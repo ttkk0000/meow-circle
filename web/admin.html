@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="admin.title">喵友圈后台管理</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/admin.css" />
+  <script src="/shared.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div>
+      <h1 data-i18n="admin.title">喵友圈后台管理系统</h1>
+      <p data-i18n="admin.subtitle">仅管理员可访问操作接口（帖子/评论/交易治理）</p>
+    </div>
+    <div id="settings-bar"></div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2 data-i18n="admin.auth_title">管理员认证</h2>
+      <form id="auth-form" class="row">
+        <input id="admin-key" type="password" required data-i18n-placeholder="admin.placeholder_key" />
+        <button type="submit" data-i18n="admin.btn_load">保存并加载数据</button>
+      </form>
+      <p class="tip">默认示例 key: <code>admin123</code> (通过环境变量 <code>ADMIN_KEY</code> 覆盖)</p>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="admin.overview">运营总览</h2>
+      <div id="summary" class="summary"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-i18n="admin.manage_posts">帖子管理</h2>
+        <button id="refresh-posts" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="admin-posts" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-i18n="admin.manage_comments">评论管理</h2>
+        <button id="refresh-comments" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="admin-comments" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-i18n="admin.manage_listings">交易管理</h2>
+        <button id="refresh-listings" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="admin-listings" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-i18n="admin.nav_media">媒体审核</h2>
+        <button id="refresh-media" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="admin-media" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-i18n="admin.nav_reports">举报处理</h2>
+        <button id="refresh-reports" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="admin-reports" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-i18n="admin.nav_orders">订单总览</h2>
+        <button id="refresh-orders" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="admin-orders" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 data-i18n="admin.nav_audit">审计日志</h2>
+        <button id="refresh-audit" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="admin-audit" class="list"></div>
+    </section>
+  </main>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

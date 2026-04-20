@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="app.title">喵友圈</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/shared.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/" class="meow-logo">
+        <span class="logo-mark" aria-hidden="true">🐾</span>
+        <span data-i18n="app.title">喵友圈</span>
+      </a>
+      <div class="search-box">
+        <span aria-hidden="true">🔍</span>
+        <input id="global-search" type="search" data-i18n-placeholder="nav.search_placeholder" placeholder="搜索帖子、交易..." />
+      </div>
+      <nav class="nav-links">
+        <div id="settings-bar"></div>
+        <a href="/architecture.html" data-i18n="nav.docs">系统文档</a>
+        <a id="dashboard-link" href="/dashboard" hidden data-i18n="nav.dashboard">我的管理中心</a>
+        <button id="notif-btn" class="icon-btn" type="button" hidden title="Notifications">🔔<span id="notif-count" class="badge-count" hidden>0</span></button>
+        <span id="user-hint"></span>
+        <button id="login-toggle" class="icon-btn" type="button" data-i18n="nav.login">登录 / 注册</button>
+        <button id="logout-btn" class="icon-btn" type="button" hidden data-i18n="nav.logout">退出</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1 data-i18n="hero.title">把对毛孩子的爱，分享给同好</h1>
+    <p data-i18n="hero.subtitle">发布日常、交换经验、可信交易，一站式宠物主人社区</p>
+    <div class="hero-actions">
+      <button id="hero-primary" class="btn-primary" type="button" data-i18n="hero.btn_primary">开始分享</button>
+      <a class="btn-secondary" href="#listings-section" data-i18n="hero.btn_secondary">浏览交易</a>
+    </div>
+  </section>
+
+  <section class="stat-grid" id="stat-grid">
+    <div class="stat-card"><div class="stat-label" data-i18n="stat.posts">帖子</div><div class="stat-value" id="stat-posts">—</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat.listings">交易</div><div class="stat-value" id="stat-listings">—</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat.users">用户</div><div class="stat-value" id="stat-users">—</div></div>
+  </section>
+
+  <section id="search-results" hidden>
+    <div class="section-head">
+      <h2 data-i18n="search.title">搜索结果</h2>
+      <button id="close-search" type="button" class="ghost">×</button>
+    </div>
+    <div class="tabs" id="search-tabs">
+      <button class="tab active" data-search-tab="all" data-i18n="search.tab_all">全部</button>
+      <button class="tab" data-search-tab="post" data-i18n="search.tab_posts">帖子</button>
+      <button class="tab" data-search-tab="listing" data-i18n="search.tab_listings">交易</button>
+    </div>
+    <div id="search-posts" class="list"></div>
+    <div id="search-listings" class="list"></div>
+  </section>
+
+  <main class="container" id="listings-section">
+    <section id="auth-panel" class="card" hidden>
+      <h2 data-i18n="auth.title">登录 / 注册</h2>
+      <div class="tabs">
+        <button class="tab active" data-tab="login" data-i18n="auth.tab_login">登录</button>
+        <button class="tab" data-tab="register" data-i18n="auth.tab_register">注册</button>
+      </div>
+      <form id="login-form" class="form-grid">
+        <input type="text" name="username" required data-i18n-placeholder="auth.placeholder_username" />
+        <input type="password" name="password" required data-i18n-placeholder="auth.placeholder_password" />
+        <button type="submit" data-i18n="auth.btn_login">登录</button>
+      </form>
+      <form id="register-form" class="form-grid" hidden>
+        <input type="text" name="username" required minlength="3" data-i18n-placeholder="auth.placeholder_username_reg" />
+        <input type="text" name="nickname" data-i18n-placeholder="auth.placeholder_nickname" />
+        <input type="password" name="password" required minlength="6" data-i18n-placeholder="auth.placeholder_password_reg" />
+        <button type="submit" data-i18n="auth.btn_register">注册</button>
+      </form>
+      <p class="tip" data-i18n="auth.tip">登录后可进入管理中心发布帖子和交易信息。</p>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2 data-i18n="section.latest_posts">最新帖子</h2>
+        <button id="refresh-posts" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="posts" class="list"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2 data-i18n="section.listings">交易信息</h2>
+        <button id="refresh-listings" type="button" data-i18n="action.refresh">刷新</button>
+      </div>
+      <div id="listings" class="list"></div>
+    </section>
+  </main>
+
+  <template id="post-item-template">
+    <article class="item">
+      <div class="item-head">
+        <h3 class="item-title"></h3>
+        <span class="pill category"></span>
+      </div>
+      <p class="item-content"></p>
+      <p class="meta"></p>
+      <details>
+        <summary data-i18n="post.view_comments">查看与评论</summary>
+        <div class="comments"></div>
+        <form class="comment-form">
+          <input type="text" name="content" required data-i18n-placeholder="post.placeholder_comment" />
+          <button type="submit" data-i18n="post.btn_comment">发表评论</button>
+        </form>
+      </details>
+    </article>
+  </template>
+
+  <template id="listing-item-template">
+    <article class="item">
+      <div class="item-head">
+        <h3 class="item-title"></h3>
+        <span class="pill type"></span>
+      </div>
+      <p class="item-content"></p>
+      <p class="meta"></p>
+    </article>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>

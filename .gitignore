@@ -1,0 +1,42 @@
+# ===== Go build artifacts =====
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+bestTry
+bestTry.exe
+
+# ===== Go caches / coverage =====
+/vendor/
+/bin/
+coverage.out
+coverage.html
+
+# ===== Runtime data / logs =====
+*.log
+data/uploads/
+data/*.db
+
+# ===== Local env / secrets =====
+.env
+.env.*
+!.env.example
+
+# ===== IDE / editors =====
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# ===== OS junk =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Docker volumes (if mounted locally) =====
+pgdata/
+redisdata/

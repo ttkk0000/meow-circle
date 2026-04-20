@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="dashboard.title">我的管理中心</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/dashboard.css" />
+  <script src="/shared.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/" class="meow-logo">
+        <span class="logo-mark" aria-hidden="true">🐾</span>
+        <span data-i18n="dashboard.title">我的管理中心</span>
+      </a>
+      <nav class="nav-links">
+        <div id="settings-bar"></div>
+        <a href="/" data-i18n="nav.home">返回前台</a>
+        <button id="notif-btn" class="icon-btn" type="button" title="Notifications">🔔<span id="notif-count" class="badge-count" hidden>0</span></button>
+        <span id="user-hint"></span>
+        <button id="logout-btn" class="icon-btn" type="button" data-i18n="nav.logout">退出</button>
+      </nav>
+    </div>
+  </header>
+
+  <section id="not-login" class="card" hidden>
+    <h2 data-i18n="dashboard.not_login">请先登录</h2>
+    <p data-i18n="dashboard.not_login_tip">管理中心仅登录用户可见。</p>
+    <a href="/" class="link-btn" data-i18n="dashboard.go_home">返回首页登录</a>
+  </section>
+
+  <main id="dashboard" class="container" hidden>
+    <nav class="sidebar">
+      <button class="nav-btn active" data-section="compose-post" data-i18n="dashboard.nav_compose_post">发布帖子</button>
+      <button class="nav-btn" data-section="compose-listing" data-i18n="dashboard.nav_compose_listing">发布交易</button>
+      <button class="nav-btn" data-section="media" data-i18n="dashboard.nav_media">媒体库</button>
+      <button class="nav-btn" data-section="my-posts" data-i18n="dashboard.nav_my_posts">我的帖子</button>
+      <button class="nav-btn" data-section="my-listings" data-i18n="dashboard.nav_my_listings">我的交易</button>
+      <button class="nav-btn" data-section="my-orders" data-i18n="dashboard.nav_my_orders">我的订单</button>
+      <button class="nav-btn" data-section="profile" data-i18n="dashboard.nav_profile">个人资料</button>
+      <button class="nav-btn" data-section="notifications" data-i18n="dashboard.nav_notifications">通知中心</button>
+      <button class="nav-btn" data-section="messages" data-i18n="dashboard.nav_messages">私信</button>
+    </nav>
+
+    <div class="panel-area">
+      <section class="card panel" data-panel="compose-post">
+        <h2 data-i18n="dashboard.nav_compose_post">发布帖子</h2>
+        <form id="post-form" class="form-grid">
+          <input type="text" name="title" required data-i18n-placeholder="form.title" />
+          <textarea name="content" rows="5" required data-i18n-placeholder="form.content"></textarea>
+          <select name="category">
+            <option value="daily_share" data-i18n="form.category_daily">日常分享</option>
+            <option value="help" data-i18n="form.category_help">求助问答</option>
+            <option value="activity" data-i18n="form.category_activity">线下活动</option>
+            <option value="trade" data-i18n="form.category_trade">交易信息</option>
+          </select>
+          <input type="text" name="tags" data-i18n-placeholder="form.tags" />
+          <input type="text" name="media_ids" data-i18n-placeholder="media.attach_hint" />
+          <button type="submit" data-i18n="form.btn_publish_post">发布帖子</button>
+        </form>
+      </section>
+
+      <section class="card panel" data-panel="compose-listing" hidden>
+        <h2 data-i18n="dashboard.nav_compose_listing">发布交易</h2>
+        <form id="listing-form" class="form-grid">
+          <input type="text" name="title" required data-i18n-placeholder="form.listing_title" />
+          <textarea name="description" rows="4" data-i18n-placeholder="form.listing_description"></textarea>
+          <select name="type">
+            <option value="product" data-i18n="form.type_product">商品</option>
+            <option value="service" data-i18n="form.type_service">服务</option>
+            <option value="adopt" data-i18n="form.type_adopt">领养</option>
+          </select>
+          <input type="number" name="price_cents" data-i18n-placeholder="form.price" />
+          <input type="text" name="currency" value="CNY" data-i18n-placeholder="form.currency" />
+          <input type="text" name="media_ids" data-i18n-placeholder="media.attach_hint" />
+          <button type="submit" data-i18n="form.btn_publish_listing">发布交易</button>
+        </form>
+      </section>
+
+      <section class="card panel" data-panel="media" hidden>
+        <div class="section-head">
+          <h2 data-i18n="dashboard.nav_media">媒体库</h2>
+          <button id="refresh-media" type="button" data-i18n="action.refresh">刷新</button>
+        </div>
+        <form id="media-form" class="form-grid">
+          <label data-i18n="media.upload_image">上传图片</label>
+          <input type="file" id="media-file" accept="image/*,video/mp4,video/webm,video/quicktime" required />
+          <button type="submit" data-i18n="media.btn_upload">上传</button>
+        </form>
+        <div id="media-list" class="list"></div>
+      </section>
+
+      <section class="card panel" data-panel="my-orders" hidden>
+        <div class="section-head">
+          <h2 data-i18n="dashboard.nav_my_orders">我的订单</h2>
+          <div>
+            <button id="orders-tab-buyer" type="button" class="tab active" data-i18n="order.tab_buyer">我买的</button>
+            <button id="orders-tab-seller" type="button" class="tab" data-i18n="order.tab_seller">我卖的</button>
+            <button id="refresh-my-orders" type="button" data-i18n="action.refresh">刷新</button>
+          </div>
+        </div>
+        <div id="my-orders" class="list"></div>
+      </section>
+
+      <section class="card panel" data-panel="my-posts" hidden>
+        <div class="section-head">
+          <h2 data-i18n="dashboard.nav_my_posts">我的帖子</h2>
+          <button id="refresh-my-posts" type="button" data-i18n="action.refresh">刷新</button>
+        </div>
+        <div id="my-posts" class="list"></div>
+      </section>
+
+      <section class="card panel" data-panel="my-listings" hidden>
+        <div class="section-head">
+          <h2 data-i18n="dashboard.nav_my_listings">我的交易</h2>
+          <button id="refresh-my-listings" type="button" data-i18n="action.refresh">刷新</button>
+        </div>
+        <div id="my-listings" class="list"></div>
+      </section>
+
+      <section class="card panel" data-panel="profile" hidden>
+        <h2 data-i18n="profile.title">资料设置</h2>
+        <form id="profile-form" class="form-grid">
+          <div class="user-row">
+            <img id="profile-avatar" class="avatar-lg" src="" alt="" />
+            <div>
+              <div class="name" id="profile-name">—</div>
+              <div class="handle" id="profile-handle">—</div>
+            </div>
+          </div>
+          <label data-i18n="profile.nickname">昵称</label>
+          <input type="text" name="nickname" />
+          <label data-i18n="profile.avatar_url">头像 URL</label>
+          <input type="text" name="avatar_url" placeholder="/uploads/xxx.jpg" />
+          <label data-i18n="profile.bio">简介</label>
+          <textarea name="bio" rows="3" maxlength="500"></textarea>
+          <button type="submit" data-i18n="profile.btn_save">保存资料</button>
+        </form>
+      </section>
+
+      <section class="card panel" data-panel="notifications" hidden>
+        <div class="section-head">
+          <h2 data-i18n="dashboard.nav_notifications">通知中心</h2>
+          <div style="display:flex;gap:8px;">
+            <button id="mark-all-notifications" type="button" class="ghost" data-i18n="notify.mark_all_read">全部标为已读</button>
+            <button id="refresh-notifications" type="button" data-i18n="action.refresh">刷新</button>
+          </div>
+        </div>
+        <div id="notifications-list" class="list"></div>
+      </section>
+
+      <section class="card panel" data-panel="messages" hidden>
+        <div class="section-head">
+          <h2 data-i18n="dashboard.nav_messages">私信</h2>
+          <div style="display:flex;gap:8px;">
+            <input id="new-message-peer" type="number" min="1" style="width:160px" data-i18n-placeholder="message.target_user_id" placeholder="对方用户 ID" />
+            <button id="start-conversation" type="button" class="ghost" data-i18n="message.start_new">发私信</button>
+            <button id="refresh-conversations" type="button" data-i18n="action.refresh">刷新</button>
+          </div>
+        </div>
+        <div class="conversation-layout">
+          <div id="conv-list" class="conv-list"></div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div id="conv-messages" class="messages"></div>
+            <form id="message-form" class="form-grid" hidden>
+              <input type="text" name="content" required data-i18n-placeholder="message.placeholder" />
+              <button type="submit" data-i18n="message.btn_send">发送</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="doc.title">喵友圈 - 可视化架构文档</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/architecture.css" />
+  <script src="/shared.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <div>
+      <h1 data-i18n="doc.title">喵友圈系统可视化文档</h1>
+      <p id="project-positioning"></p>
+    </div>
+    <div id="settings-bar"></div>
+  </header>
+
+  <div class="meta">
+    <span id="project-version"></span>
+    <span id="project-updated"></span>
+    <a href="/" data-i18n="doc.back">返回业务页面</a>
+  </div>
+
+  <main class="layout">
+    <section class="panel">
+      <h2 data-i18n="doc.overview">系统全景</h2>
+      <div class="swimlane">
+        <div class="lane">用户端（Web/Android/iOS）</div>
+        <div class="arrow">↓ HTTP/JSON</div>
+        <div class="lane">Caddy 入口层（反向代理）</div>
+        <div class="arrow">↓ 转发</div>
+        <div class="lane">Go API 层（Router / Handler）</div>
+        <div class="arrow">↓ 调用</div>
+        <div class="lane">Domain 领域模型</div>
+        <div class="arrow">↓ 读写</div>
+        <div class="lane">Store 存储（Memory，后续 DB）</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="doc.capabilities">能力地图</h2>
+      <div id="capabilities" class="cards"></div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="doc.layers">分层架构说明</h2>
+      <div id="layers" class="cards"></div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="doc.api">API 模块视图</h2>
+      <div id="api-modules"></div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="doc.envelope">统一响应结构</h2>
+      <p id="envelope-desc"></p>
+      <pre id="envelope-success"></pre>
+      <pre id="envelope-error"></pre>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="doc.security">安全策略</h2>
+      <ul id="security-list"></ul>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="doc.mobile">移动端接入策略</h2>
+      <h3 data-i18n="doc.mobile_strategy">建议策略</h3>
+      <ul id="mobile-strategy"></ul>
+      <h3 data-i18n="doc.android_stack">Android 推荐技术栈</h3>
+      <ul id="android-stack"></ul>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="doc.roadmap">演进路线图</h2>
+      <div id="roadmap" class="cards"></div>
+    </section>
+  </main>
+
+  <script src="/architecture.js"></script>
+</body>
+</html>

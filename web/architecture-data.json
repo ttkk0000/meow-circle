@@ -1,0 +1,308 @@
+{
+  "project": {
+    "name": "喵友圈 / Pet Owner Community Service",
+    "version": "v1.5",
+    "last_updated": "2026-04-20",
+    "positioning": "面向猫咪主人并可扩展到宠物主人的分享、交流、点评、媒体、社交与交易一站式社区。"
+  },
+  "business_capabilities": [
+    {
+      "name": "用户体系",
+      "description": "注册/登录（登录失败频率限制）、JWT 鉴权、个人资料（昵称/头像/简介）。",
+      "status": "implemented"
+    },
+    {
+      "name": "通知与私信",
+      "description": "应用内通知 inbox + 用户间私信与会话聚合，触发点覆盖评论、订单、举报、消息。",
+      "status": "implemented"
+    },
+    {
+      "name": "全局搜索",
+      "description": "关键字搜索帖子和交易，支持类型过滤，响应式前端输入框实时联想。",
+      "status": "implemented"
+    },
+    {
+      "name": "审计日志",
+      "description": "平台管理员关键动作全部留痕，支持 IP、操作对象、备注，可视化列表查询。",
+      "status": "implemented"
+    },
+    {
+      "name": "内容分享",
+      "description": "已登录用户发布帖子，按分类沉淀经验、求助、活动。",
+      "status": "implemented"
+    },
+    {
+      "name": "互动点评",
+      "description": "围绕帖子进行评论互动，形成社区讨论。",
+      "status": "implemented"
+    },
+    {
+      "name": "交易信息",
+      "description": "发布宠物相关商品/服务/领养信息，支持价格展示。",
+      "status": "implemented"
+    },
+    {
+      "name": "媒体与审核",
+      "description": "图片 (JPG/PNG/WEBP/GIF) 与视频 (MP4/WebM/MOV) 上传，敏感词过滤，举报处理，管理员审核。",
+      "status": "implemented"
+    },
+    {
+      "name": "订单与支付",
+      "description": "Listing 下单 → 支付 → 发货 → 确认收货 / 取消 / 退款 完整状态机；Mock 默认可用，Alipay / WeChat Pay / Stripe Provider 桩按环境变量自动挂载。",
+      "status": "implemented"
+    },
+    {
+      "name": "后台管理",
+      "description": "管理员可查看运营总览、审核帖子/评论/交易/媒体/举报/订单。",
+      "status": "implemented"
+    },
+    {
+      "name": "移动端适配",
+      "description": "统一 JSON envelope 与 JWT，配合主题/国际化，Android/iOS 可直接接入。",
+      "status": "implemented"
+    }
+  ],
+  "architecture_layers": [
+    {
+      "layer": "入口层",
+      "path": "cmd/server",
+      "purpose": "进程启动、HTTP Server 参数与优雅关闭。"
+    },
+    {
+      "layer": "接口层",
+      "path": "internal/platform/api",
+      "purpose": "路由、鉴权中间件、统一响应封装、CORS、文件上传。"
+    },
+    {
+      "layer": "认证层",
+      "path": "internal/platform/auth",
+      "purpose": "PBKDF2-SHA256 密码哈希 + HS256 JWT 签发/校验 + 登录频率限制器。"
+    },
+    {
+      "layer": "审核层",
+      "path": "internal/platform/audit",
+      "purpose": "敏感词过滤（可替换为第三方审核服务）。"
+    },
+    {
+      "layer": "支付层",
+      "path": "internal/platform/payment",
+      "purpose": "Provider 接口 + Mock/Alipay/WeChat/Stripe 可插拔实现。"
+    },
+    {
+      "layer": "领域层",
+      "path": "internal/domain",
+      "purpose": "核心模型：User / Post / Comment / Listing / Media / Report / Order / Notification / Message / AuditLog。"
+    },
+    {
+      "layer": "存储层",
+      "path": "internal/store",
+      "purpose": "Store 接口 + 三种后端：MemoryStore（默认）、PostgresStore（pgx/v5）、Redis 读穿透缓存装饰器。根据 DATABASE_URL / REDIS_URL 环境变量自动选择，互相之间代码零侵入。"
+    },
+    {
+      "layer": "前台（浏览）",
+      "path": "web/index.html",
+      "purpose": "任何用户可浏览帖子和交易，登录后评论、购买、举报。"
+    },
+    {
+      "layer": "用户管理后台",
+      "path": "web/dashboard.html",
+      "purpose": "登录用户发布内容、上传媒体、管理订单。"
+    },
+    {
+      "layer": "平台管理后台",
+      "path": "web/admin.html",
+      "purpose": "管理员密钥保护，审核内容/媒体/举报，查看订单。"
+    },
+    {
+      "layer": "静态资源",
+      "path": "data/uploads",
+      "purpose": "运行时创建，存放用户上传的图片与视频，通过 /uploads/ 暴露。"
+    }
+  ],
+  "api_modules": [
+    {
+      "module": "健康检查",
+      "endpoints": [
+        { "method": "GET", "path": "/healthz", "purpose": "服务可用性探测" }
+      ]
+    },
+    {
+      "module": "认证与资料",
+      "endpoints": [
+        { "method": "POST", "path": "/api/v1/auth/register", "purpose": "用户注册（返回 JWT）" },
+        { "method": "POST", "path": "/api/v1/auth/login", "purpose": "用户登录（失败 5 次 10 分钟内锁定，返回 429）" },
+        { "method": "GET", "path": "/api/v1/auth/me", "purpose": "获取当前登录用户" },
+        { "method": "PATCH", "path": "/api/v1/me", "purpose": "更新昵称/头像/简介" },
+        { "method": "GET", "path": "/api/v1/users/{id}", "purpose": "查看他人公开资料" }
+      ]
+    },
+    {
+      "module": "搜索",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/search?q=关键字&type=all|post|listing", "purpose": "关键字模糊匹配帖子/交易" }
+      ]
+    },
+    {
+      "module": "通知与私信",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/notifications?unread=true", "purpose": "通知列表 + 未读总数" },
+        { "method": "POST", "path": "/api/v1/notifications/{id}/read", "purpose": "标记单条通知为已读" },
+        { "method": "POST", "path": "/api/v1/notifications/read-all", "purpose": "全部标记为已读" },
+        { "method": "POST", "path": "/api/v1/messages", "purpose": "发送私信（敏感词过滤，自动生成通知）" },
+        { "method": "GET", "path": "/api/v1/me/conversations", "purpose": "会话列表（按最近消息降序，含未读计数）" },
+        { "method": "GET", "path": "/api/v1/me/conversations/{peer_id}", "purpose": "与某人聊天记录（读取即标记已读）" }
+      ]
+    },
+    {
+      "module": "帖子模块",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/posts?page=1&page_size=20", "purpose": "分页获取帖子列表" },
+        { "method": "POST", "path": "/api/v1/posts", "purpose": "发布帖子（需登录，敏感词过滤，支持 media_ids）" },
+        { "method": "GET", "path": "/api/v1/posts/{id}", "purpose": "帖子详情（含评论 + 媒体）" },
+        { "method": "DELETE", "path": "/api/v1/posts/{id}", "purpose": "删除自己的帖子（需登录）" },
+        { "method": "POST", "path": "/api/v1/posts/{id}/comments", "purpose": "新增评论（需登录，敏感词过滤）" }
+      ]
+    },
+    {
+      "module": "交易模块",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/listings?page=1&page_size=20", "purpose": "分页获取交易信息" },
+        { "method": "POST", "path": "/api/v1/listings", "purpose": "发布交易（需登录，支持 media_ids）" },
+        { "method": "GET", "path": "/api/v1/listings/{id}", "purpose": "交易详情（含媒体）" },
+        { "method": "DELETE", "path": "/api/v1/listings/{id}", "purpose": "删除自己的交易（需登录）" }
+      ]
+    },
+    {
+      "module": "媒体与审核",
+      "endpoints": [
+        { "method": "POST", "path": "/api/v1/media", "purpose": "上传图片/视频 (multipart form, field=file)" },
+        { "method": "GET", "path": "/api/v1/media", "purpose": "我的媒体列表（需登录）" },
+        { "method": "GET", "path": "/api/v1/media/{id}", "purpose": "媒体详情" },
+        { "method": "DELETE", "path": "/api/v1/media/{id}", "purpose": "删除自己的媒体（需登录）" },
+        { "method": "POST", "path": "/api/v1/reports", "purpose": "提交举报（需登录）" },
+        { "method": "GET", "path": "/uploads/{filename}", "purpose": "访问已上传的媒体文件" }
+      ]
+    },
+    {
+      "module": "订单与支付",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/payments/methods", "purpose": "可用支付通道列表" },
+        { "method": "POST", "path": "/api/v1/orders", "purpose": "买家下单（body: listing_id）" },
+        { "method": "GET", "path": "/api/v1/orders/{id}", "purpose": "订单详情（买/卖双方可见）" },
+        { "method": "POST", "path": "/api/v1/orders/{id}/pay", "purpose": "支付（Mock 通道）" },
+        { "method": "POST", "path": "/api/v1/orders/{id}/cancel", "purpose": "取消未支付订单（买家）" },
+        { "method": "POST", "path": "/api/v1/orders/{id}/ship", "purpose": "已支付订单发货（卖家）" },
+        { "method": "POST", "path": "/api/v1/orders/{id}/complete", "purpose": "确认收货（买家）" },
+        { "method": "POST", "path": "/api/v1/orders/{id}/refund", "purpose": "退款（卖家）" }
+      ]
+    },
+    {
+      "module": "我的内容",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/me/posts", "purpose": "我的帖子（需登录）" },
+        { "method": "GET", "path": "/api/v1/me/listings", "purpose": "我的交易（需登录）" },
+        { "method": "GET", "path": "/api/v1/me/orders?role=buyer|seller", "purpose": "我的订单（买/卖双视角）" }
+      ]
+    },
+    {
+      "module": "后台管理",
+      "endpoints": [
+        { "method": "GET", "path": "/api/v1/admin/summary", "purpose": "运营总览（需管理员密钥）" },
+        { "method": "GET", "path": "/api/v1/admin/posts", "purpose": "帖子列表（管理员）" },
+        { "method": "DELETE", "path": "/api/v1/admin/posts/{id}", "purpose": "删除帖子（管理员）" },
+        { "method": "GET", "path": "/api/v1/admin/comments", "purpose": "全站评论（管理员）" },
+        { "method": "DELETE", "path": "/api/v1/admin/comments/{id}", "purpose": "删除评论（管理员）" },
+        { "method": "GET", "path": "/api/v1/admin/listings", "purpose": "交易列表（管理员）" },
+        { "method": "DELETE", "path": "/api/v1/admin/listings/{id}", "purpose": "删除交易（管理员）" },
+        { "method": "GET", "path": "/api/v1/admin/media?status=pending|approved|rejected", "purpose": "媒体审核列表" },
+        { "method": "POST", "path": "/api/v1/admin/media/{id}/approve", "purpose": "通过媒体" },
+        { "method": "POST", "path": "/api/v1/admin/media/{id}/reject", "purpose": "拒绝媒体" },
+        { "method": "DELETE", "path": "/api/v1/admin/media/{id}", "purpose": "强制删除媒体" },
+        { "method": "GET", "path": "/api/v1/admin/reports?status=open|resolved|dismissed", "purpose": "举报列表" },
+        { "method": "POST", "path": "/api/v1/admin/reports/{id}/resolve", "purpose": "处理举报（可附 delete_target=true 同时删除目标）" },
+        { "method": "POST", "path": "/api/v1/admin/reports/{id}/dismiss", "purpose": "驳回举报" },
+        { "method": "GET", "path": "/api/v1/admin/orders", "purpose": "全站订单总览" },
+        { "method": "GET", "path": "/api/v1/admin/audit-logs?limit=200", "purpose": "审计日志列表（按时间倒序）" }
+      ]
+    }
+  ],
+  "response_envelope": {
+    "description": "所有 API 返回统一封装 { code, message, data }",
+    "example_success": "{ \"code\": 0, \"message\": \"ok\", \"data\": {...} }",
+    "example_error": "{ \"code\": 401, \"message\": \"unauthorized\" }"
+  },
+  "mobile_integration": {
+    "recommended_strategy": [
+      "所有写接口通过 Authorization: Bearer <token> 鉴权",
+      "登录成功后客户端持久化 token（Android: EncryptedSharedPreferences / DataStore）",
+      "Token 有效期 72h，过期统一 401 触发重新登录",
+      "分页参数 ?page=1&page_size=20，便于移动端无限滚动",
+      "统一 envelope 让客户端错误处理逻辑唯一",
+      "媒体上传使用 multipart form，后台统一分发到 /uploads/ 提供 CDN 式访问",
+      "订单状态机与服务端强一致，客户端根据状态渲染不同操作按钮"
+    ],
+    "android_stack_example": [
+      "Kotlin + Retrofit + OkHttp",
+      "Kotlinx Serialization 或 Moshi",
+      "Paging 3（分页列表）",
+      "DataStore（存 Token）",
+      "ExoPlayer（视频播放）",
+      "Coil / Glide（图片加载）"
+    ]
+  },
+  "security": [
+    "密码使用 PBKDF2-SHA256 (10 万轮) + 每用户随机盐",
+    "JWT 使用 HS256，secret 通过环境变量 JWT_SECRET 注入",
+    "登录失败频率限制：用户名+IP 维度 10 分钟 5 次失败，触发后返回 429 + Retry-After",
+    "管理员接口通过 X-Admin-Key 头部校验，并自动写入审计日志",
+    "文件上传限制：图片 10MB / 视频 200MB，并通过 http.DetectContentType 双重校验 MIME",
+    "内容层敏感词前置过滤，帖子/评论/交易描述/私信命中即阻断",
+    "支付接口可插拔 Provider（Mock/Alipay/WeChat/Stripe），接入真实渠道前务必校验签名/异步回调",
+    "后续建议：接入 HTTPS、对象存储（S3/COS/OSS）+ CDN、数据库持久化 + 事务"
+  ],
+  "roadmap": [
+    {
+      "phase": "Phase 1 - MVP（已完成）",
+      "items": [
+        "帖子发布与评论",
+        "交易信息发布",
+        "响应式 Web 页面",
+        "后台管理"
+      ]
+    },
+    {
+      "phase": "Phase 2 - 账号与治理（已完成）",
+      "items": [
+        "用户注册登录 + JWT",
+        "分页与统一响应",
+        "三端页面分离（前台/用户后台/平台后台）",
+        "三主题 + 三语言",
+        "媒体上传（图片+视频）与审核",
+        "举报与敏感词过滤"
+      ]
+    },
+    {
+      "phase": "Phase 3 - 商业化与社交（已完成）",
+      "items": [
+        "订单状态机 + Mock 支付",
+        "Alipay / WeChat Pay / Stripe Provider 骨架（按环境变量自动启用）",
+        "通知中心 + 私信",
+        "全局关键字搜索",
+        "登录频率限制 + 审计日志"
+      ]
+    },
+    {
+      "phase": "Phase 4 - 规模化（进行中）",
+      "items": [
+        "✅ Store 接口抽象，Memory / PostgreSQL / Redis 三后端可切换（DATABASE_URL / REDIS_URL）",
+        "✅ pgx/v5 PostgreSQL 持久化全模型（users/posts/comments/listings/media/reports/orders/notifications/messages/audit）",
+        "✅ Redis 读穿透缓存：列表、详情、未读通知计数，写入事件驱动失效",
+        "✅ docker-compose 一键启动 PG + Redis，自动执行 migrations/001_init.sql",
+        "对象存储接入（S3/COS/OSS）+ CDN 回源",
+        "PostgreSQL 全文索引（tsvector + pg_trgm）/ 独立搜索引擎",
+        "消息推送（FCM / APNs / WebSocket）",
+        "Kubernetes 化部署与可观测性（Prometheus / OpenTelemetry）"
+      ]
+    }
+  ]
+}
