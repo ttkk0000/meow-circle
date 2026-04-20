@@ -13,9 +13,9 @@ import (
 )
 
 const (
-	maxImageBytes = 10 * 1024 * 1024        // 10 MB
-	maxVideoBytes = 200 * 1024 * 1024       // 200 MB
-	maxUploadRead = maxVideoBytes + 1<<20   // reserve 1 MB for form overhead
+	maxImageBytes = 10 * 1024 * 1024      // 10 MB
+	maxVideoBytes = 200 * 1024 * 1024     // 200 MB
+	maxUploadRead = maxVideoBytes + 1<<20 // reserve 1 MB for form overhead
 )
 
 var (
@@ -58,7 +58,7 @@ func (r *Router) uploadMedia(w http.ResponseWriter, req *http.Request) {
 		writeError(w, http.StatusBadRequest, "file field is required")
 		return
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	buf := make([]byte, 512)
 	n, _ := file.Read(buf)

@@ -32,14 +32,14 @@ const contextKeyUser contextKey = "current_user"
 const maxRequestBody = 1 << 20 // 1 MiB
 
 type Router struct {
-	store      store.Store
-	storeKind  string
-	mux        *http.ServeMux
-	adminKey   string
-	tokens     *auth.TokenService
-	payments   *payment.Router
-	filter     *audit.Filter
-	loginLimit *auth.LoginLimiter
+	store       store.Store
+	storeKind   string
+	mux         *http.ServeMux
+	adminKey    string
+	tokens      *auth.TokenService
+	payments    *payment.Router
+	filter      *audit.Filter
+	loginLimit  *auth.LoginLimiter
 	allowOrigin string
 }
 
@@ -880,7 +880,7 @@ func paginateListings(all []domain.Listing, page, size int) ([]domain.Listing, i
 }
 
 func decodeJSON(req *http.Request, out any) error {
-	defer req.Body.Close()
+	defer func() { _ = req.Body.Close() }()
 	decoder := json.NewDecoder(req.Body)
 	decoder.DisallowUnknownFields()
 	if err := decoder.Decode(out); err != nil {
@@ -891,7 +891,7 @@ func decodeJSON(req *http.Request, out any) error {
 
 // decodeJSONOptional accepts empty body as success.
 func decodeJSONOptional(req *http.Request, out any) error {
-	defer req.Body.Close()
+	defer func() { _ = req.Body.Close() }()
 	decoder := json.NewDecoder(req.Body)
 	decoder.DisallowUnknownFields()
 	if err := decoder.Decode(out); err != nil {

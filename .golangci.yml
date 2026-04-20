@@ -12,6 +12,11 @@ linters:
   settings:
     misspell:
       locale: US
+      ignore-rules:
+        # British English spelling used as an enum value stored in DB and
+        # surfaced in the i18n dictionary; changing it would be a breaking
+        # change, so keep it as-is.
+        - cancelled
   exclusions:
     generated: lax
     rules:

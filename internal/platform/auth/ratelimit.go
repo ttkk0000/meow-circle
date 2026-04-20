@@ -11,16 +11,16 @@ import (
 // This is a minimal in-memory implementation suitable for a single-node MVP.
 // Swap for Redis in a clustered deployment.
 type LoginLimiter struct {
-	mu        sync.Mutex
-	records   map[string]*attemptRecord
-	maxFails  int
-	window    time.Duration
-	blockFor  time.Duration
+	mu       sync.Mutex
+	records  map[string]*attemptRecord
+	maxFails int
+	window   time.Duration
+	blockFor time.Duration
 }
 
 type attemptRecord struct {
-	fails     int
-	firstAt   time.Time
+	fails        int
+	firstAt      time.Time
 	blockedUntil time.Time
 }
 

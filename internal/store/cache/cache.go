@@ -111,11 +111,13 @@ func keyListing(id int64) string {
 
 // ===== Users (passthrough) =====
 
-func (s *Store) CreateUser(u domain.User) (domain.User, bool)             { return s.inner.CreateUser(u) }
-func (s *Store) FindUserByUsername(n string) (domain.User, bool)          { return s.inner.FindUserByUsername(n) }
-func (s *Store) GetUser(id int64) (domain.User, bool)                     { return s.inner.GetUser(id) }
-func (s *Store) CountUsers() int                                          { return s.inner.CountUsers() }
-func (s *Store) GetUsers(ids []int64) map[int64]domain.User               { return s.inner.GetUsers(ids) }
+func (s *Store) CreateUser(u domain.User) (domain.User, bool) { return s.inner.CreateUser(u) }
+func (s *Store) FindUserByUsername(n string) (domain.User, bool) {
+	return s.inner.FindUserByUsername(n)
+}
+func (s *Store) GetUser(id int64) (domain.User, bool)       { return s.inner.GetUser(id) }
+func (s *Store) CountUsers() int                            { return s.inner.CountUsers() }
+func (s *Store) GetUsers(ids []int64) map[int64]domain.User { return s.inner.GetUsers(ids) }
 func (s *Store) UpdateUserProfile(id int64, n, a, b string) (domain.User, bool) {
 	return s.inner.UpdateUserProfile(id, n, a, b)
 }
@@ -207,7 +209,9 @@ func (s *Store) ListListings() []domain.Listing {
 	s.setJSON(keyListListings, fresh, s.ttl)
 	return fresh
 }
-func (s *Store) ListListingsBySeller(id int64) []domain.Listing { return s.inner.ListListingsBySeller(id) }
+func (s *Store) ListListingsBySeller(id int64) []domain.Listing {
+	return s.inner.ListListingsBySeller(id)
+}
 func (s *Store) GetListing(id int64) (domain.Listing, bool) {
 	var cached domain.Listing
 	if s.getJSON(keyListing(id), &cached) {
@@ -237,11 +241,13 @@ func (s *Store) SearchListings(q string) []domain.Listing { return s.inner.Searc
 
 // ===== Media (passthrough) =====
 
-func (s *Store) CreateMedia(m domain.Media) domain.Media              { return s.inner.CreateMedia(m) }
-func (s *Store) GetMedia(id int64) (domain.Media, bool)               { return s.inner.GetMedia(id) }
-func (s *Store) GetMediaBatch(ids []int64) []domain.Media             { return s.inner.GetMediaBatch(ids) }
-func (s *Store) ListMediaByOwner(id int64) []domain.Media             { return s.inner.ListMediaByOwner(id) }
-func (s *Store) ListMediaByStatus(st domain.MediaStatus) []domain.Media { return s.inner.ListMediaByStatus(st) }
+func (s *Store) CreateMedia(m domain.Media) domain.Media  { return s.inner.CreateMedia(m) }
+func (s *Store) GetMedia(id int64) (domain.Media, bool)   { return s.inner.GetMedia(id) }
+func (s *Store) GetMediaBatch(ids []int64) []domain.Media { return s.inner.GetMediaBatch(ids) }
+func (s *Store) ListMediaByOwner(id int64) []domain.Media { return s.inner.ListMediaByOwner(id) }
+func (s *Store) ListMediaByStatus(st domain.MediaStatus) []domain.Media {
+	return s.inner.ListMediaByStatus(st)
+}
 func (s *Store) UpdateMediaStatus(id int64, st domain.MediaStatus) bool {
 	return s.inner.UpdateMediaStatus(id, st)
 }
@@ -249,19 +255,19 @@ func (s *Store) DeleteMedia(id int64) (domain.Media, bool) { return s.inner.Dele
 
 // ===== Reports (passthrough) =====
 
-func (s *Store) CreateReport(r domain.Report) domain.Report          { return s.inner.CreateReport(r) }
-func (s *Store) GetReport(id int64) (domain.Report, bool)            { return s.inner.GetReport(id) }
-func (s *Store) ListReports(st domain.ReportStatus) []domain.Report  { return s.inner.ListReports(st) }
-func (s *Store) UpdateReport(r domain.Report) bool                   { return s.inner.UpdateReport(r) }
+func (s *Store) CreateReport(r domain.Report) domain.Report         { return s.inner.CreateReport(r) }
+func (s *Store) GetReport(id int64) (domain.Report, bool)           { return s.inner.GetReport(id) }
+func (s *Store) ListReports(st domain.ReportStatus) []domain.Report { return s.inner.ListReports(st) }
+func (s *Store) UpdateReport(r domain.Report) bool                  { return s.inner.UpdateReport(r) }
 
 // ===== Orders (passthrough) =====
 
-func (s *Store) CreateOrder(o domain.Order) domain.Order          { return s.inner.CreateOrder(o) }
-func (s *Store) GetOrder(id int64) (domain.Order, bool)           { return s.inner.GetOrder(id) }
-func (s *Store) UpdateOrder(o domain.Order) bool                  { return s.inner.UpdateOrder(o) }
-func (s *Store) ListOrdersByBuyer(id int64) []domain.Order        { return s.inner.ListOrdersByBuyer(id) }
-func (s *Store) ListOrdersBySeller(id int64) []domain.Order       { return s.inner.ListOrdersBySeller(id) }
-func (s *Store) ListAllOrders() []domain.Order                    { return s.inner.ListAllOrders() }
+func (s *Store) CreateOrder(o domain.Order) domain.Order    { return s.inner.CreateOrder(o) }
+func (s *Store) GetOrder(id int64) (domain.Order, bool)     { return s.inner.GetOrder(id) }
+func (s *Store) UpdateOrder(o domain.Order) bool            { return s.inner.UpdateOrder(o) }
+func (s *Store) ListOrdersByBuyer(id int64) []domain.Order  { return s.inner.ListOrdersByBuyer(id) }
+func (s *Store) ListOrdersBySeller(id int64) []domain.Order { return s.inner.ListOrdersBySeller(id) }
+func (s *Store) ListAllOrders() []domain.Order              { return s.inner.ListAllOrders() }
 
 // ===== Notifications =====
 
@@ -306,9 +312,15 @@ func (s *Store) CreateMessage(m domain.Message) domain.Message {
 	s.del(keyUnreadNotif(m.RecipientID))
 	return out
 }
-func (s *Store) ListMessagesBetween(a, b int64) []domain.Message { return s.inner.ListMessagesBetween(a, b) }
-func (s *Store) MarkConversationRead(self, peer int64) int       { return s.inner.MarkConversationRead(self, peer) }
-func (s *Store) ListConversations(id int64) []domain.Conversation { return s.inner.ListConversations(id) }
+func (s *Store) ListMessagesBetween(a, b int64) []domain.Message {
+	return s.inner.ListMessagesBetween(a, b)
+}
+func (s *Store) MarkConversationRead(self, peer int64) int {
+	return s.inner.MarkConversationRead(self, peer)
+}
+func (s *Store) ListConversations(id int64) []domain.Conversation {
+	return s.inner.ListConversations(id)
+}
 
 // ===== Audit (passthrough) =====
 
