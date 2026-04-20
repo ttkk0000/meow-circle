@@ -1,0 +1,16 @@
+.git
+.github
+.idea
+.vscode
+*.md
+!README.md
+!DESIGN.md
+data
+uploads
+*.out
+*.err
+server.out
+server.err
+tmp
+bin
+Caddyfile

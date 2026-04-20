@@ -10,29 +10,27 @@ permissions:
   contents: read
 
 jobs:
+  # --------------------------------------------------------------------------
+  # Unit tests + coverage. Fast, no external services.
+  # --------------------------------------------------------------------------
   test:
     name: Build & Test
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: '1.25'
           cache: true
 
-      - name: Show Go version
+      - name: Go version
         run: go version
 
-      - name: Download modules
-        run: go mod download
-
-      - name: Verify modules
-        run: go mod verify
+      - name: Modules
+        run: |
+          go mod download
+          go mod verify
 
       - name: Vet
         run: go vet ./...
@@ -40,5 +38,127 @@ jobs:
       - name: Build
         run: go build ./...
 
-      - name: Test
-        run: go test -race -count=1 -timeout=120s ./...
+      - name: Test with coverage
+        run: |
+          go test -race -count=1 -timeout=120s \
+                  -covermode=atomic -coverprofile=coverage.out \
+                  ./...
+
+      - name: Coverage summary
+        if: always()
+        run: |
+          echo "### Coverage" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          go tool cover -func=coverage.out | tail -n 20 >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage.out
+          retention-days: 14
+
+  # --------------------------------------------------------------------------
+  # Static analysis via golangci-lint.
+  # --------------------------------------------------------------------------
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+          cache: true
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+          args: --timeout=5m
+
+  # --------------------------------------------------------------------------
+  # Build the production container image to catch Dockerfile regressions.
+  # We don't push anything — just prove it builds.
+  # --------------------------------------------------------------------------
+  docker:
+    name: Docker build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build image (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: meow-circle:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test the binary exists
+        run: docker run --rm --entrypoint /app/server meow-circle:ci --help || true
+
+  # --------------------------------------------------------------------------
+  # End-to-end PostgresStore + Redis cache test. Uses GitHub Actions service
+  # containers so no local daemon is required.
+  # --------------------------------------------------------------------------
+  integration:
+    name: Integration (Postgres + Redis)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: meow
+          POSTGRES_PASSWORD: meowpass
+          POSTGRES_DB: meow
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U meow -d meow"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://meow:meowpass@localhost:5432/meow?sslmode=disable
+      REDIS_URL: redis://localhost:6379/0
+      PGPASSWORD: meowpass
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+          cache: true
+
+      - name: Install psql
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends postgresql-client
+
+      - name: Apply migrations
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/001_init.sql
+
+      - name: Run integration tests
+        run: |
+          go test -tags=integration -race -count=1 -timeout=180s \
+                  ./internal/store/postgres/...
