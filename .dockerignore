@@ -14,3 +14,6 @@ server.err
 tmp
 bin
 Caddyfile
+
+# Mobile app is a separate deliverable — not needed for the Go container.
+mobile/

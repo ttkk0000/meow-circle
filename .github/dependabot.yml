@@ -1,0 +1,70 @@
+version: 2
+updates:
+  # Go modules — the backend.
+  - package-ecosystem: gomod
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(go)"
+    labels:
+      - dependencies
+      - backend
+
+  # GitHub Actions versions.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(actions)"
+    labels:
+      - dependencies
+      - ci
+
+  # Docker base image in Dockerfile.
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "deps(docker)"
+    labels:
+      - dependencies
+      - docker
+
+  # npm packages for the Expo mobile app.
+  - package-ecosystem: npm
+    directory: "/mobile"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(mobile)"
+    labels:
+      - dependencies
+      - mobile
+    # Expo SDK packages move together; let Expo's CLI reconcile them via
+    # `npx expo install --fix` rather than letting Dependabot bump them
+    # one-by-one and break peer dependencies.
+    ignore:
+      - dependency-name: "expo"
+      - dependency-name: "expo-*"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-*"
+      - dependency-name: "react"

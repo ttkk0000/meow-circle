@@ -227,11 +227,75 @@ ADMIN_KEY=your-secret go run ./cmd/server
 - 把 Redis 缓存扩展到按标签 / 作者聚合的子列表，加上 LRU 热度统计
 - 用 `golang-migrate` 管理 schema 迁移，CI 中自动 apply
 
-## 5) 移动端接入建议
+## 5) 移动端（Expo + React Native）
 
-为了后续 iOS/Android 小程序/Flutter/React Native 接入，建议保持：
+仓库里的 `mobile/` 目录是一套 **Expo SDK 52 + React Native 0.76**（新架构）+ **TypeScript** + **Expo Router** 的跨端 App 脚手架。一套代码出 **iOS + Android + Web** 三端，直接消费当前的 Go API，从登录到发帖到私信基础流程都已经跑通。
 
-1. `/api/v1` 版本化不变
-2. 统一 JSON 结构（成功/失败格式）
-3. 鉴权统一为 Bearer Token（后续可加刷新令牌）
-4. 媒体上传与帖子/交易解耦（对象存储 + 媒体服务）
+```
+mobile/
+├── app/                # Expo Router — 文件即路由
+│   ├── _layout.tsx     # 根 Stack + <AuthProvider>
+│   ├── index.tsx       # 鉴权分流
+│   ├── (auth)/         # 公开页：login / register
+│   └── (tabs)/         # 登录后：社区 / 市场 / 消息 / 我的
+└── src/
+    ├── api.ts          # 类型化 fetch + SecureStore token
+    ├── auth.tsx        # <AuthProvider> + useAuth()
+    ├── components.tsx  # Screen / Card / Button / Input / Txt / Pill
+    └── theme.ts        # Cursor 设计系统 token（和 web 同源）
+```
+
+本地跑：
+
+```bash
+cd mobile
+npm install
+cp .env.example .env   # 把 EXPO_PUBLIC_API_URL 指到你本机后端
+npm start              # 扫二维码即可在真机看到
+```
+
+为什么选 Expo 而不是 bare RN：**Windows 上也能云构 iOS**（EAS Build）、**OTA 热更新**（EAS Update）、**文件路由**（Expo Router）、**SecureStore**、**web 输出**同一份代码——这些都是 bare RN 需要自己拼的东西。完整说明见 [`mobile/README.md`](./mobile/README.md)。
+
+设计系统完全复刻 `web/theme.css` 的 Cursor 风：奶油画布、近黑墨、crimson 破坏色、扩散阴影。按钮按下会切到 crimson，和 web 端的 hover 动作一致。
+
+## 6) 开发、运维、CI
+
+### Makefile 常用命令
+
+```bash
+make help          # 看所有目标
+make run           # 起 Go 服务（内存模式）
+make up            # docker compose 起 Postgres + Redis
+make migrate       # psql 应用 migrations/001_init.sql
+make test          # go test -race
+make cover         # 覆盖率 + HTML 报告
+make integration   # 集成测试（需 DATABASE_URL）
+make lint          # golangci-lint v2
+make docker        # 构建生产镜像
+make mobile        # 起 Expo 开发服务
+```
+
+### Docker 镜像
+
+`Dockerfile` 采用 **多阶段 + distroless/static:nonroot**：没有 shell、没有包管理器、非 root 启动，镜像 ~20 MB。`web/` 与 `migrations/` 都被打进镜像，容器工作目录即应用根。
+
+### CI / CD (GitHub Actions)
+
+`.github/workflows/ci.yml` 跑四个 job，全部进入 `main` 分支保护的必需检查列表：
+
+| Job | 做什么 |
+| --- | --- |
+| **Build & Test** | `go vet` + `go build` + `go test -race` + 覆盖率上传为 artifact |
+| **Lint** | `golangci-lint` v2（errcheck / govet / staticcheck / unused / misspell / unconvert + gofmt） |
+| **Docker build** | buildx 构镜像 → `docker run -d` 启一次 → poll `/healthz` 验证能起来 |
+| **Integration (Postgres + Redis)** | service container 起 postgres:16 + redis:7 → apply migrations → `go test -tags=integration` |
+
+Dependabot (`.github/dependabot.yml`) 每周一早 9 点 (Asia/Shanghai) 扫描 Go module / GitHub Actions / Dockerfile / npm（mobile），自动开 PR 升级依赖。
+
+## 7) API 稳定性约定
+
+1. `/api/v1` 版本号内保持兼容；有破坏性变更开 `/api/v2`
+2. 统一 JSON 成功/失败结构：错误体 `{"code":<int>,"message":<string>,"retry_after":<int?>}`
+3. 鉴权统一为 `Authorization: Bearer <token>`（JWT，HS256，默认 72h）
+4. 登录错误 429 一律携带 `Retry-After` 响应头
+5. 媒体上传走独立 multipart 端点，不内嵌在 JSON 里

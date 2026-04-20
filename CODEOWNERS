@@ -1,0 +1,12 @@
+# Default reviewer for every change.
+*                       @ttkk0000
+
+# Critical areas — make sure the owner sees them.
+/.github/               @ttkk0000
+/cmd/                   @ttkk0000
+/internal/platform/     @ttkk0000
+/internal/store/        @ttkk0000
+/migrations/            @ttkk0000
+/Dockerfile             @ttkk0000
+/docker-compose.yml     @ttkk0000
+/mobile/                @ttkk0000

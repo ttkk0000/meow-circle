@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Meow Circle",
+    "slug": "meow-circle",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "meowcircle",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "backgroundColor": "#F7F3EC",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ttkk0000.meowcircle"
+    },
+    "android": {
+      "package": "com.ttkk0000.meowcircle",
+      "adaptiveIcon": {
+        "backgroundColor": "#F7F3EC"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
