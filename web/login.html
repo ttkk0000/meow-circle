@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="auth.login_title">登录 · 喵友圈</title>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/shared.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/" class="meow-logo">
+        <span class="logo-mark" aria-hidden="true">🐾</span>
+        <span data-i18n="app.title">喵友圈</span>
+      </a>
+      <nav class="nav-links">
+        <div id="settings-bar"></div>
+        <a href="/architecture.html" data-i18n="nav.docs">系统文档</a>
+        <a href="/register" class="cta-link" data-i18n="nav.register">注册</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth-shell">
+    <section class="auth-card">
+      <h1 data-i18n="auth.login_heading">欢迎回来</h1>
+      <p class="lede" data-i18n="auth.login_lede">登录继续分享你的宠物日常、管理交易与消息。</p>
+
+      <form id="login-form" class="form-grid" autocomplete="on" novalidate>
+        <div class="field-group">
+          <label for="login-username" data-i18n="auth.label_username">用户名</label>
+          <input
+            id="login-username"
+            name="username"
+            type="text"
+            autocomplete="username"
+            required
+            minlength="3"
+            data-i18n-placeholder="auth.placeholder_username"
+            placeholder="你的用户名" />
+        </div>
+
+        <div class="field-group">
+          <label for="login-password" data-i18n="auth.label_password">密码</label>
+          <input
+            id="login-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+            minlength="6"
+            data-i18n-placeholder="auth.placeholder_password"
+            placeholder="密码" />
+        </div>
+
+        <div class="submit-row">
+          <button class="btn-primary" type="submit" data-i18n="auth.btn_login">登录</button>
+        </div>
+        <p id="login-error" class="auth-error" role="alert"></p>
+      </form>
+
+      <p class="auth-alt-link">
+        <span data-i18n="auth.no_account">还没有账号？</span>
+        <a href="/register" data-i18n="auth.go_register">立即注册</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="/auth.js"></script>
+</body>
+</html>

@@ -118,17 +118,23 @@ caddy reload
 
 启动 Go 服务后，直接打开：
 
-- `http://localhost:8080`（直连 Go）
-- 或 `http://localhost`（走 Caddy）
-- 可视化系统文档：`http://localhost:8080/architecture.html`
+- `http://localhost:8080/`（首页 / 帖子 / 交易）
+- `http://localhost:8080/login` （**登录独立页**）
+- `http://localhost:8080/register`（**注册独立页**）
+- `http://localhost:8080/dashboard`（个人管理中心，未登录自动跳 `/login?return_to=/dashboard`）
+- `http://localhost:8080/admin` （管理员后台，`X-Admin-Key` 校验）
+- `http://localhost:8080/architecture.html`（系统可视化文档）
+- `http://localhost:8080/healthz` / `/readyz`（健康与就绪探针，返回当前 store 后端）
 
-页面包含：
+UI 基于 [Cursor Design System](https://getdesign.md/cursor/design-md) 构建（见根目录 `DESIGN.md`）：
 
-- 帖子发布、列表、评论
-- 交易发布、列表
-- 后台管理：`/admin`（管理员密钥保护）
+- **暖奶油主画布**（`#f2f1ed`）+ **近黑文本**（`#26251e`），替代传统冷色调界面；
+- 三字体系统：压缩感 Gothic（显示/UI）+ Serif（editorial 正文，带 `cswh` 花体替代字符）+ Mono（代码）；
+- 按钮 hover 统一位移到暖 crimson（`#cf2d56`）—— Cursor 标志性交互；
+- `oklab()` 空间的边框 token，带 rgba 回退；
+- 深色 / 暖色 / 浅色 三套主题（`data-theme` 属性切换），字体与语言独立持久化。
 
-并采用响应式布局，后续接移动端时可直接复用现有 API。
+登录、注册页已从首页抽离：未登录用户无需离开首页就能阅读帖子与交易，只有发帖、评论、下单、个人中心等操作才会带着 `return_to` 参数跳转到独立的登录页，登录完成后自动回到原位置。
 
 ### 后台管理系统
 

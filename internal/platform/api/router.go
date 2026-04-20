@@ -26,26 +26,36 @@ type contextKey string
 
 const contextKeyUser contextKey = "current_user"
 
+// maxRequestBody caps the JSON body size accepted by non-upload endpoints.
+// Media upload endpoints (multipart) enforce their own per-kind limits
+// (see handleMedia) and are exempted in the ServeHTTP wrapper.
+const maxRequestBody = 1 << 20 // 1 MiB
+
 type Router struct {
 	store      store.Store
+	storeKind  string
 	mux        *http.ServeMux
 	adminKey   string
 	tokens     *auth.TokenService
 	payments   *payment.Router
 	filter     *audit.Filter
 	loginLimit *auth.LoginLimiter
+	allowOrigin string
 }
 
 func NewRouter() http.Handler {
 	secret := getEnv("JWT_SECRET", "change-me-in-production")
+	st, kind := buildStore()
 	r := &Router{
-		store:      buildStore(),
-		mux:        http.NewServeMux(),
-		adminKey:   getEnv("ADMIN_KEY", "admin123"),
-		tokens:     auth.NewTokenService(secret, 72*time.Hour),
-		payments:   buildPaymentRouter(),
-		filter:     audit.NewFilter(audit.DefaultKeywords()),
-		loginLimit: auth.NewLoginLimiter(5, 10*time.Minute, 10*time.Minute),
+		store:       st,
+		storeKind:   kind,
+		mux:         http.NewServeMux(),
+		adminKey:    getEnv("ADMIN_KEY", "admin123"),
+		tokens:      auth.NewTokenService(secret, 72*time.Hour),
+		payments:    buildPaymentRouter(),
+		filter:      audit.NewFilter(audit.DefaultKeywords()),
+		loginLimit:  auth.NewLoginLimiter(5, 10*time.Minute, 10*time.Minute),
+		allowOrigin: getEnv("CORS_ALLOW_ORIGIN", "*"),
 	}
 	r.routes()
 	return r
@@ -55,13 +65,16 @@ func NewRouter() http.Handler {
 //   - DATABASE_URL set        → PostgreSQL (pgx pool)
 //   - REDIS_URL set in addition → Postgres wrapped by a Redis read-through cache
 //   - Neither set             → In-memory store (default, no external deps)
-func buildStore() store.Store {
+//
+// The returned kind is one of "memory" / "postgres" / "postgres+redis"
+// and is surfaced via /healthz for operators.
+func buildStore() (store.Store, string) {
 	dsn := strings.TrimSpace(os.Getenv("DATABASE_URL"))
 	redisURL := strings.TrimSpace(os.Getenv("REDIS_URL"))
 
 	if dsn == "" {
 		log.Printf("store: using in-memory backend (set DATABASE_URL to enable PostgreSQL)")
-		return store.NewMemoryStore()
+		return store.NewMemoryStore(), "memory"
 	}
 
 	pgCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -69,12 +82,12 @@ func buildStore() store.Store {
 	pg, err := postgres.New(pgCtx, dsn)
 	if err != nil {
 		log.Printf("store: postgres unavailable (%v), falling back to in-memory", err)
-		return store.NewMemoryStore()
+		return store.NewMemoryStore(), "memory"
 	}
 	log.Printf("store: connected to PostgreSQL")
 
 	if redisURL == "" {
-		return pg
+		return pg, "postgres"
 	}
 
 	rCtx, rCancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -82,10 +95,10 @@ func buildStore() store.Store {
 	cached, err := cache.New(rCtx, redisURL, pg)
 	if err != nil {
 		log.Printf("store: redis unavailable (%v), serving direct Postgres", err)
-		return pg
+		return pg, "postgres"
 	}
 	log.Printf("store: Redis read-through cache enabled")
-	return cached
+	return cached, "postgres+redis"
 }
 
 // buildPaymentRouter wires the Mock provider by default, and opportunistically
@@ -114,12 +127,46 @@ func buildPaymentRouter() *payment.Router {
 }
 
 func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	setCORSHeaders(w)
+	start := time.Now()
+	r.setCORSHeaders(w)
 	if req.Method == http.MethodOptions {
 		w.WriteHeader(http.StatusNoContent)
 		return
 	}
-	r.mux.ServeHTTP(w, req)
+	// Cap JSON body size for every endpoint except media upload which
+	// runs its own multipart size check.
+	if !strings.HasPrefix(req.URL.Path, "/api/v1/media") && req.Body != nil {
+		req.Body = http.MaxBytesReader(w, req.Body, maxRequestBody)
+	}
+	lw := &loggingResponseWriter{ResponseWriter: w, status: http.StatusOK}
+	r.mux.ServeHTTP(lw, req)
+
+	// Access log — only for API endpoints; static files would drown the log.
+	if strings.HasPrefix(req.URL.Path, "/api/") ||
+		strings.HasPrefix(req.URL.Path, "/healthz") ||
+		strings.HasPrefix(req.URL.Path, "/readyz") {
+		log.Printf("%s %s %d %dB %s ip=%s",
+			req.Method, req.URL.Path, lw.status, lw.bytes,
+			time.Since(start).Truncate(time.Microsecond), clientIP(req))
+	}
+}
+
+// loggingResponseWriter wraps http.ResponseWriter to capture status + size.
+type loggingResponseWriter struct {
+	http.ResponseWriter
+	status int
+	bytes  int
+}
+
+func (l *loggingResponseWriter) WriteHeader(code int) {
+	l.status = code
+	l.ResponseWriter.WriteHeader(code)
+}
+
+func (l *loggingResponseWriter) Write(b []byte) (int, error) {
+	n, err := l.ResponseWriter.Write(b)
+	l.bytes += n
+	return n, err
 }
 
 func (r *Router) routes() {
@@ -139,9 +186,24 @@ func (r *Router) routes() {
 	r.mux.HandleFunc("/dashboard/", func(w http.ResponseWriter, req *http.Request) {
 		http.ServeFile(w, req, filepath.Join(webDir, "dashboard.html"))
 	})
+	r.mux.HandleFunc("/login", func(w http.ResponseWriter, req *http.Request) {
+		http.ServeFile(w, req, filepath.Join(webDir, "login.html"))
+	})
+	r.mux.HandleFunc("/register", func(w http.ResponseWriter, req *http.Request) {
+		http.ServeFile(w, req, filepath.Join(webDir, "register.html"))
+	})
 
 	r.mux.HandleFunc("/healthz", func(w http.ResponseWriter, _ *http.Request) {
-		writeOK(w, map[string]string{"status": "ok"})
+		writeOK(w, map[string]any{
+			"status": "ok",
+			"store":  r.storeKind,
+			"time":   time.Now().UTC().Format(time.RFC3339),
+		})
+	})
+	r.mux.HandleFunc("/readyz", func(w http.ResponseWriter, _ *http.Request) {
+		// Liveness + lightweight readiness: does the store respond?
+		r.store.CountUsers()
+		writeOK(w, map[string]any{"status": "ready", "store": r.storeKind})
 	})
 
 	r.mux.HandleFunc("/api/v1/auth/register", r.handleRegister)
@@ -896,10 +958,17 @@ func writeError(w http.ResponseWriter, status int, message string) {
 	writeJSON(w, status, envelope{Code: status, Message: message})
 }
 
-func setCORSHeaders(w http.ResponseWriter) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+func (r *Router) setCORSHeaders(w http.ResponseWriter) {
+	origin := r.allowOrigin
+	if origin == "" {
+		origin = "*"
+	}
+	w.Header().Set("Access-Control-Allow-Origin", origin)
 	w.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Admin-Key")
+	if origin != "*" {
+		w.Header().Set("Vary", "Origin")
+	}
 }
 
 func getWorkingDir() string {

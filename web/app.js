@@ -3,37 +3,27 @@ const USER_KEY = "meow_user";
 
 const t = (k) => window.MeowShared.t(k);
 
-const authPanel = document.querySelector("#auth-panel");
 const userHint = document.querySelector("#user-hint");
 const logoutBtn = document.querySelector("#logout-btn");
-const loginToggle = document.querySelector("#login-toggle");
+const loginLink = document.querySelector("#login-link");
+const registerLink = document.querySelector("#register-link");
 const dashboardLink = document.querySelector("#dashboard-link");
-
-const loginForm = document.querySelector("#login-form");
-const registerForm = document.querySelector("#register-form");
 
 const postsContainer = document.querySelector("#posts");
 const listingsContainer = document.querySelector("#listings");
 const postTemplate = document.querySelector("#post-item-template");
 const listingTemplate = document.querySelector("#listing-item-template");
 
-document.querySelectorAll("#auth-panel .tab").forEach((tab) => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll("#auth-panel .tab").forEach((t) => t.classList.remove("active"));
-    tab.classList.add("active");
-    const mode = tab.dataset.tab;
-    loginForm.hidden = mode !== "login";
-    registerForm.hidden = mode !== "register";
-  });
-});
+function requireLogin(reason) {
+  if (reason) {
+    try { alert(reason); } catch (_) {}
+  }
+  const back = encodeURIComponent(location.pathname + location.search + location.hash);
+  location.href = `/login?return_to=${back}`;
+}
 
 document.querySelector("#refresh-posts").addEventListener("click", () => loadPosts());
 document.querySelector("#refresh-listings").addEventListener("click", () => loadListings());
-
-loginToggle.addEventListener("click", () => {
-  authPanel.hidden = !authPanel.hidden;
-  if (!authPanel.hidden) authPanel.scrollIntoView({ behavior: "smooth", block: "center" });
-});
 
 const heroPrimary = document.querySelector("#hero-primary");
 if (heroPrimary) {
@@ -41,8 +31,7 @@ if (heroPrimary) {
     if (getToken()) {
       window.location.href = "/dashboard#compose-post";
     } else {
-      authPanel.hidden = false;
-      authPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+      requireLogin();
     }
   });
 }
@@ -169,42 +158,6 @@ logoutBtn.addEventListener("click", () => {
   loadPosts();
 });
 
-registerForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  try {
-    const fd = new FormData(registerForm);
-    const result = await apiCall("/api/v1/auth/register", "POST", {
-      username: String(fd.get("username") || ""),
-      nickname: String(fd.get("nickname") || ""),
-      password: String(fd.get("password") || ""),
-    });
-    saveAuth(result.token, result.user);
-    registerForm.reset();
-    authPanel.hidden = true;
-    applyAuthState();
-    alert(t("alert.register_success"));
-  } catch (err) {
-    alert(err.message);
-  }
-});
-
-loginForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  try {
-    const fd = new FormData(loginForm);
-    const result = await apiCall("/api/v1/auth/login", "POST", {
-      username: String(fd.get("username") || ""),
-      password: String(fd.get("password") || ""),
-    });
-    saveAuth(result.token, result.user);
-    loginForm.reset();
-    authPanel.hidden = true;
-    applyAuthState();
-  } catch (err) {
-    alert(err.message);
-  }
-});
-
 async function loadPosts() {
   postsContainer.innerHTML = skeletonRows(3);
   try {
@@ -276,8 +229,7 @@ function renderPost(post) {
   commentForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!getToken()) {
-      alert(t("alert.login_to_comment"));
-      authPanel.hidden = false;
+      requireLogin(t("alert.login_to_comment"));
       return;
     }
     const fd = new FormData(commentForm);
@@ -374,6 +326,12 @@ async function apiCall(url, method = "GET", body) {
     payload = null;
   }
   if (!response.ok) {
+    if (response.status === 401 && token) {
+      /* Token expired: force login again preserving return_to */
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+      requireLogin();
+    }
     const message = (payload && payload.message) || "request failed";
     throw new Error(message);
   }
@@ -384,27 +342,24 @@ function getToken() {
   return localStorage.getItem(TOKEN_KEY);
 }
 
-function saveAuth(token, user) {
-  localStorage.setItem(TOKEN_KEY, token);
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
-}
-
 function applyAuthState() {
   const token = getToken();
   const rawUser = localStorage.getItem(USER_KEY);
   const user = rawUser ? JSON.parse(rawUser) : null;
 
   if (token && user) {
-    logoutBtn.hidden = false;
-    loginToggle.hidden = true;
-    dashboardLink.hidden = false;
+    if (logoutBtn) logoutBtn.hidden = false;
+    if (loginLink) loginLink.hidden = true;
+    if (registerLink) registerLink.hidden = true;
+    if (dashboardLink) dashboardLink.hidden = false;
     if (notifBtn) notifBtn.hidden = false;
     userHint.textContent = t("user.greeting").replace("{name}", user.nickname || user.username);
     refreshNotifCount();
   } else {
-    logoutBtn.hidden = true;
-    loginToggle.hidden = false;
-    dashboardLink.hidden = true;
+    if (logoutBtn) logoutBtn.hidden = true;
+    if (loginLink) loginLink.hidden = false;
+    if (registerLink) registerLink.hidden = false;
+    if (dashboardLink) dashboardLink.hidden = true;
     if (notifBtn) notifBtn.hidden = true;
     userHint.textContent = "";
   }
@@ -444,8 +399,7 @@ function buildReportButton(kind, id) {
   btn.textContent = t("report.btn");
   btn.addEventListener("click", async () => {
     if (!getToken()) {
-      alert(t("alert.login_first"));
-      if (authPanel) authPanel.hidden = false;
+      requireLogin(t("alert.login_first"));
       return;
     }
     const reason = prompt(t("report.placeholder"));
@@ -462,8 +416,7 @@ function buildReportButton(kind, id) {
 
 async function buyListing(listing) {
   if (!getToken()) {
-    alert(t("alert.login_first"));
-    if (authPanel) authPanel.hidden = false;
+    requireLogin(t("alert.login_first"));
     return;
   }
   try {

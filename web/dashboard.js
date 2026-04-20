@@ -541,6 +541,10 @@ function boot() {
   if (!token || !rawUser) {
     notLogin.hidden = false;
     dashboard.hidden = true;
+    // Send the user to the dedicated login page, preserving return_to so
+    // they bounce back into the dashboard after signing in.
+    const back = encodeURIComponent("/dashboard" + window.location.hash);
+    window.location.replace(`/login?return_to=${back}`);
     return;
   }
   const user = JSON.parse(rawUser);

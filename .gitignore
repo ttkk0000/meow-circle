@@ -17,6 +17,9 @@ coverage.html
 
 # ===== Runtime data / logs =====
 *.log
+*.err
+server.out
+server.err
 data/uploads/
 data/*.db
 
