@@ -102,8 +102,31 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Smoke test the binary exists
-        run: docker run --rm --entrypoint /app/server meow-circle:ci --help || true
+      - name: Inspect image
+        run: |
+          docker image inspect meow-circle:ci --format '{{.Id}} {{.Size}}'
+          docker image ls meow-circle:ci
+
+      - name: Boot smoke test
+        run: |
+          # Distroless/static has no shell, so we can't `--help`. Instead
+          # launch the server in the background, poll /healthz, and verify
+          # we get HTTP 200 back before killing the container.
+          docker run -d --name meow-ci -p 18080:8080 meow-circle:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18080/healthz > /tmp/healthz.json; then
+              echo "healthz ok:"; cat /tmp/healthz.json; echo
+              break
+            fi
+            sleep 1
+          done
+          if ! curl -fsS http://127.0.0.1:18080/healthz > /dev/null; then
+            echo "::error::server never answered /healthz"
+            docker logs meow-ci
+            exit 1
+          fi
+          docker logs meow-ci
+          docker rm -f meow-ci
 
   # --------------------------------------------------------------------------
   # End-to-end PostgresStore + Redis cache test. Uses GitHub Actions service
