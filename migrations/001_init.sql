@@ -1,6 +1,10 @@
 -- Schema for the Meow Circle service.
 -- Use `psql $DATABASE_URL -f migrations/001_init.sql` to apply.
 
+-- Trigram extension is optional but we enable it so the idx_posts_title_trgm
+-- index below (currently WHERE false, i.e. empty) parses cleanly.
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 CREATE TABLE IF NOT EXISTS users (
     id              BIGSERIAL PRIMARY KEY,
     username        TEXT NOT NULL UNIQUE,
