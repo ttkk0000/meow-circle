@@ -6,8 +6,8 @@
 *.dylib
 *.test
 *.out
-bestTry
-bestTry.exe
+kitty-circle
+kitty-circle.exe
 
 # ===== Go caches / coverage =====
 /vendor/

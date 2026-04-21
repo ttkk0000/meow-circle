@@ -9,7 +9,7 @@ license: MIT
 
 # Karpathy Guidelines
 
-**This file is Git-tracked in the bestTry repo.** If you also have `~/.cursor/skills/karpathy-guidelines/SKILL.md` locally, treat this repo copy as canonical. `.cursor/rules/karpathy-guidelines.mdc` **only holds a summary**; **the full rubric lives here** (avoids maintaining two long copies in rules + skill).
+**This file is Git-tracked in the kitty-circle repo.** If you also have `~/.cursor/skills/karpathy-guidelines/SKILL.md` locally, treat this repo copy as canonical. `.cursor/rules/karpathy-guidelines.mdc` **only holds a summary**; **the full rubric lives here** (avoids maintaining two long copies in rules + skill).
 
 Behavioral guardrails to reduce common LLM coding issues; from [Andrej Karpathy’s thread](https://x.com/karpathy/status/2015883857489522876). Upstream collection: [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills).
 

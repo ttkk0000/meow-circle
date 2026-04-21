@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 // Provider is the contract every payment channel must satisfy.

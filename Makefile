@@ -59,11 +59,11 @@ migrate: ## Apply migrations/001_init.sql to $$DATABASE_URL
 
 .PHONY: docker
 docker: ## Build the production container image
-	docker build -t meow-circle:local .
+	docker build -t kitty-circle:local .
 
 .PHONY: docker-run
 docker-run: docker ## Build and run the container (port 8080)
-	docker run --rm -p $(PORT):8080 meow-circle:local
+	docker run --rm -p $(PORT):8080 kitty-circle:local
 
 # ----- Mobile -----------------------------------------------------------------
 

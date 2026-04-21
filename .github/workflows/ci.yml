@@ -98,21 +98,21 @@ jobs:
           context: .
           push: false
           load: true
-          tags: meow-circle:ci
+          tags: kitty-circle:ci
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Inspect image
         run: |
-          docker image inspect meow-circle:ci --format '{{.Id}} {{.Size}}'
-          docker image ls meow-circle:ci
+          docker image inspect kitty-circle:ci --format '{{.Id}} {{.Size}}'
+          docker image ls kitty-circle:ci
 
       - name: Boot smoke test
         run: |
           # Distroless/static has no shell, so we can't `--help`. Instead
           # launch the server in the background, poll /healthz, and verify
           # we get HTTP 200 back before killing the container.
-          docker run -d --name meow-ci -p 18080:8080 meow-circle:ci
+          docker run -d --name meow-ci -p 18080:8080 kitty-circle:ci
           for i in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:18080/healthz > /tmp/healthz.json; then
               echo "healthz ok:"; cat /tmp/healthz.json; echo

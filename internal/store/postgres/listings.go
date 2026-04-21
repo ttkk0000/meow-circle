@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 
 	"github.com/jackc/pgx/v5"
 )

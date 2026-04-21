@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 // GET /api/v1/search?q=keyword&type=post|listing|all

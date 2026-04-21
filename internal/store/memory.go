@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 // Compile-time check: MemoryStore implements Store.

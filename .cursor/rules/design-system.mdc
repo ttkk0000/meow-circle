@@ -1,9 +1,9 @@
 ---
-description: bestTry product visuals and interaction tone (Cursor-inspired warm minimalism)
+description: kitty-circle product visuals and interaction tone (Cursor-inspired warm minimalism)
 alwaysApply: true
 ---
 
-# bestTry design system (project context)
+# kitty-circle design system (project context)
 
 This repo’s UI follows Cursor’s warm minimal style. When writing any UI, copy, or components, default to the tone below; full specs live in `DESIGN.md` and `web/theme.css` (single source of truth).
 
@@ -48,6 +48,6 @@ This repo’s UI follows Cursor’s warm minimal style. When writing any UI, cop
 - Before adding UI, decide primary / secondary / ghost and pick the right button level
 
 ## See also (avoid reading twice)
-- User mental model / motion summary (short): `.cursor/rules/design-user-context.mdc`; `DESIGN.md` §1–11 expanded: `.cursor/skills/besttry-design-user-context/SKILL.md` (on demand)
+- User mental model / motion summary (short): `.cursor/rules/design-user-context.mdc`; `DESIGN.md` §1–11 expanded: `.cursor/skills/kitty-circle-design-user-context/SKILL.md` (on demand)
 - Karpathy summary: `.cursor/rules/karpathy-guidelines.mdc`; expanded: `.cursor/skills/karpathy-guidelines/SKILL.md` (on demand); upstream [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)
 - Cursor User Rules paste block: `.cursor/USER_RULES_PASTE_DESIGN.md` (`~/.cursor/USER_RULES_PASTE_DESIGN.md`)

@@ -9,7 +9,7 @@ Only the `main` branch and the latest tagged release receive security fixes.
 Please **do not** file a public GitHub issue for security problems.
 
 Instead, email the maintainer or open a
-[private security advisory](https://github.com/ttkk0000/meow-circle/security/advisories/new)
+[private security advisory](https://github.com/ttkk0000/kitty-circle/security/advisories/new)
 on GitHub. Include:
 
 - A clear description of the issue and its impact.

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 // GET  /api/v1/me/conversations               list my conversations

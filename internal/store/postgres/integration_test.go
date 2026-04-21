@@ -22,10 +22,10 @@ import (
 	"testing"
 	"time"
 
-	"bestTry/internal/domain"
-	"bestTry/internal/store"
-	"bestTry/internal/store/cache"
-	"bestTry/internal/store/postgres"
+	"kitty-circle/internal/domain"
+	"kitty-circle/internal/store"
+	"kitty-circle/internal/store/cache"
+	"kitty-circle/internal/store/postgres"
 )
 
 func mustDSN(t *testing.T) string {

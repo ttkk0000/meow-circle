@@ -1,4 +1,4 @@
-# bestTry — `.cursor` index
+# kitty-circle — `.cursor` index
 
 ## Rules (short, always on)
 
@@ -13,14 +13,14 @@
 | Path | Purpose |
 |------|---------|
 | `skills/karpathy-guidelines/SKILL.md` | Karpathy full detail |
-| `skills/besttry-design-user-context/SKILL.md` | `DESIGN.md` §1–11 expanded |
+| `skills/kitty-circle-design-user-context/SKILL.md` | `DESIGN.md` §1–11 expanded |
 
 In one chat turn: **do not** read the matching `.mdc` and `SKILL.md` end-to-end twice each.
 
 ## User Rules (not project rules; paste locally)
 
-- `USER_RULES_PASTE_DESIGN.md`: Karpathy condensed + bestTry user-facing UX; keep `~/.cursor/USER_RULES_PASTE_DESIGN.md` aligned.
-- User-level `~/.cursor/skills/besttry-design-user-context/SKILL.md` should be an entry-point only and must not duplicate the full project skill content.
+- `USER_RULES_PASTE_DESIGN.md`: Karpathy condensed + kitty-circle user-facing UX; keep `~/.cursor/USER_RULES_PASTE_DESIGN.md` aligned.
+- User-level `~/.cursor/skills/kitty-circle-design-user-context/SKILL.md` should be an entry-point only and must not duplicate the full project skill content.
 
 ## Maintenance
 

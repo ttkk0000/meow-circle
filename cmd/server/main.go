@@ -14,7 +14,7 @@ import (
 	"syscall"
 	"time"
 
-	"bestTry/internal/platform/api"
+	"kitty-circle/internal/platform/api"
 )
 
 func main() {
@@ -56,7 +56,7 @@ func main() {
 
 	serverErr := make(chan error, 1)
 	go func() {
-		log.Printf("meow-circle server listening on :%s", port)
+		log.Printf("kitty-circle server listening on :%s", port)
 		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			serverErr <- err
 		}

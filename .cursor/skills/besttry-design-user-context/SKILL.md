@@ -1,17 +1,17 @@
 ---
-name: besttry-design-user-context
+name: kitty-circle-design-user-context
 description: >-
-  Use when building or reviewing bestTry UI/UX (web or mobile), user-visible
-  copy, theming, or layout; when the user references DESIGN.md, bestTry design,
+  Use when building or reviewing kitty-circle UI/UX (web or mobile), user-visible
+  copy, theming, or layout; when the user references DESIGN.md, kitty-circle design,
   warm minimalism, or Cursor-inspired product visuals. Provides user-facing
   experience principles from DESIGN.md sections 1–11; pixel tokens stay in-repo.
 ---
 
-# bestTry UI and experience (user-facing)
+# kitty-circle UI and experience (user-facing)
 
-**This file is Git-tracked in the repo and is canonical.** The user-level file `~/.cursor/skills/besttry-design-user-context/SKILL.md` should remain an entry-point only (no full mirror). **Rules** already include short summaries (`.cursor/rules/design-user-context.mdc` + `design-system.mdc`); this SKILL is the **expanded narrative** for `DESIGN.md` §1–11 without repeating the token tables line by line.
+**This file is Git-tracked in the repo and is canonical.** The user-level file `~/.cursor/skills/kitty-circle-design-user-context/SKILL.md` should remain an entry-point only (no full mirror). **Rules** already include short summaries (`.cursor/rules/design-user-context.mdc` + `design-system.mdc`); this SKILL is the **expanded narrative** for `DESIGN.md` §1–11 without repeating the token tables line by line.
 
-When building UI, motion, themes, or user-visible copy in **bestTry**, treat the following as the source of truth for *what users feel*; for hex, type scale, and pixel specs open `DESIGN.md` from section 12 onward, or `web/theme.css`.
+When building UI, motion, themes, or user-visible copy in **kitty-circle**, treat the following as the source of truth for *what users feel*; for hex, type scale, and pixel specs open `DESIGN.md` from section 12 onward, or `web/theme.css`.
 
 ## When to read this skill
 

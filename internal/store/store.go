@@ -8,7 +8,7 @@
 //     when a single module needs a narrower slice.
 package store
 
-import "bestTry/internal/domain"
+import "kitty-circle/internal/domain"
 
 // Store is the abstraction over the persistence layer used by the API.
 type Store interface {

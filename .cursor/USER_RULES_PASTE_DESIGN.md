@@ -1,10 +1,10 @@
-# Cursor User Rules — Karpathy coding + bestTry user-facing UX (Git-tracked)
+# Cursor User Rules — Karpathy coding + kitty-circle user-facing UX (Git-tracked)
 
-This file is versioned in the repo. **Inside the fence is one complete User Rules block**: it merges the four condensed Karpathy principles from [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) with the bestTry user-facing UX block; the two themes differ and do not duplicate clauses. Paste into **Cursor → Settings → Rules (or Rules & Memory) → User Rules** (once per machine).
+This file is versioned in the repo. **Inside the fence is one complete User Rules block**: it merges the four condensed Karpathy principles from [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) with the kitty-circle user-facing UX block; the two themes differ and do not duplicate clauses. Paste into **Cursor → Settings → Rules (or Rules & Memory) → User Rules** (once per machine).
 
 **Global user copy** (keep in sync with this file): `~/.cursor/USER_RULES_PASTE_DESIGN.md`.
 
-Expanded versions: `.cursor/skills/karpathy-guidelines/SKILL.md`, `.cursor/skills/besttry-design-user-context/SKILL.md` (mirrors may also live under `~/.cursor/skills/.../SKILL.md`).
+Expanded versions: `.cursor/skills/karpathy-guidelines/SKILL.md`, `.cursor/skills/kitty-circle-design-user-context/SKILL.md` (mirrors may also live under `~/.cursor/skills/.../SKILL.md`).
 
 ---
 
@@ -23,7 +23,7 @@ For the full Karpathy rubric, read `.cursor/skills/karpathy-guidelines/SKILL.md`
 
 ---
 
-In the bestTry project, or when the user explicitly mentions DESIGN.md / bestTry UI, also follow these user-facing experience constraints:
+In the kitty-circle project, or when the user explicitly mentions DESIGN.md / kitty-circle UI, also follow these user-facing experience constraints:
 
 - Tone: warm, restrained, readable; warm cream surfaces + warm near-black type; reserve strong contrast for key information and primary actions. Feel like a well-typeset magazine plus a solid tool UI — not a cold blue-gray admin dashboard.
 - Color semantics: green = success; warm red = errors or strong alerts / some interactive feedback; orange = links and guidance; soft color bands = process steps, not alarms. Users should not need to memorize hex values.
@@ -35,7 +35,7 @@ In the bestTry project, or when the user explicitly mentions DESIGN.md / bestTry
 - Copy: clear, friendly, low jargon; errors explain what happened + what the user can do; orders/payments/security stay concise and trustworthy; warm ≠ childish.
 - Pixel-level tokens and English specs: repo `DESIGN.md` from section 12 onward, `web/theme.css`, and project `.cursor/rules/design-system.mdc`.
 
-Outside the bestTry repo you may ignore the preceding UX bullets unless the user asks; the four Karpathy principles still apply.
+Outside the kitty-circle repo you may ignore the preceding UX bullets unless the user asks; the four Karpathy principles still apply.
 ```
 
 ---
@@ -51,5 +51,5 @@ Outside the bestTry repo you may ignore the preceding UX bullets unless the user
 | Layer | Path | Notes |
 |------|------|------|
 | Always attached (short) | `design-system.mdc`, `design-user-context.mdc`, `karpathy-guidelines.mdc` | Summaries; **do not** re-read the full SKILL files in the same turn |
-| On demand | `skills/karpathy-guidelines/SKILL.md`, `skills/besttry-design-user-context/SKILL.md` | Full detail |
+| On demand | `skills/karpathy-guidelines/SKILL.md`, `skills/kitty-circle-design-user-context/SKILL.md` | Full detail |
 | Local User Rules | Paste the fenced block above | Not in Git; keep aligned with this file |

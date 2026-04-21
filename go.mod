@@ -1,4 +1,4 @@
-module bestTry
+module kitty-circle
 
 go 1.25.0
 

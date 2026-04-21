@@ -13,13 +13,13 @@ import (
 	"strings"
 	"time"
 
-	"bestTry/internal/domain"
-	"bestTry/internal/platform/audit"
-	"bestTry/internal/platform/auth"
-	"bestTry/internal/platform/payment"
-	"bestTry/internal/store"
-	"bestTry/internal/store/cache"
-	"bestTry/internal/store/postgres"
+	"kitty-circle/internal/domain"
+	"kitty-circle/internal/platform/audit"
+	"kitty-circle/internal/platform/auth"
+	"kitty-circle/internal/platform/payment"
+	"kitty-circle/internal/store"
+	"kitty-circle/internal/store/cache"
+	"kitty-circle/internal/store/postgres"
 )
 
 type contextKey string

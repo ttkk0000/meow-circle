@@ -1,6 +1,6 @@
 package postgres
 
-import "bestTry/internal/domain"
+import "kitty-circle/internal/domain"
 
 const auditCols = "id, actor, action, target_kind, target_id, note, ip, created_at"
 

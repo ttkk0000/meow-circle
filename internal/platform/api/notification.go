@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 func (r *Router) handleNotifications(w http.ResponseWriter, req *http.Request) {

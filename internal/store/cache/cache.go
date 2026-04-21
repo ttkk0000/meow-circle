@@ -14,8 +14,8 @@ import (
 	"strconv"
 	"time"
 
-	"bestTry/internal/domain"
-	"bestTry/internal/store"
+	"kitty-circle/internal/domain"
+	"kitty-circle/internal/store"
 
 	"github.com/redis/go-redis/v9"
 )

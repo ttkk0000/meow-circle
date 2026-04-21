@@ -3,7 +3,7 @@ package postgres
 import (
 	"time"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 const messageCols = "id, sender_id, recipient_id, content, read, created_at"

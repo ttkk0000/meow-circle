@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 
 	"github.com/jackc/pgx/v5"
 )

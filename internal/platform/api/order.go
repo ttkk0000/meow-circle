@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 // POST /api/v1/orders              create order (buyer)

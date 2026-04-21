@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 const (

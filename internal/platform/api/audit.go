@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"bestTry/internal/domain"
+	"kitty-circle/internal/domain"
 )
 
 // audit records an administrator action. The caller is responsible for
