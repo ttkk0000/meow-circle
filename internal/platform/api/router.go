@@ -26,6 +26,12 @@ type contextKey string
 
 const contextKeyUser contextKey = "current_user"
 
+const (
+	defaultSeedUsername = "demo"
+	defaultSeedPassword = "123456"
+	defaultSeedNickname = "Demo User"
+)
+
 // maxRequestBody caps the JSON body size accepted by non-upload endpoints.
 // Media upload endpoints (multipart) enforce their own per-kind limits
 // (see handleMedia) and are exempted in the ServeHTTP wrapper.
@@ -46,6 +52,7 @@ type Router struct {
 func NewRouter() http.Handler {
 	secret := getEnv("JWT_SECRET", "change-me-in-production")
 	st, kind := buildStore()
+	ensureDefaultUser(st)
 	r := &Router{
 		store:       st,
 		storeKind:   kind,
@@ -59,6 +66,25 @@ func NewRouter() http.Handler {
 	}
 	r.routes()
 	return r
+}
+
+func ensureDefaultUser(st store.Store) {
+	if _, exists := st.FindUserByUsername(defaultSeedUsername); exists {
+		return
+	}
+	hash, salt, err := auth.HashPassword(defaultSeedPassword)
+	if err != nil {
+		log.Printf("seed: failed to hash default user password: %v", err)
+		return
+	}
+	if _, ok := st.CreateUser(domain.User{
+		Username:     defaultSeedUsername,
+		Nickname:     defaultSeedNickname,
+		PasswordHash: hash,
+		PasswordSalt: salt,
+	}); ok {
+		log.Printf("seed: default user ready (username=%s)", defaultSeedUsername)
+	}
 }
 
 // buildStore wires a persistence backend based on environment variables:

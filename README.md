@@ -126,6 +126,11 @@ caddy reload
 - `http://localhost:8080/architecture.html`（系统可视化文档）
 - `http://localhost:8080/healthz` / `/readyz`（健康与就绪探针，返回当前 store 后端）
 
+内置默认测试账号（服务启动自动确保存在）：
+
+- 用户名：`demo`
+- 密码：`123456`
+
 UI 基于 [Cursor Design System](https://getdesign.md/cursor/design-md) 构建（见根目录 `DESIGN.md`）：
 
 - **暖奶油主画布**（`#f2f1ed`）+ **近黑文本**（`#26251e`），替代传统冷色调界面；
