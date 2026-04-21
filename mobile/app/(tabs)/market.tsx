@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
+import { router } from 'expo-router';
 import { api, type Listing, HttpError } from '@/api';
-import { Card, Pill, Screen, Txt } from '@/components';
+import { useAuth } from '@/auth';
+import { Button, Card, Pill, Screen, Txt } from '@/components';
 import { colors, spacing } from '@/theme';
 
 export default function MarketScreen() {
+  const { user } = useAuth();
   const [items, setItems] = useState<Listing[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -58,20 +61,30 @@ export default function MarketScreen() {
           <Txt muted>等一会儿会有好物上架的。</Txt>
         </Card>
       ) : (
-        items.map((l) => (
-          <Card key={l.id}>
-            <View style={{ flexDirection: 'row', gap: spacing.sm }}>
-              <Pill>{listingLabel(l.type)}</Pill>
-            </View>
-            <Txt kind="h3">{l.title}</Txt>
-            <Txt muted numberOfLines={2}>
-              {l.description}
-            </Txt>
-            <Txt kind="h2" style={{ color: colors.danger }}>
-              {formatPrice(l.price_cents, l.currency)}
-            </Txt>
-          </Card>
-        ))
+        items.map((l) => {
+          const canDm = user && l.seller_id !== user.id;
+          return (
+            <Card key={l.id}>
+              <View style={{ flexDirection: 'row', gap: spacing.sm }}>
+                <Pill>{listingLabel(l.type)}</Pill>
+              </View>
+              <Txt kind="h3">{l.title}</Txt>
+              <Txt muted numberOfLines={2}>
+                {l.description}
+              </Txt>
+              <Txt kind="h2" style={{ color: colors.danger }}>
+                {formatPrice(l.price_cents, l.currency)}
+              </Txt>
+              {canDm ? (
+                <Button
+                  title="私信卖家"
+                  variant="secondary"
+                  onPress={() => router.push(`/(tabs)/messages/${l.seller_id}`)}
+                />
+              ) : null}
+            </Card>
+          );
+        })
       )}
     </Screen>
   );

@@ -292,6 +292,14 @@ make mobile        # 起 Expo 开发服务
 
 Dependabot (`.github/dependabot.yml`) 每周一早 9 点 (Asia/Shanghai) 扫描 Go module / GitHub Actions / Dockerfile / npm（mobile），自动开 PR 升级依赖。
 
+### Cursor Agent（可随 Git 同步）
+
+- **索引**：`.cursor/README.md`（规则 / 技能 / User Rules 分层说明）
+- **项目规则（短、常驻上下文）**：`.cursor/rules/design-system.mdc`（token/组件/气质/文案格式）、`.cursor/rules/design-user-context.mdc`（仅用户心智与动效提要，避免与上重复）、`.cursor/rules/karpathy-guidelines.mdc`（Karpathy 四条提要；[上游](https://github.com/forrestchang/andrej-karpathy-skills)）——**Karpathy 与 design-user 的完整长文只在对应 SKILL，勿与 .mdc 双份维护**
+- **技能（按需读，勿与规则同轮重复全文）**：`.cursor/skills/karpathy-guidelines/SKILL.md`、`.cursor/skills/besttry-design-user-context/SKILL.md`
+- **User Rules 粘贴块**（合并 Karpathy + bestTry）：`.cursor/USER_RULES_PASTE_DESIGN.md`；全局副本 `~/.cursor/USER_RULES_PASTE_DESIGN.md`
+- 完整设计文档：`DESIGN.md`
+
 ## 7) API 稳定性约定
 
 1. `/api/v1` 版本号内保持兼容；有破坏性变更开 `/api/v2`

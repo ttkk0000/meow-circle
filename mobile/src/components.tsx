@@ -108,12 +108,12 @@ export function Button({
     <Pressable
       onPress={onPress}
       disabled={isDisabled}
-      style={({ pressed }) => [
+      style={(state) => [
         styles.btn,
         variantStyles[variant].base,
-        pressed && variantStyles[variant].pressed,
+        state.pressed && variantStyles[variant].pressed,
         isDisabled && styles.btnDisabled,
-        typeof style === 'function' ? style({ pressed }) : style,
+        typeof style === 'function' ? style(state) : style,
       ]}
       {...rest}
     >

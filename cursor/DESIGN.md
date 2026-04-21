@@ -1,134 +1,6 @@
-# 界面与体验说明（用户向上下文）
+# Design System Inspired by Cursor
 
-本文档分两部分：
-
-1. **用户向描述**（第 1–11 节）：给产品、运营、客服与协作者用，描述「看到、读到、感受到什么」。
-2. **设计规范参考**（第 12 节开始，昨天已整理进仓库的细节）：给设计与前端落到像素时对齐用的真值（色号、字阶、间距、阴影、组件样式、交互与响应式规则、Agent 提示片段）。
-
-如果只是想对齐体验与口径，读到第 11 节即可；需要实现/还原到像素时再看下半段。
-
-**Cursor / Agent**：三层——**短规则** `design-system.mdc` / `design-user-context.mdc` / `karpathy-guidelines.mdc`（提要、去重）；**长文**仅在对应 `SKILL.md`（按需）；**User Rules** 见 `.cursor/USER_RULES_PASTE_DESIGN.md`（`~/.cursor/` 可有副本）。Karpathy 上游：[andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)。
-
----
-
-## 1. 这份文档的用途
-
-- **给「人」读**：不假设读者会写前端代码。
-- **给协作当上下文**：写文案、做截图说明、回复用户「为什么是这个颜色」时，可以引用这里的原则。
-- **给实现当约束**：界面应 **温暖、克制、易读**；强对比留给真正重要的信息与操作。
-
----
-
-## 2. 整体气质（你打开页面时的第一印象）
-
-- **画布偏暖**：主背景是柔和的奶油色，不是刺眼的纯白；整体像纸张或印刷品，而不是冷冰冰的「控制台灰」。
-- **文字偏深**：正文与标题使用带一点暖调的近黑色，长时间阅读不容易累。
-- **层次靠浅色块与轻阴影**：内容块（卡片、列表）用略深或略浅的底与细边框分开，重要模块会有轻微的「浮起」感，但不会夸张。
-- **品牌感在细节里**：强调色用于链接、重点提示；交互时（例如把鼠标移到按钮上）会有标志性的 **暖色深红** 反馈，表示「这里可以点、有反应」。
-
-一句话：**像一本排版讲究的杂志 + 好用的工具页**，而不是传统后台管理那种蓝灰工业风。
-
----
-
-## 3. 颜色在「对用户意味着什么」
-
-| 用户会感知到的 | 大致含义 |
-|----------------|----------|
-| 奶油 / 浅灰底上的深字 | 正常阅读、主内容区 |
-| 偏橙的强调 | 链接、品牌高亮、需要吸引注意但不恐慌的信息 |
-| 暖红 / 玫红（错误色同源，也用于部分悬停） | 错误、危险操作、或「可交互」的强烈反馈（视场景而定） |
-| 偏绿的提示 | 成功、已完成、正向状态 |
-| 柔和彩色条（若出现） | 流程或时间线上的不同阶段（思考、搜索、阅读、编辑等），用于区分步骤，不是告警 |
-
-用户不需要记住色值；只需要知道：**绿好事、红坏事或强提醒、橙/链接多引导**。
-
----
-
-## 4. 文字与阅读体验
-
-- **大标题**：偏紧凑、有「设计感」，用于页面主标题、模块名；手机上会自动缩小，但仍保持层级清晰。
-- **正文**：偏衬线、略杂志感，适合长一点的介绍、帖子正文；目标是 **像文章一样顺读**。
-- **代码、订单号、技术标签**：等宽字体，和正文明显区分，避免误读。
-- **说明与小字**：字号更小、对比略弱，用于辅助信息（时间、次数、提示语），不应承载关键决策信息。
-
-原则：**标题抓眼、正文好扫、辅助信息不抢戏**。
-
----
-
-## 5. 常见控件：用户视角
-
-### 按钮
-
-- **主按钮**：浅色底 + 深色字，像「实体按键」；悬停时文字往往变成醒目的暖红系，提示可点。
-- **次要 / 标签形按钮**：圆角胶囊形，常用于筛选、标签；选中态会略深一点，表示「当前生效」。
-- **幽灵按钮**：更淡、更轻，用于「取消」「再看看」等不主推的操作。
-
-### 卡片与列表项
-
-- 一块内容一个卡片，边框细、圆角适中；悬停时可能略加深阴影，表示可进入详情或可操作（若产品逻辑如此）。
-
-### 表单与输入
-
-- 边框默认很淡，聚焦时边框或轮廓会略加强，仍保持暖色调，而不是刺眼的冷蓝光圈（具体以当前主题为为准）。
-
-### 导航
-
-- 顶部或底部导航保持干净；当前页在标签或下划线上有明确区分；登录、注册等独立流程有单独页面，避免干扰浏览。
-
----
-
-## 6. 主题与深浅色
-
-应用支持 **多套主题**（例如浅色、暖色、深色），通过界面上的主题切换（或系统设置）生效。对用户而言：
-
-- **浅色 / 暖色**：适合日间、长时间刷帖与阅读。
-- **深色**：适合弱光环境；对比与语义色仍会保留「成功 / 错误 / 链接」的辨识度。
-
-字体与语言偏好可分开记忆，避免换主题时把阅读设置打乱。
-
----
-
-## 7. 手机与窄屏
-
-- 布局会变为 **单列优先**，按钮与可点区域保持足够大的触控区域。
-- 大图与截图保持比例，边框与圆角风格与桌面一致，避免「手机版像另一个产品」。
-- 间距会收紧，但仍保留区块之间的呼吸感，减少误触。
-
----
-
-## 8. 动效与反馈（用户能察觉的）
-
-- 颜色与阴影变化 **短而顺**，不拖泥带水。
-- 悬停、聚焦有清晰反馈；不依赖「只有动画才知道发生了什么」。
-- 避免长时间、大范围的闪烁或强烈跳动，以免引起不适或干扰阅读。
-
----
-
-## 9. 写文案与客服时可用的「口吻」
-
-- 语气：**清晰、友好、少术语**；错误信息说明「发生了什么 + 可怎么做」，不要只抛代码或内部字段名。
-- 视觉与文案一致：**温暖不等于幼稚**；专业场景（订单、支付、账号安全）仍应简洁、可信赖。
-
----
-
-## 10. 与 Cursor 设计渊源（一句话）
-
-本产品的 Web 界面在视觉基因上参考了 **Cursor 官网** 的暖色极简与字体层次（奶油画布、近黑墨、标志性暖红交互、三字体分工）。这里是 **产品向** 的转述；若需还原到像素级规范，直接看 **第 12 节及以后** 的「设计规范参考」，也可以回到 `web/theme.css` 与具体组件样式查值。
-
----
-
-## 11. 给设计与前端（极简指针）
-
-- 色板、阴影、圆角、字阶的 **单一事实来源**：`web/theme.css`（及具体页面/组件样式）。
-- 想要直接 copy 的 **hex / oklab / 字号字距 / Agent 提示模板**：继续往下读。
-
----
-
-# 设计规范参考（Design System Inspired by Cursor）
-
-> 下面这一整段是昨天整理进仓库的细节规范，**用于和实现对齐**，不是新的需求。保留英文原文以便直接粘进代码注释/对话里。对非实现读者，读到第 11 节即可，不需要再往下看。
-
-## 12. Visual Theme & Atmosphere
+## 1. Visual Theme & Atmosphere
 
 Cursor's website is a study in warm minimalism meets code-editor elegance. The entire experience is built on a warm off-white canvas (`#f2f1ed`) with dark warm-brown text (`#26251e`) -- not pure black, not neutral gray, but a deeply warm near-black with a yellowish undertone that evokes old paper, ink, and craft. This warmth permeates every surface: backgrounds lean toward cream (`#e6e5e0`, `#ebeae5`), borders dissolve into transparent warm overlays using `oklab` color space, and even the error state (`#cf2d56`) carries warmth rather than clinical red. The result feels more like a premium print publication than a tech website.
 
@@ -147,7 +19,7 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 - Pill-shaped elements with extreme radius (33.5M px, effectively full-pill)
 - 8px base spacing system with fine-grained sub-8px increments (1.5px, 2px, 2.5px, 3px, 4px, 5px, 6px)
 
-## 13. Color Palette & Roles
+## 2. Color Palette & Roles
 
 ### Primary
 - **Cursor Dark** (`#26251e`): Primary text, headings, dark UI surfaces. A warm near-black with distinct yellow-brown undertone -- the defining color of the system.
@@ -188,7 +60,7 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 - **Card Shadow** (`rgba(0,0,0,0.14) 0px 28px 70px, rgba(0,0,0,0.1) 0px 14px 32px, oklab(0.263084 -0.00230259 0.0124794 / 0.1) 0px 0px 0px 1px`): Heavy elevated card with warm oklab border ring.
 - **Ambient Shadow** (`rgba(0,0,0,0.02) 0px 0px 16px, rgba(0,0,0,0.008) 0px 0px 8px`): Subtle ambient glow for floating elements.
 
-## 14. Typography Rules
+## 3. Typography Rules
 
 ### Font Family
 - **Display/Headlines**: `CursorGothic`, with fallbacks: `CursorGothic Fallback, system-ui, Helvetica Neue, Helvetica, Arial`
@@ -227,7 +99,7 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 - **Three typographic voices**: Gothic (display/UI), serif (editorial/body), mono (code/technical). Each serves a distinct communication purpose.
 - **Weight restraint**: CursorGothic uses weight 400 almost exclusively, relying on size and tracking for hierarchy rather than weight. System-ui components use 500-700 for functional emphasis.
 
-## 15. Component Stylings
+## 4. Component Stylings
 
 ### Buttons
 
@@ -312,7 +184,7 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 - Feature lists using jjannon serif for readability
 - CTA buttons with accent orange or primary dark styling
 
-## 16. Layout Principles
+## 5. Layout Principles
 
 ### Spacing System
 - Base unit: 8px
@@ -342,7 +214,7 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 - Featured (10px): Larger containers, featured cards
 - Full Pill (33.5M px / 9999px): Pill buttons, tags, badges
 
-## 17. Depth & Elevation
+## 6. Depth & Elevation
 
 | Level | Treatment | Use |
 |-------|-----------|-----|
@@ -360,7 +232,7 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 - oklab borders at 10% and 20% create a spectrum of edge definition
 - No harsh divider lines -- section separation through background tone shifts and spacing
 
-## 18. Interaction & Motion
+## 7. Interaction & Motion
 
 ### Hover States
 - Buttons: text color shifts to `--color-error` (`#cf2d56`) on hover -- a distinctive warm crimson that signals interactivity
@@ -377,7 +249,7 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 - Shadow transitions: 200ms ease for elevation changes
 - Transform: subtle scale or translate for interactive feedback
 
-## 19. Responsive Behavior
+## 8. Responsive Behavior
 
 ### Breakpoints
 | Name | Width | Key Changes |
@@ -407,7 +279,7 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 - Product screenshots use responsive images with consistent border radius
 - Full-width hero images scale proportionally
 
-## 20. Agent Prompt Guide
+## 9. Agent Prompt Guide
 
 ### Quick Color Reference
 - Primary CTA background: `#ebeae5` (warm cream button)
@@ -434,4 +306,4 @@ The border system is particularly distinctive -- Cursor uses `oklab()` color spa
 5. Pill shapes (9999px radius) for tags and filters; 8px radius for primary buttons and cards
 6. Hover states use `#cf2d56` text color -- the warm crimson shift is a signature interaction
 7. Shadows use large blur values (28px, 70px) for diffused atmospheric depth
-8. The sub-8px spacing scale (1.5, 2, 2.5, 3, 4, 5, 6px) is critical for interaction/text micro-alignment
+8. The sub-8px spacing scale (1.5, 2, 2.5, 3, 4, 5, 6px) is critical for icon/text micro-alignment

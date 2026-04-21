@@ -43,7 +43,12 @@ export default function TabsLayout() {
       />
       <Tabs.Screen
         name="messages"
-        options={{ title: '消息', tabBarIcon: icon('✉') }}
+        options={{
+          title: '消息',
+          tabBarIcon: icon('✉'),
+          // Nested Stack in ./messages/_layout.tsx supplies its own headers.
+          headerShown: false,
+        }}
       />
       <Tabs.Screen
         name="profile"

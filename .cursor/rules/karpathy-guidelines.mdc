@@ -1,0 +1,14 @@
+---
+description: >-
+  Karpathy-inspired coding behavior (think / simplicity / surgical / goals).
+  Full text lives only in the skill file — avoid duplicating it here.
+alwaysApply: true
+---
+
+# Karpathy guidelines (summary)
+
+Orthogonal to UI rules. Upstream: [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills). **Full text, examples, and English source live only in** `.cursor/skills/karpathy-guidelines/SKILL.md` (do not expand them here).
+
+Four keywords: **Think before coding** (state assumptions, list options when ambiguous, ask when unclear); **Simplicity first** (smallest viable change, no over-abstraction, no unrequested config); **Surgical changes** (every line traces to the request, don’t casually edit neighbors); **Goal-driven execution** (verifiable success criteria, verify step per item in multi-step work).
+
+Cursor User Rules condensed block: fenced section in `.cursor/USER_RULES_PASTE_DESIGN.md` (repo-tracked; global copy `~/.cursor/USER_RULES_PASTE_DESIGN.md`).

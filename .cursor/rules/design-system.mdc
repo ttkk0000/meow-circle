@@ -1,0 +1,53 @@
+---
+description: bestTry product visuals and interaction tone (Cursor-inspired warm minimalism)
+alwaysApply: true
+---
+
+# bestTry design system (project context)
+
+This repo’s UI follows Cursor’s warm minimal style. When writing any UI, copy, or components, default to the tone below; full specs live in `DESIGN.md` and `web/theme.css` (single source of truth).
+
+## Tone
+- Warm minimal, like a well-typeset magazine plus a capable tool UI — not a cold gray admin dashboard.
+- Canvas leans warm cream (not pure white); type leans warm near-black (not pure black).
+- Contrast for what truly matters; everything else stays restrained.
+
+## Color anchors
+- Page base `#f2f1ed`; secondary surfaces `#e6e5e0` / `#ebeae5`
+- Body `#26251e`; secondary text `rgba(38,37,30,0.55)`
+- Brand accent `#f54e00` (links/highlights)
+- Errors & primary-button hover text `#cf2d56` (signature interaction, warm crimson)
+- Success `#1f8a65`; borders `rgba(38,37,30,0.1)` (or oklab equivalent)
+- Focus: warm shadow `rgba(0,0,0,0.1) 0 4px 12px` — no cold blue halos
+
+## Type three voices
+- Display/UI: `CursorGothic`, tighter tracking at large sizes (72px=-2.16, 36px=-0.72, ≤16px normal)
+- Body/editorial: `jjannon` serif with `"cswh"` on
+- Code/technical: `berkeleyMono`
+
+## Component baseline
+- Primary button: `#ebeae5` fill + `#26251e` text, 8px radius, hover text `#cf2d56`
+- Tags/filters: pill 9999px, `#e6e5e0` fill, `rgba(38,37,30,0.6)` text
+- Cards: `#e6e5e0` fill + `1px solid rgba(38,37,30,0.1)`, 8px radius
+- Large-card shadows: high blur, low opacity (28px/70px, 0.14/0.1) for soft lift, not hard drop shadows
+- Base spacing 8px; fine-tune with 1.5/2/2.5/3/4/5/6px
+
+## Responsive
+- Narrow screens: single column first; touch targets stay large enough
+- Hero scales 72→36→26 while keeping hierarchy
+- Mobile should not feel like “a different product”
+
+## Copy and errors
+- Clear, friendly, low jargon; warm does not mean childish
+- Error pattern: what happened + what the user can do — not raw field names/stack traces only
+- Orders, payments, account security: concise and trustworthy first
+
+## Defaults when coding
+- Prefer tokens from `web/theme.css` for colors/sizes; avoid duplicate hard-coded colors
+- Theme, fonts, and language preferences stay independent; changing theme should not reset reading prefs
+- Before adding UI, decide primary / secondary / ghost and pick the right button level
+
+## See also (avoid reading twice)
+- User mental model / motion summary (short): `.cursor/rules/design-user-context.mdc`; `DESIGN.md` §1–11 expanded: `.cursor/skills/besttry-design-user-context/SKILL.md` (on demand)
+- Karpathy summary: `.cursor/rules/karpathy-guidelines.mdc`; expanded: `.cursor/skills/karpathy-guidelines/SKILL.md` (on demand); upstream [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)
+- Cursor User Rules paste block: `.cursor/USER_RULES_PASTE_DESIGN.md` (`~/.cursor/USER_RULES_PASTE_DESIGN.md`)

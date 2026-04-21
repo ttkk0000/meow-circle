@@ -131,6 +131,15 @@ export interface Conversation {
   updated_at: string;
 }
 
+export interface Message {
+  id: number;
+  sender_id: number;
+  recipient_id: number;
+  content: string;
+  read: boolean;
+  created_at: string;
+}
+
 export interface ApiError {
   code: number;
   message: string;
@@ -145,6 +154,16 @@ export class HttpError extends Error {
   constructor(public status: number, public payload: ApiError) {
     super(payload.message || `HTTP ${status}`);
   }
+}
+
+/** Go handlers use `writeOK` / `writeCreated`: `{ code, message, data }`. */
+function unwrapEnvelope(parsed: unknown): unknown {
+  if (parsed === null || typeof parsed !== 'object') return parsed;
+  const o = parsed as Record<string, unknown>;
+  if (typeof o.code === 'number' && o.code === 0 && 'data' in o) {
+    return o.data;
+  }
+  return parsed;
 }
 
 async function request<T>(path: string, opts: Options = {}): Promise<T> {
@@ -173,10 +192,14 @@ async function request<T>(path: string, opts: Options = {}): Promise<T> {
   const data = text ? safeJson(text) : null;
 
   if (!res.ok) {
-    const err: ApiError =
-      data && typeof data === 'object'
-        ? (data as ApiError)
-        : { code: res.status, message: text || 'request failed' };
+    const raw = data && typeof data === 'object' ? (data as Record<string, unknown>) : null;
+    const err: ApiError = raw
+      ? {
+          code: typeof raw.code === 'number' ? raw.code : res.status,
+          message: typeof raw.message === 'string' ? raw.message : text || 'request failed',
+          retry_after: typeof raw.retry_after === 'number' ? raw.retry_after : undefined,
+        }
+      : { code: res.status, message: text || 'request failed' };
     if (res.status === 401) {
       // Token expired or revoked — clear and let the caller redirect.
       await tokenStore.clear();
@@ -185,7 +208,7 @@ async function request<T>(path: string, opts: Options = {}): Promise<T> {
     throw new HttpError(res.status, err);
   }
 
-  return data as T;
+  return unwrapEnvelope(data) as T;
 }
 
 function safeJson(s: string): unknown {
@@ -218,28 +241,44 @@ export const api = {
   },
 
   posts: {
-    list: () => request<Post[]>('/api/v1/posts', { auth: false }),
+    list: () =>
+      request<{ items: Post[]; total: number; page: number; page_size: number }>(
+        '/api/v1/posts',
+        { auth: false },
+      ).then((p) => p.items),
     create: (body: Partial<Post> & { title: string; content: string }) =>
       request<Post>('/api/v1/posts', { method: 'POST', body }),
     search: (q: string) =>
-      request<Post[]>(`/api/v1/search/posts?q=${encodeURIComponent(q)}`, { auth: false }),
+      request<{ posts: Post[]; listings: Listing[]; query: string; type: string }>(
+        `/api/v1/search?q=${encodeURIComponent(q)}&type=post`,
+        { auth: false },
+      ).then((r) => r.posts),
   },
 
   listings: {
-    list: () => request<Listing[]>('/api/v1/listings', { auth: false }),
+    list: () =>
+      request<{ items: Listing[]; total: number; page: number; page_size: number }>(
+        '/api/v1/listings',
+        { auth: false },
+      ).then((p) => p.items),
     create: (body: Partial<Listing> & { title: string; price_cents: number }) =>
       request<Listing>('/api/v1/listings', { method: 'POST', body }),
   },
 
   messages: {
-    conversations: () => request<Conversation[]>('/api/v1/messages/conversations'),
+    conversations: () =>
+      request<{ items: Conversation[] }>('/api/v1/me/conversations').then((d) => d.items),
+    withPeer: (peerId: number) =>
+      request<{ peer: User; messages: Message[] }>(`/api/v1/me/conversations/${peerId}`),
     send: (body: { recipient_id: number; content: string }) =>
-      request<unknown>('/api/v1/messages', { method: 'POST', body }),
+      request<Message>('/api/v1/messages', { method: 'POST', body }),
   },
 
   notifications: {
     unreadCount: () =>
-      request<{ count: number }>('/api/v1/notifications/unread-count').catch(() => ({ count: 0 })),
+      request<{ items: unknown[]; unread_count: number }>('/api/v1/notifications?unread=true')
+        .then((d) => ({ count: d.unread_count }))
+        .catch(() => ({ count: 0 })),
   },
 };
 

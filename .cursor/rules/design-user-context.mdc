@@ -1,0 +1,16 @@
+---
+description: >-
+  User-mental-model for colors/motion only; tokens and copy format live in
+  design-system.mdc — no duplicate prose here.
+alwaysApply: true
+---
+
+# User-facing summary (no overlap with design-system)
+
+**Tone, hex, components, responsive rules, error-message format** → read only `.cursor/rules/design-system.mdc` and `web/theme.css`. This file **only adds** mental-model bullets the design-system does not spell out:
+
+- **Color semantics (no need to memorize hex):** green = success; warm red = errors or strong feedback; orange = links/guidance; soft bands = process stages, not alarms. Mnemonic: green good, red bad or strong alert, orange/links guide.
+- **Motion:** short and smooth; **do not** rely on animation as the sole channel for critical information; avoid harsh flashing and large jumps.
+- **Narrative and full §1–11:** `DESIGN.md`; tabular expansion and control narratives → `.cursor/skills/besttry-design-user-context/SKILL.md` (read on demand; do not duplicate token implementation from the two bullets above).
+
+General coding behavior → `.cursor/rules/karpathy-guidelines.mdc` (summary) + `.cursor/skills/karpathy-guidelines/SKILL.md` (full text, on demand).

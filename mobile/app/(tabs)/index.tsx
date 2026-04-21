@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
+import { router } from 'expo-router';
 import { api, type Post, HttpError } from '@/api';
-import { Card, Pill, Screen, Txt } from '@/components';
+import { useAuth } from '@/auth';
+import { Button, Card, Pill, Screen, Txt } from '@/components';
 import { spacing } from '@/theme';
 
 export default function FeedScreen() {
@@ -66,6 +68,9 @@ export default function FeedScreen() {
 }
 
 function PostCard({ post }: { post: Post }) {
+  const { user } = useAuth();
+  const canDm = user && post.author_id !== user.id;
+
   return (
     <Card>
       <View style={{ flexDirection: 'row', gap: spacing.sm }}>
@@ -83,6 +88,13 @@ function PostCard({ post }: { post: Post }) {
       <Txt kind="bodySmall" muted>
         {new Date(post.created_at).toLocaleString()}
       </Txt>
+      {canDm ? (
+        <Button
+          title="私信作者"
+          variant="secondary"
+          onPress={() => router.push(`/(tabs)/messages/${post.author_id}`)}
+        />
+      ) : null}
     </Card>
   );
 }

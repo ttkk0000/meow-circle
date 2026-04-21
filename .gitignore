@@ -43,3 +43,6 @@ desktop.ini
 # ===== Docker volumes (if mounted locally) =====
 pgdata/
 redisdata/
+
+# ===== Local mobile SDK cache =====
+mobile/.android-sdk/
