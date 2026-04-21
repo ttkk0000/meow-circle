@@ -1,18 +1,13 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
+/* Admin console styles. Body chrome/buttons/inputs inherit from theme.css;
+   this file only adds the admin-specific shell and the small tweaks that
+   DESIGN.md expects for dense dashboards (tight metric cards, dashed
+   dividers, warm-cream panels). */
 
 .header {
-  background: var(--panel);
-  border-bottom: 1px solid var(--line);
-  padding: 18px 14px;
+  background: var(--header-bg);
+  color: var(--header-text);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,28 +21,36 @@ body {
 
 .header p {
   margin: 6px 0 0;
-  color: var(--muted);
+  color: var(--text-soft);
+  font-family: var(--font-serif);
+  font-feature-settings: "cswh";
 }
 
 .container {
   width: min(1100px, 100%);
   margin: 0 auto;
-  padding: 14px;
+  padding: 20px 24px 40px;
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .panel {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-ambient);
+}
+.panel:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .panel-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .row {
@@ -56,34 +59,16 @@ body {
   flex-wrap: wrap;
 }
 
-input,
-button {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 9px 10px;
-  font-size: 14px;
-  background: var(--card);
-  color: var(--text);
-}
-
-button {
-  background: var(--brand);
-  color: var(--text-invert);
-  border-color: var(--brand);
-}
-
-input {
+.row input {
   min-width: 260px;
   flex: 1;
-}
-
-button {
-  cursor: pointer;
 }
 
 .tip {
   color: var(--muted);
   margin-bottom: 0;
+  font-family: var(--font-serif);
+  font-feature-settings: "cswh";
 }
 
 .summary {
@@ -93,15 +78,28 @@ button {
 }
 
 .metric {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 8px 10px;
-  min-width: 120px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  min-width: 140px;
+  background: var(--surface-100);
+}
+
+.metric > div:first-child,
+.metric .label {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
 }
 
 .metric .value {
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-sub);
+  margin-top: 4px;
+  color: var(--text);
 }
 
 .list {
@@ -110,13 +108,24 @@ button {
 }
 
 .item {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  background: var(--card);
+  box-shadow: var(--shadow-ambient);
 }
 
 .item p {
   margin: 6px 0;
+  font-family: var(--font-serif);
+  color: var(--text-soft);
+}
+
+.item .item-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: var(--tracking-sub);
+  color: var(--text);
 }
 
 .danger {
