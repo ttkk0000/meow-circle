@@ -383,9 +383,29 @@
   border-radius: var(--r-md);
   background: var(--card);
   border: 1px solid var(--border);
+  position: relative;
 }
+/* Unread state — signaled by a subtle warm tint + a small leading dot,
+   not a colored border stripe (which reads as generic admin-dashboard). */
 .notification.unread {
-  border-left: 3px solid var(--brand);
+  background: var(--brand-weak);
+  border-color: transparent;
+}
+.notification.unread::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: -10px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+}
+@media (max-width: 720px) {
+  .notification.unread::before {
+    left: 6px;
+    top: 10px;
+  }
 }
 .notification .kind-badge {
   font-size: 11px;
@@ -482,5 +502,401 @@
     border-bottom: 1px solid var(--border);
     padding-right: 0;
     padding-bottom: 8px;
+  }
+}
+
+/* ==========================================================================
+   HOME — editorial masthead + asymmetric feed
+   Scoped with `body.home` so nothing here leaks into dashboard/admin/auth.
+   Reinterprets the page as an issue of a warm, opinionated pet magazine.
+   ========================================================================== */
+
+/* Slightly warmer, denser topbar on home, with a dotted bottom rule that
+   reads as "below the masthead" rather than "app chrome". */
+body.home .topbar {
+  backdrop-filter: blur(14px);
+  border-bottom: 0;
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+body.home .topbar-inner {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+/* Typographic wordmark. The CJK glyph sits in a warm near-black block,
+   intentionally square not rounded, paired with a lighter roman wordmark.
+   Replaces the 🐾 emoji (AI tell: emoji used as logo). */
+body.home .meow-logo .logo-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  background: var(--ink-display);
+  color: var(--surface-100);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  display: inline-grid;
+  place-items: center;
+  font-feature-settings: "cswh";
+}
+body.home .meow-logo .logo-wordmark {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+body.home .topbar .search-box { gap: 8px; }
+body.home .topbar .search-box .search-icon { opacity: 0.55; }
+
+/* ---------- Hero ---------- */
+
+body.home .hero {
+  max-width: 1200px;
+  margin: var(--space-7) auto var(--space-6);
+  padding: 0 var(--space-5);
+  text-align: left;
+}
+
+body.home .hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-7);
+  align-items: start;
+}
+
+body.home .hero-copy .eyebrow { margin-bottom: var(--space-4); }
+
+body.home .hero-copy .h-mega {
+  max-width: 16ch;
+  margin: 0 0 var(--space-5);
+}
+
+body.home .hero-copy .lede-serif {
+  margin-bottom: var(--space-5);
+  max-width: 42ch;
+}
+
+body.home .hero-actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Secondary "browse" link — text-only, no chip. Uses the warm-red signature
+   only on the arrow, so the hover moment is felt but not shouted. */
+body.home .btn-link-arrow {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text);
+  border: 0;
+  padding: 10px 6px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--motion-fast) var(--ease-out-quart),
+              gap var(--motion-base) var(--ease-out-quart);
+}
+body.home .btn-link-arrow:hover {
+  color: var(--danger);
+  gap: 10px;
+  border-bottom-color: transparent;
+}
+
+/* ---------- Masthead index (replaces hero-metric template) ---------- */
+
+body.home .hero-index {
+  padding: var(--space-5) 0 0;
+  border-top: 1px dotted var(--border-medium);
+  display: grid;
+  gap: var(--space-5);
+  align-self: stretch;
+}
+
+body.home .hero-index-primary {
+  display: grid;
+  gap: var(--space-2);
+}
+body.home .hero-index-primary .display-num {
+  margin-top: var(--space-1);
+}
+body.home .hero-index-primary .lede-serif {
+  max-width: 26ch;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+body.home .hero-index-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4) var(--space-5);
+}
+body.home .hero-index-grid > div {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+}
+body.home .display-num-sm {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink-display);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+body.home .hero-index-grid .caption {
+  color: var(--muted);
+  font-family: var(--font-display);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12.5px;
+}
+
+/* ---------- Main feed grid ---------- */
+
+body.home .home-main {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: var(--space-5);
+  display: grid;
+  /* intentional asymmetry — community is the page, market is a sidenote */
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-6);
+}
+
+body.home .feed-head {
+  margin-bottom: var(--space-4);
+}
+body.home .feed-head .eyebrow {
+  margin-bottom: var(--space-2);
+}
+body.home .feed-head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+body.home .feed-head .h-section {
+  margin: 0;
+}
+
+body.home .btn-small {
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+/* Editorial list — flattens cards: no card-in-card, dotted separators,
+   first item gets a little more room. Overrides the shared .item chrome
+   ONLY when it lives inside a list-editorial container. */
+body.home .list-editorial {
+  display: grid;
+  gap: 0;
+}
+body.home .list-editorial .item {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  padding: var(--space-4) 0;
+  border-top: 1px dotted var(--border-medium);
+}
+body.home .list-editorial .item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+body.home .list-editorial .item:hover {
+  box-shadow: none;
+  background: linear-gradient(
+    to right,
+    var(--brand-weak) 0%,
+    transparent 28%
+  );
+}
+body.home .list-editorial .item-title {
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+}
+body.home .list-editorial .item:first-child .item-title {
+  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-2);
+}
+body.home .list-editorial .item-content {
+  font-family: var(--font-serif);
+  font-feature-settings: "cswh";
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-soft);
+  max-width: 62ch;
+  margin: var(--space-2) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+body.home .list-editorial .item:first-child .item-content {
+  -webkit-line-clamp: 3;
+  font-size: 1.05rem;
+}
+body.home .list-editorial .meta {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+body.home .list-editorial .pill {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+body.home .list-editorial details {
+  margin-top: var(--space-3);
+}
+body.home .list-editorial details summary {
+  font-size: 12.5px;
+  color: var(--muted);
+  cursor: pointer;
+}
+body.home .list-editorial details summary:hover {
+  color: var(--danger);
+}
+
+/* Compact market list — denser, still card-like but without shadow bloom;
+   price / type should be scannable. */
+body.home .list-compact {
+  display: grid;
+  gap: var(--space-3);
+}
+body.home .list-compact .item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--space-4);
+  box-shadow: none;
+  transition: border-color var(--motion-base) var(--ease-out-quart),
+              background var(--motion-base) var(--ease-out-quart);
+}
+body.home .list-compact .item:hover {
+  border-color: var(--border-medium);
+  background: var(--surface-100);
+  box-shadow: none;
+}
+body.home .list-compact .item-head {
+  align-items: flex-start;
+}
+body.home .list-compact .item-title {
+  font-size: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  flex: 1;
+}
+body.home .list-compact .item-content {
+  font-family: var(--font-serif);
+  font-feature-settings: "cswh";
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-width: 44ch;
+  margin: var(--space-2) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+body.home .list-compact .meta {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+body.home .list-compact .pill {
+  background: var(--brand-weak);
+  color: var(--brand);
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+/* Subtle warm glow on the "first" featured post, giving the page a single
+   focal point (60-30-10 rule: accent is rare on purpose). */
+body.home .list-editorial .item:first-child .item-title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+  margin-right: 10px;
+  vertical-align: 0.18em;
+}
+
+/* Empty + skeleton states follow editorial tone instead of centered cards */
+body.home .list-editorial .empty-state,
+body.home .list-compact .empty-state {
+  text-align: left;
+  padding: var(--space-5) 0;
+  border-top: 1px dotted var(--border-medium);
+  font-family: var(--font-serif);
+  font-feature-settings: "cswh";
+  color: var(--muted);
+  max-width: 48ch;
+}
+body.home .list-editorial .empty-state .hint-icon,
+body.home .list-compact .empty-state .hint-icon {
+  display: block;
+  margin: 0 0 var(--space-2);
+  font-size: 20px;
+  opacity: 0.55;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1024px) {
+  body.home .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  body.home .hero-index {
+    padding-top: var(--space-5);
+  }
+  body.home .hero-copy .h-mega {
+    max-width: none;
+  }
+  body.home .home-main {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+}
+
+@media (max-width: 640px) {
+  body.home .hero {
+    margin-top: var(--space-6);
+  }
+  body.home .hero-index-primary .display-num {
+    font-size: clamp(2.5rem, 11vw, 3.5rem);
+  }
+  body.home .list-editorial .item:first-child .item-title::before {
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
   }
 }

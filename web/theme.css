@@ -103,6 +103,42 @@
   --r-md: 8px;
   --r-lg: 10px;
   --r-pill: 9999px;
+
+  /* Spacing scale (semantic, 4pt base; avoid pixel-named tokens) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* Motion — exponential ease-out, never bounce/elastic */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --motion-slow: 420ms;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Editorial display scale — for hero/masthead moments only. Fluid via
+     clamp() so marketing surfaces breathe on large screens. */
+  --h-mega:    clamp(2.5rem, 7vw, 5.5rem);
+  --h-display: clamp(2rem,   4.8vw, 4.5rem);
+  --h-section: clamp(1.5rem, 2.6vw, 2.25rem);
+
+  /* A softer, warmer near-black one click darker than --text, used for
+     display numerals so large metrics don't bloom on warm cream. */
+  --ink-display: #1a1915;
+
+  /* Brand in oklch (perceptually uniform). Keep --brand as hex for fallback;
+     overridden by the @supports block below when the UA supports oklch. */
+  --brand-oklch: oklch(0.67 0.19 41);
+  --danger-oklch: oklch(0.56 0.16 10);
+  --ok-oklch:    oklch(0.56 0.10 158);
 }
 
 [data-theme="warm"] {
@@ -178,6 +214,42 @@
   [data-theme="light"] {
     --border: oklab(0.263084 -0.00230259 0.0124794 / 0.1);
     --border-medium: oklab(0.263084 -0.00230259 0.0124794 / 0.2);
+  }
+}
+
+/* Upgrade flat accents to perceptually-uniform oklch where supported.
+   Keeps the hex fallback readable for older UAs. */
+@supports (color: oklch(0 0 0)) {
+  :root,
+  [data-theme="light"],
+  [data-theme="warm"] {
+    --brand:         oklch(0.67 0.19 41);
+    --brand-strong:  oklch(0.55 0.18 38);
+    --brand-weak:    oklch(0.67 0.19 41 / 0.10);
+    --danger:        oklch(0.56 0.16 10);
+    --danger-bg:     oklch(0.56 0.16 10 / 0.10);
+    --danger-border: oklch(0.56 0.16 10 / 0.25);
+    --ok:            oklch(0.56 0.10 158);
+    --ok-bg:         oklch(0.56 0.10 158 / 0.12);
+  }
+  [data-theme="dark"] {
+    /* At low lightness, reduce chroma so accents don't look garish. */
+    --brand:         oklch(0.74 0.16 41);
+    --brand-strong:  oklch(0.82 0.13 45);
+    --danger:        oklch(0.66 0.14 10);
+    --ok:            oklch(0.72 0.12 158);
+  }
+}
+
+/* Respect reduced motion — disable all non-essential animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -267,6 +339,98 @@ pre {
   color: var(--muted);
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* ========== Editorial primitives (magazine moments) ==========
+   Used on marketing / content-first surfaces (hero, masthead, section heads).
+   Not for dense dashboards — admin / dashboard keep their current chrome.
+*/
+
+/* Small uppercase label that sits above a display heading, separated
+   from the headline by a short rule. Think magazine issue line. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+.eyebrow.no-rule::before { display: none; }
+
+/* Mega display headline — reserved for hero moments. Letter-spacing and
+   line-height already tuned for Inter at hero sizes per DESIGN.md §3. */
+.h-mega {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--h-mega);
+  line-height: 0.98;
+  letter-spacing: var(--tracking-display);
+  color: var(--ink-display);
+  margin: 0;
+}
+
+/* Serif lead paragraph — warmer, narrower than body, stops at 28ch so
+   the eye drops back for the next sentence quickly. */
+.lede-serif {
+  font-family: var(--font-serif);
+  font-feature-settings: "cswh";
+  font-size: clamp(1.08rem, 1.45vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--text-soft);
+  max-width: 56ch;
+  margin: 0;
+}
+
+/* Drop cap — first letter enlarged, warm red, only on serif blocks. */
+.has-dropcap::first-letter {
+  font-family: var(--font-serif);
+  font-size: 3.4em;
+  line-height: 0.82;
+  float: left;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--danger);
+  font-feature-settings: "cswh";
+  font-weight: 500;
+}
+
+/* Dotted rule — used as a separator in editorial surfaces instead of
+   solid 1px borders everywhere. */
+.dotted-rule {
+  border: 0;
+  border-top: 1px dotted var(--border-medium);
+  margin: var(--space-5) 0;
+}
+
+/* Index number — fixed-width numeric index used for magazine-style ordered
+   entries. Monospace, oldstyle-ish. Pair with an `.eyebrow` caption. */
+.index-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Display numeral — for masthead totals. Big, tight, warm near-black. */
+.display-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  color: var(--ink-display);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ========== Buttons ========== */

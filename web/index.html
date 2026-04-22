@@ -8,22 +8,25 @@
   <link rel="stylesheet" href="/styles.css" />
   <script src="/shared.js"></script>
 </head>
-<body>
+<body class="home">
   <header class="topbar">
     <div class="topbar-inner">
       <a href="/" class="meow-logo">
-        <span class="logo-mark" aria-hidden="true">🐾</span>
-        <span data-i18n="app.title">喵友圈</span>
+        <span class="logo-mark" aria-hidden="true">喵</span>
+        <span class="logo-wordmark" data-i18n="app.title">喵友圈</span>
       </a>
-      <div class="search-box">
-        <span aria-hidden="true">🔍</span>
+      <div class="search-box" role="search">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="m14 14 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <input id="global-search" type="search" data-i18n-placeholder="nav.search_placeholder" placeholder="搜索帖子、交易..." />
       </div>
       <nav class="nav-links">
         <div id="settings-bar"></div>
         <a href="/architecture.html" data-i18n="nav.docs">系统文档</a>
         <a id="dashboard-link" href="/dashboard" hidden data-i18n="nav.dashboard">我的管理中心</a>
-        <button id="notif-btn" class="icon-btn" type="button" hidden title="Notifications">🔔<span id="notif-count" class="badge-count" hidden>0</span></button>
+        <button id="notif-btn" class="icon-btn" type="button" hidden title="Notifications">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0v3l1.5 3h-15L6 12V9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 18a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span id="notif-count" class="badge-count" hidden>0</span>
+        </button>
         <span id="user-hint"></span>
         <a id="login-link" href="/login" class="cta-link" data-i18n="nav.login">登录</a>
         <a id="register-link" href="/register" data-i18n="nav.register">注册</a>
@@ -32,25 +35,67 @@
     </div>
   </header>
 
+  <!-- ======================  HERO (editorial masthead)  ====================== -->
   <section class="hero">
-    <h1 data-i18n="hero.title">把对毛孩子的爱，分享给同好。</h1>
-    <p class="lede" data-i18n="hero.subtitle">发布日常、交换经验、可信交易，一站式宠物主人社区。</p>
-    <div class="hero-actions">
-      <button id="hero-primary" class="btn-primary" type="button" data-i18n="hero.btn_primary">开始分享</button>
-      <a class="btn" href="#listings-section" data-i18n="hero.btn_secondary">浏览交易</a>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">
+          <span data-i18n="hero.eyebrow">社区 · 正在刊载</span>
+        </span>
+
+        <h1 class="h-mega" data-i18n="hero.title">
+          把对毛孩子的爱，<br />分享给同好。
+        </h1>
+
+        <p class="lede-serif has-dropcap" data-i18n="hero.subtitle">
+          发布日常、交换经验、可信交易——一站式宠物主人社区，像翻开一本讲究的杂志。
+        </p>
+
+        <div class="hero-actions">
+          <button id="hero-primary" class="btn-primary" type="button" data-i18n="hero.btn_primary">
+            开始分享
+          </button>
+          <a class="btn-link-arrow" href="#listings-section" data-i18n="hero.btn_secondary">
+            浏览交易 <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Masthead index: replaces the 3-identical-stat-card row.
+           Varies size intentionally; primary metric is the lede number,
+           supporting metrics sit beside it in a smaller register. -->
+      <aside class="hero-index" aria-label="本期指标">
+        <div class="hero-index-primary">
+          <span class="index-num">Nº 01</span>
+          <span class="display-num" id="stat-posts">—</span>
+          <span class="lede-serif" data-i18n="hero.index_primary_caption">
+            篇帖子正在被阅读与评论
+          </span>
+        </div>
+
+        <hr class="dotted-rule" />
+
+        <div class="hero-index-grid">
+          <div>
+            <span class="index-num">Nº 02</span>
+            <div class="display-num-sm" id="stat-listings">—</div>
+            <div class="caption" data-i18n="stat.listings">交易</div>
+          </div>
+          <div>
+            <span class="index-num">Nº 03</span>
+            <div class="display-num-sm" id="stat-users">—</div>
+            <div class="caption" data-i18n="stat.users">用户</div>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <section class="stat-grid" id="stat-grid">
-    <div class="stat-card"><div class="stat-label" data-i18n="stat.posts">帖子</div><div class="stat-value" id="stat-posts">—</div></div>
-    <div class="stat-card"><div class="stat-label" data-i18n="stat.listings">交易</div><div class="stat-value" id="stat-listings">—</div></div>
-    <div class="stat-card"><div class="stat-label" data-i18n="stat.users">用户</div><div class="stat-value" id="stat-users">—</div></div>
-  </section>
-
+  <!-- ======================  SEARCH RESULTS (unchanged plumbing)  ====================== -->
   <section id="search-results" hidden>
     <div class="section-head">
       <h2 data-i18n="search.title">搜索结果</h2>
-      <button id="close-search" type="button" class="btn-ghost">×</button>
+      <button id="close-search" type="button" class="btn-ghost" aria-label="关闭搜索">×</button>
     </div>
     <div class="tab-strip" id="search-tabs">
       <button class="active" data-search-tab="all" data-i18n="search.tab_all">全部</button>
@@ -61,24 +106,34 @@
     <div id="search-listings" class="list"></div>
   </section>
 
-  <main class="container" id="listings-section">
-    <section class="card">
-      <div class="section-head">
-        <h2 data-i18n="section.latest_posts">最新帖子</h2>
-        <button id="refresh-posts" type="button" data-i18n="action.refresh">刷新</button>
-      </div>
-      <div id="posts" class="list"></div>
+  <!-- ======================  MAIN FEED (asymmetric 7/5)  ====================== -->
+  <main class="home-main" id="listings-section">
+    <section class="feed-section feed-primary">
+      <header class="feed-head">
+        <span class="eyebrow" data-i18n="home.eyebrow_posts">时间线 · 社区</span>
+        <div class="feed-head-row">
+          <h2 class="h-section" data-i18n="section.latest_posts">最新帖子</h2>
+          <button id="refresh-posts" class="btn-ghost btn-small" type="button" data-i18n="action.refresh">刷新</button>
+        </div>
+      </header>
+      <div id="posts" class="list list-editorial"></div>
     </section>
 
-    <section class="card">
-      <div class="section-head">
-        <h2 data-i18n="section.listings">交易信息</h2>
-        <button id="refresh-listings" type="button" data-i18n="action.refresh">刷新</button>
-      </div>
-      <div id="listings" class="list"></div>
+    <section class="feed-section feed-aside">
+      <header class="feed-head">
+        <span class="eyebrow" data-i18n="home.eyebrow_listings">市集 · 可交易</span>
+        <div class="feed-head-row">
+          <h2 class="h-section" data-i18n="section.listings">交易信息</h2>
+          <button id="refresh-listings" class="btn-ghost btn-small" type="button" data-i18n="action.refresh">刷新</button>
+        </div>
+      </header>
+      <div id="listings" class="list list-compact"></div>
     </section>
   </main>
 
+  <!-- Post item template — JS (app.js) fills .item-title / .category /
+       .item-content / .meta / details / .comments / .comment-form.
+       The outer classes must stay as-is. -->
   <template id="post-item-template">
     <article class="item">
       <div class="item-head">
