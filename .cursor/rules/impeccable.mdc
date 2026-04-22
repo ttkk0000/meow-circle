@@ -1,0 +1,44 @@
+---
+description: >-
+  Impeccable + project Design Context: read .impeccable.md before UI/UX work;
+  propose substantive changes and wait for confirmation unless user waives.
+alwaysApply: true
+---
+
+# Impeccable（与本仓库对齐）
+
+**新会话默认遵守**，不必每次输入 `/impeccable`。
+
+## 何时生效
+
+涉及 **用户可见界面**（`web/`、`mobile/`、文案、主题、动效、布局）时，本规则与 `design-system.mdc`、`design-user-context.mdc` 同时适用。
+
+## 开工前必读（顺序）
+
+1. 项目根 **`.impeccable.md`**（Design Context、禁忌、Design Principles）
+2. **`.cursor/rules/design-system.mdc`** + **`web/theme.css`**（色板、字阶、间距等单一事实来源）
+3. **`DESIGN.md`** §1–11（用户向叙述）；像素级细节 §12+ 按需
+
+若与 `.impeccable.md` 冲突：**以 `design-system.mdc` + `theme.css` 为准**（与 `.impeccable.md` 内说明一致）。
+
+## Impeccable 纪律（与 `.impeccable.md` 对齐）
+
+- **禁止**：渐变文字（`background-clip: text` + gradient）；在卡片/列表/提示上用 **>1px 的左右色条**（`border-left` / `border-right`）当主强调；纯 `#000` / `#fff`。
+- **字体**：遵守 `.impeccable.md` 与 `theme.css` 的约定（含本项目对 **Inter** 作为 display 替身的例外）；**不要**再引入 reflex 列表里其它默认字体当主字体。
+- **布局**：杂志感、主次不等列、少「等宽双卡复制粘贴」；避免无意义的卡片套卡片。
+
+全局技能的完整条文见用户机上的 **impeccable** skill；仓库内以 **`.impeccable.md`** 为项目裁量依据。
+
+## 流程（避免未确认就改）
+
+对 **非琐碎** 的 UI 改动（多文件、视觉方向、信息架构）：
+
+1. 先给出 **简短方案**（改哪些文件、动什么、是否符合 `.impeccable.md`）。
+2. **等用户明确确认**（例如「可以」「按这个做」）后再写代码。
+3. 若用户本句已写 **「直接改 / 不用确认」**，可跳过等待。
+
+琐碎指：单处 typo、明显 bug 一行修复、纯格式化等——仍须遵守设计与禁忌，但不必每次停下等确认。
+
+## 显式调用
+
+用户输入 **`/impeccable`** 或 **`/impeccable craft …` / `teach` / `extract`** 时，按该技能对应模式执行；平时已读本规则 + `.impeccable.md` 即视为已对齐 Impeccable 上下文。

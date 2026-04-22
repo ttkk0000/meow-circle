@@ -363,6 +363,17 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
+body.home #search-results {
+  width: min(1200px, calc(100% - 2 * var(--space-4)));
+  margin: 0 auto var(--space-5);
+  padding: var(--space-4);
+  box-sizing: border-box;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-ambient);
+}
 #search-results .list {
   gap: 12px;
 }
@@ -519,8 +530,9 @@ body.home .topbar {
   box-shadow: inset 0 -1px 0 var(--border);
 }
 body.home .topbar-inner {
-  padding-top: 18px;
-  padding-bottom: 18px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  gap: 14px;
 }
 
 /* Typographic wordmark. The CJK glyph sits in a warm near-black block,
@@ -547,42 +559,78 @@ body.home .meow-logo .logo-wordmark {
   letter-spacing: -0.01em;
 }
 
-body.home .topbar .search-box { gap: 8px; }
+body.home .topbar .search-box {
+  gap: 6px;
+  padding: 4px 10px;
+}
 body.home .topbar .search-box .search-icon { opacity: 0.55; }
+body.home .topbar .cta-link {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+/* One signature crimson at a time: secondary nav links use brand on hover;
+   `.cta-link` (登录) keeps theme’s own hover treatment. */
+body.home .topbar .nav-links a:not(.cta-link):hover {
+  color: var(--brand);
+  border-bottom-color: color-mix(in oklab, var(--brand) 35%, transparent);
+}
+body.home .topbar .nav-links button:hover {
+  color: var(--brand);
+}
 
 /* ---------- Hero ---------- */
 
 body.home .hero {
   max-width: 1200px;
-  margin: var(--space-7) auto var(--space-6);
-  padding: 0 var(--space-5);
+  margin: var(--space-5) auto var(--space-4);
+  padding: var(--space-5) var(--space-4);
   text-align: left;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-ambient);
 }
 
 body.home .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-7);
+  gap: var(--space-5);
   align-items: start;
 }
 
-body.home .hero-copy .eyebrow { margin-bottom: var(--space-4); }
+body.home .hero-copy .eyebrow { margin-bottom: var(--space-3); }
 
+/* Type ladder: hero title clearly above feed section titles (theme --h-mega is very large). */
 body.home .hero-copy .h-mega {
-  max-width: 16ch;
-  margin: 0 0 var(--space-5);
+  max-width: 18ch;
+  margin: 0 0 var(--space-4);
+  font-size: clamp(1.75rem, 4.2vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+  font-weight: 500;
 }
 
 body.home .hero-copy .lede-serif {
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
   max-width: 42ch;
+  font-size: clamp(0.98rem, 1.15vw, 1.12rem);
+  line-height: 1.52;
 }
 
 body.home .hero-actions {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-2);
   align-items: center;
   flex-wrap: wrap;
+}
+
+/* Home-only: primary CTA reads tighter without changing global buttons */
+body.home .btn-primary {
+  padding: 8px 14px;
+  font-size: 13px;
+  line-height: 1.25;
+  border-radius: var(--r-md);
 }
 
 /* Secondary "browse" link — text-only, no chip. Uses the warm-red signature
@@ -590,14 +638,14 @@ body.home .hero-actions {
 body.home .btn-link-arrow {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text);
   border: 0;
-  padding: 10px 6px;
+  padding: 6px 4px;
   background: transparent;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   transition: color var(--motion-fast) var(--ease-out-quart),
               gap var(--motion-base) var(--ease-out-quart);
 }
@@ -610,17 +658,31 @@ body.home .btn-link-arrow:hover {
 /* ---------- Masthead index (replaces hero-metric template) ---------- */
 
 body.home .hero-index {
-  padding: var(--space-5) 0 0;
-  border-top: 1px dotted var(--border-medium);
+  padding: var(--space-4);
+  margin: 0;
+  border: 0;
+  border-radius: var(--r-md);
+  background: var(--surface-200);
+  box-shadow: inset 0 0 0 1px var(--border);
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-3);
   align-self: stretch;
+}
+
+body.home .hero-index .dotted-rule {
+  margin: var(--space-2) 0;
 }
 
 body.home .hero-index-primary {
   display: grid;
   gap: var(--space-2);
 }
+body.home .hero-index .display-num {
+  font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+  line-height: 0.96;
+  letter-spacing: -0.026em;
+}
+
 body.home .hero-index-primary .display-num {
   margin-top: var(--space-1);
 }
@@ -633,7 +695,7 @@ body.home .hero-index-primary .lede-serif {
 body.home .hero-index-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-4) var(--space-5);
+  gap: var(--space-3) var(--space-4);
 }
 body.home .hero-index-grid > div {
   display: grid;
@@ -642,7 +704,7 @@ body.home .hero-index-grid > div {
 }
 body.home .display-num-sm {
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -663,33 +725,81 @@ body.home .hero-index-grid .caption {
 body.home .home-main {
   width: min(1200px, 100%);
   margin: 0 auto;
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-4) var(--space-6);
   display: grid;
   /* intentional asymmetry — community is the page, market is a sidenote */
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-6);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* Shared rhythm; chrome differs: primary = magazine column, aside = market panel */
+body.home .feed-section {
+  padding: var(--space-2) 0 var(--space-4);
+  border-radius: var(--r-lg);
+}
+
+body.home .feed-section.feed-aside {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  box-shadow: var(--shadow-ambient);
+}
+
+body.home .feed-section.feed-primary {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding-right: var(--space-2);
+}
+
+@media (min-width: 1025px) {
+  body.home .feed-section.feed-primary .feed-head {
+    padding-right: var(--space-2);
+  }
 }
 
 body.home .feed-head {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border);
 }
+
+body.home .feed-primary .feed-head {
+  border-bottom-style: dotted;
+  border-bottom-color: var(--border-medium);
+}
+
 body.home .feed-head .eyebrow {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
 }
 body.home .feed-head-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--space-3);
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
+
+/* Section titles sit between hero and list items; weight + size separate them from .item-title */
 body.home .feed-head .h-section {
   margin: 0;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--text);
+}
+
+body.home .feed-primary .feed-head .h-section {
+  letter-spacing: -0.022em;
 }
 
 body.home .btn-small {
-  font-size: 12px;
-  padding: 6px 10px;
+  font-size: 11px;
+  padding: 5px 8px;
+  line-height: 1.2;
+  border-radius: var(--r-sm);
 }
 
 /* Editorial list — flattens cards: no card-in-card, dotted separators,
@@ -704,7 +814,7 @@ body.home .list-editorial .item {
   border: 0;
   box-shadow: none;
   border-radius: 0;
-  padding: var(--space-4) 0;
+  padding: var(--space-3) 0;
   border-top: 1px dotted var(--border-medium);
 }
 body.home .list-editorial .item:first-child {
@@ -720,20 +830,22 @@ body.home .list-editorial .item:hover {
   );
 }
 body.home .list-editorial .item-title {
-  font-size: 1.25rem;
-  line-height: 1.25;
-  letter-spacing: -0.012em;
+  font-size: 1.0625rem;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  font-weight: 500;
 }
 body.home .list-editorial .item:first-child .item-title {
-  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.2rem, 1.65vw, 1.375rem);
+  line-height: 1.12;
+  letter-spacing: -0.018em;
   margin-bottom: var(--space-2);
+  font-weight: 500;
 }
 body.home .list-editorial .item-content {
   font-family: var(--font-serif);
   font-feature-settings: "cswh";
-  font-size: 1rem;
+  font-size: 0.9375rem;
   line-height: 1.55;
   color: var(--text-soft);
   max-width: 62ch;
@@ -745,7 +857,7 @@ body.home .list-editorial .item-content {
 }
 body.home .list-editorial .item:first-child .item-content {
   -webkit-line-clamp: 3;
-  font-size: 1.05rem;
+  font-size: 0.98rem;
 }
 body.home .list-editorial .meta {
   font-family: var(--font-mono);
@@ -780,36 +892,37 @@ body.home .list-editorial details summary:hover {
    price / type should be scannable. */
 body.home .list-compact {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 body.home .list-compact .item {
-  background: var(--card);
+  background: var(--surface-100);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: var(--space-4);
+  padding: var(--space-3);
   box-shadow: none;
   transition: border-color var(--motion-base) var(--ease-out-quart),
               background var(--motion-base) var(--ease-out-quart);
 }
 body.home .list-compact .item:hover {
   border-color: var(--border-medium);
-  background: var(--surface-100);
+  background: var(--card);
   box-shadow: none;
 }
 body.home .list-compact .item-head {
   align-items: flex-start;
 }
 body.home .list-compact .item-title {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   line-height: 1.3;
   letter-spacing: -0.005em;
   flex: 1;
+  font-weight: 500;
 }
 body.home .list-compact .item-content {
   font-family: var(--font-serif);
   font-feature-settings: "cswh";
   color: var(--text-soft);
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   line-height: 1.5;
   max-width: 44ch;
   margin: var(--space-2) 0;
@@ -873,26 +986,38 @@ body.home .list-compact .empty-state .hint-icon {
 @media (max-width: 1024px) {
   body.home .hero-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
+    gap: var(--space-4);
   }
   body.home .hero-index {
-    padding-top: var(--space-5);
+    padding: var(--space-3);
   }
   body.home .hero-copy .h-mega {
     max-width: none;
   }
   body.home .home-main {
     grid-template-columns: 1fr;
-    gap: var(--space-7);
+    gap: var(--space-4);
+    padding-top: var(--space-4);
+  }
+  body.home .feed-section.feed-primary {
+    padding-right: 0;
+    padding-bottom: var(--space-5);
+    margin-bottom: var(--space-1);
+    border-bottom: 1px dotted var(--border-medium);
+  }
+  body.home .feed-section.feed-aside {
+    padding-top: var(--space-2);
   }
 }
 
 @media (max-width: 640px) {
   body.home .hero {
-    margin-top: var(--space-6);
+    margin-top: var(--space-4);
+    padding: var(--space-4) var(--space-3);
+    border-radius: var(--r-md);
   }
   body.home .hero-index-primary .display-num {
-    font-size: clamp(2.5rem, 11vw, 3.5rem);
+    font-size: clamp(1.65rem, 8vw, 2.35rem);
   }
   body.home .list-editorial .item:first-child .item-title::before {
     width: 6px;
