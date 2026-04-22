@@ -107,7 +107,7 @@ export default function ConversationScreen() {
               >
                 <View style={[styles.bubble, mine ? styles.bubbleMine : styles.bubbleTheirs]}>
                   <Txt style={mine ? styles.bubbleTextMine : undefined}>{m.content}</Txt>
-                  <Txt kind="bodySmall" muted style={{ marginTop: 4 }}>
+                  <Txt kind="bodySmall" muted style={{ marginTop: spacing.s1 }}>
                     {new Date(m.created_at).toLocaleString()}
                   </Txt>
                 </View>

@@ -68,13 +68,24 @@ export const radius = {
   pill: 9999,
 } as const;
 
+/** Spacing — numeric values match `web/theme.css` `--space-1` … `--space-10`. */
 export const spacing = {
-  xs: 4,
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 24,
-  xxl: 32,
+  s1: 4,
+  s2: 8,
+  s3: 12,
+  s4: 16,
+  s5: 24,
+  s6: 32,
+  s7: 48,
+  s8: 64,
+  s9: 96,
+  s10: 128,
+  /** @alias s1 */ xs: 4,
+  /** @alias s2 */ sm: 8,
+  /** @alias s3 */ md: 12,
+  /** @alias s4 */ lg: 16,
+  /** @alias s5 */ xl: 24,
+  /** @alias s6 */ xxl: 32,
 } as const;
 
 export const fontFamily = {

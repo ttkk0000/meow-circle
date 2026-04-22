@@ -3,7 +3,7 @@
    the long-form documentation: swimlanes, api groups, status chips. */
 
 .page-header {
-  padding: 24px 28px;
+  padding: var(--space-5) var(--space-6);
   background: var(--header-bg);
   color: var(--header-text);
   border-bottom: 1px solid var(--border);
@@ -11,11 +11,11 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .page-header h1 {
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-2);
   letter-spacing: var(--tracking-display);
 }
 
@@ -30,9 +30,9 @@
 .meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--space-3);
   font-size: 13px;
-  padding: 10px 28px;
+  padding: var(--space-3) var(--space-6);
   background: var(--bg-alt);
   border-bottom: 1px solid var(--border);
   color: var(--text-soft);
@@ -51,37 +51,39 @@
 .layout {
   width: min(1200px, 100%);
   margin: 0 auto;
-  padding: 20px 24px 40px;
+  padding: var(--space-5) var(--space-5) var(--space-7);
   display: grid;
-  gap: 18px;
+  gap: var(--space-5);
 }
 
 .panel {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 22px 26px;
+  padding: var(--space-5) var(--space-6);
   box-shadow: var(--shadow-ambient);
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease,
+    transform var(--motion-fast) var(--ease-out-quart);
 }
 .panel:hover {
   box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .panel h2 {
-  margin: 0 0 14px;
+  margin: 0 0 var(--space-4);
   letter-spacing: var(--tracking-section);
 }
 
 .swimlane {
   display: grid;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .lane {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 12px 14px;
+  padding: var(--space-3) var(--space-4);
   background: var(--surface-100);
   font-family: var(--font-display);
   font-weight: 500;
@@ -97,25 +99,28 @@
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .card {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 14px 16px;
+  padding: var(--space-4);
   background: var(--card);
   box-shadow: var(--shadow-ambient);
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
 }
 .card:hover {
   box-shadow: var(--shadow-md);
 }
 .card h3 {
-  margin: 0 0 6px;
+  margin: 0;
   letter-spacing: var(--tracking-sub);
 }
 .card p {
-  margin: 6px 0;
+  margin: 0;
   font-family: var(--font-serif);
   font-feature-settings: "cswh";
   color: var(--text-soft);
@@ -123,10 +128,10 @@
 
 .status {
   display: inline-block;
-  margin-top: 8px;
+  margin-top: 0;
   border-radius: var(--r-pill);
   font-size: 12px;
-  padding: 3px 10px;
+  padding: var(--space-1) var(--space-3);
   letter-spacing: var(--tracking-caption);
   text-transform: uppercase;
 }
@@ -144,20 +149,26 @@
 .api-group {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 14px 16px;
-  margin-bottom: 12px;
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
   background: var(--surface-100);
 }
 
 .api-item {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--space-2);
   align-items: baseline;
-  margin-top: 10px;
-  padding-top: 10px;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
   border-top: 1px dashed var(--border);
   font-family: var(--font-mono);
+}
+
+.api-group > .api-item:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 
 .method {
@@ -181,13 +192,13 @@
 
 ul {
   margin: 0;
-  padding-left: 20px;
+  padding-left: var(--space-5);
 }
 
 pre {
   background: var(--code-bg);
   color: var(--code-text);
-  padding: 12px 14px;
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--r-md);
   overflow-x: auto;
   font-family: var(--font-mono);

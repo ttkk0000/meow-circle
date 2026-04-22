@@ -80,7 +80,9 @@ make run
 ## Design system
 
 `src/theme.ts` mirrors `web/theme.css`: warm-cream surfaces, near-black
-ink, crimson hover/destructive, diffused shadows. The three-font system
+ink, crimson hover/destructive, diffused shadows. Spacing uses `s1`–`s10`
+(same pixel steps as `--space-1`…`--space-10` on web); `xs`/`sm`/…/`xxl`
+remain aliases for older callsites. The three-font system
 currently resolves to platform defaults (`System` / `Georgia` / `Menlo`);
 swap in the Cursor trio (Söhne / Source Serif / JetBrains Mono) via
 `expo-font` when the assets are ready.

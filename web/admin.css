@@ -7,12 +7,12 @@
   background: var(--header-bg);
   color: var(--header-text);
   border-bottom: 1px solid var(--border);
-  padding: 20px 24px;
+  padding: var(--space-5);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .header h1 {
@@ -20,7 +20,7 @@
 }
 
 .header p {
-  margin: 6px 0 0;
+  margin: var(--space-2) 0 0;
   color: var(--text-soft);
   font-family: var(--font-serif);
   font-feature-settings: "cswh";
@@ -29,33 +29,41 @@
 .container {
   width: min(1100px, 100%);
   margin: 0 auto;
-  padding: 20px 24px 40px;
+  padding: var(--space-5) var(--space-5) var(--space-7);
   display: grid;
-  gap: 16px;
+  gap: var(--space-4);
+}
+
+/* Stacked panels: avoid styles.css 7/5 two-column flow splitting admin sections. */
+main.container {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .panel {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 20px 22px;
+  padding: var(--space-5) var(--space-5);
   box-shadow: var(--shadow-ambient);
+  transition: box-shadow 0.2s ease,
+    transform var(--motion-fast) var(--ease-out-quart);
 }
 .panel:hover {
   box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .panel-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
   flex-wrap: wrap;
 }
 
 .row {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
@@ -73,14 +81,14 @@
 
 .summary {
   display: flex;
-  gap: 10px;
+  gap: var(--space-3);
   flex-wrap: wrap;
 }
 
 .metric {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 10px 14px;
+  padding: var(--space-3) var(--space-4);
   min-width: 140px;
   background: var(--surface-100);
 }
@@ -98,25 +106,28 @@
   font-size: 22px;
   font-weight: 500;
   letter-spacing: var(--tracking-sub);
-  margin-top: 4px;
+  margin-top: var(--space-1);
   color: var(--text);
 }
 
 .list {
   display: grid;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .item {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 14px 16px;
+  padding: var(--space-4);
   background: var(--card);
   box-shadow: var(--shadow-ambient);
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
 }
 
 .item p {
-  margin: 6px 0;
+  margin: 0;
   font-family: var(--font-serif);
   color: var(--text-soft);
 }

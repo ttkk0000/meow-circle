@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   pill: {
     alignSelf: 'flex-start',
     paddingHorizontal: spacing.md,
-    paddingVertical: 4,
+    paddingVertical: spacing.s1,
     borderRadius: radius.pill,
     backgroundColor: colors.surface300,
   },
