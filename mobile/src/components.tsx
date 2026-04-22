@@ -2,9 +2,10 @@
 // Cursor-inspired tokens in ./theme.ts. Kept in a single file until they
 // earn the right to be split up.
 
-import type { ReactElement } from 'react';
+import { useEffect, useRef, type ReactElement } from 'react';
 import {
   ActivityIndicator,
+  Animated,
   Pressable,
   type PressableProps,
   SafeAreaView,
@@ -192,6 +193,46 @@ export function Pill({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ===== Kitty loader ==========================================================
+
+export function KittyLoader({ label = '正在叫猫咪起床...' }: { label?: string }) {
+  const bob = useRef(new Animated.Value(0)).current;
+  const pulse = useRef(new Animated.Value(0.45)).current;
+
+  useEffect(() => {
+    const bobAnim = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bob, { toValue: -8, duration: 520, useNativeDriver: true }),
+        Animated.timing(bob, { toValue: 0, duration: 620, useNativeDriver: true }),
+      ]),
+    );
+    const pulseAnim = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, { toValue: 1, duration: 680, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 0.45, duration: 680, useNativeDriver: true }),
+      ]),
+    );
+    bobAnim.start();
+    pulseAnim.start();
+    return () => {
+      bobAnim.stop();
+      pulseAnim.stop();
+    };
+  }, [bob, pulse]);
+
+  return (
+    <View style={styles.loaderWrap}>
+      <Animated.Text style={[styles.loaderKitty, { transform: [{ translateY: bob }] }]}>
+        🐈
+      </Animated.Text>
+      <Animated.Text style={[styles.loaderDots, { opacity: pulse }]}>• • •</Animated.Text>
+      <Txt kind="bodySmall" muted style={styles.loaderLabel}>
+        {label}
+      </Txt>
+    </View>
+  );
+}
+
 // ===== styles ================================================================
 
 const styles = StyleSheet.create({
@@ -249,5 +290,23 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.s1,
     borderRadius: radius.pill,
     backgroundColor: colors.surface300,
+  },
+  loaderWrap: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.surface100,
+    gap: spacing.sm,
+  },
+  loaderKitty: {
+    fontSize: 42,
+  },
+  loaderDots: {
+    fontSize: 18,
+    color: colors.inkMuted,
+    letterSpacing: 3,
+  },
+  loaderLabel: {
+    color: colors.inkMuted,
   },
 });

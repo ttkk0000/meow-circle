@@ -95,7 +95,7 @@ async function loadAdminMedia() {
             }
             await loadAdminMedia();
           } catch (err) {
-            alert(err.message);
+            notify(err.message, "error");
           }
         });
       });
@@ -134,7 +134,7 @@ async function loadAdminReports() {
             });
             await loadAll();
           } catch (err) {
-            alert(err.message);
+            notify(err.message, "error");
           }
         });
       });
@@ -281,6 +281,14 @@ function escapeHtml(input) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function notify(message, kind) {
+  if (window.MeowShared && typeof window.MeowShared.toast === "function") {
+    window.MeowShared.toast(message, kind);
+    return;
+  }
+  alert(message);
 }
 
 const cachedKey = localStorage.getItem("admin_key");

@@ -1,10 +1,10 @@
 import { Link, router } from 'expo-router';
 import { useState } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import { Button, Card, Input, Screen, Txt } from '@/components';
 import { HttpError } from '@/api';
 import { useAuth } from '@/auth';
-import { colors, spacing } from '@/theme';
+import { colors, elevation, radius, spacing } from '@/theme';
 
 export default function LoginScreen() {
   const { login } = useAuth();
@@ -44,8 +44,43 @@ export default function LoginScreen() {
   return (
     <Screen contentStyle={{ justifyContent: 'center' }}>
       <Card>
+        <View
+          style={{
+            position: 'relative',
+            marginBottom: spacing.sm,
+          }}
+        >
+          <Image
+            source={{
+              uri: 'https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=1200&q=80',
+            }}
+            style={{
+              width: '100%',
+              height: 160,
+              borderRadius: radius.md,
+              ...elevation.card,
+            }}
+            resizeMode="cover"
+          />
+          <Image
+            source={{
+              uri: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=400&q=80',
+            }}
+            style={{
+              position: 'absolute',
+              right: spacing.sm,
+              bottom: spacing.sm,
+              width: 56,
+              height: 56,
+              borderRadius: radius.pill,
+              borderWidth: 2,
+              borderColor: colors.surface100,
+            }}
+            resizeMode="cover"
+          />
+        </View>
         <Txt kind="h1">欢迎回来 🐾</Txt>
-        <Txt muted>登录你的 Meow Circle 账号</Txt>
+        <Txt muted>猫咪是主角，汪星人也来打个招呼</Txt>
 
         <View style={{ gap: spacing.md, marginTop: spacing.lg }}>
           <Input

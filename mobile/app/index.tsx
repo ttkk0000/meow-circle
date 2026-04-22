@@ -3,26 +3,14 @@
 // splash so we don't flash the wrong screen.
 
 import { Redirect } from 'expo-router';
-import { ActivityIndicator, View } from 'react-native';
 import { useAuth } from '@/auth';
-import { colors } from '@/theme';
+import { KittyLoader } from '@/components';
 
 export default function Gate() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.surface100,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator color={colors.ink} />
-      </View>
-    );
+    return <KittyLoader label="正在打开喵友圈..." />;
   }
 
   return <Redirect href={user ? '/(tabs)' : '/(auth)/login'} />;

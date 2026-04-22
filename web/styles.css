@@ -591,6 +591,10 @@ body.home .topbar .search-box {
   padding: var(--space-1) var(--space-3);
 }
 body.home .topbar .search-box .search-icon { opacity: 0.55; }
+body.home .topbar .search-box:focus-within {
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-focus);
+}
 body.home .topbar .cta-link {
   padding: var(--space-2) var(--space-3);
   font-size: 13px;
@@ -620,6 +624,109 @@ body.home .hero {
   animation: home-rise var(--motion-slow) var(--ease-out-expo) both;
 }
 
+/* ---------- Kitty showcase ---------- */
+
+@keyframes kitty-glide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes kitty-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+body.home .kitty-showcase {
+  max-width: 1200px;
+  margin: 0 auto var(--space-5);
+  padding: var(--space-4);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-ambient);
+}
+body.home .kitty-showcase-head {
+  margin-bottom: var(--space-3);
+}
+body.home .kitty-showcase-head .h-section {
+  margin-bottom: var(--space-2);
+}
+body.home .kitty-showcase-head .lede-serif {
+  margin: 0;
+  color: var(--muted);
+  max-width: 50ch;
+}
+body.home .kitty-marquee {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-2) 0 var(--space-3);
+  border-top: 1px dotted var(--border-medium);
+  border-bottom: 1px dotted var(--border-medium);
+  margin-bottom: var(--space-4);
+  color: color-mix(in oklab, var(--brand) 45%, var(--text));
+}
+body.home .kitty-marquee span {
+  font-size: 1.05rem;
+  animation: kitty-float 1.8s ease-in-out infinite;
+}
+body.home .kitty-marquee span:nth-child(odd) {
+  animation-delay: 0.2s;
+}
+body.home .kitty-marquee::after {
+  content: "🐾 🐈 🐾 🐈‍⬛ 🐾 😺   🐾 🐈 🐾 🐈‍⬛ 🐾 😺";
+  white-space: nowrap;
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+  animation: kitty-glide 12s linear infinite;
+}
+body.home .kitty-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+body.home .kitty-photo-card {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--surface-100);
+}
+body.home .kitty-photo-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s var(--ease-out-quart),
+              opacity 0.32s var(--ease-out-quart);
+}
+body.home .kitty-photo-card img.is-swapping {
+  opacity: 0.72;
+}
+body.home .kitty-photo-card:hover img {
+  transform: scale(1.03);
+}
+body.home .kitty-photo-card .caption {
+  margin: 0;
+  padding: var(--space-3);
+  font-family: var(--font-serif);
+  font-feature-settings: "cswh";
+  font-size: 0.95rem;
+  color: var(--text-soft);
+}
+body.home .kitty-photo-card .kitty-card-meta {
+  margin: 0;
+  padding: 0 var(--space-3) var(--space-3);
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
 body.home .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
@@ -633,7 +740,11 @@ body.home .hero-copy .eyebrow { margin-bottom: var(--space-3); }
 body.home .hero-copy .h-mega {
   max-width: 18ch;
   margin: 0 0 var(--space-4);
-  font-size: clamp(1.75rem, 4.2vw, 3rem);
+  font-size: clamp(
+    1.75rem,
+    calc(0.042 * min(100vw, var(--type-fluid-vp-cap))),
+    2.75rem
+  );
   line-height: 1.05;
   letter-spacing: -0.028em;
   font-weight: 500;
@@ -642,7 +753,11 @@ body.home .hero-copy .h-mega {
 body.home .hero-copy .lede-serif {
   margin-bottom: var(--space-4);
   max-width: 42ch;
-  font-size: clamp(0.98rem, 1.15vw, 1.12rem);
+  font-size: clamp(
+    0.98rem,
+    calc(0.0115 * min(100vw, var(--type-fluid-vp-cap))),
+    1.12rem
+  );
   line-height: 1.52;
 }
 
@@ -706,7 +821,11 @@ body.home .hero-index-primary {
   gap: var(--space-2);
 }
 body.home .hero-index .display-num {
-  font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+  font-size: clamp(
+    1.85rem,
+    calc(0.038 * min(100vw, var(--type-fluid-vp-cap))),
+    2.5rem
+  );
   line-height: 0.96;
   letter-spacing: -0.026em;
 }
@@ -814,7 +933,11 @@ body.home .feed-head-row {
 /* Section titles sit between hero and list items; weight + size separate them from .item-title */
 body.home .feed-head .h-section {
   margin: 0;
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-size: clamp(
+    1.125rem,
+    calc(0.02 * min(100vw, var(--type-fluid-vp-cap))),
+    1.35rem
+  );
   line-height: 1.18;
   letter-spacing: -0.02em;
   font-weight: 600;
@@ -868,7 +991,11 @@ body.home .list-editorial .item-title {
   font-weight: 500;
 }
 body.home .list-editorial .item:first-child .item-title {
-  font-size: clamp(1.2rem, 1.65vw, 1.375rem);
+  font-size: clamp(
+    1.2rem,
+    calc(0.0165 * min(100vw, var(--type-fluid-vp-cap))),
+    1.35rem
+  );
   line-height: 1.12;
   letter-spacing: -0.018em;
   margin-bottom: var(--space-2);
@@ -1015,6 +1142,10 @@ body.home .list-compact .empty-state .hint-icon {
   font-size: 20px;
   opacity: 0.55;
 }
+body.home .list-editorial .empty-state .empty-mark,
+body.home .list-compact .empty-state .empty-mark {
+  margin: 0 0 var(--space-2);
+}
 
 /* ---------- Responsive ---------- */
 
@@ -1043,6 +1174,9 @@ body.home .list-compact .empty-state .hint-icon {
   body.home .feed-section.feed-aside {
     padding-top: var(--space-2);
   }
+  body.home .kitty-photo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1052,7 +1186,21 @@ body.home .list-compact .empty-state .hint-icon {
     border-radius: var(--r-md);
   }
   body.home .hero-index-primary .display-num {
-    font-size: clamp(1.65rem, 8vw, 2.35rem);
+    font-size: clamp(
+      1.65rem,
+      calc(0.08 * min(100vw, var(--type-fluid-vp-cap))),
+      2.35rem
+    );
+  }
+  body.home .kitty-showcase {
+    padding: var(--space-3);
+    border-radius: var(--r-md);
+  }
+  body.home .kitty-photo-grid {
+    grid-template-columns: 1fr;
+  }
+  body.home .kitty-marquee::after {
+    animation-duration: 16s;
   }
   body.home .list-editorial .item:first-child .item-title::before {
     width: 6px;

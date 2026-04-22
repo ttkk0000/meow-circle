@@ -726,6 +726,35 @@
     bar.appendChild(langSelect);
   }
 
+  function toast(message, kind) {
+    const tone = kind || "info";
+    let stack = document.querySelector(".toast-stack");
+    if (!stack) {
+      stack = document.createElement("div");
+      stack.className = "toast-stack";
+      stack.setAttribute("aria-live", "polite");
+      stack.setAttribute("aria-atomic", "false");
+      document.body.appendChild(stack);
+    }
+    const item = document.createElement("div");
+    item.className = `toast toast-${tone}`;
+    if (tone === "error") {
+      item.setAttribute("role", "alert");
+    } else {
+      item.setAttribute("role", "status");
+    }
+    item.textContent = String(message || "");
+    stack.appendChild(item);
+
+    requestAnimationFrame(() => item.classList.add("show"));
+    const hide = () => {
+      item.classList.remove("show");
+      setTimeout(() => item.remove(), 220);
+    };
+    setTimeout(hide, 2600);
+    item.addEventListener("click", hide, { once: true });
+  }
+
   // Expose globally
   window.MeowShared = {
     t,
@@ -735,6 +764,7 @@
     setLang,
     applyI18n,
     buildSettingsBar,
+    toast,
     SUPPORTED_THEMES,
     SUPPORTED_LANGS,
   };

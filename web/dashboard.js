@@ -26,6 +26,9 @@ const messageForm = document.querySelector("#message-form");
 const notifBtn = document.querySelector("#notif-btn");
 const notifCount = document.querySelector("#notif-count");
 let activePeerId = null;
+const activeRenderJobs = new WeakMap();
+const activeRequestControllers = new Map();
+const virtualListCleanups = new WeakMap();
 
 logoutBtn.addEventListener("click", () => {
   localStorage.removeItem(TOKEN_KEY);
@@ -65,10 +68,14 @@ if (notifBtn) {
   notifBtn.addEventListener("click", () => activateSection("notifications"));
 }
 
-document.querySelector("#refresh-my-posts").addEventListener("click", () => loadMyPosts());
-document.querySelector("#refresh-my-listings").addEventListener("click", () => loadMyListings());
-document.querySelector("#refresh-media").addEventListener("click", () => loadMedia());
-document.querySelector("#refresh-my-orders").addEventListener("click", () => loadMyOrders());
+const refreshMyPostsBtn = document.querySelector("#refresh-my-posts");
+const refreshMyListingsBtn = document.querySelector("#refresh-my-listings");
+const refreshMediaBtn = document.querySelector("#refresh-media");
+const refreshMyOrdersBtn = document.querySelector("#refresh-my-orders");
+if (refreshMyPostsBtn) refreshMyPostsBtn.addEventListener("click", () => runRefresh(refreshMyPostsBtn, loadMyPosts));
+if (refreshMyListingsBtn) refreshMyListingsBtn.addEventListener("click", () => runRefresh(refreshMyListingsBtn, loadMyListings));
+if (refreshMediaBtn) refreshMediaBtn.addEventListener("click", () => runRefresh(refreshMediaBtn, loadMedia));
+if (refreshMyOrdersBtn) refreshMyOrdersBtn.addEventListener("click", () => runRefresh(refreshMyOrdersBtn, loadMyOrders));
 
 document.querySelector("#orders-tab-buyer").addEventListener("click", () => switchOrdersTab("buyer"));
 document.querySelector("#orders-tab-seller").addEventListener("click", () => switchOrdersTab("seller"));
@@ -91,68 +98,34 @@ mediaForm.addEventListener("submit", async (event) => {
     mediaForm.reset();
     await loadMedia();
   } catch (err) {
-    alert(err.message);
+    notify(err.message, "error");
   }
 });
 
 async function loadMedia() {
+  const signal = takeRequestSignal("media");
   try {
-    const data = await apiCall("/api/v1/media", "GET");
+    const data = await apiCall("/api/v1/media", "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
-    mediaList.innerHTML = items.length ? "" : `<p>${escapeHtml(t("media.empty"))}</p>`;
-    for (const m of items) {
-      const el = document.createElement("article");
-      el.className = "item";
-      const preview = m.kind === "video"
-        ? `<video src="${escapeHtml(m.url)}" controls preload="metadata" style="max-width:100%;border-radius:8px"></video>`
-        : `<img src="${escapeHtml(m.url)}" alt="" style="max-width:100%;border-radius:8px" />`;
-      el.innerHTML = `
-        ${preview}
-        <p class="meta">#${m.id} · ${escapeHtml(m.kind)} · ${escapeHtml(m.mime)} · ${(m.size/1024).toFixed(1)} KB · ${escapeHtml(m.status)}</p>
-        <div class="item-actions">
-          <button type="button" class="copy-id" data-id="${m.id}">${escapeHtml(t("media.copy_id"))}</button>
-          <button type="button" class="danger" data-id="${m.id}">${escapeHtml(t("common.delete"))}</button>
-        </div>
-      `;
-      el.querySelector(".copy-id").addEventListener("click", () => {
-        navigator.clipboard && navigator.clipboard.writeText(String(m.id));
-      });
-      el.querySelector("button.danger").addEventListener("click", async () => {
-        if (!confirm(`${t("common.delete")} #${m.id}?`)) return;
-        try {
-          await apiCall(`/api/v1/media/${m.id}`, "DELETE");
-          await loadMedia();
-        } catch (err) {
-          alert(err.message);
-        }
-      });
-      mediaList.appendChild(el);
-    }
+    mediaList.innerHTML = items.length ? "" : renderEditorialEmptyState(t("media.empty"), "Nº M");
+    if (!items.length) return;
+    await renderInBatches(mediaList, items, buildMediaNode, { batchSize: 10 });
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     mediaList.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
 }
 
 async function loadMyOrders() {
+  const signal = takeRequestSignal(`orders:${ordersRole}`);
   try {
-    const data = await apiCall(`/api/v1/me/orders?role=${encodeURIComponent(ordersRole)}`, "GET");
+    const data = await apiCall(`/api/v1/me/orders?role=${encodeURIComponent(ordersRole)}`, "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
-    myOrdersNode.innerHTML = items.length ? "" : `<p>${escapeHtml(t("order.empty"))}</p>`;
-    for (const o of items) {
-      const el = document.createElement("article");
-      el.className = "item";
-      const price = `${(o.amount_cents / 100).toFixed(2)} ${escapeHtml(o.currency || "CNY")}`;
-      const statusLabel = t(`order.status.${o.status}`);
-      el.innerHTML = `
-        <p><strong>#${o.id}</strong> ${escapeHtml(o.listing_title || "")} · ${price}</p>
-        <p class="meta">${escapeHtml(t("meta.author"))} ${o.buyer_id} → ${escapeHtml(t("meta.seller"))} ${o.seller_id} · <b>${escapeHtml(statusLabel)}</b></p>
-        <div class="item-actions" data-order-id="${o.id}"></div>
-      `;
-      const actions = el.querySelector(".item-actions");
-      orderActions(o).forEach((btn) => actions.appendChild(btn));
-      myOrdersNode.appendChild(el);
-    }
+    myOrdersNode.innerHTML = items.length ? "" : renderEditorialEmptyState(t("order.empty"), "Nº O");
+    if (!items.length) return;
+    await renderInBatches(myOrdersNode, items, buildOrderNode, { batchSize: 10 });
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     myOrdersNode.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
 }
@@ -193,7 +166,7 @@ async function doOrderAction(id, action) {
     await apiCall(`/api/v1/orders/${id}/${action}`, "POST", body);
     await loadMyOrders();
   } catch (err) {
-    alert(err.message);
+    notify(err.message, "error");
   }
 }
 
@@ -211,9 +184,9 @@ postForm.addEventListener("submit", async (event) => {
       media_ids: mediaIds,
     });
     postForm.reset();
-    alert(t("alert.publish_success"));
+    notify(t("alert.publish_success"), "success");
   } catch (err) {
-    alert(err.message);
+    notify(err.message, "error");
   }
 });
 
@@ -231,9 +204,9 @@ listingForm.addEventListener("submit", async (event) => {
       media_ids: mediaIds,
     });
     listingForm.reset();
-    alert(t("alert.publish_success"));
+    notify(t("alert.publish_success"), "success");
   } catch (err) {
-    alert(err.message);
+    notify(err.message, "error");
   }
 });
 
@@ -242,71 +215,29 @@ function splitCsv(raw) {
 }
 
 async function loadMyPosts() {
+  const signal = takeRequestSignal("my-posts");
   try {
-    const data = await apiCall("/api/v1/me/posts", "GET");
+    const data = await apiCall("/api/v1/me/posts", "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
-    myPostsNode.innerHTML = items.length ? "" : `<p>${escapeHtml(t("common.empty_my_posts"))}</p>`;
-    for (const post of items) {
-      const el = document.createElement("article");
-      el.className = "item";
-      el.innerHTML = `
-        <div class="item-head">
-          <h3 class="item-title">${escapeHtml(post.title)}</h3>
-          <span class="pill category">${escapeHtml(post.category || "")}</span>
-        </div>
-        <p class="item-content">${escapeHtml(post.content)}</p>
-        <p class="meta">${escapeHtml(t("meta.published_at"))} ${formatTime(post.created_at)} · ${escapeHtml(t("meta.last_reply"))} ${formatTime(post.last_reply_at)}</p>
-        <div class="item-actions">
-          <button class="danger" data-id="${post.id}">${escapeHtml(t("common.delete"))}</button>
-        </div>
-      `;
-      el.querySelector("button.danger").addEventListener("click", async () => {
-        if (!confirm(t("common.confirm_delete_post") + ` #${post.id}`)) return;
-        try {
-          await apiCall(`/api/v1/posts/${post.id}`, "DELETE");
-          await loadMyPosts();
-        } catch (err) {
-          alert(err.message);
-        }
-      });
-      myPostsNode.appendChild(el);
-    }
+    myPostsNode.innerHTML = items.length ? "" : renderEditorialEmptyState(t("common.empty_my_posts"), "Nº P");
+    if (!items.length) return;
+    await renderInBatches(myPostsNode, items, buildMyPostNode, { batchSize: 10 });
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     myPostsNode.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
 }
 
 async function loadMyListings() {
+  const signal = takeRequestSignal("my-listings");
   try {
-    const data = await apiCall("/api/v1/me/listings", "GET");
+    const data = await apiCall("/api/v1/me/listings", "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
-    myListingsNode.innerHTML = items.length ? "" : `<p>${escapeHtml(t("common.empty_my_listings"))}</p>`;
-    for (const listing of items) {
-      const el = document.createElement("article");
-      el.className = "item";
-      el.innerHTML = `
-        <div class="item-head">
-          <h3 class="item-title">${escapeHtml(listing.title)}</h3>
-          <span class="pill type">${escapeHtml(listing.type || "")}</span>
-        </div>
-        <p class="item-content">${escapeHtml(listing.description || "")}</p>
-        <p class="meta">${escapeHtml(t("meta.price"))} ${(listing.price_cents / 100).toFixed(2)} ${escapeHtml(listing.currency)} · ${formatTime(listing.created_at)}</p>
-        <div class="item-actions">
-          <button class="danger" data-id="${listing.id}">${escapeHtml(t("common.delete"))}</button>
-        </div>
-      `;
-      el.querySelector("button.danger").addEventListener("click", async () => {
-        if (!confirm(t("common.confirm_delete_listing") + ` #${listing.id}`)) return;
-        try {
-          await apiCall(`/api/v1/listings/${listing.id}`, "DELETE");
-          await loadMyListings();
-        } catch (err) {
-          alert(err.message);
-        }
-      });
-      myListingsNode.appendChild(el);
-    }
+    myListingsNode.innerHTML = items.length ? "" : renderEditorialEmptyState(t("common.empty_my_listings"), "Nº L");
+    if (!items.length) return;
+    await renderInBatches(myListingsNode, items, buildMyListingNode, { batchSize: 10 });
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     myListingsNode.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
 }
@@ -324,10 +255,11 @@ async function apiUpload(url, formData) {
   return payload && payload.data !== undefined ? payload.data : payload;
 }
 
-async function apiCall(url, method = "GET", body) {
+async function apiCall(url, method = "GET", body, options = {}) {
   const init = {
     method,
     headers: { "Content-Type": "application/json" },
+    signal: options.signal,
   };
   const token = getToken();
   if (token) {
@@ -382,7 +314,7 @@ async function loadProfile() {
     const avatar = document.querySelector("#profile-avatar");
     if (me.avatar_url) { avatar.src = me.avatar_url; avatar.alt = me.username; } else { avatar.removeAttribute("src"); }
   } catch (err) {
-    alert(err.message);
+    notify(err.message, "error");
   }
 }
 
@@ -398,18 +330,19 @@ if (profileForm) {
       });
       localStorage.setItem(USER_KEY, JSON.stringify(updated));
       userHint.textContent = t("user.greeting").replace("{name}", updated.nickname || updated.username);
-      alert(t("profile.saved"));
+      notify(t("profile.saved"), "success");
       loadProfile();
-    } catch (err) { alert(err.message); }
+    } catch (err) { notify(err.message, "error"); }
   });
 }
 
 // ===== Notifications =====
 async function loadNotifications() {
+  const signal = takeRequestSignal("notifications");
   try {
-    const data = await apiCall("/api/v1/notifications", "GET");
+    const data = await apiCall("/api/v1/notifications", "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
-    notificationsList.innerHTML = items.length ? "" : `<div class="empty-state"><div class="hint-icon">🔔</div><p>${escapeHtml(t("notify.empty"))}</p></div>`;
+    notificationsList.innerHTML = items.length ? "" : renderEditorialEmptyState(t("notify.empty"), "Nº N");
     for (const n of items) {
       const el = document.createElement("div");
       el.className = "notification" + (n.read ? "" : " unread");
@@ -432,6 +365,7 @@ async function loadNotifications() {
     }
     refreshNotifBadge();
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     notificationsList.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
 }
@@ -461,28 +395,20 @@ async function refreshNotifBadge() {
 
 // ===== Messages =====
 async function loadConversations() {
+  const signal = takeRequestSignal("conversations");
   try {
-    const data = await apiCall("/api/v1/me/conversations", "GET");
+    const data = await apiCall("/api/v1/me/conversations", "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
-    convListNode.innerHTML = items.length ? "" : `<p class="empty-state">${escapeHtml(t("message.empty"))}</p>`;
-    for (const c of items) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.dataset.peerId = c.peer.id;
-      btn.innerHTML = `
-        <div class="user-row">
-          <div>
-            <div class="name">${escapeHtml(c.peer.nickname || c.peer.username)}</div>
-            <div class="handle">${escapeHtml((c.last_message || "").slice(0, 40))}</div>
-          </div>
-          ${c.unread_count ? `<span class="badge accent" style="margin-left:auto;">${c.unread_count}</span>` : ""}
-        </div>
-      `;
-      btn.addEventListener("click", () => openConversation(c.peer.id));
-      convListNode.appendChild(btn);
-      if (activePeerId === c.peer.id) btn.classList.add("active");
+    teardownVirtualList(convListNode);
+    convListNode.innerHTML = items.length ? "" : renderEditorialEmptyState(t("message.empty"), "Nº D");
+    if (!items.length) return;
+    if (items.length > 80) {
+      renderVirtualConversations(items);
+      return;
     }
+    await renderInBatches(convListNode, items, buildConversationNode, { batchSize: 12 });
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     convListNode.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
 }
@@ -493,7 +419,7 @@ async function openConversation(peerId) {
     b.classList.toggle("active", Number(b.dataset.peerId) === peerId));
   messageForm.hidden = false;
   try {
-    const data = await apiCall(`/api/v1/me/conversations/${peerId}`, "GET");
+    const data = await apiCall(`/api/v1/me/conversations/${peerId}`, "GET", undefined, { signal: takeRequestSignal(`conversation:${peerId}`) });
     const me = JSON.parse(localStorage.getItem(USER_KEY) || "{}");
     convMessagesNode.innerHTML = "";
     for (const m of data.messages || []) {
@@ -521,7 +447,7 @@ if (messageForm) {
       });
       messageForm.reset();
       openConversation(activePeerId);
-    } catch (err) { alert(err.message); }
+    } catch (err) { notify(err.message, "error"); }
   });
 }
 
@@ -533,7 +459,7 @@ if (startConvBtn) startConvBtn.addEventListener("click", () => {
   openConversation(peerId);
 });
 const refreshConvBtn = document.querySelector("#refresh-conversations");
-if (refreshConvBtn) refreshConvBtn.addEventListener("click", loadConversations);
+if (refreshConvBtn) refreshConvBtn.addEventListener("click", () => runRefresh(refreshConvBtn, loadConversations));
 
 function boot() {
   const token = getToken();
@@ -554,6 +480,230 @@ function boot() {
   loadMyPosts();
   refreshNotifBadge();
   setInterval(refreshNotifBadge, 30000);
+}
+
+function notify(message, kind) {
+  if (window.MeowShared && typeof window.MeowShared.toast === "function") {
+    window.MeowShared.toast(message, kind);
+    return;
+  }
+  alert(message);
+}
+
+function renderEditorialEmptyState(message, mark) {
+  return `<div class="empty-state empty-state-editorial"><div class="empty-mark" aria-hidden="true"><span class="index-num">${escapeHtml(mark)}</span></div><p>${escapeHtml(message)}</p></div>`;
+}
+
+async function runRefresh(button, loader) {
+  if (!button || typeof loader !== "function") return;
+  button.classList.add("is-loading");
+  try {
+    await loader();
+    button.classList.remove("is-loading");
+    button.classList.add("is-success");
+    setTimeout(() => button.classList.remove("is-success"), 720);
+  } catch (err) {
+    button.classList.remove("is-loading");
+    button.classList.add("is-error");
+    setTimeout(() => button.classList.remove("is-error"), 720);
+    notify(err.message, "error");
+  }
+}
+
+function buildMediaNode(m) {
+  const el = document.createElement("article");
+  el.className = "item";
+  const preview = m.kind === "video"
+    ? `<video src="${escapeHtml(m.url)}" controls preload="metadata" style="max-width:100%;border-radius:8px"></video>`
+    : `<img src="${escapeHtml(m.url)}" alt="" style="max-width:100%;border-radius:8px" />`;
+  el.innerHTML = `
+    ${preview}
+    <p class="meta">#${m.id} · ${escapeHtml(m.kind)} · ${escapeHtml(m.mime)} · ${(m.size / 1024).toFixed(1)} KB · ${escapeHtml(m.status)}</p>
+    <div class="item-actions">
+      <button type="button" class="copy-id" data-id="${m.id}">${escapeHtml(t("media.copy_id"))}</button>
+      <button type="button" class="danger" data-id="${m.id}">${escapeHtml(t("common.delete"))}</button>
+    </div>
+  `;
+  el.querySelector(".copy-id").addEventListener("click", () => {
+    navigator.clipboard && navigator.clipboard.writeText(String(m.id));
+  });
+  el.querySelector("button.danger").addEventListener("click", async () => {
+    if (!confirm(`${t("common.delete")} #${m.id}?`)) return;
+    try {
+      await apiCall(`/api/v1/media/${m.id}`, "DELETE");
+      await loadMedia();
+    } catch (err) {
+      notify(err.message, "error");
+    }
+  });
+  return el;
+}
+
+function buildOrderNode(o) {
+  const el = document.createElement("article");
+  el.className = "item";
+  const price = `${(o.amount_cents / 100).toFixed(2)} ${escapeHtml(o.currency || "CNY")}`;
+  const statusLabel = t(`order.status.${o.status}`);
+  el.innerHTML = `
+    <p><strong>#${o.id}</strong> ${escapeHtml(o.listing_title || "")} · ${price}</p>
+    <p class="meta">${escapeHtml(t("meta.author"))} ${o.buyer_id} → ${escapeHtml(t("meta.seller"))} ${o.seller_id} · <b>${escapeHtml(statusLabel)}</b></p>
+    <div class="item-actions" data-order-id="${o.id}"></div>
+  `;
+  const actions = el.querySelector(".item-actions");
+  orderActions(o).forEach((btn) => actions.appendChild(btn));
+  return el;
+}
+
+function buildMyPostNode(post) {
+  const el = document.createElement("article");
+  el.className = "item";
+  el.innerHTML = `
+    <div class="item-head">
+      <h3 class="item-title">${escapeHtml(post.title)}</h3>
+      <span class="pill category">${escapeHtml(post.category || "")}</span>
+    </div>
+    <p class="item-content">${escapeHtml(post.content)}</p>
+    <p class="meta">${escapeHtml(t("meta.published_at"))} ${formatTime(post.created_at)} · ${escapeHtml(t("meta.last_reply"))} ${formatTime(post.last_reply_at)}</p>
+    <div class="item-actions">
+      <button class="danger" data-id="${post.id}">${escapeHtml(t("common.delete"))}</button>
+    </div>
+  `;
+  el.querySelector("button.danger").addEventListener("click", async () => {
+    if (!confirm(t("common.confirm_delete_post") + ` #${post.id}`)) return;
+    try {
+      await apiCall(`/api/v1/posts/${post.id}`, "DELETE");
+      await loadMyPosts();
+    } catch (err) {
+      notify(err.message, "error");
+    }
+  });
+  return el;
+}
+
+function buildMyListingNode(listing) {
+  const el = document.createElement("article");
+  el.className = "item";
+  el.innerHTML = `
+    <div class="item-head">
+      <h3 class="item-title">${escapeHtml(listing.title)}</h3>
+      <span class="pill type">${escapeHtml(listing.type || "")}</span>
+    </div>
+    <p class="item-content">${escapeHtml(listing.description || "")}</p>
+    <p class="meta">${escapeHtml(t("meta.price"))} ${(listing.price_cents / 100).toFixed(2)} ${escapeHtml(listing.currency)} · ${formatTime(listing.created_at)}</p>
+    <div class="item-actions">
+      <button class="danger" data-id="${listing.id}">${escapeHtml(t("common.delete"))}</button>
+    </div>
+  `;
+  el.querySelector("button.danger").addEventListener("click", async () => {
+    if (!confirm(t("common.confirm_delete_listing") + ` #${listing.id}`)) return;
+    try {
+      await apiCall(`/api/v1/listings/${listing.id}`, "DELETE");
+      await loadMyListings();
+    } catch (err) {
+      notify(err.message, "error");
+    }
+  });
+  return el;
+}
+
+function buildConversationNode(c) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.dataset.peerId = c.peer.id;
+  btn.innerHTML = `
+    <div class="user-row">
+      <div>
+        <div class="name">${escapeHtml(c.peer.nickname || c.peer.username)}</div>
+        <div class="handle">${escapeHtml((c.last_message || "").slice(0, 40))}</div>
+      </div>
+      ${c.unread_count ? `<span class="badge accent" style="margin-left:auto;">${c.unread_count}</span>` : ""}
+    </div>
+  `;
+  btn.addEventListener("click", () => openConversation(c.peer.id));
+  if (activePeerId === c.peer.id) btn.classList.add("active");
+  return btn;
+}
+
+async function renderInBatches(container, items, renderItem, options = {}) {
+  const batchSize = options.batchSize || 12;
+  const jobId = Symbol("render-job");
+  activeRenderJobs.set(container, jobId);
+  container.innerHTML = "";
+  for (let i = 0; i < items.length; i += batchSize) {
+    if (activeRenderJobs.get(container) !== jobId) return;
+    const frag = document.createDocumentFragment();
+    const batch = items.slice(i, i + batchSize);
+    for (const item of batch) {
+      frag.appendChild(renderItem(item));
+    }
+    container.appendChild(frag);
+    if (i + batchSize < items.length) await nextFrame();
+  }
+}
+
+function nextFrame() {
+  return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+}
+
+function renderVirtualConversations(items) {
+  teardownVirtualList(convListNode);
+  convListNode.innerHTML = "";
+  const rowHeight = 62;
+  const overscan = 6;
+  const topSpacer = document.createElement("div");
+  const bottomSpacer = document.createElement("div");
+  const viewport = document.createElement("div");
+  convListNode.append(topSpacer, viewport, bottomSpacer);
+  let currentStart = -1;
+  let currentEnd = -1;
+
+  const renderWindow = () => {
+    const scrollTop = convListNode.scrollTop;
+    const viewportHeight = convListNode.clientHeight || 420;
+    const visibleStart = Math.max(0, Math.floor(scrollTop / rowHeight) - overscan);
+    const visibleEnd = Math.min(items.length, Math.ceil((scrollTop + viewportHeight) / rowHeight) + overscan);
+    if (visibleStart === currentStart && visibleEnd === currentEnd) return;
+    currentStart = visibleStart;
+    currentEnd = visibleEnd;
+    topSpacer.style.height = `${visibleStart * rowHeight}px`;
+    bottomSpacer.style.height = `${Math.max(0, (items.length - visibleEnd) * rowHeight)}px`;
+    viewport.innerHTML = "";
+    const frag = document.createDocumentFragment();
+    for (let i = visibleStart; i < visibleEnd; i++) {
+      frag.appendChild(buildConversationNode(items[i]));
+    }
+    viewport.appendChild(frag);
+  };
+
+  const onScroll = () => requestAnimationFrame(renderWindow);
+  convListNode.addEventListener("scroll", onScroll, { passive: true });
+  renderWindow();
+  virtualListCleanups.set(convListNode, () => {
+    convListNode.removeEventListener("scroll", onScroll);
+  });
+}
+
+function teardownVirtualList(container) {
+  const cleanup = virtualListCleanups.get(container);
+  if (cleanup) {
+    cleanup();
+    virtualListCleanups.delete(container);
+  }
+}
+
+function takeRequestSignal(key) {
+  cancelRequest(key);
+  const controller = new AbortController();
+  activeRequestControllers.set(key, controller);
+  return controller.signal;
+}
+
+function cancelRequest(key) {
+  const controller = activeRequestControllers.get(key);
+  if (controller) {
+    controller.abort();
+    activeRequestControllers.delete(key);
+  }
 }
 
 boot();

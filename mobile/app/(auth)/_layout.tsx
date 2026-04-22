@@ -13,10 +13,11 @@ export default function AuthLayout() {
         contentStyle: { backgroundColor: colors.surface100 },
         headerShadowVisible: false,
         headerBackTitle: ' ',
+        headerShown: false,
       }}
     >
-      <Stack.Screen name="login" options={{ title: '登录' }} />
-      <Stack.Screen name="register" options={{ title: '注册' }} />
+      <Stack.Screen name="login" />
+      <Stack.Screen name="register" />
     </Stack>
   );
 }

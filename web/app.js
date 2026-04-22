@@ -13,17 +13,21 @@ const postsContainer = document.querySelector("#posts");
 const listingsContainer = document.querySelector("#listings");
 const postTemplate = document.querySelector("#post-item-template");
 const listingTemplate = document.querySelector("#listing-item-template");
+const activeRenderJobs = new WeakMap();
+const activeRequestControllers = new Map();
 
 function requireLogin(reason) {
   if (reason) {
-    try { alert(reason); } catch (_) {}
+    notify(reason, "error");
   }
   const back = encodeURIComponent(location.pathname + location.search + location.hash);
   location.href = `/login?return_to=${back}`;
 }
 
-document.querySelector("#refresh-posts").addEventListener("click", () => loadPosts());
-document.querySelector("#refresh-listings").addEventListener("click", () => loadListings());
+const refreshPostsBtn = document.querySelector("#refresh-posts");
+const refreshListingsBtn = document.querySelector("#refresh-listings");
+if (refreshPostsBtn) refreshPostsBtn.addEventListener("click", () => runRefresh(refreshPostsBtn, loadPosts));
+if (refreshListingsBtn) refreshListingsBtn.addEventListener("click", () => runRefresh(refreshListingsBtn, loadListings));
 
 const heroPrimary = document.querySelector("#hero-primary");
 if (heroPrimary) {
@@ -77,6 +81,7 @@ document.querySelectorAll('[data-search-tab]').forEach((btn) => {
 function hideSearchResults() {
   if (searchResultsPanel) searchResultsPanel.hidden = true;
   lastSearchQuery = "";
+  cancelRequest("search");
 }
 
 async function runSearch(q, type) {
@@ -84,44 +89,28 @@ async function runSearch(q, type) {
   searchResultsPanel.hidden = false;
   searchPostsNode.innerHTML = skeletonRows(3);
   searchListingsNode.innerHTML = "";
+  const signal = takeRequestSignal("search");
   try {
-    const data = await apiCall(`/api/v1/search?q=${encodeURIComponent(q)}&type=${type}`, "GET");
-    renderSearchSection(searchPostsNode, data.posts || [], "post");
-    renderSearchSection(searchListingsNode, data.listings || [], "listing");
+    const data = await apiCall(`/api/v1/search?q=${encodeURIComponent(q)}&type=${type}`, "GET", undefined, { signal });
+    await renderSearchSection(searchPostsNode, data.posts || [], "post");
+    await renderSearchSection(searchListingsNode, data.listings || [], "listing");
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     searchPostsNode.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
 }
 
-function renderSearchSection(container, items, kind) {
+async function renderSearchSection(container, items, kind) {
   container.innerHTML = "";
   if (items.length === 0) {
-    container.innerHTML = `<p class="empty-state">${escapeHtml(t("search.no_result"))}</p>`;
+    container.innerHTML = renderEditorialEmptyState(t("search.no_result"), "Nº S");
     return;
   }
   const title = document.createElement("div");
   title.className = "group-title";
   title.textContent = kind === "post" ? t("search.tab_posts") : t("search.tab_listings");
   container.appendChild(title);
-  for (const item of items) {
-    const el = document.createElement("article");
-    el.className = "item";
-    const head = document.createElement("div");
-    head.className = "item-head";
-    head.innerHTML = `<h3 class="item-title">${escapeHtml(item.title)}</h3><span class="pill">${escapeHtml(kind)}</span>`;
-    const body = document.createElement("p");
-    body.className = "item-content";
-    body.textContent = kind === "post" ? (item.content || "") : (item.description || "");
-    const meta = document.createElement("p");
-    meta.className = "meta";
-    if (kind === "post") {
-      meta.textContent = `${t("meta.author")} ${item.author_id} · ${formatTime(item.created_at)}`;
-    } else {
-      meta.textContent = `${t("meta.seller")} ${item.seller_id} · ${t("meta.price")} ${(item.price_cents / 100).toFixed(2)} ${item.currency}`;
-    }
-    el.append(head, body, meta);
-    container.appendChild(el);
-  }
+  await renderInBatches(container, items, (item) => buildSearchItemNode(item, kind), { batchSize: 14, preserveExisting: true });
 }
 
 function skeletonRows(n) {
@@ -160,19 +149,19 @@ logoutBtn.addEventListener("click", () => {
 
 async function loadPosts() {
   postsContainer.innerHTML = skeletonRows(3);
+  const signal = takeRequestSignal("posts");
   try {
-    const data = await apiCall("/api/v1/posts?page=1&page_size=20", "GET");
+    const data = await apiCall("/api/v1/posts?page=1&page_size=20", "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
     postsContainer.innerHTML = "";
     updateStat("stat-posts", data.total ?? items.length);
     if (items.length === 0) {
-      postsContainer.innerHTML = `<div class="empty-state"><div class="hint-icon">📝</div><p>${escapeHtml(t("common.empty_posts_hint"))}</p></div>`;
+      postsContainer.innerHTML = renderEditorialEmptyState(t("common.empty_posts_hint"), "Nº 01");
       return;
     }
-    for (const post of items) {
-      renderPost(post);
-    }
+    await renderInBatches(postsContainer, items, buildPostNode, { batchSize: 8 });
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     postsContainer.innerHTML = `<p>${escapeHtml(t("common.error_load_posts"))}: ${escapeHtml(err.message)}</p>`;
   }
 }
@@ -182,7 +171,7 @@ function updateStat(id, value) {
   if (el) el.textContent = String(value);
 }
 
-function renderPost(post) {
+function buildPostNode(post) {
   const node = postTemplate.content.cloneNode(true);
   window.MeowShared.applyI18n(node);
   node.querySelector(".item-title").textContent = post.title;
@@ -241,75 +230,80 @@ function renderPost(post) {
       details.open = true;
       details.dispatchEvent(new Event("toggle"));
     } catch (err) {
-      alert(err.message);
+      notify(err.message, "error");
     }
   });
 
-  postsContainer.appendChild(node);
+  return node;
 }
 
 async function loadListings() {
   listingsContainer.innerHTML = skeletonRows(3);
+  const signal = takeRequestSignal("listings");
   try {
-    const data = await apiCall("/api/v1/listings?page=1&page_size=20", "GET");
+    const data = await apiCall("/api/v1/listings?page=1&page_size=20", "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
     listingsContainer.innerHTML = "";
     updateStat("stat-listings", data.total ?? items.length);
     if (items.length === 0) {
-      listingsContainer.innerHTML = `<div class="empty-state"><div class="hint-icon">🛒</div><p>${escapeHtml(t("common.empty_listings"))}</p></div>`;
+      listingsContainer.innerHTML = renderEditorialEmptyState(t("common.empty_listings"), "Nº 02");
       return;
     }
-    for (const listing of items) {
-      const node = listingTemplate.content.cloneNode(true);
-      window.MeowShared.applyI18n(node);
-      node.querySelector(".item-title").textContent = listing.title;
-      node.querySelector(".type").textContent = listing.type || "product";
-      node.querySelector(".item-content").textContent = listing.description || t("common.no_description");
-      node.querySelector(".meta").textContent =
-        `${t("meta.seller")} ${listing.seller_id} · ${t("meta.price")} ${(listing.price_cents / 100).toFixed(2)} ${listing.currency}`;
-      const article = node.querySelector("article.item");
-      const actions = document.createElement("div");
-      actions.className = "item-actions";
-      if (listing.price_cents > 0) {
-        const buyBtn = document.createElement("button");
-        buyBtn.type = "button";
-        buyBtn.textContent = t("listing.btn_buy");
-        buyBtn.addEventListener("click", () => buyListing(listing));
-        actions.appendChild(buyBtn);
-      }
-      actions.appendChild(buildReportButton("listing", listing.id));
-      article.appendChild(actions);
-
-      if (Array.isArray(listing.media_ids) && listing.media_ids.length) {
-        const detailsEl = document.createElement("details");
-        detailsEl.innerHTML = `<summary>${escapeHtml(t("post.view_comments"))}</summary>`;
-        const holder = document.createElement("div");
-        detailsEl.appendChild(holder);
-        let loaded = false;
-        detailsEl.addEventListener("toggle", async () => {
-          if (!detailsEl.open || loaded) return;
-          try {
-            const detail = await apiCall(`/api/v1/listings/${listing.id}`, "GET");
-            const mediaItems = Array.isArray(detail.media) ? detail.media : [];
-            if (mediaItems.length) holder.appendChild(renderMediaGallery(mediaItems));
-            loaded = true;
-          } catch (err) {
-            holder.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
-          }
-        });
-        article.appendChild(detailsEl);
-      }
-      listingsContainer.appendChild(node);
-    }
+    await renderInBatches(listingsContainer, items, buildListingNode, { batchSize: 10 });
   } catch (err) {
+    if (err && err.name === "AbortError") return;
     listingsContainer.innerHTML = `<p>${escapeHtml(t("common.error_load_listings"))}: ${escapeHtml(err.message)}</p>`;
   }
 }
 
-async function apiCall(url, method = "GET", body) {
+function buildListingNode(listing) {
+  const node = listingTemplate.content.cloneNode(true);
+  window.MeowShared.applyI18n(node);
+  node.querySelector(".item-title").textContent = listing.title;
+  node.querySelector(".type").textContent = listing.type || "product";
+  node.querySelector(".item-content").textContent = listing.description || t("common.no_description");
+  node.querySelector(".meta").textContent =
+    `${t("meta.seller")} ${listing.seller_id} · ${t("meta.price")} ${(listing.price_cents / 100).toFixed(2)} ${listing.currency}`;
+  const article = node.querySelector("article.item");
+  const actions = document.createElement("div");
+  actions.className = "item-actions";
+  if (listing.price_cents > 0) {
+    const buyBtn = document.createElement("button");
+    buyBtn.type = "button";
+    buyBtn.textContent = t("listing.btn_buy");
+    buyBtn.addEventListener("click", () => buyListing(listing));
+    actions.appendChild(buyBtn);
+  }
+  actions.appendChild(buildReportButton("listing", listing.id));
+  article.appendChild(actions);
+
+  if (Array.isArray(listing.media_ids) && listing.media_ids.length) {
+    const detailsEl = document.createElement("details");
+    detailsEl.innerHTML = `<summary>${escapeHtml(t("post.view_comments"))}</summary>`;
+    const holder = document.createElement("div");
+    detailsEl.appendChild(holder);
+    let loaded = false;
+    detailsEl.addEventListener("toggle", async () => {
+      if (!detailsEl.open || loaded) return;
+      try {
+        const detail = await apiCall(`/api/v1/listings/${listing.id}`, "GET");
+        const mediaItems = Array.isArray(detail.media) ? detail.media : [];
+        if (mediaItems.length) holder.appendChild(renderMediaGallery(mediaItems));
+        loaded = true;
+      } catch (err) {
+        holder.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
+      }
+    });
+    article.appendChild(detailsEl);
+  }
+  return node;
+}
+
+async function apiCall(url, method = "GET", body, options = {}) {
   const init = {
     method,
     headers: { "Content-Type": "application/json" },
+    signal: options.signal,
   };
   const token = getToken();
   if (token) {
@@ -406,9 +400,9 @@ function buildReportButton(kind, id) {
     if (!reason) return;
     try {
       await apiCall("/api/v1/reports", "POST", { target_kind: kind, target_id: id, reason });
-      alert(t("report.submitted"));
+      notify(t("report.submitted"), "success");
     } catch (err) {
-      alert(err.message);
+      notify(err.message, "error");
     }
   });
   return btn;
@@ -421,9 +415,162 @@ async function buyListing(listing) {
   }
   try {
     const order = await apiCall("/api/v1/orders", "POST", { listing_id: listing.id });
-    alert(`${t("listing.btn_buy")} #${order.id} · ${t("order.status.pending_payment")}`);
+    notify(`${t("listing.btn_buy")} #${order.id} · ${t("order.status.pending_payment")}`, "success");
   } catch (err) {
-    alert(err.message);
+    notify(err.message, "error");
+  }
+}
+
+function notify(message, kind) {
+  if (window.MeowShared && typeof window.MeowShared.toast === "function") {
+    window.MeowShared.toast(message, kind);
+    return;
+  }
+  alert(message);
+}
+
+function renderEditorialEmptyState(message, mark) {
+  return `<div class="empty-state empty-state-editorial"><div class="empty-mark" aria-hidden="true"><span class="index-num">${escapeHtml(mark)}</span></div><p>${escapeHtml(message)}</p></div>`;
+}
+
+async function runRefresh(button, loader) {
+  if (!button || typeof loader !== "function") return;
+  button.classList.add("is-loading");
+  try {
+    await loader();
+    button.classList.remove("is-loading");
+    button.classList.add("is-success");
+    setTimeout(() => button.classList.remove("is-success"), 720);
+  } catch (err) {
+    button.classList.remove("is-loading");
+    button.classList.add("is-error");
+    setTimeout(() => button.classList.remove("is-error"), 720);
+    notify(err.message, "error");
+  }
+}
+
+async function renderInBatches(container, items, renderItem, options = {}) {
+  const batchSize = options.batchSize || 12;
+  const preserveExisting = options.preserveExisting === true;
+  const jobId = Symbol("render-job");
+  activeRenderJobs.set(container, jobId);
+  if (!preserveExisting) container.innerHTML = "";
+  for (let i = 0; i < items.length; i += batchSize) {
+    if (activeRenderJobs.get(container) !== jobId) return;
+    const frag = document.createDocumentFragment();
+    const batch = items.slice(i, i + batchSize);
+    for (const item of batch) {
+      frag.appendChild(renderItem(item));
+    }
+    container.appendChild(frag);
+    if (i + batchSize < items.length) {
+      await nextFrame();
+    }
+  }
+}
+
+function nextFrame() {
+  return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+}
+
+function initKittyShowcase() {
+  const cards = Array.from(document.querySelectorAll(".kitty-photo-card"));
+  if (cards.length === 0) return;
+  const pool = [
+    {
+      src: "https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=900&q=80",
+      alt: "好奇地看向镜头的猫",
+      caption: "“今天是认真营业的小店长”",
+      likes: 246,
+      comments: 38,
+    },
+    {
+      src: "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=900&q=80",
+      alt: "在毯子上休息的猫",
+      caption: "“午后打盹，主打一个治愈”",
+      likes: 312,
+      comments: 54,
+    },
+    {
+      src: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=80",
+      alt: "坐在窗边的橘猫",
+      caption: "“窗边观察员，已上线巡逻”",
+      likes: 189,
+      comments: 29,
+    },
+    {
+      src: "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=900&q=80",
+      alt: "在木桌上趴着的灰白猫",
+      caption: "“值班结束，申请摸摸奖励”",
+      likes: 278,
+      comments: 41,
+    },
+    {
+      src: "https://images.unsplash.com/photo-1536589961747-e239b2c7d4d0?auto=format&fit=crop&w=900&q=80",
+      alt: "看向窗外的黑白猫",
+      caption: "“今天也在认真研究窗外新闻”",
+      likes: 334,
+      comments: 47,
+    },
+  ];
+
+  let tick = 0;
+  const swapCard = (card, data) => {
+    const img = card.querySelector("img");
+    const caption = card.querySelector(".caption");
+    const meta = card.querySelector(".kitty-card-meta");
+    if (!img || !caption || !meta) return;
+    img.classList.add("is-swapping");
+    setTimeout(() => {
+      img.src = data.src;
+      img.alt = data.alt;
+      caption.textContent = data.caption;
+      meta.innerHTML = `<span>❤ ${data.likes}</span><span>💬 ${data.comments}</span>`;
+      img.classList.remove("is-swapping");
+    }, 170);
+  };
+
+  setInterval(() => {
+    tick += 1;
+    cards.forEach((card, idx) => {
+      const data = pool[(tick + idx) % pool.length];
+      swapCard(card, data);
+    });
+  }, 7000);
+}
+
+function buildSearchItemNode(item, kind) {
+  const el = document.createElement("article");
+  el.className = "item";
+  const head = document.createElement("div");
+  head.className = "item-head";
+  head.innerHTML = `<h3 class="item-title">${escapeHtml(item.title)}</h3><span class="pill">${escapeHtml(kind)}</span>`;
+  const body = document.createElement("p");
+  body.className = "item-content";
+  body.textContent = kind === "post" ? (item.content || "") : (item.description || "");
+  const meta = document.createElement("p");
+  meta.className = "meta";
+  if (kind === "post") {
+    meta.textContent = `${t("meta.author")} ${item.author_id} · ${formatTime(item.created_at)}`;
+  } else {
+    meta.textContent = `${t("meta.seller")} ${item.seller_id} · ${t("meta.price")} ${(item.price_cents / 100).toFixed(2)} ${item.currency}`;
+  }
+  el.append(head, body, meta);
+  return el;
+}
+
+function takeRequestSignal(key) {
+  cancelRequest(key);
+  const controller = new AbortController();
+  activeRequestControllers.set(key, controller);
+  return controller.signal;
+}
+
+function cancelRequest(key) {
+  const controller = activeRequestControllers.get(key);
+  if (controller) {
+    controller.abort();
+    activeRequestControllers.delete(key);
   }
 }
 
@@ -437,5 +584,6 @@ function escapeHtml(input) {
 }
 
 applyAuthState();
+initKittyShowcase();
 loadPosts();
 loadListings();

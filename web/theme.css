@@ -124,11 +124,26 @@
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Editorial display scale — for hero/masthead moments only. Fluid via
-     clamp() so marketing surfaces breathe on large screens. */
-  --h-mega:    clamp(2.5rem, 7vw, 5.5rem);
-  --h-display: clamp(2rem,   4.8vw, 4.5rem);
-  --h-section: clamp(1.5rem, 2.6vw, 2.25rem);
+  /* Fluid type: vw is capped at this viewport width so ultrawide / 4K
+     does not keep inflating display sizes (content column ~1200px). */
+  --type-fluid-vp-cap: 1200px;
+
+  /* Editorial display scale — for hero/masthead moments only. */
+  --h-mega: clamp(
+    2.5rem,
+    calc(0.07 * min(100vw, var(--type-fluid-vp-cap))),
+    4rem
+  );
+  --h-display: clamp(
+    2rem,
+    calc(0.048 * min(100vw, var(--type-fluid-vp-cap))),
+    3.25rem
+  );
+  --h-section: clamp(
+    1.5rem,
+    calc(0.026 * min(100vw, var(--type-fluid-vp-cap))),
+    2rem
+  );
 
   /* A softer, warmer near-black one click darker than --text, used for
      display numerals so large metrics don't bloom on warm cream. */
@@ -292,7 +307,7 @@ h1,
 .h-display {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2rem, 4.8vw, 4.5rem);
+  font-size: var(--h-display);
   line-height: 1.05;
   letter-spacing: var(--tracking-display);
   margin: 0 0 var(--space-4);
@@ -301,7 +316,7 @@ h2,
 .h-section {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-size: var(--h-section);
   line-height: 1.15;
   letter-spacing: var(--tracking-section);
   margin: 0 0 var(--space-3);
@@ -385,7 +400,11 @@ pre {
 .lede-serif {
   font-family: var(--font-serif);
   font-feature-settings: "cswh";
-  font-size: clamp(1.08rem, 1.45vw, 1.25rem);
+  font-size: clamp(
+    1.08rem,
+    calc(0.0145 * min(100vw, var(--type-fluid-vp-cap))),
+    1.2rem
+  );
   line-height: 1.55;
   color: var(--text-soft);
   max-width: 56ch;
@@ -425,7 +444,11 @@ pre {
 /* Display numeral — for masthead totals. Big, tight, warm near-black. */
 .display-num {
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 6vw, 5rem);
+  font-size: clamp(
+    2.75rem,
+    calc(0.06 * min(100vw, var(--type-fluid-vp-cap))),
+    3.25rem
+  );
   font-weight: 400;
   line-height: 0.94;
   letter-spacing: -0.03em;
@@ -469,6 +492,36 @@ button:disabled,
 .btn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+button.is-loading,
+.btn.is-loading {
+  position: relative;
+  color: var(--text-soft);
+}
+button.is-loading::after,
+.btn.is-loading::after {
+  content: "";
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  border-top-color: var(--text);
+  animation: spin 0.8s linear infinite;
+}
+button.is-success,
+.btn.is-success {
+  box-shadow: 0 0 0 2px var(--ok-bg);
+  border-color: color-mix(in oklab, var(--ok) 40%, var(--border));
+}
+button.is-error,
+.btn.is-error {
+  box-shadow: 0 0 0 2px var(--danger-bg);
+  border-color: var(--danger-border);
 }
 
 .btn-primary {
@@ -732,7 +785,11 @@ label {
 .hero p.lede {
   font-family: var(--font-serif);
   font-feature-settings: "cswh";
-  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  font-size: clamp(
+    1.05rem,
+    calc(0.014 * min(100vw, var(--type-fluid-vp-cap))),
+    1.15rem
+  );
   max-width: 620px;
   color: var(--text-soft);
   margin: 0 0 var(--space-6);
@@ -775,7 +832,11 @@ label {
 }
 .stat-card .stat-value {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+  font-size: clamp(
+    1.75rem,
+    calc(0.025 * min(100vw, var(--type-fluid-vp-cap))),
+    2rem
+  );
   font-weight: 400;
   letter-spacing: -0.02em;
   color: var(--text);
@@ -796,6 +857,10 @@ label {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.55; }
 }
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
 .empty-state {
   padding: var(--space-8) var(--space-4);
@@ -803,10 +868,67 @@ label {
   color: var(--muted);
   font-family: var(--font-serif);
 }
-.empty-state .hint-icon {
-  font-size: 28px;
+.empty-state.empty-state-editorial {
+  text-align: left;
+  border-top: 1px dotted var(--border-medium);
+  max-width: 50ch;
+  padding-inline: 0;
+}
+.empty-state .empty-mark {
   margin-bottom: var(--space-3);
-  opacity: 0.7;
+}
+.empty-state .empty-mark .index-num {
+  display: inline-block;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: 2px var(--space-2);
+  background: var(--surface-300);
+}
+.empty-state p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ========== Toast ========== */
+
+.toast-stack {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 70;
+  display: grid;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+.toast {
+  min-width: min(380px, calc(100vw - var(--space-8)));
+  max-width: min(460px, calc(100vw - var(--space-8)));
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--r-md);
+  padding: var(--space-3) var(--space-4);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast.toast-success {
+  border-color: color-mix(in oklab, var(--ok) 34%, var(--border));
+  background: color-mix(in oklab, var(--ok-bg) 46%, var(--card));
+}
+.toast.toast-error {
+  border-color: var(--danger-border);
+  background: color-mix(in oklab, var(--danger-bg) 52%, var(--card));
 }
 
 /* ========== Tabs ========== */
