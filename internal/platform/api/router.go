@@ -17,6 +17,7 @@ import (
 	"kitty-circle/internal/platform/audit"
 	"kitty-circle/internal/platform/auth"
 	"kitty-circle/internal/platform/payment"
+	"kitty-circle/internal/platform/phoneotp"
 	"kitty-circle/internal/store"
 	"kitty-circle/internal/store/cache"
 	"kitty-circle/internal/store/postgres"
@@ -46,6 +47,7 @@ type Router struct {
 	payments    *payment.Router
 	filter      *audit.Filter
 	loginLimit  *auth.LoginLimiter
+	phoneOTP    *phoneotp.Store
 	allowOrigin string
 }
 
@@ -62,6 +64,7 @@ func NewRouter() http.Handler {
 		payments:    buildPaymentRouter(),
 		filter:      audit.NewFilter(audit.DefaultKeywords()),
 		loginLimit:  auth.NewLoginLimiter(5, 10*time.Minute, 10*time.Minute),
+		phoneOTP:    phoneotp.NewStore(10 * time.Minute),
 		allowOrigin: getEnv("CORS_ALLOW_ORIGIN", "*"),
 	}
 	r.routes()
@@ -233,6 +236,7 @@ func (r *Router) routes() {
 	})
 
 	r.mux.HandleFunc("/api/v1/auth/register", r.handleRegister)
+	r.mux.HandleFunc("/api/v1/auth/send-verification-code", r.handleSendVerificationCode)
 	r.mux.HandleFunc("/api/v1/auth/login", r.handleLogin)
 	r.mux.HandleFunc("/api/v1/auth/me", r.requireAuth(r.handleMe))
 	r.mux.HandleFunc("/api/v1/me", r.requireAuth(r.handleUpdateMe))
@@ -263,6 +267,7 @@ func (r *Router) routes() {
 	r.mux.HandleFunc("/api/v1/payments/methods", r.handlePaymentMethods)
 
 	r.mux.HandleFunc("/api/v1/me/posts", r.requireAuth(r.handleMyPosts))
+	r.mux.HandleFunc("/api/v1/me/follow/", r.requireAuth(r.handleMeFollow))
 	r.mux.HandleFunc("/api/v1/me/listings", r.requireAuth(r.handleMyListings))
 	r.mux.HandleFunc("/api/v1/me/orders", r.requireAuth(r.handleMyOrders))
 
@@ -291,6 +296,27 @@ func (r *Router) handlePaymentMethods(w http.ResponseWriter, req *http.Request) 
 
 // ===== Auth handlers =====
 
+func (r *Router) handleSendVerificationCode(w http.ResponseWriter, req *http.Request) {
+	if req.Method != http.MethodPost {
+		writeError(w, http.StatusMethodNotAllowed, "method not allowed")
+		return
+	}
+	var payload struct {
+		Phone string `json:"phone"`
+	}
+	if err := decodeJSON(req, &payload); err != nil {
+		writeError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	norm := phoneotp.NormalizePhone(payload.Phone)
+	if !phoneotp.ValidPhone(norm) {
+		writeError(w, http.StatusBadRequest, "invalid phone number")
+		return
+	}
+	r.phoneOTP.Issue(norm)
+	writeOK(w, map[string]any{"ok": true})
+}
+
 func (r *Router) handleRegister(w http.ResponseWriter, req *http.Request) {
 	if req.Method != http.MethodPost {
 		writeError(w, http.StatusMethodNotAllowed, "method not allowed")
@@ -300,6 +326,8 @@ func (r *Router) handleRegister(w http.ResponseWriter, req *http.Request) {
 		Username string `json:"username"`
 		Password string `json:"password"`
 		Nickname string `json:"nickname"`
+		Phone    string `json:"phone"`
+		SMSCode  string `json:"sms_code"`
 	}
 	if err := decodeJSON(req, &payload); err != nil {
 		writeError(w, http.StatusBadRequest, err.Error())
@@ -308,12 +336,28 @@ func (r *Router) handleRegister(w http.ResponseWriter, req *http.Request) {
 
 	payload.Username = strings.TrimSpace(payload.Username)
 	payload.Nickname = strings.TrimSpace(payload.Nickname)
+	phoneNorm := phoneotp.NormalizePhone(payload.Phone)
 	if len(payload.Username) < 3 || len(payload.Password) < 6 {
 		writeError(w, http.StatusBadRequest, "username>=3 and password>=6 required")
 		return
 	}
 	if payload.Nickname == "" {
 		payload.Nickname = payload.Username
+	}
+
+	if phoneNorm != "" {
+		if !phoneotp.ValidPhone(phoneNorm) {
+			writeError(w, http.StatusBadRequest, "invalid phone number")
+			return
+		}
+		if _, taken := r.store.FindUserByPhone(phoneNorm); taken {
+			writeError(w, http.StatusConflict, "phone already registered")
+			return
+		}
+		if !r.phoneOTP.Peek(phoneNorm, payload.SMSCode) {
+			writeError(w, http.StatusBadRequest, "invalid or expired verification code")
+			return
+		}
 	}
 
 	hash, salt, err := auth.HashPassword(payload.Password)
@@ -325,12 +369,17 @@ func (r *Router) handleRegister(w http.ResponseWriter, req *http.Request) {
 	user, ok := r.store.CreateUser(domain.User{
 		Username:     payload.Username,
 		Nickname:     payload.Nickname,
+		Phone:        phoneNorm,
 		PasswordHash: hash,
 		PasswordSalt: salt,
 	})
 	if !ok {
 		writeError(w, http.StatusConflict, "username already exists")
 		return
+	}
+
+	if phoneNorm != "" {
+		r.phoneOTP.Forget(phoneNorm)
 	}
 
 	token, err := r.tokens.Issue(user.ID, user.Username)
@@ -359,16 +408,26 @@ func (r *Router) handleLogin(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	username := strings.TrimSpace(payload.Username)
-	limiterKey := strings.ToLower(username) + "|" + clientIP(req)
-	if ok, wait := r.loginLimit.Allow(limiterKey); !ok {
+	ident := strings.TrimSpace(payload.Username)
+	phoneNorm := phoneotp.NormalizePhone(ident)
+	var limiterKey string
+	var user domain.User
+	var found bool
+	if phoneotp.ValidPhone(phoneNorm) {
+		limiterKey = phoneNorm + "|" + clientIP(req)
+		user, found = r.store.FindUserByPhone(phoneNorm)
+	} else {
+		limiterKey = strings.ToLower(ident) + "|" + clientIP(req)
+		user, found = r.store.FindUserByUsername(ident)
+	}
+
+	if allow, wait := r.loginLimit.Allow(limiterKey); !allow {
 		w.Header().Set("Retry-After", strconv.Itoa(int(wait.Seconds())+1))
 		writeError(w, http.StatusTooManyRequests, "too many failed attempts, try again later")
 		return
 	}
 
-	user, ok := r.store.FindUserByUsername(username)
-	if !ok {
+	if !found {
 		r.loginLimit.RecordFailure(limiterKey)
 		writeError(w, http.StatusUnauthorized, "invalid username or password")
 		return
@@ -406,14 +465,26 @@ func (r *Router) handleMe(w http.ResponseWriter, req *http.Request) {
 func (r *Router) handlePosts(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case http.MethodGet:
-		page, size := parsePagination(req)
+		filter := normalizeFeedFilter(req.URL.Query().Get("filter"))
+		var viewerID int64
+		if claims, ok := r.parseAuth(req); ok {
+			viewerID = claims.UserID
+		}
+		if filter == "follow" && viewerID == 0 {
+			writeError(w, http.StatusUnauthorized, "login required for follow feed")
+			return
+		}
 		all := r.store.ListPosts()
-		items, total := paginate(all, page, size)
+		prepared := r.prepareFeedPosts(all, filter, viewerID)
+		page, size := parsePagination(req)
+		slice, total := paginate(prepared, page, size)
+		items := r.buildPostFeedItems(slice, viewerID)
 		writeOK(w, map[string]any{
 			"items":     items,
 			"total":     total,
 			"page":      page,
 			"page_size": size,
+			"filter":    filter,
 		})
 	case http.MethodPost:
 		claims, ok := r.parseAuth(req)
@@ -484,10 +555,29 @@ func (r *Router) handlePostChildren(w http.ResponseWriter, req *http.Request) {
 				writeError(w, http.StatusNotFound, "post not found")
 				return
 			}
+			counts := r.store.BatchPostLikeCounts([]int64{postID})
+			var viewerID int64
+			if claims, ok := r.parseAuth(req); ok {
+				viewerID = claims.UserID
+			}
+			liked := false
+			if viewerID != 0 {
+				lm := r.store.BatchUserLikedPosts(viewerID, []int64{postID})
+				liked = lm[postID]
+			}
+			author, _ := r.store.GetUser(post.AuthorID)
+			followingAuthor := false
+			if viewerID != 0 && post.AuthorID != viewerID {
+				followingAuthor = r.store.IsFollowing(viewerID, post.AuthorID)
+			}
 			writeOK(w, map[string]any{
-				"post":     post,
-				"media":    r.store.GetMediaBatch(post.MediaIDs),
-				"comments": r.store.ListCommentsByPost(postID),
+				"post":             post,
+				"media":            r.store.GetMediaBatch(post.MediaIDs),
+				"comments":         r.store.ListCommentsByPost(postID),
+				"like_count":       counts[postID],
+				"liked":            liked,
+				"author":           author,
+				"following_author": followingAuthor,
 			})
 			return
 		case http.MethodDelete:
@@ -553,6 +643,25 @@ func (r *Router) handlePostChildren(w http.ResponseWriter, req *http.Request) {
 			r.notify(post.AuthorID, domain.NotificationComment, "New comment on your post", comment.Content, postID)
 		}
 		writeCreated(w, comment)
+		return
+	}
+
+	if len(parts) == 2 && parts[1] == "like" {
+		if req.Method != http.MethodPost {
+			writeError(w, http.StatusMethodNotAllowed, "method not allowed")
+			return
+		}
+		claims, ok := r.parseAuth(req)
+		if !ok {
+			writeError(w, http.StatusUnauthorized, "unauthorized")
+			return
+		}
+		liked, count, ok := r.store.TogglePostLike(claims.UserID, postID)
+		if !ok {
+			writeError(w, http.StatusNotFound, "post not found")
+			return
+		}
+		writeOK(w, map[string]any{"liked": liked, "like_count": count})
 		return
 	}
 

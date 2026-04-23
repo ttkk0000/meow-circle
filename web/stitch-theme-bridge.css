@@ -1,0 +1,106 @@
+/**
+ * Maps legacy theme.css tokens → Dopamine Petal (Stitch kit).
+ * Load immediately AFTER theme.css on pages that still use theme + styles + dashboard/admin CSS.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+:root,
+[data-theme="light"] {
+  --surface-100: #f9f7f2;
+  --surface-200: #f9f7f2;
+  --surface-300: #f5f3ee;
+  --surface-400: #f0eee9;
+  --surface-500: #eae8e3;
+
+  --bg: #f9f7f2;
+  --bg-alt: #f5f3ee;
+  --card: #ffffff;
+  --panel: #fbf9f4;
+  --text: #1b1c19;
+  --text-soft: rgba(89, 64, 66, 0.88);
+  --muted: rgba(89, 64, 66, 0.62);
+  --text-invert: #ffffff;
+
+  --border: rgba(141, 112, 114, 0.18);
+  --border-medium: rgba(141, 112, 114, 0.28);
+  --border-strong: rgba(141, 112, 114, 0.45);
+  --border-solid: #8d7072;
+
+  --brand: #ff5a77;
+  --brand-strong: #e04b66;
+  --brand-weak: rgba(255, 90, 119, 0.12);
+  --brand-text: #b52044;
+  --accent: #fdaf18;
+  --accent-weak: rgba(253, 175, 24, 0.18);
+
+  --danger: #ba1a1a;
+  --danger-bg: rgba(186, 26, 26, 0.08);
+  --danger-border: rgba(186, 26, 26, 0.28);
+  --ok: #006b54;
+  --ok-bg: rgba(0, 169, 134, 0.12);
+
+  --header-bg: rgba(249, 247, 242, 0.92);
+  --header-solid: #f9f7f2;
+  --header-text: #1b1c19;
+  --tab-bg: #f0eee9;
+
+  --shadow-ambient: 0 4px 20px rgba(255, 90, 119, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 8px 28px rgba(255, 90, 119, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
+
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  --font-serif: "Plus Jakarta Sans", Georgia, serif;
+}
+
+body {
+  font-family: var(--font-display);
+}
+
+.topbar {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: rgba(255, 90, 119, 0.12) !important;
+  box-shadow: 0 4px 20px rgba(255, 90, 119, 0.05);
+}
+
+.meow-logo .logo-wordmark,
+.meow-logo span:last-child {
+  color: #ff5a77;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.btn-primary,
+.form-grid button[type="submit"] {
+  background: linear-gradient(180deg, #ff7a91, #ff5a77) !important;
+  border-color: #ff5a77 !important;
+  color: #fff !important;
+  border-radius: 9999px !important;
+}
+
+.btn-primary:hover,
+.form-grid button[type="submit"]:hover {
+  filter: brightness(1.02);
+  background: linear-gradient(180deg, #ff8a9f, #ff5a77) !important;
+}
+
+.nav-btn.active {
+  background: rgba(255, 90, 119, 0.1) !important;
+  color: #ff5a77 !important;
+  border-color: transparent !important;
+  border-radius: 9999px;
+  font-weight: 700;
+}
+
+.nav-btn {
+  border-radius: 9999px;
+}
+
+.sidebar {
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-ambient);
+}
+
+.card {
+  border-radius: 1.25rem;
+}

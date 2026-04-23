@@ -98,6 +98,73 @@ func TestLoginPageIsServed(t *testing.T) {
 	}
 }
 
+func TestRegisterPhoneDevCodeAndLoginByPhone(t *testing.T) {
+	t.Setenv("MEOW_DEV_SMS_CODE", "999999")
+	h := setupTestServer(t)
+
+	regBody := `{"username":"phoneuser","password":"hunter22","phone":"13900001111","sms_code":"999999"}`
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/auth/register", strings.NewReader(regBody))
+	req.Header.Set("Content-Type", "application/json")
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("register with phone: status=%d body=%s", rec.Code, rec.Body.String())
+	}
+
+	dup := `{"username":"other","password":"hunter22","phone":"13900001111","sms_code":"999999"}`
+	rec = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/v1/auth/register", strings.NewReader(dup))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusConflict {
+		t.Fatalf("duplicate phone register: status=%d want 409", rec.Code)
+	}
+
+	loginBody := `{"username":"13900001111","password":"hunter22"}`
+	rec = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/v1/auth/login", strings.NewReader(loginBody))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("login by phone: status=%d body=%s", rec.Code, rec.Body.String())
+	}
+}
+
+func TestSendVerificationCodeEndpoint(t *testing.T) {
+	h := setupTestServer(t)
+	body := `{"phone":"13800138000"}`
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/auth/send-verification-code", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("send code: status=%d body=%s", rec.Code, rec.Body.String())
+	}
+}
+
+func TestRegisterPhoneRequiresValidSMS(t *testing.T) {
+	t.Setenv("MEOW_DEV_SMS_CODE", "")
+	h := setupTestServer(t)
+
+	send := httptest.NewRequest(http.MethodPost, "/api/v1/auth/send-verification-code",
+		strings.NewReader(`{"phone":"13700137000"}`))
+	send.Header.Set("Content-Type", "application/json")
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, send)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("send: %d", rec.Code)
+	}
+
+	bad := `{"username":"smsbad","password":"hunter22","phone":"13700137000","sms_code":"000000"}`
+	rec = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/auth/register", strings.NewReader(bad))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("register bad sms: status=%d want 400 body=%s", rec.Code, rec.Body.String())
+	}
+}
+
 func TestRegisterThenLoginFlow(t *testing.T) {
 	h := setupTestServer(t)
 

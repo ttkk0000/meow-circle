@@ -1,14 +1,11 @@
-// Shared UI primitives: Button, Input, Card, Screen. All styled with the
-// Cursor-inspired tokens in ./theme.ts. Kept in a single file until they
-// earn the right to be split up.
+// Shared UI — Dopamine Petal (Stitch) styling.
 
-import { useEffect, useRef, type ReactElement } from 'react';
+import { forwardRef, useEffect, useRef, type ReactElement } from 'react';
 import {
   ActivityIndicator,
   Animated,
   Pressable,
   type PressableProps,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,25 +15,25 @@ import {
   View,
   type ViewProps,
 } from 'react-native';
+import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 import { colors, elevation, radius, spacing, typography } from './theme';
 
-// ===== Screen ================================================================
-
-// `refreshControl` is forwarded explicitly so callers can plug a
-// <RefreshControl> into the inner ScrollView without prop-drilling
-// through ViewProps.
 export function Screen({
   children,
   scroll = true,
   style,
   contentStyle,
   refreshControl,
+  edges,
   ...rest
 }: ViewProps & {
   scroll?: boolean;
   contentStyle?: ViewProps['style'];
   refreshControl?: ReactElement;
+  /** Safe-area edges; default top+left+right (bottom uses tab bar / home indicator elsewhere). */
+  edges?: Edge[];
 }) {
+  const safeEdges: Edge[] = edges ?? ['top', 'left', 'right'];
   const body = scroll ? (
     <ScrollView
       contentContainerStyle={[styles.screenContent, contentStyle]}
@@ -49,13 +46,11 @@ export function Screen({
     <View style={[styles.screenContent, contentStyle]}>{children}</View>
   );
   return (
-    <SafeAreaView style={[styles.screen, style]} {...rest}>
+    <SafeAreaView style={[styles.screen, style]} edges={safeEdges} {...rest}>
       {body}
     </SafeAreaView>
   );
 }
-
-// ===== Text ==================================================================
 
 type TypoKind = keyof typeof typography;
 
@@ -69,15 +64,13 @@ export function Txt({
     <Text
       style={[
         typography[kind],
-        { color: muted ? colors.inkSubtle : colors.ink },
+        { color: muted ? colors.onSurfaceVariant : colors.onSurface },
         style,
       ]}
       {...rest}
     />
   );
 }
-
-// ===== Card ==================================================================
 
 export function Card({ style, children, ...rest }: ViewProps) {
   return (
@@ -86,8 +79,6 @@ export function Card({ style, children, ...rest }: ViewProps) {
     </View>
   );
 }
-
-// ===== Button ================================================================
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 
@@ -121,9 +112,7 @@ export function Button({
       {loading ? (
         <ActivityIndicator color={variantStyles[variant].textColor} />
       ) : (
-        <Text style={[styles.btnText, { color: variantStyles[variant].textColor }]}>
-          {title}
-        </Text>
+        <Text style={[styles.btnText, { color: variantStyles[variant].textColor }]}>{title}</Text>
       )}
     </Pressable>
   );
@@ -134,66 +123,71 @@ const variantStyles: Record<
   { base: object; pressed: object; textColor: string }
 > = {
   primary: {
-    base: { backgroundColor: colors.ink, borderColor: colors.ink },
-    pressed: { backgroundColor: colors.danger, borderColor: colors.danger },
-    textColor: colors.accentOnDark,
+    base: {
+      backgroundColor: colors.primaryContainer,
+      borderColor: colors.primaryContainer,
+    },
+    pressed: { opacity: 0.92, transform: [{ scale: 0.98 }] },
+    textColor: colors.onPrimary,
   },
   secondary: {
-    base: { backgroundColor: colors.surface200, borderColor: colors.border },
-    pressed: { backgroundColor: colors.surface300 },
-    textColor: colors.ink,
+    base: {
+      backgroundColor: colors.surfaceLow,
+      borderColor: colors.outlineVariant,
+    },
+    pressed: { backgroundColor: colors.surfaceContainer },
+    textColor: colors.onSurface,
   },
   ghost: {
     base: { backgroundColor: 'transparent', borderColor: 'transparent' },
-    pressed: { backgroundColor: colors.surface200 },
-    textColor: colors.ink,
+    pressed: { backgroundColor: colors.brandWeak },
+    textColor: colors.primaryContainer,
   },
   danger: {
-    base: { backgroundColor: colors.danger, borderColor: colors.danger },
-    pressed: { backgroundColor: colors.ink },
-    textColor: colors.accentOnDark,
+    base: { backgroundColor: colors.error, borderColor: colors.error },
+    pressed: { opacity: 0.9 },
+    textColor: colors.onPrimary,
   },
 };
 
-// ===== Input =================================================================
-
-export function Input({
-  label,
-  error,
-  hint,
-  style,
-  ...rest
-}: TextInputProps & { label?: string; error?: string; hint?: string }) {
+export const Input = forwardRef<
+  TextInput,
+  TextInputProps & { label?: string; error?: string; hint?: string }
+>(function Input({ label, error, hint, style, ...rest }, ref) {
   return (
     <View style={{ gap: spacing.xs }}>
       {label ? (
-        <Text style={[typography.label, { color: colors.inkMuted }]}>{label}</Text>
+        <Text style={[typography.label, { color: colors.onSurfaceVariant }]}>{label}</Text>
       ) : null}
       <TextInput
-        placeholderTextColor={colors.inkSubtle}
+        ref={ref}
+        placeholderTextColor={colors.outline}
         style={[styles.input, error ? styles.inputError : null, style]}
         {...rest}
       />
       {error ? (
-        <Text style={[typography.bodySmall, { color: colors.danger }]}>{error}</Text>
+        <Text style={[typography.bodySmall, { color: colors.error }]}>{error}</Text>
       ) : hint ? (
-        <Text style={[typography.bodySmall, { color: colors.inkSubtle }]}>{hint}</Text>
+        <Text style={[typography.bodySmall, { color: colors.onSurfaceVariant }]}>{hint}</Text>
       ) : null}
     </View>
   );
-}
+});
 
-// ===== Pill ==================================================================
-
-export function Pill({ children }: { children: React.ReactNode }) {
+export function Pill({ children, tone = 'neutral' }: { children: React.ReactNode; tone?: 'neutral' | 'brand' }) {
   return (
-    <View style={styles.pill}>
-      <Text style={[typography.label, { color: colors.inkMuted }]}>{children}</Text>
+    <View
+      style={[
+        styles.pill,
+        tone === 'brand' ? { backgroundColor: colors.brandWeak } : { backgroundColor: colors.surfaceLow },
+      ]}
+    >
+      <Text style={[typography.label, { color: tone === 'brand' ? colors.primaryContainer : colors.onSurfaceVariant }]}>
+        {children}
+      </Text>
     </View>
   );
 }
-
-// ===== Kitty loader ==========================================================
 
 export function KittyLoader({ label = '正在叫猫咪起床...' }: { label?: string }) {
   const bob = useRef(new Animated.Value(0)).current;
@@ -222,9 +216,7 @@ export function KittyLoader({ label = '正在叫猫咪起床...' }: { label?: st
 
   return (
     <View style={styles.loaderWrap}>
-      <Animated.Text style={[styles.loaderKitty, { transform: [{ translateY: bob }] }]}>
-        🐈
-      </Animated.Text>
+      <Animated.Text style={[styles.loaderKitty, { transform: [{ translateY: bob }] }]}>🐈</Animated.Text>
       <Animated.Text style={[styles.loaderDots, { opacity: pulse }]}>• • •</Animated.Text>
       <Txt kind="bodySmall" muted style={styles.loaderLabel}>
         {label}
@@ -233,69 +225,68 @@ export function KittyLoader({ label = '正在叫猫咪起床...' }: { label?: st
   );
 }
 
-// ===== styles ================================================================
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: colors.surface100,
+    backgroundColor: colors.canvas,
   },
   screenContent: {
     padding: spacing.lg,
-    gap: spacing.lg,
+    gap: spacing.md,
     flexGrow: 1,
   },
   card: {
-    backgroundColor: colors.surface200,
-    borderRadius: radius.lg,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.border,
     padding: spacing.lg,
     gap: spacing.sm,
-    ...elevation.card,
+    ...elevation.soft,
   },
   btn: {
-    borderRadius: radius.md,
+    borderRadius: radius.pill,
     borderWidth: StyleSheet.hairlineWidth,
     paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.xl,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 44,
+    minHeight: 48,
   },
   btnText: {
     ...typography.label,
-    letterSpacing: 0.5,
+    fontSize: 15,
+    letterSpacing: 0.3,
   },
   btnDisabled: {
-    opacity: 0.5,
+    opacity: 0.45,
   },
   input: {
-    borderRadius: radius.md,
+    borderRadius: radius.xl,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.borderStrong,
-    backgroundColor: colors.surface100,
-    paddingHorizontal: spacing.md,
+    borderColor: colors.outlineVariant,
+    backgroundColor: colors.surfaceLow,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
-    color: colors.ink,
+    color: colors.onSurface,
     fontSize: 16,
-    minHeight: 44,
+    minHeight: 48,
+    fontFamily: typography.body.fontFamily,
   },
   inputError: {
-    borderColor: colors.danger,
+    borderColor: colors.error,
   },
   pill: {
     alignSelf: 'flex-start',
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.s1,
+    paddingVertical: spacing.s1 + 2,
     borderRadius: radius.pill,
-    backgroundColor: colors.surface300,
   },
   loaderWrap: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.surface100,
+    backgroundColor: colors.canvas,
     gap: spacing.sm,
   },
   loaderKitty: {
@@ -303,10 +294,10 @@ const styles = StyleSheet.create({
   },
   loaderDots: {
     fontSize: 18,
-    color: colors.inkMuted,
+    color: colors.primaryContainer,
     letterSpacing: 3,
   },
   loaderLabel: {
-    color: colors.inkMuted,
+    color: colors.onSurfaceVariant,
   },
 });

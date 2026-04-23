@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#002118",
+                      "error": "#ba1a1a",
+                      "surface-dim": "#dbdad5",
+                      "on-secondary-fixed-variant": "#614000",
+                      "on-error": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#694600",
+                      "on-primary-fixed-variant": "#91002f",
+                      "surface-tint": "#b52044",
+                      "surface-container-high": "#eae8e3",
+                      "primary-fixed-dim": "#ffb2b9",
+                      "on-tertiary-container": "#003528",
+                      "surface-bright": "#fbf9f4",
+                      "on-tertiary-fixed-variant": "#00513f",
+                      "on-error-container": "#93000a",
+                      "on-background": "#1b1c19",
+                      "secondary-container": "#fdaf18",
+                      "inverse-primary": "#ffb2b9",
+                      "secondary-fixed": "#ffddb0",
+                      "secondary": "#805600",
+                      "on-primary-container": "#62001d",
+                      "tertiary-fixed-dim": "#55dcb6",
+                      "surface-container-low": "#f5f3ee",
+                      "outline": "#8d7072",
+                      "surface-container-lowest": "#ffffff",
+                      "outline-variant": "#e1bec0",
+                      "on-primary-fixed": "#400010",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#ffba46",
+                      "on-surface-variant": "#594042",
+                      "on-surface": "#1b1c19",
+                      "primary": "#b52044",
+                      "inverse-on-surface": "#f2f1ec",
+                      "tertiary": "#006b54",
+                      "tertiary-container": "#00a986",
+                      "surface-variant": "#e4e2dd",
+                      "inverse-surface": "#30312e",
+                      "background": "#fbf9f4",
+                      "surface-container": "#f0eee9",
+                      "surface": "#fbf9f4",
+                      "on-secondary-fixed": "#281800",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#75f9d1",
+                      "primary-container": "#ff5a77",
+                      "primary-fixed": "#ffdadc",
+                      "on-secondary": "#ffffff",
+                      "surface-container-highest": "#e4e2dd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "24px",
+                      "container-padding": "16px",
+                      "xl": "32px",
+                      "card-gap": "12px",
+                      "xs": "8px",
+                      "md": "16px",
+                      "base": "4px",
+                      "sm": "12px"
+              },
+              "fontFamily": {
+                      "label-md": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-xl": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-xl": ["28px", {"lineHeight": "36px", "fontWeight": "800"}],
+                      "headline-lg": ["22px", {"lineHeight": "28px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col hide-scrollbar">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-[#F9F7F2]/80 dark:bg-neutral-900/80 backdrop-blur-xl shadow-sm shadow-[#FF5A77]/5 border-none">
+<div class="flex items-center justify-start w-12">
+<img alt="User profile avatar" class="w-10 h-10 rounded-full border-2 border-primary-container active:scale-95 transition-transform duration-200 cursor-pointer" data-alt="Close up portrait of a fluffy orange cat with bright green eyes and a soft pink nose looking curious" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqaZUlvrxSXD2T5jadJiWznnLNB6-vxosIX6FXxjaj-s-li-NxqbybzlukiRK3vgN3X6orhKxO5Tw4hOWRRPeJCh4w15mMOkGb_CtKm0-ovanAXpBHopFEJ_6-BsY6R7yw1IAKvu7oHR_eij_3nUr3vFHwIxascvRpcNTlRQpKgIjfwnRjQM2o-6YdWNhRupr2E8L1N1-MDBKqDrWyRPEdpi7FFZPdw2-eLT6eQGSXRfmwF7hgejcbS9cgwWOJNcx70qA7F4Gk"/>
+</div>
+<h1 class="text-2xl font-black text-[#FF5A77] tracking-widest font-['Plus_Jakarta_Sans']">MEOW</h1>
+<div class="flex items-center justify-end w-12">
+<button class="material-symbols-outlined text-[#FF5A77] dark:text-[#FF7A91] hover:opacity-80 transition-opacity active:scale-95 duration-200">notifications</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 pt-24 pb-32 px-container-padding">
+<!-- Profile Header Section -->
+<section class="flex flex-col items-center mb-xl">
+<div class="relative mb-md">
+<div class="w-32 h-32 rounded-xl overflow-hidden shadow-[0_8px_30px_rgba(255,90,119,0.15)] bg-white p-1">
+<img alt="Main Profile" class="w-full h-full rounded-lg object-cover" data-alt="Beautiful calico cat sitting elegantly on a soft cream colored velvet cushion in natural sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU-eMEy8QEeFiyOE5U8l6FwwuyMGDgh-pLMbnjTD-N_sqZHByj63EYPgoEJBNizjJNGNV8OglO-2YiNoOma2zLbL3y6W3Op3QhwprsniEOfqshaUX6KDdFwSUPl6Rt1Fa_WVmUj-ZMShSRCSqB6QnKLJ75QxBflnqP9phHgh__8-fCTpHq4TQSV5EyJZlyWBMAOVkvHxxBLOZHiJuNkUoijuNEctA1iqP3BXfKPhXfY9EDDf_ZJGj1SPg8Q1tB-u32n19yLwf0"/>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-secondary-container text-on-secondary-container p-2 rounded-full shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+</div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-xs">奶油小猫咪</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mb-lg">Professional Cat Slave</p>
+<!-- Stats Bar -->
+<div class="flex items-center justify-around w-full max-w-xs mb-lg bg-surface-container-low rounded-lg py-md">
+<div class="flex flex-col items-center">
+<span class="text-headline-lg font-headline-lg text-primary">1.2k</span>
+<span class="text-label-md font-label-md text-stone-400">获赞</span>
+</div>
+<div class="w-[1px] h-8 bg-outline-variant/30"></div>
+<div class="flex flex-col items-center">
+<span class="text-headline-lg font-headline-lg text-on-surface">458</span>
+<span class="text-label-md font-label-md text-stone-400">关注</span>
+</div>
+<div class="w-[1px] h-8 bg-outline-variant/30"></div>
+<div class="flex flex-col items-center">
+<span class="text-headline-lg font-headline-lg text-on-surface">8.9k</span>
+<span class="text-label-md font-label-md text-stone-400">粉丝</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-sm w-full">
+<button class="flex-1 bg-primary-container text-on-primary py-3 rounded-lg font-label-md flex items-center justify-center gap-2 shadow-sm active:scale-[0.96] transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                    编辑资料
+                </button>
+<button class="w-14 bg-surface-container-highest text-on-surface-variant py-3 rounded-lg flex items-center justify-center active:scale-[0.96] transition-transform">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</section>
+<!-- Recent Meowments Section (Feed) -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<h3 class="text-headline-lg font-headline-lg">动态</h3>
+<div class="flex gap-xs">
+<span class="material-symbols-outlined text-primary cursor-pointer">grid_view</span>
+<span class="material-symbols-outlined text-stone-400 cursor-pointer">splitscreen</span>
+</div>
+</div>
+<!-- Staggered Grid -->
+<div class="grid grid-cols-2 gap-card-gap">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm active:scale-[0.98] transition-transform">
+<img alt="Cat moment" class="w-full aspect-[3/4] object-cover" data-alt="Ginger kitten peeking through a paper bag with wide blue eyes and playful expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUwUQ7XKKrtBlZyjisb-jqIQVlB4z6Cl15mvsbUFSM0PnxorOkN8iwAi2AiE6lVqzwaV9tiav45r9IqXR8VOUKi5f39ric3ieMhxn_TvIw8aqu581yzz7eF98u38sd4IW01W8Pe3siTv8fMUH6Bpat3-VmW0wMUZTtuEK1jhgerfkKhqZW4roqv1M9tP36cUSGXC1O3bbYGhXTUfUBw2COwl8hoGmcRLekA_VGN70c5z9eP-BfRpyPlDj2U3052wZ8PkhE3Uig"/>
+<div class="p-sm">
+<p class="text-label-md font-label-md text-on-surface line-clamp-1">躲猫猫第一名！</p>
+<div class="flex items-center mt-xs gap-1 text-primary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-[10px]">128</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm active:scale-[0.98] transition-transform">
+<img alt="Cat moment" class="w-full aspect-square object-cover" data-alt="Elegant white Persian cat sitting majestically on a high-end designer chair in a bright room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC3UejHJrdDLH2iCqA4ocGwbHxwVM7ZvDTeiEFwxAOZwIibxEup9imzPJtvC2niCfmU9MaOQMbdArZJLpmP0kx2TtTgJr1E0L9T8jIaQCD4mdY0oUni08UkpVZNNPIwWoibFeL4PNIztjkuwmMPHhQuEgcrhkB90lJdmJZ1DLVQfRzkUjcjwejMcaUlBVxfr9mQ792kncNhlkpeM4vLHDIbcYCReTReXbwT4WL6hxHFx9w1KnZdqP_yAJlMXb6OP_wLQLk_HFi"/>
+<div class="p-sm">
+<p class="text-label-md font-label-md text-on-surface line-clamp-1">午后的阳光真舒服~</p>
+<div class="flex items-center mt-xs gap-1 text-primary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-[10px]">256</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm active:scale-[0.98] transition-transform">
+<img alt="Cat moment" class="w-full aspect-square object-cover" data-alt="Close up of a cat paw reaching out toward a floating dust mote in a soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzRpJxoF_2ctN0qidAyj0PC4e9OcV-yhRgiMB6co0zSw4JLTqvUoEUH2H5W8OS_37JaFNawbFd5QGEb80BO7I2CyOTsLTbonHT9jdDh_Xcq2xbGry_Wt7g-2LDN3zKI8uvQsRPGEIw1wS_9pynSFlAszBLSq91zqpdYNkotUasmGn2rdOEiJq28e0eFQU5ZYMZK_vV6qnRbeDQ_l70FJqH3YdgzETEv1OsAcdGIDxNHCm-I4igPSBgbhvJRg9NelB1YPMtDEVL"/>
+<div class="p-sm">
+<p class="text-label-md font-label-md text-on-surface line-clamp-1">伸个懒腰...</p>
+<div class="flex items-center mt-xs gap-1 text-primary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-[10px]">92</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm active:scale-[0.98] transition-transform">
+<img alt="Cat moment" class="w-full aspect-[4/5] object-cover" data-alt="Multiple cats eating from colorful bowls on a stylish kitchen floor with warm interior lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdmTCdpDUAA-N5lrONSctnsFcUqvbfRhiikFQ_C6hcLZjMy9ITSJz5EuRVj-oUhjfVHQVG-Zma3WIY2aIzGxNXikAk3DjuoTCWevg9xWjdYTpcXboomTIZmuUmPbOyQ4ScBaiFkqWKdM7fHknYVmRyZaxnh6zJdb2rkLmG_0OIi3EcfJar7fYmFSYWY0pZcwvTYB7zSFDBVxDeF6EYFMiyW5Br2lrcj-Y2EyfDkv2RT76HlUgNUPucgFFpdqSEUZBXJEzSdxYt"/>
+<div class="p-sm">
+<p class="text-label-md font-label-md text-on-surface line-clamp-1">干饭啦！</p>
+<div class="flex items-center mt-xs gap-1 text-primary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-[10px]">342</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-safe bg-[#F9F7F2]/90 dark:bg-neutral-900/90 backdrop-blur-2xl rounded-t-[32px] border-t border-[#FF5A77]/10 shadow-[0_-8px_30px_rgba(255,90,119,0.08)]">
+<a class="flex flex-col items-center justify-center text-stone-400 hover:text-[#FF5A77]/70 active:scale-90 transition-transform duration-200 ease-out" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold">首页</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 hover:text-[#FF5A77]/70 active:scale-90 transition-transform duration-200 ease-out" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold">发现</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 hover:text-[#FF5A77]/70 active:scale-90 transition-transform duration-200 ease-out" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold">消息</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#FF5A77] scale-110 transition-all duration-300 active:scale-90 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold">我</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>注册 - MEOW Kitty Circle</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#fbf9f4",
+                    "surface-bright": "#fbf9f4",
+                    "surface-container": "#f0eee9",
+                    "surface-container-high": "#eae8e3",
+                    "outline": "#8d7072",
+                    "inverse-surface": "#30312e",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1b1c19",
+                    "tertiary-container": "#00a986",
+                    "secondary": "#805600",
+                    "on-secondary-fixed": "#281800",
+                    "on-primary-fixed-variant": "#91002f",
+                    "tertiary": "#006b54",
+                    "on-surface": "#1b1c19",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#ffddb0",
+                    "surface-tint": "#b52044",
+                    "secondary-fixed-dim": "#ffba46",
+                    "on-primary-container": "#62001d",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#002118",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#f2f1ec",
+                    "surface-container-low": "#f5f3ee",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#b52044",
+                    "surface-container-highest": "#e4e2dd",
+                    "secondary-container": "#fdaf18",
+                    "primary-container": "#ff5a77",
+                    "on-error": "#ffffff",
+                    "outline-variant": "#e1bec0",
+                    "tertiary-fixed-dim": "#55dcb6",
+                    "on-tertiary-container": "#003528",
+                    "on-secondary-fixed-variant": "#614000",
+                    "background": "#fbf9f4",
+                    "primary-fixed-dim": "#ffb2b9",
+                    "primary-fixed": "#ffdadc",
+                    "on-tertiary-fixed-variant": "#00513f",
+                    "tertiary-fixed": "#75f9d1",
+                    "on-surface-variant": "#594042",
+                    "on-primary-fixed": "#400010",
+                    "surface-dim": "#dbdad5",
+                    "on-secondary-container": "#694600",
+                    "surface-variant": "#e4e2dd",
+                    "inverse-primary": "#ffb2b9",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "xl": "32px",
+                    "sm": "12px",
+                    "card-gap": "12px",
+                    "base": "4px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "container-padding": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-xl": [
+                            "Plus Jakarta Sans"
+                    ]
+            },
+            "fontSize": {
+                    "headline-lg": [
+                            "22px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "label-md": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.02em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-xl": [
+                            "28px",
+                            {
+                                    "lineHeight": "36px",
+                                    "fontWeight": "800"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex">
+<!-- Left Column: Brand Imagery -->
+<div class="hidden lg:block lg:w-1/2 relative overflow-hidden bg-surface-container">
+<img alt="Brand Imagery" class="absolute inset-0 w-full h-full object-cover opacity-90" data-alt="soft warm aesthetic photo of a cute fluffy cat looking curiously at the camera, bathed in gentle morning sunlight, cozy indoor setting, pastel tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjyQIAgLp4bQ6UYqUoKE92s5Wi4oUxuAHSdZd8iCLnn2FNMMZU0v5O_AuPd0rH178eIbGh7HBZ9knXo0jmwp2FhkUUEpEPJRR4iobNbJCosa8zsbiRU3oXAqA5a5iU2hoTao9GDe59NeybJwDXFSs99gFm7xtFm-Ujxsw87svinxotym6dSt-31iUgSpn2xINzTDgDQKSjyItj8Pi0JaVXK1cf0wgUodvggUbXdJ6kVJC4hiD0gmRNzyrxPlTxflPxcFFYHkBP"/>
+<!-- Overlay for brand vibe -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary-container/20 to-surface/40 mix-blend-overlay"></div>
+</div>
+<!-- Right Column: Form -->
+<div class="w-full lg:w-1/2 flex flex-col justify-center items-center p-md lg:p-xl">
+<div class="w-full max-w-[400px] flex flex-col gap-xl">
+<!-- Brand Logo -->
+<div class="text-center flex flex-col items-center gap-xs">
+<h1 class="font-headline-xl text-headline-xl text-primary-container tracking-tighter">MEOW</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">加入喵圈，发现更多可爱日常</p>
+</div>
+<!-- Registration Form -->
+<form class="flex flex-col gap-lg">
+<!-- Username -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface pl-xs" for="username">用户名</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-sm text-outline" data-icon="person">person</span>
+<input class="w-full pl-[40px] pr-md py-sm bg-surface-container border-2 border-transparent focus:border-primary-container focus:bg-surface-lowest rounded-DEFAULT font-body-md text-body-md text-on-surface placeholder:text-outline transition-all outline-none" id="username" name="username" placeholder="给自己起个好听的名字" type="text"/>
+</div>
+</div>
+<!-- Mobile Number -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface pl-xs" for="mobile">手机号码</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-sm text-outline" data-icon="smartphone">smartphone</span>
+<input class="w-full pl-[40px] pr-md py-sm bg-surface-container border-2 border-transparent focus:border-primary-container focus:bg-surface-lowest rounded-DEFAULT font-body-md text-body-md text-on-surface placeholder:text-outline transition-all outline-none" id="mobile" name="mobile" placeholder="输入您的手机号" type="tel"/>
+</div>
+</div>
+<!-- Verification Code -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface pl-xs" for="code">验证码</label>
+<div class="flex gap-sm">
+<div class="relative flex items-center flex-1">
+<span class="material-symbols-outlined absolute left-sm text-outline" data-icon="key">key</span>
+<input class="w-full pl-[40px] pr-md py-sm bg-surface-container border-2 border-transparent focus:border-primary-container focus:bg-surface-lowest rounded-DEFAULT font-body-md text-body-md text-on-surface placeholder:text-outline transition-all outline-none" id="code" name="code" placeholder="输入验证码" type="text"/>
+</div>
+<button class="whitespace-nowrap px-md py-sm bg-primary-container/10 text-primary-container font-label-md text-label-md rounded-DEFAULT hover:bg-primary-container/20 transition-colors active:scale-95" type="button">
+                            获取验证码
+                        </button>
+</div>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface pl-xs" for="password">密码</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-sm text-outline" data-icon="lock">lock</span>
+<input class="w-full pl-[40px] pr-md py-sm bg-surface-container border-2 border-transparent focus:border-primary-container focus:bg-surface-lowest rounded-DEFAULT font-body-md text-body-md text-on-surface placeholder:text-outline transition-all outline-none" id="password" name="password" placeholder="设置登录密码" type="password"/>
+</div>
+</div>
+<!-- Agreement Checkbox -->
+<div class="flex items-start gap-xs mt-xs">
+<div class="flex items-center h-5">
+<input class="w-4 h-4 rounded border-outline text-primary-container focus:ring-primary-container focus:ring-2 bg-surface-container transition-all cursor-pointer" id="agreement" name="agreement" type="checkbox"/>
+</div>
+<label class="font-body-md text-body-md text-on-surface-variant cursor-pointer select-none" for="agreement">
+                        我已阅读并同意 
+                        <a class="text-primary-container hover:underline decoration-2 underline-offset-2" href="#">《用户协议》</a> 与 
+                        <a class="text-primary-container hover:underline decoration-2 underline-offset-2" href="#">《隐私政策》</a>
+</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full py-md mt-sm bg-primary-container text-on-primary font-body-lg text-body-lg rounded-DEFAULT shadow-[0_4px_14px_rgba(255,90,119,0.3)] hover:shadow-[0_6px_20px_rgba(255,90,119,0.4)] active:scale-95 transition-all duration-200 flex justify-center items-center gap-xs group" type="submit">
+<span>立即注册</span>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+<!-- Login Link -->
+<div class="text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    已有账号？ 
+                    <a class="text-primary-container font-label-md text-label-md hover:underline decoration-2 underline-offset-4 transition-all" href="#">直接登录</a>
+</p>
+</div>
+</div>
+</div>
+</body></html>

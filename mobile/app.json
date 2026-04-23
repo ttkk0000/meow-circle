@@ -7,7 +7,9 @@
     "scheme": "meowcircle",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "icon": "./assets/icon.png",
     "splash": {
+      "image": "./assets/icon.png",
       "backgroundColor": "#F7F3EC",
       "resizeMode": "contain"
     },
@@ -18,6 +20,7 @@
     "android": {
       "package": "com.ttkk0000.meowcircle",
       "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#F7F3EC"
       },
       "edgeToEdgeEnabled": true

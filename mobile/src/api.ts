@@ -21,6 +21,12 @@ export function resolveBaseUrl(): string {
   const fromEnv = process.env.EXPO_PUBLIC_API_URL?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, '');
 
+  // Android emulator (including most AVD-based setups) reaches host machine
+  // through 10.0.2.2. Prefer this before hostUri to avoid LAN-IP mismatches.
+  if (Platform.OS === 'android' && !Constants.isDevice) {
+    return 'http://10.0.2.2:8080';
+  }
+
   const host = Constants.expoConfig?.hostUri?.split(':')[0];
   if (host) return `http://${host}:8080`;
 
@@ -29,6 +35,15 @@ export function resolveBaseUrl(): string {
 }
 
 export const BASE_URL = resolveBaseUrl();
+
+/** Media `url` from the API may be a path; prefix with API origin when needed. */
+export function resolveMediaUrl(url?: string | null): string | undefined {
+  if (url == null) return undefined;
+  const u = String(url).trim();
+  if (!u) return undefined;
+  if (u.startsWith('http://') || u.startsWith('https://')) return u;
+  return `${BASE_URL}${u.startsWith('/') ? u : `/${u}`}`;
+}
 
 // ===== token storage =========================================================
 
@@ -109,6 +124,35 @@ export interface Post {
   media_ids?: number[];
   created_at: string;
   last_reply_at?: string;
+}
+
+export interface MediaItem {
+  id: number;
+  owner_id: number;
+  kind: string;
+  mime: string;
+  size: number;
+  filename: string;
+  url: string;
+  status: string;
+  created_at: string;
+}
+
+export interface Comment {
+  id: number;
+  post_id: number;
+  author_id: number;
+  content: string;
+  created_at: string;
+}
+
+/** GET /api/v1/posts enriched card (Stitch feed). */
+export interface PostFeedItem {
+  post: Post;
+  author: User;
+  like_count: number;
+  liked: boolean;
+  first_media?: MediaItem | null;
 }
 
 export interface Listing {
@@ -225,8 +269,20 @@ export const api = {
   health: () => request<{ status: string; store: string }>('/healthz', { auth: false }),
 
   auth: {
-    register: (body: { username: string; password: string; nickname?: string }) =>
+    register: (body: {
+      username: string;
+      password: string;
+      nickname?: string;
+      phone?: string;
+      sms_code?: string;
+    }) =>
       request<{ token: string; user: User }>('/api/v1/auth/register', {
+        method: 'POST',
+        body,
+        auth: false,
+      }),
+    sendVerificationCode: (body: { phone: string }) =>
+      request<{ ok: boolean }>('/api/v1/auth/send-verification-code', {
         method: 'POST',
         body,
         auth: false,
@@ -241,13 +297,35 @@ export const api = {
   },
 
   posts: {
-    list: () =>
-      request<{ items: Post[]; total: number; page: number; page_size: number }>(
-        '/api/v1/posts',
-        { auth: false },
-      ).then((p) => p.items),
+    list: (opts?: { filter?: 'rec' | 'new' | 'follow' }) => {
+      const filter = opts?.filter ?? 'rec';
+      return request<{
+        items: PostFeedItem[];
+        total: number;
+        page: number;
+        page_size: number;
+        filter?: string;
+      }>(`/api/v1/posts?page=1&page_size=40&filter=${encodeURIComponent(filter)}`).then((p) => p.items);
+    },
+    get: (id: number) =>
+      request<{
+        post: Post;
+        media: MediaItem[];
+        comments: Comment[];
+        like_count: number;
+        liked: boolean;
+        author: User;
+        following_author?: boolean;
+      }>(`/api/v1/posts/${id}`),
+    my: () => request<{ items: Post[] }>('/api/v1/me/posts').then((p) => p.items),
     create: (body: Partial<Post> & { title: string; content: string }) =>
       request<Post>('/api/v1/posts', { method: 'POST', body }),
+    addComment: (postId: number, content: string) =>
+      request<Comment>(`/api/v1/posts/${postId}/comments`, { method: 'POST', body: { content } }),
+    toggleLike: (postId: number) =>
+      request<{ liked: boolean; like_count: number }>(`/api/v1/posts/${postId}/like`, {
+        method: 'POST',
+      }),
     search: (q: string) =>
       request<{ posts: Post[]; listings: Listing[]; query: string; type: string }>(
         `/api/v1/search?q=${encodeURIComponent(q)}&type=post`,
@@ -280,6 +358,16 @@ export const api = {
         .then((d) => ({ count: d.unread_count }))
         .catch(() => ({ count: 0 })),
   },
+
+  /** POST follow / DELETE unfollow (auth). */
+  followUser: (userId: number) =>
+    request<{ following: boolean; user_id: number }>(`/api/v1/me/follow/${userId}`, {
+      method: 'POST',
+    }),
+  unfollowUser: (userId: number) =>
+    request<{ following: boolean; user_id: number }>(`/api/v1/me/follow/${userId}`, {
+      method: 'DELETE',
+    }),
 };
 
 export type { Options };

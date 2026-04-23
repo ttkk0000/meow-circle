@@ -115,6 +115,9 @@ func (s *Store) CreateUser(u domain.User) (domain.User, bool) { return s.inner.C
 func (s *Store) FindUserByUsername(n string) (domain.User, bool) {
 	return s.inner.FindUserByUsername(n)
 }
+func (s *Store) FindUserByPhone(phone string) (domain.User, bool) {
+	return s.inner.FindUserByPhone(phone)
+}
 func (s *Store) GetUser(id int64) (domain.User, bool)       { return s.inner.GetUser(id) }
 func (s *Store) CountUsers() int                            { return s.inner.CountUsers() }
 func (s *Store) GetUsers(ids []int64) map[int64]domain.User { return s.inner.GetUsers(ids) }
@@ -326,6 +329,26 @@ func (s *Store) ListConversations(id int64) []domain.Conversation {
 
 func (s *Store) CreateAuditLog(l domain.AuditLog) domain.AuditLog { return s.inner.CreateAuditLog(l) }
 func (s *Store) ListAuditLogs(limit int) []domain.AuditLog        { return s.inner.ListAuditLogs(limit) }
+
+// ===== Social (passthrough; feed list cache stays post-only; counts resolved live) =====
+
+func (s *Store) Follow(a, b int64) bool            { return s.inner.Follow(a, b) }
+func (s *Store) Unfollow(a, b int64) bool          { return s.inner.Unfollow(a, b) }
+func (s *Store) IsFollowing(a, b int64) bool       { return s.inner.IsFollowing(a, b) }
+func (s *Store) ListFollowingIDs(id int64) []int64 { return s.inner.ListFollowingIDs(id) }
+func (s *Store) TogglePostLike(u, p int64) (liked bool, count int64, ok bool) {
+	liked, count, ok = s.inner.TogglePostLike(u, p)
+	if ok {
+		s.del(keyPost(p))
+	}
+	return liked, count, ok
+}
+func (s *Store) BatchPostLikeCounts(ids []int64) map[int64]int64 {
+	return s.inner.BatchPostLikeCounts(ids)
+}
+func (s *Store) BatchUserLikedPosts(u int64, ids []int64) map[int64]bool {
+	return s.inner.BatchUserLikedPosts(u, ids)
+}
 
 // Stats returns a snapshot string for diagnostics.
 func (s *Store) Stats() string {

@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, View } from 'react-native';
-import { router } from 'expo-router';
+import { Pressable, RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { router, useRouter } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
 import { api, type Listing, HttpError } from '@/api';
 import { useAuth } from '@/auth';
-import { Button, Card, Pill, Screen, Txt } from '@/components';
-import { colors, spacing } from '@/theme';
+import { Button, Card, Pill, Txt } from '@/components';
+import { colors, radius, spacing } from '@/theme';
 
 export default function MarketScreen() {
+  const r = useRouter();
+  const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const [items, setItems] = useState<Listing[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
@@ -35,14 +39,28 @@ export default function MarketScreen() {
     }
   }, [load]);
 
+  const canBack = r.canGoBack();
+
   return (
-    <Screen
-      scroll
-      contentStyle={{ gap: spacing.md }}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-    >
+    <View style={styles.root}>
+      <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safe}>
+        <View style={[styles.top, { paddingTop: Math.max(insets.top, spacing.md) }]}>
+          <Pressable
+            onPress={() => router.back()}
+            disabled={!canBack}
+            style={[styles.back, !canBack && styles.backHidden]}
+            accessibilityLabel="返回"
+          >
+            <MaterialIcons name="arrow-back-ios-new" size={22} color={colors.onSurface} />
+          </Pressable>
+          <Txt kind="h2">好物市集</Txt>
+          <View style={styles.topSpacer} />
+        </View>
+        <ScrollView
+          contentContainerStyle={styles.content}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >
       <View style={{ gap: spacing.xs }}>
-        <Txt kind="h1">小市集</Txt>
         <Txt muted>宠物用品、领养、上门服务。</Txt>
       </View>
 
@@ -86,9 +104,45 @@ export default function MarketScreen() {
           );
         })
       )}
-    </Screen>
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: colors.canvas,
+  },
+  safe: {
+    flex: 1,
+  },
+  top: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(255, 90, 119, 0.1)',
+  },
+  back: {
+    padding: spacing.sm,
+    width: 44,
+  },
+  backHidden: {
+    opacity: 0,
+  },
+  topSpacer: {
+    width: 44,
+  },
+  content: {
+    padding: spacing.lg,
+    gap: spacing.md,
+    paddingBottom: 120,
+  },
+});
 
 function listingLabel(t: string): string {
   if (t === 'product') return '商品';

@@ -1,88 +1,188 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="auth.register_title">注册 · 喵友圈</title>
-  <link rel="stylesheet" href="/theme.css" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="/tw-stitch.js"></script>
+  <link rel="stylesheet" href="/stitch-toast.css" />
   <script src="/shared.js"></script>
+  <style>
+    body { background: #fbf9f4; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .icon-fill { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+    #settings-bar select {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      border: 1px solid #e4e2dd;
+      background: #fff;
+      color: #594042;
+    }
+  </style>
 </head>
-<body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a href="/" class="meow-logo">
-        <span class="logo-mark" aria-hidden="true">🐾</span>
-        <span data-i18n="app.title">喵友圈</span>
-      </a>
-      <nav class="nav-links">
-        <div id="settings-bar"></div>
-        <a href="/architecture.html" data-i18n="nav.docs">系统文档</a>
-        <a href="/login" class="cta-link" data-i18n="nav.login">登录</a>
-      </nav>
-    </div>
+<body class="font-body-md text-on-surface bg-surface min-h-screen flex flex-col relative overflow-x-hidden">
+  <header class="sticky top-0 z-20 flex justify-between items-center px-4 md:px-8 h-14 md:h-16 bg-surface/85 backdrop-blur-xl border-b border-primary-container/10">
+    <a href="/" class="text-xl md:text-2xl font-black text-primary-container tracking-tighter font-headline-xl">MEOW</a>
+    <nav class="flex items-center gap-3 md:gap-4">
+      <div id="settings-bar"></div>
+      <a href="/architecture.html" class="text-label-md text-on-surface-variant hover:text-primary-container hidden sm:inline" data-i18n="nav.docs">系统文档</a>
+      <a href="/login" class="px-4 py-1.5 rounded-full bg-primary-container/10 text-primary-container font-label-md hover:bg-primary-container/20" data-i18n="nav.login">登录</a>
+    </nav>
   </header>
 
-  <main class="auth-shell">
-    <section class="auth-card">
-      <h1 data-i18n="auth.register_heading">创建你的账号</h1>
-      <p class="lede" data-i18n="auth.register_lede">几秒完成注册，立即发帖、发布交易、收发私信。</p>
+  <main class="flex-1 flex flex-col lg:flex-row min-h-0">
+    <!-- Left: brand imagery -->
+    <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-surface-container min-h-[320px]">
+      <img
+        alt=""
+        class="absolute inset-0 w-full h-full object-cover opacity-90"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjyQIAgLp4bQ6UYqUoKE92s5Wi4oUxuAHSdZd8iCLnn2FNMMZU0v5O_AuPd0rH178eIbGh7HBZ9knXo0jmwp2FhkUUEpEPJRR4iobNbJCosa8zsbiRU3oXAqA5a5iU2hoTao9GDe59NeybJwDXFSs99gFm7xtFm-Ujxsw87svinxotym6dSt-31iUgSpn2xINzTDgDQKSjyItj8Pi0JaVXK1cf0wgUodvggUbXdJ6kVJC4hiD0gmRNzyrxPlTxflPxcFFYHkBP"
+      />
+      <div class="absolute inset-0 bg-gradient-to-tr from-primary-container/20 to-surface/40 mix-blend-overlay pointer-events-none"></div>
+    </div>
 
-      <form id="register-form" class="form-grid" autocomplete="on" novalidate>
-        <div class="field-group">
-          <label for="reg-username" data-i18n="auth.label_username">用户名</label>
-          <input
-            id="reg-username"
-            name="username"
-            type="text"
-            autocomplete="username"
-            required
-            minlength="3"
-            pattern="[A-Za-z0-9_]{3,}"
-            data-i18n-placeholder="auth.placeholder_username_reg"
-            placeholder="3 位以上，字母/数字/下划线" />
-          <p class="caption" data-i18n="auth.hint_username">3 位以上，支持字母、数字、下划线</p>
+    <!-- Right: form -->
+    <div class="w-full lg:w-1/2 flex flex-col justify-center items-center p-md lg:p-xl py-10 lg:py-12">
+      <div class="auth-card w-full max-w-[400px] flex flex-col gap-8">
+        <div class="text-center flex flex-col items-center gap-1">
+          <h1 class="font-headline-xl text-headline-xl text-primary-container tracking-tighter">MEOW</h1>
+          <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="auth.register_tagline">加入喵圈，发现更多可爱日常</p>
         </div>
 
-        <div class="field-group">
-          <label for="reg-nickname" data-i18n="auth.label_nickname">昵称</label>
-          <input
-            id="reg-nickname"
-            name="nickname"
-            type="text"
-            autocomplete="nickname"
-            maxlength="32"
-            data-i18n-placeholder="auth.placeholder_nickname"
-            placeholder="将展示给其他用户" />
-        </div>
+        <form id="register-form" class="flex flex-col gap-5" autocomplete="on" novalidate>
+          <!-- Username -->
+          <div class="flex flex-col gap-1">
+            <label class="font-label-md text-label-md text-on-surface pl-1" for="reg-username" data-i18n="auth.label_username">用户名</label>
+            <div class="relative flex items-center">
+              <span class="material-symbols-outlined absolute left-3 text-outline pointer-events-none text-[20px]">person</span>
+              <input
+                id="reg-username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                required
+                minlength="3"
+                pattern="[A-Za-z0-9_]{3,}"
+                data-i18n-placeholder="auth.placeholder_username_register"
+                placeholder="给自己起个好听的名字"
+                class="w-full pl-11 pr-4 py-3.5 bg-surface-container border-2 border-transparent focus:border-primary-container focus:bg-surface-container-lowest rounded-2xl font-body-md text-body-md text-on-surface placeholder:text-outline transition-all outline-none"
+              />
+            </div>
+          </div>
 
-        <div class="field-group">
-          <label for="reg-password" data-i18n="auth.label_password">密码</label>
-          <input
-            id="reg-password"
-            name="password"
-            type="password"
-            autocomplete="new-password"
-            required
-            minlength="6"
-            data-i18n-placeholder="auth.placeholder_password_reg"
-            placeholder="至少 6 位" />
-          <p class="caption" data-i18n="auth.hint_password">至少 6 位，建议包含字母和数字</p>
-        </div>
+          <!-- Phone -->
+          <div class="flex flex-col gap-1">
+            <label class="font-label-md text-label-md text-on-surface pl-1" for="reg-phone" data-i18n="auth.label_phone">手机号码</label>
+            <div class="relative flex items-center">
+              <span class="material-symbols-outlined absolute left-3 text-outline pointer-events-none text-[20px]">smartphone</span>
+              <input
+                id="reg-phone"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                inputmode="tel"
+                data-i18n-placeholder="auth.placeholder_phone"
+                placeholder="输入您的手机号"
+                class="w-full pl-11 pr-4 py-3.5 bg-surface-container border-2 border-transparent focus:border-primary-container focus:bg-surface-container-lowest rounded-2xl font-body-md text-body-md text-on-surface placeholder:text-outline transition-all outline-none"
+              />
+            </div>
+          </div>
 
-        <div class="submit-row">
-          <button class="btn-primary" type="submit" data-i18n="auth.btn_register">注册</button>
-        </div>
-        <p id="register-error" class="auth-error" role="alert"></p>
-      </form>
+          <!-- Code -->
+          <div class="flex flex-col gap-1">
+            <label class="font-label-md text-label-md text-on-surface pl-1" for="reg-code" data-i18n="auth.label_code">验证码</label>
+            <div class="flex gap-2">
+              <div class="relative flex items-center flex-1 min-w-0">
+                <span class="material-symbols-outlined absolute left-3 text-outline pointer-events-none text-[20px]">mark_email_read</span>
+                <input
+                  id="reg-code"
+                  name="code"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="one-time-code"
+                  data-i18n-placeholder="auth.placeholder_code"
+                  placeholder="输入验证码"
+                  class="w-full pl-11 pr-4 py-3.5 bg-surface-container border-2 border-transparent focus:border-primary-container focus:bg-surface-container-lowest rounded-2xl font-body-md text-body-md text-on-surface placeholder:text-outline transition-all outline-none"
+                />
+              </div>
+              <button
+                id="send-verification-code"
+                type="button"
+                class="shrink-0 whitespace-nowrap px-4 py-3.5 bg-primary-container/10 text-primary-container font-label-md text-label-md rounded-2xl hover:bg-primary-container/20 transition-colors active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
+                data-i18n="auth.send_code"
+              >
+                获取验证码
+              </button>
+            </div>
+          </div>
 
-      <p class="auth-alt-link">
-        <span data-i18n="auth.have_account">已经有账号？</span>
-        <a href="/login" data-i18n="auth.go_login">返回登录</a>
-      </p>
-    </section>
+          <!-- Password -->
+          <div class="flex flex-col gap-1">
+            <label class="font-label-md text-label-md text-on-surface pl-1" for="reg-password" data-i18n="auth.label_password">密码</label>
+            <div class="relative flex items-center">
+              <span class="material-symbols-outlined absolute left-3 text-outline pointer-events-none text-[20px]">lock</span>
+              <input
+                id="reg-password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                required
+                minlength="6"
+                data-i18n-placeholder="auth.placeholder_password_register"
+                placeholder="设置登录密码"
+                class="w-full pl-11 pr-12 py-3.5 bg-surface-container border-2 border-transparent focus:border-primary-container focus:bg-surface-container-lowest rounded-2xl font-body-md text-body-md text-on-surface placeholder:text-outline transition-all outline-none"
+              />
+              <button id="register-password-toggle" class="absolute right-3 text-outline hover:text-on-surface-variant p-1" type="button" aria-label="Toggle password">
+                <span class="material-symbols-outlined reg-pw-icon text-[20px]">visibility_off</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Agreement -->
+          <div class="flex items-start gap-2 mt-1">
+            <div class="flex items-center h-6 pt-0.5">
+              <input
+                id="agreement"
+                name="agreement"
+                type="checkbox"
+                value="1"
+                class="w-4 h-4 rounded border-outline text-primary-container focus:ring-primary-container focus:ring-2 bg-surface-container cursor-pointer accent-primary-container"
+              />
+            </div>
+            <label class="font-body-md text-body-md text-on-surface-variant cursor-pointer select-none leading-snug" for="agreement">
+              <span data-i18n="auth.agreement_html">我已阅读并同意</span>
+              <a class="text-primary-container hover:underline font-semibold" href="#" data-i18n="auth.user_agreement_link">《用户协议》</a>
+              <span data-i18n="auth.agreement_and">与</span>
+              <a class="text-primary-container hover:underline font-semibold" href="#" data-i18n="auth.privacy_policy_link">《隐私政策》</a>
+            </label>
+          </div>
+
+          <p id="register-error" class="text-sm text-error font-medium min-h-[1.25rem] -mt-1" role="alert"></p>
+
+          <button
+            type="submit"
+            class="w-full py-4 mt-1 bg-primary-container text-on-primary font-body-lg text-body-lg rounded-2xl shadow-[0_4px_14px_rgba(255,90,119,0.3)] hover:shadow-[0_6px_20px_rgba(255,90,119,0.4)] active:scale-[0.98] transition-all duration-200 flex justify-center items-center gap-2 group"
+          >
+            <span data-i18n="auth.btn_register_submit">立即注册</span>
+            <span class="material-symbols-outlined text-[20px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+          </button>
+        </form>
+
+        <div class="text-center">
+          <p class="font-body-md text-body-md text-on-surface-variant">
+            <span data-i18n="auth.have_account">已经有账号？</span>
+            <a class="text-primary-container font-label-md font-semibold hover:underline decoration-2 underline-offset-4" href="/login" data-i18n="auth.direct_login">直接登录</a>
+          </p>
+        </div>
+      </div>
+    </div>
   </main>
-
   <script src="/auth.js"></script>
 </body>
 </html>

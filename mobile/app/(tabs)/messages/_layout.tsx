@@ -11,7 +11,7 @@ export default function MessagesStackLayout() {
         headerTintColor: colors.ink,
       }}
     >
-      <Stack.Screen name="index" options={{ title: '私信' }} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="[peerId]" options={{ title: '对话' }} />
     </Stack>
   );

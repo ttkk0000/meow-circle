@@ -6,6 +6,7 @@ type User struct {
 	ID           int64     `json:"id"`
 	Username     string    `json:"username"`
 	Nickname     string    `json:"nickname"`
+	Phone        string    `json:"-"` // stored normalized digits-only; never exposed in JSON
 	AvatarURL    string    `json:"avatar_url,omitempty"`
 	Bio          string    `json:"bio,omitempty"`
 	PasswordHash string    `json:"-"`

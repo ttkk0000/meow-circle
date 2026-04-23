@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="stitch.post_detail">帖子详情 · 喵友圈</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="/tw-stitch.js"></script>
+  <link rel="stylesheet" href="/stitch-toast.css" />
+  <script src="/shared.js"></script>
+  <style>
+    body { background: #fbf9f4; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .material-symbols-outlined.fill { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen font-body-md antialiased">
+  <nav class="fixed top-0 w-full flex justify-between items-center px-4 md:px-8 h-16 z-50 bg-[#F9F7F2]/80 backdrop-blur-xl border-b border-[#FF5A77]/10 shadow-[0_4px_20px_rgba(255,90,119,0.05)]">
+    <div class="flex items-center gap-3 md:gap-6 min-w-0">
+      <button type="button" id="btn-back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors text-on-surface shrink-0" aria-label="返回">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <a href="/" class="text-xl md:text-2xl font-black text-[#FF5A77] tracking-tighter truncate">Kitty Circle</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="/compose.html" class="hidden sm:flex bg-[#FF5A77] text-white px-4 py-2 rounded-full font-label-md items-center gap-1 hover:scale-105 transition-transform shadow-md">
+        <span class="material-symbols-outlined text-[20px]">add_circle</span>
+        <span data-i18n="nav.compose">发帖</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="pt-16 px-4 md:px-8 py-6 max-w-[1200px] mx-auto">
+    <div id="err-box" class="hidden rounded-2xl bg-error-container/30 text-error p-4 mb-4"></div>
+    <div id="post-shell" class="hidden flex flex-col lg:flex-row min-h-[calc(100vh-120px)] bg-white rounded-[24px] shadow-[0_8px_40px_rgba(255,90,119,0.06)] overflow-hidden border border-outline-variant/20">
+      <div class="lg:w-[58%] bg-surface-container-low relative min-h-[280px] lg:min-h-0">
+        <div id="media-stage" class="w-full h-full min-h-[320px] lg:min-h-[480px] flex items-center justify-center bg-surface-container-low">
+          <img id="hero-img" alt="" class="max-w-full max-h-[70vh] object-contain lg:w-full lg:h-full lg:object-cover" />
+          <video id="hero-video" class="hidden max-w-full max-h-[70vh] w-full h-full object-contain lg:object-cover" controls playsinline></video>
+        </div>
+      </div>
+      <div class="lg:w-[42%] flex flex-col bg-surface-container-lowest min-h-0">
+        <div class="min-h-[72px] px-4 md:px-6 py-2 flex items-center justify-between gap-3 border-b border-outline-variant/20 shrink-0 flex-wrap">
+          <div class="flex items-center gap-3 min-w-0 flex-1">
+            <div class="w-11 h-11 rounded-full bg-primary-container/15 flex items-center justify-center text-primary-container font-bold shrink-0 overflow-hidden" id="author-avatar">?</div>
+            <div class="min-w-0">
+              <span class="font-body-lg text-on-surface truncate block" id="author-line"></span>
+              <span class="font-label-md text-on-surface-variant/60" data-i18n="stitch.poster">发布者</span>
+              <button type="button" id="btn-follow" class="hidden mt-2 px-3 py-1 rounded-full text-label-md font-label-md border border-primary-container text-primary-container hover:bg-primary-container/10 transition-colors w-fit" data-i18n="stitch.follow">关注</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" id="btn-like" class="flex items-center gap-1 px-3 py-1.5 rounded-full border-2 border-outline-variant/40 text-on-surface font-label-md hover:bg-primary-container/10 transition-all text-sm" aria-label="like">
+              <span class="material-symbols-outlined text-[22px]" id="like-icon">favorite</span>
+              <span id="like-count" class="font-label-md tabular-nums">0</span>
+            </button>
+            <button type="button" id="btn-report" class="px-4 py-1.5 rounded-full border-2 border-primary-container text-primary-container font-label-md hover:bg-primary-container hover:text-white transition-all text-sm" data-i18n="report.btn">举报</button>
+          </div>
+        </div>
+        <div class="flex-1 overflow-y-auto px-4 md:px-6 py-5 flex flex-col gap-4">
+          <div>
+            <h1 class="font-headline-lg text-on-surface mb-3 leading-snug" id="post-title"></h1>
+            <p class="font-body-md text-on-surface-variant whitespace-pre-line leading-relaxed" id="post-body"></p>
+          </div>
+          <div id="post-tags" class="flex flex-wrap gap-2"></div>
+          <p class="font-label-md text-on-surface-variant/40" id="post-meta"></p>
+          <div class="h-px w-full bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent"></div>
+          <div>
+            <h3 class="font-body-lg text-on-surface mb-4 flex items-center gap-2">
+              <span data-i18n="post.view_comments">评论</span>
+              <span id="comment-count" class="text-on-surface-variant">(0)</span>
+            </h3>
+            <div id="comments" class="flex flex-col gap-4"></div>
+          </div>
+        </div>
+        <div class="shrink-0 border-t border-outline-variant/10 px-4 md:px-6 py-4 bg-surface-container-lowest">
+          <form id="comment-form" class="flex gap-3">
+            <input name="content" required class="flex-1 bg-surface-container-low rounded-full px-4 py-3 border border-outline-variant/20 focus:ring-2 focus:ring-primary-container outline-none font-body-md" data-i18n-placeholder="post.placeholder_comment" placeholder="说点什么..." />
+            <button type="submit" class="w-11 h-11 rounded-full bg-primary-container text-white flex items-center justify-center hover:scale-105 transition-transform shrink-0">
+              <span class="material-symbols-outlined text-[20px]">send</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="/post.js"></script>
+</body>
+</html>

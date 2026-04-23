@@ -1,211 +1,239 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="app.title">喵友圈</title>
-  <link rel="stylesheet" href="/theme.css" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="/tw-stitch.js"></script>
+  <link rel="stylesheet" href="/stitch-toast.css" />
   <script src="/shared.js"></script>
+  <style>
+    body { background-color: #f9f7f2; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .material-symbols-outlined.fill { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 90, 119, 0.2); border-radius: 10px; }
+    #settings-bar select {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      border: 1px solid #e4e2dd;
+      background: #fff;
+      color: #594042;
+    }
+  </style>
 </head>
-<body class="home">
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a href="/" class="meow-logo">
-        <span class="logo-mark" aria-hidden="true">喵</span>
-        <span class="logo-wordmark" data-i18n="app.title">喵友圈</span>
-      </a>
-      <div class="search-box" role="search">
-        <svg class="search-icon" width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="m14 14 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <input id="global-search" type="search" data-i18n-placeholder="nav.search_placeholder" placeholder="搜索帖子、交易..." />
-      </div>
-      <nav class="nav-links">
-        <div id="settings-bar"></div>
-        <a href="/architecture.html" data-i18n="nav.docs">系统文档</a>
-        <a id="dashboard-link" href="/dashboard" hidden data-i18n="nav.dashboard">我的管理中心</a>
-        <button id="notif-btn" class="icon-btn" type="button" hidden title="Notifications">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0v3l1.5 3h-15L6 12V9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 18a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span id="notif-count" class="badge-count" hidden>0</span>
+<body class="font-body-md text-on-background bg-[#F9F7F2] min-h-screen pb-24 md:pb-0">
+  <!-- Mobile top bar -->
+  <div class="md:hidden">
+    <nav class="fixed top-0 z-50 w-full flex justify-between items-center px-4 h-16 bg-[#F9F7F2]/80 backdrop-blur-xl shadow-[0_4px_20px_rgba(255,90,119,0.05)]">
+      <a href="/" class="text-2xl font-black text-[#FF5A77] tracking-tighter">MEOW</a>
+      <div class="flex items-center gap-3">
+        <button type="button" id="mobile-search-open" class="text-gray-500 hover:text-[#FF5A77] hover:scale-105 transition-transform" aria-label="搜索">
+          <span class="material-symbols-outlined">search</span>
         </button>
-        <span id="user-hint"></span>
-        <a id="login-link" href="/login" class="cta-link" data-i18n="nav.login">登录</a>
-        <a id="register-link" href="/register" data-i18n="nav.register">注册</a>
-        <button id="logout-btn" type="button" hidden data-i18n="nav.logout">退出</button>
+        <a href="/compose.html" class="bg-[#FF5A77] text-white px-4 py-1.5 rounded-full text-label-md font-label-md hover:scale-105 transition-transform shadow-md" data-i18n="nav.compose">发帖</a>
+      </div>
+    </nav>
+    <div class="h-16"></div>
+  </div>
+
+  <div class="flex max-w-[1440px] mx-auto min-h-screen">
+    <!-- Desktop sidebar -->
+    <aside class="hidden md:flex bg-[#F9F7F2] h-screen w-64 border-r border-gray-100 flex-col p-6 gap-4 sticky top-0 shrink-0 rounded-r-[32px]">
+      <div class="mb-6 pl-2">
+        <a href="/" class="block">
+          <h1 class="text-headline-xl font-headline-xl text-[#FF5A77] tracking-tighter">MEOW</h1>
+          <p class="text-label-md font-label-md text-gray-500 mt-1" data-i18n="stitch.tagline">社区探索</p>
+        </a>
+      </div>
+      <nav class="flex flex-col gap-2 flex-grow">
+        <a class="flex items-center gap-4 px-4 py-3 bg-[#FF5A77]/10 text-[#FF5A77] font-bold rounded-full hover:scale-[0.98] transition-transform" href="/">
+          <span class="material-symbols-outlined fill">home</span>
+          <span class="text-body-lg font-body-lg" data-i18n="stitch.nav_home">首页</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-gray-600 hover:bg-[#FF5A77]/5 rounded-full transition-colors" href="/discover.html">
+          <span class="material-symbols-outlined">explore</span>
+          <span class="text-body-lg font-body-lg" data-i18n="stitch.nav_discover">发现</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-gray-600 hover:bg-[#FF5A77]/5 rounded-full transition-colors relative" href="/messages.html">
+          <span class="material-symbols-outlined">mail</span>
+          <span class="text-body-lg font-body-lg" data-i18n="stitch.nav_messages">消息</span>
+          <span id="sidebar-notif-dot" class="absolute left-10 top-3 w-2 h-2 bg-primary-container rounded-full hidden"></span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-gray-600 hover:bg-[#FF5A77]/5 rounded-full transition-colors" href="/profile.html">
+          <span class="material-symbols-outlined">person</span>
+          <span class="text-body-lg font-body-lg" data-i18n="stitch.nav_me">我的</span>
+        </a>
       </nav>
-    </div>
-  </header>
-
-  <!-- ======================  HERO (editorial masthead)  ====================== -->
-  <section class="hero">
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <span class="eyebrow">
-          <span data-i18n="hero.eyebrow">社区 · 正在刊载</span>
-        </span>
-
-        <h1 class="h-mega" data-i18n="hero.title">
-          把对毛孩子的爱，<br />分享给同好。
-        </h1>
-
-        <p class="lede-serif has-dropcap" data-i18n="hero.subtitle">
-          发布日常、交换经验、可信交易——一站式宠物主人社区，像翻开一本讲究的杂志。
-        </p>
-
-        <div class="hero-actions">
-          <button id="hero-primary" class="btn-primary" type="button" data-i18n="hero.btn_primary">
-            开始分享
-          </button>
-          <a class="btn-link-arrow" href="#listings-section" data-i18n="hero.btn_secondary">
-            浏览交易 <span aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Masthead index: replaces the 3-identical-stat-card row.
-           Varies size intentionally; primary metric is the lede number,
-           supporting metrics sit beside it in a smaller register. -->
-      <aside class="hero-index" aria-label="本期指标">
-        <div class="hero-index-primary">
-          <span class="index-num">Nº 01</span>
-          <span class="display-num" id="stat-posts">—</span>
-          <span class="lede-serif" data-i18n="hero.index_primary_caption">
-            篇帖子正在被阅读与评论
-          </span>
-        </div>
-
-        <hr class="dotted-rule" />
-
-        <div class="hero-index-grid">
-          <div>
-            <span class="index-num">Nº 02</span>
-            <div class="display-num-sm" id="stat-listings">—</div>
-            <div class="caption" data-i18n="stat.listings">交易</div>
+      <a href="/compose.html" class="mt-2 bg-gradient-to-r from-primary-container to-[#ff7e95] text-on-primary font-body-lg text-body-lg py-4 px-6 rounded-full shadow-[0_8px_16px_rgba(255,90,119,0.2)] hover:scale-95 transition-all duration-150 flex justify-center items-center gap-2">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span data-i18n="nav.compose">发帖</span>
+      </a>
+      <div class="pt-4 mt-auto border-t border-gray-100 space-y-3">
+        <div id="settings-bar"></div>
+        <div class="flex flex-col gap-2 text-label-md">
+          <span id="user-hint" class="text-gray-600 truncate"></span>
+          <div class="flex flex-wrap gap-2">
+            <a id="login-link" href="/login" class="text-primary-container font-semibold" data-i18n="nav.login">登录</a>
+            <a id="register-link" href="/register" class="text-gray-500" data-i18n="nav.register">注册</a>
+            <a id="dashboard-link" href="/dashboard" class="text-gray-500 hidden" data-i18n="nav.dashboard">管理</a>
+            <button id="logout-btn" type="button" class="text-gray-500 hidden" data-i18n="nav.logout">退出</button>
           </div>
-          <div>
-            <span class="index-num">Nº 03</span>
-            <div class="display-num-sm" id="stat-users">—</div>
-            <div class="caption" data-i18n="stat.users">用户</div>
+          <a href="/architecture.html" class="text-gray-400 hover:text-primary-container" data-i18n="nav.docs">系统文档</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Feed -->
+    <main class="flex-1 px-4 md:px-8 py-6 overflow-y-auto">
+      <div class="hidden md:flex justify-between items-center mb-8 gap-4 flex-wrap">
+        <div class="relative w-full max-w-md">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">search</span>
+          <input id="global-search" class="w-full bg-surface-container-low border-none rounded-full py-3 pl-12 pr-4 text-body-md font-body-md focus:ring-2 focus:ring-primary-container outline-none transition-shadow" type="search" data-i18n-placeholder="stitch.search_posts" placeholder="搜索猫咪日常、好物推荐..." />
+        </div>
+        <div class="flex gap-2 flex-wrap" id="filter-tabs">
+          <button type="button" data-filter="rec" class="filter-chip px-4 py-2 bg-primary-container/10 text-primary-container rounded-full font-label-md text-label-md ring-2 ring-primary-container/30" data-i18n="stitch.filter_rec">推荐</button>
+          <button type="button" data-filter="new" class="filter-chip px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-full font-label-md text-label-md" data-i18n="stitch.filter_new">最新</button>
+          <button type="button" data-filter="follow" class="filter-chip px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-full font-label-md text-label-md" data-i18n="stitch.filter_follow">关注</button>
+        </div>
+      </div>
+
+      <!-- Mobile search panel -->
+      <div id="mobile-search-panel" class="md:hidden hidden mb-4">
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+          <input id="global-search-mobile" class="w-full bg-surface-container-low border-none rounded-full py-3 pl-12 pr-4 text-body-md" type="search" placeholder="搜索..." data-i18n-placeholder="nav.search_placeholder" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-card-gap md:gap-lg" id="posts"></div>
+
+      <div class="py-8 flex justify-center" id="feed-loading" hidden>
+        <div class="flex items-center gap-2 text-primary-container">
+          <span class="material-symbols-outlined animate-spin">sync</span>
+          <span class="font-label-md text-label-md" data-i18n="stitch.loading_more">加载更多喵星人...</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right rail -->
+    <aside class="hidden lg:block w-80 p-6 pt-8 overflow-y-auto border-l border-gray-100 shrink-0">
+      <div class="mb-8">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="material-symbols-outlined text-secondary-container fill">local_fire_department</span>
+          <h2 class="text-headline-lg font-headline-lg text-on-surface" data-i18n="stitch.hot_topics">热门话题</h2>
+        </div>
+        <div class="flex flex-col gap-3">
+          <div class="bg-surface-container-lowest p-3 rounded-[16px] border border-transparent hover:border-primary-container/20 cursor-pointer">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-body-lg font-body-lg font-bold text-on-surface"># 晒晒家里的猫主子</span>
+              <span class="text-label-md font-label-md text-primary-container bg-primary-container/10 px-2 py-0.5 rounded-full">Top 1</span>
+            </div>
+            <p class="text-label-md font-label-md text-gray-500">45.2w 参与</p>
+          </div>
+          <div class="bg-surface-container-lowest p-3 rounded-[16px] border border-transparent hover:border-primary-container/20 cursor-pointer">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-body-lg font-body-lg font-bold text-on-surface"># 猫咪迷惑行为大赏</span>
+              <span class="text-label-md font-label-md text-secondary-fixed-dim bg-secondary-container/10 px-2 py-0.5 rounded-full">Top 2</span>
+            </div>
+            <p class="text-label-md font-label-md text-gray-500">32.8w 参与</p>
+          </div>
+          <div class="bg-surface-container-lowest p-3 rounded-[16px] border border-transparent hover:border-primary-container/20 cursor-pointer">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-body-lg font-body-lg font-bold text-on-surface"># 新手养猫避坑指南</span>
+              <span class="text-label-md font-label-md text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">Top 3</span>
+            </div>
+            <p class="text-label-md font-label-md text-gray-500">18.5w 参与</p>
           </div>
         </div>
-      </aside>
-    </div>
-  </section>
-
-  <section class="kitty-showcase" aria-label="社区猫咪精选">
-    <header class="kitty-showcase-head">
-      <span class="eyebrow">喵友精选</span>
-      <h2 class="h-section">今日猫咪氛围</h2>
-      <p class="lede-serif">晒娃、求助、交易之外，也别忘了停下来吸一口猫。</p>
-    </header>
-    <div class="kitty-marquee" aria-hidden="true">
-      <span>🐾</span><span>🐈</span><span>🐾</span><span>🐈‍⬛</span><span>🐾</span><span>😺</span>
-    </div>
-    <div class="kitty-photo-grid">
-      <article class="kitty-photo-card">
-        <img
-          src="https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=900&q=80"
-          alt="好奇地看向镜头的猫"
-          loading="lazy"
-          decoding="async"
-        />
-        <p class="caption">“今天是认真营业的小店长”</p>
-        <p class="kitty-card-meta"><span>❤ 246</span><span>💬 38</span></p>
-      </article>
-      <article class="kitty-photo-card">
-        <img
-          src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=900&q=80"
-          alt="在毯子上休息的猫"
-          loading="lazy"
-          decoding="async"
-        />
-        <p class="caption">“午后打盹，主打一个治愈”</p>
-        <p class="kitty-card-meta"><span>❤ 312</span><span>💬 54</span></p>
-      </article>
-      <article class="kitty-photo-card">
-        <img
-          src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=80"
-          alt="坐在窗边的橘猫"
-          loading="lazy"
-          decoding="async"
-        />
-        <p class="caption">“窗边观察员，已上线巡逻”</p>
-        <p class="kitty-card-meta"><span>❤ 189</span><span>💬 29</span></p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ======================  SEARCH RESULTS (unchanged plumbing)  ====================== -->
-  <section id="search-results" hidden>
-    <div class="section-head">
-      <h2 data-i18n="search.title">搜索结果</h2>
-      <button id="close-search" type="button" class="btn-ghost" aria-label="关闭搜索">×</button>
-    </div>
-    <div class="tab-strip" id="search-tabs">
-      <button class="active" data-search-tab="all" data-i18n="search.tab_all">全部</button>
-      <button data-search-tab="post" data-i18n="search.tab_posts">帖子</button>
-      <button data-search-tab="listing" data-i18n="search.tab_listings">交易</button>
-    </div>
-    <div id="search-posts" class="list"></div>
-    <div id="search-listings" class="list"></div>
-  </section>
-
-  <!-- ======================  MAIN FEED (asymmetric 7/5)  ====================== -->
-  <main class="home-main" id="listings-section">
-    <section class="feed-section feed-primary">
-      <header class="feed-head">
-        <span class="eyebrow" data-i18n="home.eyebrow_posts">时间线 · 社区</span>
-        <div class="feed-head-row">
-          <h2 class="h-section" data-i18n="section.latest_posts">最新帖子</h2>
-          <button id="refresh-posts" class="btn-ghost btn-small" type="button" data-i18n="action.refresh">刷新</button>
-        </div>
-      </header>
-      <div id="posts" class="list list-editorial"></div>
-    </section>
-
-    <section class="feed-section feed-aside">
-      <header class="feed-head">
-        <span class="eyebrow" data-i18n="home.eyebrow_listings">市集 · 可交易</span>
-        <div class="feed-head-row">
-          <h2 class="h-section" data-i18n="section.listings">交易信息</h2>
-          <button id="refresh-listings" class="btn-ghost btn-small" type="button" data-i18n="action.refresh">刷新</button>
-        </div>
-      </header>
-      <div id="listings" class="list list-compact"></div>
-    </section>
-  </main>
-
-  <!-- Post item template — JS (app.js) fills .item-title / .category /
-       .item-content / .meta / details / .comments / .comment-form.
-       The outer classes must stay as-is. -->
-  <template id="post-item-template">
-    <article class="item">
-      <div class="item-head">
-        <h3 class="item-title"></h3>
-        <span class="pill category"></span>
       </div>
-      <p class="item-content"></p>
-      <p class="meta"></p>
-      <details>
-        <summary data-i18n="post.view_comments">查看与评论</summary>
-        <div class="comments"></div>
-        <form class="comment-form">
-          <input type="text" name="content" required data-i18n-placeholder="post.placeholder_comment" />
-          <button type="submit" data-i18n="post.btn_comment">发表评论</button>
-        </form>
-      </details>
-    </article>
-  </template>
-
-  <template id="listing-item-template">
-    <article class="item">
-      <div class="item-head">
-        <h3 class="item-title"></h3>
-        <span class="pill type"></span>
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-tertiary-container fill">group</span>
+            <h2 class="text-headline-lg font-headline-lg text-on-surface" data-i18n="stitch.rec_circles">推荐圈子</h2>
+          </div>
+          <a href="/discover.html" class="text-label-md font-label-md text-primary-container" data-i18n="stitch.view_all">查看全部</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center justify-between bg-surface-container-lowest p-3 rounded-[20px] shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-[12px] bg-tertiary-container/10 flex items-center justify-center text-tertiary-container">
+                <span class="material-symbols-outlined text-[24px]">healing</span>
+              </div>
+              <div>
+                <h4 class="text-body-md font-body-md font-bold">猫咪医疗互助</h4>
+                <p class="text-label-md font-label-md text-gray-500">1.2w 成员</p>
+              </div>
+            </div>
+            <a href="/discover.html" class="bg-primary-container/10 text-primary-container px-3 py-1.5 rounded-full text-label-md font-label-md" data-i18n="stitch.join">加入</a>
+          </div>
+          <div class="flex items-center justify-between bg-surface-container-lowest p-3 rounded-[20px] shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-[12px] bg-secondary-container/10 flex items-center justify-center text-secondary-fixed-dim">
+                <span class="material-symbols-outlined text-[24px]">shopping_bag</span>
+              </div>
+              <div>
+                <h4 class="text-body-md font-body-md font-bold">好物种草机</h4>
+                <p class="text-label-md font-label-md text-gray-500">8.9k 成员</p>
+              </div>
+            </div>
+            <a href="/market.html" class="bg-primary-container/10 text-primary-container px-3 py-1.5 rounded-full text-label-md font-label-md" data-i18n="stitch.join">加入</a>
+          </div>
+        </div>
       </div>
-      <p class="item-content"></p>
-      <p class="meta"></p>
-    </article>
-  </template>
+    </aside>
+  </div>
+
+  <!-- Search overlay -->
+  <section id="search-results" class="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm hidden" hidden>
+    <div class="absolute inset-x-0 top-0 md:top-20 max-h-[85vh] overflow-y-auto bg-[#F9F7F2] md:rounded-b-[24px] shadow-xl md:max-w-3xl md:mx-auto p-4 md:p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-headline-lg font-headline-lg" data-i18n="search.title">搜索结果</h2>
+        <button type="button" id="close-search" class="w-10 h-10 rounded-full bg-surface-container-low hover:bg-surface-container" aria-label="关闭">×</button>
+      </div>
+      <div class="flex gap-2 mb-4 flex-wrap" id="search-tabs">
+        <button type="button" class="search-tab px-4 py-2 rounded-full bg-primary-container text-white text-label-md active" data-search-tab="all" data-i18n="search.tab_all">全部</button>
+        <button type="button" class="search-tab px-4 py-2 rounded-full bg-surface-container-low text-gray-600 text-label-md" data-search-tab="post" data-i18n="search.tab_posts">帖子</button>
+        <button type="button" class="search-tab px-4 py-2 rounded-full bg-surface-container-low text-gray-600 text-label-md" data-search-tab="listing" data-i18n="search.tab_listings">交易</button>
+      </div>
+      <div id="search-posts" class="space-y-3"></div>
+      <div id="search-listings" class="space-y-3 mt-4"></div>
+    </div>
+  </section>
+
+  <!-- Mobile bottom nav -->
+  <div class="md:hidden fixed bottom-0 w-full bg-[#F9F7F2]/90 backdrop-blur-lg pt-2 pb-safe px-4 flex justify-between items-center z-50 shadow-[0_-4px_20px_rgba(255,90,119,0.05)] rounded-t-[24px] border-t border-white/50">
+    <a class="flex flex-col items-center p-2 text-[#FF5A77] scale-105" href="/">
+      <span class="material-symbols-outlined fill">home</span>
+      <span class="text-[10px] mt-1 font-semibold" data-i18n="stitch.nav_home">首页</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-[#FF5A77]" href="/discover.html">
+      <span class="material-symbols-outlined">explore</span>
+      <span class="text-[10px] mt-1" data-i18n="stitch.nav_discover">发现</span>
+    </a>
+    <div class="relative -top-6">
+      <a href="/compose.html" class="w-14 h-14 bg-gradient-to-r from-primary-container to-[#ff7e95] rounded-full flex items-center justify-center shadow-lg shadow-primary-container/30 text-white hover:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-[32px]">add</span>
+      </a>
+    </div>
+    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-[#FF5A77] relative" href="/messages.html">
+      <span class="material-symbols-outlined">mail</span>
+      <span id="bottom-notif-dot" class="absolute top-1 right-2 w-2 h-2 bg-primary-container rounded-full hidden"></span>
+      <span class="text-[10px] mt-1" data-i18n="stitch.nav_messages">消息</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-[#FF5A77]" href="/profile.html">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-[10px] mt-1" data-i18n="stitch.nav_me">我的</span>
+    </a>
+  </div>
 
   <script src="/app.js"></script>
 </body>

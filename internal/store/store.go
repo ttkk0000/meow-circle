@@ -15,6 +15,7 @@ type Store interface {
 	// Users
 	CreateUser(user domain.User) (domain.User, bool)
 	FindUserByUsername(username string) (domain.User, bool)
+	FindUserByPhone(phoneNormalized string) (domain.User, bool)
 	GetUser(id int64) (domain.User, bool)
 	UpdateUserProfile(id int64, nickname, avatarURL, bio string) (domain.User, bool)
 	CountUsers() int
@@ -83,4 +84,14 @@ type Store interface {
 	// Audit
 	CreateAuditLog(log domain.AuditLog) domain.AuditLog
 	ListAuditLogs(limit int) []domain.AuditLog
+
+	// Social (feed UI: likes, follow filter)
+	Follow(followerID, followingID int64) bool
+	Unfollow(followerID, followingID int64) bool
+	IsFollowing(followerID, followingID int64) bool
+	ListFollowingIDs(followerID int64) []int64
+
+	TogglePostLike(userID, postID int64) (liked bool, count int64, ok bool)
+	BatchPostLikeCounts(postIDs []int64) map[int64]int64
+	BatchUserLikedPosts(userID int64, postIDs []int64) map[int64]bool
 }

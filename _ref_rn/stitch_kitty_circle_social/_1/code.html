@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#002118",
+                    "error": "#ba1a1a",
+                    "surface-dim": "#dbdad5",
+                    "on-secondary-fixed-variant": "#614000",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#694600",
+                    "on-primary-fixed-variant": "#91002f",
+                    "surface-tint": "#b52044",
+                    "surface-container-high": "#eae8e3",
+                    "primary-fixed-dim": "#ffb2b9",
+                    "on-tertiary-container": "#003528",
+                    "surface-bright": "#fbf9f4",
+                    "on-tertiary-fixed-variant": "#00513f",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1b1c19",
+                    "secondary-container": "#fdaf18",
+                    "inverse-primary": "#ffb2b9",
+                    "secondary-fixed": "#ffddb0",
+                    "secondary": "#805600",
+                    "on-primary-container": "#62001d",
+                    "tertiary-fixed-dim": "#55dcb6",
+                    "surface-container-low": "#f5f3ee",
+                    "outline": "#8d7072",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#e1bec0",
+                    "on-primary-fixed": "#400010",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffba46",
+                    "on-surface-variant": "#594042",
+                    "on-surface": "#1b1c19",
+                    "primary": "#b52044",
+                    "inverse-on-surface": "#f2f1ec",
+                    "tertiary": "#006b54",
+                    "tertiary-container": "#00a986",
+                    "surface-variant": "#e4e2dd",
+                    "inverse-surface": "#30312e",
+                    "background": "#fbf9f4",
+                    "surface-container": "#f0eee9",
+                    "surface": "#fbf9f4",
+                    "on-secondary-fixed": "#281800",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#75f9d1",
+                    "primary-container": "#ff5a77",
+                    "primary-fixed": "#ffdadc",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e4e2dd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "container-padding": "16px",
+                    "xl": "32px",
+                    "card-gap": "12px",
+                    "xs": "8px",
+                    "md": "16px",
+                    "base": "4px",
+                    "sm": "12px"
+            },
+            "fontFamily": {
+                    "label-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-xl": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-xl": ["28px", {"lineHeight": "36px", "fontWeight": "800"}],
+                    "headline-lg": ["22px", {"lineHeight": "28px", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fbf9f4; }
+        .glass-effect { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .squish:active { transform: scale(0.96); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background selection:bg-primary-container/30">
+<!-- Top AppBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-[#F9F7F2]/80 dark:bg-neutral-900/80 backdrop-blur-xl shadow-sm shadow-[#FF5A77]/5 border-none">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container/20 squish">
+<img class="w-full h-full object-cover" data-alt="close up profile portrait of a cute fluffy calico cat looking at camera with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABsYAeNW7QtosdMif0a81NUFL_G1BeAX2rA0Ia4CtYkvoQGvaVMJ9l5eItmvrjb56KuhPaSXUDJDszzSh_i1lQRP5sY1R67wuPdi0L4libREzsLxrZo9PSRVSg8Kcj9Ve8_AfOWkry1urTCpFKlZpj5jRsQXBeC7kqxzWJwOEJSwKWnmcC4Xh0LnKocIh72yzxUBDg5gwr1Z734LX-YWo40tzH6wUSFAPispm_x83Kg06UDr_OBZDBLigm6HmG2OJVDPlIYxrn"/>
+</div>
+<div class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-2xl font-black text-[#FF5A77] tracking-widest">MEOW</div>
+<div class="relative squish">
+<span class="material-symbols-outlined text-[#FF5A77] dark:text-[#FF7A91] text-2xl" data-icon="notifications">notifications</span>
+<div class="absolute top-0 right-0 w-2.5 h-2.5 bg-primary rounded-full border-2 border-[#F9F7F2]"></div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-20 pb-32 px-container-padding">
+<!-- Quick Action Shortcuts (Bento Style) -->
+<div class="grid grid-cols-3 gap-card-gap mb-xl">
+<div class="flex flex-col items-center justify-center bg-surface-container-lowest p-md rounded-lg shadow-sm shadow-primary/5 squish transition-all">
+<div class="w-14 h-14 bg-primary-container/10 rounded-full flex items-center justify-center mb-xs">
+<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="favorite" data-weight="fill" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">赞和收藏</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-surface-container-lowest p-md rounded-lg shadow-sm shadow-primary/5 squish transition-all">
+<div class="w-14 h-14 bg-secondary-container/10 rounded-full flex items-center justify-center mb-xs relative">
+<span class="material-symbols-outlined text-secondary-container text-3xl" data-icon="person_add" data-weight="fill" style="font-variation-settings: 'FILL' 1;">person_add</span>
+<div class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold px-1.5 py-0.5 rounded-full">12</div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">新增粉丝</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-surface-container-lowest p-md rounded-lg shadow-sm shadow-primary/5 squish transition-all">
+<div class="w-14 h-14 bg-tertiary-container/10 rounded-full flex items-center justify-center mb-xs">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="campaign" data-weight="fill" style="font-variation-settings: 'FILL' 1;">campaign</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">通知中心</span>
+</div>
+</div>
+<!-- Conversation List -->
+<div class="space-y-sm">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-md px-xs">私信内容</h2>
+<!-- Chat Item 1 -->
+<div class="flex items-center gap-md p-md bg-surface-container-lowest rounded-lg squish shadow-sm shadow-primary/5">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover" data-alt="portrait of a ginger cat wearing cool sunglasses sitting outdoors on a sunny day" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2yyl7I9VR8CsrZCvUPy8BL-AFohxkvqT7pL3RKcpwFFih8Jf8Tr7JRCr1XaiBH1L8Exq-aVU8K7V5qRpGgZG4pAplPK0ndtSyDzFFQ02NCDkHGfOlv9CYFXeCDfEZvDFB_CPM5isTNKdEoL_d-70r6pz8zssqFYy7pN8CZBuJGadZ30vaXHMVM816gS9ap82kB6pltovz593PG6Tk6pmyizIPUO4aB0rAzwSSZRUaLVvLixJU9hH7gG72LEWiB5eKaY3pXBbJ"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h3 class="font-body-lg text-body-lg text-on-surface truncate">橘猫队长</h3>
+<span class="font-label-md text-[10px] text-stone-400">14:30</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">你的猫薄荷在哪里买的呀？看起来很不错...</p>
+</div>
+</div>
+<!-- Chat Item 2 -->
+<div class="flex items-center gap-md p-md bg-surface-container-lowest rounded-lg squish shadow-sm shadow-primary/5">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover" data-alt="whimsical photo of a white cat looking through a transparent butterfly sticker, dreamlike pastel tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-Q-N5s0Vhd3bx4F5fA6m5E6mzUOAfjMdJkEed9xuvT_LxieBaCpoYAoGflaXdtJ4czp0Pt7lVXujMw6azjhrVR6bG-Usi-iV_aJx67frU0kT5Zs5obSMwJSUeDfpwAU_PRbPmsE8DVyyjBYdwyeHt8N8cppC6cWaLthXqReU_v4BxUPl5gvMzFTwg8p9U7oWVpJeQEWSqeSLxIRggSeaPV-qtJgjB124lLv3h2frsmtj1CC_CMo_QybuPGQhZ2ymwl6RtbjPX"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h3 class="font-body-lg text-body-lg text-on-surface truncate">小白与蝴蝶</h3>
+<span class="font-label-md text-[10px] text-stone-400">昨天</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">[图片] 看我今天拍的新照片！</p>
+</div>
+<div class="w-5 h-5 bg-primary text-on-primary text-[10px] font-bold flex items-center justify-center rounded-full">2</div>
+</div>
+<!-- Chat Item 3 -->
+<div class="flex items-center gap-md p-md bg-surface-container-lowest rounded-lg squish shadow-sm shadow-primary/5">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover" data-alt="close up of a beautiful persian cat with thick white fur and deep blue eyes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ2cdUgomXnyGofHtVcYHpgzje66NVli72e6OI5bMDj9NGzwWlPJGTQotKre0ktcPbp4xVv9vpxAZOUFDcjt7fFqY4MI47JfVNGLTt-kYPlN9gOYAbAQ4YkvoamnvrhQQ07y65U8VeZ6zzf9kkoQsnqfRRMnV8cZEI8-VXGxDmBDVDjSqMJhiD8m4tvZKjC9gOQ1UMabZGngu78MEO4l0YElKzshmPQ_9lGxS-U7Lwj8IisJw_TUQV0K4sGOfF6HlPXZQclGcI"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h3 class="font-body-lg text-body-lg text-on-surface truncate">布偶猫格蕾丝</h3>
+<span class="font-label-md text-[10px] text-stone-400">周三</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">下次猫聚会记得带上逗猫棒哦~</p>
+</div>
+</div>
+<!-- Chat Item 4 -->
+<div class="flex items-center gap-md p-md bg-surface-container-lowest rounded-lg squish shadow-sm shadow-primary/5">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover" data-alt="tabby cat sitting on a windowsill looking at the street with soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLgt11r6Angw4tjNEyXY8RNdMJnzZm-Q9v9iuBdYq21jk1dCUoe6rXToLP5ltH7Uu192GMwqz9V73aoLRDxOuFpexpT_1iSgKIuqFJvUsPeyagyoL1HFMRvVfDdsEIWmAU26afoM48pfXMnKH5YRQNHbSbkr5VDbnnBclNSvNGq7626p3amSUaGYE_JJjJ8M6n6QVBkpzt9CQfac0YzgHvaABNUxkggdFcNX898vy1Lx6p4Zl5n4whPz2qpTR9Y6gqkrlYVjhp"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h3 class="font-body-lg text-body-lg text-on-surface truncate">街角流浪客</h3>
+<span class="font-label-md text-[10px] text-stone-400">05-20</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">谢谢你上次在路口放的罐罐...</p>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-gradient-to-br from-primary-container to-primary text-on-primary rounded-full shadow-lg shadow-primary/30 flex items-center justify-center squish z-50">
+<span class="material-symbols-outlined text-3xl" data-icon="add_comment" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add_comment</span>
+</button>
+<!-- Bottom NavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 bg-[#F9F7F2]/90 dark:bg-neutral-900/90 backdrop-blur-2xl rounded-t-[32px] border-t border-[#FF5A77]/10 shadow-[0_-8px_30px_rgba(255,90,119,0.08)]">
+<div class="flex flex-col items-center justify-center text-stone-400 hover:text-[#FF5A77]/70 squish">
+<span class="material-symbols-outlined text-2xl" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold mt-1">首页</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 hover:text-[#FF5A77]/70 squish">
+<span class="material-symbols-outlined text-2xl" data-icon="explore">explore</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold mt-1">发现</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#FF5A77] scale-110 transition-all duration-300 squish">
+<span class="material-symbols-outlined text-2xl" data-icon="chat_bubble" data-weight="fill" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold mt-1">消息</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 hover:text-[#FF5A77]/70 squish">
+<span class="material-symbols-outlined text-2xl" data-icon="person">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold mt-1">我</span>
+</div>
+</nav>
+</body></html>

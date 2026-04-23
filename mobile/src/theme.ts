@@ -1,74 +1,81 @@
-// Design tokens — Cursor Design System (see DESIGN.md).
-// One source of truth for the whole mobile app. Values are kept byte-for-byte
-// aligned with `web/theme.css` so a component styled in React Native reads
-// visually identical to its web counterpart.
-//
-// Font note: Cursor's CursorGothic / jjannon / berkeleyMono are proprietary.
-// The web ships Inter / EB Garamond / JetBrains Mono as free drop-ins. On
-// mobile we currently fall back to platform defaults; wire `expo-google-fonts`
-// + `expo-font` when we're ready to ship the custom trio.
+/**
+ * Dopamine Petal / Stitch kit — aligned with web `tw-stitch.js` + DESIGN.md in zip.
+ * Plus Jakarta Sans is loaded in `app/_layout.tsx` via `@expo-google-fonts/plus-jakarta-sans`.
+ */
 
 import { Platform } from 'react-native';
 
+/** Font keys must match `useFonts` in root layout. */
+export const fontFamily = {
+  regular: 'PlusJakartaSans_400Regular',
+  medium: 'PlusJakartaSans_500Medium',
+  semiBold: 'PlusJakartaSans_600SemiBold',
+  bold: 'PlusJakartaSans_700Bold',
+  extraBold: 'PlusJakartaSans_800ExtraBold',
+  /** Fallback before fonts load */
+  system: Platform.select({
+    ios: 'System',
+    android: 'sans-serif',
+    default: 'System',
+  }) as string,
+} as const;
+
 export const colors = {
-  // Cursor warm-cream surface scale
-  surface100: '#f7f7f4',
-  surface200: '#f2f1ed', // canvas (body background)
-  surface300: '#ebeae5',
-  surface400: '#e6e5e0',
-  surface500: '#e1e0db',
+  canvas: '#F9F7F2',
+  surface: '#ffffff',
+  surfaceLow: '#f5f3ee',
+  surfaceContainer: '#f0eee9',
+  onSurface: '#1b1c19',
+  onSurfaceVariant: '#594042',
+  primary: '#b52044',
+  primaryContainer: '#ff5a77',
+  onPrimary: '#ffffff',
+  secondary: '#805600',
+  secondaryContainer: '#fdaf18',
+  tertiary: '#006b54',
+  tertiaryContainer: '#00a986',
+  outline: '#8d7072',
+  outlineVariant: '#e1bec0',
+  error: '#ba1a1a',
 
-  // Ink (warm near-black)
-  ink: '#26251e',
-  inkMuted: 'rgba(38, 37, 30, 0.72)',
-  inkSubtle: 'rgba(38, 37, 30, 0.55)',
-  inkInvert: '#f8f7f2',
-
-  // Borders
-  border: 'rgba(38, 37, 30, 0.1)',
-  borderMedium: 'rgba(38, 37, 30, 0.2)',
-  borderStrong: 'rgba(38, 37, 30, 0.55)',
-  borderSolid: '#26251e',
-
-  // Brand + accent (Cursor orange + gold)
-  brand: '#f54e00',
-  brandStrong: '#c03d00',
-  brandWeak: 'rgba(245, 78, 0, 0.08)',
-  brandText: '#8a2c00',
-  gold: '#c08532',
-  goldWeak: 'rgba(192, 133, 50, 0.14)',
-
-  // Semantic
-  danger: '#cf2d56', // signature crimson — hover + destructive
-  dangerBg: 'rgba(207, 45, 86, 0.1)',
-  dangerBorder: 'rgba(207, 45, 86, 0.25)',
-  success: '#1f8a65',
-  successBg: 'rgba(31, 138, 101, 0.12)',
-  warning: '#b45309',
-  warningBg: 'rgba(192, 133, 50, 0.16)',
-
-  // Keep legacy aliases so existing callsites compile
-  accent: '#26251e',
-  accentOnDark: '#f7f7f4',
-
-  // AI Timeline palette (DESIGN.md §4)
-  tlThink: '#dfa88f',
-  tlGrep: '#9fc9a2',
-  tlRead: '#9fbbe0',
-  tlEdit: '#c0a8dd',
-
-  overlay: 'rgba(38, 37, 30, 0.55)',
+  /** Legacy aliases — keep RN screens/components compiling */
+  surface100: '#F9F7F2',
+  surface200: '#ffffff',
+  surface300: '#f5f3ee',
+  surface400: '#eae8e3',
+  surface500: '#e4e2dd',
+  ink: '#1b1c19',
+  inkMuted: '#594042',
+  inkSubtle: 'rgba(89, 64, 66, 0.62)',
+  inkInvert: '#ffffff',
+  border: 'rgba(141, 112, 114, 0.22)',
+  borderMedium: 'rgba(141, 112, 114, 0.35)',
+  borderStrong: '#8d7072',
+  borderSolid: '#1b1c19',
+  brand: '#ff5a77',
+  brandWeak: 'rgba(255, 90, 119, 0.12)',
+  gold: '#fdaf18',
+  goldWeak: 'rgba(253, 175, 24, 0.18)',
+  danger: '#ba1a1a',
+  dangerBg: 'rgba(186, 26, 26, 0.08)',
+  dangerBorder: 'rgba(186, 26, 26, 0.28)',
+  success: '#006b54',
+  successBg: 'rgba(0, 169, 134, 0.12)',
+  accent: '#1b1c19',
+  accentOnDark: '#ffffff',
+  overlay: 'rgba(27, 28, 25, 0.45)',
+  tabBar: 'rgba(249, 247, 242, 0.95)',
 } as const;
 
 export const radius = {
-  sm: 4,
-  md: 8,
-  lg: 10,
-  xl: 16,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  xxl: 32,
   pill: 9999,
 } as const;
 
-/** Spacing — numeric values match `web/theme.css` `--space-1` … `--space-10`. */
 export const spacing = {
   s1: 4,
   s2: 8,
@@ -78,103 +85,92 @@ export const spacing = {
   s6: 32,
   s7: 48,
   s8: 64,
-  s9: 96,
-  s10: 128,
-  /** @alias s1 */ xs: 4,
-  /** @alias s2 */ sm: 8,
-  /** @alias s3 */ md: 12,
-  /** @alias s4 */ lg: 16,
-  /** @alias s5 */ xl: 24,
-  /** @alias s6 */ xxl: 32,
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  xxl: 32,
 } as const;
 
-export const fontFamily = {
-  display: Platform.select({
-    ios: 'System',
-    android: 'sans-serif-medium',
-    default: 'System',
-  }) as string,
-  body: Platform.select({
-    ios: 'Georgia',
-    android: 'serif',
-    default: 'Georgia',
-  }) as string,
-  mono: Platform.select({
-    ios: 'Menlo',
-    android: 'monospace',
-    default: 'Menlo',
-  }) as string,
-} as const;
-
-// Letter-spacing scale from DESIGN.md §3 (negative tracking for display copy).
 export const tracking = {
-  display: -1.0,
-  section: -0.5,
-  sub: -0.2,
-  caption: 0.6,
+  tight: -0.8,
+  label: 0.2,
 } as const;
 
 export const typography = {
+  mega: {
+    fontFamily: fontFamily.extraBold,
+    fontSize: 28,
+    fontWeight: '800' as const,
+    letterSpacing: tracking.tight,
+    lineHeight: 34,
+  },
   h1: {
-    fontFamily: fontFamily.display,
-    fontSize: 32,
-    fontWeight: '600' as const,
-    letterSpacing: tracking.display,
-    lineHeight: 36,
+    fontFamily: fontFamily.extraBold,
+    fontSize: 24,
+    fontWeight: '800' as const,
+    letterSpacing: tracking.tight,
+    lineHeight: 30,
   },
   h2: {
-    fontFamily: fontFamily.display,
-    fontSize: 24,
-    fontWeight: '600' as const,
-    letterSpacing: tracking.section,
+    fontFamily: fontFamily.bold,
+    fontSize: 22,
+    fontWeight: '700' as const,
     lineHeight: 28,
   },
   h3: {
-    fontFamily: fontFamily.display,
-    fontSize: 18,
-    fontWeight: '600' as const,
-    letterSpacing: tracking.sub,
-    lineHeight: 24,
+    fontFamily: fontFamily.bold,
+    fontSize: 17,
+    fontWeight: '700' as const,
+    lineHeight: 22,
   },
   body: {
-    fontFamily: fontFamily.body,
+    fontFamily: fontFamily.medium,
     fontSize: 16,
+    fontWeight: '500' as const,
     lineHeight: 24,
   },
   bodySmall: {
-    fontFamily: fontFamily.body,
+    fontFamily: fontFamily.regular,
     fontSize: 14,
+    fontWeight: '400' as const,
     lineHeight: 20,
   },
   label: {
-    fontFamily: fontFamily.display,
+    fontFamily: fontFamily.semiBold,
     fontSize: 12,
-    fontWeight: '500' as const,
-    letterSpacing: tracking.caption,
-    textTransform: 'uppercase' as const,
+    fontWeight: '600' as const,
+    letterSpacing: tracking.label,
+    lineHeight: 16,
   },
   mono: {
-    fontFamily: fontFamily.mono,
+    fontFamily: Platform.select({ ios: 'Menlo', android: 'monospace', default: 'Menlo' }) as string,
     fontSize: 13,
   },
 } as const;
 
-// Diffused shadows — Cursor's signature "28 / 70" double-shadow. React Native
-// only takes a single layer per view; we approximate the hero value here.
 export const elevation = {
   card: {
+    shadowColor: '#ff5a77',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 14,
+    elevation: 3,
+  },
+  fab: {
+    shadowColor: '#ff5a77',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.22,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  soft: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
     shadowRadius: 12,
     elevation: 2,
-  },
-  floating: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 14 },
-    shadowOpacity: 0.14,
-    shadowRadius: 32,
-    elevation: 6,
   },
 } as const;
 

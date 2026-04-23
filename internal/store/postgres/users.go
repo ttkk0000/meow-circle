@@ -4,27 +4,30 @@ import (
 	"errors"
 
 	"kitty-circle/internal/domain"
+	"kitty-circle/internal/platform/phoneotp"
 
 	"github.com/jackc/pgx/v5"
 )
 
-const userCols = "id, username, nickname, avatar_url, bio, password_hash, password_salt, created_at"
+const userCols = "id, username, nickname, phone, avatar_url, bio, password_hash, password_salt, created_at"
 
 func scanUser(row pgx.Row) (domain.User, error) {
 	var u domain.User
-	err := row.Scan(&u.ID, &u.Username, &u.Nickname, &u.AvatarURL, &u.Bio,
+	err := row.Scan(&u.ID, &u.Username, &u.Nickname, &u.Phone, &u.AvatarURL, &u.Bio,
 		&u.PasswordHash, &u.PasswordSalt, &u.CreatedAt)
 	return u, err
 }
 
 func (s *Store) CreateUser(user domain.User) (domain.User, bool) {
+	phoneNorm := phoneotp.NormalizePhone(user.Phone)
+	user.Phone = phoneNorm
 	ctx, cancel := bg()
 	defer cancel()
 	row := s.pool.QueryRow(ctx, `
-		INSERT INTO users (username, nickname, avatar_url, bio, password_hash, password_salt)
-		VALUES ($1, $2, $3, $4, $5, $6)
+		INSERT INTO users (username, nickname, phone, avatar_url, bio, password_hash, password_salt)
+		VALUES ($1, $2, $3, $4, $5, $6, $7)
 		RETURNING `+userCols,
-		user.Username, user.Nickname, user.AvatarURL, user.Bio, user.PasswordHash, user.PasswordSalt)
+		user.Username, user.Nickname, user.Phone, user.AvatarURL, user.Bio, user.PasswordHash, user.PasswordSalt)
 	u, err := scanUser(row)
 	if err != nil {
 		logErr("CreateUser", err)
@@ -41,6 +44,23 @@ func (s *Store) FindUserByUsername(username string) (domain.User, bool) {
 	if err != nil {
 		if !errors.Is(err, pgx.ErrNoRows) {
 			logErr("FindUserByUsername", err)
+		}
+		return domain.User{}, false
+	}
+	return u, true
+}
+
+func (s *Store) FindUserByPhone(phoneNormalized string) (domain.User, bool) {
+	if phoneNormalized == "" {
+		return domain.User{}, false
+	}
+	ctx, cancel := bg()
+	defer cancel()
+	row := s.pool.QueryRow(ctx, `SELECT `+userCols+` FROM users WHERE phone = $1`, phoneNormalized)
+	u, err := scanUser(row)
+	if err != nil {
+		if !errors.Is(err, pgx.ErrNoRows) {
+			logErr("FindUserByPhone", err)
 		}
 		return domain.User{}, false
 	}

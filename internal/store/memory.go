@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"kitty-circle/internal/domain"
+	"kitty-circle/internal/platform/phoneotp"
 )
 
 // Compile-time check: MemoryStore implements Store.
@@ -28,6 +29,7 @@ type MemoryStore struct {
 
 	users         map[int64]domain.User
 	usersByName   map[string]int64
+	usersByPhone  map[string]int64 // normalized phone (digits) -> id
 	posts         map[int64]domain.Post
 	comments      map[int64][]domain.Comment
 	listings      map[int64]domain.Listing
@@ -37,12 +39,16 @@ type MemoryStore struct {
 	notifications map[int64]domain.Notification
 	messages      map[int64]domain.Message
 	auditLogs     map[int64]domain.AuditLog
+
+	postLikes map[int64]map[int64]struct{} // postID -> liker user IDs
+	follows   map[int64]map[int64]struct{} // follower -> following user IDs
 }
 
 func NewMemoryStore() *MemoryStore {
 	return &MemoryStore{
 		users:         make(map[int64]domain.User),
 		usersByName:   make(map[string]int64),
+		usersByPhone:  make(map[string]int64),
 		posts:         make(map[int64]domain.Post),
 		comments:      make(map[int64][]domain.Comment),
 		listings:      make(map[int64]domain.Listing),
@@ -52,6 +58,8 @@ func NewMemoryStore() *MemoryStore {
 		notifications: make(map[int64]domain.Notification),
 		messages:      make(map[int64]domain.Message),
 		auditLogs:     make(map[int64]domain.AuditLog),
+		postLikes:     make(map[int64]map[int64]struct{}),
+		follows:       make(map[int64]map[int64]struct{}),
 	}
 }
 
@@ -62,11 +70,21 @@ func (s *MemoryStore) CreateUser(user domain.User) (domain.User, bool) {
 	if _, exists := s.usersByName[user.Username]; exists {
 		return domain.User{}, false
 	}
+	phoneNorm := phoneotp.NormalizePhone(user.Phone)
+	user.Phone = phoneNorm
+	if phoneNorm != "" {
+		if _, exists := s.usersByPhone[phoneNorm]; exists {
+			return domain.User{}, false
+		}
+	}
 	s.userSeq++
 	user.ID = s.userSeq
 	user.CreatedAt = time.Now().UTC()
 	s.users[user.ID] = user
 	s.usersByName[user.Username] = user.ID
+	if phoneNorm != "" {
+		s.usersByPhone[phoneNorm] = user.ID
+	}
 	return user, true
 }
 
@@ -75,6 +93,17 @@ func (s *MemoryStore) FindUserByUsername(username string) (domain.User, bool) {
 	defer s.mu.RUnlock()
 
 	id, ok := s.usersByName[username]
+	if !ok {
+		return domain.User{}, false
+	}
+	user, ok := s.users[id]
+	return user, ok
+}
+
+func (s *MemoryStore) FindUserByPhone(phoneNormalized string) (domain.User, bool) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	id, ok := s.usersByPhone[phoneNormalized]
 	if !ok {
 		return domain.User{}, false
 	}
@@ -276,6 +305,7 @@ func (s *MemoryStore) DeletePost(postID int64) bool {
 	}
 	delete(s.posts, postID)
 	delete(s.comments, postID)
+	delete(s.postLikes, postID)
 	return true
 }
 
@@ -766,6 +796,112 @@ func (s *MemoryStore) ListAuditLogs(limit int) []domain.AuditLog {
 	})
 	if limit > 0 && len(out) > limit {
 		out = out[:limit]
+	}
+	return out
+}
+
+// ===== Social =====
+
+func (s *MemoryStore) Follow(followerID, followingID int64) bool {
+	if followerID == followingID {
+		return false
+	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, ok := s.users[followerID]; !ok {
+		return false
+	}
+	if _, ok := s.users[followingID]; !ok {
+		return false
+	}
+	set, ok := s.follows[followerID]
+	if !ok {
+		set = make(map[int64]struct{})
+		s.follows[followerID] = set
+	}
+	set[followingID] = struct{}{}
+	return true
+}
+
+func (s *MemoryStore) Unfollow(followerID, followingID int64) bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if set, ok := s.follows[followerID]; ok {
+		delete(set, followingID)
+	}
+	return true
+}
+
+func (s *MemoryStore) IsFollowing(followerID, followingID int64) bool {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	set, ok := s.follows[followerID]
+	if !ok {
+		return false
+	}
+	_, on := set[followingID]
+	return on
+}
+
+func (s *MemoryStore) ListFollowingIDs(followerID int64) []int64 {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	set := s.follows[followerID]
+	out := make([]int64, 0, len(set))
+	for id := range set {
+		out = append(out, id)
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i] < out[j] })
+	return out
+}
+
+func (s *MemoryStore) TogglePostLike(userID, postID int64) (liked bool, count int64, ok bool) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, exists := s.posts[postID]; !exists {
+		return false, 0, false
+	}
+	set, exists := s.postLikes[postID]
+	if !exists {
+		set = make(map[int64]struct{})
+		s.postLikes[postID] = set
+	}
+	if _, on := set[userID]; on {
+		delete(set, userID)
+		liked = false
+	} else {
+		set[userID] = struct{}{}
+		liked = true
+	}
+	count = int64(len(set))
+	return liked, count, true
+}
+
+func (s *MemoryStore) BatchPostLikeCounts(postIDs []int64) map[int64]int64 {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	out := make(map[int64]int64, len(postIDs))
+	for _, pid := range postIDs {
+		if set, ok := s.postLikes[pid]; ok {
+			out[pid] = int64(len(set))
+		} else {
+			out[pid] = 0
+		}
+	}
+	return out
+}
+
+func (s *MemoryStore) BatchUserLikedPosts(userID int64, postIDs []int64) map[int64]bool {
+	if userID == 0 {
+		return nil
+	}
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	out := make(map[int64]bool, len(postIDs))
+	for _, pid := range postIDs {
+		if set, ok := s.postLikes[pid]; ok {
+			_, out[pid] = set[userID]
+		}
 	}
 	return out
 }

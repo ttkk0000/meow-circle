@@ -10,84 +10,150 @@ const registerLink = document.querySelector("#register-link");
 const dashboardLink = document.querySelector("#dashboard-link");
 
 const postsContainer = document.querySelector("#posts");
-const listingsContainer = document.querySelector("#listings");
-const postTemplate = document.querySelector("#post-item-template");
-const listingTemplate = document.querySelector("#listing-item-template");
 const activeRenderJobs = new WeakMap();
 const activeRequestControllers = new Map();
 
+let cachedFeed = [];
+let currentFilter = "rec";
+
 function requireLogin(reason) {
-  if (reason) {
-    notify(reason, "error");
-  }
+  if (reason) notify(reason, "error");
   const back = encodeURIComponent(location.pathname + location.search + location.hash);
   location.href = `/login?return_to=${back}`;
 }
 
-const refreshPostsBtn = document.querySelector("#refresh-posts");
-const refreshListingsBtn = document.querySelector("#refresh-listings");
-if (refreshPostsBtn) refreshPostsBtn.addEventListener("click", () => runRefresh(refreshPostsBtn, loadPosts));
-if (refreshListingsBtn) refreshListingsBtn.addEventListener("click", () => runRefresh(refreshListingsBtn, loadListings));
-
-const heroPrimary = document.querySelector("#hero-primary");
-if (heroPrimary) {
-  heroPrimary.addEventListener("click", () => {
-    if (getToken()) {
-      window.location.href = "/dashboard#compose-post";
-    } else {
-      requireLogin();
-    }
-  });
+function pickAspectClass(seed) {
+  const aspects = ["aspect-[3/4]", "aspect-square", "aspect-[4/5]", "aspect-[9/16]"];
+  let h = 0;
+  const s = String(seed);
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return aspects[Math.abs(h) % aspects.length];
 }
 
-// ===== Global search =====
+function placeholderImg(seed) {
+  const id = Math.abs(String(seed).split("").reduce((a, c) => a + c.charCodeAt(0), 0) % 1000);
+  return `https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=600&q=80&sig=${id}`;
+}
+
+// ----- Filter chips -----
+document.querySelectorAll(".filter-chip").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const f = btn.dataset.filter;
+    if (f === "follow" && !getToken()) {
+      notify(t("stitch.filter_follow_login"), "info");
+      const back = encodeURIComponent(location.pathname + location.search + location.hash);
+      location.href = `/login?return_to=${back}`;
+      return;
+    }
+    currentFilter = f;
+    document.querySelectorAll(".filter-chip").forEach((b) => {
+      const on = b.dataset.filter === f;
+      b.classList.toggle("bg-primary-container/10", on);
+      b.classList.toggle("text-primary-container", on);
+      b.classList.toggle("ring-2", on);
+      b.classList.toggle("ring-primary-container/30", on);
+      b.classList.toggle("text-gray-500", !on);
+      b.classList.toggle("hover:bg-gray-100", !on);
+    });
+    renderPosts();
+  });
+});
+
+// ----- Search -----
 const searchInput = document.querySelector("#global-search");
+const searchInputMobile = document.querySelector("#global-search-mobile");
 const searchResultsPanel = document.querySelector("#search-results");
 const searchPostsNode = document.querySelector("#search-posts");
 const searchListingsNode = document.querySelector("#search-listings");
 const closeSearchBtn = document.querySelector("#close-search");
+const mobileSearchOpen = document.querySelector("#mobile-search-open");
+const mobileSearchPanel = document.querySelector("#mobile-search-panel");
+
 let currentSearchType = "all";
 let lastSearchQuery = "";
 
-if (searchInput) {
+function syncSearchInputs(from, to) {
+  if (from && to && document.activeElement === from) to.value = from.value;
+}
+
+if (mobileSearchOpen && mobileSearchPanel) {
+  mobileSearchOpen.addEventListener("click", () => {
+    mobileSearchPanel.classList.toggle("hidden");
+    if (!mobileSearchPanel.classList.contains("hidden") && searchInputMobile) {
+      searchInputMobile.focus();
+    }
+  });
+}
+
+function bindSearchInput(el) {
+  if (!el) return;
   let timer = null;
-  searchInput.addEventListener("input", () => {
+  el.addEventListener("input", () => {
+    if (searchInputMobile && el === searchInput) searchInputMobile.value = el.value;
+    if (searchInput && el === searchInputMobile) searchInput.value = el.value;
     clearTimeout(timer);
-    const q = searchInput.value.trim();
+    const q = el.value.trim();
     if (!q) {
       hideSearchResults();
       return;
     }
     timer = setTimeout(() => runSearch(q, currentSearchType), 300);
   });
-  searchInput.addEventListener("keydown", (ev) => {
+  el.addEventListener("keydown", (ev) => {
     if (ev.key === "Escape") {
-      searchInput.value = "";
+      el.value = "";
+      if (searchInput && el !== searchInput) searchInput.value = "";
+      if (searchInputMobile && el !== searchInputMobile) searchInputMobile.value = "";
       hideSearchResults();
     }
   });
 }
-if (closeSearchBtn) closeSearchBtn.addEventListener("click", () => { searchInput.value = ""; hideSearchResults(); });
+bindSearchInput(searchInput);
+bindSearchInput(searchInputMobile);
 
-document.querySelectorAll('[data-search-tab]').forEach((btn) => {
+if (closeSearchBtn) {
+  closeSearchBtn.addEventListener("click", () => {
+    hideSearchResults();
+    if (searchInput) searchInput.value = "";
+    if (searchInputMobile) searchInputMobile.value = "";
+  });
+}
+
+document.querySelectorAll("[data-search-tab]").forEach((btn) => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll('[data-search-tab]').forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
+    document.querySelectorAll("[data-search-tab]").forEach((b) => {
+      b.classList.remove("bg-primary-container", "text-white");
+      b.classList.add("bg-surface-container-low", "text-gray-600");
+    });
+    btn.classList.add("bg-primary-container", "text-white");
+    btn.classList.remove("bg-surface-container-low", "text-gray-600");
     currentSearchType = btn.dataset.searchTab;
     if (lastSearchQuery) runSearch(lastSearchQuery, currentSearchType);
   });
 });
 
+if (searchResultsPanel) {
+  searchResultsPanel.addEventListener("click", (ev) => {
+    if (ev.target === searchResultsPanel) hideSearchResults();
+  });
+}
+
 function hideSearchResults() {
-  if (searchResultsPanel) searchResultsPanel.hidden = true;
+  if (searchResultsPanel) {
+    searchResultsPanel.setAttribute("hidden", "");
+    searchResultsPanel.classList.add("hidden");
+  }
   lastSearchQuery = "";
   cancelRequest("search");
 }
 
 async function runSearch(q, type) {
   lastSearchQuery = q;
-  searchResultsPanel.hidden = false;
-  searchPostsNode.innerHTML = skeletonRows(3);
+  if (searchResultsPanel) {
+    searchResultsPanel.removeAttribute("hidden");
+    searchResultsPanel.classList.remove("hidden");
+  }
+  searchPostsNode.innerHTML = skeletonCards(3);
   searchListingsNode.innerHTML = "";
   const signal = takeRequestSignal("search");
   try {
@@ -96,207 +162,218 @@ async function runSearch(q, type) {
     await renderSearchSection(searchListingsNode, data.listings || [], "listing");
   } catch (err) {
     if (err && err.name === "AbortError") return;
-    searchPostsNode.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
+    searchPostsNode.innerHTML = `<p class="text-sm text-red-600">${escapeHtml(err.message)}</p>`;
   }
 }
 
 async function renderSearchSection(container, items, kind) {
   container.innerHTML = "";
-  if (items.length === 0) {
-    container.innerHTML = renderEditorialEmptyState(t("search.no_result"), "Nº S");
-    return;
-  }
+  if (items.length === 0) return;
   const title = document.createElement("div");
-  title.className = "group-title";
+  title.className = "text-label-md font-semibold text-gray-500 mb-2";
   title.textContent = kind === "post" ? t("search.tab_posts") : t("search.tab_listings");
   container.appendChild(title);
-  await renderInBatches(container, items, (item) => buildSearchItemNode(item, kind), { batchSize: 14, preserveExisting: true });
+  await renderInBatches(container, items, (item) => buildSearchCard(item, kind), { batchSize: 14, preserveExisting: true });
 }
 
-function skeletonRows(n) {
+function buildSearchCard(item, kind) {
+  const a = document.createElement("a");
+  a.className =
+    "block bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(255,90,119,0.06)] hover:-translate-y-0.5 transition-transform border border-gray-100";
+  if (kind === "post") {
+    a.href = `/post.html?id=${item.id}`;
+    a.innerHTML = `<div class="font-body-lg font-semibold text-on-surface line-clamp-2">${escapeHtml(item.title)}</div>
+      <p class="text-body-md text-gray-500 line-clamp-2 mt-1">${escapeHtml(item.content || "")}</p>
+      <p class="text-label-md text-gray-400 mt-2">${escapeHtml(t("meta.author"))} ${item.author_id}</p>`;
+  } else {
+    a.href = `/market.html#l${item.id}`;
+    a.innerHTML = `<div class="font-body-lg font-semibold text-on-surface line-clamp-2">${escapeHtml(item.title)}</div>
+      <p class="text-body-md text-gray-500 line-clamp-2 mt-1">${escapeHtml(item.description || "")}</p>
+      <p class="text-label-md text-primary-container mt-2">${escapeHtml(t("meta.price"))} ${(item.price_cents / 100).toFixed(2)} ${escapeHtml(item.currency || "")}</p>`;
+  }
+  return a;
+}
+
+function skeletonCards(n) {
   return Array.from({ length: n })
-    .map(() => `<div class="skeleton" style="height:72px;margin-bottom:10px;"></div>`)
+    .map(
+      () =>
+        `<div class="bg-white rounded-[24px] h-48 animate-pulse shadow-sm border border-gray-100"></div>`
+    )
     .join("");
 }
 
-// ===== Notifications badge =====
-const notifBtn = document.querySelector("#notif-btn");
-const notifCount = document.querySelector("#notif-count");
-if (notifBtn) {
-  notifBtn.addEventListener("click", () => { window.location.href = "/dashboard#notifications"; });
-}
+// ----- Notifications -----
+const sidebarNotifDot = document.querySelector("#sidebar-notif-dot");
+const bottomNotifDot = document.querySelector("#bottom-notif-dot");
 
 async function refreshNotifCount() {
-  if (!getToken() || !notifBtn) return;
+  if (!getToken()) return;
   try {
     const data = await apiCall("/api/v1/notifications?unread=true", "GET");
-    const c = (data && typeof data.unread_count === "number") ? data.unread_count : (data.items || []).length;
-    if (c > 0) {
-      notifCount.textContent = c > 99 ? "99+" : String(c);
-      notifCount.hidden = false;
-    } else {
-      notifCount.hidden = true;
-    }
-  } catch (_) { /* ignore */ }
+    const c = data && typeof data.unread_count === "number" ? data.unread_count : (data.items || []).length;
+    const on = c > 0;
+    if (sidebarNotifDot) sidebarNotifDot.classList.toggle("hidden", !on);
+    if (bottomNotifDot) bottomNotifDot.classList.toggle("hidden", !on);
+  } catch (_) {
+    /* ignore */
+  }
 }
 
-logoutBtn.addEventListener("click", () => {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(USER_KEY);
-  applyAuthState();
-  loadPosts();
-});
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+    applyAuthState();
+    loadPosts();
+  });
+}
+
+function formatCompactCount(n) {
+  const x = Math.floor(Number(n) || 0);
+  if (x >= 10000) {
+    const w = x / 10000;
+    const s = w >= 10 ? String(Math.round(w)) : w.toFixed(1).replace(/\.0$/, "");
+    return `${s}w`;
+  }
+  if (x >= 1000) {
+    const k = x / 1000;
+    const s = k >= 10 ? String(Math.round(k)) : k.toFixed(1).replace(/\.0$/, "");
+    return `${s}k`;
+  }
+  return String(x);
+}
 
 async function loadPosts() {
-  postsContainer.innerHTML = skeletonRows(3);
+  if (!postsContainer) return;
+  postsContainer.innerHTML = skeletonCards(6);
   const signal = takeRequestSignal("posts");
   try {
-    const data = await apiCall("/api/v1/posts?page=1&page_size=20", "GET", undefined, { signal });
+    const q = new URLSearchParams({ page: "1", page_size: "40", filter: currentFilter });
+    const data = await apiCall(`/api/v1/posts?${q.toString()}`, "GET", undefined, { signal });
     const items = Array.isArray(data.items) ? data.items : [];
-    postsContainer.innerHTML = "";
-    updateStat("stat-posts", data.total ?? items.length);
+    cachedFeed = items;
     if (items.length === 0) {
-      postsContainer.innerHTML = renderEditorialEmptyState(t("common.empty_posts_hint"), "Nº 01");
+      postsContainer.innerHTML = `<div class="col-span-full text-center py-16 text-gray-500">${escapeHtml(t("common.empty_posts_hint"))}</div>`;
       return;
     }
-    await renderInBatches(postsContainer, items, buildPostNode, { batchSize: 8 });
+    renderPosts();
   } catch (err) {
     if (err && err.name === "AbortError") return;
-    postsContainer.innerHTML = `<p>${escapeHtml(t("common.error_load_posts"))}: ${escapeHtml(err.message)}</p>`;
+    postsContainer.innerHTML = `<p class="col-span-full text-red-600">${escapeHtml(t("common.error_load_posts"))}: ${escapeHtml(err.message)}</p>`;
   }
 }
 
-function updateStat(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = String(value);
+function renderPosts() {
+  if (!postsContainer) return;
+  postsContainer.innerHTML = "";
+  renderInBatches(postsContainer, cachedFeed, buildPostNode, { batchSize: 10 });
 }
 
-function buildPostNode(post) {
-  const node = postTemplate.content.cloneNode(true);
-  window.MeowShared.applyI18n(node);
-  node.querySelector(".item-title").textContent = post.title;
-  node.querySelector(".category").textContent = post.category || "daily_share";
-  node.querySelector(".item-content").textContent = post.content;
-  node.querySelector(".meta").textContent =
-    `${t("meta.author")} ${post.author_id} · ${t("meta.published_at")} ${formatTime(post.created_at)}`;
-
-  const article = node.querySelector("article.item");
-  const actionBar = document.createElement("div");
-  actionBar.className = "item-actions";
-  actionBar.appendChild(buildReportButton("post", post.id));
-  article.insertBefore(actionBar, article.querySelector("details"));
-
-  const details = node.querySelector("details");
-  const commentsNode = node.querySelector(".comments");
-  const commentForm = node.querySelector(".comment-form");
-  let mediaNode = null;
-
-  details.addEventListener("toggle", async () => {
-    if (!details.open) return;
-    try {
-      const detail = await apiCall(`/api/v1/posts/${post.id}`, "GET");
-      if (mediaNode) mediaNode.remove();
-      const mediaItems = Array.isArray(detail.media) ? detail.media : [];
-      if (mediaItems.length) {
-        mediaNode = renderMediaGallery(mediaItems);
-        details.insertBefore(mediaNode, commentsNode);
-      }
-      const comments = Array.isArray(detail.comments) ? detail.comments : [];
-      commentsNode.innerHTML = comments.length
-        ? comments
-            .map(
-              (comment) =>
-                `<div class="comment">#${comment.id} ${escapeHtml(t("meta.author"))} ${comment.author_id}: ${escapeHtml(comment.content)}</div>`
-            )
-            .join("")
-        : `<p>${escapeHtml(t("common.no_comments"))}</p>`;
-    } catch (err) {
-      commentsNode.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
-    }
-  });
-
-  commentForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (!getToken()) {
-      requireLogin(t("alert.login_to_comment"));
-      return;
-    }
-    const fd = new FormData(commentForm);
-    try {
-      await apiCall(`/api/v1/posts/${post.id}/comments`, "POST", {
-        content: String(fd.get("content") || ""),
-      });
-      commentForm.reset();
-      details.open = true;
-      details.dispatchEvent(new Event("toggle"));
-    } catch (err) {
-      notify(err.message, "error");
-    }
-  });
-
-  return node;
-}
-
-async function loadListings() {
-  listingsContainer.innerHTML = skeletonRows(3);
-  const signal = takeRequestSignal("listings");
+async function hydratePostThumb(imgEl, overlayEl, mediaId) {
+  if (!mediaId || !imgEl) return;
   try {
-    const data = await apiCall("/api/v1/listings?page=1&page_size=20", "GET", undefined, { signal });
-    const items = Array.isArray(data.items) ? data.items : [];
-    listingsContainer.innerHTML = "";
-    updateStat("stat-listings", data.total ?? items.length);
-    if (items.length === 0) {
-      listingsContainer.innerHTML = renderEditorialEmptyState(t("common.empty_listings"), "Nº 02");
-      return;
+    const m = await apiCall(`/api/v1/media/${mediaId}`, "GET");
+    if (m.url) imgEl.src = m.url;
+    if (m.kind === "video" && overlayEl) {
+      overlayEl.classList.remove("hidden");
     }
-    await renderInBatches(listingsContainer, items, buildListingNode, { batchSize: 10 });
-  } catch (err) {
-    if (err && err.name === "AbortError") return;
-    listingsContainer.innerHTML = `<p>${escapeHtml(t("common.error_load_listings"))}: ${escapeHtml(err.message)}</p>`;
+  } catch (_) {
+    /* keep placeholder */
   }
 }
 
-function buildListingNode(listing) {
-  const node = listingTemplate.content.cloneNode(true);
-  window.MeowShared.applyI18n(node);
-  node.querySelector(".item-title").textContent = listing.title;
-  node.querySelector(".type").textContent = listing.type || "product";
-  node.querySelector(".item-content").textContent = listing.description || t("common.no_description");
-  node.querySelector(".meta").textContent =
-    `${t("meta.seller")} ${listing.seller_id} · ${t("meta.price")} ${(listing.price_cents / 100).toFixed(2)} ${listing.currency}`;
-  const article = node.querySelector("article.item");
-  const actions = document.createElement("div");
-  actions.className = "item-actions";
-  if (listing.price_cents > 0) {
-    const buyBtn = document.createElement("button");
-    buyBtn.type = "button";
-    buyBtn.textContent = t("listing.btn_buy");
-    buyBtn.addEventListener("click", () => buyListing(listing));
-    actions.appendChild(buyBtn);
-  }
-  actions.appendChild(buildReportButton("listing", listing.id));
-  article.appendChild(actions);
+function buildPostNode(item) {
+  const post = item.post || item;
+  const author = item.author || {};
+  const likeCount = item.like_count ?? 0;
+  let liked = item.liked ?? false;
+  const fm = item.first_media;
+  const aspect = pickAspectClass(post.id);
+  const firstTag = Array.isArray(post.tags) && post.tags.length ? post.tags[0] : "";
+  const tagHtml = firstTag
+    ? `<div class="flex flex-wrap gap-2 mb-2"><span class="bg-primary-container/10 text-primary-container px-2 py-0.5 rounded-full text-label-md font-label-md">#${escapeHtml(firstTag)}</span></div>`
+    : "";
+  const authorLabel = escapeHtml(author.nickname || author.username || `${t("meta.author")} ${post.author_id}`);
+  const avatarHtml = author.avatar_url
+    ? `<img alt="" class="w-6 h-6 rounded-full object-cover shrink-0" src="${escapeHtml(author.avatar_url)}" />`
+    : `<div class="w-6 h-6 rounded-full bg-primary-container/20 shrink-0 flex items-center justify-center text-label-md text-primary-container font-bold">${escapeHtml(String(post.author_id).slice(-1))}</div>`;
+  const thumbSrc = fm && fm.url ? escapeHtml(fm.url) : placeholderImg(post.id);
+  const heartClass = liked ? "fill text-primary-container" : "text-gray-400";
 
-  if (Array.isArray(listing.media_ids) && listing.media_ids.length) {
-    const detailsEl = document.createElement("details");
-    detailsEl.innerHTML = `<summary>${escapeHtml(t("post.view_comments"))}</summary>`;
-    const holder = document.createElement("div");
-    detailsEl.appendChild(holder);
-    let loaded = false;
-    detailsEl.addEventListener("toggle", async () => {
-      if (!detailsEl.open || loaded) return;
+  const article = document.createElement("article");
+  article.className =
+    "bg-white rounded-[24px] overflow-hidden shadow-[0_4px_20px_rgba(255,90,119,0.04)] hover:-translate-y-1 transition-transform duration-300 cursor-pointer border border-gray-50";
+
+  article.innerHTML = `
+    <div class="${aspect} relative p-1 group">
+      <img alt="" class="w-full h-full object-cover rounded-t-[20px] rounded-b-[8px] bg-surface-container-low" src="${thumbSrc}" data-thumb />
+      <div class="video-overlay absolute inset-0 flex items-center justify-center pointer-events-none hidden">
+        <div class="w-12 h-12 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-white text-[28px] fill">play_arrow</span>
+        </div>
+      </div>
+    </div>
+    <div class="p-4">
+      ${tagHtml}
+      <h3 class="text-body-lg font-body-lg text-on-surface line-clamp-2 mb-2">${escapeHtml(post.title)}</h3>
+      <div class="flex items-center justify-between mt-auto gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+          ${avatarHtml}
+          <span class="text-label-md font-label-md text-gray-500 truncate">${authorLabel}</span>
+        </div>
+        <button type="button" class="like-btn flex items-center gap-1 shrink-0 rounded-full px-1 py-0.5 hover:bg-primary-container/5" data-post-id="${post.id}" aria-label="like">
+          <span class="material-symbols-outlined text-[16px] like-heart ${heartClass}">favorite</span>
+          <span class="text-label-md font-label-md like-count-num ${liked ? "text-primary-container" : "text-gray-500"}">${escapeHtml(formatCompactCount(likeCount))}</span>
+        </button>
+      </div>
+    </div>`;
+
+  article.addEventListener("click", () => {
+    window.location.href = `/post.html?id=${post.id}`;
+  });
+
+  const likeBtn = article.querySelector(".like-btn");
+  if (likeBtn) {
+    likeBtn.addEventListener("click", async (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (!getToken()) {
+        notify(t("stitch.like_login"), "info");
+        const back = encodeURIComponent(location.pathname + location.search + location.hash);
+        location.href = `/login?return_to=${back}`;
+        return;
+      }
       try {
-        const detail = await apiCall(`/api/v1/listings/${listing.id}`, "GET");
-        const mediaItems = Array.isArray(detail.media) ? detail.media : [];
-        if (mediaItems.length) holder.appendChild(renderMediaGallery(mediaItems));
-        loaded = true;
-      } catch (err) {
-        holder.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
+        const res = await apiCall(`/api/v1/posts/${post.id}/like`, "POST");
+        liked = res.liked;
+        const heart = likeBtn.querySelector(".like-heart");
+        const countEl = likeBtn.querySelector(".like-count-num");
+        if (countEl) countEl.textContent = formatCompactCount(res.like_count);
+        if (heart) {
+          heart.classList.toggle("fill", !!res.liked);
+          heart.classList.toggle("text-primary-container", !!res.liked);
+          heart.classList.toggle("text-gray-400", !res.liked);
+        }
+        if (countEl) {
+          countEl.classList.toggle("text-primary-container", !!res.liked);
+          countEl.classList.toggle("text-gray-500", !res.liked);
+        }
+      } catch (e) {
+        notify(e.message, "error");
       }
     });
-    article.appendChild(detailsEl);
   }
-  return node;
+
+  const img = article.querySelector("[data-thumb]");
+  const overlay = article.querySelector(".video-overlay");
+  if (fm && fm.kind === "video" && overlay) {
+    overlay.classList.remove("hidden");
+  }
+  const mid = post.media_ids && post.media_ids[0];
+  if (!(fm && fm.url) && mid) hydratePostThumb(img, overlay, mid);
+
+  return article;
 }
 
 async function apiCall(url, method = "GET", body, options = {}) {
@@ -306,12 +383,8 @@ async function apiCall(url, method = "GET", body, options = {}) {
     signal: options.signal,
   };
   const token = getToken();
-  if (token) {
-    init.headers.Authorization = `Bearer ${token}`;
-  }
-  if (body !== undefined) {
-    init.body = JSON.stringify(body);
-  }
+  if (token) init.headers.Authorization = `Bearer ${token}`;
+  if (body !== undefined) init.body = JSON.stringify(body);
   const response = await fetch(url, init);
   let payload = null;
   try {
@@ -321,7 +394,6 @@ async function apiCall(url, method = "GET", body, options = {}) {
   }
   if (!response.ok) {
     if (response.status === 401 && token) {
-      /* Token expired: force login again preserving return_to */
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(USER_KEY);
       requireLogin();
@@ -342,82 +414,20 @@ function applyAuthState() {
   const user = rawUser ? JSON.parse(rawUser) : null;
 
   if (token && user) {
-    if (logoutBtn) logoutBtn.hidden = false;
-    if (loginLink) loginLink.hidden = true;
-    if (registerLink) registerLink.hidden = true;
-    if (dashboardLink) dashboardLink.hidden = false;
-    if (notifBtn) notifBtn.hidden = false;
-    userHint.textContent = t("user.greeting").replace("{name}", user.nickname || user.username);
+    if (logoutBtn) logoutBtn.classList.remove("hidden");
+    if (loginLink) loginLink.classList.add("hidden");
+    if (registerLink) registerLink.classList.add("hidden");
+    if (dashboardLink) dashboardLink.classList.remove("hidden");
+    if (userHint) userHint.textContent = t("user.greeting").replace("{name}", user.nickname || user.username);
     refreshNotifCount();
   } else {
-    if (logoutBtn) logoutBtn.hidden = true;
-    if (loginLink) loginLink.hidden = false;
-    if (registerLink) registerLink.hidden = false;
-    if (dashboardLink) dashboardLink.hidden = true;
-    if (notifBtn) notifBtn.hidden = true;
-    userHint.textContent = "";
-  }
-}
-
-function formatTime(value) {
-  if (!value) return t("common.unknown");
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return t("common.unknown");
-  return date.toLocaleString();
-}
-
-function renderMediaGallery(items) {
-  const wrap = document.createElement("div");
-  wrap.className = "media-gallery";
-  for (const m of items) {
-    if (m.kind === "video") {
-      const v = document.createElement("video");
-      v.src = m.url;
-      v.controls = true;
-      v.preload = "metadata";
-      wrap.appendChild(v);
-    } else {
-      const img = document.createElement("img");
-      img.src = m.url;
-      img.alt = "";
-      wrap.appendChild(img);
-    }
-  }
-  return wrap;
-}
-
-function buildReportButton(kind, id) {
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "link";
-  btn.textContent = t("report.btn");
-  btn.addEventListener("click", async () => {
-    if (!getToken()) {
-      requireLogin(t("alert.login_first"));
-      return;
-    }
-    const reason = prompt(t("report.placeholder"));
-    if (!reason) return;
-    try {
-      await apiCall("/api/v1/reports", "POST", { target_kind: kind, target_id: id, reason });
-      notify(t("report.submitted"), "success");
-    } catch (err) {
-      notify(err.message, "error");
-    }
-  });
-  return btn;
-}
-
-async function buyListing(listing) {
-  if (!getToken()) {
-    requireLogin(t("alert.login_first"));
-    return;
-  }
-  try {
-    const order = await apiCall("/api/v1/orders", "POST", { listing_id: listing.id });
-    notify(`${t("listing.btn_buy")} #${order.id} · ${t("order.status.pending_payment")}`, "success");
-  } catch (err) {
-    notify(err.message, "error");
+    if (logoutBtn) logoutBtn.classList.add("hidden");
+    if (loginLink) loginLink.classList.remove("hidden");
+    if (registerLink) registerLink.classList.remove("hidden");
+    if (dashboardLink) dashboardLink.classList.add("hidden");
+    if (userHint) userHint.textContent = "";
+    if (sidebarNotifDot) sidebarNotifDot.classList.add("hidden");
+    if (bottomNotifDot) bottomNotifDot.classList.add("hidden");
   }
 }
 
@@ -427,26 +437,6 @@ function notify(message, kind) {
     return;
   }
   alert(message);
-}
-
-function renderEditorialEmptyState(message, mark) {
-  return `<div class="empty-state empty-state-editorial"><div class="empty-mark" aria-hidden="true"><span class="index-num">${escapeHtml(mark)}</span></div><p>${escapeHtml(message)}</p></div>`;
-}
-
-async function runRefresh(button, loader) {
-  if (!button || typeof loader !== "function") return;
-  button.classList.add("is-loading");
-  try {
-    await loader();
-    button.classList.remove("is-loading");
-    button.classList.add("is-success");
-    setTimeout(() => button.classList.remove("is-success"), 720);
-  } catch (err) {
-    button.classList.remove("is-loading");
-    button.classList.add("is-error");
-    setTimeout(() => button.classList.remove("is-error"), 720);
-    notify(err.message, "error");
-  }
 }
 
 async function renderInBatches(container, items, renderItem, options = {}) {
@@ -471,92 +461,6 @@ async function renderInBatches(container, items, renderItem, options = {}) {
 
 function nextFrame() {
   return new Promise((resolve) => requestAnimationFrame(() => resolve()));
-}
-
-function initKittyShowcase() {
-  const cards = Array.from(document.querySelectorAll(".kitty-photo-card"));
-  if (cards.length === 0) return;
-  const pool = [
-    {
-      src: "https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=900&q=80",
-      alt: "好奇地看向镜头的猫",
-      caption: "“今天是认真营业的小店长”",
-      likes: 246,
-      comments: 38,
-    },
-    {
-      src: "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=900&q=80",
-      alt: "在毯子上休息的猫",
-      caption: "“午后打盹，主打一个治愈”",
-      likes: 312,
-      comments: 54,
-    },
-    {
-      src: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=80",
-      alt: "坐在窗边的橘猫",
-      caption: "“窗边观察员，已上线巡逻”",
-      likes: 189,
-      comments: 29,
-    },
-    {
-      src: "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=900&q=80",
-      alt: "在木桌上趴着的灰白猫",
-      caption: "“值班结束，申请摸摸奖励”",
-      likes: 278,
-      comments: 41,
-    },
-    {
-      src: "https://images.unsplash.com/photo-1536589961747-e239b2c7d4d0?auto=format&fit=crop&w=900&q=80",
-      alt: "看向窗外的黑白猫",
-      caption: "“今天也在认真研究窗外新闻”",
-      likes: 334,
-      comments: 47,
-    },
-  ];
-
-  let tick = 0;
-  const swapCard = (card, data) => {
-    const img = card.querySelector("img");
-    const caption = card.querySelector(".caption");
-    const meta = card.querySelector(".kitty-card-meta");
-    if (!img || !caption || !meta) return;
-    img.classList.add("is-swapping");
-    setTimeout(() => {
-      img.src = data.src;
-      img.alt = data.alt;
-      caption.textContent = data.caption;
-      meta.innerHTML = `<span>❤ ${data.likes}</span><span>💬 ${data.comments}</span>`;
-      img.classList.remove("is-swapping");
-    }, 170);
-  };
-
-  setInterval(() => {
-    tick += 1;
-    cards.forEach((card, idx) => {
-      const data = pool[(tick + idx) % pool.length];
-      swapCard(card, data);
-    });
-  }, 7000);
-}
-
-function buildSearchItemNode(item, kind) {
-  const el = document.createElement("article");
-  el.className = "item";
-  const head = document.createElement("div");
-  head.className = "item-head";
-  head.innerHTML = `<h3 class="item-title">${escapeHtml(item.title)}</h3><span class="pill">${escapeHtml(kind)}</span>`;
-  const body = document.createElement("p");
-  body.className = "item-content";
-  body.textContent = kind === "post" ? (item.content || "") : (item.description || "");
-  const meta = document.createElement("p");
-  meta.className = "meta";
-  if (kind === "post") {
-    meta.textContent = `${t("meta.author")} ${item.author_id} · ${formatTime(item.created_at)}`;
-  } else {
-    meta.textContent = `${t("meta.seller")} ${item.seller_id} · ${t("meta.price")} ${(item.price_cents / 100).toFixed(2)} ${item.currency}`;
-  }
-  el.append(head, body, meta);
-  return el;
 }
 
 function takeRequestSignal(key) {
@@ -584,6 +488,4 @@ function escapeHtml(input) {
 }
 
 applyAuthState();
-initKittyShowcase();
 loadPosts();
-loadListings();

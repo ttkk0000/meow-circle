@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>帖子详情 - Kitty Circle</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed-dim": "#ffb2b9",
+                        "tertiary-fixed": "#75f9d1",
+                        "surface-container-highest": "#e4e2dd",
+                        "secondary": "#805600",
+                        "primary-fixed": "#ffdadc",
+                        "on-surface-variant": "#594042",
+                        "surface-variant": "#e4e2dd",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-container-low": "#f5f3ee",
+                        "surface-container": "#f0eee9",
+                        "on-tertiary-fixed-variant": "#00513f",
+                        "on-error": "#ffffff",
+                        "primary": "#b52044",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#fdaf18",
+                        "outline-variant": "#e1bec0",
+                        "on-tertiary-container": "#003528",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#55dcb6",
+                        "secondary-fixed-dim": "#ffba46",
+                        "on-background": "#1b1c19",
+                        "outline": "#8d7072",
+                        "on-tertiary-fixed": "#002118",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#ffb2b9",
+                        "surface-tint": "#b52044",
+                        "on-secondary-fixed": "#281800",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#91002f",
+                        "inverse-surface": "#30312e",
+                        "tertiary-container": "#00a986",
+                        "primary-container": "#ff5a77",
+                        "on-primary-container": "#62001d",
+                        "surface-bright": "#fbf9f4",
+                        "background": "#fbf9f4",
+                        "surface": "#fbf9f4",
+                        "secondary-fixed": "#ffddb0",
+                        "on-secondary-fixed-variant": "#614000",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#400010",
+                        "tertiary": "#006b54",
+                        "surface-dim": "#dbdad5",
+                        "on-secondary-container": "#694600",
+                        "surface-container-high": "#eae8e3"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "md": "16px",
+                        "xs": "8px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "card-gap": "12px",
+                        "container-padding": "16px",
+                        "base": "4px",
+                        "sm": "12px"
+                    },
+                    fontFamily: {
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "headline-xl": ["28px", { lineHeight: "36px", fontWeight: "800" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+                        "headline-lg": ["22px", { lineHeight: "28px", fontWeight: "700" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for immersive feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e1bec0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff5a77;
+        }
+        
+        /* Material Icon default class */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen overflow-hidden flex flex-col font-body-md antialiased">
+<!-- TopNavBar (Derived from JSON) -->
+<nav class="fixed top-0 w-full flex justify-between items-center px-8 h-16 z-50 bg-[#F9F7F2]/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-[#FF5A77]/10 shadow-[0_4px_20px_rgba(255,90,119,0.05)]">
+<!-- Brand / Back Navigation -->
+<div class="flex items-center gap-6">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors text-on-surface">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 600;">arrow_back</span>
+</button>
+<div class="text-2xl font-black text-[#FF5A77] tracking-tighter font-['Plus_Jakarta_Sans'] cursor-pointer">
+                Kitty Circle
+            </div>
+</div>
+<!-- Center Search (Subtle) -->
+<div class="hidden md:flex flex-1 max-w-md mx-8">
+<div class="w-full h-10 bg-surface-container-low rounded-full flex items-center px-4 border border-outline-variant/30 focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container/30 transition-all">
+<span class="material-symbols-outlined text-outline-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-md text-on-surface placeholder:text-outline p-0" placeholder="探索更多可爱日常..." type="text"/>
+</div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="bg-[#FF5A77] text-white px-5 py-2 rounded-full font-label-md flex items-center gap-1.5 hover:scale-105 transition-transform duration-200 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3)]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'wght' 600;">add_circle</span>
+                发帖
+            </button>
+</div>
+</nav>
+<!-- Main Detail Canvas -->
+<main class="flex-1 mt-16 px-8 py-6 flex justify-center items-center overflow-hidden w-full box-border">
+<!-- Bento-style Split Card -->
+<div class="w-full max-w-[1200px] h-[calc(100vh-120px)] bg-surface-container-lowest rounded-[24px] shadow-[0_8px_40px_rgba(255,90,119,0.06)] flex overflow-hidden border border-outline-variant/20 relative">
+<!-- Left: Immersive Media View -->
+<div class="w-[58%] h-full bg-surface-container-low relative flex items-center justify-center group overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="high quality vertical close-up photo of a fluffy white ragdoll cat with bright blue eyes, sitting in a sunlit room with soft warm morning light, highly detailed, aesthetic pastel coloring" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDztikFSbavQqBYrBS2QwlonzYP89J5YBUN_K1YJwBWeV8aSXrO3ic_EdOkTY0hIVc13-4xPTqAWO_NeP4-kTrVVgYFwcILolhPn7mL4VAkIGxg3DBRkhLvPWxwZy3IhFoxKg0JhF6JSJAoherpDk571pG6iU7CeW99dI_nJXKvbaqPDMwY_4STNPu78p_sU8AyiIXmkcASzz2TSobIPhJljpE66xmkfIVsFg0C5X_u9CHgFRcjN6HqyinfdOGXNOUxrGgg_Nv2"/>
+<!-- Media Overlay Controls -->
+<button class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-surface-container-lowest/40 backdrop-blur-md flex items-center justify-center text-on-surface opacity-0 group-hover:opacity-100 transition-opacity hover:bg-surface-container-lowest/80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 500;">chevron_left</span>
+</button>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-surface-container-lowest/40 backdrop-blur-md flex items-center justify-center text-on-surface opacity-0 group-hover:opacity-100 transition-opacity hover:bg-surface-container-lowest/80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 500;">chevron_right</span>
+</button>
+<!-- Pagination Dots -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+<div class="w-2 h-2 rounded-full bg-surface-container-lowest shadow-sm"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-lowest/50 backdrop-blur shadow-sm"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-lowest/50 backdrop-blur shadow-sm"></div>
+</div>
+</div>
+<!-- Right: Content & Interaction Area -->
+<div class="w-[42%] h-full flex flex-col bg-surface-container-lowest z-10 relative">
+<!-- Author Header -->
+<div class="h-[72px] px-6 flex items-center justify-between border-b border-outline-variant/20 shrink-0">
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="relative">
+<img class="w-11 h-11 rounded-full object-cover border-2 border-surface-container-lowest shadow-sm" data-alt="portrait of a young asian woman with a gentle smile, soft natural lighting, minimal makeup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3tvpBBMW1s5EWYIupsPvsY1suW1nKE5duRctfNO5EuZMR8v1KmJYkmuGZ1XXk3hEDnxH8HkqBaoyWTHT30JGQczbqoa7Zco9r8Eg3QhqJaGxBAo_zcDcpR2elJY9B3b2AqmXixRvwP81WTGvEG7Ytjkea5LoNkiQTOugPc8XW_Ue80HlJNHZQZ8HzrJoUhRscQpnGc2mEqPitgvDNbImyN0UR2GVeX4tDTtgB1vh1S8nIQxrJuixbRj8CITZmcbVfSarFpkj7"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-tertiary-container rounded-full border-2 border-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-on-tertiary-container" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-lg text-on-surface group-hover:text-primary-container transition-colors">Momo_Cat 🐾</span>
+<span class="font-label-md text-on-surface-variant/60">全职铲屎官</span>
+</div>
+</div>
+<button class="px-5 py-1.5 rounded-full border-2 border-primary-container text-primary-container font-label-md hover:bg-primary-container hover:text-white transition-all active:scale-95">
+                        关注
+                    </button>
+</div>
+<!-- Scrollable Body (Post & Comments) -->
+<div class="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-5">
+<!-- Post Text -->
+<div>
+<h1 class="font-headline-lg text-on-surface mb-3 leading-snug">
+                            周末和毛孩子去公园放风啦！阳光正好🍃
+                        </h1>
+<p class="font-body-md text-on-surface-variant whitespace-pre-line leading-relaxed">
+                            今天天气超好，带家里的小布偶去新开的宠物友好公园玩耍。阳光洒在草地上，毛茸茸的一团在阳光下发光，真的太治愈了！✨
+
+                            小家伙平时在家里很懒，到了外面反而兴奋得不行，到处乱跑抓蝴蝶。看着它开心的样子，感觉一周的疲惫都消失了。
+                            
+                            大家周末都带主子去哪里玩呢？求推荐周边好玩的宠物友好去处呀～
+                        </p>
+</div>
+<!-- Tags -->
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3.5 py-1.5 rounded-full bg-primary-container/10 text-primary-container font-label-md cursor-pointer hover:bg-primary-container/20 transition-colors">#布偶猫神仙颜值</span>
+<span class="px-3.5 py-1.5 rounded-full bg-primary-container/10 text-primary-container font-label-md cursor-pointer hover:bg-primary-container/20 transition-colors">#宠物友好</span>
+<span class="px-3.5 py-1.5 rounded-full bg-primary-container/10 text-primary-container font-label-md cursor-pointer hover:bg-primary-container/20 transition-colors">#周末去哪儿</span>
+<span class="px-3.5 py-1.5 rounded-full bg-primary-container/10 text-primary-container font-label-md cursor-pointer hover:bg-primary-container/20 transition-colors">#治愈系</span>
+</div>
+<div class="font-label-md text-on-surface-variant/40 mt-1 flex items-center gap-2">
+<span>发布于 2023-10-24 14:30</span>
+<span>•</span>
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">location_on</span> 上海 · 世纪公园</span>
+</div>
+<!-- Subtle Divider -->
+<div class="h-px w-full bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent my-2"></div>
+<!-- Comments Section -->
+<div>
+<h3 class="font-body-lg text-on-surface mb-5 flex items-center gap-2">
+                            共 128 条评论
+                        </h3>
+<div class="flex flex-col gap-6">
+<!-- Comment 1 -->
+<div class="flex gap-3 group">
+<img class="w-9 h-9 rounded-full object-cover shrink-0 cursor-pointer" data-alt="avatar of a young person smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEsTThVfePLv9pSqe6FNT3F94h_4QBkiCT-a87Xxeevn6UK7rxdyhymEmsTbznV-ICMmxFaunG5nAfAEGYzwcq9XpWSW-gex3IWMdSQ13CyHvPF1IG9vcLGVJD7tlEByXex4ux0I1XRky5ELV_Awq1_1AdWfGEaGt7TwsEzAu5-uKuXF6Hieoy7z90d38HjtNNDOVsCF9e9KUGFaBSs73iWhECqFZ1zBMdmVNtINI8rIRm6EXr82yyPhMWd8W1wMUszrWbYbcR"/>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-on-surface-variant cursor-pointer hover:text-primary-container">星空下的猫</span>
+<div class="flex items-center gap-1 text-on-surface-variant/40 hover:text-primary-container cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+<span class="font-label-md">34</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface mt-1 leading-snug">天哪太可爱了吧！！这个毛量慕了慕了😍，求问博主用的什么梳子呀？</p>
+<div class="flex items-center gap-4 mt-2">
+<span class="font-label-md text-on-surface-variant/40">2小时前</span>
+<span class="font-label-md text-on-surface-variant/60 cursor-pointer hover:text-on-surface">回复</span>
+</div>
+</div>
+</div>
+<!-- Comment 2 -->
+<div class="flex gap-3 group">
+<img class="w-9 h-9 rounded-full object-cover shrink-0 cursor-pointer" data-alt="avatar of a smiling woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNQ8p7Sr8CTjfxh-oUEA82hm8zSdxzJYwAHo6s8YaZr2YPs4h1vxh8CzdoJj45EkAKFwBdoXwhtJeH884l2w57N0vaopsUsNr9tMIdct9cbfYqvIu4PLwBHuyyhWPN3rqyOn3eUPv-lT3_a_V9NP6LHJJa8bVMKO5gSydcc1JG9Ir73oQ1bJ9DhJQUswaq0vbJn9c3Pq-0oo7J7j0WsXKZbpVBg6Rio7UYSq3kJ0pKvAgBwkaBumWP-w8St6Gqs2Ae-TJqBZgK"/>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-on-surface-variant cursor-pointer hover:text-primary-container">撸猫重度患者</span>
+<div class="flex items-center gap-1 text-primary-container cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-md">12</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface mt-1 leading-snug">世纪公园真的很适合带宠物去，上周末我也带我家柴犬去了，风景很好！推荐去东门那边有一大片草坪。</p>
+<div class="flex items-center gap-4 mt-2">
+<span class="font-label-md text-on-surface-variant/40">3小时前</span>
+<span class="font-label-md text-on-surface-variant/60 cursor-pointer hover:text-on-surface">回复</span>
+</div>
+</div>
+</div>
+<!-- Comment 3 -->
+<div class="flex gap-3 group">
+<div class="w-9 h-9 rounded-full bg-secondary-fixed-dim text-on-secondary-fixed-variant flex items-center justify-center shrink-0 font-bold font-body-lg cursor-pointer">
+                                    K
+                                </div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-on-surface-variant cursor-pointer hover:text-primary-container">Kevin_99</span>
+<div class="flex items-center gap-1 text-on-surface-variant/40 hover:text-primary-container cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+<span class="font-label-md">5</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface mt-1 leading-snug">好有活力的布偶，我家那只出了门就趴在包里不肯出来😅</p>
+<div class="flex items-center gap-4 mt-2">
+<span class="font-label-md text-on-surface-variant/40">5小时前</span>
+<span class="font-label-md text-on-surface-variant/60 cursor-pointer hover:text-on-surface">回复</span>
+</div>
+</div>
+</div>
+<button class="w-full py-3 mt-2 rounded-xl bg-surface-container-low text-on-surface-variant font-label-md hover:bg-surface-container transition-colors">
+                                展开更多评论
+                            </button>
+</div>
+</div>
+</div>
+<!-- Bottom Interaction Bar -->
+<div class="shrink-0 border-t border-outline-variant/10 px-6 py-4 bg-surface-container-lowest flex flex-col gap-4 shadow-[0_-4px_20px_rgba(0,0,0,0.02)]">
+<!-- Action Icons -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary-container transition-colors group">
+<span class="material-symbols-outlined text-[26px] group-hover:scale-110 transition-transform group-active:scale-95" style="font-variation-settings: 'wght' 300;">favorite</span>
+<span class="font-body-lg font-medium">1.2k</span>
+</button>
+<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-secondary-container transition-colors group">
+<span class="material-symbols-outlined text-[26px] group-hover:scale-110 transition-transform group-active:scale-95" style="font-variation-settings: 'wght' 300;">star</span>
+<span class="font-body-lg font-medium">456</span>
+</button>
+<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-tertiary-container transition-colors group">
+<span class="material-symbols-outlined text-[26px] group-hover:scale-110 transition-transform group-active:scale-95" style="font-variation-settings: 'wght' 300;">chat_bubble</span>
+<span class="font-body-lg font-medium">128</span>
+</button>
+</div>
+<button class="text-on-surface-variant hover:text-primary-container transition-colors group p-2 -mr-2">
+<span class="material-symbols-outlined text-[26px] group-hover:scale-110 transition-transform" style="font-variation-settings: 'wght' 300;">share</span>
+</button>
+</div>
+<!-- Comment Input -->
+<div class="flex gap-3">
+<div class="flex-1 bg-surface-container-low rounded-full flex items-center px-4 py-1 border border-outline-variant/20 focus-within:border-primary-container/50 focus-within:bg-surface-container-lowest transition-colors">
+<input class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-surface placeholder:text-outline-variant" placeholder="喜欢就说点什么吧..." type="text"/>
+<span class="material-symbols-outlined text-outline-variant ml-2 cursor-pointer hover:text-on-surface">sentiment_satisfied</span>
+</div>
+<button class="w-[42px] h-[42px] rounded-full bg-primary-container text-on-primary flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-all shadow-[inset_0_2px_4px_rgba(255,255,255,0.3)]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'wght' 600;">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
