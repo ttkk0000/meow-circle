@@ -81,3 +81,69 @@ data class HealthData(
     val status: String,
     val store: String,
 )
+
+@Serializable
+data class Comment(
+    val id: Long,
+    @SerialName("post_id") val postId: Long,
+    @SerialName("author_id") val authorId: Long,
+    val content: String,
+    @SerialName("created_at") val createdAt: String,
+    val author: User? = null,
+)
+
+@Serializable
+data class PostDetailData(
+    val post: Post,
+    val media: List<Media> = emptyList(),
+    val comments: List<Comment> = emptyList(),
+    @SerialName("like_count") val likeCount: Long = 0,
+    val liked: Boolean = false,
+    val author: User,
+    @SerialName("following_author") val followingAuthor: Boolean = false,
+)
+
+@Serializable
+data class RegisterBody(
+    val username: String,
+    val password: String,
+    val nickname: String = "",
+    val phone: String = "",
+    @SerialName("sms_code") val smsCode: String = "",
+)
+
+@Serializable
+data class CreatePostBody(
+    val title: String,
+    val content: String,
+    val category: String = "daily_share",
+    val tags: List<String> = emptyList(),
+    @SerialName("media_ids") val mediaIds: List<Long> = emptyList(),
+)
+
+@Serializable
+data class Conversation(
+    val peer: User,
+    @SerialName("last_message") val lastMessage: String,
+    @SerialName("last_sender_id") val lastSenderId: Long = 0,
+    @SerialName("unread_count") val unreadCount: Int = 0,
+    @SerialName("updated_at") val updatedAt: String,
+)
+
+@Serializable
+data class ConversationsPayload(
+    val items: List<Conversation>,
+)
+
+@Serializable
+data class FollowActionResult(
+    val following: Boolean,
+    @SerialName("user_id") val userId: Long,
+)
+
+@Serializable
+data class UpdateMeBody(
+    val nickname: String = "",
+    @SerialName("avatar_url") val avatarUrl: String = "",
+    val bio: String = "",
+)

@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -5,6 +6,22 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.composeCompiler)
 }
+
+/**
+ * 默认 `10.0.2.2`（官方 Android 模拟器）。
+ * MuMu / 雷电等：在 **已有** `kmp/local.properties`（含 sdk.dir）里增加一行
+ * `meow.api.base.url=http://127.0.0.1:8080`，并在电脑执行 `adb reverse tcp:8080 tcp:8080`。
+ * 也可仅本次构建：`./gradlew :androidApp:assembleDebug -Pmeow.api.base.url=http://127.0.0.1:8080`
+ */
+val meowApiBaseUrl: String =
+    (project.findProperty("meow.api.base.url") as String?)?.trim()?.takeIf { it.isNotEmpty() }
+        ?: run {
+            val f = rootProject.file("local.properties")
+            if (!f.exists()) return@run "http://10.0.2.2:8080"
+            val p = Properties()
+            f.inputStream().use { p.load(it) }
+            p.getProperty("meow.api.base.url")?.trim()?.takeIf { it.isNotEmpty() } ?: "http://10.0.2.2:8080"
+        }
 
 android {
     namespace = "com.ttkk0000.meowcircle.kmpapp"
@@ -15,7 +32,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "0.1.0"
-        buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8080\"")
+        buildConfigField("String", "API_BASE_URL", "\"$meowApiBaseUrl\"")
     }
     buildTypes {
         release {

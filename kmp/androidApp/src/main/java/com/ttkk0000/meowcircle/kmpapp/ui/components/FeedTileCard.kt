@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.PlayCircle
@@ -33,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.PostFeedItem
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
+import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShadows
 import com.ttkk0000.meowcircle.kmpapp.util.categoryLabel
 import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
@@ -65,13 +65,13 @@ fun FeedTileCard(
                 .fillMaxWidth()
                 .shadow(
                     elevation = StitchShadows.cardAmbientY,
-                    shape = RoundedCornerShape(28.dp),
+                    shape = StitchShape.cardFeed,
                     ambientColor = StitchShadows.cardAmbientColor,
                     spotColor = StitchShadows.cardAmbientColor,
                 )
-                .clip(RoundedCornerShape(28.dp))
+                .clip(StitchShape.cardFeed)
                 .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(28.dp))
+                .border(1.dp, StitchPalette.BorderHairline, StitchShape.cardFeed)
                 .clickable(onClick = onClick),
     ) {
         if (thumb != null) {
@@ -80,7 +80,7 @@ fun FeedTileCard(
                     Modifier
                         .fillMaxWidth()
                         .aspectRatio(1.1f)
-                        .clip(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)),
+                        .clip(StitchShape.cardFeedTop),
             ) {
                 AsyncImage(
                     model = thumb,
@@ -110,7 +110,7 @@ fun FeedTileCard(
             Spacer(Modifier.height(4.dp))
             Text(
                 post.title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
                 color = StitchPalette.OnSurface,
                 maxLines = 2,

@@ -63,7 +63,7 @@ fun StitchBottomNav(
                         contentDescription = spec.label,
                     )
                 },
-                label = { Text(spec.label, style = MaterialTheme.typography.labelLarge) },
+                label = { Text(spec.label, style = MaterialTheme.typography.labelMedium) },
                 colors =
                     NavigationBarItemDefaults.colors(
                         selectedIconColor = StitchPalette.Brand,

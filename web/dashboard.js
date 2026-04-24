@@ -13,6 +13,10 @@ let listingMediaIds = [];
 /** First media by id; filled when loading my posts (for cover thumbs). */
 let mediaCacheById = new Map();
 let mediaFilter = "all";
+let mediaQuery = "";
+let listingFilter = "all";
+let lastMediaItems = [];
+let lastListingItems = [];
 
 const notLogin = document.querySelector("#not-login");
 const dashboard = document.querySelector("#dashboard");
@@ -43,6 +47,8 @@ const myListingsNode = document.querySelector("#my-listings");
 const mediaForm = document.querySelector("#media-form");
 const mediaFile = document.querySelector("#media-file");
 const mediaList = document.querySelector("#media-list");
+const mediaSearchInput = document.querySelector("#media-search");
+const myListingsMeta = document.querySelector("#my-listings-meta");
 const myOrdersTbody = document.querySelector("#my-orders-tbody");
 const myOrdersEmpty = document.querySelector("#my-orders-empty");
 const ordersStatRevenue = document.querySelector("#orders-stat-revenue");
@@ -67,6 +73,8 @@ const headerAvatar = document.querySelector("#header-avatar");
 const myPostsEmpty = document.querySelector("#my-posts-empty");
 const myPostsStatTotal = document.querySelector("#my-posts-stat-total");
 const myPostsStatViews = document.querySelector("#my-posts-stat-views");
+const postLivePreview = document.querySelector("#post-live-preview");
+const listingLivePreview = document.querySelector("#listing-live-preview");
 
 let lastOrdersAll = [];
 let ordersStatusFilter = "all";
@@ -74,6 +82,7 @@ let activePanel = "compose-post";
 let myPostsFilter = "all";
 let lastNotifItems = [];
 let notifFilterKind = "all";
+let notifUnreadOnly = false;
 let lastLoadedPosts = [];
 let lastConversationItems = [];
 let convMessageFilter = "all";
@@ -90,10 +99,27 @@ const messageForm = document.querySelector("#message-form");
 const notifBtn = document.querySelector("#notif-btn");
 const notifCount = document.querySelector("#notif-count");
 const notifUnreadDot = document.querySelector("#notif-unread-dot");
+const toggleUnreadOnlyBtn = document.querySelector("#toggle-unread-only");
 let activePeerId = null;
 const activeRenderJobs = new WeakMap();
 const activeRequestControllers = new Map();
 const virtualListCleanups = new WeakMap();
+
+function readProfilePrefs() {
+  try {
+    return JSON.parse(localStorage.getItem(PREF_KEY) || "{}");
+  } catch (_) {
+    return {};
+  }
+}
+
+function applyProfilePrefsVisuals() {
+  const p = readProfilePrefs();
+  const compact = !!p.compact;
+  if (myPostsNode) myPostsNode.classList.toggle("gap-4", compact);
+  if (myPostsNode) myPostsNode.classList.toggle("gap-6", !compact);
+  if (myListingsNode) myListingsNode.classList.toggle("compact", compact);
+}
 
 logoutBtn?.addEventListener("click", () => {
   localStorage.removeItem(TOKEN_KEY);
@@ -148,6 +174,33 @@ function syncListingPricePrefix() {
   pre.textContent = v === "USD" ? "$" : v === "HKD" ? "HK$" : "¥";
 }
 
+function refreshPostPreview() {
+  if (!postLivePreview || !postForm) return;
+  const titleEl = postForm.querySelector('[name="title"]');
+  const title = String((titleEl && titleEl.value) || "").trim();
+  const content = String((postContentEl && postContentEl.value) || "").trim();
+  const h = postLivePreview.querySelector("h4");
+  const p = postLivePreview.querySelector("p");
+  if (h) h.textContent = title || "Untitled post";
+  if (p) p.textContent = content || "Write something to preview how this card looks in feed.";
+}
+
+function refreshListingPreview() {
+  if (!listingLivePreview || !listingForm) return;
+  const titleEl = listingForm.querySelector('[name="title"]');
+  const descEl = listingForm.querySelector('[name="description"]');
+  const ccyEl = listingForm.querySelector('[name="currency"]');
+  const title = String((titleEl && titleEl.value) || "").trim();
+  const desc = String((descEl && descEl.value) || "").trim();
+  const ccy = String((ccyEl && ccyEl.value) || "CNY");
+  const price = Number((listingCentsField && listingCentsField.value) || 0);
+  const h = listingLivePreview.querySelector("h4");
+  const ps = listingLivePreview.querySelectorAll("p");
+  if (h) h.textContent = title || "Untitled listing";
+  if (ps[0]) ps[0].textContent = desc || "Describe what you sell and condition details.";
+  if (ps[1]) ps[1].textContent = `${(price / 100).toFixed(2)} ${ccy}`;
+}
+
 function setListingCurrency(code) {
   const sel = document.querySelector("#listing-currency");
   if (!sel) return;
@@ -163,10 +216,35 @@ const ADMIN_SEARCH_PLACEHOLDER_BY_PANEL = {
   messages: "dashboard.search_placeholder_messages",
 };
 
+const STITCH_SCREEN_BY_PANEL = {
+  "compose-post": "ADMIN_COMPOSE_POST",
+  "compose-listing": "ADMIN_COMPOSE_LISTING",
+  media: "ADMIN_MEDIA",
+  "my-posts": "ADMIN_MY_POSTS",
+  "my-listings": "ADMIN_MY_LISTINGS",
+  "my-orders": "ADMIN_MY_ORDERS",
+  profile: "ADMIN_PROFILE",
+  notifications: "ADMIN_NOTIFICATIONS",
+  messages: "ADMIN_MESSAGES",
+};
+
+function syncStitchScreenByPanel(panel) {
+  const shared = window.MeowShared;
+  if (!shared || typeof shared.setStitchScreen !== "function") return;
+  const key = STITCH_SCREEN_BY_PANEL[panel || "compose-post"] || STITCH_SCREEN_BY_PANEL["compose-post"];
+  const screenId = shared.STITCH_WEB_SCREENS && shared.STITCH_WEB_SCREENS[key];
+  if (screenId) shared.setStitchScreen(screenId);
+}
+
 function syncAdminSearchPlaceholder() {
+  syncStitchScreenByPanel(activePanel);
   if (!adminGlobalSearch) return;
   const key = ADMIN_SEARCH_PLACEHOLDER_BY_PANEL[activePanel] || "dashboard.search_placeholder";
   adminGlobalSearch.placeholder = t(key);
+}
+
+function getAdminSearchQuery() {
+  return (adminGlobalSearch && adminGlobalSearch.value ? adminGlobalSearch.value : "").trim().toLowerCase();
 }
 
 function setPostTagList(tags) {
@@ -484,6 +562,7 @@ function initStitchDashboard() {
   if (postPublishBtn && postForm) {
     postPublishBtn.addEventListener("click", () => postForm.requestSubmit());
   }
+  if (postForm) postForm.addEventListener("input", refreshPostPreview);
   if (postBrowseBtn) {
     postBrowseBtn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -527,6 +606,8 @@ function initStitchDashboard() {
       searchDebounce = setTimeout(() => {
         if (activePanel === "my-orders") renderOrdersView();
         if (activePanel === "my-posts") renderMyPostsView();
+        if (activePanel === "my-listings") renderMyListingsView();
+        if (activePanel === "media") renderMediaView();
         if (activePanel === "messages") void renderFilteredConversations();
       }, 200);
     });
@@ -604,9 +685,31 @@ function initStitchDashboard() {
       });
       b.classList.add("active", "bg-primary-container", "text-white", "shadow-sm");
       b.classList.remove("text-on-surface-variant");
-      void loadMedia();
+      renderMediaView();
     });
   });
+  document.querySelectorAll(".listing-filter-chip").forEach((b) => {
+    b.addEventListener("click", () => {
+      listingFilter = b.getAttribute("data-listing-filter") || "all";
+      document.querySelectorAll(".listing-filter-chip").forEach((x) => {
+        const on = x === b;
+        x.classList.toggle("bg-primary-container", on);
+        x.classList.toggle("text-white", on);
+        x.classList.toggle("text-on-surface-variant", !on);
+      });
+      renderMyListingsView();
+    });
+  });
+  if (mediaSearchInput) {
+    let mediaSearchDebounce;
+    mediaSearchInput.addEventListener("input", () => {
+      clearTimeout(mediaSearchDebounce);
+      mediaSearchDebounce = setTimeout(() => {
+        mediaQuery = String(mediaSearchInput.value || "").trim().toLowerCase();
+        renderMediaView();
+      }, 160);
+    });
+  }
   const profileCancel = document.querySelector("#profile-cancel");
   if (profileCancel) {
     profileCancel.addEventListener("click", () => {
@@ -635,6 +738,7 @@ function initStitchDashboard() {
       try {
         localStorage.setItem(PREF_KEY, JSON.stringify(p));
       } catch (_) {}
+      applyProfilePrefsVisuals();
     });
   });
   try {
@@ -653,6 +757,7 @@ function initStitchDashboard() {
       btn.classList.toggle("bg-surface-variant", !on);
     });
   } catch (_) {}
+  applyProfilePrefsVisuals();
   if (listingPublishBtn && listingForm) {
     listingPublishBtn.addEventListener("click", () => listingForm.requestSubmit());
   }
@@ -664,13 +769,18 @@ function initStitchDashboard() {
         return Math.max(0, Math.round(n * 100));
       })();
       listingCentsField.value = String(cents);
+      refreshListingPreview();
     });
   }
   const listingCurrency = document.querySelector("#listing-currency");
   if (listingCurrency) {
-    listingCurrency.addEventListener("change", () => syncListingPricePrefix());
+    listingCurrency.addEventListener("change", () => {
+      syncListingPricePrefix();
+      refreshListingPreview();
+    });
     syncListingPricePrefix();
   }
+  if (listingForm) listingForm.addEventListener("input", refreshListingPreview);
   if (postDraftBtn) {
     postDraftBtn.addEventListener("click", () => {
       if (!postForm) return;
@@ -833,16 +943,38 @@ async function loadMedia() {
   const signal = takeRequestSignal("media");
   try {
     const data = await apiCall("/api/v1/media", "GET", undefined, { signal });
-    let items = Array.isArray(data.items) ? data.items : [];
-    if (mediaFilter === "photos") items = items.filter((m) => m.kind === "image");
-    if (mediaFilter === "videos") items = items.filter((m) => m.kind === "video");
-    mediaList.innerHTML = items.length ? "" : renderEditorialEmptyState(t("media.empty"), "Nº M");
-    if (!items.length) return;
-    await renderInBatches(mediaList, items, buildMediaNode, { batchSize: 10 });
+    lastMediaItems = Array.isArray(data.items) ? data.items : [];
+    renderMediaView();
   } catch (err) {
     if (err && err.name === "AbortError") return;
     mediaList.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
+}
+
+function getFilteredMediaItems() {
+  let items = lastMediaItems.slice();
+  if (mediaFilter === "photos") items = items.filter((m) => m.kind === "image");
+  if (mediaFilter === "videos") items = items.filter((m) => m.kind === "video");
+  const qFromPanel = mediaQuery || "";
+  const qFromHeader = getAdminSearchQuery();
+  const q = (qFromPanel || qFromHeader || "").trim().toLowerCase();
+  if (q) {
+    items = items.filter((m) => {
+      const name = String(m.filename || "").toLowerCase();
+      const id = String(m.id || "");
+      const kind = String(m.kind || "").toLowerCase();
+      return name.includes(q) || id.includes(q) || kind.includes(q);
+    });
+  }
+  return items;
+}
+
+function renderMediaView() {
+  if (!mediaList) return;
+  const items = getFilteredMediaItems();
+  mediaList.innerHTML = items.length ? "" : renderEditorialEmptyState(t("media.empty"), "Nº M");
+  if (!items.length) return;
+  void renderInBatches(mediaList, items, buildMediaNode, { batchSize: 10 });
 }
 
 function filterOrdersBySearch(items) {
@@ -1268,15 +1400,44 @@ async function loadMyPosts() {
 async function loadMyListings() {
   const signal = takeRequestSignal("my-listings");
   try {
-    const data = await apiCall("/api/v1/me/listings", "GET", undefined, { signal });
-    const items = Array.isArray(data.items) ? data.items : [];
-    myListingsNode.innerHTML = items.length ? "" : renderEditorialEmptyState(t("common.empty_my_listings"), "Nº L");
-    if (!items.length) return;
-    await renderInBatches(myListingsNode, items, buildMyListingNode, { batchSize: 10 });
+    const [data, mediaData] = await Promise.all([
+      apiCall("/api/v1/me/listings", "GET", undefined, { signal }),
+      apiCall("/api/v1/media", "GET", undefined, { signal }).catch(() => null),
+    ]);
+    if (mediaData && Array.isArray(mediaData.items)) {
+      mediaCacheById = new Map(mediaData.items.map((m) => [Number(m.id), m]));
+    }
+    lastListingItems = Array.isArray(data.items) ? data.items : [];
+    renderMyListingsView();
   } catch (err) {
     if (err && err.name === "AbortError") return;
     myListingsNode.innerHTML = `<p>${escapeHtml(err.message)}</p>`;
   }
+}
+
+function getFilteredListings() {
+  let items = lastListingItems.slice();
+  if (listingFilter !== "all") items = items.filter((l) => String(l.type || "") === listingFilter);
+  const q = getAdminSearchQuery();
+  if (!q) return items;
+  return items.filter((l) => {
+    const title = String(l.title || "").toLowerCase();
+    const desc = String(l.description || "").toLowerCase();
+    const id = String(l.id || "");
+    const type = String(l.type || "").toLowerCase();
+    return title.includes(q) || desc.includes(q) || id.includes(q) || type.includes(q);
+  });
+}
+
+function renderMyListingsView() {
+  if (!myListingsNode) return;
+  const items = getFilteredListings();
+  if (myListingsMeta) {
+    myListingsMeta.textContent = `${items.length} / ${lastListingItems.length} listings`;
+  }
+  myListingsNode.innerHTML = items.length ? "" : renderEditorialEmptyState(t("common.empty_my_listings"), "Nº L");
+  if (!items.length) return;
+  void renderInBatches(myListingsNode, items, buildMyListingNode, { batchSize: 10 });
 }
 
 async function apiUpload(url, formData) {
@@ -1349,13 +1510,34 @@ async function loadProfile() {
     document.querySelector("#profile-name").textContent = me.nickname || me.username;
     document.querySelector("#profile-handle").textContent = "@" + me.username;
     const avatar = document.querySelector("#profile-avatar");
-    if (me.avatar_url) { avatar.src = me.avatar_url; avatar.alt = me.username; } else { avatar.removeAttribute("src"); }
+    if (me.avatar_url) {
+      avatar.src = me.avatar_url;
+      avatar.alt = me.username;
+      if (headerAvatar) headerAvatar.src = me.avatar_url;
+    } else {
+      avatar.removeAttribute("src");
+      if (headerAvatar) headerAvatar.removeAttribute("src");
+    }
+    if (userHint) userHint.textContent = t("user.greeting").replace("{name}", me.nickname || me.username);
   } catch (err) {
     notify(err.message, "error");
   }
 }
 
 if (profileForm) {
+  const avatarInput = profileForm.querySelector('[name="avatar_url"]');
+  if (avatarInput) {
+    avatarInput.addEventListener("input", () => {
+      const v = String(avatarInput.value || "").trim();
+      const avatar = document.querySelector("#profile-avatar");
+      if (!avatar) return;
+      if (v) {
+        avatar.src = v;
+      } else {
+        avatar.removeAttribute("src");
+      }
+    });
+  }
   profileForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const fd = new FormData(profileForm);
@@ -1368,7 +1550,7 @@ if (profileForm) {
       localStorage.setItem(USER_KEY, JSON.stringify(updated));
       userHint.textContent = t("user.greeting").replace("{name}", updated.nickname || updated.username);
       notify(t("profile.saved"), "success");
-      loadProfile();
+      await loadProfile();
     } catch (err) { notify(err.message, "error"); }
   });
 }
@@ -1446,10 +1628,11 @@ function buildNotifCategoryNav(items) {
 
 function renderNotifList() {
   if (!notificationsList) return;
-  const items =
+  let items =
     notifFilterKind === "all"
       ? lastNotifItems.slice()
       : lastNotifItems.filter((n) => n.kind === notifFilterKind);
+  if (notifUnreadOnly) items = items.filter((n) => !n.read);
   notificationsList.innerHTML = items.length ? "" : renderEditorialEmptyState(t("notify.empty"), "Nº N");
   for (const n of items) {
     const unread = !n.read;
@@ -1535,6 +1718,15 @@ function renderNotifList() {
     notificationsList.appendChild(el);
   }
   refreshNotifBadge();
+}
+
+if (toggleUnreadOnlyBtn) {
+  toggleUnreadOnlyBtn.addEventListener("click", () => {
+    notifUnreadOnly = !notifUnreadOnly;
+    toggleUnreadOnlyBtn.classList.toggle("bg-primary-container", notifUnreadOnly);
+    toggleUnreadOnlyBtn.classList.toggle("text-white", notifUnreadOnly);
+    renderNotifList();
+  });
 }
 
 async function loadNotifications() {
@@ -1635,6 +1827,12 @@ async function loadConversations() {
     const items = Array.isArray(data.items) ? data.items : [];
     lastConversationItems = items;
     await renderFilteredConversations();
+    if (!activePeerId && items.length) {
+      const first = items[0];
+      if (first && first.peer && first.peer.id) {
+        await openConversation(first.peer.id);
+      }
+    }
   } catch (err) {
     if (err && err.name === "AbortError") return;
     lastConversationItems = [];
@@ -1718,6 +1916,8 @@ function boot() {
   initStitchDashboard();
   loadPostDraft();
   loadListingDraft();
+refreshPostPreview();
+refreshListingPreview();
   refreshNotifBadge();
   setInterval(refreshNotifBadge, 30000);
   if (window.MeowShared && typeof window.MeowShared.applyI18n === "function") {
@@ -1891,22 +2091,43 @@ function buildMyPostNode(post) {
       notify(err.message, "error");
     }
   });
+  if (!post.isDraft) {
+    el.addEventListener("click", () => {
+      window.open(`/post.html?id=${post.id}`, "_blank");
+    });
+  }
   return el;
 }
 
 function buildMyListingNode(listing) {
   const el = document.createElement("article");
-  el.className = "item";
+  el.className =
+    "group flex flex-col overflow-hidden rounded-2xl border border-white/70 bg-surface-container-lowest shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-transform hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(255,90,119,0.1)]";
+  const thumb = Array.isArray(listing.media_ids) && listing.media_ids.length
+    ? mediaCacheById.get(Number(listing.media_ids[0]))
+    : null;
+  const hero = thumb && thumb.url
+    ? `<img src="${escapeHtml(thumb.url)}" alt="" class="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105" />`
+    : `<div class="h-44 w-full bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined text-4xl text-stone-300">inventory_2</span></div>`;
+  const price = `${(listing.price_cents / 100).toFixed(2)} ${escapeHtml(listing.currency || "CNY")}`;
   el.innerHTML = `
-    <div class="item-head">
-      <h3 class="item-title">${escapeHtml(listing.title)}</h3>
-      <span class="pill type">${escapeHtml(listing.type || "")}</span>
+    <div class="relative h-44 w-full overflow-hidden rounded-t-2xl">
+      ${hero}
+      <span class="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-on-surface shadow-sm">${escapeHtml(listing.type || "")}</span>
     </div>
-    <p class="item-content">${escapeHtml(listing.description || "")}</p>
-    <p class="meta">${escapeHtml(t("meta.price"))} ${(listing.price_cents / 100).toFixed(2)} ${escapeHtml(listing.currency)} · ${formatTime(listing.created_at)}</p>
-    <div class="item-actions">
-      <button type="button" class="stitch-btn-secondary !w-auto" data-action="edit">${escapeHtml(t("common.edit"))}</button>
-      <button type="button" class="danger" data-id="${listing.id}">${escapeHtml(t("common.delete"))}</button>
+    <div class="flex flex-1 flex-col gap-2 p-4">
+      <h3 class="m-0 line-clamp-2 text-lg font-bold text-on-surface">${escapeHtml(listing.title)}</h3>
+      <p class="m-0 line-clamp-2 text-sm text-on-surface-variant">${escapeHtml(listing.description || "")}</p>
+      <p class="m-0 text-sm font-semibold text-primary-container">${escapeHtml(t("meta.price"))} ${price}</p>
+      <p class="m-0 text-xs text-on-surface-variant">${formatTime(listing.created_at)}</p>
+      <div class="mt-auto flex items-center justify-end gap-2 pt-2">
+        <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container text-stone-500 transition-colors hover:bg-primary-container/10 hover:text-primary-container" data-action="edit" title="${escapeHtml(t("common.edit"))}">
+          <span class="material-symbols-outlined text-[18px]">edit</span>
+        </button>
+        <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container text-stone-500 transition-colors hover:bg-error/10 hover:text-error danger" data-id="${listing.id}" title="${escapeHtml(t("common.delete"))}">
+          <span class="material-symbols-outlined text-[18px]">delete</span>
+        </button>
+      </div>
     </div>
   `;
   el.querySelector('[data-action="edit"]').addEventListener("click", () => {

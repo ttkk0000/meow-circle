@@ -10,16 +10,163 @@ const registerLink = document.querySelector("#register-link");
 const dashboardLink = document.querySelector("#dashboard-link");
 
 const postsContainer = document.querySelector("#posts");
+const homeToolbar = document.querySelector("#home-toolbar");
+const homePostsWrap = document.querySelector("#home-posts-wrap");
+const feedLoading = document.querySelector("#feed-loading");
+const rightRail = document.querySelector("#right-rail");
+const discoverPanel = document.querySelector("#panel-discover");
+const messagesPanel = document.querySelector("#panel-messages");
+const profilePanel = document.querySelector("#panel-profile");
+const messagesPreviewList = document.querySelector("#messages-preview-list");
+const profilePreviewCard = document.querySelector("#profile-preview-card");
+const desktopPanelLinks = Array.from(document.querySelectorAll(".desktop-panel-link"));
+const panelRouteLinks = Array.from(document.querySelectorAll("[data-panel-route]"));
 const activeRenderJobs = new WeakMap();
 const activeRequestControllers = new Map();
+const PANEL_IDS = ["home", "discover", "messages", "profile"];
 
 let cachedFeed = [];
 let currentFilter = "rec";
+let currentPanel = "home";
+const pageParams = new URLSearchParams(location.search);
+const initialFeed = pageParams.get("feed");
+if (initialFeed && ["rec", "new", "follow"].includes(initialFeed)) {
+  currentFilter = initialFeed;
+}
+
+function applyFilterChipState(filter) {
+  document.querySelectorAll(".filter-chip").forEach((b) => {
+    const on = b.dataset.filter === filter;
+    b.classList.toggle("bg-primary-container/10", on);
+    b.classList.toggle("text-primary-container", on);
+    b.classList.toggle("ring-2", on);
+    b.classList.toggle("ring-primary-container/30", on);
+    b.classList.toggle("text-gray-500", !on);
+    b.classList.toggle("hover:bg-gray-100", !on);
+  });
+}
 
 function requireLogin(reason) {
   if (reason) notify(reason, "error");
   const back = encodeURIComponent(location.pathname + location.search + location.hash);
   location.href = `/login?return_to=${back}`;
+}
+
+function setDesktopPanelActive(panel) {
+  desktopPanelLinks.forEach((link) => {
+    const on = link.dataset.panel === panel;
+    link.classList.toggle("bg-[#FF5A77]/10", on);
+    link.classList.toggle("text-[#FF5A77]", on);
+    link.classList.toggle("font-bold", on);
+    link.classList.toggle("text-gray-600", !on);
+  });
+}
+
+function setPanelVisibility(panel) {
+  const home = panel === "home";
+  const discover = panel === "discover";
+  const messages = panel === "messages";
+  const profile = panel === "profile";
+  if (homeToolbar) {
+    homeToolbar.classList.toggle("hidden", !home);
+    homeToolbar.style.display = home ? "" : "none";
+  }
+  if (homePostsWrap) {
+    homePostsWrap.classList.toggle("hidden", !home);
+    homePostsWrap.style.display = home ? "" : "none";
+  }
+  if (feedLoading) {
+    feedLoading.classList.toggle("hidden", !home);
+    feedLoading.style.display = home ? "" : "none";
+  }
+  // Desktop right rail belongs to Home only; other panels replace whole right side.
+  if (rightRail) {
+    rightRail.classList.toggle("hidden", !home);
+    rightRail.classList.toggle("lg:block", home);
+    rightRail.classList.toggle("lg:hidden", !home);
+    rightRail.style.display = home ? "" : "none";
+  }
+  discoverPanel && discoverPanel.classList.toggle("hidden", !discover);
+  messagesPanel && messagesPanel.classList.toggle("hidden", !messages);
+  profilePanel && profilePanel.classList.toggle("hidden", !profile);
+}
+
+function renderHomePanel() {
+  // Home data is handled by loadPosts/renderPosts and remains local to home panel.
+}
+
+function renderDiscoverPanel() {
+  // Discover currently uses static cards in index.html.
+}
+
+function renderMessagesPanel() {
+  loadMessagesPreview();
+}
+
+function renderProfilePanel() {
+  loadProfilePreview();
+}
+
+const panelRenderers = {
+  home: renderHomePanel,
+  discover: renderDiscoverPanel,
+  messages: renderMessagesPanel,
+  profile: renderProfilePanel,
+};
+
+function togglePanels(panel) {
+  const normalizedPanel = PANEL_IDS.includes(panel) ? panel : "home";
+  currentPanel = normalizedPanel;
+  setPanelVisibility(normalizedPanel);
+  setDesktopPanelActive(normalizedPanel);
+  panelRenderers[normalizedPanel]?.();
+}
+
+async function loadMessagesPreview() {
+  if (!messagesPreviewList) return;
+  if (!getToken()) {
+    messagesPreviewList.innerHTML = `<p class="text-sm text-gray-500">${escapeHtml(t("alert.login_first"))}</p>`;
+    return;
+  }
+  messagesPreviewList.innerHTML = skeletonCards(2);
+  try {
+    const data = await apiCall("/api/v1/me/conversations", "GET");
+    const items = Array.isArray(data.items) ? data.items : [];
+    messagesPreviewList.innerHTML = "";
+    if (!items.length) {
+      messagesPreviewList.innerHTML = `<p class="text-sm text-gray-500">${escapeHtml(t("message.empty"))}</p>`;
+      return;
+    }
+    items.slice(0, 12).forEach((c) => {
+      const peer = c.peer || {};
+      const row = document.createElement("a");
+      row.href = "/dashboard#messages";
+      row.className = "block bg-white rounded-xl border border-gray-100 p-3";
+      row.innerHTML = `<div class="flex justify-between gap-2"><strong class="truncate">${escapeHtml(peer.nickname || peer.username || `User ${peer.id || c.peer_id}`)}</strong>${c.unread_count ? `<span class="text-xs bg-primary-container text-white rounded-full px-2">${c.unread_count}</span>` : ""}</div><p class="text-sm text-gray-500 truncate mt-1">${escapeHtml(c.last_message || "")}</p>`;
+      messagesPreviewList.appendChild(row);
+    });
+  } catch (err) {
+    messagesPreviewList.innerHTML = `<p class="text-sm text-red-600">${escapeHtml(err.message)}</p>`;
+  }
+}
+
+async function loadProfilePreview() {
+  if (!profilePreviewCard) return;
+  if (!getToken()) {
+    profilePreviewCard.innerHTML = `<p class="text-sm text-gray-500">${escapeHtml(t("dashboard.not_login_tip"))}</p>`;
+    return;
+  }
+  profilePreviewCard.innerHTML = skeletonCards(1);
+  try {
+    const [me, posts] = await Promise.all([
+      apiCall("/api/v1/me", "GET"),
+      apiCall("/api/v1/me/posts", "GET"),
+    ]);
+    const count = Array.isArray(posts.items) ? posts.items.length : 0;
+    profilePreviewCard.innerHTML = `<div class="flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-primary-container/10 overflow-hidden">${me.avatar_url ? `<img src="${escapeHtml(me.avatar_url)}" class="w-full h-full object-cover" alt="" />` : ""}</div><div><p class="font-semibold">${escapeHtml(me.nickname || me.username || "")}</p><p class="text-sm text-gray-500">@${escapeHtml(me.username || "")}</p></div></div><p class="mt-3 text-sm text-gray-600">${escapeHtml(me.bio || "")}</p><p class="mt-2 text-sm text-primary-container">${count} posts</p>`;
+  } catch (err) {
+    profilePreviewCard.innerHTML = `<p class="text-sm text-red-600">${escapeHtml(err.message)}</p>`;
+  }
 }
 
 function pickAspectClass(seed) {
@@ -46,18 +193,14 @@ document.querySelectorAll(".filter-chip").forEach((btn) => {
       return;
     }
     currentFilter = f;
-    document.querySelectorAll(".filter-chip").forEach((b) => {
-      const on = b.dataset.filter === f;
-      b.classList.toggle("bg-primary-container/10", on);
-      b.classList.toggle("text-primary-container", on);
-      b.classList.toggle("ring-2", on);
-      b.classList.toggle("ring-primary-container/30", on);
-      b.classList.toggle("text-gray-500", !on);
-      b.classList.toggle("hover:bg-gray-100", !on);
-    });
+    const params = new URLSearchParams(location.search);
+    params.set("feed", currentFilter);
+    history.replaceState(null, "", `${location.pathname}?${params.toString()}${location.hash}`);
+    applyFilterChipState(f);
     renderPosts();
   });
 });
+applyFilterChipState(currentFilter);
 
 // ----- Search -----
 const searchInput = document.querySelector("#global-search");
@@ -110,6 +253,12 @@ function bindSearchInput(el) {
 }
 bindSearchInput(searchInput);
 bindSearchInput(searchInputMobile);
+const initialQuery = pageParams.get("q");
+if (initialQuery) {
+  if (searchInput) searchInput.value = initialQuery;
+  if (searchInputMobile) searchInputMobile.value = initialQuery;
+  runSearch(initialQuery, currentSearchType);
+}
 
 if (closeSearchBtn) {
   closeSearchBtn.addEventListener("click", () => {
@@ -144,11 +293,17 @@ function hideSearchResults() {
     searchResultsPanel.classList.add("hidden");
   }
   lastSearchQuery = "";
+  const params = new URLSearchParams(location.search);
+  params.delete("q");
+  history.replaceState(null, "", `${location.pathname}?${params.toString()}${location.hash}`);
   cancelRequest("search");
 }
 
 async function runSearch(q, type) {
   lastSearchQuery = q;
+  const params = new URLSearchParams(location.search);
+  params.set("q", q);
+  history.replaceState(null, "", `${location.pathname}?${params.toString()}${location.hash}`);
   if (searchResultsPanel) {
     searchResultsPanel.removeAttribute("hidden");
     searchResultsPanel.classList.remove("hidden");
@@ -489,3 +644,31 @@ function escapeHtml(input) {
 
 applyAuthState();
 loadPosts();
+desktopPanelLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const panel = link.dataset.panel || "home";
+    history.replaceState(null, "", `#${panel}`);
+    togglePanels(panel);
+  });
+});
+panelRouteLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const panel = link.dataset.panelRoute || "home";
+    history.replaceState(null, "", `#${panel}`);
+    togglePanels(panel);
+  });
+});
+window.addEventListener("hashchange", () => {
+  const panel = (location.hash || "").replace("#", "");
+  if (PANEL_IDS.includes(panel)) {
+    togglePanels(panel);
+  }
+});
+const hashPanel = (location.hash || "").replace("#", "");
+if (PANEL_IDS.includes(hashPanel)) {
+  togglePanels(hashPanel);
+} else {
+  togglePanels("home");
+}

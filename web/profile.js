@@ -9,6 +9,11 @@ const profileAvatar = document.querySelector("#profile-avatar");
 const statPosts = document.querySelector("#stat-posts");
 const myPosts = document.querySelector("#my-posts");
 const btnShare = document.querySelector("#btn-share");
+const btnEdit = document.querySelector("#btn-edit-profile");
+const editModal = document.querySelector("#profile-edit-modal");
+const editForm = document.querySelector("#profile-edit-form");
+const btnEditCancel = document.querySelector("#btn-edit-cancel");
+let currentUser = null;
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -54,6 +59,41 @@ btnShare.addEventListener("click", async () => {
   }
 });
 
+function openEditModal() {
+  if (!currentUser || !editModal || !editForm) return;
+  editForm.nickname.value = currentUser.nickname || currentUser.username || "";
+  editForm.avatar_url.value = currentUser.avatar_url || "";
+  editForm.bio.value = currentUser.bio || "";
+  editModal.classList.remove("hidden");
+}
+
+function closeEditModal() {
+  editModal?.classList.add("hidden");
+}
+
+btnEdit?.addEventListener("click", openEditModal);
+btnEditCancel?.addEventListener("click", closeEditModal);
+editModal?.addEventListener("click", (e) => {
+  if (e.target === editModal) closeEditModal();
+});
+
+editForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  try {
+    const fd = new FormData(editForm);
+    await apiCall("/api/v1/me", "PATCH", {
+      nickname: String(fd.get("nickname") || "").trim(),
+      avatar_url: String(fd.get("avatar_url") || "").trim(),
+      bio: String(fd.get("bio") || "").trim(),
+    });
+    notify(t("profile.saved"), "success");
+    closeEditModal();
+    await load();
+  } catch (err) {
+    notify(err.message, "error");
+  }
+});
+
 async function load() {
   if (!getToken()) {
     guestHint.classList.remove("hidden");
@@ -65,6 +105,7 @@ async function load() {
   guestLogin.classList.add("hidden");
   try {
     const user = await apiCall("/api/v1/me", "GET");
+    currentUser = user;
     profileName.textContent = user.nickname || user.username || `User ${user.id}`;
     profileBio.textContent = user.bio || "";
     if (user.avatar_url) {

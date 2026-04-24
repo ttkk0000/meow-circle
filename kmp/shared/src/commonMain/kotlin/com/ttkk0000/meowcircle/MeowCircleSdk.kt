@@ -2,9 +2,11 @@ package com.ttkk0000.meowcircle
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
+import io.ktor.client.request.patch
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
@@ -98,6 +100,106 @@ class MeowCircleSdk(
             page.items
         }
 
+    suspend fun register(
+        username: String,
+        password: String,
+        nickname: String = "",
+        phone: String = "",
+        smsCode: String = "",
+    ): Result<User> =
+        runCatching {
+            val nick = nickname.trim().ifBlank { username.trim() }
+            val envelopeText =
+                httpPost(
+                    "/api/v1/auth/register",
+                    auth = false,
+                    body =
+                        RegisterBody(
+                            username = username.trim(),
+                            password = password,
+                            nickname = nick,
+                            phone = phone.trim(),
+                            smsCode = smsCode.trim(),
+                        ),
+                )
+            val data: LoginData = unwrapData(envelopeText)
+            session.setToken(data.token)
+            session.setUserJson(json.encodeToString(User.serializer(), data.user))
+            data.user
+        }
+
+    /** POST follow or DELETE unfollow; returns new following state. */
+    suspend fun setFollowing(
+        userId: Long,
+        follow: Boolean,
+    ): Result<Boolean> =
+        runCatching {
+            val path = "/api/v1/me/follow/$userId"
+            val text =
+                if (follow) {
+                    httpPostEmpty(path, auth = true)
+                } else {
+                    httpDelete(path, auth = true)
+                }
+            val out: FollowActionResult = unwrapData(text)
+            out.following
+        }
+
+    suspend fun postDetail(postId: Long): Result<PostDetailData> =
+        runCatching {
+            val authed = !session.getToken().isNullOrBlank()
+            unwrapData(httpGet("/api/v1/posts/$postId", auth = authed))
+        }
+
+    suspend fun createPost(
+        title: String,
+        content: String,
+        tags: List<String> = emptyList(),
+    ): Result<Post> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/posts",
+                    auth = true,
+                    body =
+                        CreatePostBody(
+                            title = title.trim(),
+                            content = content.trim(),
+                            tags = tags,
+                        ),
+                ),
+            )
+        }
+
+    suspend fun conversations(): Result<List<Conversation>> =
+        runCatching {
+            val payload: ConversationsPayload = unwrapData(httpGet("/api/v1/me/conversations", auth = true))
+            payload.items
+        }
+
+    suspend fun updateMe(
+        nickname: String,
+        avatarUrl: String,
+        bio: String,
+    ): Result<User> =
+        runCatching {
+            val updated: User =
+                unwrapData(
+                    httpPatch(
+                        "/api/v1/me",
+                        auth = true,
+                        body =
+                            UpdateMeBody(
+                                nickname = nickname.trim(),
+                                avatarUrl = avatarUrl.trim(),
+                                bio = bio.trim(),
+                            ),
+                    ),
+                )
+            session.setUserJson(json.encodeToString(User.serializer(), updated))
+            updated
+        }
+
     private suspend fun httpGet(
         path: String,
         auth: Boolean,
@@ -116,6 +218,42 @@ class MeowCircleSdk(
     ): String {
         val response =
             http.post("$root$path") {
+                contentType(ContentType.Application.Json)
+                if (auth) attachBearer()
+                setBody(body)
+            }
+        return readResponse(response)
+    }
+
+    private suspend fun httpPostEmpty(
+        path: String,
+        auth: Boolean,
+    ): String {
+        val response =
+            http.post("$root$path") {
+                if (auth) attachBearer()
+            }
+        return readResponse(response)
+    }
+
+    private suspend fun httpDelete(
+        path: String,
+        auth: Boolean,
+    ): String {
+        val response =
+            http.delete("$root$path") {
+                if (auth) attachBearer()
+            }
+        return readResponse(response)
+    }
+
+    private suspend inline fun <reified B : Any> httpPatch(
+        path: String,
+        auth: Boolean,
+        body: B,
+    ): String {
+        val response =
+            http.patch("$root$path") {
                 contentType(ContentType.Application.Json)
                 if (auth) attachBearer()
                 setBody(body)

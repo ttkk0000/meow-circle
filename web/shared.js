@@ -1446,6 +1446,34 @@
     item.addEventListener("click", hide, { once: true });
   }
 
+  // Stitch MCP desktop design references (17 web screens).
+  const STITCH_WEB_PROJECT_ID = "472020832926366758";
+  const STITCH_WEB_SCREENS = {
+    HOME_DESKTOP: "cd9894efb5c141e6895ad328663a64b0",
+    LOGIN_DESKTOP: "ccdaf889da834d8a839e720352980ee9",
+    REGISTER_DESKTOP: "4ace569b3226457ab364b5c0362ef55c",
+    DISCOVER_DESKTOP: "87b58790989b4ac09c53fb50a60d9797",
+    MESSAGES_DESKTOP: "3bb5216364e84f1899f07fc7fe8e2038",
+    PROFILE_DESKTOP: "d39145c57af848cdadbbc15cf97c3487",
+    POST_DETAIL_DESKTOP: "a75de8a6450744949bdea167e327c292",
+    COMPOSE_POST_DESKTOP: "cb6d98b9ae354f3e90e17d0416f9ad05",
+    ADMIN_COMPOSE_POST: "7a10ed77fc7a4f4fb9b169ab1cab4205",
+    ADMIN_COMPOSE_LISTING: "7c6cce1873954c309cb55b197f5a9a64",
+    ADMIN_MEDIA: "7c0bc12051204b98ae724b5b9b79d8e8",
+    ADMIN_MY_POSTS: "486e83f213884a7999302ec9c1f3a0af",
+    ADMIN_MY_LISTINGS: "8516f4328a7b419d8ae9fdaf412cfa62",
+    ADMIN_MY_ORDERS: "ec5bfdd3707849dda72da3c1bafe5b95",
+    ADMIN_PROFILE: "05062f3a8a09444596188cb3d26bad65",
+    ADMIN_NOTIFICATIONS: "98220d4897c04bcaadbe0c141efe71a0",
+    ADMIN_MESSAGES: "4cf8b752667a4021989d3bfabf894031",
+  };
+
+  function setStitchScreen(screenId) {
+    if (!screenId || !document || !document.body) return;
+    document.body.setAttribute("data-stitch-project-id", STITCH_WEB_PROJECT_ID);
+    document.body.setAttribute("data-stitch-screen-id", screenId);
+  }
+
   // Expose globally
   window.MeowShared = {
     t,
@@ -1456,6 +1484,9 @@
     applyI18n,
     buildSettingsBar,
     toast,
+    STITCH_WEB_PROJECT_ID,
+    STITCH_WEB_SCREENS,
+    setStitchScreen,
     SUPPORTED_THEMES,
     SUPPORTED_LANGS,
   };

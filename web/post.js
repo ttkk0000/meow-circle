@@ -24,6 +24,8 @@ const btnLike = document.querySelector("#btn-like");
 const likeIcon = document.querySelector("#like-icon");
 const likeCountEl = document.querySelector("#like-count");
 const btnFollow = document.querySelector("#btn-follow");
+const mediaStrip = document.querySelector("#media-strip");
+const mediaThumbs = document.querySelector("#media-thumbs");
 
 let detailLikeCount = 0;
 let detailLiked = false;
@@ -188,19 +190,47 @@ btnReport.addEventListener("click", async () => {
 function renderMedia(media) {
   heroImg.classList.add("hidden");
   heroVideo.classList.add("hidden");
+  if (mediaStrip) mediaStrip.classList.add("hidden");
+  if (mediaThumbs) mediaThumbs.innerHTML = "";
   if (!media || !media.length) {
     heroImg.classList.remove("hidden");
     heroImg.src =
       "https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=1200&q=80";
     return;
   }
-  const m = media[0];
-  if (m.kind === "video") {
-    heroVideo.classList.remove("hidden");
-    heroVideo.src = m.url;
-  } else {
-    heroImg.classList.remove("hidden");
-    heroImg.src = m.url;
+  const showMedia = (m) => {
+    if (!m) return;
+    if (m.kind === "video") {
+      heroVideo.classList.remove("hidden");
+      heroVideo.src = m.url;
+      heroImg.classList.add("hidden");
+    } else {
+      heroImg.classList.remove("hidden");
+      heroImg.src = m.url;
+      heroVideo.classList.add("hidden");
+      heroVideo.pause();
+    }
+  };
+  showMedia(media[0]);
+  if (media.length > 1 && mediaStrip && mediaThumbs) {
+    mediaStrip.classList.remove("hidden");
+    media.forEach((m, idx) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className =
+        "shrink-0 w-16 h-16 rounded-xl overflow-hidden border " +
+        (idx === 0 ? "border-white ring-2 ring-white/80" : "border-white/30");
+      b.innerHTML =
+        m.kind === "video"
+          ? `<div class="w-full h-full bg-black/60 flex items-center justify-center"><span class="material-symbols-outlined text-white">play_arrow</span></div>`
+          : `<img alt="" class="w-full h-full object-cover" src="${escapeHtml(m.url)}" />`;
+      b.addEventListener("click", () => {
+        mediaThumbs.querySelectorAll("button").forEach((x) => x.className = "shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-white/30");
+        b.className = "shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-white ring-2 ring-white/80";
+        showMedia(m);
+      });
+      mediaThumbs.appendChild(b);
+    });
   }
 }
 

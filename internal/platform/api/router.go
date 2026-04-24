@@ -570,10 +570,22 @@ func (r *Router) handlePostChildren(w http.ResponseWriter, req *http.Request) {
 			if viewerID != 0 && post.AuthorID != viewerID {
 				followingAuthor = r.store.IsFollowing(viewerID, post.AuthorID)
 			}
+			rawComments := r.store.ListCommentsByPost(postID)
+			commentViews := make([]map[string]any, 0, len(rawComments))
+			for _, c := range rawComments {
+				row := map[string]any{
+					"id": c.ID, "post_id": c.PostID, "author_id": c.AuthorID,
+					"content": c.Content, "created_at": c.CreatedAt,
+				}
+				if u, ok := r.store.GetUser(c.AuthorID); ok {
+					row["author"] = u
+				}
+				commentViews = append(commentViews, row)
+			}
 			writeOK(w, map[string]any{
 				"post":             post,
 				"media":            r.store.GetMediaBatch(post.MediaIDs),
-				"comments":         r.store.ListCommentsByPost(postID),
+				"comments":         commentViews,
 				"like_count":       counts[postID],
 				"liked":            liked,
 				"author":           author,

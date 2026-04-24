@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="/tw-stitch.js"></script>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/stitch-theme-bridge.css" />
   <link rel="stylesheet" href="/stitch-toast.css" />
   <script src="/shared.js"></script>
   <style>
@@ -48,7 +50,7 @@
           <div><span class="font-headline-lg text-on-surface block">—</span><span class="text-on-surface-variant">粉丝</span></div>
         </div>
         <div class="flex gap-4 flex-wrap justify-center">
-          <a href="/dashboard#profile" class="bg-surface-container-high text-on-surface hover:bg-surface-dim px-6 py-2 rounded-full font-label-md transition-colors" data-i18n="stitch.profile_edit">编辑资料</a>
+          <button type="button" id="btn-edit-profile" class="bg-surface-container-high text-on-surface hover:bg-surface-dim px-6 py-2 rounded-full font-label-md transition-colors" data-i18n="stitch.profile_edit">编辑资料</button>
           <button type="button" id="btn-share" class="bg-primary-container text-on-primary hover:bg-primary px-6 py-2 rounded-full font-label-md flex items-center gap-2">
             <span class="material-symbols-outlined text-[18px]">share</span>
             <span data-i18n="stitch.profile_share">分享主页</span>
@@ -62,6 +64,23 @@
 
     <section class="masonry-grid" id="my-posts"></section>
   </main>
+  <section id="profile-edit-modal" class="hidden fixed inset-0 z-50 bg-black/30 backdrop-blur-[2px] p-4">
+    <div class="max-w-lg mx-auto mt-10 rounded-3xl bg-white border border-gray-100 shadow-[0_16px_48px_rgba(255,90,119,0.18)] p-5">
+      <h3 class="text-headline-lg font-headline-lg mb-4" data-i18n="profile.stitch_title">资料与偏好</h3>
+      <form id="profile-edit-form" class="space-y-3">
+        <input name="nickname" class="w-full rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 py-2.5" data-i18n-placeholder="profile.nickname" required />
+        <input name="avatar_url" class="w-full rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 py-2.5" data-i18n-placeholder="profile.avatar_url" />
+        <textarea name="bio" rows="4" class="w-full rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 py-2.5" data-i18n-placeholder="profile.bio"></textarea>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" id="btn-edit-cancel" class="rounded-full px-4 py-2 bg-surface-container text-on-surface-variant" data-i18n="profile.btn_cancel">取消</button>
+          <button type="submit" class="rounded-full px-5 py-2 bg-primary-container text-white" data-i18n="profile.btn_save">保存资料</button>
+        </div>
+      </form>
+    </div>
+  </section>
   <script src="/profile.js"></script>
+  <script>
+    window.MeowShared?.setStitchScreen(window.MeowShared?.STITCH_WEB_SCREENS?.PROFILE_DESKTOP);
+  </script>
 </body>
 </html>

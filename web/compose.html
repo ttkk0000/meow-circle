@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="/tw-stitch.js"></script>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/stitch-theme-bridge.css" />
   <link rel="stylesheet" href="/stitch-toast.css" />
   <script src="/shared.js"></script>
   <style>
@@ -55,10 +57,27 @@
       </div>
       <div class="bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)]">
         <label class="block text-label-md font-semibold text-on-surface-variant mb-2" data-i18n="media.attach_hint">媒体 ID</label>
-        <input name="media_ids" class="w-full rounded-2xl bg-surface-container-low border-none py-3 px-4 focus:ring-2 focus:ring-primary-container" placeholder="1,2,3" />
+        <input id="compose-media-ids" name="media_ids" class="w-full rounded-2xl bg-surface-container-low border-none py-3 px-4 focus:ring-2 focus:ring-primary-container" placeholder="1,2,3" />
+        <div class="mt-3 flex flex-wrap gap-2">
+          <label class="inline-flex items-center gap-2 rounded-full bg-primary-container/10 text-primary-container px-4 py-2 font-label-md cursor-pointer hover:bg-primary-container/20">
+            <span class="material-symbols-outlined text-[18px]">upload</span>
+            <span data-i18n="media.upload_image">上传图片</span>
+            <input id="compose-upload-image" type="file" accept="image/*" class="hidden" />
+          </label>
+          <label class="inline-flex items-center gap-2 rounded-full bg-primary-container/10 text-primary-container px-4 py-2 font-label-md cursor-pointer hover:bg-primary-container/20">
+            <span class="material-symbols-outlined text-[18px]">videocam</span>
+            <span data-i18n="media.upload_video">上传视频</span>
+            <input id="compose-upload-video" type="file" accept="video/mp4,video/webm,video/quicktime" class="hidden" />
+          </label>
+          <button type="button" id="compose-save-draft" class="inline-flex items-center gap-2 rounded-full bg-surface-container text-on-surface-variant px-4 py-2 font-label-md hover:bg-surface-dim" data-i18n="form.save_draft">存草稿</button>
+        </div>
+        <p id="compose-media-picked" class="mt-2 text-label-md text-on-surface-variant"></p>
       </div>
     </form>
   </main>
   <script src="/compose.js"></script>
+  <script>
+    window.MeowShared?.setStitchScreen(window.MeowShared?.STITCH_WEB_SCREENS?.COMPOSE_POST_DESKTOP);
+  </script>
 </body>
 </html>

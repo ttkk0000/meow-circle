@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="/tw-stitch.js"></script>
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/stitch-theme-bridge.css" />
   <link rel="stylesheet" href="/stitch-toast.css" />
   <script src="/shared.js"></script>
   <style>
@@ -33,14 +35,48 @@
     <a href="/compose.html" class="mt-auto w-full py-4 bg-gradient-to-br from-primary-container to-[#ff7a91] text-white rounded-full text-body-lg font-bold shadow-[0_8px_20px_rgba(255,90,119,0.2)] text-center" data-i18n="nav.compose">发帖</a>
   </nav>
 
-  <main class="flex-1 flex flex-col items-center justify-center p-8 text-center max-w-lg mx-auto">
-    <div class="w-20 h-20 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container mb-6">
-      <span class="material-symbols-outlined text-[40px] fill">mail</span>
+  <main class="flex-1 min-w-0 p-4 md:p-6 lg:p-8">
+    <div id="msg-guest" class="hidden max-w-lg mx-auto text-center py-16">
+      <div class="w-20 h-20 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container mb-6 mx-auto">
+        <span class="material-symbols-outlined text-[40px] fill">mail</span>
+      </div>
+      <h1 class="text-headline-xl font-headline-xl text-on-surface mb-3" data-i18n="stitch.messages_title">消息中心</h1>
+      <p class="text-body-lg text-on-surface-variant mb-8" data-i18n="dashboard.not_login_tip">请先登录</p>
+      <a href="/login?return_to=%2Fmessages.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-container to-[#ff7e95] text-white px-8 py-4 rounded-full font-label-md shadow-lg hover:scale-[0.98] transition-transform" data-i18n="nav.login">登录</a>
     </div>
-    <h1 class="text-headline-xl font-headline-xl text-on-surface mb-3" data-i18n="stitch.messages_title">消息中心</h1>
-    <p class="text-body-lg text-on-surface-variant mb-8" data-i18n="stitch.messages_tip">完整私信与通知请在管理中心使用。</p>
-    <a href="/dashboard#messages" class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-container to-[#ff7e95] text-white px-8 py-4 rounded-full font-label-md shadow-lg hover:scale-[0.98] transition-transform" data-i18n="stitch.messages_cta">打开管理中心</a>
-    <a href="/" class="mt-6 text-label-md text-primary-container" data-i18n="stitch.back_home">返回首页</a>
+    <section id="msg-shell" class="hidden min-h-[calc(100vh-7rem)] rounded-[24px] border border-outline-variant/20 bg-surface-container-lowest shadow-[0_8px_32px_rgba(255,90,119,0.06)] overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-[22rem_minmax(0,1fr)] h-full min-h-[calc(100vh-7rem)]">
+        <aside class="border-r border-outline-variant/15 bg-surface-container-low/35 p-3 md:p-4 flex flex-col gap-3 min-h-0">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="text-headline-lg font-headline-lg" data-i18n="stitch.messages_title">消息中心</h2>
+            <button id="msg-refresh" type="button" class="rounded-full px-3 py-1.5 text-label-md bg-surface-container hover:bg-surface-container-high" data-i18n="action.refresh">刷新</button>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="msg-filter rounded-full bg-primary-container text-white px-3 py-1.5 text-label-md" data-filter="all" data-i18n="message.filter_all">全部会话</button>
+            <button type="button" class="msg-filter rounded-full bg-surface-container px-3 py-1.5 text-label-md text-on-surface-variant" data-filter="unread" data-i18n="message.filter_unread">未读</button>
+            <button type="button" class="msg-filter rounded-full bg-surface-container px-3 py-1.5 text-label-md text-on-surface-variant" data-filter="trades" data-i18n="message.filter_trades">交易</button>
+          </div>
+          <div id="msg-conversations" class="flex-1 min-h-0 overflow-y-auto space-y-2"></div>
+        </aside>
+        <section class="min-w-0 min-h-0 flex flex-col">
+          <header class="px-4 md:px-6 py-3 border-b border-outline-variant/15 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <p id="msg-peer-name" class="text-body-lg font-semibold truncate">—</p>
+              <p id="msg-peer-sub" class="text-label-md text-on-surface-variant">—</p>
+            </div>
+          </header>
+          <div id="msg-stream" class="flex-1 min-h-0 overflow-y-auto p-4 md:p-6 space-y-3 bg-surface"></div>
+          <form id="msg-form" class="border-t border-outline-variant/15 p-3 md:p-4 flex gap-2" hidden>
+            <input name="content" required class="flex-1 rounded-full border border-outline-variant/30 bg-surface-container-low px-4 py-2.5 text-body-md focus:ring-2 focus:ring-primary-container/30 outline-none" data-i18n-placeholder="message.placeholder" />
+            <button type="submit" class="rounded-full bg-gradient-to-r from-primary-container to-[#ff7e95] text-white px-5 py-2.5 font-label-md" data-i18n="message.btn_send">发送</button>
+          </form>
+        </section>
+      </div>
+    </section>
   </main>
+  <script>
+    window.MeowShared?.setStitchScreen(window.MeowShared?.STITCH_WEB_SCREENS?.MESSAGES_DESKTOP);
+  </script>
+  <script src="/messages.js"></script>
 </body>
 </html>
