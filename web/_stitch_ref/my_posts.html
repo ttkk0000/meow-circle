@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Management Center - My Posts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#ffdadc",
+                        "secondary-fixed": "#ffddb0",
+                        "on-tertiary-container": "#003528",
+                        "outline": "#8d7072",
+                        "on-tertiary-fixed-variant": "#00513f",
+                        "on-primary-container": "#62001d",
+                        "tertiary": "#006b54",
+                        "primary-fixed-dim": "#ffb2b9",
+                        "on-primary-fixed-variant": "#91002f",
+                        "surface": "#fbf9f4",
+                        "on-tertiary-fixed": "#002118",
+                        "inverse-on-surface": "#f2f1ec",
+                        "background": "#fbf9f4",
+                        "on-primary-fixed": "#400010",
+                        "surface-container": "#f0eee9",
+                        "surface-container-highest": "#e4e2dd",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffba46",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#805600",
+                        "tertiary-container": "#00a986",
+                        "surface-variant": "#e4e2dd",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#694600",
+                        "on-surface-variant": "#594042",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fbf9f4",
+                        "inverse-surface": "#30312e",
+                        "secondary-container": "#fdaf18",
+                        "tertiary-fixed": "#75f9d1",
+                        "tertiary-fixed-dim": "#55dcb6",
+                        "on-background": "#1b1c19",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#281800",
+                        "on-secondary-fixed-variant": "#614000",
+                        "inverse-primary": "#ffb2b9",
+                        "primary": "#b52044",
+                        "surface-dim": "#dbdad5",
+                        "surface-tint": "#b52044",
+                        "surface-container-high": "#eae8e3",
+                        "on-surface": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f5f3ee",
+                        "outline-variant": "#e1bec0",
+                        "primary-container": "#ff5a77"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "16px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "sm": "12px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "card-gap": "12px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-xl": ["28px", { "lineHeight": "36px", "fontWeight": "800" }],
+                        "headline-lg": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* Ambient Tonal Depth helpers */
+        .ambient-shadow { box-shadow: 0 12px 32px rgba(255, 90, 119, 0.08); }
+        .ambient-glow { box-shadow: 0 4px 20px rgba(255, 90, 119, 0.15); }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex">
+<!-- Shared Component: SideNavBar -->
+<nav class="bg-white dark:bg-stone-950 rounded-r-[32px] h-screen w-72 border-r border-[#FF5A77]/5 shadow-[10px_0_30px_rgba(255,90,119,0.03)] fixed left-0 top-0 flex flex-col p-6 gap-2 z-50 font-['Plus_Jakarta_Sans'] font-medium text-sm">
+<!-- Header -->
+<div class="flex flex-col items-start gap-4 mb-8 pl-2">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center ambient-glow">
+<span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<div>
+<h1 class="font-black text-xl text-[#FF5A77]">Admin Center</h1>
+<p class="text-stone-500 text-xs mt-1">Management Dashboard</p>
+</div>
+</div>
+<!-- CTA -->
+<button class="mb-6 w-full py-3 px-4 bg-gradient-to-r from-primary-container to-[#ff7a91] text-white rounded-full font-bold shadow-[0_8px_15px_rgba(255,90,119,0.3)] hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add</span>
+            Create New
+        </button>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-1 overflow-y-auto pb-6">
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96] transition-transform group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">add_circle</span> Publish Post
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96] transition-transform group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">swap_horiz</span> Publish Trade
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96] transition-transform group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">photo_library</span> Media Library
+            </a>
+<!-- ACTIVE TAB: My Posts -->
+<a class="flex items-center gap-3 px-4 py-3 bg-[#FF5A77] text-white rounded-full shadow-[0_8px_15px_rgba(255,90,119,0.3)] scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">article</span> My Posts
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96] transition-transform group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">receipt_long</span> My Trades
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96] transition-transform group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">shopping_bag</span> My Orders
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96] transition-transform group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">person_outline</span> Profile
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96] transition-transform group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">notifications_none</span> Notification Center
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96] transition-transform group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">forum</span> Direct Messages
+            </a>
+</div>
+</nav>
+<!-- Main Layout Wrapper (Offset for Sidebar) -->
+<div class="flex-1 ml-72 flex flex-col min-h-screen">
+<!-- Shared Component: TopNavBar -->
+<header class="sticky top-0 z-40 bg-[#F9F7F2]/80 backdrop-blur-xl dark:bg-stone-900/80 border-b border-[#FF5A77]/10 shadow-[0_4px_20px_rgba(255,90,119,0.05)] flex justify-between items-center w-full px-6 py-3 font-['Plus_Jakarta_Sans'] antialiased text-[#FF5A77] dark:text-[#FF7A91]">
+<!-- Left: Product Name / Search -->
+<div class="flex items-center gap-8 flex-1">
+<div class="text-2xl font-black tracking-tighter text-[#FF5A77]">Kitty Circle Admin</div>
+<div class="relative w-full max-w-md hidden md:block">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">search</span>
+<input class="w-full bg-white/50 border border-stone-200 rounded-full py-2 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-[#FF5A77]/30 transition-all font-body-md text-stone-700" placeholder="Search posts, trades..." type="text"/>
+</div>
+</div>
+<!-- Right: Actions -->
+<div class="flex items-center gap-2">
+<button class="p-2 text-stone-500 dark:text-stone-400 hover:bg-[#FF5A77]/5 hover:scale-[1.02] transition-all rounded-full active:scale-95 duration-200 ease-out flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-stone-500 dark:text-stone-400 hover:bg-[#FF5A77]/5 hover:scale-[1.02] transition-all rounded-full active:scale-95 duration-200 ease-out flex items-center justify-center">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="p-2 text-stone-500 dark:text-stone-400 hover:bg-[#FF5A77]/5 hover:scale-[1.02] transition-all rounded-full active:scale-95 duration-200 ease-out flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="ml-4 pl-4 border-l border-stone-200 flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+<img alt="Admin profile avatar" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="portrait of a young professional woman smiling warmly in soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0aexUwPH9_PMSLg4JYcKDl3aCOwRdWeZ5hPbMIcJYPmsGBPIEEoDaeb1G3rh6QUiFDvZ4BpFdku1W9jhWuEHvN3UdQcvqi2PVuZ5FXzJGCO9ENMeqxo9VH7o46JyjnIxdzu-D6Zj6_x7VSfRP68Fr3ToZKrFegRLXMx8Mm_BZHflfknnienZEd1L5JUvxu9AbretcX08yKT6MMhPjxezK88bmywxHJhsas9AqvZQgs1NDafmYXunSViv51MU2hPEdIV4scoa0"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas Content -->
+<main class="flex-1 p-xl flex flex-col gap-xl max-w-7xl mx-auto w-full">
+<!-- Page Header & Stats -->
+<div class="flex flex-col gap-lg md:flex-row md:items-end justify-between">
+<div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-2">My Posts</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage and review your published content.</p>
+</div>
+<!-- Stats Bento Row -->
+<div class="flex gap-md">
+<div class="bg-surface-container-lowest px-6 py-4 rounded-lg ambient-shadow flex flex-col items-center justify-center min-w-[120px]">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Total Posts</span>
+<span class="font-headline-lg text-headline-lg text-primary-container">124</span>
+</div>
+<div class="bg-surface-container-lowest px-6 py-4 rounded-lg ambient-shadow flex flex-col items-center justify-center min-w-[120px]">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Total Views</span>
+<span class="font-headline-lg text-headline-lg text-secondary-container">84.2k</span>
+</div>
+</div>
+</div>
+<!-- Filters / Tabs -->
+<div class="flex gap-2 pb-2 overflow-x-auto no-scrollbar">
+<button class="px-6 py-2 rounded-full bg-primary-container/10 text-primary-container font-label-md text-label-md whitespace-nowrap active:scale-95 transition-transform">All Posts</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container font-label-md text-label-md whitespace-nowrap transition-colors">Published</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container font-label-md text-label-md whitespace-nowrap transition-colors">Drafts</button>
+</div>
+<!-- Content Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Post Card 1 -->
+<article class="bg-surface-container-lowest rounded-lg p-md flex flex-col gap-md ambient-shadow hover:-translate-y-1 transition-transform duration-300 group cursor-pointer">
+<div class="relative w-full h-48 rounded-DEFAULT overflow-hidden">
+<img alt="Dog on beach" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="joyful golden retriever running on a sunny sandy beach with light blue ocean waves in the background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVCLQ0njUuv5yN0wngScEP2VAgQ_-tYgdB9jj4Wak7OfUtP8DiX8IjVs0kpW7ny1KJm8PRuJ3EQkpBNKZ2plusNcv4WNRL3sI9MD9lid6YvxHJS8vDOo8R6RMp36-SS2FHwEwgL-tXpx37XOtFKXtj3yqQiTGFSRf2_TF2lDw-Ls9Mnij2c__BQrXIMIOAQoeDQtkW51JvXnaUiAcP6JKQmsH_mINk5_OneWXqa2drnAvP7CKa1aMtZdclDc-zap_xfAlMqZxK"/>
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="font-label-md text-xs text-on-surface">Published</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<h3 class="font-headline-lg text-lg leading-tight text-on-surface line-clamp-2">The Ultimate Guide to Beach Days with Your Golden Retriever</h3>
+<p class="font-body-md text-sm text-on-surface-variant line-clamp-2">Essential tips for keeping your furry friend safe and happy under the sun, from hydration to paw protection.</p>
+<div class="mt-auto pt-4 flex items-center justify-between border-t border-surface-variant">
+<!-- Metrics -->
+<div class="flex items-center gap-4 text-stone-400">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">visibility</span> <span class="font-body-md text-sm">1.2k</span></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">favorite</span> <span class="font-body-md text-sm">342</span></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">chat_bubble</span> <span class="font-body-md text-sm">28</span></div>
+</div>
+<!-- Actions -->
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-primary-container/10 hover:text-primary-container flex items-center justify-center transition-colors text-stone-500">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-error/10 hover:text-error flex items-center justify-center transition-colors text-stone-500">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Post Card 2 -->
+<article class="bg-surface-container-lowest rounded-lg p-md flex flex-col gap-md ambient-shadow hover:-translate-y-1 transition-transform duration-300 group cursor-pointer">
+<div class="relative w-full h-48 rounded-DEFAULT overflow-hidden">
+<img alt="Cat sleeping" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="peaceful orange tabby cat sleeping curled up on a soft white knitted blanket bathed in warm afternoon sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTPPGQoI4J4CwT38xGjoi-NnI0_ZwZ0UYLspiVfYsmXFPvC5BcxIYmhij3hJS2LnYiuouNTLfJRd8jjbxAipeef3fagYt-c7_lJ29Tc_YjT369CtMMt2PE3llWNw5zdnuzeBhxWNog3kEShQC3kwDU83nG1RjUmI9fSR3iiiVpeDKCc77wgs5A5Zu98ltsJGxJCwBSlqCqPnSaKUl-G9GD28-CvPrPABQniovoxCDkv446ix7Kl2iInW1w1XeO8I_qvxhPX_Be"/>
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="font-label-md text-xs text-on-surface">Published</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<h3 class="font-headline-lg text-lg leading-tight text-on-surface line-clamp-2">Creating the Perfect Nap Space for Your Feline Friend</h3>
+<p class="font-body-md text-sm text-on-surface-variant line-clamp-2">Cats spend most of their day sleeping. Here is how you can optimize their environment for maximum comfort.</p>
+<div class="mt-auto pt-4 flex items-center justify-between border-t border-surface-variant">
+<div class="flex items-center gap-4 text-stone-400">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">visibility</span> <span class="font-body-md text-sm">890</span></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">favorite</span> <span class="font-body-md text-sm">215</span></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">chat_bubble</span> <span class="font-body-md text-sm">14</span></div>
+</div>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-primary-container/10 hover:text-primary-container flex items-center justify-center transition-colors text-stone-500">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-error/10 hover:text-error flex items-center justify-center transition-colors text-stone-500">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Post Card 3 (Draft State) -->
+<article class="bg-surface-container-lowest rounded-lg p-md flex flex-col gap-md ambient-shadow hover:-translate-y-1 transition-transform duration-300 group cursor-pointer opacity-80">
+<div class="relative w-full h-48 rounded-DEFAULT overflow-hidden bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-stone-300">image</span>
+<div class="absolute top-3 right-3 bg-stone-100/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm border border-stone-200">
+<span class="w-2 h-2 rounded-full bg-stone-400"></span>
+<span class="font-label-md text-xs text-stone-600">Draft</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<h3 class="font-headline-lg text-lg leading-tight text-on-surface line-clamp-2 italic">Top 5 Nutritious Treats for Puppies...</h3>
+<p class="font-body-md text-sm text-on-surface-variant line-clamp-2">Content pending review and image selection...</p>
+<div class="mt-auto pt-4 flex items-center justify-between border-t border-surface-variant">
+<div class="flex items-center gap-4 text-stone-300">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">visibility</span> <span class="font-body-md text-sm">0</span></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">favorite</span> <span class="font-body-md text-sm">0</span></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">chat_bubble</span> <span class="font-body-md text-sm">0</span></div>
+</div>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-primary-container/10 hover:text-primary-container flex items-center justify-center transition-colors text-stone-500">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-error/10 hover:text-error flex items-center justify-center transition-colors text-stone-500">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Load More -->
+<div class="flex justify-center mt-8">
+<button class="px-8 py-3 rounded-full bg-white border border-surface-variant font-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all active:scale-95 shadow-sm">
+                    Load More Posts
+                </button>
+</div>
+</main>
+</div>
+</body></html>

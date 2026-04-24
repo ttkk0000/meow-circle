@@ -90,6 +90,10 @@ func (r *Router) handleSendMessage(w http.ResponseWriter, req *http.Request) {
 		RecipientID: payload.RecipientID,
 		Content:     content,
 	})
-	r.notify(payload.RecipientID, domain.NotificationMessage, "New message", content, user.ID)
+	var opts []NotifyOption
+	if sender, ok := r.store.GetUser(user.ID); ok {
+		opts = append(opts, notifyActor(sender))
+	}
+	r.notify(payload.RecipientID, domain.NotificationMessage, "New message", content, user.ID, opts...)
 	writeCreated(w, msg)
 }

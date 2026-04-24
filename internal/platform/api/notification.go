@@ -9,6 +9,39 @@ import (
 	"kitty-circle/internal/domain"
 )
 
+// NotifyOption augments an in-app notification before persistence.
+type NotifyOption func(*domain.Notification)
+
+func notifyActor(u domain.User) NotifyOption {
+	return func(n *domain.Notification) {
+		if u.ID <= 0 {
+			return
+		}
+		n.ActorID = u.ID
+		n.ActorUsername = u.Username
+		n.ActorNickname = u.Nickname
+		n.ActorAvatarURL = u.AvatarURL
+	}
+}
+
+func notifyImageURL(url string) NotifyOption {
+	return func(n *domain.Notification) {
+		n.ImageURL = strings.TrimSpace(url)
+	}
+}
+
+func (r *Router) firstMediaURL(ids []int64) string {
+	for _, id := range ids {
+		if id <= 0 {
+			continue
+		}
+		if m, ok := r.store.GetMedia(id); ok && strings.TrimSpace(m.URL) != "" {
+			return m.URL
+		}
+	}
+	return ""
+}
+
 func (r *Router) handleNotifications(w http.ResponseWriter, req *http.Request) {
 	user, _ := currentUser(req)
 	switch req.Method {
@@ -63,25 +96,37 @@ func (r *Router) handleNotificationChild(w http.ResponseWriter, req *http.Reques
 
 // notify is a helper wrapper to fan out an in-app notification.
 // It silently ignores errors so callers can use fire-and-forget semantics.
-func (r *Router) notify(userID int64, kind domain.NotificationKind, title, body string, refID int64) {
+func (r *Router) notify(userID int64, kind domain.NotificationKind, title, body string, refID int64, opts ...NotifyOption) {
 	if userID <= 0 {
 		return
 	}
-	r.store.CreateNotification(domain.Notification{
+	n := domain.Notification{
 		UserID: userID,
 		Kind:   kind,
 		Title:  title,
 		Body:   body,
 		RefID:  refID,
-	})
+	}
+	for _, o := range opts {
+		o(&n)
+	}
+	r.store.CreateNotification(n)
 }
 
 // notifyOrderStatus delivers a templated order update to both buyer and seller.
 func (r *Router) notifyOrderStatus(order domain.Order, action string) {
 	title := fmt.Sprintf("Order #%d %s", order.ID, action)
 	body := fmt.Sprintf("%s · %.2f %s", order.ListingTitle, float64(order.AmountCents)/100, order.Currency)
-	r.notify(order.BuyerID, domain.NotificationOrder, title, body, order.ID)
+	img := ""
+	if listing, ok := r.store.GetListing(order.ListingID); ok {
+		img = r.firstMediaURL(listing.MediaIDs)
+	}
+	var opts []NotifyOption
+	if img != "" {
+		opts = append(opts, notifyImageURL(img))
+	}
+	r.notify(order.BuyerID, domain.NotificationOrder, title, body, order.ID, opts...)
 	if order.SellerID != order.BuyerID {
-		r.notify(order.SellerID, domain.NotificationOrder, title, body, order.ID)
+		r.notify(order.SellerID, domain.NotificationOrder, title, body, order.ID, opts...)
 	}
 }

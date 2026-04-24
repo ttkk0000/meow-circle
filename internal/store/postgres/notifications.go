@@ -6,12 +6,16 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-const notifCols = "id, user_id, kind, title, body, ref_id, read, created_at"
+const notifCols = "id, user_id, kind, title, body, ref_id, actor_id, actor_username, actor_nickname, actor_avatar_url, image_url, read, created_at"
 
 func scanNotif(row pgx.Row) (domain.Notification, error) {
 	var n domain.Notification
 	var kind string
-	err := row.Scan(&n.ID, &n.UserID, &kind, &n.Title, &n.Body, &n.RefID, &n.Read, &n.CreatedAt)
+	err := row.Scan(
+		&n.ID, &n.UserID, &kind, &n.Title, &n.Body, &n.RefID,
+		&n.ActorID, &n.ActorUsername, &n.ActorNickname, &n.ActorAvatarURL, &n.ImageURL,
+		&n.Read, &n.CreatedAt,
+	)
 	if err != nil {
 		return domain.Notification{}, err
 	}
@@ -23,10 +27,12 @@ func (s *Store) CreateNotification(n domain.Notification) domain.Notification {
 	ctx, cancel := bg()
 	defer cancel()
 	row := s.pool.QueryRow(ctx, `
-		INSERT INTO notifications (user_id, kind, title, body, ref_id, read)
-		VALUES ($1, $2, $3, $4, $5, FALSE)
+		INSERT INTO notifications (user_id, kind, title, body, ref_id, actor_id, actor_username, actor_nickname, actor_avatar_url, image_url, read)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, FALSE)
 		RETURNING `+notifCols,
-		n.UserID, string(n.Kind), n.Title, n.Body, n.RefID)
+		n.UserID, string(n.Kind), n.Title, n.Body, n.RefID,
+		n.ActorID, n.ActorUsername, n.ActorNickname, n.ActorAvatarURL, n.ImageURL,
+	)
 	got, err := scanNotif(row)
 	if err != nil {
 		logErr("CreateNotification", err)

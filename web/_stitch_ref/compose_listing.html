@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Management Center - Publish Trade</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed": "#ffdadc",
+                        "secondary-fixed": "#ffddb0",
+                        "on-tertiary-container": "#003528",
+                        "outline": "#8d7072",
+                        "on-tertiary-fixed-variant": "#00513f",
+                        "on-primary-container": "#62001d",
+                        "tertiary": "#006b54",
+                        "primary-fixed-dim": "#ffb2b9",
+                        "on-primary-fixed-variant": "#91002f",
+                        "surface": "#fbf9f4",
+                        "on-tertiary-fixed": "#002118",
+                        "inverse-on-surface": "#f2f1ec",
+                        "background": "#fbf9f4",
+                        "on-primary-fixed": "#400010",
+                        "surface-container": "#f0eee9",
+                        "surface-container-highest": "#e4e2dd",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffba46",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#805600",
+                        "tertiary-container": "#00a986",
+                        "surface-variant": "#e4e2dd",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#694600",
+                        "on-surface-variant": "#594042",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fbf9f4",
+                        "inverse-surface": "#30312e",
+                        "secondary-container": "#fdaf18",
+                        "tertiary-fixed": "#75f9d1",
+                        "tertiary-fixed-dim": "#55dcb6",
+                        "on-background": "#1b1c19",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#281800",
+                        "on-secondary-fixed-variant": "#614000",
+                        "inverse-primary": "#ffb2b9",
+                        "primary": "#b52044",
+                        "surface-dim": "#dbdad5",
+                        "surface-tint": "#b52044",
+                        "surface-container-high": "#eae8e3",
+                        "on-surface": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f5f3ee",
+                        "outline-variant": "#e1bec0",
+                        "primary-container": "#ff5a77"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "container-padding": "16px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "sm": "12px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "card-gap": "12px",
+                        "base": "4px"
+                    },
+                    fontFamily: {
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+                        "headline-xl": ["28px", { lineHeight: "36px", fontWeight: "800" }],
+                        "headline-lg": ["22px", { lineHeight: "28px", fontWeight: "700" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #e4e2dd; border-radius: 20px; }
+    </style>
+</head>
+<body class="bg-background text-on-background flex h-screen overflow-hidden antialiased">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-white dark:bg-stone-950 font-['Plus_Jakarta_Sans'] font-medium text-sm rounded-r-[32px] h-screen w-72 border-r border-[#FF5A77]/5 shadow-[10px_0_30px_rgba(255,90,119,0.03)] hidden md:flex flex-col p-6 gap-2 z-40 relative">
+<div class="mb-8 px-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-[#FF5A77]">
+<span class="material-symbols-outlined fill">pets</span>
+</div>
+<div>
+<h1 class="font-black text-xl text-[#FF5A77]">Admin Center</h1>
+<p class="text-xs text-stone-500">Management Dashboard</p>
+</div>
+</div>
+<button class="w-full mb-6 bg-[#FF5A77] text-white rounded-full py-3 flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(255,90,119,0.3)] hover:scale-[1.02] active:scale-[0.96] transition-all duration-300">
+<span class="material-symbols-outlined text-lg">add</span>
+<span>Create New</span>
+</button>
+<div class="flex flex-col gap-1 overflow-y-auto flex-1 pb-4">
+<!-- Item 0 -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96]" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Publish Post</span>
+</a>
+<!-- Item 1 (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-[#FF5A77] text-white rounded-full shadow-[0_8px_15px_rgba(255,90,119,0.3)] scale-[0.98] active:scale-[0.96] transition-transform" href="#">
+<span class="material-symbols-outlined fill">swap_horiz</span>
+<span>Publish Trade</span>
+</a>
+<!-- Item 2 -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96]" href="#">
+<span class="material-symbols-outlined">photo_library</span>
+<span>Media Library</span>
+</a>
+<!-- Item 3 -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96]" href="#">
+<span class="material-symbols-outlined">article</span>
+<span>My Posts</span>
+</a>
+<!-- Item 4 -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96]" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>My Trades</span>
+</a>
+<!-- Item 5 -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96]" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span>My Orders</span>
+</a>
+<!-- Item 6 -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96]" href="#">
+<span class="material-symbols-outlined">person_outline</span>
+<span>Profile</span>
+</a>
+<!-- Item 7 -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96]" href="#">
+<span class="material-symbols-outlined">notifications_none</span>
+<span>Notification Center</span>
+</a>
+<!-- Item 8 -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 rounded-full transition-all duration-300 active:scale-[0.96]" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span>Direct Messages</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-surface relative">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-[#F9F7F2]/80 backdrop-blur-xl dark:bg-stone-900/80 font-['Plus_Jakarta_Sans'] antialiased docked full-width top-0 z-50 border-b border-[#FF5A77]/10 shadow-[0_4px_20px_rgba(255,90,119,0.05)] flex justify-between items-center w-full px-6 py-3 sticky">
+<div class="flex items-center gap-4">
+<div class="md:hidden">
+<span class="text-2xl font-black tracking-tighter text-[#FF5A77]">Kitty Circle Admin</span>
+</div>
+<div class="hidden md:flex items-center bg-white rounded-full px-4 py-2 shadow-sm border border-surface-variant">
+<span class="material-symbols-outlined text-stone-400 mr-2 text-sm">search</span>
+<input class="bg-transparent border-none outline-none text-sm w-48 text-stone-600 placeholder-stone-400 focus:ring-0" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-stone-500 dark:text-stone-400 hover:bg-[#FF5A77]/5 hover:scale-[1.02] transition-all active:scale-95 duration-200 ease-out w-10 h-10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-stone-500 dark:text-stone-400 hover:bg-[#FF5A77]/5 hover:scale-[1.02] transition-all active:scale-95 duration-200 ease-out w-10 h-10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="text-stone-500 dark:text-stone-400 hover:bg-[#FF5A77]/5 hover:scale-[1.02] transition-all active:scale-95 duration-200 ease-out w-10 h-10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-white shadow-sm overflow-hidden flex-shrink-0 cursor-pointer ml-2">
+<img alt="Admin profile avatar" class="w-full h-full object-cover" data-alt="Default admin avatar with pink background and white letter A" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqmLfinwPIAjqIf5gYHG9qSbcIOipZZfPqH3LQ97mN1ywQ7VwKuJu83PvTJj0zgeXRUBj1czH-c3dWf_fd4SPRw9nwv-gmyAyoV3fp_EV-2da-478igtTkEkcoywYCEg3M8Q8NS_vlFGytVjNd6N2CHz7wyBwYdXv45qahv922VOBx_ycHtyfACSEsbA4rUB0amxBTNRtprJGY_CCm44elbLA-vpgZIugFmlpnYjXHTXGoHmba_IE2nS66NbQNqtdF-bOzTw3R"/>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<main class="flex-1 p-6 md:p-xl max-w-7xl mx-auto w-full">
+<div class="mb-8">
+<h2 class="font-headline-xl text-headline-xl text-on-background tracking-tight">Publish Trade</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Create a new listing for the marketplace.</p>
+</div>
+<!-- Bento Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Left Column: Media -->
+<div class="lg:col-span-5 flex flex-col gap-lg">
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_30px_rgba(255,90,119,0.04)] h-full flex flex-col relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-container to-secondary-fixed"></div>
+<h3 class="font-headline-lg text-headline-lg text-on-background mb-4">Media</h3>
+<!-- Primary Image Upload -->
+<div class="flex-1 min-h-[300px] bg-surface-container/50 border-2 border-dashed border-outline-variant rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-primary-container/5 hover:border-primary-container transition-colors group relative overflow-hidden">
+<div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center text-primary-container mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">add_photo_alternate</span>
+</div>
+<p class="font-label-md text-label-md text-on-background">Click or drag to upload</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-xs mt-1">High-res JPEG or PNG up to 10MB</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Details -->
+<div class="lg:col-span-7 flex flex-col gap-lg">
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_30px_rgba(255,90,119,0.04)] relative overflow-hidden">
+<div class="space-y-6">
+<!-- Title -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2 pl-1">Listing Title</label>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT px-4 py-3 font-body-lg text-body-lg text-on-background placeholder-on-surface-variant/50 focus:ring-2 focus:ring-primary-container focus:bg-white transition-all shadow-inner" placeholder="e.g., Premium Salmon Cat Food 2kg" type="text"/>
+</div>
+<!-- Category -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2 pl-1">Category</label>
+<div class="flex flex-wrap gap-3">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="category" type="radio"/>
+<div class="px-5 py-2.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant peer-checked:bg-primary-container/10 peer-checked:text-primary-container peer-checked:ring-2 peer-checked:ring-primary-container/30 transition-all hover:bg-surface-container-high">
+                                            Food
+                                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="category" type="radio"/>
+<div class="px-5 py-2.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant peer-checked:bg-primary-container/10 peer-checked:text-primary-container peer-checked:ring-2 peer-checked:ring-primary-container/30 transition-all hover:bg-surface-container-high">
+                                            Toy
+                                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="category" type="radio"/>
+<div class="px-5 py-2.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant peer-checked:bg-primary-container/10 peer-checked:text-primary-container peer-checked:ring-2 peer-checked:ring-primary-container/30 transition-all hover:bg-surface-container-high">
+                                            Service
+                                        </div>
+</label>
+</div>
+</div>
+<!-- Price & Currency -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2 pl-1">Price</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="text-on-surface-variant font-body-lg">¥</span>
+</div>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT pl-8 pr-4 py-3 font-body-lg text-body-lg text-on-background placeholder-on-surface-variant/50 focus:ring-2 focus:ring-primary-container focus:bg-white transition-all shadow-inner" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2 pl-1">Currency</label>
+<select class="w-full bg-surface-container-low border-none rounded-DEFAULT px-4 py-3 font-body-lg text-body-lg text-on-background focus:ring-2 focus:ring-primary-container focus:bg-white transition-all shadow-inner appearance-none pr-10">
+<option>CNY (¥)</option>
+<option>USD ($)</option>
+<option>HKD (HK$)</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none mt-7">
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Description -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2 pl-1">Description</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-DEFAULT px-4 py-3 font-body-md text-body-md text-on-background placeholder-on-surface-variant/50 focus:ring-2 focus:ring-primary-container focus:bg-white transition-all shadow-inner resize-none" placeholder="Detail the condition, ingredients, or service inclusions..." rows="5"></textarea>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex justify-end gap-4 mt-2">
+<button class="px-6 py-3 rounded-full font-label-md text-label-md text-on-surface-variant bg-surface-container hover:bg-surface-container-high transition-colors active:scale-95">
+                            Save Draft
+                        </button>
+<button class="px-8 py-3 rounded-full font-label-md text-label-md text-white bg-primary-container hover:bg-[#ff4264] shadow-[0_8px_20px_rgba(255,90,119,0.25)] hover:shadow-[0_10px_25px_rgba(255,90,119,0.35)] transition-all active:scale-95 flex items-center gap-2">
+<span>Publish Trade</span>
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

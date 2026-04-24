@@ -54,8 +54,11 @@ down: ## docker compose down
 	docker compose down
 
 .PHONY: migrate
-migrate: ## Apply migrations/001_init.sql to $$DATABASE_URL
+migrate: ## Apply migrations/*.sql (001–004) to $$DATABASE_URL
 	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/001_init.sql
+	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/002_social.sql
+	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/003_user_phone.sql
+	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/004_notifications_actor_image.sql
 
 .PHONY: docker
 docker: ## Build the production container image

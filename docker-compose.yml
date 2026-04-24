@@ -11,6 +11,9 @@ services:
     volumes:
       - meow_pg:/var/lib/postgresql/data
       - ./migrations/001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+      - ./migrations/002_social.sql:/docker-entrypoint-initdb.d/002_social.sql:ro
+      - ./migrations/003_user_phone.sql:/docker-entrypoint-initdb.d/003_user_phone.sql:ro
+      - ./migrations/004_notifications_actor_image.sql:/docker-entrypoint-initdb.d/004_notifications_actor_image.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U meow -d meow"]
       interval: 5s

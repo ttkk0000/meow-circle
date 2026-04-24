@@ -5,7 +5,7 @@
 //
 // Requirements:
 //   - DATABASE_URL pointing at a fresh Postgres (the test truncates tables).
-//   - migrations/001_init.sql (+ 002_social.sql, 003_user_phone.sql) applied.
+//   - migrations/001_init.sql (+ 002_social.sql, 003_user_phone.sql, 004_notifications_actor_image.sql) applied.
 //   - REDIS_URL is optional; when set, the test also exercises the Redis
 //     read-through cache decorator end-to-end.
 //

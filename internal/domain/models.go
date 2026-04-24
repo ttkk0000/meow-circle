@@ -178,14 +178,21 @@ const (
 )
 
 type Notification struct {
-	ID        int64            `json:"id"`
-	UserID    int64            `json:"user_id"`
-	Kind      NotificationKind `json:"kind"`
-	Title     string           `json:"title"`
-	Body      string           `json:"body,omitempty"`
-	RefID     int64            `json:"ref_id,omitempty"`
-	Read      bool             `json:"read"`
-	CreatedAt time.Time        `json:"created_at"`
+	ID     int64            `json:"id"`
+	UserID int64            `json:"user_id"`
+	Kind   NotificationKind `json:"kind"`
+	Title  string           `json:"title"`
+	Body   string           `json:"body,omitempty"`
+	RefID  int64            `json:"ref_id,omitempty"`
+	// Actor is the user who triggered the notification (commenter, DM sender, etc.).
+	ActorID        int64  `json:"actor_id,omitempty"`
+	ActorUsername  string `json:"actor_username,omitempty"`
+	ActorNickname  string `json:"actor_nickname,omitempty"`
+	ActorAvatarURL string `json:"actor_avatar_url,omitempty"`
+	// ImageURL is a preview (e.g. first post/listing media) for card thumbnails.
+	ImageURL  string    `json:"image_url,omitempty"`
+	Read      bool      `json:"read"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 // ===== Messages =====

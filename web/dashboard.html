@@ -1,180 +1,585 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="dashboard.title">我的管理中心</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="/tw-stitch.js"></script>
+  <link rel="stylesheet" href="/stitch-toast.css" />
   <link rel="stylesheet" href="/theme.css" />
-  <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/stitch-theme-bridge.css" />
+  <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/dashboard.css" />
   <script src="/shared.js"></script>
+  <style>
+    body { background: #fbf9f4; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    #settings-bar select {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      border: 1px solid #e4e2dd;
+      background: #fff;
+      color: #594042;
+    }
+  </style>
 </head>
-<body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a href="/" class="meow-logo">
-        <span class="logo-mark" aria-hidden="true">🐾</span>
-        <span class="logo-wordmark" data-i18n="dashboard.title">我的管理中心</span>
-      </a>
-      <nav class="nav-links">
-        <div id="settings-bar"></div>
-        <a href="/" data-i18n="nav.home">返回前台</a>
-        <button id="notif-btn" class="icon-btn" type="button" title="Notifications">🔔<span id="notif-count" class="badge-count" hidden>0</span></button>
-        <span id="user-hint"></span>
-        <button id="logout-btn" class="icon-btn" type="button" data-i18n="nav.logout">退出</button>
-      </nav>
-    </div>
-  </header>
+<body class="font-body-md text-on-surface bg-surface min-h-screen flex flex-col relative overflow-x-hidden">
+  <div class="pointer-events-none fixed top-[-20%] right-[-10%] h-[45vw] w-[45vw] max-w-2xl rounded-full bg-primary-container/15 blur-[100px]" aria-hidden="true"></div>
+  <div class="pointer-events-none fixed bottom-[-15%] left-[-10%] h-[40vw] w-[40vw] max-w-xl rounded-full bg-secondary-container/15 blur-[90px]" aria-hidden="true"></div>
 
-  <section id="not-login" class="card" hidden>
-    <h2 data-i18n="dashboard.not_login">请先登录</h2>
-    <p data-i18n="dashboard.not_login_tip">管理中心仅登录用户可见。</p>
-    <a href="/login?return_to=%2Fdashboard" class="btn-primary" data-i18n="dashboard.go_home">返回首页登录</a>
+  <section id="not-login" class="mx-auto mt-10 w-full max-w-md rounded-2xl border border-white/60 bg-surface-container-lowest/90 p-8 text-center shadow-[0_16px_48px_rgba(255,90,119,0.1)] backdrop-blur-xl" hidden>
+    <span class="material-symbols-outlined mb-4 text-5xl text-primary-container/80">lock_person</span>
+    <h2 class="mb-2 font-headline-lg text-headline-lg text-on-surface" data-i18n="dashboard.not_login">请先登录</h2>
+    <p class="mb-6 text-body-md text-on-surface-variant" data-i18n="dashboard.not_login_tip">管理中心仅登录用户可见。</p>
+    <a href="/login?return_to=%2Fdashboard" class="btn-primary inline-flex items-center justify-center rounded-full px-8 py-3 font-label-md" data-i18n="dashboard.go_home">返回首页登录</a>
   </section>
 
-  <main id="dashboard" class="container" hidden>
-    <nav class="sidebar">
-      <button class="nav-btn active" data-section="compose-post" data-i18n="dashboard.nav_compose_post">发布帖子</button>
-      <button class="nav-btn" data-section="compose-listing" data-i18n="dashboard.nav_compose_listing">发布交易</button>
-      <button class="nav-btn" data-section="media" data-i18n="dashboard.nav_media">媒体库</button>
-      <button class="nav-btn" data-section="my-posts" data-i18n="dashboard.nav_my_posts">我的帖子</button>
-      <button class="nav-btn" data-section="my-listings" data-i18n="dashboard.nav_my_listings">我的交易</button>
-      <button class="nav-btn" data-section="my-orders" data-i18n="dashboard.nav_my_orders">我的订单</button>
-      <button class="nav-btn" data-section="profile" data-i18n="dashboard.nav_profile">个人资料</button>
-      <button class="nav-btn" data-section="notifications" data-i18n="dashboard.nav_notifications">通知中心</button>
-      <button class="nav-btn" data-section="messages" data-i18n="dashboard.nav_messages">私信</button>
-    </nav>
-
-    <div class="panel-area">
-      <section class="card panel" data-panel="compose-post">
-        <h2 data-i18n="dashboard.nav_compose_post">发布帖子</h2>
-        <form id="post-form" class="form-grid">
-          <input type="text" name="title" required data-i18n-placeholder="form.title" />
-          <textarea name="content" rows="5" required data-i18n-placeholder="form.content"></textarea>
-          <select name="category">
-            <option value="daily_share" data-i18n="form.category_daily">日常分享</option>
-            <option value="help" data-i18n="form.category_help">求助问答</option>
-            <option value="activity" data-i18n="form.category_activity">线下活动</option>
-            <option value="trade" data-i18n="form.category_trade">交易信息</option>
-          </select>
-          <input type="text" name="tags" data-i18n-placeholder="form.tags" />
-          <input type="text" name="media_ids" data-i18n-placeholder="media.attach_hint" />
-          <button type="submit" data-i18n="form.btn_publish_post">发布帖子</button>
-        </form>
-      </section>
-
-      <section class="card panel" data-panel="compose-listing" hidden>
-        <h2 data-i18n="dashboard.nav_compose_listing">发布交易</h2>
-        <form id="listing-form" class="form-grid">
-          <input type="text" name="title" required data-i18n-placeholder="form.listing_title" />
-          <textarea name="description" rows="4" data-i18n-placeholder="form.listing_description"></textarea>
-          <select name="type">
-            <option value="product" data-i18n="form.type_product">商品</option>
-            <option value="service" data-i18n="form.type_service">服务</option>
-            <option value="adopt" data-i18n="form.type_adopt">领养</option>
-          </select>
-          <input type="number" name="price_cents" data-i18n-placeholder="form.price" />
-          <input type="text" name="currency" value="CNY" data-i18n-placeholder="form.currency" />
-          <input type="text" name="media_ids" data-i18n-placeholder="media.attach_hint" />
-          <button type="submit" data-i18n="form.btn_publish_listing">发布交易</button>
-        </form>
-      </section>
-
-      <section class="card panel" data-panel="media" hidden>
-        <div class="section-head">
-          <h2 data-i18n="dashboard.nav_media">媒体库</h2>
-          <button id="refresh-media" type="button" data-i18n="action.refresh">刷新</button>
-        </div>
-        <form id="media-form" class="form-grid">
-          <label data-i18n="media.upload_image">上传图片</label>
-          <input type="file" id="media-file" accept="image/*,video/mp4,video/webm,video/quicktime" required />
-          <button type="submit" data-i18n="media.btn_upload">上传</button>
-        </form>
-        <div id="media-list" class="list"></div>
-      </section>
-
-      <section class="card panel" data-panel="my-orders" hidden>
-        <div class="section-head">
-          <h2 data-i18n="dashboard.nav_my_orders">我的订单</h2>
+  <div id="dashboard" class="stitch-shell relative z-10 flex w-full min-h-0 flex-1 flex-col md:grid md:min-h-screen md:grid-cols-[18rem_minmax(0,1fr)]" hidden>
+    <aside class="sidebar stitch-sidenav z-30 flex w-full max-w-full flex-row gap-1 overflow-x-auto border-b border-[#FF5A77]/10 bg-white p-2 shadow-sm md:sticky md:top-0 md:h-screen md:max-h-screen md:min-h-0 md:w-full md:max-w-none md:flex-col md:overflow-y-auto md:overflow-x-visible md:rounded-r-[32px] md:border-b-0 md:border-r md:p-6 md:shadow-[10px_0_30px_rgba(255,90,119,0.03)]" aria-label="Admin">
+      <div class="mb-6 hidden min-w-0 flex-1 flex-col gap-1 px-1 md:flex">
+        <div class="flex items-center gap-3 px-1">
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary-container shadow-[0_4px_20px_rgba(255,90,119,0.15)]" aria-hidden="true">
+            <span class="material-symbols-outlined text-2xl text-white" style="font-variation-settings: 'FILL' 1">pets</span>
+          </div>
           <div>
-            <button id="orders-tab-buyer" type="button" class="tab active" data-i18n="order.tab_buyer">我买的</button>
-            <button id="orders-tab-seller" type="button" class="tab" data-i18n="order.tab_seller">我卖的</button>
-            <button id="refresh-my-orders" type="button" data-i18n="action.refresh">刷新</button>
+            <p class="m-0 text-xl font-black text-[#FF5A77]" data-i18n="dashboard.stitch_admin_title">Admin Center</p>
+            <p class="m-0 text-xs font-medium text-stone-500" data-i18n="dashboard.stitch_admin_sub">Management Dashboard</p>
           </div>
         </div>
-        <div id="my-orders" class="list"></div>
-      </section>
+      </div>
+      <button type="button" id="sidebar-create-new" class="mb-3 hidden w-full shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary-container to-primary py-3 font-label-md text-white shadow-[0_8px_15px_rgba(255,90,119,0.3)] transition-transform hover:scale-[1.01] active:scale-[0.98] md:flex">
+        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1">add</span>
+        <span data-i18n="dashboard.stitch_create_new">Create New</span>
+      </button>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:w-full active" data-section="compose-post">
+        <span class="material-symbols-outlined text-[20px]">add_circle</span>
+        <span data-i18n="dashboard.nav_compose_post">发布帖子</span>
+      </button>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:w-full" data-section="compose-listing">
+        <span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+        <span data-i18n="dashboard.nav_compose_listing">发布交易</span>
+      </button>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:w-full" data-section="media">
+        <span class="material-symbols-outlined text-[20px]">photo_library</span>
+        <span data-i18n="dashboard.nav_media">媒体库</span>
+      </button>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:w-full" data-section="my-posts">
+        <span class="material-symbols-outlined text-[20px]">article</span>
+        <span data-i18n="dashboard.nav_my_posts">我的帖子</span>
+      </button>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:w-full" data-section="my-listings">
+        <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+        <span data-i18n="dashboard.nav_stitch_trades">My Trades</span>
+      </button>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:w-full" data-section="my-orders">
+        <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+        <span data-i18n="dashboard.nav_my_orders">我的订单</span>
+      </button>
+      <div class="mx-4 my-2 hidden h-px bg-surface-variant md:block" aria-hidden="true"></div>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:mt-0 md:w-full" data-section="profile">
+        <span class="material-symbols-outlined text-[20px]">person_outline</span>
+        <span data-i18n="dashboard.nav_stitch_profile">Profile</span>
+      </button>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:w-full" data-section="notifications">
+        <span class="material-symbols-outlined text-[20px]">notifications_none</span>
+        <span data-i18n="dashboard.nav_stitch_notif">Notification Center</span>
+      </button>
+      <button type="button" class="nav-btn stitch-nav-btn flex w-auto shrink-0 items-center gap-3 rounded-full py-2.5 pl-3 pr-4 text-left font-label-md text-stone-600 transition-colors hover:bg-[#FF5A77]/10 hover:text-[#FF5A77] md:w-full" data-section="messages">
+        <span class="material-symbols-outlined text-[20px]">forum</span>
+        <span data-i18n="dashboard.nav_stitch_dm">Direct Messages</span>
+      </button>
+      <a href="/" class="mt-2 hidden items-center justify-center gap-2 rounded-full border border-dashed border-stone-300 py-2.5 text-center text-xs font-medium text-stone-500 transition-colors hover:border-[#FF5A77]/50 hover:text-[#FF5A77] md:mt-auto md:flex" data-i18n="nav.home">返回前台</a>
+    </aside>
 
-      <section class="card panel" data-panel="my-posts" hidden>
-        <div class="section-head">
-          <h2 data-i18n="dashboard.nav_my_posts">我的帖子</h2>
-          <button id="refresh-my-posts" type="button" data-i18n="action.refresh">刷新</button>
+    <div class="stitch-maincol flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden">
+      <header class="stitch-inbar sticky top-0 z-20 flex w-full items-center justify-between border-b border-[#FF5A77]/10 bg-[#F9F7F2]/80 px-4 py-3 backdrop-blur-xl md:px-6">
+        <div class="flex min-w-0 flex-1 items-center gap-4">
+          <span class="min-w-0 font-display text-xl font-black tracking-tighter text-[#FF5A77] md:hidden" data-i18n="dashboard.header_brand">Kitty Circle Admin</span>
+          <div class="relative hidden max-w-md flex-1 md:block">
+            <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-stone-400">search</span>
+            <input id="admin-global-search" type="search" class="w-full rounded-full border border-stone-200/90 bg-white/50 py-2.5 pl-10 pr-4 text-sm text-stone-700 shadow-inner focus:outline-none focus:ring-2 focus:ring-primary-container/30" placeholder="Search posts, trades…" autocomplete="off" />
+          </div>
         </div>
-        <div id="my-posts" class="list"></div>
+        <div class="flex items-center gap-1 sm:gap-2">
+          <button id="notif-btn" class="icon-btn relative flex h-10 w-10 items-center justify-center rounded-full text-stone-500 transition-all hover:scale-[1.02] hover:bg-[#FF5A77]/5 hover:text-[#FF5A77] active:scale-95" type="button" aria-label="Notifications">
+            <span class="material-symbols-outlined text-[22px]">notifications</span>
+            <span id="notif-unread-dot" class="pointer-events-none absolute left-2 top-2 z-10 h-2 w-2 rounded-full border-2 border-[#F9F7F2] bg-error shadow-sm" hidden aria-hidden="true"></span>
+            <span id="notif-count" class="badge-count absolute -right-0.5 -top-0.5 z-[11] min-w-[1.125rem] rounded-full bg-primary-container px-1 text-center text-[10px] font-bold leading-tight text-white" hidden>0</span>
+          </button>
+          <button type="button" id="inbar-mail" class="flex h-10 w-10 items-center justify-center rounded-full text-stone-500 transition-all hover:scale-[1.02] hover:bg-[#FF5A77]/5 hover:text-[#FF5A77] active:scale-95" data-i18n-title="nav.messages" title="Messages">
+            <span class="material-symbols-outlined text-[22px]">mail</span>
+          </button>
+          <button type="button" id="inbar-settings" class="flex h-10 w-10 items-center justify-center rounded-full text-stone-500 transition-all hover:scale-[1.02] hover:bg-[#FF5A77]/5 hover:text-[#FF5A77] active:scale-95" data-i18n-title="nav.settings" title="Settings">
+            <span class="material-symbols-outlined text-[22px]">settings</span>
+          </button>
+          <div id="settings-bar" class="hidden sm:block"></div>
+          <span id="user-hint" class="hidden max-w-[100px] truncate text-label-md text-stone-500 sm:inline sm:max-w-[160px]"></span>
+          <div class="ml-1 h-9 w-9 shrink-0 overflow-hidden rounded-full border-2 border-white bg-surface-variant shadow-sm">
+            <img id="header-avatar" class="h-full w-full object-cover" src="" alt="" />
+          </div>
+          <button id="logout-btn" class="icon-btn flex h-10 items-center justify-center rounded-full px-2 text-stone-500 hover:bg-[#FF5A77]/5 hover:text-[#FF5A77] md:px-3" type="button" title="Logout">
+            <span class="material-symbols-outlined text-[20px]">logout</span>
+            <span class="hidden pl-1 md:inline" data-i18n="nav.logout">退出</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="stitch-canvas min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8">
+        <div class="panel-area stitch-workspace mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-8">
+      <section class="panel stitch-panel w-full min-w-0 border-0 bg-transparent p-0 shadow-none" data-panel="compose-post">
+        <div class="mx-auto w-full max-w-5xl">
+        <div class="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <h2 class="m-0 font-headline-xl text-on-background" data-i18n="dashboard.stitch_create_post">Create New Post</h2>
+            <p class="mt-1 font-body-md text-on-surface-variant" data-i18n="dashboard.compose_post_sub">与喵友分享内容（布局与 Stitch 设计稿一致）</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="post-edit-badge" class="hidden items-center rounded-full bg-secondary-container/25 px-3 py-1.5 text-xs font-semibold text-on-secondary-container" data-i18n="dashboard.editing_badge">编辑中</span>
+            <button type="button" id="post-cancel-edit" class="stitch-btn-ghost hidden rounded-full px-4 py-2 font-label-md" data-i18n="dashboard.cancel_edit">取消编辑</button>
+            <button type="button" id="post-draft-btn" class="rounded-full bg-surface-container px-5 py-2 font-label-md text-on-surface transition-colors hover:bg-surface-variant" data-i18n="form.save_draft">存草稿</button>
+            <button type="button" id="post-publish-btn" class="rounded-full bg-gradient-to-r from-primary-container to-primary px-6 py-2 font-label-md text-white shadow-[0_4px_12px_rgba(255,90,119,0.2)] transition-transform hover:scale-[0.98] active:scale-[0.96]" data-i18n="form.btn_publish">Publish</button>
+          </div>
+        </div>
+        <form id="post-form" class="stitch-form">
+          <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+            <div class="space-y-6 lg:col-span-2">
+              <div class="rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-[0_4px_20px_rgba(255,90,119,0.03)] md:p-5">
+                <input type="text" name="title" required class="w-full border-none bg-transparent text-headline-lg font-bold text-on-background placeholder:text-surface-dim focus:ring-0" data-i18n-placeholder="form.stitch_title_ph" placeholder="Enter post title here..." />
+              </div>
+              <div class="space-y-4 rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-[0_4px_20px_rgba(255,90,119,0.03)] md:p-5">
+                <h3 class="m-0 text-label-md font-semibold uppercase tracking-wider text-on-surface-variant" data-i18n="form.media_block">Media Files</h3>
+                <div id="post-dropzone" class="stitch-dropzone flex min-h-[160px] cursor-pointer flex-col items-center justify-center gap-1 rounded-2xl border-2 border-dashed border-outline-variant bg-surface-container-low p-6 text-center transition-colors hover:bg-primary-fixed/30">
+                  <div class="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-primary-container/10">
+                    <span class="material-symbols-outlined text-3xl text-primary-container">cloud_upload</span>
+                  </div>
+                  <p class="m-0 font-body-lg text-on-background" data-i18n="form.drop_hint_line1">Drag and drop images or video here</p>
+                  <p class="m-0 text-sm text-on-surface-variant" data-i18n="form.drop_formats">Supports JPG, PNG, MP4 (Max 50MB)</p>
+                  <button type="button" id="post-browse-btn" class="mt-3 rounded-full bg-surface-container px-5 py-2 font-label-md text-primary-container transition-colors hover:bg-primary-fixed" data-i18n="form.browse_files">Browse Files</button>
+                  <input type="file" id="post-file-input" class="hidden" accept="image/*,video/mp4,video/webm,video/quicktime" multiple />
+                </div>
+                <div id="post-media-preview" class="flex flex-wrap gap-2" aria-live="polite"></div>
+                <input type="hidden" name="media_ids" id="post-media-ids" value="" />
+              </div>
+              <div class="flex h-[400px] min-h-0 flex-col overflow-hidden rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest shadow-[0_4px_20px_rgba(255,90,119,0.03)]">
+                <div class="stitch-format-bar flex flex-wrap items-center gap-1 border-b border-surface-variant bg-surface-container-low p-2">
+                  <button type="button" class="stitch-ico-btn" data-cmd="bold" data-i18n-title="form.format_title_bold" title="Bold"><span class="material-symbols-outlined text-sm">format_bold</span></button>
+                  <button type="button" class="stitch-ico-btn" data-cmd="italic" data-i18n-title="form.format_title_italic" title="Italic"><span class="material-symbols-outlined text-sm">format_italic</span></button>
+                  <button type="button" class="stitch-ico-btn" data-cmd="underline" data-i18n-title="form.format_title_underline" title="Underline"><span class="material-symbols-outlined text-sm">format_underlined</span></button>
+                  <div class="mx-1 h-6 w-px bg-surface-variant" aria-hidden="true"></div>
+                  <button type="button" class="stitch-ico-btn" data-cmd="ul" data-i18n-title="form.format_title_ul" title="List"><span class="material-symbols-outlined text-sm">format_list_bulleted</span></button>
+                  <button type="button" class="stitch-ico-btn" data-cmd="ol" data-i18n-title="form.format_title_ol" title="Numbered list"><span class="material-symbols-outlined text-sm">format_list_numbered</span></button>
+                  <div class="mx-1 h-6 w-px bg-surface-variant" aria-hidden="true"></div>
+                  <button type="button" class="stitch-ico-btn" data-cmd="align_left" data-i18n-title="form.format_title_align_outdent" title="Outdent"><span class="material-symbols-outlined text-sm">format_align_left</span></button>
+                  <button type="button" class="stitch-ico-btn" data-cmd="align_center" data-i18n-title="form.format_title_indent" title="Indent"><span class="material-symbols-outlined text-sm">format_align_center</span></button>
+                  <button type="button" class="stitch-ico-btn" data-cmd="link" data-i18n-title="form.format_title_link" title="Link"><span class="material-symbols-outlined text-sm">link</span></button>
+                </div>
+                <textarea id="post-content" name="content" required class="min-h-0 w-full flex-1 resize-none border-none bg-transparent p-4 font-body-lg text-on-background placeholder:text-surface-dim focus:ring-0" data-i18n-placeholder="form.stitch_content_ph" placeholder="Write your post content here..."></textarea>
+              </div>
+            </div>
+            <div class="space-y-6">
+              <div class="space-y-3 rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-[0_4px_20px_rgba(255,90,119,0.03)] md:p-5">
+                <h3 class="m-0 text-label-md font-semibold uppercase tracking-wider text-on-surface-variant" data-i18n="form.category_label">Category</h3>
+                <div class="flex flex-col gap-2" id="post-category-group" role="radiogroup" aria-label="Category">
+                  <label class="post-cat-label flex cursor-pointer items-center gap-3 rounded-xl p-3 transition-colors hover:bg-surface-container" data-cat="daily_share">
+                    <input class="h-5 w-5 border-outline-variant text-primary-container focus:ring-primary-container" type="radio" name="category" value="daily_share" checked />
+                    <span class="font-body-lg text-on-background" data-i18n="form.stitch_cat_daily">Daily Life</span>
+                  </label>
+                  <label class="post-cat-label flex cursor-pointer items-center gap-3 rounded-xl p-3 transition-colors hover:bg-surface-container" data-cat="activity">
+                    <input class="h-5 w-5 border-outline-variant text-primary-container focus:ring-primary-container" type="radio" name="category" value="activity" />
+                    <span class="font-body-lg text-on-background" data-i18n="form.stitch_cat_tips">Pet Tips</span>
+                  </label>
+                  <label class="post-cat-label flex cursor-pointer items-center gap-3 rounded-xl p-3 transition-colors hover:bg-surface-container" data-cat="help">
+                    <input class="h-5 w-5 border-outline-variant text-primary-container focus:ring-primary-container" type="radio" name="category" value="help" />
+                    <span class="font-body-lg text-on-background" data-i18n="form.stitch_cat_questions">Questions</span>
+                  </label>
+                  <label class="post-cat-label flex cursor-pointer items-center gap-3 rounded-xl p-3 transition-colors hover:bg-surface-container" data-cat="trade">
+                    <input class="h-5 w-5 border-outline-variant text-primary-container focus:ring-primary-container" type="radio" name="category" value="trade" />
+                    <span class="font-body-lg text-on-background" data-i18n="form.stitch_cat_trade">Trade Info</span>
+                  </label>
+                </div>
+              </div>
+              <div class="space-y-3 rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-[0_4px_20px_rgba(255,90,119,0.03)] md:p-5">
+                <h3 class="m-0 text-label-md font-semibold uppercase tracking-wider text-on-surface-variant" data-i18n="form.tags_label">Tags</h3>
+                <div id="post-tag-box" class="flex min-h-[2.5rem] flex-wrap gap-2"></div>
+                <input type="text" id="post-tag-input" class="w-full rounded-xl border border-dashed border-outline-variant bg-surface-container-low px-3 py-2 text-sm" data-i18n-placeholder="form.tag_add_placeholder" />
+              </div>
+              <div class="space-y-3 rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-[0_4px_20px_rgba(255,90,119,0.03)] md:p-5">
+                <h3 class="m-0 text-label-md font-semibold uppercase tracking-wider text-on-surface-variant" data-i18n="form.visibility">Visibility</h3>
+                <div class="flex items-center justify-between gap-3 rounded-xl bg-surface-container-low p-3">
+                  <div>
+                    <p class="m-0 font-body-lg font-medium text-on-background" data-i18n="form.visibility_public_label">Public</p>
+                    <p class="m-0 text-sm text-on-surface-variant" data-i18n="form.visibility_public_desc">Visible to all users</p>
+                  </div>
+                  <button type="button" id="post-visibility-btn" class="relative h-6 w-11 shrink-0 rounded-full bg-primary-container transition-colors" aria-pressed="true" data-on="1">
+                    <span class="absolute left-0.5 top-0.5 h-4 w-4 translate-x-5 rounded-full bg-white shadow-sm transition-transform"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" id="post-form-submit" class="sr-only" tabindex="-1" aria-hidden="true">submit</button>
+        </form>
+        </div>
       </section>
 
-      <section class="card panel" data-panel="my-listings" hidden>
+      <section class="panel stitch-panel w-full min-w-0 border-0 bg-transparent p-0 shadow-none" data-panel="compose-listing" hidden>
+        <div class="mx-auto w-full max-w-5xl">
+        <div class="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <h2 class="m-0 font-headline-xl text-on-background" data-i18n="dashboard.stitch_listing_title">Create Listing / Trade</h2>
+            <p class="mt-1 font-body-md text-on-surface-variant" data-i18n="dashboard.compose_listing_sub">左侧图库，右侧标题、类型、价格与描述（与 Stitch 稿一致）</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="listing-edit-badge" class="hidden items-center rounded-full bg-secondary-container/25 px-3 py-1.5 text-xs font-semibold text-on-secondary-container" data-i18n="dashboard.editing_badge">编辑中</span>
+            <button type="button" id="listing-cancel-edit" class="stitch-btn-ghost hidden rounded-full px-4 py-2 font-label-md" data-i18n="dashboard.cancel_edit">取消编辑</button>
+            <button type="button" id="listing-draft-btn" class="rounded-full bg-surface-container px-5 py-2 font-label-md text-on-surface transition-colors hover:bg-surface-variant" data-i18n="form.save_draft">存草稿</button>
+            <button type="button" id="listing-publish-btn" class="rounded-full bg-gradient-to-r from-primary-container to-primary px-6 py-2 font-label-md text-white shadow-[0_4px_12px_rgba(255,90,119,0.2)]" data-i18n="form.btn_publish_trade">Publish Trade</button>
+          </div>
+        </div>
+        <form id="listing-form" class="stitch-form">
+          <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+            <div class="flex min-h-0 flex-col space-y-4 lg:col-span-5">
+              <div class="relative flex min-h-[280px] flex-1 flex-col overflow-hidden rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-[0_8px_30px_rgba(255,90,119,0.04)] md:min-h-[320px] md:p-6">
+                <div class="pointer-events-none absolute inset-x-0 top-0 z-10 h-1 bg-gradient-to-r from-primary-container to-secondary-fixed" aria-hidden="true"></div>
+                <h3 class="relative z-10 m-0 font-headline-lg text-on-background" data-i18n="form.media_block">图库 / 媒体</h3>
+                <div id="listing-dropzone" class="stitch-dropzone relative z-10 mt-4 flex min-h-[200px] flex-1 cursor-pointer flex-col items-center justify-center gap-1 rounded-2xl border-2 border-dashed border-outline-variant bg-surface-container/50 p-4 text-center text-sm text-on-surface-variant transition-colors hover:border-primary-container/40 hover:bg-primary-container/5">
+                  <div class="mb-1 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm">
+                    <span class="material-symbols-outlined text-3xl text-primary-container">add_photo_alternate</span>
+                  </div>
+                  <span class="font-label-md text-on-background" data-i18n="form.listing_drop">点击或拖入媒体</span>
+                  <span class="text-xs text-on-surface-variant" data-i18n="form.listing_media_hint">高分辨率 JPEG / PNG，按服务器限制</span>
+                  <input type="file" id="listing-file-input" class="hidden" accept="image/*" multiple />
+                </div>
+                <div id="listing-media-preview" class="relative z-10 mt-3 flex flex-wrap gap-2"></div>
+                <input type="hidden" name="media_ids" id="listing-media-ids" value="" />
+              </div>
+            </div>
+            <div class="space-y-4 lg:col-span-7">
+              <div class="rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-sm md:p-5">
+                <p class="stitch-label m-0 mb-2" data-i18n="form.listing_title">商品/服务标题</p>
+                <input type="text" name="title" required class="w-full rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 py-2.5" data-i18n-placeholder="form.listing_title" />
+              </div>
+              <div class="flex flex-col gap-3 rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 md:p-5">
+                <p class="m-0 text-label-md font-semibold uppercase tracking-wider text-on-surface-variant" data-i18n="form.type_label">类型</p>
+                <div class="flex flex-wrap gap-2" role="radiogroup">
+                  <label class="rounded-full border border-outline-variant/40 px-3 py-1.5 has-[:checked]:border-primary-container has-[:checked]:bg-primary-container/10">
+                    <input class="sr-only" type="radio" name="type" value="product" checked /><span class="text-sm" data-i18n="form.type_product">商品</span>
+                  </label>
+                  <label class="rounded-full border border-outline-variant/40 px-3 py-1.5 has-[:checked]:border-primary-container has-[:checked]:bg-primary-container/10">
+                    <input class="sr-only" type="radio" name="type" value="service" /><span class="text-sm" data-i18n="form.type_service">服务</span>
+                  </label>
+                  <label class="rounded-full border border-outline-variant/40 px-3 py-1.5 has-[:checked]:border-primary-container has-[:checked]:bg-primary-container/10">
+                    <input class="sr-only" type="radio" name="type" value="adopt" /><span class="text-sm" data-i18n="form.type_adopt">领养</span>
+                  </label>
+                </div>
+              </div>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-sm">
+                  <p class="m-0 text-label-md font-medium text-on-surface-variant" data-i18n="form.stitch_price_amount">价格</p>
+                  <div class="mt-2 flex items-center gap-2">
+                    <span id="listing-price-prefix" class="shrink-0 text-xl font-bold text-on-background">¥</span>
+                    <input type="text" id="listing-price-yuan" inputmode="decimal" class="w-full min-w-0 border-none bg-transparent text-2xl font-bold text-on-background placeholder:text-surface-dim focus:ring-0" placeholder="0.00" aria-describedby="listing-price-cents-hint" />
+                    <input type="hidden" name="price_cents" id="listing-price-cents-field" value="0" data-default="0" />
+                  </div>
+                  <p id="listing-price-cents-hint" class="m-0 mt-1 text-xs text-on-surface-variant" data-i18n="form.stitch_price_minor_hint">金额将按所选币种以「分」为单位提交</p>
+                </div>
+                <div class="rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-sm">
+                  <p class="stitch-label m-0 mb-2" data-i18n="form.currency">币种</p>
+                  <div class="relative">
+                    <select name="currency" id="listing-currency" class="w-full appearance-none rounded-xl border border-outline-variant/30 bg-surface-container-low py-2.5 pl-3 pr-10 font-body-md text-on-background focus:outline-none focus:ring-2 focus:ring-primary-container/30">
+                      <option value="CNY">CNY (¥)</option>
+                      <option value="USD">USD ($)</option>
+                      <option value="HKD">HKD (HK$)</option>
+                    </select>
+                    <span class="material-symbols-outlined pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[20px] text-on-surface-variant">expand_more</span>
+                  </div>
+                </div>
+              </div>
+              <div class="min-h-[160px] rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest p-4 shadow-sm md:p-5">
+                <p class="stitch-label m-0 mb-2" data-i18n="form.listing_description">描述</p>
+                <textarea name="description" rows="6" class="min-h-[140px] w-full resize-y rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 py-2" data-i18n-placeholder="form.listing_description"></textarea>
+              </div>
+            </div>
+          </div>
+          <button type="submit" id="listing-form-submit" class="sr-only" tabindex="-1" aria-hidden="true">submit</button>
+        </form>
+        </div>
+      </section>
+
+      <section class="panel stitch-panel w-full min-w-0 border-0 bg-transparent p-0 shadow-none" data-panel="media" hidden>
+        <div class="mx-auto w-full max-w-7xl">
+        <div class="mb-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 class="m-0 font-headline-xl text-on-surface" data-i18n="dashboard.nav_media">媒体库</h2>
+            <p class="mt-1 font-body-md text-on-surface-variant" data-i18n="media.stitch_sub">管理已上传的照片与视频</p>
+          </div>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+            <div class="inline-flex w-fit max-w-full flex-wrap items-center gap-1 rounded-full border border-surface-container-highest bg-surface-container-low p-1 shadow-sm">
+              <button type="button" class="media-filter-chip active rounded-full bg-primary-container px-4 py-1.5 font-label-md text-white shadow-sm transition-all" data-media-filter="all" data-i18n="media.filter_all">All</button>
+              <button type="button" class="media-filter-chip rounded-full px-4 py-1.5 font-label-md text-on-surface-variant transition-all hover:text-on-surface" data-media-filter="photos" data-i18n="media.filter_photos">Photos</button>
+              <button type="button" class="media-filter-chip rounded-full px-4 py-1.5 font-label-md text-on-surface-variant transition-all hover:text-on-surface" data-media-filter="videos" data-i18n="media.filter_videos">Videos</button>
+            </div>
+            <form id="media-form" class="inline-flex">
+              <label class="stitch-btn-upload flex cursor-pointer items-center gap-2 rounded-full bg-gradient-to-r from-primary-container to-[#ff7e95] px-5 py-2.5 font-label-md text-white shadow-[0_4px_15px_rgba(255,90,119,0.3)] transition-transform hover:scale-95">
+                <span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+                <span data-i18n="media.btn_upload">Upload</span>
+                <input type="file" id="media-file" class="sr-only" accept="image/*,video/mp4,video/webm,video/quicktime" />
+              </label>
+              <button type="submit" class="sr-only" tabindex="-1" aria-hidden="true">upload</button>
+            </form>
+            <button id="refresh-media" type="button" class="inline-flex rounded-full border border-surface-container-highest bg-surface-container-lowest px-4 py-2 font-label-md text-on-surface-variant hover:bg-surface-container" data-i18n="action.refresh">刷新</button>
+          </div>
+        </div>
+        <div id="media-list" class="stitch-media-grid list"></div>
+        </div>
+      </section>
+
+      <section class="panel stitch-panel w-full min-w-0 border-0 bg-transparent p-0 shadow-none" data-panel="my-orders" hidden>
+        <div class="mx-auto w-full max-w-7xl space-y-6 lg:space-y-8">
+        <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+          <div class="min-w-0">
+            <h2 class="m-0 font-headline-xl text-on-background tracking-tight" data-i18n="order.stitch_title">Order Management</h2>
+            <p class="mt-2 font-body-md text-on-surface-variant" data-i18n="order.stitch_sub2">Track, fulfill, and manage your recent sales.</p>
+          </div>
+          <div class="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto">
+            <button id="orders-export-csv" type="button" class="stitch-orders-export inline-flex items-center gap-2 rounded-full bg-surface-container-lowest px-5 py-2.5 font-label-md text-on-background shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)]">
+              <span class="material-symbols-outlined text-lg">download</span>
+              <span data-i18n="order.export_csv">Export CSV</span>
+            </button>
+            <button id="refresh-my-orders" type="button" class="rounded-full border border-surface-container-highest bg-surface-container-lowest px-4 py-2 font-label-md text-on-surface-variant hover:bg-surface-container" data-i18n="action.refresh">刷新</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+          <div class="group relative overflow-hidden rounded-[24px] bg-surface-container-lowest p-6 shadow-[0_8px_30px_rgba(255,90,119,0.04)]">
+            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-primary-container/10 blur-2xl transition-transform duration-700 group-hover:scale-150" aria-hidden="true"></div>
+            <div class="relative z-10 mb-4 flex items-center justify-between">
+              <span class="text-label-md font-medium uppercase tracking-wider text-on-surface-variant" data-i18n="order.stat_revenue_bento">Total Revenue</span>
+              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-container/10 text-primary-container">
+                <span class="material-symbols-outlined">payments</span>
+              </div>
+            </div>
+            <div class="relative z-10">
+              <p id="orders-stat-revenue" class="m-0 font-headline-xl text-on-background">—</p>
+              <div id="orders-stat-trend" class="mt-2 flex items-center gap-1 text-tertiary" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-[24px] bg-surface-container-lowest p-6 shadow-[0_8px_30px_rgba(255,90,119,0.04)]">
+            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-secondary-container/20 blur-2xl transition-transform duration-700 group-hover:scale-150" aria-hidden="true"></div>
+            <div class="relative z-10 mb-4 flex items-center justify-between">
+              <span class="text-label-md font-medium uppercase tracking-wider text-on-surface-variant" data-i18n="order.stat_active_bento">Active Orders</span>
+              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-secondary-container/20 text-on-secondary-container">
+                <span class="material-symbols-outlined">local_shipping</span>
+              </div>
+            </div>
+            <div class="relative z-10">
+              <p id="orders-stat-active" class="m-0 font-headline-xl text-on-background">—</p>
+              <p id="orders-stat-urgent" class="mt-2 text-sm text-on-surface-variant">—</p>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-[24px] bg-surface-container-lowest p-6 shadow-[0_8px_30px_rgba(255,90,119,0.04)]">
+            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-tertiary-container/20 blur-2xl transition-transform duration-700 group-hover:scale-150" aria-hidden="true"></div>
+            <div class="relative z-10 mb-4 flex items-center justify-between">
+              <span class="text-label-md font-medium uppercase tracking-wider text-on-surface-variant" data-i18n="order.stat_satisfaction_bento">Customer Satisfaction</span>
+              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-tertiary-container/20 text-tertiary">
+                <span class="material-symbols-outlined">sentiment_satisfied</span>
+              </div>
+            </div>
+            <div class="relative z-10">
+              <p id="orders-stat-satisfaction" class="m-0 font-headline-xl text-on-background">—</p>
+              <p id="orders-stat-satisfaction-sub" class="mt-2 flex items-center gap-1 text-tertiary text-label-md">—</p>
+            </div>
+          </div>
+        </div>
+        <div class="min-w-0 overflow-hidden rounded-[24px] bg-surface-container-lowest shadow-[0_8px_30px_rgba(255,90,119,0.04)]">
+          <div class="stitch-orders-filters border-b border-surface-variant p-4 sm:p-6">
+            <div class="flex w-full min-w-0 flex-col gap-3">
+              <div class="order-role-bar order-role-filters order-role-filters--bar inline-flex w-full max-w-sm gap-0 self-start rounded-full border border-surface-container-highest bg-surface-container-low p-1" role="group" aria-label="Order role">
+                <button id="orders-tab-buyer" type="button" class="order-role-tab order-role-tab--on min-w-0 flex-1 rounded-full px-3 py-2 text-center text-sm font-semibold transition-colors sm:min-w-[5.5rem] sm:flex-none sm:px-4" data-order-role="buyer" data-i18n="order.tab_buyer">我买的</button>
+                <button id="orders-tab-seller" type="button" class="order-role-tab min-w-0 flex-1 rounded-full px-3 py-2 text-center text-sm font-semibold text-on-surface-variant transition-colors hover:bg-surface-container-high sm:min-w-[5.5rem] sm:flex-none sm:px-4" data-order-role="seller" data-i18n="order.tab_seller">我卖的</button>
+              </div>
+              <div class="flex w-full min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                <div class="order-status-filters flex min-w-0 flex-wrap gap-2">
+                  <button type="button" class="order-filter-chip active rounded-full bg-primary-container px-4 py-2 font-label-md text-white shadow-[0_4px_10px_rgba(255,90,119,0.2)]" data-order-filter="all" data-i18n="order.filter_all_orders">All Orders</button>
+                  <button type="button" class="order-filter-chip rounded-full bg-surface-container px-4 py-2 font-label-md text-on-surface-variant transition-colors hover:bg-surface-container-high" data-order-filter="pending" data-i18n="order.filter_pending">Pending</button>
+                  <button type="button" class="order-filter-chip rounded-full bg-surface-container px-4 py-2 font-label-md text-on-surface-variant transition-colors hover:bg-surface-container-high" data-order-filter="processing" data-i18n="order.filter_processing">Processing</button>
+                  <button type="button" class="order-filter-chip rounded-full bg-surface-container px-4 py-2 font-label-md text-on-surface-variant transition-colors hover:bg-surface-container-high" data-order-filter="completed" data-i18n="order.filter_completed">Completed</button>
+                </div>
+                <button type="button" id="orders-focus-search" class="inline-flex shrink-0 items-center justify-center gap-2 self-stretch rounded-full border border-transparent px-2 py-1.5 font-label-md text-on-surface-variant transition-colors hover:border-surface-container-high hover:text-primary-container sm:justify-end">
+                  <span class="material-symbols-outlined text-[20px]">filter_list</span>
+                  <span data-i18n="order.filter_options">Filter options</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="stitch-orders-twrap-outer w-full min-w-0">
+            <div class="stitch-orders-twrap w-full min-w-0 overflow-x-auto">
+            <table class="w-full min-w-[720px] border-collapse text-left">
+              <thead>
+                <tr class="border-b border-surface-variant bg-surface/50 font-label-md text-on-surface-variant">
+                  <th class="p-4 pl-6 font-medium" data-i18n="order.col_id">Order ID</th>
+                  <th class="p-4 font-medium" data-i18n="order.col_customer">Customer</th>
+                  <th class="p-4 font-medium" data-i18n="order.col_date">Date</th>
+                  <th class="p-4 font-medium" data-i18n="order.col_total">Total</th>
+                  <th class="p-4 font-medium" data-i18n="order.col_status">Status</th>
+                  <th class="p-4 pr-6 text-right font-medium" data-i18n="order.col_actions">Action</th>
+                </tr>
+              </thead>
+              <tbody id="my-orders-tbody" class="font-body-md text-on-background"></tbody>
+            </table>
+            <p id="my-orders-empty" class="hidden p-8 text-center text-on-surface-variant" data-i18n="order.empty">暂无订单</p>
+            </div>
+          </div>
+          <div id="orders-pagination" class="hidden flex flex-wrap items-center justify-between gap-2 border-t border-surface-variant p-4 text-sm text-on-surface-variant" aria-live="polite"></div>
+        </div>
+        <p id="my-orders-legacy-host" class="sr-only" aria-hidden="true"></p>
+        </div>
+      </section>
+
+      <section class="panel stitch-panel w-full min-w-0 border-0 bg-transparent p-0 shadow-none" data-panel="my-posts" hidden>
+        <div class="mx-auto w-full max-w-7xl">
+        <div class="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div class="min-w-0">
+            <h2 class="m-0 font-headline-xl text-on-surface" data-i18n="dashboard.stitch_my_posts_title">My Posts</h2>
+            <p class="mt-1 font-body-md text-on-surface-variant" data-i18n="dashboard.stitch_my_posts_sub2">Manage and review your published content.</p>
+          </div>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
+            <div class="flex flex-wrap gap-3" id="my-posts-stats" aria-live="polite">
+              <div class="flex min-w-[7.5rem] flex-col items-center justify-center rounded-2xl bg-surface-container-lowest px-6 py-4 shadow-[0_12px_32px_rgba(255,90,119,0.08)]">
+                <span class="mb-1 text-label-md font-medium uppercase tracking-wider text-on-surface-variant" data-i18n="dashboard.posts_stat_total_label">Total Posts</span>
+                <span id="my-posts-stat-total" class="font-headline-lg text-primary-container">0</span>
+              </div>
+              <div class="flex min-w-[7.5rem] flex-col items-center justify-center rounded-2xl bg-surface-container-lowest px-6 py-4 shadow-[0_12px_32px_rgba(255,90,119,0.08)]">
+                <span class="mb-1 text-label-md font-medium uppercase tracking-wider text-on-surface-variant" data-i18n="dashboard.posts_stat_views_label">Total Views</span>
+                <span id="my-posts-stat-views" class="font-headline-lg text-secondary-container">—</span>
+              </div>
+            </div>
+            <button id="refresh-my-posts" type="button" class="shrink-0 self-start rounded-full bg-primary-container/10 px-4 py-2 font-label-md text-primary-container hover:bg-primary-container/20 sm:self-end" data-i18n="action.refresh">刷新</button>
+          </div>
+        </div>
+        <div class="mb-4 flex flex-wrap gap-2 overflow-x-auto pb-2">
+          <button type="button" class="my-posts-filter rounded-full bg-primary-container/10 px-6 py-2 font-label-md text-primary-container shadow-sm transition-transform active:scale-95" data-posts-filter="all" data-i18n="dashboard.posts_tab_all">All Posts</button>
+          <button type="button" class="my-posts-filter rounded-full bg-surface-container-lowest px-6 py-2 font-label-md text-on-surface-variant transition-colors hover:bg-surface-container" data-posts-filter="published" data-i18n="dashboard.posts_filter_published">Published</button>
+          <button type="button" class="my-posts-filter rounded-full bg-surface-container-lowest px-6 py-2 font-label-md text-on-surface-variant transition-colors hover:bg-surface-container" data-posts-filter="drafts" data-i18n="dashboard.posts_filter_drafts">Drafts</button>
+        </div>
+        <div id="my-posts" class="my-posts-bento grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3"></div>
+        <div class="mt-8 flex justify-center">
+          <button type="button" id="my-posts-load-more" class="rounded-full border border-surface-container-highest bg-white px-8 py-3 font-label-md text-on-surface-variant shadow-sm transition-all hover:bg-surface-container hover:text-on-surface active:scale-95" data-i18n="dashboard.posts_load_more">Load more posts</button>
+        </div>
+        <p id="my-posts-empty" class="hidden p-6 text-center text-on-surface-variant" data-i18n="common.empty_my_posts">暂无帖子</p>
+        </div>
+      </section>
+
+      <section class="panel stitch-panel w-full min-w-0 rounded-2xl border border-[#FF5A77]/8 bg-surface-container-lowest/95 p-5 shadow-[0_8px_32px_rgba(255,90,119,0.06)] md:p-8" data-panel="my-listings" hidden>
         <div class="section-head">
-          <h2 data-i18n="dashboard.nav_my_listings">我的交易</h2>
-          <button id="refresh-my-listings" type="button" data-i18n="action.refresh">刷新</button>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface" data-i18n="dashboard.nav_my_listings">我的交易</h2>
+          <button id="refresh-my-listings" type="button" class="rounded-full bg-primary-container/10 px-4 py-2 font-label-md text-primary-container hover:bg-primary-container/20" data-i18n="action.refresh">刷新</button>
         </div>
         <div id="my-listings" class="list"></div>
       </section>
 
-      <section class="card panel" data-panel="profile" hidden>
-        <h2 data-i18n="profile.title">资料设置</h2>
-        <form id="profile-form" class="form-grid">
-          <div class="user-row">
-            <img id="profile-avatar" class="avatar-lg" src="" alt="" />
-            <div>
-              <div class="name" id="profile-name">—</div>
-              <div class="handle" id="profile-handle">—</div>
+      <section class="panel stitch-panel w-full min-w-0 border-0 bg-transparent p-0 shadow-none" data-panel="profile" hidden>
+        <h2 class="m-0 font-headline-xl text-on-background" data-i18n="profile.stitch_title">Profile and settings</h2>
+        <p class="mb-6 mt-1 font-body-md text-on-surface-variant" data-i18n="profile.stitch_sub">Bento 布局：头像卡 + 基本资料 + 偏好（本机存）</p>
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div class="min-w-0 rounded-3xl border border-[#FF5A77]/5 bg-surface-container-lowest p-6 shadow-sm">
+            <div class="user-row flex items-center gap-4">
+              <img id="profile-avatar" class="h-20 w-20 shrink-0 rounded-2xl border-2 border-white object-cover shadow-md" src="" alt="" />
+              <div class="min-w-0">
+                <div class="name text-headline-lg font-bold text-on-surface" id="profile-name">—</div>
+                <div class="handle font-label-md text-on-surface-variant" id="profile-handle">—</div>
+              </div>
             </div>
           </div>
-          <label data-i18n="profile.nickname">昵称</label>
-          <input type="text" name="nickname" />
-          <label data-i18n="profile.avatar_url">头像 URL</label>
-          <input type="text" name="avatar_url" placeholder="/uploads/xxx.jpg" />
-          <label data-i18n="profile.bio">简介</label>
-          <textarea name="bio" rows="3" maxlength="500"></textarea>
-          <button type="submit" data-i18n="profile.btn_save">保存资料</button>
+          <div class="min-w-0 rounded-3xl border border-[#FF5A77]/5 bg-surface-container-lowest p-6 shadow-sm">
+            <p class="m-0 text-label-md font-semibold text-on-surface-variant" data-i18n="profile.pref_block">Preferences</p>
+            <div class="mt-3 space-y-3" id="profile-prefs">
+              <div class="flex items-center justify-between gap-2 rounded-2xl bg-surface-container-low p-3">
+                <span class="text-sm text-on-surface" data-i18n="profile.pref_compact">列表紧凑</span>
+                <button type="button" class="profile-pref-toggle relative h-6 w-11 shrink-0 rounded-full bg-primary-container" data-pref="compact" aria-pressed="true"><span class="absolute left-0.5 top-0.5 block h-4 w-4 translate-x-5 rounded-full bg-white transition-transform"></span></button>
+              </div>
+              <div class="flex items-center justify-between gap-2 rounded-2xl bg-surface-container-low p-3">
+                <span class="text-sm text-on-surface" data-i18n="profile.pref_notify">桌面通知</span>
+                <button type="button" class="profile-pref-toggle relative h-6 w-11 shrink-0 rounded-full bg-surface-variant" data-pref="desktop_notif" aria-pressed="false"><span class="absolute left-0.5 top-0.5 block h-4 w-4 translate-x-0.5 rounded-full bg-white transition-transform"></span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form id="profile-form" class="form-grid dash-form mt-4 flex max-w-2xl flex-col gap-4 rounded-3xl border border-[#FF5A77]/5 bg-surface-container-lowest p-6 shadow-sm">
+          <div class="field flex flex-col gap-1.5">
+            <label for="profile-nickname" data-i18n="profile.nickname">昵称</label>
+            <input id="profile-nickname" type="text" name="nickname" class="w-full rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 py-2" />
+          </div>
+          <div class="field flex flex-col gap-1.5">
+            <label for="profile-avatar-url" data-i18n="profile.avatar_url">头像 URL</label>
+            <input id="profile-avatar-url" type="text" name="avatar_url" class="w-full rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 py-2" placeholder="/uploads/xxx.jpg" />
+          </div>
+          <div class="field flex flex-col gap-1.5">
+            <label for="profile-bio" data-i18n="profile.bio">简介</label>
+            <textarea id="profile-bio" name="bio" class="min-h-[100px] w-full resize-y rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 py-2" rows="3" maxlength="500"></textarea>
+          </div>
+          <div class="field flex flex-wrap gap-2 pt-1">
+            <button type="submit" class="stitch-btn-primary rounded-full px-6 py-2.5" data-i18n="profile.btn_save">保存资料</button>
+            <button type="button" class="stitch-btn-secondary rounded-full px-6 py-2.5" id="profile-cancel" data-i18n="profile.btn_cancel">取消</button>
+          </div>
         </form>
       </section>
 
-      <section class="card panel" data-panel="notifications" hidden>
-        <div class="section-head">
-          <h2 data-i18n="dashboard.nav_notifications">通知中心</h2>
-          <div style="display:flex;gap:8px;">
-            <button id="mark-all-notifications" type="button" class="ghost" data-i18n="notify.mark_all_read">全部标为已读</button>
-            <button id="refresh-notifications" type="button" data-i18n="action.refresh">刷新</button>
+      <section class="panel stitch-panel w-full min-w-0 border-0 bg-transparent p-0 shadow-none" data-panel="notifications" hidden>
+        <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="m-0 font-headline-xl text-on-background" data-i18n="notify.stitch_title">Notification Center</h2>
+            <p class="mt-1 font-body-md text-on-surface-variant" data-i18n="notify.stitch_sub">左侧分类、右侧列表（与 Stitch 版式对齐）</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button id="mark-all-notifications" type="button" class="ghost rounded-full border border-outline-variant/40 bg-transparent px-4 py-2 font-label-md text-on-surface-variant hover:bg-surface-container" data-i18n="notify.mark_all_read">全部标为已读</button>
+            <button id="refresh-notifications" type="button" class="rounded-full bg-primary-container/10 px-4 py-2 font-label-md text-primary-container hover:bg-primary-container/20" data-i18n="action.refresh">刷新</button>
           </div>
         </div>
-        <div id="notifications-list" class="list"></div>
+        <div class="notif-stitch grid min-h-0 w-full min-w-0 grid-cols-1 gap-4 md:grid-cols-12 md:gap-6 md:items-start">
+          <nav id="notif-categories" class="flex min-h-0 w-full flex-col gap-1 rounded-xl border border-[#FF5A77]/10 bg-surface-container-lowest p-3 shadow-[0_4px_20px_rgba(255,90,119,0.03)] md:col-span-3 md:max-h-[min(32rem,72vh)] md:overflow-y-auto lg:sticky lg:top-20" aria-label="通知分类"></nav>
+          <div class="min-h-0 min-w-0 rounded-2xl border border-[#FF5A77]/5 bg-surface-container-lowest/90 p-3 md:col-span-9 md:max-h-[min(36rem,75vh)] md:overflow-y-auto md:p-4">
+            <div id="notifications-list" class="stitch-notif-list list space-y-4"></div>
+          </div>
+        </div>
       </section>
 
-      <section class="card panel" data-panel="messages" hidden>
+      <section class="panel stitch-panel w-full min-w-0 rounded-2xl border border-[#FF5A77]/8 bg-surface-container-lowest/95 p-5 shadow-[0_8px_32px_rgba(255,90,119,0.06)] md:p-8" data-panel="messages" hidden>
         <div class="section-head">
-          <h2 data-i18n="dashboard.nav_messages">私信</h2>
-          <div style="display:flex;gap:8px;">
-            <input id="new-message-peer" type="number" min="1" style="width:160px" data-i18n-placeholder="message.target_user_id" placeholder="对方用户 ID" />
-            <button id="start-conversation" type="button" class="ghost" data-i18n="message.start_new">发私信</button>
-            <button id="refresh-conversations" type="button" data-i18n="action.refresh">刷新</button>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface" data-i18n="dashboard.nav_messages">私信</h2>
+          <div class="flex flex-wrap items-center gap-2">
+            <input id="new-message-peer" type="number" min="1" class="dash-input w-32 rounded-xl border-0 bg-surface-container px-3 py-2 font-body-md" data-i18n-placeholder="message.target_user_id" placeholder="对方用户 ID" />
+            <button id="start-conversation" type="button" class="ghost rounded-full border border-outline-variant/40 px-4 py-2 font-label-md text-on-surface-variant hover:bg-surface-container" data-i18n="message.start_new">发私信</button>
+            <button id="refresh-conversations" type="button" class="rounded-full bg-primary-container/10 px-4 py-2 font-label-md text-primary-container hover:bg-primary-container/20" data-i18n="action.refresh">刷新</button>
           </div>
         </div>
-        <div class="conversation-layout">
-          <div id="conv-list" class="conv-list"></div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div id="conv-messages" class="messages"></div>
-            <form id="message-form" class="form-grid" hidden>
-              <input type="text" name="content" required data-i18n-placeholder="message.placeholder" />
-              <button type="submit" data-i18n="message.btn_send">发送</button>
+        <div class="stitch-msg-shell">
+          <div class="stitch-conv-rail-col flex min-h-0 min-w-0 flex-col gap-2">
+            <div id="conv-filter-chips" class="flex shrink-0 flex-wrap gap-2" role="tablist" aria-label="Messages filter">
+              <button type="button" class="conv-filter-chip rounded-full bg-primary-container px-4 py-1.5 font-label-md text-white shadow-sm transition-colors" data-conv-filter="all" data-i18n="message.filter_all">All Chats</button>
+              <button type="button" class="conv-filter-chip rounded-full bg-surface-container-lowest px-4 py-1.5 font-label-md text-on-surface-variant transition-colors hover:bg-surface-container" data-conv-filter="unread" data-i18n="message.filter_unread">Unread</button>
+              <button type="button" class="conv-filter-chip rounded-full bg-surface-container-lowest px-4 py-1.5 font-label-md text-on-surface-variant transition-colors hover:bg-surface-container" data-conv-filter="trades" data-i18n="message.filter_trades">Trades</button>
+            </div>
+            <div id="conv-list" class="conv-list stitch-conv-rail min-h-0 flex-1"></div>
+          </div>
+          <div class="stitch-msg-thread flex min-h-0 min-w-0 flex-col gap-3">
+            <div id="conv-messages" class="messages stitch-msg-stream flex flex-col rounded-2xl border border-outline-variant/15 bg-surface-container/50"></div>
+            <form id="message-form" class="dash-form flex w-full min-w-0 flex-col gap-2 sm:flex-row sm:items-end" hidden>
+              <input type="text" name="content" class="min-w-0 flex-1" required data-i18n-placeholder="message.placeholder" />
+              <button type="submit" class="shrink-0" data-i18n="message.btn_send">发送</button>
             </form>
           </div>
         </div>
       </section>
+        </div>
+      </main>
     </div>
-  </main>
+  </div>
 
   <script src="/dashboard.js"></script>
 </body>

@@ -179,7 +179,11 @@ jobs:
           sudo apt-get install -y --no-install-recommends postgresql-client
 
       - name: Apply migrations
-        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/001_init.sql
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/001_init.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/002_social.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/003_user_phone.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/004_notifications_actor_image.sql
 
       - name: Run integration tests
         run: |

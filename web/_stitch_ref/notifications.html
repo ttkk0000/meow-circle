@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kitty Circle Admin - Notification Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#ffdadc",
+                        "secondary-fixed": "#ffddb0",
+                        "on-tertiary-container": "#003528",
+                        "outline": "#8d7072",
+                        "on-tertiary-fixed-variant": "#00513f",
+                        "on-primary-container": "#62001d",
+                        "tertiary": "#006b54",
+                        "primary-fixed-dim": "#ffb2b9",
+                        "on-primary-fixed-variant": "#91002f",
+                        "surface": "#fbf9f4",
+                        "on-tertiary-fixed": "#002118",
+                        "inverse-on-surface": "#f2f1ec",
+                        "background": "#fbf9f4",
+                        "on-primary-fixed": "#400010",
+                        "surface-container": "#f0eee9",
+                        "surface-container-highest": "#e4e2dd",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffba46",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#805600",
+                        "tertiary-container": "#00a986",
+                        "surface-variant": "#e4e2dd",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#694600",
+                        "on-surface-variant": "#594042",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fbf9f4",
+                        "inverse-surface": "#30312e",
+                        "secondary-container": "#fdaf18",
+                        "tertiary-fixed": "#75f9d1",
+                        "tertiary-fixed-dim": "#55dcb6",
+                        "on-background": "#1b1c19",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#281800",
+                        "on-secondary-fixed-variant": "#614000",
+                        "inverse-primary": "#ffb2b9",
+                        "primary": "#b52044",
+                        "surface-dim": "#dbdad5",
+                        "surface-tint": "#b52044",
+                        "surface-container-high": "#eae8e3",
+                        "on-surface": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f5f3ee",
+                        "outline-variant": "#e1bec0",
+                        "primary-container": "#ff5a77"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "16px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "sm": "12px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "card-gap": "12px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-xl": ["28px", { "lineHeight": "36px", "fontWeight": "800" }],
+                        "headline-lg": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fbf9f4;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background flex min-h-screen">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-white dark:bg-stone-950 rounded-r-[32px] h-screen w-72 border-r border-[#FF5A77]/5 shadow-[10px_0_30px_rgba(255,90,119,0.03)] fixed left-0 top-0 flex-col p-6 gap-2 z-40">
+<div class="mb-8 px-4 flex flex-col gap-1">
+<span class="font-black text-xl text-[#FF5A77] tracking-tighter">Kitty Circle Admin</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-sm text-stone-500">Admin Center</span>
+<span class="font-label-md text-label-md text-stone-400">Management Dashboard</span>
+</div>
+<button class="w-full mb-6 bg-gradient-to-r from-primary-container to-[#ff7a91] text-white rounded-full py-3 px-4 shadow-[0_8px_15px_rgba(255,90,119,0.3)] font-label-md text-label-md flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            Create New
+        </button>
+<div class="flex flex-col gap-1 overflow-y-auto">
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-full text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 transition-all duration-300 font-['Plus_Jakarta_Sans'] font-medium text-sm group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">add_circle</span>
+                Publish Post
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 transition-all duration-300 font-['Plus_Jakarta_Sans'] font-medium text-sm group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">swap_horiz</span>
+                Publish Trade
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 transition-all duration-300 font-['Plus_Jakarta_Sans'] font-medium text-sm group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">photo_library</span>
+                Media Library
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 transition-all duration-300 font-['Plus_Jakarta_Sans'] font-medium text-sm group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">article</span>
+                My Posts
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 transition-all duration-300 font-['Plus_Jakarta_Sans'] font-medium text-sm group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">receipt_long</span>
+                My Trades
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 transition-all duration-300 font-['Plus_Jakarta_Sans'] font-medium text-sm group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">shopping_bag</span>
+                My Orders
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 transition-all duration-300 font-['Plus_Jakarta_Sans'] font-medium text-sm group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">person_outline</span>
+                Profile
+            </a>
+<!-- Active -->
+<a class="flex items-center gap-3 px-4 py-3 bg-[#FF5A77] text-white rounded-full shadow-[0_8px_15px_rgba(255,90,119,0.3)] scale-[0.98] font-['Plus_Jakarta_Sans'] font-medium text-sm active:scale-[0.96] transition-transform" href="#">
+<span class="material-symbols-outlined icon-fill text-[20px]">notifications_none</span>
+                Notification Center
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-full text-stone-600 dark:text-stone-400 hover:text-[#FF5A77] hover:bg-[#FF5A77]/10 transition-all duration-300 font-['Plus_Jakarta_Sans'] font-medium text-sm group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">forum</span>
+                Direct Messages
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 w-full md:ml-72 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-[#F9F7F2]/80 backdrop-blur-xl dark:bg-stone-900/80 docked full-width top-0 z-50 border-b border-[#FF5A77]/10 shadow-[0_4px_20px_rgba(255,90,119,0.05)] flex justify-between items-center w-full px-6 py-3 font-['Plus_Jakarta_Sans'] antialiased sticky">
+<div class="flex items-center gap-4">
+<!-- Mobile Menu Toggle (Visible only on mobile) -->
+<button class="md:hidden text-[#FF5A77] p-2 hover:bg-[#FF5A77]/5 rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="text-2xl font-black tracking-tighter text-[#FF5A77]">Kitty Circle Admin</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-[20px]">search</span>
+<input class="bg-surface-container rounded-full pl-10 pr-4 py-2 border-none focus:ring-2 focus:ring-[#FF5A77]/50 text-sm w-64 placeholder:text-stone-400 transition-all" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-[#FF5A77] font-bold hover:bg-[#FF5A77]/5 hover:scale-[1.02] active:scale-95 duration-200 ease-out transition-all rounded-full relative">
+<span class="material-symbols-outlined icon-fill">notifications</span>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="p-2 text-stone-500 dark:text-stone-400 hover:bg-[#FF5A77]/5 hover:scale-[1.02] active:scale-95 duration-200 ease-out transition-all rounded-full">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="p-2 text-stone-500 dark:text-stone-400 hover:bg-[#FF5A77]/5 hover:scale-[1.02] active:scale-95 duration-200 ease-out transition-all rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-surface ml-2">
+<img alt="Admin profile avatar" class="w-full h-full object-cover" data-alt="Portrait of an admin user with a soft pastel background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPsvgkWgolBTCm-2nRDOXIFJL1----9BzkBEqvHJXKVqA8Sc2alYRCceTt0xBqu1PB4nkjzNWFDxDpGMN2_3Yj74OjyOaXEp4cY85LHf9XBNJa6eejg_dZ_MqDeLiA7JS3uTR7PDoZRzDfFZyeOPyJ81U2RqEDU6tLjo_m-DH2j1o85EKsxMjqBrGtd9QcxRl--yF7Rg0Ka-8BLIcKIjhI59ZiqehNG4rAm0-sl5BbLRqhaMqvYuTOjebJ4msPdEb0U2SgFdiW"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-container-padding md:p-xl flex-1 max-w-6xl mx-auto w-full">
+<div class="mb-lg flex justify-between items-end">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-2">Notification Center</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Stay updated with system alerts, user engagement, and community activity.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-white rounded-full text-sm font-medium text-stone-600 shadow-sm border border-surface-variant hover:bg-surface-container-low transition-colors">Mark all as read</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Filters Column -->
+<div class="md:col-span-3 space-y-4">
+<div class="bg-white rounded-xl p-4 shadow-[0_4px_20px_rgba(255,90,119,0.03)] border border-surface-variant/50 sticky top-24">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-4">Categories</h3>
+<div class="flex flex-col gap-2">
+<button class="flex items-center justify-between px-3 py-2 bg-primary-fixed/20 text-primary-container rounded-lg font-medium text-sm transition-all">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">all_inbox</span>
+                                    All Updates
+                                </div>
+<span class="bg-primary-container text-white text-[10px] px-2 py-0.5 rounded-full">24</span>
+</button>
+<button class="flex items-center justify-between px-3 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg font-medium text-sm transition-all group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] group-hover:text-tertiary-container">campaign</span>
+                                    System Alerts
+                                </div>
+<span class="text-xs text-stone-400">2</span>
+</button>
+<button class="flex items-center justify-between px-3 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg font-medium text-sm transition-all group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] group-hover:text-primary-container">favorite</span>
+                                    Likes &amp; Reactions
+                                </div>
+<span class="text-xs text-stone-400">15</span>
+</button>
+<button class="flex items-center justify-between px-3 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg font-medium text-sm transition-all group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] group-hover:text-secondary-container">chat_bubble</span>
+                                    Comments
+                                </div>
+<span class="text-xs text-stone-400">5</span>
+</button>
+<button class="flex items-center justify-between px-3 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg font-medium text-sm transition-all group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] group-hover:text-[#8a2be2]">person_add</span>
+                                    New Followers
+                                </div>
+<span class="text-xs text-stone-400">2</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Notifications List -->
+<div class="md:col-span-9 space-y-4">
+<!-- Notification Card - System Alert (High Priority) -->
+<div class="bg-white rounded-2xl p-5 shadow-[0_8px_30px_rgba(255,90,119,0.06)] border border-primary-fixed relative overflow-hidden transition-all hover:shadow-[0_12px_40px_rgba(255,90,119,0.1)] hover:-translate-y-0.5 group cursor-pointer">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed/30 flex items-center justify-center shrink-0 text-primary-container">
+<span class="material-symbols-outlined icon-fill">campaign</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body-lg text-body-lg text-on-surface">Platform Maintenance Scheduled</h4>
+<span class="text-xs text-primary-container font-medium bg-primary-fixed/20 px-2 py-1 rounded-full">New</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">System downtime expected on Sunday, 2 AM EST for roughly 2 hours to deploy new trading features.</p>
+<span class="text-xs text-stone-400 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                    10 mins ago
+                                </span>
+</div>
+</div>
+</div>
+<!-- Notification Card - Like -->
+<div class="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-surface-variant/30 transition-all hover:shadow-[0_8px_30px_rgba(255,90,119,0.05)] hover:-translate-y-0.5 group cursor-pointer">
+<div class="flex gap-4">
+<div class="relative shrink-0">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="Close up portrait of a young woman with natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsFFhnTuA5aSMbrMd4Zw7iH6JsTIrhzkJx2iYyNQ6sf9PNkBV26LAv6C3glMO7L43dT0N9LNzpvBwDzkggtFip1snoe9K7JWmc-I8QiTqtPbxQ_F6R_Y7DD260m4E06DkDnhRg4Pvvpcte8ll8KX7SiyhIC4aLBpxcNUf9wFsRePj2iDJMAh3jO1v-mRbocMqAJgAS7XK7DBLExXcHaHv_2h81WVbGwSMpaJy93We2chiqCin1rGkMdSzEL3ufRDvxlOFf44E_"/>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm border border-surface">
+<span class="material-symbols-outlined icon-fill text-primary-container text-[14px]">favorite</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<p class="font-body-md text-body-md text-on-surface">
+<span class="font-bold">Sarah Jenkins</span> liked your post 
+                                        <span class="text-stone-500">"Spring Collection Drop Strategy"</span>
+</p>
+</div>
+<span class="text-xs text-stone-400 font-medium">2 hours ago</span>
+</div>
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 hidden sm:block">
+<img alt="Post thumbnail" class="w-full h-full object-cover" data-alt="Aesthetic layout of spring clothing collection on soft pink background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2GHpfs_c7nJTPd3QwuIR4E0jJpDYefnqiHkYdoLUvhwLUmXLuAIMzyPOPeVVlUwKDGtgXIkaneRl4Hl12Na0VzLCQJi74cGSlihrv0PG1T80NZCu5ic4viz67JkHa2K6IhF8nApiCGIPC7hSzJkiz6LMTQhvg_q0g4rgKtD6x0faruTJ0zcq0sCJ6Bjqv0ssNkeu9itBZCFPv6pqKernq0mbGS1u2sD20MdEQg_3S08a9ZX_Fjk7ia-TNd53THH7BUTPma1X5"/>
+</div>
+</div>
+</div>
+<!-- Notification Card - Comment -->
+<div class="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-surface-variant/30 transition-all hover:shadow-[0_8px_30px_rgba(255,90,119,0.05)] hover:-translate-y-0.5 group cursor-pointer">
+<div class="flex gap-4">
+<div class="relative shrink-0">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="Portrait of a young man with a casual style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxd7jvv7o7mZRbQ0kJMokzqTPkfXd2cNN-Ci8rA5LjtI2TFCHejiyDlpDiZwNNESSPMFRNzPiM-660fs_8ejf16Mwx9az14t9CawdHEyOKR17dtRthzVS3oq62ujwSInGBnFzWMGNFcRzKndGlVVloDoaULnYfhEOg8vygApNmC5SDLmRHdOjZpV9TDItUB1e1Tepl4fOkIUnQXgiAuQgbdm8VAS3-j8PG3MbUFIo7EJu0S5hrbkwVXkyUv4yrrg3JB9YJ0NhV"/>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm border border-surface">
+<span class="material-symbols-outlined icon-fill text-secondary-container text-[14px]">chat_bubble</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<p class="font-body-md text-body-md text-on-surface">
+<span class="font-bold">Alex Wong</span> commented on your trade offer
+                                    </p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 mb-2 border border-surface-variant/50">
+<p class="font-body-md text-body-md text-on-surface-variant italic">"Is this still available? I can offer a direct swap for the limited edition variant."</p>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-xs text-stone-400 font-medium">5 hours ago</span>
+<button class="text-xs font-bold text-primary-container hover:text-primary transition-colors">Reply</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Notification Card - New Follower -->
+<div class="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-surface-variant/30 transition-all hover:shadow-[0_8px_30px_rgba(255,90,119,0.05)] hover:-translate-y-0.5 group cursor-pointer">
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="relative shrink-0">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<div class="w-full h-full bg-tertiary-container/20 text-tertiary-container flex items-center justify-center font-bold text-lg">M</div>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm border border-surface">
+<span class="material-symbols-outlined icon-fill text-[#8a2be2] text-[14px]">person_add</span>
+</div>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface">
+<span class="font-bold">Mia Store</span> started following you
+                                    </p>
+<span class="text-xs text-stone-400 font-medium">Yesterday</span>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary-fixed/30 text-primary-container font-label-md text-label-md rounded-full hover:bg-primary-container hover:text-white transition-colors">Follow Back</button>
+</div>
+</div>
+<!-- Load More -->
+<div class="flex justify-center mt-6">
+<button class="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-surface-variant text-stone-500 font-medium hover:bg-white hover:text-primary-container hover:border-primary-container/30 transition-all duration-300">
+                            Load Older Notifications
+                            <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

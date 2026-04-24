@@ -580,6 +580,64 @@ func (r *Router) handlePostChildren(w http.ResponseWriter, req *http.Request) {
 				"following_author": followingAuthor,
 			})
 			return
+		case http.MethodPatch:
+			claims, ok := r.parseAuth(req)
+			if !ok {
+				writeError(w, http.StatusUnauthorized, "unauthorized")
+				return
+			}
+			existing, ok := r.store.GetPost(postID)
+			if !ok {
+				writeError(w, http.StatusNotFound, "post not found")
+				return
+			}
+			if existing.AuthorID != claims.UserID {
+				writeError(w, http.StatusForbidden, "not post owner")
+				return
+			}
+			var payload struct {
+				Title    string              `json:"title"`
+				Content  string              `json:"content"`
+				Category domain.PostCategory `json:"category"`
+				Tags     []string            `json:"tags"`
+				MediaIDs []int64             `json:"media_ids"`
+			}
+			if err := decodeJSON(req, &payload); err != nil {
+				writeError(w, http.StatusBadRequest, err.Error())
+				return
+			}
+			if strings.TrimSpace(payload.Title) == "" || strings.TrimSpace(payload.Content) == "" {
+				writeError(w, http.StatusBadRequest, "title and content are required")
+				return
+			}
+			if hit, blocked := r.filter.Check(payload.Title + " " + payload.Content); blocked {
+				writeError(w, http.StatusBadRequest, "content rejected by moderation: "+hit)
+				return
+			}
+			if payload.Category == "" {
+				payload.Category = existing.Category
+			}
+			mediaIDs, err := r.validateMediaOwnership(payload.MediaIDs, claims.UserID)
+			if err != nil {
+				writeError(w, http.StatusBadRequest, err.Error())
+				return
+			}
+			updated := existing
+			updated.Title = strings.TrimSpace(payload.Title)
+			updated.Content = strings.TrimSpace(payload.Content)
+			updated.Category = payload.Category
+			updated.Tags = payload.Tags
+			updated.MediaIDs = mediaIDs
+			if !r.store.UpdatePost(updated) {
+				writeError(w, http.StatusInternalServerError, "update failed")
+				return
+			}
+			if fresh, ok := r.store.GetPost(postID); ok {
+				writeOK(w, fresh)
+				return
+			}
+			writeError(w, http.StatusInternalServerError, "post not found after update")
+			return
 		case http.MethodDelete:
 			claims, ok := r.parseAuth(req)
 			if !ok {
@@ -640,7 +698,15 @@ func (r *Router) handlePostChildren(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		if post, exists := r.store.GetPost(postID); exists && post.AuthorID != claims.UserID {
-			r.notify(post.AuthorID, domain.NotificationComment, "New comment on your post", comment.Content, postID)
+			img := r.firstMediaURL(post.MediaIDs)
+			var opts []NotifyOption
+			if img != "" {
+				opts = append(opts, notifyImageURL(img))
+			}
+			if actor, ok := r.store.GetUser(claims.UserID); ok {
+				opts = append(opts, notifyActor(actor))
+			}
+			r.notify(post.AuthorID, domain.NotificationComment, "New comment on your post", comment.Content, postID, opts...)
 		}
 		writeCreated(w, comment)
 		return
@@ -749,6 +815,71 @@ func (r *Router) handleListingChild(w http.ResponseWriter, req *http.Request) {
 			"listing": listing,
 			"media":   r.store.GetMediaBatch(listing.MediaIDs),
 		})
+		return
+	case http.MethodPatch:
+		claims, ok := r.parseAuth(req)
+		if !ok {
+			writeError(w, http.StatusUnauthorized, "unauthorized")
+			return
+		}
+		existing, ok := r.store.GetListing(listingID)
+		if !ok {
+			writeError(w, http.StatusNotFound, "listing not found")
+			return
+		}
+		if existing.SellerID != claims.UserID {
+			writeError(w, http.StatusForbidden, "not listing owner")
+			return
+		}
+		var payload struct {
+			Type        domain.ListingType `json:"type"`
+			Title       string             `json:"title"`
+			Description string             `json:"description"`
+			PriceCents  int64              `json:"price_cents"`
+			Currency    string             `json:"currency"`
+			MediaIDs    []int64            `json:"media_ids"`
+		}
+		if err := decodeJSON(req, &payload); err != nil {
+			writeError(w, http.StatusBadRequest, err.Error())
+			return
+		}
+		if strings.TrimSpace(payload.Title) == "" {
+			writeError(w, http.StatusBadRequest, "title is required")
+			return
+		}
+		if hit, blocked := r.filter.Check(payload.Title + " " + payload.Description); blocked {
+			writeError(w, http.StatusBadRequest, "content rejected by moderation: "+hit)
+			return
+		}
+		if payload.Type == "" {
+			payload.Type = existing.Type
+		}
+		if payload.Currency == "" {
+			payload.Currency = existing.Currency
+		} else {
+			payload.Currency = strings.ToUpper(strings.TrimSpace(payload.Currency))
+		}
+		mediaIDs, err := r.validateMediaOwnership(payload.MediaIDs, claims.UserID)
+		if err != nil {
+			writeError(w, http.StatusBadRequest, err.Error())
+			return
+		}
+		updated := existing
+		updated.Type = payload.Type
+		updated.Title = strings.TrimSpace(payload.Title)
+		updated.Description = strings.TrimSpace(payload.Description)
+		updated.PriceCents = payload.PriceCents
+		updated.Currency = payload.Currency
+		updated.MediaIDs = mediaIDs
+		if !r.store.UpdateListing(updated) {
+			writeError(w, http.StatusInternalServerError, "update failed")
+			return
+		}
+		if fresh, ok := r.store.GetListing(listingID); ok {
+			writeOK(w, fresh)
+			return
+		}
+		writeError(w, http.StatusInternalServerError, "listing not found after update")
 		return
 	case http.MethodDelete:
 		claims, ok := r.parseAuth(req)
