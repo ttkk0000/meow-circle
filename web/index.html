@@ -127,17 +127,21 @@
       </div>
       <section id="panel-discover" class="hidden max-w-5xl mx-auto">
         <h2 class="text-headline-xl font-headline-xl mb-4" data-i18n="stitch.discover_title">发现圈子</h2>
-        <p class="text-body-md text-gray-500 mb-6" data-i18n="stitch.discover_tip">以下为示例圈子卡片；后续可接入真实圈子数据与帖子聚合。</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          <a href="#discover" data-panel-route="discover" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm"><h3 class="font-semibold">橘猫大联盟</h3><p class="text-sm text-gray-500 mt-1">12.5w members</p></a>
-          <a href="#discover" data-panel-route="discover" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm"><h3 class="font-semibold">新手铲屎官互助</h3><p class="text-sm text-gray-500 mt-1">8.2w members</p></a>
-          <a href="#discover" data-panel-route="discover" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm"><h3 class="font-semibold">黑猫玄学社</h3><p class="text-sm text-gray-500 mt-1">5.6w members</p></a>
+        <p class="text-body-md text-gray-500 mb-6" data-i18n="stitch.discover_tip">按圈子浏览动态，加入状态会保存在本机。</p>
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-5">
+          <div id="discover-chip-row" class="flex flex-wrap gap-2"></div>
+          <label class="relative block md:w-72">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[18px]">search</span>
+            <input id="discover-search" class="w-full rounded-full bg-surface-container-low border-none py-2.5 pl-10 pr-4 text-body-md focus:ring-2 focus:ring-primary-container" type="search" data-i18n-placeholder="stitch.discover_search_ph" placeholder="搜索你感兴趣的圈子..." />
+          </label>
         </div>
+        <div id="discover-circles" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+        <p id="discover-empty" class="hidden text-body-md text-gray-500 mt-6">没有匹配的圈子。</p>
       </section>
       <section id="panel-messages" class="hidden max-w-5xl mx-auto">
         <div class="flex items-center justify-between mb-4 gap-3">
           <h2 class="text-headline-xl font-headline-xl" data-i18n="stitch.messages_title">消息中心</h2>
-          <a href="#messages" data-panel-route="messages" class="text-primary-container text-label-md" data-i18n="stitch.messages_cta">查看全部消息</a>
+          <a href="/dashboard#messages" class="text-primary-container text-label-md" data-i18n="stitch.messages_cta">打开管理中心</a>
         </div>
         <div id="messages-preview-list" class="space-y-3"></div>
       </section>

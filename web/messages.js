@@ -63,6 +63,15 @@
     return d.toLocaleString();
   }
 
+  function escapeHtml(input) {
+    return String(input)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
   function renderConversations() {
     const items = filteredConvs();
     convNode.innerHTML = "";
@@ -82,12 +91,12 @@
       const unread = Number(c.unread_count || 0);
       btn.innerHTML = `
         <div class="flex items-center justify-between gap-2">
-          <p class="text-body-md font-semibold truncate">${name}</p>
+          <p class="text-body-md font-semibold truncate">${escapeHtml(name)}</p>
           ${unread > 0 ? `<span class="rounded-full bg-primary-container text-white text-[10px] px-2 py-0.5">${unread > 99 ? "99+" : unread}</span>` : ""}
         </div>
-        <p class="text-label-md text-on-surface-variant truncate mt-1">${c.last_message || ""}</p>
+        <p class="text-label-md text-on-surface-variant truncate mt-1">${escapeHtml(c.last_message || "")}</p>
       `;
-      btn.addEventListener("click", () => openConversation(Number(c.peer.id || c.peer_id || 0), name));
+      btn.addEventListener("click", () => openConversation(Number(c.peer?.id || c.peer_id || 0), name));
       convNode.appendChild(btn);
     }
   }
@@ -105,8 +114,8 @@
       wrap.className = `flex ${mine ? "justify-end" : "justify-start"}`;
       wrap.innerHTML = `
         <div class="${mine ? "bg-primary-container text-white" : "bg-surface-container-low text-on-surface"} max-w-[80%] rounded-2xl px-3 py-2.5">
-          <p class="text-body-md whitespace-pre-wrap break-words">${m.content || ""}</p>
-          <p class="text-[11px] opacity-70 mt-1">${fmtTime(m.created_at)}</p>
+          <p class="text-body-md whitespace-pre-wrap break-words">${escapeHtml(m.content || "")}</p>
+          <p class="text-[11px] opacity-70 mt-1">${escapeHtml(fmtTime(m.created_at))}</p>
         </div>
       `;
       streamNode.appendChild(wrap);

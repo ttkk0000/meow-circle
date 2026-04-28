@@ -22,3 +22,18 @@ Admin (`dashboard.html` multi-panel):
 - `ADMIN_PROFILE`: DONE
 - `ADMIN_NOTIFICATIONS`: DONE
 - `ADMIN_MESSAGES`: DONE
+
+Mobile / responsive:
+
+- `HOME_MOBILE`: DONE via responsive `index.html` and Expo feed
+- `DISCOVER_MOBILE`: DONE via responsive `discover.html` and Expo discover
+- `MESSAGES_MOBILE`: DONE via responsive `messages.html` and Expo messages
+- `PROFILE_MOBILE`: DONE via responsive `profile.html` and Expo profile
+- `POST_DETAIL_MOBILE`: DONE via responsive `post.html` and Expo detail
+- `COMPOSE_POST_MOBILE`: DONE via responsive `compose.html` and Expo compose
+- `LOGIN_MOBILE`: DONE via responsive `login.html` and Expo login
+- `REGISTER_MOBILE`: DONE via responsive `register.html` and Expo register
+- `SPLASH_MOBILE`: DONE via Expo splash config
+- `LOADING_MOBILE`: DONE via shared loading/skeleton states
+- `DETAIL_LOADING_MOBILE`: DONE via post/detail skeleton states
+- `APP_ICON`: DONE via Expo icon/adaptive icon config

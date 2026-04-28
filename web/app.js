@@ -24,10 +24,68 @@ const panelRouteLinks = Array.from(document.querySelectorAll("[data-panel-route]
 const activeRenderJobs = new WeakMap();
 const activeRequestControllers = new Map();
 const PANEL_IDS = ["home", "discover", "messages", "profile"];
+const CIRCLE_JOIN_KEY = "meow_joined_circles_v1";
+const DISCOVER_CATEGORIES = [
+  { key: "all", labelKey: "stitch.chip_all" },
+  { key: "newbie", labelKey: "stitch.chip_newbie" },
+  { key: "breed", labelKey: "stitch.chip_breed" },
+  { key: "gear", labelKey: "stitch.chip_gear" },
+  { key: "health", labelKey: "stitch.chip_health" },
+];
+const DISCOVER_CIRCLES = [
+  {
+    id: "orange",
+    category: "breed",
+    titleKey: "stitch.circle_orange",
+    descKey: "stitch.circle_orange_desc",
+    members: "12.5w",
+    mark: "橘",
+    href: "/?q=%E6%A9%98%E7%8C%AB#home",
+  },
+  {
+    id: "newbie",
+    category: "newbie",
+    titleKey: "stitch.circle_newbie",
+    descKey: "stitch.circle_newbie_desc",
+    members: "8.2w",
+    mark: "新",
+    href: "/?q=%E6%96%B0%E6%89%8B#home",
+  },
+  {
+    id: "black",
+    category: "breed",
+    titleKey: "stitch.circle_black",
+    descKey: "stitch.circle_black_desc",
+    members: "5.6w",
+    mark: "黑",
+    href: "/?q=%E9%BB%91%E7%8C%AB#home",
+  },
+  {
+    id: "market",
+    category: "gear",
+    titleKey: "stitch.circle_market",
+    descKey: "stitch.circle_market_desc",
+    members: "8.9k",
+    mark: "市",
+    href: "/market.html",
+  },
+  {
+    id: "health",
+    category: "health",
+    titleKey: "stitch.chip_health",
+    descKey: "猫咪医疗、驱虫、绝育和急救经验集中讨论。",
+    members: "1.2w",
+    mark: "医",
+    href: "/?q=%E5%8C%BB%E7%96%97#home",
+  },
+];
 
 let cachedFeed = [];
 let currentFilter = "rec";
 let currentPanel = "home";
+let discoverCategory = "all";
+let discoverQuery = "";
+let discoverPanelBound = false;
 const pageParams = new URLSearchParams(location.search);
 const initialFeed = pageParams.get("feed");
 if (initialFeed && ["rec", "new", "follow"].includes(initialFeed)) {
@@ -96,7 +154,8 @@ function renderHomePanel() {
 }
 
 function renderDiscoverPanel() {
-  // Discover currently uses static cards in index.html.
+  bindDiscoverPanel();
+  renderDiscoverCircles();
 }
 
 function renderMessagesPanel() {
@@ -125,7 +184,10 @@ function togglePanels(panel) {
 async function loadMessagesPreview() {
   if (!messagesPreviewList) return;
   if (!getToken()) {
-    messagesPreviewList.innerHTML = `<p class="text-sm text-gray-500">${escapeHtml(t("alert.login_first"))}</p>`;
+    messagesPreviewList.innerHTML = `<div class="rounded-2xl bg-white border border-gray-100 p-4">
+      <p class="text-sm text-gray-500">${escapeHtml(t("alert.login_first"))}</p>
+      <a href="/login?return_to=%2Fdashboard%23messages" class="inline-flex mt-3 rounded-full bg-primary-container text-white px-4 py-2 text-label-md">${escapeHtml(t("nav.login"))}</a>
+    </div>`;
     return;
   }
   messagesPreviewList.innerHTML = skeletonCards(2);
@@ -153,7 +215,11 @@ async function loadMessagesPreview() {
 async function loadProfilePreview() {
   if (!profilePreviewCard) return;
   if (!getToken()) {
-    profilePreviewCard.innerHTML = `<p class="text-sm text-gray-500">${escapeHtml(t("dashboard.not_login_tip"))}</p>`;
+    profilePreviewCard.innerHTML = `<p class="text-sm text-gray-500">${escapeHtml(t("dashboard.not_login_tip"))}</p>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <a href="/login?return_to=%2Fprofile.html" class="rounded-full bg-primary-container text-white px-4 py-2 text-label-md">${escapeHtml(t("nav.login"))}</a>
+        <a href="/register?return_to=%2Fprofile.html" class="rounded-full bg-surface-container text-on-surface px-4 py-2 text-label-md">${escapeHtml(t("nav.register"))}</a>
+      </div>`;
     return;
   }
   profilePreviewCard.innerHTML = skeletonCards(1);
@@ -163,10 +229,99 @@ async function loadProfilePreview() {
       apiCall("/api/v1/me/posts", "GET"),
     ]);
     const count = Array.isArray(posts.items) ? posts.items.length : 0;
-    profilePreviewCard.innerHTML = `<div class="flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-primary-container/10 overflow-hidden">${me.avatar_url ? `<img src="${escapeHtml(me.avatar_url)}" class="w-full h-full object-cover" alt="" />` : ""}</div><div><p class="font-semibold">${escapeHtml(me.nickname || me.username || "")}</p><p class="text-sm text-gray-500">@${escapeHtml(me.username || "")}</p></div></div><p class="mt-3 text-sm text-gray-600">${escapeHtml(me.bio || "")}</p><p class="mt-2 text-sm text-primary-container">${count} posts</p>`;
+    profilePreviewCard.innerHTML = `<div class="flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-primary-container/10 overflow-hidden">${me.avatar_url ? `<img src="${escapeHtml(me.avatar_url)}" class="w-full h-full object-cover" alt="" />` : ""}</div><div><p class="font-semibold">${escapeHtml(me.nickname || me.username || "")}</p><p class="text-sm text-gray-500">@${escapeHtml(me.username || "")}</p></div></div><p class="mt-3 text-sm text-gray-600">${escapeHtml(me.bio || "")}</p><p class="mt-2 text-sm text-primary-container">${count} posts</p><div class="mt-4 flex flex-wrap gap-2"><a href="/profile.html" class="rounded-full bg-primary-container text-white px-4 py-2 text-label-md">${escapeHtml(t("stitch.profile_title"))}</a><a href="/dashboard#profile" class="rounded-full bg-surface-container text-on-surface px-4 py-2 text-label-md">${escapeHtml(t("nav.dashboard"))}</a></div>`;
   } catch (err) {
     profilePreviewCard.innerHTML = `<p class="text-sm text-red-600">${escapeHtml(err.message)}</p>`;
   }
+}
+
+function readJoinedCircles() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(CIRCLE_JOIN_KEY) || "[]");
+    return new Set(Array.isArray(raw) ? raw : []);
+  } catch (_) {
+    return new Set();
+  }
+}
+
+function writeJoinedCircles(joined) {
+  localStorage.setItem(CIRCLE_JOIN_KEY, JSON.stringify(Array.from(joined)));
+}
+
+function bindDiscoverPanel() {
+  if (discoverPanelBound) return;
+  discoverPanelBound = true;
+  const search = document.querySelector("#discover-search");
+  if (search) {
+    search.addEventListener("input", () => {
+      discoverQuery = search.value.trim().toLowerCase();
+      renderDiscoverCircles();
+    });
+  }
+}
+
+function renderDiscoverCircles() {
+  const chipRow = document.querySelector("#discover-chip-row");
+  const grid = document.querySelector("#discover-circles");
+  const empty = document.querySelector("#discover-empty");
+  if (!chipRow || !grid) return;
+
+  chipRow.innerHTML = "";
+  for (const cat of DISCOVER_CATEGORIES) {
+    const on = discoverCategory === cat.key;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = on
+      ? "rounded-full bg-primary-container text-white px-4 py-2 text-label-md font-label-md"
+      : "rounded-full bg-surface-container text-on-surface-variant px-4 py-2 text-label-md font-label-md hover:bg-surface-container-high";
+    btn.textContent = t(cat.labelKey);
+    btn.addEventListener("click", () => {
+      discoverCategory = cat.key;
+      renderDiscoverCircles();
+    });
+    chipRow.appendChild(btn);
+  }
+
+  const joined = readJoinedCircles();
+  const q = discoverQuery;
+  const items = DISCOVER_CIRCLES.filter((circle) => {
+    const matchCategory = discoverCategory === "all" || circle.category === discoverCategory;
+    const text = `${t(circle.titleKey)} ${t(circle.descKey || "")} ${circle.members}`.toLowerCase();
+    return matchCategory && (!q || text.includes(q));
+  });
+
+  grid.innerHTML = "";
+  if (empty) empty.classList.toggle("hidden", items.length !== 0);
+  const frag = document.createDocumentFragment();
+  for (const circle of items) {
+    const isJoined = joined.has(circle.id);
+    const card = document.createElement("article");
+    card.className =
+      "bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:-translate-y-0.5 transition-transform";
+    card.innerHTML = `
+      <div class="flex items-start gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-primary-container/10 text-primary-container flex items-center justify-center font-headline-lg shrink-0">${escapeHtml(circle.mark)}</div>
+        <div class="min-w-0 flex-1">
+          <h3 class="font-headline-lg text-on-surface">${escapeHtml(t(circle.titleKey))}</h3>
+          <p class="mt-1 text-body-md text-gray-500 line-clamp-2">${escapeHtml(circle.descKey.startsWith("stitch.") ? t(circle.descKey) : circle.descKey)}</p>
+          <p class="mt-2 text-label-md text-gray-400">${escapeHtml(circle.members)} members</p>
+        </div>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <a href="${escapeHtml(circle.href)}" class="rounded-full bg-surface-container text-on-surface px-4 py-2 text-label-md">${escapeHtml(t("stitch.view_all"))}</a>
+        <button type="button" class="circle-join rounded-full ${isJoined ? "bg-surface-container text-on-surface-variant" : "bg-primary-container text-white"} px-4 py-2 text-label-md" data-circle-id="${escapeHtml(circle.id)}">${escapeHtml(t(isJoined ? "stitch.joined" : "stitch.join"))}</button>
+      </div>`;
+    const joinBtn = card.querySelector(".circle-join");
+    joinBtn?.addEventListener("click", () => {
+      const next = readJoinedCircles();
+      if (next.has(circle.id)) next.delete(circle.id);
+      else next.add(circle.id);
+      writeJoinedCircles(next);
+      renderDiscoverCircles();
+    });
+    frag.appendChild(card);
+  }
+  grid.appendChild(frag);
 }
 
 function pickAspectClass(seed) {

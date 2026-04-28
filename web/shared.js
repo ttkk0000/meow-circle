@@ -381,7 +381,7 @@
       "stitch.discover_title": "发现圈子",
       "stitch.discover_page_title": "咪友圈",
       "stitch.discover_search_ph": "搜索你感兴趣的圈子...",
-      "stitch.discover_tip": "以下为示例圈子卡片；后续可接入真实圈子数据与帖子聚合。",
+      "stitch.discover_tip": "按圈子浏览动态，加入状态会保存在本机。",
       "stitch.chip_all": "全部圈子",
       "stitch.chip_newbie": "新手养猫",
       "stitch.chip_breed": "品种讨论",
@@ -395,6 +395,7 @@
       "stitch.circle_black_desc": "神秘优雅的小精灵。",
       "stitch.circle_market": "好物种草机",
       "stitch.circle_market_desc": "跳转真实交易市集。",
+      "stitch.joined": "已加入",
       "stitch.messages_title": "消息中心",
       "stitch.messages_tip": "完整私信与通知请在管理中心使用。",
       "stitch.messages_cta": "打开管理中心",
@@ -819,7 +820,7 @@
       "stitch.discover_title": "Discover",
       "stitch.discover_page_title": "Circles",
       "stitch.discover_search_ph": "Search circles...",
-      "stitch.discover_tip": "Sample circles; real data can be wired later.",
+      "stitch.discover_tip": "Browse by circles. Joined state is saved on this device.",
       "stitch.chip_all": "All",
       "stitch.chip_newbie": "New owners",
       "stitch.chip_breed": "Breeds",
@@ -833,6 +834,7 @@
       "stitch.circle_black_desc": "Elegant void cats.",
       "stitch.circle_market": "Gear picks",
       "stitch.circle_market_desc": "Go to the real marketplace.",
+      "stitch.joined": "Joined",
       "stitch.messages_title": "Messages",
       "stitch.messages_tip": "Use the console for full DMs and notifications.",
       "stitch.messages_cta": "Open console",
@@ -1257,7 +1259,7 @@
       "stitch.discover_title": "発見",
       "stitch.discover_page_title": "サークル",
       "stitch.discover_search_ph": "サークルを検索...",
-      "stitch.discover_tip": "サンプル表示です。後でデータ連携できます。",
+      "stitch.discover_tip": "サークル別に閲覧できます。参加状態は端末内に保存されます。",
       "stitch.chip_all": "すべて",
       "stitch.chip_newbie": "初心者",
       "stitch.chip_breed": "品種",
@@ -1271,6 +1273,7 @@
       "stitch.circle_black_desc": "ミステリアスな子たち。",
       "stitch.circle_market": "お買い物",
       "stitch.circle_market_desc": "マーケットへ。",
+      "stitch.joined": "参加済み",
       "stitch.messages_title": "メッセージ",
       "stitch.messages_tip": "DM と通知は管理画面でどうぞ。",
       "stitch.messages_cta": "管理画面へ",
@@ -1446,7 +1449,8 @@
     item.addEventListener("click", hide, { once: true });
   }
 
-  // Stitch MCP desktop design references (17 web screens).
+  // Stitch MCP design references. Desktop/admin screens are implemented as
+  // web routes; mobile/state screens are used by responsive web and Expo.
   const STITCH_WEB_PROJECT_ID = "472020832926366758";
   const STITCH_WEB_SCREENS = {
     HOME_DESKTOP: "cd9894efb5c141e6895ad328663a64b0",
@@ -1466,6 +1470,18 @@
     ADMIN_PROFILE: "05062f3a8a09444596188cb3d26bad65",
     ADMIN_NOTIFICATIONS: "98220d4897c04bcaadbe0c141efe71a0",
     ADMIN_MESSAGES: "4cf8b752667a4021989d3bfabf894031",
+    HOME_MOBILE: "24394474a8fb461691446c023767549f",
+    DISCOVER_MOBILE: "c4356b5a317846ae8d58ffa3ec723154",
+    MESSAGES_MOBILE: "855b3e0ba0194e9aaa07f2b0237c075f",
+    PROFILE_MOBILE: "072b7dd565914b8e835a6260878aa0ee",
+    POST_DETAIL_MOBILE: "56969a3c2b064bd1976cf418ec4d32e2",
+    COMPOSE_POST_MOBILE: "300abed7f6aa4aef9e4a02b95e093059",
+    LOGIN_MOBILE: "11540204191034377071",
+    REGISTER_MOBILE: "62e4e647722245a88e07d5801560ada1",
+    SPLASH_MOBILE: "ea5847d8c0fd4dc7b14e62893aad56ee",
+    LOADING_MOBILE: "550bdee1020e465c9cc49aaf46de7ec8",
+    DETAIL_LOADING_MOBILE: "306a6d8179f14973a4156e69ec84ff14",
+    APP_ICON: "5105072463b444239544a7c5ca2215fe",
   };
 
   function setStitchScreen(screenId) {
