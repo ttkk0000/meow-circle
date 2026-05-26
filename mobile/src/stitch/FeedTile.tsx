@@ -16,10 +16,10 @@ export function feedTileHeight(postId: number, column: 0 | 1): number {
 }
 
 export function categoryLabel(c: string): string {
-  if (c === 'daily_share') return '日常';
-  if (c === 'help') return '求助';
+  if (c === 'daily_share') return '猫猫日常';
+  if (c === 'help') return '求助问答';
   if (c === 'activity') return '活动';
-  if (c === 'trade') return '交易';
+  if (c === 'trade') return '好物交易';
   return c;
 }
 
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: radius.xl,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255, 90, 119, 0.14)',
+    borderColor: colors.border,
     padding: spacing.md,
     overflow: 'hidden',
     ...elevation.soft,

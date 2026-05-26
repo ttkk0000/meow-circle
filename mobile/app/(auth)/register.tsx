@@ -107,15 +107,17 @@ export default function RegisterScreen() {
 
   return (
     <Screen contentStyle={styles.screenInner}>
-      <View style={styles.glowTop} pointerEvents="none" />
       <View style={styles.card}>
         <View style={styles.heroWrap}>
           <Image source={{ uri: HERO_REG }} style={styles.heroImg} resizeMode="cover" />
+          <View style={styles.heroBadge}>
+            <Text style={styles.heroBadgeText}>M&D · meow & doggie</Text>
+          </View>
         </View>
 
-        <Text style={styles.brandMeow}>MEOW</Text>
+        <Text style={styles.brandMeow}>M&D</Text>
         <Txt muted style={styles.tagline}>
-          加入喵圈，发现更多可爱日常
+          加入 M&D，发现更多猫猫日常
         </Txt>
 
         <View style={styles.form}>
@@ -233,15 +235,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: spacing.lg,
   },
-  glowTop: {
-    position: 'absolute',
-    top: -72,
-    right: -48,
-    width: 200,
-    height: 200,
-    borderRadius: 999,
-    backgroundColor: 'rgba(255, 90, 119, 0.14)',
-  },
   card: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: radius.xl,
@@ -259,6 +252,21 @@ const styles = StyleSheet.create({
   heroImg: {
     width: '100%',
     height: 120,
+  },
+  heroBadge: {
+    position: 'absolute',
+    top: spacing.md,
+    left: spacing.md,
+    backgroundColor: 'rgba(255,255,255,0.78)',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.pill,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+  },
+  heroBadgeText: {
+    ...typography.label,
+    color: colors.primaryContainer,
   },
   brandMeow: {
     ...typography.mega,

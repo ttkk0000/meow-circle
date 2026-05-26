@@ -66,8 +66,7 @@ import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import kotlinx.coroutines.launch
 
 /**
- * Matches Stitch **MOBILE** screen「登录页面」(`deviceType=MOBILE`, not the desktop-titled export):
- * open canvas, MEOW lockup + sparkle, tagline, icon fields, forgot password, CTA, social row, register footer.
+ * M&D mobile login: cat-first lockup, icon fields, CTA, social row, register footer.
  */
 @Composable
 fun StitchLoginScreen(
@@ -87,25 +86,6 @@ fun StitchLoginScreen(
     val scroll = rememberScrollState()
 
     Box(modifier.fillMaxSize()) {
-        Box(
-            modifier =
-                Modifier
-                    .align(Alignment.TopEnd)
-                    .offset(50.dp, (-100).dp)
-                    .size(256.dp)
-                    .clip(CircleShape)
-                    .background(StitchLoginRef.PrimaryContainer.copy(alpha = 0.10f)),
-        )
-        Box(
-            modifier =
-                Modifier
-                    .align(Alignment.CenterStart)
-                    .offset((-80).dp, 120.dp)
-                    .size(288.dp)
-                    .clip(CircleShape)
-                    .background(StitchLoginRef.SecondaryContainer.copy(alpha = 0.10f)),
-        )
-
         Column(
             Modifier
                 .fillMaxSize()
@@ -134,12 +114,12 @@ fun StitchLoginScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        "MEOW",
+                        "M&D",
                         fontSize = 56.sp,
                         lineHeight = 56.sp,
                         fontWeight = FontWeight.Black,
                         color = StitchLoginRef.PrimaryContainer,
-                        letterSpacing = (-1).sp,
+                        letterSpacing = 0.sp,
                     )
                     Icon(
                         imageVector = Icons.Filled.AutoAwesome,
@@ -153,7 +133,7 @@ fun StitchLoginScreen(
                     )
                 }
                 Text(
-                    "欢迎回到喵圈",
+                    "登录回到你的猫猫宇宙",
                     style = MaterialTheme.typography.bodyLarge,
                     color = StitchLoginRef.Outline,
                 )
@@ -182,7 +162,7 @@ fun StitchLoginScreen(
                         )
                     },
                     singleLine = true,
-                    shape = RoundedCornerShape(32.dp),
+                    shape = RoundedCornerShape(8.dp),
                     colors =
                         TextFieldDefaults.colors(
                             focusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
@@ -229,7 +209,7 @@ fun StitchLoginScreen(
                     },
                     visualTransformation = if (showPw) VisualTransformation.None else PasswordVisualTransformation(),
                     singleLine = true,
-                    shape = RoundedCornerShape(32.dp),
+                    shape = RoundedCornerShape(8.dp),
                     colors =
                         TextFieldDefaults.colors(
                             focusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
@@ -256,7 +236,7 @@ fun StitchLoginScreen(
                                 letterSpacing = 0.2.sp,
                             ),
                         color = StitchLoginRef.PrimaryContainer,
-                        modifier = Modifier.clickable(enabled = !busy) { /* Stitch placeholder */ },
+                        modifier = Modifier.clickable(enabled = !busy) { /* M&D placeholder */ },
                     )
                 }
 
@@ -276,11 +256,11 @@ fun StitchLoginScreen(
                             .height(64.dp)
                             .shadow(
                                 elevation = 12.dp,
-                                shape = RoundedCornerShape(32.dp),
+                                shape = RoundedCornerShape(8.dp),
                                 spotColor = StitchLoginRef.PrimaryContainer.copy(alpha = 0.25f),
                                 ambientColor = StitchLoginRef.PrimaryContainer.copy(alpha = 0.12f),
                             )
-                            .clip(RoundedCornerShape(32.dp))
+                            .clip(RoundedCornerShape(8.dp))
                             .background(
                                 Brush.horizontalGradient(
                                     listOf(StitchLoginRef.PrimaryContainer, StitchLoginRef.InversePrimary),

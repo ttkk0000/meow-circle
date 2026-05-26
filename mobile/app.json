@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Meow Circle",
-    "slug": "kitty-circle",
+    "name": "M&D",
+    "slug": "mnd",
     "version": "0.1.0",
     "orientation": "portrait",
     "scheme": "meowcircle",
@@ -10,7 +10,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/icon.png",
-      "backgroundColor": "#F7F3EC",
+      "backgroundColor": "#FFF7EE",
       "resizeMode": "contain"
     },
     "ios": {
@@ -21,7 +21,7 @@
       "package": "com.ttkk0000.meowcircle",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#F7F3EC"
+        "backgroundColor": "#FFF7EE"
       },
       "edgeToEdgeEnabled": true
     },

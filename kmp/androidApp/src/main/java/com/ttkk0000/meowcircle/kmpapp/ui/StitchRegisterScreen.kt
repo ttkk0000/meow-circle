@@ -60,7 +60,7 @@ import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import kotlinx.coroutines.launch
 
-/** MOBILE「注册页面」：Material 3 Scaffold + Stitch 色与圆角输入（无手机号时使用用户名注册）。 */
+/** M&D mobile register: cat-first onboarding with optional phone verification. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StitchRegisterScreen(
@@ -84,7 +84,7 @@ fun StitchRegisterScreen(
         containerColor = StitchLoginRef.Background,
         topBar = {
             TopAppBar(
-                title = { Text("注册 · Kitty Circle", fontWeight = FontWeight.SemiBold) },
+                title = { Text("注册 · M&D", fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = onBack, enabled = !busy) {
                         Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "返回")
@@ -113,7 +113,7 @@ fun StitchRegisterScreen(
                 color = StitchLoginRef.PrimaryContainer,
             )
             Text(
-                "加入 Kitty Circle，分享主子的日常",
+                "加入 M&D，发现更多猫猫日常",
                 style = MaterialTheme.typography.bodyLarge,
                 color = StitchLoginRef.Outline,
                 modifier = Modifier.padding(top = 6.dp, bottom = 12.dp),
@@ -230,9 +230,9 @@ fun StitchRegisterScreen(
                             Brush.horizontalGradient(
                                 listOf(StitchLoginRef.PrimaryContainer, StitchLoginRef.InversePrimary),
                             ),
-                            RoundedCornerShape(32.dp),
+                            RoundedCornerShape(8.dp),
                         ),
-                shape = RoundedCornerShape(32.dp),
+                shape = RoundedCornerShape(8.dp),
                 colors =
                     ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent,
@@ -301,7 +301,7 @@ private fun RegField(
         },
         singleLine = true,
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        shape = RoundedCornerShape(32.dp),
+        shape = RoundedCornerShape(8.dp),
         colors =
             TextFieldDefaults.colors(
                 focusedContainerColor = StitchLoginRef.SurfaceContainerLowest,

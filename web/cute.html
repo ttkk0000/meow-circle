@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Meow Circle Pawpop UI</title>
+  <title>M&D Cute WebUI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ff4f93'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='34' font-family='Arial' font-weight='700' fill='white'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 64'%3E%3Crect width='80' height='64' rx='12' fill='%23ff4f93'/%3E%3Ctext x='40' y='40' text-anchor='middle' font-size='24' font-family='Arial' font-weight='700' fill='white'%3EM%26D%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="cute-ui.css" />
 </head>
 <body>
   <div class="cute-shell">
     <aside class="dock" aria-label="主导航">
-      <a class="brand-lockup" href="/cute.html" aria-label="Meow Circle Pawpop 首页">
-        <span class="brand-mark">M</span>
+      <a class="brand-lockup" href="cute.html" aria-label="M&D meow and doggie 首页">
+        <span class="brand-mark">M&D</span>
         <span>
-          <strong>MEOW</strong>
-          <small>Pawpop</small>
+          <strong>M&D</strong>
+          <small>meow & doggie</small>
         </span>
       </a>
       <nav class="dock-nav">
@@ -52,7 +52,7 @@
           <span>安全</span>
         </button>
       </nav>
-      <a class="legacy-link" href="/">旧版入口</a>
+      <a class="legacy-link" href="index.html">经典功能页</a>
     </aside>
 
     <main class="stage">
@@ -76,9 +76,9 @@
         <div class="hero-grid">
           <article class="hero-card">
             <div class="hero-copy">
-              <span class="eyebrow">Pawpop Universe</span>
-              <h1>把今天可爱的瞬间，放进喵友圈。</h1>
-              <p>动态、求助、活动、市集和私信都在一个可爱的宠物小宇宙里。</p>
+              <span class="eyebrow">M&D Universe</span>
+              <h1>猫猫是主角，狗狗也来同桌。</h1>
+              <p>M&D = meow & doggie。这里先为猫咪日常发光，也让狗狗、领养、服务和交易自然加入同一个可爱社区。</p>
               <div class="action-row">
                 <button class="primary-action" type="button" data-view-jump="studio">
                   <span class="material-symbols-rounded">add_circle</span>
@@ -177,8 +177,8 @@
           </article>
           <article>
             <span class="material-symbols-rounded">pets</span>
-            <h3>宠物档案</h3>
-            <p>下一阶段可让每只宠物都有独立主页。</p>
+            <h3>猫狗档案</h3>
+            <p>下一阶段可让每只猫和 doggie 都有独立主页。</p>
           </article>
         </div>
       </section>
@@ -304,7 +304,7 @@
               </div>
             </div>
             <div class="chat-stream">
-              <p class="bubble incoming">还在哦，适合 4-8kg 的小狗。</p>
+              <p class="bubble incoming">还在哦，适合 4-8kg 的小狗狗。</p>
               <p class="bubble outgoing">可以今天晚上自提吗？</p>
               <p class="bubble incoming">可以，我把地址发你。</p>
             </div>
@@ -349,22 +349,24 @@
         <div class="auth-grid">
           <article class="auth-hero">
             <span class="eyebrow">Welcome</span>
-            <h1>登录后，继续你的 Pawpop 宇宙。</h1>
-            <p>发动态、换主页背景、收藏好物、处理订单和私信都需要账号。</p>
+            <h1>登录后，继续你的 M&D 宇宙。</h1>
+            <p>发猫猫动态、换主页背景、收藏好物、处理订单和私信都需要账号。</p>
           </article>
           <div class="auth-forms">
-            <form class="compose-card">
+            <form class="compose-card" data-auth-login-form>
               <h2>登录</h2>
-              <label><span>用户名 / 手机号</span><input type="text" value="demo" /></label>
-              <label><span>密码</span><input type="password" value="123456" /></label>
-              <button class="primary-action" type="button">进入喵友圈</button>
+              <label><span>用户名 / 手机号</span><input name="username" type="text" value="demo" /></label>
+              <label><span>密码</span><input name="password" type="password" value="123456" /></label>
+              <button class="primary-action" type="submit">进入 M&D</button>
+              <p class="inline-status" data-auth-login-status></p>
             </form>
-            <form class="compose-card">
+            <form class="compose-card" data-auth-register-form>
               <h2>注册</h2>
-              <label><span>昵称</span><input type="text" placeholder="给自己起个名字" /></label>
-              <label><span>手机号</span><input type="tel" placeholder="用于验证码" /></label>
-              <label><span>密码</span><input type="password" placeholder="至少 6 位" /></label>
-              <button class="secondary-action" type="button">创建账号</button>
+              <label><span>昵称</span><input name="username" type="text" placeholder="给自己起个名字" /></label>
+              <label><span>手机号</span><input name="phone" type="tel" placeholder="可选，用于验证码" /></label>
+              <label><span>密码</span><input name="password" type="password" placeholder="至少 6 位" /></label>
+              <button class="secondary-action" type="submit">创建账号</button>
+              <p class="inline-status" data-auth-register-status></p>
             </form>
           </div>
         </div>
@@ -375,9 +377,9 @@
           <div class="profile-panel">
             <img class="avatar" src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=300&q=80" alt="用户头像猫咪" />
             <div>
-              <span class="eyebrow">Me</span>
+              <span class="eyebrow">M&D Me</span>
               <h1>桃子和拿铁</h1>
-              <p>@peachlatte · 两只猫的日常记录员</p>
+              <p>@peachlatte · 两只猫的日常记录员，偶尔带 doggie 出镜</p>
               <div class="profile-stats">
                 <strong>128<small>动态</small></strong>
                 <strong>42<small>关注</small></strong>
@@ -421,37 +423,39 @@
         </div>
         <div class="studio-grid">
           <div class="studio-pane is-active" data-studio-panel="post">
-            <form class="compose-card">
+            <form class="compose-card" data-compose-post-form>
               <label>
                 <span>标题</span>
-                <input type="text" value="今天第一次带拿铁去公园" />
+                <input name="title" type="text" value="今天第一次带拿铁去公园" />
               </label>
               <label>
                 <span>内容</span>
-                <textarea rows="6">它有点紧张，但看到别的小狗后立刻开始摇尾巴。</textarea>
+                <textarea name="content" rows="6">它有点紧张，但看到别的小狗狗后立刻开始摇尾巴。</textarea>
               </label>
               <div class="chip-row">
-                <button class="filter-chip is-active" type="button">日常</button>
-                <button class="filter-chip" type="button">求助</button>
-                <button class="filter-chip" type="button">活动</button>
+                <button class="filter-chip is-active" type="button" data-post-category="daily_share">日常</button>
+                <button class="filter-chip" type="button" data-post-category="help">求助</button>
+                <button class="filter-chip" type="button" data-post-category="activity">活动</button>
               </div>
-              <button class="primary-action" type="button">
+              <button class="primary-action" type="submit">
                 <span class="material-symbols-rounded">publish</span>
                 发布
               </button>
+              <p class="inline-status" data-compose-post-status></p>
             </form>
           </div>
           <div class="studio-pane" data-studio-panel="listing">
-            <form class="compose-card">
-              <label><span>交易标题</span><input type="text" value="彩色牵引绳套装" /></label>
-              <label><span>描述</span><textarea rows="5">轻量织带，适合日常散步，附近可自提。</textarea></label>
+            <form class="compose-card" data-compose-listing-form>
+              <label><span>交易标题</span><input name="title" type="text" value="彩色牵引绳套装" /></label>
+              <label><span>描述</span><textarea name="description" rows="5">轻量织带，适合日常散步，附近可自提。</textarea></label>
               <div class="chip-row">
-                <button class="filter-chip is-active" type="button">商品</button>
-                <button class="filter-chip" type="button">服务</button>
-                <button class="filter-chip" type="button">领养</button>
+                <button class="filter-chip is-active" type="button" data-listing-type="product">商品</button>
+                <button class="filter-chip" type="button" data-listing-type="service">服务</button>
+                <button class="filter-chip" type="button" data-listing-type="adopt">领养</button>
               </div>
-              <label><span>价格</span><input type="text" value="69.00 CNY" /></label>
-              <button class="primary-action" type="button"><span class="material-symbols-rounded">sell</span>发布交易</button>
+              <label><span>价格</span><input name="price" type="text" value="69.00 CNY" /></label>
+              <button class="primary-action" type="submit"><span class="material-symbols-rounded">sell</span>发布交易</button>
+              <p class="inline-status" data-compose-listing-status></p>
             </form>
           </div>
           <div class="studio-pane" data-studio-panel="media">
@@ -507,7 +511,7 @@
       </article>
       <article class="rail-card">
         <span class="eyebrow">Hot</span>
-        <h3>#新手养猫</h3>
+        <h3>#猫猫新手村</h3>
         <p>今日 46 条讨论，求助回复率 87%。</p>
       </article>
       <article class="rail-card">

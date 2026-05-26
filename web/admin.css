@@ -13,10 +13,39 @@
   align-items: center;
   flex-wrap: wrap;
   gap: var(--space-3);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.header-brand,
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.header-actions a {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-soft);
+  font-weight: 700;
+  padding: 0.55rem 0.85rem;
+  text-decoration: none;
+}
+
+.header-actions a:hover {
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .header h1 {
   margin: 0;
+  color: var(--text);
+  font-size: clamp(1.5rem, 2vw, 2.15rem);
 }
 
 .header p {
@@ -37,6 +66,43 @@
 /* Stacked panels: avoid styles.css 7/5 two-column flow splitting admin sections. */
 main.container {
   grid-template-columns: minmax(0, 1fr);
+}
+
+.admin-hero {
+  align-items: end;
+  background:
+    linear-gradient(135deg, rgba(255, 79, 147, 0.13), rgba(86, 199, 255, 0.14)),
+    var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-ambient);
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr) auto;
+  overflow: hidden;
+  padding: var(--space-5);
+}
+
+.admin-hero h2 {
+  color: var(--text);
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  margin: 0.35rem 0;
+}
+
+.admin-hero p {
+  color: var(--text-soft);
+  margin: 0;
+  max-width: 620px;
+}
+
+.admin-hero-mark {
+  background: var(--brand);
+  border-radius: 999px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
 }
 
 .panel {
@@ -70,6 +136,15 @@ main.container {
 .row input {
   min-width: 260px;
   flex: 1;
+}
+
+.row button,
+.panel-head button {
+  background: var(--brand);
+  border-color: var(--brand);
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 800;
 }
 
 .tip {
@@ -143,4 +218,14 @@ main.container {
   background: var(--danger-bg);
   color: var(--danger);
   border-color: var(--danger-border);
+}
+
+@media (max-width: 720px) {
+  .admin-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-hero-mark {
+    justify-self: start;
+  }
 }

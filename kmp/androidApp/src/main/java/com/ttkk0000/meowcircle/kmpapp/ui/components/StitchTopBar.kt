@@ -35,7 +35,7 @@ import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShadows
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 
-/** 顶部栏：磨砂浅色底 + 品牌标题，与 Stitch 移动中文版一致。 */
+/** 顶部栏：M&D = meow & doggie，猫猫优先的移动端品牌栏。 */
 @Composable
 fun StitchTopBar(
     apiBase: String,
@@ -43,8 +43,8 @@ fun StitchTopBar(
     onAvatarPress: () -> Unit,
     onNotifyPress: () -> Unit,
     modifier: Modifier = Modifier,
-    title: String = "Kitty Circle",
-    subtitle: String = "喵友圈 · 萌友社区",
+    title: String = "M&D",
+    subtitle: String = "meow & doggie",
 ) {
     val avatarUrl = resolveMediaUrl(apiBase, user?.avatarUrl?.takeIf { it.isNotBlank() })
     Column(

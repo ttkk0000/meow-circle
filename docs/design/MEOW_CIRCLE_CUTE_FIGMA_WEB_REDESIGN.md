@@ -1,8 +1,8 @@
-# Meow Circle Cute Figma & Web Redesign
+# M&D Cute Figma & Web Redesign
 
 > Version: 1.0  
 > Date: 2026-05-25  
-> Goal: abandon the Stitch visual/layout system, keep only product capabilities, and rebuild Meow Circle as a cute, polished, themeable social-commerce experience for teen and young adult users.
+> Goal: abandon the Stitch visual/layout system, keep only product capabilities, and rebuild the project as M&D, a cute, polished, themeable social-commerce experience for teen and young adult users.
 
 ## 1. Redesign Decision
 
@@ -15,7 +15,7 @@ The new product direction is:
 - Social feed + cute discovery + pet marketplace + private chat + profile customization.
 - Global theme switching across the whole app.
 - "My/Profile" page supports switchable background images.
-- Three independent UI deliverables are required: Mobile, Desktop, and WebUI. They share the Pawpop brand system but do not share layout assumptions.
+- Three independent UI deliverables are required: Mobile, Desktop, and WebUI. They share the M&D brand system but do not share layout assumptions.
 - WebUI has an independent browser product layout instead of copying mobile or Stitch.
 
 ## 2. Audience
@@ -39,11 +39,15 @@ Design implications:
 
 Design system name:
 
-`Pawpop`
+`M&D`
+
+Meaning:
+
+`meow & doggie`
 
 Brand sentence:
 
-`A soft-pop pet universe for sharing, discovering, chatting, and trading safely.`
+`A cat-first, doggie-friendly soft-pop universe for sharing, discovering, chatting, and trading safely.`
 
 Visual keywords:
 
@@ -55,12 +59,21 @@ Visual keywords:
 - Cute but not childish
 - High-contrast CTAs
 - Customizable identity
+- Cat-first content hierarchy
+- Doggie-friendly commerce and community branches
+
+Logo/mark rule:
+
+- Primary mark text: `M&D`
+- Small lockup text: `meow & doggie`
+- The ampersand should stay visible; do not simplify the brand to `MD` or `Meow & Dog`.
+- Visual emphasis favors cats in hero/profile/feed imagery, while doggie imagery is allowed for marketplace, activities, services, and secondary stories.
 
 ## 4. Figma File Structure
 
 Create a Figma file:
 
-`Meow Circle Pawpop Redesign`
+`M&D Cute Redesign`
 
 Pages:
 
@@ -68,7 +81,7 @@ Pages:
 | --- | --- |
 | `00 Cover` | Brand direction, audience, status |
 | `01 Product Map` | Capabilities from current project and new IA |
-| `02 Pawpop Tokens` | Color, typography, spacing, radius, shadows, themes |
+| `02 M&D Tokens` | Color, typography, spacing, radius, shadows, themes |
 | `03 Components` | Buttons, chips, cards, nav, feed tile, listing card, chat, profile bg picker |
 | `04 Mobile App` | Home, Discover, Market, Messages, Profile, Compose |
 | `05 Desktop App` | Desktop client / efficiency workspace layouts |
@@ -86,7 +99,7 @@ This redesign has three separate deliverables:
 | Set | Repo Entry | Figma Page | Design Intent |
 | --- | --- | --- | --- |
 | Mobile | `web/pawpop-mobile.html` | `04 Mobile App` | Native app-like, thumb-first, screen-by-screen phone experience |
-| Desktop | `web/pawpop-desktop.html` | `05 Desktop App` | Desktop client / efficiency workspace with split panes and dense tools |
+| Desktop | `web/pawpop-desktop.html` | `05 Desktop App` | Desktop client / efficiency workspace with split panes, dense tools, search states, and admin review detail |
 | WebUI | `web/cute.html` | `06 WebUI` | Browser-facing product UI with left dock, center stage, and right rail |
 
 The overview page is:
@@ -98,7 +111,7 @@ Rules:
 - Mobile is not a shrunken WebUI.
 - Desktop is not a widened mobile app.
 - WebUI is the browser product experience and may be responsive, but it remains its own design set.
-- All three share tokens, themes, imagery direction, tone, and core components.
+- All three share M&D tokens, themes, imagery direction, tone, and core components.
 - All three include the same functional coverage: auth, feed, post detail, discover, market, listing detail, messages, notifications, profile/background switch, compose, media, orders, and safety/admin.
 
 Required Web frames:
@@ -120,6 +133,11 @@ Required Web frames:
 - `Web / Safety - Reports`
 - `Web / Safety - Media Review`
 - `Web / Safety - Audit`
+
+Additional desktop detail frames now represented in repo:
+
+- `Desktop / Search & States`
+- `Desktop / Admin Review Detail`
 
 ## 5. New Information Architecture
 
@@ -477,7 +495,7 @@ Content:
 Cute, concise, and expressive:
 
 - `今天想记录哪一刻？`
-- `帮新手喵友一个忙`
+- `帮 M&D 新手一个忙`
 - `这件好物正在找新主人`
 - `给主页换一张心情背景`
 - `已进入安全交易模式`
@@ -500,12 +518,16 @@ It should be accessible at:
 
 `http://localhost:8080/cute.html`
 
+For live backend data hydration, use:
+
+`http://localhost:8080/cute.html?live=1`
+
 This lets the new design live beside the old Stitch UI until the direction is approved.
 
 ## 14. Future Figma Production Steps
 
 1. Import the new Web prototype screenshots as visual reference.
-2. Build Pawpop tokens as Figma variables.
+2. Build M&D tokens as Figma variables.
 3. Build component variants from `03 Components`.
 4. Recreate the Web prototype in `05 Web App`.
 5. Recreate mobile equivalents in `04 Mobile App`.
@@ -515,4 +537,4 @@ This lets the new design live beside the old Stitch UI until the direction is ap
    - Market to chat/order.
    - Profile background switch.
    - Report to safety queue.
-7. Only after approval, migrate production pages from old Stitch UI to Pawpop.
+7. Continue migrating production pages from old Stitch UI to M&D.

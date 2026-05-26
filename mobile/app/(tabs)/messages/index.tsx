@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: radius.xl,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255, 90, 119, 0.12)',
+    borderColor: colors.border,
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing.sm,
     alignItems: 'center',

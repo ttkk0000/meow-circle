@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n="auth.register_title">注册 · 喵友圈</title>
+  <title data-i18n="auth.register_title">注册 · M&D</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -30,7 +30,7 @@
 </head>
 <body class="font-body-md text-on-surface bg-surface min-h-screen flex flex-col relative overflow-x-hidden">
   <header class="sticky top-0 z-20 flex justify-between items-center px-4 md:px-8 h-14 md:h-16 bg-surface/85 backdrop-blur-xl border-b border-primary-container/10">
-    <a href="/" class="text-xl md:text-2xl font-black text-primary-container tracking-tighter font-headline-xl">MEOW</a>
+    <a href="/" class="text-xl md:text-2xl font-black text-primary-container tracking-normal font-headline-xl">M&D</a>
     <nav class="flex items-center gap-3 md:gap-4">
       <div id="settings-bar"></div>
       <a href="/architecture.html" class="text-label-md text-on-surface-variant hover:text-primary-container hidden sm:inline" data-i18n="nav.docs">系统文档</a>
@@ -47,14 +47,19 @@
         src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjyQIAgLp4bQ6UYqUoKE92s5Wi4oUxuAHSdZd8iCLnn2FNMMZU0v5O_AuPd0rH178eIbGh7HBZ9knXo0jmwp2FhkUUEpEPJRR4iobNbJCosa8zsbiRU3oXAqA5a5iU2hoTao9GDe59NeybJwDXFSs99gFm7xtFm-Ujxsw87svinxotym6dSt-31iUgSpn2xINzTDgDQKSjyItj8Pi0JaVXK1cf0wgUodvggUbXdJ6kVJC4hiD0gmRNzyrxPlTxflPxcFFYHkBP"
       />
       <div class="absolute inset-0 bg-gradient-to-tr from-primary-container/20 to-surface/40 mix-blend-overlay pointer-events-none"></div>
+      <div class="absolute left-10 top-10 rounded-full bg-white/80 px-5 py-2 font-headline-lg text-primary-container shadow-sm backdrop-blur-md">M&D · meow & doggie</div>
+      <div class="absolute bottom-10 left-10 right-10 rounded-lg bg-white/75 p-5 shadow-sm backdrop-blur-md">
+        <p class="mnd-eyebrow">Cute identity</p>
+        <p class="mt-2 text-2xl font-black text-on-surface">以猫为主角，给少男少女一个轻盈可爱的宠物社区。</p>
+      </div>
     </div>
 
     <!-- Right: form -->
     <div class="w-full lg:w-1/2 flex flex-col justify-center items-center p-md lg:p-xl py-10 lg:py-12">
       <div class="auth-card w-full max-w-[400px] flex flex-col gap-8">
         <div class="text-center flex flex-col items-center gap-1">
-          <h1 class="font-headline-xl text-headline-xl text-primary-container tracking-tighter">MEOW</h1>
-          <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="auth.register_tagline">加入喵圈，发现更多可爱日常</p>
+          <h1 class="font-headline-xl text-headline-xl text-primary-container tracking-normal">M&D</h1>
+          <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="auth.register_tagline">加入 M&D，发现更多猫猫日常</p>
         </div>
 
         <form id="register-form" class="flex flex-col gap-5" autocomplete="on" novalidate>

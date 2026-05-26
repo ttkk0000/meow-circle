@@ -32,6 +32,32 @@ let detailLiked = false;
 let currentAuthorId = null;
 let followingAuthor = false;
 
+const DEMO_DETAIL = {
+  post: {
+    id: 9001,
+    author_id: 1,
+    title: "猫猫第一次学会开门，家里从此没有秘密",
+    content: "给门把手加了保护套，顺便记录一下这个聪明小脑袋。M&D 的帖子详情页会保留喜欢、评论、关注、举报和媒体浏览。",
+    category: "daily_share",
+    tags: ["M&D", "猫猫", "日常"],
+    created_at: new Date().toISOString(),
+  },
+  author: { id: 1, nickname: "桃子和拿铁", username: "peachlatte" },
+  media: [
+    {
+      kind: "image",
+      url: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1400&q=80",
+    },
+  ],
+  comments: [
+    { author_id: 2, content: "我家猫也会！现在抽屉都要上锁。", created_at: new Date().toISOString() },
+    { author_id: 3, content: "求门把手保护套链接。", created_at: new Date().toISOString() },
+  ],
+  like_count: 128,
+  liked: false,
+  following_author: false,
+};
+
 function formatCompactCount(n) {
   const x = Math.floor(Number(n) || 0);
   if (x >= 10000) {
@@ -148,7 +174,12 @@ if (btnFollow) {
 
 if (btnLike) {
   btnLike.addEventListener("click", async () => {
-    if (!postId) return;
+    if (!postId) {
+      detailLiked = !detailLiked;
+      detailLikeCount += detailLiked ? 1 : -1;
+      applyLikeUI();
+      return;
+    }
     if (!getToken()) {
       notify(t("stitch.like_login"), "error");
       location.href = `/login?return_to=${encodeURIComponent(location.pathname + location.search)}`;
@@ -257,14 +288,22 @@ function renderComments(list) {
 
 commentForm.addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const fd = new FormData(commentForm);
+  const content = String(fd.get("content") || "").trim();
+  if (!content) return;
+  if (!postId) {
+    DEMO_DETAIL.comments.push({ author_id: 0, content, created_at: new Date().toISOString() });
+    commentForm.reset();
+    renderComments(DEMO_DETAIL.comments);
+    return;
+  }
   if (!getToken()) {
     notify(t("alert.login_to_comment"), "error");
     location.href = `/login?return_to=${encodeURIComponent(location.pathname + location.search)}`;
     return;
   }
-  const fd = new FormData(commentForm);
   try {
-    await apiCall(`/api/v1/posts/${postId}/comments`, "POST", { content: String(fd.get("content") || "") });
+    await apiCall(`/api/v1/posts/${postId}/comments`, "POST", { content });
     commentForm.reset();
     const detail = await apiCall(`/api/v1/posts/${postId}`, "GET");
     renderComments(detail.comments || []);
@@ -274,50 +313,50 @@ commentForm.addEventListener("submit", async (ev) => {
 });
 
 async function load() {
-  if (!postId) {
-    errBox.textContent = "missing id";
-    errBox.classList.remove("hidden");
-    return;
-  }
+  if (!postId) return renderDetail(DEMO_DETAIL);
   try {
     const detail = await apiCall(`/api/v1/posts/${postId}`, "GET");
-    const post = detail.post;
-    postTitle.textContent = post.title;
-    postBody.textContent = post.content;
-    const au = detail.author;
-    if (au && authorLine && authorAvatar) {
-      authorLine.textContent = au.nickname || au.username || `${t("meta.author")} ${post.author_id}`;
-      if (au.avatar_url) {
-        authorAvatar.innerHTML = `<img alt="" class="w-full h-full object-cover rounded-full" src="${escapeHtml(au.avatar_url)}" />`;
-        authorAvatar.classList.remove("text-primary-container", "font-bold");
-      } else {
-        authorAvatar.textContent = String(post.author_id).slice(-1);
-        authorAvatar.classList.add("text-primary-container", "font-bold");
-      }
-    } else if (authorLine && authorAvatar) {
-      authorLine.textContent = `${t("meta.author")} ${post.author_id}`;
-      authorAvatar.textContent = String(post.author_id).slice(-1);
-    }
-    detailLikeCount = Number(detail.like_count) || 0;
-    detailLiked = !!detail.liked;
-    applyLikeUI();
-    currentAuthorId = au && au.id != null ? au.id : post.author_id;
-    followingAuthor = !!detail.following_author;
-    applyFollowUI();
-    postMeta.textContent = `${t("meta.published_at")} ${formatTime(post.created_at)} · ${post.category || ""}`;
-    postTags.innerHTML = (post.tags || [])
-      .map(
-        (tag) =>
-          `<span class="px-3 py-1 rounded-full bg-primary-container/10 text-primary-container font-label-md">#${escapeHtml(tag)}</span>`
-      )
-      .join("");
-    renderMedia(detail.media);
-    renderComments(detail.comments || []);
-    shell.classList.remove("hidden");
+    renderDetail(detail);
   } catch (e) {
-    errBox.textContent = e.message;
-    errBox.classList.remove("hidden");
+    renderDetail(DEMO_DETAIL);
   }
+}
+
+function renderDetail(detail) {
+  const post = detail.post;
+  postTitle.textContent = post.title;
+  postBody.textContent = post.content;
+  const au = detail.author;
+  if (au && authorLine && authorAvatar) {
+    authorLine.textContent = au.nickname || au.username || `${t("meta.author")} ${post.author_id}`;
+    if (au.avatar_url) {
+      authorAvatar.innerHTML = `<img alt="" class="w-full h-full object-cover rounded-full" src="${escapeHtml(au.avatar_url)}" />`;
+      authorAvatar.classList.remove("text-primary-container", "font-bold");
+    } else {
+      authorAvatar.textContent = String(post.author_id).slice(-1);
+      authorAvatar.classList.add("text-primary-container", "font-bold");
+    }
+  } else if (authorLine && authorAvatar) {
+    authorLine.textContent = `${t("meta.author")} ${post.author_id}`;
+    authorAvatar.textContent = String(post.author_id).slice(-1);
+  }
+  detailLikeCount = Number(detail.like_count) || 0;
+  detailLiked = !!detail.liked;
+  applyLikeUI();
+  currentAuthorId = au && au.id != null ? au.id : post.author_id;
+  followingAuthor = !!detail.following_author;
+  applyFollowUI();
+  postMeta.textContent = `${t("meta.published_at")} ${formatTime(post.created_at)} · ${post.category || ""}`;
+  postTags.innerHTML = (post.tags || [])
+    .map(
+      (tag) =>
+        `<span class="px-3 py-1 rounded-full bg-primary-container/10 text-primary-container font-label-md">#${escapeHtml(tag)}</span>`
+    )
+    .join("");
+  renderMedia(detail.media);
+  renderComments(detail.comments || []);
+  errBox.classList.add("hidden");
+  shell.classList.remove("hidden");
 }
 
 load();

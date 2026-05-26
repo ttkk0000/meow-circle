@@ -1,6 +1,6 @@
-# Cat/Pet Share Server (Go + Caddy)
+# M&D / meow & doggie Server (Go + Caddy)
 
-一个面向猫咪主人（并可扩展到宠物主人）的社区与交易服务端骨架：
+M&D = meow & doggie。项目定位为猫猫优先、狗狗陪伴的社区与交易服务端骨架：
 
 - 日常分享发帖
 - 评论互动

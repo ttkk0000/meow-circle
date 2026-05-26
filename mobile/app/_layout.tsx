@@ -12,7 +12,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from '@/auth';
-import { KittyLoader } from '@/components';
+import { MndLoader } from '@/components';
 import { colors } from '@/theme';
 
 SplashScreen.preventAutoHideAsync().catch(() => null);
@@ -47,7 +47,7 @@ function RootNavigator() {
   const { loading } = useAuth();
 
   if (loading) {
-    return <KittyLoader label="喵友圈正在梳理猫毛..." />;
+    return <MndLoader label="M&D 正在整理猫猫宇宙..." />;
   }
 
   return (

@@ -1,4 +1,4 @@
-# Meow Circle Figma Design Document
+# M&D Figma Design Document
 
 > Version: 1.0  
 > Date: 2026-05-25  
@@ -6,7 +6,7 @@
 
 ## 1. Document Purpose
 
-This document turns the current Meow Circle codebase into a professional Figma-ready design blueprint. It is intended for four uses:
+This document turns the current codebase into a professional Figma-ready design blueprint for M&D = meow & doggie. It is intended for four uses:
 
 - Product planning: clarify what the product is, who it serves, and how it can grow.
 - Figma production: define pages, frames, component libraries, variants, and prototype flows.
@@ -19,7 +19,7 @@ This document does not replace `DESIGN.md`. The existing `DESIGN.md` remains the
 
 ### 2.1 Current Codebase Signals
 
-Meow Circle is already more than a simple feed app. Current implemented capabilities include:
+M&D is already more than a simple feed app. Current implemented capabilities include:
 
 - Community posts, categories, tags, comments, likes, follow-filter feed.
 - Marketplace listings for products, services, and adoption.
@@ -47,7 +47,7 @@ Meow Circle is already more than a simple feed app. Current implemented capabili
 
 ### 3.1 One-Sentence Positioning
 
-Meow Circle is a warm, trustworthy pet-owner community that combines daily sharing, practical help, private messaging, local marketplace, adoption/service discovery, and platform-level safety in one coherent social-commerce experience.
+M&D is a warm, trustworthy cat-first community that combines daily sharing, practical help, private messaging, local marketplace, adoption/service discovery, and platform-level safety in one coherent social-commerce experience. Dogs are included as doggie-friendly branches for activities, services, listings, and secondary stories, while the primary emotional center remains cats.
 
 ### 3.2 Product Promise
 
@@ -216,7 +216,7 @@ Project ID: `472020832926366758`
 
 Create one Figma file named:
 
-`Meow Circle - Product Design System & App Blueprint`
+`M&D - Product Design System & App Blueprint`
 
 Recommended pages:
 
@@ -774,7 +774,7 @@ Examples:
 | Context | Recommended Copy |
 | --- | --- |
 | Empty feed | `还没有动态。发布第一条，给大家一个认识你的机会。` |
-| Following empty | `关注几位喵友后，这里会变成你的专属动态流。` |
+| Following empty | `关注几位 M&D 伙伴后，这里会变成你的专属动态流。` |
 | Market empty | `暂时没有上架内容。可以先发布一个闲置、服务或领养信息。` |
 | Auth required | `登录后可以继续这个操作，回来时会保留当前位置。` |
 | Safety rejection | `内容里可能包含不适合发布的词语。调整后再试一次。` |
@@ -927,7 +927,7 @@ States: loading, empty, error, following-auth-required, search-empty
 
 ## 20. Final Design Bar
 
-A professional Meow Circle design is successful when:
+A professional M&D design is successful when:
 
 - The feed feels warm and alive.
 - Commerce feels clear and trustworthy.
@@ -936,4 +936,3 @@ A professional Meow Circle design is successful when:
 - Empty/loading/error states are as carefully designed as happy paths.
 - The Figma file can guide engineering without extra explanation.
 - Future product ideas are visible but separated from MVP scope.
-

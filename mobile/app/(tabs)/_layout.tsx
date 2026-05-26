@@ -3,7 +3,7 @@ import { Redirect, Tabs } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '@/auth';
-import { colors, typography } from '@/theme';
+import { colors, radius, typography } from '@/theme';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
@@ -41,9 +41,9 @@ export default function TabsLayout() {
           bottom: 0,
           backgroundColor: colors.tabBar,
           borderTopWidth: 1,
-          borderTopColor: 'rgba(255, 90, 119, 0.1)',
-          borderTopLeftRadius: 32,
-          borderTopRightRadius: 32,
+          borderTopColor: colors.border,
+          borderTopLeftRadius: radius.lg,
+          borderTopRightRadius: radius.lg,
           height: tabHeight,
           paddingBottom: tabPadBottom,
           paddingTop: 10,

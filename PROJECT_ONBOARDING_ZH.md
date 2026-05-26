@@ -29,7 +29,7 @@
 
 ## 1. 项目一句话
 
-一个宠物社区 + 二手交易后端骨架：Go 提供 REST API，前端有**原生 HTML 网页**和 **Expo React Native App**，存储层做了接口化抽象，可在 **内存 / PostgreSQL / PostgreSQL+Redis 缓存** 三种后端零代码切换。
+M&D = meow & doggie，是一个猫猫优先、狗狗陪伴的社区 + 二手交易后端骨架：Go 提供 REST API，前端有**原生 HTML 网页**和 **Expo React Native App**，存储层做了接口化抽象，可在 **内存 / PostgreSQL / PostgreSQL+Redis 缓存** 三种后端零代码切换。
 
 ---
 

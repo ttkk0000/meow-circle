@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.sm,
     backgroundColor: colors.canvas,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'rgba(255, 90, 119, 0.1)',
+    borderBottomColor: colors.border,
   },
   iconBtn: {
     padding: spacing.sm,
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
     paddingTop: spacing.md,
     backgroundColor: colors.surface,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(255, 90, 119, 0.12)',
+    borderTopColor: colors.border,
   },
   composerInput: {
     flex: 1,

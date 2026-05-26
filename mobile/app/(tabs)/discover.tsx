@@ -11,11 +11,11 @@ import { FeedTile, MasonryTwoCol, StitchFab, StitchTopBar } from '@/stitch';
 import { colors, radius, spacing } from '@/theme';
 
 const CHIPS: { key: string; label: string; match?: (p: Post) => boolean }[] = [
-  { key: 'all', label: '全部' },
-  { key: 'daily_share', label: '日常', match: (p) => p.category === 'daily_share' },
-  { key: 'help', label: '求助', match: (p) => p.category === 'help' },
+  { key: 'all', label: '全部圈子' },
+  { key: 'daily_share', label: '猫猫日常', match: (p) => p.category === 'daily_share' },
+  { key: 'help', label: '猫猫新手村', match: (p) => p.category === 'help' },
   { key: 'activity', label: '活动', match: (p) => p.category === 'activity' },
-  { key: 'trade', label: '交易', match: (p) => p.category === 'trade' },
+  { key: 'trade', label: '好物交易', match: (p) => p.category === 'trade' },
 ];
 
 export default function DiscoverScreen() {
@@ -89,6 +89,12 @@ export default function DiscoverScreen() {
           contentContainerStyle={styles.scrollContent}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
+          <View style={styles.hero}>
+            <Txt kind="label" style={styles.heroEyebrow}>M&D · meow & doggie</Txt>
+            <Txt kind="h2">猫猫是主角，doggie 也有座位</Txt>
+            <Txt muted>按兴趣进入圈子：新手、健康、活动、好物交易都统一到 M&D 可爱语言里。</Txt>
+          </View>
+
           <Pressable style={styles.marketCard} onPress={() => router.push('/(tabs)/market')}>
             <View style={styles.marketIcon}>
               <MaterialIcons name="storefront" size={28} color={colors.primaryContainer} />
@@ -96,7 +102,7 @@ export default function DiscoverScreen() {
             <View style={{ flex: 1 }}>
               <Txt kind="h3">好物市集</Txt>
               <Txt kind="bodySmall" muted>
-                用品 · 服务 · 领养信息
+                猫猫优先的用品、服务、领养信息
               </Txt>
             </View>
             <MaterialIcons name="chevron-right" size={24} color={colors.outline} />
@@ -165,7 +171,7 @@ const styles = StyleSheet.create({
   },
   chipOn: {
     backgroundColor: colors.brandWeak,
-    borderColor: 'rgba(255, 90, 119, 0.35)',
+    borderColor: colors.borderMedium,
   },
   chipLabel: {
     color: colors.onSurfaceVariant,
@@ -189,7 +195,18 @@ const styles = StyleSheet.create({
     borderRadius: radius.xl,
     padding: spacing.lg,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255, 90, 119, 0.14)',
+    borderColor: colors.border,
+  },
+  hero: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    padding: spacing.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+    gap: spacing.sm,
+  },
+  heroEyebrow: {
+    color: colors.primaryContainer,
   },
   marketIcon: {
     width: 48,

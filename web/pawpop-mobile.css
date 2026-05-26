@@ -54,7 +54,6 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--secondary) 24%, transparent), transparent 28%),
     repeating-linear-gradient(135deg, transparent 0 18px, color-mix(in srgb, var(--primary) 10%, transparent) 18px 19px),
     var(--canvas);
   color: var(--ink);
@@ -76,7 +75,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
   align-items: end;
   padding: 18px;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 8px;
   background: color-mix(in srgb, var(--surface) 90%, transparent);
   box-shadow: var(--shadow);
 }
@@ -173,15 +172,16 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
 
 .brand-badge {
   display: grid;
-  width: 56px;
+  width: 68px;
   height: 56px;
   place-items: center;
-  border-radius: 14px;
+  border-radius: 8px;
   background: var(--secondary);
   color: #2b1722;
   font-family: var(--font-round);
-  font-size: 1.8rem;
+  font-size: 1.18rem;
   font-weight: 700;
+  line-height: 1;
 }
 
 .primary-action,
@@ -221,7 +221,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
 .avatar-dot {
   width: 44px;
   height: 44px;
-  border-radius: 14px;
+  border-radius: 8px;
 }
 
 .avatar-dot.blue { background-image: url("https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=240&q=80"); }
@@ -239,7 +239,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
 .comment,
 .seller-row {
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 8px;
   background: var(--surface);
 }
 
@@ -262,7 +262,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
   width: 54px;
   height: 54px;
   border: 3px solid var(--primary);
-  border-radius: 18px;
+  border-radius: 8px;
   background: var(--secondary);
 }
 
@@ -291,7 +291,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
   gap: 6px;
   padding: 8px;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 8px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
 }
 
@@ -299,7 +299,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
   display: grid;
   min-height: 34px;
   place-items: center;
-  border-radius: 12px;
+  border-radius: 8px;
   color: transparent;
   font-size: 0;
 }
@@ -354,7 +354,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
 .circle-grid div {
   min-height: 118px;
   padding: 12px;
-  border-radius: 16px;
+  border-radius: 8px;
   background: var(--surface);
   border: 1px solid var(--line);
 }
@@ -402,7 +402,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .price {
@@ -445,7 +445,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
 .chat-preview p {
   max-width: 82%;
   padding: 10px 12px;
-  border-radius: 14px;
+  border-radius: 8px;
   background: var(--surface);
 }
 
@@ -481,7 +481,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
   width: 82px;
   height: 82px;
   border: 3px solid var(--surface);
-  border-radius: 20px;
+  border-radius: 8px;
   box-shadow: var(--shadow);
 }
 
@@ -498,7 +498,7 @@ p { margin: 0; color: var(--muted); line-height: 1.55; }
 .stat-row b,
 .metric-row b {
   padding: 10px;
-  border-radius: 14px;
+  border-radius: 8px;
   background: var(--surface);
 }
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n="stitch.profile_title">我的 · 喵友圈</title>
+  <title data-i18n="stitch.profile_title">我的 · M&D</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -26,7 +26,7 @@
 <body class="font-body-md text-on-background min-h-screen pb-24 md:pb-8">
   <header class="hidden md:flex fixed top-0 w-full justify-between items-center px-8 h-16 bg-[#F9F7F2]/80 backdrop-blur-xl border-b border-[#FF5A77]/10 z-50">
     <div class="flex items-center gap-8">
-      <a href="/" class="text-2xl font-black text-[#FF5A77] tracking-tighter">Kitty Circle</a>
+      <a href="/" class="text-2xl font-black text-[#FF5A77] tracking-normal">M&D</a>
       <nav class="flex gap-6 text-body-lg">
         <a class="text-gray-500 hover:text-[#FF5A77]" href="/discover.html" data-i18n="stitch.nav_discover">发现</a>
         <a class="text-[#FF5A77] border-b-2 border-[#FF5A77] pb-1" href="/profile.html" data-i18n="stitch.nav_me">我的</a>
@@ -40,7 +40,7 @@
 
   <main class="md:pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <section class="mt-4 md:mt-8 mb-10 rounded-[32px] bg-white overflow-hidden shadow-[0_8px_30px_rgba(255,90,119,0.04)] relative border border-gray-100">
-      <div class="h-48 sm:h-64 w-full bg-gradient-to-br from-primary-container/30 to-tertiary-container/20 relative flex items-center justify-center text-6xl" id="profile-cover">🐾</div>
+      <div class="h-48 sm:h-64 w-full bg-gradient-to-br from-primary-container/30 to-tertiary-container/20 relative flex items-center justify-center text-6xl" id="profile-cover"></div>
       <div class="px-6 md:px-8 pb-8 relative -mt-12 flex flex-col items-center">
         <div class="w-28 h-28 rounded-full border-4 border-white overflow-hidden shadow-lg mb-4 bg-surface-container-low flex items-center justify-center text-3xl font-bold text-primary-container" id="profile-avatar">?</div>
         <h1 class="font-headline-xl text-on-surface mb-2 text-center" id="profile-name">—</h1>
@@ -55,6 +55,12 @@
             <span class="material-symbols-outlined text-[18px]">share</span>
             <span data-i18n="stitch.profile_share">分享主页</span>
           </button>
+        </div>
+        <div class="mt-5 flex flex-wrap justify-center gap-2" id="profile-bg-picks" aria-label="M&D 主页背景">
+          <button type="button" class="profile-bg-chip rounded-full bg-primary-container px-3 py-1.5 text-label-md font-bold text-white" data-profile-bg="picnic">Picnic</button>
+          <button type="button" class="profile-bg-chip rounded-full bg-surface-container px-3 py-1.5 text-label-md font-bold text-on-surface-variant" data-profile-bg="desk">Desk</button>
+          <button type="button" class="profile-bg-chip rounded-full bg-surface-container px-3 py-1.5 text-label-md font-bold text-on-surface-variant" data-profile-bg="arcade">Arcade</button>
+          <button type="button" class="profile-bg-chip rounded-full bg-surface-container px-3 py-1.5 text-label-md font-bold text-on-surface-variant" data-profile-bg="garden">Garden</button>
         </div>
       </div>
     </section>

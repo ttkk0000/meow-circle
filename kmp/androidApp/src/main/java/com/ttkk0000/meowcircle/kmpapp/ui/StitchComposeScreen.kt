@@ -46,7 +46,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -59,7 +58,7 @@ import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import kotlinx.coroutines.launch
 
-/** MOBILE「发布帖子」：Material 3 表单 + 调用 `POST /api/v1/posts`。 */
+/** MOBILE「M&D 发布帖子」：猫猫优先的 Material 3 表单 + 调用 `POST /api/v1/posts`。 */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StitchComposeScreen(
@@ -74,9 +73,9 @@ fun StitchComposeScreen(
     var busy by remember { mutableStateOf(false) }
     var err by remember { mutableStateOf<String?>(null) }
     var pickedMediaCount by remember { mutableStateOf(0) }
-    var tagsSummary by remember { mutableStateOf("喵星人、新手养猫…") }
+    var tagsSummary by remember { mutableStateOf("M&D、猫猫、新手…") }
     var locationSummary by remember { mutableStateOf("分享你所在的位置") }
-    var circleSummary by remember { mutableStateOf("布偶猫交流群") }
+    var circleSummary by remember { mutableStateOf("猫猫新手村") }
     var visibilitySummary by remember { mutableStateOf("公开") }
     var saveToAlbum by remember { mutableStateOf(false) }
 
@@ -85,7 +84,7 @@ fun StitchComposeScreen(
         containerColor = StitchLoginRef.Background,
         topBar = {
             TopAppBar(
-                title = { Text("发布动态", fontWeight = FontWeight.SemiBold) },
+                title = { Text("M&D 发布台", fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = onClose, enabled = !busy) {
                         Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "关闭")
@@ -141,11 +140,38 @@ fun StitchComposeScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
         ) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = StitchShape.container,
+                color = StitchLoginRef.SurfaceContainerLow,
+            ) {
+                Column(Modifier.padding(16.dp)) {
+                    Text(
+                        "COMPOSE · M&D",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = StitchLoginRef.PrimaryContainer,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "写给猫猫宇宙的一条新动态",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = StitchLoginRef.OnSurface,
+                    )
+                    Text(
+                        "猫猫是主角，doggie 也可以一起入镜。",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = StitchLoginRef.Outline,
+                    )
+                }
+            }
+            Spacer(Modifier.height(16.dp))
             OutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text("标题") },
+                placeholder = { Text("今天想记录哪一刻？") },
                 singleLine = true,
                 shape = StitchShape.field,
                 colors =
@@ -161,6 +187,7 @@ fun StitchComposeScreen(
                 onValueChange = { content = it },
                 modifier = Modifier.fillMaxWidth().height(220.dp),
                 label = { Text("正文") },
+                placeholder = { Text("写下猫猫日常、求助、活动，doggie 也欢迎出镜。") },
                 minLines = 8,
                 shape = StitchShape.field,
                 colors =
@@ -179,7 +206,7 @@ fun StitchComposeScreen(
             Spacer(Modifier.height(12.dp))
             ComposeMetaRow(
                 Icons.Outlined.AddCircleOutline,
-                "添加",
+                "媒体",
                 if (pickedMediaCount == 0) "照片或视频" else "已选择 $pickedMediaCount 个媒体",
             ) { pickedMediaCount = (pickedMediaCount + 1) % 10 }
             ComposeMetaRow(
@@ -188,10 +215,10 @@ fun StitchComposeScreen(
                 tagsSummary,
             ) {
                 tagsSummary =
-                    if (tagsSummary.startsWith("喵星人")) {
+                    if (tagsSummary.startsWith("M&D")) {
                         "晒猫日常、幼猫成长"
                     } else {
-                        "喵星人、新手养猫…"
+                        "M&D、猫猫、新手…"
                     }
             }
             ComposeMetaRow(
@@ -212,10 +239,10 @@ fun StitchComposeScreen(
                 circleSummary,
             ) {
                 circleSummary =
-                    if (circleSummary.startsWith("布偶")) {
-                        "新手铲屎官"
+                    if (circleSummary.startsWith("猫猫")) {
+                        "M&D 发现圈子"
                     } else {
-                        "布偶猫交流群"
+                        "猫猫新手村"
                     }
             }
             ComposeMetaRow(
@@ -249,7 +276,7 @@ fun StitchComposeScreen(
             ) {
                 Icon(Icons.Outlined.ChatBubbleOutline, contentDescription = null, tint = StitchLoginRef.PrimaryContainer)
                 Spacer(Modifier.size(8.dp))
-                Text("分享", style = MaterialTheme.typography.titleMedium, color = StitchLoginRef.OnSurface)
+                Text("发布到 M&D", style = MaterialTheme.typography.titleMedium, color = StitchLoginRef.OnSurface)
             }
         }
     }

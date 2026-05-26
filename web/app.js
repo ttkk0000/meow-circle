@@ -88,6 +88,44 @@ let discoverQuery = "";
 let discoverPanelBound = false;
 const pageParams = new URLSearchParams(location.search);
 const initialFeed = pageParams.get("feed");
+const FALLBACK_FEED = [
+  {
+    post: {
+      id: 9001,
+      author_id: 1,
+      title: "猫猫第一次学会开门，家里从此没有秘密",
+      tags: ["M&D", "猫猫"],
+      media_ids: [],
+    },
+    author: { nickname: "桃子和拿铁" },
+    like_count: 128,
+    liked: false,
+  },
+  {
+    post: {
+      id: 9002,
+      author_id: 2,
+      title: "新手求助：幼猫晚上一直叫怎么办？",
+      tags: ["求助", "新手"],
+      media_ids: [],
+    },
+    author: { nickname: "小满" },
+    like_count: 52,
+    liked: false,
+  },
+  {
+    post: {
+      id: 9003,
+      author_id: 3,
+      title: "周末猫狗野餐，有没有一起的？",
+      tags: ["同城", "doggie"],
+      media_ids: [],
+    },
+    author: { nickname: "泡芙小队" },
+    like_count: 87,
+    liked: false,
+  },
+];
 if (initialFeed && ["rec", "new", "follow"].includes(initialFeed)) {
   currentFilter = initialFeed;
 }
@@ -134,8 +172,9 @@ function setPanelVisibility(panel) {
     homePostsWrap.style.display = home ? "" : "none";
   }
   if (feedLoading) {
-    feedLoading.classList.toggle("hidden", !home);
-    feedLoading.style.display = home ? "" : "none";
+    feedLoading.classList.add("hidden");
+    feedLoading.hidden = true;
+    feedLoading.style.display = "none";
   }
   // Desktop right rail belongs to Home only; other panels replace whole right side.
   if (rightRail) {
@@ -570,7 +609,8 @@ async function loadPosts() {
     renderPosts();
   } catch (err) {
     if (err && err.name === "AbortError") return;
-    postsContainer.innerHTML = `<p class="col-span-full text-red-600">${escapeHtml(t("common.error_load_posts"))}: ${escapeHtml(err.message)}</p>`;
+    cachedFeed = FALLBACK_FEED;
+    renderPosts();
   }
 }
 

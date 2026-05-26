@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n="admin.title">喵友圈后台管理</title>
+  <title data-i18n="admin.title">M&D 后台管理</title>
   <link rel="stylesheet" href="/theme.css" />
   <link rel="stylesheet" href="/stitch-theme-bridge.css" />
   <link rel="stylesheet" href="/admin.css" />
@@ -11,14 +11,31 @@
 </head>
 <body>
   <header class="header">
-    <div>
-      <h1 data-i18n="admin.title">喵友圈后台管理系统</h1>
-      <p data-i18n="admin.subtitle">仅管理员可访问操作接口（帖子/评论/交易治理）</p>
+    <div class="header-brand">
+      <span class="mnd-brand-dot">M</span>
+      <div>
+        <p class="mnd-eyebrow">M&D admin</p>
+        <h1 data-i18n="admin.title">M&D 后台管理系统</h1>
+        <p data-i18n="admin.subtitle">仅管理员可访问操作接口（帖子/评论/交易治理）</p>
+      </div>
     </div>
-    <div id="settings-bar"></div>
+    <div class="header-actions">
+      <a href="/" data-i18n="nav.home">返回前台</a>
+      <a href="/dashboard.html" data-i18n="nav.dashboard">我的管理中心</a>
+      <div id="settings-bar"></div>
+    </div>
   </header>
 
   <main class="container">
+    <section class="admin-hero">
+      <div>
+        <p class="mnd-eyebrow">Trust & safety</p>
+        <h2>猫猫社区的安全工作台</h2>
+        <p>媒体、举报、订单和审计集中处理；保持 M&D 可爱，但管理端仍然紧凑、清晰、可扫描。</p>
+      </div>
+      <div class="admin-hero-mark">meow & doggie</div>
+    </section>
+
     <section class="panel">
       <h2 data-i18n="admin.auth_title">管理员认证</h2>
       <form id="auth-form" class="row">

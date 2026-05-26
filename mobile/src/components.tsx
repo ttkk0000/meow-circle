@@ -1,4 +1,4 @@
-// Shared UI — Dopamine Petal (Stitch) styling.
+// Shared UI — M&D cute styling.
 
 import { forwardRef, useEffect, useRef, type ReactElement } from 'react';
 import {
@@ -189,7 +189,7 @@ export function Pill({ children, tone = 'neutral' }: { children: React.ReactNode
   );
 }
 
-export function KittyLoader({ label = '正在叫猫咪起床...' }: { label?: string }) {
+export function MndLoader({ label = 'M&D 正在准备猫猫宇宙...' }: { label?: string }) {
   const bob = useRef(new Animated.Value(0)).current;
   const pulse = useRef(new Animated.Value(0.45)).current;
 
@@ -216,7 +216,7 @@ export function KittyLoader({ label = '正在叫猫咪起床...' }: { label?: st
 
   return (
     <View style={styles.loaderWrap}>
-      <Animated.Text style={[styles.loaderKitty, { transform: [{ translateY: bob }] }]}>🐈</Animated.Text>
+      <Animated.Text style={[styles.loaderKitty, { transform: [{ translateY: bob }] }]}>M&D</Animated.Text>
       <Animated.Text style={[styles.loaderDots, { opacity: pulse }]}>• • •</Animated.Text>
       <Txt kind="bodySmall" muted style={styles.loaderLabel}>
         {label}
@@ -224,6 +224,8 @@ export function KittyLoader({ label = '正在叫猫咪起床...' }: { label?: st
     </View>
   );
 }
+
+export const KittyLoader = MndLoader;
 
 const styles = StyleSheet.create({
   screen: {
@@ -256,7 +258,7 @@ const styles = StyleSheet.create({
   btnText: {
     ...typography.label,
     fontSize: 15,
-    letterSpacing: 0.3,
+    letterSpacing: 0,
   },
   btnDisabled: {
     opacity: 0.45,

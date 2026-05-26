@@ -1,41 +1,48 @@
 /**
- * Dashboard — Stitch「统一导航版」admin shell + data views.
+ * Dashboard — M&D unified admin shell + data views.
  * JS hooks: .item-actions, .danger, .form-grid, .stitch-*.
  */
 
-/* ===== Stitch admin shell ===== */
+/* ===== M&D admin shell ===== */
 .stitch-sidenav .nav-btn.stitch-nav-btn.active {
-  background: #ff5a77;
+  background: var(--brand, #ff4f93);
   color: #fff;
   font-weight: 600;
-  box-shadow: 0 8px 15px rgba(255, 90, 119, 0.3);
+  box-shadow: 0 8px 15px rgba(255, 79, 147, 0.28);
   transform: scale(0.98);
 }
 .stitch-sidenav .nav-btn.stitch-nav-btn.active .material-symbols-outlined {
   color: #fff;
 }
 .stitch-sidebar .stitch-nav-btn.active {
-  background: rgba(255, 90, 119, 0.12);
-  color: var(--color-primary-container, #ff5a77);
-  border-color: rgba(255, 90, 119, 0.18);
+  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
+  color: var(--brand, #ff4f93);
+  border-color: rgba(255, 79, 147, 0.18);
   font-weight: 600;
 }
 .stitch-sidebar .stitch-nav-btn .material-symbols-outlined {
   opacity: 0.9;
 }
 .stitch-sidebar .stitch-nav-btn.active .material-symbols-outlined {
-  color: #c41e3a;
+  color: var(--brand-strong, #db3177);
 }
 
 #post-form .post-cat-label.is-selected,
 #post-form .post-cat-label:has(input:checked) {
-  border: 1px solid rgba(255, 90, 119, 0.35);
-  background: rgba(255, 218, 220, 0.35);
+  border: 1px solid rgba(255, 79, 147, 0.35);
+  background: rgba(255, 79, 147, 0.1);
 }
 
 /* Main column: prevent flex children from forcing horizontal scroll */
 #dashboard .stitch-maincol {
   min-width: 0;
+}
+
+#header-avatar:not([src]),
+#header-avatar[src=""],
+#profile-avatar:not([src]),
+#profile-avatar[src=""] {
+  display: none;
 }
 
 /* Shell: grid column 2 must shrink; avoid 0-width flex bugs with fixed sidebar hacks */
@@ -82,7 +89,7 @@
 }
 
 .stitch-panel {
-  border-radius: 1.25rem;
+  border-radius: 0.5rem;
 }
 
 /* DM: grid only from .stitch-msg-shell (do not mix with utility `flex` on same node) */
@@ -120,7 +127,7 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   border: 1px solid rgba(141, 112, 114, 0.22);
   background: rgba(255, 255, 255, 0.95);
   color: var(--text, #23191b);
@@ -131,15 +138,15 @@
 .stitch-input:focus,
 .stitch-textarea:focus {
   outline: none;
-  border-color: rgba(255, 90, 119, 0.45);
-  box-shadow: 0 0 0 3px rgba(255, 90, 119, 0.1);
+  border-color: rgba(255, 79, 147, 0.45);
+  box-shadow: 0 0 0 3px rgba(255, 79, 147, 0.1);
 }
 
 .stitch-btn-primary {
-  background: linear-gradient(180deg, #ff7a91, #ff5a77);
+  background: linear-gradient(180deg, #ff7ebb, var(--brand, #ff4f93));
   color: #fff;
   border: none;
-  box-shadow: 0 6px 20px rgba(255, 90, 119, 0.28);
+  box-shadow: 0 6px 20px rgba(255, 79, 147, 0.28);
 }
 .stitch-btn-primary:hover {
   filter: brightness(1.03);
@@ -158,8 +165,8 @@
   border: 1px dashed rgba(141, 112, 114, 0.35);
 }
 .stitch-btn-ghost:hover {
-  border-color: rgba(255, 90, 119, 0.35);
-  color: #c41e3a;
+  border-color: rgba(255, 79, 147, 0.35);
+  color: var(--brand-strong, #db3177);
 }
 
 .stitch-ico-btn {
@@ -175,13 +182,13 @@
   cursor: pointer;
 }
 .stitch-ico-btn:hover {
-  background: rgba(255, 90, 119, 0.08);
-  color: #c41e3a;
+  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
+  color: var(--brand-strong, #db3177);
 }
 
 .stitch-dropzone.stitch-dropzone--active {
-  border-color: rgba(255, 90, 119, 0.55) !important;
-  background: rgba(255, 90, 119, 0.08) !important;
+  border-color: rgba(255, 79, 147, 0.55) !important;
+  background: rgba(255, 79, 147, 0.08) !important;
 }
 
 /* Category / type chips (radio) */
@@ -205,9 +212,9 @@
   pointer-events: none;
 }
 .stitch-chip:has(input:checked) {
-  background: rgba(255, 90, 119, 0.14);
-  border-color: rgba(255, 90, 119, 0.45);
-  color: #9a1f3a;
+  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
+  border-color: rgba(255, 79, 147, 0.45);
+  color: var(--brand-text, #a91558);
   font-weight: 600;
 }
 
@@ -216,11 +223,11 @@
   align-items: center;
   gap: 0.25rem;
   border-radius: 9999px;
-  background: rgba(255, 90, 119, 0.1);
+  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
   padding: 0.2rem 0.5rem 0.2rem 0.65rem;
   font-size: 12px;
   font-weight: 600;
-  color: #7a1f35;
+  color: var(--brand-text, #a91558);
 }
 .stitch-tag button {
   border: none;
@@ -232,7 +239,7 @@
   color: #594042;
 }
 
-/* Media grid (Stitch-style cards) */
+/* Media grid (M&D cards) */
 .stitch-media-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -280,11 +287,11 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.35rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   border: 1px solid rgba(141, 112, 114, 0.12);
   background: rgba(255, 255, 255, 0.92);
   padding: 0.75rem 1rem;
-  box-shadow: 0 4px 16px rgba(255, 90, 119, 0.05);
+  box-shadow: 0 4px 16px rgba(255, 79, 147, 0.05);
 }
 @media (min-width: 768px) {
   .stitch-order-row {
@@ -319,11 +326,11 @@
   color: #555;
 }
 
-/* Order page — My Orders (Stitch my_orders.html) */
+/* Order page — My Orders */
 .order-role-bar .order-role-tab--on {
-  background: #ff5a77;
+  background: var(--brand, #ff4f93);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(255, 90, 119, 0.28);
+  box-shadow: 0 2px 8px rgba(255, 79, 147, 0.28);
 }
 .order-role-bar .order-role-tab:not(.order-role-tab--on) {
   background: transparent;
@@ -373,8 +380,8 @@
 }
 .stitch-order-popover > .stitch-order-more:hover,
 .stitch-order-popover[open] > .stitch-order-more {
-  color: #ff5a77;
-  background: rgba(255, 90, 119, 0.1);
+  color: var(--brand, #ff4f93);
+  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
 }
 
 .stitch-orders-body {
@@ -383,20 +390,20 @@
   gap: 0.5rem;
 }
 
-/* Notifications — Stitch-style cards (layout mostly Tailwind on node) */
+/* Notifications — M&D cards (layout mostly Tailwind on node) */
 #dashboard .stitch-notif-list .stitch-notif-card {
   box-sizing: border-box;
 }
 #dashboard .stitch-notif-list .stitch-notif-card:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 90, 119, 0.22);
+  box-shadow: 0 0 0 3px rgba(255, 79, 147, 0.22);
 }
 
 /* Messages (shell grid lives under #dashboard .stitch-msg-shell above) */
 .stitch-conv-rail {
   max-height: 420px;
   min-height: 200px;
-  border-radius: 1.25rem;
+  border-radius: 0.5rem;
   border: 1px solid rgba(141, 112, 114, 0.12);
   background: rgba(255, 255, 255, 0.85);
   padding: 0.35rem;
@@ -411,14 +418,14 @@
 .stitch-msg-stream .message-bubble {
   max-width: 88%;
   padding: 0.5rem 0.75rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   margin-bottom: 0.4rem;
   font-size: 14px;
   line-height: 1.45;
 }
 .stitch-msg-stream .message-bubble.mine {
   margin-left: auto;
-  background: linear-gradient(180deg, #ff7a91, #ff5a77);
+  background: linear-gradient(180deg, #ff7ebb, var(--brand, #ff4f93));
   color: #fff;
   border-bottom-right-radius: 0.25rem;
 }
@@ -443,7 +450,7 @@
   background: var(--brand-weak);
 }
 #dashboard .tab.active {
-  background: rgba(255, 90, 119, 0.14);
+  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
   color: var(--brand-text);
   border-bottom-color: transparent;
   font-weight: 600;
@@ -456,7 +463,7 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   border: 1px solid var(--border-medium);
   background: rgba(255, 255, 255, 0.92);
   color: var(--text);
@@ -468,8 +475,8 @@
 #dashboard .form-grid textarea:focus,
 #dashboard .form-grid select:focus {
   outline: none;
-  border-color: rgba(255, 90, 119, 0.45);
-  box-shadow: 0 0 0 3px rgba(255, 90, 119, 0.12);
+  border-color: rgba(255, 79, 147, 0.45);
+  box-shadow: 0 0 0 3px rgba(255, 79, 147, 0.12);
 }
 #dashboard .form-grid label {
   font-size: 13px;
@@ -479,7 +486,7 @@
 
 /* Active conversation — match primary CTA */
 #dashboard .conversation-layout .conv-list button.active {
-  background: linear-gradient(180deg, #ff7a91, #ff5a77);
+  background: linear-gradient(180deg, #ff7ebb, var(--brand, #ff4f93));
   color: #fff;
 }
 #dashboard .conversation-layout .conv-list button.active:hover {

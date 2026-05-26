@@ -16,12 +16,34 @@
   let convs = [];
   let filter = "all";
   let activePeerId = 0;
+  let demoMode = false;
+
+  const DEMO_CONVS = [
+    { peer_id: 9101, peer: { id: 9101, nickname: "泡芙小店" }, last_message: "彩色牵引绳还在哦，今晚可以自提。", unread_count: 2 },
+    { peer_id: 9102, peer: { id: 9102, nickname: "城南救助" }, last_message: "三个月橘猫的领养资料已收到。", unread_count: 1 },
+    { peer_id: 9103, peer: { id: 9103, nickname: "M&D 活动组" }, last_message: "周末猫狗野餐已开放报名。", unread_count: 0 },
+  ];
+
+  const DEMO_MESSAGES = {
+    9101: [
+      { sender_id: 9101, content: "还在哦，适合猫猫日常外出，也适合 4-8kg 的 doggie。", created_at: new Date().toISOString() },
+      { sender_id: 0, content: "可以今天晚上自提吗？", created_at: new Date().toISOString() },
+      { sender_id: 9101, content: "可以，我把地址发你。", created_at: new Date().toISOString() },
+    ],
+    9102: [
+      { sender_id: 9102, content: "领养申请表已经收到，稍后安排回访。", created_at: new Date().toISOString() },
+    ],
+    9103: [
+      { sender_id: 9103, content: "活动以猫猫为主角，也欢迎 doggie 家长来玩。", created_at: new Date().toISOString() },
+    ],
+  };
 
   function getToken() {
     return localStorage.getItem(TOKEN_KEY) || "";
   }
 
   function me() {
+    if (demoMode) return { id: 0 };
     try {
       return JSON.parse(localStorage.getItem(USER_KEY) || "{}");
     } catch (_) {
@@ -128,8 +150,12 @@
     activePeerId = peerId;
     renderConversations();
     peerName.textContent = nameHint || `User ${peerId}`;
-    peerSub.textContent = `ID ${peerId}`;
+    peerSub.textContent = demoMode ? "M&D 演示会话" : `ID ${peerId}`;
     form.hidden = false;
+    if (demoMode) {
+      renderMessages(DEMO_MESSAGES[peerId] || []);
+      return;
+    }
     try {
       const data = await apiCall(`/api/v1/me/conversations/${peerId}`, "GET");
       renderMessages(Array.isArray(data.messages) ? data.messages : []);
@@ -140,6 +166,12 @@
   }
 
   async function loadConversations() {
+    if (demoMode) {
+      convs = DEMO_CONVS;
+      const first = convs[0];
+      await openConversation(Number(first.peer.id), first.peer.nickname);
+      return;
+    }
     try {
       const data = await apiCall("/api/v1/me/conversations", "GET");
       convs = Array.isArray(data.items) ? data.items : [];
@@ -152,12 +184,19 @@
       }
       renderConversations();
     } catch (err) {
-      convNode.innerHTML = `<p class="text-sm text-error px-2 py-4">${err.message}</p>`;
+      demoMode = true;
+      await loadConversations();
     }
   }
 
   async function sendMessage(content) {
     if (!activePeerId) return;
+    if (demoMode) {
+      DEMO_MESSAGES[activePeerId] = DEMO_MESSAGES[activePeerId] || [];
+      DEMO_MESSAGES[activePeerId].push({ sender_id: 0, content, created_at: new Date().toISOString() });
+      renderMessages(DEMO_MESSAGES[activePeerId]);
+      return;
+    }
     await apiCall("/api/v1/messages", "POST", {
       recipient_id: activePeerId,
       content,
@@ -198,8 +237,10 @@
 
   function init() {
     if (!getToken()) {
-      guest?.classList.remove("hidden");
-      shell?.classList.add("hidden");
+      demoMode = true;
+      guest?.classList.add("hidden");
+      shell?.classList.remove("hidden");
+      loadConversations();
       return;
     }
     guest?.classList.add("hidden");

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n="app.title">喵友圈</title>
+  <title data-i18n="app.title">M&D</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/theme.css" />
   <link rel="stylesheet" href="/stitch-theme-bridge.css" />
   <link rel="stylesheet" href="/stitch-toast.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 64'%3E%3Crect width='80' height='64' rx='12' fill='%23ff4f93'/%3E%3Ctext x='40' y='40' text-anchor='middle' font-size='24' font-family='Arial' font-weight='700' fill='white'%3EM%26D%3C/text%3E%3C/svg%3E">
   <script src="/shared.js"></script>
   <style>
     body { background-color: #f9f7f2; }
@@ -20,7 +21,7 @@
     .material-symbols-outlined.fill { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 90, 119, 0.2); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 79, 147, 0.2); border-radius: 10px; }
     #settings-bar select {
       font-size: 12px;
       padding: 6px 10px;
@@ -35,7 +36,7 @@
   <!-- Mobile top bar -->
   <div class="md:hidden">
     <nav class="fixed top-0 z-50 w-full flex justify-between items-center px-4 h-16 bg-[#F9F7F2]/80 backdrop-blur-xl shadow-[0_4px_20px_rgba(255,90,119,0.05)]">
-      <a href="/" class="text-2xl font-black text-[#FF5A77] tracking-tighter">MEOW</a>
+      <a href="/" class="text-2xl font-black text-[#FF5A77] tracking-normal">M&D</a>
       <div class="flex items-center gap-3">
         <button type="button" id="mobile-search-open" class="text-gray-500 hover:text-[#FF5A77] hover:scale-105 transition-transform" aria-label="搜索">
           <span class="material-symbols-outlined">search</span>
@@ -51,7 +52,7 @@
     <aside class="hidden md:flex bg-[#F9F7F2] h-screen w-64 border-r border-gray-100 flex-col p-6 gap-4 sticky top-0 shrink-0 rounded-r-[32px]">
       <div class="mb-6 pl-2">
         <a href="/" class="block">
-          <h1 class="text-headline-xl font-headline-xl text-[#FF5A77] tracking-tighter">MEOW</h1>
+          <h1 class="text-headline-xl font-headline-xl text-[#FF5A77] tracking-normal">M&D</h1>
           <p class="text-label-md font-label-md text-gray-500 mt-1" data-i18n="stitch.tagline">社区探索</p>
         </a>
       </div>
@@ -88,6 +89,7 @@
             <a id="dashboard-link" href="/dashboard" class="text-gray-500 hidden" data-i18n="nav.dashboard">管理</a>
             <button id="logout-btn" type="button" class="text-gray-500 hidden" data-i18n="nav.logout">退出</button>
           </div>
+          <a href="/cute.html" class="text-primary-container font-semibold">M&D WebUI</a>
           <a href="/architecture.html" class="text-gray-400 hover:text-primary-container" data-i18n="nav.docs">系统文档</a>
         </div>
       </div>
@@ -122,7 +124,7 @@
       <div class="py-8 flex justify-center" id="feed-loading" hidden>
         <div class="flex items-center gap-2 text-primary-container">
           <span class="material-symbols-outlined animate-spin">sync</span>
-          <span class="font-label-md text-label-md" data-i18n="stitch.loading_more">加载更多喵星人...</span>
+          <span class="font-label-md text-label-md" data-i18n="stitch.loading_more">加载更多 M&D 动态...</span>
         </div>
       </div>
       <section id="panel-discover" class="hidden max-w-5xl mx-auto">
@@ -161,7 +163,7 @@
         <div class="flex flex-col gap-3">
           <div class="bg-surface-container-lowest p-3 rounded-[16px] border border-transparent hover:border-primary-container/20 cursor-pointer">
             <div class="flex justify-between items-center mb-1">
-              <span class="text-body-lg font-body-lg font-bold text-on-surface"># 晒晒家里的猫主子</span>
+              <span class="text-body-lg font-body-lg font-bold text-on-surface"># 晒晒家里的猫猫</span>
               <span class="text-label-md font-label-md text-primary-container bg-primary-container/10 px-2 py-0.5 rounded-full">Top 1</span>
             </div>
             <p class="text-label-md font-label-md text-gray-500">45.2w 参与</p>

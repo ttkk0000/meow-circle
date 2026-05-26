@@ -112,7 +112,7 @@
   font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .item-content {
@@ -363,7 +363,7 @@
 .user-row .name {
   font-family: var(--font-display);
   font-weight: 500;
-  letter-spacing: -0.005em;
+  letter-spacing: 0;
 }
 .user-row .handle {
   color: var(--muted);
@@ -451,7 +451,7 @@ body.home #search-results {
 .notification .notif-body strong {
   color: var(--text);
   font-family: var(--font-display);
-  letter-spacing: -0.005em;
+  letter-spacing: 0;
 }
 
 /* ================== Messages ================== */
@@ -583,7 +583,7 @@ body.home .meow-logo .logo-mark {
 body.home .meow-logo .logo-wordmark {
   font-family: var(--font-display);
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 body.home .topbar .search-box {
@@ -624,7 +624,7 @@ body.home .hero {
   animation: home-rise var(--motion-slow) var(--ease-out-expo) both;
 }
 
-/* ---------- Kitty showcase ---------- */
+/* ---------- M&D showcase ---------- */
 
 @keyframes kitty-glide {
   from { transform: translateX(0); }
@@ -746,7 +746,7 @@ body.home .hero-copy .h-mega {
     2.75rem
   );
   line-height: 1.05;
-  letter-spacing: -0.028em;
+  letter-spacing: 0;
   font-weight: 500;
 }
 
@@ -827,7 +827,7 @@ body.home .hero-index .display-num {
     2.5rem
   );
   line-height: 0.96;
-  letter-spacing: -0.026em;
+  letter-spacing: 0;
 }
 
 body.home .hero-index-primary .display-num {
@@ -854,7 +854,7 @@ body.home .display-num-sm {
   font-size: 1.4rem;
   font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   color: var(--ink-display);
   margin-top: var(--space-1);
   font-variant-numeric: tabular-nums;
@@ -939,13 +939,13 @@ body.home .feed-head .h-section {
     1.35rem
   );
   line-height: 1.18;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   font-weight: 600;
   color: var(--text);
 }
 
 body.home .feed-primary .feed-head .h-section {
-  letter-spacing: -0.022em;
+  letter-spacing: 0;
 }
 
 body.home .btn-small {
@@ -987,7 +987,7 @@ body.home .list-editorial .item:hover {
 body.home .list-editorial .item-title {
   font-size: 1.0625rem;
   line-height: 1.28;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   font-weight: 500;
 }
 body.home .list-editorial .item:first-child .item-title {
@@ -997,7 +997,7 @@ body.home .list-editorial .item:first-child .item-title {
     1.35rem
   );
   line-height: 1.12;
-  letter-spacing: -0.018em;
+  letter-spacing: 0;
   margin-bottom: var(--space-2);
   font-weight: 500;
 }
@@ -1076,7 +1076,7 @@ body.home .list-compact .item-head {
 body.home .list-compact .item-title {
   font-size: 0.9375rem;
   line-height: 1.3;
-  letter-spacing: -0.005em;
+  letter-spacing: 0;
   flex: 1;
   font-weight: 500;
 }

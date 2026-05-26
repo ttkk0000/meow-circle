@@ -91,13 +91,13 @@ private val FEED_FILTERS =
         FeedFilter("follow", "关注"),
     )
 
-/** MOBILE「发现」热门圈子 — 与 Stitch 稿文案一致（本地展示，后续可接圈子接口）。 */
+/** M&D「发现」热门圈子，本地展示，后续可接圈子接口。 */
 private val DISCOVER_CIRCLE_LABELS =
-    listOf("布偶猫舍", "新手铲屎官", "橘猫联盟", "猫咪摄影", "领养中心")
+    listOf("猫猫新手村", "橘猫联盟", "黑猫部", "猫咪摄影", "领养中心")
 
 private val FEED_PAGE_PADDING = 20.dp
 private val FEED_CARD_RADIUS = RoundedCornerShape(20.dp)
-private val FEED_SECTION_RADIUS = RoundedCornerShape(24.dp)
+private val FEED_SECTION_RADIUS = RoundedCornerShape(8.dp)
 private val FEED_CARD_CONTENT_PADDING = PaddingValues(horizontal = 16.dp, vertical = 12.dp)
 
 private enum class MessageSection {
@@ -217,7 +217,7 @@ fun StitchFeedScreen(
             StitchMainTab.Discover -> "发现" to "看看新鲜事"
             StitchMainTab.Messages -> "消息" to "私信与通知"
             StitchMainTab.Profile -> "我的" to profileUser.nickname.ifBlank { profileUser.username }
-            else -> "Kitty Circle" to "喵友圈 · 萌友社区"
+            else -> "M&D" to "meow & doggie"
         }
 
     Scaffold(
@@ -373,7 +373,7 @@ fun StitchFeedScreen(
                             StitchSearchField(
                                 value = q,
                                 onValueChange = { q = it },
-                                placeholder = if (tab == StitchMainTab.Discover) "搜索发现…" else "搜索喵友动态…",
+                                placeholder = if (tab == StitchMainTab.Discover) "搜索 M&D 圈子…" else "搜索 M&D 猫猫动态…",
                                 modifier = Modifier.fillMaxWidth(),
                             )
                             if (tab == StitchMainTab.Discover) {
@@ -384,7 +384,7 @@ fun StitchFeedScreen(
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Text(
-                                        "热门圈子",
+                                        "M&D 发现圈子",
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.Bold,
                                         color = StitchPalette.PrimaryDark,
@@ -409,7 +409,7 @@ fun StitchFeedScreen(
                                 ) {
                                     DISCOVER_CIRCLE_LABELS.forEach { label ->
                                         Surface(
-                                            shape = RoundedCornerShape(24.dp),
+                                            shape = RoundedCornerShape(8.dp),
                                             color = StitchPalette.SecondaryContainer.copy(alpha = 0.65f),
                                             modifier =
                                                 Modifier.clickable {
@@ -428,7 +428,7 @@ fun StitchFeedScreen(
                                 }
                                 Spacer(Modifier.height(20.dp))
                                 Text(
-                                    "发现日常",
+                                    "猫猫日常",
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = StitchPalette.PrimaryDark,
@@ -990,9 +990,9 @@ private fun MessagesPane(
                                 )
                             MessageSection.NewFollowers ->
                                 listOf(
-                                    "铲屎官阿强 关注了你",
-                                    "新手喵友_07 关注了你",
-                                    "布偶猫舍官方 关注了你",
+                                    "M&D 伙伴阿强关注了你",
+                                    "猫猫新手_07 关注了你",
+                                    "领养中心官方关注了你",
                                 )
                             MessageSection.Notifications ->
                                 listOf(

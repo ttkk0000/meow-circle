@@ -60,21 +60,18 @@ export default function LoginScreen() {
 
   return (
     <Screen contentStyle={styles.screenInner}>
-      <View style={styles.glowTop} pointerEvents="none" />
-      <View style={styles.glowBottom} pointerEvents="none" />
-
       <View style={styles.card}>
         <View style={styles.heroWrap}>
           <Image source={{ uri: HERO }} style={styles.heroImg} resizeMode="cover" />
           <View style={styles.heroBadge}>
-            <Text style={styles.heroBadgeText}>Kitty Circle</Text>
+            <Text style={styles.heroBadgeText}>M&D · meow & doggie</Text>
           </View>
         </View>
 
-        <Text style={styles.brandMeow}>MEOW</Text>
+        <Text style={styles.brandMeow}>M&D</Text>
         <Txt kind="h2">欢迎回来</Txt>
         <Txt muted style={styles.tagline}>
-          登录以继续您的探索之旅
+          登录回到你的猫猫宇宙
         </Txt>
 
         <View style={styles.form}>
@@ -168,7 +165,7 @@ export default function LoginScreen() {
         </View>
 
         <Txt kind="bodySmall" muted style={styles.legal}>
-          登录即代表您同意 MEOW 的服务条款与隐私政策（演示文案）
+          登录即代表您同意 M&D 的服务条款与隐私政策（演示文案）
         </Txt>
       </View>
     </Screen>
@@ -179,24 +176,6 @@ const styles = StyleSheet.create({
   screenInner: {
     justifyContent: 'center',
     paddingVertical: spacing.lg,
-  },
-  glowTop: {
-    position: 'absolute',
-    top: -80,
-    left: -60,
-    width: 220,
-    height: 220,
-    borderRadius: 999,
-    backgroundColor: 'rgba(255, 90, 119, 0.18)',
-  },
-  glowBottom: {
-    position: 'absolute',
-    bottom: -60,
-    right: -40,
-    width: 180,
-    height: 180,
-    borderRadius: 999,
-    backgroundColor: 'rgba(253, 175, 24, 0.16)',
   },
   card: {
     backgroundColor: 'rgba(255, 255, 255, 0.92)',

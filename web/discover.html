@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n="stitch.discover_title">发现圈子 · 喵友圈</title>
+  <title data-i18n="stitch.discover_title">发现圈子 · M&D</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -20,11 +20,10 @@
   </style>
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen">
-  <div class="fixed top-[-10%] right-[-5%] w-[400px] h-[400px] bg-primary-container/5 rounded-full blur-[80px] pointer-events-none -z-10"></div>
   <nav class="hidden md:flex fixed left-0 top-0 h-full w-64 bg-surface border-r border-surface-container-highest flex-col p-6 gap-4 z-40">
     <div class="mb-6 px-2">
-      <a href="/" class="block font-headline-xl text-headline-xl text-primary-container tracking-tighter">Kitty Circle</a>
-      <p class="font-label-md text-label-md text-on-surface-variant mt-1" data-i18n="stitch.tagline">社区探索</p>
+      <a href="/" class="block font-headline-xl text-headline-xl text-primary-container tracking-normal">M&D</a>
+      <p class="font-label-md text-label-md text-on-surface-variant mt-1" data-i18n="stitch.tagline">meow & doggie 探索</p>
     </div>
     <div class="flex flex-col gap-2 flex-1">
       <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/">
@@ -52,13 +51,33 @@
 
   <main class="md:ml-64 min-h-screen">
     <header class="sticky top-0 z-30 w-full flex justify-between items-center px-4 md:px-8 h-16 md:h-20 bg-surface/80 backdrop-blur-xl border-b border-transparent shadow-[0_4px_30px_rgba(0,0,0,0.02)]">
-      <h2 class="font-headline-xl text-on-surface" data-i18n="stitch.discover_page_title">咪友圈</h2>
-      <div class="relative group max-w-[200px] md:max-w-xs w-full hidden sm:block">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-        <input class="w-full bg-surface-container-low rounded-full pl-10 pr-4 py-2.5 border-none focus:ring-2 focus:ring-primary-container text-sm" type="search" data-i18n-placeholder="stitch.discover_search_ph" placeholder="搜索圈子..." />
+      <h2 class="font-headline-xl text-on-surface" data-i18n="stitch.discover_page_title">M&D 发现圈子</h2>
+      <div class="flex items-center gap-3">
+        <div id="settings-bar" class="hidden md:flex"></div>
+        <div class="relative group max-w-[200px] md:max-w-xs w-full hidden sm:block">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+          <input class="w-full bg-surface-container-low rounded-full pl-10 pr-4 py-2.5 border-none focus:ring-2 focus:ring-primary-container text-sm" type="search" data-i18n-placeholder="stitch.discover_search_ph" placeholder="搜索圈子..." />
+        </div>
       </div>
     </header>
     <div class="p-4 md:p-8 pb-24 max-w-7xl mx-auto w-full">
+      <section class="mnd-page-hero mb-6 overflow-hidden">
+        <div class="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+          <div class="p-5 md:p-7 lg:p-8">
+            <p class="mnd-eyebrow">M&D · meow & doggie</p>
+            <h1 class="mt-2 font-headline-xl text-headline-xl text-on-surface" data-i18n="stitch.discover_hero_title">猫猫是主角，doggie 也有座位</h1>
+            <p class="mt-3 max-w-2xl text-body-lg text-on-surface-variant" data-i18n="stitch.discover_hero_sub">按兴趣进入圈子：养猫新手、品种讨论、健康急救、好物交易，都用可爱的 M&D 语言重新组织。</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span class="mnd-chip px-4 py-2">Cat-first</span>
+              <span class="mnd-chip px-4 py-2">Doggie-friendly</span>
+              <span class="mnd-chip px-4 py-2">Cute system</span>
+            </div>
+          </div>
+          <div class="min-h-[220px] bg-surface-container-low">
+            <img class="h-full min-h-[220px] w-full object-cover" alt="" src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?auto=format&fit=crop&w=1200&q=80" />
+          </div>
+        </div>
+      </section>
       <div class="flex flex-wrap gap-3 mb-8">
         <span class="px-5 py-2 rounded-full bg-primary-container text-white font-label-md shadow-[0_2px_8px_rgba(255,90,119,0.3)]" data-i18n="stitch.chip_all">全部圈子</span>
         <span class="px-5 py-2 rounded-full bg-surface-container text-on-surface-variant font-label-md" data-i18n="stitch.chip_newbie">新手养猫</span>
@@ -66,7 +85,7 @@
         <span class="px-5 py-2 rounded-full bg-surface-container text-on-surface-variant font-label-md" data-i18n="stitch.chip_gear">好物分享</span>
         <span class="px-5 py-2 rounded-full bg-surface-container text-on-surface-variant font-label-md" data-i18n="stitch.chip_health">医疗健康</span>
       </div>
-      <p class="text-body-md text-on-surface-variant mb-6" data-i18n="stitch.discover_tip">以下为示例圈子卡片；后续可接入真实圈子数据与帖子聚合。</p>
+      <p class="text-body-md text-on-surface-variant mb-6" data-i18n="stitch.discover_tip">按圈子浏览动态，加入状态会保存在本机。</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <a href="/" class="group bg-surface-container-lowest rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.03)] overflow-hidden border border-surface-container-low hover:-translate-y-1 transition-all flex flex-col">
           <div class="h-32 w-full relative overflow-hidden bg-orange-100 flex items-center justify-center text-4xl">🐈</div>
@@ -81,7 +100,7 @@
           <div class="h-32 w-full bg-slate-100 flex items-center justify-center text-4xl">🐱</div>
           <div class="pt-10 p-5 flex flex-col gap-2 flex-1 relative">
             <div class="absolute top-[-2.5rem] left-5 w-16 h-16 rounded-full border-4 border-white bg-slate-200 flex items-center justify-center text-xl font-bold">新</div>
-            <h3 class="font-headline-lg text-on-surface" data-i18n="stitch.circle_newbie">新手铲屎官互助</h3>
+            <h3 class="font-headline-lg text-on-surface" data-i18n="stitch.circle_newbie">猫猫新手村</h3>
             <p class="text-body-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> 8.2w</p>
             <p class="text-body-md text-on-surface-variant line-clamp-2" data-i18n="stitch.circle_newbie_desc">保姆级教程与热心答疑。</p>
           </div>

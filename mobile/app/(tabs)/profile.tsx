@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     height: 72,
     borderRadius: radius.xl,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255, 90, 119, 0.35)',
+    borderColor: colors.borderMedium,
   },
   avatarPh: {
     backgroundColor: colors.surfaceLow,
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: radius.lg,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255, 90, 119, 0.12)',
+    borderColor: colors.border,
     padding: spacing.md,
     minHeight: 100,
   },

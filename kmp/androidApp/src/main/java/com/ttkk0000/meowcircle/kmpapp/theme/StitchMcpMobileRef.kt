@@ -1,10 +1,9 @@
 package com.ttkk0000.meowcircle.kmpapp.theme
 
 /**
- * Stitch **MCP** 源：项目「Kitty Circle Social」`deviceType = MOBILE`（不要用同项目里的桌面屏当真值）。
+ * 旧 Stitch MCP 源：项目「Kitty Circle Social」`deviceType = MOBILE`。
  *
- * 对齐方式：以 MCP `list_projects` / `get_project` 返回的 `designTheme.namedColors` 与 `typography` 为准；
- * 具体界面 HTML 用 MCP `list_screens` 筛 `deviceType == MOBILE` 后 `get_screen`。
+ * 现在仅作为迁移参考；实际视觉以 M&D 设计记忆和当前 token 为准。
  *
  * Project id（`list_screens` / `get_screen` 的 `projectId`）：
  */

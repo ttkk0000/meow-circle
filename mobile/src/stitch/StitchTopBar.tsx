@@ -4,8 +4,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { resolveMediaUrl, type User } from '@/api';
 import { colors, radius, spacing, typography } from '@/theme';
 
-const trackingMeow = -0.6;
-
 type Props = {
   user: User | null;
   onAvatarPress?: () => void;
@@ -28,11 +26,14 @@ export function StitchTopBar({ user, onAvatarPress, onNotifyPress }: Props) {
           <Image source={{ uri: avatarUri }} style={styles.avatarImg} />
         ) : (
           <View style={[styles.avatarImg, styles.avatarFallback]}>
-            <Text style={styles.avatarGlyph}>🐱</Text>
+            <Text style={styles.avatarGlyph}>M</Text>
           </View>
         )}
       </Pressable>
-      <Text style={styles.meow}>MEOW</Text>
+      <View style={styles.lockup}>
+        <Text style={styles.meow}>M&D</Text>
+        <Text style={styles.sub}>meow & doggie</Text>
+      </View>
       <Pressable
         onPress={onNotifyPress}
         style={styles.iconBtn}
@@ -62,21 +63,31 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: radius.pill,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255, 90, 119, 0.35)',
+    borderColor: colors.borderMedium,
   },
   avatarFallback: {
-    backgroundColor: colors.surfaceLow,
+    backgroundColor: colors.primaryContainer,
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarGlyph: {
-    fontSize: 22,
+    ...typography.label,
+    fontSize: 16,
+    color: colors.onPrimary,
+  },
+  lockup: {
+    alignItems: 'center',
+    gap: 1,
   },
   meow: {
     ...typography.h1,
     fontSize: 20,
-    letterSpacing: trackingMeow,
-    color: colors.onSurface,
+    letterSpacing: 0,
+    color: colors.primaryContainer,
+  },
+  sub: {
+    ...typography.label,
+    color: colors.onSurfaceVariant,
   },
   iconBtn: {
     padding: spacing.xs,

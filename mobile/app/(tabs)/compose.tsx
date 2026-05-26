@@ -8,10 +8,10 @@ import { Button, Input, Txt } from '@/components';
 import { colors, radius, spacing } from '@/theme';
 
 const CATS = [
-  { value: 'daily_share', label: '日常' },
-  { value: 'help', label: '求助' },
+  { value: 'daily_share', label: '猫猫日常' },
+  { value: 'help', label: '求助问答' },
   { value: 'activity', label: '活动' },
-  { value: 'trade', label: '交易' },
+  { value: 'trade', label: '好物交易' },
 ] as const;
 
 export default function ComposeScreen() {
@@ -56,7 +56,7 @@ export default function ComposeScreen() {
         <Pressable onPress={() => router.back()} style={styles.hBtn} accessibilityLabel="关闭">
           <MaterialIcons name="close" size={26} color={colors.onSurface} />
         </Pressable>
-        <Txt kind="h2">MEOW</Txt>
+        <Txt kind="h2" style={{ color: colors.primaryContainer }}>M&D 发布台</Txt>
         <Pressable onPress={publish} disabled={busy} style={styles.hBtn} accessibilityLabel="发布">
           <Txt kind="h3" style={{ color: colors.primaryContainer }}>
             发布
@@ -68,10 +68,16 @@ export default function ComposeScreen() {
         contentContainerStyle={[styles.body, { paddingBottom: Math.max(insets.bottom, spacing.lg) + 80 }]}
         keyboardShouldPersistTaps="handled"
       >
-        <Input label="标题" placeholder="今天猫咪做了什么？" value={title} onChangeText={setTitle} />
+        <View style={styles.hero}>
+          <Txt kind="label" style={styles.heroEyebrow}>COMPOSE · M&D</Txt>
+          <Txt kind="h2">写给猫猫宇宙的一条新动态</Txt>
+          <Txt muted>猫猫日常、求助、活动优先，doggie 也可以自然出镜。</Txt>
+        </View>
+
+        <Input label="标题" placeholder="今天想记录哪一刻？" value={title} onChangeText={setTitle} />
         <Input
           label="正文"
-          placeholder="写下来…"
+          placeholder="写下猫猫日常、求助、活动，doggie 也可以出镜。"
           value={content}
           onChangeText={setContent}
           multiline
@@ -100,7 +106,7 @@ export default function ComposeScreen() {
 
         <Input
           label="标签"
-          placeholder="用逗号分隔，例如：英短,零食"
+          placeholder="用逗号分隔，例如：M&D,猫猫,新手"
           value={tagsRaw}
           onChangeText={setTagsRaw}
         />
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.md,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'rgba(255, 90, 119, 0.1)',
+    borderBottomColor: colors.border,
     backgroundColor: colors.canvas,
   },
   hBtn: {
@@ -140,6 +146,17 @@ const styles = StyleSheet.create({
   body: {
     padding: spacing.lg,
     gap: spacing.md,
+  },
+  hero: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border,
+    padding: spacing.lg,
+    gap: spacing.sm,
+  },
+  heroEyebrow: {
+    color: colors.primaryContainer,
   },
   catRow: {
     flexDirection: 'row',
@@ -156,7 +173,7 @@ const styles = StyleSheet.create({
   },
   catChipOn: {
     backgroundColor: colors.brandWeak,
-    borderColor: 'rgba(255, 90, 119, 0.35)',
+    borderColor: colors.borderMedium,
   },
   catOn: {
     color: colors.primaryContainer,

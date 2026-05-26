@@ -18,6 +18,8 @@
       descKey: "stitch.circle_orange_desc",
       members: "12.5w",
       mark: "橘",
+      badge: "Cat club",
+      image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=900&q=80",
       href: "/?q=%E6%A9%98%E7%8C%AB#home",
     },
     {
@@ -27,6 +29,8 @@
       descKey: "stitch.circle_newbie_desc",
       members: "8.2w",
       mark: "新",
+      badge: "Starter",
+      image: "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=900&q=80",
       href: "/?q=%E6%96%B0%E6%89%8B#home",
     },
     {
@@ -36,6 +40,8 @@
       descKey: "stitch.circle_black_desc",
       members: "5.6w",
       mark: "黑",
+      badge: "Mystery",
+      image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=900&q=80",
       href: "/?q=%E9%BB%91%E7%8C%AB#home",
     },
     {
@@ -45,6 +51,8 @@
       descKey: "stitch.circle_market_desc",
       members: "8.9k",
       mark: "市",
+      badge: "Market",
+      image: "https://images.unsplash.com/photo-1545249390-6bdfa286032f?auto=format&fit=crop&w=900&q=80",
       href: "/market.html",
     },
     {
@@ -54,6 +62,8 @@
       desc: "猫咪医疗、驱虫、绝育和急救经验集中讨论。",
       members: "1.2w",
       mark: "医",
+      badge: "Care",
+      image: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=900&q=80",
       href: "/?q=%E5%8C%BB%E7%96%97#home",
     },
   ];
@@ -127,11 +137,15 @@
       card.className =
         "group bg-surface-container-lowest rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.03)] overflow-hidden border border-surface-container-low hover:-translate-y-1 transition-all flex flex-col";
       card.innerHTML = `
-        <div class="h-32 w-full bg-primary-container/10 flex items-center justify-center">
-          <div class="h-16 w-16 rounded-full bg-surface text-primary-container flex items-center justify-center text-xl font-bold shadow-sm">${escapeHtml(circle.mark)}</div>
+        <div class="relative h-40 w-full overflow-hidden bg-primary-container/10">
+          <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" alt="" src="${escapeHtml(circle.image)}" />
+          <div class="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[12px] font-bold text-primary-container shadow-sm">${escapeHtml(circle.badge)}</div>
         </div>
         <div class="p-5 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-lg text-on-surface">${escapeHtml(t(circle.titleKey))}</h3>
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-full bg-primary-container text-white flex items-center justify-center text-lg font-bold shadow-sm">${escapeHtml(circle.mark)}</div>
+            <h3 class="font-headline-lg text-on-surface">${escapeHtml(t(circle.titleKey))}</h3>
+          </div>
           <p class="text-body-md text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> ${escapeHtml(circle.members)}</p>
           <p class="text-body-md text-on-surface-variant line-clamp-2">${escapeHtml(circleDescription(circle))}</p>
           <div class="mt-3 flex flex-wrap gap-2">

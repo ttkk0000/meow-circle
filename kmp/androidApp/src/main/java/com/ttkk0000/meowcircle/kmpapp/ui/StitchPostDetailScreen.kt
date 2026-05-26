@@ -64,7 +64,7 @@ import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 import com.ttkk0000.meowcircle.humanizeClientFailure
 import kotlinx.coroutines.launch
 
-/** MOBILE「帖子详情」：与 Stitch 稿一致：图集分页、作者行、关注、互动统计、评论区块。 */
+/** MOBILE「帖子详情」：M&D 图集分页、作者行、关注、互动统计、评论区块。 */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun StitchPostDetailScreen(
@@ -157,7 +157,7 @@ fun StitchPostDetailScreen(
                                         Modifier
                                             .fillMaxWidth()
                                             .aspectRatio(1f)
-                                            .clip(RoundedCornerShape(20.dp))
+                                            .clip(RoundedCornerShape(8.dp))
                                             .background(StitchLoginRef.SurfaceContainerLow),
                                 ) {
                                     HorizontalPager(
@@ -226,7 +226,7 @@ fun StitchPostDetailScreen(
                                         fontWeight = FontWeight.Bold,
                                     )
                                     Text(
-                                        author.bio.ifBlank { "喵圈用户" },
+                                        author.bio.ifBlank { "M&D 伙伴" },
                                         style = MaterialTheme.typography.bodySmall,
                                         color = StitchLoginRef.Outline,
                                     )
@@ -242,7 +242,7 @@ fun StitchPostDetailScreen(
                                                 )
                                         }
                                     },
-                                    shape = RoundedCornerShape(20.dp),
+                                    shape = RoundedCornerShape(8.dp),
                                 ) {
                                     Text(if (following) "已关注" else "关注")
                                 }

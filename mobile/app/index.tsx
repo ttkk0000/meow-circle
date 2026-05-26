@@ -4,13 +4,13 @@
 
 import { Redirect } from 'expo-router';
 import { useAuth } from '@/auth';
-import { KittyLoader } from '@/components';
+import { MndLoader } from '@/components';
 
 export default function Gate() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <KittyLoader label="正在打开喵友圈..." />;
+    return <MndLoader label="正在打开 M&D..." />;
   }
 
   return <Redirect href={user ? '/(tabs)' : '/(auth)/login'} />;

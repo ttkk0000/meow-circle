@@ -19,7 +19,7 @@
   --shadow: 0 14px 34px rgba(92, 47, 75, 0.13);
   --shadow-soft: 0 8px 20px rgba(92, 47, 75, 0.08);
   --radius-card: 8px;
-  --radius-soft: 14px;
+  --radius-soft: 8px;
   --radius-pill: 999px;
   --focus: 0 0 0 3px rgba(255, 79, 147, 0.24);
   --profile-bg-image: url("https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1400&q=80");
@@ -168,7 +168,7 @@ textarea:focus-visible {
 
 .brand-mark {
   display: grid;
-  width: 46px;
+  width: 54px;
   height: 46px;
   place-items: center;
   border: 2px solid var(--ink);
@@ -176,8 +176,9 @@ textarea:focus-visible {
   background: var(--secondary);
   color: #2b1722;
   font-family: var(--font-round);
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 700;
+  line-height: 1;
   box-shadow: 5px 5px 0 color-mix(in srgb, var(--ink) 16%, transparent);
 }
 
@@ -197,6 +198,7 @@ h3 {
 
 .brand-lockup small {
   color: var(--muted);
+  text-transform: lowercase;
 }
 
 .dock-nav {
@@ -1308,6 +1310,22 @@ h3 {
   border-radius: var(--radius-card);
   background: var(--surface-soft);
   resize: vertical;
+}
+
+.inline-status {
+  min-height: 1.2em;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.inline-status.is-error {
+  color: var(--danger);
+}
+
+.inline-status.is-success {
+  color: color-mix(in srgb, var(--mint) 70%, var(--ink));
+  font-weight: 700;
 }
 
 .studio-side {

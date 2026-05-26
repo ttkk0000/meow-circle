@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n="stitch.market_title">市集 · 喵友圈</title>
+  <title data-i18n="stitch.market_title">市集 · M&D</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/theme.css" />
   <link rel="stylesheet" href="/stitch-theme-bridge.css" />
   <link rel="stylesheet" href="/stitch-toast.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 64'%3E%3Crect width='80' height='64' rx='12' fill='%23ff4f93'/%3E%3Ctext x='40' y='40' text-anchor='middle' font-size='24' font-family='Arial' font-weight='700' fill='white'%3EM%26D%3C/text%3E%3C/svg%3E">
   <script src="/shared.js"></script>
   <style>
     body { background: #fbf9f4; }
@@ -28,7 +29,23 @@
     <a href="/dashboard#compose-listing" class="hidden sm:inline-flex bg-gradient-to-b from-primary-container to-[#E04B66] text-white px-5 py-2 rounded-full font-label-md shadow-[0_4px_16px_rgba(255,90,119,0.25)]" data-i18n="dashboard.nav_compose_listing">发布交易</a>
   </header>
   <main class="max-w-7xl mx-auto p-4 md:p-8">
-    <p class="text-body-md text-on-surface-variant mb-6" data-i18n="stitch.market_lede">领养、用品、服务——逛一逛同好发布的交易信息。</p>
+    <section class="mb-6 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-5 shadow-[0_8px_30px_rgba(255,79,147,0.06)]">
+      <span class="text-label-md font-bold uppercase text-primary-container">M&D Market</span>
+      <h2 class="mt-2 font-headline-xl text-on-surface">猫猫优先的可信好物市集</h2>
+      <p class="mt-2 text-body-md text-on-surface-variant" data-i18n="stitch.market_lede">领养、用品、服务——逛一逛同好发布的交易信息。</p>
+      <div class="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <label class="relative block md:w-80">
+          <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+          <input id="market-search" class="w-full rounded-full border border-outline-variant/20 bg-surface-container-low py-2.5 pl-10 pr-4 text-body-md outline-none focus:ring-2 focus:ring-primary-container/30" type="search" placeholder="搜索猫猫好物、服务、领养" />
+        </label>
+        <div class="flex flex-wrap gap-2" id="market-type-tabs">
+          <button class="market-type-chip rounded-full bg-primary-container px-4 py-2 text-label-md font-bold text-white" type="button" data-market-type="all">全部</button>
+          <button class="market-type-chip rounded-full bg-surface-container px-4 py-2 text-label-md font-bold text-on-surface-variant" type="button" data-market-type="product">商品</button>
+          <button class="market-type-chip rounded-full bg-surface-container px-4 py-2 text-label-md font-bold text-on-surface-variant" type="button" data-market-type="service">服务</button>
+          <button class="market-type-chip rounded-full bg-surface-container px-4 py-2 text-label-md font-bold text-on-surface-variant" type="button" data-market-type="adopt">领养</button>
+        </div>
+      </div>
+    </section>
     <div id="listings" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
   <script src="/market.js"></script>

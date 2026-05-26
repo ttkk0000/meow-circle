@@ -1,7 +1,23 @@
 (function () {
   const root = document.documentElement;
-  const THEME_KEY = "meow_cute_theme";
-  const PROFILE_BG_KEY = "meow_cute_profile_bg";
+  const THEME_KEY = "mnd_cute_theme";
+  const PROFILE_BG_KEY = "mnd_cute_profile_bg";
+  const TOKEN_KEY = "meow_token";
+  const USER_KEY = "meow_user";
+  const VIEWS = new Set([
+    "home",
+    "discover",
+    "market",
+    "messages",
+    "profile",
+    "studio",
+    "safety",
+    "post-detail",
+    "listing-detail",
+    "orders",
+    "notifications",
+    "auth",
+  ]);
 
   const imagePool = [
     "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=900&q=80",
@@ -40,7 +56,7 @@
     },
     {
       title: "周末公园宠物野餐，有没有一起的？",
-      content: "准备了饮水点和小零食，欢迎同城喵友来玩。",
+      content: "准备了饮水点和小零食，猫猫是主角，doggie 也欢迎。",
       category: "activity",
       tags: ["同城", "活动"],
       author: "泡芙小队",
@@ -91,10 +107,10 @@
   ];
 
   const topics = [
-    { icon: "local_florist", title: "新手养猫", desc: "入门清单、夜叫、猫砂、疫苗。" },
+    { icon: "local_florist", title: "猫猫新手村", desc: "入门清单、夜叫、猫砂、疫苗。" },
     { icon: "restaurant", title: "科学喂养", desc: "粮食、饮水、体重与挑食问题。" },
-    { icon: "volunteer_activism", title: "领养互助", desc: "领养故事、审核流程与回访。" },
-    { icon: "festival", title: "同城活动", desc: "野餐、公益日、宠物友好地点。" },
+    { icon: "volunteer_activism", title: "猫狗领养", desc: "领养故事、审核流程与回访。" },
+    { icon: "festival", title: "同城活动", desc: "野餐、公益日、猫狗友好地点。" },
   ];
 
   const conversations = [
@@ -121,6 +137,50 @@
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+  }
+
+  function getToken() {
+    return localStorage.getItem(TOKEN_KEY) || "";
+  }
+
+  function saveAuth(token, user) {
+    if (token) localStorage.setItem(TOKEN_KEY, token);
+    if (user) localStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  async function postJSON(url, body, requireAuth = false) {
+    const headers = { "Content-Type": "application/json" };
+    const token = getToken();
+    if (requireAuth) {
+      if (!token) throw new Error("请先登录再继续");
+      headers.Authorization = `Bearer ${token}`;
+    }
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    });
+    let payload = null;
+    try {
+      payload = await response.json();
+    } catch (_) {
+      payload = null;
+    }
+    if (!response.ok) throw new Error((payload && payload.message) || `请求失败 (${response.status})`);
+    return payload && payload.data !== undefined ? payload.data : payload;
+  }
+
+  function setStatus(selector, message, kind = "") {
+    const node = document.querySelector(selector);
+    if (!node) return;
+    node.textContent = message || "";
+    node.classList.toggle("is-error", kind === "error");
+    node.classList.toggle("is-success", kind === "success");
+  }
+
+  function selectedValue(container, selector, fallback) {
+    const active = container.querySelector(`${selector}.is-active`) || container.querySelector(selector);
+    return active?.dataset.postCategory || active?.dataset.listingType || fallback;
   }
 
   function categoryLabel(category) {
@@ -165,13 +225,17 @@
     });
   }
 
-  function setView(view) {
+  function setView(view, options = {}) {
+    const nextView = VIEWS.has(view) ? view : "home";
     document.querySelectorAll("[data-view-panel]").forEach((panel) => {
-      panel.classList.toggle("is-active", panel.dataset.viewPanel === view);
+      panel.classList.toggle("is-active", panel.dataset.viewPanel === nextView);
     });
     document.querySelectorAll("[data-view]").forEach((button) => {
-      button.classList.toggle("is-active", button.dataset.view === view);
+      button.classList.toggle("is-active", button.dataset.view === nextView);
     });
+    if (!options.skipHash && window.location.hash.replace("#", "") !== nextView) {
+      history.replaceState(null, "", `#${nextView}`);
+    }
     if (window.innerWidth < 820) window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -213,7 +277,7 @@
               <h3>${escapeHtml(post.title)}</h3>
               <p>${escapeHtml(post.content)}</p>
               <div class="meta-row">
-                <span>@${escapeHtml(post.author || "meow")}</span>
+                <span>@${escapeHtml(post.author || "mnd")}</span>
                 <span>${Number(post.likes || 0)} 喜欢</span>
                 <span>${Number(post.comments || 0)} 评论</span>
               </div>
@@ -361,6 +425,20 @@
       const bgButton = event.target.closest("[data-bg-choice]");
       if (bgButton) setProfileBg(bgButton.dataset.bgChoice);
 
+      const postCategoryButton = event.target.closest("[data-post-category]");
+      if (postCategoryButton) {
+        postCategoryButton.closest(".chip-row")?.querySelectorAll("[data-post-category]").forEach((button) => {
+          button.classList.toggle("is-active", button === postCategoryButton);
+        });
+      }
+
+      const listingTypeButton = event.target.closest("[data-listing-type]");
+      if (listingTypeButton) {
+        listingTypeButton.closest(".chip-row")?.querySelectorAll("[data-listing-type]").forEach((button) => {
+          button.classList.toggle("is-active", button === listingTypeButton);
+        });
+      }
+
       const filterButton = event.target.closest("[data-feed-filter]");
       if (filterButton) {
         activeFeedFilter = filterButton.dataset.feedFilter;
@@ -383,7 +461,100 @@
     });
 
     document.getElementById("cute-search")?.addEventListener("input", renderFeed);
+    document.querySelector(".mini-form")?.addEventListener("submit", (event) => event.preventDefault());
     document.querySelector(".chat-input")?.addEventListener("submit", (event) => event.preventDefault());
+
+    document.querySelector("[data-auth-login-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const data = new FormData(form);
+      const username = String(data.get("username") || "").trim();
+      const password = String(data.get("password") || "");
+      if (!username || !password) {
+        setStatus("[data-auth-login-status]", "请填写用户名和密码", "error");
+        return;
+      }
+      setStatus("[data-auth-login-status]", "正在进入 M&D...");
+      try {
+        const result = await postJSON("/api/v1/auth/login", { username, password });
+        saveAuth(result.token, result.user);
+        setStatus("[data-auth-login-status]", "登录成功，可以发布和交易了。", "success");
+        setView("home");
+      } catch (error) {
+        setStatus("[data-auth-login-status]", error.message || "登录失败", "error");
+      }
+    });
+
+    document.querySelector("[data-auth-register-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const data = new FormData(form);
+      const username = String(data.get("username") || "").trim();
+      const password = String(data.get("password") || "");
+      if (username.length < 3 || password.length < 6) {
+        setStatus("[data-auth-register-status]", "昵称至少 3 位，密码至少 6 位", "error");
+        return;
+      }
+      setStatus("[data-auth-register-status]", "正在创建 M&D 账号...");
+      try {
+        const result = await postJSON("/api/v1/auth/register", { username, password, nickname: username });
+        saveAuth(result.token, result.user);
+        setStatus("[data-auth-register-status]", "注册成功，欢迎来到 M&D。", "success");
+        setView("home");
+      } catch (error) {
+        setStatus("[data-auth-register-status]", error.message || "注册失败", "error");
+      }
+    });
+
+    document.querySelector("[data-compose-post-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const data = new FormData(form);
+      const title = String(data.get("title") || "").trim();
+      const content = String(data.get("content") || "").trim();
+      const category = selectedValue(form, "[data-post-category]", "daily_share");
+      if (!title || !content) {
+        setStatus("[data-compose-post-status]", "标题和内容都要填哦", "error");
+        return;
+      }
+      setStatus("[data-compose-post-status]", "正在发布...");
+      try {
+        const post = await postJSON("/api/v1/posts", { title, content, category, tags: ["M&D", "猫猫"] }, true);
+        allPosts = [{ ...post, author: "我", likes: 0, comments: 0, image: imagePool[0] }, ...allPosts];
+        renderFeed();
+        setStatus("[data-compose-post-status]", "已发布到 M&D 动态。", "success");
+        setView("home");
+      } catch (error) {
+        setStatus("[data-compose-post-status]", error.message || "发布失败", "error");
+        if (!getToken()) setView("auth");
+      }
+    });
+
+    document.querySelector("[data-compose-listing-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const data = new FormData(form);
+      const title = String(data.get("title") || "").trim();
+      const description = String(data.get("description") || "").trim();
+      const type = selectedValue(form, "[data-listing-type]", "product");
+      const priceRaw = String(data.get("price") || "0").replace(/[^\d.]/g, "");
+      const priceCents = Math.round(Number(priceRaw || 0) * 100);
+      if (!title) {
+        setStatus("[data-compose-listing-status]", "交易标题不能为空", "error");
+        return;
+      }
+      setStatus("[data-compose-listing-status]", "正在发布交易...");
+      try {
+        const listing = await postJSON("/api/v1/listings", { title, description, type, price_cents: priceCents, currency: "CNY" }, true);
+        allListings = [{ ...listing, seller: "我", image: imagePool[3] }, ...allListings];
+        renderMarket();
+        setStatus("[data-compose-listing-status]", "交易已发布。", "success");
+        setView("market");
+      } catch (error) {
+        setStatus("[data-compose-listing-status]", error.message || "发布失败", "error");
+        if (!getToken()) setView("auth");
+      }
+    });
   }
 
   function init() {
@@ -399,7 +570,10 @@
     renderSafety();
     renderFeed();
     renderMarket();
-    if (new URLSearchParams(window.location.search).has("live")) hydrateFromApi();
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("live")) hydrateFromApi();
+    const initialView = params.get("view") || window.location.hash.replace("#", "");
+    if (initialView) setView(initialView, { skipHash: true });
     window.addEventListener("test-set-view", (event) => setView(event.detail));
     window.meowCuteSetView = setView;
   }

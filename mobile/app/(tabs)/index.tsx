@@ -111,7 +111,7 @@ export default function HomeScreen() {
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
           <StitchSearchField
-            placeholder="搜索喵友动态…"
+            placeholder="搜索 M&D 猫猫动态…"
             value={q}
             onChangeText={setQ}
             returnKeyType="search"
@@ -119,10 +119,10 @@ export default function HomeScreen() {
 
           <View style={styles.banner}>
             <Txt kind="h2" style={styles.bannerTitle}>
-              春日萌友季
+              M&D 猫猫主角季
             </Txt>
             <Txt kind="bodySmall" muted>
-              晒出毛孩子 · 每一只都值得被看见
+              猫猫日常先被看见，doggie 也欢迎一起入镜
             </Txt>
           </View>
 
@@ -134,7 +134,7 @@ export default function HomeScreen() {
           ) : feedFilter === 'follow' && !user ? (
             <View style={styles.card}>
               <Txt kind="h3">关注</Txt>
-              <Txt muted>登录后即可看你关注的铲屎官发布的动态。</Txt>
+              <Txt muted>登录后即可看你关注的 M&D 伙伴发布的动态。</Txt>
             </View>
           ) : items === null ? (
             <View style={styles.card}>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   filterChipOn: {
     backgroundColor: colors.brandWeak,
-    borderColor: 'rgba(255, 90, 119, 0.35)',
+    borderColor: colors.borderMedium,
   },
   filterLabel: {
     color: colors.onSurfaceVariant,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.xl,
     padding: spacing.lg,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255, 90, 119, 0.18)',
+    borderColor: colors.border,
   },
   bannerTitle: {
     color: colors.primaryContainer,

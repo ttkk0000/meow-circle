@@ -13,7 +13,30 @@ const btnEdit = document.querySelector("#btn-edit-profile");
 const editModal = document.querySelector("#profile-edit-modal");
 const editForm = document.querySelector("#profile-edit-form");
 const btnEditCancel = document.querySelector("#btn-edit-cancel");
+const profileCover = document.querySelector("#profile-cover");
+const PROFILE_BG_KEY = "mnd_profile_bg";
 let currentUser = null;
+
+const PROFILE_BACKGROUNDS = {
+  picnic: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1400&q=80",
+  desk: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1400&q=80",
+  arcade: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=1400&q=80",
+  garden: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&w=1400&q=80",
+};
+
+const DEMO_USER = {
+  id: 9001,
+  username: "peachlatte",
+  nickname: "桃子和拿铁",
+  bio: "两只猫的日常记录员，偶尔带 doggie 出镜。M&D 的猫猫优先示例主页。",
+  avatar_url: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=300&q=80",
+};
+
+const DEMO_POSTS = [
+  { id: 9001, title: "猫猫第一次学会开门，家里从此没有秘密", category: "daily_share" },
+  { id: 9002, title: "猫猫新手村：晚上一直叫怎么办", category: "help" },
+  { id: 9003, title: "周末猫狗野餐，有没有一起的？", category: "activity" },
+];
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -94,48 +117,71 @@ editForm?.addEventListener("submit", async (e) => {
   }
 });
 
+function setProfileBg(bg) {
+  const key = PROFILE_BACKGROUNDS[bg] ? bg : "picnic";
+  if (profileCover) {
+    profileCover.style.background = `linear-gradient(180deg, rgba(43,23,34,.05), rgba(43,23,34,.46)), url("${PROFILE_BACKGROUNDS[key]}") center / cover`;
+  }
+  localStorage.setItem(PROFILE_BG_KEY, key);
+  document.querySelectorAll("[data-profile-bg]").forEach((button) => {
+    const active = button.dataset.profileBg === key;
+    button.classList.toggle("bg-primary-container", active);
+    button.classList.toggle("text-white", active);
+    button.classList.toggle("bg-surface-container", !active);
+    button.classList.toggle("text-on-surface-variant", !active);
+  });
+}
+
+function renderProfile(user, posts) {
+  currentUser = user;
+  profileName.textContent = user.nickname || user.username || `User ${user.id}`;
+  profileBio.textContent = user.bio || "";
+  if (user.avatar_url) {
+    profileAvatar.innerHTML = `<img src="${escapeHtml(user.avatar_url)}" alt="" class="w-full h-full object-cover" />`;
+  } else {
+    profileAvatar.textContent = (user.nickname || user.username || "?").slice(0, 1).toUpperCase();
+  }
+  statPosts.textContent = String(posts.length);
+  myPosts.innerHTML = "";
+  if (!posts.length) {
+    myPosts.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">${escapeHtml(t("common.empty_my_posts"))}</div>`;
+    return;
+  }
+  for (const p of posts) {
+    const div = document.createElement("div");
+    div.className =
+      "masonry-item bg-white rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-gray-100 cursor-pointer hover:shadow-lg transition-shadow";
+    div.innerHTML = `<div class="p-4"><h3 class="font-body-lg text-on-surface line-clamp-2">${escapeHtml(p.title)}</h3>
+      <p class="text-label-md text-gray-400 mt-2">${escapeHtml(p.category || "")}</p></div>`;
+    div.addEventListener("click", () => {
+      location.href = `/post.html?id=${p.id}`;
+    });
+    myPosts.appendChild(div);
+  }
+}
+
 async function load() {
+  setProfileBg(localStorage.getItem(PROFILE_BG_KEY) || "picnic");
   if (!getToken()) {
     guestHint.classList.remove("hidden");
     guestLogin.classList.remove("hidden");
-    profileName.textContent = "Guest";
+    renderProfile(DEMO_USER, DEMO_POSTS);
     return;
   }
   guestHint.classList.add("hidden");
   guestLogin.classList.add("hidden");
   try {
     const user = await apiCall("/api/v1/me", "GET");
-    currentUser = user;
-    profileName.textContent = user.nickname || user.username || `User ${user.id}`;
-    profileBio.textContent = user.bio || "";
-    if (user.avatar_url) {
-      profileAvatar.innerHTML = `<img src="${escapeHtml(user.avatar_url)}" alt="" class="w-full h-full object-cover" />`;
-    } else {
-      profileAvatar.textContent = (user.nickname || user.username || "?").slice(0, 1).toUpperCase();
-    }
-
     const { items } = await apiCall("/api/v1/me/posts", "GET");
     const posts = items || [];
-    statPosts.textContent = String(posts.length);
-    myPosts.innerHTML = "";
-    if (!posts.length) {
-      myPosts.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">${escapeHtml(t("common.empty_my_posts"))}</div>`;
-      return;
-    }
-    for (const p of posts) {
-      const div = document.createElement("div");
-      div.className =
-        "masonry-item bg-white rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-gray-100 cursor-pointer hover:shadow-lg transition-shadow";
-      div.innerHTML = `<div class="p-4"><h3 class="font-body-lg text-on-surface line-clamp-2">${escapeHtml(p.title)}</h3>
-        <p class="text-label-md text-gray-400 mt-2">${escapeHtml(p.category || "")}</p></div>`;
-      div.addEventListener("click", () => {
-        location.href = `/post.html?id=${p.id}`;
-      });
-      myPosts.appendChild(div);
-    }
+    renderProfile(user, posts);
   } catch (e) {
-    profileBio.textContent = e.message;
+    renderProfile(DEMO_USER, DEMO_POSTS);
   }
 }
+
+document.querySelectorAll("[data-profile-bg]").forEach((button) => {
+  button.addEventListener("click", () => setProfileBg(button.dataset.profileBg));
+});
 
 load();
