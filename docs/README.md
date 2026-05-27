@@ -55,31 +55,22 @@ activities, services, marketplace, adoption, and secondary stories.
 
 Known-good checks from the latest pass:
 
+- `python scripts/verify_web_smoke.py` (Automated verification of HTML tags, assets, and branding names)
+- `go test ./...` (All Go backend unit tests pass)
 - `cd mobile && npm run typecheck`
 - `git diff --check`
-- Static Web smoke test through `python3 -m http.server 4173` from `web/`.
 
 Static Web smoke coverage checked these pages at desktop `1440x1000` and mobile
 `390x844`: `/`, discover, compose, market, messages, profile, login, register,
 dashboard, admin, post, mobile board, desktop board, and WebUI.
 
-The smoke test checked:
-
-- No page errors.
-- No horizontal overflow.
-- No old visible product terms.
-- No visible legacy decorative blur blobs.
-- No oversized non-action radii.
-- No negative letter spacing.
+The automated verification check covers:
+- HTML link/reference completeness (no broken local assets).
+- No forbidden old visible product terms (e.g. `喵友圈`, `Kitty Circle`, etc.).
 
 Known local blockers:
-
-- The current shell Node reported `v16.10.0`; React Native dependencies expect
-  Node 18+ for normal development.
-- KMP Gradle dependency resolution hit HTTP 403 from Maven/Gradle Plugin Portal
-  before source compilation.
-- The Go backend previously failed in this local environment with the repo's
-  `go.mod` version string; use static Web verification when Go cannot run.
+- **KMP Gradle dependency resolution**: Commented Aliyun mirror sources have been added to `kmp/settings.gradle.kts` for developers encountering HTTP 403 blocks.
+- **Go and Node version**: Previously reported version parsing blockers are now resolved (tested on Go v1.26.2 and Node v24.15.0).
 
 ## Documentation Rules
 

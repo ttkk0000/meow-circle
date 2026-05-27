@@ -243,9 +243,14 @@ Run or manually verify before handing off a UI change:
 Recommended commands:
 
 ```bash
+# Verify static HTML pages, brand terms alignment, and check for broken local links
+python scripts/verify_web_smoke.py
+
+# Typecheck Expo mobile app
 cd mobile && npm run typecheck
+
+# Check for check warnings in git
 git diff --check
-cd web && python3 -m http.server 4173
 ```
 
 For Web visual smoke tests, check:
@@ -267,23 +272,17 @@ For Web visual smoke tests, check:
 
 ## 9. Known Local Blockers
 
-- Local shell Node has been observed as `v16.10.0`; React Native packages expect
-  Node 18+.
-- KMP Gradle dependency resolution was blocked by Maven/Gradle Plugin Portal HTTP
-  403 before Kotlin compilation began.
-- The Go backend has previously failed locally on `go.mod` version parsing in
-  this environment; static Web verification is the fallback.
+- **Go version parser**: **Resolved** (Running Go v1.26.2 locally).
+- **Node.js version**: **Resolved** (Running Node.js v24.15.0 locally).
+- **KMP Gradle dependency resolution 403**: **Mitigated** (Optional Aliyun mirror sources have been added in `kmp/settings.gradle.kts` to bypass the 403 resolution blocks).
+- **kmp/gradlew execute bit**: Use `bash ./gradlew ...` on Windows shells or if execute bit is missing.
 
 ## 10. Next Useful Improvements
 
-- Add Figma export screenshots or direct Figma nodes once a `use_figma` tool is
-  available.
-- Add automated Playwright smoke test script under `scripts/` so the current
-  manual Web smoke checklist is repeatable.
-- Add native screenshots for Expo and KMP once the local Node/Gradle blockers are
-  cleared.
-- Continue replacing risky internal legacy names only when it does not affect
-  route/API/package compatibility.
+- Add Figma export screenshots or direct Figma nodes once a `use_figma` tool is available.
+- **Automated Web smoke checklist**: **Implemented** (Created a lightweight python-based automated smoke test script in `scripts/verify_web_smoke.py`).
+- Add native screenshots for Expo and KMP once the local Node/Gradle blockers are cleared.
+- Continue replacing risky internal legacy names only when it does not affect route/API/package compatibility.
 
 ## Related Engineering Docs
 

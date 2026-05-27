@@ -209,9 +209,13 @@ then set the Gradle property to `http://127.0.0.1:8080`.
 | KMP shared/Android | Gradle compile | Emulator visual smoke. |
 | Docker | `make docker` | `make docker-run` and `/healthz` check. |
 
-Useful docs lint:
+Useful docs and code lint:
 
 ```bash
+# Verify static HTML pages: structure, branding terms (M&D), and check for broken local links
+python scripts/verify_web_smoke.py
+
+# Git check and docs search
 git diff --check -- docs
 rg -n "TODO|TBD|Pawpop|Kitty Circle|喵友圈|铲屎官|Meow Circle" docs
 ```
@@ -223,14 +227,14 @@ Do not "fix" historical context by erasing useful warnings.
 
 These are machine/session-specific observations from the latest pass.
 
-| Blocker | Impact | Workaround |
+| Blocker | Impact | Status / Workaround |
 | --- | --- | --- |
-| Go version parser rejected `go 1.25.0` previously | Go tests/server may not run in this shell | Use a Go toolchain that accepts the repo version or validate static Web while blocked. |
-| Shell Node reported `v16.10.0` previously | React Native dependencies warn and expect Node 18+ | Use Node 18+ for normal Expo development. |
-| KMP Gradle resolution hit HTTP 403 from Maven/Gradle Plugin Portal | Kotlin compile stops before source validation | Retry on a network that can reach Maven/Gradle repos. |
+| Go version parser rejected `go 1.25.0` previously | Go tests/server may not run | **Resolved**: The local machine is verified running Go v1.26.2. |
+| Shell Node reported `v16.10.0` previously | React Native dependencies warn and expect Node 18+ | **Resolved**: The local machine is verified running Node v24.15.0. |
+| KMP Gradle resolution hit HTTP 403 from Maven/Gradle Plugin Portal | Kotlin compile stops before source validation | **Mitigated**: Commented Aliyun Maven/Gradle mirror links have been added to `kmp/settings.gradle.kts` for easy enabling. |
 | `kmp/gradlew` may lack execute bit | Direct `./gradlew` can fail | Use `bash ./gradlew ...`. |
 
-Keep these in docs until verified resolved on the user's machine.
+Keep these in docs for troubleshooting references.
 
 ## 8. Deployment Notes
 
