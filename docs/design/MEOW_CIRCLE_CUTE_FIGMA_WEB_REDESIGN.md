@@ -4,6 +4,10 @@
 > Date: 2026-05-25  
 > Goal: abandon the Stitch visual/layout system, keep only product capabilities, and rebuild the project as M&D, a cute, polished, themeable social-commerce experience for teen and young adult users.
 
+> Current note: for the latest implementation-facing rules, read
+> `docs/design/MND_UI_ALIGNMENT_GUIDE.md` first. This file remains the broad
+> redesign concept and screen inventory.
+
 ## 1. Redesign Decision
 
 Stitch is now treated only as a functional reference. Its layout, visual hierarchy, spacing, card shapes, navigation, and screen composition can be discarded.
@@ -526,15 +530,17 @@ This lets the new design live beside the old Stitch UI until the direction is ap
 
 ## 14. Future Figma Production Steps
 
-1. Import the new Web prototype screenshots as visual reference.
-2. Build M&D tokens as Figma variables.
-3. Build component variants from `03 Components`.
-4. Recreate the Web prototype in `05 Web App`.
-5. Recreate mobile equivalents in `04 Mobile App`.
-6. Add clickable prototypes for:
+1. Read `docs/design/MND_UI_ALIGNMENT_GUIDE.md`.
+2. Import the current WebUI, mobile board, and desktop board screenshots as visual reference.
+3. Build M&D tokens as Figma variables.
+4. Build component variants from `03 Components`.
+5. Recreate the Web prototype in `06 WebUI`.
+6. Recreate mobile equivalents in `04 Mobile App`.
+7. Recreate desktop equivalents in `05 Desktop App`.
+8. Add clickable prototypes for:
    - Home to post detail.
    - Compose post.
    - Market to chat/order.
    - Profile background switch.
    - Report to safety queue.
-7. Continue migrating production pages from old Stitch UI to M&D.
+9. Continue migrating production pages from old Stitch UI to M&D.

@@ -1,6 +1,8 @@
 # M&D Design Memory
 
-Date: 2026-05-26
+Created: 2026-05-26
+
+Last updated: 2026-05-27
 
 ## Decision
 
@@ -42,6 +44,15 @@ The emphasis is **cat-first**: cats lead the emotional identity, default imagery
   - KMP Android tokens now use M&D colors, 8dp shapes, zero letter spacing, and M&D pink shadows.
   - KMP Android visible surfaces now use M&D copy across manifest label, top bar, splash, login, register, feed/discover, compose, and post detail fallback identity.
   - Web design-board radii were tightened so ordinary mobile/desktop cards, inputs, panels, and chat bubbles use 8px; pills and device mock shells remain intentionally rounded.
+- Documentation pass:
+  - Added `docs/README.md` as the docs hub.
+  - Added `docs/design/MND_UI_ALIGNMENT_GUIDE.md` as the current implementation-facing UI contract.
+  - Added `docs/PROJECT_STRUCTURE.md` to map backend, Web, Expo, KMP, infra, migrations, and common edit entry points.
+  - Added `docs/API_AND_DATA_FLOW.md` to map API routes, auth/admin behavior, core models, order state, clients, and persistence notes.
+  - Added `docs/FRONTEND_SURFACE_MAP.md` to map production Web, WebUI, design boards, Expo routes, and KMP screens.
+  - Added `docs/RUNBOOK.md` to capture local run modes, env vars, upload storage, verification matrix, deployment notes, and known local blockers.
+  - Expanded `docs/design/MND_FIGMA_DESIGN_DOCUMENT.md` with current status and immediate Figma work order.
+  - Kept historical `MEOW_CIRCLE_*` filenames as containers, but documented that their contents now describe M&D.
 
 ## Implementation Notes
 
@@ -55,6 +66,15 @@ The emphasis is **cat-first**: cats lead the emotional identity, default imagery
 - Expo `npm run typecheck` passed after local dependencies were installed. Current shell Node is `v16.10.0`, which causes React Native engine warnings; use Node 18+ for normal mobile development.
 - KMP compile was attempted with `bash ./gradlew :androidApp:compileDebugKotlin`. The Gradle wrapper downloaded, but dependency resolution was blocked by Maven/Gradle Plugin Portal HTTP 403 responses before Kotlin compilation began.
 - Current repository has WebUI and HTML desktop design-board sources, plus Expo mobile and KMP Android. No separate native desktop app source tree exists beyond the desktop board and browser/admin/workbench surfaces.
+
+## How Future Agents Should Continue
+
+- Start with `docs/README.md`.
+- Use `docs/RUNBOOK.md` when you need to run, validate, or deploy the project.
+- Use `docs/design/MND_UI_ALIGNMENT_GUIDE.md` as the source of truth for UI alignment.
+- Preserve behavior before renaming internal legacy identifiers.
+- Prefer adding repeatable smoke-test scripts instead of relying only on manual browser checks.
+- Keep this memory file updated after any meaningful design, implementation, or validation pass.
 
 ## Figma Handoff
 

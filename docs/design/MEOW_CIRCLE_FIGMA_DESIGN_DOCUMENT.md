@@ -4,6 +4,10 @@
 > Date: 2026-05-25  
 > Scope: Product design, Figma structure, design system, screen inventory, interaction model, future use cases, and handoff rules.
 
+> Current note: this is the broad product blueprint. For the current UI contract,
+> token snapshot, platform mapping, and QA checklist, read
+> `docs/design/MND_UI_ALIGNMENT_GUIDE.md`.
+
 ## 1. Document Purpose
 
 This document turns the current codebase into a professional Figma-ready design blueprint for M&D = meow & doggie. It is intended for four uses:
@@ -13,7 +17,7 @@ This document turns the current codebase into a professional Figma-ready design 
 - Engineering handoff: map UI surfaces to existing web, mobile, KMP, API, and domain models.
 - Operational alignment: make moderation, commerce, trust, notifications, and admin workflows visible in the product design.
 
-This document does not replace `DESIGN.md`. The existing `DESIGN.md` remains the detailed visual-system source for Cursor-inspired color, typography, spacing, motion, and tone. This document sits one layer above it: product structure, Figma canvas plan, screen requirements, and expansion strategy.
+This document is the broad product blueprint. For the current implementation-facing visual contract, use `docs/design/MND_UI_ALIGNMENT_GUIDE.md`; it records the active M&D tokens, platform mapping, copy rules, and QA checklist. `DESIGN.md` remains useful historical context for older base tokens, but M&D alignment now takes precedence for user-facing UI.
 
 ## 2. Source Context
 
@@ -33,8 +37,10 @@ M&D is already more than a simple feed app. Current implemented capabilities inc
 
 ### 2.2 Design Sources Of Truth
 
-- Visual system: `DESIGN.md`
-- Web tokens: `web/theme.css`
+- Current UI contract: `docs/design/MND_UI_ALIGNMENT_GUIDE.md`
+- Design memory: `docs/design/MND_DESIGN_MEMORY.md`
+- Web bridge tokens: `web/stitch-theme-bridge.css`
+- Web base tokens: `web/theme.css`
 - Mobile tokens: `mobile/src/theme.ts`
 - Shared RN primitives: `mobile/src/components.tsx`
 - Stitch screen mapping: `web/STITCH_WEB_17.md`
