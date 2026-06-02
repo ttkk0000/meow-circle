@@ -249,15 +249,15 @@ function renderMedia(media) {
       const b = document.createElement("button");
       b.type = "button";
       b.className =
-        "shrink-0 w-16 h-16 rounded-xl overflow-hidden border " +
+        "shrink-0 w-16 h-16 rounded-lg overflow-hidden border " +
         (idx === 0 ? "border-white ring-2 ring-white/80" : "border-white/30");
       b.innerHTML =
         m.kind === "video"
           ? `<div class="w-full h-full bg-black/60 flex items-center justify-center"><span class="material-symbols-outlined text-white">play_arrow</span></div>`
           : `<img alt="" class="w-full h-full object-cover" src="${escapeHtml(m.url)}" />`;
       b.addEventListener("click", () => {
-        mediaThumbs.querySelectorAll("button").forEach((x) => x.className = "shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-white/30");
-        b.className = "shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-white ring-2 ring-white/80";
+        mediaThumbs.querySelectorAll("button").forEach((x) => x.className = "shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-white/30");
+        b.className = "shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-white ring-2 ring-white/80";
         showMedia(m);
       });
       mediaThumbs.appendChild(b);

@@ -94,7 +94,7 @@ async function buyListing(listing) {
 function card(listing) {
   const el = document.createElement("article");
   el.className =
-    "bg-white rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-surface-container-low hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(255,90,119,0.08)] transition-all flex flex-col";
+    "bg-white rounded-lg overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-surface-container-low hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(255,79,147,0.08)] transition-all flex flex-col";
   el.id = `l${listing.id}`;
   const price =
     listing.price_cents > 0
@@ -137,7 +137,7 @@ function renderListings() {
   const items = filteredListings();
   listingsContainer.innerHTML = "";
   if (!items.length) {
-    listingsContainer.innerHTML = `<article class="col-span-full rounded-2xl border border-outline-variant/20 bg-white p-8 text-center text-gray-500">没有找到匹配的 M&D 好物。</article>`;
+    listingsContainer.innerHTML = `<article class="col-span-full rounded-lg border border-outline-variant/20 bg-white p-8 text-center text-gray-500">没有找到匹配的 M&D 好物。</article>`;
     return;
   }
   for (const item of items) listingsContainer.appendChild(card(item));

@@ -150,7 +150,7 @@ function renderProfile(user, posts) {
   for (const p of posts) {
     const div = document.createElement("div");
     div.className =
-      "masonry-item bg-white rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-gray-100 cursor-pointer hover:shadow-lg transition-shadow";
+      "masonry-item bg-white rounded-lg overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-gray-100 cursor-pointer hover:shadow-lg transition-shadow";
     div.innerHTML = `<div class="p-4"><h3 class="font-body-lg text-on-surface line-clamp-2">${escapeHtml(p.title)}</h3>
       <p class="text-label-md text-gray-400 mt-2">${escapeHtml(p.category || "")}</p></div>`;
     div.addEventListener("click", () => {

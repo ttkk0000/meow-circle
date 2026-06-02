@@ -151,8 +151,8 @@ function requireLogin(reason) {
 function setDesktopPanelActive(panel) {
   desktopPanelLinks.forEach((link) => {
     const on = link.dataset.panel === panel;
-    link.classList.toggle("bg-[#FF5A77]/10", on);
-    link.classList.toggle("text-[#FF5A77]", on);
+    link.classList.toggle("bg-primary-container/10", on);
+    link.classList.toggle("text-primary-container", on);
     link.classList.toggle("font-bold", on);
     link.classList.toggle("text-gray-600", !on);
   });

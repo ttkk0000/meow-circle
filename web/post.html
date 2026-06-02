@@ -15,21 +15,21 @@
   <link rel="stylesheet" href="/stitch-toast.css" />
   <script src="/shared.js"></script>
   <style>
-    body { background: #fbf9f4; }
+    body { background: #FFF7EE; }
     .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
     .material-symbols-outlined.fill { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
   </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen font-body-md antialiased">
-  <nav class="fixed top-0 w-full flex justify-between items-center px-4 md:px-8 h-16 z-50 bg-[#F9F7F2]/80 backdrop-blur-xl border-b border-[#FF5A77]/10 shadow-[0_4px_20px_rgba(255,90,119,0.05)]">
+  <nav class="fixed top-0 w-full flex justify-between items-center px-4 md:px-8 h-16 z-50 bg-[#FFF7EE]/80 backdrop-blur-xl border-b border-primary-container/10 shadow-[0_4px_20px_rgba(255,79,147,0.05)]">
     <div class="flex items-center gap-3 md:gap-6 min-w-0">
       <button type="button" id="btn-back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors text-on-surface shrink-0" aria-label="返回">
         <span class="material-symbols-outlined">arrow_back</span>
       </button>
-      <a href="/" class="text-xl md:text-2xl font-black text-[#FF5A77] tracking-normal truncate">M&D</a>
+      <a href="/" class="text-xl md:text-2xl font-black text-primary-container tracking-normal truncate">M&D</a>
     </div>
     <div class="flex items-center gap-2">
-      <a href="/compose.html" class="hidden sm:flex bg-[#FF5A77] text-white px-4 py-2 rounded-full font-label-md items-center gap-1 hover:scale-105 transition-transform shadow-md">
+      <a href="/compose.html" class="hidden sm:flex bg-primary-container text-white px-4 py-2 rounded-full font-label-md items-center gap-1 hover:scale-105 transition-transform shadow-md">
         <span class="material-symbols-outlined text-[20px]">add_circle</span>
         <span data-i18n="nav.compose">发帖</span>
       </a>
@@ -38,7 +38,7 @@
 
   <main class="pt-16 px-4 md:px-8 py-6 max-w-[1200px] mx-auto">
     <div id="err-box" class="hidden rounded-2xl bg-error-container/30 text-error p-4 mb-4"></div>
-    <div id="post-shell" class="hidden flex flex-col lg:flex-row min-h-[calc(100vh-120px)] bg-white rounded-[24px] shadow-[0_8px_40px_rgba(255,90,119,0.06)] overflow-hidden border border-outline-variant/20">
+    <div id="post-shell" class="hidden flex flex-col lg:flex-row min-h-[calc(100vh-120px)] bg-white rounded-xl shadow-[0_8px_40px_rgba(255,79,147,0.06)] overflow-hidden border border-outline-variant/20">
       <div class="lg:w-[58%] bg-surface-container-low relative min-h-[280px] lg:min-h-0">
         <div id="media-stage" class="w-full h-full min-h-[320px] lg:min-h-[480px] flex items-center justify-center bg-surface-container-low">
           <img id="hero-img" alt="" class="max-w-full max-h-[70vh] object-contain lg:w-full lg:h-full lg:object-cover" />
