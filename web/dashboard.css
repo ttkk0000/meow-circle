@@ -8,16 +8,16 @@
   background: var(--brand, #ff4f93);
   color: #fff;
   font-weight: 600;
-  box-shadow: 0 8px 15px rgba(255, 79, 147, 0.28);
+  box-shadow: 0 8px 15px color-mix(in srgb, var(--brand) 28%, transparent);
   transform: scale(0.98);
 }
 .stitch-sidenav .nav-btn.stitch-nav-btn.active .material-symbols-outlined {
   color: #fff;
 }
 .stitch-sidebar .stitch-nav-btn.active {
-  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
+  background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
   color: var(--brand, #ff4f93);
-  border-color: rgba(255, 79, 147, 0.18);
+  border-color: color-mix(in srgb, var(--brand) 18%, transparent);
   font-weight: 600;
 }
 .stitch-sidebar .stitch-nav-btn .material-symbols-outlined {
@@ -29,8 +29,8 @@
 
 #post-form .post-cat-label.is-selected,
 #post-form .post-cat-label:has(input:checked) {
-  border: 1px solid rgba(255, 79, 147, 0.35);
-  background: rgba(255, 79, 147, 0.1);
+  border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
 }
 
 /* Main column: prevent flex children from forcing horizontal scroll */
@@ -138,15 +138,15 @@
 .stitch-input:focus,
 .stitch-textarea:focus {
   outline: none;
-  border-color: rgba(255, 79, 147, 0.45);
-  box-shadow: 0 0 0 3px rgba(255, 79, 147, 0.1);
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 10%, transparent);
 }
 
 .stitch-btn-primary {
-  background: linear-gradient(180deg, #ff7ebb, var(--brand, #ff4f93));
+  background: linear-gradient(180deg, var(--brand-gradient-start, #ff7ebb), var(--brand, #ff4f93));
   color: #fff;
   border: none;
-  box-shadow: 0 6px 20px rgba(255, 79, 147, 0.28);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--brand) 28%, transparent);
 }
 .stitch-btn-primary:hover {
   filter: brightness(1.03);
@@ -165,7 +165,7 @@
   border: 1px dashed rgba(141, 112, 114, 0.35);
 }
 .stitch-btn-ghost:hover {
-  border-color: rgba(255, 79, 147, 0.35);
+  border-color: color-mix(in srgb, var(--brand) 35%, transparent);
   color: var(--brand-strong, #db3177);
 }
 
@@ -182,13 +182,13 @@
   cursor: pointer;
 }
 .stitch-ico-btn:hover {
-  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
+  background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
   color: var(--brand-strong, #db3177);
 }
 
 .stitch-dropzone.stitch-dropzone--active {
-  border-color: rgba(255, 79, 147, 0.55) !important;
-  background: rgba(255, 79, 147, 0.08) !important;
+  border-color: color-mix(in srgb, var(--brand) 55%, transparent) !important;
+  background: color-mix(in srgb, var(--brand) 8%, transparent) !important;
 }
 
 /* Category / type chips (radio) */
@@ -212,8 +212,8 @@
   pointer-events: none;
 }
 .stitch-chip:has(input:checked) {
-  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
-  border-color: rgba(255, 79, 147, 0.45);
+  background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
   color: var(--brand-text, #a91558);
   font-weight: 600;
 }
@@ -223,7 +223,7 @@
   align-items: center;
   gap: 0.25rem;
   border-radius: 9999px;
-  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
+  background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
   padding: 0.2rem 0.5rem 0.2rem 0.65rem;
   font-size: 12px;
   font-weight: 600;
@@ -291,7 +291,7 @@
   border: 1px solid rgba(141, 112, 114, 0.12);
   background: rgba(255, 255, 255, 0.92);
   padding: 0.75rem 1rem;
-  box-shadow: 0 4px 16px rgba(255, 79, 147, 0.05);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--brand) 5%, transparent);
 }
 @media (min-width: 768px) {
   .stitch-order-row {
@@ -330,7 +330,7 @@
 .order-role-bar .order-role-tab--on {
   background: var(--brand, #ff4f93);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(255, 79, 147, 0.28);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--brand) 28%, transparent);
 }
 .order-role-bar .order-role-tab:not(.order-role-tab--on) {
   background: transparent;
@@ -381,7 +381,7 @@
 .stitch-order-popover > .stitch-order-more:hover,
 .stitch-order-popover[open] > .stitch-order-more {
   color: var(--brand, #ff4f93);
-  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
+  background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
 }
 
 .stitch-orders-body {
@@ -396,7 +396,7 @@
 }
 #dashboard .stitch-notif-list .stitch-notif-card:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 79, 147, 0.22);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 22%, transparent);
 }
 
 /* Messages (shell grid lives under #dashboard .stitch-msg-shell above) */
@@ -425,7 +425,7 @@
 }
 .stitch-msg-stream .message-bubble.mine {
   margin-left: auto;
-  background: linear-gradient(180deg, #ff7ebb, var(--brand, #ff4f93));
+  background: linear-gradient(180deg, var(--brand-gradient-start, #ff7ebb), var(--brand, #ff4f93));
   color: #fff;
   border-bottom-right-radius: 0.25rem;
 }
@@ -450,7 +450,7 @@
   background: var(--brand-weak);
 }
 #dashboard .tab.active {
-  background: var(--brand-weak, rgba(255, 79, 147, 0.13));
+  background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
   color: var(--brand-text);
   border-bottom-color: transparent;
   font-weight: 600;
@@ -475,8 +475,8 @@
 #dashboard .form-grid textarea:focus,
 #dashboard .form-grid select:focus {
   outline: none;
-  border-color: rgba(255, 79, 147, 0.45);
-  box-shadow: 0 0 0 3px rgba(255, 79, 147, 0.12);
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 12%, transparent);
 }
 #dashboard .form-grid label {
   font-size: 13px;
@@ -486,7 +486,7 @@
 
 /* Active conversation — match primary CTA */
 #dashboard .conversation-layout .conv-list button.active {
-  background: linear-gradient(180deg, #ff7ebb, var(--brand, #ff4f93));
+  background: linear-gradient(180deg, var(--brand-gradient-start, #ff7ebb), var(--brand, #ff4f93));
   color: #fff;
 }
 #dashboard .conversation-layout .conv-list button.active:hover {

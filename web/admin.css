@@ -71,7 +71,7 @@ main.container {
 .admin-hero {
   align-items: end;
   background:
-    linear-gradient(135deg, rgba(255, 79, 147, 0.13), rgba(86, 199, 255, 0.14)),
+    linear-gradient(135deg, var(--brand-weak), var(--accent-weak)),
     var(--card);
   border: 1px solid var(--border);
   border-radius: var(--r-md);

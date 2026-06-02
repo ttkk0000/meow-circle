@@ -3,9 +3,9 @@
   const LANG_KEY = "meow_lang";
 
   const SUPPORTED_THEMES = [
-    { id: "light", label: { zh: "浅色", en: "Light", ja: "ライト" } },
-    { id: "dark", label: { zh: "深色", en: "Dark", ja: "ダーク" } },
-    { id: "warm", label: { zh: "暖橙", en: "Warm", ja: "ウォーム" } },
+    { id: "sugar", label: { zh: "Sugar", en: "Sugar", ja: "Sugar" } },
+    { id: "mint", label: { zh: "Mint", en: "Mint", ja: "Mint" } },
+    { id: "night", label: { zh: "Night", en: "Night", ja: "Night" } },
   ];
 
   const SUPPORTED_LANGS = [
@@ -26,6 +26,9 @@
       "nav.logout": "退出",
       "nav.settings_theme": "主题",
       "nav.settings_lang": "语言",
+      "theme.sugar": "蜜糖",
+      "theme.mint": "薄荷",
+      "theme.night": "暗夜",
       "auth.title": "登录 / 注册",
       "auth.tab_login": "登录",
       "auth.tab_register": "注册",
@@ -471,6 +474,9 @@
       "nav.logout": "Logout",
       "nav.settings_theme": "Theme",
       "nav.settings_lang": "Language",
+      "theme.sugar": "Sugar",
+      "theme.mint": "Mint",
+      "theme.night": "Night",
       "auth.title": "Sign in / Sign up",
       "auth.tab_login": "Sign in",
       "auth.tab_register": "Sign up",
@@ -915,6 +921,9 @@
       "nav.logout": "ログアウト",
       "nav.settings_theme": "テーマ",
       "nav.settings_lang": "言語",
+      "theme.sugar": "シュガー",
+      "theme.mint": "ミント",
+      "theme.night": "ナイト",
       "auth.title": "ログイン / 登録",
       "auth.tab_login": "ログイン",
       "auth.tab_register": "登録",
@@ -1352,7 +1361,7 @@
 
   function getTheme() {
     const saved = localStorage.getItem(THEME_KEY);
-    return saved && SUPPORTED_THEMES.some((t) => t.id === saved) ? saved : "light";
+    return saved && SUPPORTED_THEMES.some((t) => t.id === saved) ? saved : "sugar";
   }
 
   function getLang() {
@@ -1411,7 +1420,7 @@
     SUPPORTED_THEMES.forEach((item) => {
       const opt = document.createElement("option");
       opt.value = item.id;
-      opt.textContent = item.label[lang] || item.label.zh;
+      opt.textContent = t(`theme.${item.id}`);
       if (item.id === theme) opt.selected = true;
       themeSelect.appendChild(opt);
     });
