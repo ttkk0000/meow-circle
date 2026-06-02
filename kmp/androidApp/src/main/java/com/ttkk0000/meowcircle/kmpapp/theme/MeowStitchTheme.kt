@@ -2,6 +2,7 @@ package com.ttkk0000.meowcircle.kmpapp.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -10,27 +11,81 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-private val StitchScheme =
+enum class MeowTheme {
+    Sugar,
+    Mint,
+    Night
+}
+
+private val SugarScheme =
     lightColorScheme(
-        primary = StitchPalette.Brand,
+        primary = Color(0xFFFF4F93),
         onPrimary = Color.White,
-        primaryContainer = StitchPalette.BrandLight,
-        onPrimaryContainer = StitchPalette.PrimaryDark,
-        secondary = StitchPalette.Secondary,
+        primaryContainer = Color(0xFFFF7EBB),
+        onPrimaryContainer = Color(0xFFA91558),
+        secondary = Color(0xFF26B8D8),
         onSecondary = Color.White,
-        secondaryContainer = StitchPalette.SecondaryContainer,
-        onSecondaryContainer = StitchPalette.Secondary,
-        tertiary = StitchPalette.BrandLight,
-        onTertiary = StitchPalette.PrimaryDark,
-        background = StitchPalette.Canvas,
-        onBackground = StitchPalette.OnSurface,
-        surface = StitchPalette.Surface,
-        onSurface = StitchPalette.OnSurface,
-        surfaceVariant = StitchPalette.SurfaceContainer,
-        onSurfaceVariant = StitchPalette.OnSurfaceVariant,
-        outline = StitchPalette.Outline,
-        outlineVariant = StitchPalette.OutlineVariant,
-        error = StitchPalette.Error,
+        secondaryContainer = Color(0x3356C7FF),
+        onSecondaryContainer = Color(0xFF26B8D8),
+        tertiary = Color(0xFFFF7EBB),
+        onTertiary = Color(0xFFA91558),
+        background = Color(0xFFFFF7EE),
+        onBackground = Color(0xFF2B1722),
+        surface = Color(0xFFFFFFFF),
+        onSurface = Color(0xFF2B1722),
+        surfaceVariant = Color(0xFFFFF0F6),
+        onSurfaceVariant = Color(0xCC2B1722),
+        outline = Color(0x9959414D),
+        outlineVariant = Color(0x2459414D),
+        error = Color(0xFFBA1A1A),
+        onError = Color.White,
+    )
+
+private val MintScheme =
+    lightColorScheme(
+        primary = Color(0xFF00AECA),
+        onPrimary = Color.White,
+        primaryContainer = Color(0xFF56C7FF),
+        onPrimaryContainer = Color(0xFF006B54),
+        secondary = Color(0xFFFF9F7A),
+        onSecondary = Color.White,
+        secondaryContainer = Color(0xFFE8FFF6),
+        onSecondaryContainer = Color(0xFFFF9F7A),
+        tertiary = Color(0xFF56C7FF),
+        onTertiary = Color(0xFF006B54),
+        background = Color(0xFFEFFFF8),
+        onBackground = Color(0xFF0F2A29),
+        surface = Color(0xFFFFFFFF),
+        onSurface = Color(0xFF0F2A29),
+        surfaceVariant = Color(0xFFE8FFF6),
+        onSurfaceVariant = Color(0xCC0F2A29),
+        outline = Color(0x994D6866),
+        outlineVariant = Color(0x244D6866),
+        error = Color(0xFFD94A67),
+        onError = Color.White,
+    )
+
+private val NightScheme =
+    darkColorScheme(
+        primary = Color(0xFFC482FF),
+        onPrimary = Color(0xFF1D1028),
+        primaryContainer = Color(0xFF282D59),
+        onPrimaryContainer = Color(0xFFFFF7FF),
+        secondary = Color(0xFFFFE66F),
+        onSecondary = Color(0xFF1D1028),
+        secondaryContainer = Color(0xFF252A55),
+        onSecondaryContainer = Color(0xFFFFE66F),
+        tertiary = Color(0xFF282D59),
+        onTertiary = Color(0xFFFFF7FF),
+        background = Color(0xFF14162F),
+        onBackground = Color(0xFFF8F0FF),
+        surface = Color(0xFF1D2144),
+        onSurface = Color(0xFFF8F0FF),
+        surfaceVariant = Color(0xFF252A55),
+        onSurfaceVariant = Color(0xCCF8F0FF),
+        outline = Color(0x99BBB4DA),
+        outlineVariant = Color(0x24BBB4DA),
+        error = Color(0xFFFF6689),
         onError = Color.White,
     )
 
@@ -158,10 +213,25 @@ private val StitchTypography =
     )
 
 @Composable
-fun MeowStitchTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = StitchScheme,
-        typography = StitchTypography,
-        content = content,
-    )
+fun MeowStitchTheme(
+    theme: MeowTheme = MeowTheme.Sugar,
+    content: @Composable () -> Unit
+) {
+    val scheme = when (theme) {
+        MeowTheme.Mint -> MintScheme
+        MeowTheme.Night -> NightScheme
+        MeowTheme.Sugar -> SugarScheme
+    }
+    val stitchColors = when (theme) {
+        MeowTheme.Mint -> MintStitchColors
+        MeowTheme.Night -> NightStitchColors
+        MeowTheme.Sugar -> SugarStitchColors
+    }
+    CompositionLocalProvider(LocalStitchColors provides stitchColors) {
+        MaterialTheme(
+            colorScheme = scheme,
+            typography = StitchTypography,
+            content = content,
+        )
+    }
 }

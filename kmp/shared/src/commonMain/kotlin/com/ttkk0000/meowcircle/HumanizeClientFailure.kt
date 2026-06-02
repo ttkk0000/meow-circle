@@ -13,7 +13,8 @@ fun humanizeClientFailure(
         generateSequence(throwable) { it.cause }
             .mapNotNull { it.message?.trim()?.takeIf { msg -> msg.isNotEmpty() } }
             .joinToString(" ")
-    val m = raw.lowercase()
+    val cleanRaw = raw.replace(Regex("<[^>]*>"), " ").replace(Regex("\\s+"), " ").trim()
+    val m = cleanRaw.lowercase()
     return when {
         "socket timeout" in m ||
             "timeout has expired" in m ||
@@ -25,11 +26,13 @@ fun humanizeClientFailure(
                 "· 检查 8080 是否已被占用：netstat -ano | findstr :8080；放行 Windows 防火墙；真机请改为电脑局域网 IP。"
         "connection refused" in m ||
             "failed to connect" in m ||
-            "ECONNREFUSED" in raw ->
+            "connectionrefused" in m ||
+            "积极拒绝" in m ||
+            "econnrefused" in m ->
             "无法连接后端（连接被拒绝）。\n请先启动服务：go run ./cmd/server\n目标：$apiBaseUrl"
         "unable to resolve host" in m ||
             "unknownhost" in m.replace(" ", "") ->
             "无法解析主机名，请检查地址是否正确。\n当前：$apiBaseUrl"
-        else -> raw.ifBlank { "网络请求失败" }
+        else -> cleanRaw.ifBlank { "网络请求失败" }
     }
 }

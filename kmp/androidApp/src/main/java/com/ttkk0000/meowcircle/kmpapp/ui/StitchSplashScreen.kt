@@ -68,7 +68,7 @@ fun StitchSplashScreen(
             )
             if (loading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(28.dp).padding(top = 20.dp),
+                    modifier = Modifier.padding(top = 20.dp).size(28.dp),
                     color = StitchPalette.Brand,
                     strokeWidth = 2.dp,
                 )

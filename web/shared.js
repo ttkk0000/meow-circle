@@ -3,9 +3,9 @@
   const LANG_KEY = "meow_lang";
 
   const SUPPORTED_THEMES = [
-    { id: "sugar", label: { zh: "Sugar", en: "Sugar", ja: "Sugar" } },
-    { id: "mint", label: { zh: "Mint", en: "Mint", ja: "Mint" } },
-    { id: "night", label: { zh: "Night", en: "Night", ja: "Night" } },
+    { id: "sugar", label: { zh: "蜜糖", en: "Sugar", ja: "シュガー" } },
+    { id: "mint", label: { zh: "薄荷", en: "Mint", ja: "ミント" } },
+    { id: "night", label: { zh: "暗夜", en: "Night", ja: "ナイト" } },
   ];
 
   const SUPPORTED_LANGS = [

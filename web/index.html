@@ -36,7 +36,12 @@
   <!-- Mobile top bar -->
   <div class="md:hidden">
     <nav class="fixed top-0 z-50 w-full flex justify-between items-center px-4 h-16 bg-background/80 backdrop-blur-xl shadow-[0_4px_20px_rgba(255,79,147,0.05)]">
-      <a href="/" class="text-2xl font-black text-primary-container tracking-normal">M&D</a>
+      <a class="brand-lockup scale-75 origin-left" href="/" aria-label="M&D meow and doggie">
+        <span class="brand-mark">M&D</span>
+        <span>
+          <strong>M&D</strong>
+        </span>
+      </a>
       <div class="flex items-center gap-3">
         <button type="button" id="mobile-search-open" class="text-gray-500 hover:text-primary-container hover:scale-105 transition-transform" aria-label="搜索">
           <span class="material-symbols-outlined">search</span>
@@ -49,8 +54,13 @@
 
   <nav class="hidden md:flex fixed left-0 top-0 h-full w-64 bg-surface border-r border-surface-container-highest flex-col p-6 gap-4 z-40">
     <div class="mb-6 px-2">
-      <a href="/" class="block font-headline-xl text-headline-xl text-primary-container tracking-normal">M&D</a>
-      <p class="font-label-md text-label-md text-on-surface-variant mt-1" data-i18n="stitch.tagline">meow & doggie 探索</p>
+      <a class="brand-lockup" href="/" aria-label="M&D meow and doggie">
+        <span class="brand-mark">M&D</span>
+        <span>
+          <strong>M&D</strong>
+          <small data-i18n="stitch.tagline">meow & doggie 探索</small>
+        </span>
+      </a>
     </div>
     <div class="flex flex-col gap-2 flex-grow">
       <a class="flex items-center gap-3 px-4 py-3 rounded-full bg-primary-container/10 text-primary-container font-bold" href="/">

@@ -35,6 +35,7 @@
   --brand-text: #a91558;
   --accent: #56c7ff;
   --accent-weak: rgba(86, 199, 255, 0.18);
+  --secondary: #ffd84d;
 
   --danger: #ba1a1a;
   --danger-bg: rgba(186, 26, 26, 0.08);
@@ -95,6 +96,7 @@
   --brand-text: #ebd4ff;
   --accent: #64e7ff;
   --accent-weak: rgba(100, 231, 255, 0.18);
+  --secondary: #ffe66f;
 
   --header-bg: rgba(20, 22, 47, 0.88);
   --header-solid: #14162f;
@@ -137,6 +139,7 @@
   --brand-text: #006f82;
   --accent: #9274ff;
   --accent-weak: rgba(146, 116, 255, 0.18);
+  --secondary: #ff9f7a;
 
   --header-bg: rgba(239, 255, 248, 0.9);
   --header-solid: #effff8;
@@ -373,4 +376,45 @@ textarea::placeholder {
   background: var(--card);
   color: var(--text-soft);
   font-weight: 700;
+}
+
+/* M&D Logo Lockup for Sidebar & Top Bars */
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 58px;
+  height: 48px;
+  place-items: center;
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  background: var(--secondary);
+  color: #2b1722;
+  font-family: var(--font-display), "Fredoka", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 4px 12px rgba(43, 23, 34, 0.12);
+}
+
+.brand-lockup strong {
+  display: block;
+  font-family: var(--font-display), "Fredoka", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.brand-lockup small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  text-transform: lowercase;
 }

@@ -45,6 +45,12 @@ class MeowCircleSdk(
         return runCatching { json.decodeFromString(User.serializer(), raw) }.getOrNull()
     }
 
+    fun getTheme(): String = session.getTheme()
+
+    fun setTheme(theme: String) {
+        session.setTheme(theme)
+    }
+
     fun logout() {
         session.clear()
     }

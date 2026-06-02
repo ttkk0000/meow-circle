@@ -168,18 +168,18 @@ textarea:focus-visible {
 
 .brand-mark {
   display: grid;
-  width: 54px;
-  height: 46px;
+  width: 58px;
+  height: 48px;
   place-items: center;
-  border: 2px solid var(--ink);
-  border-radius: var(--radius-card);
+  border: 3px solid #ffffff;
+  border-radius: 12px;
   background: var(--secondary);
   color: #2b1722;
   font-family: var(--font-round);
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 800;
   line-height: 1;
-  box-shadow: 5px 5px 0 color-mix(in srgb, var(--ink) 16%, transparent);
+  box-shadow: 0 4px 12px rgba(43, 23, 34, 0.12);
 }
 
 .brand-lockup strong,

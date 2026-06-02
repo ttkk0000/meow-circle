@@ -27,6 +27,12 @@ class SessionStore(private val settings: Settings = Settings()) {
         }
     }
 
+    fun getTheme(): String = settings.getString(KEY_THEME, "sugar")
+
+    fun setTheme(value: String) {
+        settings[KEY_THEME] = value
+    }
+
     fun clear() {
         settings.remove(KEY_TOKEN)
         settings.remove(KEY_USER)
@@ -35,5 +41,6 @@ class SessionStore(private val settings: Settings = Settings()) {
     private companion object {
         const val KEY_TOKEN = "meow.auth.token"
         const val KEY_USER = "meow.auth.user"
+        const val KEY_THEME = "meow.theme"
     }
 }

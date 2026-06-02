@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.humanizeClientFailure
+import com.ttkk0000.meowcircle.kmpapp.theme.MeowStitchTheme
+import com.ttkk0000.meowcircle.kmpapp.theme.MeowTheme
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchComposeScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchFeedScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchLoginScreen
@@ -35,6 +37,13 @@ fun MeowApp(sdk: MeowCircleSdk) {
     var postDetailId by remember { mutableStateOf<Long?>(null) }
     var composeOpen by remember { mutableStateOf(false) }
     var feedReloadSignal by remember { mutableIntStateOf(0) }
+    var activeThemeStr by remember { mutableStateOf(sdk.getTheme()) }
+
+    val activeTheme = when (activeThemeStr.lowercase()) {
+        "mint" -> MeowTheme.Mint
+        "night" -> MeowTheme.Night
+        else -> MeowTheme.Sugar
+    }
 
     LaunchedEffect(Unit) {
         val elapsed =
@@ -51,59 +60,65 @@ fun MeowApp(sdk: MeowCircleSdk) {
         restoring = false
     }
 
-    when {
-        restoring -> StitchSplashScreen(Modifier.fillMaxSize(), loading = true)
-        user == null ->
-            when (authScreen) {
-                AuthScreen.Login ->
-                    StitchLoginScreen(
-                        sdk = sdk,
-                        healthHint = healthHint,
-                        onLoggedIn = {
-                            user = it
-                            authScreen = AuthScreen.Login
-                        },
-                        onNavigateRegister = { authScreen = AuthScreen.Register },
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                AuthScreen.Register ->
-                    StitchRegisterScreen(
-                        sdk = sdk,
-                        onBack = { authScreen = AuthScreen.Login },
-                        onRegistered = {
-                            user = it
-                            authScreen = AuthScreen.Login
-                        },
-                        modifier = Modifier.fillMaxSize(),
-                    )
-            }
-        composeOpen ->
-            StitchComposeScreen(
-                sdk = sdk,
-                onClose = { composeOpen = false },
-                onPosted = { feedReloadSignal++ },
-                modifier = Modifier.fillMaxSize(),
-            )
-        postDetailId != null ->
-            StitchPostDetailScreen(
-                sdk = sdk,
-                postId = postDetailId!!,
-                onBack = { postDetailId = null },
-                modifier = Modifier.fillMaxSize(),
-            )
-        else ->
-            StitchFeedScreen(
-                sdk = sdk,
-                user = user!!,
-                feedReloadSignal = feedReloadSignal,
-                onLogout = {
-                    sdk.logout()
-                    user = null
-                    authScreen = AuthScreen.Login
-                },
-                onOpenPost = { postDetailId = it },
-                onCompose = { composeOpen = true },
-                modifier = Modifier.fillMaxSize(),
-            )
+    MeowStitchTheme(theme = activeTheme) {
+        when {
+            restoring -> StitchSplashScreen(Modifier.fillMaxSize(), loading = true)
+            user == null ->
+                when (authScreen) {
+                    AuthScreen.Login ->
+                        StitchLoginScreen(
+                            sdk = sdk,
+                            healthHint = healthHint,
+                            onLoggedIn = {
+                                user = it
+                                authScreen = AuthScreen.Login
+                            },
+                            onNavigateRegister = { authScreen = AuthScreen.Register },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    AuthScreen.Register ->
+                        StitchRegisterScreen(
+                            sdk = sdk,
+                            onBack = { authScreen = AuthScreen.Login },
+                            onRegistered = {
+                                user = it
+                                authScreen = AuthScreen.Login
+                            },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                }
+            composeOpen ->
+                StitchComposeScreen(
+                    sdk = sdk,
+                    onClose = { composeOpen = false },
+                    onPosted = { feedReloadSignal++ },
+                    modifier = Modifier.fillMaxSize(),
+                )
+            postDetailId != null ->
+                StitchPostDetailScreen(
+                    sdk = sdk,
+                    postId = postDetailId!!,
+                    onBack = { postDetailId = null },
+                    modifier = Modifier.fillMaxSize(),
+                )
+            else ->
+                StitchFeedScreen(
+                    sdk = sdk,
+                    user = user!!,
+                    feedReloadSignal = feedReloadSignal,
+                    onLogout = {
+                        sdk.logout()
+                        user = null
+                        authScreen = AuthScreen.Login
+                    },
+                    onOpenPost = { postDetailId = it },
+                    onCompose = { composeOpen = true },
+                    onThemeChanged = {
+                        sdk.setTheme(it)
+                        activeThemeStr = it
+                    },
+                    modifier = Modifier.fillMaxSize(),
+                )
+        }
     }
 }

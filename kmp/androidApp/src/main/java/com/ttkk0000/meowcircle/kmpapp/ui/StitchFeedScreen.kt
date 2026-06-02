@@ -43,6 +43,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -115,6 +117,7 @@ fun StitchFeedScreen(
     onLogout: () -> Unit,
     onOpenPost: (Long) -> Unit = {},
     onCompose: () -> Unit = {},
+    onThemeChanged: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val apiBase = BuildConfig.API_BASE_URL
@@ -128,6 +131,7 @@ fun StitchFeedScreen(
     var messageSection by remember { mutableStateOf(MessageSection.Chats) }
     var profileHint by remember { mutableStateOf<String?>(null) }
     var showEditProfile by remember { mutableStateOf(false) }
+    var showThemeDialog by remember { mutableStateOf(false) }
     var profileSaving by remember { mutableStateOf(false) }
     var profileSaveErr by remember { mutableStateOf<String?>(null) }
     var rawItems by remember { mutableStateOf<List<PostFeedItem>?>(null) }
@@ -138,6 +142,47 @@ fun StitchFeedScreen(
     var convLoading by remember { mutableStateOf(false) }
     var profilePosts by remember { mutableStateOf<List<PostFeedItem>?>(null) }
     var profileLoading by remember { mutableStateOf(false) }
+    var mockMode by remember { mutableStateOf(false) }
+
+    fun createMockPosts(): List<PostFeedItem> {
+        val author1 = User(1L, "peachlatte", "桃子和拿铁", "", "两只猫的日常记录员", "2026-05-27T00:00:00Z")
+        val author2 = User(2L, "puff_bakery", "泡芙小店", "", "提供猫罐头和零食", "2026-05-27T00:00:00Z")
+        val post1 = Post(
+            id = 1L,
+            authorId = 1L,
+            title = "猫猫第一次学会开门，家里从此没有秘密",
+            content = "给门把手加了保护套，顺便记录一下这个聪明小脑袋。它先观察了我们两天，然后第三天就开始自己尝试。",
+            category = "daily_share",
+            tags = listOf("日常", "聪明猫"),
+            mediaIds = emptyList(),
+            createdAt = "2026-06-02T10:00:00Z",
+            lastReplyAt = "2026-06-02T10:30:00Z"
+        )
+        val post2 = Post(
+            id = 2L,
+            authorId = 2L,
+            title = "猫猫新手村：接猫回家第一周需要准备什么？",
+            content = "接猫回家前，猫砂盆、航空箱、幼猫粮和水碗必不可少。最重要的是给主子一个安静的角落适应新环境。",
+            category = "help",
+            tags = listOf("新手", "养猫技巧"),
+            mediaIds = emptyList(),
+            createdAt = "2026-06-02T09:00:00Z",
+            lastReplyAt = "2026-06-02T09:15:00Z"
+        )
+        return listOf(
+            PostFeedItem(post1, author1, 128L, true, null),
+            PostFeedItem(post2, author2, 45L, false, null)
+        )
+    }
+
+    fun createMockConversations(): List<Conversation> {
+        val peer1 = User(2L, "puff_bakery", "泡芙小店", "", "提供猫罐头和零食", "2026-05-27T00:00:00Z")
+        val peer2 = User(3L, "xiaoman", "小满", "", "橘猫大联盟盟主", "2026-05-27T00:00:00Z")
+        return listOf(
+            Conversation(peer1, "地址发你啦，今晚可自提。", 2L, 1, "2026-06-02T10:00:00Z"),
+            Conversation(peer2, "谢谢！", 3L, 0, "2026-06-02T09:00:00Z")
+        )
+    }
 
     val effectiveFilter =
         when (tab) {
@@ -146,8 +191,14 @@ fun StitchFeedScreen(
             else -> filter
         }
 
-    LaunchedEffect(effectiveFilter, tab, feedReloadSignal) {
+    LaunchedEffect(effectiveFilter, tab, feedReloadSignal, mockMode) {
         if (tab != StitchMainTab.Home && tab != StitchMainTab.Discover) return@LaunchedEffect
+        if (mockMode) {
+            rawItems = createMockPosts()
+            err = null
+            loading = false
+            return@LaunchedEffect
+        }
         loading = true
         err = null
         rawItems =
@@ -161,8 +212,14 @@ fun StitchFeedScreen(
         loading = false
     }
 
-    LaunchedEffect(tab, feedReloadSignal) {
+    LaunchedEffect(tab, feedReloadSignal, mockMode) {
         if (tab != StitchMainTab.Messages) return@LaunchedEffect
+        if (mockMode) {
+            conversations = createMockConversations()
+            convErr = null
+            convLoading = false
+            return@LaunchedEffect
+        }
         convLoading = true
         convErr = null
         conversations =
@@ -178,8 +235,13 @@ fun StitchFeedScreen(
         convLoading = false
     }
 
-    LaunchedEffect(tab, profileUser.id, feedReloadSignal) {
+    LaunchedEffect(tab, profileUser.id, feedReloadSignal, mockMode) {
         if (tab != StitchMainTab.Profile) return@LaunchedEffect
+        if (mockMode) {
+            profilePosts = createMockPosts().filter { it.author.id == profileUser.id }
+            profileLoading = false
+            return@LaunchedEffect
+        }
         profileLoading = true
         profilePosts =
             sdk.feedPosts("new").fold(
@@ -240,7 +302,7 @@ fun StitchFeedScreen(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(inner),
+                    .padding(bottom = inner.calculateBottomPadding()),
         ) {
             when (tab) {
                 StitchMainTab.Profile ->
@@ -265,7 +327,7 @@ fun StitchFeedScreen(
                             onLogout = onLogout,
                             onOpenPost = onOpenPost,
                             onEditProfile = { showEditProfile = true },
-                            onSettings = { profileHint = "设置面板将在后续版本接入偏好配置接口" },
+                            onSettings = { showThemeDialog = true },
                             hint = profileHint,
                             modifier = Modifier.fillMaxWidth().weight(1f),
                         )
@@ -300,6 +362,7 @@ fun StitchFeedScreen(
                                         else -> MessageSection.Chats
                                     }
                             },
+                            onToggleMock = { mockMode = true },
                         )
                     }
                 else ->
@@ -486,8 +549,28 @@ fun StitchFeedScreen(
                                         CircularProgressIndicator(color = StitchPalette.Brand)
                                     }
                                 err != null && rawItems == null ->
-                                    Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-                                        Text(err!!, color = StitchPalette.Error, style = MaterialTheme.typography.bodyLarge)
+                                    Column(
+                                        modifier = Modifier.fillMaxSize().padding(24.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Text(
+                                            text = err!!,
+                                            color = StitchPalette.Error,
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            textAlign = TextAlign.Center
+                                        )
+                                        Spacer(Modifier.height(16.dp))
+                                        TextButton(
+                                            onClick = { mockMode = true },
+                                            colors = ButtonDefaults.textButtonColors(
+                                                containerColor = StitchPalette.Brand.copy(alpha = 0.1f),
+                                                contentColor = StitchPalette.Brand
+                                            ),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text("体验离线演示模式 (Mock)", fontWeight = FontWeight.Bold)
+                                        }
                                     }
                                 else ->
                                     LazyColumn(
@@ -543,7 +626,61 @@ fun StitchFeedScreen(
                 },
             )
         }
+        if (showThemeDialog) {
+            ThemeSelectionDialog(
+                currentTheme = sdk.getTheme(),
+                onDismiss = { showThemeDialog = false },
+                onSelect = {
+                    onThemeChanged(it)
+                    showThemeDialog = false
+                }
+            )
+        }
     }
+}
+
+@Composable
+private fun ThemeSelectionDialog(
+    currentTheme: String,
+    onDismiss: () -> Unit,
+    onSelect: (String) -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("切换主题色") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Text("选择一个配色风格：", style = MaterialTheme.typography.bodyMedium)
+                Row(
+                    modifier = Modifier.fillMaxWidth().clickable { onSelect("sugar") }.padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFFFF4F93)))
+                    Spacer(Modifier.width(12.dp))
+                    Text("蜜糖 (Sugar)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (currentTheme == "sugar") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth().clickable { onSelect("mint") }.padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFF00AECA)))
+                    Spacer(Modifier.width(12.dp))
+                    Text("薄荷 (Mint)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (currentTheme == "mint") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth().clickable { onSelect("night") }.padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFFC482FF)))
+                    Spacer(Modifier.width(12.dp))
+                    Text("暗夜 (Night)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (currentTheme == "night") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("取消") }
+        }
+    )
 }
 
 @Composable
@@ -914,6 +1051,7 @@ private fun MessagesPane(
     query: String,
     section: MessageSection,
     onShortcut: (String) -> Unit,
+    onToggleMock: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val filteredItems =
@@ -937,7 +1075,23 @@ private fun MessagesPane(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(err, color = StitchPalette.Error, style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = err,
+                    color = StitchPalette.Error,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(Modifier.height(16.dp))
+                TextButton(
+                    onClick = onToggleMock,
+                    colors = ButtonDefaults.textButtonColors(
+                        containerColor = StitchPalette.Brand.copy(alpha = 0.1f),
+                        contentColor = StitchPalette.Brand
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text("体验离线演示模式 (Mock)", fontWeight = FontWeight.Bold)
+                }
             }
         else ->
             Column(modifier.fillMaxSize()) {
