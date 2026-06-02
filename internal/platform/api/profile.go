@@ -6,8 +6,12 @@ import (
 	"strings"
 )
 
-// PATCH /api/v1/me  {nickname, avatar_url, bio}
+// PATCH/GET /api/v1/me  {nickname, avatar_url, bio}
 func (r *Router) handleUpdateMe(w http.ResponseWriter, req *http.Request) {
+	if req.Method == http.MethodGet {
+		r.handleMe(w, req)
+		return
+	}
 	if req.Method != http.MethodPatch && req.Method != http.MethodPut {
 		writeError(w, http.StatusMethodNotAllowed, "method not allowed")
 		return

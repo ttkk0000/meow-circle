@@ -1514,6 +1514,34 @@
     document.body.setAttribute("data-stitch-screen-id", screenId);
   }
 
+  function applyGlobalAuthState() {
+    const token = localStorage.getItem("meow_token");
+    const rawUser = localStorage.getItem("meow_user");
+    const user = rawUser ? JSON.parse(rawUser) : null;
+
+    const logoutBtn = document.querySelector("#logout-btn");
+    const loginLink = document.querySelector("#login-link");
+    const registerLink = document.querySelector("#register-link");
+    const dashboardLink = document.querySelector("#dashboard-link");
+    const userHint = document.querySelector("#user-hint");
+
+    if (token && user) {
+      if (logoutBtn) logoutBtn.classList.remove("hidden");
+      if (loginLink) loginLink.classList.add("hidden");
+      if (registerLink) registerLink.classList.add("hidden");
+      if (dashboardLink) dashboardLink.classList.remove("hidden");
+      if (userHint) {
+        userHint.textContent = t("user.greeting").replace("{name}", user.nickname || user.username);
+      }
+    } else {
+      if (logoutBtn) logoutBtn.classList.add("hidden");
+      if (loginLink) loginLink.classList.remove("hidden");
+      if (registerLink) registerLink.classList.remove("hidden");
+      if (dashboardLink) dashboardLink.classList.add("hidden");
+      if (userHint) userHint.textContent = "";
+    }
+  }
+
   // Expose globally
   window.MeowShared = {
     t,
@@ -1529,6 +1557,7 @@
     setStitchScreen,
     SUPPORTED_THEMES,
     SUPPORTED_LANGS,
+    applyGlobalAuthState,
   };
 
   // Apply theme immediately (before paint)
@@ -1538,5 +1567,17 @@
   document.addEventListener("DOMContentLoaded", () => {
     applyI18n();
     buildSettingsBar();
+    applyGlobalAuthState();
+
+    const logoutBtn = document.querySelector("#logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        localStorage.removeItem("meow_token");
+        localStorage.removeItem("meow_user");
+        location.href = "/";
+      });
+    }
   });
 })();
+

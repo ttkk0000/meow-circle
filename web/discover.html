@@ -25,7 +25,7 @@
       <a href="/" class="block font-headline-xl text-headline-xl text-primary-container tracking-normal">M&D</a>
       <p class="font-label-md text-label-md text-on-surface-variant mt-1" data-i18n="stitch.tagline">meow & doggie 探索</p>
     </div>
-    <div class="flex flex-col gap-2 flex-1">
+    <div class="flex flex-col gap-2 flex-grow">
       <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/">
         <span class="material-symbols-outlined">home</span>
         <span class="font-body-lg" data-i18n="stitch.nav_home">首页</span>
@@ -38,9 +38,10 @@
         <span class="material-symbols-outlined">shopping_bag</span>
         <span class="font-body-lg" data-i18n="stitch.nav_market">市集</span>
       </a>
-      <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/#messages">
+      <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container relative" href="/messages.html">
         <span class="material-symbols-outlined">mail</span>
         <span class="font-body-lg" data-i18n="stitch.nav_messages">消息</span>
+        <span id="sidebar-notif-dot" class="absolute left-10 top-3 w-2 h-2 bg-primary-container rounded-full hidden"></span>
       </a>
       <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/profile.html">
         <span class="material-symbols-outlined">person</span>
@@ -51,13 +52,26 @@
       <span class="material-symbols-outlined text-[20px]">add_circle</span>
       <span data-i18n="nav.compose">发帖</span>
     </a>
+    <div class="pt-4 mt-auto border-t border-surface-container-highest space-y-3">
+      <div id="settings-bar"></div>
+      <div class="flex flex-col gap-2 text-label-md">
+        <span id="user-hint" class="text-on-surface-variant truncate"></span>
+        <div class="flex flex-wrap gap-2">
+          <a id="login-link" href="/login" class="text-primary-container font-semibold" data-i18n="nav.login">登录</a>
+          <a id="register-link" href="/register" class="text-on-surface-variant" data-i18n="nav.register">注册</a>
+          <a id="dashboard-link" href="/dashboard" class="text-on-surface-variant hidden" data-i18n="nav.dashboard">管理</a>
+          <button id="logout-btn" type="button" class="text-on-surface-variant hidden" data-i18n="nav.logout">退出</button>
+        </div>
+        <a href="/cute.html" class="text-primary-container font-semibold">M&D WebUI</a>
+        <a href="/architecture.html" class="text-on-surface-variant hover:text-primary-container" data-i18n="nav.docs">系统文档</a>
+      </div>
+    </div>
   </nav>
 
   <main class="md:ml-64 min-h-screen">
     <header class="sticky top-0 z-30 w-full flex justify-between items-center px-4 md:px-8 h-16 md:h-20 bg-surface/80 backdrop-blur-xl border-b border-transparent shadow-[0_4px_30px_rgba(0,0,0,0.02)]">
       <h2 class="font-headline-xl text-on-surface" data-i18n="stitch.discover_page_title">M&D 发现圈子</h2>
       <div class="flex items-center gap-3">
-        <div id="settings-bar" class="hidden md:flex"></div>
         <div class="relative group max-w-[200px] md:max-w-xs w-full hidden sm:block">
           <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
           <input class="w-full bg-surface-container-low rounded-full pl-10 pr-4 py-2.5 border-none focus:ring-2 focus:ring-primary-container text-sm" type="search" data-i18n-placeholder="stitch.discover_search_ph" placeholder="搜索圈子..." />
@@ -151,7 +165,7 @@
         <span class="material-symbols-outlined text-[32px]">add</span>
       </a>
     </div>
-    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-primary-container relative" href="/#messages">
+    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-primary-container relative" href="/messages.html">
       <span class="material-symbols-outlined">mail</span>
       <span class="text-[10px] mt-1" data-i18n="stitch.nav_messages">消息</span>
     </a>

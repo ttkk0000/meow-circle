@@ -20,63 +20,129 @@
     .material-symbols-outlined.fill { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
   </style>
 </head>
-<body class="bg-background text-on-surface flex min-h-screen flex-col md:flex-row font-body-md">
-  <nav class="hidden md:flex h-screen w-64 border-r border-outline-variant bg-surface flex-col p-6 gap-4 shrink-0 shadow-[4px_0_24px_rgba(255,90,119,0.03)]">
+<body class="bg-background text-on-background font-body-md min-h-screen">
+  <nav class="hidden md:flex fixed left-0 top-0 h-full w-64 bg-surface border-r border-surface-container-highest flex-col p-6 gap-4 z-40">
     <div class="mb-6 px-2">
-      <a href="/" class="text-headline-lg font-headline-lg text-primary-container tracking-normal block">M&D</a>
-      <p class="text-label-md text-outline mt-1" data-i18n="stitch.tagline">社区探索</p>
+      <a href="/" class="block font-headline-xl text-headline-xl text-primary-container tracking-normal">M&D</a>
+      <p class="font-label-md text-label-md text-on-surface-variant mt-1" data-i18n="stitch.tagline">meow & doggie 探索</p>
     </div>
-    <div class="flex flex-col gap-2 flex-1">
-      <a class="flex items-center gap-4 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/"><span class="material-symbols-outlined">home</span><span data-i18n="stitch.nav_home">首页</span></a>
-      <a class="flex items-center gap-4 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/discover.html"><span class="material-symbols-outlined">explore</span><span data-i18n="stitch.nav_discover">发现</span></a>
-      <a class="flex items-center gap-4 px-4 py-3 rounded-full bg-primary-container/10 text-primary-container font-bold" href="/messages.html"><span class="material-symbols-outlined fill">mail</span><span data-i18n="stitch.nav_messages">消息</span></a>
-      <a class="flex items-center gap-4 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/profile.html"><span class="material-symbols-outlined">person</span><span data-i18n="stitch.nav_me">我的</span></a>
+    <div class="flex flex-col gap-2 flex-grow">
+      <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-body-lg" data-i18n="stitch.nav_home">首页</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/discover.html">
+        <span class="material-symbols-outlined">explore</span>
+        <span class="font-body-lg" data-i18n="stitch.nav_discover">发现</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/market.html">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        <span class="font-body-lg" data-i18n="stitch.nav_market">市集</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-full bg-primary-container/10 text-primary-container font-bold" href="/messages.html">
+        <span class="material-symbols-outlined fill">mail</span>
+        <span class="font-headline-lg text-headline-lg scale-[0.98] origin-left" data-i18n="stitch.nav_messages">消息</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container" href="/profile.html">
+        <span class="material-symbols-outlined">person</span>
+        <span class="font-body-lg" data-i18n="stitch.nav_me">我的</span>
+      </a>
     </div>
-    <a href="/compose.html" class="mt-auto w-full py-4 bg-gradient-to-br from-primary-container to-[#ff7a91] text-white rounded-full text-body-lg font-bold shadow-[0_8px_20px_rgba(255,90,119,0.2)] text-center" data-i18n="nav.compose">发帖</a>
+    <a href="/compose.html" class="w-full flex items-center justify-center gap-2 bg-gradient-to-b from-primary-container to-[#E04B66] text-white px-6 py-4 rounded-full font-headline-lg shadow-[0_4px_16px_rgba(255,79,147,0.25)] hover:scale-[0.98] transition-transform">
+      <span class="material-symbols-outlined text-[20px]">add_circle</span>
+      <span data-i18n="nav.compose">发帖</span>
+    </a>
+    <div class="pt-4 mt-auto border-t border-surface-container-highest space-y-3">
+      <div id="settings-bar"></div>
+      <div class="flex flex-col gap-2 text-label-md">
+        <span id="user-hint" class="text-on-surface-variant truncate"></span>
+        <div class="flex flex-wrap gap-2">
+          <a id="login-link" href="/login" class="text-primary-container font-semibold" data-i18n="nav.login">登录</a>
+          <a id="register-link" href="/register" class="text-on-surface-variant" data-i18n="nav.register">注册</a>
+          <a id="dashboard-link" href="/dashboard" class="text-on-surface-variant hidden" data-i18n="nav.dashboard">管理</a>
+          <button id="logout-btn" type="button" class="text-on-surface-variant hidden" data-i18n="nav.logout">退出</button>
+        </div>
+        <a href="/cute.html" class="text-primary-container font-semibold">M&D WebUI</a>
+        <a href="/architecture.html" class="text-on-surface-variant hover:text-primary-container" data-i18n="nav.docs">系统文档</a>
+      </div>
+    </div>
   </nav>
 
-  <main class="flex-1 min-w-0 p-4 md:p-6 lg:p-8">
-    <div id="msg-guest" class="hidden max-w-lg mx-auto text-center py-16">
-      <div class="w-20 h-20 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container mb-6 mx-auto">
-        <span class="material-symbols-outlined text-[40px] fill">mail</span>
+  <main class="md:ml-64 min-h-screen">
+    <div class="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+      <div id="msg-guest" class="hidden max-w-lg mx-auto text-center py-16">
+        <div class="w-20 h-20 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container mb-6 mx-auto">
+          <span class="material-symbols-outlined text-[40px] fill">mail</span>
+        </div>
+        <h1 class="text-headline-xl font-headline-xl text-on-surface mb-3" data-i18n="stitch.messages_title">消息中心</h1>
+        <p class="text-body-lg text-on-surface-variant mb-8" data-i18n="dashboard.not_login_tip">请先登录</p>
+        <a href="/login?return_to=%2Fmessages.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-container to-[#ff7e95] text-white px-8 py-4 rounded-full font-label-md shadow-lg hover:scale-[0.98] transition-transform" data-i18n="nav.login">登录</a>
       </div>
-      <h1 class="text-headline-xl font-headline-xl text-on-surface mb-3" data-i18n="stitch.messages_title">消息中心</h1>
-      <p class="text-body-lg text-on-surface-variant mb-8" data-i18n="dashboard.not_login_tip">请先登录</p>
-      <a href="/login?return_to=%2Fmessages.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-container to-[#ff7e95] text-white px-8 py-4 rounded-full font-label-md shadow-lg hover:scale-[0.98] transition-transform" data-i18n="nav.login">登录</a>
-    </div>
-    <section id="msg-shell" class="hidden min-h-[calc(100vh-7rem)] rounded-[24px] border border-outline-variant/20 bg-surface-container-lowest shadow-[0_8px_32px_rgba(255,90,119,0.06)] overflow-hidden">
-      <div class="grid grid-cols-1 lg:grid-cols-[22rem_minmax(0,1fr)] h-full min-h-[calc(100vh-7rem)]">
-        <aside class="border-r border-outline-variant/15 bg-surface-container-low/35 p-3 md:p-4 flex flex-col gap-3 min-h-0">
-          <div class="flex items-center justify-between gap-2">
-            <h2 class="text-headline-lg font-headline-lg" data-i18n="stitch.messages_title">消息中心</h2>
-            <button id="msg-refresh" type="button" class="rounded-full px-3 py-1.5 text-label-md bg-surface-container hover:bg-surface-container-high" data-i18n="action.refresh">刷新</button>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="msg-filter rounded-full bg-primary-container text-white px-3 py-1.5 text-label-md" data-filter="all" data-i18n="message.filter_all">全部会话</button>
-            <button type="button" class="msg-filter rounded-full bg-surface-container px-3 py-1.5 text-label-md text-on-surface-variant" data-filter="unread" data-i18n="message.filter_unread">未读</button>
-            <button type="button" class="msg-filter rounded-full bg-surface-container px-3 py-1.5 text-label-md text-on-surface-variant" data-filter="trades" data-i18n="message.filter_trades">交易</button>
-          </div>
-          <div id="msg-conversations" class="flex-1 min-h-0 overflow-y-auto space-y-2"></div>
-        </aside>
-        <section class="min-w-0 min-h-0 flex flex-col">
-          <header class="px-4 md:px-6 py-3 border-b border-outline-variant/15 flex items-center justify-between gap-3">
-            <div class="min-w-0">
-              <p id="msg-peer-name" class="text-body-lg font-semibold truncate">—</p>
-              <p id="msg-peer-sub" class="text-label-md text-on-surface-variant">—</p>
+      <section id="msg-shell" class="hidden min-h-[calc(100vh-7rem)] rounded-[24px] border border-outline-variant/20 bg-surface-container-lowest shadow-[0_8px_32px_rgba(255,90,119,0.06)] overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-[22rem_minmax(0,1fr)] h-full min-h-[calc(100vh-7rem)]">
+          <aside class="border-r border-outline-variant/15 bg-surface-container-low/35 p-3 md:p-4 flex flex-col gap-3 min-h-0">
+            <div class="flex items-center justify-between gap-2">
+              <h2 class="text-headline-lg font-headline-lg" data-i18n="stitch.messages_title">消息中心</h2>
+              <button id="msg-refresh" type="button" class="rounded-full px-3 py-1.5 text-label-md bg-surface-container hover:bg-surface-container-high" data-i18n="action.refresh">刷新</button>
             </div>
-          </header>
-          <div id="msg-stream" class="flex-1 min-h-0 overflow-y-auto p-4 md:p-6 space-y-3 bg-surface"></div>
-          <form id="msg-form" class="border-t border-outline-variant/15 p-3 md:p-4 flex gap-2" hidden>
-            <input name="content" required class="flex-1 rounded-full border border-outline-variant/30 bg-surface-container-low px-4 py-2.5 text-body-md focus:ring-2 focus:ring-primary-container/30 outline-none" data-i18n-placeholder="message.placeholder" />
-            <button type="submit" class="rounded-full bg-gradient-to-r from-primary-container to-[#ff7e95] text-white px-5 py-2.5 font-label-md" data-i18n="message.btn_send">发送</button>
-          </form>
-        </section>
-      </div>
-    </section>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" class="msg-filter rounded-full bg-primary-container text-white px-3 py-1.5 text-label-md" data-filter="all" data-i18n="message.filter_all">全部会话</button>
+              <button type="button" class="msg-filter rounded-full bg-surface-container px-3 py-1.5 text-label-md text-on-surface-variant" data-filter="unread" data-i18n="message.filter_unread">未读</button>
+              <button type="button" class="msg-filter rounded-full bg-surface-container px-3 py-1.5 text-label-md text-on-surface-variant" data-filter="trades" data-i18n="message.filter_trades">交易</button>
+            </div>
+            <div id="msg-conversations" class="flex-1 min-h-0 overflow-y-auto space-y-2"></div>
+          </aside>
+          <section class="min-w-0 min-h-0 flex flex-col">
+            <header class="px-4 md:px-6 py-3 border-b border-outline-variant/15 flex items-center justify-between gap-3">
+              <div class="min-w-0">
+                <p id="msg-peer-name" class="text-body-lg font-semibold truncate">—</p>
+                <p id="msg-peer-sub" class="text-label-md text-on-surface-variant">—</p>
+              </div>
+            </header>
+            <div id="msg-stream" class="flex-1 min-h-0 overflow-y-auto p-4 md:p-6 space-y-3 bg-surface"></div>
+            <form id="msg-form" class="border-t border-outline-variant/15 p-3 md:p-4 flex gap-2" hidden>
+              <input name="content" required class="flex-1 rounded-full border border-outline-variant/30 bg-surface-container-low px-4 py-2.5 text-body-md focus:ring-2 focus:ring-primary-container/30 outline-none" data-i18n-placeholder="message.placeholder" />
+              <button type="submit" class="rounded-full bg-gradient-to-r from-primary-container to-[#ff7e95] text-white px-5 py-2.5 font-label-md" data-i18n="message.btn_send">发送</button>
+            </form>
+          </section>
+        </div>
+      </section>
+    </div>
   </main>
+
+  <!-- Mobile bottom nav -->
+  <div class="md:hidden fixed bottom-0 w-full bg-background/90 backdrop-blur-lg pt-2 pb-safe px-4 flex justify-between items-center z-50 shadow-[0_-4px_20px_rgba(255,90,119,0.05)] rounded-t-[24px] border-t border-white/50">
+    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-primary-container" href="/">
+      <span class="material-symbols-outlined">home</span>
+      <span class="text-[10px] mt-1" data-i18n="stitch.nav_home">首页</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-primary-container" href="/discover.html">
+      <span class="material-symbols-outlined">explore</span>
+      <span class="text-[10px] mt-1" data-i18n="stitch.nav_discover">发现</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-primary-container" href="/market.html">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span class="text-[10px] mt-1" data-i18n="stitch.nav_market">市集</span>
+    </a>
+    <div class="relative -top-6">
+      <a href="/compose.html" class="w-14 h-14 bg-gradient-to-r from-primary-container to-[#ff7e95] rounded-full flex items-center justify-center shadow-lg shadow-primary-container/30 text-white hover:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-[32px]">add</span>
+      </a>
+    </div>
+    <a class="flex flex-col items-center p-2 text-primary-container scale-105" href="/messages.html">
+      <span class="material-symbols-outlined fill">mail</span>
+      <span class="text-[10px] mt-1 font-semibold" data-i18n="stitch.nav_messages">消息</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-gray-400 hover:text-primary-container" href="/profile.html">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-[10px] mt-1" data-i18n="stitch.nav_me">我的</span>
+    </a>
+  </div>
+
   <script>
     window.MeowShared?.setStitchScreen(window.MeowShared?.STITCH_WEB_SCREENS?.MESSAGES_DESKTOP);
   </script>
   <script src="/messages.js"></script>
 </body>
 </html>
+
