@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
@@ -65,6 +66,7 @@ import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.Conversation
 import com.ttkk0000.meowcircle.MeowCircleSdk
+import com.ttkk0000.meowcircle.Post
 import com.ttkk0000.meowcircle.PostFeedItem
 import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.humanizeClientFailure
@@ -80,6 +82,7 @@ import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
 import com.ttkk0000.meowcircle.kmpapp.util.formatConversationListTime
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 import kotlinx.coroutines.launch
+import kotlin.collections.emptyList
 
 private data class FeedFilter(
     val key: String,
@@ -148,26 +151,26 @@ fun StitchFeedScreen(
         val author1 = User(1L, "peachlatte", "桃子和拿铁", "", "两只猫的日常记录员", "2026-05-27T00:00:00Z")
         val author2 = User(2L, "puff_bakery", "泡芙小店", "", "提供猫罐头和零食", "2026-05-27T00:00:00Z")
         val post1 = Post(
-            id = 1L,
-            authorId = 1L,
-            title = "猫猫第一次学会开门，家里从此没有秘密",
-            content = "给门把手加了保护套，顺便记录一下这个聪明小脑袋。它先观察了我们两天，然后第三天就开始自己尝试。",
-            category = "daily_share",
-            tags = listOf("日常", "聪明猫"),
-            mediaIds = emptyList(),
-            createdAt = "2026-06-02T10:00:00Z",
-            lastReplyAt = "2026-06-02T10:30:00Z"
+          id = 1L,
+          authorId = 1L,
+          title = "猫猫第一次学会开门，家里从此没有秘密",
+          content = "给门把手加了保护套，顺便记录一下这个聪明小脑袋。它先观察了我们两天，然后第三天就开始自己尝试。",
+          category = "daily_share",
+          tags = listOf("日常", "聪明猫"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T10:00:00Z",
+          lastReplyAt = "2026-06-02T10:30:00Z"
         )
         val post2 = Post(
-            id = 2L,
-            authorId = 2L,
-            title = "猫猫新手村：接猫回家第一周需要准备什么？",
-            content = "接猫回家前，猫砂盆、航空箱、幼猫粮和水碗必不可少。最重要的是给主子一个安静的角落适应新环境。",
-            category = "help",
-            tags = listOf("新手", "养猫技巧"),
-            mediaIds = emptyList(),
-            createdAt = "2026-06-02T09:00:00Z",
-            lastReplyAt = "2026-06-02T09:15:00Z"
+          id = 2L,
+          authorId = 2L,
+          title = "猫猫新手村：接猫回家第一周需要准备什么？",
+          content = "接猫回家前，猫砂盆、航空箱、幼猫粮和水碗必不可少。最重要的是给主子一个安静的角落适应新环境。",
+          category = "help",
+          tags = listOf("新手", "养猫技巧"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T09:00:00Z",
+          lastReplyAt = "2026-06-02T09:15:00Z"
         )
         return listOf(
             PostFeedItem(post1, author1, 128L, true, null),
