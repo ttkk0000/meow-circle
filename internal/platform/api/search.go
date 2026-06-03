@@ -19,8 +19,8 @@ func (r *Router) handleSearch(w http.ResponseWriter, req *http.Request) {
 		kind = "all"
 	}
 
-	var posts []domain.Post
-	var listings []domain.Listing
+	posts := []domain.Post{}
+	listings := []domain.Listing{}
 	if kind == "post" || kind == "all" {
 		posts = r.store.SearchPosts(q)
 		if len(posts) > 30 {

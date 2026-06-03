@@ -141,6 +141,8 @@ Rules:
 - Shapes use `8.dp` except true pills.
 - Splash, login, register, feed, discover, compose, and detail screens use
   M&D copy.
+- Runtime Sugar theme has been toned down from high-saturation candy pink toward
+  warm cream + warm crimson for the first mobile client pass.
 
 ## 5. Component Expectations
 

@@ -59,7 +59,7 @@ func (r *Router) prepareFeedPosts(all []domain.Post, filter string, viewerID int
 
 func (r *Router) buildPostFeedItems(posts []domain.Post, viewerID int64) []postFeedItem {
 	if len(posts) == 0 {
-		return nil
+		return []postFeedItem{}
 	}
 	authorSeen := make(map[int64]struct{})
 	var authorIDs []int64

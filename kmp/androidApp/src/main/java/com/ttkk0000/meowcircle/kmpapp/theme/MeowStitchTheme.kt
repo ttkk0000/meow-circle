@@ -18,7 +18,7 @@ enum class MeowTheme {
     Night
 }
 
-private val SugarScheme =
+val SugarScheme =
     lightColorScheme(
         primary = Color(0xFFCF2D56),
         onPrimary = Color.White,
@@ -42,7 +42,7 @@ private val SugarScheme =
         onError = Color.White,
     )
 
-private val MintScheme =
+val MintScheme =
     lightColorScheme(
         primary = Color(0xFF00AECA),
         onPrimary = Color.White,
@@ -66,7 +66,7 @@ private val MintScheme =
         onError = Color.White,
     )
 
-private val NightScheme =
+val NightScheme =
     darkColorScheme(
         primary = Color(0xFFC482FF),
         onPrimary = Color(0xFF1D1028),
@@ -94,7 +94,7 @@ private val NightScheme =
  * Typography = M&D cute design tokens（Plus Jakarta Sans 由系统无衬线近似），
  * 与移动端 M&D 设计记忆一致，避免旧稿的紧缩字距。
  */
-private val StitchTypography =
+val StitchTypography =
     Typography(
         displayLarge =
             TextStyle(

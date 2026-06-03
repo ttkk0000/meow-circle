@@ -2,7 +2,7 @@
 
 Created: 2026-05-26
 
-Last updated: 2026-05-27
+Last updated: 2026-06-03
 
 ## Decision
 
@@ -53,6 +53,10 @@ The emphasis is **cat-first**: cats lead the emotional identity, default imagery
   - Added `docs/RUNBOOK.md` to capture local run modes, env vars, upload storage, verification matrix, deployment notes, and known local blockers.
   - Expanded `docs/design/MND_FIGMA_DESIGN_DOCUMENT.md` with current status and immediate Figma work order.
   - Kept historical `MEOW_CIRCLE_*` filenames as containers, but documented that their contents now describe M&D.
+- Runtime client interaction pass:
+  - Added `docs/design/MND_CLIENT_INTERACTION_SPEC.md` as the page-by-page runtime client interaction contract.
+  - Started KMP Android home/feed realignment from the Figma-ready M&D direction: compact top bar, editorial home header, restrained warm search field, better feed loading/empty/error states, less candy-pink Sugar palette, stronger middle compose tab, and image/placeholder-led feed cards.
+  - KMP shared SDK now tolerates `items: null` for posts and conversations by treating it as an empty list, preventing Kotlin JSON serializer messages from appearing in the feed.
 
 ## Implementation Notes
 
