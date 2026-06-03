@@ -49,6 +49,7 @@ fun FeedTileCard(
     val post = item.post
     val author = item.author
     val who = author.nickname.ifBlank { author.username.ifBlank { "用户 ${post.authorId}" } }
+    val category = categoryLabel(post.category)
     val thumb =
         resolveMediaUrl(apiBase, item.firstMedia?.url)?.takeIf {
             item.firstMedia?.kind == "image" ||
@@ -79,7 +80,7 @@ fun FeedTileCard(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1.1f)
+                        .aspectRatio(1.18f)
                         .clip(StitchShape.cardFeedTop),
             ) {
                 AsyncImage(
@@ -99,15 +100,60 @@ fun FeedTileCard(
                                 .size(48.dp),
                     )
                 }
+                Text(
+                    category,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = StitchPalette.OnSurface,
+                    modifier =
+                        Modifier
+                            .align(Alignment.TopStart)
+                            .padding(10.dp)
+                            .clip(StitchShape.pill)
+                            .background(StitchPalette.Surface.copy(alpha = 0.9f))
+                            .padding(horizontal = 10.dp, vertical = 5.dp),
+                )
+            }
+        } else {
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1.55f)
+                        .clip(StitchShape.cardFeedTop)
+                        .background(StitchPalette.SurfaceLow),
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.FavoriteBorder,
+                    contentDescription = null,
+                    tint = StitchPalette.Brand.copy(alpha = 0.28f),
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 22.dp)
+                            .size(46.dp),
+                )
+                Column(
+                    modifier =
+                        Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(14.dp),
+                ) {
+                    Text(
+                        "M&D NOTE",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = StitchPalette.Brand,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        category,
+                        style = MaterialTheme.typography.titleSmall,
+                        color = StitchPalette.OnSurface,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
         }
         Column(Modifier.padding(horizontal = 14.dp, vertical = 12.dp)) {
-            Text(
-                categoryLabel(post.category),
-                style = MaterialTheme.typography.labelLarge,
-                color = StitchPalette.Brand,
-            )
-            Spacer(Modifier.height(4.dp))
             Text(
                 post.title,
                 style = MaterialTheme.typography.bodyLarge,
@@ -131,6 +177,22 @@ fun FeedTileCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                Box(
+                    modifier =
+                        Modifier
+                            .size(24.dp)
+                            .clip(CircleShape)
+                            .background(StitchPalette.BrandMuted),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        who.take(1).uppercase(),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = StitchPalette.Brand,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+                Spacer(Modifier.size(8.dp))
                 Text(
                     who,
                     style = MaterialTheme.typography.bodyMedium,

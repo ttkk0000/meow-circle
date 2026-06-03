@@ -72,6 +72,7 @@ import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.humanizeClientFailure
 import com.ttkk0000.meowcircle.kmpapp.BuildConfig
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
+import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShadows
 import com.ttkk0000.meowcircle.kmpapp.ui.components.FeedTileCard
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchBottomNav
@@ -89,6 +90,12 @@ private data class FeedFilter(
     val label: String,
 )
 
+private data class HomeSignal(
+    val label: String,
+    val value: String,
+    val tone: Color,
+)
+
 private val FEED_FILTERS =
     listOf(
         FeedFilter("rec", "推荐"),
@@ -101,9 +108,24 @@ private val DISCOVER_CIRCLE_LABELS =
     listOf("猫猫新手村", "橘猫联盟", "黑猫部", "猫咪摄影", "领养中心")
 
 private val FEED_PAGE_PADDING = 20.dp
-private val FEED_CARD_RADIUS = RoundedCornerShape(20.dp)
+private val FEED_CARD_RADIUS = RoundedCornerShape(8.dp)
 private val FEED_SECTION_RADIUS = RoundedCornerShape(8.dp)
 private val FEED_CARD_CONTENT_PADDING = PaddingValues(horizontal = 16.dp, vertical = 12.dp)
+
+private fun feedErrorMessage(
+    e: Throwable,
+    apiBase: String,
+): String {
+    val raw = (e as? ApiException)?.message ?: e.message.orEmpty()
+    return when {
+        raw.contains("Expected JsonArray", ignoreCase = true) ||
+            raw.contains("$.items", ignoreCase = true) ||
+            raw.contains("JsonNull", ignoreCase = true) ->
+            "动态列表暂时没有返回内容。可以重试，或先看离线演示。"
+        e is ApiException && raw.isNotBlank() -> raw
+        else -> humanizeClientFailure(e, apiBase)
+    }
+}
 
 private enum class MessageSection {
     Chats,
@@ -146,10 +168,13 @@ fun StitchFeedScreen(
     var profilePosts by remember { mutableStateOf<List<PostFeedItem>?>(null) }
     var profileLoading by remember { mutableStateOf(false) }
     var mockMode by remember { mutableStateOf(false) }
+    var feedRetrySignal by remember { mutableStateOf(0) }
 
     fun createMockPosts(): List<PostFeedItem> {
         val author1 = User(1L, "peachlatte", "桃子和拿铁", "", "两只猫的日常记录员", "2026-05-27T00:00:00Z")
         val author2 = User(2L, "puff_bakery", "泡芙小店", "", "提供猫罐头和零食", "2026-05-27T00:00:00Z")
+        val author3 = User(3L, "sunday_walk", "周日散步社", "", "组织小型宠物活动", "2026-05-27T00:00:00Z")
+        val author4 = User(4L, "clean_corner", "干净角落", "", "二手猫用品整理中", "2026-05-27T00:00:00Z")
         val post1 = Post(
           id = 1L,
           authorId = 1L,
@@ -172,9 +197,33 @@ fun StitchFeedScreen(
           createdAt = "2026-06-02T09:00:00Z",
           lastReplyAt = "2026-06-02T09:15:00Z"
         )
+        val post3 = Post(
+          id = 3L,
+          authorId = 3L,
+          title = "周末猫猫摄影散步局，doggie 也可以来当气氛组",
+          content = "小区花园集合，拍照为主，不强社交。胆小猫可以只坐航空箱里观察。",
+          category = "activity",
+          tags = listOf("活动", "摄影"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T08:30:00Z",
+          lastReplyAt = "2026-06-02T08:45:00Z"
+        )
+        val post4 = Post(
+          id = 4L,
+          authorId = 4L,
+          title = "出一个 9 成新的开放式猫砂盆，适合小户型",
+          content = "已彻底清洁消毒，同城可自提，附送未拆封猫砂铲。",
+          category = "trade",
+          tags = listOf("二手", "猫砂盆"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T08:00:00Z",
+          lastReplyAt = "2026-06-02T08:10:00Z"
+        )
         return listOf(
             PostFeedItem(post1, author1, 128L, true, null),
-            PostFeedItem(post2, author2, 45L, false, null)
+            PostFeedItem(post2, author2, 45L, false, null),
+            PostFeedItem(post3, author3, 68L, false, null),
+            PostFeedItem(post4, author4, 16L, false, null)
         )
     }
 
@@ -194,7 +243,7 @@ fun StitchFeedScreen(
             else -> filter
         }
 
-    LaunchedEffect(effectiveFilter, tab, feedReloadSignal, mockMode) {
+    LaunchedEffect(effectiveFilter, tab, feedReloadSignal, mockMode, feedRetrySignal) {
         if (tab != StitchMainTab.Home && tab != StitchMainTab.Discover) return@LaunchedEffect
         if (mockMode) {
             rawItems = createMockPosts()
@@ -208,7 +257,7 @@ fun StitchFeedScreen(
             sdk.feedPosts(effectiveFilter).fold(
                 onSuccess = { it },
                 onFailure = { e ->
-                    err = (e as? ApiException)?.message ?: e.message ?: "加载失败"
+                    err = feedErrorMessage(e, apiBase)
                     null
                 },
             )
@@ -382,199 +431,60 @@ fun StitchFeedScreen(
                                 messageSection = MessageSection.Notifications
                             },
                         )
-                        if (tab == StitchMainTab.Home) {
-                            Row(
-                                modifier =
-                                    Modifier
-                                        .fillMaxWidth()
-                                        .horizontalScroll(rememberScrollState())
-                                        .padding(horizontal = FEED_PAGE_PADDING, vertical = 8.dp),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                FEED_FILTERS.forEach { f ->
-                                    val selected = filter == f.key
-                                    FilterChip(
-                                        selected = selected,
-                                        onClick = { filter = f.key },
-                                        label = { Text(f.label) },
-                                        border =
-                                            FilterChipDefaults.filterChipBorder(
-                                                enabled = true,
-                                                selected = selected,
-                                                borderColor = StitchPalette.BorderHairline,
-                                                selectedBorderColor = Color.Transparent,
-                                            ),
-                                        colors =
-                                            FilterChipDefaults.filterChipColors(
-                                                selectedContainerColor = StitchPalette.Brand,
-                                                selectedLabelColor = Color.White,
-                                                containerColor = StitchPalette.Surface,
-                                                labelColor = StitchPalette.OnSurfaceVariant,
-                                            ),
-                                        modifier =
-                                            Modifier.then(
-                                                if (selected) {
-                                                    Modifier.shadow(
-                                                        elevation = StitchShadows.ctaGlowY,
-                                                        shape = CircleShape,
-                                                        ambientColor = StitchShadows.ctaGlowColor,
-                                                        spotColor = StitchShadows.ctaGlowColor,
-                                                    )
-                                                } else {
-                                                    Modifier
-                                                },
-                                            ),
-                                    )
-                                }
-                            }
-                        } else {
-                            Spacer(Modifier.height(4.dp))
-                        }
                         Column(
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = FEED_PAGE_PADDING),
                         ) {
-                            StitchSearchField(
-                                value = q,
-                                onValueChange = { q = it },
-                                placeholder = if (tab == StitchMainTab.Discover) "搜索 M&D 圈子…" else "搜索 M&D 猫猫动态…",
-                                modifier = Modifier.fillMaxWidth(),
-                            )
                             if (tab == StitchMainTab.Discover) {
-                                Spacer(Modifier.height(16.dp))
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Text(
-                                        "M&D 发现圈子",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        fontWeight = FontWeight.Bold,
-                                        color = StitchPalette.PrimaryDark,
-                                    )
-                                    Text(
-                                        "查看更多",
-                                        style = MaterialTheme.typography.labelLarge,
-                                        color = StitchPalette.Brand,
-                                        modifier =
-                                            Modifier.clickable {
-                                                selectedCircle = null
-                                            },
-                                    )
-                                }
-                                Spacer(Modifier.height(10.dp))
-                                Row(
-                                    modifier =
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .horizontalScroll(rememberScrollState()),
-                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                ) {
-                                    DISCOVER_CIRCLE_LABELS.forEach { label ->
-                                        Surface(
-                                            shape = RoundedCornerShape(8.dp),
-                                            color = StitchPalette.SecondaryContainer.copy(alpha = 0.65f),
-                                            modifier =
-                                                Modifier.clickable {
-                                                    selectedCircle = if (selectedCircle == label) null else label
-                                                },
-                                        ) {
-                                            Text(
-                                                label,
-                                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
-                                                style = MaterialTheme.typography.labelLarge,
-                                                fontWeight = FontWeight.SemiBold,
-                                                color = StitchPalette.Secondary,
-                                            )
-                                        }
-                                    }
-                                }
-                                Spacer(Modifier.height(20.dp))
-                                Text(
-                                    "猫猫日常",
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    color = StitchPalette.PrimaryDark,
+                                DiscoverFeedHeader(
+                                    query = q,
+                                    onQueryChange = { q = it },
+                                    selectedCircle = selectedCircle,
+                                    onCircleSelect = { label ->
+                                        selectedCircle = if (selectedCircle == label) null else label
+                                    },
+                                    onResetCircles = { selectedCircle = null },
                                 )
-                                Spacer(Modifier.height(8.dp))
-                            }
-                            if (tab == StitchMainTab.Home) {
-                                Spacer(Modifier.height(16.dp))
-                                Surface(
-                                    modifier =
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .shadow(
-                                                elevation = StitchShadows.cardAmbientY,
-                                                shape = FEED_SECTION_RADIUS,
-                                                ambientColor = StitchShadows.cardAmbientColor,
-                                                spotColor = StitchShadows.cardAmbientColor,
-                                            )
-                                            .border(
-                                                1.dp,
-                                                StitchPalette.Brand.copy(alpha = 0.15f),
-                                                FEED_SECTION_RADIUS,
-                                            ),
-                                    shape = FEED_SECTION_RADIUS,
-                                    color = StitchPalette.SecondaryContainer.copy(alpha = 0.55f),
-                                ) {
-                                    Column(Modifier.padding(FEED_PAGE_PADDING)) {
-                                        Text(
-                                            "HOT EVENT",
-                                            style = MaterialTheme.typography.labelLarge,
-                                            color = StitchPalette.Brand,
-                                            fontWeight = FontWeight.Bold,
-                                        )
-                                        Spacer(Modifier.height(4.dp))
-                                        Text(
-                                            "咪友圈摄影大赛",
-                                            style = MaterialTheme.typography.headlineMedium,
-                                            fontWeight = FontWeight.Bold,
-                                            color = StitchPalette.PrimaryDark,
-                                        )
-                                        Text(
-                                            "晒出你的心动瞬间，赢取猫罐头大礼包",
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = StitchPalette.OnSurfaceVariant,
-                                        )
-                                    }
-                                }
+                            } else {
+                                HomeFeedHeader(
+                                    query = q,
+                                    onQueryChange = { q = it },
+                                    selectedFilter = filter,
+                                    onFilterChange = { filter = it },
+                                    items = rawItems.orEmpty(),
+                                    mockMode = mockMode,
+                                    onEnableMock = { mockMode = true },
+                                )
                             }
                             Spacer(Modifier.height(12.dp))
                         }
                         Box(Modifier.weight(1f)) {
                             when {
                                 loading && rawItems == null ->
-                                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                        CircularProgressIndicator(color = StitchPalette.Brand)
-                                    }
+                                    FeedLoadingPane(Modifier.fillMaxSize())
                                 err != null && rawItems == null ->
-                                    Column(
-                                        modifier = Modifier.fillMaxSize().padding(24.dp),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Text(
-                                            text = err!!,
-                                            color = StitchPalette.Error,
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            textAlign = TextAlign.Center
-                                        )
-                                        Spacer(Modifier.height(16.dp))
-                                        TextButton(
-                                            onClick = { mockMode = true },
-                                            colors = ButtonDefaults.textButtonColors(
-                                                containerColor = StitchPalette.Brand.copy(alpha = 0.1f),
-                                                contentColor = StitchPalette.Brand
-                                            ),
-                                            shape = RoundedCornerShape(8.dp)
-                                        ) {
-                                            Text("体验离线演示模式 (Mock)", fontWeight = FontWeight.Bold)
-                                        }
-                                    }
+                                    FeedFailurePane(
+                                        message = err!!,
+                                        onRetry = {
+                                            mockMode = false
+                                            feedRetrySignal += 1
+                                        },
+                                        onDemo = { mockMode = true },
+                                        modifier = Modifier.fillMaxSize(),
+                                    )
+                                filtered.isEmpty() ->
+                                    PlaceholderPane(
+                                        headline = if (q.isBlank()) "今天还没有动态" else "没有找到相关动态",
+                                        body =
+                                            if (q.isBlank()) {
+                                                "先去发布一条猫猫日常，或切到离线演示看看完整首页。"
+                                            } else {
+                                                "换个关键词，或者清空搜索后继续浏览 M&D。"
+                                            },
+                                        modifier = Modifier.fillMaxSize(),
+                                    )
                                 else ->
                                     LazyColumn(
                                         modifier = Modifier.fillMaxSize(),
@@ -643,6 +553,373 @@ fun StitchFeedScreen(
 }
 
 @Composable
+private fun HomeFeedHeader(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    selectedFilter: String,
+    onFilterChange: (String) -> Unit,
+    items: List<PostFeedItem>,
+    mockMode: Boolean,
+    onEnableMock: () -> Unit,
+) {
+    val signals =
+        listOf(
+            HomeSignal("今日动态", items.size.coerceAtLeast(0).toString(), StitchPalette.Brand),
+            HomeSignal("新手求助", items.count { it.post.category == "help" }.toString(), StitchPalette.Secondary),
+            HomeSignal("好物交易", items.count { it.post.category == "trade" }.toString(), StitchPalette.PrimaryDark),
+        )
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column {
+            Text(
+                "今日猫猫编辑台",
+                style = MaterialTheme.typography.titleMedium,
+                color = StitchPalette.OnSurface,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                "先看猫猫日常，再处理求助和交易",
+                style = MaterialTheme.typography.bodySmall,
+                color = StitchPalette.OnSurfaceVariant,
+            )
+        }
+        TextButton(
+            onClick = onEnableMock,
+            colors =
+                ButtonDefaults.textButtonColors(
+                    containerColor = if (mockMode) StitchPalette.BrandMuted else StitchPalette.Surface,
+                    contentColor = StitchPalette.Brand,
+                ),
+            shape = FEED_SECTION_RADIUS,
+        ) {
+            Text(if (mockMode) "演示中" else "离线演示", style = MaterialTheme.typography.labelMedium)
+        }
+    }
+    Spacer(Modifier.height(12.dp))
+    Surface(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .shadow(
+                    elevation = StitchShadows.cardAmbientY,
+                    shape = FEED_SECTION_RADIUS,
+                    ambientColor = StitchShadows.cardAmbientColor,
+                    spotColor = StitchShadows.cardAmbientColor,
+                )
+                .border(1.dp, StitchPalette.BorderHairline, FEED_SECTION_RADIUS),
+        shape = FEED_SECTION_RADIUS,
+        color = StitchPalette.Surface,
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(14.dp),
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text(
+                    "M&D 猫猫主角季",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.PrimaryDark,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "晒出今天最像杂志封面的一张照片，也欢迎 doggie 作为配角入镜。",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = StitchPalette.OnSurfaceVariant,
+                )
+            }
+            Box(
+                modifier =
+                    Modifier
+                        .size(54.dp)
+                        .clip(FEED_SECTION_RADIUS)
+                        .background(StitchPalette.BrandMuted),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Pets,
+                    contentDescription = null,
+                    tint = StitchPalette.Brand,
+                    modifier = Modifier.size(28.dp),
+                )
+            }
+        }
+    }
+    Spacer(Modifier.height(12.dp))
+    FeedFilterRow(selectedFilter = selectedFilter, onFilterChange = onFilterChange)
+    Spacer(Modifier.height(12.dp))
+    StitchSearchField(
+        value = query,
+        onValueChange = onQueryChange,
+        placeholder = "搜索猫猫动态、求助或标签",
+        modifier = Modifier.fillMaxWidth(),
+    )
+    Spacer(Modifier.height(12.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        signals.forEach { signal ->
+            Surface(
+                modifier = Modifier.weight(1f),
+                shape = FEED_SECTION_RADIUS,
+                color = StitchPalette.SurfaceLow,
+                border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+            ) {
+                Column(Modifier.padding(horizontal = 10.dp, vertical = 9.dp)) {
+                    Text(
+                        signal.value,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = signal.tone,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        signal.label,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = StitchPalette.OnSurfaceVariant,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FeedFilterRow(
+    selectedFilter: String,
+    onFilterChange: (String) -> Unit,
+) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        FEED_FILTERS.forEach { f ->
+            val selected = selectedFilter == f.key
+            FilterChip(
+                selected = selected,
+                onClick = { onFilterChange(f.key) },
+                label = {
+                    Text(
+                        f.label,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                },
+                border =
+                    FilterChipDefaults.filterChipBorder(
+                        enabled = true,
+                        selected = selected,
+                        borderColor = StitchPalette.BorderHairline,
+                        selectedBorderColor = Color.Transparent,
+                    ),
+                colors =
+                    FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = StitchPalette.Brand,
+                        selectedLabelColor = Color.White,
+                        containerColor = StitchPalette.Surface,
+                        labelColor = StitchPalette.OnSurfaceVariant,
+                    ),
+                shape = StitchShape.pill,
+            )
+        }
+    }
+}
+
+@Composable
+private fun DiscoverFeedHeader(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    selectedCircle: String?,
+    onCircleSelect: (String) -> Unit,
+    onResetCircles: () -> Unit,
+) {
+    StitchSearchField(
+        value = query,
+        onValueChange = onQueryChange,
+        placeholder = "搜索圈子、活动或好物",
+        modifier = Modifier.fillMaxWidth(),
+    )
+    Spacer(Modifier.height(14.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column {
+            Text(
+                "M&D 发现圈子",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.OnSurface,
+            )
+            Text(
+                selectedCircle ?: "猫猫兴趣先行，服务和领养随后",
+                style = MaterialTheme.typography.bodySmall,
+                color = StitchPalette.OnSurfaceVariant,
+            )
+        }
+        Text(
+            "全部",
+            style = MaterialTheme.typography.labelLarge,
+            color = StitchPalette.Brand,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.clickable(onClick = onResetCircles),
+        )
+    }
+    Spacer(Modifier.height(10.dp))
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        DISCOVER_CIRCLE_LABELS.forEach { label ->
+            val selected = selectedCircle == label
+            Surface(
+                shape = StitchShape.pill,
+                color = if (selected) StitchPalette.Brand else StitchPalette.SurfaceLow,
+                border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+                modifier = Modifier.clickable { onCircleSelect(label) },
+            ) {
+                Text(
+                    label,
+                    modifier = Modifier.padding(horizontal = 15.dp, vertical = 9.dp),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = if (selected) Color.White else StitchPalette.OnSurfaceVariant,
+                )
+            }
+        }
+    }
+    Spacer(Modifier.height(14.dp))
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = FEED_SECTION_RADIUS,
+        color = StitchPalette.SecondaryContainer.copy(alpha = 0.35f),
+        border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Row(
+            modifier = Modifier.padding(14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Icon(Icons.Filled.Campaign, contentDescription = null, tint = StitchPalette.Secondary)
+            Column(Modifier.weight(1f)) {
+                Text(
+                    "本周主题：猫猫新手村开放问答",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = StitchPalette.OnSurface,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    "适合第一次养猫、换粮、搬家适应等问题",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = StitchPalette.OnSurfaceVariant,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun FeedLoadingPane(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.padding(horizontal = FEED_PAGE_PADDING, vertical = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        repeat(3) { index ->
+            Surface(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(if (index == 0) 176.dp else 132.dp),
+                shape = FEED_SECTION_RADIUS,
+                color = StitchPalette.SurfaceLow,
+                border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+            ) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = StitchPalette.Brand, modifier = Modifier.size(24.dp))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FeedFailurePane(
+    message: String,
+    onRetry: () -> Unit,
+    onDemo: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Surface(
+            shape = FEED_SECTION_RADIUS,
+            color = StitchPalette.Surface,
+            border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+        ) {
+            Column(
+                modifier = Modifier.padding(18.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    "动态暂时没取到",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = StitchPalette.OnSurface,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    message,
+                    color = StitchPalette.OnSurfaceVariant,
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(Modifier.height(14.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(
+                        onClick = onRetry,
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                containerColor = StitchPalette.SurfaceLow,
+                                contentColor = StitchPalette.OnSurface,
+                            ),
+                        shape = FEED_SECTION_RADIUS,
+                    ) {
+                        Text("重试", fontWeight = FontWeight.Bold)
+                    }
+                    TextButton(
+                        onClick = onDemo,
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                containerColor = StitchPalette.BrandMuted,
+                                contentColor = StitchPalette.Brand,
+                            ),
+                        shape = FEED_SECTION_RADIUS,
+                    ) {
+                        Text("看离线演示", fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
 private fun ThemeSelectionDialog(
     currentTheme: String,
     onDismiss: () -> Unit,
@@ -658,7 +935,7 @@ private fun ThemeSelectionDialog(
                     modifier = Modifier.fillMaxWidth().clickable { onSelect("sugar") }.padding(vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFFFF4F93)))
+                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFFCF2D56)))
                     Spacer(Modifier.width(12.dp))
                     Text("蜜糖 (Sugar)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (currentTheme == "sugar") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
                 }
@@ -1093,7 +1370,7 @@ private fun MessagesPane(
                     ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("体验离线演示模式 (Mock)", fontWeight = FontWeight.Bold)
+                    Text("看离线演示", fontWeight = FontWeight.Bold)
                 }
             }
         else ->

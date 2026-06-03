@@ -57,7 +57,7 @@ data class PostFeedItem(
 
 @Serializable
 data class PostsPage(
-    val items: List<PostFeedItem>,
+    val items: List<PostFeedItem>? = null,
     val total: Long,
     val page: Int,
     @SerialName("page_size") val pageSize: Int,
@@ -132,7 +132,7 @@ data class Conversation(
 
 @Serializable
 data class ConversationsPayload(
-    val items: List<Conversation>,
+    val items: List<Conversation>? = null,
 )
 
 @Serializable

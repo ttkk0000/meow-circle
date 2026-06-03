@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pets
@@ -23,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -52,29 +52,29 @@ fun StitchTopBar(
             modifier
                 .fillMaxWidth()
                 .shadow(
-                    elevation = 4.dp,
+                    elevation = 2.dp,
                     shape = RectangleShape,
                     ambientColor = StitchShadows.headerAmbientColor,
                     spotColor = StitchShadows.headerAmbientColor,
                 )
-                .background(StitchPalette.SurfaceContainerHigh.copy(alpha = 0.88f)),
+                .background(StitchPalette.Canvas.copy(alpha = 0.98f)),
     ) {
         Row(
             modifier =
                 Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
-                    .padding(horizontal = 20.dp, vertical = 10.dp),
+                    .padding(horizontal = 20.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = onAvatarPress, modifier = Modifier.size(52.dp)) {
+            IconButton(onClick = onAvatarPress, modifier = Modifier.size(44.dp)) {
                 if (avatarUrl != null) {
                     AsyncImage(
                         model = avatarUrl,
                         contentDescription = "头像",
                         modifier =
                             Modifier
-                                .size(44.dp)
+                                .size(36.dp)
                                 .clip(CircleShape)
                                 .border(1.dp, StitchPalette.BorderHairline, CircleShape),
                         contentScale = ContentScale.Crop,
@@ -83,23 +83,23 @@ fun StitchTopBar(
                     Box(
                         modifier =
                             Modifier
-                                .size(44.dp)
+                                .size(36.dp)
                                 .shadow(
-                                    elevation = 4.dp,
+                                    elevation = 2.dp,
                                     shape = CircleShape,
                                     ambientColor = StitchShadows.avatarGlowColor,
                                     spotColor = StitchShadows.avatarGlowColor,
                                 )
                                 .clip(CircleShape)
-                                .background(StitchPalette.Brand)
-                                .border(1.dp, Color.White.copy(alpha = 0.35f), CircleShape),
+                                .background(StitchPalette.Surface)
+                                .border(1.dp, StitchPalette.BorderHairline, CircleShape),
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Pets,
                             contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(26.dp),
+                            tint = StitchPalette.Brand,
+                            modifier = Modifier.size(21.dp),
                         )
                     }
                 }
@@ -113,7 +113,7 @@ fun StitchTopBar(
             ) {
                 Text(
                     title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     color = StitchPalette.Brand,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Center,
@@ -121,18 +121,24 @@ fun StitchTopBar(
                 )
                 Text(
                     subtitle,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.labelMedium,
                     color = StitchPalette.Stone500,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
-            IconButton(onClick = onNotifyPress) {
+            IconButton(
+                onClick = onNotifyPress,
+                modifier =
+                    Modifier
+                        .size(44.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+            ) {
                 Icon(
                     imageVector = Icons.Outlined.NotificationsNone,
                     contentDescription = "通知",
                     tint = StitchPalette.Brand,
-                    modifier = Modifier.size(28.dp),
+                    modifier = Modifier.size(24.dp),
                 )
             }
         }

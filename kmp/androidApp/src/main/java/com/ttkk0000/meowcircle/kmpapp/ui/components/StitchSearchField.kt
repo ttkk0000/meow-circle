@@ -1,6 +1,5 @@
 package com.ttkk0000.meowcircle.kmpapp.ui.components
 
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
@@ -10,8 +9,8 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
+import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 
 @Composable
 fun StitchSearchField(
@@ -33,13 +32,13 @@ fun StitchSearchField(
             )
         },
         singleLine = true,
-        shape = RoundedCornerShape(999.dp),
+        shape = StitchShape.field,
         colors =
             OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = StitchPalette.Brand.copy(alpha = 0.45f),
                 unfocusedBorderColor = StitchPalette.BorderHairline,
-                focusedContainerColor = StitchPalette.SecondaryContainer.copy(alpha = 0.35f),
-                unfocusedContainerColor = StitchPalette.SecondaryContainer.copy(alpha = 0.28f),
+                focusedContainerColor = StitchPalette.Surface,
+                unfocusedContainerColor = StitchPalette.SurfaceLow,
                 cursorColor = StitchPalette.Brand,
                 focusedTextColor = StitchPalette.OnSurface,
                 unfocusedTextColor = StitchPalette.OnSurface,

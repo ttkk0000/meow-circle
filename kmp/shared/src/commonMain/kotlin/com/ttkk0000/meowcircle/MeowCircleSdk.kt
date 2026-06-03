@@ -103,7 +103,7 @@ class MeowCircleSdk(
         runCatching {
             val path = "/api/v1/posts?page=1&page_size=40&filter=$filter"
             val page: PostsPage = unwrapData(httpGet(path, auth = true))
-            page.items
+            page.items.orEmpty()
         }
 
     suspend fun register(
@@ -180,7 +180,7 @@ class MeowCircleSdk(
     suspend fun conversations(): Result<List<Conversation>> =
         runCatching {
             val payload: ConversationsPayload = unwrapData(httpGet("/api/v1/me/conversations", auth = true))
-            payload.items
+            payload.items.orEmpty()
         }
 
     suspend fun updateMe(
