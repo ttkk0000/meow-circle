@@ -117,12 +117,17 @@ private fun feedErrorMessage(
     apiBase: String,
 ): String {
     val raw = (e as? ApiException)?.message ?: e.message.orEmpty()
+    val isHtmlOrProxy = raw.contains("<html", ignoreCase = true) ||
+            raw.contains("[Fiddler]", ignoreCase = true) ||
+            raw.contains("connection refused", ignoreCase = true) ||
+            raw.contains("connectionrefused", ignoreCase = true) ||
+            raw.contains("积极拒绝", ignoreCase = true)
     return when {
         raw.contains("Expected JsonArray", ignoreCase = true) ||
             raw.contains("$.items", ignoreCase = true) ||
             raw.contains("JsonNull", ignoreCase = true) ->
             "动态列表暂时没有返回内容。可以重试，或先看离线演示。"
-        e is ApiException && raw.isNotBlank() -> raw
+        e is ApiException && raw.isNotBlank() && !isHtmlOrProxy -> raw
         else -> humanizeClientFailure(e, apiBase)
     }
 }
@@ -145,7 +150,7 @@ fun StitchFeedScreen(
     onThemeChanged: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    val apiBase = BuildConfig.API_BASE_URL
+    var apiBase by remember { mutableStateOf(sdk.baseUrl) }
     val scope = rememberCoroutineScope()
     var profileUser by remember(user.id) { mutableStateOf(user) }
     var tab by remember { mutableStateOf(StitchMainTab.Home) }
@@ -467,6 +472,14 @@ fun StitchFeedScreen(
                                 err != null && rawItems == null ->
                                     FeedFailurePane(
                                         message = err!!,
+                                        currentUrl = apiBase,
+                                        defaultUrl = BuildConfig.API_BASE_URL,
+                                        onUrlChanged = { newUrl ->
+                                            sdk.sessionStore().setApiUrl(newUrl)
+                                            apiBase = sdk.baseUrl
+                                            mockMode = false
+                                            feedRetrySignal += 1
+                                        },
                                         onRetry = {
                                             mockMode = false
                                             feedRetrySignal += 1
@@ -857,10 +870,15 @@ private fun FeedLoadingPane(modifier: Modifier = Modifier) {
 @Composable
 private fun FeedFailurePane(
     message: String,
+    currentUrl: String,
+    defaultUrl: String,
+    onUrlChanged: (String?) -> Unit,
     onRetry: () -> Unit,
     onDemo: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var showApiDialog by remember { mutableStateOf(false) }
+
     Column(
         modifier = modifier.padding(24.dp),
         verticalArrangement = Arrangement.Center,
@@ -889,8 +907,19 @@ private fun FeedFailurePane(
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                 )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    "当前 API: $currentUrl",
+                    color = StitchPalette.OnSurfaceVariant.copy(alpha = 0.7f),
+                    style = MaterialTheme.typography.labelSmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.clickable { showApiDialog = true }
+                )
                 Spacer(Modifier.height(14.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     TextButton(
                         onClick = onRetry,
                         colors =
@@ -901,6 +930,17 @@ private fun FeedFailurePane(
                         shape = FEED_SECTION_RADIUS,
                     ) {
                         Text("重试", fontWeight = FontWeight.Bold)
+                    }
+                    TextButton(
+                        onClick = { showApiDialog = true },
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                containerColor = StitchPalette.SurfaceLow,
+                                contentColor = StitchPalette.Brand,
+                            ),
+                        shape = FEED_SECTION_RADIUS,
+                    ) {
+                        Text("配置 API", fontWeight = FontWeight.Bold)
                     }
                     TextButton(
                         onClick = onDemo,
@@ -915,6 +955,18 @@ private fun FeedFailurePane(
                     }
                 }
             }
+        }
+
+        if (showApiDialog) {
+            ApiBaseUrlConfigDialog(
+                currentUrl = currentUrl,
+                defaultUrl = defaultUrl,
+                onDismiss = { showApiDialog = false },
+                onSave = { newUrl ->
+                    onUrlChanged(newUrl)
+                    showApiDialog = false
+                }
+            )
         }
     }
 }

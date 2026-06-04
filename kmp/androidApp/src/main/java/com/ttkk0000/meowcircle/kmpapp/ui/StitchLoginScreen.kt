@@ -85,6 +85,10 @@ fun StitchLoginScreen(
     var hintDialog by remember { mutableStateOf<Pair<String, String>?>(null) }
     val scroll = rememberScrollState()
 
+    var apiBase by remember { mutableStateOf(sdk.baseUrl) }
+    var showApiConfig by remember { mutableStateOf(false) }
+    var localHealthHint by remember(healthHint) { mutableStateOf(healthHint) }
+
     Box(modifier.fillMaxSize()) {
         Column(
             Modifier
@@ -93,7 +97,7 @@ fun StitchLoginScreen(
                 .padding(horizontal = 20.dp)
                 .padding(top = 56.dp, bottom = 28.dp),
         ) {
-            healthHint?.let { hint ->
+            localHealthHint?.let { hint ->
                 val isBad = hint.contains("超时") || hint.contains("无法连接") || hint.contains("失败")
                 CompactHintLine(
                     fullText = hint,
@@ -277,7 +281,7 @@ fun StitchLoginScreen(
                                             onFailure = { e ->
                                                 err =
                                                     (e as? ApiException)?.message
-                                                        ?: humanizeClientFailure(e, BuildConfig.API_BASE_URL)
+                                                        ?: humanizeClientFailure(e, apiBase)
                                             },
                                         )
                                     busy = false
@@ -380,13 +384,14 @@ fun StitchLoginScreen(
             }
 
             Text(
-                "后端 ${BuildConfig.API_BASE_URL}",
+                "后端 $apiBase (点击配置)",
                 style = MaterialTheme.typography.labelSmall,
                 color = StitchLoginRef.Outline.copy(alpha = 0.55f),
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(top = 20.dp),
+                        .clickable { showApiConfig = true }
+                        .padding(top = 20.dp, bottom = 8.dp),
                 textAlign = TextAlign.Center,
             )
         }
@@ -412,6 +417,28 @@ fun StitchLoginScreen(
                                 .verticalScroll(dialogScroll),
                     )
                 },
+            )
+        }
+
+        if (showApiConfig) {
+            ApiBaseUrlConfigDialog(
+                currentUrl = apiBase,
+                defaultUrl = BuildConfig.API_BASE_URL,
+                onDismiss = { showApiConfig = false },
+                onSave = { newUrl ->
+                    sdk.sessionStore().setApiUrl(newUrl)
+                    val resolved = sdk.baseUrl
+                    apiBase = resolved
+                    showApiConfig = false
+                    
+                    scope.launch {
+                        localHealthHint = "正在连接新后端..."
+                        sdk.health().fold(
+                            onSuccess = { localHealthHint = "服务 ${it.status} · ${it.store}" },
+                            onFailure = { localHealthHint = humanizeClientFailure(it, resolved) }
+                        )
+                    }
+                }
             )
         }
     }

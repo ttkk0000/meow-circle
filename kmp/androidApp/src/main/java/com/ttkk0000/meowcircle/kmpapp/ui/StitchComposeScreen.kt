@@ -106,7 +106,7 @@ fun StitchComposeScreen(
                                         onFailure = { e ->
                                             err =
                                                 (e as? ApiException)?.message
-                                                    ?: humanizeClientFailure(e, BuildConfig.API_BASE_URL)
+                                                    ?: humanizeClientFailure(e, sdk.baseUrl)
                                         },
                                     )
                                 busy = false

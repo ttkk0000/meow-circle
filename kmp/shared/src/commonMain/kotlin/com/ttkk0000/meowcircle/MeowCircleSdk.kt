@@ -24,10 +24,14 @@ import kotlinx.serialization.serializer
  * @param baseUrl e.g. `http://10.0.2.2:8080` (Android emulator) or your LAN IP for a device.
  */
 class MeowCircleSdk(
-    private val baseUrl: String,
+    private val defaultBaseUrl: String,
     private val session: SessionStore = SessionStore(),
 ) {
-    private val root = baseUrl.trimEnd('/')
+    val baseUrl: String
+        get() = session.getApiUrl(defaultBaseUrl)
+
+    private val root: String
+        get() = baseUrl.trimEnd('/')
 
     private val json =
         Json {

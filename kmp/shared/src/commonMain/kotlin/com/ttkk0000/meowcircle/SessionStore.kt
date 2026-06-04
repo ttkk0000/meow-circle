@@ -33,6 +33,16 @@ class SessionStore(private val settings: Settings = Settings()) {
         settings[KEY_THEME] = value
     }
 
+    fun getApiUrl(fallback: String): String = settings.getString(KEY_API_URL, fallback)
+
+    fun setApiUrl(value: String?) {
+        if (value == null) {
+            settings.remove(KEY_API_URL)
+        } else {
+            settings[KEY_API_URL] = value
+        }
+    }
+
     fun clear() {
         settings.remove(KEY_TOKEN)
         settings.remove(KEY_USER)
@@ -42,5 +52,6 @@ class SessionStore(private val settings: Settings = Settings()) {
         const val KEY_TOKEN = "meow.auth.token"
         const val KEY_USER = "meow.auth.user"
         const val KEY_THEME = "meow.theme"
+        const val KEY_API_URL = "meow.api_url"
     }
 }

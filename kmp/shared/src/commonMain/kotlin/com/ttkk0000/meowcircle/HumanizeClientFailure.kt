@@ -8,11 +8,26 @@ fun humanizeClientFailure(
     throwable: Throwable,
     apiBaseUrl: String,
 ): String {
-    if (throwable is ApiException) return throwable.message ?: "请求失败"
-    val raw =
+    val rawMessage = throwable.message.orEmpty()
+    val isHtmlOrProxy = throwable is ApiException && (
+        rawMessage.contains("<html", ignoreCase = true) ||
+        rawMessage.contains("[Fiddler]", ignoreCase = true) ||
+        rawMessage.contains("connection refused", ignoreCase = true) ||
+        rawMessage.contains("connectionrefused", ignoreCase = true) ||
+        rawMessage.contains("积极拒绝", ignoreCase = true)
+    )
+
+    if (throwable is ApiException && !isHtmlOrProxy) {
+        return throwable.message ?: "请求失败"
+    }
+
+    val raw = if (throwable is ApiException) {
+        rawMessage
+    } else {
         generateSequence(throwable) { it.cause }
             .mapNotNull { it.message?.trim()?.takeIf { msg -> msg.isNotEmpty() } }
             .joinToString(" ")
+    }
     val cleanRaw = raw.replace(Regex("<[^>]*>"), " ").replace(Regex("\\s+"), " ").trim()
     val m = cleanRaw.lowercase()
     return when {

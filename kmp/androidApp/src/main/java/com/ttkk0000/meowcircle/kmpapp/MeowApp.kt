@@ -52,7 +52,7 @@ fun MeowApp(sdk: MeowCircleSdk) {
                 healthHint =
                     sdk.health().fold(
                         onSuccess = { "服务 ${it.status} · ${it.store}" },
-                        onFailure = { humanizeClientFailure(it, BuildConfig.API_BASE_URL) },
+                        onFailure = { humanizeClientFailure(it, sdk.baseUrl) },
                     )
             }
         val minSplashMs = 750L

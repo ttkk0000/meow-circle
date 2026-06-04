@@ -73,7 +73,7 @@ fun StitchPostDetailScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val apiBase = BuildConfig.API_BASE_URL
+    val apiBase = sdk.baseUrl
     var detail by remember { mutableStateOf<PostDetailData?>(null) }
     var err by remember { mutableStateOf<String?>(null) }
     var loading by remember { mutableStateOf(true) }
