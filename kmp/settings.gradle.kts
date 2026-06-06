@@ -23,3 +23,4 @@ rootProject.name = "meow-circle-kmp"
 
 include(":shared")
 include(":androidApp")
+include(":desktopApp")

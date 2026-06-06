@@ -1,0 +1,358 @@
+<!DOCTYPE html><html class="light" lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D 璁捐绯荤粺 - 鏍稿績鑹插僵涓庝笟鍔￠€昏緫鏄犲皠</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF8A3D",
+                        "on-primary": "#FFFFFF",
+                        "primary-container": "#FFD166",
+                        "on-primary-container": "#231F20",
+                        surface: "#FFFFFF",
+                        "surface-soft": "#FFF8F2",
+                        "surface-strong": "#1A1A1A",
+                        "on-surface": "#231F20",
+                        "on-surface-variant": "#49454F",
+                        outline: "#F1D8C8",
+                        honey: {
+                            main: "#FF8A3D",
+                            container: "#FFD166",
+                            warning: "#F59E0B",
+                            success: "#22C55E",
+                            error: "#EF4444",
+                            info: "#3B82F6",
+                            bg: "#FFF8F2",
+                            border: "#F1D8C8",
+                            text: "#231F20"
+                        },
+                        mint: {
+                            main: "#2EC4A6",
+                            container: "#A7F3D0",
+                            info: "#0EA5E9"
+                        },
+                        night: {
+                            main: "#8B5CF6",
+                            container: "#6366F1",
+                            surface: "#151821"
+                        },
+                        neutral: {
+                            main: "#4B5563",
+                            container: "#9CA3AF",
+                            disabled: "#D6C7BE"
+                        }
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Outfit", "sans-serif"],
+                        display: ["Outfit", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .token-cell { min-width: 120px; }
+    </style>
+</head>
+<body class="bg-surface-soft font-body text-on-surface">
+<!-- SideNavBar Integration -->
+<aside class="fixed left-0 h-full w-64 border-r border-outline bg-surface dark:bg-surface-strong flex flex-col py-6 px-4 z-50">
+<div class="flex items-center gap-3 mb-10 px-2">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">pets</span>
+</div>
+<div>
+<h1 class="text-headline-lg font-headline font-extrabold text-primary leading-none">M&amp;D</h1>
+<p class="text-xs text-on-surface-variant">meow &amp; doggie</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 bg-surface-soft dark:bg-surface-strong text-primary font-bold rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">home</span> Home
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span> Discover
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_bag</span> Market
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">mail</span> Messages
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span> Me
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">movie_filter</span> Studio
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary transition-colors border-t border-outline/30 mt-4 pt-6" href="#">
+<span class="material-symbols-outlined">security</span> Safety
+            </a>
+</nav>
+</aside>
+<!-- TopNavBar Integration -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 z-40 bg-surface/80 dark:bg-surface-strong/80 backdrop-blur-md border-b border-outline flex items-center justify-between px-8">
+<div class="flex items-center gap-4 bg-surface-soft px-4 py-2 rounded-full w-96 border border-outline">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full" placeholder="鎼滅储缁勪欢銆侀鑹叉垨瑙勮寖..." type="text">
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-on-surface-variant font-label text-label-lg">
+<button class="hover:text-primary transition-colors">璁捐鍘熷垯</button>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">palette</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">notifications</span>
+<button class="bg-primary text-white px-6 py-2 rounded-full font-bold text-sm active:opacity-80 transition-opacity">鐧诲綍 / 娉ㄥ唽</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-20 px-10 max-w-7xl mx-auto">
+<div class="mb-12">
+<h2 class="text-3xl font-headline font-extrabold mb-2">M&amp;D 璁捐绯荤粺 - Phase 1 Foundation</h2>
+<p class="text-on-surface-variant">Visual Identity &amp; Color Strategy 鏍稿績鑹插僵涓庝笟鍔￠€昏緫鏄犲皠</p>
+</div>
+<!-- 1. Brand Principles -->
+<section class="mb-16">
+<div class="flex items-center gap-3 mb-6">
+<span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span>
+<h3 class="text-xl font-headline font-bold">鍝佺墝鍘熷垯 (Brand Principles)</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white p-6 rounded-xl border border-outline hover:shadow-lg transition-shadow">
+<img alt="Cat Icon" class="w-16 h-16 mb-4 rounded-lg bg-honey-container p-2" data-alt="A clean, minimalist vector illustration of a friendly ginger cat face with stylized whiskers and a soft orange collar. The style is modern 2D character design with thick, rounded lines, set against a warm, buttery cream background. The expression is welcoming and curious, embodying the cat-first principle." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqz7T6x6Qb8zCETwAWkrb0755aHqKil2fzTWaYm-NxlnJv8yNla25HN7t60J9xgU467PNRlVVw2ajhDpKqLd2NWgfVxIT6MNI6Vmp8x3SKbqVj2x8uaK7wu6lBHq8fo4pPTAjCHYmi50KxYlrqDyRL3fCZ-Zn61crtS6pUPu9IGem6irKyBRt16-f2zKJj6toKC4fTskNeN9hWCGR5WDu3SVczccjfM9yyndqIOcsEndrT6qY58URQVy9yFkbAt2WrVGuYhfp2lIbo">
+<h4 class="font-headline font-bold text-lg mb-2">Cat-first</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">浠ョ尗涓哄厛锛氫紭闆呫€佺嫭绔嬨€佸瘜鏈夊ソ濂囧績鐨勮璁¤瑷€锛屽己璋冧釜鎬у寲浣撻獙銆?/p>
+</div>
+<div class="bg-white p-6 rounded-xl border border-outline hover:shadow-lg transition-shadow">
+<img alt="Dog Icon" class="w-16 h-16 mb-4 rounded-lg bg-mint-container p-2" data-alt="A charming, minimalist vector illustration of a happy golden retriever puppy with floppy ears and a tiny blue collar. The art style features smooth vector paths and a bright, friendly aesthetic. The puppy is looking forward with a playful tilt, representing loyalty and accessibility." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp2hpGzA4UNIFSk-rwhr6qat3xxTY_HCewpwYeOxIXNEUcpJdABAztPBYRMrd98Vq2BnxiC0adj7hPTA4_0ymjQhQ-VYLDx0XOkyCINETtcAqqPZ3DcBeg6rK6pHsxW5gZc_dbPtq3zTq1hxo9ozXOHsx9S6R0T-FjU2cQsDTgIEXgfImJJEki9jHHQKyA0o9ZT4nMxOVE2fPFA-PAhNXvqeTZXDqsAZkToVsOeoyaxGtj1EaH-Yz8WEMMkJ2zfRzq5f5FdlXbyTpq">
+<h4 class="font-headline font-bold text-lg mb-2">Dog-friendly</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">鐙楃嫍鍙嬪ソ锛氬繝璇氥€佸彲闈犮€佹槗浜庢帴杩戠殑浜や簰妯″紡锛屾敞閲嶇ぞ鍖轰簰鍔ㄣ€?/p>
+</div>
+<div class="bg-white p-6 rounded-xl border border-outline hover:shadow-lg transition-shadow">
+<img alt="Commerce Icon" class="w-16 h-16 mb-4 rounded-lg bg-neutral-container p-2" data-alt="A sleek icon representing two hands shaking, integrated with a subtle shopping bag silhouette in the background. The style is clean, corporate but modern, using cool slate grays and muted blues. It symbolizes trust and the seamless integration of social and commercial transactions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1Y1g9Gj9FImzSYtoabEznAiQs_t4r2pgrYndRKiB5kJmJSrCM9azjRMP0PZeQHkuQNofV4E2BOOMf6uBYBti8L4Q-KGX3hAdW_e2L5nz20lwbI38C6Ic_Px64xFj5kaZRcMm5-sPTVm9BWQo3lIG7ON2ffZsCO1-au-wV30rKxd5Sam-pCQbZWtG2OcP3om3lqAF7XJnzDe4eBUsKTeTCiQZCGFrLcA4tOXPmQEUepUV9g7t5ANheHV7VLZ4DHQlwQgMi2KE_mutI">
+<h4 class="font-headline font-bold text-lg mb-2">Social Commerce</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">绀句氦鐢靛晢锛氳瀺鍚堝唴瀹瑰垎浜笌浜ゆ槗鍔熻兘锛屽缓绔嬩俊浠讳笌杩炴帴銆?/p>
+</div>
+</div>
+</section>
+<!-- 2. Theme Definitions & Isolation -->
+<section class="mb-16">
+<div class="flex items-center gap-3 mb-6">
+<span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">2</span>
+<h3 class="text-xl font-headline font-bold">涓婚瀹氫箟涓庝弗鏍奸殧绂昏鍒?/h3>
+</div>
+<div class="bg-white rounded-xl border border-outline overflow-hidden">
+<div class="p-6 bg-red-50 border-b border-red-100 flex items-start gap-4">
+<span class="material-symbols-outlined text-red-600">warning</span>
+<div>
+<p class="font-bold text-red-900">涓ユ牸闅旂鍘熷垯 (Isolation Rule)</p>
+<p class="text-sm text-red-700">鍗曚竴灞忓箷涓ユ牸浣跨敤涓€绉嶄富棰橈紝涓ョ涓婚鑹插僵娣风敤锛佹瘡涓笟鍔℃ā鍧楅攣瀹氱壒瀹氱殑鑹插僵绌洪棿銆?/p>
+<p class="text-sm text-red-800 font-bold mt-2">鏍稿績鍘熷垯锛氫竴灞忎竴涓婚 (One screen = one theme)銆備弗绂佽法涓婚鍊熺敤鑹插僵 (No cross-theme color borrowing)銆?/p>
+</div>
+</div>
+<div class="grid grid-cols-4 divide-x divide-outline">
+<div class="p-6">
+<div class="flex items-center justify-between mb-4">
+<span class="font-bold">Honey (Social)</span>
+<div class="w-6 h-6 rounded bg-[#FF8A3D]"></div>
+</div>
+<p class="text-xs text-on-surface-variant">鍦烘櫙锛氱ぞ浜?Feed銆佷釜浜轰富椤点€佹秷鎭祦銆佹櫘閫氳鍗曘€?/p>
+</div>
+<div class="p-6">
+<div class="flex items-center justify-between mb-4">
+<span class="font-bold">Mint (Market)</span>
+<div class="w-6 h-6 rounded bg-[#2EC4A6]"></div>
+</div>
+<p class="text-xs text-on-surface-variant">鍦烘櫙锛氬晢鍩庨椤点€佸晢鍝佸垪琛ㄣ€佽鎯呫€佸彂甯冩祦绋嬨€?/p>
+</div>
+<div class="p-6">
+<div class="flex items-center justify-between mb-4">
+<span class="font-bold">Night (Dark)</span>
+<div class="w-6 h-6 rounded bg-[#8B5CF6]"></div>
+</div>
+<p class="text-xs text-on-surface-variant">鍦烘櫙锛氬叏灞€娣辫壊妯″紡鏄犲皠锛岄拡瀵规墍鏈夋繁鑹茬晫闈€?/p>
+</div>
+<div class="p-6">
+<div class="flex items-center justify-between mb-4">
+<span class="font-bold">Neutral (Admin)</span>
+<div class="w-6 h-6 rounded bg-[#4B5563]"></div>
+</div>
+<p class="text-xs text-on-surface-variant">鍦烘櫙锛氬垱浣滆€呭悗鍙般€佺鐞嗘帶鍒跺彴 (Admin/Dashboard)銆?/p>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Order Status Logic Table -->
+<section class="mb-16">
+<div class="flex items-center gap-3 mb-6">
+<span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">3</span>
+<h3 class="text-xl font-headline font-bold">涓氬姟鐘舵€佽壊褰╂槧灏?(Order Status Resolution)</h3>
+</div>
+<div class="mb-6 p-5 bg-blue-50/50 rounded-xl border border-blue-100">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-blue-600 text-sm">route</span>
+<h4 class="font-bold text-blue-900">瑙ｆ瀽瑙勫垯 (Resolution Rule)</h4>
+</div>
+<p class="text-sm text-blue-800 font-mono bg-blue-100/50 p-3 rounded-lg border border-blue-200/50 inline-block">Business order state 鈫?semantic status token 鈫?selected theme color value</p>
+<div class="mt-3 flex items-center gap-2 text-sm text-blue-700">
+<span class="font-bold">绀轰緥:</span>
+<code class="font-mono bg-white px-2 py-1 rounded text-xs border border-blue-100 shadow-sm">pending_payment</code> 鈫?
+<code class="font-mono bg-white px-2 py-1 rounded text-xs border border-blue-100 shadow-sm">color.warning</code> 鈫?
+<code class="font-mono bg-white px-2 py-1 rounded text-xs border border-blue-100 shadow-sm">Honey warning (#F59E0B)</code>
+</div>
+</div>
+<div class="bg-white rounded-xl border border-outline overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-soft border-b border-outline">
+<th class="px-6 py-4 font-bold text-sm w-1/2">涓氬姟璁㈠崟鐘舵€?(Business State)</th>
+<th class="px-6 py-4 font-bold text-sm w-1/2 border-l border-outline">璇箟鐘舵€?Token (Semantic)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline">
+<tr>
+<td class="px-6 py-4 text-sm font-mono font-medium">pending_payment</td>
+<td class="px-6 py-4 border-l border-outline"><span class="px-3 py-1 rounded text-[#F59E0B] bg-[#FFFBEB] font-bold font-mono text-xs border border-[#FDE68A]">warning</span></td>
+</tr>
+<tr>
+<td class="px-6 py-4 text-sm font-mono font-medium">paid / shipped</td>
+<td class="px-6 py-4 border-l border-outline"><span class="px-3 py-1 rounded text-[#3B82F6] bg-[#EFF6FF] font-bold font-mono text-xs border border-[#BFDBFE]">info</span></td>
+</tr>
+<tr>
+<td class="px-6 py-4 text-sm font-mono font-medium">completed</td>
+<td class="px-6 py-4 border-l border-outline"><span class="px-3 py-1 rounded text-[#22C55E] bg-[#F0FDF4] font-bold font-mono text-xs border border-[#BBF7D0]">success</span></td>
+</tr>
+<tr>
+<td class="px-6 py-4 text-sm font-mono font-medium">cancelled</td>
+<td class="px-6 py-4 border-l border-outline"><span class="px-3 py-1 rounded text-[#4B5563] bg-[#F3F4F6] font-bold font-mono text-xs border border-[#D6C7BE]">disabled / neutral</span></td>
+</tr>
+<tr>
+<td class="px-6 py-4 text-sm font-mono font-medium">refunded</td>
+<td class="px-6 py-4 border-l border-outline"><span class="px-3 py-1 rounded text-[#EF4444] bg-[#FEF2F2] font-bold font-mono text-xs border border-[#FECACA]">warning / error</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 4. Full Token Library -->
+<section class="mb-16">
+<div class="flex items-center gap-3 mb-6">
+<span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">4</span>
+<h3 class="text-xl font-headline font-bold">鍏ㄨ壊鍩?Token 搴?(Full Spectrum Tokens)</h3>
+</div>
+<div class="bg-white rounded-xl border border-outline overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-soft border-b border-outline">
+<th class="px-6 py-4 font-bold text-sm">Token 鍚嶇О</th>
+<th class="px-6 py-4 font-bold text-sm">Honey (Social)</th>
+<th class="px-6 py-4 font-bold text-sm">Mint (Market)</th>
+<th class="px-6 py-4 font-bold text-sm">Night (Dark)</th>
+<th class="px-6 py-4 font-bold text-sm">Neutral (Admin)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline font-mono text-xs">
+<tr>
+<td class="px-6 py-4 font-bold text-on-surface">primary</td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#FF8A3D]"></div> #FF8A3D</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#2EC4A6]"></div> #2EC4A6</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#8B5CF6]"></div> #8B5CF6</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#4B5563]"></div> #4B5563</div></td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-bold text-on-surface">secondary</td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#FFD166]"></div> #FFD166</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#A7F3D0]"></div> #A7F3D0</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#6366F1]"></div> #6366F1</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#9CA3AF]"></div> #9CA3AF</div></td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-bold text-on-surface">tertiary</td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#FF7A45]"></div> #FF7A45</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#FF8A65]"></div> #FF8A65</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#F59E0B]"></div> #F59E0B</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#F97316]"></div> #F97316</div></td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-bold text-on-surface">background</td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded border border-outline bg-[#FFF8F2]"></div> #FFF8F2</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded border border-outline bg-[#F5FFFC]"></div> #F5FFFC</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded border border-outline bg-[#0B0D12]"></div> #0B0D12</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded border border-outline bg-[#F7F7F8]"></div> #F7F7F8</div></td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-bold text-on-surface">surface</td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded border border-outline bg-[#FFFFFF]"></div> #FFFFFF</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded border border-outline bg-[#FFFFFF]"></div> #FFFFFF</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded border border-outline bg-[#151821]"></div> #151821</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded border border-outline bg-[#FFFFFF]"></div> #FFFFFF</div></td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-bold text-on-surface">text</td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#231F20]"></div> #231F20</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#12312B]"></div> #12312B</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#F8FAFC]"></div> #F8FAFC</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#111827]"></div> #111827</div></td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-bold text-on-surface">border</td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#F1D8C8]"></div> #F1D8C8</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#CDEFE6]"></div> #CDEFE6</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#303644]"></div> #303644</div></td>
+<td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-[#E5E7EB]"></div> #E5E7EB</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 p-5 bg-[#F7F7F8] rounded-xl border border-outline flex items-start gap-4">
+<span class="material-symbols-outlined text-gray-600 mt-1">info</span>
+<div>
+<h4 class="font-bold text-on-surface mb-2">Admin / Dashboard 娉ㄦ剰浜嬮」锛?/h4>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li>1. 寮哄埗浣跨敤 Neutral 涓婚銆傜鐢ㄦ墍鏈夆€滃彲鐖扁€濆厓绱狅紝鍖呮嫭鍦嗚闄愬埗涓?4px (radius.xs)銆?/li>
+<li class="text-primary font-medium">2. Phase 1 Admin 棰勮浠呯敤浜庡睍绀鸿瑙夎鍒欎笌甯冨眬鍘熷垯 (visual rules/layout principles)锛屽苟闈炴渶缁堢粍浠跺簱 (not final components)銆?/li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<!-- Global Interactions Script -->
+<script>
+        // Simple dark mode toggle for demonstration
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd') {
+                document.documentElement.classList.toggle('dark');
+            }
+        });
+
+        // Add hover interaction to token rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.classList.add('bg-surface-soft/50');
+            });
+            row.addEventListener('mouseleave', () => {
+                row.classList.remove('bg-surface-soft/50');
+            });
+        });
+    </script>
+</body></html>

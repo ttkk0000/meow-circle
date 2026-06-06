@@ -5,7 +5,7 @@
 
 /* ===== M&D admin shell ===== */
 .stitch-sidenav .nav-btn.stitch-nav-btn.active {
-  background: var(--brand, #ff4f93);
+  background: var(--brand, #4b5563);
   color: #fff;
   font-weight: 600;
   box-shadow: 0 8px 15px color-mix(in srgb, var(--brand) 28%, transparent);
@@ -16,7 +16,7 @@
 }
 .stitch-sidebar .stitch-nav-btn.active {
   background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
-  color: var(--brand, #ff4f93);
+  color: var(--brand, #4b5563);
   border-color: color-mix(in srgb, var(--brand) 18%, transparent);
   font-weight: 600;
 }
@@ -24,7 +24,7 @@
   opacity: 0.9;
 }
 .stitch-sidebar .stitch-nav-btn.active .material-symbols-outlined {
-  color: var(--brand-strong, #db3177);
+  color: var(--brand-strong, #374151);
 }
 
 #post-form .post-cat-label.is-selected,
@@ -143,7 +143,7 @@
 }
 
 .stitch-btn-primary {
-  background: linear-gradient(180deg, var(--brand-gradient-start, #ff7ebb), var(--brand, #ff4f93));
+  background: linear-gradient(180deg, var(--brand-gradient-start, #9CA3AF), var(--brand, #4b5563));
   color: #fff;
   border: none;
   box-shadow: 0 6px 20px color-mix(in srgb, var(--brand) 28%, transparent);
@@ -166,7 +166,7 @@
 }
 .stitch-btn-ghost:hover {
   border-color: color-mix(in srgb, var(--brand) 35%, transparent);
-  color: var(--brand-strong, #db3177);
+  color: var(--brand-strong, #374151);
 }
 
 .stitch-ico-btn {
@@ -183,7 +183,7 @@
 }
 .stitch-ico-btn:hover {
   background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
-  color: var(--brand-strong, #db3177);
+  color: var(--brand-strong, #374151);
 }
 
 .stitch-dropzone.stitch-dropzone--active {
@@ -328,7 +328,7 @@
 
 /* Order page — My Orders */
 .order-role-bar .order-role-tab--on {
-  background: var(--brand, #ff4f93);
+  background: var(--brand, #4b5563);
   color: #fff;
   box-shadow: 0 2px 8px color-mix(in srgb, var(--brand) 28%, transparent);
 }
@@ -380,7 +380,7 @@
 }
 .stitch-order-popover > .stitch-order-more:hover,
 .stitch-order-popover[open] > .stitch-order-more {
-  color: var(--brand, #ff4f93);
+  color: var(--brand, #4b5563);
   background: var(--brand-weak, color-mix(in srgb, var(--brand) 13%, transparent));
 }
 
@@ -425,7 +425,7 @@
 }
 .stitch-msg-stream .message-bubble.mine {
   margin-left: auto;
-  background: linear-gradient(180deg, var(--brand-gradient-start, #ff7ebb), var(--brand, #ff4f93));
+  background: linear-gradient(180deg, var(--brand-gradient-start, #9CA3AF), var(--brand, #4b5563));
   color: #fff;
   border-bottom-right-radius: 0.25rem;
 }
@@ -486,7 +486,7 @@
 
 /* Active conversation — match primary CTA */
 #dashboard .conversation-layout .conv-list button.active {
-  background: linear-gradient(180deg, var(--brand-gradient-start, #ff7ebb), var(--brand, #ff4f93));
+  background: linear-gradient(180deg, var(--brand-gradient-start, #9CA3AF), var(--brand, #4b5563));
   color: #fff;
 }
 #dashboard .conversation-layout .conv-list button.active:hover {

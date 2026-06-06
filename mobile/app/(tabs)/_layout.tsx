@@ -1,9 +1,9 @@
-import type { ComponentProps } from 'react';
-import { Redirect, Tabs } from 'expo-router';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAuth } from '@/auth';
-import { colors, radius, typography } from '@/theme';
+import type {ComponentProps} from 'react';
+import {Redirect, Tabs} from 'expo-router';
+import {MaterialIcons} from '@expo/vector-icons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useAuth} from '@/auth';
+import {radius, typography, useMndTheme} from '@/theme';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
@@ -20,9 +20,10 @@ function tabIcon(name: IconName) {
 
 export default function TabsLayout() {
   const { user, loading } = useAuth();
+  const { colors } = useMndTheme();
   const insets = useSafeAreaInsets();
   const tabPadBottom = Math.max(insets.bottom, 10);
-  const tabHeight = 56 + tabPadBottom;
+  const tabHeight = 58 + tabPadBottom;
 
   if (!loading && !user) return <Redirect href="/(auth)/login" />;
 
@@ -31,7 +32,7 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primaryContainer,
-        tabBarInactiveTintColor: colors.onSurfaceVariant,
+        tabBarInactiveTintColor: colors.onSurfaceSubtle,
         tabBarShowLabel: true,
         tabBarLabelStyle: { ...typography.label, fontSize: 11 },
         tabBarStyle: {
@@ -50,37 +51,13 @@ export default function TabsLayout() {
         },
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: '首页',
-          tabBarIcon: tabIcon('home'),
-        }}
-      />
-      <Tabs.Screen
-        name="discover"
-        options={{
-          title: '发现',
-          tabBarIcon: tabIcon('explore'),
-        }}
-      />
-      <Tabs.Screen
-        name="messages"
-        options={{
-          title: '消息',
-          tabBarIcon: tabIcon('forum'),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: '我',
-          tabBarIcon: tabIcon('person'),
-        }}
-      />
+      <Tabs.Screen name="index" options={{ title: '首页', tabBarIcon: tabIcon('home') }} />
+      <Tabs.Screen name="discover" options={{ title: '发现', tabBarIcon: tabIcon('explore') }} />
+      <Tabs.Screen name="compose" options={{ title: '发布', tabBarIcon: tabIcon('add-circle') }} />
+      <Tabs.Screen name="messages" options={{ title: '消息', tabBarIcon: tabIcon('forum') }} />
+      <Tabs.Screen name="profile" options={{ title: '我的', tabBarIcon: tabIcon('person') }} />
       <Tabs.Screen name="market" options={{ href: null }} />
       <Tabs.Screen name="post" options={{ href: null }} />
-      <Tabs.Screen name="compose" options={{ href: null }} />
     </Tabs>
   );
 }

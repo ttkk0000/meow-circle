@@ -110,6 +110,12 @@ class MeowCircleSdk(
             page.items.orEmpty()
         }
 
+    suspend fun listings(): Result<List<Listing>> =
+        runCatching {
+            val page: ListingsPage = unwrapData(httpGet("/api/v1/listings", auth = false))
+            page.items.orEmpty()
+        }
+
     suspend fun register(
         username: String,
         password: String,
@@ -164,6 +170,7 @@ class MeowCircleSdk(
     suspend fun createPost(
         title: String,
         content: String,
+        category: String = "daily_share",
         tags: List<String> = emptyList(),
     ): Result<Post> =
         runCatching {
@@ -175,6 +182,7 @@ class MeowCircleSdk(
                         CreatePostBody(
                             title = title.trim(),
                             content = content.trim(),
+                            category = category,
                             tags = tags,
                         ),
                 ),

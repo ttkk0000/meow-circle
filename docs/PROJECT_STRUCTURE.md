@@ -1,6 +1,6 @@
 # Project Structure
 
-Last updated: 2026-05-27
+Last updated: 2026-06-06
 
 This document maps the real repository structure for M&D. It is meant for
 engineers and future agents who need to understand where a feature lives before
@@ -40,6 +40,7 @@ static files served from `web/`.
 | Design boards | `web/pawpop.html`, `web/pawpop-mobile.html`, `web/pawpop-desktop.html` | Figma-ready source boards for the three UI sets. |
 | Expo app | `mobile/app/_layout.tsx` | Root Expo Router layout and auth provider. |
 | KMP Android | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt` | Android Compose host for `MeowApp`. |
+| KMP Desktop | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/Main.kt` | Compose Desktop client aligned to the Stitch V2 desktop direction. |
 | KMP shared SDK | `kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/MeowCircleSdk.kt` | Shared Kotlin HTTP/session client mirroring the Go API envelope. |
 
 ## 3. Backend Layers
@@ -126,7 +127,7 @@ same migrations manually to an existing database.
 | Area | Files | Purpose |
 | --- | --- | --- |
 | Base Web app | `index.html`, `app.js`, `theme.css`, `styles.css`, `shared.js` | Public feed/home, i18n/theme helpers, shared tokens. |
-| M&D bridge | `stitch-theme-bridge.css`, `tw-stitch.js`, `stitch-toast.css` | Maps legacy Tailwind/static pages onto M&D tokens and toast behavior. |
+| M&D bridge | `stitch-theme-bridge.css`, `tw-stitch.js`, `stitch-toast.css` | Maps existing Tailwind/static pages onto M&D tokens and toast behavior. |
 | Auth | `login.html`, `register.html`, `auth.js` | Login/register pages with return-to behavior. |
 | Content | `discover.html/js`, `compose.html/js`, `post.html/js` | Circles, post creation, post detail/comment/report. |
 | Marketplace | `market.html/js` | Listing browsing with M&D static fallback. |
@@ -135,8 +136,8 @@ same migrations manually to an existing database.
 | Platform admin | `admin.html/js/css` | `X-Admin-Key` protected moderation and audit tools. |
 | Architecture page | `architecture.html/js/css`, `architecture-data.json` | Visual system/API architecture reference page. |
 | WebUI prototype | `cute.html`, `cute-ui.css`, `cute-ui.js` | Independent browser product design and implementation target. |
-| Design boards | `pawpop.html`, `pawpop-mobile.*`, `pawpop-desktop.*` | Figma-ready overview, mobile, and desktop source boards. |
-| Old references | `_stitch_ref/*`, `STITCH_WEB_17*.md` | Historical Stitch export/reference material. Do not use as visual truth. |
+| Design boards | `pawpop.html`, `pawpop-mobile.html`, `pawpop-desktop.*`, `mnd-web-client-board.*`, `stitch-remote-gallery.html` | Current Stitch V2 overview, mobile, desktop, sync, and gallery boards. |
+| Stitch remote assets | `assets/stitch-remote/screens`, `assets/stitch-remote/sources` | Browser-visible full-size Stitch screenshots and HTML/SVG/Markdown sources. |
 
 ## 6. Expo Mobile Map
 
@@ -161,6 +162,8 @@ SecureStore, falling back to `localStorage` on Web.
 | Android app | `kmp/androidApp` | Compose Android app using the shared SDK. |
 | Android theme | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/theme` | M&D palette, typography, shapes, shadows. |
 | Android UI | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/ui` | Splash, login, register, feed, compose, post detail. |
+| Desktop app | `kmp/desktopApp` | Compose Desktop app using the shared SDK and Stitch V2 desktop refs. |
+| Desktop theme | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/MndDesktopTheme.kt` | Honey, Mint, Night, and Neutral desktop tokens. |
 | iOS note | `kmp/ios/README.md` | Guidance for future SwiftUI/iOS integration around the shared SDK. |
 
 KMP versions are centralized in `kmp/gradle/libs.versions.toml`:
@@ -169,6 +172,7 @@ KMP versions are centralized in `kmp/gradle/libs.versions.toml`:
 - Android Gradle Plugin `8.7.2`
 - Ktor `3.0.3`
 - Compose BOM `2024.10.01`
+- Compose Multiplatform `1.7.3`
 
 ## 8. Infra And Commands
 
@@ -184,23 +188,21 @@ KMP versions are centralized in `kmp/gradle/libs.versions.toml`:
 See `docs/RUNBOOK.md` for environment variables, local modes, deployment notes,
 and current machine-specific blockers.
 
-Useful commands:
+Useful local commands for static UI review:
 
 ```bash
-make run
-make test
-make up
-make migrate
-cd mobile && npm run typecheck
 cd web && python3 -m http.server 4173
 ```
+
+Do not run Gradle or Go build/run/test commands on this machine. Ask before
+running any broad verification command.
 
 ## 9. Naming And Legacy Boundaries
 
 The product is now M&D. Some internal names remain for compatibility:
 
 - Go module is still `kitty-circle`.
-- Web historical references still mention Stitch.
+- Old Web design references and stale Stitch export maps have been removed.
 - Some component/file names still include `Stitch`.
 - Existing auth storage keys remain `meow_token` / `meow_user` on Web and
   `meow.auth.*` on mobile.
@@ -216,7 +218,7 @@ has been checked.
 | Add a domain field | `internal/domain/models.go`, `internal/store/store.go`, memory store, Postgres store, migrations, clients. |
 | Change feed card shape/content | `internal/platform/api/feed.go`, `web/app.js`, `mobile/src/stitch/FeedTile.tsx`, KMP `FeedTileCard.kt`. |
 | Change auth behavior | `internal/platform/api/router.go`, `internal/platform/auth`, `web/auth.js`, `mobile/src/auth.tsx`, KMP `MeowCircleSdk.kt`. |
-| Change M&D visual tokens | `docs/design/MND_UI_ALIGNMENT_GUIDE.md`, then `web/stitch-theme-bridge.css`, `web/cute-ui.css`, `mobile/src/theme.ts`, KMP theme files. |
+| Change M&D visual tokens | `docs/design/MND_UI_ALIGNMENT_GUIDE.md`, then `web/stitch-theme-bridge.css`, `web/cute-ui.css`, `mobile/src/theme.ts`, KMP Android and Desktop theme files. |
 | Add new Web page | Add `.html` + `.js` + CSS if needed, route static file if pretty URL is needed, update `shared.js` i18n if visible copy is shared. |
 | Add mobile tab/screen | Add Expo route under `mobile/app`, extend API types if needed, reuse `mobile/src/components.tsx`. |
-| Add KMP screen | Add UI Composable under KMP Android, add SDK method/model in `kmp/shared` if API access is needed. |
+| Add KMP screen | Add UI Composable under KMP Android or Desktop, add SDK method/model in `kmp/shared` if API access is needed. |

@@ -70,6 +70,7 @@ fun StitchComposeScreen(
     val scope = rememberCoroutineScope()
     var title by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
+    var categoryKey by remember { mutableStateOf("daily_share") }
     var busy by remember { mutableStateOf(false) }
     var err by remember { mutableStateOf<String?>(null) }
     var pickedMediaCount by remember { mutableStateOf(0) }
@@ -97,7 +98,7 @@ fun StitchComposeScreen(
                             scope.launch {
                                 busy = true
                                 sdk
-                                    .createPost(title, content)
+                                    .createPost(title, content, category = categoryKey)
                                     .fold(
                                         onSuccess = {
                                             onPosted()
@@ -205,10 +206,12 @@ fun StitchComposeScreen(
             HorizontalDivider(color = StitchLoginRef.SurfaceVariant)
             Spacer(Modifier.height(12.dp))
             ComposeMetaRow(
-                Icons.Outlined.AddCircleOutline,
-                "媒体",
-                if (pickedMediaCount == 0) "照片或视频" else "已选择 $pickedMediaCount 个媒体",
-            ) { pickedMediaCount = (pickedMediaCount + 1) % 10 }
+                Icons.AutoMirrored.Outlined.Label,
+                "分类",
+                composeCategoryLabel(categoryKey),
+            ) {
+                categoryKey = nextComposeCategory(categoryKey)
+            }
             ComposeMetaRow(
                 Icons.AutoMirrored.Outlined.Label,
                 "标签",
@@ -221,6 +224,11 @@ fun StitchComposeScreen(
                         "M&D、猫猫、新手…"
                     }
             }
+            ComposeMetaRow(
+                Icons.Outlined.AddCircleOutline,
+                "媒体",
+                if (pickedMediaCount == 0) "照片或视频" else "已选择 $pickedMediaCount 个媒体",
+            ) { pickedMediaCount = (pickedMediaCount + 1) % 10 }
             ComposeMetaRow(
                 Icons.Outlined.LocationOn,
                 "添加地点",
@@ -318,3 +326,19 @@ private fun ComposeMetaRow(
         }
     }
 }
+
+private fun composeCategoryLabel(category: String): String =
+    when (category) {
+        "help" -> "求助"
+        "activity" -> "活动"
+        "trade" -> "好物交易"
+        else -> "猫猫日常"
+    }
+
+private fun nextComposeCategory(category: String): String =
+    when (category) {
+        "daily_share" -> "help"
+        "help" -> "activity"
+        "activity" -> "trade"
+        else -> "daily_share"
+    }

@@ -27,10 +27,16 @@ class SessionStore(private val settings: Settings = Settings()) {
         }
     }
 
-    fun getTheme(): String = settings.getString(KEY_THEME, "sugar")
+    fun getTheme(): String = normalizeTheme(settings.getString(KEY_THEME, "honey"))
 
     fun setTheme(value: String) {
-        settings[KEY_THEME] = value
+        settings[KEY_THEME] = normalizeTheme(value)
+    }
+
+    fun getProfileBackground(): String = normalizeProfileBackground(settings.getString(KEY_PROFILE_BACKGROUND, "picnic"))
+
+    fun setProfileBackground(value: String) {
+        settings[KEY_PROFILE_BACKGROUND] = normalizeProfileBackground(value)
     }
 
     fun getApiUrl(fallback: String): String = settings.getString(KEY_API_URL, fallback)
@@ -52,6 +58,25 @@ class SessionStore(private val settings: Settings = Settings()) {
         const val KEY_TOKEN = "meow.auth.token"
         const val KEY_USER = "meow.auth.user"
         const val KEY_THEME = "meow.theme"
+        const val KEY_PROFILE_BACKGROUND = "meow.profile_background"
         const val KEY_API_URL = "meow.api_url"
+
+        fun normalizeTheme(value: String): String =
+            when (value.trim().lowercase()) {
+                "honey", "sugar" -> "honey"
+                "mint" -> "mint"
+                "night" -> "night"
+                "neutral", "system" -> "neutral"
+                else -> "honey"
+            }
+
+        fun normalizeProfileBackground(value: String): String =
+            when (value.trim().lowercase()) {
+                "picnic" -> "picnic"
+                "desk" -> "desk"
+                "arcade" -> "arcade"
+                "garden" -> "garden"
+                else -> "picnic"
+            }
     }
 }

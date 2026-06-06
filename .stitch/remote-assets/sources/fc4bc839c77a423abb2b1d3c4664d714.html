@@ -1,0 +1,475 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D 浜や簰妯″紡 - Documentation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            honey: {
+              bg: '#FFF8F2',
+              surface: '#FFFFFF',
+              surfaceVariant: '#FFF1E6',
+              primary: '#FF8A3D',
+              textPrimary: '#231F20',
+              textSecondary: '#6B5E57',
+              border: '#F1D8C8',
+              divider: '#F5E2D5',
+            },
+            admin: {
+              bg: '#F7F7F8',
+              surface: '#FFFFFF',
+              primary: '#4B5563',
+              success: '#16A34A',
+              danger: '#DC2626',
+            },
+            status: {
+              warning: '#F59E0B',
+              info: '#3B82F6',
+              success: '#22C55E',
+              disabled: '#D6C7BE',
+              error: '#EF4444',
+            },
+            mint: {
+              primary: '#2EC4A6'
+            },
+            night: {
+              bg: '#151821',
+              primary: '#8B5CF6'
+            }
+          },
+          fontFamily: {
+            outfit: ['Outfit', 'sans-serif'],
+            inter: ['Inter', 'sans-serif'],
+          },
+          borderRadius: {
+            'md': '12px',
+            'lg': '16px',
+            'xl': '24px',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-utilities">
+    body {
+      background-color: theme('colors.honey.bg');
+      color: theme('colors.honey.textPrimary');
+      font-family: theme('fontFamily.inter');
+      min-height: 100vh;
+    }
+    h1, h2, h3, h4, .font-outfit {
+      font-family: theme('fontFamily.outfit');
+    }
+    .loader-ring {
+      display: inline-block;
+      border: 3px solid transparent;
+      border-radius: 50%;
+      border-top-color: currentColor;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="flex min-h-screen">
+<!-- BEGIN: Sidebar -->
+<aside class="w-64 bg-honey-surface border-r border-honey-border flex flex-col shrink-0">
+<div class="p-6 sticky top-0 h-screen flex flex-col">
+<div class="flex items-center gap-2 text-honey-primary font-outfit text-xl font-bold mb-8">
+<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 19.93C7.05 19.43 4 16.05 4 12C4 7.95 7.05 4.57 11 4.07V19.93ZM13 4.07C16.95 4.57 20 7.95 20 12C20 16.05 16.95 19.43 13 19.93V4.07Z"></path>
+</svg>
+        M&amp;D Docs
+      </div>
+<nav class="flex-1 space-y-1 font-inter">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-honey-textSecondary hover:bg-honey-surfaceVariant transition-colors" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Home
+        </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md bg-honey-surfaceVariant text-honey-primary font-medium transition-colors" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Interaction Guide
+        </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-honey-textSecondary hover:bg-honey-surfaceVariant transition-colors" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Market
+        </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-honey-textSecondary hover:bg-honey-surfaceVariant transition-colors" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Messages
+        </a>
+</nav>
+<div class="mt-auto pt-6 border-t border-honey-divider">
+<button class="w-full px-4 py-2 bg-honey-primary text-white rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">Login / Register</button>
+</div>
+</div>
+</aside>
+<!-- END: Sidebar -->
+<div class="flex-1 flex flex-col">
+<!-- BEGIN: Top Bar -->
+<header class="h-16 bg-honey-surface border-b border-honey-border flex items-center justify-between px-8 sticky top-0 z-20">
+<div class="flex-1 max-w-md relative">
+<svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-honey-textSecondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<input class="w-full pl-10 pr-4 py-2 bg-honey-bg border-honey-divider rounded-md text-sm focus:ring-honey-primary focus:border-honey-primary transition-colors" placeholder="Search documentation..." type="text">
+</div>
+<div class="flex items-center gap-6">
+<a class="text-sm font-medium text-honey-textSecondary hover:text-honey-primary transition-colors" href="#">Design Principles</a>
+<a class="text-sm font-medium text-honey-textSecondary hover:text-honey-primary transition-colors" href="#">Token System</a>
+</div>
+</header>
+<!-- END: Top Bar -->
+<!-- BEGIN: Main Content -->
+<main class="flex-1 p-12">
+<div class="max-w-6xl mx-auto">
+<!-- Documentation Header -->
+<div class="mb-12">
+<h1 class="text-4xl font-bold text-honey-textPrimary mb-4">M&amp;D 浜や簰妯″紡 - Advanced Interaction Components</h1>
+<p class="text-lg text-honey-textSecondary max-w-3xl">Comprehensive business interaction component specification. Includes real previews, state logic mapping, and theme-aware feedback patterns for high-concurrency business flows.</p>
+</div>
+<!-- Section 1: Order Stepper -->
+<section class="mb-xxl scroll-mt-24">
+<div class="bg-white rounded-lg p-10 border border-honey-border shadow-sm">
+<div class="flex items-center gap-3 mb-8">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-honey-primary text-white font-bold">1</span>
+<h2 class="text-2xl font-bold text-honey-textPrimary font-outfit">Order Stepper</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+<!-- Live Preview -->
+<div class="space-y-6">
+<p class="text-sm font-medium text-honey-textSecondary uppercase tracking-wider">Live Preview</p>
+<div class="bg-honey-bg border border-honey-border rounded-xl p-8">
+<div class="flex items-center gap-4 p-4 bg-white rounded-lg mb-8 shadow-sm">
+<img alt="Product" class="w-14 h-14 rounded-md object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDILbtxyLRWeQemcVjFWyvJcECupJH1zCI-A1xiVmCJDQMkRqFqY0R6Rfr6r6rxOZrEo1kgFYRL0NK9dSGJHb9UItoHD9QL8DQb8x_AQa0xA3ErRkQNM60nOEeaplX6BewhuTAEqhyGzJgaquqkNsDCkp_rJ-o61WMAGVcCnt_QmC5aDREbtlO-wqOQcTDUSI34KnJk4RmiaxRSP93XvJpj68VPRmwpYgUEjxqoGIwvBCecd8oAlKmSfOWtJD2lWOMBwnY8k6YxW_r8">
+<div>
+<h4 class="font-bold text-honey-textPrimary">Premium Organic Cat Food</h4>
+<p class="text-xs text-honey-textSecondary">Order #12345678 鈥?Transacted via MintMarket</p>
+</div>
+</div>
+<!-- Stepper Implementation -->
+<div class="relative py-6">
+<div class="absolute left-10 right-10 top-1/2 h-1 bg-honey-divider -translate-y-1/2"></div>
+<div class="absolute left-10 w-[50%] top-1/2 h-1 bg-status-info -translate-y-1/2"></div>
+<div class="relative flex justify-between items-center px-4">
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-status-info text-white flex items-center justify-center border-4 border-white shadow-md">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+</div>
+<span class="text-sm font-bold text-honey-textPrimary">Paid</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-status-info text-white flex items-center justify-center border-4 border-white shadow-md">
+<div class="w-3 h-3 rounded-full bg-white"></div>
+</div>
+<span class="text-sm font-bold text-honey-textPrimary">Shipped</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-honey-divider text-honey-textSecondary flex items-center justify-center border-4 border-white"></div>
+<span class="text-sm font-medium text-honey-textSecondary">Completed</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- State Logic Table -->
+<div class="space-y-6">
+<p class="text-sm font-medium text-honey-textSecondary uppercase tracking-wider">Order Status Resolution Table</p>
+<div class="bg-white border border-honey-divider rounded-xl overflow-hidden">
+<table class="w-full text-sm text-left">
+<thead class="bg-honey-surfaceVariant text-honey-textSecondary text-xs uppercase tracking-tighter">
+<tr>
+<th class="px-6 py-4 font-semibold">Order State</th>
+<th class="px-6 py-4 font-semibold">Token Mapping</th>
+<th class="px-6 py-4 font-semibold">Visual</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-honey-divider">
+<tr class="hover:bg-honey-bg/50 transition-colors">
+<td class="px-6 py-4 font-medium text-honey-textPrimary">pending_payment</td>
+<td class="px-6 py-4 text-honey-textSecondary font-mono text-xs">status.warning</td>
+<td class="px-6 py-4"><div class="w-5 h-5 rounded-md bg-status-warning shadow-sm"></div></td>
+</tr>
+<tr class="hover:bg-honey-bg/50 transition-colors">
+<td class="px-6 py-4 font-medium text-honey-textPrimary">paid / shipped</td>
+<td class="px-6 py-4 text-honey-textSecondary font-mono text-xs">status.info</td>
+<td class="px-6 py-4"><div class="w-5 h-5 rounded-md bg-status-info shadow-sm"></div></td>
+</tr>
+<tr class="hover:bg-honey-bg/50 transition-colors">
+<td class="px-6 py-4 font-medium text-honey-textPrimary">completed</td>
+<td class="px-6 py-4 text-honey-textSecondary font-mono text-xs">status.success</td>
+<td class="px-6 py-4"><div class="w-5 h-5 rounded-md bg-status-success shadow-sm"></div></td>
+</tr>
+<tr class="hover:bg-honey-bg/50 transition-colors">
+<td class="px-6 py-4 font-medium text-honey-textPrimary">cancelled</td>
+<td class="px-6 py-4 text-honey-textSecondary font-mono text-xs">status.disabled</td>
+<td class="px-6 py-4"><div class="w-5 h-5 rounded-md bg-status-disabled shadow-sm"></div></td>
+</tr>
+<tr class="hover:bg-honey-bg/50 transition-colors">
+<td class="px-6 py-4 font-medium text-honey-textPrimary">refunded</td>
+<td class="px-6 py-4 text-honey-textSecondary font-mono text-xs">status.error</td>
+<td class="px-6 py-4"><div class="w-5 h-5 rounded-md bg-status-error shadow-sm"></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Messaging -->
+<section class="mb-xxl scroll-mt-24">
+<div class="bg-white rounded-lg p-10 border border-honey-border shadow-sm">
+<div class="flex items-center gap-3 mb-8">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-honey-primary text-white font-bold">2</span>
+<h2 class="text-2xl font-bold text-honey-textPrimary font-outfit">Messaging &amp; In-App Chat</h2>
+</div>
+<div class="max-w-3xl mx-auto space-y-8">
+<!-- Context Card Component -->
+<div class="p-4 bg-honey-surfaceVariant rounded-xl border border-honey-divider flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="Context" class="w-12 h-12 rounded-lg object-cover shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvA9yiZgqg_AM1FqKXFW8fk40QfJc7pevrs33-erc8CF4emsltfJdiZDWBq8G3HJMujsYGVXqI7WvSqwmsI91xP0ijG9mFEkL05GG-tb3f-daNjMJc3b6C3VyvnSVL2_ZlXqwVsa278YH32CrZvIjVTQQV8D31pnFkuBgHIoSteKdRHJHePs50WhlarsUPbaxriAsOCsUUMdBoK7dJpQ131Mw88gh5CRAXs3cluX7P8VZiNr0oo9Z6Sb91C8UoiNimXYnVqC1wsg-U">
+<div>
+<p class="text-sm font-bold text-honey-textPrimary">Regarding: Order #12345</p>
+<p class="text-xs text-honey-textSecondary">Premium Organic Cat Food - $24.90</p>
+</div>
+</div>
+<button class="px-4 py-1.5 bg-white border border-honey-divider rounded-lg text-xs font-bold text-honey-primary hover:bg-honey-bg transition-colors">View Details</button>
+</div>
+<!-- Chat Conversation Preview -->
+<div class="space-y-6">
+<!-- Sender (Internal/Admin/Seller) -->
+<div class="flex flex-col items-end gap-2">
+<div class="flex items-end gap-3 max-w-[85%]">
+<div class="bg-honey-primary text-white px-5 py-3 rounded-2xl rounded-br-sm shadow-md">
+<p class="text-sm leading-relaxed">Your order has been shipped successfully! You can track it in real-time now. 馃惥</p>
+</div>
+</div>
+<span class="text-[11px] text-honey-textSecondary flex items-center gap-1 font-medium">
+                    10:42 AM 鈥?Delivered
+                    <svg class="w-3 h-3 text-status-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+</span>
+</div>
+<!-- Receiver (User) -->
+<div class="flex flex-col items-start gap-2">
+<div class="flex items-end gap-3 max-w-[85%]">
+<img alt="User" class="w-8 h-8 rounded-full border-2 border-white shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=User&amp;background=F1D8C8&amp;color=6B5E57'" src="https://ui-avatars.com/api/?name=User&amp;background=F1D8C8&amp;color=6B5E57">
+<div class="bg-honey-bg text-honey-textPrimary px-5 py-3 rounded-2xl rounded-bl-sm border border-honey-divider shadow-sm">
+<p class="text-sm leading-relaxed">Thanks, I'll check the tracking. Can't wait for my cat to try it! 馃樅</p>
+</div>
+</div>
+<span class="text-[11px] text-honey-textSecondary ml-11 font-medium">10:45 AM</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Admin Modals -->
+<section class="mb-xxl scroll-mt-24">
+<div class="bg-white rounded-lg p-10 border border-honey-border shadow-sm">
+<div class="flex items-center gap-3 mb-8">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-honey-primary text-white font-bold">3</span>
+<h2 class="text-2xl font-bold text-honey-textPrimary font-outfit">Admin Management Modals</h2>
+</div>
+<div class="bg-honey-bg p-12 rounded-xl border border-honey-divider grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Content Review -->
+<div class="bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden self-start">
+<div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-warning"></div>
+<h3 class="font-bold text-gray-800 font-outfit">Content Review</h3>
+</div>
+<button class="text-gray-400 hover:text-gray-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+</div>
+<div class="p-6 space-y-4">
+<div class="bg-yellow-50 text-yellow-800 text-xs px-4 py-3 rounded-lg border border-yellow-100 leading-relaxed">
+<strong>Notice:</strong> This post was flagged by the automated filter for containing "Excessive Advertising". Requires manual audit.
+                  </div>
+<div class="text-sm border border-gray-100 rounded-lg p-4 bg-gray-50/50">
+<p class="mb-2"><span class="font-bold text-gray-500 uppercase text-[10px] tracking-widest mr-2">Target User</span> @doggo_market_v3</p>
+<p class=""><span class="font-bold text-gray-500 uppercase text-[10px] tracking-widest mr-2">Reason</span> Spam / Irrelevant content</p>
+</div>
+</div>
+<div class="px-6 py-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+<button class="px-5 py-2.5 bg-neutral-danger text-white rounded-lg text-sm font-bold hover:bg-red-700 shadow-md transition-all">Reject Post</button>
+<button class="px-5 py-2.5 bg-neutral-success text-white rounded-lg text-sm font-bold hover:bg-green-700 shadow-md transition-all">Approve Post</button>
+</div>
+</div>
+<!-- User Moderation -->
+<div class="bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden self-start">
+<div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-neutral-primary"></div>
+<h3 class="font-bold text-gray-800 font-outfit">Account Moderation</h3>
+</div>
+<button class="text-gray-400 hover:text-gray-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+</div>
+<div class="p-6 space-y-4">
+<div class="bg-blue-50 text-blue-800 text-xs px-4 py-3 rounded-lg border border-blue-100 leading-relaxed">
+                    Suspension action will be logged in the Global Audit Trail for traceability.
+                  </div>
+<div class="text-sm border border-gray-100 rounded-lg p-4 bg-gray-50/50">
+<p class="mb-2"><span class="font-bold text-gray-500 uppercase text-[10px] tracking-widest mr-2">Action</span> Permanent Suspension</p>
+<p class=""><span class="font-bold text-gray-500 uppercase text-[10px] tracking-widest mr-2">Subject</span> User ID: 998822 (bad_cat_2024)</p>
+</div>
+</div>
+<div class="px-6 py-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+<button class="px-5 py-2.5 bg-white text-gray-700 border border-gray-300 rounded-lg text-sm font-bold hover:bg-gray-50">Cancel</button>
+<button class="px-5 py-2.5 bg-neutral-primary text-white rounded-lg text-sm font-bold hover:bg-gray-700 shadow-md transition-all">Confirm Action</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Feedback Components -->
+<section class="mb-xxl scroll-mt-24 pb-20">
+<div class="bg-white rounded-lg p-10 border border-honey-border shadow-sm space-y-12">
+<div class="flex items-center gap-3">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-honey-primary text-white font-bold">4</span>
+<h2 class="text-2xl font-bold text-honey-textPrimary font-outfit">Feedback &amp; Status Indicators</h2>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-12">
+<!-- Part A: Toasts -->
+<div class="space-y-6">
+<h3 class="text-lg font-bold text-honey-textPrimary border-l-4 border-honey-primary pl-3">Part A: Toast &amp; Alert States</h3>
+<p class="text-sm text-honey-textSecondary">Global notification patterns with updated M&amp;D business copy.</p>
+<div class="space-y-4">
+<div class="bg-status-success text-white px-5 py-4 rounded-xl shadow-lg flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="p-2 bg-white/20 rounded-lg"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg></div>
+<div>
+<p class="font-bold">Transaction Success</p>
+<p class="text-xs opacity-90">Offer for 'Premium Organic Cat Food' sent successfully.</p>
+</div>
+</div>
+</div>
+<div class="bg-status-warning text-white px-5 py-4 rounded-xl shadow-lg flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="p-2 bg-white/20 rounded-lg"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg></div>
+<div>
+<p class="font-bold">Inventory Notice</p>
+<p class="text-xs opacity-90">This pet product has low availability. Complete purchase soon.</p>
+</div>
+</div>
+</div>
+<div class="bg-status-error text-white px-5 py-4 rounded-xl shadow-lg flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="p-2 bg-white/20 rounded-lg"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg></div>
+<div>
+<p class="font-bold">Payment Error</p>
+<p class="text-xs opacity-90">Payment failed via MintGateway. Please try another method.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Part B: Global Loading Component -->
+<div class="space-y-6">
+<h3 class="text-lg font-bold text-honey-textPrimary border-l-4 border-mint-primary pl-3">Part B: Global Loading Matrix</h3>
+<p class="text-sm text-honey-textSecondary">Theme-aware variants for multi-brand ecosystem integration.</p>
+<div class="grid grid-cols-2 gap-4"><div class="flex flex-col items-center justify-center p-8 bg-honey-bg rounded-xl border border-honey-divider shadow-inner">
+  <div class="relative w-10 h-10 mb-3">
+    <div class="absolute inset-0 border-4 border-honey-surfaceVariant rounded-full"></div>
+    <div class="absolute inset-0 border-4 border-t-honey-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <svg class="w-5 h-5 text-honey-primary" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8.5,5C7.67,5,7,5.67,7,6.5S7.67,8,8.5,8S10,7.33,10,6.5S9.33,5,8.5,5M12,11C13.1,11,14,10.1,14,9s-0.9-2-2-2s-2,0.9-2,2S10.9,11,12,11M15.5,5C14.67,5,14,5.67,14,6.5S14.67,8,15.5,8S17,7.33,17,6.5S16.33,5,15.5,5M18,11c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S16.9,11,18,11M12,12c-2.76,0-5,2.24-5,5c0,1.1,0.9,2,2,2c0.23,0,0.45-0.04,0.66-0.12C10.23,18.45,11.08,18,12,18s1.77,0.45,2.34,0.88c0.21,0.08,0.43,0.12,0.66,0.12c1.1,0,2-0.9,2-2C17,14.24,14.76,12,12,12z"></path>
+      </svg>
+    </div>
+  </div>
+  <p class="text-[11px] font-bold text-honey-textPrimary">Loading...</p>
+  <span class="mt-1 text-[9px] font-bold text-honey-textSecondary uppercase tracking-widest">Honey Paw (MD)</span>
+</div>
+<div class="flex flex-col items-center justify-center p-8 bg-white rounded-xl border border-honey-divider shadow-inner">
+  <div class="relative w-10 h-10 mb-3">
+    <div class="absolute inset-0 border-4 border-[#E7FAF5] rounded-full"></div>
+    <div class="absolute inset-0 border-4 border-t-mint-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <svg class="w-5 h-5 text-mint-primary" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8.5,5C7.67,5,7,5.67,7,6.5S7.67,8,8.5,8S10,7.33,10,6.5S9.33,5,8.5,5M12,11C13.1,11,14,10.1,14,9s-0.9-2-2-2s-2,0.9-2,2S10.9,11,12,11M15.5,5C14.67,5,14,5.67,14,6.5S14.67,8,15.5,8S17,7.33,17,6.5S16.33,5,15.5,5M18,11c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S16.9,11,18,11M12,12c-2.76,0-5,2.24-5,5c0,1.1,0.9,2,2,2c0.23,0,0.45-0.04,0.66-0.12C10.23,18.45,11.08,18,12,18s1.77,0.45,2.34,0.88c0.21,0.08,0.43,0.12,0.66,0.12c1.1,0,2-0.9,2-2C17,14.24,14.76,12,12,12z"></path>
+      </svg>
+    </div>
+  </div>
+  <p class="text-[11px] font-bold text-[#12312B]">Loading...</p>
+  <span class="mt-1 text-[9px] font-bold text-honey-textSecondary uppercase tracking-widest">Mint Paw (MD)</span>
+</div>
+<div class="flex flex-col items-center justify-center p-8 bg-night-bg rounded-xl border border-gray-800 shadow-inner">
+  <div class="relative w-14 h-14 mb-3">
+    <div class="absolute inset-0 border-[5px] border-[#2E1F4F] rounded-full"></div>
+    <div class="absolute inset-0 border-[5px] border-t-night-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <svg class="w-8 h-8 text-night-primary" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8.5,5C7.67,5,7,5.67,7,6.5S7.67,8,8.5,8S10,7.33,10,6.5S9.33,5,8.5,5M12,11C13.1,11,14,10.1,14,9s-0.9-2-2-2s-2,0.9-2,2S10.9,11,12,11M15.5,5C14.67,5,14,5.67,14,6.5S14.67,8,15.5,8S17,7.33,17,6.5S16.33,5,15.5,5M18,11c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S16.9,11,18,11M12,12c-2.76,0-5,2.24-5,5c0,1.1,0.9,2,2,2c0.23,0,0.45-0.04,0.66-0.12C10.23,18.45,11.08,18,12,18s1.77,0.45,2.34,0.88c0.21,0.08,0.43,0.12,0.66,0.12c1.1,0,2-0.9,2-2C17,14.24,14.76,12,12,12z"></path>
+      </svg>
+    </div>
+  </div>
+  <p class="text-[11px] font-bold text-white">Loading...</p>
+  <span class="mt-1 text-[9px] font-bold text-gray-400 uppercase tracking-widest">Night Paw (LG)</span>
+</div>
+<div class="flex flex-col items-center justify-center p-8 bg-neutral-bg rounded-xl border border-gray-200 shadow-inner">
+  <div class="relative w-6 h-6 mb-3">
+    <div class="absolute inset-0 border-2 border-[#F3F4F6] rounded-full"></div>
+    <div class="absolute inset-0 border-2 border-t-neutral-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <svg class="w-3 h-3 text-neutral-primary" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8.5,5C7.67,5,7,5.67,7,6.5S7.67,8,8.5,8S10,7.33,10,6.5S9.33,5,8.5,5M12,11C13.1,11,14,10.1,14,9s-0.9-2-2-2s-2,0.9-2,2S10.9,11,12,11M15.5,5C14.67,5,14,5.67,14,6.5S14.67,8,15.5,8S17,7.33,17,6.5S16.33,5,15.5,5M18,11c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S16.9,11,18,11M12,12c-2.76,0-5,2.24-5,5c0,1.1,0.9,2,2,2c0.23,0,0.45-0.04,0.66-0.12C10.23,18.45,11.08,18,12,18s1.77,0.45,2.34,0.88c0.21,0.08,0.43,0.12,0.66,0.12c1.1,0,2-0.9,2-2C17,14.24,14.76,12,12,12z"></path>
+      </svg>
+    </div>
+  </div>
+  <p class="text-[11px] font-bold text-[#111827]">Loading...</p>
+  <span class="mt-1 text-[9px] font-bold text-honey-textSecondary uppercase tracking-widest">Admin Paw (SM)</span>
+</div></div>
+</div>
+</div>
+<!-- Part C: Loading Spec Panel -->
+<div class="pt-8 border-t border-honey-divider">
+<h3 class="text-lg font-bold text-honey-textPrimary mb-6 flex items-center gap-2">
+<svg class="w-5 h-5 text-honey-primary" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" fill-rule="evenodd"></path></svg>
+                Part C: Component Specification
+              </h3>
+<div class="bg-gray-50 rounded-xl p-8 border border-honey-divider font-inter">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div>
+<p class="text-[10px] font-bold text-honey-textSecondary uppercase tracking-widest mb-3">Component Identifier</p>
+<p class="text-xl font-bold font-outfit text-honey-textPrimary">GlobalPawLoading</p>
+<p class="text-sm text-honey-textSecondary mt-2">Theme-aware ring with centered cat-paw identifier.</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-honey-textSecondary uppercase tracking-widest mb-3">Available Sizes</p>
+<div class="flex gap-4"><div class="text-center">
+  <span class="block text-xs font-bold px-3 py-1 bg-white border border-honey-divider rounded-md mb-1">SM</span>
+  <span class="text-[10px] text-honey-textSecondary">24px</span>
+</div>
+<div class="text-center">
+  <span class="block text-xs font-bold px-3 py-1 bg-white border border-honey-divider rounded-md mb-1">MD</span>
+  <span class="text-[10px] text-honey-textSecondary">40px</span>
+</div>
+<div class="text-center">
+  <span class="block text-xs font-bold px-3 py-1 bg-white border border-honey-divider rounded-md mb-1">LG</span>
+  <span class="text-[10px] text-honey-textSecondary">56px</span>
+</div></div>
+</div>
+<div>
+<p class="text-[10px] font-bold text-honey-textSecondary uppercase tracking-widest mb-3">Technical Notes</p>
+<ul class="text-xs text-honey-textSecondary space-y-2 list-disc pl-4"><li class="">Uses <code class="bg-white px-1">border-t-color</code> for progress animation.</li>
+<li class="">Dynamic paw SVG scaling relative to container size.</li>
+<li class="">Flattened design language for modern interface consistency.</li></ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- END: Main Content Area -->
+</div>
+
+
+</body></html>

@@ -1,172 +1,125 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="sugar" data-profile-bg="picnic">
+<html lang="en" data-theme="honey">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>M&D Desktop UI Kit</title>
+  <title>M&D Desktop Remote-Aligned Board</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet">
-  <link rel="stylesheet" href="pawpop-desktop.css" />
+  <link rel="stylesheet" href="pawpop-desktop.css?v=stitch-v2" />
 </head>
 <body>
-  <header class="desktop-kit-header">
+  <header class="desktop-header">
     <div>
-      <span class="eyebrow">M&D Desktop</span>
-      <h1>桌面端完整页面设计板</h1>
-      <p>桌面端按“效率工作台”设计：并排阅读、交易决策、消息协同、创作管理、审核运营。</p>
+      <span class="eyebrow">Desktop mapping</span>
+      <h1>M&D desktop expands the current Stitch mobile system.</h1>
+      <p>Honey drives Feed, Profile, Messages, and Orders. Mint drives Market. Neutral drives safety, docs, and review surfaces. Night is a dark-mode variant.</p>
     </div>
-    <div class="control-stack">
-      <div class="chip-row">
-        <button class="theme-chip is-active" type="button" data-theme-choice="sugar">Sugar</button>
-        <button class="theme-chip" type="button" data-theme-choice="mint">Mint</button>
-        <button class="theme-chip" type="button" data-theme-choice="night">Night</button>
-      </div>
-      <div class="chip-row">
-        <button class="theme-chip is-active" type="button" data-bg-choice="picnic">Picnic</button>
-        <button class="theme-chip" type="button" data-bg-choice="desk">Desk</button>
-        <button class="theme-chip" type="button" data-bg-choice="arcade">Arcade</button>
-        <button class="theme-chip" type="button" data-bg-choice="garden">Garden</button>
-      </div>
-    </div>
+    <nav class="theme-switch" aria-label="Theme preview">
+      <button class="is-active" type="button" data-theme-choice="honey">Honey</button>
+      <button type="button" data-theme-choice="mint">Mint</button>
+      <button type="button" data-theme-choice="night">Night</button>
+      <button type="button" data-theme-choice="neutral">Neutral</button>
+      <a href="pawpop.html">Index</a>
+    </nav>
   </header>
 
   <main class="desktop-board">
-    <section class="desktop-frame app-home">
-      <div class="titlebar"><span></span><span></span><span></span><b>Home Command</b></div>
-      <aside class="app-sidebar">
-        <strong>M&D</strong>
-        <nav><span class="on">首页</span><span>发现</span><span>市集</span><span>消息</span><span>我的</span></nav>
+    <section class="remote-strip" aria-label="Remote design references">
+      <article><img src="assets/stitch-remote/screens/2cbf0afac9824702b850d2f0d9d06942.png" alt=""><b>Mobile Home</b></article>
+      <article><img src="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png" alt=""><b>Mobile Market</b></article>
+      <article><img src="assets/stitch-remote/screens/6d735a2d4f714b29ad07607685e2de49.png" alt=""><b>Mobile Profile</b></article>
+      <article><img src="assets/stitch-remote/screens/11310ac2a2284e809a68589261f12e31.png" alt=""><b>Neutral Board</b></article>
+    </section>
+
+    <section class="desktop-frame feed-frame">
+      <aside class="desktop-sidebar">
+        <strong><span class="material-symbols-rounded">pets</span>M&D</strong>
+        <nav>
+          <button class="is-active"><span class="material-symbols-rounded">rss_feed</span>Feed</button>
+          <button><span class="material-symbols-rounded">storefront</span>Market</button>
+          <button><span class="material-symbols-rounded">chat_bubble</span>Messages</button>
+          <button><span class="material-symbols-rounded">orders</span>Orders</button>
+          <button><span class="material-symbols-rounded">person</span>Profile</button>
+        </nav>
       </aside>
-      <article class="app-main">
-        <div class="hero-wide">
-          <div><span class="eyebrow">Dashboard</span><h2>今日 M&D 动态</h2><p>桌面端首页把浏览、搜索、热门话题和任务放到同一屏。</p></div>
-          <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1100&q=80" alt="" />
+      <section class="desktop-main">
+        <header class="commandbar"><label><span class="material-symbols-rounded">search</span><input value="cat collar"></label><button>Create</button></header>
+        <article class="desktop-card lead-feed">
+          <div><span class="eyebrow">Honey Feed</span><h2>Social feed keeps the mobile composer-first hierarchy.</h2><p>Desktop adds scanable rails but does not add care reminders or unrelated modules.</p></div>
+          <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="">
+        </article>
+        <div class="desktop-feed-grid">
+          <article class="desktop-card post"><img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt=""><b>@catlover</b><p>Look at this cute collar I just got from the market!</p><footer>245 likes · 42 comments</footer></article>
+          <article class="desktop-card post skeleton"><i></i><em></em><em></em><div></div></article>
         </div>
-        <div class="desktop-feed">
-          <article><img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=700&q=80" alt="" /><b>猫猫第一次学会开门</b><p>128 喜欢 · 24 评论</p></article>
-          <article><img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=700&q=80" alt="" /><b>周末宠物野餐</b><p>活动 · 同城</p></article>
-        </div>
-      </article>
-      <aside class="app-rail"><h3>右侧效率栏</h3><p>照护提醒、热门话题、安全提示。</p></aside>
-    </section>
-
-    <section class="desktop-frame split-detail">
-      <div class="titlebar"><span></span><span></span><span></span><b>Post Detail</b></div>
-      <div class="split-list">
-        <h3>动态列表</h3>
-        <article class="row-card on">猫猫第一次学会开门</article>
-        <article class="row-card">幼猫晚上一直叫怎么办</article>
-        <article class="row-card">周末公园宠物野餐</article>
-      </div>
-      <article class="reader-panel">
-        <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=1100&q=80" alt="" />
-        <span class="tag">日常</span>
-        <h2>猫猫第一次学会开门，家里从此没有秘密</h2>
-        <p>桌面端详情适合左列表右阅读，并保留评论、私信、举报动作。</p>
-      </article>
-      <aside class="comment-panel"><h3>评论</h3><p>小满：求链接！</p><p>泡芙：它太聪明了。</p></aside>
-    </section>
-
-    <section class="desktop-frame commerce-frame">
-      <div class="titlebar"><span></span><span></span><span></span><b>Market & Orders</b></div>
-      <div class="market-column">
-        <h3>市集</h3>
-        <article class="listing-row"><img src="https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&w=700&q=80" alt="" /><div><b>彩色牵引绳套装</b><p>¥69.00 · 可信卖家</p></div></article>
-        <article class="listing-row"><img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=700&q=80" alt="" /><div><b>上门喂猫</b><p>¥45.00 · 可预约</p></div></article>
-      </div>
-      <article class="listing-reader">
-        <span class="tag">商品</span>
-        <h2>彩色牵引绳套装</h2>
-        <strong class="price">¥69.00</strong>
-        <p>交易决策页在桌面端并排展示详情、卖家信用、订单状态和聊天入口。</p>
-        <button>创建订单</button>
-      </article>
-      <aside class="order-panel">
-        <h3>订单状态</h3>
-        <ol><li class="done">下单</li><li class="on">支付</li><li>发货</li><li>完成</li></ol>
+      </section>
+      <aside class="desktop-rail">
+        <article class="desktop-card"><b>Feed rules</b><p>Pet avatar, user name, timestamp, post text, media, like, comment, share, save.</p></article>
+        <article class="desktop-card"><b>GlobalPawLoading</b><span class="paw-ring"><i class="material-symbols-rounded">pets</i></span></article>
       </aside>
     </section>
 
-    <section class="desktop-frame message-frame">
-      <div class="titlebar"><span></span><span></span><span></span><b>Messages</b></div>
-      <aside class="inbox-list">
-        <h3>消息</h3>
-        <article class="row-card on">泡芙小店 <small>地址发你啦</small></article>
-        <article class="row-card">城南救助 <small>申请表已收到</small></article>
-        <article class="row-card">小满 <small>谢谢！</small></article>
+    <section class="desktop-frame market-frame">
+      <aside class="desktop-sidebar mint-side">
+        <strong><span class="material-symbols-rounded">storefront</span>Market</strong>
+        <nav><button class="is-active">Products</button><button>Publish</button><button>Saved</button><button>Sellers</button></nav>
       </aside>
-      <article class="chat-desktop">
-        <header><h2>泡芙小店</h2><span class="tag done">安全交易</span></header>
-        <div class="context-card">彩色牵引绳套装 · ¥69.00</div>
-        <p class="bubble in">还在哦，适合 4-8kg。</p>
-        <p class="bubble out">可以今晚自提吗？</p>
-        <footer>写一条消息...</footer>
-      </article>
+      <section class="desktop-main">
+        <header class="commandbar"><label><span class="material-symbols-rounded">search</span><input value="toys, food, care..."></label><button>Publish</button></header>
+        <div class="market-products">
+          <article class="product-card"><span>Sell</span><img src="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png" alt=""><b>Handmade Leather Dog Collar</b><strong>$128.00</strong><button>Buy Now</button></article>
+          <article class="product-card"><span>Trade</span><div>img</div><b>Premium Ergonomic Dog Harness</b><strong>$86.00</strong><button>Make Offer</button></article>
+          <article class="desktop-card seller-card"><b>Seller Info Card</b><p>Credit badge, verified seller, contact seller, and save actions stay visible.</p></article>
+        </div>
+      </section>
     </section>
 
-    <section class="desktop-frame profile-frame">
-      <div class="titlebar"><span></span><span></span><span></span><b>Profile Studio</b></div>
-      <article class="profile-desktop-hero">
-        <div class="profile-glass">
-          <span class="avatar-large"></span>
-          <div><span class="eyebrow">Me</span><h2>桃子和拿铁</h2><p>@peachlatte · 两只猫的日常记录员</p></div>
-        </div>
-      </article>
-      <aside class="profile-tools">
-        <h3>主页背景</h3>
-        <div class="chip-row">
-          <button class="theme-chip is-active" data-bg-choice="picnic" type="button">Picnic</button>
-          <button class="theme-chip" data-bg-choice="desk" type="button">Desk</button>
-          <button class="theme-chip" data-bg-choice="arcade" type="button">Arcade</button>
-          <button class="theme-chip" data-bg-choice="garden" type="button">Garden</button>
-        </div>
+    <section class="desktop-frame messages-frame">
+      <aside class="inbox">
+        <b>Messages</b>
+        <article class="is-active">Bubble Store<span>Address sent.</span></article>
+        <article>South Rescue<span>Adoption form received.</span></article>
+        <article>Momo<span>Thanks for the tip.</span></article>
+      </aside>
+      <section class="chat">
+        <header><b>Bubble Store</b><span>Verified seller</span></header>
+        <article class="order-context"><b>Leather Dog Collar</b><span>paid · Contact Seller</span><strong>$128.00</strong></article>
+        <p class="bubble in">It is still available.</p>
+        <p class="bubble out">Can I pick it up tonight?</p>
+      </section>
+      <aside class="orders-rail">
+        <article class="desktop-card"><span class="status warning">pending_payment</span><b>Pay Now, Cancel Order</b></article>
+        <article class="desktop-card"><span class="status info">shipped</span><b>Confirm Receipt, Contact Seller</b></article>
       </aside>
     </section>
 
-    <section class="desktop-frame studio-frame">
-      <div class="titlebar"><span></span><span></span><span></span><b>Creator Studio</b></div>
-      <article class="editor-panel">
-        <h2>发布动态</h2>
-        <label>标题<input value="今天第一次带拿铁去公园" /></label>
-        <label>内容<textarea>它有点紧张，但看到别的小狗后立刻摇尾巴。</textarea></label>
-        <button>发布</button>
-      </article>
-      <article class="editor-panel">
-        <h2>发布交易</h2>
-        <label>标题<input value="彩色牵引绳套装" /></label>
-        <label>价格<input value="69.00 CNY" /></label>
-        <button>发布交易</button>
-      </article>
-      <aside class="media-panel"><h3>媒体库</h3><div class="media-grid"><span></span><span></span><span></span><span></span></div></aside>
-    </section>
-
-    <section class="desktop-frame safety-frame">
-      <div class="titlebar"><span></span><span></span><span></span><b>Safety Operations</b></div>
-      <div class="metric-grid"><article><b>128</b><span>帖子</span></article><article><b>31</b><span>评论</span></article><article><b>12</b><span>交易</span></article><article><b>2</b><span>待审核</span></article></div>
-      <div class="ops-grid">
-        <article><h3>举报处理</h3><p>交易信息描述不完整。</p><span class="tag danger">开放中</span></article>
-        <article><h3>媒体审核</h3><p>2 个视频等待人工确认。</p><span class="tag">待审核</span></article>
-        <article><h3>审计日志</h3><p>管理员删除评论操作已记录。</p><span class="tag done">已记录</span></article>
-      </div>
-    </section>
-
-    <section class="desktop-frame auth-frame">
-      <div class="titlebar"><span></span><span></span><span></span><b>Auth</b></div>
-      <article class="auth-art"><h2>登录后继续你的 M&D 宇宙</h2><p>桌面端登录页需要明确 return-to、隐私协议 and 错误状态。</p></article>
-      <form class="auth-form"><h3>登录</h3><input value="demo" /><input type="password" value="123456" /><button>进入</button></form>
-      <form class="auth-form"><h3>注册</h3><input placeholder="昵称" /><input placeholder="手机号" /><button>创建账号</button></form>
-    </section>
-
-    <section class="desktop-frame notification-frame">
-      <div class="titlebar"><span></span><span></span><span></span><b>Notifications</b></div>
-      <article class="notice-row unread"><span class="material-symbols-rounded">chat</span><div><h3>小满评论了你的动态</h3><p>“我家猫也会！”</p></div><time>2 分钟前</time></article>
-      <article class="notice-row unread"><span class="material-symbols-rounded">shopping_bag</span><div><h3>订单等待付款</h3><p>彩色牵引绳套装正在等你。</p></div><time>12 分钟前</time></article>
-      <article class="notice-row"><span class="material-symbols-rounded">verified_user</span><div><h3>举报已处理</h3><p>管理员已标记解决。</p></div><time>昨天</time></article>
+    <section class="desktop-frame neutral-frame">
+      <aside class="neutral-menu">
+        <b>System Specifications</b>
+        <button class="is-active">Overview</button>
+        <button>Users</button>
+        <button>Moderation</button>
+        <button>Logs</button>
+      </aside>
+      <section class="neutral-content">
+        <span class="eyebrow">Neutral</span>
+        <h2>Restrained, professional, not cute.</h2>
+        <div class="neutral-grid">
+          <article><b>#4B5563</b><span>Primary</span></article>
+          <article><b>#9CA3AF</b><span>Secondary</span></article>
+          <article><b>#F97316</b><span>Rare cat accent</span></article>
+          <article><b>#111827</b><span>Text primary</span></article>
+        </div>
+        <table>
+          <thead><tr><th>ID</th><th>Event</th><th>Status</th></tr></thead>
+          <tbody><tr><td>#A102</td><td>User Login</td><td>OK</td></tr><tr><td>#A103</td><td>Bad Sync</td><td>FAIL</td></tr></tbody>
+        </table>
+      </section>
     </section>
   </main>
-
-  <script src="pawpop-desktop.js" defer></script>
+  <script src="pawpop-desktop.js?v=stitch-v2" defer></script>
 </body>
 </html>

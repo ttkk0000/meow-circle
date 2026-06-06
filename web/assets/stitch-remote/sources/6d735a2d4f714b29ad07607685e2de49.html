@@ -1,0 +1,264 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>M&amp;D Phone App - Profile Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Outfit:wght@400;650;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#9a4600",
+                        "mint-background": "#F5FFFC",
+                        "secondary-fixed-dim": "#edc157",
+                        "mint-surface": "#FFFFFF",
+                        "inverse-primary": "#ffb68d",
+                        "neutral-background": "#F7F7F8",
+                        "mint-border": "#CDEFE6",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1e1b1c",
+                        "outline-variant": "#ddc1b3",
+                        "honey-primary-hover": "#F0782C",
+                        "on-error": "#ffffff",
+                        "night-background": "#0B0D12",
+                        "outline": "#8a7266",
+                        "inverse-surface": "#342f30",
+                        "honey-text-tertiary": "#9A8A80",
+                        "on-tertiary-container": "#722400",
+                        "honey-primary-container": "#FFF1E6",
+                        "inverse-on-surface": "#f8efef",
+                        "error-container": "#ffdad6",
+                        "honey-text-secondary": "#6B5E57",
+                        "surface-tint": "#9a4600",
+                        "honey-divider": "#F5E2D5",
+                        "neutral-primary": "#4B5563",
+                        "night-primary": "#8B5CF6",
+                        "secondary-fixed": "#ffdf9b",
+                        "secondary-container": "#ffd167",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#a73a05",
+                        "honey-surface": "#FFFFFF",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#564338",
+                        "surface-dim": "#e1d8d9",
+                        "primary-fixed-dim": "#ffb68d",
+                        "night-dog-accent": "#60A5FA",
+                        "neutral-surface": "#FFFFFF",
+                        "honey-primary-pressed": "#D9641F",
+                        "surface-container-highest": "#e9e0e1",
+                        "on-secondary-fixed": "#251a00",
+                        "on-secondary-container": "#765900",
+                        "on-tertiary-fixed-variant": "#802900",
+                        "surface-container-low": "#fbf1f2",
+                        "on-primary-container": "#682d00",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-primary-fixed-variant": "#763300",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "surface-bright": "#fff8f8",
+                        "primary-fixed": "#ffdbc9",
+                        "background": "#fff8f8",
+                        "neutral-text-primary": "#111827",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#785a00",
+                        "night-surface": "#151821",
+                        "mint-primary": "#2EC4A6",
+                        "honey-background": "#FFF8F2",
+                        "tertiary-container": "#ff895b",
+                        "on-primary-fixed": "#321200",
+                        "surface-container": "#f5eced",
+                        "on-tertiary-fixed": "#380d00",
+                        "primary-container": "#ff8a3d",
+                        "on-secondary-fixed-variant": "#5b4300",
+                        "surface-variant": "#e9e0e1",
+                        "on-surface": "#1e1b1c",
+                        "night-text-primary": "#F8FAFC",
+                        "mint-text-primary": "#12312B",
+                        "error": "#ba1a1a",
+                        "surface": "#fff8f8",
+                        "surface-container-high": "#efe6e7",
+                        "honey-border": "#F1D8C8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "card": "16px"
+                    },
+                    "spacing": {
+                        "xxs": "4px",
+                        "neutral-row": "48px",
+                        "neutral-header": "64px",
+                        "lg": "24px",
+                        "sm": "12px",
+                        "md": "16px",
+                        "xs": "8px",
+                        "xxl": "48px",
+                        "xl": "32px",
+                        "neutral-sidebar": "240px",
+                        "safe-bottom": "env(safe-area-inset-bottom)"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Outfit", "sans-serif"],
+                        "neutral-table-header": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "price": ["Outfit", "sans-serif"],
+                        "label-sm": ["Inter", "sans-serif"],
+                        "display-lg": ["Outfit", "sans-serif"],
+                        "headline-lg": ["Outfit", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "title-md": ["Outfit", "sans-serif"],
+                        "label-lg": ["Inter", "sans-serif"],
+                        "display-md": ["Outfit", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "1.3", "fontWeight": "650" }],
+                        "neutral-table-header": ["12px", { "lineHeight": "1.25", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-md": ["15px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "price": ["20px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "display-lg": ["36px", { "lineHeight": "1.12", "fontWeight": "700" }],
+                        "headline-lg": ["24px", { "lineHeight": "1.25", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["22px", { "lineHeight": "1.25", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "1.55", "fontWeight": "400" }],
+                        "title-md": ["18px", { "lineHeight": "1.35", "fontWeight": "650" }],
+                        "label-lg": ["15px", { "lineHeight": "1.35", "fontWeight": "650" }],
+                        "display-md": ["28px", { "lineHeight": "1.18", "fontWeight": "700" }],
+                        "body-sm": ["13px", { "lineHeight": "1.45", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md min-h-screen flex flex-col max-w-[430px] mx-auto relative shadow-2xl" style="background-color: #FFF8F2; color: #231F20;">
+<!-- Top Navigation -->
+<header class="flex justify-between items-center h-16 px-md w-full max-w-full bg-honey-background z-10 sticky top-0"><button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-honey-primary-container transition-colors">
+<span class="material-symbols-outlined text-[#FF8A3D] text-[24px]">pets</span>
+</button>
+<h1 class="text-headline-lg font-bold text-[#FF8A3D] font-['Outfit']">M&amp;D</h1>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-honey-primary-container transition-colors">
+<span class="material-symbols-outlined text-[#FF8A3D] text-[24px]">settings</span>
+</button></header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto pb-[90px] px-md flex flex-col gap-xl">
+<!-- Profile Header Section -->
+<section class="flex flex-col items-center text-center mt-md">
+<div class="relative mb-md">
+<img alt="Profile Avatar" class="w-[100px] h-[100px] rounded-full object-cover border-4 border-honey-surface shadow-md" data-alt="A close-up portrait of a cute, fluffy cat with soft lighting, warm tones, and an inviting, modern aesthetic suitable for a pet community app avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKmnlZ2ozw3C2JD-Rcv-xRir-HwXNHIL0YH8ntth5I_nYovdigsH0oNcVvXGK82mOlzzl85lrSwLsOVN_D679uvXeX2pe0cxAJsl_5bnJ_-S4JJHQZ985Uizv7ei-aJOwyLnxgQfMykPaB3gUBISWsl_08_7mnniRjBk4QqUjS275ROtQpCoS96OkpHxZuqmMfTDJbw-wsCz8LQUoEG-Gmfy6KzMNS4jlL4f_h9MvAe-thCvgBh85YASfoijnyAdmveK_dqUQtdlen">
+<div class="absolute bottom-0 right-0 w-8 h-8 bg-secondary-container rounded-full flex items-center justify-center border-2 border-honey-background shadow-sm"><span class="material-symbols-outlined text-[#FF8A3D] text-[18px]" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span></div>
+</div>
+<h2 class="text-headline-md font-headline-md text-on-surface mb-xs font-['Outfit']">Peach &amp; Latte</h2>
+<p class="text-label-lg font-label-lg text-honey-text-secondary mb-md font-['Inter']">@peachlatte</p>
+<p class="text-body-md font-body-md text-on-surface max-w-[280px] mx-auto mb-lg font-['Inter']">
+                Documenting the daily life of two cats.
+            </p>
+<!-- Stats Bar -->
+<div class="flex justify-center gap-lg w-full bg-honey-surface py-md rounded-card shadow-sm"><div class="flex flex-col items-center flex-1">
+<span class="text-title-md font-bold text-[#FF8A3D] font-['Outfit']">128</span>
+<span class="text-label-sm text-[#6B5E57] font-['Inter']">Posts</span>
+</div>
+<div class="w-px h-8 bg-honey-divider self-center"></div>
+<div class="flex flex-col items-center flex-1">
+<span class="text-title-md font-bold text-[#FF8A3D] font-['Outfit']">42</span>
+<span class="text-label-sm text-[#6B5E57] font-['Inter']">Followers</span>
+</div>
+<div class="w-px h-8 bg-honey-divider self-center"></div>
+<div class="flex flex-col items-center flex-1">
+<span class="text-title-md font-bold text-[#FF8A3D] font-['Outfit']">2</span>
+<span class="text-label-sm text-[#6B5E57] font-['Inter']">Pets</span>
+</div></div>
+</section>
+<!-- Pet Summary Bento Card -->
+<section>
+<h3 class="text-title-md font-title-md text-on-surface mb-md font-['Outfit']">My Pets</h3>
+<div class="bg-[#FFF1E6] border border-[#F1D8C8] p-md rounded-card shadow-sm flex items-center gap-md relative overflow-hidden">
+<img alt="Latte the Cat" class="w-16 h-16 rounded-full object-cover border-2 border-white z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAUUzVc9Oxx5rIbCX5mEf1p7T1oTDJ7H4iMKTPUKAUs88FrTegvU-DV3np-DECmQ2i23ULMNoEJQ7eFQyK7SQS1RKeSF_ZoM7Tkh3KVMaZIwSHg0OIaLsWqmqsJjTqJBXAanq_MANgTK2Leg8QuAVsF_Agami0GLKssyIX6lQfuPSds4NEHJG4DUwSUT9XKuVE0PXpL8Lh4nghSIYFPWJB6ZFds7yoUdix1F2TvraGzx08rTiquwBXRJrmZftfJq6NFy7zDnF2TRub">
+<div class="flex-1 z-10 min-w-0">
+<h4 class="text-headline-md text-[#231F20] font-['Outfit'] truncate">Latte</h4>
+<p class="text-body-sm text-[#6B5E57] font-['Inter'] truncate">Domestic Shorthair 鈥?3 yrs</p>
+</div>
+<button class="w-10 h-10 shrink-0 rounded-full bg-white/80 flex items-center justify-center shadow-sm z-10 hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-[#FF8A3D] text-[20px]">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Recent Posts Grid -->
+<section>
+<div class="flex justify-between items-center mb-md">
+<h3 class="text-title-md font-title-md text-on-surface font-['Outfit']">Recent Posts</h3>
+<button class="text-label-lg font-label-lg text-primary hover:text-honey-primary-hover transition-colors font-['Inter']">View All</button>
+</div>
+<div class="grid grid-cols-3 gap-sm">
+<!-- Post 1 -->
+<div class="aspect-square rounded-lg overflow-hidden relative group">
+<img alt="Post thumbnail" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="A high-quality, aesthetic photo of a cat sleeping peacefully on a cozy blanket, bathed in warm, soft sunlight, perfect for a modern pet social feed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA6mpV5DVbEESHp1HLRVF_ZeOcwe7QcwdLOiwpILwPvvfUpFQDbHYqIsQlOfb65raLCrwjIgDln3F8Kyb82mgYrHAhfnx9633qxBwSWjlcShZppVb8wZiW0qpcbiUYqrie0z_O4GYE7EagJ7NQHC91pZL3vJlt3_i7UmEBU0wPQyWkOqnboCk4p9Ar4LtEBMWRmwpWMcwbEvYFZnCRSIKMz-UnVbBwXStQtV7nCfs_aMV01C75wxOduM6AJjkTmG8sRiFUdOTxJmNy">
+</div>
+<!-- Post 2 -->
+<div class="aspect-square rounded-lg overflow-hidden relative group">
+<img alt="Post thumbnail" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="A playful cat reaching for a toy, captured in motion with a clean, light background and vibrant colors fitting a warm community app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnbYC1TZhJtVjXOimxHt6UPh21JjyjluVzYcgc6rQIgiVESQYCkxjvY1B-HoK4Yb8D5-a8yWWxja3ssxyxEIJZnhYdJPn4S6X0X_YuX3feVNOCp7rFBnqjL3ncvyhQoEVSwGpEYVDvUb55t-wYTFKf4zEQ_4KAoXz1AJp_ue0gj4-Zt6mnzhKyBITau75jwmV2HJt5za-v2yTiDZw0MEwIP1twWQvZwtQR-75UpOfQ41OTGLd347CjBcyXIyoh3Z7cIGZ3WXMYH3OX">
+</div>
+<!-- Post 3 -->
+<div class="aspect-square rounded-lg overflow-hidden relative group">
+<img alt="Post thumbnail" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="An artistic close-up of a cat's eye and whiskers, showcasing fine details with a soft, warm color palette appropriate for a premium pet app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoNOHKcFK7HR7g6sgQT7OSvtwGn05hwD6YUfiVENywPfCCL_hzqtPKZqnAyd2rTOzug4cx_x8q_OeMWqnbTL4Mag3tHoX4uv5_1T99DCj5peLxJ1LEgwx9w_Qeu5aJdSILvfIEjym5KPsX84KBEjQel6XxN8b5pUUibYfcwWQQVezzr-wZx-bf1lnQJWvzXJsW9zjs_R6-iSdhMEZLFGAZAnSoKn1TKx6ZefV25MvfKsq-W1d0_Sxk4D1Mcvj_V4TdFOI89GvYIcIi">
+</div>
+<!-- Post 4 -->
+<div class="aspect-square rounded-lg overflow-hidden relative group">
+<img alt="Post thumbnail" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="A cozy scene of a cat sitting on a windowsill looking outside, with warm, inviting natural light filtering in, matching a honey-themed aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlM8MoqhOZ0huFQMd8WaPUMMbhNpJkpcUNW2X0ZjVmtKqjmE364RyEXaEdyZpv5dJ9HQW3iUoZ0vKbyG8MTMGB6yXXKXmVYKq2pQbnA-hPWf662o0nykq3eMC-v251oIgnUEGFvGjRJ9Ec_FoVtmdaBA3w1rqDiYUx8XRoxi93w7lMGuHR9dBzoWcYrRP84Kg926uUqnOBtfs9Tgw3FJYwCAQrRql7uA_P0Ygf3GZZNR-TD4xpFAW-J-I3_9J-UGM41GgNvpXdsGsd">
+</div>
+<!-- Post 5 -->
+<div class="aspect-square rounded-lg overflow-hidden relative group">
+<img alt="Post thumbnail" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="A cute kitten playfully hiding in a cardboard box, shot from a high angle with soft, diffused lighting and a warm color grade." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdjrJ0XrR79DmKY2Q3_WHt9vUJLEqA-yoQp7VCsyubWvPoXMld5e-me58otVo7B3PonNGUMjYHaoQz3U4pQ6K9iJYkdwYoAamhZPdz0vl4uPlldi0cEOefX8IRNpSDY1hfPI4t-co8yJIdwM8q3BfqqfPsjKWxr3OHJjsL_nlTYV1c6W2vtQqQ_Q6oZG37_pyfCK5zSowAEFRKBcFeFEe-CP2WqEbrpvTrCKMa24Q9UVxp02K0hWZM5C3cyFgCHzo5M41Mg262pEOv">
+</div>
+<!-- Post 6 -->
+<div class="aspect-square rounded-lg overflow-hidden relative group bg-honey-primary-container flex items-center justify-center cursor-pointer hover:bg-honey-primary-hover/20 transition-colors" style="background-color: #FFF1E6; border: 1px solid #F1D8C8;"><span class="material-symbols-outlined text-[#FF8A3D] text-[32px]">add</span></div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-[64px] border-t border-honey-divider bg-surface shadow-lg max-w-[430px] left-1/2 -translate-x-1/2 rounded-t-xl"><a class="flex flex-col items-center justify-center text-[#6B5E57] px-2" href="#">
+<span class="material-symbols-outlined">rss_feed</span>
+<span class="text-[10px] font-medium mt-0.5">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] px-2" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-[10px] font-medium mt-0.5">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] px-2" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-medium mt-0.5">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] px-2" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[10px] font-medium mt-0.5">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#FFF1E6] text-[#FF8A3D] px-4 py-1.5 rounded-xl" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-bold mt-0.5">Profile</span>
+</a></nav>
+
+
+</body></html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Honey Messages &amp; Orders Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=Satoshi:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Public+Sans:wght@400;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF8A3D",
+                        "on-primary": "#FFFFFF",
+                        surface: "#FFFFFF",
+                        "surface-strong": "#FFF8F2",
+                        "surface-soft": "#FFF1E6",
+                        "on-surface": "#231F20",
+                        "on-surface-variant": "#6B5E57",
+                        outline: "#F1D8C8",
+                        honey: {
+                            canvas: "#FFF8F2",
+                            panel: "#FFF1E6",
+                            accent: "#FF8A3D",
+                            ink: "#231F20",
+                            muted: "#6B5E57",
+                            border: "#F1D8C8",
+                            divider: "#F5E2D5"
+                        },
+                        status: {
+                            success: "#2F9B75",
+                            warning: "#D8872E",
+                            info: "#4B89AC",
+                            error: "#D64747",
+                            neutral: "#706D67"
+                        }
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Outfit", "sans-serif"],
+                        display: ["Outfit", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFF8F2; color: #231F20; }
+        .font-display { font-family: 'Outfit', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-honey-canvas min-h-screen flex">
+<!-- Sidebar Component (SideNavBar) -->
+<aside class="w-64 bg-surface border-r border-outline flex flex-col p-4 gap-2 shrink-0">
+<div class="px-4 py-6 mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-display font-black text-xl">M</div>
+<div>
+<h1 class="font-display font-black text-xl text-primary leading-none">M&amp;D</h1>
+<p class="text-[10px] text-on-surface-variant font-medium tracking-widest uppercase">Meow &amp; Doggie</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft rounded-lg px-4 py-3 transition-all cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label text-label-lg font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 bg-surface-soft text-primary rounded-lg px-4 py-3 font-bold transition-all cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label text-label-lg font-medium">Conversations</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft rounded-lg px-4 py-3 transition-all cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label text-label-lg font-medium">Message Bubbles</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft rounded-lg px-4 py-3 transition-all cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label text-label-lg font-medium">Order Context</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft rounded-lg px-4 py-3 transition-all cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined">flaky</span>
+<span class="font-label text-label-lg font-medium">Order Status</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft rounded-lg px-4 py-3 transition-all cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined">rule</span>
+<span class="font-label text-label-lg font-medium">Action Rules</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft rounded-lg px-4 py-3 transition-all cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label text-label-lg font-medium">Order Cards</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft rounded-lg px-4 py-3 transition-all cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined">layers</span>
+<span class="font-label text-label-lg font-medium">Empty &amp; Skeleton</span>
+</a>
+</nav>
+<div class="mt-auto p-4 bg-honey-panel rounded-2xl">
+<p class="text-xs font-bold text-honey-ink mb-1">Honey Theme Active</p>
+<p class="text-[10px] text-honey-muted leading-relaxed">Strict adherence to #FF8A3D primary tokens.</p>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 p-8 lg:p-12 w-full max-w-[1400px] mx-auto">
+<!-- Header -->
+<header class="mb-12">
+<h2 class="font-display font-extrabold text-4xl text-on-surface mb-2">M&amp;D 缁勪欢搴?- Honey Messages &amp; Orders Components</h2>
+<p class="text-on-surface-variant text-lg">Reusable messaging and order components with real previews, status logic, buyer/seller action rules, and Honey Theme specs.</p>
+</header>
+<!-- Section 1: Conversations -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">1</div>
+<h3 class="font-display font-bold text-2xl text-on-surface">Conversations</h3>
+</div>
+<div class="bg-surface rounded-2xl border border-outline p-8 flex flex-col lg:flex-row gap-8">
+<div class="flex-1 border border-outline rounded-xl overflow-hidden shadow-sm">
+<!-- Conversation Item Preview -->
+<div class="h-[72px] px-4 flex items-center gap-4 hover:bg-surface-soft transition-colors cursor-pointer bg-white">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-primary/20" data-alt="A portrait of a fluffy white Persian cat looking directly at the camera with expressive green eyes, lit with soft natural daylight in a bright modern domestic setting. The cat has a premium orange leather collar with a small gold tag. The overall aesthetic is warm, clean, and high-end, perfectly fitting the Honey theme palette of creams and oranges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKxDkabqZ5oSHQUQIsQsI3IVb8r_mgtXwnNhFs_TCH1AtyK98IlYmalubZRz-5VqT5JVqb3bmIDOEXwVRKI89rtTnDQ4rLLrCCj4E12ILsmCjMm3mDEqJ5KRXYAmdRHCNn3usDBMmRsdrNUGv5HgXF_tg5KlXtlUeYuAzChMgAxTEk8bpvARbU2czcysDgdjDizGuaUNeB__dOGmKHmIRC4_Rqo-Zc6U_PL4jepbnefJ1Sh9gUILiDcWS2SgDAzl6UqOuLcwmbreWc">
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-status-success border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h4 class="font-display font-semibold text-on-surface truncate">Luna &amp; Co.</h4>
+<span class="font-mono text-[10px] text-on-surface-variant">12:45 PM</span>
+</div>
+<p class="text-sm text-on-surface-variant truncate">The handmade collar is still available.</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">2</span>
+</div>
+</div>
+</div>
+<div class="flex-1 bg-honey-panel p-6 rounded-xl border border-honey-border">
+<h4 class="font-display font-bold text-honey-ink mb-3">Specification Breakdown</h4>
+<ul class="space-y-3 text-sm text-honey-muted">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Avatar: 48px Circular with 2px border</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Row Height: 72px</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Container Radius: 16px</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Typography: Outfit 16px (Name), Inter 14px (Preview)</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 2: Message Bubbles -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">2</div>
+<h3 class="font-display font-bold text-2xl text-on-surface">Message Bubbles</h3>
+</div>
+<div class="bg-surface rounded-2xl border border-outline p-8 flex flex-col lg:flex-row gap-8">
+<div class="flex-1 border border-outline rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="p-4 border-b border-outline flex items-center gap-3 bg-white">
+<div class="w-8 h-8 rounded-full bg-honey-panel flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">pets</span>
+</div>
+<span class="font-display font-bold">Luna &amp; Co. Support</span>
+</div>
+<div class="flex-1 p-6 space-y-6 bg-white">
+<!-- Receiver Bubble -->
+<div class="flex items-end gap-2 max-w-[70%]">
+<div class="bg-surface-soft text-on-surface p-4 rounded-[16px] rounded-bl-none text-sm leading-relaxed border border-outline/20">
+                                Hi there! We saw your interest in the "Handmade Honey Collar". Would you like to see more photos?
+                            </div>
+</div>
+<!-- Sender Bubble -->
+<div class="flex items-end gap-2 max-w-[70%] ml-auto">
+<div class="bg-primary text-white p-4 rounded-[16px] rounded-br-none text-sm leading-relaxed shadow-sm">
+                                Yes, please! Especially the buckle detail.
+                            </div>
+</div>
+</div>
+</div>
+<div class="flex-1 bg-honey-panel p-6 rounded-xl border border-honey-border">
+<h4 class="font-display font-bold text-honey-ink mb-3">Specification Breakdown</h4>
+<ul class="space-y-3 text-sm text-honey-muted">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Bubble Radius: 16px</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Max Width: 70% of container</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Sender Bubble: #FF8A3D (Primary) background</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Receiver Bubble: #FFF1E6 background</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 3: Compact Order Context Card -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">3</div>
+<h3 class="font-display font-bold text-2xl text-on-surface">Compact Order Context Card</h3>
+</div>
+<div class="bg-surface rounded-2xl border border-outline p-8 flex flex-col lg:flex-row gap-8">
+<div class="flex-1 flex items-center justify-center p-8 border border-outline rounded-xl bg-white shadow-sm">
+<div class="bg-honey-panel border border-outline p-3 rounded-[16px] flex items-center gap-4 w-full max-w-sm">
+<img class="w-10 h-10 rounded-lg object-cover bg-white" data-alt="A small thumbnail of an orange woven pet collar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8sf05H53iD7JFK-TvxNJcIQUb3cfFQyKlf7o2GNr4NVzJQESTgmsTbEyfw8B1aZz04-KvWHMJ1mRc9rosyDgcRT1ecFpPYOBxhRMmA9od9ziu3HuGKkVpZxrNHAPlNCs_9IL8fPgj0P6pFeaEBK4D8PhMyfOodix8Z_iFD3GuKMmTHc6jWZk1cTZ0wkIQ1_8RPWlwUoxlHst0X-TX7aB7bls1SEDkDxg3BNoBHQ98RuT4lcrkCeJOmWxg4rODQViyva9tGYCcZMRB">
+<div class="flex-1">
+<p class="font-bold text-sm">Handmade Honey Collar</p>
+<p class="text-xs text-on-surface-variant">Order #4829</p>
+</div>
+<button class="text-primary hover:bg-white/50 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex-1 bg-honey-panel p-6 rounded-xl border border-honey-border">
+<h4 class="font-display font-bold text-honey-ink mb-3">Specification Breakdown</h4>
+<ul class="space-y-3 text-sm text-honey-muted">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Thumbnail: 40px with 8px radius</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Card Background: #FFF1E6 (Panel)</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Card Radius: 16px</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Usage: Displayed within chat or headers</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 4: Order Status Badges -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">4</div>
+<h3 class="font-display font-bold text-2xl text-on-surface">Order Status Badges</h3>
+</div>
+<div class="bg-surface rounded-2xl border border-outline p-8 flex flex-col lg:flex-row gap-8">
+<div class="flex-1 grid grid-cols-2 md:grid-cols-3 gap-6 p-8 border border-outline rounded-xl bg-white shadow-sm place-items-center"><div class="px-1.5 py-2.5 bg-[#FEF3C7] text-[#F59E0B] rounded-full text-[12px] font-[600] font-label">Pending Payment</div><div class="px-1.5 py-2.5 bg-[#DBEAFE] text-[#3B82F6] rounded-full text-[12px] font-[600] font-label">Paid</div><div class="px-1.5 py-2.5 bg-[#DBEAFE] text-[#3B82F6] rounded-full text-[12px] font-[600] font-label">Shipped</div><div class="px-1.5 py-2.5 bg-[#DCFCE7] text-[#22C55E] rounded-full text-[12px] font-[600] font-label">Completed</div><div class="px-1.5 py-2.5 bg-[#F5E2D5] text-[#6B5E57] rounded-full text-[12px] font-[600] font-label">Cancelled</div><div class="px-1.5 py-2.5 bg-[#FEE2E2] text-[#EF4444] rounded-full text-[12px] font-[600] font-label">Refunded</div></div>
+<div class="flex-1 bg-honey-panel p-6 rounded-xl border border-honey-border"><h4 class="font-display font-bold text-honey-ink mb-3">Specification Breakdown</h4>
+<ul class="space-y-3 text-sm text-honey-muted"><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">6 official states.</span></li><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">pending_payment maps to warning.</span></li><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">paid / shipped map to info.</span></li><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">completed maps to success.</span></li><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">cancelled maps to neutral.</span></li><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">refunded maps to error / warning.</span></li></ul></div>
+</div>
+</section>
+<!-- Section 5: Order Timeline -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">5</div>
+<h3 class="font-display font-bold text-2xl text-on-surface">Order Timeline</h3>
+</div>
+<div class="bg-surface rounded-2xl border border-outline p-8 flex flex-col lg:flex-row gap-8">
+<div class="flex-1 p-8 border border-outline rounded-xl bg-white shadow-sm"><div class="relative space-y-8">
+    <div class="absolute left-4 top-2 bottom-2 w-0.5 bg-[#F5E2D5]"></div>
+    <div class="absolute left-4 top-2 h-[128px] w-0.5 bg-[#FF8A3D]"></div>
+
+    <div class="relative pl-12 flex items-start gap-4">
+        <div class="absolute left-0 top-0 w-8 h-8 bg-[#FF8A3D] rounded-full flex items-center justify-center border-4 border-white text-white z-10">
+            <span class="material-symbols-outlined text-sm">check</span>
+        </div>
+        <div>
+            <p class="font-display font-bold text-[#231F20]">Order Placed</p>
+            <p class="text-xs text-on-surface-variant">2023-11-20 09:12</p>
+        </div>
+    </div>
+
+    <div class="relative pl-12 flex items-start gap-4">
+        <div class="absolute left-0 top-0 w-8 h-8 bg-[#FF8A3D] rounded-full flex items-center justify-center border-4 border-white text-white z-10">
+            <span class="material-symbols-outlined text-sm">payments</span>
+        </div>
+        <div>
+            <p class="font-display font-bold text-[#231F20]">Payment Confirmed</p>
+            <p class="text-xs text-on-surface-variant">2023-11-20 09:15</p>
+        </div>
+    </div>
+
+    <div class="relative pl-12 flex items-start gap-4">
+        <div class="absolute left-0 top-0 w-8 h-8 bg-white rounded-full flex items-center justify-center border-2 border-[#FF8A3D] text-[#FF8A3D] z-10 shadow-sm">
+            <span class="material-symbols-outlined text-sm">local_shipping</span>
+        </div>
+        <div>
+            <p class="font-display font-bold text-[#FF8A3D]">Shipped</p>
+            <p class="text-xs text-on-surface-variant">Package is in transit. Estimated arrival: Tomorrow.</p>
+        </div>
+    </div>
+
+    <div class="relative pl-12 flex items-start gap-4">
+        <div class="absolute left-0 top-0 w-8 h-8 bg-white rounded-full flex items-center justify-center border-2 border-[#D6C7BE] text-[#D6C7BE] z-10">
+            <span class="material-symbols-outlined text-sm">inventory_2</span>
+        </div>
+        <div>
+            <p class="font-display font-bold text-[#D6C7BE]">Completed</p>
+            <p class="text-xs text-on-surface-variant">Awaiting delivery</p>
+        </div>
+    </div>
+</div></div>
+<div class="flex-1 bg-honey-panel p-6 rounded-xl border border-honey-border">
+<h4 class="font-display font-bold text-honey-ink mb-3">Specification Breakdown</h4>
+<ul class="space-y-3 text-sm text-honey-muted"><li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Icons: 32px diameter.</li><li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Connector: 2px wide line.</li><li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Spacing: 32px between steps.</li><li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Timeline shell uses Honey Primary #FF8A3D.</li><li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Semantic colors appear only in Order Status Badges.</li></ul>
+</div>
+</div>
+</section>
+<!-- Section 6: Buyer Action Bars -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">6</div>
+<h3 class="font-display font-bold text-2xl text-on-surface">Buyer Action Bars</h3>
+</div>
+<div class="bg-surface rounded-2xl border border-outline p-8 flex flex-col lg:flex-row gap-8">
+<div class="flex-1 flex flex-col gap-4 p-8 border border-outline rounded-xl bg-white shadow-sm"><div class="flex flex-col gap-4">
+    <div class="flex gap-4">
+        <button class="flex-1 h-11 bg-[#FF8A3D] text-[#FFFFFF] font-bold rounded-xl text-sm">Pay Now</button>
+        <button class="flex-1 h-11 bg-[#FFFFFF] text-[#6B5E57] border border-[#F1D8C8] font-bold rounded-xl text-sm">Cancel Order</button>
+    </div>
+    <div class="flex gap-4">
+        <button class="flex-1 h-11 bg-[#FFFFFF] text-[#FF8A3D] border border-[#FF8A3D] font-bold rounded-xl text-sm">Track</button>
+        <button class="flex-1 h-11 bg-[#FF8A3D] text-[#FFFFFF] font-bold rounded-xl text-sm">Confirm Receipt</button>
+    </div>
+    <div class="flex gap-4">
+        <button class="flex-1 h-11 bg-[#FF8A3D] text-[#FFFFFF] font-bold rounded-xl text-sm">Leave Review</button>
+        <button class="flex-1 h-11 bg-[#FFFFFF] text-[#6B5E57] border border-[#F1D8C8] font-bold rounded-xl text-sm">View Details</button>
+    </div>
+</div></div>
+<div class="flex-1 bg-honey-panel p-6 rounded-xl border border-honey-border"><h4 class="font-display font-bold text-honey-ink mb-3">Specification Breakdown</h4>
+<ul class="space-y-3 text-sm text-honey-muted"><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">Primary Action: #FF8A3D background.</span></li><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">Secondary Action: outline style.</span></li><li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5"></span> <span class="">Rule logic applied based on status.</span></li></ul></div>
+</div>
+</section>
+<!-- Section 7: Seller Action Bars -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">7</div>
+<h3 class="font-display font-bold text-2xl text-on-surface">Seller Action Bars</h3>
+</div>
+<div class="bg-surface rounded-2xl border border-outline p-8 flex flex-col lg:flex-row gap-8">
+<div class="flex-1 flex flex-col gap-4 p-8 border border-outline rounded-xl bg-white shadow-sm">
+<div class="flex gap-2">
+<button class="flex-1 py-2 px-4 border border-outline text-on-surface-variant font-bold rounded-xl text-sm bg-surface-soft cursor-not-allowed opacity-50">Awaiting Payment</button>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 px-4 bg-primary text-white font-bold rounded-xl text-sm shadow-sm">Ship Now</button>
+<button class="py-2 px-4 border border-outline text-on-surface-variant font-bold rounded-xl text-sm">Contact Buyer</button>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 px-4 border border-outline text-on-surface-variant font-bold rounded-xl text-sm">View Shipping Details</button>
+</div>
+</div>
+<div class="flex-1 bg-honey-panel p-6 rounded-xl border border-honey-border">
+<h4 class="font-display font-bold text-honey-ink mb-3">Specification Breakdown</h4>
+<ul class="space-y-3 text-sm text-honey-muted">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Logistics integration requirements</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Disabled states for pending actions</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Contextual button sizing</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 8: Order Cards + Empty/Skeleton -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">8</div>
+<h3 class="font-display font-bold text-2xl text-on-surface">Order Cards + Empty/Skeleton</h3>
+</div>
+<div class="bg-surface rounded-2xl border border-outline p-8 flex flex-col xl:flex-row gap-8">
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Empty State -->
+<div class="border border-outline rounded-xl p-8 flex flex-col items-center text-center bg-white shadow-sm h-full justify-center">
+<div class="w-24 h-24 mb-4 relative">
+<div class="absolute inset-0 bg-honey-panel rounded-full"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl">chat_bubble_outline</span>
+</div>
+</div>
+<h4 class="font-display font-bold text-lg mb-1">No messages yet</h4>
+<p class="text-on-surface-variant text-sm mb-6 max-w-[200px] mx-auto">Start a conversation or explore the community.</p>
+<button class="px-6 py-2 bg-primary text-white font-bold rounded-xl text-sm shadow-sm">Explore Market</button>
+</div>
+<!-- Skeleton State -->
+<div class="border border-outline rounded-xl p-6 flex flex-col gap-4 bg-white shadow-sm h-full">
+<div class="flex justify-between items-center pb-4 border-b border-honey-divider">
+<div class="w-32 h-4 bg-honey-panel rounded-full"></div>
+<div class="w-16 h-4 bg-honey-panel rounded-full"></div>
+</div>
+<div class="flex gap-4 mb-4">
+<div class="w-20 h-20 bg-honey-panel rounded-xl"></div>
+<div class="flex-1 space-y-3">
+<div class="w-3/4 h-4 bg-honey-panel rounded-full"></div>
+<div class="w-1/2 h-3 bg-honey-panel rounded-full"></div>
+<div class="w-1/4 h-5 bg-honey-panel rounded-full mt-2"></div>
+</div>
+</div>
+<div class="flex gap-2 mt-auto">
+<div class="flex-1 h-10 bg-honey-panel rounded-xl"></div>
+<div class="w-24 h-10 bg-honey-panel rounded-xl"></div>
+</div>
+</div>
+</div>
+<div class="flex-1 bg-honey-panel p-6 rounded-xl border border-honey-border">
+<h4 class="font-display font-bold text-honey-ink mb-3">Specification Breakdown</h4>
+<ul class="space-y-3 text-sm text-honey-muted">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Combined display of Cards and States</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Skeleton Base: #FFF1E6</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Empty State: Centered illustration + CTA</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Card Border: #F1D8C8 with 16px radius</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+
+
+
+
+
+
+</body></html>

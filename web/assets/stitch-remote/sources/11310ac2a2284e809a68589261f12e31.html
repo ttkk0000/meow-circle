@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neutral Theme Color Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#4B5563",
+                        "secondary": "#9CA3AF",
+                        "tertiary": "#F97316",
+                        "on-background": "#111827",
+                        "background": "#F7F7F8",
+                        "surface": "#FFFFFF",
+                        "surface-variant": "#F3F4F6",
+                        "border": "#E5E7EB",
+                        "status-success": "#16A34A",
+                        "status-warning": "#D97706",
+                        "error": "#DC2626",
+                        "status-info": "#2563EB"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "display": ["Outfit"],
+                        "body": ["Inter"],
+                        "sans": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body antialiased flex">
+<!-- Left Sidebar -->
+<aside class="w-64 bg-surface border-r border-border h-screen flex-shrink-0 flex flex-col fixed left-0 top-0 z-10">
+<div class="p-6 border-b border-border flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="font-display font-bold text-lg">Admin Panel</span>
+</div>
+<nav class="flex-1 py-4 px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-primary bg-surface-variant rounded font-medium text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+            Overview
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-secondary hover:bg-surface-variant hover:text-primary rounded font-medium text-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+            Users
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-secondary hover:bg-surface-variant hover:text-primary rounded font-medium text-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+            Moderation
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-secondary hover:bg-surface-variant hover:text-primary rounded font-medium text-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">list_alt</span>
+            Logs
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-secondary hover:bg-surface-variant hover:text-primary rounded font-medium text-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+            Settings
+        </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 ml-64 flex flex-col">
+<!-- Top Navigation -->
+<nav class="w-full bg-surface shadow-sm flex items-center justify-between px-6 h-16 border-b border-border z-0">
+<div class="font-display text-xl font-semibold text-on-background">System Specifications</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded text-secondary hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-semibold text-sm">A</div>
+</div>
+</nav>
+<main class="flex-1 p-8 overflow-auto">
+<!-- Header -->
+<header class="mb-8">
+<h1 class="font-display text-3xl font-bold text-on-background mb-2">Neutral Theme Color Board</h1>
+<p class="text-secondary text-sm max-w-2xl">Professional, restrained, efficient, data-oriented, neutral-friendly palette for Dashboard and System UI.</p>
+</header>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+<!-- Core Palette (Left Column) -->
+<div class="xl:col-span-8 flex flex-col gap-6">
+<section class="bg-surface rounded-lg border border-border p-6 shadow-sm">
+<h2 class="font-display text-xl font-semibold text-on-background mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">palette</span>
+                        Core Brand Tokens
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Primary -->
+<div class="flex flex-col border border-border rounded-lg overflow-hidden">
+<div class="h-24 bg-primary w-full"></div>
+<div class="p-4 bg-surface flex justify-between items-center">
+<div>
+<div class="font-semibold text-sm text-on-background">Primary</div>
+<div class="text-xs text-secondary mt-1">Neutral Admin</div>
+</div>
+<div class="text-xs text-secondary font-mono bg-background px-2 py-1 rounded">#4B5563</div>
+</div>
+</div>
+<!-- Secondary -->
+<div class="flex flex-col border border-border rounded-lg overflow-hidden">
+<div class="h-24 bg-secondary w-full"></div>
+<div class="p-4 bg-surface flex justify-between items-center">
+<div>
+<div class="font-semibold text-sm text-on-background">Secondary</div>
+<div class="text-xs text-secondary mt-1">Muted Elements</div>
+</div>
+<div class="text-xs text-secondary font-mono bg-background px-2 py-1 rounded">#9CA3AF</div>
+</div>
+</div>
+<!-- Tertiary -->
+<div class="flex flex-col border border-border rounded-lg overflow-hidden">
+<div class="h-24 bg-tertiary w-full"></div>
+<div class="p-4 bg-surface flex justify-between items-center">
+<div>
+<div class="font-semibold text-sm text-on-background">Tertiary</div>
+<div class="text-xs text-secondary mt-1">Rare Cat Accent only, not primary admin action.</div>
+</div>
+<div class="text-xs text-secondary font-mono bg-background px-2 py-1 rounded">#F97316</div>
+</div>
+</div>
+<!-- Text Primary -->
+<div class="flex flex-col border border-border rounded-lg overflow-hidden">
+<div class="h-24 bg-on-background w-full"></div>
+<div class="p-4 bg-surface flex justify-between items-center">
+<div>
+<div class="font-semibold text-sm text-on-background">Text Primary</div>
+<div class="text-xs text-secondary mt-1">Headings &amp; Core Text</div>
+</div>
+<div class="text-xs text-secondary font-mono bg-background px-2 py-1 rounded">#111827</div>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface rounded-lg border border-border p-6 shadow-sm">
+<h2 class="font-display text-xl font-semibold text-on-background mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">layers</span>
+                        Surface &amp; Background
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Background -->
+<div class="flex flex-col border border-border rounded-lg p-4 bg-background">
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="font-semibold text-sm text-on-background">Background</div>
+<div class="text-xs text-secondary mt-1">App Canvas</div>
+</div>
+<div class="text-xs text-secondary font-mono bg-surface border border-border px-2 py-1 rounded">#F7F7F8</div>
+</div>
+<div class="h-16 w-full border border-border rounded border-dashed flex items-center justify-center bg-transparent">
+<span class="text-xs text-secondary">Page Area</span>
+</div>
+</div>
+<!-- Surface -->
+<div class="flex flex-col border border-border rounded-lg p-4 bg-surface">
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="font-semibold text-sm text-on-background">Surface</div>
+<div class="text-xs text-secondary mt-1">Cards &amp; Containers</div>
+</div>
+<div class="text-xs text-secondary font-mono bg-background border border-border px-2 py-1 rounded">#FFFFFF</div>
+</div>
+<div class="h-16 w-full bg-surface border border-border rounded shadow-sm flex items-center justify-center">
+<span class="text-xs text-secondary">Card Content</span>
+</div>
+</div>
+<!-- Surface Variant -->
+<div class="flex flex-col border border-border rounded-lg p-4 bg-surface-variant md:col-span-2">
+<div class="flex justify-between items-start mb-2">
+<div>
+<div class="font-semibold text-sm text-on-background">Surface Variant</div>
+<div class="text-xs text-secondary mt-1">Hover States &amp; Alternate Backgrounds</div>
+</div>
+<div class="text-xs text-secondary font-mono bg-surface border border-border px-2 py-1 rounded">#F3F4F6</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Status & UI States (Right Column) -->
+<div class="xl:col-span-4 flex flex-col gap-6">
+<section class="bg-surface rounded-lg border border-border p-6 shadow-sm">
+<h2 class="font-display text-xl font-semibold text-on-background mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">notifications_active</span>
+                        Status Tokens
+                    </h2>
+<div class="flex flex-col gap-3">
+<!-- Success -->
+<div class="flex items-center gap-3 p-3 rounded border border-border">
+<div class="w-8 h-8 rounded bg-status-success flex items-center justify-center text-white flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-grow flex justify-between items-center">
+<span class="font-medium text-sm text-on-background">Success</span>
+<span class="text-xs text-secondary font-mono">#16A34A</span>
+</div>
+</div>
+<!-- Warning -->
+<div class="flex items-center gap-3 p-3 rounded border border-border">
+<div class="w-8 h-8 rounded bg-status-warning flex items-center justify-center text-white flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-grow flex justify-between items-center">
+<span class="font-medium text-sm text-on-background">Warning</span>
+<span class="text-xs text-secondary font-mono">#D97706</span>
+</div>
+</div>
+<!-- Error -->
+<div class="flex items-center gap-3 p-3 rounded border border-border">
+<div class="w-8 h-8 rounded bg-error flex items-center justify-center text-white flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div class="flex-grow flex justify-between items-center">
+<span class="font-medium text-sm text-on-background">Error</span>
+<span class="text-xs text-secondary font-mono">#DC2626</span>
+</div>
+</div>
+<!-- Info -->
+<div class="flex items-center gap-3 p-3 rounded border border-border">
+<div class="w-8 h-8 rounded bg-status-info flex items-center justify-center text-white flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">info</span>
+</div>
+<div class="flex-grow flex justify-between items-center">
+<span class="font-medium text-sm text-on-background">Info</span>
+<span class="text-xs text-secondary font-mono">#2563EB</span>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface rounded-lg border border-border p-6 shadow-sm flex-1">
+<h2 class="font-display text-xl font-semibold text-on-background mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">table_chart</span>
+                        UI Preview
+                    </h2>
+<div class="border border-border rounded overflow-hidden">
+<div class="bg-surface-variant px-4 py-2 border-b border-border flex justify-between items-center">
+<span class="text-sm font-semibold text-on-background">Recent Logs</span>
+<span class="text-xs text-secondary">Last 24h</span>
+</div>
+<div class="p-0">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="border-b border-border text-secondary bg-surface">
+<th class="px-4 py-2 font-medium">ID</th>
+<th class="px-4 py-2 font-medium">Event</th>
+<th class="px-4 py-2 font-medium text-right">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-border bg-surface">
+<td class="px-4 py-2 text-secondary font-mono text-xs">#A102</td>
+<td class="px-4 py-2 text-on-background">User Login</td>
+<td class="px-4 py-2 text-right"><span class="text-xs text-status-success font-medium">OK</span></td>
+</tr>
+<tr class="bg-surface">
+<td class="px-4 py-2 text-secondary font-mono text-xs">#A103</td>
+<td class="px-4 py-2 text-on-background">DB Sync</td>
+<td class="px-4 py-2 text-right"><span class="text-xs text-error font-medium">FAIL</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-border bg-surface">
+<button class="w-full bg-primary text-white text-sm font-medium py-2 px-4 rounded hover:bg-on-background transition-colors">
+                                View All Logs
+                            </button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</body></html>

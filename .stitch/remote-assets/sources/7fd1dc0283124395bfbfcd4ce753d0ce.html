@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Product Flow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#F5FFFC',
+                        primary: '#2EC4A6',
+                        'text-primary': '#12312B',
+                        'text-secondary': '#49645E',
+                        border: '#CDEFE6',
+                        surface: '#FFFFFF',
+                        'surface-variant': '#E8F5F1',
+                        'on-surface': '#12312B',
+                        'on-surface-variant': '#49645E',
+                    },
+                    fontFamily: {
+                        headline: ["Outfit", "sans-serif"],
+                        display: ["Outfit", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #E2E8F0; min-height: 100vh; padding: 2rem; display: flex; justify-content: center; align-items: center; }
+        .grid-container { display: grid; grid-template-columns: repeat(2, 390px); gap: 2rem; }
+        .phone-frame { width: 390px; height: 844px; background-color: #F5FFFC; border-radius: 2.5rem; overflow: hidden; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border: 8px solid #333; display: flex; flex-direction: column; }
+        
+        /* Safe areas for simple rounded frame */
+        .safe-top { padding-top: 20px; }
+        .safe-bottom { padding-bottom: 20px; }
+        .pb-safe { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+        
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar { display: none; }
+        .scrollable-content { overflow-y: auto; flex: 1; -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Custom styles for mint theme */
+        .chip { display: inline-flex; items: center; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; }
+        .chip-primary { background-color: #E8F5F1; color: #2EC4A6; }
+        .chip-outline { border: 1px solid #CDEFE6; color: #49645E; }
+    </style>
+</head>
+<body>
+<div class="grid-container">
+<!-- Screen 1: Product Detail -->
+<div class="phone-frame">
+<div class="safe-top bg-surface w-full z-40 sticky top-0 border-b border-border">
+<!-- TopAppBar -->
+<div class="flex justify-between items-center h-16 px-4 w-full">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-variant text-text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="font-headline font-semibold text-text-primary text-lg">Product Detail</span>
+<div class="flex space-x-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-variant text-text-primary">
+<span class="material-symbols-outlined">favorite_border</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-variant text-text-primary">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+<div class="scrollable-content pb-[140px] bg-background">
+<!-- Image Carousel Placeholder -->
+<div class="w-full aspect-[4/3] bg-surface-variant relative">
+<img alt="Handmade Leather Dog Collar" class="w-full h-full object-cover" data-alt="Close up studio shot of a premium handcrafted brown leather dog collar with brass hardware resting on a clean white surface. Soft bright lighting, luxurious feel, minimal background, high quality product photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACzNCaKngLlGA7l1THU74uwn083e6HnlSsX1kABuiagEjajnZgc6nI2jF1otpeZHV3aVRcmAStfI37LNWuxKhGAvW4dmFmEMILt6GZDl2s5JQPgKu53P_I6WE7DclJTzvy3iLNIzxm7T7MQMB9rcUx5N5o8xFAohMeWDHKBbV65DxdyQgOsfP2U2ijB0n1bU0B6pHjtvJ0qWp12P015ftLnyy7xav3GvtPeBIx2gu2LNbY1XxtTaD1fZFU62XwTVTeLMuA9mwCTYIK">
+<div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-white/50"></div>
+<div class="w-2 h-2 rounded-full bg-white/50"></div>
+</div>
+</div>
+<div class="p-5 space-y-6">
+<!-- Title & Price -->
+<div>
+<div class="flex justify-between items-start mb-2">
+<h1 class="font-headline text-2xl font-bold text-text-primary leading-tight">Handmade Leather Dog Collar</h1>
+<span class="chip chip-primary ml-2 shrink-0">Sell</span>
+</div>
+<p class="font-headline text-3xl font-bold text-primary">$128.00</p>
+<p class="text-sm text-text-secondary mt-1">Listed 2 days ago</p>
+</div>
+<!-- Chips -->
+<div class="flex flex-wrap gap-2">
+<span class="chip chip-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">new_releases</span> New</span>
+<span class="chip chip-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">local_shipping</span> Shipping Available</span>
+<span class="chip chip-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">storefront</span> Local Pickup</span>
+</div>
+<!-- Seller Info Box -->
+<div class="bg-surface rounded-2xl p-4 border border-border flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-surface-variant overflow-hidden">
+<img alt="Jordan M." class="w-full h-full object-cover" data-alt="Portrait of a smiling young woman with dark hair in an urban setting, shallow depth of field, warm natural lighting, casual and friendly appearance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS1LOt6k642M5lf9z_6nwjUr_Hx0vztVkPlZtZ_vcEdvdszFu0PTCFkcd7Up6LH6O6cE52zODT6hg1CY9rcmFbl5x5XtPQ1_u5wNtRN5nAntO9CYcFgO6vA-XV2lKxWuFgOdKbm11ziGhYYcV1UEDjOhr6WPPvMmZo7-1NIJBt41-RQqHSk1xPBBcQUihxv8l1w-1kr6I0X18JJTsu6bPgT0YqJByRRAxfFDtB9j4FsGVe6Y06LmXiepviJ4ENNLhYkX0bhg_hujp6">
+</div>
+<div>
+<p class="font-headline font-semibold text-text-primary flex items-center gap-1">Jordan M. <span class="material-symbols-outlined text-primary text-[16px] font-bold">verified</span></p>
+<p class="text-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] font-variation-settings-'FILL'-1 text-primary">star</span> 4.8
+                            </p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary">chevron_right</span>
+</div>
+<!-- Description -->
+<div>
+<h3 class="font-headline font-semibold text-text-primary mb-2 text-lg">Description</h3>
+<p class="text-body text-text-secondary leading-relaxed">
+                        Beautiful handcrafted leather collar for medium to large dogs. Brass hardware. Never used as it was too small for my golden retriever. High-quality stitching and durable material. Reach out if you have any questions!
+                    </p>
+</div>
+</div>
+</div>
+<!-- Sticky Action Bottom Bar (Above Nav) -->
+<div class="absolute bottom-[64px] left-0 w-full bg-surface border-t border-border p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-40 pb-safe">
+<div class="flex gap-2"><button class="flex-1 py-3 px-4 rounded-xl border border-border text-text-primary font-semibold text-sm flex items-center justify-center gap-2 bg-surface hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">chat_bubble</span> Contact</button><button class="flex-1 py-3 px-4 rounded-xl border border-primary text-primary font-semibold text-sm flex items-center justify-center gap-2 bg-background hover:bg-primary/10 transition-colors">Offer</button><button class="flex-[1.5] py-3 px-4 rounded-xl bg-primary text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-[#25a58c] transition-colors shadow-sm">Buy Now</button></div>
+</div>
+<!-- BottomNavBar -->
+<div class="absolute bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 h-[84px] border-t border-border bg-surface">
+<div class="flex flex-col items-center justify-center text-text-secondary px-3 py-1">
+<span class="material-symbols-outlined">rss_feed</span>
+<span class="text-[10px] font-label mt-1">Feed</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-surface-variant text-primary rounded-xl px-3 py-1">
+<span class="material-symbols-outlined font-variation-settings-'FILL'-1">shopping_bag</span>
+<span class="text-[10px] font-label mt-1 font-medium">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary px-3 py-1">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-label mt-1">Messages</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary px-3 py-1">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[10px] font-label mt-1">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary px-3 py-1">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label mt-1">Profile</span>
+</div>
+</div>
+</div>
+<!-- Screen 2: Seller Info -->
+<div class="phone-frame">
+<div class="safe-top bg-surface w-full z-40 sticky top-0 border-b border-border">
+<div class="flex justify-between items-center h-16 px-4 w-full">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-variant text-text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="font-headline font-semibold text-text-primary">Seller Profile</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-variant text-text-primary">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+<div class="scrollable-content bg-background pb-[84px]">
+<!-- Seller Header -->
+<div class="bg-surface p-6 border-b border-border text-center flex flex-col items-center">
+<div class="w-24 h-24 rounded-full bg-surface-variant overflow-hidden mb-4 relative">
+<img alt="Jordan M." class="w-full h-full object-cover" data-alt="Portrait of a smiling young woman with dark hair in an urban setting, shallow depth of field, warm natural lighting, casual and friendly appearance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3lEuXPVVVmorJ5wRal_ThffiHezZmAxaM9OkeWZ2JjTVC7byHRMac8iDGeaTRMtMnxqPnWgtojxOONO4ILv_51tPYbwdW1FS8qSNxVDolovrKkPnf32T7b7Xc-CiPnaycDNJKoxEsfb9HEtRgE4CA1AihuGhplJ0c1_MYmzqwrdF4JggTk_6eFtGWfY5PykjnBJ_H5Yixtf5q1x2mi8dZ-fnqfyrtMO2PKlKG0P_-at-Fbr1yUCvQq1GsSBs46ppF5KQTBkl6JOPF">
+</div>
+<h2 class="font-headline text-2xl font-bold text-text-primary flex items-center justify-center gap-1">Jordan M. <span class="bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center ml-1"><span class="material-symbols-outlined text-[12px] font-bold">verified</span></span></h2>
+<p class="text-text-secondary text-sm mt-1 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Seattle, WA 鈥?Member since 2021
+                </p>
+<div class="text-sm text-primary font-medium mt-1">Verified Seller</div>
+<div class="flex gap-6 mt-6 w-full justify-center">
+<div class="text-center">
+<p class="font-headline font-bold text-xl text-text-primary">124</p>
+<p class="text-xs text-text-secondary uppercase tracking-wider">Sales</p>
+</div>
+<div class="w-px h-10 bg-border"></div>
+<div class="text-center">
+<p class="font-headline font-bold text-xl text-text-primary flex items-center gap-1 justify-center">4.8 <span class="material-symbols-outlined text-primary text-[16px] font-variation-settings-'FILL'-1">star</span></p>
+<p class="text-xs text-text-secondary uppercase tracking-wider">Rating</p>
+</div>
+</div>
+<button class="mt-6 w-full py-3 rounded-xl bg-primary text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-[#25a58c] transition-colors">
+<span class="material-symbols-outlined text-[18px]">chat_bubble</span> Message Seller
+                </button>
+</div>
+<!-- Seller Listings -->
+<div class="p-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline font-semibold text-text-primary text-lg">Active Listings (12)</h3>
+<button class="text-primary text-sm font-medium flex items-center">Filter <span class="material-symbols-outlined text-[16px]">filter_list</span></button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Item 1 -->
+<div class="bg-surface rounded-xl overflow-hidden border border-border flex flex-col">
+<div class="aspect-square bg-surface-variant relative">
+<img alt="Handmade Leather Dog Collar" class="w-full h-full object-cover" data-alt="Close up studio shot of a premium handcrafted brown leather dog collar with brass hardware resting on a clean white surface. Soft bright lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD9KIpjiRQA6vAZMsKmQ7U7YKXCoXJl4ytAL_W3MeUEDcDbABAKotdYppv-s6VltAlP4AFAmnlbMvjDfn3rCsf9xg1jLqv64aw9FuhNYWW5-nr1n5AL1P_hXJqxqosDvYz8RSr7-6clZMY2D-MnjqfKX8ugGWJDJqU0j644Oca8GGQF7IUGuOT8NBnCbdr9CZHa620yEHSMBR4VOpXVQT-8XOAt4kDx4MX-2ZqB6zmesDnw8ZE52jruhWbgSipmw1vyc3wlgk6Bc0j">
+</div>
+<div class="p-3 flex-1 flex flex-col justify-between">
+<p class="font-headline text-sm font-semibold text-text-primary line-clamp-2 mb-2">Handmade Leather Dog Collar</p>
+<p class="font-headline font-bold text-primary">$128.00</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface rounded-xl overflow-hidden border border-border flex flex-col">
+<div class="aspect-square bg-surface-variant relative">
+<img alt="Automatic Pet Feeder" class="w-full h-full object-cover" data-alt="A modern white plastic automatic pet feeder with a sleek digital display, sitting on a hardwood floor in a brightly lit modern living room." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9co440KJybDHbPUxnGAzXcQ3i6937wtwdgBCT_7yyT6b3Z5Fy_lLqno6RzxjuCjY1d_j1mr8QbLYtEFK8Tcyg1jpcyI5_fppCNXVs9G_mD9Q7JoynRWFhluMlfgoY6jOhSHDARft9WGUvUHmYlLDy-0z3PmDQFurqbXeU3Dx2ZK2Ji1KO1hC8tIqquoVd5I6gvBpOnG36AYtSR7sC5uMwlj4kF66bz2maUltPatUkuz-SIQi3UJcRr0mfeL5q2qcdtP0l3z6qmXZC">
+</div>
+<div class="p-3 flex-1 flex flex-col justify-between">
+<p class="font-headline text-sm font-semibold text-text-primary line-clamp-2 mb-2">Smart Auto Pet Feeder Wi-Fi</p>
+<p class="font-headline font-bold text-primary">$65.00</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- BottomNavBar -->
+<div class="absolute bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 h-[84px] border-t border-border bg-surface">
+<div class="flex flex-col items-center justify-center text-text-secondary px-3 py-1">
+<span class="material-symbols-outlined">rss_feed</span>
+<span class="text-[10px] font-label mt-1">Feed</span>
+</div>
+<div class="flex flex-col items-center justify-center px-3 py-1 bg-surface-variant text-primary rounded-xl">
+<span class="material-symbols-outlined font-variation-settings-'FILL'-1">shopping_bag</span>
+<span class="text-[10px] font-label mt-1">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary px-3 py-1">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-label mt-1">Messages</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary px-3 py-1">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[10px] font-label mt-1">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center px-3 py-1 text-text-secondary"><span class="material-symbols-outlined">person</span><span class="text-[10px] font-label mt-1">Profile</span></div>
+</div>
+</div>
+<!-- Screen 3: Make Offer -->
+<div class="phone-frame bg-surface">
+<div class="safe-top w-full z-40 sticky top-0 bg-surface">
+<div class="flex justify-between items-center h-16 px-4 w-full">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-variant text-text-primary">
+<span class="material-symbols-outlined">close</span>
+</button>
+<span class="font-headline font-semibold text-text-primary text-lg">Make Offer</span>
+<div class="w-10"></div> <!-- spacer -->
+</div>
+</div>
+<div class="scrollable-content px-5 pt-2 pb-[100px] flex flex-col">
+<!-- Product Summary -->
+<div class="flex items-center gap-4 bg-background p-3 rounded-2xl border border-border mb-8">
+<div class="w-16 h-16 rounded-xl bg-surface-variant overflow-hidden shrink-0">
+<img alt="Handmade Leather Dog Collar" class="w-full h-full object-cover" data-alt="Close up studio shot of a premium handcrafted brown leather dog collar with brass hardware resting on a clean white surface. Soft bright lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7APbQYZld3AX0l0gnMItHI0YIguyHE5Z4La9sBZJGF31CSvBEeyhsGUw7d5uFYRxKZ9epxYuYhgl9daVy-ipjUr-MEehSJgFjNBm6vgeVCU0lDbOLBXaUD7TiVduMDd4nmE6_60eXbBpsKHkQapZZ6k_piZXnE2kPEabMlSKfUqWiDhFzr83WwB0kkceCMIkIAaNdmOp0WPMtE-uIob7OuRRMOTnjj5Sc8lUf2VyouBhvOZoaujE5R5P94gDLP7PQ3v-HpTEQoWC1">
+</div>
+<div>
+<p class="font-headline text-sm font-semibold text-text-primary">Handmade Leather Dog Collar</p>
+<p class="font-body text-xs text-text-secondary mt-1">Listed Price: <span class="line-through">$128.00</span></p>
+</div>
+</div>
+<div class="flex-1 flex flex-col items-center">
+<p class="font-body text-sm text-text-secondary mb-2">Your Offer</p>
+<div class="flex items-center justify-center w-full mb-6 relative">
+<span class="text-3xl font-headline font-bold text-text-secondary absolute left-[28%]">$</span>
+<input class="text-5xl font-headline font-bold text-text-primary bg-transparent border-none text-center focus:ring-0 w-full outline-none" style="caret-color: rgb(46, 196, 166);" type="text" value="110.00">
+</div>
+<!-- Quick Offer Chips -->
+<div class="flex gap-3 mb-8 w-full justify-center">
+<button class="px-4 py-2 rounded-full border border-border text-sm font-medium text-text-primary hover:bg-background transition-colors">$100</button>
+<button class="px-4 py-2 rounded-full bg-surface-variant border border-primary text-sm font-medium text-primary">$110</button>
+<button class="px-4 py-2 rounded-full border border-border text-sm font-medium text-text-primary hover:bg-background transition-colors">$120</button>
+</div>
+<div class="w-full space-y-4">
+<div class="flex flex-col gap-2">
+<label class="font-headline text-sm font-semibold text-text-primary">Delivery Method</label>
+<div class="flex p-1 bg-background rounded-xl border border-border">
+<button class="flex-1 py-2 rounded-lg bg-surface shadow-sm text-sm font-semibold text-text-primary text-center">Local Pickup</button>
+<button class="flex-1 py-2 rounded-lg text-sm font-medium text-text-secondary text-center hover:bg-surface-variant transition-colors">Shipping</button>
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-4">
+<label class="font-headline text-sm font-semibold text-text-primary">Message (Optional)</label>
+<textarea class="w-full bg-background border border-border rounded-xl p-3 text-sm text-text-primary focus:ring-primary focus:border-primary placeholder-text-secondary/50 resize-none h-24" placeholder="Add a friendly note to Jordan M...">Hi, would you accept $110 if I pick it up today?</textarea>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Actions -->
+<div class="absolute bottom-0 left-0 w-full bg-surface border-t border-border p-4 pb-safe flex gap-3 z-40">
+<button class="flex-1 py-3.5 rounded-xl border border-border text-text-primary font-semibold text-[15px] hover:bg-background transition-colors">
+                Cancel
+            </button>
+<button class="flex-[2] py-3.5 rounded-xl bg-primary text-white font-semibold text-[15px] hover:bg-[#25a58c] transition-colors shadow-md">
+                Send Offer
+            </button>
+</div>
+</div>
+<!-- Screen 4: Product Publish -->
+<div class="phone-frame bg-surface">
+<div class="safe-top w-full z-40 sticky top-0 bg-surface border-b border-border">
+<div class="flex justify-between items-center h-16 px-4 w-full">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-variant text-text-primary">
+<span class="material-symbols-outlined">close</span>
+</button>
+<span class="font-headline font-semibold text-text-primary text-lg">Publish Product</span>
+<button class="text-sm font-semibold text-primary">Drafts</button>
+</div>
+</div>
+<div class="scrollable-content bg-background pb-\[120px\] pb-40">
+<!-- Photo Upload Area -->
+<div class="p-4 bg-surface mb-2 border-b border-border">
+<div class="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+<!-- Upload Button -->
+<button class="w-24 h-24 shrink-0 rounded-2xl border-2 border-dashed border-primary bg-surface-variant flex flex-col items-center justify-center text-primary gap-1">
+<span class="material-symbols-outlined">add_a_photo</span>
+<span class="text-xs font-semibold">Add Photo</span>
+</button>
+<!-- Uploaded Image 1 -->
+<div class="w-24 h-24 shrink-0 rounded-2xl bg-gray-200 overflow-hidden relative">
+<img alt="Draft Image" class="w-full h-full object-cover" data-alt="Close up studio shot of a premium handcrafted brown leather dog collar with brass hardware resting on a clean white surface. Soft bright lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0beKj2Yt5EvXjAOCoP8BN8pMC_Helkb6zxImq78EG0WG4PZLx6aw6RaZmgEKftudneZ7Enoq7ZvCl7RxWx0B3f46XjQ4wj1g1Za-5SgI8QEkgIDo-dFSutHPM3diTMV4lRe228wMpcVHWLluK3MUBZZ5voQ4ZwNFsBywMF8mkvsHZ0Tm2UaFrKZlO7j7-62Kd0nT35kMKO2BuL6cdhI9J1ZOH1Ic0xhPll6o71ULMBnd_Ci1GrUm2P4QiIM0jc4lNselFy6JxSmAO">
+<button class="absolute top-1 right-1 w-6 h-6 bg-black/50 rounded-full text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-5 space-y-5 bg-surface">
+<!-- Title & Price Inputs -->
+<div class="space-y-4">
+<div>
+<label class="block font-headline text-sm font-semibold text-text-primary mb-1">Title</label>
+<input class="w-full border-0 border-b border-border bg-transparent px-0 py-2 text-lg font-headline text-text-primary focus:ring-0 focus:border-primary placeholder-text-secondary/50" placeholder="What are you selling?" type="text" value="Handmade Leather Dog Collar">
+</div>
+<div>
+<label class="block font-headline text-sm font-semibold text-text-primary mb-1">Price</label>
+<div class="relative flex items-center border-b border-border focus-within:border-primary transition-colors"><span class="text-lg font-headline font-bold text-text-primary">$</span><input class="w-full border-none bg-transparent px-0 py-2 text-lg font-headline font-bold text-text-primary focus:ring-0 placeholder-text-secondary/50" placeholder="0.00" type="number" value="128.00"></div>
+</div>
+</div>
+<!-- Chips Selections -->
+<div class="space-y-4 pt-2">
+<div>
+<label class="block font-headline text-sm font-semibold text-text-primary mb-2">Category</label>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-2 rounded-full border border-border text-text-secondary text-sm font-medium">Toys</span>
+<span class="px-4 py-2 rounded-full border border-border text-text-secondary text-sm font-medium">Food</span>
+<span class="px-4 py-2 rounded-full border border-border text-text-secondary text-sm font-medium">Apparel</span>
+<span class="px-4 py-2 rounded-full bg-surface-variant border border-primary text-primary text-sm font-medium">Care</span>
+</div>
+</div>
+<div>
+<label class="block font-headline text-sm font-semibold text-text-primary mb-2">Trade Type</label>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-2 rounded-full bg-surface-variant border border-primary text-primary text-sm font-medium">Sell</span>
+<span class="px-4 py-2 rounded-full border border-border text-text-secondary text-sm font-medium">Trade</span>
+<span class="px-4 py-2 rounded-full border border-border text-text-secondary text-sm font-medium">Looking For</span>
+<span class="px-4 py-2 rounded-full border border-border text-text-secondary text-sm font-medium">Free / Donation</span>
+</div>
+</div>
+<div>
+<label class="block font-headline text-sm font-semibold text-text-primary mb-2">Condition</label>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-2 rounded-full bg-surface-variant border border-primary text-primary text-sm font-medium">New</span>
+<span class="px-4 py-2 rounded-full border border-border text-text-secondary text-sm font-medium">Lightly Used</span>
+<span class="px-4 py-2 rounded-full border border-border text-text-secondary text-sm font-medium">Used</span>
+</div>
+</div>
+</div>
+<!-- Description -->
+<div class="pt-2">
+<label class="block font-headline text-sm font-semibold text-text-primary mb-2">Description</label>
+<textarea class="w-full bg-background border border-border rounded-xl p-3 text-sm text-text-primary focus:ring-primary focus:border-primary placeholder-text-secondary/50 resize-none h-32" placeholder="Describe your item in detail (brand, size, flaws, etc)..."></textarea>
+</div>
+<div class="flex items-center justify-between py-2 border-t border-border mt-2">
+<span class="font-headline text-sm font-semibold text-text-primary flex items-center gap-2"><span class="material-symbols-outlined text-text-secondary">local_shipping</span> Offer Shipping</span>
+<!-- Toggle switch -->
+<div class="w-11 h-6 bg-primary rounded-full relative cursor-pointer">
+<div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Actions -->
+<div class="absolute bottom-0 left-0 w-full bg-surface border-t border-border p-4 pb-safe flex gap-3 z-40">
+<button class="flex-1 py-3.5 rounded-xl border border-border text-text-primary font-semibold text-[15px] hover:bg-background transition-colors">
+                Save Draft
+            </button>
+<button class="flex-[2] py-3.5 rounded-xl bg-primary text-white font-semibold text-[15px] hover:bg-[#25a58c] transition-colors shadow-md">
+                Publish
+            </button>
+</div>
+</div>
+</div>
+
+
+</body></html>

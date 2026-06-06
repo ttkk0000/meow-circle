@@ -1,13 +1,18 @@
-import { StyleSheet, TextInput, type TextInputProps, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { colors, radius, spacing, typography } from '@/theme';
+import {useMemo} from 'react';
+import {StyleSheet, TextInput, type TextInputProps, View} from 'react-native';
+import {MaterialIcons} from '@expo/vector-icons';
+import {type MndColors, radius, shadow, spacing, typography, useMndTheme} from '@/theme';
 
-export function StitchSearchField(props: TextInputProps) {
+export function StitchSearchField({ accessibilityLabel, placeholder, ...props }: TextInputProps) {
+  const { colors } = useMndTheme();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   return (
     <View style={styles.row}>
-      <MaterialIcons name="search" size={22} color={colors.outline} style={styles.icon} />
+      <MaterialIcons name="search" size={22} color={colors.onSurfaceSubtle} style={styles.icon} />
       <TextInput
-        placeholderTextColor={colors.outline}
+        placeholder={placeholder}
+        placeholderTextColor={colors.onSurfaceSubtle}
+        accessibilityLabel={accessibilityLabel ?? (typeof placeholder === 'string' ? placeholder : '搜索')}
         style={styles.input}
         {...props}
       />
@@ -15,31 +20,27 @@ export function StitchSearchField(props: TextInputProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.border,
-    paddingHorizontal: spacing.md,
-    minHeight: 48,
-    ...{
-      shadowColor: colors.primaryContainer,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.06,
-      shadowRadius: 10,
-      elevation: 2,
+function makeStyles(colors: MndColors) {
+  return StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: colors.border,
+      paddingHorizontal: spacing.md,
+      minHeight: 48,
+      ...shadow(colors.shadow, 'soft'),
     },
-  },
-  icon: {
-    marginRight: spacing.sm,
-  },
-  input: {
-    flex: 1,
-    ...typography.body,
-    color: colors.onSurface,
-    paddingVertical: spacing.sm,
-  },
-});
+    icon: {
+      marginRight: spacing.sm,
+    },
+    input: {
+      flex: 1,
+      ...typography.body,
+      color: colors.onSurface,
+      paddingVertical: spacing.sm,
+    },
+  });
+}

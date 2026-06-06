@@ -1,0 +1,260 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Honey Theme - Profile Screens</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        honey: {
+                            primary: '#FF8A3D',
+                            background: '#FFF8F2',
+                            surface: '#FFFFFF',
+                            border: '#F1D8C8',
+                            text: {
+                                primary: '#333333',
+                                secondary: '#666666',
+                                tertiary: '#999999'
+                            },
+                            nav: {
+                                activeBg: '#FFF1E6'
+                            }
+                        }
+                    },
+                    borderRadius: {
+                        'DEFAULT': '0.25rem',
+                        'md': '0.5rem',
+                        'lg': '0.75rem',
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                        'full': '9999px'
+                    },
+                    fontFamily: {
+                        display: ['Outfit', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                        label: ['Outfit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            margin: 0;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 390px);
+            gap: 2rem;
+        }
+        .phone-frame {
+            width: 390px;
+            height: 844px;
+            background-color: #FFF8F2;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 8px solid #333;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Material Icon styling */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body>
+<div class="grid-container">
+<!-- Screen 1: User Profile -->
+<div class="phone-frame">
+<!-- TopAppBar -->
+<div class="flex justify-between items-center w-full px-4 h-14 bg-honey-surface shadow-sm z-10 sticky top-0">
+<span class="material-symbols-outlined text-honey-primary cursor-pointer">pets</span>
+<h1 class="font-display font-bold text-lg text-honey-text-primary">M&amp;D</h1>
+<span class="material-symbols-outlined text-honey-text-secondary cursor-pointer">settings</span>
+</div>
+<div class="flex-1 overflow-y-auto hide-scrollbar pb-24 bg-honey-background">
+<!-- Profile Card -->
+<div class="bg-honey-surface m-4 p-6 rounded-2xl shadow-sm border border-honey-border text-center flex flex-col items-center p-4"><img alt="Profile avatar" class="w-20 h-20 rounded-full object-cover border-4 border-honey-background mb-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"><div class="flex items-center justify-center gap-1 mb-0.5"><h2 class="font-display font-bold text-lg text-honey-text-primary">Peach &amp; Latte</h2><span class="material-symbols-outlined text-honey-primary filled-icon text-base">verified</span></div><p class="font-body text-xs text-honey-text-secondary mb-2">@peachlatte</p><p class="font-body text-xs text-honey-text-primary px-4">Documenting the daily life of two cats.</p></div>
+<!-- Stats Card -->
+<div class="bg-honey-surface mx-4 mb-6 p-4 rounded-xl shadow-sm border border-honey-border flex justify-around text-center">
+<div>
+<p class="font-display font-bold text-lg text-honey-text-primary">128</p>
+<p class="font-body text-xs text-honey-text-secondary">Posts</p>
+</div>
+<div class="w-px bg-honey-border"></div>
+<div>
+<p class="font-display font-bold text-lg text-honey-text-primary">42</p>
+<p class="font-body text-xs text-honey-text-secondary">Followers</p>
+</div>
+<div class="w-px bg-honey-border"></div>
+<div>
+<p class="font-display font-bold text-lg text-honey-text-primary">2</p>
+<p class="font-body text-xs text-honey-text-secondary">Pets</p>
+</div>
+</div>
+<!-- My Pets Section -->
+<div class="px-4 mb-6">
+<h3 class="font-display font-semibold text-lg text-honey-text-primary mb-3">My Pets</h3>
+<div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
+<div class="flex-shrink-0 w-36 bg-honey-surface rounded-xl border border-honey-border p-3 flex flex-col items-center">
+<img alt="Latte" class="w-16 h-16 rounded-full object-cover mb-2" data-alt="A close-up portrait of a domestic shorthair cat with a curious expression, lit softly in a light, modern setting. The image fits perfectly within a clean, premium UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_wAN_GxnnAAUC824gbkwKFBcuWOJGQ0P1VB2v7oscnhDCzvDnEu78e5PfbGGecz_vxsffrH6Ekn63ujTmXmGIOyfJNmWeyWo1EbSXiA5WM9EGs_sl39Zs_3yfBED72CpR4QnmRQWUhTNrxz5BtyVdvMLA32_B6imJq25qKaYdAzATcz4o7oZXZbLOvopydTTYhDNuIxwa91SClCI9x3uVkJXicK5z9P5qe-P7NYnmtN9JbGDWHuozanfFF6EilSx0jhg-Xgg-rQpO">
+<p class="font-display font-medium text-sm text-honey-text-primary">Latte</p>
+<p class="font-body text-xs text-honey-text-secondary text-center mt-1">Domestic Shorthair<br>3 yrs</p>
+</div>
+<div class="flex-shrink-0 w-36 bg-honey-surface rounded-xl border border-honey-border p-3 flex flex-col items-center">
+<img alt="Peach" class="w-16 h-16 rounded-full object-cover mb-2" data-alt="A high-quality portrait of a fluffy Persian cat looking regal, set against a soft, bright background suitable for a modern app interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOZ15aXqXrVuGnghhPqYq2I8RSXUPCYbpNi3W6hdaAxLKsCEKEYc4sFx53xyt5ACKTcWUU6A56prfOSauE7fyyEdNzQ84vs4-PDb6s7zraJYKPF1YQgvY5Tp4AUsB2D9Fjp0fclhq0JXKPjFJ7ugI2UpG27sGCXk5dA4cNiOFoNLnBkj15QDgc_0DlFcXsiRzeoMbPQ1-15I-3gA6KnNNr247JxHhOWM8KTPFpTp8wD3RQx0OkUBNVnZAXsJd28_1zFPLg8YuNbsrt">
+<p class="font-display font-medium text-sm text-honey-text-primary">Peach</p>
+<p class="font-body text-xs text-honey-text-secondary text-center mt-1">Persian<br>5 yrs</p>
+</div>
+</div>
+</div>
+<!-- Recent Posts -->
+<div class="px-4 mb-4">
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-display font-semibold text-lg text-honey-text-primary">Recent Posts</h3>
+<a class="font-label text-sm text-honey-primary font-medium" href="#">View All</a>
+</div>
+<div class="grid gap-2 grid-cols-2"><div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+<img alt="Cat post" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjFUxPZD7WKpURiK9oADQE3UTeeFoWDtIkg_63asTeLfBRFcxypdEhiM6x92BuTaPIngkzpUzGsTk4uuxulyi6q1b_Wu1s4oCciPwP2ObAGcuPQQn9F65yXcB1H9d8V_DBbLd34QxO_zWmigSvPrtZ2k9ZPmLp6tIO-SeKSiTYBbslmb6Sg8JYI3eg1kfOeRIPWneSTS3yHhx6sALI2JlW1y9tSNhyLHlwIZ7BB-LwPnhkR4VdCo0fpwEVUNYJ-a0Ee3E5af4KhrNJ">
+</div>
+<div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+<img alt="Cat post" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlRlaf196K6eZPQAdq8ZIdy70MmlIDIP2SImazVGlXE6RyAQUKMdMabX6s7tfDUYjUXVEYGfajD738p4erjpQlGS2kVy34byMmD0SOeEL7H2JxKQIFajKd53tTCN7f72SFbswag99XQ14HuAD_6mSySoJTchwJtyCrdfILaR7OBeeLs2WDJLyVfaeyWOjEt34UTmzxbozGp8s0SN3_uNrDvwU2vfMvP6L602EN9CJiy17dWkeC-ZGsDSgSQdofa2RRfKJl_8lYyKYn">
+</div>
+<div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+<img alt="Cat post" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV0BL-Lv_xBxCh8g1ScoAkdHuFcyPzUMKGHRCCjTNTBz861blUlFWL9P9LUFcm5CHakwmGEj6VjV_1Fyun2ZLkM0c0X2C6rfAhkYtsc0-C09HIW1uADm-5MmrNn_yPeETkQLd2yjkGzY6fYktxoAKvpOapWdIS32gBCSaGvfOrTs0OgKj6jlhaE73FptGz0hKGkQNFe2qhMGDQ009rdK-3DeAHOMBfYdXSAkMDSN1dZ5uJ3WiRqIhqqBgCBOEN5T5jwoSZtHU8xbEN">
+</div>
+<div class="aspect-square bg-honey-surface rounded-lg border border-honey-border flex flex-col items-center justify-center cursor-pointer hover:bg-honey-nav-activeBg transition-colors">
+<span class="material-symbols-outlined text-honey-primary text-3xl mb-1">add_circle</span>
+<span class="font-label text-xs text-honey-primary">Add Post</span>
+</div></div>
+</div>
+</div>
+<!-- BottomNavBar (Profile Active) -->
+<div class="absolute bottom-0 left-0 right-0 z-50 bg-white border-t border-[#F5E2D5] pb-4 pt-2"><div class="flex justify-around items-center px-2"><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">home</span><span class="font-label text-[10px]">Feed</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">storefront</span><span class="font-label text-[10px]">Market</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">chat_bubble</span><span class="font-label text-[10px]">Messages</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">list_alt</span><span class="font-label text-[10px]">Orders</span></div><div class="flex flex-col items-center justify-center bg-[#FFF1E6] text-[#FF8A3D] rounded-xl p-2 px-4 cursor-pointer"><span class="material-symbols-outlined mb-1 filled-icon">pets</span><span class="font-label text-[10px] font-medium">Profile</span></div></div></div>
+</div>
+<!-- Screen 2: Pet Profile (Latte) -->
+<div class="phone-frame">
+<!-- TopAppBar -->
+<div class="flex justify-between items-center w-full px-4 h-14 bg-honey-surface border-b border-honey-border shadow-sm z-10 sticky top-0">
+<span class="material-symbols-outlined text-honey-text-secondary cursor-pointer">arrow_back</span>
+<h1 class="font-display font-bold text-lg text-honey-text-primary">Latte</h1>
+<span class="material-symbols-outlined text-honey-text-secondary cursor-pointer">more_horiz</span>
+</div>
+<div class="flex-1 overflow-y-auto hide-scrollbar pb-24 bg-honey-background"><div class="bg-honey-surface pt-4 pb-4 px-4 rounded-b-3xl shadow-sm border-b border-honey-border flex flex-col items-center mb-4"><img alt="Latte large avatar" class="w-24 h-24 rounded-full object-cover border-4 border-honey-background shadow-md mb-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtpafG6w_ihBz9WeJlja3ROBkMPuCFAA4hnKOIzuiQrNnbIGUNgUL3C86YlYkiGs_g83LNjdF9HEJGAG6kn_nUxvNJH79lKZJR7ffwyUlrPuN-4_UTF0nStPimkB4OrrMBpLR52Ey5hLAnfICDWwvO2roB_7T4h-GsNFAuCEm2ufdxB-MtobJTkxlErlugKkDHQxqb-PkHiwE4TxVZja6hULFwOZA8A9iAITFeO9-0p002tyFYr06Uw1nvde0sEmTitezIbg6YGpdD"><h2 class="font-display font-bold text-xl text-honey-text-primary mb-0.5">Latte</h2><p class="font-body text-xs text-honey-text-secondary mb-3">Domestic Shorthair 路 3 yrs</p><div class="flex gap-2 mb-3"><span class="px-2 py-0.5 bg-honey-background border border-honey-border rounded-full font-label text-[10px] text-honey-text-primary">Cozy</span><span class="px-2 py-0.5 bg-honey-background border border-honey-border rounded-full font-label text-[10px] text-honey-text-primary">Curious</span><span class="px-2 py-0.5 bg-honey-background border border-honey-border rounded-full font-label text-[10px] text-honey-text-primary">Sunny</span></div><button class="w-full bg-honey-primary text-white font-label font-semibold py-2.5 rounded-xl text-sm">Follow</button></div><div class="flex justify-around bg-honey-surface mx-4 p-3 rounded-xl shadow-sm border border-honey-border mb-4"><div class="text-center"><p class="font-display font-bold text-base text-honey-text-primary">38</p><p class="font-body text-xs text-honey-text-secondary">Posts</p></div><div class="w-px bg-honey-border"></div><div class="text-center"><p class="font-display font-bold text-base text-honey-text-primary">2.4k</p><p class="font-body text-xs text-honey-text-secondary">Likes</p></div><div class="w-px bg-honey-border"></div><div class="text-center"><p class="font-display font-bold text-base text-honey-text-primary">12</p><p class="font-body text-xs text-honey-text-secondary">Badges</p></div></div><div class="bg-honey-surface mx-4 mb-4 p-3 rounded-xl shadow-sm border border-honey-border flex items-center justify-between"><div class="flex items-center gap-2"><img alt="Owner avatar" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjLIAKzLI-4Mx020wY10tpcrXhEZNE_ySVZhJc8HqVQZ0GynB2Q7cDBWg4QuQmLer33ishgtHBiJbmR0E42J04-djJUv-y-3RLbPzhJZn9675oA_sk3OujMN0KfEDLClyZs6OeAkttdpvMraEUuyqoHBBPfZNQ-k-gJ2AN9Afn662J9oFULAGTy8ed0Vmy4NR48Iv0AefmN9U5-kWNigSo3_DrlikRRscaC81piQGPU0kGa2w6FnIcf9z-RNHeQFxVQ9_rEjk2MXZj"><div><p class="font-display font-medium text-xs text-honey-text-primary">Peach &amp; Latte</p></div></div><a class="font-label text-[10px] text-honey-primary font-medium bg-honey-nav-activeBg px-2 py-1 rounded-lg" href="#">View</a></div><div class="px-4"><h3 class="font-display font-semibold text-base text-honey-text-primary mb-2">Recent Moments</h3><div class="grid grid-cols-2 gap-2"><div class="aspect-square rounded-xl overflow-hidden"><img alt="Moment" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFNF4hCS4yd2IoxmUFxX1T6YWld8SgwydctBZT6gIPR0iH5AEfYPbYMPNpooHu-5kTobnP00htgzcIFNZAuCC1DscWXMg_hLMx5hjon2zVszxEY0BYqyLSAwjTMF0Bye2CK1aQkK-MzkGLHKv6uE85qJDzJxMSNrNAwiuOYz4Bn46vtMCKxSBGxIfCqA9bIzzkEEceQiXvNy7aYxInFdiOdbf_AAwsO9DhfwFsOT9e1dBDF2V3P_M0gEH-2SYEfXvMAI4ambrRmG6z"></div><div class="aspect-square rounded-xl overflow-hidden"><img alt="Moment" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2Fqmeg6OyJcyrYk_eoevP3ZqlHnL14IYNNx2E8mgbqcyH3QVmgoIv9uEl_mJsOUCJsNiyg8FqvJZPrbA9W-MpN_cqMkh1-O_CZyGaBeuMZ_FteBcOv7Q1CZzM45JMTgyfJ9wmYiisC4EtnvJKOloAmaEl7KoxCX81HMaaflkDAGuQM3hR11ywHu6_xrRdwyNh2bEbHoXVwKKA4bY1aFqmunIoDWSYx3NRamnDCeZz05Z9KSIfgYsTR56MBsN_OUkzVWIcNxujm_LS"></div></div></div></div>
+<div class="absolute bottom-0 left-0 right-0 z-50 bg-white border-t border-[#F5E2D5] pb-4 pt-2"><div class="flex justify-around items-center px-2"><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">home</span><span class="font-label text-[10px]">Feed</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">storefront</span><span class="font-label text-[10px]">Market</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">chat_bubble</span><span class="font-label text-[10px]">Messages</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">list_alt</span><span class="font-label text-[10px]">Orders</span></div><div class="flex flex-col items-center justify-center bg-[#FFF1E6] text-[#FF8A3D] rounded-xl p-2 px-4 cursor-pointer"><span class="material-symbols-outlined mb-1 filled-icon">pets</span><span class="font-label text-[10px] font-medium">Profile</span></div></div></div></div>
+<!-- Screen 3: Edit Profile -->
+<div class="phone-frame">
+<!-- TopAppBar -->
+<div class="flex justify-between items-center w-full px-4 h-14 bg-honey-surface border-b border-honey-border shadow-sm z-10 sticky top-0">
+<span class="material-symbols-outlined text-honey-text-secondary cursor-pointer">close</span>
+<h1 class="font-display font-bold text-lg text-honey-text-primary">Edit Profile</h1>
+<button class="font-label font-semibold text-honey-primary">Save</button>
+</div>
+<div class="flex-1 overflow-y-auto hide-scrollbar p-6 bg-honey-surface pb-12"><div class="flex flex-col items-center mb-4"><div class="relative"><img alt="Profile avatar" class="w-20 h-20 rounded-full object-cover border-2 border-honey-border" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz7T_rJNAoHQ8nnlUdqKYcs-FjPF66Do-00A4YO8nkqZgN2i_lb7SndT9HR9ErZh6gRHTXj2Jkr1UBAi1gjin2RxXUYH-KPnfF3dw8kqBxk8bXk0u4ejEXqMXjDlPhSm0trWZWeuFwVwEo4pH_X7VF3zWlEfBPZGObMG9JsWl2zx9fs7y4F6TQ9lKNMcE_FPOqdllSiJ1P866zH69AtCQqbt9ZGxQ0goo3VGWHW31k4DzK0ku_DKmOHylajrfM3ysBbuz9Os7NccNm"><div class="absolute bottom-0 right-0 bg-honey-primary text-white rounded-full w-7 h-7 flex items-center justify-center border-2 border-white cursor-pointer shadow-sm"><span class="material-symbols-outlined text-xs">edit</span></div></div><button class="mt-1.5 font-label text-xs text-honey-primary font-medium">Change photo</button></div><div class="space-y-3"><div><label class="block font-label text-xs font-medium text-honey-text-secondary mb-1">Display Name</label><input class="w-full border-honey-border rounded-lg bg-honey-background px-3 py-2 font-body text-sm text-honey-text-primary outline-none" type="text" value="Peach &amp; Latte"></div><div><label class="block font-label text-xs font-medium text-honey-text-secondary mb-1">Handle</label><input class="w-full border-honey-border rounded-lg bg-honey-background px-3 py-2 font-body text-sm text-honey-text-primary outline-none" type="text" value="@peachlatte"></div><div><label class="block font-label text-xs font-medium text-honey-text-secondary mb-1">Bio</label><textarea class="w-full border-honey-border rounded-lg bg-honey-background px-3 py-2 font-body text-sm text-honey-text-primary outline-none resize-none" rows="2">Documenting the daily life of two cats.</textarea></div></div><hr class="border-honey-border my-4"><div class="mb-4"><label class="block font-label text-xs font-medium text-honey-text-secondary mb-2">Linked Pets</label><div class="flex gap-2"><div class="relative w-12 h-12 rounded-lg border-2 border-honey-primary p-0.5"><img alt="Latte" class="w-full h-full rounded object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBP3UueOkcQpWo0ST4oE6FzjjExScD0El8LM2m3HjqJyvnB3OiNvbyOrNNsO78sGvievO640Qk7_P0u6-Q7qTB_-p1IOru9wcXgjiyw6hQAu89vXdPfFFLSZUMTvIiFO-h6-Wik0g3ixnG2n6lN3daCXBLCfVIfLzlbvYAclvV5RG_3dENtwOH6p1NCxQeHq8EFLUG8RHiFENs3hF4-Or9NbqJCme7ZabMEgLkJYKZNR-xqm-SQhWZMMHC4-HlmWU-cJWIA_dQ83Fvb"><div class="absolute -top-1.5 -right-1.5 bg-honey-surface rounded-full"><span class="material-symbols-outlined text-honey-primary filled-icon text-base">check_circle</span></div></div><div class="w-12 h-12 rounded-lg border border-dashed border-honey-text-tertiary flex flex-col items-center justify-center text-honey-text-secondary"><span class="material-symbols-outlined text-lg">add</span></div></div></div><div class="space-y-3"><div class="flex items-center justify-between"><div><p class="font-display font-medium text-honey-text-primary text-xs">Public profile</p></div><div class="w-10 h-5 bg-honey-primary rounded-full relative"><div class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm"></div></div></div><div class="flex items-center justify-between mt-3">
+<div><p class="font-display font-medium text-honey-text-primary text-xs">Show pets on profile</p></div>
+<div class="w-10 h-5 bg-honey-primary rounded-full relative">
+<div class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm"></div>
+</div>
+</div></div></div>
+</div>
+<!-- Screen 4: Followers / Following List -->
+<div class="phone-frame">
+<!-- TopAppBar -->
+<div class="flex justify-between items-center w-full px-4 h-14 bg-honey-surface z-10 sticky top-0 border-b border-honey-border">
+<span class="material-symbols-outlined text-honey-text-secondary cursor-pointer">arrow_back</span>
+<h1 class="font-display font-bold text-lg text-honey-text-primary">Followers</h1>
+<span class="material-symbols-outlined text-honey-text-secondary cursor-pointer">search</span>
+</div>
+<!-- Segmented Tabs -->
+<div class="bg-honey-surface px-4 pt-2 shadow-sm z-10 sticky top-14">
+<div class="flex w-full bg-honey-background p-1 rounded-xl mb-3">
+<button class="flex-1 py-2 font-label text-sm font-semibold text-honey-primary bg-white shadow-sm rounded-lg">Followers</button>
+<button class="flex-1 py-2 font-label text-sm font-medium text-honey-text-secondary rounded-lg">Following</button>
+</div>
+<!-- Search Bar -->
+<div class="relative mb-3 pb-3">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-honey-text-tertiary">search</span>
+<input class="w-full bg-honey-background border-none rounded-xl py-2.5 pl-10 pr-4 font-body text-sm text-honey-text-primary placeholder-honey-text-tertiary focus:ring-1 focus:ring-honey-primary outline-none" placeholder="Search people or pets..." type="text">
+</div>
+</div>
+<div class="flex-1 overflow-y-auto hide-scrollbar bg-honey-surface pb-24">
+<!-- List Items -->
+<div class="divide-y divide-honey-border px-4">
+<!-- Item 1 -->
+<div class="py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Milo &amp; Friends" class="w-12 h-12 rounded-full object-cover" data-alt="A portrait of a beautiful cat serving as a profile picture for a creator account." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqOpKzJg3eoebYOf4tdwW8rrO54rCO8tS4PsQPSG900aAmMkurveX2Ns9y0XDoJe7OHL91KBKfbGaNHAaybdbA9eX47hmb8R7sb5oa-TCt5Rr_ETjWTokbvGSK3-szIVkCGIL3NR0G64Uu9ht2eS0IPiH55RKt-6aBn11NeS7xE5JGzi76SYgz4KbGJV4AvhKTRi1MkbuLdPPtKpRvXk1yotvH-2wJCb5I63qwu7Y_3Yb15HlvRA5r473zadIYO6Ss4h2p6S9H1WC7">
+<div>
+<p class="font-display font-semibold text-sm text-honey-text-primary flex items-center gap-1">Milo &amp; Friends <span class="material-symbols-outlined text-[14px] text-honey-primary filled-icon">verified</span></p>
+<p class="font-body text-xs text-honey-text-secondary">@milo_paws 路 Cat creator</p>
+</div>
+</div>
+<button class="px-4 py-1.5 bg-honey-primary text-white font-label text-xs font-semibold rounded-lg shadow-sm">Follow</button>
+</div>
+<!-- Item 2 -->
+<div class="py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Luna the Tabby" class="w-12 h-12 rounded-full object-cover" data-alt="Profile picture of a cute tabby cat." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_Ai24A5Goj2zvd8555z3DwYugKUa-FIrdg-1wlLDqCIRA2ElHWJKIe0mymOZ8qpazvAhWZr93BIQY0fd3oNeohlHX2e_cg5a5Ws_8N8DpeVsbIe8B6nQgkLYdj71NDa3T2iKzi8nZMjxpUKZFC3yu9O1rX74t45TsUU_eejW_jfFZtfo5CwYzGRWjaVOGpmOHXnJK0t9ayshjLRkBl_qf1SMLCMYHDbH4_BqnJb1eWnWlYe-BFR4aT-nx7hiI69sx6pncCaXo1qZy">
+<div>
+<p class="font-display font-semibold text-sm text-honey-text-primary">Luna the Tabby</p>
+<p class="font-body text-xs text-honey-text-secondary">@luna_tabby 路 Domestic Shorthair</p>
+</div>
+</div>
+<button class="px-4 py-1.5 bg-honey-background border border-honey-border text-honey-text-primary font-label text-xs font-semibold rounded-lg">Following</button>
+</div>
+<!-- Item 3 -->
+<div class="py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Whiskers Daily" class="w-12 h-12 rounded-full object-cover" data-alt="Profile picture showing two cats together." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6YREznxgaU1PbkV7g5W32xTfySiCiMfF9MECjWuVEZ5oke8nLphRo2iMq7vgjdmk3pZ-ungauGG5dh9RJEfQndyztfAg8JRRrpVSmcHTrXCmmB7wavGILTfPnqGwfJacsf26XUM0usxUsibbkd0pLSoh0DWyI59AVCNvCZo6sdz9E50aiSHRhRpMKJ_yvR1aEKu4xzKJSta-tmew3m1vWxBZ4r6KsW6KOydAJnC61e7q0WyWgCvo3tt7JAEE4VOYmCDFdO8RTrdls">
+<div>
+<p class="font-display font-semibold text-sm text-honey-text-primary">Whiskers Daily</p>
+<p class="font-body text-xs text-honey-text-secondary">@whiskers 路 Cozy cat moments</p>
+</div>
+</div>
+<button class="px-4 py-1.5 bg-honey-primary text-white font-label text-xs font-semibold rounded-lg shadow-sm">Follow</button>
+</div>
+<!-- Item 4 -->
+<div class="py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Maple &amp; Co." class="w-12 h-12 rounded-full object-cover" data-alt="Profile picture of a fluffy light colored cat." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ6o8pnwlxS1HaaPj0ki6qCtJ-Cg1mxWYO752Rbin7gUElvMpWyXIPuXY7LQeVIRLWyr6CIF0omS1D73qWU3f4EfGWfMJkWRp0XyboXDi_zPW3JojXY2E8sd8smY3ck0zuTG9qJtijJ-zYmrnvCg9yj0mqyy1MmxqHGAz-cs7QG08iivtBlrItpqxoA5bCF_7033CHeBN8mt_zh3Pk8a_Z60EtgfloalLr_ihEqZue7P4V63w8VzP4oYTwT2rraLLodxfFwsWo5DVH">
+<div>
+<p class="font-display font-semibold text-sm text-honey-text-primary">Maple &amp; Co.</p>
+<p class="font-body text-xs text-honey-text-secondary">@mapleco 路 Pet family</p>
+</div>
+</div>
+<button class="px-4 py-1.5 bg-honey-background border border-honey-border text-honey-text-primary font-label text-xs font-semibold rounded-lg">Following</button>
+</div>
+</div>
+</div>
+<!-- BottomNavBar (Profile Active) -->
+<div class="absolute bottom-0 left-0 right-0 z-50 bg-white border-t border-[#F5E2D5] pb-4 pt-2"><div class="flex justify-around items-center px-2"><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">home</span><span class="font-label text-[10px]">Feed</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">storefront</span><span class="font-label text-[10px]">Market</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">chat_bubble</span><span class="font-label text-[10px]">Messages</span></div><div class="flex flex-col items-center justify-center text-[#6B5E57] p-2 cursor-pointer"><span class="material-symbols-outlined mb-1">list_alt</span><span class="font-label text-[10px]">Orders</span></div><div class="flex flex-col items-center justify-center bg-[#FFF1E6] text-[#FF8A3D] rounded-xl p-2 px-4 cursor-pointer"><span class="material-symbols-outlined mb-1 filled-icon">pets</span><span class="font-label text-[10px] font-medium">Profile</span></div></div></div>
+</div>
+</div>
+</body></html>

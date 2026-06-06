@@ -4,10 +4,10 @@ import kotlin.math.floor
 
 fun categoryLabel(c: String): String =
     when (c) {
-        "daily_share" -> "日常"
+        "daily_share" -> "猫猫日常"
         "help" -> "求助"
         "activity" -> "活动"
-        "trade" -> "交易"
+        "trade" -> "好物交易"
         else -> c
     }
 

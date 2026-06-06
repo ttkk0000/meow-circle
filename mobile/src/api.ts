@@ -1,4 +1,4 @@
-// Minimal, dependency-free fetch client for the Meow Circle Go backend.
+// Minimal, dependency-free fetch client for the M&D Go backend.
 // Matches the URL contract defined in internal/platform/api/router.go.
 //
 // Token lifecycle: we persist it in expo-secure-store (Keychain on iOS,
@@ -7,7 +7,7 @@
 
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 
 const TOKEN_KEY = 'meow.auth.token';
 const USER_KEY = 'meow.auth.user';
@@ -50,10 +50,27 @@ export function resolveMediaUrl(url?: string | null): string | undefined {
 // SecureStore isn't available on web; transparently fall back to the
 // platform's storage. We keep the API identical so the rest of the app
 // doesn't need to care.
+function getWebStorage():
+  | {
+      getItem: (key: string) => string | null;
+      setItem: (key: string, value: string) => void;
+      removeItem: (key: string) => void;
+    }
+  | null {
+  const maybeGlobal = globalThis as {
+    localStorage?: {
+      getItem: (key: string) => string | null;
+      setItem: (key: string, value: string) => void;
+      removeItem: (key: string) => void;
+    };
+  };
+  return maybeGlobal.localStorage ?? null;
+}
+
 const secureGet = async (k: string): Promise<string | null> => {
   if (Platform.OS === 'web') {
     try {
-      return typeof window !== 'undefined' ? window.localStorage.getItem(k) : null;
+      return getWebStorage()?.getItem(k) ?? null;
     } catch {
       return null;
     }
@@ -63,7 +80,7 @@ const secureGet = async (k: string): Promise<string | null> => {
 const secureSet = async (k: string, v: string): Promise<void> => {
   if (Platform.OS === 'web') {
     try {
-      window.localStorage.setItem(k, v);
+      getWebStorage()?.setItem(k, v);
     } catch {
       /* ignore */
     }
@@ -74,7 +91,7 @@ const secureSet = async (k: string, v: string): Promise<void> => {
 const secureDel = async (k: string): Promise<void> => {
   if (Platform.OS === 'web') {
     try {
-      window.localStorage.removeItem(k);
+      getWebStorage()?.removeItem(k);
     } catch {
       /* ignore */
     }

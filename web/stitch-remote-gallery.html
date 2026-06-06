@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>M&D Stitch Remote Asset Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #f7f7f8;
+      --surface: #ffffff;
+      --surface-variant: #f3f4f6;
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #e5e7eb;
+      --accent: #ff8a3d;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: end;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(247, 247, 248, .96);
+      backdrop-filter: blur(12px);
+    }
+    h1,
+    h2 {
+      margin: 0;
+      font-family: "Outfit", "Inter", system-ui, sans-serif;
+      letter-spacing: 0;
+    }
+    h1 {
+      max-width: 860px;
+      font-size: clamp(30px, 5vw, 56px);
+      line-height: .95;
+    }
+    p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    a {
+      color: inherit;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: end;
+    }
+    .top-actions a,
+    .filters button,
+    .links a {
+      display: inline-flex;
+      min-height: 40px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      padding: 0 14px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .filters {
+      width: min(1500px, calc(100% - 28px));
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px auto 0;
+    }
+    .filters button.is-active {
+      border-color: #4b5563;
+      background: #4b5563;
+      color: #ffffff;
+    }
+    main {
+      width: min(1500px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 18px 0 64px;
+    }
+    .status {
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    article {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+    .preview {
+      display: block;
+      height: 560px;
+      border-bottom: 1px solid var(--border);
+      background: #fff8f2;
+    }
+    .preview img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: top center;
+    }
+    .meta {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+    }
+    .meta span,
+    .meta code {
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chips span {
+      min-height: 26px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: var(--surface-variant);
+      padding: 0 9px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .links a:first-child {
+      border-color: #f1d8c8;
+      background: #fff1e6;
+      color: var(--accent);
+    }
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      header { position: static; grid-template-columns: 1fr; }
+      .top-actions { justify-content: start; }
+      .grid { grid-template-columns: 1fr; }
+      .preview { height: min(680px, 74vh); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Remote Stitch assets, full-size and source-backed.</h1>
+      <p>Rendered from <code>web/assets/stitch-remote/metadata.json</code>. Screenshots are downloaded with <code>=s0</code>; HTML, SVG, and Markdown sources are mirrored beside them.</p>
+    </div>
+    <nav class="top-actions" aria-label="Gallery navigation">
+      <a href="pawpop.html">Index</a>
+      <a href="mnd-web-client-board.html">Sync Board</a>
+      <a href="assets/stitch-remote/metadata.json">Metadata</a>
+    </nav>
+  </header>
+
+  <nav class="filters" aria-label="Asset filters">
+    <button type="button" class="is-active" data-filter="all">All</button>
+    <button type="button" data-filter="mobile-flow">Mobile</button>
+    <button type="button" data-filter="web-desktop-flow">Web/Desktop</button>
+    <button type="button" data-filter="theme-board">Themes</button>
+    <button type="button" data-filter="component-library">Components</button>
+    <button type="button" data-filter="design-system">Design System</button>
+    <button type="button" data-filter="global-requirements">Docs</button>
+    <button type="button" data-filter="icon">Icons</button>
+  </nav>
+
+  <main>
+    <p class="status" id="status">Loading Stitch metadata...</p>
+    <section class="grid" id="gallery" aria-live="polite"></section>
+  </main>
+
+  <script>
+    const gallery = document.querySelector("#gallery");
+    const statusNode = document.querySelector("#status");
+    const filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
+    let records = [];
+
+    const order = [
+      "mobile-flow",
+      "web-desktop-flow",
+      "theme-board",
+      "component-library",
+      "design-system",
+      "theme-flow",
+      "global-requirements",
+      "image-asset",
+      "icon"
+    ];
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function sortRecords(a, b) {
+      const group = order.indexOf(a.category) - order.indexOf(b.category);
+      if (group !== 0) return group;
+      return a.title.localeCompare(b.title);
+    }
+
+    function render(filter = "all") {
+      const visible = records
+        .filter((record) => filter === "all" || record.category === filter)
+        .sort(sortRecords);
+
+      statusNode.textContent = `${visible.length} of ${records.length} Stitch records shown. Open a screenshot for the full-resolution PNG, or open source for the exact Stitch HTML/SVG/Markdown.`;
+      gallery.innerHTML = visible.map((record, index) => {
+        const title = escapeHtml(record.title);
+        const category = escapeHtml(record.category);
+        const deviceType = escapeHtml(record.deviceType || "SOURCE");
+        const id = escapeHtml(record.id);
+        const loading = index < 6 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`;
+        const image = record.webScreenshot
+          ? `<a class="preview" href="${record.webScreenshot}"><img src="${record.webScreenshot}" alt="${title}" ${loading} decoding="async"></a>`
+          : `<a class="preview" href="${record.webSource || "#"}"><img src="assets/stitch-remote/screens/11310ac2a2284e809a68589261f12e31.png" alt="" ${loading} decoding="async"></a>`;
+        const sourceLink = record.webSource
+          ? `<a href="${record.webSource}">Open source</a>`
+          : "";
+        const imageLink = record.webScreenshot
+          ? `<a href="${record.webScreenshot}">Open PNG</a>`
+          : "";
+
+        return `
+          <article>
+            ${image}
+            <div class="meta">
+              <h2>${title}</h2>
+              <div class="chips">
+                <span>${category}</span>
+                <span>${deviceType}</span>
+                <span>${record.width || "?"} x ${record.height || "?"}</span>
+              </div>
+              <code>${id}</code>
+              <div class="links">
+                ${imageLink}
+                ${sourceLink}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+        render(button.dataset.filter);
+      });
+    });
+
+    fetch("assets/stitch-remote/metadata.json")
+      .then((response) => {
+        if (!response.ok) throw new Error(`Metadata request failed: ${response.status}`);
+        return response.json();
+      })
+      .then((metadata) => {
+        records = metadata.screens || [];
+        render("all");
+      })
+      .catch((error) => {
+        statusNode.textContent = error.message;
+      });
+  </script>
+</body>
+</html>

@@ -3,9 +3,10 @@
   const LANG_KEY = "meow_lang";
 
   const SUPPORTED_THEMES = [
-    { id: "sugar", label: { zh: "蜜糖", en: "Sugar", ja: "シュガー" } },
+    { id: "honey", label: { zh: "蜜糖", en: "Honey", ja: "ハニー" } },
     { id: "mint", label: { zh: "薄荷", en: "Mint", ja: "ミント" } },
     { id: "night", label: { zh: "暗夜", en: "Night", ja: "ナイト" } },
+    { id: "neutral", label: { zh: "中性", en: "Neutral", ja: "ニュートラル" } },
   ];
 
   const SUPPORTED_LANGS = [
@@ -26,9 +27,10 @@
       "nav.logout": "退出",
       "nav.settings_theme": "主题",
       "nav.settings_lang": "语言",
-      "theme.sugar": "蜜糖",
+      "theme.honey": "蜜糖",
       "theme.mint": "薄荷",
       "theme.night": "暗夜",
+      "theme.neutral": "中性",
       "auth.title": "登录 / 注册",
       "auth.tab_login": "登录",
       "auth.tab_register": "注册",
@@ -474,9 +476,10 @@
       "nav.logout": "Logout",
       "nav.settings_theme": "Theme",
       "nav.settings_lang": "Language",
-      "theme.sugar": "Sugar",
+      "theme.honey": "Honey",
       "theme.mint": "Mint",
       "theme.night": "Night",
+      "theme.neutral": "Neutral",
       "auth.title": "Sign in / Sign up",
       "auth.tab_login": "Sign in",
       "auth.tab_register": "Sign up",
@@ -921,9 +924,10 @@
       "nav.logout": "ログアウト",
       "nav.settings_theme": "テーマ",
       "nav.settings_lang": "言語",
-      "theme.sugar": "シュガー",
+      "theme.honey": "ハニー",
       "theme.mint": "ミント",
       "theme.night": "ナイト",
+      "theme.neutral": "ニュートラル",
       "auth.title": "ログイン / 登録",
       "auth.tab_login": "ログイン",
       "auth.tab_register": "登録",
@@ -1359,9 +1363,15 @@
     },
   };
 
+  function normalizeTheme(id) {
+    if (id === "sugar" || id === "light" || id === "warm") return "honey";
+    if (id === "system") return "neutral";
+    return id;
+  }
+
   function getTheme() {
-    const saved = localStorage.getItem(THEME_KEY);
-    return saved && SUPPORTED_THEMES.some((t) => t.id === saved) ? saved : "sugar";
+    const saved = normalizeTheme(localStorage.getItem(THEME_KEY));
+    return saved && SUPPORTED_THEMES.some((t) => t.id === saved) ? saved : "honey";
   }
 
   function getLang() {
@@ -1374,8 +1384,9 @@
   }
 
   function setTheme(id) {
-    localStorage.setItem(THEME_KEY, id);
-    document.documentElement.setAttribute("data-theme", id);
+    const next = normalizeTheme(id);
+    localStorage.setItem(THEME_KEY, next);
+    document.documentElement.setAttribute("data-theme", next);
   }
 
   function setLang(id) {
@@ -1473,39 +1484,83 @@
     item.addEventListener("click", hide, { once: true });
   }
 
-  // External design screen references. Desktop/admin screens are implemented
-  // as web routes; mobile/state screens are used by responsive web and Expo.
-  const STITCH_WEB_PROJECT_ID = "472020832926366758";
+  // Current Stitch V2 design references for project 13275961100622290348.
+  // Runtime pages keep STITCH_WEB_SCREENS compatibility labels below.
+  const STITCH_WEB_PROJECT_ID = "13275961100622290348";
+  const STITCH_MOBILE_REFERENCE_SCREENS = {
+    HOME: "2cbf0afac9824702b850d2f0d9d06942",
+    MARKET: "e57b8cd42f6f45c08949322cbcc3b89f",
+    PROFILE: "6d735a2d4f714b29ad07607685e2de49",
+    PRODUCT_FLOWS: "7fd1dc0283124395bfbfcd4ce753d0ce",
+    PROFILE_AND_PET: "eff431efe77f47858d47809096cfad7a",
+    AUTH_ONBOARDING: "72bf00c20d734bc7b1312be642a918fc",
+  };
+  const STITCH_WEB_FLOW_SCREENS = {
+    SOCIAL_FEED: "9316e37facb5477e8a41f17c92caf433",
+    MARKET_DESKTOP: "b8877dd4369e479fbbddf4dcc3a5e5eb",
+    MESSAGES: "8d7449b2407243bd8f827d38bf4f509c",
+    ORDERS: "bbfc29fa595a4773afc2a91b276b2a05",
+    SETTINGS: "ec4b9497c04f4b91b2d6236703efdaff",
+    REVIEW_SAFETY: "fd8cd509a0c24d61b789ae22f4146c80",
+  };
+  const STITCH_THEME_SCREENS = {
+    HONEY: "b30ddbe5a0c241fc910ff51716f415c4",
+    MINT: "d940b93dce0547dfb353990cf6c90719",
+    NIGHT: "a984395ba2834be688e397c12967facf",
+    NEUTRAL: "11310ac2a2284e809a68589261f12e31",
+    NIGHT_FLOW: "207a704fbe6e4962b73725ee6d2b88da",
+  };
+  const STITCH_COMPONENT_SCREENS = {
+    DESIGN_FOUNDATION: "bc706d4088e34bdfb6c30bf8045e4cb4",
+    DESIGN_GEOMETRY: "dad492ad9bc547e4aafb94b9a9baf50e",
+    HONEY_BASIC: "c9e36d888ec147a692112ba1da15233a",
+    HONEY_CORE: "339cebfa1f904aaca1cd353b15e1858a",
+    HONEY_SOCIAL_FEED: "7745202be4e3400fa8556050a89dcca4",
+    HONEY_MESSAGES_ORDERS: "44b8b0dc48024ccc982898ef4c900b81",
+    MINT_MARKET: "b58af2de47354cf5ab92f5b64b160350",
+    INTERACTION_PATTERNS: "fc4bc839c77a423abb2b1d3c4664d714",
+  };
+  const STITCH_DESIGN_DOCS = {
+    OFFICIAL_FORMAT: "11388975682457720262",
+    V2_NEUTRAL_FIXED: "1187049162856747640",
+  };
+  const STITCH_REFERENCE_SCREENS = {
+    ...STITCH_MOBILE_REFERENCE_SCREENS,
+    ...STITCH_WEB_FLOW_SCREENS,
+    ...STITCH_THEME_SCREENS,
+    ...STITCH_COMPONENT_SCREENS,
+    ...STITCH_DESIGN_DOCS,
+  };
   const STITCH_WEB_SCREENS = {
-    HOME_DESKTOP: "cd9894efb5c141e6895ad328663a64b0",
-    LOGIN_DESKTOP: "ccdaf889da834d8a839e720352980ee9",
-    REGISTER_DESKTOP: "4ace569b3226457ab364b5c0362ef55c",
-    DISCOVER_DESKTOP: "87b58790989b4ac09c53fb50a60d9797",
-    MESSAGES_DESKTOP: "3bb5216364e84f1899f07fc7fe8e2038",
-    PROFILE_DESKTOP: "d39145c57af848cdadbbc15cf97c3487",
-    POST_DETAIL_DESKTOP: "a75de8a6450744949bdea167e327c292",
-    COMPOSE_POST_DESKTOP: "cb6d98b9ae354f3e90e17d0416f9ad05",
-    ADMIN_COMPOSE_POST: "7a10ed77fc7a4f4fb9b169ab1cab4205",
-    ADMIN_COMPOSE_LISTING: "7c6cce1873954c309cb55b197f5a9a64",
-    ADMIN_MEDIA: "7c0bc12051204b98ae724b5b9b79d8e8",
-    ADMIN_MY_POSTS: "486e83f213884a7999302ec9c1f3a0af",
-    ADMIN_MY_LISTINGS: "8516f4328a7b419d8ae9fdaf412cfa62",
-    ADMIN_MY_ORDERS: "ec5bfdd3707849dda72da3c1bafe5b95",
-    ADMIN_PROFILE: "05062f3a8a09444596188cb3d26bad65",
-    ADMIN_NOTIFICATIONS: "98220d4897c04bcaadbe0c141efe71a0",
-    ADMIN_MESSAGES: "4cf8b752667a4021989d3bfabf894031",
-    HOME_MOBILE: "24394474a8fb461691446c023767549f",
-    DISCOVER_MOBILE: "c4356b5a317846ae8d58ffa3ec723154",
-    MESSAGES_MOBILE: "855b3e0ba0194e9aaa07f2b0237c075f",
-    PROFILE_MOBILE: "072b7dd565914b8e835a6260878aa0ee",
-    POST_DETAIL_MOBILE: "56969a3c2b064bd1976cf418ec4d32e2",
-    COMPOSE_POST_MOBILE: "300abed7f6aa4aef9e4a02b95e093059",
-    LOGIN_MOBILE: "11540204191034377071",
-    REGISTER_MOBILE: "62e4e647722245a88e07d5801560ada1",
-    SPLASH_MOBILE: "ea5847d8c0fd4dc7b14e62893aad56ee",
-    LOADING_MOBILE: "550bdee1020e465c9cc49aaf46de7ec8",
-    DETAIL_LOADING_MOBILE: "306a6d8179f14973a4156e69ec84ff14",
-    APP_ICON: "5105072463b444239544a7c5ca2215fe",
+    HOME_DESKTOP: STITCH_WEB_FLOW_SCREENS.SOCIAL_FEED,
+    LOGIN_DESKTOP: STITCH_MOBILE_REFERENCE_SCREENS.AUTH_ONBOARDING,
+    REGISTER_DESKTOP: STITCH_MOBILE_REFERENCE_SCREENS.AUTH_ONBOARDING,
+    DISCOVER_DESKTOP: STITCH_COMPONENT_SCREENS.HONEY_SOCIAL_FEED,
+    MESSAGES_DESKTOP: STITCH_WEB_FLOW_SCREENS.MESSAGES,
+    PROFILE_DESKTOP: STITCH_MOBILE_REFERENCE_SCREENS.PROFILE_AND_PET,
+    POST_DETAIL_DESKTOP: STITCH_COMPONENT_SCREENS.HONEY_SOCIAL_FEED,
+    COMPOSE_POST_DESKTOP: STITCH_COMPONENT_SCREENS.HONEY_SOCIAL_FEED,
+    ADMIN_COMPOSE_POST: STITCH_COMPONENT_SCREENS.HONEY_SOCIAL_FEED,
+    ADMIN_COMPOSE_LISTING: STITCH_COMPONENT_SCREENS.MINT_MARKET,
+    ADMIN_MEDIA: STITCH_COMPONENT_SCREENS.DESIGN_GEOMETRY,
+    ADMIN_MY_POSTS: STITCH_COMPONENT_SCREENS.HONEY_SOCIAL_FEED,
+    ADMIN_MY_LISTINGS: STITCH_WEB_FLOW_SCREENS.MARKET_DESKTOP,
+    ADMIN_MY_ORDERS: STITCH_WEB_FLOW_SCREENS.ORDERS,
+    ADMIN_PROFILE: STITCH_MOBILE_REFERENCE_SCREENS.PROFILE_AND_PET,
+    ADMIN_NOTIFICATIONS: STITCH_COMPONENT_SCREENS.HONEY_MESSAGES_ORDERS,
+    ADMIN_MESSAGES: STITCH_WEB_FLOW_SCREENS.MESSAGES,
+    HOME_MOBILE: STITCH_MOBILE_REFERENCE_SCREENS.HOME,
+    DISCOVER_MOBILE: STITCH_MOBILE_REFERENCE_SCREENS.HOME,
+    MESSAGES_MOBILE: STITCH_WEB_FLOW_SCREENS.MESSAGES,
+    PROFILE_MOBILE: STITCH_MOBILE_REFERENCE_SCREENS.PROFILE,
+    POST_DETAIL_MOBILE: STITCH_COMPONENT_SCREENS.HONEY_SOCIAL_FEED,
+    COMPOSE_POST_MOBILE: STITCH_COMPONENT_SCREENS.HONEY_SOCIAL_FEED,
+    LOGIN_MOBILE: STITCH_MOBILE_REFERENCE_SCREENS.AUTH_ONBOARDING,
+    REGISTER_MOBILE: STITCH_MOBILE_REFERENCE_SCREENS.AUTH_ONBOARDING,
+    SPLASH_MOBILE: STITCH_MOBILE_REFERENCE_SCREENS.AUTH_ONBOARDING,
+    LOADING_MOBILE: STITCH_COMPONENT_SCREENS.HONEY_CORE,
+    DETAIL_LOADING_MOBILE: STITCH_COMPONENT_SCREENS.INTERACTION_PATTERNS,
+    APP_ICON: "16054956948476331741",
   };
 
   function setStitchScreen(screenId) {
@@ -1553,6 +1608,12 @@
     buildSettingsBar,
     toast,
     STITCH_WEB_PROJECT_ID,
+    STITCH_MOBILE_REFERENCE_SCREENS,
+    STITCH_WEB_FLOW_SCREENS,
+    STITCH_THEME_SCREENS,
+    STITCH_COMPONENT_SCREENS,
+    STITCH_DESIGN_DOCS,
+    STITCH_REFERENCE_SCREENS,
     STITCH_WEB_SCREENS,
     setStitchScreen,
     SUPPORTED_THEMES,

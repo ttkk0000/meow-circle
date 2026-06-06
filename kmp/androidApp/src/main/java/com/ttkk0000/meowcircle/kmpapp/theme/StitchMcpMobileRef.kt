@@ -1,24 +1,52 @@
 package com.ttkk0000.meowcircle.kmpapp.theme
 
 /**
- * 旧 Stitch MCP 源：项目「Kitty Circle Social」`deviceType = MOBILE`。
+ * Current Stitch V2 source references for M&D.
  *
- * 现在仅作为迁移参考；实际视觉以 M&D 设计记忆和当前 token 为准。
- *
- * Project id（`list_screens` / `get_screen` 的 `projectId`）：
+ * KMP UI should use local theme tokens and component code at runtime. These IDs
+ * are reference anchors for comparing the Android implementation with the
+ * mirrored Stitch project and local files under web/assets/stitch-remote.
  */
-const val STITCH_MCP_KITTY_CIRCLE_PROJECT_ID = "472020832926366758"
+const val STITCH_MCP_MND_PROJECT_ID = "13275961100622290348"
 
-/** 移动端屏（`list_screens` 中 `deviceType: MOBILE`）的 `screenId` 片段，便于 `get_screen`。 */
 object StitchMcpMobileScreens {
-    const val HOME_ZH = "24394474a8fb461691446c023767549f"
-    const val LOGIN = "11540204191034377071"
-    const val REGISTER = "62e4e647722245a88e07d5801560ada1"
-    const val POST_DETAIL_ZH = "56969a3c2b064bd1976cf418ec4d32e2"
-    const val COMPOSE_POST_ZH = "300abed7f6aa4aef9e4a02b95e093059"
-    const val DISCOVER_ZH = "c4356b5a317846ae8d58ffa3ec723154"
-    const val PROFILE_ZH = "072b7dd565914b8e835a6260878aa0ee"
-    const val MESSAGES_ZH = "855b3e0ba0194e9aaa07f2b0237c075f"
-    const val SPLASH = "ea5847d8c0fd4dc7b14e62893aad56ee"
-    const val LOADING = "550bdee1020e465c9cc49aaf46de7ec8"
+    const val HOME = "2cbf0afac9824702b850d2f0d9d06942"
+    const val MARKET = "e57b8cd42f6f45c08949322cbcc3b89f"
+    const val PROFILE = "6d735a2d4f714b29ad07607685e2de49"
+    const val PRODUCT_FLOWS = "7fd1dc0283124395bfbfcd4ce753d0ce"
+    const val PROFILE_AND_PET = "eff431efe77f47858d47809096cfad7a"
+    const val AUTH_ONBOARDING = "72bf00c20d734bc7b1312be642a918fc"
+}
+
+object StitchMcpWebScreens {
+    const val SOCIAL_FEED = "9316e37facb5477e8a41f17c92caf433"
+    const val MARKET_DESKTOP = "b8877dd4369e479fbbddf4dcc3a5e5eb"
+    const val MESSAGES = "8d7449b2407243bd8f827d38bf4f509c"
+    const val ORDERS = "bbfc29fa595a4773afc2a91b276b2a05"
+    const val SETTINGS = "ec4b9497c04f4b91b2d6236703efdaff"
+    const val REVIEW_SAFETY = "fd8cd509a0c24d61b789ae22f4146c80"
+}
+
+object StitchMcpThemeScreens {
+    const val HONEY = "b30ddbe5a0c241fc910ff51716f415c4"
+    const val MINT = "d940b93dce0547dfb353990cf6c90719"
+    const val NIGHT = "a984395ba2834be688e397c12967facf"
+    const val NEUTRAL = "11310ac2a2284e809a68589261f12e31"
+    const val NIGHT_FLOW = "207a704fbe6e4962b73725ee6d2b88da"
+}
+
+object StitchMcpComponentScreens {
+    const val DESIGN_FOUNDATION = "bc706d4088e34bdfb6c30bf8045e4cb4"
+    const val DESIGN_GEOMETRY = "dad492ad9bc547e4aafb94b9a9baf50e"
+    const val HONEY_BASIC = "c9e36d888ec147a692112ba1da15233a"
+    const val HONEY_CORE = "339cebfa1f904aaca1cd353b15e1858a"
+    const val HONEY_SOCIAL_FEED = "7745202be4e3400fa8556050a89dcca4"
+    const val HONEY_MESSAGES_ORDERS = "44b8b0dc48024ccc982898ef4c900b81"
+    const val MINT_MARKET = "b58af2de47354cf5ab92f5b64b160350"
+    const val INTERACTION_PATTERNS = "fc4bc839c77a423abb2b1d3c4664d714"
+}
+
+object StitchMcpDesignDocs {
+    const val OFFICIAL_FORMAT = "11388975682457720262"
+    const val V2_NEUTRAL_FIXED = "1187049162856747640"
 }

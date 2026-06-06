@@ -616,10 +616,10 @@ function initStitchDashboard() {
     chip.addEventListener("click", () => {
       ordersStatusFilter = chip.getAttribute("data-order-filter") || "all";
       document.querySelectorAll(".order-filter-chip").forEach((c) => {
-        c.classList.remove("active", "bg-primary-container", "text-white", "shadow-[0_4px_10px_rgba(255,90,119,0.2)]");
+        c.classList.remove("active", "bg-primary-container", "text-white", "shadow-[0_4px_10px_rgba(75,85,99,0.2)]");
         c.classList.add("bg-surface-container", "text-on-surface-variant");
       });
-      chip.classList.add("active", "bg-primary-container", "text-white", "shadow-[0_4px_10px_rgba(255,90,119,0.2)]");
+      chip.classList.add("active", "bg-primary-container", "text-white", "shadow-[0_4px_10px_rgba(75,85,99,0.2)]");
       chip.classList.remove("bg-surface-container", "text-on-surface-variant");
       renderOrdersView();
     });
@@ -1169,7 +1169,7 @@ function renderOrdersView() {
       ordersPagination.innerHTML = `<span class="pl-1">${escapeHtml(line)}</span>
         <div class="inline-flex items-center gap-0.5 pr-1 opacity-50" title="">
           <span class="inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-400" aria-hidden="true"><span class="material-symbols-outlined text-sm">chevron_left</span></span>
-          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-container text-sm font-bold text-white shadow-[0_2px_8px_rgba(255,90,119,0.3)]" aria-hidden="true">1</span>
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-container text-sm font-bold text-white shadow-[0_2px_8px_rgba(75,85,99,0.3)]" aria-hidden="true">1</span>
           <span class="inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-400" aria-hidden="true"><span class="material-symbols-outlined text-sm">chevron_right</span></span>
         </div>`;
     }
@@ -1664,7 +1664,7 @@ function renderNotifList() {
     el.className =
       "stitch-notif-card notification stitch-notif relative overflow-hidden rounded-2xl border p-4 transition-all md:p-5 " +
       (unread
-        ? "cursor-pointer border-primary-container/20 bg-white shadow-[0_6px_24px_rgba(255,90,119,0.07)] hover:-translate-y-0.5 hover:border-primary-container/35 hover:shadow-[0_12px_36px_rgba(255,90,119,0.12)]"
+        ? "cursor-pointer border-primary-container/20 bg-white shadow-[0_6px_24px_rgba(75,85,99,0.07)] hover:-translate-y-0.5 hover:border-primary-container/35 hover:shadow-[0_12px_36px_rgba(75,85,99,0.12)]"
         : "cursor-default border-outline-variant/15 bg-surface-container-lowest/95 hover:bg-surface-container-lowest");
     el.innerHTML = `
       <div class="pointer-events-none absolute bottom-0 left-0 top-0 w-1 rounded-full ${
@@ -1957,7 +1957,7 @@ async function runRefresh(button, loader) {
 function buildMediaNode(m) {
   const el = document.createElement("article");
   el.className =
-    "item stitch-media-card group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white bg-surface-container-lowest shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(255,90,119,0.1)]";
+    "item stitch-media-card group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white bg-surface-container-lowest shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(75,85,99,0.1)]";
   const isVideo = m.kind === "video";
   const typeIcon = isVideo ? "play_circle" : "image";
   const typeColor = isVideo ? "text-secondary-container" : "text-primary-container";
@@ -2015,7 +2015,7 @@ function buildMediaNode(m) {
 function buildMyPostNode(post) {
   const el = document.createElement("article");
   el.className =
-    "group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/60 bg-surface-container-lowest shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(255,90,119,0.1)]";
+    "group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/60 bg-surface-container-lowest shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(75,85,99,0.1)]";
   if (post.isDraft) el.classList.add("opacity-90");
   const firstId = !post.isDraft && post.media_ids && post.media_ids[0] ? post.media_ids[0] : null;
   const media = firstId ? mediaCacheById.get(firstId) : null;
@@ -2102,7 +2102,7 @@ function buildMyPostNode(post) {
 function buildMyListingNode(listing) {
   const el = document.createElement("article");
   el.className =
-    "group flex flex-col overflow-hidden rounded-2xl border border-white/70 bg-surface-container-lowest shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-transform hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(255,90,119,0.1)]";
+    "group flex flex-col overflow-hidden rounded-2xl border border-white/70 bg-surface-container-lowest shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-transform hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(75,85,99,0.1)]";
   const thumb = Array.isArray(listing.media_ids) && listing.media_ids.length
     ? mediaCacheById.get(Number(listing.media_ids[0]))
     : null;

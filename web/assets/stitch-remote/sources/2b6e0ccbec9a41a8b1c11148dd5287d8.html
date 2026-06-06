@@ -1,0 +1,366 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Social Feed Components - Honey Theme</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Outfit:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#f9e4db",
+                        "on-background": "#241914",
+                        "neutral-muted": "#706D67",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#001f29",
+                        "neutral-accent": "#4B5563",
+                        "inverse-on-surface": "#ffede5",
+                        "tertiary-fixed": "#bce9ff",
+                        "on-secondary": "#ffffff",
+                        "mint-container": "#E7FAF5",
+                        "on-secondary-container": "#00705d",
+                        "surface-container-low": "#fff1eb",
+                        "on-secondary-fixed": "#002019",
+                        "neutral-container": "#F3F4F6",
+                        "tertiary-container": "#00b7e7",
+                        "primary-fixed-dim": "#ffb68d",
+                        "outline-variant": "#ddc1b3",
+                        "on-primary-container": "#682d00",
+                        "night-container": "#2A1B13",
+                        "neutral-border": "#DDD8CF",
+                        "night-muted": "#B7AA9B",
+                        "background": "#fff8f6",
+                        "night-surface": "#1D1B1A",
+                        "surface-dim": "#ead6cd",
+                        "on-primary-fixed": "#321200",
+                        "inverse-surface": "#3a2e28",
+                        "honey-canvas": "#FFF8ED",
+                        "mint-panel": "#DDF4E8",
+                        "surface": "#fff8f6",
+                        "neutral-canvas": "#F7F6F2",
+                        "surface-variant": "#f3ded5",
+                        "secondary-fixed-dim": "#50dcbd",
+                        "mint-ink": "#17231D",
+                        "honey-panel": "#FFF1D8",
+                        "mint-border": "#CCE6DA",
+                        "secondary-fixed": "#71f9d9",
+                        "on-error": "#ffffff",
+                        "primary-container": "#ff8a3d",
+                        "on-primary-fixed-variant": "#763300",
+                        "on-surface-variant": "#564338",
+                        "honey-muted": "#7A6654",
+                        "mint-accent": "#2EC4A6",
+                        "honey-border": "#EAD8BD",
+                        "surface-bright": "#fff8f6",
+                        "on-tertiary-fixed-variant": "#004d63",
+                        "honey-ink": "#2A2118",
+                        "tertiary-fixed-dim": "#63d3ff",
+                        "mint-canvas": "#F0FBF6",
+                        "honey-container": "#FFF1E6",
+                        "primary": "#9a4600",
+                        "night-panel": "#282522",
+                        "secondary": "#006b59",
+                        "surface-tint": "#9a4600",
+                        "surface-container": "#feeae0",
+                        "honey-surface": "#FFFFFF",
+                        "night-canvas": "#141312",
+                        "mint-muted": "#5D7168",
+                        "honey-accent": "#FF8A3D",
+                        "surface-container-lowest": "#ffffff",
+                        "night-text": "#F6EFE7",
+                        "secondary-container": "#6ef6d6",
+                        "primary-fixed": "#ffdbc9",
+                        "neutral-surface": "#FFFFFF",
+                        "neutral-ink": "#232220",
+                        "inverse-primary": "#ffb68d",
+                        "surface-container-highest": "#f3ded5",
+                        "on-tertiary-container": "#004457",
+                        "neutral-panel": "#ECE9E1",
+                        "night-border": "#3A352F",
+                        "outline": "#8a7266",
+                        "night-accent": "#FF9F5A",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#005142",
+                        "mint-surface": "#FFFFFF",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#006783",
+                        "on-surface": "#241914",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "margin": "16px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Outfit"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "label-sm": ["JetBrains Mono"],
+                        "display-md": ["Outfit"],
+                        "display-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "display-md": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-honey-canvas text-honey-ink min-h-screen p-xl font-body-md">
+<div class="max-w-[1200px] mx-auto space-y-xl">
+<!-- Header -->
+<header class="mb-xl border-b border-honey-border pb-lg">
+<h1 class="font-display-md text-display-md text-honey-ink mb-sm">Social Feed Components</h1>
+<p class="font-body-lg text-body-lg text-honey-muted">Theme: Honey. Cat-first aesthetics, soft structural elements, high-quality photography.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Main Content Area (Cards & Feed) -->
+<div class="lg:col-span-7 space-y-xl">
+<!-- Section: Post Composer Entry -->
+<section>
+<h2 class="font-headline-sm text-headline-sm mb-md text-honey-muted">Post Composer Entry</h2>
+<div class="bg-honey-surface rounded-xl border border-honey-border p-md">
+<div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-honey-panel">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A close-up portrait of a fluffy Maine Coon cat looking directly at the camera with bright golden eyes. The lighting is soft and warm, highlighting the intricate details of the cat's fur. The background is slightly blurred, creating a shallow depth of field. The overall aesthetic is cozy, welcoming, and high-quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGZB5PbIGfK4HN05DHlX360ewUHgDaG7_STZHaZQoAWnILJ2luW9cVWYqmKJPQfGqQgr7hP_6oVwvu_O7fyJ9ZQNEKmftHTskbZEEU-IKFRKKWVbKTHVo5RQLX_stGulZxJuHvS2w1uRk8TiT8FIX-1CWaAiCjNfhBvgPIwiOt_zzDHjAwQUvMsPvZUAHvhAu3gSkaWlHIngU3SQVgmNH1g1950fq32IkzFfikcxqorXKBARzluTjlaFH8YuMtE1-uHbjUa0w668AM">
+</div>
+<div class="flex-1">
+<div class="bg-honey-canvas rounded-full px-lg py-sm text-honey-muted font-body-md border border-honey-border cursor-text hover:bg-honey-panel transition-colors duration-200">Share your thoughts...</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-honey-container text-honey-accent flex items-center justify-center hover:bg-honey-accent hover:text-white transition-colors duration-200 shrink-0">
+<span class="material-symbols-outlined">image</span>
+</button>
+</div>
+</section>
+<!-- Section: Full Feed Card -->
+<section>
+<h2 class="font-headline-sm text-headline-sm mb-md text-honey-muted">Feed Card: Complete Anatomy</h2>
+<article class="bg-honey-surface rounded-xl border border-honey-border shadow-sm overflow-hidden">
+<!-- Header -->
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-honey-panel border border-honey-border">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A portrait of an elegant Abyssinian cat sitting gracefully. The lighting is natural and bright, illuminating the cat's ticked coat. The setting is a minimalist indoor space with subtle warm tones. The mood is calm and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSX34TcR6PFOK6NzSFhT5CDAvCe0OdB6hBmVeiTLRQOTlWTxyH-MlqFJaLTw1baJi0Uir6NFPSCFMCS9V5GTyGVDhBB6PSJQ6KsfILBXlUzj_C3tqbuGbgCte75WPbffcG3CqmNcGM4JRWd0kIMFjIfYxsRliSSNJj4504WXBgvBgZLAwTr0fJn7yFEeKZenNr6pTQgkpfv8M0zrtr3UxS3Sk0BVOQnTjG45bw0_OQGixD8TN0Z2ezN21DdOxLifnj3qArRKK1AxVS">
+</div>
+<div>
+<h3 class="text-label-md text-honey-ink font-bold font-headline-sm">@LunaTheAbyssinian</h3>
+<p class="font-label-sm text-label-sm text-honey-muted">2 hours ago</p>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="px-sm py-xs rounded-full border border-honey-accent text-honey-accent font-label-sm text-label-sm hover:bg-honey-container transition-colors duration-200">
+                                    Follow
+                                </button>
+<button class="text-honey-muted hover:text-honey-ink transition-colors duration-200">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Content -->
+<div class="px-md pb-sm">
+<p class="font-body-md text-body-md text-honey-ink mb-md">
+                                Afternoon sunbeams are simply the best. 鈽€锔?Found the perfect spot on the new rug.
+                            </p>
+<!-- Media Grid: One Image -->
+<div class="rounded-xl overflow-hidden aspect-[4/3] bg-honey-panel border border-honey-border">
+<img alt="Cat in sunbeam" class="w-full h-full object-cover" data-alt="A beautiful calico cat basking in a warm, golden sunbeam streaming through a window. The cat is curled up comfortably on a textured cream rug. The lighting creates a high-contrast, cozy atmosphere with deep shadows and bright highlights. The aesthetic is serene, tactile, and highly appealing to pet lovers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARTW6xIulJ_QFxNPzjKcj7uBtIou0Jrqo-v-Ja4GiZ6ddd0-S6qaSjxsi10cVcRVJtU9BrzLCnGnSITRN5tDAXQ1YscH92eIKJ_Vz9_ula4RysBOMq8-hSAqvaE-hQ3rlAwVehDhvmcaXSAHLi_QcU0BefECGsjHZ7wCshGuc-CGE7teAuVAHC3j_f23-lRAwvke9bkkE3ixM_0ONbzCy8cKQZ6zQAKhFnxy0uPhKwcMLs0RO1Sik2HU0Agy8TrVgTXdPfJZOqQaQm">
+</div>
+</div>
+<!-- Actions -->
+<div class="px-md py-sm border-t border-honey-border flex items-center justify-between"><div class="flex items-center gap-xl">
+<button class="group flex items-center gap-sm text-honey-muted hover:text-honey-accent transition-colors">
+<span class="material-symbols-outlined group-hover:icon-fill transition-all duration-200">favorite</span>
+<span class="font-label-md font-bold">1,248</span>
+</button>
+<button class="group flex items-center gap-sm text-honey-muted hover:text-honey-accent transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md font-bold">48</span>
+</button>
+<button class="group flex items-center gap-sm text-honey-muted hover:text-honey-accent transition-colors">
+<span class="material-symbols-outlined">share</span>
+<span class="font-label-md font-bold">Share</span>
+</button>
+</div>
+<button class="text-honey-muted hover:text-honey-ink transition-colors p-xs rounded-full hover:bg-honey-container">
+<span class="material-symbols-outlined">bookmark</span>
+</button></div>
+</article>
+</section>
+<!-- Section: Post Media Grid Variants -->
+<section>
+<h2 class="font-headline-sm text-headline-sm mb-md text-honey-muted">Post Media Grids</h2>
+<div class="space-y-lg">
+<!-- Variant: Grid (2 images) -->
+<div class="bg-honey-surface rounded-xl border border-honey-border p-md">
+<p class="font-label-md text-label-md text-honey-muted mb-sm">Grid: 2 Images</p>
+<div class="grid grid-cols-2 gap-xs h-64 rounded-xl overflow-hidden border border-honey-border">
+<img alt="Playful ginger cat" class="w-full h-full object-cover bg-honey-panel" data-alt="A playful ginger cat reaching up towards a toy out of frame. The cat's expression is focused and energetic. The background is a clean, modern living space in soft warm tones. The lighting is bright and cheerful." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR70J9KheV2LR0wZbNjH1cLFRvak2V3-rfrarvtcRksL6o-R_E7D3betkdGpMfh2Ktp4tWrPtvLq9hwf1nzsYZ9OOwd5gwfQlTBNaYD5xWP6dASaRAvC-iHTiCVCKnsE1iH4ICfZ0OGtxyJzcRMwB4JnGu3IK-hs1x0i1ol66vC_c1a44RKXzJ6grx78hHzhWwaGp27OHUBCd6C2HXRCClTic5h_I2VlJLcCq2Js-wpDDJa-5UWGG9fJXGNdgP0rVuqpRMbfDTyh1j">
+<img alt="Resting ginger cat" class="w-full h-full object-cover bg-honey-panel" data-alt="The same ginger cat now resting comfortably on a soft knitted blanket. The cat looks relaxed and content. The warm tones of the blanket complement the cat's fur. The scene is cozy and tactile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdlT6oDkG4aZWLPzdmEvxqrPxAV7G2eMkAQHCvP7mtEomQKw8KfHuIKHG2Z0UO8cuZ0FINrLNyCm1IeW12jETMDxEUUCZ0RIvKKBOIYDWmIFHk3y3UpLdy6TmaNgQf7R7GSswZ-DeY1awwImjhgY3ZBKG-G87OoY8ze2IjDDMbuZ_UHJBRnvamQbkuQZoB7AMAgFD-JNPDldaHr28l13TkxH8Ss6cF_Y_0_g_cTEMds3VedCh96CMM5_2_2u6qb3nlaing_lTZXb_G">
+</div>
+</div>
+<!-- Variant: Grid (3+ images) -->
+<div class="bg-honey-surface rounded-xl border border-honey-border p-md">
+<p class="font-label-md text-label-md text-honey-muted mb-sm">Grid: 3 Images</p>
+<div class="grid grid-cols-2 gap-xs h-64 rounded-xl overflow-hidden border border-honey-border">
+<div class="col-span-1 h-full">
+<img alt="Black cat looking out" class="w-full h-full object-cover bg-honey-panel" data-alt="A sleek black cat sitting gracefully on a modern windowsill, looking out. The lighting is dramatic, highlighting the sleekness of the cat's coat against a slightly softer background. The overall tone is moody yet warm." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAMp_8JyNXDlK9XbDRPnh0egNZ_n0VLx7EthAmOfetkHIi8TaVH3iFTWGhmRuW8nOM8b4PobMnFpEXM4PpCQpc8n2n38iT0PvArS-nATbDDKhRr2y1jwauggof5tU3X-O4GnhCGpNUa5ytCLI1Jb1IkofXly7Z2U4J-jSqKq42UUF9xiwXDKHl0YCpK_s1VYf9ryJEk8EMVtBX32PT6_zKKoCRcGJ5Jwkfna0CHxUoO3n60EAr9cpJG7OdYkO5XPKKRZc1pmJbLOKf">
+</div>
+<div class="col-span-1 grid grid-rows-2 gap-xs h-full">
+<img alt="Scottish Fold close-up" class="w-full h-full object-cover bg-honey-panel" data-alt="A close-up of a Scottish Fold cat looking inquisitive. The focus is sharp on the eyes and folded ears. The background is a soft, blurry mix of warm honey colors. The image feels intimate and adorable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7wrYHbc6re92dVAxmzkVnY917eBfJ518cBLDSektMkAGcoICjtvExDgVqMsy8A96SZkKK5m5HpErdF8Ehfs06E5iqmR_xR95wuwzll-GXPXo1s63oTlQZfzhwBsYH9M16WM7CUmSuJK9k35o1_hzQVwYEEOqds-owyAolr5vw8mO6E0S5Qn_1UcsgJWTTRvsIYuFGK06W4DP8OAfs4zadJi3-nr08_AANpUNtyFiMYtcgFW7qKKOl2sZXTuEEcvTrYfnN3ytw7JAF">
+<img alt="Sleeping white cat" class="w-full h-full object-cover bg-honey-panel" data-alt="A fluffy white cat curled into a tight ball on a textured rug. The cat appears fast asleep and entirely peaceful. The lighting is very soft and diffused, creating a serene, sleepy atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYUmLZsqIBOIklxRB2W5oaHcL8XEjJ2_OPYxtWoxMytaed1cPZkZKCtoT9RUPfihu-KaLe6bU5B72x8Z2-lPpDNTS7t5pQAoIjjH-y6_a1CAS1H6a7ORYTFYgKG6_-EeLMWoPTD2Fcr_FAtUd6RakDxTbxNEfMaWFNxReNSUHO2eKEPTHEfvNVUcPOKzmCNRaFJx3zAWjFSi4Iqt2zASVSsAshl6CorZwqh4DPe-LEL4Bg2KTjBnT7_aTdYW-yvq_WJ3VUnDIYYcX2">
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar Area (Utilities & Actions) -->
+<div class="lg:col-span-5 space-y-xl">
+<!-- Section: Social Actions -->
+<section>
+<h2 class="font-headline-sm text-headline-sm mb-md text-honey-muted">Social Actions (States)</h2>
+<div class="bg-honey-surface rounded-xl p-md border border-honey-border space-y-lg shadow-sm">
+<div>
+<p class="font-label-sm text-label-sm text-honey-muted mb-sm">Like Button</p>
+<div class="flex items-center gap-md">
+<!-- Inactive -->
+<button class="flex items-center gap-xs text-honey-muted hover:text-honey-accent transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-label-md">Like</span>
+</button>
+<!-- Active -->
+<button class="flex items-center gap-xs text-honey-accent">
+<span class="material-symbols-outlined icon-fill">favorite</span>
+<span class="font-label-md text-label-md">Liked</span>
+</button>
+</div>
+</div>
+<hr class="border-honey-border">
+<div>
+<p class="font-label-sm text-label-sm text-honey-muted mb-sm">Bookmark</p>
+<div class="flex items-center gap-md">
+<!-- Inactive -->
+<button class="text-honey-muted hover:text-honey-ink transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+<!-- Active -->
+<button class="text-honey-ink">
+<span class="material-symbols-outlined icon-fill">bookmark</span>
+</button>
+</div>
+</div>
+<hr class="border-honey-border">
+<div>
+<p class="font-label-sm text-label-sm text-honey-muted mb-sm">Follow Button Variants</p>
+<div class="flex flex-wrap gap-md">
+<!-- Primary Outline (Inactive) -->
+<button class="px-lg py-sm rounded-full border-2 border-honey-accent text-honey-accent font-label-md font-bold hover:bg-honey-accent hover:text-white transition-all duration-200">
+                                    Follow
+                                </button>
+<!-- Primary Solid (Active) -->
+<button class="px-md py-sm rounded-full bg-honey-accent text-white font-label-md text-label-md hover:opacity-90 transition-opacity duration-200 flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">check</span> Following
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Utilities -->
+<section>
+<h2 class="font-headline-sm text-headline-sm mb-md text-honey-muted">Utilities</h2>
+<div class="space-y-md">
+<!-- User Mini Card -->
+<div class="bg-honey-surface rounded-xl p-md border border-honey-border shadow-sm flex items-center gap-md hover:bg-honey-container transition-colors cursor-pointer hover:shadow-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-honey-panel">
+<img alt="Mini Card Avatar" class="w-full h-full object-cover" data-alt="A cute British Shorthair cat wearing a tiny knitted collar. The cat is looking slightly upwards with large round eyes. The background is a soft, warm pastel orange. The image is charming, bright, and perfect for an avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3bDSeEhDSvG8xrr49PVCWaJ4G4W4nWKlOOCAqSANxNqnwkXyJMZxD_wuLA9XQfDZpmm9IuZTGKPcfakmT3LaDPucfwAku3hbM2qW0enpt2-9ucJGnXGV_Ut7LL2EfxRFArgkbrfPVmHvpNrd0RlXcuBJ-sPihWpoEZ6v91yIoorG82dxkfrOSRBHnLhDaEXPWkCgl1vCI0KIxuaaokdpcnj-m6aR3kLZNknJOpffDY_050VAUCP4FMImnDsFRWK1dw-PjYnx46TcQ">
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-honey-ink font-bold">Milo &amp; Friends</h4>
+<p class="font-label-sm text-label-sm text-honey-muted">@milo_bsh 鈥?12k followers</p>
+</div>
+<button class="w-8 h-8 rounded-full border border-honey-accent text-honey-accent flex items-center justify-center hover:bg-honey-accent hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<!-- Comment Item -->
+<div class="bg-honey-surface rounded-xl p-md border border-honey-border shadow-sm">
+<p class="font-label-sm text-label-sm text-honey-muted mb-sm">Comment Item</p>
+<div class="flex gap-sm">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-honey-panel">
+<img alt="Commenter Avatar" class="w-full h-full object-cover" data-alt="A small, fluffy kitten looking curious. The lighting is bright and cheerful. The background is completely out of focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqlMuMNaD3xJXsINOLWW8Ve5HIHi5dzGeMJn-BKY7XbQTGXQXuUeA2J-Q8eZB8Jq1r361W8bwXwr3Qebof0MFH786QakEAHpo4QAA3ZPBdLy6TTH8aTGF1qFci-qMqMDjoZkXhFZHPhxx_bW6sLH5MQfpU7pMbTbR05y5DbqX83IDOd7jytgDhTmNpYQKPIhnp4j_Hci7M5S09fbebB_g-pLp279J4R4p0EqgOuGpsdhfBsbY4GpLGXpDd05bYs7_yL92zIDA8YYKG">
+</div>
+<div>
+<div class="bg-honey-canvas rounded-[16px] rounded-tl-none p-sm border border-honey-border inline-block">
+<p class="font-label-md text-label-md font-bold text-honey-ink mb-[2px]">@Whiskers</p>
+<p class="font-body-sm text-body-sm text-honey-ink">Omg this is too cute! Need that rug ASAP.</p>
+</div>
+<div class="flex items-center gap-md mt-xs px-sm">
+<span class="font-label-sm text-label-sm text-honey-muted">1h</span>
+<button class="font-label-sm text-label-sm text-honey-muted hover:text-honey-accent transition-colors font-bold">Reply</button>
+<button class="flex items-center gap-[2px] text-honey-muted hover:text-honey-accent transition-colors">
+<span class="material-symbols-outlined text-[16px]">favorite</span>
+<span class="font-label-sm text-label-sm">12</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment Input Bar -->
+<div class="bg-honey-surface rounded-xl p-md border border-honey-border shadow-sm">
+<p class="font-label-sm text-label-sm text-honey-muted mb-sm">Comment Input Bar</p>
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-honey-panel">
+<img alt="Current User" class="w-full h-full object-cover" data-alt="A close-up portrait of a fluffy Maine Coon cat looking directly at the camera with bright golden eyes. The lighting is soft and warm, highlighting the intricate details of the cat's fur." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsSDkDbFQbzLn7BRCIequyignqDLkGzd_-5pHjRCTio_0W6rX7T9DgZ26PLEaWgHQSWCNgvDVJzwLq0votdouvPFs7bo64dLAF3wZlczDowvXHDYkvoBWESsfgtuRANTP1A9-TSDtDrAgeqaBhAHyO0oxp5kFagr6_EpH011dhOKCQ8_Wdd8-v0pvq6gKWp6EOpsW5mJHvCYUmXd0_jGNexCz4141G7pUfJ2N-WwET3mkrrJLEWwlRfwHEIYXpcwfxW8YoK4rahtXk">
+</div>
+<div class="flex-1 bg-honey-canvas rounded-full flex items-center px-sm border border-honey-border focus-within:border-honey-accent focus-within:ring-1 focus-within:ring-honey-accent transition-all">
+<input class="w-full bg-transparent border-none focus:ring-0 text-body-sm text-honey-ink placeholder-honey-muted py-sm px-xs font-label-md" placeholder="Add a comment..." type="text">
+<button class="text-honey-accent p-xs hover:bg-honey-container rounded-full transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</body></html>

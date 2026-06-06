@@ -1,16 +1,18 @@
-import { Redirect, Stack } from 'expo-router';
-import { useAuth } from '@/auth';
-import { colors } from '@/theme';
+import {Redirect, Stack} from 'expo-router';
+import {useAuth} from '@/auth';
+import {typography, useMndTheme} from '@/theme';
 
 export default function AuthLayout() {
   const { user, loading } = useAuth();
+  const { colors } = useMndTheme();
   if (!loading && user) return <Redirect href="/(tabs)" />;
   return (
     <Stack
       screenOptions={{
-        headerStyle: { backgroundColor: colors.surface100 },
-        headerTitleStyle: { color: colors.ink },
-        contentStyle: { backgroundColor: colors.surface100 },
+        headerStyle: { backgroundColor: colors.canvas },
+        headerTitleStyle: { color: colors.onSurface, ...typography.h3 },
+        contentStyle: { backgroundColor: colors.canvas },
+        headerTintColor: colors.onSurface,
         headerShadowVisible: false,
         headerBackTitle: ' ',
         headerShown: false,

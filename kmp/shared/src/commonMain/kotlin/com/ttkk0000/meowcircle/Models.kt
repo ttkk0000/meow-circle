@@ -65,6 +65,27 @@ data class PostsPage(
 )
 
 @Serializable
+data class Listing(
+    val id: Long,
+    @SerialName("seller_id") val sellerId: Long,
+    val type: String,
+    val title: String,
+    val description: String,
+    @SerialName("price_cents") val priceCents: Long,
+    val currency: String = "CNY",
+    @SerialName("media_ids") val mediaIds: List<Long> = emptyList(),
+    @SerialName("created_at") val createdAt: String,
+)
+
+@Serializable
+data class ListingsPage(
+    val items: List<Listing>? = null,
+    val total: Long = 0,
+    val page: Int = 1,
+    @SerialName("page_size") val pageSize: Int = 20,
+)
+
+@Serializable
 data class LoginBody(
     val username: String,
     val password: String,

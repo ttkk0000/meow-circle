@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Mint Theme - Market Components</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        mint: {
+                            50: '#F5FFFC',
+                            100: '#E7FAF5',
+                            200: '#CDEFE6',
+                            300: '#A4E0D1',
+                            400: '#73CDB9',
+                            500: '#44CA75', // Matching image primary cyan
+                            600: '#2EC4A6', // User requested primary
+                            700: '#239B83',
+                            800: '#1F7D6B',
+                            900: '#1C675A',
+                        },
+                        seafoam: '#6AD3A8',
+                        palemint: '#A9F1E3',
+                        text: {
+                            main: '#111827',
+                            muted: '#6B7280',
+                            light: '#9CA3AF'
+                        }
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem", // 16px
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Outfit", "sans-serif"],
+                        "display": ["Outfit", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5FFFC; }
+        h1, h2, h3, h4, h5, h6, .font-headline { font-family: 'Outfit', sans-serif; }
+    </style>
+</head>
+<body class="bg-mint-50 text-text-main flex min-h-screen antialiased">
+<!-- Sidebar Navigation -->
+<nav class="w-64 border-r border-mint-200 bg-white fixed h-full flex flex-col z-[90]">
+<div class="p-6 border-b border-mint-200 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-mint-600 flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">storefront</span>
+</div>
+<div>
+<h1 class="font-headline font-bold text-lg text-text-main">M&amp;D Core</h1>
+<p class="text-xs text-text-muted">Mint Theme UI Kit</p>
+</div>
+</div>
+<div class="p-4 flex-1 overflow-y-auto">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-mint-50 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">overview</span>
+                        Overview
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 bg-mint-100 text-mint-600 rounded-lg transition-colors text-sm font-semibold" href="#">
+<span class="material-symbols-outlined text-[20px]">category</span>
+                        Market Components
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-mint-50 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">filter_alt</span>
+                        Discovery &amp; Filters
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-mint-50 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">sell</span>
+                        Tags &amp; Badges
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-mint-50 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">store</span>
+                        Seller Info
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-mint-50 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">article</span>
+                        Product Detail
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-mint-50 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">hourglass_empty</span>
+                        Empty &amp; Skeleton
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 p-10 lg:p-14">
+<header class="mb-12">
+<h1 class="text-4xl font-headline font-bold text-text-main mb-2">Market Components</h1>
+<p class="text-text-muted text-lg">Documentation and anatomy for the marketplace ecosystem in the Mint Theme.</p>
+</header>
+<div class="space-y-16">
+<!-- Section 1: Product Card -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<div class="w-1 h-6 bg-mint-600 rounded-full"></div>
+<h2 class="text-2xl font-headline font-bold">1. Product Card</h2>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+<!-- Real UI Preview -->
+<div class="bg-white border border-mint-200 rounded-2xl p-8 flex flex-col md:flex-row gap-6 shadow-sm">
+<!-- Card 1 -->
+<div class="w-full max-w-[280px] bg-white border border-mint-200 rounded-2xl overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48 bg-mint-50 flex items-center justify-center p-4">
+<img class="w-full h-full object-cover rounded-xl" data-alt="A bright, modern studio shot of an interactive laser teaser toy for cats. The toy has a sleek, minimalist design in white and mint green, placed against a soft pastel mint background. Soft, diffused lighting creates a clean, premium aesthetic suitable for an e-commerce product card." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0xzqfVi4NxXG5ywJc2X8kdU_UYJSnVBl3OsDffmNW0Am9zVjPptzuatEnsJcEFdulZ5HaqM1LSpLbs8dZ6Q6Ms-m-T3vM0j9AYXSNF8DNjNrLOa09tpZ1SfzFkcXXfHznEtTC-111J9YZWSdK1Cy1Jhwfp05IOVsMc-blS-lcZKoGto7KPtkDk3s_jj6aLcThuhSK1_Wng_HmY_f0HNqVcxAJdq-KlTjfujA8m3ofcdsVbfvP0PLOU9nvT8fFreDeTeaVkturvTYw">
+<div class="absolute top-3 left-3 bg-white px-2 py-1 rounded-md text-xs font-bold text-mint-600 shadow-sm">Sell</div>
+<button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-text-muted hover:text-mint-600 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-semibold text-[16px] leading-tight text-text-main line-clamp-2">Interactive Laser Teaser</h3>
+</div>
+<div class="font-headline font-bold text-[20px] text-mint-600 mb-3">$24.99</div>
+<div class="flex items-center gap-2 mb-4">
+<div class="w-6 h-6 rounded-full bg-mint-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small circular avatar portrait of a smiling woman with glasses, representing a seller profile picture on a marketplace card." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH37u7DWRg7UjKI41pvX2JWXPJL6P_2mM-XiJ7f0rItg832-LILBlkbarAy1cDZSvQFKTnHQ77uAB0Z3HucgmAalpB-8YpL1gV2Qjezk6BvyshN6DGyGSRtDrmN3vCnrj1oZdw3D4hgWBSnmtwtauHJU_Df6w_QouRKWsAK7wM_MfSIjG9ksFVKQIXD3QjjGT6Am31_WTEk-M6jQ5ZRo4N4lvG02_dSahJ3MkUvgqTRzY6diIS7UlGu-jFPGh4AJSOmbp5bHku0M_4">
+</div>
+<span class="text-xs text-text-muted font-medium flex-1 truncate">Sarah Jenkins</span>
+<div class="flex items-center text-xs text-text-muted">
+<span class="material-symbols-outlined text-[14px] text-[#FBBF24] mr-0.5" style="font-variation-settings: 'FILL' 1;">star</span>
+                                        4.8
+                                    </div>
+</div>
+<button class="w-full bg-mint-600 hover:bg-mint-700 text-white font-medium py-2 rounded-xl transition-colors text-sm">
+                                    Buy Now
+                                </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="w-full max-w-[280px] bg-white border border-mint-200 rounded-2xl overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48 bg-mint-50 flex items-center justify-center p-4">
+<img class="w-full h-full object-cover rounded-xl" data-alt="A clean, well-lit studio image of a classic leather dog collar with brass buckles. The collar is laid out neatly on a pale mint green surface. The lighting is bright and even, highlighting the texture of the leather and the shine of the metal, fitting for a modern pet store theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8_Kt0piQRwtdRyebH9k56zPw6iZIN407wDo8v_xGIIYb8BNK0cjQ4pHfD2oVwTfxcq5mO6RNd0D2y-FPf9oQE2puN0JnG2fcEIMLhAJakKA98GxZ1nxzhF5PF4iATQQPwAKdmHiDmBKY2Bs2tsvFrGiZuPjw5JPB8F5MekRmlIftYH9aFRbaRGgbg7IOa0cwyCnddnBdZ148Q1dJo4mtL8ygkaUVtNA5Z_4ZsLdr-_hu4jkzcMPLGjRP502RvS6DE3H5_m9Az4GCe">
+<div class="absolute top-3 left-3 bg-mint-100 px-2 py-1 rounded-md text-xs font-bold text-mint-700 shadow-sm border border-mint-200">Trade</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-semibold text-[16px] leading-tight text-text-main line-clamp-2">Classic Leather Collar</h3>
+</div>
+<div class="font-headline font-bold text-[20px] text-text-main mb-3">Est. $35.00</div>
+<div class="flex items-center gap-2 mb-4">
+<div class="w-6 h-6 rounded-full bg-mint-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small circular avatar portrait of a smiling man, representing a seller profile picture on a marketplace card." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdJg_80tKkdMvHnRP2tksA7VDyFqjbT_jxV2D1cRMfrWTb7ECCc--fafYgodfu7Hitz50W25hVctbry_4RJQJmVfFqircOf99ND9QXiQ_UaU61CNPVgSJfW2yf63tPKWbrqRUKkcfY3B4n4PZcUFBpQg_0hmNHkp9b_LVJm8Wz2WWK81tAbbMMrdq6KSGlcp3yiDuJAgs8dwrB3BPb4BND9lVkWytT7Iap8PfI5e0wei1Sx79edGX78le7bZ8cOfSMFICiPlYPGG0b">
+</div>
+<span class="text-xs text-text-muted font-medium flex-1 truncate">Mike's Pets</span>
+<div class="flex items-center text-xs text-text-muted">
+<span class="material-symbols-outlined text-[14px] text-[#FBBF24] mr-0.5" style="font-variation-settings: 'FILL' 1;">star</span>
+                                        5.0
+                                    </div>
+</div>
+<button class="w-full bg-mint-50 hover:bg-mint-100 text-mint-700 border border-mint-200 font-medium py-2 rounded-xl transition-colors text-sm">
+                                    View Details
+                                </button>
+</div>
+</div>
+</div>
+<!-- Specs -->
+<div class="bg-white border border-mint-200 rounded-2xl p-8 relative">
+<h3 class="text-sm font-bold text-text-muted uppercase tracking-wider mb-6">Component Anatomy</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-4 p-3 rounded-xl hover:bg-mint-50 transition-colors">
+<div class="w-8 h-8 rounded-lg bg-mint-100 text-mint-600 flex items-center justify-center font-bold text-sm shrink-0">1</div>
+<div>
+<div class="font-semibold text-text-main">Image Container</div>
+<div class="text-sm text-text-muted font-mono mt-1">h-48 rounded-t-2xl p-4 bg-mint-50</div>
+<div class="text-xs text-text-light mt-1">Image itself has 16px radius (rounded-xl)</div>
+</div>
+</div>
+<div class="flex items-start gap-4 p-3 rounded-xl hover:bg-mint-50 transition-colors">
+<div class="w-8 h-8 rounded-lg bg-mint-100 text-mint-600 flex items-center justify-center font-bold text-sm shrink-0">2</div>
+<div>
+<div class="font-semibold text-text-main">Typography Hierarchy</div>
+<div class="text-sm text-text-muted font-mono mt-1">Title: font-headline text-[16px] font-semibold</div>
+<div class="text-sm text-text-muted font-mono mt-0.5">Price: font-headline text-[20px] font-bold</div>
+</div>
+</div>
+<div class="flex items-start gap-4 p-3 rounded-xl hover:bg-mint-50 transition-colors">
+<div class="w-8 h-8 rounded-lg bg-mint-100 text-mint-600 flex items-center justify-center font-bold text-sm shrink-0">3</div>
+<div>
+<div class="font-semibold text-text-main">Primary Action</div>
+<div class="text-sm text-text-muted font-mono mt-1">bg-mint-600 text-white rounded-xl py-2</div>
+<div class="text-xs text-text-light mt-1">Used for direct purchasing actions</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Discovery & Filters -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<div class="w-1 h-6 bg-mint-600 rounded-full"></div>
+<h2 class="text-2xl font-headline font-bold">2. Discovery &amp; Filters</h2>
+</div>
+<div class="bg-white border border-mint-200 rounded-2xl p-8 shadow-sm">
+<!-- Search Bar -->
+<div class="max-w-2xl mb-8">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-light">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-white border border-mint-200 rounded-full focus:ring-2 focus:ring-mint-600 focus:border-transparent outline-none transition-shadow text-sm" placeholder="Search for toys, food, apparel..." type="text">
+</div>
+</div>
+<!-- Chips & Filters Row -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-1.5 bg-mint-600 text-white rounded-full text-sm font-medium shadow-sm">All Items</button>
+<button class="px-4 py-1.5 bg-white border border-mint-200 text-text-muted hover:border-mint-400 hover:text-text-main rounded-full text-sm font-medium transition-colors">Toys</button>
+<button class="px-4 py-1.5 bg-white border border-mint-200 text-text-muted hover:border-mint-400 hover:text-text-main rounded-full text-sm font-medium transition-colors">Food</button>
+<button class="px-4 py-1.5 bg-white border border-mint-200 text-text-muted hover:border-mint-400 hover:text-text-main rounded-full text-sm font-medium transition-colors">Apparel</button>
+<button class="px-4 py-1.5 bg-white border border-mint-200 text-text-muted hover:border-mint-400 hover:text-text-main rounded-full text-sm font-medium transition-colors">Care</button>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-1.5 bg-white border border-mint-200 text-text-main rounded-full text-sm font-medium hover:bg-mint-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+                                Filters
+                            </button>
+<div class="h-6 w-px bg-mint-200"></div>
+<button class="flex items-center gap-2 px-4 py-1.5 bg-white border border-mint-200 text-text-main rounded-full text-sm font-medium hover:bg-mint-50 transition-colors">
+                                Sort: Newest
+                                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

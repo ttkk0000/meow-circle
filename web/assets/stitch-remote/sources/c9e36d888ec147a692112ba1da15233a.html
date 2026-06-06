@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Component Library - Honey Theme</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF8A3D',
+                        'primary-soft': '#FFF1E6',
+                        'primary-dark': '#E6742B',
+                        'accent-cat': '#FF7A45',
+                        'accent-dog': '#4DA8DA',
+                        'surface': '#FFFFFF',
+                        'surface-strong': '#FFF8F2',
+                        'surface-soft': '#FFF1E6',
+                        'on-surface': '#231F20',
+                        'on-surface-variant': '#7E7671',
+                        'outline': '#F1D8C8',
+                        'outline-soft': '#FBE9DF',
+                        'success': '#22C55E',
+                        'warning': '#F59E0B',
+                        'error': '#EF4444',
+                        'info': '#3B82F6',
+                        'scrim': 'rgba(35, 31, 32, 0.48)'
+                    },
+                    borderRadius: {
+                        'DEFAULT': '0.25rem',
+                        'md': '0.5rem',
+                        'lg': '0.75rem',
+                        'xl': '1rem',
+                        '2xl': '1.25rem',
+                        'full': '9999px'
+                    },
+                    fontFamily: {
+                        headline: ['Outfit', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                        label: ['Inter', 'sans-serif']
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #FFF8F2; }
+    </style>
+</head>
+<body class="font-body text-on-surface antialiased flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="w-64 shrink-0 bg-surface border-r border-outline flex flex-col p-4 gap-2 z-40 hidden md:flex">
+<div class="flex items-center gap-3 px-4 py-6 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-soft flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<div>
+<h1 class="font-display font-black text-xl text-primary leading-tight">M&amp;D</h1>
+<p class="text-xs text-on-surface-variant font-label">Meow &amp; Doggie</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 bg-surface-soft text-primary rounded-xl px-4 py-3 font-bold font-label transition-all" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+                Home
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft hover:text-primary rounded-xl px-4 py-3 font-label transition-all" href="#">
+<span class="material-symbols-outlined">explore</span>
+                Discover
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft hover:text-primary rounded-xl px-4 py-3 font-label transition-all" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+                Market
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft hover:text-primary rounded-xl px-4 py-3 font-label transition-all" href="#">
+<span class="material-symbols-outlined">chat</span>
+                Messages
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-soft hover:text-primary rounded-xl px-4 py-3 font-label transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+                Me
+            </a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-soft">
+<button class="w-full bg-primary text-white font-bold rounded-xl py-3 shadow-sm hover:bg-primary-dark transition-colors font-label">
+                Post Now
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative">
+<!-- Top Header -->
+<header class="z-30 bg-surface/80 backdrop-blur-md border-b border-outline px-8 h-20 shrink-0 flex items-center justify-between">
+<div>
+<h2 class="font-headline font-bold text-2xl text-on-surface">Honey Theme Components</h2>
+<p class="text-sm text-on-surface-variant">Core visual evolution and spec documentation</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="pl-9 pr-4 py-2 bg-surface-strong border border-outline rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary w-64" placeholder="Search components..." type="text">
+</div>
+<button class="w-10 h-10 rounded-full border border-outline flex items-center justify-center text-on-surface-variant hover:bg-surface-soft transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-outline flex items-center justify-center text-on-surface-variant hover:bg-surface-soft transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-8 pb-32 max-w-7xl mx-auto w-full space-y-12">
+<!-- Section 1: Buttons -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-headline">1</div>
+<h3 class="font-headline font-bold text-xl">Buttons &amp; Actions</h3>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Left: Preview -->
+<div class="bg-surface border border-outline rounded-2xl p-8 flex flex-col gap-6 shadow-sm">
+<div class="flex flex-wrap items-center gap-4">
+<button class="bg-primary text-white px-6 py-3 rounded-xl font-semibold shadow-sm hover:bg-primary-dark transition-colors">Primary Button</button>
+<button class="bg-surface border-2 border-primary text-primary px-6 py-3 rounded-xl font-semibold hover:bg-primary-soft transition-colors">Secondary</button>
+<button class="text-primary font-semibold px-4 py-3 hover:bg-primary-soft rounded-xl transition-colors">Text Action</button>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<button class="bg-error text-white px-6 py-3 rounded-xl font-semibold shadow-sm hover:bg-red-600 transition-colors">Destructive</button>
+<button class="bg-surface border border-outline text-on-surface-variant px-6 py-3 rounded-xl font-semibold flex items-center gap-2 hover:bg-surface-soft transition-colors">
+<span class="material-symbols-outlined">upload</span> Upload
+                            </button>
+<button class="bg-surface-soft text-primary/50 px-6 py-3 rounded-xl font-semibold cursor-not-allowed flex items-center gap-2">
+<span class="material-symbols-outlined animate-spin">progress_activity</span> Loading
+                            </button>
+<button class="bg-surface-strong text-on-surface-variant/40 px-6 py-3 rounded-xl font-semibold cursor-not-allowed border border-outline-soft">Disabled</button>
+</div>
+</div>
+<!-- Right: Specs -->
+<div class="bg-surface-strong border border-outline-soft rounded-2xl p-8 flex flex-col justify-center shadow-inner">
+<h4 class="font-headline font-semibold text-sm uppercase tracking-wider text-on-surface-variant mb-4">Button Specifications</h4>
+<ul class="space-y-3 font-label text-sm">
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Default Height</span>
+<span class="font-mono text-on-surface">48px (h-12)</span>
+</li>
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Border Radius</span>
+<span class="font-mono text-on-surface">12px (rounded-xl)</span>
+</li>
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Typography</span>
+<span class="font-mono text-on-surface">Inter 15px / W600</span>
+</li>
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Primary Fill</span>
+<span class="font-mono text-on-surface">#FF8A3D</span>
+</li>
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Hover Shift</span>
+<span class="font-mono text-on-surface">#E6742B</span>
+</li>
+<li class="flex items-center justify-between pt-1">
+<span class="text-on-surface-variant">Elevation</span>
+<span class="font-mono text-on-surface">shadow-sm</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 2: Inputs -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-headline">2</div>
+<h3 class="font-headline font-bold text-xl">Input Fields</h3>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Left: Preview -->
+<div class="bg-surface border border-outline rounded-2xl p-8 flex flex-col gap-5 shadow-sm">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-sm font-medium text-on-surface">Pet Name</label>
+<input class="w-full bg-surface border border-outline rounded-xl px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Enter pet name" type="text">
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-sm font-medium text-on-surface">Search</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-strong border border-transparent rounded-xl pl-11 pr-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:bg-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search breeds..." type="text">
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-sm font-medium text-on-surface">Description <span class="text-error">*</span></label>
+<textarea class="w-full bg-surface border border-error rounded-xl px-4 py-3 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-error/20 transition-all" placeholder="Describe your pet..." rows="2"></textarea>
+<p class="text-xs text-error font-label flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-[14px]">error</span> Description is required</p>
+</div>
+</div>
+<!-- Right: Specs -->
+<div class="bg-surface-strong border border-outline-soft rounded-2xl p-8 flex flex-col justify-center shadow-inner">
+<h4 class="font-headline font-semibold text-sm uppercase tracking-wider text-on-surface-variant mb-4">Input Specifications</h4>
+<ul class="space-y-3 font-label text-sm">
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Default Height</span>
+<span class="font-mono text-on-surface">48px (h-12)</span>
+</li>
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Border Radius</span>
+<span class="font-mono text-on-surface">12px (rounded-xl)</span>
+</li>
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Default Border</span>
+<span class="font-mono text-on-surface">1px solid #F1D8C8</span>
+</li>
+<li class="flex items-center justify-between border-b border-outline-soft pb-2">
+<span class="text-on-surface-variant">Focus Ring</span>
+<span class="font-mono text-on-surface">ring-2 ring-primary/20</span>
+</li>
+<li class="flex items-center justify-between pt-1">
+<span class="text-on-surface-variant">Error State</span>
+<span class="font-mono text-error">border-error text-error</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 3: Avatars & Chips -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-headline">3</div>
+<h3 class="font-headline font-bold text-xl">Avatars &amp; Identity</h3>
+</div>
+<div class="bg-surface border border-outline rounded-2xl p-8 shadow-sm">
+<div class="flex flex-wrap items-end gap-8 mb-8 border-b border-outline-soft pb-8">
+<div class="flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded-full bg-surface-strong border-2 border-primary relative overflow-hidden flex items-center justify-center">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait photo of a young smiling woman, warm light, neutral studio background, modern casual style, high resolution photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT8UGeMny5ApVIVMCnBuMI__jMpmz1XLuHfG8qeE_Tbnd0rCqmXi0NvCdbBllUpXS4dFpiOakLu0tYSd1x8EUe3IpyJKt7IlwLLPrFEqiJ2MbbxxKh7ryGj7mqFO6-gDmH68WGZiONSrpnksT7MfQ9YaVVQneZCzu5qM6enJskAPfPpVCq0mHnug4G0RSDTkjydtHTG3KVyYEjv4qx6l6MKvYxGxPuBdRMeIaImrH3018snSIaOc0UUP_HgS2J_6VOn5Dm51DoaMA0">
+</div>
+<span class="text-xs font-label text-on-surface-variant">User (Active)</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded-full bg-surface-strong relative flex items-center justify-center p-1">
+<div class="absolute inset-0 rounded-full border-[3px] border-accent-cat border-dashed"></div>
+<img alt="Cat Pet" class="w-full h-full object-cover rounded-full" data-alt="Close up of a cute ginger cat face, looking directly at camera, soft natural lighting, shallow depth of field, warm cozy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy4sae5DYnGGUHdaTVK1HjCQ3qbK_NFqenmKOzOz77pkr1sT-iobC_f6XHBmUtta4keBLrPC3nqVIL5synVIqFkiiNySZeWloznIbF_nOhxmiQ1DlS1NxMtDjSpbMIVw-ceQkzSlrKiIsOfia0rGCXD6NE8OhJWWx5bhVyRXdxKqxRZ-A8WodtR8H22UaNx0JhrKfjxDDMdUbWaEk5yr5kGDydkmp25HwAyJPNpXDh-YZlzRqKZL6yy3AgKQ8wQ05TNjUU0O9ND9sK">
+</div>
+<span class="text-xs font-label text-on-surface-variant">Pet (Cat Accent)</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded-2xl bg-surface-strong border border-outline relative overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">storefront</span>
+</div>
+<span class="text-xs font-label text-on-surface-variant">Seller Entity</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded-full bg-surface-strong border border-dashed border-outline-soft flex items-center justify-center text-on-surface-variant/50">
+<span class="material-symbols-outlined text-2xl">person</span>
+</div>
+<span class="text-xs font-label text-on-surface-variant">Empty State</span>
+</div>
+<!-- Sizes -->
+<div class="ml-auto flex items-end gap-4 bg-surface-strong p-4 rounded-xl border border-outline-soft">
+<div class="w-6 h-6 rounded-full bg-primary-soft border border-primary flex items-center justify-center"><span class="text-[10px]">XS</span></div>
+<div class="w-8 h-8 rounded-full bg-primary-soft border border-primary flex items-center justify-center"><span class="text-xs">SM</span></div>
+<div class="w-12 h-12 rounded-full bg-primary-soft border border-primary flex items-center justify-center"><span class="text-sm">MD</span></div>
+<div class="w-16 h-16 rounded-full bg-primary-soft border border-primary flex items-center justify-center"><span class="text-base font-bold">LG</span></div>
+<div class="w-20 h-20 rounded-full bg-primary-soft border border-primary flex items-center justify-center"><span class="text-lg font-bold">XL</span></div>
+</div>
+</div>
+<div>
+<h4 class="font-headline font-semibold text-sm uppercase tracking-wider text-on-surface-variant mb-4">Contextual Chips</h4>
+<div class="flex flex-wrap gap-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-soft text-primary text-sm font-medium font-label border border-primary/20">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Market Item
+                            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-strong text-on-surface text-sm font-medium font-label border border-outline">
+                                New Arrival
+                            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-success/10 text-success text-sm font-medium font-label border border-success/20">
+<span class="material-symbols-outlined text-[16px]">verified</span> Verified Breeder
+                            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface text-on-surface-variant text-sm font-medium font-label border border-dashed border-outline-soft hover:bg-surface-soft cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span> Add Tag
+                            </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Feedback -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-headline">4</div>
+<h3 class="font-headline font-bold text-xl">Feedback &amp; Overlays</h3>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Left: Toasts -->
+<div class="bg-surface border border-outline rounded-2xl p-8 flex flex-col gap-4 shadow-sm relative overflow-hidden">
+<div class="flex items-center gap-3 bg-success/10 border border-success/20 text-success px-4 py-3 rounded-xl shadow-sm">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-label font-medium text-sm">Success! Item added to cart.</span>
+</div>
+<div class="flex items-center gap-3 bg-warning/10 border border-warning/20 text-warning px-4 py-3 rounded-xl shadow-sm">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label font-medium text-sm">Warning! Low stock remaining.</span>
+</div>
+<div class="flex items-center gap-3 bg-error/10 border border-error/20 text-error px-4 py-3 rounded-xl shadow-sm">
+<span class="material-symbols-outlined">error</span>
+<span class="font-label font-medium text-sm">Error! Payment processing failed.</span>
+</div>
+<div class="flex items-center gap-3 bg-surface-strong border border-outline text-on-surface px-4 py-3 rounded-xl shadow-sm mt-4">
+<span class="material-symbols-outlined text-primary">info</span>
+<span class="font-label font-medium text-sm flex-1">System update scheduled for 2AM.</span>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">close</span></button>
+</div>
+</div>
+<!-- Right: Dialog & Specs -->
+<div class="bg-surface border border-outline rounded-2xl p-8 flex flex-col shadow-sm relative">
+<!-- Simulated Modal Overlay inside card -->
+<div class="absolute inset-0 bg-[#231F20]/10 rounded-2xl flex items-center justify-center p-6 backdrop-blur-[2px]">
+<div class="bg-surface w-full max-w-sm rounded-[20px] p-6 shadow-xl border border-outline/50 flex flex-col">
+<div class="w-12 h-12 rounded-full bg-error/10 text-error flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">delete</span>
+</div>
+<h3 class="font-headline font-bold text-lg mb-2">Delete this post?</h3>
+<p class="text-sm text-on-surface-variant font-label mb-6">This action cannot be undone and will permanently remove the post from your profile.</p>
+<div class="flex gap-3 mt-auto">
+<button class="flex-1 px-4 py-2.5 rounded-xl border border-outline text-on-surface font-semibold hover:bg-surface-soft transition-colors text-sm">Cancel</button>
+<button class="flex-1 px-4 py-2.5 rounded-xl bg-error text-white font-semibold hover:bg-red-600 transition-colors shadow-sm text-sm">Delete</button>
+</div>
+</div>
+</div>
+<!-- Hidden Specs for layout balance -->
+<div class="opacity-0 h-48"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

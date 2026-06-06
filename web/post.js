@@ -46,7 +46,7 @@ const DEMO_DETAIL = {
   media: [
     {
       kind: "image",
-      url: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1400&q=80",
+      url: "assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png",
     },
   ],
   comments: [
@@ -226,7 +226,7 @@ function renderMedia(media) {
   if (!media || !media.length) {
     heroImg.classList.remove("hidden");
     heroImg.src =
-      "https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=1200&q=80";
+      "assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png";
     return;
   }
   const showMedia = (m) => {

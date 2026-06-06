@@ -1,225 +1,45 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="sugar" data-profile-bg="picnic">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>M&D Mobile UI Kit</title>
+  <title>M&D Mobile Remote Board</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 64'%3E%3Crect width='80' height='64' rx='12' fill='%23ff4f93'/%3E%3Ctext x='40' y='40' text-anchor='middle' font-size='24' font-family='Arial' font-weight='700' fill='white'%3EM%26D%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="pawpop-mobile.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff8f2; color: #231f20; font-family: "Inter", system-ui, sans-serif; }
+    main { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 32px 0 64px; }
+    header { display: flex; justify-content: space-between; gap: 16px; align-items: end; margin-bottom: 20px; }
+    h1, h2 { margin: 0; font-family: "Outfit", "Inter", system-ui, sans-serif; letter-spacing: 0; }
+    h1 { max-width: 760px; font-size: clamp(38px, 7vw, 76px); line-height: .94; }
+    p { color: #6b5e57; line-height: 1.65; }
+    a { color: inherit; font-weight: 800; }
+    .badge { display: inline-flex; min-height: 28px; align-items: center; padding: 0 10px; border-radius: 999px; background: #fff1e6; color: #ff8a3d; font-size: 12px; font-weight: 800; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    article { overflow: hidden; border: 1px solid #f1d8c8; border-radius: 16px; background: #fff; box-shadow: 0 16px 36px rgba(154,70,0,.1); }
+    img { width: 100%; height: 680px; object-fit: contain; object-position: top; background: #fff8f2; border-bottom: 1px solid #f1d8c8; }
+    article div { padding: 16px; }
+    span { color: #6b5e57; }
+    @media (max-width: 940px) { header { display: grid; } .grid { grid-template-columns: 1fr; } img { height: auto; max-height: none; } }
+  </style>
 </head>
 <body>
-  <header class="mobile-kit-header">
-    <div>
-      <span class="eyebrow">M&D Mobile</span>
-      <h1>手机端完整页面设计板</h1>
-      <p>M&D = meow & doggie，面向少男少女的猫猫优先社区 App：动态、详情、发现、市集、聊天、我的、创作、订单、安全全部独立成屏。</p>
-    </div>
-    <div class="control-stack">
-      <div class="chip-row">
-        <button class="theme-chip is-active" type="button" data-theme-choice="sugar">Sugar</button>
-        <button class="theme-chip" type="button" data-theme-choice="mint">Mint</button>
-        <button class="theme-chip" type="button" data-theme-choice="night">Night</button>
+  <main>
+    <header>
+      <div>
+        <span class="badge">Remote mobile source</span>
+        <h1>Mobile board mirrors the current Stitch screens.</h1>
+        <p>Use this page for app-side visual parity. Main nav is Feed, Market, Messages, Orders, Profile.</p>
       </div>
-      <div class="chip-row">
-        <button class="theme-chip is-active" type="button" data-bg-choice="picnic">Picnic</button>
-        <button class="theme-chip" type="button" data-bg-choice="desk">Desk</button>
-        <button class="theme-chip" type="button" data-bg-choice="arcade">Arcade</button>
-        <button class="theme-chip" type="button" data-bg-choice="garden">Garden</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="phone-board" aria-label="手机端页面设计板">
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>M&D</span></div>
-        <article class="screen auth-screen">
-          <span class="brand-badge">M&D</span>
-          <h2>欢迎来到 M&D</h2>
-          <p>记录猫猫日常，也给 doggie 留一个可爱座位。</p>
-          <button class="primary-action">登录</button>
-          <button class="ghost-action">创建账号</button>
-        </article>
-      </div>
-      <h3>Auth / Splash</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>首页</span></div>
-        <article class="screen">
-          <div class="mobile-top">
-            <div><span class="eyebrow">Home</span><h2>M&D 今日猫猫</h2></div>
-            <span class="avatar-dot"></span>
-          </div>
-          <div class="mobile-search"><span class="material-symbols-rounded">search</span> 搜索动态</div>
-          <div class="story-row"><span></span><span></span><span></span><span></span></div>
-          <div class="post-card">
-            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=700&q=80" alt="" />
-            <b>猫猫第一次学会开门</b>
-            <p>家里从此没有秘密。</p>
-          </div>
-          <nav class="tabbar"><span>home</span><span>explore</span><span>add</span><span>chat</span><span>face</span></nav>
-        </article>
-      </div>
-      <h3>Home Feed</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>详情</span></div>
-        <article class="screen detail-screen">
-          <img class="hero-img" src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=700&q=80" alt="" />
-          <div class="content-pad">
-            <span class="tag">日常</span>
-            <h2>猫猫第一次学会开门</h2>
-            <p>给门把手加了保护套，顺便记录一下这个聪明小脑袋。</p>
-            <div class="reaction-row"><button>喜欢 128</button><button>评论</button><button>举报</button></div>
-            <div class="comment">小满：求保护套链接！</div>
-          </div>
-        </article>
-      </div>
-      <h3>Post Detail</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>发现</span></div>
-        <article class="screen">
-          <div class="mobile-top"><div><span class="eyebrow">Discover</span><h2>发现圈子</h2></div></div>
-          <div class="circle-grid">
-            <div><span>新手</span><b>养猫</b></div>
-            <div><span>同城</span><b>活动</b></div>
-            <div><span>专家</span><b>问答</b></div>
-            <div><span>领养</span><b>互助</b></div>
-          </div>
-          <div class="wide-card"><b>周末猫狗野餐</b><p>附近 12 位 M&D 伙伴想去。</p></div>
-        </article>
-      </div>
-      <h3>Discover</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>市集</span></div>
-        <article class="screen">
-          <div class="mobile-top"><div><span class="eyebrow">Market</span><h2>好物市集</h2></div></div>
-          <div class="segmented"><b>商品</b><span>服务</span><span>领养</span></div>
-          <div class="listing-mini"><img src="https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&w=700&q=80" alt="" /><div><b>彩色牵引绳套装</b><p>¥69.00 · 可信卖家</p></div></div>
-          <div class="listing-mini"><img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=700&q=80" alt="" /><div><b>上门喂猫 30 分钟</b><p>¥45.00 · 可预约</p></div></div>
-        </article>
-      </div>
-      <h3>Market</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>交易详情</span></div>
-        <article class="screen detail-screen">
-          <img class="hero-img" src="https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&w=700&q=80" alt="" />
-          <div class="content-pad">
-            <span class="tag">商品</span>
-            <h2>彩色牵引绳套装</h2>
-            <strong class="price">¥69.00</strong>
-            <div class="seller-row"><span class="avatar-dot"></span><div><b>泡芙小店</b><p>3 笔安全交易</p></div></div>
-            <button class="primary-action">创建订单</button>
-            <button class="ghost-action">私信卖家</button>
-          </div>
-        </article>
-      </div>
-      <h3>Listing Detail</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>消息</span></div>
-        <article class="screen">
-          <div class="mobile-top"><div><span class="eyebrow">Messages</span><h2>私信</h2></div></div>
-          <div class="conversation"><span class="avatar-dot"></span><div><b>泡芙小店</b><p>地址发你啦，晚上见。</p></div><i>2</i></div>
-          <div class="conversation"><span class="avatar-dot blue"></span><div><b>城南救助</b><p>领养申请表已收到。</p></div><i>1</i></div>
-          <div class="chat-preview"><p class="in">还在哦，适合 4-8kg。</p><p class="out">可以今晚自提吗？</p></div>
-        </article>
-      </div>
-      <h3>Messages</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>通知</span></div>
-        <article class="screen">
-          <div class="mobile-top"><div><span class="eyebrow">Inbox</span><h2>通知中心</h2></div></div>
-          <div class="notice unread"><b>小满评论了你的动态</b><p>“我家猫也会！”</p></div>
-          <div class="notice unread"><b>订单等待付款</b><p>彩色牵引绳套装正在等你。</p></div>
-          <div class="notice"><b>举报已处理</b><p>管理员已标记解决。</p></div>
-        </article>
-      </div>
-      <h3>Notifications</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>我的</span></div>
-        <article class="screen profile-mobile-screen">
-          <div class="profile-bg">
-            <span class="avatar-large"></span>
-          </div>
-          <div class="content-pad">
-            <span class="eyebrow">Me</span>
-            <h2>桃子和拿铁</h2>
-            <p>@peachlatte · 两只猫的日常记录员</p>
-            <div class="stat-row"><b>128<small>动态</small></b><b>42<small>关注</small></b><b>9<small>徽章</small></b></div>
-            <div class="segmented"><b>Picnic</b><span>Desk</span><span>Arcade</span><span>Garden</span></div>
-          </div>
-        </article>
-      </div>
-      <h3>Profile Customization</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>创作</span></div>
-        <article class="screen">
-          <div class="mobile-top"><div><span class="eyebrow">Studio</span><h2>发布动态</h2></div></div>
-          <label class="field"><span>标题</span><input value="今天第一次去公园" /></label>
-          <label class="field"><span>内容</span><textarea>它有点紧张，但看到别的小狗狗后立刻摇尾巴。</textarea></label>
-          <div class="upload-box"><span class="material-symbols-rounded">cloud_upload</span><b>上传媒体</b></div>
-          <button class="primary-action">发布</button>
-        </article>
-      </div>
-      <h3>Compose</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>订单</span></div>
-        <article class="screen">
-          <div class="mobile-top"><div><span class="eyebrow">Orders</span><h2>订单中心</h2></div></div>
-          <div class="order-mobile"><span class="tag">待付款</span><h3>彩色牵引绳套装</h3><p>下一步：买家完成支付。</p><div class="steps"><b></b><b></b><span></span><span></span></div></div>
-          <div class="order-mobile"><span class="tag done">已发货</span><h3>上门喂猫</h3><p>下一步：确认服务完成。</p><div class="steps"><b></b><b></b><b></b><span></span></div></div>
-        </article>
-      </div>
-      <h3>Orders</h3>
-    </section>
-
-    <section class="phone-screen">
-      <div class="phone">
-        <div class="phone-status"><span>9:41</span><span>安全</span></div>
-        <article class="screen">
-          <div class="mobile-top"><div><span class="eyebrow">Safety</span><h2>审核中心</h2></div></div>
-          <div class="metric-row"><b>128<small>帖子</small></b><b>2<small>待审</small></b></div>
-          <div class="notice warning"><b>媒体审核</b><p>2 个视频等待确认。</p></div>
-          <div class="notice danger"><b>举报处理</b><p>交易信息描述不完整。</p></div>
-          <div class="notice"><b>审计日志</b><p>删除评论操作已记录。</p></div>
-        </article>
-      </div>
-      <h3>Safety / Admin</h3>
+      <a href="pawpop.html">Back to index</a>
+    </header>
+    <section class="grid">
+      <article><img src="assets/stitch-remote/screens/2cbf0afac9824702b850d2f0d9d06942.png" alt="Mobile Home"><div><h2>Home / Honey</h2><span>Composer, feed filters, feed card, skeleton, bottom nav.</span></div></article>
+      <article><img src="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png" alt="Mobile Market"><div><h2>Market / Mint</h2><span>Search, categories, trade chip, seller trust, Buy Now.</span></div></article>
+      <article><img src="assets/stitch-remote/screens/6d735a2d4f714b29ad07607685e2de49.png" alt="Mobile Profile"><div><h2>Profile / Honey</h2><span>Avatar, stats, pets, recent posts, profile settings.</span></div></article>
     </section>
   </main>
-
-  <script src="pawpop-mobile.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,561 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head></head><body class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-center font-body-md text-body-md text-on-tertiary">```html
+
+
+
+    <meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Night Theme Core Screens</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Outfit:wght@400;650;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#9a4600",
+                        "on-surface-variant": "#564338",
+                        "on-primary-container": "#682d00",
+                        "neutral-border": "#E5E7EB",
+                        "on-primary-fixed-variant": "#763300",
+                        "surface-variant": "#e9e0e1",
+                        "background": "#fff8f8",
+                        "on-surface": "#1e1b1c",
+                        "secondary-container": "#ffd167",
+                        "inverse-primary": "#ffb68d",
+                        "neutral-secondary": "#9CA3AF",
+                        "secondary-fixed-dim": "#edc157",
+                        "surface-dim": "#e1d8d9",
+                        "mint-tertiary": "#FF8A65",
+                        "surface": "#fff8f8",
+                        "surface-container": "#f5eced",
+                        "mint-border": "#CDEFE6",
+                        "primary-container": "#ff8a3d",
+                        "honey-overlay": "rgba(35, 31, 32, 0.48)",
+                        "on-error-container": "#93000a",
+                        "night-surface-elevated": "#252B38",
+                        "neutral-primary": "#4B5563",
+                        "on-tertiary": "#ffffff",
+                        "night-scrim": "rgba(0, 0, 0, 0.72)",
+                        "on-tertiary-fixed": "#380d00",
+                        "primary": "#9a4600",
+                        "mint-background": "#F5FFFC",
+                        "error-container": "#ffdad6",
+                        "mint-primary": "#2EC4A6",
+                        "tertiary-container": "#ff895b",
+                        "neutral-tertiary": "#F97316",
+                        "on-secondary": "#ffffff",
+                        "night-surface": "#151821",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "night-primary": "#8B5CF6",
+                        "neutral-text-primary": "#111827",
+                        "surface-container-low": "#fbf1f2",
+                        "secondary": "#785a00",
+                        "honey-surface-variant": "#FFF1E6",
+                        "surface-bright": "#fff8f8",
+                        "honey-divider": "#F5E2D5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#ffb68d",
+                        "on-tertiary-container": "#722400",
+                        "night-border": "#303644",
+                        "night-background": "#0B0D12",
+                        "surface-container-highest": "#e9e0e1",
+                        "outline": "#8a7266",
+                        "night-tertiary": "#F59E0B",
+                        "outline-variant": "#ddc1b3",
+                        "night-secondary": "#6366F1",
+                        "on-error": "#ffffff",
+                        "honey-background": "#FFF8F2",
+                        "mint-text-primary": "#12312B",
+                        "inverse-surface": "#342f30",
+                        "secondary-fixed": "#ffdf9b",
+                        "error": "#ba1a1a",
+                        "tertiary": "#a73a05",
+                        "mint-secondary": "#A7F3D0",
+                        "inverse-on-surface": "#f8efef",
+                        "on-secondary-fixed": "#251a00",
+                        "honey-border": "#F1D8C8",
+                        "on-tertiary-fixed-variant": "#802900",
+                        "on-background": "#1e1b1c",
+                        "on-secondary-fixed-variant": "#5b4300",
+                        "surface-container-high": "#efe6e7",
+                        "on-primary": "#ffffff",
+                        "honey-surface": "#FFFFFF",
+                        "primary-fixed": "#ffdbc9",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-primary-fixed": "#321200",
+                        "neutral-background": "#F7F7F8",
+                        "on-secondary-container": "#765900"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "nav-height": "64px",
+                        "neutral-sidebar": "240px",
+                        "lg": "24px",
+                        "header-height": "64px",
+                        "md": "16px",
+                        "xxs": "4px",
+                        "xl": "32px",
+                        "xxl": "48px",
+                        "xs": "8px",
+                        "sm": "12px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "neutral-header": ["Inter"],
+                        "price": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Outfit"],
+                        "title-md": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", { "lineHeight": "1.40", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "1.30", "fontWeight": "650" }],
+                        "neutral-header": ["12px", { "lineHeight": "1.25", "letterSpacing": "0.06em", "fontWeight": "700" }],
+                        "price": ["20px", { "lineHeight": "1.20", "fontWeight": "700" }],
+                        "body-md": ["15px", { "lineHeight": "1.50", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "1.25", "fontWeight": "700" }],
+                        "title-md": ["18px", { "lineHeight": "1.35", "fontWeight": "650" }],
+                        "display-lg": ["36px", { "lineHeight": "1.12", "fontWeight": "700" }],
+                        "label-lg": ["15px", { "lineHeight": "1.35", "fontWeight": "650" }],
+                        "body-lg": ["16px", { "lineHeight": "1.55", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #000; padding: 48px; }
+        .phone-frame {
+            width: 390px;
+            height: 844px;
+            border: 4px solid #303644;
+            border-radius: 40px;
+            overflow: hidden;
+            background-color: #0B0D12;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Night Nav overrides for precise user request */
+        .night-nav-bg { background-color: #12121A; border-top: 1px solid #242430; }
+        .night-nav-active-bg { background-color: #2E2468; }
+        .night-nav-active-text { color: #A78BFA; }
+        .night-nav-inactive-text { color: #94A3B8; }
+    </style>
+<!-- FRAME 0: Night Welcome -->
+<div class="phone-frame flex flex-col bg-[#0B0B12]">
+<div class="flex-1 overflow-y-auto hide-scrollbar flex flex-col p-md pt-xl items-center text-center">
+<div class="flex flex-col items-center justify-center w-[60px] h-[60px] bg-[#1A1A24] rounded-[12px] mb-lg mx-auto shadow-lg shadow-black/20">
+    <span class="material-symbols-outlined text-[#A78BFA] text-[24px]">pets</span>
+    <span class="font-headline-md text-[14px] leading-tight font-bold text-[#A78BFA] font-['Outfit']">M&amp;D</span>
+</div>
+<div class="flex flex-col items-center gap-4 mb-lg w-full">
+<h1 class="font-display-lg text-display-lg text-[#F8FAFC] leading-tight">Welcome to M&amp;D.</h1>
+<p class="font-body-lg text-body-lg text-[#94A3B8]">A warm community for pets, people, and trusted local finds.</p>
+</div>
+<div class="rounded-2xl overflow-hidden mb-xl w-full aspect-video shrink-0">
+<img class="w-full h-full object-cover" data-alt="A beautiful ginger cat looking curiously at camera, warm soft lighting." src="https://lh3.googleusercontent.com/aida/AP1WRLs4-hnL88eETQ5apBrhPNTpS2qhWxVqD294cJf8Sna3zrv2VXOu0bVClGi0aIV8e7FUquU6RxfZ47s4xcTwLyvm0ZwHiV2BfIQN3MMDbe-Q3oygYyyE97RAch-XY0GL9qTUbuAgZXfcQLoq99wtZphhwn0AJx49etUxwfm6j3WxiVKP1ab8p1ydnsgEr4J6odB5oaKz-DUMKLPHuloFGnKCqameFfplcDJPlSNB_3JJ8wlkXY1F3A9a3gQj">
+</div>
+<button class="w-full bg-[#8B5CF6] text-white font-label-lg text-label-lg py-4 rounded-xl mb-xl">
+            Continue with Email
+        </button>
+<div class="flex justify-center gap-md mb-xl w-full">
+<div class="flex flex-col items-center gap-2">
+<button class="w-12 h-12 rounded-full bg-[#12121A] border border-[#2A2A36] flex items-center justify-center p-2.5">
+<img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLsAur-LdeTwTpV087xzd4pofpW4h9PiODWs17kiFfDFYralomNQsuPXumM5CWcioWyqkYv6pCoBPn77pcJ3iFLsEHvOPdNyaV8fRYVbQr55U9yWMknTnnlNzeQ14_NGCQhpr5sIC9PfqbhnXJBt6wULkOq6GMDkDRGaP8G60A9Iat4FeFzY17bOdSg5WAqHr9k2vK5J0u8FW4l64B5E72dhSqnKAxmZrvaORoQeX71XHcaZdEeahGpAeMWA">
+</button>
+<span class="font-caption text-caption text-[#CBD5E1]">WeChat</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<button class="w-12 h-12 rounded-full bg-[#12121A] border border-[#2A2A36] flex items-center justify-center p-2.5">
+<img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLvVGn7rPTBitCD7T7SXJTLi0OWn0y2ShpKYwRt1SdhwY5YbzgR8V-5yfcZW8Vwr7ORukyWivbRV4dxrDBZxjORnKnN-UmyMXBi8Gvqev3Et-QPuLDggdflkQ_Q3Bh4yME8QKTjxKS-q2jo2ipDGRJytHM6RNtDDSWzOgEle09jzkYrCmdnBOzTA4JzglW7YEYtWQzlU0SeW8jMNDPU0XndcFFqY8dUBlLsYnfynCHah2OIvPacSkYlKL1rw">
+</button>
+<span class="font-caption text-caption text-[#CBD5E1]">QQ</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<button class="w-12 h-12 rounded-full bg-[#12121A] border border-[#2A2A36] flex items-center justify-center p-2.5">
+<img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLuMryU5Zng8RBmu2R1rLTzjtMxVy3DDeWZMZOvr-ovAFeUwIIWU5ttgff5hWAXQ-9AGs0ipPppr98QFbXoDCawrrWJcP3l8U-sU9qNC2qov9_IPsC7LhRaai76v2lZ5H_3Oa1LG3zgncKzVhK9uky96K3559f0HBKcRGRPitLBKt3Tyw01SNrJDEg1UdNnErS17Yt7P1UOTZAKbUCxQf1SsVUojdIr0F4KwokOwlG9bEpS3jFYgVOGp05Xp">
+</button>
+<span class="font-caption text-caption text-[#CBD5E1]">Google</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<button class="w-12 h-12 rounded-full bg-[#12121A] border border-[#2A2A36] flex items-center justify-center p-2.5">
+<img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLuPnCBgEItGwvqw4QfcSeb5_znURKWF8Sw_U7TG6LGw19_J-hAze9-fATblXzeuWFRMGGNbd3Aw20pdifgBaOgZAa5OFpAMhpOqm4CdFMGH1juKOlZadpmvNZLi-zc8HDEzJCcjwxSP_FynMrDsiyQ0GZwOtgZATuhMH4PvVKv2MLXokrn27XSNN_XrfZG4ToJ42qyvD5ekJ0NzjLwCND4G1GsiRZeXpNjSgVEcMF-5gzsW7v9GeieNVInm">
+</button>
+<span class="font-caption text-caption text-[#CBD5E1]">Apple</span>
+</div>
+</div>
+<div class="mt-auto text-center font-caption text-caption text-[#94A3B8] pb-md w-full">
+            By continuing, you agree to Terms and Privacy.
+        </div>
+</div>
+</div>
+<!-- FRAME 1: Night Feed -->
+<div class="phone-frame flex flex-col bg-[#0B0B12]">
+<!-- Top Bar -->
+<div class="flex justify-between items-center px-md py-sm bg-[#0B0B12] shrink-0 h-header-height z-10">
+<span class="material-symbols-outlined text-[#A78BFA]">pets</span>
+<span class="font-headline-lg text-headline-lg font-bold text-[#F8FAFC]">M&amp;D</span>
+<span class="material-symbols-outlined text-[#F8FAFC]">notifications</span>
+</div>
+<!-- Content Scroll -->
+<div class="flex-1 overflow-y-auto hide-scrollbar bg-[#0B0B12]">
+<!-- Composer -->
+<div class="p-md bg-[#12121A] mb-xs">
+<div class="flex items-center gap-sm">
+<img class="w-10 h-10 rounded-full border-2 border-night-primary object-cover" data-alt="A close-up portrait of a young woman with a soft expression, glowing warm lighting, isolated on a dark background in a high-end photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQPurdCoGAew57wkScBh5K5444nnRqB-GJAtl5XQ1d8Sp4aL-94nEPiJEJfyTV1uxtpI45r39BD5zFyQp6Y9lMoX7hJK5IXSzlY98KjgnFBFohJShGZE1uSmSZB3rfHdgaMlwW1SrVw7BBy8MMkMOOH6ouB3QHSjnvdCrdfLGW9vVxl2Phh8qWpcn4suMXEbC0rFc38PYx-IX01-HW1LmQD0KVyHWiwRNksDcMdajpjdBlM-TT8IEA0DNyqe4i1mmLMUFHcgGruQM8">
+<input class="flex-1 bg-transparent border-none text-[#F8FAFC] placeholder:text-[#94A3B8] focus:ring-0 font-body-md text-body-md" placeholder="What's on your mind?" type="text">
+<button class="w-10 h-10 rounded-full bg-[#1A1A24] flex items-center justify-center text-[#8B5CF6]">
+<span class="material-symbols-outlined">image</span>
+</button>
+</div>
+</div>
+<!-- Chips -->
+<div class="flex gap-xs px-md py-sm overflow-x-auto hide-scrollbar mb-xs">
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Following</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Nearby</button>
+<button class="px-4 py-1.5 rounded-full bg-[#8B5CF6] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Popular</button>
+</div>
+<!-- Post -->
+<div class="mx-md mb-xs pb-sm bg-[#12121A] border border-[#2A2A36] rounded-2xl overflow-hidden">
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="relative">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Portrait of a smiling woman in a dark moody setting, high contrast dramatic lighting, elegant night aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaZGDxKAxSeCkb9ivazGFiCHT7DpRvKgriDzJSl6klPw1nFZ7P0k2_4UWmD6d42nynO-MwnatYrUXr0hgCHtRarGuqNWOGRhCPJmGswrCSmxBTSb8jFgN_8iyLnPkWnUN0AlAN6o1TVppfXMNyHJRQ5qizMpz1QkLRRufRe1-Um81DVV8GxV2AW2NJLTwQwJ2pvgJaQ9uZuqpnF7sHKULKLf5b_sb7HX3VO91WL-AAolVY-tTG3KAkA3jUDmL1gH1g3AbxUx9LACMf">
+<span class="material-symbols-outlined absolute -bottom-1 -right-1 text-[#8B5CF6] text-[16px] bg-[#12121A] rounded-full" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div>
+<div class="font-label-lg text-label-lg text-[#F8FAFC] flex items-center gap-xs">@catlover</div>
+<div class="font-caption text-caption text-[#94A3B8]">British Shorthair 鈥?2h ago</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#94A3B8]">more_horiz</span>
+</div>
+<div class="px-md pb-sm text-[#F8FAFC] font-body-md text-body-md">
+                    Look at this cute collar I just got from the market!
+                </div>
+<img class="w-full h-64 object-cover" data-alt="A cute British Shorthair cat wearing a new leather collar." src="https://lh3.googleusercontent.com/aida/AP1WRLunzCdJvXCvvkjM20OdnUxrcJ3Wo0Mx-rxTBUUlPCkb9P9JVk8PEclZSumiiUcY3N0PGfB5Jiz3MtR_PIl2WAz7HNk9J-n5XkMKnACIfFPxeMXQEUdUPzB77I3jGM8OpAqzOQtPhWEsbnhd9DCsa-bqE-uzgOwfde4HXj-QrC_uYi4UmQ9bcXbQv1dTBAfzhtq_CSq-KSTagAdx0DWCjlI_0Lb9JbySgBlhX4agqoAT1f3-79dLa8udA3fC">
+<div class="p-md flex justify-between items-center text-[#94A3B8]">
+<div class="flex gap-lg">
+<button class="flex items-center gap-xs hover:text-[#8B5CF6] transition-colors"><span class="material-symbols-outlined">favorite</span></button>
+<button class="flex items-center gap-xs hover:text-[#8B5CF6] transition-colors"><span class="material-symbols-outlined">chat_bubble</span></button>
+<button class="flex items-center gap-xs hover:text-[#8B5CF6] transition-colors"><span class="material-symbols-outlined">share</span></button>
+</div>
+<button class="hover:text-[#8B5CF6] transition-colors"><span class="material-symbols-outlined">bookmark</span></button>
+</div>
+</div>
+<div class="h-24"></div> <!-- Nav spacer -->
+</div>
+<!-- Night Bottom Nav -->
+<div class="absolute bottom-0 w-full h-[72px] bg-[#12121A] border-t border-[#242430] flex justify-between items-center px-sm z-50"><div class="flex flex-col items-center justify-center w-full px-1"><div class="flex flex-col items-center justify-center w-[56px] h-[48px] rounded-[16px] bg-[#2E2468] text-[#A78BFA]"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">home</span><span class="font-caption text-[10px] font-semibold">Feed</span></div></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">storefront</span><span class="font-caption text-[10px] font-medium">Market</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">mail</span><span class="font-caption text-[10px] font-medium">Messages</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">receipt_long</span><span class="font-caption text-[10px] font-medium">Orders</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-caption text-[10px] font-medium">Profile</span></div></div>
+</div>
+<!-- FRAME 2: Night Market -->
+<div class="phone-frame flex flex-col bg-[#0B0B12]">
+<!-- Top Bar -->
+<div class="flex justify-between items-center px-md py-sm bg-[#0B0B12] shrink-0 h-header-height z-10">
+<span class="material-symbols-outlined text-[#A78BFA]">pets</span>
+<span class="font-headline-lg text-headline-lg font-bold text-[#F8FAFC]">M&amp;D</span>
+<span class="material-symbols-outlined text-[#F8FAFC]">notifications</span>
+</div>
+<!-- Content Scroll -->
+<div class="flex-1 overflow-y-auto hide-scrollbar bg-[#0B0B12] px-md">
+<!-- Search -->
+<div class="relative mb-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#94A3B8]">search</span>
+<input class="w-full bg-[#12121A] border border-[#242430] rounded-lg py-2.5 pl-10 pr-4 text-[#F8FAFC] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#8B5CF6] font-body-md text-body-md" placeholder="Search toys, food, care..." type="text">
+</div>
+<!-- Chips -->
+<div class="flex gap-xs overflow-x-auto hide-scrollbar mb-md py-1">
+<button class="px-4 py-1.5 rounded-full bg-[#8B5CF6] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Toys</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Food</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Apparel</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Care</button>
+</div>
+<!-- Product Card 1 -->
+<div class="bg-[#12121A] rounded-[16px] overflow-hidden border border-[#2A2A36] mb-md">
+<div class="relative h-48">
+<img class="w-full h-full object-cover" data-alt="Handmade Leather Dog Collar." src="https://lh3.googleusercontent.com/aida/AP1WRLsiGP7OwV1wq5Sjl7h93VR1UDY6-fggYM8E-0dQwJTuGSDGglBY4sAV4d3zEiVAKXwTF-mVVSTLGR3BXQs6WPp8CwALPxLU02LKeP91HbpanqlPN02_FatDZ3lfCHDF4DC0jCZUe6-y-fANOdGeWr7aCnKpD7Qxa_hHl47r8W5D9bNyoPGJs2iBfY3Y5kD4RRLsHURUrrx3cjLTNodzG3uciemiY9IxPNMEP_RdAzOhVnTb8FbjnHqNLT63">
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-white backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-sm">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-[#F8FAFC] leading-tight line-clamp-2 pr-2 font-bold">Handmade Leather Dog Collar</h3>
+<span class="font-price text-price text-[#A78BFA] whitespace-nowrap">$128.00</span>
+</div>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center gap-2">
+<span class="font-caption text-caption text-[#94A3B8]">Jordan M.</span>
+</div>
+<button class="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-label-sm text-label-sm px-4 py-1.5 rounded-lg transition-colors">
+                            Buy Now
+                        </button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-[#12121A] rounded-[16px] overflow-hidden border border-[#2A2A36] mb-md">
+<div class="relative h-48">
+<img class="w-full h-full object-cover" data-alt="Premium Ergonomic Dog Harness." src="https://lh3.googleusercontent.com/aida/AP1WRLts9Geza6kV14glFih98bizyapHLcJObqxRw8ST2xrxvOuH36n-KOq_Fw41EKRL1uv8SkVfjL3-MvuttvW-YUQItsHz248Yg0u75RLEeO1sfqPUH-PuAgy6CN7oI4srfMNZHBfziHqTbUq0_4CdLWxqOH0vVXcEJq4g56AorMaXZVHKutAa0JbWVU1-pT5wuU4BVIz7cm5nWW4sAQf_bWHTCEx_A6vYrJXnEl_qBtCCtJxWDJEEVLLXx-Tz">
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-white backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-sm">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-[#F8FAFC] leading-tight line-clamp-2 pr-2 font-bold">Premium Ergonomic Dog Harness</h3>
+<span class="font-price text-price text-[#A78BFA] whitespace-nowrap">$45.00</span>
+</div>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center gap-2">
+<span class="font-caption text-caption text-[#94A3B8]">Jordan M.</span>
+</div>
+<button class="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-label-sm text-label-sm px-4 py-1.5 rounded-lg transition-colors">
+                            Buy Now
+                        </button>
+</div>
+</div>
+</div>
+<div class="h-24"></div> <!-- Nav spacer -->
+</div>
+<!-- Night Bottom Nav -->
+<div class="absolute bottom-0 w-full h-[72px] bg-[#12121A] border-t border-[#242430] flex justify-between items-center px-sm z-50"><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-caption text-[10px] font-medium">Feed</span></div><div class="flex flex-col items-center justify-center w-full px-1"><div class="flex flex-col items-center justify-center w-[56px] h-[48px] rounded-[16px] bg-[#2E2468] text-[#A78BFA]"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">storefront</span><span class="font-caption text-[10px] font-semibold">Market</span></div></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">mail</span><span class="font-caption text-[10px] font-medium">Messages</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">receipt_long</span><span class="font-caption text-[10px] font-medium">Orders</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-caption text-[10px] font-medium">Profile</span></div></div>
+</div>
+<!-- FRAME 3: Night Messages -->
+<div class="phone-frame flex flex-col bg-[#0B0B12]">
+<!-- Top Bar -->
+<div class="flex justify-between items-center px-md py-sm bg-[#0B0B12] shrink-0 h-header-height z-10 border-b border-[#242430]">
+<span class="w-6"></span> <!-- Spacer for center alignment -->
+<span class="font-headline-md text-headline-md font-bold text-[#F8FAFC]">Messages</span>
+<span class="material-symbols-outlined text-[#8B5CF6]">edit_square</span>
+</div>
+<!-- Content Scroll -->
+<div class="flex-1 overflow-y-auto hide-scrollbar bg-[#0B0B12]">
+<div class="p-md pb-0">
+<!-- Search -->
+<div class="relative mb-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#94A3B8]">search</span>
+<input class="w-full bg-[#12121A] border border-[#242430] rounded-lg py-2.5 pl-10 pr-4 text-[#F8FAFC] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#8B5CF6] font-body-md text-body-md" placeholder="Search messages..." type="text">
+</div>
+<!-- Chips -->
+<div class="flex gap-xs overflow-x-auto hide-scrollbar mb-md py-1">
+<button class="px-4 py-1.5 rounded-full bg-[#8B5CF6] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">All</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Buying</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Selling</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Unread</button>
+</div>
+</div>
+<!-- List -->
+<div class="flex flex-col">
+<!-- Message 1 -->
+<div class="flex items-center gap-sm px-md py-3 hover:bg-[#12121A] cursor-pointer transition-colors relative">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-[#1A1A24] flex items-center justify-center text-[#A78BFA] font-headline-md">L</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h4 class="font-label-lg text-label-lg text-[#F8FAFC] truncate">Luna &amp; Co.</h4>
+<span class="font-caption text-caption text-[#8B5CF6] whitespace-nowrap ml-2">10:42 AM</span>
+</div>
+<div class="font-caption text-caption text-[#94A3B8] mb-0.5">Order #4829 路 Paid</div>
+<p class="font-body-md text-body-md text-[#F8FAFC] font-semibold truncate">"Thanks!"</p>
+</div>
+<div class="w-2.5 h-2.5 bg-[#8B5CF6] rounded-full absolute right-md top-1/2 -translate-y-1/2"></div>
+</div>
+<!-- Message 2 -->
+<div class="flex items-center gap-sm px-md py-3 hover:bg-[#12121A] cursor-pointer transition-colors">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Small profile picture of male artisan, dark aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBS0EnJ2LC8zFR7hIIduMBHO9B63mDgJWSMUGawr1HJMfXy0nEGvHn-Hwcx8AlHtwsEPtKkxLdSE3A9GQ0LvlrIqqysqsHe_zr2VtieNr40hmz2Eh6RHU9-8vAocNXa0q8PESGqfvm4-WE89btTR2LFxa43lIWDIXUL-8zg3Q3oM3Hh9in0-VdguKw4tIWVJ6XlUozmBd-4sCM4I_97T9nGtJgGmehxsB58Rr_4azvmNY58d4DcUoTr8v9L2YzKW7J_gMnjYModASTW">
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h4 class="font-label-lg text-label-lg text-[#F8FAFC] truncate">Jordan M.</h4>
+<span class="font-caption text-caption text-[#94A3B8] whitespace-nowrap ml-2">Yesterday</span>
+</div>
+<div class="font-caption text-caption text-[#94A3B8] mb-0.5">Order #4829 路 Shipped</div>
+<p class="font-body-md text-body-md text-[#94A3B8] truncate">"Tracking inside"</p>
+</div>
+</div>
+<!-- Message 3 -->
+<div class="flex items-center gap-sm px-md py-3 hover:bg-[#12121A] cursor-pointer transition-colors">
+<div class="w-12 h-12 rounded-full bg-[#1A1A24] flex items-center justify-center text-[#94A3B8] font-headline-md">S</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h4 class="font-label-lg text-label-lg text-[#F8FAFC] truncate">Sarah's Boutique</h4>
+<span class="font-caption text-caption text-[#94A3B8] whitespace-nowrap ml-2">Mon</span>
+</div>
+<p class="font-body-md text-body-md text-[#94A3B8] truncate mt-1">"Is the ceramic bowl still available?"</p>
+</div>
+</div>
+</div>
+<div class="h-24"></div> <!-- Nav spacer -->
+</div>
+<!-- Night Bottom Nav -->
+<div class="absolute bottom-0 w-full h-[72px] bg-[#12121A] border-t border-[#242430] flex justify-between items-center px-sm z-50"><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-caption text-[10px] font-medium">Feed</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">storefront</span><span class="font-caption text-[10px] font-medium">Market</span></div><div class="flex flex-col items-center justify-center w-full px-1"><div class="flex flex-col items-center justify-center w-[56px] h-[48px] rounded-[16px] bg-[#2E2468] text-[#A78BFA]"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">mail</span><span class="font-caption text-[10px] font-semibold">Messages</span></div></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">receipt_long</span><span class="font-caption text-[10px] font-medium">Orders</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-caption text-[10px] font-medium">Profile</span></div></div>
+</div>
+<!-- FRAME 4: Night Orders -->
+<div class="phone-frame flex flex-col bg-[#0B0B12]">
+<!-- Top Bar -->
+<div class="flex justify-between items-center px-md py-sm bg-[#0B0B12] shrink-0 h-header-height z-10 border-b border-[#242430]">
+<span class="w-6"></span> <!-- Spacer -->
+<span class="font-headline-md text-headline-md font-bold text-[#F8FAFC]">Orders</span>
+<span class="material-symbols-outlined text-[#8B5CF6]">filter_list</span>
+</div>
+<!-- Content Scroll -->
+<div class="flex-1 overflow-y-auto hide-scrollbar bg-[#0B0B12]">
+<div class="p-md pb-xs">
+<!-- Chips -->
+<div class="flex flex-wrap gap-xs pb-1 mb-2">
+<button class="px-4 py-1.5 rounded-full bg-[#8B5CF6] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">All</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Pending</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Paid</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Shipped</button>
+<button class="px-4 py-1.5 rounded-full bg-[#1A1A24] text-[#F8FAFC] font-label-sm text-label-sm whitespace-nowrap">Completed</button>
+</div>
+</div>
+<div class="px-md flex flex-col gap-sm">
+<!-- Order Card 1 -->
+<div class="bg-[#12121A] rounded-[16px] border border-[#2A2A36] p-sm">
+<div class="flex justify-between items-center mb-3 pb-2 border-b border-[#242430]">
+<span class="font-label-sm text-label-sm text-[#94A3B8]">Order #4824</span>
+<span class="font-label-sm text-label-sm text-[#60A5FA] px-2 py-0.5 rounded bg-[#102A45]">Shipped</span>
+</div>
+<div class="flex gap-sm mb-3">
+<div class="w-16 h-16 rounded-lg bg-[#1A1A24] overflow-hidden shrink-0">
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<h4 class="font-title-md text-title-md text-[#F8FAFC] line-clamp-2 leading-tight">Handmade Leather Dog Collar</h4>
+<span class="font-price text-[16px] font-bold text-[#F8FAFC] mt-1">$128.00</span>
+</div>
+</div>
+<button class="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-label-sm text-label-sm py-2 rounded-lg transition-colors">
+                        Confirm Receipt
+                    </button>
+</div>
+<!-- Order Card 2 -->
+<div class="bg-[#12121A] rounded-[16px] border border-[#2A2A36] p-sm">
+<div class="flex justify-between items-center mb-3 pb-2 border-b border-[#242430]">
+<span class="font-label-sm text-label-sm text-[#94A3B8]">Order #9810</span>
+<span class="font-label-sm text-label-sm text-[#60A5FA] px-2 py-0.5 rounded bg-[#102A45]">Paid</span>
+</div>
+<div class="flex gap-sm mb-3">
+<div class="w-16 h-16 rounded-lg bg-[#1A1A24] shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#94A3B8]">inventory_2</span>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<h4 class="font-title-md text-title-md text-[#F8FAFC] line-clamp-2 leading-tight">Ceramic Elevated Bowl Set</h4>
+<span class="font-price text-[16px] font-bold text-[#F8FAFC] mt-1">$68.00</span>
+</div>
+</div>
+<button class="w-full bg-transparent border border-[#8B5CF6] text-[#A78BFA] font-label-sm text-label-sm py-2 rounded-lg transition-colors">
+                        Contact Seller
+                    </button>
+</div>
+<!-- Order Card 3 -->
+<div class="bg-[#12121A] rounded-[16px] border border-[#2A2A36] p-sm">
+<div class="flex justify-between items-center mb-3 pb-2 border-b border-[#242430]">
+<span class="font-label-sm text-label-sm text-[#94A3B8]">Order #0832</span>
+<span class="font-label-sm text-label-sm text-[#60A5FA] px-2 py-0.5 rounded bg-[#102A45]">Paid</span>
+</div>
+<div class="flex gap-sm mb-3">
+<div class="w-16 h-16 rounded-lg bg-[#1A1A24] shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#94A3B8]">sell</span>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<h4 class="font-title-md text-title-md text-[#F8FAFC] line-clamp-2 leading-tight">Premium Ergonomic Dog Harness</h4>
+<span class="font-price text-[16px] font-bold text-[#F8FAFC] mt-1">$45.00</span>
+</div>
+</div>
+<button class="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-label-sm text-label-sm py-2 rounded-lg transition-colors">
+                        Ship Order
+                    </button>
+</div>
+</div>
+<div class="h-24"></div> <!-- Nav spacer -->
+</div>
+<!-- Night Bottom Nav -->
+<div class="absolute bottom-0 w-full h-[72px] bg-[#12121A] border-t border-[#242430] flex justify-between items-center px-sm z-50"><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-caption text-[10px] font-medium">Feed</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">storefront</span><span class="font-caption text-[10px] font-medium">Market</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">mail</span><span class="font-caption text-[10px] font-medium">Messages</span></div><div class="flex flex-col items-center justify-center w-full px-1"><div class="flex flex-col items-center justify-center w-[56px] h-[48px] rounded-[16px] bg-[#2E2468] text-[#A78BFA]"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">receipt_long</span><span class="font-caption text-[10px] font-semibold">Orders</span></div></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-caption text-[10px] font-medium">Profile</span></div></div>
+</div>
+<!-- FRAME 5: Night Profile -->
+<div class="phone-frame flex flex-col bg-[#0B0B12]">
+<!-- Top Bar -->
+<div class="flex justify-between items-center px-md py-sm bg-[#0B0B12] shrink-0 h-header-height z-10">
+<span class="material-symbols-outlined text-[#A78BFA]">pets</span>
+<span class="font-headline-lg text-headline-lg font-bold text-[#F8FAFC]">M&amp;D</span>
+<span class="material-symbols-outlined text-[#F8FAFC]">settings</span>
+</div>
+<!-- Content Scroll -->
+<div class="flex-1 overflow-y-auto hide-scrollbar bg-[#0B0B12]">
+<!-- Header -->
+<div class="px-md py-sm flex flex-col items-center border-b border-[#242430] pb-md">
+<div class="relative mb-3">
+<img class="w-20 h-20 rounded-full border-2 border-[#8B5CF6] object-cover" data-alt="Portrait of young woman, soft glowing light, dark background, cinematic style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3ev5KgZqctJo266yoHezDGc8CIUgQ3g4rOWZEkwM_4tdcu_fY5ftZxdxPJ4VZSPhvxnQkffH8ncoHvJ-_ZrslE62gTH6Z14WeGJXG4791DTD19AU9oMPu4FB7anS4hehll2guuiOgFTUjZlzirwocMLIh0gtzOe8-LvkFzZ-_7Qg4Tl6Se0x9ndc_aVBNxySkPF67e4F4SWawebUbhYUgUEdtbcTE34g4DnOXOYCzPke1LSJS8tW6lat8XvKyJ6A2GsWloITFyRmf">
+<span class="material-symbols-outlined absolute bottom-0 right-0 text-[#8B5CF6] text-[20px] bg-[#0B0B12] rounded-full border-2 border-[#0B0B12]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-[#F8FAFC]">Peach &amp; Latte</h2>
+<span class="font-caption text-caption text-[#94A3B8] mb-2">@peachlatte</span>
+<p class="font-body-md text-body-md text-[#F8FAFC] text-center max-w-[280px]">Documenting the daily life of two cats.</p>
+<div class="flex gap-xl mt-md">
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-[18px] font-bold text-[#F8FAFC]">128</span>
+<span class="font-caption text-caption text-[#94A3B8]">Posts</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-[18px] font-bold text-[#F8FAFC]">42</span>
+<span class="font-caption text-caption text-[#94A3B8]">Followers</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-[18px] font-bold text-[#F8FAFC]">2</span>
+<span class="font-caption text-caption text-[#94A3B8]">Pets</span>
+</div>
+</div>
+</div>
+<!-- My Pets Section -->
+<div class="p-md">
+<h3 class="font-title-md text-title-md text-[#F8FAFC] mb-sm">My Pets</h3>
+<div class="flex gap-sm overflow-x-auto hide-scrollbar pb-1">
+<div class="bg-[#12121A] rounded-[16px] border border-[#2A2A36] p-sm flex items-center gap-sm shrink-0 min-w-[200px]">
+<div class="w-10 h-10 rounded-full bg-[#1A1A24] shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLunzCdJvXCvvkjM20OdnUxrcJ3Wo0Mx-rxTBUUlPCkb9P9JVk8PEclZSumiiUcY3N0PGfB5Jiz3MtR_PIl2WAz7HNk9J-n5XkMKnACIfFPxeMXQEUdUPzB77I3jGM8OpAqzOQtPhWEsbnhd9DCsa-bqE-uzgOwfde4HXj-QrC_uYi4UmQ9bcXbQv1dTBAfzhtq_CSq-KSTagAdx0DWCjlI_0Lb9JbySgBlhX4agqoAT1f3-79dLa8udA3fC">
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-[#F8FAFC]">Latte</h4>
+<span class="font-caption text-[10px] text-[#94A3B8] block">Domestic Shorthair 路 3 yrs</span>
+</div>
+</div>
+<div class="bg-[#12121A] rounded-[16px] border border-[#2A2A36] p-sm flex items-center gap-sm shrink-0 min-w-[200px]">
+<div class="w-10 h-10 rounded-full bg-[#1A1A24] shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLs4-hnL88eETQ5apBrhPNTpS2qhWxVqD294cJf8Sna3zrv2VXOu0bVClGi0aIV8e7FUquU6RxfZ47s4xcTwLyvm0ZwHiV2BfIQN3MMDbe-Q3oygYyyE97RAch-XY0GL9qTUbuAgZXfcQLoq99wtZphhwn0AJx49etUxwfm6j3WxiVKP1ab8p1ydnsgEr4J6odB5oaKz-DUMKLPHuloFGnKCqameFfplcDJPlSNB_3JJ8wlkXY1F3A9a3gQj">
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-[#F8FAFC]">Peach</h4>
+<span class="font-caption text-[10px] text-[#94A3B8] block">Persian 路 5 yrs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Post Grid -->
+<div class="px-md pb-md">
+<div class="grid grid-cols-3 gap-1">
+<div class="aspect-square bg-[#1A1A24] rounded-sm overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtXMvTnpLTEV7gIKLrS9K2ErAjCkruXEFE3fy8BMdxyzaxqeqocFyml1ZJ_Dqg-OmwVeu5LibDlcfFchjXLb1umUCcPY91TA-h6P2SGM2KTx0WsQUQjRGLoP0TCZQXiW2Koo-qxkDd-JGCgieDrYBtSGzzfcfyoJvfpK2bM5q-k1ZZ9JZkZPUq-bCxZ7UKmgyZ_1y_Zvp-NwJ1Moh1ut_KBc4lXYmAO7n73oJJfHevI4e6PFQJoj9s3Mls3">
+</div>
+</div></div></div><div class="absolute bottom-0 w-full h-[72px] bg-[#12121A] border-t border-[#242430] flex justify-between items-center px-sm z-50"><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-caption text-[10px] font-medium">Feed</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">storefront</span><span class="font-caption text-[10px] font-medium">Market</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">mail</span><span class="font-caption text-[10px] font-medium">Messages</span></div><div class="flex flex-col items-center justify-center w-full px-1 text-[#94A3B8]"><span class="material-symbols-outlined text-[24px]">receipt_long</span><span class="font-caption text-[10px] font-medium">Orders</span></div><div class="flex flex-col items-center justify-center w-full px-1"><div class="flex flex-col items-center justify-center w-[56px] h-[48px] rounded-[16px] bg-[#2E2468] text-[#A78BFA]"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">person</span><span class="font-caption text-[10px] font-semibold">Profile</span></div></div></div></div>
+
+
+
+</body></html>

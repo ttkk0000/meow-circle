@@ -1,6 +1,4 @@
-// Shared UI — M&D cute styling.
-
-import { forwardRef, useEffect, useRef, type ReactElement } from 'react';
+import {type ComponentProps, forwardRef, type ReactElement, type ReactNode, useEffect, useMemo, useRef,} from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -15,8 +13,9 @@ import {
   View,
   type ViewProps,
 } from 'react-native';
-import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
-import { colors, elevation, radius, spacing, typography } from './theme';
+import {type Edge, SafeAreaView} from 'react-native-safe-area-context';
+import {MaterialIcons} from '@expo/vector-icons';
+import {type MndColors, radius, shadow, spacing, typography, useMndTheme,} from './theme';
 
 export function Screen({
   children,
@@ -30,9 +29,10 @@ export function Screen({
   scroll?: boolean;
   contentStyle?: ViewProps['style'];
   refreshControl?: ReactElement;
-  /** Safe-area edges; default top+left+right (bottom uses tab bar / home indicator elsewhere). */
   edges?: Edge[];
 }) {
+  const { colors } = useMndTheme();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const safeEdges: Edge[] = edges ?? ['top', 'left', 'right'];
   const body = scroll ? (
     <ScrollView
@@ -57,22 +57,22 @@ type TypoKind = keyof typeof typography;
 export function Txt({
   kind = 'body',
   muted,
+  subtle,
   style,
   ...rest
-}: TextProps & { kind?: TypoKind; muted?: boolean }) {
-  return (
-    <Text
-      style={[
-        typography[kind],
-        { color: muted ? colors.onSurfaceVariant : colors.onSurface },
-        style,
-      ]}
-      {...rest}
-    />
-  );
+}: TextProps & { kind?: TypoKind; muted?: boolean; subtle?: boolean }) {
+  const { colors } = useMndTheme();
+  const color = subtle
+    ? colors.onSurfaceSubtle
+    : muted
+      ? colors.onSurfaceVariant
+      : colors.onSurface;
+  return <Text style={[typography[kind], { color }, style]} {...rest} />;
 }
 
 export function Card({ style, children, ...rest }: ViewProps) {
+  const { colors } = useMndTheme();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   return (
     <View style={[styles.card, style]} {...rest}>
       {children}
@@ -80,7 +80,7 @@ export function Card({ style, children, ...rest }: ViewProps) {
   );
 }
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'neutral';
 
 export function Button({
   title,
@@ -88,18 +88,29 @@ export function Button({
   variant = 'primary',
   loading,
   disabled,
+  icon,
   style,
+  accessibilityLabel,
   ...rest
 }: Omit<PressableProps, 'children'> & {
   title: string;
   variant?: ButtonVariant;
   loading?: boolean;
+  icon?: ComponentProps<typeof MaterialIcons>['name'];
 }) {
-  const isDisabled = disabled || loading;
+  const { colors } = useMndTheme();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
+  const variantStyles = getButtonVariantStyles(colors);
+  const isDisabled = Boolean(disabled || loading);
+  const textColor = variantStyles[variant].textColor;
+
   return (
     <Pressable
       onPress={onPress}
       disabled={isDisabled}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel ?? title}
+      accessibilityState={{ disabled: isDisabled, busy: Boolean(loading) }}
       style={(state) => [
         styles.btn,
         variantStyles[variant].base,
@@ -110,58 +121,74 @@ export function Button({
       {...rest}
     >
       {loading ? (
-        <ActivityIndicator color={variantStyles[variant].textColor} />
+        <ActivityIndicator color={textColor} />
       ) : (
-        <Text style={[styles.btnText, { color: variantStyles[variant].textColor }]}>{title}</Text>
+        <>
+          {icon ? <MaterialIcons name={icon} size={18} color={textColor} /> : null}
+          <Text style={[styles.btnText, { color: textColor }]}>{title}</Text>
+        </>
       )}
     </Pressable>
   );
 }
 
-const variantStyles: Record<
+function getButtonVariantStyles(colors: MndColors): Record<
   ButtonVariant,
   { base: object; pressed: object; textColor: string }
-> = {
-  primary: {
-    base: {
-      backgroundColor: colors.primaryContainer,
-      borderColor: colors.primaryContainer,
+> {
+  return {
+    primary: {
+      base: {
+        backgroundColor: colors.primaryContainer,
+        borderColor: colors.primaryContainer,
+      },
+      pressed: { opacity: 0.92, transform: [{ scale: 0.98 }] },
+      textColor: colors.onPrimary,
     },
-    pressed: { opacity: 0.92, transform: [{ scale: 0.98 }] },
-    textColor: colors.onPrimary,
-  },
-  secondary: {
-    base: {
-      backgroundColor: colors.surfaceLow,
-      borderColor: colors.outlineVariant,
+    secondary: {
+      base: {
+        backgroundColor: colors.surfaceLow,
+        borderColor: colors.border,
+      },
+      pressed: { backgroundColor: colors.surfaceContainer },
+      textColor: colors.onSurface,
     },
-    pressed: { backgroundColor: colors.surfaceContainer },
-    textColor: colors.onSurface,
-  },
-  ghost: {
-    base: { backgroundColor: 'transparent', borderColor: 'transparent' },
-    pressed: { backgroundColor: colors.brandWeak },
-    textColor: colors.primaryContainer,
-  },
-  danger: {
-    base: { backgroundColor: colors.error, borderColor: colors.error },
-    pressed: { opacity: 0.9 },
-    textColor: colors.onPrimary,
-  },
-};
+    neutral: {
+      base: {
+        backgroundColor: colors.surface,
+        borderColor: colors.border,
+      },
+      pressed: { backgroundColor: colors.surfaceLow },
+      textColor: colors.onSurface,
+    },
+    ghost: {
+      base: { backgroundColor: 'transparent', borderColor: 'transparent' },
+      pressed: { backgroundColor: colors.accentSoft },
+      textColor: colors.primaryContainer,
+    },
+    danger: {
+      base: { backgroundColor: colors.error, borderColor: colors.error },
+      pressed: { opacity: 0.9 },
+      textColor: colors.onPrimary,
+    },
+  };
+}
 
 export const Input = forwardRef<
   TextInput,
   TextInputProps & { label?: string; error?: string; hint?: string }
->(function Input({ label, error, hint, style, ...rest }, ref) {
+>(function Input({ label, error, hint, style, accessibilityLabel, accessibilityHint, placeholder, ...rest }, ref) {
+  const { colors } = useMndTheme();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   return (
     <View style={{ gap: spacing.xs }}>
-      {label ? (
-        <Text style={[typography.label, { color: colors.onSurfaceVariant }]}>{label}</Text>
-      ) : null}
+      {label ? <Text style={[typography.label, { color: colors.onSurfaceVariant }]}>{label}</Text> : null}
       <TextInput
         ref={ref}
-        placeholderTextColor={colors.outline}
+        placeholder={placeholder}
+        placeholderTextColor={colors.onSurfaceSubtle}
+        accessibilityLabel={accessibilityLabel ?? label ?? (typeof placeholder === 'string' ? placeholder : undefined)}
+        accessibilityHint={accessibilityHint ?? error ?? hint}
         style={[styles.input, error ? styles.inputError : null, style]}
         {...rest}
       />
@@ -174,22 +201,83 @@ export const Input = forwardRef<
   );
 });
 
-export function Pill({ children, tone = 'neutral' }: { children: React.ReactNode; tone?: 'neutral' | 'brand' }) {
+export function Pill({
+  children,
+  tone = 'neutral',
+}: {
+  children: ReactNode;
+  tone?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger';
+}) {
+  const { colors } = useMndTheme();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
+  const palette = {
+    neutral: { bg: colors.surfaceLow, fg: colors.onSurfaceVariant },
+    brand: { bg: colors.accentSoft, fg: colors.primaryContainer },
+    success: { bg: colors.successBg, fg: colors.success },
+    warning: { bg: colors.warningBg, fg: colors.warning },
+    danger: { bg: colors.errorBg, fg: colors.error },
+  }[tone];
   return (
-    <View
-      style={[
-        styles.pill,
-        tone === 'brand' ? { backgroundColor: colors.brandWeak } : { backgroundColor: colors.surfaceLow },
-      ]}
-    >
-      <Text style={[typography.label, { color: tone === 'brand' ? colors.primaryContainer : colors.onSurfaceVariant }]}>
-        {children}
-      </Text>
+    <View style={[styles.pill, { backgroundColor: palette.bg }]}>
+      <Text style={[typography.label, { color: palette.fg }]}>{children}</Text>
     </View>
   );
 }
 
-export function MndLoader({ label = 'M&D 正在准备猫猫宇宙...' }: { label?: string }) {
+export function IconButton({
+  icon,
+  label,
+  onPress,
+  tone = 'neutral',
+}: {
+  icon: ComponentProps<typeof MaterialIcons>['name'];
+  label: string;
+  onPress?: () => void;
+  tone?: 'neutral' | 'brand';
+}) {
+  const { colors } = useMndTheme();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      style={({ pressed }) => [
+        styles.iconButton,
+        tone === 'brand' && { backgroundColor: colors.accentSoft },
+        pressed && styles.pressed,
+      ]}
+    >
+      <MaterialIcons
+        name={icon}
+        size={22}
+        color={tone === 'brand' ? colors.primaryContainer : colors.onSurface}
+      />
+    </Pressable>
+  );
+}
+
+export function EmptyState({
+  title,
+  body,
+  action,
+}: {
+  title: string;
+  body: string;
+  action?: ReactElement;
+}) {
+  return (
+    <Card>
+      <Txt kind="h3">{title}</Txt>
+      <Txt muted>{body}</Txt>
+      {action}
+    </Card>
+  );
+}
+
+export function MndLoader({ label = 'M&D 正在整理猫猫宇宙...' }: { label?: string }) {
+  const { colors } = useMndTheme();
+  const styles = useMemo(() => makeStyles(colors), [colors]);
   const bob = useRef(new Animated.Value(0)).current;
   const pulse = useRef(new Animated.Value(0.45)).current;
 
@@ -216,8 +304,8 @@ export function MndLoader({ label = 'M&D 正在准备猫猫宇宙...' }: { label
 
   return (
     <View style={styles.loaderWrap}>
-      <Animated.Text style={[styles.loaderKitty, { transform: [{ translateY: bob }] }]}>M&D</Animated.Text>
-      <Animated.Text style={[styles.loaderDots, { opacity: pulse }]}>• • •</Animated.Text>
+      <Animated.Text style={[styles.loaderMark, { transform: [{ translateY: bob }] }]}>M&D</Animated.Text>
+      <Animated.Text style={[styles.loaderDots, { opacity: pulse }]}>...</Animated.Text>
       <Txt kind="bodySmall" muted style={styles.loaderLabel}>
         {label}
       </Txt>
@@ -227,79 +315,98 @@ export function MndLoader({ label = 'M&D 正在准备猫猫宇宙...' }: { label
 
 export const KittyLoader = MndLoader;
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.canvas,
-  },
-  screenContent: {
-    padding: spacing.lg,
-    gap: spacing.md,
-    flexGrow: 1,
-  },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.xl,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.border,
-    padding: spacing.lg,
-    gap: spacing.sm,
-    ...elevation.soft,
-  },
-  btn: {
-    borderRadius: radius.pill,
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.xl,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 48,
-  },
-  btnText: {
-    ...typography.label,
-    fontSize: 15,
-    letterSpacing: 0,
-  },
-  btnDisabled: {
-    opacity: 0.45,
-  },
-  input: {
-    borderRadius: radius.xl,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.outlineVariant,
-    backgroundColor: colors.surfaceLow,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    color: colors.onSurface,
-    fontSize: 16,
-    minHeight: 48,
-    fontFamily: typography.body.fontFamily,
-  },
-  inputError: {
-    borderColor: colors.error,
-  },
-  pill: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.s1 + 2,
-    borderRadius: radius.pill,
-  },
-  loaderWrap: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.canvas,
-    gap: spacing.sm,
-  },
-  loaderKitty: {
-    fontSize: 42,
-  },
-  loaderDots: {
-    fontSize: 18,
-    color: colors.primaryContainer,
-    letterSpacing: 3,
-  },
-  loaderLabel: {
-    color: colors.onSurfaceVariant,
-  },
-});
+function makeStyles(colors: MndColors) {
+  return StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: colors.canvas,
+    },
+    screenContent: {
+      padding: spacing.lg,
+      gap: spacing.md,
+      flexGrow: 1,
+    },
+    card: {
+      backgroundColor: colors.surface,
+      borderRadius: radius.xl,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: colors.border,
+      padding: spacing.lg,
+      gap: spacing.sm,
+      ...shadow(colors.shadow, 'soft'),
+    },
+    btn: {
+      borderRadius: radius.pill,
+      borderWidth: StyleSheet.hairlineWidth,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.xl,
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: 48,
+      flexDirection: 'row',
+      gap: spacing.sm,
+    },
+    btnText: {
+      ...typography.label,
+      fontSize: 15,
+      letterSpacing: 0,
+    },
+    btnDisabled: {
+      opacity: 0.45,
+    },
+    input: {
+      borderRadius: radius.xl,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: colors.border,
+      backgroundColor: colors.surfaceLow,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+      color: colors.onSurface,
+      fontSize: 16,
+      minHeight: 48,
+      fontFamily: typography.body.fontFamily,
+    },
+    inputError: {
+      borderColor: colors.error,
+    },
+    pill: {
+      alignSelf: 'flex-start',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.s1 + 2,
+      borderRadius: radius.pill,
+    },
+    iconButton: {
+      width: 44,
+      height: 44,
+      borderRadius: radius.pill,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.surface,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: colors.border,
+    },
+    pressed: {
+      opacity: 0.88,
+      transform: [{ scale: 0.97 }],
+    },
+    loaderWrap: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.canvas,
+      gap: spacing.sm,
+    },
+    loaderMark: {
+      ...typography.mega,
+      color: colors.primaryContainer,
+    },
+    loaderDots: {
+      ...typography.h3,
+      color: colors.primaryContainer,
+      letterSpacing: 3,
+    },
+    loaderLabel: {
+      color: colors.onSurfaceVariant,
+    },
+  });
+}

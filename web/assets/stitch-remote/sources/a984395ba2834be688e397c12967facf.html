@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Night Theme Color Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8B5CF6",
+                        "secondary": "#6366F1",
+                        "tertiary": "#F59E0B",
+                        "cat-accent": "#F59E0B",
+                        "on-surface": "#F8FAFC",
+                        "background": "#0B0D12",
+                        "surface": "#151821",
+                        "surface-variant": "#1F2430",
+                        "surface-elevated": "#252B38",
+                        "border-color": "#303644",
+                        "success": "#4ADE80",
+                        "warning": "#FBBF24",
+                        "error": "#F87171",
+                        "info": "#60A5FA",
+                        "on-background": "#F8FAFC",
+                        "on-surface-variant": "#94A3B8"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "16px",
+                        "xl": "24px",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "sm": "8px",
+                        "xl": "32px",
+                        "xxl": "48px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "md": "16px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Outfit"],
+                        "title-lg": ["Outfit"],
+                        "title": ["Outfit"],
+                        "display": ["Outfit"],
+                        "section-title": ["Outfit"],
+                        "bodySmall": ["Inter"],
+                        "body": ["Inter"],
+                        "button": ["Inter"],
+                        "button-label": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    fontSize: {
+                        "display-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "title-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "title": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "display": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "section-title": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "bodySmall": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "button": ["15px", { "lineHeight": "22px", "fontWeight": "600" }],
+                        "button-label": ["15px", { "lineHeight": "22px", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "18px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0B0D12; color: #F8FAFC; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="font-body text-body bg-background text-on-background min-h-screen antialiased flex">
+<!-- Left Navigation -->
+<aside class="w-64 bg-surface border-r border-border-color min-h-screen p-lg hidden md:block">
+<div class="space-y-xl">
+<div>
+<h2 class="font-display text-primary text-xl font-bold mb-md">NightTheme</h2>
+</div>
+<nav class="space-y-sm">
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-variant text-on-surface transition-colors" href="#"><span class="material-symbols-outlined">rss_feed</span> Feed</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-variant text-on-surface transition-colors" href="#"><span class="material-symbols-outlined">storefront</span> Market</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-variant text-on-surface transition-colors" href="#"><span class="material-symbols-outlined">chat</span> Messages</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-variant text-on-surface transition-colors" href="#"><span class="material-symbols-outlined">receipt_long</span> Orders</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg hover:bg-surface-variant text-on-surface transition-colors" href="#"><span class="material-symbols-outlined">person</span> Profile</a>
+</nav>
+</div>
+</aside>
+<div class="flex-1 max-w-7xl mx-auto p-lg md:p-xxl space-y-xxl">
+<!-- Header -->
+<header class="space-y-sm">
+<h1 class="font-display-lg text-display-lg text-primary tracking-tight">Night Theme Color Board</h1>
+<p class="font-body text-body text-on-surface-variant max-w-2xl">A premium, immersive, and low-light friendly color palette designed for a sophisticated digital experience. Exploring the deep hues and vibrant accents of our night mode.</p>
+</header>
+<!-- Core Colors Grid -->
+<section class="space-y-lg">
+<h2 class="font-title-lg text-title-lg border-b border-border-color pb-sm">Core Brand Tokens</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Primary -->
+<div class="bg-surface rounded-lg p-md flex flex-col shadow-sm border border-border-color">
+<div class="h-32 rounded-lg bg-primary mb-md"></div>
+<div class="flex justify-between items-center">
+<div>
+<h3 class="font-section-title text-section-title text-on-surface">Primary</h3>
+<p class="font-bodySmall text-bodySmall text-on-surface-variant">Used for main actions &amp; highlights</p>
+</div>
+<span class="font-button text-button bg-surface-variant text-on-surface px-sm py-xs rounded">#8B5CF6</span>
+</div>
+</div>
+<!-- Secondary -->
+<div class="bg-surface rounded-lg p-md flex flex-col shadow-sm border border-border-color">
+<div class="h-32 rounded-lg bg-secondary mb-md"></div>
+<div class="flex justify-between items-center">
+<div>
+<h3 class="font-section-title text-section-title text-on-surface">Secondary</h3>
+<p class="font-bodySmall text-bodySmall text-on-surface-variant">Supporting elements &amp; secondary buttons</p>
+</div>
+<span class="font-button text-button bg-surface-variant text-on-surface px-sm py-xs rounded">#6366F1</span>
+</div>
+</div>
+<!-- Tertiary / Accent -->
+<div class="bg-surface rounded-lg p-md flex flex-col shadow-sm border border-border-color">
+<div class="h-32 rounded-lg bg-tertiary mb-md"></div>
+<div class="flex justify-between items-center">
+<div>
+<h3 class="font-section-title text-section-title text-on-surface">Cat Accent</h3>
+<p class="font-bodySmall text-bodySmall text-on-surface-variant">Warm highlights &amp; specific category markers</p>
+</div>
+<span class="font-button text-button bg-surface-variant text-on-surface px-sm py-xs rounded">#F59E0B</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Foundation Colors Grid -->
+<section class="space-y-lg">
+<h2 class="font-title-lg text-title-lg border-b border-border-color pb-sm">Structural Foundation</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Background -->
+<div class="bg-surface rounded-lg p-md flex flex-col border border-border-color">
+<div class="h-24 rounded-lg bg-background border border-border-color mb-md"></div>
+<div class="flex justify-between items-center">
+<div>
+<h3 class="font-section-title text-section-title text-on-surface">Background</h3>
+</div>
+<span class="font-bodySmall text-bodySmall text-on-surface-variant">#0B0D12</span>
+</div>
+</div>
+<!-- Surface -->
+<div class="bg-surface rounded-lg p-md flex flex-col border border-border-color">
+<div class="h-24 rounded-lg bg-surface border border-border-color mb-md"></div>
+<div class="flex justify-between items-center">
+<div>
+<h3 class="font-section-title text-section-title text-on-surface">Surface</h3>
+</div>
+<span class="font-bodySmall text-bodySmall text-on-surface-variant">#151821</span>
+</div>
+</div>
+<!-- Text Primary -->
+<div class="bg-surface rounded-lg p-md flex flex-col border border-border-color">
+<div class="h-24 rounded-lg bg-on-surface mb-md"></div>
+<div class="flex justify-between items-center">
+<div>
+<h3 class="font-section-title text-section-title text-on-surface">Text Primary</h3>
+</div>
+<span class="font-bodySmall text-bodySmall text-on-surface-variant">#F8FAFC</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Status Colors -->
+<section class="space-y-lg">
+<h2 class="font-title-lg text-title-lg border-b border-border-color pb-sm">Semantic Status</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Success -->
+<div class="bg-surface rounded-lg p-sm border border-border-color flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-success flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#0B0D12]">check_circle</span>
+</div>
+<div class="overflow-hidden">
+<h3 class="font-button text-button text-on-surface truncate">Success</h3>
+<p class="font-caption text-caption text-on-surface-variant">#4ADE80</p>
+</div>
+</div>
+<!-- Warning -->
+<div class="bg-surface rounded-lg p-sm border border-border-color flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-warning flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#0B0D12]">warning</span>
+</div>
+<div class="overflow-hidden">
+<h3 class="font-button text-button text-on-surface truncate">Warning</h3>
+<p class="font-caption text-caption text-on-surface-variant">#FBBF24</p>
+</div>
+</div>
+<!-- Error -->
+<div class="bg-surface rounded-lg p-sm border border-border-color flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#0B0D12]">error</span>
+</div>
+<div class="overflow-hidden">
+<h3 class="font-button text-button text-on-surface truncate">Error</h3>
+<p class="font-caption text-caption text-on-surface-variant">#F87171</p>
+</div>
+</div>
+<!-- Info -->
+<div class="bg-surface rounded-lg p-sm border border-border-color flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-info flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#0B0D12]">info</span>
+</div>
+<div class="overflow-hidden">
+<h3 class="font-button text-button text-on-surface truncate">Info</h3>
+<p class="font-caption text-caption text-on-surface-variant">#60A5FA</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Component Preview -->
+<section class="space-y-lg pb-xxl">
+<h2 class="font-title-lg text-title-lg border-b border-border-color pb-sm">UI Preview</h2>
+<div class="bg-surface p-lg rounded-lg border border-border-color flex flex-col md:flex-row gap-lg items-center justify-between">
+<div class="space-y-md max-w-md">
+<h3 class="font-title text-title text-on-surface">Premium Immersive Experience</h3>
+<p class="font-body text-body text-on-surface-variant">The night theme utilizes deep backgrounds and vibrant primary highlights to create depth without relying on heavy shadows. High contrast typography ensures readability.</p>
+<div class="flex gap-md pt-sm">
+<button class="bg-primary hover:bg-secondary transition-colors text-on-surface font-button text-button px-lg py-sm rounded-lg">Primary Action</button>
+<button class="bg-surface-variant hover:bg-surface-elevated border border-border-color transition-colors text-on-surface font-button text-button px-lg py-sm rounded-lg">Secondary Action</button>
+</div>
+</div>
+<div class="w-full md:w-1/2 h-48 rounded-lg bg-surface-elevated border border-border-color relative overflow-hidden flex items-center justify-center">
+<div class="text-on-surface-variant font-caption">Solid Background Area</div>
+<div class="absolute bottom-md left-md">
+<span class="bg-primary text-on-surface font-caption text-caption px-sm py-xs rounded">Immersive Mode</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</body></html>

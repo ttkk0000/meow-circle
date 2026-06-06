@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { useFonts } from 'expo-font';
+import {useEffect} from 'react';
+import {Stack} from 'expo-router';
+import {StatusBar} from 'expo-status-bar';
+import {useFonts} from 'expo-font';
 import {
   PlusJakartaSans_400Regular,
   PlusJakartaSans_500Medium,
@@ -10,10 +10,10 @@ import {
   PlusJakartaSans_800ExtraBold,
 } from '@expo-google-fonts/plus-jakarta-sans';
 import * as SplashScreen from 'expo-splash-screen';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AuthProvider, useAuth } from '@/auth';
-import { MndLoader } from '@/components';
-import { colors } from '@/theme';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {AuthProvider, useAuth} from '@/auth';
+import {MndLoader} from '@/components';
+import {MndThemeProvider, typography, useMndTheme} from '@/theme';
 
 SplashScreen.preventAutoHideAsync().catch(() => null);
 
@@ -30,34 +30,36 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => null);
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  if (!fontsLoaded) return null;
 
   return (
     <SafeAreaProvider>
-      <AuthProvider>
-        <RootNavigator />
-      </AuthProvider>
+      <MndThemeProvider>
+        <AuthProvider>
+          <RootNavigator />
+        </AuthProvider>
+      </MndThemeProvider>
     </SafeAreaProvider>
   );
 }
 
 function RootNavigator() {
   const { loading } = useAuth();
+  const { colors, isDark } = useMndTheme();
 
   if (loading) {
-    return <MndLoader label="M&D 正在整理猫猫宇宙..." />;
+    return <MndLoader label="M&D 正在打开猫猫圈子..." />;
   }
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style={isDark ? 'light' : 'dark'} />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: colors.surface100 },
-          headerTitleStyle: { color: colors.ink },
-          contentStyle: { backgroundColor: colors.surface100 },
+          headerStyle: { backgroundColor: colors.canvas },
+          headerTitleStyle: { color: colors.onSurface, ...typography.h3 },
+          headerTintColor: colors.onSurface,
+          contentStyle: { backgroundColor: colors.canvas },
           headerShadowVisible: false,
         }}
       >

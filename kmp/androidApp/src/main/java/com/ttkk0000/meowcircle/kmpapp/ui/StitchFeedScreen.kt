@@ -65,6 +65,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.Conversation
+import com.ttkk0000.meowcircle.Listing
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.Post
 import com.ttkk0000.meowcircle.PostFeedItem
@@ -96,6 +97,12 @@ private data class HomeSignal(
     val tone: Color,
 )
 
+private data class ProfileBackgroundOption(
+    val key: String,
+    val label: String,
+    val note: String,
+)
+
 private val FEED_FILTERS =
     listOf(
         FeedFilter("rec", "推荐"),
@@ -106,6 +113,14 @@ private val FEED_FILTERS =
 /** M&D「发现」热门圈子，本地展示，后续可接圈子接口。 */
 private val DISCOVER_CIRCLE_LABELS =
     listOf("猫猫新手村", "橘猫联盟", "黑猫部", "猫咪摄影", "领养中心")
+
+private val PROFILE_BACKGROUND_OPTIONS =
+    listOf(
+        ProfileBackgroundOption("picnic", "Picnic", "野餐毯和晒太阳的猫猫"),
+        ProfileBackgroundOption("desk", "Desk", "书桌边的键盘搭子"),
+        ProfileBackgroundOption("arcade", "Arcade", "夜间游戏感名片"),
+        ProfileBackgroundOption("garden", "Garden", "花园角落，doggie 友好"),
+    )
 
 private val FEED_PAGE_PADDING = 20.dp
 private val FEED_CARD_RADIUS = RoundedCornerShape(8.dp)
@@ -160,6 +175,7 @@ fun StitchFeedScreen(
     var messageQuery by remember { mutableStateOf("") }
     var messageSection by remember { mutableStateOf(MessageSection.Chats) }
     var profileHint by remember { mutableStateOf<String?>(null) }
+    var profileBackground by remember { mutableStateOf(sdk.sessionStore().getProfileBackground()) }
     var showEditProfile by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
     var profileSaving by remember { mutableStateOf(false) }
@@ -170,6 +186,9 @@ fun StitchFeedScreen(
     var conversations by remember { mutableStateOf<List<Conversation>?>(null) }
     var convErr by remember { mutableStateOf<String?>(null) }
     var convLoading by remember { mutableStateOf(false) }
+    var listings by remember { mutableStateOf<List<Listing>?>(null) }
+    var listingsErr by remember { mutableStateOf<String?>(null) }
+    var listingsLoading by remember { mutableStateOf(false) }
     var profilePosts by remember { mutableStateOf<List<PostFeedItem>?>(null) }
     var profileLoading by remember { mutableStateOf(false) }
     var mockMode by remember { mutableStateOf(false) }
@@ -241,6 +260,40 @@ fun StitchFeedScreen(
         )
     }
 
+    fun createMockListings(): List<Listing> =
+        listOf(
+            Listing(
+                id = 1L,
+                sellerId = 2L,
+                type = "product",
+                title = "未拆封猫罐头 6 罐组合",
+                description = "猫猫优先，适合换粮过渡；同城可自提。",
+                priceCents = 6800L,
+                currency = "CNY",
+                createdAt = "2026-06-02T10:00:00Z",
+            ),
+            Listing(
+                id = 2L,
+                sellerId = 5L,
+                type = "service",
+                title = "周末上门喂猫与铲砂",
+                description = "有基础照护记录，可同时帮 doggie 换水。",
+                priceCents = 12000L,
+                currency = "CNY",
+                createdAt = "2026-06-01T12:00:00Z",
+            ),
+            Listing(
+                id = 3L,
+                sellerId = 8L,
+                type = "adopt",
+                title = "三个月橘猫找稳定家庭",
+                description = "已驱虫，性格亲人，需要领养回访。",
+                priceCents = 0L,
+                currency = "CNY",
+                createdAt = "2026-05-31T18:30:00Z",
+            ),
+        )
+
     val effectiveFilter =
         when (tab) {
             StitchMainTab.Discover -> "new"
@@ -267,6 +320,29 @@ fun StitchFeedScreen(
                 },
             )
         loading = false
+    }
+
+    LaunchedEffect(tab, mockMode) {
+        if (tab != StitchMainTab.Discover) return@LaunchedEffect
+        if (mockMode) {
+            listings = createMockListings()
+            listingsErr = null
+            listingsLoading = false
+            return@LaunchedEffect
+        }
+        listingsLoading = true
+        listingsErr = null
+        listings =
+            sdk.listings().fold(
+                onSuccess = { it },
+                onFailure = { e ->
+                    listingsErr =
+                        (e as? ApiException)?.message
+                            ?: humanizeClientFailure(e, apiBase)
+                    null
+                },
+            )
+        listingsLoading = false
     }
 
     LaunchedEffect(tab, feedReloadSignal, mockMode) {
@@ -381,10 +457,15 @@ fun StitchFeedScreen(
                             user = profileUser,
                             gridPosts = profilePosts,
                             gridLoading = profileLoading,
+                            profileBackground = profileBackground,
                             onLogout = onLogout,
                             onOpenPost = onOpenPost,
                             onEditProfile = { showEditProfile = true },
                             onSettings = { showThemeDialog = true },
+                            onProfileBackgroundChanged = {
+                                sdk.sessionStore().setProfileBackground(it)
+                                profileBackground = sdk.sessionStore().getProfileBackground()
+                            },
                             hint = profileHint,
                             modifier = Modifier.fillMaxWidth().weight(1f),
                         )
@@ -451,6 +532,10 @@ fun StitchFeedScreen(
                                         selectedCircle = if (selectedCircle == label) null else label
                                     },
                                     onResetCircles = { selectedCircle = null },
+                                    listings = listings,
+                                    listingsLoading = listingsLoading,
+                                    listingsErr = listingsErr,
+                                    onEnableMock = { mockMode = true },
                                 )
                             } else {
                                 HomeFeedHeader(
@@ -753,6 +838,10 @@ private fun DiscoverFeedHeader(
     selectedCircle: String?,
     onCircleSelect: (String) -> Unit,
     onResetCircles: () -> Unit,
+    listings: List<Listing>?,
+    listingsLoading: Boolean,
+    listingsErr: String?,
+    onEnableMock: () -> Unit,
 ) {
     StitchSearchField(
         value = query,
@@ -841,6 +930,196 @@ private fun DiscoverFeedHeader(
             }
         }
     }
+    Spacer(Modifier.height(12.dp))
+    MarketPreviewSection(
+        query = query,
+        listings = listings,
+        loading = listingsLoading,
+        err = listingsErr,
+        onEnableMock = onEnableMock,
+    )
+}
+
+@Composable
+private fun MarketPreviewSection(
+    query: String,
+    listings: List<Listing>?,
+    loading: Boolean,
+    err: String?,
+    onEnableMock: () -> Unit,
+) {
+    val previewItems =
+        remember(listings, query) {
+            val all = listings.orEmpty()
+            val key = query.trim().lowercase()
+            val filtered =
+                if (key.isBlank()) {
+                    all
+                } else {
+                    all.filter {
+                        it.title.lowercase().contains(key) ||
+                            it.description.lowercase().contains(key) ||
+                            it.type.lowercase().contains(key)
+                    }
+                }
+            filtered.take(3)
+        }
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = FEED_SECTION_RADIUS,
+        color = StitchPalette.Surface,
+        border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Column(
+            modifier = Modifier.padding(14.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(Modifier.weight(1f)) {
+                    Text(
+                        "好物市集",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = StitchPalette.OnSurface,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        "猫猫用品、领养、上门服务优先；doggie 友好内容作为伴随分支",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = StitchPalette.OnSurfaceVariant,
+                    )
+                }
+                Surface(
+                    shape = StitchShape.pill,
+                    color = StitchPalette.BrandMuted,
+                ) {
+                    Text(
+                        "安心交易",
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = StitchPalette.Brand,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+            }
+            when {
+                loading && listings == null ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    ) {
+                        CircularProgressIndicator(color = StitchPalette.Brand, modifier = Modifier.size(18.dp))
+                        Text("正在加载市集...", style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
+                    }
+                err != null && listings == null ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    ) {
+                        Text(
+                            "市集暂时不可用",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = StitchPalette.Error,
+                            modifier = Modifier.weight(1f),
+                        )
+                        TextButton(
+                            onClick = onEnableMock,
+                            colors =
+                                ButtonDefaults.textButtonColors(
+                                    containerColor = StitchPalette.BrandMuted,
+                                    contentColor = StitchPalette.Brand,
+                                ),
+                            shape = FEED_SECTION_RADIUS,
+                        ) {
+                            Text("看演示")
+                        }
+                    }
+                previewItems.isEmpty() ->
+                    Text(
+                        "暂时没有匹配的好物",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StitchPalette.OnSurfaceVariant,
+                    )
+                else ->
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        previewItems.forEach { item ->
+                            ListingPreviewRow(item)
+                        }
+                    }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ListingPreviewRow(item: Listing) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(FEED_CARD_RADIUS)
+                .background(StitchPalette.SurfaceLow)
+                .border(1.dp, StitchPalette.BorderHairline, FEED_CARD_RADIUS)
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Surface(
+            shape = StitchShape.pill,
+            color = if (item.type == "adopt") StitchPalette.SecondaryContainer else StitchPalette.BrandMuted,
+        ) {
+            Text(
+                listingTypeLabel(item.type),
+                modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp),
+                style = MaterialTheme.typography.labelMedium,
+                color = if (item.type == "adopt") StitchPalette.PrimaryDark else StitchPalette.Brand,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        Column(Modifier.weight(1f)) {
+            Text(
+                item.title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = StitchPalette.OnSurface,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                item.description,
+                style = MaterialTheme.typography.bodySmall,
+                color = StitchPalette.OnSurfaceVariant,
+                maxLines = 1,
+            )
+        }
+        Text(
+            formatListingPrice(item.priceCents, item.currency),
+            style = MaterialTheme.typography.labelLarge,
+            color = StitchPalette.Error,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+private fun listingTypeLabel(type: String): String =
+    when (type) {
+        "product" -> "商品"
+        "service" -> "服务"
+        "adopt" -> "领养"
+        else -> type
+    }
+
+private fun formatListingPrice(
+    cents: Long,
+    currency: String,
+): String {
+    if (cents <= 0L) return "免费"
+    val amount = cents / 100.0
+    val symbol = if (currency.uppercase() == "CNY") "¥" else currency.uppercase()
+    return "$symbol${amount.toString().trimEnd('0').trimEnd('.')}"
 }
 
 @Composable
@@ -977,6 +1256,13 @@ private fun ThemeSelectionDialog(
     onDismiss: () -> Unit,
     onSelect: (String) -> Unit,
 ) {
+    val normalizedTheme =
+        when (currentTheme.lowercase()) {
+            "sugar" -> "honey"
+            "system" -> "neutral"
+            else -> currentTheme.lowercase()
+        }
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("切换主题色") },
@@ -984,28 +1270,36 @@ private fun ThemeSelectionDialog(
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text("选择一个配色风格：", style = MaterialTheme.typography.bodyMedium)
                 Row(
-                    modifier = Modifier.fillMaxWidth().clickable { onSelect("sugar") }.padding(vertical = 12.dp),
+                    modifier = Modifier.fillMaxWidth().clickable { onSelect("honey") }.padding(vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFFCF2D56)))
+                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFFFF8A3D)))
                     Spacer(Modifier.width(12.dp))
-                    Text("蜜糖 (Sugar)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (currentTheme == "sugar") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                    Text("蜂蜜 (Honey)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "honey") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth().clickable { onSelect("mint") }.padding(vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFF00AECA)))
+                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFF2EC4A6)))
                     Spacer(Modifier.width(12.dp))
-                    Text("薄荷 (Mint)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (currentTheme == "mint") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                    Text("薄荷 (Mint)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "mint") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth().clickable { onSelect("night") }.padding(vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFFC482FF)))
+                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFF8B5CF6)))
                     Spacer(Modifier.width(12.dp))
-                    Text("暗夜 (Night)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (currentTheme == "night") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                    Text("暗夜 (Night)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "night") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth().clickable { onSelect("neutral") }.padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFF4B5563)))
+                    Spacer(Modifier.width(12.dp))
+                    Text("中性 (Neutral)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "neutral") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
                 }
             }
         },
@@ -1079,16 +1373,34 @@ private fun ProfilePanel(
     user: User,
     gridPosts: List<PostFeedItem>?,
     gridLoading: Boolean,
+    profileBackground: String,
     onLogout: () -> Unit,
     onOpenPost: (Long) -> Unit,
     onEditProfile: () -> Unit,
     onSettings: () -> Unit,
+    onProfileBackgroundChanged: (String) -> Unit,
     hint: String?,
     modifier: Modifier = Modifier,
 ) {
     val avatarUrl = resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() })
     val posts = gridPosts.orEmpty()
     val likesTotal = posts.sumOf { it.likeCount }
+    val activeBackground =
+        PROFILE_BACKGROUND_OPTIONS.firstOrNull { it.key == profileBackground }
+            ?: PROFILE_BACKGROUND_OPTIONS.first()
+    val coverColor =
+        when (activeBackground.key) {
+            "desk" -> StitchPalette.SurfaceLow
+            "arcade" -> StitchPalette.SurfaceContainer
+            "garden" -> StitchPalette.GoldWeak
+            else -> StitchPalette.SecondaryContainer.copy(alpha = 0.55f)
+        }
+    val coverBorder =
+        when (activeBackground.key) {
+            "arcade" -> StitchPalette.BrandLight
+            "garden" -> StitchPalette.Outline
+            else -> StitchPalette.BorderHairline
+        }
     Column(
         modifier =
             modifier
@@ -1096,29 +1408,94 @@ private fun ProfilePanel(
                 .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Row(
+        Surface(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
+            shape = FEED_SECTION_RADIUS,
+            color = coverColor,
+            border = androidx.compose.foundation.BorderStroke(1.dp, coverBorder),
         ) {
-            Icon(
-                Icons.Filled.Pets,
-                contentDescription = null,
-                tint = StitchPalette.Brand,
-                modifier = Modifier.size(28.dp),
+            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        Icons.Filled.Pets,
+                        contentDescription = null,
+                        tint = StitchPalette.Brand,
+                        modifier = Modifier.size(28.dp),
+                    )
+                    Spacer(Modifier.size(8.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            user.nickname.ifBlank { user.username },
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = StitchPalette.PrimaryDark,
+                        )
+                        Text(
+                            user.bio.ifBlank { "分享主子的每一刻" },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = StitchPalette.OnSurfaceVariant,
+                        )
+                    }
+                }
+                Surface(
+                    shape = StitchShape.pill,
+                    color = StitchPalette.Surface.copy(alpha = 0.72f),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        Text(
+                            activeBackground.label,
+                            style = MaterialTheme.typography.labelLarge,
+                            color = StitchPalette.Brand,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Text(
+                            activeBackground.note,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = StitchPalette.OnSurfaceVariant,
+                        )
+                    }
+                }
+            }
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                "个人背景",
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.OnSurface,
             )
-            Spacer(Modifier.size(8.dp))
-            Column(Modifier.weight(1f)) {
-                Text(
-                    user.nickname.ifBlank { user.username },
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = StitchPalette.PrimaryDark,
-                )
-                Text(
-                    user.bio.ifBlank { "分享主子的每一刻" },
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = StitchPalette.OnSurfaceVariant,
-                )
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                PROFILE_BACKGROUND_OPTIONS.forEach { option ->
+                    val selected = option.key == activeBackground.key
+                    Surface(
+                        shape = StitchShape.pill,
+                        color = if (selected) StitchPalette.Brand else StitchPalette.Surface,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+                        modifier = Modifier.clickable { onProfileBackgroundChanged(option.key) },
+                    ) {
+                        Text(
+                            option.label,
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = if (selected) Color.White else StitchPalette.OnSurfaceVariant,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                    }
+                }
             }
         }
         Row(

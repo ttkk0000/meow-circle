@@ -13,80 +13,105 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 enum class MeowTheme {
-    Sugar,
+    Honey,
     Mint,
-    Night
+    Night,
+    Neutral,
 }
 
-val SugarScheme =
+val HoneyScheme =
     lightColorScheme(
-        primary = Color(0xFFCF2D56),
+        primary = Color(0xFF9A4600),
         onPrimary = Color.White,
-        primaryContainer = Color(0xFFE77E96),
-        onPrimaryContainer = Color(0xFF7F2038),
-        secondary = Color(0xFF2D8AA3),
-        onSecondary = Color.White,
-        secondaryContainer = Color(0x2E2D8AA3),
-        onSecondaryContainer = Color(0xFF2D8AA3),
-        tertiary = Color(0xFFC08532),
-        onTertiary = Color(0xFF7F2038),
-        background = Color(0xFFF7F1E8),
-        onBackground = Color(0xFF2B1722),
-        surface = Color(0xFFFFFCF7),
-        onSurface = Color(0xFF2B1722),
-        surfaceVariant = Color(0xFFF9E8EE),
-        onSurfaceVariant = Color(0xCC2B1722),
-        outline = Color(0x9959414D),
-        outlineVariant = Color(0x2459414D),
+        primaryContainer = Color(0xFFFF8A3D),
+        onPrimaryContainer = Color.White,
+        secondary = Color(0xFFFFD166),
+        onSecondary = Color(0xFF231F20),
+        secondaryContainer = Color(0xFFFFF2C2),
+        onSecondaryContainer = Color(0xFF231F20),
+        tertiary = Color(0xFF7C5CFF),
+        onTertiary = Color.White,
+        background = Color(0xFFFFF8F2),
+        onBackground = Color(0xFF231F20),
+        surface = Color(0xFFFFFFFF),
+        onSurface = Color(0xFF231F20),
+        surfaceVariant = Color(0xFFFFF1E6),
+        onSurfaceVariant = Color(0xCC231F20),
+        outline = Color(0xFFF1D8C8),
+        outlineVariant = Color(0xFFF5E2D5),
         error = Color(0xFFBA1A1A),
         onError = Color.White,
     )
 
 val MintScheme =
     lightColorScheme(
-        primary = Color(0xFF00AECA),
+        primary = Color(0xFF12312B),
         onPrimary = Color.White,
-        primaryContainer = Color(0xFF56C7FF),
-        onPrimaryContainer = Color(0xFF006B54),
-        secondary = Color(0xFFFF9F7A),
-        onSecondary = Color.White,
-        secondaryContainer = Color(0xFFE8FFF6),
-        onSecondaryContainer = Color(0xFFFF9F7A),
-        tertiary = Color(0xFF56C7FF),
-        onTertiary = Color(0xFF006B54),
-        background = Color(0xFFEFFFF8),
-        onBackground = Color(0xFF0F2A29),
+        primaryContainer = Color(0xFF2EC4A6),
+        onPrimaryContainer = Color.White,
+        secondary = Color(0xFFA7F3D0),
+        onSecondary = Color(0xFF12312B),
+        secondaryContainer = Color(0xFFDDFBF0),
+        onSecondaryContainer = Color(0xFF12312B),
+        tertiary = Color(0xFF0EA5E9),
+        onTertiary = Color.White,
+        background = Color(0xFFF5FFFC),
+        onBackground = Color(0xFF12312B),
         surface = Color(0xFFFFFFFF),
-        onSurface = Color(0xFF0F2A29),
-        surfaceVariant = Color(0xFFE8FFF6),
-        onSurfaceVariant = Color(0xCC0F2A29),
-        outline = Color(0x994D6866),
-        outlineVariant = Color(0x244D6866),
-        error = Color(0xFFD94A67),
+        onSurface = Color(0xFF12312B),
+        surfaceVariant = Color(0xFFEAFBF6),
+        onSurfaceVariant = Color(0xCC12312B),
+        outline = Color(0xFF8CCFC0),
+        outlineVariant = Color(0xFFCDEFE6),
+        error = Color(0xFFEF4444),
         onError = Color.White,
     )
 
 val NightScheme =
     darkColorScheme(
-        primary = Color(0xFFC482FF),
-        onPrimary = Color(0xFF1D1028),
-        primaryContainer = Color(0xFF282D59),
-        onPrimaryContainer = Color(0xFFFFF7FF),
-        secondary = Color(0xFFFFE66F),
-        onSecondary = Color(0xFF1D1028),
-        secondaryContainer = Color(0xFF252A55),
-        onSecondaryContainer = Color(0xFFFFE66F),
-        tertiary = Color(0xFF282D59),
-        onTertiary = Color(0xFFFFF7FF),
-        background = Color(0xFF14162F),
-        onBackground = Color(0xFFF8F0FF),
-        surface = Color(0xFF1D2144),
-        onSurface = Color(0xFFF8F0FF),
-        surfaceVariant = Color(0xFF252A55),
-        onSurfaceVariant = Color(0xCCF8F0FF),
-        outline = Color(0x99BBB4DA),
-        outlineVariant = Color(0x24BBB4DA),
-        error = Color(0xFFFF6689),
+        primary = Color(0xFFF8FAFC),
+        onPrimary = Color(0xFF151821),
+        primaryContainer = Color(0xFF8B5CF6),
+        onPrimaryContainer = Color.White,
+        secondary = Color(0xFFFBBF24),
+        onSecondary = Color(0xFF151821),
+        secondaryContainer = Color(0x29FBBF24),
+        onSecondaryContainer = Color(0xFFFBBF24),
+        tertiary = Color(0xFF60A5FA),
+        onTertiary = Color(0xFF151821),
+        background = Color(0xFF0B0D12),
+        onBackground = Color(0xFFF8FAFC),
+        surface = Color(0xFF151821),
+        onSurface = Color(0xFFF8FAFC),
+        surfaceVariant = Color(0xFF252B38),
+        onSurfaceVariant = Color(0xFFCBD5E1),
+        outline = Color(0xFF475569),
+        outlineVariant = Color(0xFF303644),
+        error = Color(0xFFF87171),
+        onError = Color.White,
+    )
+
+val NeutralScheme =
+    lightColorScheme(
+        primary = Color(0xFF4B5563),
+        onPrimary = Color.White,
+        primaryContainer = Color(0xFF4B5563),
+        onPrimaryContainer = Color.White,
+        secondary = Color(0xFF9CA3AF),
+        onSecondary = Color.White,
+        secondaryContainer = Color(0xFFF3F4F6),
+        onSecondaryContainer = Color(0xFF111827),
+        tertiary = Color(0xFFF97316),
+        onTertiary = Color.White,
+        background = Color(0xFFF7F7F8),
+        onBackground = Color(0xFF111827),
+        surface = Color(0xFFFFFFFF),
+        onSurface = Color(0xFF111827),
+        surfaceVariant = Color(0xFFE5E7EB),
+        onSurfaceVariant = Color(0xFF4B5563),
+        outline = Color(0xFF9CA3AF),
+        outlineVariant = Color(0xFFE5E7EB),
+        error = Color(0xFFDC2626),
         onError = Color.White,
     )
 
@@ -215,18 +240,20 @@ val StitchTypography =
 
 @Composable
 fun MeowStitchTheme(
-    theme: MeowTheme = MeowTheme.Sugar,
+    theme: MeowTheme = MeowTheme.Honey,
     content: @Composable () -> Unit
 ) {
     val scheme = when (theme) {
+        MeowTheme.Honey -> HoneyScheme
         MeowTheme.Mint -> MintScheme
         MeowTheme.Night -> NightScheme
-        MeowTheme.Sugar -> SugarScheme
+        MeowTheme.Neutral -> NeutralScheme
     }
     val stitchColors = when (theme) {
+        MeowTheme.Honey -> HoneyStitchColors
         MeowTheme.Mint -> MintStitchColors
         MeowTheme.Night -> NightStitchColors
-        MeowTheme.Sugar -> SugarStitchColors
+        MeowTheme.Neutral -> NeutralStitchColors
     }
     CompositionLocalProvider(LocalStitchColors provides stitchColors) {
         MaterialTheme(

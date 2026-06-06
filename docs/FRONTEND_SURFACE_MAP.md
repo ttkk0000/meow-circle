@@ -1,6 +1,6 @@
 # Frontend Surface Map
 
-Last updated: 2026-05-27
+Last updated: 2026-06-06
 
 This document maps all user-visible frontend surfaces and how they relate to the
 current M&D UI direction.
@@ -11,12 +11,12 @@ current M&D UI direction.
 | --- | --- | --- |
 | Production Web | Static HTML/CSS/JS under `web/` served by Go | M&D-aligned through page updates and `stitch-theme-bridge.css`. |
 | WebUI prototype | `web/cute.html`, `web/cute-ui.css`, `web/cute-ui.js` | Independent M&D browser product experience. |
+| Stitch V2 mirror | `.stitch/remote-assets`, `web/assets/stitch-remote`, `web/mnd-web-client-board.html`, `web/stitch-remote-gallery.html` | Full-size remote screenshots, source files, and local parity boards. |
 | Mobile design board | `web/pawpop-mobile.html` | Figma source board, not runtime app code. |
 | Desktop design board | `web/pawpop-desktop.html` | Figma source board and current desktop deliverable. |
 | Expo app | `mobile/app`, `mobile/src` | Runtime mobile app aligned to M&D. |
 | KMP Android app | `kmp/androidApp` + `kmp/shared` | Runtime Android Compose app aligned to M&D in source. |
-
-There is no separate native desktop app source tree at this time.
+| KMP Desktop app | `kmp/desktopApp` + `kmp/shared` | Runtime Compose Desktop app aligned to M&D in source. |
 
 ## 2. Production Web Pages
 
@@ -74,6 +74,8 @@ Behavior:
 | Board | Purpose |
 | --- | --- |
 | `web/pawpop.html` | Overview of the three UI sets. |
+| `web/mnd-web-client-board.html` | Current Stitch V2 sync board with mobile, theme, component, and implementation contract references. |
+| `web/stitch-remote-gallery.html` | Full-size remote screenshot gallery with local source links. |
 | `web/pawpop-mobile.html` | Native mobile-like screen inventory for Figma. |
 | `web/pawpop-desktop.html` | Desktop client/workbench design inventory for Figma. |
 
@@ -118,7 +120,15 @@ Rules:
 Internal file names still include `Stitch` because they began as imported
 reference surfaces. The visible UI is now M&D.
 
-## 7. Visual QA Matrix
+## 7. KMP Desktop Screen Map
+
+| Surface | File | Purpose |
+| --- | --- | --- |
+| Desktop app shell | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/Main.kt` | Dense desktop feed/workspace layout with theme switching and Stitch refs. |
+| Desktop tokens | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/MndDesktopTheme.kt` | Honey, Mint, Night, and Neutral token set aligned to Stitch V2. |
+| Desktop Stitch refs | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/StitchDesktopReferences.kt` | Project, desktop screen, and theme screen IDs. |
+
+## 8. Visual QA Matrix
 
 | Surface | Desktop | Mobile | Notes |
 | --- | --- | --- | --- |
@@ -126,10 +136,11 @@ reference surfaces. The visible UI is now M&D.
 | WebUI prototype | `1440x1000` | responsive check | Verify theme/profile switching. |
 | Mobile board | browser desktop | browser mobile optional | Board is a Figma source, not app runtime. |
 | Desktop board | browser desktop | not required | Verify dense desktop panes, search states, admin detail. |
-| Expo | simulator/device | device-first | Run typecheck, then visual QA when Node 18+ is available. |
-| KMP Android | emulator/device | Android | Compile/visual QA once Maven/Gradle 403 blocker is cleared. |
+| Expo | simulator/device | device-first | Static source review and visual QA when a safe Node environment is available. |
+| KMP Android | emulator/device | Android | Static source review only on this machine; do not run Gradle. |
+| KMP Desktop | desktop JVM | desktop | Static source review only on this machine; do not run Gradle. |
 
-## 8. Common Frontend Risks
+## 9. Common Frontend Risks
 
 - Static Web pages may call `/api/v1/*` and receive 404 when served by a plain
   static server. That is acceptable if demo fallback keeps the page usable.

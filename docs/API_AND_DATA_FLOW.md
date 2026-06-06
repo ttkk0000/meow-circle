@@ -242,4 +242,4 @@ When adding a field or feature:
 7. Update Web scripts and i18n copy if visible.
 8. Update `mobile/src/api.ts` types and KMP `Models.kt`.
 9. Update docs in `docs/`.
-10. Run Go tests, mobile typecheck, and Web smoke checks where possible.
+10. Run only checks approved for the current machine. On this machine, default to static review and Web smoke checks; do not run Go build/run/test or Gradle.

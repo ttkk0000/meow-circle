@@ -70,7 +70,7 @@ fun StitchBottomNav(
                         Surface(
                             modifier =
                                 Modifier
-                                    .size(42.dp)
+                                    .size(44.dp)
                                     .border(1.dp, StitchPalette.Brand.copy(alpha = 0.2f), CircleShape),
                             shape = CircleShape,
                             color = if (sel) StitchPalette.Brand else StitchPalette.SurfaceLow,

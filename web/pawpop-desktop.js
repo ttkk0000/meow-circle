@@ -2,12 +2,22 @@
   const root = document.documentElement;
   const themeKey = "pawpop_desktop_theme";
   const bgKey = "pawpop_desktop_bg";
+  const themes = new Set(["honey", "mint", "night", "neutral"]);
+
+  function normalizeTheme(theme) {
+    if (theme === "sugar") return "honey";
+    if (theme === "system") return "neutral";
+    return themes.has(theme) ? theme : "honey";
+  }
 
   function setTheme(theme) {
-    root.dataset.theme = theme;
-    localStorage.setItem(themeKey, theme);
+    const nextTheme = normalizeTheme(theme);
+    root.dataset.theme = nextTheme;
+    localStorage.setItem(themeKey, nextTheme);
     document.querySelectorAll("[data-theme-choice]").forEach((button) => {
-      button.classList.toggle("is-active", button.dataset.themeChoice === theme);
+      const active = button.dataset.themeChoice === nextTheme;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
     });
   }
 
@@ -27,6 +37,6 @@
     if (bg) setBg(bg.dataset.bgChoice);
   });
 
-  setTheme(localStorage.getItem(themeKey) || "sugar");
+  setTheme(localStorage.getItem(themeKey) || "honey");
   setBg(localStorage.getItem(bgKey) || "picnic");
 })();

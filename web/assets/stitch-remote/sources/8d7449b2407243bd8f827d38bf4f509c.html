@@ -1,0 +1,311 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Honey Messages</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#fff8f8",
+                    "on-primary-fixed-variant": "#763300",
+                    "primary-fixed": "#ffdbc9",
+                    "on-tertiary-fixed-variant": "#004395",
+                    "on-secondary-fixed": "#2a1700",
+                    "inverse-surface": "#342f30",
+                    "outline": "#8a7266",
+                    "primary": "#9a4600",
+                    "surface-container-highest": "#e9e0e1",
+                    "tertiary-fixed": "#d8e2ff",
+                    "on-tertiary": "#ffffff",
+                    "on-surface": "#1e1b1c",
+                    "on-tertiary-fixed": "#001a42",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#ffb68d",
+                    "on-primary-fixed": "#321200",
+                    "on-primary-container": "#682d00",
+                    "surface-variant": "#e9e0e1",
+                    "inverse-primary": "#ffb68d",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#005ac2",
+                    "inverse-on-surface": "#f8efef",
+                    "on-error": "#ffffff",
+                    "surface-container": "#f5eced",
+                    "surface": "#fff8f8",
+                    "tertiary-container": "#7da8ff",
+                    "error": "#ba1a1a",
+                    "surface-dim": "#e1d8d9",
+                    "secondary-fixed": "#ffddb8",
+                    "tertiary-fixed-dim": "#adc6ff",
+                    "background": "#fff8f8",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "outline-variant": "#ddc1b3",
+                    "primary-container": "#ff8a3d",
+                    "secondary-container": "#fea619",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1e1b1c",
+                    "on-secondary-container": "#684000",
+                    "surface-tint": "#9a4600",
+                    "on-surface-variant": "#564338",
+                    "on-tertiary-container": "#003b84",
+                    "surface-container-high": "#efe6e7",
+                    "surface-container-low": "#fbf1f2",
+                    "secondary": "#855300"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-main": "16px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "stack-lg": "24px",
+                    "gutter": "12px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "display-lg": ["Outfit"],
+                    "headline-sm": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "600"}]
+            }
+        }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #342f30; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 2rem; }
+        .grid-layout { display: grid; grid-template-columns: repeat(2, 390px); gap: 2rem; }
+        .screen { width: 390px; height: 844px; background-color: #FFF8F2; position: relative; overflow: hidden; display: flex; flex-direction: column; border-radius: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border: 8px solid #1e1b1c; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Custom Utility for Bubble Colors requested in prompt */
+        .bg-receiver-bubble { background-color: #FFF1E6; }
+        .bg-sender-bubble { background-color: #FF8A3D; }
+        .border-chat-input { border-color: #F1D8C8; }
+        
+        /* Order Badges */
+        .badge-pending { background-color: #FEF3C7; color: #F59E0B; }
+        .badge-shipped { background-color: #DBEAFE; color: #3B82F6; }
+        .badge-completed { background-color: #DCFCE7; color: #22C55E; }
+    </style>
+</head>
+<body>
+<div class="grid-layout">
+<!-- Screen 1: Conversation List -->
+<div class="screen">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-background w-full top-0 sticky shadow-sm z-10 flex items-center justify-between px-margin-main h-16 w-full">
+<div class="flex items-center gap-2"><h1 class="font-headline-sm text-headline-sm text-on-surface">Messages</h1></div>
+<button class="hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 p-2 rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined" style="color: rgb(255, 138, 61);">edit_square</span>
+</button>
+</header>
+<div class="flex-1 overflow-y-auto hide-scrollbar pb-24">
+<!-- Search -->
+<div class="px-margin-main py-stack-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-xl py-3 pl-10 pr-4 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant shadow-[0px_4px_20px_0px_rgba(35,31,32,0.04)] focus:ring-2 focus:ring-primary-container outline-none" placeholder="Search messages..." type="text">
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="px-margin-main pb-stack-sm flex gap-2 overflow-x-auto hide-scrollbar"><button class="px-[14px] h-[32px] rounded-full bg-[#FF8A3D] text-white border border-[#FF8A3D] font-semibold text-[13px] whitespace-nowrap shadow-sm">All</button><button class="px-[14px] h-[32px] rounded-full bg-white text-[#6B5E57] border border-[#F1D8C8] font-semibold text-[13px] whitespace-nowrap">Buying</button><button class="px-[14px] h-[32px] rounded-full bg-white text-[#6B5E57] border border-[#F1D8C8] font-semibold text-[13px] whitespace-nowrap">Selling</button><button class="px-[14px] h-[32px] rounded-full bg-white text-[#6B5E57] border border-[#F1D8C8] font-semibold text-[13px] whitespace-nowrap">Unread</button></div>
+<!-- Conversations -->
+<div class="flex flex-col">
+<!-- Convo 1 -->
+<div class="flex items-center gap-3 px-margin-main py-4 hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest border-b border-surface-variant">
+<div class="relative w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A warm, brightly lit close-up of a fluffy orange tabby cat looking directly at the camera. The background is a soft, out-of-focus cream color. The lighting is soft and natural, emphasizing the cat's soft fur and friendly expression, matching a cozy, cat-first brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlR5HIm5kFy4nhTQDAoZgOB8LAi3zGo5ehX74dvA4SRcK6pAANj01p9DHteyZriCx1hoCowu5F_bHy9LmBWUzMYSSo4wsg6UP-hKhme1KkPMkiWtnJ46ye5LPJRdL5Q4T95gGp99z2u3EYWN10I49B8hh5moUmYBBeFSUWleF3FDUCBSAGsauadmAjJPMCRGaaucxnHx3w4T20cb3RVi7KoAan1ttQskNhKY97IOLvboYbsgoMcybHv4MfzMgwTNgCS4ghwOD0dn06">
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline-sm text-[16px] text-on-surface truncate font-semibold">Luna &amp; Co.</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">10:42 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold truncate"><span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#DBEAFE] text-[#3B82F6] mr-2">Order #4829 路 Paid</span> Thanks!</p>
+</div>
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+</div>
+<!-- Convo 2 -->
+<div class="flex items-center gap-3 px-margin-main py-4 hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest border-b border-surface-variant">
+<div class="relative w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A clean, modern portrait of a person holding a small, sleek black cat. The background is a minimalist, warm white studio setting. The lighting is even and bright, giving the image a professional, trustworthy, yet approachable feel consistent with a premium pet marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8yF8fSI3OB49mk8HjVVh12cc_phs9BYJkhHlmTxgSqtFrpFzjwxdl1zhDdtDfr_o1Y_AXHShKzRcWTD5-vhruLUZY8-q-w2tV9FanJgaES4y1FVN9rmLLeGyLcG8luuWEhIP6htDMZnU_n8uBbU976wazUkWKMZkO79tuAiLQ7c7Y9-wOy78cD7l72LmgppryLR-Tt3TsG7tFNI9a7KsDYO6p5ZWM5w4qxt2j6sFptILvWcjpl03ic1yVFN7CAf_T6NbSeCZ07vsy">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline-sm text-[16px] text-on-surface truncate">Jordan M.</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Yesterday</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate"><span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#DBEAFE] text-[#3B82F6] mr-2">Order #4829 路 Shipped</span> Tracking inside</p>
+</div>
+</div>
+<!-- Convo 3 -->
+<div class="flex items-center gap-3 px-margin-main py-4 hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest border-b border-surface-variant">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container-highest flex items-center justify-center text-primary font-headline-md">
+                        S
+                    </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline-sm text-[16px] text-on-surface truncate">Sarah's Boutique</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Mon</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">Is the ceramic bowl still available?</p>
+</div>
+</div>
+<!-- Convo 4 -->
+<div class="flex items-center gap-3 px-margin-main py-4 hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest border-b border-surface-variant">
+<div class="relative w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A soft, aesthetically pleasing photo of handmade knitted cat toys in a woven basket. The color palette features warm creams, soft oranges, and earthy browns. The lighting is gentle and inviting, conveying a sense of boutique craftsmanship and cozy pet care." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcfhAzloJOgOhWOjDtOhEGG0lQ_Vv8lI6xxkoNQRV5kqsCIITy91-YI03OV5psPiGlMvyaml6RLbCs_3iRkFf0KJsiHWvfNoX3JZ9423BOlTkgrUdg3wDvgogY_0hdjy52BKHdidox3DmSJS9xnGTcIzuSQrjnhXhKbL9v82HACnM72Ew1il4GgMbtY_YBTH88hvCh5IcovzQmmE1uEyL-nOkesMvklyhRsNzeQ05cpgbzA7c6r0eQNX5gJhJ71b92TUnQCq2a7Ry5">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline-sm text-[16px] text-on-surface truncate">Whiskers Crafters</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Oct 12</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate"><span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#DCFCE7] text-[#22C55E] mr-2">Order #4112 路 Completed</span> Leave a review!</p>
+</div>
+</div>
+<!-- Convo 5 -->
+<div class="flex items-center gap-3 px-margin-main py-4 hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container-highest flex items-center justify-center text-primary font-headline-md">
+                        M
+                    </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline-sm text-[16px] text-on-surface truncate">Max D.</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Oct 08</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">Great, I'll pick it up tomorrow.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="bg-surface dark:bg-on-background fixed bottom-0 w-full z-50 h-20 shadow-[0px_-4px_20px_0px_rgba(35,31,32,0.04)] flex justify-around items-center px-4 w-full" style="position: absolute;"><button class="flex flex-col items-center justify-center text-[#6B5E57] hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full"><span class="material-symbols-outlined mb-1">rss_feed</span><span class="font-label-sm text-label-sm">Feed</span></button><button class="flex flex-col items-center justify-center text-[#6B5E57] hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full"><span class="material-symbols-outlined mb-1">storefront</span><span class="font-label-sm text-label-sm">Market</span></button><button class="flex flex-col items-center justify-center bg-[#FFF1E6] text-[#FF8A3D] font-bold hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full relative rounded-xl"><span class="material-symbols-outlined mb-1" style="font-variation-settings: &quot;FILL&quot; 1;">chat_bubble</span><span class="font-label-sm text-label-sm">Messages</span></button><button class="flex flex-col items-center justify-center text-[#6B5E57] hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full"><span class="material-symbols-outlined mb-1">shopping_bag</span><span class="font-label-sm text-label-sm">Orders</span></button><button class="flex flex-col items-center justify-center text-[#6B5E57] hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full"><span class="material-symbols-outlined mb-1">person</span><span class="font-label-sm text-label-sm">Profile</span></button></nav>
+</div>
+<!-- Screen 2: Chat Detail -->
+<div class="screen bg-surface-container-lowest">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-background w-full top-0 sticky shadow-sm z-10 flex items-center px-margin-main h-16 w-full gap-3">
+<button class="text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 p-2 -ml-2 rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex items-center gap-3 flex-1">
+<div class="relative w-10 h-10 rounded-full overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A warm, brightly lit close-up of a fluffy orange tabby cat looking directly at the camera. The background is a soft, out-of-focus cream color. The lighting is soft and natural, emphasizing the cat's soft fur and friendly expression, matching a cozy, cat-first brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTut-rmwjqHfkB0ZTGjlybqnN6VIJlG5ijZrjpBPT3m7XW-DbAl9wmgZefWo4KtPHXL4VJLQbwr5yZb6NoUriqnXG12lNbQ07vYR6dtK3VMLjQVoQqZmtOJ22xbpbAz-DwYmCh3SB4EB2pdBbuh0mMwST_B2LG_R4jUqu24V2sSeVp0Qi6BeoEQcVk6-IsS9LkA1v0vHOD-rYN3xCxCl_rbBITJvVKZVAmtWhRXzQH6XHJmb80C13W4WpL3pOt3GWdLWK10592kJId">
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<h2 class="font-headline-sm text-[16px] text-on-surface leading-tight">Luna &amp; Co.</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Online</span>
+</div>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 p-2 -mr-2 rounded-full">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<!-- Chat Thread -->
+<div class="flex-1 overflow-y-auto hide-scrollbar p-margin-main flex flex-col gap-4 bg-[#FFF8F2]"><div class="flex justify-center my-2"><span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-lowest px-3 py-1 rounded-full shadow-sm">Today</span></div><div class="flex gap-2 max-w-[85%]"><div class="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-surface-container-highest mt-auto"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd3Rs25j1QAnGgMNkyyjZpLNezqWqVPr47Dj3lHERteC3z4Fww2Izz-lxMDCKAoF4KpAtaWbA6oulasXFspg93z24nubeEaT2rHZPntaXyLaQi6YuxO5IZZybBmzQ4-xBhLkaIj11X0IefbqPHVjDtGWSDe42pC3UhdpWyhVmmRe1AcMGnaXz3H5GNWBW5y-o3T6ppTUOiU_FmbFCT3K_vdPVdCvUzXoXRplmYMIhfmqNbK5IsXtY9jYdad_j0LIVKyr9V09Lz71wB"></div><div class="flex flex-col gap-1"><div class="bg-[#FFF1E6] text-[#231F20] font-body-md text-body-md p-3 rounded-2xl rounded-bl-sm shadow-sm">Hi! I just paid for Order #4829. So excited for the new cat tree! 馃惥</div><span class="font-label-sm text-label-sm text-on-surface-variant ml-1">10:30 AM</span></div></div><div class="flex gap-2 max-w-[85%] self-end flex-row-reverse"><div class="flex flex-col gap-1 items-end"><div class="bg-[#FF8A3D] text-white font-body-md text-body-md p-3 rounded-2xl rounded-br-sm shadow-sm">Thanks so much for your order. We鈥檝e received the payment.</div></div></div><div class="flex gap-2 max-w-[85%] self-end flex-row-reverse -mt-2"><div class="flex flex-col gap-1 items-end"><div class="bg-[#FF8A3D] text-white font-body-md text-body-md p-3 rounded-2xl rounded-tr-sm rounded-br-sm shadow-sm">I鈥檒l pack it safely and ship it tomorrow morning.</div><div class="flex items-center gap-1 mr-1 mt-1"><span class="font-label-sm text-label-sm text-on-surface-variant">10:42 AM</span><span class="material-symbols-outlined text-[14px] text-[#FF8A3D]" style="font-variation-settings: &quot;FILL&quot; 1;">done_all</span></div></div></div></div>
+<!-- Input Bar -->
+<div class="bg-surface-container-lowest p-3 border-t border-surface-variant">
+<div class="flex items-center gap-2">
+<button class="p-2 text-primary-container hover:bg-surface-container-highest rounded-full transition-colors shrink-0">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<div class="flex-1 bg-surface-container-lowest border border-chat-input rounded-full flex items-center px-4 py-2 min-h-[44px]">
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant outline-none" placeholder="Type a message..." type="text">
+</div>
+<button class="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center text-on-primary shrink-0 shadow-sm active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Screen 3: Chat With Order Context -->
+<div class="screen bg-surface-container-lowest">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-background w-full top-0 sticky z-10 flex items-center px-margin-main h-16 w-full gap-3">
+<button class="text-on-surface hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 p-2 -ml-2 rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex items-center gap-3 flex-1">
+<div class="relative w-10 h-10 rounded-full overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A clean, modern portrait of a person holding a small, sleek black cat. The background is a minimalist, warm white studio setting. The lighting is even and bright, giving the image a professional, trustworthy, yet approachable feel consistent with a premium pet marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa_vCoZAde9EZL5P8hZqajEjPnYJbr3SNdGTEBjgQWLOjIsAaJ_BbbPTiv-MoPyvgWpKUOJsuiUIU8qwsVHaFUscxnwFyfFlD98l4ag1OUQKWTgNdcXZ8uxivFumo_SpR7isHr1rvE-dpOdlfvEsHzXg-10JrbfUUIJWP8RcSYUqVLHDirS1TY-lSITcTpk13uf0HQrjdg26WTKhNFIxkHqHMaAhHPYiBwQKsH8LAfCnK8cwNSB8w-WqDv3k3K4rSTN8Aa3-QZoLHo">
+</div>
+<div>
+<h2 class="font-headline-sm text-[16px] text-on-surface leading-tight">Jordan M.</h2>
+</div>
+</div>
+</header>
+<!-- Compact Order Card Context -->
+<div class="px-margin-main pb-3 bg-surface border-b border-surface-variant shadow-sm z-0 relative">
+<div class="bg-white border border-[#F1D8C8] rounded-[16px] p-3 flex gap-3 items-center shadow-[0px_4px_20px_0px_rgba(35,31,32,0.04)]">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A beautifully crafted, modern ceramic cat food bowl sitting on a light oak wooden floor. The bowl is a soft cream color. Soft, diffused daylight highlights the smooth texture of the ceramic, presenting a premium, high-quality pet accessory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB59NrpwTfsDpG5udyP7NIwBsBK6XxugJeixUjAqAh8v2DXC4RMpkIN0g2rkwMKaWuBiheGfd22fIoNZ9RcHUX0JLuPiNDK3ujqe3AoHoGXMZiDhvvNAabg96ivX9Ld_lFY3GFGpA2iGEAqIfgZl_N3Y3-wvJyiQnbL-6_nfyo0g8ROrkV8RELPOkNwPTl9KNYvr-x-s_hf72RsYbqiWcV00KST1TVmeLhdY4_f76swlsVqI2EMs2Oyl_rfIGZdcFghAdLp29HNeke6">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Order #4829</span>
+<span class="badge-shipped px-2 py-0.5 rounded-md font-label-sm text-[10px] uppercase font-bold">Shipped</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold truncate">Ceramic Elevated Bowl Set</p>
+</div>
+<button class="text-primary-container p-1 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Chat Thread -->
+<div class="flex-1 overflow-y-auto hide-scrollbar p-margin-main flex flex-col gap-4 bg-[#FFF8F2]"><div class="flex justify-center my-2"><span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-lowest px-3 py-1 rounded-full shadow-sm">Yesterday</span></div><div class="flex gap-2 max-w-[85%] self-end flex-row-reverse"><div class="flex flex-col gap-1 items-end"><div class="bg-[#FF8A3D] text-white font-body-md text-body-md p-3 rounded-2xl rounded-br-sm shadow-sm">Great news! Order #4829 has been shipped.</div></div></div><div class="flex gap-2 max-w-[85%]"><div class="flex flex-col gap-1"><div class="bg-[#FFF1E6] text-[#231F20] font-body-md text-body-md p-3 rounded-2xl rounded-bl-sm shadow-sm">Thanks, I鈥檒l check the tracking.</div></div></div><div class="flex gap-2 max-w-[85%] self-end flex-row-reverse"><div class="flex flex-col gap-1 items-end"><div class="bg-[#FF8A3D] text-white font-body-md text-body-md p-3 rounded-2xl rounded-br-sm shadow-sm">Estimated arrival is tomorrow afternoon.</div></div></div><div class="flex gap-2 max-w-[85%]"><div class="flex flex-col gap-1"><div class="bg-[#FFF1E6] text-[#231F20] font-body-md text-body-md p-3 rounded-2xl rounded-bl-sm shadow-sm">Perfect, thank you!</div></div></div></div>
+<!-- Input Bar -->
+<div class="bg-surface-container-lowest p-3 border-t border-surface-variant">
+<div class="flex items-center gap-2">
+<button class="p-2 text-primary-container hover:bg-surface-container-highest rounded-full transition-colors shrink-0">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<div class="flex-1 bg-surface-container-lowest border border-chat-input rounded-full flex items-center px-4 py-2 min-h-[44px]">
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant outline-none" placeholder="Type a message..." type="text">
+</div>
+<button class="w-10 h-10 bg-surface-container-highest rounded-full flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Screen 4: Message Empty State -->
+<div class="screen">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-background w-full top-0 sticky shadow-sm z-10 flex items-center justify-between px-margin-main h-16 w-full"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[#FF8A3D] font-display-lg text-display-lg">pets</span><h1 class="font-headline-sm text-headline-sm text-on-surface">Messages</h1></div><button class="hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 p-2 rounded-full text-on-surface-variant"><span class="material-symbols-outlined" style="color: rgb(255, 138, 61);">search</span></button></header>
+<div class="flex-1 flex flex-col items-center justify-center p-margin-main relative bg-[#FFF8F2] pb-20"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary-fixed opacity-30 rounded-full blur-3xl -z-10"></div><div class="bg-surface-container-lowest rounded-[16px] p-8 flex flex-col items-center text-center shadow-[0px_4px_20px_0px_rgba(35,31,32,0.04)] max-w-[320px] w-full border border-surface-variant"><div class="w-20 h-20 bg-[#FFF1E6] rounded-full flex items-center justify-center mb-6 relative"><span class="material-symbols-outlined text-[40px] text-primary-container">mail</span><div class="absolute -bottom-1 -right-1 w-8 h-8 bg-surface-container-lowest rounded-full flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-[16px] text-[#FF8A3D]" style="font-variation-settings: &quot;FILL&quot; 1;">pets</span></div></div><h2 class="font-headline-md text-headline-md text-on-surface mb-2">No messages yet</h2><p class="font-body-md text-body-md text-on-surface-variant mb-8">Start a conversation with a seller or buyer.</p><div class="flex flex-col gap-3 w-full"><button class="bg-[#FF8A3D] text-on-primary font-label-md text-label-md w-full py-4 rounded-xl font-bold shadow-md active:scale-95 transition-transform">Browse Market</button><button class="bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md w-full py-4 rounded-xl font-bold active:scale-95 transition-transform">View orders</button></div></div><div class="mt-8 w-full max-w-[320px]"><p class="text-center font-label-sm text-on-surface-variant mb-4">Suggested Starters</p><div class="flex flex-col gap-2"><button class="bg-surface-container-lowest border border-outline-variant text-left px-4 py-3 rounded-xl font-body-md text-on-surface text-[13px] hover:bg-surface-container-low">Ask a seller about product details</button><button class="bg-surface-container-lowest border border-outline-variant text-left px-4 py-3 rounded-xl font-body-md text-on-surface text-[13px] hover:bg-surface-container-low">Check order updates</button><button class="bg-surface-container-lowest border border-outline-variant text-left px-4 py-3 rounded-xl font-body-md text-on-surface text-[13px] hover:bg-surface-container-low">Follow a pet creator</button></div></div></div>
+<!-- BottomNavBar -->
+<nav class="bg-surface dark:bg-on-background fixed bottom-0 w-full z-50 h-20 shadow-[0px_-4px_20px_0px_rgba(35,31,32,0.04)] flex justify-around items-center px-4 w-full" style="position: absolute;"><button class="flex flex-col items-center justify-center text-[#6B5E57] hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full"><span class="material-symbols-outlined mb-1">rss_feed</span><span class="font-label-sm text-label-sm">Feed</span></button><button class="flex flex-col items-center justify-center text-[#6B5E57] hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full"><span class="material-symbols-outlined mb-1">storefront</span><span class="font-label-sm text-label-sm">Market</span></button><button class="flex flex-col items-center justify-center bg-[#FFF1E6] text-[#FF8A3D] font-bold hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full relative rounded-xl"><span class="material-symbols-outlined mb-1" style="font-variation-settings: &quot;FILL&quot; 1;">chat_bubble</span><span class="font-label-sm text-label-sm">Messages</span></button><button class="flex flex-col items-center justify-center text-[#6B5E57] hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full"><span class="material-symbols-outlined mb-1">shopping_bag</span><span class="font-label-sm text-label-sm">Orders</span></button><button class="flex flex-col items-center justify-center text-[#6B5E57] hover:bg-surface-container-low transition-all active:scale-90 w-16 h-full"><span class="material-symbols-outlined mb-1">person</span><span class="font-label-sm text-label-sm">Profile</span></button></nav>
+</div>
+</div>
+
+
+</body></html>

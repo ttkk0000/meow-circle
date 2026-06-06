@@ -1,0 +1,489 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Social Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;650;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "honey-divider": "#F5E2D5",
+              "error-container": "#ffdad6",
+              "secondary-fixed-dim": "#edc157",
+              "on-tertiary-fixed-variant": "#802900",
+              "neutral-background": "#F7F7F8",
+              "on-secondary": "#ffffff",
+              "primary-container": "#ff8a3d",
+              "mint-surface": "#FFFFFF",
+              "tertiary-fixed-dim": "#ffb59a",
+              "on-primary-container": "#682d00",
+              "primary-fixed-dim": "#ffb68d",
+              "mint-background": "#F5FFFC",
+              "honey-primary-hover": "#F0782C",
+              "honey-text-tertiary": "#9A8A80",
+              "surface-bright": "#fff8f8",
+              "mint-border": "#CDEFE6",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#ffdbcf",
+              "surface-variant": "#e9e0e1",
+              "surface-container": "#f5eced",
+              "honey-text-secondary": "#6B5E57",
+              "inverse-surface": "#342f30",
+              "primary-fixed": "#ffdbc9",
+              "inverse-primary": "#ffb68d",
+              "secondary": "#785a00",
+              "primary": "#9a4600",
+              "honey-primary-container": "#FFF1E6",
+              "on-tertiary": "#ffffff",
+              "honey-surface": "#FFFFFF",
+              "mint-text-primary": "#12312B",
+              "on-tertiary-fixed": "#380d00",
+              "outline-variant": "#ddc1b3",
+              "honey-border": "#F1D8C8",
+              "on-surface": "#1e1b1c",
+              "night-text-primary": "#F8FAFC",
+              "on-surface-variant": "#564338",
+              "night-primary": "#8B5CF6",
+              "secondary-fixed": "#ffdf9b",
+              "on-secondary-fixed-variant": "#5b4300",
+              "mint-primary": "#2EC4A6",
+              "neutral-text-primary": "#111827",
+              "on-primary": "#ffffff",
+              "night-dog-accent": "#60A5FA",
+              "on-error": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "honey-background": "#FFF8F2",
+              "on-secondary-fixed": "#251a00",
+              "honey-primary-pressed": "#D9641F",
+              "secondary-container": "#ffd167",
+              "surface": "#fff8f8",
+              "on-tertiary-container": "#722400",
+              "tertiary": "#a73a05",
+              "surface-container-low": "#fbf1f2",
+              "on-background": "#1e1b1c",
+              "inverse-on-surface": "#f8efef",
+              "neutral-surface": "#FFFFFF",
+              "neutral-primary": "#4B5563",
+              "outline": "#8a7266",
+              "on-error-container": "#93000a",
+              "on-primary-fixed": "#321200",
+              "on-primary-fixed-variant": "#763300",
+              "background": "#fff8f8",
+              "surface-dim": "#e1d8d9",
+              "surface-container-high": "#efe6e7",
+              "night-background": "#0B0D12",
+              "on-secondary-container": "#765900",
+              "surface-tint": "#9a4600",
+              "tertiary-container": "#ff895b",
+              "night-surface": "#151821",
+              "surface-container-highest": "#e9e0e1"
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px"
+            },
+            spacing: {
+              "neutral-row": "48px",
+              xl: "32px",
+              xs: "8px",
+              xxl: "48px",
+              sm: "12px",
+              lg: "24px",
+              xxs: "4px",
+              "neutral-header": "64px",
+              "neutral-sidebar": "240px",
+              md: "16px"
+            },
+            fontFamily: {
+              "title-md": ["Outfit"],
+              "body-sm": ["Inter"],
+              "neutral-table-header": ["Inter"],
+              "display-md": ["Outfit"],
+              "headline-md": ["Outfit"],
+              "body-md": ["Inter"],
+              "label-lg": ["Inter"],
+              "label-sm": ["Inter"],
+              "display-lg": ["Outfit"],
+              "price": ["Outfit"],
+              "headline-lg": ["Outfit"],
+              "body-lg": ["Inter"]
+            },
+            fontSize: {
+              "title-md": ["18px", { lineHeight: "1.35", fontWeight: "650" }],
+              "body-sm": ["13px", { lineHeight: "1.45", fontWeight: "400" }],
+              "neutral-table-header": ["12px", { lineHeight: "1.25", letterSpacing: "0.05em", fontWeight: "700" }],
+              "display-md": ["28px", { lineHeight: "1.18", fontWeight: "700" }],
+              "headline-md": ["20px", { lineHeight: "1.3", fontWeight: "650" }],
+              "body-md": ["15px", { lineHeight: "1.5", fontWeight: "400" }],
+              "label-lg": ["15px", { lineHeight: "1.35", fontWeight: "650" }],
+              "label-sm": ["12px", { lineHeight: "1.25", fontWeight: "600" }],
+              "display-lg": ["36px", { lineHeight: "1.12", fontWeight: "700" }],
+              "price": ["20px", { lineHeight: "1.2", fontWeight: "700" }],
+              "headline-lg": ["24px", { lineHeight: "1.25", fontWeight: "700" }],
+              "body-lg": ["16px", { lineHeight: "1.55", fontWeight: "400" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      body { background-color: #e5e7eb; padding: 40px; display: flex; justify-content: center; font-family: 'Inter', sans-serif; }
+      .app-screen { width: 390px; height: 844px; background-color: #FFF8F2; position: relative; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border-radius: 40px; border: 8px solid #333;}
+      .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 860px; }
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+<div class="grid-container">
+<!-- SCREEN 1: Feed Home -->
+<div class="app-screen">
+<!-- TopAppBar -->
+<header class="bg-honey-surface text-primary flex justify-between items-center w-full px-md h-[64px] shrink-0 sticky top-0 z-10 border-b border-honey-divider shadow-sm">
+<div class="flex items-center gap-sm cursor-pointer hover:bg-honey-primary-container rounded-full p-xs transition-colors duration-200">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary font-bold">M&amp;D</h1>
+<div class="flex items-center cursor-pointer hover:bg-honey-primary-container rounded-full p-xs transition-colors duration-200">
+<span class="material-symbols-outlined text-primary text-[28px]">notifications</span>
+</div>
+</header>
+<!-- Content -->
+<div class="flex-1 overflow-y-auto no-scrollbar pb-[80px]">
+<!-- Composer Entry -->
+<div class="bg-honey-surface px-md py-sm border-b border-honey-divider flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-honey-primary-container flex items-center justify-center shrink-0 border-2 border-primary-container">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+<div class="flex-1 bg-honey-background rounded-full px-md py-sm text-honey-text-tertiary font-body-sm cursor-text hover:bg-honey-divider transition-colors">
+                    Share a meow or woof...
+                </div>
+<button class="material-symbols-outlined text-primary hover:text-honey-primary-hover p-xs">image</button>
+</div>
+<!-- Filter Tabs -->
+<div class="px-md py-sm flex overflow-x-auto no-scrollbar border-b border-honey-divider bg-honey-surface"><button class="px-3 py-1 rounded-full bg-[#FF8A3D] text-[#FFFFFF] font-label-sm whitespace-nowrap shadow-sm" style="background-color: #FF8A3D;">Following</button><button class="px-3 py-1 rounded-full bg-[#FFFFFF] text-[#6B5E57] border border-[#F1D8C8] font-label-sm whitespace-nowrap">Nearby</button><button class="px-3 py-1 rounded-full bg-[#FFFFFF] text-[#6B5E57] border border-[#F1D8C8] font-label-sm whitespace-nowrap">Popular</button></div>
+<!-- Feed Post Card -->
+<div class="bg-honey-surface mt-sm shadow-sm">
+<!-- Post Header -->
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-honey-border overflow-hidden ring-2 ring-primary-container ring-offset-2 ring-offset-honey-surface">
+<div class="w-full h-full bg-cover bg-center" data-alt="Close up profile shot of an orange tabby cat with bright green eyes looking attentively. Soft natural lighting, shallow depth of field. High quality, crisp details, warm tone." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD7Dy78mruF1XglKajvsXHmyREFrLk5njPXDVem8qHrNL72Zt_0rRB9X9CfB0XTldy-c-9-iY1JGU_X476e7a8q4ohlz75zonCduwJbc_GTiHVRgMaZKGifiClPozsdPI5Y0fvuFsUuFFx0xr_lmO7xvv5M0zNDC7BFWnbP543gJa5ve6136r5n6wcqN0wwe7HuidaRA2-2FScqMOBHFnolxYCvJ2k2k6ku4bJkGjYBz9RFvFbn5v5AibX-4jPptde4K2NKsEE23PW4');"></div>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">@catlover</p>
+<p class="font-body-sm text-body-sm text-honey-text-tertiary">2 hours ago</p>
+</div>
+</div>
+<button class="material-symbols-outlined text-honey-text-secondary hover:text-primary">more_horiz</button>
+</div>
+<!-- Post Text -->
+<div class="px-md pb-sm">
+<p class="font-body-md text-body-md text-on-surface-variant">Milo found a new sunbeam today! 鈽€锔?Look at how majestic he is. #BritishShorthair #LazyAfternoon</p>
+</div>
+<!-- Post Image -->
+<div class="w-full bg-honey-background relative aspect-\[4\/3\]">
+<img alt="Post image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLu2jlVS-sfYYtLrXmTyvMimF5gGnUINZAoJwF6bhqxWReSgFzrVfObYRTguMUS3oF3uchEzjwlGRko4zTI0l1XmDP15Ra_zv-u-uXkoWVEMFFvnSWAhkX9EMR5X7UASpZybeKcicYhdjNVCr_R5wQB2ZVXJ0iT6gsdtuOSB4Tqy12JgwMu_82l3e3uDGStE-_QhgLg2M9k05bSv2CtdRQEoLlIe33THlIMxXR-21lwHzXmTEyRMQ2wb88w">
+</div>
+<!-- Post Actions -->
+<div class="p-md border-t border-honey-divider">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex gap-lg">
+<button class="flex items-center gap-xs text-honey-text-secondary hover:text-primary-container transition-colors group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">favorite</span>
+<span class="font-label-sm text-label-sm">245</span>
+</button>
+<button class="flex items-center gap-xs text-honey-text-secondary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">chat_bubble</span>
+<span class="font-label-sm text-label-sm">42</span>
+</button>
+<button class="flex items-center gap-xs text-honey-text-secondary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">send</span>
+</button>
+</div>
+<button class="text-honey-text-secondary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">bookmark</span>
+</button>
+</div>
+<!-- Small comment preview -->
+<div class="mt-xs">
+<p class="font-body-sm text-body-sm text-on-surface-variant"><span class="font-label-sm font-semibold text-on-surface">@milo_paws</span> That lighting is purrfect!</p>
+<p class="font-body-sm text-body-sm text-honey-text-tertiary mt-xxs cursor-pointer hover:underline">View all 42 comments</p>
+</div>
+</div>
+</div>
+<!-- Skeleton Preview -->
+<div class="bg-honey-surface mt-sm p-md shadow-sm opacity-60">
+<div class="flex items-center gap-sm mb-md animate-pulse">
+<div class="w-10 h-10 rounded-full bg-honey-divider"></div>
+<div class="flex-1">
+<div class="h-4 w-24 bg-honey-divider rounded mb-xs"></div>
+<div class="h-3 w-16 bg-honey-divider rounded"></div>
+</div>
+</div>
+<div class="w-full aspect-[4/3] bg-honey-divider rounded-lg animate-pulse mb-md"></div>
+<div class="h-4 w-full bg-honey-divider rounded mb-xs animate-pulse"></div>
+<div class="h-4 w-2/3 bg-honey-divider rounded animate-pulse"></div>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="absolute bottom-0 left-0 w-full flex justify-around items-center px-sm py-xs bg-white border-t border-honey-divider shadow-lg z-50 h-[64px]"><a class="flex flex-col items-center justify-center bg-[#FFF1E6] text-[#FF8A3D] rounded-xl p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-[10px] mt-xxs font-bold">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-sm text-[10px] mt-xxs">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-sm text-[10px] mt-xxs">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-sm text-[10px] mt-xxs">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined">pets</span>
+<span class="font-label-sm text-[10px] mt-xxs">Profile</span>
+</a></nav>
+</div>
+<!-- SCREEN 2: Post Detail -->
+<div class="app-screen">
+<!-- TopAppBar -->
+<header class="bg-honey-surface text-primary flex justify-between items-center w-full px-md h-[64px] shrink-0 sticky top-0 z-10 border-b border-honey-divider shadow-sm">
+<div class="flex items-center gap-sm cursor-pointer hover:bg-honey-primary-container rounded-full p-xs transition-colors duration-200">
+<span class="material-symbols-outlined text-primary text-[24px]">arrow_back</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary font-bold">Post</h1>
+<div class="flex items-center cursor-pointer hover:bg-honey-primary-container rounded-full p-xs transition-colors duration-200">
+<span class="material-symbols-outlined text-primary text-[24px]">more_vert</span>
+</div>
+</header>
+<!-- Content -->
+<div class="flex-1 overflow-y-auto no-scrollbar pb-[100px] bg-honey-surface">
+<!-- Full Post Card (No top shadow/margin needed here as it continues from header) -->
+<div class="bg-honey-surface">
+<!-- Post Header -->
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-honey-border overflow-hidden">
+<div class="w-full h-full bg-cover bg-center" data-alt="Close up profile shot of an orange tabby cat with bright green eyes looking attentively. Soft natural lighting, shallow depth of field. High quality, crisp details, warm tone." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyETPaxYIDMqfkAmQfjnxAf0-rjr_kli4BAM0TY0s5lECMSnoPaNzQ_vPCbXJ3czXJUkboLnsKAwrDO16TqYRFolpQEVyW4iPA3erIcIldTTAOW122peFr3P89j_TTuDC0ec7jeRcHnubPT2A9lPcgYpIcxVnIbdhDBnZunYdtNRQ5E0N9wvEbvPSG60cfxoFDQPZg2x1NcOM4aEuaBUvH334LP2LXuzSwr2t7gU8etpD0cqh4WIpws_SPr5x459QEYlf9eQnfZ-Q0');"></div>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">@catlover</p>
+<p class="font-body-sm text-body-sm text-honey-text-tertiary">2 hours ago</p>
+</div>
+</div>
+<button class="px-md py-xs rounded-full bg-honey-primary-container text-primary font-label-sm hover:bg-primary-container hover:text-white transition-colors">Follow</button>
+</div>
+<!-- Post Image -->
+<div class="w-full bg-honey-background relative aspect-video">
+<img alt="Post image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLu2jlVS-sfYYtLrXmTyvMimF5gGnUINZAoJwF6bhqxWReSgFzrVfObYRTguMUS3oF3uchEzjwlGRko4zTI0l1XmDP15Ra_zv-u-uXkoWVEMFFvnSWAhkX9EMR5X7UASpZybeKcicYhdjNVCr_R5wQB2ZVXJ0iT6gsdtuOSB4Tqy12JgwMu_82l3e3uDGStE-_QhgLg2M9k05bSv2CtdRQEoLlIe33THlIMxXR-21lwHzXmTEyRMQ2wb88w">
+</div>
+<!-- Post Actions -->
+<div class="p-md pt-sm pb-xs">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex gap-lg">
+<button class="flex items-center gap-xs text-primary-container hover:text-honey-primary-pressed transition-colors group">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+<button class="flex items-center gap-xs text-honey-text-secondary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<button class="flex items-center gap-xs text-honey-text-secondary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<button class="text-honey-text-secondary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface">245 likes</p>
+</div>
+<!-- Post Text -->
+<div class="px-md pb-md border-b border-honey-divider">
+<p class="font-body-md text-body-md text-on-surface-variant"><span class="font-label-sm font-semibold text-on-surface mr-xs">@catlover</span>Milo found a new sunbeam today! 鈽€锔?Look at how majestic he is. #BritishShorthair #LazyAfternoon</p>
+</div>
+</div>
+<!-- Comments Section -->
+<div class="bg-honey-surface p-md">
+<h3 class="font-title-md text-title-md text-on-surface mb-md">Comments (42)</h3>
+<div class="flex flex-col gap-lg">
+<!-- Comment 1 -->
+<div class="flex gap-sm">
+<div class="w-8 h-8 rounded-full bg-honey-border overflow-hidden shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Small profile picture of a playful calico cat peering over a edge. Clean, bright, soft lighting. Light mode aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB-UowvXidfDskeAp7SE-AhO6B1RlqGT6FGfAWiaUtUm-LMMOj4Ik4L7SJbctStJ6uD3qhcja8dNihsAnY1oljAR2AqvLczFgjm4CpQcaIVCg7zJgL6ew_E65Hpfiv2XvZhQTlied4k5OoPEN8A3walKnYxAKQi5MuTR2va8kpDvE7d5rstHyaNXCbHKfNCZf9_VMa4DdZdQ9NQu9igmEPvXoUIl-9hNGZIKdpDEkXewdusjF2-C6cTp1Y-pS38UoxAIpOFNXLt70wn');"></div>
+</div>
+<div class="flex-1">
+<div class="bg-honey-background p-sm rounded-lg rounded-tl-none inline-block">
+<p class="font-label-sm text-label-sm text-on-surface">@whiskers <span class="text-honey-text-tertiary font-normal text-[10px] ml-xs">1h</span></p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xxs">Such a handsome boy! Those eyes are mesmerizing.</p>
+</div>
+<div class="flex gap-md mt-xs ml-xs">
+<button class="text-honey-text-tertiary font-label-sm text-[11px] hover:text-primary">Reply</button>
+<div class="flex items-center gap-xxs text-honey-text-tertiary">
+<span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-primary-container">favorite</span>
+<span class="font-label-sm text-[10px]">12</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment 2 -->
+<div class="flex gap-sm">
+<div class="w-8 h-8 rounded-full bg-honey-border overflow-hidden shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Profile avatar of a fluffy white Persian cat sitting majestically. High key lighting, very clean and modern aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBe26v50t4h0G3QMt3ObXZe4CiGDzb4UMN_LKstDTLBfSG4JitEtVkVqJcc5SRNdX9BJCxO2RCqTFODa_xHrZzmtdvr4goyIr7RyETVgWqV2Xj5ZpJ0usiyU1a2OghfBIVWvkpnk1hBd8wqwXLsPbJfcCmufelGtIcAC8hvjxxeu15MgvNTFfZIk0DIrVlv2msvHrvoUpJK77K63UaP8zsVHalEtMCZHBJp7s_D5VWQ-nE3hWeL8voSPKsB2DKlqhXir9044q9_X0Ad');"></div>
+</div>
+<div class="flex-1">
+<div class="bg-honey-background p-sm rounded-lg rounded-tl-none inline-block">
+<p class="font-label-sm text-label-sm text-on-surface">@milo_paws <span class="text-honey-text-tertiary font-normal text-[10px] ml-xs">45m</span></p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xxs">That lighting is purrfect! 馃樆</p>
+</div>
+<div class="flex gap-md mt-xs ml-xs">
+<button class="text-honey-text-tertiary font-label-sm text-[11px] hover:text-primary">Reply</button>
+<div class="flex items-center gap-xxs text-primary-container">
+<span class="material-symbols-outlined text-[14px] cursor-pointer" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm text-[10px]">8</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment 3 -->
+<div class="flex gap-sm">
+<div class="w-8 h-8 rounded-full bg-honey-border overflow-hidden shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Avatar photo of an alert grey tabby cat stretching. Warm natural light, shallow depth of field, honey-themed warm background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBOvpq5vlCPzkSEsbgWvCbc-fCli8l-ssA76jEAe9ct4gmsfR_uqyP34DH7vKg0lPiyKQhEue4b42liOTHmeMtBowUYoD0cWa_WqurvfUfftdw0h0zToLV3NSx2wVnsTgFUhn-UNG4FDrTUvGLJ9SnHpcBs4zJc7S8F_Pao_GqkF3-P5kO94l1pUzCTKhF_CdAJFmNHhEkqW1DpreSosfqZ6mvQp0R1gpKWYIPL42UocMP3rONY52270WVD2p_QUC232agxZSH2zOVm');"></div>
+</div>
+<div class="flex-1">
+<div class="bg-honey-background p-sm rounded-lg rounded-tl-none inline-block">
+<p class="font-label-sm text-label-sm text-on-surface">@luna_tabby <span class="text-honey-text-tertiary font-normal text-[10px] ml-xs">15m</span></p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xxs">I need to know what camera you use! 馃摳</p>
+</div>
+<div class="flex gap-md mt-xs ml-xs">
+<button class="text-honey-text-tertiary font-label-sm text-[11px] hover:text-primary">Reply</button>
+<div class="flex items-center gap-xxs text-honey-text-tertiary">
+<span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-primary-container">favorite</span>
+<span class="font-label-sm text-[10px]">2</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fixed Comment Input -->
+<div class="absolute bottom-0 left-0 w-full bg-honey-surface border-t border-honey-divider p-sm flex items-center gap-sm shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20">
+<div class="w-8 h-8 rounded-full bg-honey-primary-container flex items-center justify-center shrink-0 border border-primary-container">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+<div class="flex-1 bg-honey-background rounded-full flex items-center px-sm py-xs border border-honey-border">
+<input class="bg-transparent border-none focus:ring-0 text-body-sm text-on-surface w-full p-0 placeholder-honey-text-tertiary" placeholder="Add a comment..." type="text">
+</div>
+<button class="w-8 h-8 rounded-full bg-primary-container text-white flex items-center justify-center shrink-0 hover:bg-honey-primary-pressed transition-colors">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+</button>
+</div>
+</div>
+<!-- SCREEN 3: Create Post -->
+<div class="app-screen">
+<!-- TopAppBar -->
+<header class="bg-honey-surface text-primary flex justify-between items-center w-full px-md h-[64px] shrink-0 sticky top-0 z-10 border-b border-honey-divider shadow-sm">
+<div class="flex items-center gap-sm cursor-pointer hover:bg-honey-primary-container rounded-full p-xs transition-colors duration-200">
+<span class="material-symbols-outlined text-primary text-[28px]">close</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary font-bold">Create Post</h1>
+<button class="bg-primary-container text-white px-md py-xs rounded-full font-label-sm hover:bg-honey-primary-pressed transition-colors shadow-sm" style="background-color: #FF8A3D;">Post</button>
+</header>
+<!-- Content -->
+<div class="flex-1 bg-honey-surface flex flex-col p-md"><div class="flex items-center gap-sm mb-sm cursor-pointer hover:bg-honey-background p-xs rounded-lg transition-colors border border-honey-border"><div class="w-10 h-10 rounded-full bg-honey-border overflow-hidden"><div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDHVw2rohvbBXfW1BKKWoPZf1CoNC0mzk5O0aJtGmz3x-2U7zLGcFrCzZnrjmJSTYJQa31X6-JzO4lBmxXEyk4lneAJGqui8_EEvlWaHTccfSKAPb2fC7r5FGfi5X3GoLb8akSHXszB0awQdCknx0hrfUBD5j_tvikz7-pRx7fAPQar8e_vJzetdCuI1ilsNasUpGeVKdbYyAk_PZDhVI26bbM2VloSR-nqoOr07hZ8gGkK4YyR6DwZrqPJl5GdtI0ogRafFs76k4ic');"></div></div><div class="flex-1"><div class="flex items-center gap-xs"><p class="font-label-lg text-label-lg text-on-surface">Peach &amp; Latte</p><span class="material-symbols-outlined text-[16px] text-honey-text-secondary">expand_more</span></div></div></div><textarea class="w-full h-24 resize-none bg-transparent border-none focus:ring-0 text-body-lg text-[#231F20] placeholder-[#9A8A80] font-body-lg p-0 mb-sm" placeholder="What's on your pet's mind?"></textarea><div class="flex gap-sm py-sm mb-sm"><div class="w-20 h-20 rounded-lg bg-honey-border relative overflow-hidden shrink-0 border border-honey-divider shadow-sm"><div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBFPjxkPoCk6nPjqSEN-Q-b0qeLdfYnj2wn5TXTHtffsPqG20POJAm62lhA5OdWcpRERIz-GHZJHC3TbKSThxf260edQ1KeScfF7ozHmSQxEd1MFIJWt6M8Uh_GlQPBzp39w_V6DK7colrTlG2H1qzReXoKvirAhH6NsFLq6v6cJ3ZnewTF47ouD2mXVGeREQVfBXgfgCpt9Z4XL9kw6AAcS9HmfgZhPwtPI44jmG84kQAC3m9nUzM_zAfDz5L71PGtuuEWg55bPJI7');"></div></div><div class="w-20 h-20 rounded-lg bg-honey-background border-2 border-dashed border-honey-border flex items-center justify-center shrink-0 cursor-pointer text-honey-text-secondary"><span class="material-symbols-outlined">add_photo_alternate</span></div></div><div class="space-y-sm"><div class="flex items-center justify-between py-xs border-b border-honey-divider"><div class="flex items-center gap-sm"><span class="material-symbols-outlined text-primary-container">public</span><span class="font-label-sm text-on-surface">Visibility</span></div><div class="flex items-center gap-xxs text-honey-text-secondary"><span class="font-body-sm">Public</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></div></div><div class="flex items-center justify-between py-xs border-b border-honey-divider"><div class="flex items-center gap-sm"><span class="material-symbols-outlined text-secondary">location_on</span><span class="font-label-sm text-on-surface">Add Location</span></div><span class="material-symbols-outlined text-honey-text-secondary text-[18px]">chevron_right</span></div></div><p class="text-honey-text-tertiary text-[11px] font-body-sm mt-auto mb-xs italic">Draft saved automatically</p><div class="mt-md"><p class="font-label-sm text-honey-text-secondary mb-xs">Suggested Tags</p><div class="flex flex-wrap gap-xs"><button class="px-sm py-xxs rounded-full bg-honey-primary-container text-primary border border-primary-container/30 font-label-sm"># Cat</button><button class="px-sm py-xxs rounded-full bg-honey-background text-on-surface-variant border border-honey-border font-label-sm"># Daily Life</button><button class="px-sm py-xxs rounded-full bg-honey-background text-on-surface-variant border border-honey-border font-label-sm"># Cozy</button></div></div></div>
+</div>
+<!-- SCREEN 4: Feed Empty State -->
+<div class="app-screen">
+<!-- TopAppBar -->
+<header class="bg-honey-surface text-primary flex justify-between items-center w-full px-md h-[64px] shrink-0 sticky top-0 z-10 border-b border-honey-divider shadow-sm">
+<div class="flex items-center gap-sm cursor-pointer hover:bg-honey-primary-container rounded-full p-xs transition-colors duration-200">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary font-bold">M&amp;D</h1>
+<div class="flex items-center cursor-pointer hover:bg-honey-primary-container rounded-full p-xs transition-colors duration-200 relative">
+<span class="material-symbols-outlined text-primary text-[28px]">notifications</span>
+</div>
+</header>
+<!-- Content -->
+<div class="flex-1 overflow-y-auto no-scrollbar bg-honey-background pb-[80px]">
+<!-- Empty State Card -->
+<div class="m-md bg-honey-surface rounded-2xl p-lg flex flex-col items-center justify-center text-center shadow-sm border border-honey-border mt-xl">
+<div class="w-20 h-20 rounded-full bg-honey-primary-container flex items-center justify-center mb-md shadow-inner">
+<span class="material-symbols-outlined text-[40px] text-primary-container opacity-80" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<h2 class="font-title-md text-title-md text-on-surface mb-xs">Follow pets and creators to start your feed.</h2>
+<p class="font-body-sm text-body-sm text-honey-text-secondary mb-lg max-w-[250px]">Follow pets and creators to start your feed.</p>
+<button class="bg-primary-container text-white px-lg py-sm rounded-xl font-label-lg shadow-md hover:bg-honey-primary-pressed transition-all active:scale-95 w-full">Find pets to follow</button><button class="mt-sm border border-[#FF8A3D] text-[#FF8A3D] px-lg py-sm rounded-xl font-label-lg hover:bg-honey-primary-container transition-all active:scale-95 w-full">Create your first post</button>
+</div>
+<!-- Suggested Section -->
+<div class="mt-xl px-md">
+<h3 class="font-title-md text-title-md text-on-surface mb-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary-container text-[20px]">star</span> Suggested Creators
+                </h3>
+<div class="flex flex-col gap-sm">
+<!-- Creator Card 1 -->
+<div class="bg-honey-surface rounded-xl p-md flex items-center justify-between border border-honey-border shadow-sm">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-honey-border overflow-hidden">
+<div class="w-full h-full bg-cover bg-center" data-alt="Profile picture of an adorable fluffy white puppy looking up. Soft bright lighting, very clean." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCtizODTtTQ3yJ6c7EiLLpdal5M1EhkG__rGEyki55pPDmGKPrSFDfr79mxNOTB4bIAb9L5Pa17YLvSnzUXX8xp3Pf7tdkBBSTgKP6r9qniM2poRe4MWKtb4__SVBuHHoo1V1081JMcraw8raRdKPh9C4sQ4R0pNfVIfmNcn0ay-Wl-f1JIgs_Piifhxqe1AOrDCt31nyDB8eX0Dt5TOlatYreiiOeRd1fblMf8Op11h6lwJenQ0JefKjp4U4Jz4Zog7P_X1FnztTfu');"></div>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Milo &amp; Friends</p>
+<p class="font-body-sm text-[11px] text-honey-text-tertiary">12.4k followers 鈥?Dog &amp; Cat duo</p>
+</div>
+</div>
+<button class="px-sm py-xs rounded-lg bg-honey-primary-container text-primary font-label-sm hover:bg-primary-container hover:text-white transition-colors border border-primary-container/20">Follow</button>
+</div>
+<!-- Creator Card 2 -->
+<div class="bg-honey-surface rounded-xl p-md flex items-center justify-between border border-honey-border shadow-sm">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-honey-border overflow-hidden">
+<div class="w-full h-full bg-cover bg-center" data-alt="Avatar photo of an alert grey tabby cat stretching. Warm natural light, shallow depth of field, honey-themed warm background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBUmgRM3YqYqa3XiQ1dFHvkUWgSK20DguvI6ySe7APIDx4B0-DiWwEhCN-iVhOQmlStO30XX0J474nN6TeP3-hpg9R_LQj-rrZtdWaR2fCuqcy4C67wGMT-cXWt-f562apKR7-MV-od7ZMDfaPPJ1r3RgavnZonFJ_e5jZo9ekvti-icp-2sGcVTctyUbReSHhL-fBWZ4DfU1XhwoGNlYFpSJfqP7PFp0_jhPNvHHrF6QGL1Q9wWtU1qVMfBx-WKJRmh6sSThp6CU3r');"></div>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Luna the Tabby</p>
+<p class="font-body-sm text-[11px] text-honey-text-tertiary">8.2k followers 鈥?Daily adventures</p>
+</div>
+</div>
+<button class="px-sm py-xs rounded-lg bg-honey-primary-container text-primary font-label-sm hover:bg-primary-container hover:text-white transition-colors border border-primary-container/20">Follow</button>
+</div>
+</div>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="absolute bottom-0 left-0 w-full flex justify-around items-center px-sm py-xs bg-white border-t border-honey-divider shadow-lg z-50 h-[64px]"><a class="flex flex-col items-center justify-center bg-[#FFF1E6] text-[#FF8A3D] rounded-xl p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-[10px] mt-xxs font-bold">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-sm text-[10px] mt-xxs">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-sm text-[10px] mt-xxs">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-sm text-[10px] mt-xxs">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6B5E57] p-xs transition-transform w-16" href="#">
+<span class="material-symbols-outlined">pets</span>
+<span class="font-label-sm text-[10px] mt-xxs">Profile</span>
+</a></nav>
+</div>
+</div>
+</body></html>

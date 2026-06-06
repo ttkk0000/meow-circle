@@ -1,0 +1,441 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Honey Design System - Social Feed Components</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#FFF8F2",
+                        surface: "#FFFFFF",
+                        primary: {
+                            DEFAULT: "#FF8A3D",
+                            container: "#FFF1E6",
+                            on_container: "#FF8A3D",
+                        },
+                        text: {
+                            main: "#231F20",
+                            muted: "#71717A",
+                        },
+                        border: {
+                            DEFAULT: "#F1D8C8",
+                        },
+                        state: {
+                            hover: "#F5E2D5",
+                            pressed: "#F5E2D5",
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Outfit", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                    },
+                    borderRadius: {
+                        'md': '0.75rem',
+                        'lg': '1rem',
+                        'full': '9999px',
+                    },
+                    boxShadow: {
+                        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: theme('colors.background');
+            color: theme('colors.text.main');
+            /* Removed overflow: hidden */
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Outfit', sans-serif;
+        }
+        .spec-label {
+            font-family: 'ui-monospace', monospace;
+            font-size: 0.75rem;
+            color: theme('colors.text.muted');
+        }
+        .card-panel {
+            background-color: theme('colors.surface');
+            border-radius: theme('borderRadius.lg');
+            border: 1px solid theme('colors.border.DEFAULT');
+            padding: 1.5rem;
+        }
+        .skeleton-bg {
+            background-color: theme('colors.primary.container');
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; background-color: theme('colors.state.hover'); }
+        }
+    </style>
+</head>
+<body class="w-full flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-64 flex-shrink-0 border-r border-border bg-surface flex flex-col p-6 gap-2 sticky top-0 h-screen">
+<div class="mb-8 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<span class="font-display font-bold text-xl text-primary">M&amp;D</span>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="px-3 py-2 rounded-md text-text-muted hover:bg-primary-container hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">overview</span> Overview
+            </a>
+<a class="px-3 py-2 rounded-md text-text-muted hover:bg-primary-container hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">edit_square</span> Composer
+            </a>
+<a class="px-3 py-2 rounded-md bg-primary-container text-primary font-medium flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">view_agenda</span> Feed Card
+            </a>
+<a class="px-3 py-2 rounded-md text-text-muted hover:bg-primary-container hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">grid_view</span> Media Grid
+            </a>
+<a class="px-3 py-2 rounded-md text-text-muted hover:bg-primary-container hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">favorite</span> Social Actions
+            </a>
+<a class="px-3 py-2 rounded-md text-text-muted hover:bg-primary-container hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">chat_bubble</span> Comments
+            </a>
+<a class="px-3 py-2 rounded-md text-text-muted hover:bg-primary-container hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">hourglass_empty</span> Empty &amp; Skeleton
+            </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-h-screen">
+<!-- Top Header -->
+<header class="h-16 border-b border-border bg-surface flex items-center justify-between px-8 flex-shrink-0 sticky top-0 z-50">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-background border-none rounded-full text-sm focus:ring-1 focus:ring-primary outline-none text-text-main placeholder-text-muted" placeholder="Search components..." type="text">
+</div>
+<div class="flex items-center gap-4">
+<span class="text-sm text-text-muted">Theme: <strong class="text-primary">Honey</strong></span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 p-8 flex flex-col gap-8">
+<!-- Page Header -->
+<div>
+<h1 class="text-3xl font-display font-bold text-text-main mb-2">M&amp;D 缁勪欢搴?- Honey Social Feed Components</h1>
+<p class="text-text-muted text-sm max-w-2xl">Reusable social feed components with real previews, anatomy, states, and Honey Theme specs. Adhering strictly to #FFF8F2 background, #FFFFFF surface, and #FF8A3D primary tokens.</p>
+</div>
+<div class="grid grid-cols-2 gap-8 items-start">
+<!-- Left Column -->
+<div class="flex flex-col gap-8">
+<!-- 1. Post Composer Entry -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">1</span>
+<h2 class="font-display font-semibold text-lg">Post Composer Entry</h2>
+</div>
+<div class="card-panel flex flex-col gap-6">
+<!-- Real Preview -->
+<div class="flex items-center gap-3 p-4 border border-border rounded-lg bg-background">
+<div class="w-10 h-10 rounded-full bg-border overflow-hidden">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCikF0Pb5o6ApIESeCz5A1DicaVVzU8ArgRfK3qrwufLFtHhvbNrwNO3-npp28NlzdArGINsNT1pVB5LQPLD4pi5p8xTrZPSIBG4hZdeZiVIz-8Ul-nfK1A2ys6-jyrmpGgG8Gcy0H4WdAQPxHeqLfyKdtVDEpAZcKa7nnAlp5gNy2yb3kGa5OOiEDMXk7YKkR9xfzoreKBFPKComLvIjCFMO5Z2JSnyZlRu5NtSiCjzrn9R9Y0wT-kzjuoqI3Ijxjmluzp84TCHe_">
+</div>
+<div class="flex-1 bg-surface border border-border rounded-full px-4 h-12 flex items-center text-text-muted text-sm cursor-text">
+                                    Share a moment with your pet...
+                                </div>
+<button class="w-10 h-10 rounded-full hover:bg-state-hover text-text-muted flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">image</span>
+</button>
+<button class="px-4 h-10 rounded-full bg-primary text-white font-medium text-sm hover:bg-orange-600 transition-colors">Post</button>
+</div>
+<!-- Specs -->
+<div class="grid grid-cols-3 gap-4 border-t border-border pt-4">
+<div>
+<div class="spec-label">Avatar</div>
+<div class="text-sm">40x40px, radius: full</div>
+</div>
+<div>
+<div class="spec-label">Input Area</div>
+<div class="text-sm">Height: 48px, radius: 9999px</div>
+</div>
+<div>
+<div class="spec-label">Colors</div>
+<div class="text-sm">Bg: #FFFFFF, Border: #F1D8C8</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Post Media Grid -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">3</span>
+<h2 class="font-display font-semibold text-lg">Post Media Grid</h2>
+</div>
+<div class="card-panel">
+<div class="grid grid-cols-2 gap-6 mb-6">
+<!-- 1 Image -->
+<div>
+<div class="spec-label mb-2">1 Image</div>
+<div class="aspect-video bg-border rounded-md overflow-hidden">
+<img alt="Cat in sun" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBBaqZ1HCGXqSIF8PIV5uKYogotjwfquDpNg-ZcGxRPH0DmExfrzT_AKEl9XEpILcJgHKCg2Z0jqRZVq8L1PimBHqXP2FrlZok12Z3o9bk0hggsgp5LKTSSOLJnibbC2CBpZFx7Mku9YRnpPcOWYhs5Wpdn3dOl6VCQHOKHPub4EMg2bbROQv5wMMiW4ZsM1qV9h__1BVHN7WZp0pTWOfT1-5PFOQQvqxwronIIo5E83m0rm0UkADSiyRTO3E7wzLnYuHdNsIw0T-u">
+</div>
+</div>
+<!-- 2 Images -->
+<div>
+<div class="spec-label mb-2">2 Images (gap: 8px)</div>
+<div class="flex gap-2 h-full">
+<div class="flex-1 bg-border rounded-md overflow-hidden aspect-square">
+<img alt="Cat" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPl59qtsHuS5g6P9OZZBLLaI5mqYTPcD2nz0okjvGZmVCHITC3oeyO8ebwWm6sFLl0S8lzW4jspox36MYTO26Ft4dXG4WcZ1wMlgtrWjmIpxfXJ0Kodwrp7OLqEiCDsWmpiFb0inKcC5S1F3kWB0tFy8BK1XABnQ0gutt95_w9jRZmpGXVJ68Q7f5MkMQwtVeQsMvhC_89MONkQurZtb9_PsbwyI9P8wrJ9JT1EWtu_1wx88YQe0y_SstzdDv2alamU3kkN_Paw6F7">
+</div>
+<div class="flex-1 bg-border rounded-md overflow-hidden aspect-square">
+<img alt="Cat" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_qkqTWUp6_jGRcSmndx1M5WQj7odcEqeCCRPGwqM7yGNK7b0NqDqkByAnepCzwdD0sZBaDaV7oPGC4b9to293oOxKgntih3DE3shTjG8LVUmdAU7fekUZgsiSeTE427zgACqbc5ZmZhXr_UwjxPR70yHmxgT3fHmNCfVK0prOIeOUkhAtgvruPeeNyHe2o5hwR6-Owe6MK6INEbEQcwRnPuj0nV0VzLS9CPvidffuFPp4nqw-fQ5Ak5Oyi8oGkse8yYmjsjs9Kvw-">
+</div>
+</div>
+</div>
+</div>
+<div class="border-t border-border pt-4 text-sm">
+<span class="spec-label">Component:</span> PostMediaGrid | <span class="spec-label">Spacing:</span> gap-2 (8px) | <span class="spec-label">Radius:</span> 12px (md)
+                            </div>
+</div>
+</section>
+<!-- 5. Comments & Utilities -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">5</span>
+<h2 class="font-display font-semibold text-lg">Comments &amp; Utilities</h2>
+</div>
+<div class="card-panel flex flex-col gap-6">
+<!-- Filter Tabs -->
+<div>
+<div class="spec-label mb-2">Feed Filter Tabs</div>
+<div class="flex items-center gap-2 p-1 bg-background border border-border rounded-lg inline-flex">
+<button class="px-4 py-1.5 text-sm font-medium bg-surface text-primary shadow-sm rounded-md border border-border">Following</button>
+<button class="px-4 py-1.5 text-sm font-medium text-text-muted hover:text-primary transition-colors rounded-md">Nearby</button>
+<button class="px-4 py-1.5 text-sm font-medium text-text-muted hover:text-primary transition-colors rounded-md">Popular</button>
+<button class="px-4 py-1.5 text-sm font-medium text-text-muted hover:text-primary transition-colors rounded-md">Latest</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<!-- User Mini Card -->
+<div>
+<div class="spec-label mb-2">User Mini Card</div>
+<div class="flex items-center gap-3 p-3 border border-border rounded-lg">
+<div class="w-10 h-10 rounded-full bg-border overflow-hidden flex-shrink-0">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCikF0Pb5o6ApIESeCz5A1DicaVVzU8ArgRfK3qrwufLFtHhvbNrwNO3-npp28NlzdArGINsNT1pVB5LQPLD4pi5p8xTrZPSIBG4hZdeZiVIz-8Ul-nfK1A2ys6-jyrmpGgG8Gcy0H4WdAQPxHeqLfyKdtVDEpAZcKa7nnAlp5gNy2yb3kGa5OOiEDMXk7YKkR9xfzoreKBFPKComLvIjCFMO5Z2JSnyZlRu5NtSiCjzrn9R9Y0wT-kzjuoqI3Ijxjmluzp84TCHe_">
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-medium text-sm text-text-main truncate">Anna Smith</div>
+<div class="text-xs text-text-muted truncate">@anna_pets 鈥?1.2k followers</div>
+</div>
+<button class="px-3 py-1 rounded-full border border-primary text-primary text-xs font-medium hover:bg-primary-container transition-colors">Follow</button>
+</div>
+</div>
+<!-- Pet Mini Card -->
+<div>
+<div class="spec-label mb-2">Pet Mini Card</div>
+<div class="flex items-center gap-3 p-3 border border-border rounded-lg">
+<div class="w-10 h-10 rounded-full bg-border overflow-hidden flex-shrink-0">
+<img alt="Pet avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBBaqZ1HCGXqSIF8PIV5uKYogotjwfquDpNg-ZcGxRPH0DmExfrzT_AKEl9XEpILcJgHKCg2Z0jqRZVq8L1PimBHqXP2FrlZok12Z3o9bk0hggsgp5LKTSSOLJnibbC2CBpZFx7Mku9YRnpPcOWYhs5Wpdn3dOl6VCQHOKHPub4EMg2bbROQv5wMMiW4ZsM1qV9h__1BVHN7WZp0pTWOfT1-5PFOQQvqxwronIIo5E83m0rm0UkADSiyRTO3E7wzLnYuHdNsIw0T-u">
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-medium text-sm text-text-main truncate">Milo</div>
+<div class="text-xs text-text-muted truncate">Cat 鈥?Owner: Anna</div>
+</div>
+<button class="px-3 py-1 rounded-full bg-primary-container text-primary text-xs font-medium hover:bg-state-hover transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+<!-- Comment Item -->
+<div>
+<div class="spec-label mb-2">Comment Item</div>
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-border overflow-hidden flex-shrink-0 mt-1">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV8KDNbDiTqCgelIty0wnqxLSex9x8XXqFTfyR4Xlh6XZMJ6bpSDv8S7cfzGO5eEa8zjyHRktz4O3xap6erK2rmNWFRBVGiQfa_qCg_nlgk8ZthnSN5xDU-_Hvaq5CnvLAw_V0diaEFZQ--fRpSjGWNe_-iNR33jG7gkNxD26n4mhybmE41Zzq3ALyyTkbV2zhS-krAbMwad6ggJy7kF8WfbVWZV9hLPATnndRdP3Q2NVpRGhGs7A3PMOJYRou1ne3hwoYhFOPac-E">
+</div>
+<div class="flex-1">
+<div class="bg-background rounded-lg p-3 inline-block border border-border">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-medium text-sm text-text-main">David Lee</span>
+<span class="text-xs text-text-muted">2h</span>
+</div>
+<p class="text-sm text-text-main">So cute! Reminds me of my cat. 馃惥</p>
+</div>
+<div class="flex items-center gap-4 mt-1 ml-1 text-xs text-text-muted font-medium">
+<button class="hover:text-primary">Like (2)</button>
+<button class="hover:text-primary">Reply</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment Input Bar -->
+<div>
+<div class="spec-label mb-2">Comment Input Bar</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-border overflow-hidden flex-shrink-0">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCikF0Pb5o6ApIESeCz5A1DicaVVzU8ArgRfK3qrwufLFtHhvbNrwNO3-npp28NlzdArGINsNT1pVB5LQPLD4pi5p8xTrZPSIBG4hZdeZiVIz-8Ul-nfK1A2ys6-jyrmpGgG8Gcy0H4WdAQPxHeqLfyKdtVDEpAZcKa7nnAlp5gNy2yb3kGa5OOiEDMXk7YKkR9xfzoreKBFPKComLvIjCFMO5Z2JSnyZlRu5NtSiCjzrn9R9Y0wT-kzjuoqI3Ijxjmluzp84TCHe_">
+</div>
+<div class="flex-1 relative">
+<input class="w-full h-10 pl-4 pr-12 bg-background border border-border rounded-full text-sm focus:outline-none focus:border-primary text-text-main placeholder-text-muted" placeholder="Add a comment..." type="text">
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center hover:bg-orange-600 transition-colors">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column -->
+<div class="flex flex-col gap-8">
+<!-- 2. Feed Card Anatomy (Main Focus) -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">2</span>
+<h2 class="font-display font-semibold text-lg">Feed Card Anatomy</h2>
+</div>
+<div class="card-panel relative">
+<!-- High-fidelity Card -->
+<div class="bg-surface border border-border rounded-lg shadow-sm p-4 relative z-10 w-full max-w-md mx-auto">
+<!-- Header -->
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-border overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV8KDNbDiTqCgelIty0wnqxLSex9x8XXqFTfyR4Xlh6XZMJ6bpSDv8S7cfzGO5eEa8zjyHRktz4O3xap6erK2rmNWFRBVGiQfa_qCg_nlgk8ZthnSN5xDU-_Hvaq5CnvLAw_V0diaEFZQ--fRpSjGWNe_-iNR33jG7gkNxD26n4mhybmE41Zzq3ALyyTkbV2zhS-krAbMwad6ggJy7kF8WfbVWZV9hLPATnndRdP3Q2NVpRGhGs7A3PMOJYRou1ne3hwoYhFOPac-E">
+</div>
+<div>
+<div class="font-semibold text-sm text-text-main flex items-center gap-1">
+                                                Sarah &amp; Milo
+                                                <span class="material-symbols-outlined text-primary text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="text-xs text-text-muted">2 hours ago</div>
+</div>
+</div>
+<button class="text-text-muted hover:bg-state-hover rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<!-- Body -->
+<p class="text-sm text-text-main mb-3 leading-relaxed">Milo found the perfect sunny spot this afternoon. 鈽€锔忦煇?/p>
+<!-- Media Area -->
+<div class="w-full aspect-video bg-border rounded-md overflow-hidden mb-4">
+<img alt="Cat in sun" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4JE7XPe8jP9rE8lIgjevqCfGpZw-q5YqB_7tJD4TH1MC_zTOIDiaASURgTWGhU6MISWW3l-jMZ8xURHlTbX7TI3Vma3hDt3OrVyzCCtuneXlZPv2QaLknFfA7FdIHU-BDMX0qxSyJ6I2LEQGZtSduQIfVL09krO-2D3CAhFh05kBa7PuZX3Y9g2QIheW61_57PAjCws_f5-kED-29OmxvQ94CCUYsIe5YOEMEbMkTEAPt_xKqembK6qcUSHnSnQlTpllOjLgPGKKJ">
+</div>
+<!-- Action Row -->
+<div class="flex items-center justify-between border-t border-border pt-3">
+<button class="flex items-center gap-1.5 text-text-muted hover:text-primary transition-colors text-sm">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+<span>24</span>
+</button>
+<button class="flex items-center gap-1.5 text-text-muted hover:text-primary transition-colors text-sm">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+<span>5</span>
+</button>
+<button class="flex items-center gap-1.5 text-text-muted hover:text-primary transition-colors text-sm">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+</div>
+</div>
+<!-- Spec Breakdown Notes below -->
+<div class="mt-6 p-4 bg-background rounded-md border border-border grid grid-cols-2 gap-4 text-sm">
+<div><span class="spec-label">Card Radius:</span> 16px (lg)</div>
+<div><span class="spec-label">Media Radius:</span> 12px (md)</div>
+<div><span class="spec-label">Border:</span> #F1D8C8</div>
+<div><span class="spec-label">Padding:</span> 16px (p-4)</div>
+</div>
+</div>
+</section>
+<!-- 4. Social Actions & States -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">4</span>
+<h2 class="font-display font-semibold text-lg">Social Actions &amp; States</h2>
+</div>
+<div class="card-panel">
+<div class="flex gap-8 items-end mb-6">
+<!-- Default -->
+<div class="flex flex-col items-center gap-2">
+<div class="spec-label">Default</div>
+<button class="flex items-center gap-2 text-text-muted text-sm py-1 px-2 rounded hover:bg-state-hover">
+<span class="material-symbols-outlined">favorite</span> Like
+                                    </button>
+</div>
+<!-- Active -->
+<div class="flex flex-col items-center gap-2">
+<div class="spec-label">Active</div>
+<button class="flex items-center gap-2 text-primary text-sm py-1 px-2 rounded bg-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span> Like
+                                    </button>
+</div>
+<!-- Follow Btn -->
+<div class="flex flex-col items-center gap-2">
+<div class="spec-label">Follow Action</div>
+<button class="px-4 py-1.5 rounded-full border border-primary text-primary text-sm font-medium hover:bg-primary-container transition-colors">Follow</button>
+</div>
+</div>
+<div class="border-t border-border pt-3 text-xs text-text-muted font-mono">
+                                Tokens: Active <span class="text-primary font-bold">#FF8A3D</span>, Hover/Pressed <span class="text-[#F5E2D5] font-bold">#F5E2D5</span>
+</div>
+</div>
+</section>
+<!-- 6. Empty & Skeleton States -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">6</span>
+<h2 class="font-display font-semibold text-lg">Empty &amp; Skeleton States</h2>
+</div>
+<div class="card-panel flex flex-col gap-6">
+<!-- Empty State -->
+<div>
+<div class="spec-label mb-2">Empty State</div>
+<div class="bg-background border border-border border-dashed rounded-lg p-8 flex flex-col items-center justify-center text-center">
+<div class="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<h3 class="font-display font-semibold text-lg text-text-main mb-1">No posts yet</h3>
+<p class="text-sm text-text-muted mb-6">Follow pets and creators to see their moments here.</p>
+<button class="px-6 py-2 rounded-full bg-primary text-white font-medium text-sm hover:bg-orange-600 transition-colors">Find pets to follow</button>
+</div>
+</div>
+<!-- Skeleton State -->
+<div>
+<div class="spec-label mb-2">Skeleton State (Feed Card)</div>
+<div class="bg-surface border border-border rounded-lg shadow-sm p-4 w-full">
+<!-- Header Skeleton -->
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full skeleton-bg"></div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="h-4 w-32 skeleton-bg rounded"></div>
+<div class="h-3 w-20 skeleton-bg rounded"></div>
+</div>
+</div>
+<!-- Body Skeleton -->
+<div class="flex flex-col gap-2 mb-4">
+<div class="h-3 w-full skeleton-bg rounded"></div>
+<div class="h-3 w-4/5 skeleton-bg rounded"></div>
+</div>
+<!-- Media Skeleton -->
+<div class="w-full aspect-video skeleton-bg rounded-md mb-4"></div>
+<!-- Actions Skeleton -->
+<div class="flex items-center gap-6 border-t border-border pt-3">
+<div class="h-5 w-12 skeleton-bg rounded"></div>
+<div class="h-5 w-12 skeleton-bg rounded"></div>
+<div class="h-5 w-8 skeleton-bg rounded"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</body></html>

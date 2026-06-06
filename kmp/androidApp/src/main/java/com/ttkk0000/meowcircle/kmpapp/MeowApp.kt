@@ -40,9 +40,11 @@ fun MeowApp(sdk: MeowCircleSdk) {
     var activeThemeStr by remember { mutableStateOf(sdk.getTheme()) }
 
     val activeTheme = when (activeThemeStr.lowercase()) {
+        "honey", "sugar" -> MeowTheme.Honey
         "mint" -> MeowTheme.Mint
         "night" -> MeowTheme.Night
-        else -> MeowTheme.Sugar
+        "neutral", "system" -> MeowTheme.Neutral
+        else -> MeowTheme.Honey
     }
 
     LaunchedEffect(Unit) {

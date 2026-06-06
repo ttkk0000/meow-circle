@@ -1,6 +1,6 @@
 # Runbook
 
-Last updated: 2026-05-27
+Last updated: 2026-06-06
 
 This runbook captures how to run, verify, and safely change the current M&D
 repository. It is intentionally practical: start here when you need the system
@@ -15,7 +15,8 @@ up locally or when another agent needs a clean handoff.
 | Go API with Postgres | You need persistence and migrations. | `make up`, set `DATABASE_URL`, then `make run` |
 | Go API with Postgres + Redis | You need cache behavior too. | `make up`, set `DATABASE_URL` and `REDIS_URL`, then `make run` |
 | Expo mobile | You need the runtime mobile app. | `cd mobile && npm install && npm start` |
-| KMP Android | You need Kotlin/Android source validation. | `cd kmp && bash ./gradlew :androidApp:compileDebugKotlin` |
+| KMP Android | You need Kotlin/Android source review. | Static file review only on this machine; do not run Gradle. |
+| KMP Desktop | You need the Compose Desktop client source. | Static file review only on this machine; do not run Gradle. |
 
 Recommended first smoke test for design-only changes:
 
@@ -182,12 +183,8 @@ Token storage:
 
 The default Android emulator base URL is `http://10.0.2.2:8080`.
 
-Override it per build:
-
-```bash
-cd kmp
-bash ./gradlew :androidApp:assembleDebug -Pmeow.api.base.url=http://127.0.0.1:8080
-```
+Do not run a local Gradle build on this machine. If another safe machine builds
+the app, pass `meow.api.base.url` as a Gradle property there.
 
 For a physical Android device, either use the host LAN IP or run:
 
@@ -197,16 +194,25 @@ adb reverse tcp:8080 tcp:8080
 
 then set the Gradle property to `http://127.0.0.1:8080`.
 
+### KMP Desktop
+
+The desktop client lives in `kmp/desktopApp` and reuses `kmp/shared` through the
+`desktop` JVM target. It is aligned to the same Stitch V2 project refs and
+Honey/Mint/Night/Neutral tokens as Web, Expo, and KMP Android.
+
+Do not run a local Gradle build on this machine. Use static source review here;
+build and package `:desktopApp` only on a safe external machine.
+
 ## 6. Verification Matrix
 
 | Change Area | Minimum Check | Stronger Check |
 | --- | --- | --- |
 | Docs only | `git diff --check -- docs` | Review docs hub links and stale naming search. |
 | Web CSS/HTML/JS | Static server smoke | Desktop `1440x1000` + mobile `390x844` browser screenshots. |
-| Go API | `make test` | `make integration` with Postgres/Redis. |
+| Go API | Static handler/store review on this machine | Run Go tests only on a machine with an approved compatible Go toolchain. |
 | Migrations | `make migrate` against a fresh DB | Integration tests plus manual create/read flows. |
-| Expo | `cd mobile && npm run typecheck` | Device/simulator visual smoke. |
-| KMP shared/Android | Gradle compile | Emulator visual smoke. |
+| Expo | Static source review on this machine | Device/simulator visual smoke when a safe Node environment is available. |
+| KMP shared/Android/Desktop | Static Kotlin/Compose review | Emulator/desktop visual smoke only when a safe external build is available. |
 | Docker | `make docker` | `make docker-run` and `/healthz` check. |
 
 Useful docs and code lint:
@@ -229,10 +235,8 @@ These are machine/session-specific observations from the latest pass.
 
 | Blocker | Impact | Status / Workaround |
 | --- | --- | --- |
-| Go version parser rejected `go 1.25.0` previously | Go tests/server may not run | **Resolved**: The local machine is verified running Go v1.26.2. |
-| Shell Node reported `v16.10.0` previously | React Native dependencies warn and expect Node 18+ | **Resolved**: The local machine is verified running Node v24.15.0. |
-| KMP Gradle resolution hit HTTP 403 from Maven/Gradle Plugin Portal | Kotlin compile stops before source validation | **Mitigated**: Commented Aliyun Maven/Gradle mirror links have been added to `kmp/settings.gradle.kts` for easy enabling. |
-| `kmp/gradlew` may lack execute bit | Direct `./gradlew` can fail | Use `bash ./gradlew ...`. |
+| Gradle commands freeze this machine | KMP compile/emulator verification is unsafe locally | Do not run `gradle`, `gradlew`, `./gradlew`, or `gradlew.bat`; use static review. |
+| Local Go toolchain is not approved for this repo | Go tests/server are unsafe locally | Do not run `go build`, `go run`, or `go test`; use static Web checks for UI work. |
 
 Keep these in docs for troubleshooting references.
 
@@ -273,7 +277,7 @@ For UI-system changes:
 1. Update `docs/design/MND_UI_ALIGNMENT_GUIDE.md`.
 2. Update Web tokens/bridge/prototype.
 3. Update Expo `mobile/src/theme.ts` and shared components.
-4. Update KMP Android theme files.
+4. Update KMP Android and Desktop theme files.
 5. Update the design boards if the pattern changed.
 6. Update `docs/FRONTEND_SURFACE_MAP.md` and `docs/design/MND_DESIGN_MEMORY.md`.
 7. Run Web smoke checks and mobile/KMP checks when available.
@@ -293,7 +297,7 @@ Compatibility names that may remain in code:
 - Web auth keys: `meow_token`, `meow_user`.
 - Mobile auth keys: `meow.auth.token`, `meow.auth.user`.
 - Environment variables: `MEOW_LOG_SMS_CODE`, `MEOW_DEV_SMS_CODE`.
-- Historical files: `MEOW_CIRCLE_*`, `_stitch_ref`, `STITCH_WEB_*`.
+- Removed old design references and stale Stitch export maps.
 - Internal class/function names such as `MeowCircleSdk` or `Stitch*`.
 
 Only rename compatibility names after checking routes, storage migration,

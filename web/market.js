@@ -9,32 +9,32 @@ const FALLBACK_LISTINGS = [
   {
     id: 9101,
     type: "product",
-    title: "猫猫彩色牵引绳套装",
-    description: "轻量织带，适合日常散步，附送 M&D 小挂件。doggie 也可用。",
+    title: "Mint cat toy bundle",
+    description: "Soft teaser, rolling ball, and a washable mat for daily indoor play. Doggie siblings can use the mat too.",
     price_cents: 6900,
     currency: "CNY",
-    seller_id: "泡芙小店",
-    image: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&w=900&q=80",
+    seller_id: "Bubble Pet Studio",
+    image: "assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png",
   },
   {
     id: 9102,
     type: "service",
-    title: "上门喂猫 30 分钟",
-    description: "换水、铲砂、拍照回传，节假日可约。",
+    title: "30 min cat-sitting visit",
+    description: "Water, litter, feeding, and a photo check-in for short trips or late workdays.",
     price_cents: 4500,
     currency: "CNY",
-    seller_id: "毛球管家",
-    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=900&q=80",
+    seller_id: "Momo Care",
+    image: "assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png",
   },
   {
     id: 9103,
     type: "adopt",
-    title: "三个月橘猫找家",
-    description: "已驱虫，亲人活泼，需要稳定家庭。",
+    title: "Ginger kitten adoption lead",
+    description: "Three-month-old kitten, active and friendly. Looking for a steady indoor home.",
     price_cents: 0,
     currency: "CNY",
-    seller_id: "城南救助",
-    image: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=900&q=80",
+    seller_id: "South Rescue",
+    image: "assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png",
   },
 ];
 
@@ -94,7 +94,7 @@ async function buyListing(listing) {
 function card(listing) {
   const el = document.createElement("article");
   el.className =
-    "bg-white rounded-lg overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-surface-container-low hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(255,79,147,0.08)] transition-all flex flex-col";
+    "bg-white rounded-lg overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-surface-container-low hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(46,196,166,0.08)] transition-all flex flex-col";
   el.id = `l${listing.id}`;
   const price =
     listing.price_cents > 0
@@ -117,7 +117,7 @@ function card(listing) {
       <p class="text-label-md text-gray-500 mt-auto">${escapeHtml(t("meta.seller"))} ${escapeHtml(listing.seller_id || "M&D 卖家")}</p>
       <p class="text-headline-lg font-bold text-primary-container">${escapeHtml(price)}</p>
       <div class="flex gap-2 pt-2">
-        <button type="button" class="btn-buy flex-1 py-3 rounded-full bg-gradient-to-r from-primary-container to-[#ff7e95] text-white font-label-md hover:scale-[0.98] transition-transform">${escapeHtml(t("listing.btn_buy"))}</button>
+        <button type="button" class="btn-buy flex-1 py-3 rounded-full bg-gradient-to-r from-primary-container to-[#2EC4A6] text-white font-label-md hover:scale-[0.98] transition-transform">${escapeHtml(t("listing.btn_buy"))}</button>
       </div>
     </div>`;
   el.querySelector(".btn-buy").addEventListener("click", () => buyListing(listing));

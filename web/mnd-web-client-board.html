@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" data-theme="honey">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>M&D Stitch Remote Sync Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet">
+  <link rel="stylesheet" href="mnd-web-client-board.css?v=stitch-v2" />
+</head>
+<body>
+  <header class="sync-header">
+    <a class="brand" href="pawpop.html"><span class="material-symbols-rounded">pets</span><b>M&D</b><small>Stitch remote sync</small></a>
+    <nav aria-label="Board jumps">
+      <a href="#source">Source</a>
+      <a href="#mobile">Mobile</a>
+      <a href="#themes">Themes</a>
+      <a href="#components">Components</a>
+      <a href="cute.html">WebUI</a>
+      <a href="pawpop-desktop.html">Desktop</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="source">
+      <div>
+        <span class="eyebrow">Source of truth</span>
+        <h1>Local board rebuilt from the current Stitch remote.</h1>
+        <p>Project <code>projects/13275961100622290348</code> is mirrored into <code>.stitch/remote-assets</code> and <code>web/assets/stitch-remote</code>. These screens and markdown files are now the design authority.</p>
+      </div>
+      <aside>
+        <b>Synced artifacts</b>
+        <span>34 remote records</span>
+        <span>Honey / Mint / Night / Neutral</span>
+        <span>Global DESIGN.md + Official format</span>
+      </aside>
+    </section>
+
+    <section class="section-head" id="mobile">
+      <span class="eyebrow">Mobile parity</span>
+      <h2>Client screens</h2>
+      <p>These are full-size remote mobile screenshots; local WebUI must match their structure and token rules.</p>
+    </section>
+    <section class="shot-grid mobile-grid">
+      <article><img src="assets/stitch-remote/screens/2cbf0afac9824702b850d2f0d9d06942.png" alt="Mobile Home"><b>Mobile Home / Honey Feed</b><span>Composer, Following/Nearby/Popular, feed card, bottom nav.</span></article>
+      <article><img src="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png" alt="Mobile Market"><b>Mobile Market / Mint</b><span>Search, category chips, Sell trade chip, seller trust badge.</span></article>
+      <article><img src="assets/stitch-remote/screens/6d735a2d4f714b29ad07607685e2de49.png" alt="Mobile Profile"><b>Mobile Profile / Honey</b><span>Centered avatar, stats, pets, recent posts, settings entry.</span></article>
+    </section>
+
+    <section class="section-head" id="themes">
+      <span class="eyebrow">Four independent themes</span>
+      <h2>Theme boards</h2>
+      <p>Primary/secondary/tertiary/neutral are roles inside each theme. They are not the four themes.</p>
+    </section>
+    <section class="shot-grid theme-grid">
+      <article><img src="assets/stitch-remote/screens/b30ddbe5a0c241fc910ff51716f415c4.png" alt="Honey board"><b>Honey</b><span>#FF8A3D, #FFD166, #FFF8F2, #231F20.</span></article>
+      <article><img src="assets/stitch-remote/screens/d940b93dce0547dfb353990cf6c90719.png" alt="Mint board"><b>Mint</b><span>#2EC4A6, #A7F3D0, #F5FFFC, #12312B.</span></article>
+      <article><img src="assets/stitch-remote/screens/a984395ba2834be688e397c12967facf.png" alt="Night board"><b>Night</b><span>#8B5CF6, #6366F1, #0B0D12, #F8FAFC.</span></article>
+      <article><img src="assets/stitch-remote/screens/11310ac2a2284e809a68589261f12e31.png" alt="Neutral board"><b>Neutral</b><span>#4B5563, #9CA3AF, #F7F7F8, #111827.</span></article>
+    </section>
+
+    <section class="section-head" id="components">
+      <span class="eyebrow">Controls and requirements</span>
+      <h2>Component boards</h2>
+      <p>Local implementations should map these specs into working controls, not use old WebUI styling.</p>
+    </section>
+    <section class="wide-grid">
+      <article><img src="assets/stitch-remote/screens/c9e36d888ec147a692112ba1da15233a.png" alt="Honey basic components"><b>Honey Basic Components</b></article>
+      <article><img src="assets/stitch-remote/screens/7745202be4e3400fa8556050a89dcca4.png" alt="Honey social components"><b>Honey Social Feed Components</b></article>
+      <article><img src="assets/stitch-remote/screens/b58af2de47354cf5ab92f5b64b160350.png" alt="Mint market components"><b>Mint Market Components</b></article>
+      <article><img src="assets/stitch-remote/screens/44b8b0dc48024ccc982898ef4c900b81.png" alt="Messages and orders components"><b>Messages & Orders Components</b></article>
+      <article><img src="assets/stitch-remote/screens/fc4bc839c77a423abb2b1d3c4664d714.png" alt="Advanced interaction components"><b>Advanced Interaction Components</b></article>
+      <article><img src="assets/stitch-remote/screens/fd8cd509a0c24d61b789ae22f4146c80.png" alt="Safety review"><b>Review & Safety</b></article>
+    </section>
+
+    <section class="contract">
+      <span class="eyebrow">Implementation contract</span>
+      <div class="rule-grid">
+        <article><b>Navigation</b><p>Mobile app nav is exactly Feed, Market, Messages, Orders, Profile.</p></article>
+        <article><b>Market</b><p>Use Mint. Use Sell, Trade, Looking For, Free / Donation. Do not use Add to Cart as the dominant action.</p></article>
+        <article><b>Orders</b><p>Use pending_payment, paid, cancelled, shipped, refunded, completed. Hide invalid buyer/seller actions.</p></article>
+        <article><b>Neutral</b><p>Neutral is a restrained professional theme, not an automatic admin dashboard.</p></article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

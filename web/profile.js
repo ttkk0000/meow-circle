@@ -18,10 +18,10 @@ const PROFILE_BG_KEY = "mnd_profile_bg";
 let currentUser = null;
 
 const PROFILE_BACKGROUNDS = {
-  picnic: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1400&q=80",
-  desk: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1400&q=80",
-  arcade: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=1400&q=80",
-  garden: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&w=1400&q=80",
+  picnic: "assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png",
+  desk: "assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png",
+  arcade: "assets/stitch-remote/screens/207a704fbe6e4962b73725ee6d2b88da.png",
+  garden: "assets/stitch-remote/screens/6d735a2d4f714b29ad07607685e2de49.png",
 };
 
 const DEMO_USER = {
@@ -29,7 +29,7 @@ const DEMO_USER = {
   username: "peachlatte",
   nickname: "桃子和拿铁",
   bio: "两只猫的日常记录员，偶尔带 doggie 出镜。M&D 的猫猫优先示例主页。",
-  avatar_url: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=300&q=80",
+  avatar_url: "assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png",
 };
 
 const DEMO_POSTS = [

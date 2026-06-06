@@ -1,0 +1,332 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Honey Theme Color Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#e1d8d9",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#722400",
+                        "on-secondary-container": "#765900",
+                        "on-secondary-fixed-variant": "#5b4300",
+                        "outline-variant": "#ddc1b3",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-background": "#1e1b1c",
+                        "secondary": "#785a00",
+                        "on-tertiary-fixed": "#380d00",
+                        "tertiary-fixed": "#ffdbcf",
+                        "surface": "#FFFFFF", 
+                        "on-surface-variant": "#564338",
+                        "on-tertiary-fixed-variant": "#802900",
+                        "primary-fixed": "#ffdbc9",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#321200",
+                        "tertiary-container": "#ff895b",
+                        "mint-market": "#2EC4A6",
+                        "secondary-fixed": "#ffdf9b",
+                        "surface-container": "#f5eced",
+                        "surface-bright": "#fff8f8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#763300",
+                        "inverse-on-surface": "#f8efef",
+                        "surface-container-low": "#fbf1f2",
+                        "surface-tint": "#9a4600",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#ffb68d",
+                        "cat-accent": "#FF7A45", 
+                        "night-primary": "#8B5CF6",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#682d00",
+                        "tertiary": "#FF7A45", 
+                        "inverse-primary": "#ffb68d",
+                        "background": "#FFF8F2", 
+                        "secondary-fixed-dim": "#edc157",
+                        "surface-container-high": "#efe6e7",
+                        "surface-variant": "#e9e0e1",
+                        "on-surface": "#231F20", 
+                        "secondary-container": "#ffd167",
+                        "neutral-primary": "#4B5563",
+                        "inverse-surface": "#342f30",
+                        "primary": "#FF8A3D", 
+                        "surface-container-highest": "#e9e0e1",
+                        "on-secondary-fixed": "#251a00",
+                        "error": "#EF4444", 
+                        "outline": "#8a7266",
+                        "primary-container": "#ff8a3d",
+                        "dog-accent": "#7C5CFF",
+                        "status-success": "#22C55E",
+                        "status-warning": "#F59E0B",
+                        "status-error": "#EF4444",
+                        "status-info": "#3B82F6",
+                        "custom-secondary": "#FFD166", 
+                        "custom-neutral": "#231F20",
+                        "custom-border": "#F1D8C8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "md": "12px",
+                        "lg": "16px",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "xxl": "48px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Outfit", "sans-serif"],
+                        "title-lg": ["Outfit", "sans-serif"],
+                        "caption": ["Inter", "sans-serif"],
+                        "button-label": ["Inter", "sans-serif"],
+                        "title": ["Outfit", "sans-serif"],
+                        "bodySmall": ["Inter", "sans-serif"],
+                        "display": ["Outfit", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "button": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "section-title": ["Outfit", "sans-serif"],
+                        "sectionTitle": ["Outfit", "sans-serif"],
+                        "display-lg-mobile": ["Outfit", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "title-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "caption": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "button-label": ["15px", { "lineHeight": "22px", "fontWeight": "600" }],
+                        "title": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "bodySmall": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "display": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "button": ["15px", { "lineHeight": "22px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "section-title": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "sectionTitle": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FFF8F2; /* Enforce background here just in case */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen font-body">
+<!-- TopNavBar Structure -->
+<nav class="bg-surface text-primary font-title text-title fixed top-0 w-full z-40 shadow-sm flex items-center justify-between px-lg h-16 border-b border-custom-border">
+<div class="flex items-center gap-md">
+<span class="font-display text-display text-primary">M&amp;D</span>
+</div>
+<div class="flex items-center gap-md">
+<!-- Search bar placeholder -->
+<div class="hidden md:flex bg-surface-container-low rounded-full px-md py-sm items-center border border-custom-border">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm text-[20px]">search</span>
+<span class="text-bodySmall font-bodySmall text-on-surface-variant">Search...</span>
+</div>
+<button class="bg-primary text-on-primary rounded-md px-md py-sm font-button-label text-button-label hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
+                Create
+            </button>
+<div class="flex gap-sm">
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors p-sm rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors p-sm rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<img alt="User profile" class="w-8 h-8 rounded-full border-2 border-custom-border" data-alt="A portrait of a young woman with warm, friendly lighting, fitting the Honey theme aesthetic, serving as a user profile picture avatar in a circular crop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvDKhHs1hl5O04AuV8LutVStABktVzU4h3CWtQ5h97uScwf9F-bXvc82UK4cVKHxSI5tVQsdkks0ga_bLtqJTOw_z9YNb9zMDqoRlpeVzjbMCMo6rGyiRXD8AZifjbIqK9oTfe8yo7oBbTbB8th8DgnKsmsAhg2pQ_bm9_oOGFfAQ_QB7ajSNAjmO6EAUJu4haq0NLvM6UMT1PlSzYNCgQHHPUudhvuhInFESaYwLq7UmwaUawywHMKU5Y57-ipYz6Q6rC6aWT90GF">
+</div>
+</nav>
+<!-- SideNavBar Structure (Desktop) -->
+<aside class="hidden md:flex flex-col bg-surface text-primary font-button-label text-button-label fixed left-0 top-0 h-full w-64 z-50 border-r border-custom-border p-md gap-sm">
+<div class="mb-xl px-sm mt-md">
+<h1 class="font-display text-title-lg text-primary">M&amp;D Social</h1>
+<p class="font-caption text-caption text-on-surface-variant">Community First</p>
+</div>
+<nav class="flex-1 flex flex-col gap-sm">
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container hover:bg-surface-container-highest transition-all active:translate-x-1 duration-150 rounded-md" href="#">
+<span class="material-symbols-outlined">feed</span>
+<span>Feed</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all active:translate-x-1 duration-150 rounded-md" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span>Market</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all active:translate-x-1 duration-150 rounded-md" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span>Messages</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all active:translate-x-1 duration-150 rounded-md" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all active:translate-x-1 duration-150 rounded-md" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Profile</span>
+</a>
+</nav>
+<button class="bg-primary text-on-primary rounded-md py-md mb-md font-button-label text-button-label w-full hover:bg-primary-fixed-dim transition-colors shadow-sm">
+            Open Studio
+        </button>
+<div class="flex flex-col gap-sm mt-auto pt-md border-t border-custom-border">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-md" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-md" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-20 px-md md:px-xl pb-xxl max-w-[1440px] mx-auto">
+<header class="mb-xl mt-lg">
+<h1 class="font-display-lg text-display-lg text-custom-neutral mb-sm">Honey Theme Color Board</h1>
+<p class="font-body text-body text-on-surface-variant max-w-2xl">
+                A visual showcase of the Honey theme color palette. Designed to evoke a warm, friendly, cat-first, soft, social, and trustworthy feeling.
+            </p>
+</header>
+<!-- Core Brand Colors -->
+<section class="mb-xxl">
+<h2 class="font-section-title text-section-title text-custom-neutral mb-md border-b border-custom-border pb-xs">Core Brand Colors</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Primary -->
+<div class="bg-surface rounded-lg shadow-sm border border-custom-border overflow-hidden group">
+<div class="h-32 bg-primary w-full relative">
+<div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors"></div>
+</div>
+<div class="p-md">
+<h3 class="font-title-lg text-title-lg text-custom-neutral mb-xs">Primary</h3>
+<div class="flex justify-between items-center">
+<span class="font-body text-body text-on-surface-variant">Brand Anchor</span>
+<span class="font-button-label text-button-label text-custom-neutral bg-surface-container-low px-sm py-xs rounded-full border border-custom-border">#FF8A3D</span>
+</div>
+</div>
+</div>
+<!-- Secondary -->
+<div class="bg-surface rounded-lg shadow-sm border border-custom-border overflow-hidden group">
+<div class="h-32 bg-custom-secondary w-full relative">
+<div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors"></div>
+</div>
+<div class="p-md">
+<h3 class="font-title-lg text-title-lg text-custom-neutral mb-xs">Secondary</h3>
+<div class="flex justify-between items-center">
+<span class="font-body text-body text-on-surface-variant">Support &amp; Accents</span>
+<span class="font-button-label text-button-label text-custom-neutral bg-surface-container-low px-sm py-xs rounded-full border border-custom-border">#FFD166</span>
+</div>
+</div>
+</div>
+<!-- Tertiary / Cat Accent -->
+<div class="bg-surface rounded-lg shadow-sm border border-custom-border overflow-hidden group">
+<div class="h-32 bg-cat-accent w-full relative">
+<div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors"></div>
+</div>
+<div class="p-md">
+<h3 class="font-title-lg text-title-lg text-custom-neutral mb-xs">Tertiary / Cat Accent</h3>
+<div class="flex justify-between items-center">
+<span class="font-body text-body text-on-surface-variant">Vibrant Highlights</span>
+<span class="font-button-label text-button-label text-custom-neutral bg-surface-container-low px-sm py-xs rounded-full border border-custom-border">#FF7A45</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Neutral & Foundation Colors -->
+<section class="mb-xxl">
+<h2 class="font-section-title text-section-title text-custom-neutral mb-md border-b border-custom-border pb-xs">Foundation &amp; Neutrals</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Text Primary -->
+<div class="bg-surface rounded-lg shadow-sm border border-custom-border overflow-hidden flex flex-col h-full">
+<div class="h-24 bg-custom-neutral w-full"></div>
+<div class="p-md flex-1 flex flex-col">
+<h3 class="font-title-lg text-title-lg text-custom-neutral mb-xs">Neutral / Text Primary</h3>
+<p class="font-body text-body text-on-surface-variant mb-md text-sm">Main typography color for high readability.</p>
+<div class="mt-auto flex justify-end">
+<span class="font-button-label text-button-label text-custom-neutral bg-surface-container-low px-sm py-xs rounded-full border border-custom-border">#231F20</span>
+</div>
+</div>
+</div>
+<!-- Background -->
+<div class="bg-surface rounded-lg shadow-sm border border-custom-border overflow-hidden flex flex-col h-full">
+<div class="h-24 bg-background w-full border-b border-custom-border"></div>
+<div class="p-md flex-1 flex flex-col">
+<h3 class="font-title-lg text-title-lg text-custom-neutral mb-xs">Background</h3>
+<p class="font-body text-body text-on-surface-variant mb-md text-sm">Global app background, warm and inviting.</p>
+<div class="mt-auto flex justify-end">
+<span class="font-button-label text-button-label text-custom-neutral bg-surface-container-low px-sm py-xs rounded-full border border-custom-border">#FFF8F2</span>
+</div>
+</div>
+</div>
+<!-- Surface -->
+<div class="bg-surface rounded-lg shadow-sm border border-custom-border overflow-hidden flex flex-col h-full">
+<div class="h-24 bg-surface w-full border-b border-custom-border flex items-center justify-center">
+<span class="font-caption text-caption text-outline">Surface Example</span>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<h3 class="font-title-lg text-title-lg text-custom-neutral mb-xs">Surface</h3>
+<p class="font-body text-body text-on-surface-variant mb-md text-sm">Clean white for content cards to pop.</p>
+<div class="mt-auto flex justify-end">
+<span class="font-button-label text-button-label text-custom-neutral bg-surface-container-low px-sm py-xs rounded-full border border-custom-border">#FFFFFF</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Status Colors - Bento Layout -->
+<section class="mb-xl">
+<h2 class="font-section-title text-section-title text-custom-neutral mb-md border-b border-custom-border pb-xs">System Status Colors</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Success -->
+<div class="bg-surface rounded-lg p-md border border-custom-border flex flex-col items-center justify-center text-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-status-success flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<h3 class="font-button-label text-button-label text-custom-neutral font-title">Success</h3>
+<span class="font-caption text-caption text-on-surface-variant">#22C55E</span>
+</div>
+<!-- Warning -->
+<div class="bg-surface rounded-lg p-md border border-custom-border flex flex-col items-center justify-center text-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-status-warning flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<h3 class="font-button-label text-button-label text-custom-neutral font-title">Warning</h3>
+<span class="font-caption text-caption text-on-surface-variant">#F59E0B</span>
+</div>
+<!-- Error -->
+<div class="bg-surface rounded-lg p-md border border-custom-border flex flex-col items-center justify-center text-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-status-error flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined">error</span>
+</div>
+<h3 class="font-button-label text-button-label text-custom-neutral font-title">Error</h3>
+<span class="font-caption text-caption text-on-surface-variant">#EF4444</span>
+</div>
+<!-- Info -->
+<div class="bg-surface rounded-lg p-md border border-custom-border flex flex-col items-center justify-center text-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-status-info flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined">info</span>
+</div>
+<h3 class="font-button-label text-button-label text-custom-neutral font-title">Info</h3>
+<span class="font-caption text-caption text-on-surface-variant">#3B82F6</span>
+</div>
+</div>
+</section>
+</main>
+</body></html>

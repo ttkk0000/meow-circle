@@ -372,8 +372,7 @@ function pickAspectClass(seed) {
 }
 
 function placeholderImg(seed) {
-  const id = Math.abs(String(seed).split("").reduce((a, c) => a + c.charCodeAt(0), 0) % 1000);
-  return `https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=600&q=80&sig=${id}`;
+  return "assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png";
 }
 
 // ----- Filter chips -----
@@ -528,7 +527,7 @@ async function renderSearchSection(container, items, kind) {
 function buildSearchCard(item, kind) {
   const a = document.createElement("a");
   a.className =
-    "block bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(255,90,119,0.06)] hover:-translate-y-0.5 transition-transform border border-gray-100";
+    "block bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(255,138,61,0.06)] hover:-translate-y-0.5 transition-transform border border-gray-100";
   if (kind === "post") {
     a.href = `/post.html?id=${item.id}`;
     a.innerHTML = `<div class="font-body-lg font-semibold text-on-surface line-clamp-2">${escapeHtml(item.title)}</div>
@@ -653,7 +652,7 @@ function buildPostNode(item) {
 
   const article = document.createElement("article");
   article.className =
-    "bg-white rounded-[24px] overflow-hidden shadow-[0_4px_20px_rgba(255,90,119,0.04)] hover:-translate-y-1 transition-transform duration-300 cursor-pointer border border-gray-50";
+    "bg-white rounded-[24px] overflow-hidden shadow-[0_4px_20px_rgba(255,138,61,0.04)] hover:-translate-y-1 transition-transform duration-300 cursor-pointer border border-gray-50";
 
   article.innerHTML = `
     <div class="${aspect} relative p-1 group">

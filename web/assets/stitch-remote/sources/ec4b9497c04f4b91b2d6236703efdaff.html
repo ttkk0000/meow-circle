@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>M&amp;D Honey My Settings Flow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#FF8A3D",
+                        "on-surface": "#231F20",
+                        "on-surface-variant": "#564338",
+                        "outline": "#8a7266",
+                        "outline-variant": "#ddc1b3",
+                        "surface": "#FFFFFF",
+                        "surface-container": "#f5eced",
+                        "surface-container-low": "#fbf1f2",
+                        "error": "#ba1a1a",
+                        "background": "#FFF8F2",
+                        "primary-container": "#FF8A3D",
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter-card": "12px",
+                        "base-unit": "8px",
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "margin-page": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "headline-sm": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["28px", { "lineHeight": "34px", "fontWeight": "600" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #1a1a1a; padding: 40px; display: flex; flex-direction: column; gap: 40px; align-items: center; font-family: 'Inter', sans-serif; }
+        .row { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+        .phone {
+            width: 390px;
+            height: 844px;
+            background-color: #FFF8F2; /* Custom Honey Background */
+            border-radius: 40px;
+            box-shadow: 0 0 0 12px #000, 0 20px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        /* No internal scrolling */
+        .phone-content {
+            flex: 1;
+            padding-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .top-app-bar {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            background-color: #FFF8F2;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .setting-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            margin: 0 16px 24px 16px;
+            overflow: hidden;
+        }
+        .setting-row {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            height: 56px;
+            border-bottom: 1px solid #F5E2D5;
+            cursor: pointer;
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .duotone-icon {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FF8A3D;
+        }
+        .duotone-icon::before {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            background-color: rgba(255, 138, 61, 0.1);
+            border-radius: 8px;
+            z-index: 0;
+        }
+        .duotone-icon span { position: relative; z-index: 1; }
+        
+        .toggle-switch {
+            width: 44px;
+            height: 24px;
+            background-color: #F5E2D5;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .toggle-switch.active { background-color: #FF8A3D; }
+        .toggle-knob {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .toggle-switch.active .toggle-knob { transform: translateX(20px); }
+        
+        .btn-primary {
+            background-color: #FF8A3D;
+            color: white;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            font-weight: 500;
+            margin: 0 16px;
+            cursor: pointer;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: #FF8A3D;
+            border: 1px solid #FF8A3D;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            font-weight: 500;
+            margin: 0 16px;
+            cursor: pointer;
+        }
+        .section-title {
+            padding: 0 16px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #FF8A3D;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+<!-- Screen 1: My Settings -->
+<div class="phone">
+<div class="top-app-bar">
+<span class="material-symbols-outlined text-on-surface" style="cursor:pointer">arrow_back</span>
+<span class="font-headline-sm text-on-surface">My Settings</span>
+<div style="width: 24px"></div>
+</div>
+<div class="phone-content pt-stack-md">
+<!-- Profile Card -->
+<div class="setting-card p-4 flex flex-col items-center gap-2 mb-4">
+<img alt="Peach &amp; Latte" class="w-20 h-20 rounded-full object-cover border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9luEGSYbU_Afnbm-9ATjf_n6sv5v4Q4w11Ro9tXvwQqAWSklkOZ8D4iBKaNohSaflSMZgTp9J5uIE4ZUQm1bsP4qnwCxZJ_JbSIro-xmKlom5WfimkB8dCRNGQX3f8uhdiDGzt2ZlMKLw74QK1V5mn6ALVfXrU5oqvAmhogcxj-raUL9D6CxSTPBXfklwq9b8R79R-pImvjBaQfawbad63vZlT2hyB1idX0X8xAZwnEqUzIslHZGvfN96-4SM308RI0eJ2gVlRQ-G"/>
+<div class="text-center">
+<div class="flex items-center justify-center gap-1 mb-1">
+<span class="font-headline-sm text-on-surface">Peach &amp; Latte</span>
+<span class="material-symbols-outlined text-primary-container" data-weight="fill" style="font-size: 18px">verified</span>
+</div>
+<span class="font-body-md text-on-surface-variant block mb-1">@peachlatte</span>
+<span class="font-label-md text-outline block">Documenting the daily life of two cats.</span>
+</div>
+<div class="btn-secondary w-full mt-2 py-2" style="border-color: #F5E2D5; color: #FF8A3D; font-size: 14px; padding: 8px;">Edit Profile</div>
+</div>
+<!-- Profile Section -->
+<div class="section-title">Profile</div>
+<div class="setting-card">
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">person</span></div>
+<span class="font-body-lg text-on-surface flex-1">Edit Profile</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">pets</span></div>
+<span class="font-body-lg text-on-surface flex-1">My Pets</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">grid_view</span></div>
+<span class="font-body-lg text-on-surface flex-1">My Posts</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<!-- Account Section -->
+<div class="section-title">Account</div>
+<div class="setting-card">
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">security</span></div>
+<span class="font-body-lg text-on-surface flex-1">Account &amp; Security</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">link</span></div>
+<span class="font-body-lg text-on-surface flex-1">Linked Accounts</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">payment</span></div>
+<span class="font-body-lg text-on-surface flex-1">Payment Methods</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<!-- Preferences Section -->
+<div class="section-title">Preferences</div>
+<div class="setting-card">
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">palette</span></div>
+<span class="font-body-lg text-on-surface flex-1">Appearance &amp; Theme</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">notifications</span></div>
+<span class="font-body-lg text-on-surface flex-1">Notifications</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">language</span></div>
+<span class="font-body-lg text-on-surface flex-1">Language</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<!-- Privacy & Terms Section -->
+<div class="section-title">Privacy &amp; Terms</div>
+<div class="setting-card mb-6">
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">privacy_tip</span></div>
+<span class="font-body-lg text-on-surface flex-1">Privacy Policy</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">description</span></div>
+<span class="font-body-lg text-on-surface flex-1">User Notice</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">gavel</span></div>
+<span class="font-body-lg text-on-surface flex-1">Community Guidelines</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<!-- Other Section -->
+<div class="section-title">Other</div>
+<div class="setting-card mb-6">
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">delete_sweep</span></div>
+<span class="font-body-lg text-on-surface flex-1">Clear Cache</span>
+<span class="font-body-md text-on-surface-variant mr-2">124 MB</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">logout</span></div>
+<span class="font-body-lg text-error flex-1">Log Out</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Screen 2: Edit Profile -->
+<div class="phone">
+<div class="top-app-bar">
+<span class="material-symbols-outlined text-on-surface" style="cursor:pointer">arrow_back</span>
+<span class="font-headline-sm text-on-surface">Edit Profile</span>
+<div style="width: 24px"></div>
+</div>
+<div class="phone-content pt-stack-lg">
+<!-- Avatar Edit -->
+<div class="flex flex-col items-center mb-stack-lg">
+<div class="relative w-24 h-24 mb-2">
+<img alt="Profile" class="w-full h-full rounded-full object-cover border-4 border-white shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9luEGSYbU_Afnbm-9ATjf_n6sv5v4Q4w11Ro9tXvwQqAWSklkOZ8D4iBKaNohSaflSMZgTp9J5uIE4ZUQm1bsP4qnwCxZJ_JbSIro-xmKlom5WfimkB8dCRNGQX3f8uhdiDGzt2ZlMKLw74QK1V5mn6ALVfXrU5oqvAmhogcxj-raUL9D6CxSTPBXfklwq9b8R79R-pImvjBaQfawbad63vZlT2hyB1idX0X8xAZwnEqUzIslHZGvfN96-4SM308RI0eJ2gVlRQ-G"/>
+<div class="absolute bottom-0 right-0 bg-primary-container text-white rounded-full p-1 border-2 border-white">
+<span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+</div>
+</div>
+<span class="font-label-md text-primary-container cursor-pointer">Change Photo</span>
+</div>
+<!-- Form -->
+<div class="px-margin-page flex flex-col gap-4 mb-stack-lg">
+<div>
+<label class="font-label-md text-on-surface-variant block mb-1">Display Name</label>
+<input class="w-full bg-white border border-[#F5E2D5] rounded-xl px-4 py-3 font-body-lg text-on-surface focus:border-primary-container focus:ring-0 outline-none transition-colors" type="text" value="Peach &amp; Latte"/>
+</div>
+<div>
+<label class="font-label-md text-on-surface-variant block mb-1">Handle</label>
+<input class="w-full bg-white border border-[#F5E2D5] rounded-xl px-4 py-3 font-body-lg text-on-surface focus:border-primary-container focus:ring-0 outline-none transition-colors" type="text" value="@peachlatte"/>
+</div>
+<div>
+<label class="font-label-md text-on-surface-variant block mb-1">Bio</label>
+<textarea class="w-full bg-white border border-[#F5E2D5] rounded-xl px-4 py-3 font-body-lg text-on-surface focus:border-primary-container focus:ring-0 outline-none transition-colors resize-none h-24">Documenting the daily life of two cats.</textarea>
+</div>
+<div>
+<label class="font-label-md text-on-surface-variant block mb-1">Location</label>
+<input class="w-full bg-white border border-[#F5E2D5] rounded-xl px-4 py-3 font-body-lg text-on-surface focus:border-primary-container focus:ring-0 outline-none transition-colors" type="text" value="Seattle, WA"/>
+</div>
+</div>
+<!-- Linked Pets -->
+<div class="section-title text-on-surface-variant" style="color: #564338;">Linked Pets</div>
+<div class="px-margin-page flex gap-3 mb-stack-lg overflow-x-auto pb-2">
+<div class="flex flex-col items-center gap-1 min-w-[72px]">
+<img alt="Latte" class="w-16 h-16 rounded-full object-cover border border-[#F5E2D5]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5WUfYmssm9IoyVfZOxjeGc0hjOXa9PXdS_pM4N9HWhgFi1wue2E8pL5cNva7pnfVjSJgYJyaPaXvtlMfMnL5rRlikK9NG9OO73S9OhJKOtIWOhPsK3hpQZWEc1gF1Hngpb7SPMRw-6BUHYgLvOr4yl5-3ydc34SPH9G9-5PgyrRpt0sz6IEoMytSZZp95ZW24X4XkM0Tr4EroLVbztUblEGSkDdExRmrgF3poTUm5O_NvI7WLVOQkSeF2bbuUCIVcmLZ4ThdYaR-L"/>
+<span class="font-label-md text-on-surface">Latte</span>
+</div>
+<div class="flex flex-col items-center gap-1 min-w-[72px]">
+<img alt="Peach" class="w-16 h-16 rounded-full object-cover border border-[#F5E2D5]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6Ix2fEkkkfqafMV95Di-5m69kqQl_Dlv6JvJWQd0FMuJOQkyjYx4Tlzoh5JcnWJfk-dhZmkL0aixyZWEVxlWhsthvGf59FYJB_nMXdhMXH8KkAJ8ntdfHwqwwzNCmi2iVANqxuC1c3eTFQIja61kX40XD94ge2ykwX-6GAaqSVXnnU9Ofr7ryIHlsgtWDDTikRk5hNS4lxZGYbSzglzoY-KYYkmpzyWDpf0an8xbz9lyql2qhss5VwBZ_H1AGB-fSiBg2nuSYLWXK"/>
+<span class="font-label-md text-on-surface">Peach</span>
+</div>
+<div class="flex flex-col items-center gap-1 min-w-[72px] cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-white border border-dashed border-[#FF8A3D] flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined">add</span>
+</div>
+<span class="font-label-md text-on-surface-variant">Add Pet</span>
+</div>
+</div>
+<div class="btn-primary mt-auto mb-4">Save Changes</div>
+</div>
+</div>
+<!-- Screen 3: Account & Security -->
+<div class="phone">
+<div class="top-app-bar">
+<span class="material-symbols-outlined text-on-surface" style="cursor:pointer">arrow_back</span>
+<span class="font-headline-sm text-on-surface">Account &amp; Security</span>
+<div style="width: 24px"></div>
+</div>
+<div class="phone-content pt-stack-md">
+<div class="section-title text-on-surface-variant" style="color: #564338;">Login Info</div>
+<div class="setting-card">
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">mail</span></div>
+<span class="font-body-lg text-on-surface flex-1">Email</span>
+<span class="font-body-md text-on-surface-variant mr-2">peachlatte@example.com</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">phone_iphone</span></div>
+<span class="font-body-lg text-on-surface flex-1">Phone Number</span>
+<span class="font-body-md text-on-surface-variant mr-2">+1 204 *** 44</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">password</span></div>
+<span class="font-body-lg text-on-surface flex-1">Password</span>
+<span class="font-body-md text-on-surface-variant mr-2">Updated 2 months ago</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<div class="section-title text-on-surface-variant mt-stack-md" style="color: #564338;">Security</div>
+<div class="setting-card">
+<div class="setting-row justify-between">
+<div class="flex items-center">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">verified_user</span></div>
+<span class="font-body-lg text-on-surface">Two-Factor Auth (2FA)</span>
+</div>
+<div class="toggle-switch active"><div class="toggle-knob"></div></div>
+</div>
+<div class="setting-row justify-between">
+<div class="flex items-center">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">notifications_active</span></div>
+<span class="font-body-lg text-on-surface">Login Alerts</span>
+</div>
+<div class="toggle-switch active"><div class="toggle-knob"></div></div>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">devices</span></div>
+<span class="font-body-lg text-on-surface flex-1">Trusted Devices</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="duotone-icon mr-4"><span class="material-symbols-outlined">history</span></div>
+<span class="font-body-lg text-on-surface flex-1">Recent Login Activity</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<div class="section-title text-on-surface-variant mt-stack-md" style="color: #564338;">Connected Accounts</div>
+<div class="setting-card mb-stack-lg">
+<div class="setting-row">
+<div class="w-6 h-6 mr-4 bg-[#07C160] rounded-full flex items-center justify-center text-white text-xs font-bold">W</div>
+<span class="font-body-lg text-on-surface flex-1">WeChat</span>
+<span class="font-body-md text-on-surface-variant mr-2">Linked</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="w-6 h-6 mr-4 bg-black rounded-full flex items-center justify-center text-white text-xs font-bold">A</div>
+<span class="font-body-lg text-on-surface flex-1">Apple</span>
+<span class="font-body-md text-primary-container mr-2">Link</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="setting-row">
+<div class="w-6 h-6 mr-4 bg-[#4285F4] rounded-full flex items-center justify-center text-white text-xs font-bold">G</div>
+<span class="font-body-lg text-on-surface flex-1">Google</span>
+<span class="font-body-md text-primary-container mr-2">Link</span>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<div class="text-center font-body-md text-error cursor-pointer hover:underline mt-auto mb-6 opacity-70">Delete Account</div>
+</div>
+</div>
+<!-- Screen 4: Appearance & Theme -->
+<div class="phone">
+<div class="top-app-bar">
+<span class="material-symbols-outlined text-on-surface" style="cursor:pointer">arrow_back</span>
+<span class="font-headline-sm text-on-surface">Appearance &amp; Theme</span>
+<div style="width: 24px"></div>
+</div>
+<div class="phone-content pt-stack-md flex flex-col">
+<!-- UI Preview -->
+<div class="px-margin-page mb-stack-lg">
+<div class="bg-[#FFF8F2] rounded-2xl p-4 border border-[#F5E2D5] flex flex-col gap-3 relative overflow-hidden shadow-sm">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-white border border-[#F5E2D5]"></div>
+<div class="h-4 w-24 bg-white rounded border border-[#F5E2D5]"></div>
+</div>
+<div class="h-16 w-full bg-white rounded-xl border border-[#F5E2D5] flex items-center p-2 gap-3 shadow-sm">
+<div class="w-12 h-12 rounded-lg bg-[#FF8A3D] opacity-20"></div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="h-3 w-1/2 bg-[#FF8A3D] rounded"></div>
+<div class="h-2 w-3/4 bg-[#ddc1b3] rounded"></div>
+</div>
+</div>
+<div class="flex justify-center mt-2">
+<div class="h-1 w-8 bg-[#FF8A3D] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="section-title text-on-surface-variant" style="color: #564338;">Select Theme</div>
+<div class="px-margin-page grid grid-cols-2 gap-3 mb-stack-lg">
+<!-- Honey Theme (Selected) -->
+<div class="bg-[#FFF1E6] rounded-xl border-2 border-[#FF8A3D] p-4 relative cursor-pointer shadow-sm"><div class="absolute top-2 right-2 text-[#FF8A3D]"><span class="material-symbols-outlined" data-weight="fill" style="font-size: 20px">check_circle</span></div><div class="w-full h-12 bg-[#FFF1E6] rounded-lg mb-3 flex items-center justify-center text-[#FF8A3D]"><span class="material-symbols-outlined">pets</span></div><span class="font-body-md font-medium text-on-surface block text-center">Honey</span></div>
+<!-- Mint Theme -->
+<div class="bg-[#E8FAF4] rounded-xl border border-[#D5EFE8] p-4 cursor-pointer relative"><div class="w-full h-12 bg-[#E8FAF4] rounded-lg mb-3 flex items-center justify-center text-[#2EC4A6]"><span class="material-symbols-outlined">eco</span></div><span class="font-body-md font-medium text-on-surface block text-center">Mint</span></div>
+<!-- Night Theme -->
+<div class="bg-[#12121A] rounded-xl border border-[#2A2A36] p-4 cursor-pointer relative"><div class="w-full h-12 bg-[#12121A] rounded-lg mb-3 flex items-center justify-center text-[#8B5CF6]"><span class="material-symbols-outlined">dark_mode</span></div><span class="font-body-md font-medium text-white block text-center">Night</span></div>
+<!-- System Theme -->
+<div class="bg-[#F1F3F5] rounded-xl border border-[#E2E8F0] p-4 cursor-pointer relative"><div class="w-full h-12 bg-[#F1F3F5] rounded-lg mb-3 flex items-center justify-center text-[#64748B]"><span class="material-symbols-outlined">settings_suggest</span></div><span class="font-body-md font-medium text-[#111827] block text-center">Neutral</span></div>
+</div>
+<div class="mt-auto">
+<div class="btn-primary mb-4">Apply Theme</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<!-- Screen 5: Notifications -->
+<div class="phone">
+<div class="top-app-bar">
+<span class="material-symbols-outlined text-on-surface" style="cursor:pointer">arrow_back</span>
+<span class="font-headline-sm text-on-surface">Notifications</span>
+<div style="width: 24px"></div>
+</div>
+<div class="phone-content pt-stack-md flex flex-col pb-6">
+<div class="section-title text-on-surface-variant" style="color: #564338;">Messages</div>
+<div class="setting-card mb-4">
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">New messages</span>
+<div class="toggle-switch active"><div class="toggle-knob"></div></div>
+</div>
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">Seller replies</span>
+<div class="toggle-switch active"><div class="toggle-knob"></div></div>
+</div>
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">Buyer questions</span>
+<div class="toggle-switch"><div class="toggle-knob"></div></div>
+</div>
+</div>
+<div class="section-title text-on-surface-variant" style="color: #564338;">Orders</div>
+<div class="setting-card mb-4">
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">Payment updates</span>
+<div class="toggle-switch active"><div class="toggle-knob"></div></div>
+</div>
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">Shipping updates</span>
+<div class="toggle-switch active"><div class="toggle-knob"></div></div>
+</div>
+</div>
+<div class="section-title text-on-surface-variant" style="color: #564338;">Community</div>
+<div class="setting-card mb-4">
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">New followers</span>
+<div class="toggle-switch active"><div class="toggle-knob"></div></div>
+</div>
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">Post comments</span>
+<div class="toggle-switch active"><div class="toggle-knob"></div></div>
+</div>
+</div>
+<div class="section-title text-on-surface-variant" style="color: #564338;">Marketplace</div>
+<div class="setting-card mb-4">
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">Recommendations</span>
+<div class="toggle-switch"><div class="toggle-knob"></div></div>
+</div>
+<div class="setting-row justify-between">
+<span class="font-body-lg text-on-surface">Local Highlights</span>
+<div class="toggle-switch"><div class="toggle-knob"></div></div>
+</div>
+</div>
+<div class="mt-auto pt-stack-md">
+<div class="btn-primary mb-4">Save Preferences</div>
+</div>
+</div>
+</div>
+<!-- Screen 6: Privacy Policy -->
+<div class="phone">
+<div class="top-app-bar">
+<span class="material-symbols-outlined text-on-surface" style="cursor:pointer">arrow_back</span>
+<span class="font-headline-sm text-on-surface">Privacy Policy</span>
+<div style="width: 24px"></div>
+</div>
+<div class="phone-content pt-stack-md flex flex-col">
+<div class="setting-card p-6 text-center border border-[#F5E2D5] mb-6">
+<div class="w-16 h-16 bg-[#FFF8F2] rounded-full mx-auto flex items-center justify-center mb-4 border border-[#FF8A3D]">
+<span class="material-symbols-outlined text-primary-container" style="font-size: 32px">policy</span>
+</div>
+<h2 class="font-headline-sm text-on-surface mb-2">Our commitment to your privacy</h2>
+<p class="font-body-md text-on-surface-variant">We keep your M&amp;D experience private, safe, and transparent.</p>
+</div>
+<div class="px-margin-page flex flex-col gap-4 mb-stack-lg flex-1">
+<div class="bg-white p-4 rounded-xl shadow-sm border border-[#F5E2D5]">
+<h3 class="font-body-lg font-medium text-on-surface mb-2">1. Information we collect</h3>
+<p class="font-body-md text-on-surface-variant">We collect information you provide directly to us, such as when you create an account, build a pet profile, or communicate with others in the community.</p>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border border-[#F5E2D5]">
+<h3 class="font-body-lg font-medium text-on-surface mb-2">2. How we use information</h3>
+<p class="font-body-md text-on-surface-variant">We use the information we collect to provide, maintain, and improve our services, and to develop new features that benefit our pet-loving community.</p>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border border-[#F5E2D5]">
+<h3 class="font-body-lg font-medium text-on-surface mb-2">3. Your controls</h3>
+<p class="font-body-md text-on-surface-variant">You have control over your data. You can delete your account, manage your visibility settings, and request a copy of your personal data at any time.</p>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border border-[#F5E2D5]">
+<h3 class="font-body-lg font-medium text-on-surface mb-2">4. Contact</h3>
+<p class="font-body-md text-on-surface-variant">Questions about privacy? Reach out to our dedicated privacy team at privacy@mdpets.com.</p>
+</div>
+</div>
+<div class="mt-auto">
+<div class="btn-primary mb-4">I Understand</div>
+</div>
+</div>
+</div>
+<!-- Screen 7: User Notice -->
+<div class="phone">
+<div class="top-app-bar">
+<span class="material-symbols-outlined text-on-surface" style="cursor:pointer">arrow_back</span>
+<span class="font-headline-sm text-on-surface">User Notice</span>
+<div style="width: 24px"></div>
+</div>
+<div class="phone-content pt-stack-md flex flex-col pb-6">
+<div class="setting-card p-6 text-center border border-[#F5E2D5] mb-6">
+<h2 class="font-headline-sm text-primary mb-2">Community Guidelines</h2>
+<p class="font-body-md text-on-surface-variant">Please follow these guidelines to keep M&amp;D safe, friendly, and trustworthy.</p>
+</div>
+<div class="setting-card mb-stack-lg border border-[#F5E2D5]">
+<div class="p-4 border-b border-[#F5E2D5]">
+<div class="flex items-center gap-3 mb-2">
+<div class="duotone-icon"><span class="material-symbols-outlined">favorite</span></div>
+<h3 class="font-body-lg font-medium text-on-surface">Community Behavior</h3>
+</div>
+<ul class="font-body-md text-on-surface-variant ml-9 list-disc pl-4 space-y-1">
+<li>Be kind and respectful.</li>
+<li>Bullying, harassment, or hateful content will result in immediate account suspension.</li>
+</ul>
+</div>
+<div class="p-4 border-b border-[#F5E2D5]">
+<div class="flex items-center gap-3 mb-2">
+<div class="duotone-icon"><span class="material-symbols-outlined">storefront</span></div>
+<h3 class="font-body-lg font-medium text-on-surface">Marketplace Rules</h3>
+</div>
+<ul class="font-body-md text-on-surface-variant ml-9 list-disc pl-4 space-y-1">
+<li>Only list genuine pet-related items.</li>
+<li>Selling live animals is strictly prohibited on our platform.</li>
+</ul>
+</div>
+<div class="p-4 border-b border-[#F5E2D5]">
+<div class="flex items-center gap-3 mb-2">
+<div class="duotone-icon"><span class="material-symbols-outlined">pets</span></div>
+<h3 class="font-body-lg font-medium text-on-surface">Pet Content</h3>
+</div>
+<ul class="font-body-md text-on-surface-variant ml-9 list-disc pl-4 space-y-1">
+<li>Content showing animal abuse, neglect, or harm will be removed and reported to authorities.</li>
+</ul>
+</div>
+<div class="p-4">
+<div class="flex items-center gap-3 mb-2">
+<div class="duotone-icon"><span class="material-symbols-outlined">gpp_good</span></div>
+<h3 class="font-body-lg font-medium text-on-surface">Account Safety</h3>
+</div>
+<ul class="font-body-md text-on-surface-variant ml-9 list-disc pl-4 space-y-1">
+<li>Never share your password or financial information in public chats or comments.</li>
+</ul>
+</div>
+</div>
+<div class="mt-auto flex flex-col gap-3 mb-4">
+<div class="btn-primary">I Agree</div>
+<div class="btn-secondary" style="background-color: #FFFFFF; border-color: #F1D8C8; color: #FF8A3D;">Contact Support</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

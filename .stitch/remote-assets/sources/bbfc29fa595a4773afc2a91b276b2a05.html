@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>M&amp;D Honey Orders</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "primary": "#FF8A3D",
+                  "primary-container": "#FFF1E6",
+                  "background": "#FFF8F2",
+                  "surface": "#FFFFFF",
+                  "text-primary": "#231F20",
+                  "text-secondary": "#6B5E57",
+                  "text-tertiary": "#9A8A80",
+                  "border": "#F1D8C8",
+                  "divider": "#F5E2D5",
+                  "success": "#22C55E",
+                  "info": "#3B82F6",
+                  "warning": "#F59E0B",
+                  "error": "#EF4444",
+                  "disabled": "#D6C7BE",
+                  "chip-active-bg": "#DBEAFE",
+                  "chip-active-text": "#3B82F6"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px",
+                  "btn": "12px"
+          },
+          "spacing": {
+                  "margin-main": "16px",
+                  "stack-md": "16px",
+                  "stack-sm": "8px",
+                  "stack-lg": "24px",
+                  "gutter": "12px"
+          },
+          "fontFamily": {
+                  "label-sm": ["Inter"],
+                  "body-lg": ["Inter"],
+                  "body-md": ["Inter"],
+                  "label-md": ["Inter"],
+                  "display-lg": ["Outfit"],
+                  "headline-md": ["Outfit"],
+                  "headline-sm": ["Outfit"]
+          },
+          "fontSize": {
+                  "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "600"}],
+                  "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                  "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                  "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                  "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                  "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                  "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                  "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                  "display-md-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                  "label-sm-mobile": ["10px", {"lineHeight": "12px", "fontWeight": "600"}]
+          },
+          boxShadow: {
+            'ambient': '0px 4px 20px rgba(35, 31, 32, 0.04)'
+          }
+        },
+      }
+    }
+  </script>
+<style>
+    body { background-color: #E9E0E1; padding: 60px; display: flex; flex-wrap: wrap; gap: 60px; justify-content: center; align-items: flex-start; }
+    .device-frame { 
+      width: 390px; height: 844px; 
+      background-color: #FFF8F2;
+      border-radius: 40px; overflow: hidden; position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 8px solid #1E1B1C;
+    }
+    .safe-area { padding: 0 16px; height: 100%; display: flex; flex-direction: column; }
+    .content-area { flex: 1; overflow-y: auto; padding-bottom: 24px; }
+    .content-area::-webkit-scrollbar { display: none; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0; }
+    .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+    .bottom-nav-container { 
+      position: absolute; bottom: 0; left: 0; right: 0; 
+      height: 72px; background: #FFFFFF; border-top: 1px solid #F5E2D5;
+      display: flex; justify-content: space-around; items: center; padding-bottom: 12px;
+    }
+  </style>
+</head>
+<body class="font-body-md text-text-primary">
+<!-- 1. Orders List -->
+<div class="device-frame">
+<div class="safe-area">
+<div class="flex justify-between items-center w-full h-[64px] mt-[24px]">
+<div class="w-7"></div>
+<h1 class="font-headline-md-mobile text-headline-md-mobile text-text-primary font-bold">Orders</h1>
+<span class="material-symbols-outlined text-text-secondary">filter_list</span>
+</div>
+<div class="flex flex-wrap gap-gutter mb-stack-lg"><button class="px-4 py-2 bg-primary text-surface rounded-full font-label-md text-label-md">All</button><button class="px-4 py-2 bg-surface text-text-secondary border border-border rounded-full font-label-md text-label-md">Pending</button><button class="px-4 py-2 bg-surface text-text-secondary border border-border rounded-full font-label-md text-label-md">Paid</button><button class="px-4 py-2 bg-surface text-text-secondary border border-border rounded-full font-label-md text-label-md">Shipped</button><button class="px-4 py-2 bg-surface text-text-secondary border border-border rounded-full font-label-md text-label-md">Completed</button></div>
+<div class="content-area flex flex-col gap-stack-md"><div class="bg-surface rounded-xl p-4 shadow-ambient border border-divider"><div class="flex justify-between items-center mb-3"><span class="font-label-md text-label-md text-text-secondary">Order #4824 鈥?Jordan M.</span><span class="bg-chip-active-bg text-chip-active-text px-2 py-1 rounded font-label-sm text-label-sm uppercase">Shipped</span></div><div class="flex gap-4"><div class="w-16 h-16 rounded-lg bg-background bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzV213A4Lr9fsduEXlju61rezf1IiGDXeuugWWXHvqF1fCRrWBTW3hpF1y_pR9ihYyQeiKXaBhmoIJY1axOzeTdjErW6NFuN0Zk9jIuj0Ujyy5Og-trCg0t8HjeRAi0Tv3EoHVefH1eMIY5spwEh6y5uVUX2pbNjbuoqk4goffs0VjOcA4Stf-C0aV49IOqN34yC30LkQFw0nNrd-48GlXU4LsGGI8FX_W_mMCthCZC_nAsb4vaPGgHzpITiFvi-NM3e68JZrOEsfq')"></div><div class="flex-1"><h3 class="font-body-md text-body-md font-medium text-text-primary">Handmade Leather Dog Collar</h3><p class="font-headline-sm text-headline-sm text-primary mt-1">$128.00</p></div></div><div class="mt-4 pt-3 border-t border-divider"><button class="w-full text-center text-surface bg-primary rounded-btn font-label-md text-label-md font-semibold py-2">Confirm Receipt</button></div></div><div class="bg-surface rounded-xl p-4 shadow-ambient border border-divider"><div class="flex justify-between items-center mb-3"><span class="font-label-md text-label-md text-text-secondary">Order #9810 鈥?Luna &amp; Co.</span><span class="bg-chip-active-bg text-chip-active-text px-2 py-1 rounded font-label-sm text-label-sm uppercase">Paid</span></div><div class="flex gap-4"><div class="w-16 h-16 rounded-lg bg-background bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrx-rD8mCi9-DOGghELp_-URObCDsXXcZbpWvIUTbGgJ73aKDCDa3qH_olrcWk1C1_kDatr6FFtTIjFpfOAR-2JO30BLnihBKhkPtBq9uWnaVhFKegGosN1IjqdqwpB3XOuErnrb6HmpR2WoM1nVcCc_C5mPZg2Vnr9wOGgohedGqbf1YlbRJD14He55DSOBn_rWj5sJyMe_FNNyoCJ3p6tRqqym-FlwjgfSDn7NGDGMN6saNNSxBrDaPktYPoimLovCSjTatBBWhu')"></div><div class="flex-1"><h3 class="font-body-md text-body-md font-medium text-text-primary">Ceramic Elevated Bowl Set</h3><p class="font-headline-sm text-headline-sm text-primary mt-1">$68.00</p></div></div><div class="mt-4 pt-3 border-t border-divider"><button class="w-full text-center text-text-primary border border-border rounded-btn font-label-md text-label-md font-semibold py-2">Contact Seller</button></div></div><div class="bg-surface rounded-xl p-4 shadow-ambient border border-divider"><div class="flex justify-between items-center mb-3"><span class="font-label-md text-label-md text-text-secondary">Order #0832 鈥?Sarah P.</span><span class="bg-chip-active-bg text-chip-active-text px-2 py-1 rounded font-label-sm text-label-sm uppercase">Paid</span></div><div class="flex gap-4"><div class="w-16 h-16 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-primary text-3xl">sell</span></div><div class="flex-1"><h3 class="font-body-md text-body-md font-medium text-text-primary">Premium Ergonomic Dog Harness</h3><p class="font-headline-sm text-headline-sm text-primary mt-1">$45.00</p></div></div><div class="mt-4 pt-3 border-t border-divider"><button class="w-full text-center text-surface bg-primary rounded-btn font-label-md text-label-md font-semibold py-2">Ship Order</button></div></div></div>
+</div>
+<div class="bottom-nav-container">
+<div class="flex flex-col items-center justify-center text-text-secondary w-16">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Feed</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary w-16">
+<span class="material-symbols-outlined text-[24px]">storefront</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary w-16">
+<span class="material-symbols-outlined text-[24px]">chat_bubble</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Messages</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-primary rounded-xl w-16 h-[48px] self-center">
+<span class="material-symbols-outlined fill text-[24px]">shopping_bag</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary w-16">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Profile</span>
+</div>
+</div>
+</div>
+<!-- 2. Order Detail - Buyer -->
+<div class="device-frame">
+<div class="safe-area">
+<div class="flex justify-between items-center w-full h-[64px] mt-[24px]">
+<span class="material-symbols-outlined text-text-primary">arrow_back</span>
+<h1 class="font-headline-md-mobile text-headline-md-mobile text-text-primary font-bold">Order #4824</h1>
+<div class="w-6"></div>
+</div>
+<div class="content-area flex flex-col gap-stack-lg mt-4"><div class="flex justify-between items-center bg-chip-active-bg p-4 rounded-xl"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-chip-active-text fill">local_shipping</span><span class="font-headline-sm text-headline-sm text-chip-active-text">Shipped</span></div><span class="font-label-md text-label-md text-chip-active-text opacity-80">Est. Aug 15</span></div><div class="bg-surface rounded-xl p-4 shadow-ambient border border-divider flex gap-4 items-center"><div class="w-20 h-20 rounded-lg bg-background bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDaXu57jpYEx4w6pIZ1XM2v1V0adTnR3YZKIAvqx70d09W5l9w9DscvOof82yPy7X_PBTEH6F_aF27TmJImWEu8M-1iRf7XhxrI63dqBgmasYHpodeVsDfYHimMciw1b2TLUs7g50vz48sJx2nMQVcFbSZEZOsugqQwmO8u6pBCH5ZDrvr64GoN7Glqg-s3jnq8ZVPPY_W8FP2YQJtDmg2VXtRwnZ36QNmF9pQ0cBdrBa96u7Pn6ckd8pSCUfD9PFMEyuhjswhUKtlE')"></div><div class="flex-1"><h3 class="font-body-md text-body-md font-medium text-text-primary">Handmade Leather Dog Collar</h3><p class="font-label-md text-label-md text-text-secondary mt-1">Seller: Jordan M.</p><p class="font-headline-sm text-headline-sm text-primary mt-2">$128.00</p></div></div><div class="bg-surface rounded-xl p-5 shadow-ambient border border-divider"><h4 class="font-headline-sm text-headline-sm text-text-primary mb-3">Shipping Information</h4><div class="flex items-start gap-3"><span class="material-symbols-outlined text-primary">local_shipping</span><div><p class="font-body-md text-body-md font-medium">Status: Shipped</p><p class="font-label-md text-label-md text-text-secondary">Est. arrival: Tomorrow afternoon</p></div></div></div><div class="bg-surface rounded-xl p-5 shadow-ambient border border-divider"><h4 class="font-headline-sm text-headline-sm text-text-primary mb-4">Payment Summary</h4><div class="space-y-2 mb-4"><div class="flex justify-between items-center"><span class="font-body-md text-body-md text-text-secondary">Item</span><span class="font-body-md text-body-md text-text-primary">$128.00</span></div><div class="flex justify-between items-center"><span class="font-body-md text-body-md text-text-secondary">Shipping (Local pickup)</span><span class="font-body-md text-body-md text-text-primary">$0.00</span></div></div><div class="flex justify-between items-center border-t border-divider pt-4"><span class="font-body-md text-body-md font-bold text-text-primary">Total</span><span class="font-headline-sm text-headline-sm text-primary">$128.00</span></div></div></div>
+</div>
+<div class="absolute bottom-0 w-full bg-surface p-4 border-t border-divider pb-8">
+<div class="flex flex-col gap-2">
+<button class="w-full bg-primary text-surface h-[44px] rounded-btn font-body-md text-body-md font-semibold">Confirm Receipt</button>
+<button class="w-full border border-border text-text-primary h-[44px] rounded-btn font-body-md text-body-md font-semibold">Contact Seller</button>
+</div>
+</div>
+</div>
+<!-- 3. Order Detail - Seller -->
+<div class="device-frame">
+<div class="safe-area">
+<div class="flex justify-between items-center w-full h-[64px] mt-[24px]">
+<span class="material-symbols-outlined text-text-primary">arrow_back</span>
+<h1 class="font-headline-md-mobile text-headline-md-mobile text-text-primary font-bold">Seller Order</h1>
+<div class="w-6"></div>
+</div>
+<div class="content-area flex flex-col gap-stack-lg mt-4">
+<div class="flex justify-between items-center bg-chip-active-bg p-4 rounded-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-chip-active-text fill">payments</span>
+<span class="font-headline-sm text-headline-sm text-chip-active-text">Paid</span>
+</div>
+<span class="font-label-md text-label-md text-chip-active-text opacity-80">Ship by Aug 14</span>
+</div>
+<div class="bg-surface rounded-xl p-4 shadow-ambient border border-divider">
+<div class="flex justify-between border-b border-divider pb-3 mb-3">
+<span class="font-label-md text-label-md text-text-secondary">Order #0832</span>
+<span class="font-label-md text-label-md text-text-secondary">Aug 10, 2023</span>
+</div>
+<div class="flex gap-4 items-center">
+<div class="w-16 h-16 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">sell</span>
+</div>
+<div class="flex-1"><h3 class="font-body-md text-body-md font-medium text-text-primary">Premium Ergonomic Dog Harness</h3><p class="font-label-md text-label-md text-text-secondary mt-1">Buyer: Sarah P.</p><p class="font-headline-sm text-headline-sm text-primary mt-1">Net: $45.00</p></div>
+</div>
+</div><div class="bg-surface rounded-xl p-5 shadow-ambient border border-divider"><h4 class="font-headline-sm text-headline-sm text-text-primary mb-3">Shipping Requirement</h4><div class="flex items-start gap-3"><span class="material-symbols-outlined text-warning">info</span><div><p class="font-body-md text-body-md font-medium">Awaiting shipment</p><p class="font-label-md text-label-md text-text-secondary">Standard Shipping (3-5 days)</p></div></div></div>
+<div class="bg-surface rounded-xl p-5 shadow-ambient border border-divider">
+<h4 class="font-headline-sm text-headline-sm text-text-primary mb-3">Buyer Information</h4>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-background border border-border"></div>
+<div>
+<p class="font-body-md text-body-md font-medium">Alex Johnson</p>
+<p class="font-label-md text-label-md text-text-secondary">@alexj</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-primary bg-primary-container p-2 rounded-full">chat</span>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 w-full bg-surface p-4 border-t border-divider pb-8">
+<div class="flex flex-col gap-2">
+<button class="w-full bg-primary text-surface h-[44px] rounded-btn font-body-md text-body-md font-semibold">Ship Order</button>
+<button class="w-full border border-border text-text-primary h-[44px] rounded-btn font-body-md text-body-md font-semibold">Contact Buyer</button>
+</div>
+</div>
+</div>
+<!-- 4. Order Tracking Timeline -->
+<div class="device-frame">
+<div class="safe-area">
+<div class="flex justify-between items-center w-full h-[64px] mt-[24px]">
+<span class="material-symbols-outlined text-text-primary">close</span>
+<h1 class="font-headline-md-mobile text-headline-md-mobile text-text-primary font-bold">Tracking</h1>
+<div class="w-6"></div>
+</div>
+<div class="content-area flex flex-col gap-stack-lg mt-4">
+<div class="bg-surface rounded-xl p-5 shadow-ambient border border-divider">
+<p class="font-label-md text-label-md text-text-secondary mb-1">Tracking Number</p>
+<p class="font-headline-sm text-headline-sm text-primary tracking-wider">9400123456</p>
+</div>
+<div class="bg-surface rounded-xl p-[24px_20px] border border-[#F1D8C8] flex-1 overflow-hidden">
+  <div class="relative flex flex-col h-full">
+    <!-- Connector Line -->
+    <div class="absolute left-[15px] top-[16px] bottom-[16px] w-[2px]">
+      <div class="h-1/3 bg-[#FF8A3D]"></div>
+      <div class="h-1/3 bg-[#FF8A3D]"></div>
+      <div class="h-1/3 bg-[#F5E2D5]"></div>
+    </div>
+
+    <div class="flex flex-col gap-8 h-full">
+      <!-- Step 1: Order Placed -->
+      <div class="flex gap-4 relative z-10">
+        <div class="w-8 flex justify-center flex-shrink-0">
+          <div class="w-8 h-8 rounded-full bg-[#FF8A3D] flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-[18px]">check</span>
+          </div>
+        </div>
+        <div class="flex-1">
+          <p class="font-headline-sm text-[15px] font-semibold text-[#231F20] leading-none">Order Placed</p>
+          <p class="font-body-md text-[13px] text-[#6B5E57] mt-1">2023-11-20 09:12</p>
+        </div>
+      </div>
+
+      <!-- Step 2: Payment Confirmed -->
+      <div class="flex gap-4 relative z-10">
+        <div class="w-8 flex justify-center flex-shrink-0">
+          <div class="w-8 h-8 rounded-full bg-[#FF8A3D] flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-[18px]">receipt_long</span>
+          </div>
+        </div>
+        <div class="flex-1">
+          <p class="font-headline-sm text-[15px] font-semibold text-[#231F20] leading-none">Payment Confirmed</p>
+          <p class="font-body-md text-[13px] text-[#6B5E57] mt-1">2023-11-20 09:15</p>
+        </div>
+      </div>
+
+      <!-- Step 3: Shipped -->
+      <div class="flex gap-4 relative z-10">
+        <div class="w-8 flex justify-center flex-shrink-0">
+          <div class="w-8 h-8 rounded-full bg-white border-2 border-[#FF8A3D] flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#FF8A3D] text-[18px] fill">local_shipping</span>
+          </div>
+        </div>
+        <div class="flex-1">
+          <p class="font-headline-sm text-[15px] font-semibold text-[#FF8A3D] leading-none">Shipped</p>
+          <p class="font-body-md text-[13px] text-[#6B5E57] mt-1 leading-tight">Package is in transit. Estimated arrival: Tomorrow.</p>
+        </div>
+      </div>
+
+      <!-- Step 4: Completed -->
+      <div class="flex gap-4 relative z-10">
+        <div class="w-8 flex justify-center flex-shrink-0">
+          <div class="w-8 h-8 rounded-full bg-white border-2 border-[#D6C7BE] flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#D6C7BE] text-[18px]">done_all</span>
+          </div>
+        </div>
+        <div class="flex-1">
+          <p class="font-headline-sm text-[15px] text-[#9A8A80] leading-none">Completed</p>
+          <p class="font-body-md text-[13px] text-[#9A8A80] mt-1">Awaiting delivery</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. Orders Empty State -->
+<div class="device-frame">
+<div class="safe-area">
+<div class="flex justify-center items-center w-full h-[64px] mt-[24px]">
+<h1 class="font-headline-md-mobile text-headline-md-mobile text-text-primary font-bold">Orders</h1>
+</div>
+<div class="content-area flex flex-col items-center justify-center text-center px-4 h-full pb-32"><div class="w-32 h-32 bg-primary-container rounded-full flex items-center justify-center mb-6"><span class="material-symbols-outlined text-primary text-[64px]">shopping_bag</span></div><h2 class="font-headline-md text-headline-md text-text-primary mb-3">No orders yet</h2><p class="font-body-lg text-body-lg text-text-secondary mb-8 px-8">Your marketplace orders will appear here.</p><div class="w-full flex flex-col gap-3 px-margin-main"><button class="w-full bg-primary text-surface h-[44px] rounded-btn font-body-md text-body-md font-semibold">Explore items</button><button class="w-full border border-border text-text-primary h-[44px] rounded-btn font-body-md text-body-md font-semibold">View saved products</button><div class="flex flex-col items-center gap-2 mt-4"><button class="text-primary font-label-md">Browse market</button><button class="text-primary font-label-md">Contact a seller</button><button class="text-primary font-label-md">Check messages</button></div></div></div>
+</div>
+<div class="bottom-nav-container">
+<div class="flex flex-col items-center justify-center text-text-secondary w-16">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Feed</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary w-16">
+<span class="material-symbols-outlined text-[24px]">storefront</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary w-16">
+<span class="material-symbols-outlined text-[24px]">chat_bubble</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Messages</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-primary rounded-xl w-16 h-[48px] self-center">
+<span class="material-symbols-outlined fill text-[24px]">shopping_bag</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center text-text-secondary w-16">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-label-sm-mobile text-label-sm-mobile mt-1">Profile</span>
+</div>
+</div>
+</div>
+
+
+
+
+</body></html>

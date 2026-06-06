@@ -1,14 +1,16 @@
-import { Stack } from 'expo-router';
-import { colors, typography } from '@/theme';
+import {Stack} from 'expo-router';
+import {typography, useMndTheme} from '@/theme';
 
 export default function MessagesStackLayout() {
+  const { colors } = useMndTheme();
   return (
     <Stack
       screenOptions={{
-        headerStyle: { backgroundColor: colors.surface100 },
+        headerStyle: { backgroundColor: colors.canvas },
         headerShadowVisible: false,
-        headerTitleStyle: { color: colors.ink, ...typography.h3 },
-        headerTintColor: colors.ink,
+        headerTitleStyle: { color: colors.onSurface, ...typography.h3 },
+        headerTintColor: colors.onSurface,
+        contentStyle: { backgroundColor: colors.canvas },
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
