@@ -2,10 +2,16 @@ SHELL := /bin/sh
 GO     ?= go
 BIN    ?= ./bin/server
 PORT   ?= 8080
+KMP_DIR ?= kmp
+MOBILE_DIR ?= mobile
+KMP_GRADLE ?= ./gradlew
+EXPO ?= npx expo
+EAS ?= npx eas
+MEOW_API_BASE_URL ?= http://127.0.0.1:8080
 
 .PHONY: help
 help: ## Show this help
-	@awk 'BEGIN{FS":.*?## "}/^[a-zA-Z_-]+:.*?## /{printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@awk 'BEGIN{FS=":.*## "}/^[a-zA-Z0-9_-]+:.*## /{printf "  \033[36m%-24s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 # ----- Go ---------------------------------------------------------------------
 
@@ -77,6 +83,32 @@ mobile-install: ## Install Expo mobile app deps
 .PHONY: mobile
 mobile: ## Start Expo dev server
 	cd mobile && npx expo start
+
+# ----- Client packaging -------------------------------------------------------
+
+.PHONY: package-kmp-android
+package-kmp-android: ## Package KMP Android release APK
+	cd $(KMP_DIR) && $(KMP_GRADLE) :androidApp:assembleRelease -Pmeow.api.base.url=$(MEOW_API_BASE_URL)
+
+.PHONY: package-kmp-android-debug
+package-kmp-android-debug: ## Package KMP Android debug APK
+	cd $(KMP_DIR) && $(KMP_GRADLE) :androidApp:assembleDebug -Pmeow.api.base.url=$(MEOW_API_BASE_URL)
+
+.PHONY: package-kmp-desktop
+package-kmp-desktop: ## Package KMP desktop app for the current OS
+	cd $(KMP_DIR) && $(KMP_GRADLE) :desktopApp:packageDistributionForCurrentOS
+
+.PHONY: package-rn-web
+package-rn-web: ## Export RN/Expo web static bundle
+	cd $(MOBILE_DIR) && $(EXPO) export --platform web
+
+.PHONY: package-rn-android
+package-rn-android: ## Build RN/Expo Android release locally
+	cd $(MOBILE_DIR) && $(EXPO) run:android --variant release
+
+.PHONY: package-rn-android-eas
+package-rn-android-eas: ## Build RN/Expo Android with EAS
+	cd $(MOBILE_DIR) && $(EAS) build --platform android
 
 # ----- Meta -------------------------------------------------------------------
 
