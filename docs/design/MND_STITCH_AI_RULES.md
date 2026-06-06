@@ -28,20 +28,20 @@ references. Prefer those local files when comparing layout and visual details.
 
 - Keep the visible brand as `M&D`; keep the lockup/supporting copy as `meow & doggie`.
 - Use only the four Stitch themes: Honey, Mint, Night, and Neutral.
+- **Unified Global Theme**: At runtime, the entire application uses exactly **one active global theme** (Honey, Mint, Night, or Neutral). Do NOT hardcode page-specific themes (e.g., green for Market, orange for Feed) in UI layouts or components. The separate themes shown in design mockups (e.g., Honey for Feed, Mint for Market) were merely to demonstrate the visual styles of different themes. All UI elements must use dynamic styling tokens (e.g., `StitchPalette.Brand`, `StitchPalette.Canvas`) so that the screens scale automatically to whichever global theme is currently selected.
 - Treat Neutral as a first-class theme, not a system/default fallback.
-- Do not recreate old `_stitch_ref`, `STITCH_WEB_17`, or prior-generation design docs.
 - Do not invent new color palettes, typography, navigation models, decorative effects, or component geometry when Stitch already defines the rule.
-- Do not introduce generic pet-community branding, `MD`, `Meow & Dog`, `Kitty Circle`, `Pawpop`, or old visible product names.
+- Use current M&D naming only for visible product UI.
 - Do not add decorative gradient blobs, glassmorphism, neon styling, glossy 3D, or heavy shadows.
 - Use real cat-first imagery by default; doggie imagery is valid for services, marketplace, activities, adoption, and secondary stories.
 
 ## Platform Mapping
 
-- Web and desktop Web: use `web/pawpop-desktop.html`, `web/mnd-web-client-board.html`, `web/stitch-remote-gallery.html`, and `web/assets/stitch-remote`.
+- Web and desktop Web: use `web/cute.html`, `web/pawpop-desktop.html`, `web/mnd-web-client-board.html`, `web/stitch-remote-gallery.html`, and `web/assets/stitch-remote`.
 - WebUI prototype: use `web/cute.html`, `web/cute-ui.css`, and `web/cute-ui.js`.
 - Expo mobile: use `mobile/src/theme.ts`, `mobile/src/components.tsx`, `mobile/src/stitch`, and `mobile/app`.
 - KMP Android: use `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/theme` and `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/ui`.
-- KMP Desktop: use `kmp/desktopApp` and keep it aligned with the desktop board and Stitch desktop refs.
+- KMP Desktop: use `kmp/desktopApp` and keep it aligned with the local desktop board plus remote mobile/component rules.
 
 ## What AI May Suggest
 

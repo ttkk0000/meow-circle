@@ -8,14 +8,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet">
-  <link rel="stylesheet" href="pawpop-desktop.css?v=stitch-v2" />
+  <link rel="stylesheet" href="pawpop-desktop.css?v=stitch-v2-desktop-auth" />
 </head>
 <body>
   <header class="desktop-header">
     <div>
       <span class="eyebrow">Desktop mapping</span>
-      <h1>M&D desktop expands the current Stitch mobile system.</h1>
-      <p>Honey drives Feed, Profile, Messages, and Orders. Mint drives Market. Neutral drives safety, docs, and review surfaces. Night is a dark-mode variant.</p>
+      <h1>M&D desktop is a local wide-screen mapping of the current Stitch remote.</h1>
+      <p>The remote set is mobile and component-board led. This page translates those approved controls into desktop Feed, Market, Messages, Orders, Profile, and Neutral review layouts.</p>
     </div>
     <nav class="theme-switch" aria-label="Theme preview">
       <button class="is-active" type="button" data-theme-choice="honey">Honey</button>
@@ -23,6 +23,7 @@
       <button type="button" data-theme-choice="night">Night</button>
       <button type="button" data-theme-choice="neutral">Neutral</button>
       <a href="pawpop.html">Index</a>
+      <a href="stitch-remote-gallery.html">Remote</a>
     </nav>
   </header>
 
@@ -34,15 +35,31 @@
       <article><img src="assets/stitch-remote/screens/11310ac2a2284e809a68589261f12e31.png" alt=""><b>Neutral Board</b></article>
     </section>
 
-    <section class="desktop-frame feed-frame">
+    <section class="desktop-note" aria-label="Desktop source mapping">
+      <article><b>Remote truth</b><span>Mobile flows, theme boards, and component specs.</span></article>
+      <article><b>Local desktop</b><span>Wider rails, denser lists, and persistent context panels.</span></article>
+      <article><b>Guardrail</b><span>No new theme, no old legacy styling, no generic pet branding.</span></article>
+    </section>
+
+    <nav class="desktop-view-switch" aria-label="Desktop prototype views">
+      <button class="is-active" type="button" data-view="feed"><span class="material-symbols-rounded">rss_feed</span>Feed</button>
+      <button type="button" data-view="market"><span class="material-symbols-rounded">storefront</span>Market</button>
+      <button type="button" data-view="messages"><span class="material-symbols-rounded">chat_bubble</span>Messages</button>
+      <button type="button" data-view="orders"><span class="material-symbols-rounded">orders</span>Orders</button>
+      <button type="button" data-view="profile"><span class="material-symbols-rounded">person</span>Profile</button>
+      <button type="button" data-view="auth"><span class="material-symbols-rounded">login</span>Login</button>
+      <button type="button" data-view="neutral"><span class="material-symbols-rounded">tune</span>Neutral</button>
+    </nav>
+
+    <section class="desktop-frame feed-frame is-active" id="desktop-feed" data-view-panel="feed">
       <aside class="desktop-sidebar">
         <strong><span class="material-symbols-rounded">pets</span>M&D</strong>
         <nav>
-          <button class="is-active"><span class="material-symbols-rounded">rss_feed</span>Feed</button>
-          <button><span class="material-symbols-rounded">storefront</span>Market</button>
-          <button><span class="material-symbols-rounded">chat_bubble</span>Messages</button>
-          <button><span class="material-symbols-rounded">orders</span>Orders</button>
-          <button><span class="material-symbols-rounded">person</span>Profile</button>
+          <button class="is-active" type="button" data-view="feed"><span class="material-symbols-rounded">rss_feed</span>Feed</button>
+          <button type="button" data-view="market"><span class="material-symbols-rounded">storefront</span>Market</button>
+          <button type="button" data-view="messages"><span class="material-symbols-rounded">chat_bubble</span>Messages</button>
+          <button type="button" data-view="orders"><span class="material-symbols-rounded">orders</span>Orders</button>
+          <button type="button" data-view="profile"><span class="material-symbols-rounded">person</span>Profile</button>
         </nav>
       </aside>
       <section class="desktop-main">
@@ -53,7 +70,11 @@
         </article>
         <div class="desktop-feed-grid">
           <article class="desktop-card post"><img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt=""><b>@catlover</b><p>Look at this cute collar I just got from the market!</p><footer>245 likes · 42 comments</footer></article>
+          <article class="desktop-card post"><img src="assets/stitch-remote/screens/2cbf0afac9824702b850d2f0d9d06942.png" alt=""><b>@peachlatte</b><p>Morning window inspection passed. Peach owns the soft blanket now.</p><footer>128 likes · 24 comments</footer></article>
+        </div>
+        <div class="desktop-feed-grid compact-feed-grid">
           <article class="desktop-card post skeleton"><i></i><em></em><em></em><div></div></article>
+          <article class="desktop-card comment-preview"><b>Comment preview</b><p>“The collar color is perfect for ginger cats.”</p><button type="button">Reply</button></article>
         </div>
       </section>
       <aside class="desktop-rail">
@@ -62,7 +83,7 @@
       </aside>
     </section>
 
-    <section class="desktop-frame market-frame">
+    <section class="desktop-frame market-frame" id="desktop-market" data-view-panel="market">
       <aside class="desktop-sidebar mint-side">
         <strong><span class="material-symbols-rounded">storefront</span>Market</strong>
         <nav><button class="is-active">Products</button><button>Publish</button><button>Saved</button><button>Sellers</button></nav>
@@ -72,12 +93,13 @@
         <div class="market-products">
           <article class="product-card"><span>Sell</span><img src="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png" alt=""><b>Handmade Leather Dog Collar</b><strong>$128.00</strong><button>Buy Now</button></article>
           <article class="product-card"><span>Trade</span><div>img</div><b>Premium Ergonomic Dog Harness</b><strong>$86.00</strong><button>Make Offer</button></article>
-          <article class="desktop-card seller-card"><b>Seller Info Card</b><p>Credit badge, verified seller, contact seller, and save actions stay visible.</p></article>
+          <article class="product-card"><span>Looking For</span><img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt=""><b>Weekend cat sitter near Jing'an</b><strong>$36.00</strong><button>Contact Seller</button></article>
+          <article class="desktop-card seller-card"><b>Bubble Store</b><p>Verified seller · Credit 99 · Contact Seller and Save actions stay visible.</p><button type="button">View Details</button></article>
         </div>
       </section>
     </section>
 
-    <section class="desktop-frame messages-frame">
+    <section class="desktop-frame messages-frame" id="desktop-messages" data-view-panel="messages">
       <aside class="inbox">
         <b>Messages</b>
         <article class="is-active">Bubble Store<span>Address sent.</span></article>
@@ -96,7 +118,94 @@
       </aside>
     </section>
 
-    <section class="desktop-frame neutral-frame">
+    <section class="desktop-frame orders-frame" id="desktop-orders" data-view-panel="orders">
+      <aside class="orders-sidebar">
+        <strong><span class="material-symbols-rounded">orders</span>Orders</strong>
+        <button class="is-active" type="button">Buyer</button>
+        <button type="button">Seller</button>
+        <button type="button">Pending Payment</button>
+        <button type="button">Shipped</button>
+      </aside>
+      <section class="desktop-main">
+        <header class="commandbar"><label><span class="material-symbols-rounded">search</span><input value="order #A102, collar"></label><button>Export</button></header>
+        <div class="orders-kpi-grid">
+          <article class="orders-kpi"><span class="status warning">pending_payment</span><b>$128.00</b><p>1 order needs Pay Now or Cancel Order.</p></article>
+          <article class="orders-kpi"><span class="status info">shipped</span><b>2 in transit</b><p>Confirm Receipt stays visible on buyer rows.</p></article>
+          <article class="orders-kpi"><span class="status success">completed</span><b>6 completed</b><p>Marketplace trust follows the remote component rules.</p></article>
+        </div>
+        <article class="orders-table-card">
+          <table>
+            <thead><tr><th>Order</th><th>Item</th><th>Role</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>#A102</td><td>Leather Dog Collar</td><td>Buyer</td><td>pending_payment</td><td>Pay Now</td></tr>
+              <tr><td>#A103</td><td>Cat sitter near Jing'an</td><td>Seller</td><td>paid</td><td>Contact Buyer</td></tr>
+              <tr><td>#A104</td><td>Premium Dog Harness</td><td>Buyer</td><td>shipped</td><td>Confirm Receipt</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </section>
+      <aside class="desktop-rail">
+        <article class="desktop-card"><b>Order controls</b><p>Pay Now, Cancel Order, Contact Seller, Confirm Receipt, and Refund Request mirror the web client state names.</p></article>
+        <article class="desktop-card"><b>Local mapping</b><p>Remote has mobile marketplace screens; desktop keeps the same actions but uses dense tables.</p></article>
+      </aside>
+    </section>
+
+    <section class="desktop-frame profile-frame" id="desktop-profile" data-view-panel="profile">
+      <aside class="profile-summary">
+        <div class="profile-cover">
+          <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="">
+        </div>
+        <h2>Peach & Latte</h2>
+        <p>@peachlatte · 2 cats · Shanghai</p>
+        <div class="profile-stats"><b>128<span>Posts</span></b><b>42<span>Followers</span></b><b>4<span>Saved</span></b></div>
+      </aside>
+      <section class="desktop-main">
+        <header class="commandbar"><label><span class="material-symbols-rounded">search</span><input value="posts"></label><button>Edit Profile</button></header>
+        <div class="profile-content-grid">
+          <article class="desktop-card"><b>Pet profile</b><p>Peach · British Shorthair · Picnic background</p></article>
+          <article class="desktop-card"><b>Recent post</b><p>Sunny window spot claimed and approved.</p></article>
+          <article class="desktop-card"><b>Market saves</b><p>Cat tunnel, handmade collar, weekend sitter.</p></article>
+          <article class="desktop-card"><b>Trust</b><p>Verified buyer · 6 completed orders</p></article>
+        </div>
+      </section>
+      <aside class="desktop-rail">
+        <article class="desktop-card"><b>Profile backgrounds</b><p>Picnic, Desk, Arcade, Garden.</p></article>
+        <article class="desktop-card"><b>Cat-first identity</b><p>Cat imagery leads profile and feed by default.</p></article>
+      </aside>
+    </section>
+
+    <section class="desktop-frame auth-frame" id="desktop-auth" data-view-panel="auth">
+      <section class="auth-visual-panel">
+        <img src="login_hero.png" alt="M&D desktop login hero">
+        <div>
+          <span class="eyebrow">M&D · meow & doggie</span>
+          <h2>Login keeps the cat-first brand moment.</h2>
+          <p>Desktop auth uses the approved Honey language, the existing hero imagery, and account fields that match the production login/register flow.</p>
+        </div>
+      </section>
+      <form class="desktop-auth-form" aria-label="Desktop login preview">
+        <h2>Welcome back</h2>
+        <p>Sign in to return to Feed, Market, Messages, and Orders.</p>
+        <label><span>Phone / Email</span><input value="peach@example.com" autocomplete="username"></label>
+        <label><span>Password</span><input type="password" value="catcircle" autocomplete="current-password"></label>
+        <div class="desktop-auth-row"><label><input type="checkbox" checked> Remember me</label><a href="#">Forgot password?</a></div>
+        <button type="button">Login</button>
+        <div class="desktop-social-row">
+          <button type="button" aria-label="WeChat"><span class="material-symbols-rounded">chat_bubble</span></button>
+          <button type="button" aria-label="Phone"><span class="material-symbols-rounded">phone_iphone</span></button>
+          <button type="button" aria-label="Mail"><span class="material-symbols-rounded">mail</span></button>
+        </div>
+      </form>
+      <aside class="desktop-register-panel">
+        <b>Create account</b>
+        <label><span>Display name</span><input value="Peach Latte"></label>
+        <label><span>Verification code</span><input value="128648"></label>
+        <button type="button">Register</button>
+        <p>Register sits beside login on desktop, while mobile can stack it below the hero.</p>
+      </aside>
+    </section>
+
+    <section class="desktop-frame neutral-frame" id="desktop-neutral" data-view-panel="neutral">
       <aside class="neutral-menu">
         <b>System Specifications</b>
         <button class="is-active">Overview</button>
@@ -120,6 +229,6 @@
       </section>
     </section>
   </main>
-  <script src="pawpop-desktop.js?v=stitch-v2" defer></script>
+  <script src="pawpop-desktop.js?v=stitch-v2-desktop-auth" defer></script>
 </body>
 </html>

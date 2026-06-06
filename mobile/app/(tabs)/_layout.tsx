@@ -52,11 +52,12 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen name="index" options={{ title: '首页', tabBarIcon: tabIcon('home') }} />
-      <Tabs.Screen name="discover" options={{ title: '发现', tabBarIcon: tabIcon('explore') }} />
-      <Tabs.Screen name="compose" options={{ title: '发布', tabBarIcon: tabIcon('add-circle') }} />
+      <Tabs.Screen name="market" options={{ title: '市集', tabBarIcon: tabIcon('storefront') }} />
       <Tabs.Screen name="messages" options={{ title: '消息', tabBarIcon: tabIcon('forum') }} />
+      <Tabs.Screen name="orders" options={{ title: '订单', tabBarIcon: tabIcon('receipt') }} />
       <Tabs.Screen name="profile" options={{ title: '我的', tabBarIcon: tabIcon('person') }} />
-      <Tabs.Screen name="market" options={{ href: null }} />
+      <Tabs.Screen name="discover" options={{ href: null }} />
+      <Tabs.Screen name="compose" options={{ href: null }} />
       <Tabs.Screen name="post" options={{ href: null }} />
     </Tabs>
   );

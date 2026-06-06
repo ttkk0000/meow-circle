@@ -17,7 +17,7 @@
       font-family: "Inter", system-ui, sans-serif;
     }
     main {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1280px, calc(100% - 32px));
       margin: 0 auto;
       padding: 48px 0;
     }
@@ -70,11 +70,10 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
     a {
-      min-height: 260px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -98,14 +97,109 @@
     a:nth-child(2) span { background: #fff1e6; color: #ff8a3d; }
     a:nth-child(3) span { background: #e7faf5; color: #2ec4a6; }
     a:nth-child(4) span { background: #2e1f4f; color: #a78bfa; }
+    .entry-card {
+      min-height: 420px;
+      gap: 16px;
+      overflow: hidden;
+    }
+    .entry-card h2 {
+      margin-top: 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.02;
+    }
+    .entry-card p {
+      max-width: 560px;
+      margin-bottom: 0;
+    }
+    .entry-preview {
+      min-height: 170px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #f7f7f8;
+      overflow: hidden;
+    }
+    .preview-web {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr) 120px;
+      gap: 10px;
+      padding: 12px;
+      background: #fff8f2;
+    }
+    .preview-web nav,
+    .preview-web aside,
+    .preview-desktop nav,
+    .preview-desktop aside {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+    .preview-line,
+    .preview-pill,
+    .preview-block {
+      display: block;
+      border-radius: 999px;
+      background: #fff1e6;
+    }
+    .preview-line { height: 10px; }
+    .preview-pill { height: 24px; }
+    .preview-block { border-radius: 8px; }
+    .preview-web nav .preview-pill:first-child,
+    .preview-web main .preview-pill,
+    .preview-desktop .preview-pill { background: #ff8a3d; }
+    .preview-web main {
+      display: grid;
+      gap: 10px;
+    }
+    .preview-web main img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .preview-web aside .preview-block { height: 56px; background: #ffffff; border: 1px solid #f1d8c8; }
+    .preview-desktop {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 150px;
+      gap: 10px;
+      min-height: 190px;
+      padding: 12px;
+      background: #f5fffc;
+    }
+    .preview-desktop nav {
+      padding: 10px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid #cdefe6;
+    }
+    .preview-desktop .preview-pill { background: #2ec4a6; }
+    .preview-desktop main {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .preview-desktop .preview-block {
+      min-height: 74px;
+      background: #ffffff;
+      border: 1px solid #cdefe6;
+    }
+    .preview-desktop aside .preview-block {
+      height: 42px;
+      background: #ffffff;
+      border: 1px solid #cdefe6;
+    }
     @media (max-width: 980px) {
       .hero { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       main { width: min(100% - 20px, 1180px); padding: 24px 0; }
       .grid { grid-template-columns: 1fr; }
       a { min-height: 210px; }
+      .entry-card { min-height: 360px; }
+      .preview-web,
+      .preview-desktop { grid-template-columns: 1fr; }
+      .preview-web aside,
+      .preview-desktop aside { display: none; }
     }
   </style>
 </head>
@@ -129,13 +223,48 @@
         <span>Remote Sync</span>
         <div><h2>Stitch design board</h2><p>Mobile references, four theme boards, component libraries, and implementation contract.</p></div>
       </a>
-      <a href="cute.html">
+      <a class="entry-card" href="cute.html">
         <span>WebUI</span>
-        <div><h2>Working web client</h2><p>Feed, Market, Messages, Orders, Profile, Compose, and Safety rebuilt to match the remote controls.</p></div>
+        <div class="entry-preview preview-web" aria-hidden="true">
+          <nav>
+            <i class="preview-pill"></i>
+            <i class="preview-line"></i>
+            <i class="preview-line"></i>
+            <i class="preview-line"></i>
+          </nav>
+          <main>
+            <i class="preview-pill"></i>
+            <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="">
+          </main>
+          <aside>
+            <i class="preview-block"></i>
+            <i class="preview-block"></i>
+          </aside>
+        </div>
+        <div><h2>Working web client</h2><p>Full desktop Web shell for Login, Feed, Market, Messages, Orders, Profile, Compose, and Safety using the remote mobile/component rules.</p></div>
       </a>
-      <a href="pawpop-desktop.html">
+      <a class="entry-card" href="pawpop-desktop.html">
         <span>Desktop</span>
-        <div><h2>Desktop board</h2><p>Wide-screen mappings for social feed, market/orders, messages, creator, and neutral safety views.</p></div>
+        <div class="entry-preview preview-desktop" aria-hidden="true">
+          <nav>
+            <i class="preview-pill"></i>
+            <i class="preview-line"></i>
+            <i class="preview-line"></i>
+            <i class="preview-line"></i>
+          </nav>
+          <main>
+            <i class="preview-block"></i>
+            <i class="preview-block"></i>
+            <i class="preview-block"></i>
+            <i class="preview-block"></i>
+          </main>
+          <aside>
+            <i class="preview-block"></i>
+            <i class="preview-block"></i>
+            <i class="preview-block"></i>
+          </aside>
+        </div>
+        <div><h2>Desktop prototype</h2><p>Clickable wide-screen mappings for Login, Feed, Market, Messages, Orders, Profile, and Neutral review surfaces.</p></div>
       </a>
       <a href="stitch-remote-gallery.html">
         <span>All Assets</span>

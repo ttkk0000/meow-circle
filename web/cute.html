@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet">
   <link rel="icon" href="assets/stitch-remote/screens/16054956948476331741.png">
-  <link rel="stylesheet" href="cute-ui.css?v=stitch-v2" />
+  <link rel="stylesheet" href="cute-ui.css?v=stitch-v2-web-desktop-auth" />
 </head>
 <body>
   <div class="app-shell">
@@ -24,6 +24,7 @@
         <button class="nav-item" type="button" data-view="messages"><span class="material-symbols-rounded">chat_bubble</span><b>Messages</b><i>3</i></button>
         <button class="nav-item" type="button" data-view="orders"><span class="material-symbols-rounded">orders</span><b>Orders</b></button>
         <button class="nav-item" type="button" data-view="profile"><span class="material-symbols-rounded">person</span><b>Profile</b></button>
+        <button class="nav-item" type="button" data-view="auth"><span class="material-symbols-rounded">login</span><b>Login</b></button>
       </nav>
       <div class="sidebar-actions">
         <button class="primary-button" type="button" data-view-jump="compose"><span class="material-symbols-rounded">add</span>Create</button>
@@ -37,11 +38,31 @@
           <span class="material-symbols-rounded">search</span>
           <input type="search" placeholder="Search posts, products, sellers..." />
         </label>
-        <div class="theme-switch" aria-label="Theme preview">
-          <button class="is-active" type="button" data-theme-choice="honey">Honey</button>
-          <button type="button" data-theme-choice="mint">Mint</button>
-          <button type="button" data-theme-choice="night">Night</button>
-          <button type="button" data-theme-choice="neutral">Neutral</button>
+        <div class="settings-dropdown" style="position:relative; z-index:100;">
+          <button class="ghost-button settings-trigger" type="button" aria-label="Style settings" style="gap:6px;padding:0 16px;border-radius:999px;font-weight:600;cursor:pointer;height:44px;box-sizing:border-box;display:inline-flex;align-items:center;">
+            <span class="material-symbols-rounded">palette</span>
+            <span class="settings-text" style="font-size:13px;">Style Settings</span>
+          </button>
+
+          <div class="settings-popup" style="display:none;position:absolute;right:0;top:100%;margin-top:8px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:16px;width:240px;box-shadow:0 10px 25px rgba(0,0,0,0.1);flex-direction:column;gap:12px;">
+            <h3 style="margin:0 0 4px 0;font-size:12px;font-weight:bold;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;">App Theme</h3>
+            <div class="theme-switch-popup" style="display:grid;grid-template-columns:repeat(2, 1f);gap:8px;">
+              <button class="popup-btn" type="button" data-theme-choice="honey" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-secondary);font-size:12px;font-weight:bold;cursor:pointer;color:var(--text-primary);">Honey</button>
+              <button class="popup-btn" type="button" data-theme-choice="mint" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-secondary);font-size:12px;font-weight:bold;cursor:pointer;color:var(--text-primary);">Mint</button>
+              <button class="popup-btn" type="button" data-theme-choice="night" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-secondary);font-size:12px;font-weight:bold;cursor:pointer;color:var(--text-primary);">Night</button>
+              <button class="popup-btn" type="button" data-theme-choice="neutral" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-secondary);font-size:12px;font-weight:bold;cursor:pointer;color:var(--text-primary);">Neutral</button>
+            </div>
+
+            <hr style="border:0;border-top:1px solid var(--border-color);margin:4px 0;" />
+
+            <h3 style="margin:0 0 4px 0;font-size:12px;font-weight:bold;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;">Profile Cover</h3>
+            <div class="bg-switch-popup" style="display:grid;grid-template-columns:repeat(2, 1f);gap:8px;">
+              <button class="popup-btn" type="button" data-bg-choice="picnic" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-secondary);font-size:12px;font-weight:bold;cursor:pointer;color:var(--text-primary);">Picnic</button>
+              <button class="popup-btn" type="button" data-bg-choice="desk" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-secondary);font-size:12px;font-weight:bold;cursor:pointer;color:var(--text-primary);">Desk</button>
+              <button class="popup-btn" type="button" data-bg-choice="arcade" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-secondary);font-size:12px;font-weight:bold;cursor:pointer;color:var(--text-primary);">Arcade</button>
+              <button class="popup-btn" type="button" data-bg-choice="garden" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-secondary);font-size:12px;font-weight:bold;cursor:pointer;color:var(--text-primary);">Garden</button>
+            </div>
+          </div>
         </div>
         <button class="icon-button" type="button" data-view-jump="safety" aria-label="Safety review"><span class="material-symbols-rounded">verified_user</span></button>
       </header>
@@ -95,21 +116,62 @@
             </article>
           </section>
 
-          <aside class="insight-panel">
-            <span class="eyebrow">Honey Theme</span>
-            <h1>Cat-first social feed, doggie-friendly branches.</h1>
-            <p>The web client now mirrors the Stitch mobile hierarchy: top brand, composer, feed filter tabs, one complete feed card, skeleton state, and five-item app navigation.</p>
-            <div class="spec-list">
-              <span>Primary #FF8A3D</span>
-              <span>Background #FFF8F2</span>
-              <span>Card radius 16px</span>
-              <span>Outfit + Inter</span>
+          <section class="web-feed-stream" aria-label="Desktop web feed">
+            <div class="feed-hero-card">
+              <div>
+                <span class="eyebrow">Honey Feed</span>
+                <h1>Peach Circle</h1>
+                <p>Morning cats, collar finds, and nearby meetups from trusted local people.</p>
+              </div>
+              <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="Ginger cat resting">
             </div>
-            <div class="paw-loading" aria-label="GlobalPawLoading">
-              <span class="paw-ring"><i class="material-symbols-rounded">pets</i></span>
-              <b>GlobalPawLoading</b>
-              <small>Honey variant</small>
+            <article class="web-composer-card">
+              <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="Peach avatar">
+              <button type="button" data-view-jump="compose">Share a cat moment or local pet update</button>
+              <span class="material-symbols-rounded">add_photo_alternate</span>
+            </article>
+            <article class="web-post-card">
+              <header>
+                <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="Cat avatar">
+                <div><b>@peachlatte</b><span>Peach · Honey circle · 18m</span></div>
+                <button class="ghost-button" type="button">Follow</button>
+              </header>
+              <p>New sunny window spot claimed. Latte inspected the blanket and approved the afternoon nap setup.</p>
+              <div class="web-media-grid">
+                <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="Ginger cat portrait">
+                <img src="assets/stitch-remote/screens/2cbf0afac9824702b850d2f0d9d06942.png" alt="Mobile feed reference crop">
+              </div>
+              <footer>
+                <button type="button"><span class="material-symbols-rounded">favorite</span>128</button>
+                <button type="button"><span class="material-symbols-rounded">chat_bubble</span>24</button>
+                <button type="button"><span class="material-symbols-rounded">share</span>Share</button>
+                <button type="button"><span class="material-symbols-rounded">bookmark</span>Save</button>
+              </footer>
+            </article>
+            <div class="web-feed-pair">
+              <article><b>Nearby</b><span>3 cat circles active today</span></article>
+              <article><b>Saved</b><span>4 market items watched</span></article>
             </div>
+          </section>
+
+          <aside class="context-rail" aria-label="Feed context">
+            <article class="rail-card profile-mini">
+              <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="Peach avatar">
+              <b>Peach & Latte</b>
+              <span>2 cats · 128 posts</span>
+            </article>
+            <article class="rail-card">
+              <b>Today</b>
+              <p>Cat cafe meetup at 17:30</p>
+              <p>Collar pickup with Bubble Store</p>
+            </article>
+            <article class="rail-card">
+              <b>Loading state</b>
+              <div class="paw-loading compact" aria-label="GlobalPawLoading">
+                <span class="paw-ring"><i class="material-symbols-rounded">pets</i></span>
+                <small>Refreshing feed</small>
+              </div>
+            </article>
           </aside>
         </div>
       </section>
@@ -121,24 +183,42 @@
         </div>
         <div class="market-layout">
           <aside class="remote-shot"><img src="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png" alt="Stitch mobile market reference"></aside>
-          <section class="market-grid">
-            <article class="product-card">
-              <span class="trade-chip">Sell</span>
-              <img src="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png" alt="Dog collar product">
-              <div><b>Handmade Leather Dog Collar</b><strong>$128.00</strong></div>
-              <footer><span>Verified Seller</span><button type="button">Buy Now</button></footer>
-            </article>
-            <article class="product-card">
-              <span class="trade-chip">Trade</span>
-              <div class="product-placeholder">img</div>
-              <div><b>Premium Ergonomic Dog Harness</b><strong>$86.00</strong></div>
-              <footer><span>Credit 98</span><button type="button">Make Offer</button></footer>
-            </article>
-            <article class="empty-card">
-              <span class="material-symbols-rounded">search_off</span>
-              <b>No saved listings yet</b>
-              <p>Empty states stay calm and actionable.</p>
-            </article>
+          <section class="market-workspace">
+            <div class="market-toolbar">
+              <button class="is-active" type="button">Sell</button>
+              <button type="button">Trade</button>
+              <button type="button">Looking For</button>
+              <button type="button">Free / Donation</button>
+            </div>
+            <section class="market-grid">
+              <article class="product-card">
+                <span class="trade-chip">Sell</span>
+                <img src="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png" alt="Dog collar product">
+                <div><b>Handmade Leather Dog Collar</b><strong>$128.00</strong></div>
+                <footer><span>Verified Seller</span><button type="button">Buy Now</button></footer>
+              </article>
+              <article class="product-card">
+                <span class="trade-chip">Trade</span>
+                <div class="product-placeholder">img</div>
+                <div><b>Premium Ergonomic Dog Harness</b><strong>$86.00</strong></div>
+                <footer><span>Credit 98</span><button type="button">Make Offer</button></footer>
+              </article>
+              <article class="product-card">
+                <span class="trade-chip">Looking For</span>
+                <img src="assets/stitch-remote/screens/5e8d58afba4142068ea51010b1e17e3a.png" alt="Cat sitting listing">
+                <div><b>Weekend cat sitter near Jing'an</b><strong>$36.00</strong></div>
+                <footer><span>3 replies</span><button type="button">Contact Seller</button></footer>
+              </article>
+              <article class="empty-card">
+                <span class="material-symbols-rounded">search_off</span>
+                <b>No saved listings yet</b>
+                <p>Try saving a trusted seller or a collar listing.</p>
+              </article>
+            </section>
+            <aside class="seller-strip">
+              <article><b>Bubble Store</b><span>Verified · Credit 99 · 42 sales</span><button type="button">Contact Seller</button></article>
+              <article><b>South Rescue</b><span>Free / Donation · adoption supplies</span><button type="button">View Details</button></article>
+            </aside>
           </section>
         </div>
       </section>
@@ -162,7 +242,13 @@
       </section>
 
       <section class="view" id="orders" data-view-panel="orders">
-        <div class="screen-head"><div><span class="eyebrow">Honey Theme</span><h1>Orders</h1><p>Only official Stitch order states and valid buyer/seller actions are shown.</p></div></div>
+        <div class="screen-head">
+          <div><span class="eyebrow">Honey Theme</span><h1>Orders</h1><p>Only official Stitch order states and valid buyer/seller actions are shown.</p></div>
+          <div class="order-role-toggle" style="display:flex;background:var(--bg-secondary);border-radius:999px;padding:3px;border:1px solid var(--border-color);gap:4px;">
+            <button class="role-btn is-active" type="button" data-role="buyer" style="border:0;background:var(--primary);color:#fff;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:bold;cursor:pointer;transition:all 0.2s;">Buyer Mode</button>
+            <button class="role-btn" type="button" data-role="seller" style="border:0;background:transparent;color:var(--text-secondary);border-radius:999px;padding:6px 14px;font-size:12px;font-weight:bold;cursor:pointer;transition:all 0.2s;">Seller Mode</button>
+          </div>
+        </div>
         <div class="orders-grid">
           <article class="order-card"><span class="status warning">pending_payment</span><h2>Cat tunnel preorder</h2><p>Buyer actions: Pay Now, Cancel Order.</p><footer><button>Pay Now</button><button>Cancel Order</button></footer></article>
           <article class="order-card"><span class="status info">shipped</span><h2>Leather dog collar</h2><p>Buyer actions: Confirm Receipt, Contact Seller.</p><footer><button>Confirm Receipt</button><button>Contact Seller</button></footer></article>
@@ -180,13 +266,18 @@
             <h1>Peach & Latte</h1>
             <p>@peachlatte · Documenting the daily life of two cats.</p>
             <div class="profile-stats"><b>128<span>Posts</span></b><b>42<span>Followers</span></b><b>2<span>Pets</span></b></div>
-            <h2>Profile background</h2>
-            <div class="bg-switch" aria-label="Profile background">
-              <button class="is-active" type="button" data-bg-choice="picnic">Picnic</button>
-              <button type="button" data-bg-choice="desk">Desk</button>
-              <button type="button" data-bg-choice="arcade">Arcade</button>
-              <button type="button" data-bg-choice="garden">Garden</button>
+
+            <div class="profile-edit-section" style="width:100%;display:none;flex-direction:column;gap:12px;margin-top:16px;">
+              <label class="auth-field" style="display:flex;flex-direction:column;gap:4px;text-align:left;"><span style="font-size:12px;font-weight:bold;color:var(--text-secondary)">Nickname</span><input type="text" id="profile-edit-nickname" style="padding:10px;border-radius:8px;border:1px solid var(--border-color);font-size:14px;" /></label>
+              <label class="auth-field" style="display:flex;flex-direction:column;gap:4px;text-align:left;"><span style="font-size:12px;font-weight:bold;color:var(--text-secondary)">Bio</span><textarea id="profile-edit-bio" rows="3" style="padding:10px;border-radius:8px;border:1px solid var(--border-color);font-size:14px;resize:vertical;"></textarea></label>
+              <div style="display:flex;gap:8px;">
+                <button class="primary-button" id="profile-save-btn" type="button" style="padding:8px 16px;border-radius:999px;">Save Changes</button>
+                <button class="ghost-button" id="profile-cancel-btn" type="button" style="padding:8px 16px;border-radius:999px;">Cancel</button>
+              </div>
             </div>
+            <button class="primary-button" id="profile-start-edit-btn" type="button" style="margin-top:16px;padding:8px 16px;border-radius:999px;display:none;">Edit Profile</button>
+
+            <!-- Profile background switcher now inside Style Settings popup -->
           </section>
         </div>
       </section>
@@ -206,6 +297,57 @@
             <label>Price<input value="$128.00"></label>
             <button class="primary-button" type="button">Publish Listing</button>
           </form>
+        </div>
+      </section>
+
+      <section class="view" id="auth" data-view-panel="auth">
+        <div class="screen-head">
+          <div><span class="eyebrow">Honey Auth</span><h1>Login and register</h1><p>Cat-first brand panel, clear account fields, social login, and register conversion in one web shell.</p></div>
+          <button class="ghost-button" type="button" data-view-jump="feed"><span class="material-symbols-rounded">arrow_back</span>Back to Feed</button>
+        </div>
+        <div class="auth-layout">
+          <section class="auth-hero-card">
+            <img src="login_hero.png" alt="M&D login cat hero">
+            <div>
+              <span class="eyebrow">M&D · meow & doggie</span>
+              <h2>Welcome back to your cat circle.</h2>
+              <p>Feed, market, messages, and orders stay one tap away after sign-in.</p>
+            </div>
+          </section>
+
+          <form class="auth-form-card" aria-label="Login form preview">
+            <h2>Welcome back</h2>
+            <p>Use phone, email, or a trusted social account.</p>
+            <label class="auth-field"><span>Phone / Email</span><input value="peach@example.com" autocomplete="username"></label>
+            <label class="auth-field"><span>Password</span><input type="password" value="catcircle" autocomplete="current-password"></label>
+            <div class="auth-row"><label><input type="checkbox" checked> Remember me</label><a href="#">Forgot?</a></div>
+            <button class="primary-button" type="button">Login</button>
+            <div class="auth-social-row" aria-label="Social login preview">
+              <button type="button"><span class="material-symbols-rounded">chat_bubble</span></button>
+              <button type="button"><span class="material-symbols-rounded">phone_iphone</span></button>
+              <button type="button"><span class="material-symbols-rounded">mail</span></button>
+            </div>
+          </form>
+
+          <form class="auth-register-card" aria-label="Register form preview">
+            <h2>Create account</h2>
+            <label class="auth-field"><span>Display name</span><input value="Peach Latte"></label>
+            <label class="auth-field"><span>Phone</span><input value="+86 138 0000 0000"></label>
+            <label class="auth-field"><span>Verification code</span><input value="128648"></label>
+            <button class="primary-button" type="button">Create M&D account</button>
+          </form>
+
+          <aside class="auth-mobile-card">
+            <b>Mobile auth parity</b>
+            <div class="auth-mini-phone">
+              <span class="material-symbols-rounded">pets</span>
+              <strong>M&D</strong>
+              <i></i>
+              <em></em>
+              <em></em>
+              <button type="button">Continue with Email</button>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -234,8 +376,10 @@
       <button type="button" data-view="messages"><span class="material-symbols-rounded">chat_bubble</span>Messages</button>
       <button type="button" data-view="orders"><span class="material-symbols-rounded">orders</span>Orders</button>
       <button type="button" data-view="profile"><span class="material-symbols-rounded">person</span>Profile</button>
+      <button type="button" data-view="auth"><span class="material-symbols-rounded">login</span>Login</button>
     </nav>
   </div>
-  <script src="cute-ui.js?v=stitch-v2" defer></script>
+  <script src="cute-ui.js?v=stitch-v2-auth" defer></script>
+  <script src="cute-api.js" defer></script>
 </body>
 </html>

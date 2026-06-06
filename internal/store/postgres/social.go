@@ -166,3 +166,19 @@ func (s *Store) BatchUserLikedPosts(userID int64, postIDs []int64) map[int64]boo
 	}
 	return out
 }
+
+func (s *Store) CountFollowers(userID int64) int64 {
+	ctx, cancel := bg()
+	defer cancel()
+	var c int64
+	_ = s.pool.QueryRow(ctx, `SELECT COUNT(*) FROM follows WHERE following_id=$1`, userID).Scan(&c)
+	return c
+}
+
+func (s *Store) CountFollowing(userID int64) int64 {
+	ctx, cancel := bg()
+	defer cancel()
+	var c int64
+	_ = s.pool.QueryRow(ctx, `SELECT COUNT(*) FROM follows WHERE follower_id=$1`, userID).Scan(&c)
+	return c
+}

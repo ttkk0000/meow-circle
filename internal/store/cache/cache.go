@@ -336,6 +336,9 @@ func (s *Store) Follow(a, b int64) bool            { return s.inner.Follow(a, b)
 func (s *Store) Unfollow(a, b int64) bool          { return s.inner.Unfollow(a, b) }
 func (s *Store) IsFollowing(a, b int64) bool       { return s.inner.IsFollowing(a, b) }
 func (s *Store) ListFollowingIDs(id int64) []int64 { return s.inner.ListFollowingIDs(id) }
+func (s *Store) CountFollowers(userID int64) int64 { return s.inner.CountFollowers(userID) }
+func (s *Store) CountFollowing(userID int64) int64 { return s.inner.CountFollowing(userID) }
+
 func (s *Store) TogglePostLike(u, p int64) (liked bool, count int64, ok bool) {
 	liked, count, ok = s.inner.TogglePostLike(u, p)
 	if ok {

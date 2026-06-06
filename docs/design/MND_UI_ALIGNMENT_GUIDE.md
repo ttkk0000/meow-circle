@@ -9,7 +9,6 @@ This is the implementation-facing guide for keeping Web, desktop boards, mobile 
 Current Stitch project:
 
 - `projects/13275961100622290348`
-- Title: `Kitty Circle Social`
 
 Local mirrors:
 
@@ -42,7 +41,7 @@ M&D means `meow & doggie`.
 - Cat-first and doggie-friendly.
 - Cats lead Feed, Profile, Auth, and default emotional examples.
 - Doggie content is valid for Market, services, activities, adoption, and secondary stories.
-- Do not rename the product to `MD`, `Meow & Dog`, or generic pet community.
+- Use current M&D naming only for visible product UI.
 
 ## Theme Contract
 
@@ -54,6 +53,9 @@ The four themes are:
 - Neutral
 
 Do not treat Primary, Secondary, Tertiary, and Neutral as four global M&D themes. Those are roles inside each theme.
+
+**Unified Global Theme Rule**:
+At runtime, the entire application uses exactly **one active global theme** (Honey, Mint, Night, or Neutral). Do NOT hardcode page-specific themes (e.g., green for Market, orange for Feed) in UI layouts or components. The separate themes shown in design mockups (e.g., Honey for Feed, Mint for Market) were merely to demonstrate the visual styles of different themes. All UI elements must use dynamic styling tokens (e.g., `StitchPalette.Brand`, `StitchPalette.Canvas`) so that the screens scale automatically to whichever global theme is currently selected.
 
 ### Honey
 
@@ -169,10 +171,8 @@ Neutral / true admin:
 - `web/mnd-web-client-board.html`: remote sync board with key Stitch references.
 - `web/stitch-remote-gallery.html`: all downloaded full-size Stitch screenshots and local source links.
 - `web/cute.html`: working WebUI aligned to the current remote controls.
-- `web/pawpop-desktop.html`: desktop mapping board.
+- `web/pawpop-desktop.html`: local desktop mapping board aligned to the remote mobile/component rules.
 - `web/stitch-theme-bridge.css`: compatibility token bridge mapped to V2.
-
-Legacy handmade references, old Stitch maps, and prior-generation design docs have been removed. Do not recreate them or use them as design sources.
 
 ## Verification Rules
 

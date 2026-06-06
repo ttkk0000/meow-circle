@@ -42,6 +42,7 @@ AI agents may give product or design opinions, but they must label them as sugge
 - Consumer cards use 16px radius per the current Stitch V2 spec; Neutral cards use 8px; true admin dense controls may use 4px. Pills remain for chips and compact actions.
 - No decorative gradient blobs. Use imagery, stripes, panels, badges, and clear hierarchy.
 - Theme system: Honey, Mint, Night, Neutral. Neutral is a first-class theme, not an OS/default fallback; old `sugar` values are compatibility aliases for Honey only.
+- **Unified Global Theme**: At runtime, the entire application uses exactly **one active global theme** (Honey, Mint, Night, or Neutral). Do NOT hardcode page-specific themes (e.g., green for Market, orange for Feed) in UI layouts or components. The separate themes shown in design mockups (e.g., Honey for Feed, Mint for Market) were merely to demonstrate the visual styles of different themes. All UI elements must use dynamic styling tokens (e.g., `StitchPalette.Brand`, `StitchPalette.Canvas`) so that the screens scale automatically to whichever global theme is currently selected.
 - Profile background system: Picnic, Desk, Arcade, Garden.
 
 ## Implementation Notes

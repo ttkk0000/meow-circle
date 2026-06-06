@@ -184,6 +184,34 @@ export interface Listing {
   created_at: string;
 }
 
+export type OrderStatus =
+  | 'pending_payment'
+  | 'paid'
+  | 'cancelled'
+  | 'shipped'
+  | 'refunded'
+  | 'completed'
+  | string;
+
+export interface Order {
+  id: number;
+  buyer_id: number;
+  seller_id: number;
+  listing_id: number;
+  listing_title?: string;
+  amount_cents: number;
+  currency: string;
+  status: OrderStatus;
+  payment_method?: string | null;
+  payment_tx_id?: string | null;
+  note?: string | null;
+  created_at: string;
+  updated_at: string;
+  paid_at?: string | null;
+  shipped_at?: string | null;
+  completed_at?: string | null;
+}
+
 export interface Conversation {
   peer: User;
   last_message: string;
@@ -358,6 +386,31 @@ export const api = {
       ).then((p) => p.items),
     create: (body: Partial<Listing> & { title: string; price_cents: number }) =>
       request<Listing>('/api/v1/listings', { method: 'POST', body }),
+  },
+
+  orders: {
+    list: (role: 'buyer' | 'seller') =>
+      request<{ items: Order[]; role?: string }>(
+        `/api/v1/me/orders?role=${encodeURIComponent(role)}`,
+      ).then((p) => p.items),
+    create: (listingId: number, note = '') =>
+      request<Order>('/api/v1/orders', {
+        method: 'POST',
+        body: { listing_id: listingId, note },
+      }),
+    pay: (orderId: number, method = 'mock') =>
+      request<Order>(`/api/v1/orders/${orderId}/pay`, {
+        method: 'POST',
+        body: { method },
+      }),
+    cancel: (orderId: number) =>
+      request<Order>(`/api/v1/orders/${orderId}/cancel`, { method: 'POST' }),
+    ship: (orderId: number) =>
+      request<Order>(`/api/v1/orders/${orderId}/ship`, { method: 'POST' }),
+    complete: (orderId: number) =>
+      request<Order>(`/api/v1/orders/${orderId}/complete`, { method: 'POST' }),
+    refund: (orderId: number) =>
+      request<Order>(`/api/v1/orders/${orderId}/refund`, { method: 'POST' }),
   },
 
   messages: {

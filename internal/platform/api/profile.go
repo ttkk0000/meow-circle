@@ -49,6 +49,10 @@ func (r *Router) handleUserPublic(w http.ResponseWriter, req *http.Request) {
 	}
 	raw := strings.TrimPrefix(req.URL.Path, "/api/v1/users/")
 	raw = strings.Trim(raw, "/")
+	if strings.HasSuffix(req.URL.Path, "/stats") {
+		r.handleUserStats(w, req)
+		return
+	}
 	id, err := strconv.ParseInt(raw, 10, 64)
 	if err != nil {
 		writeError(w, http.StatusBadRequest, "invalid user id")

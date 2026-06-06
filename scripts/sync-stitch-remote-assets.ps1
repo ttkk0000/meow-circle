@@ -19,13 +19,13 @@ $screens = @(
   @{
     id = "9316e37facb5477e8a41f17c92caf433"
     title = "M&D Social Feed - Polished Set v3"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 3616
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLuo21mFZL40EXgzAKtOc_bQToXLLLYCxWsaXl2GjRTdRnzxRtJEPLQeK6RCy8uSw1XEArf6-hCKsMqgVHFmzaTtuTer3oApPLWZquYKi-40qNNfRoNddXTJX9OqO3c6ukRMn_fwIb_GqDZNmagbEO9bXd7J0IhE9-2t9vNSnMVozlC1Cw7zCiBuJBSjFpaccfnbQlJIwga9e0bZyoqkR13lxJVDiauNPKV8FipYEnRsOTLdE6gQiNai5z4"
     source = "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1MzcyODUwNTFkMWYwMmQzYzIyZDliMTg0ZWUxEgsSBxCC073tpAEYAZIBJAoKcHJvamVjdF9pZBIWQhQxMzI3NTk2MTEwMDYyMjI5MDM0OA&filename=&opi=89354086"
     mime = "text/html"
-    category = "web-desktop-flow"
+    category = "mobile-flow"
   }
   @{
     id = "e57b8cd42f6f45c08949322cbcc3b89f"
@@ -41,13 +41,13 @@ $screens = @(
   @{
     id = "fd8cd509a0c24d61b789ae22f4146c80"
     title = "M&D Review & Safety - Final Polished Set (No Nav)"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 5320
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLu6pdddHpa5o-0UvigqAKtwZiD9uESjBG61KKzG-HBv6ens-H60D9rdWSBtDeVowE-XwYm5cEdjMtRl5mzMneASFNKr8gzefhpQC5jyRZPp33SjpzGta9ioqE9LON3j8FjC_7anI7idasLzj_ttRoV344DZfpG_eu9x3eRXfAnVrU3d8a5QkGRdUiTKvVhT-qeE7bkZBYpvsZosvx0Hhk6DZC4SEmbFvzbJBIBEzG7Uw8GLL9TXnUQuhPg2"
     source = "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1MzcyODRjMjE0NzYwODlhZjdiNDM4MTYzY2YwEgsSBxCC073tpAEYAZIBJAoKcHJvamVjdF9pZBIWQhQxMzI3NTk2MTEwMDYyMjI5MDM0OA&filename=&opi=89354086"
     mime = "text/html"
-    category = "web-desktop-flow"
+    category = "mobile-flow"
   }
   @{
     id = "bc706d4088e34bdfb6c30bf8045e4cb4"
@@ -184,29 +184,29 @@ $screens = @(
   @{
     id = "ec4b9497c04f4b91b2d6236703efdaff"
     title = "M&D Honey Settings Flow - Final Polish Patch"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 7120
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLs6o59Xwaf_V2WQte47W4IDgMU_NodVjJehFDEdi1x0ShDd08dP07RHOM_pJL8ykZm84BS0bf9nnAoP9MwHkXXK0gNsJ4nzUdvk3N6LNvg5waY6HEUZz62o0mP4ZKEWF8Wg3WfwFusoFdAtTn0jXBXejm_97X9GVH936CHy5dXS6FPwoykoq76Uk2-HwksASpa3IcXB42Vx3_sW7yDf1kFCWrdqqySMRTSDNOtzNyRqXEog28_4lnH9Uqg"
     source = "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sX2FlMjE3MmVkZDc4ZDRhYWI5M2E3NTI3YzAyMzM5MDY0EgsSBxCC073tpAEYAZIBJAoKcHJvamVjdF9pZBIWQhQxMzI3NTk2MTEwMDYyMjI5MDM0OA&filename=&opi=89354086"
     mime = "text/html"
-    category = "web-desktop-flow"
+    category = "mobile-flow"
   }
   @{
     id = "bbfc29fa595a4773afc2a91b276b2a05"
     title = "M&D Honey Orders - Final Polished Set"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 5544
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLtKzqzxUq1YZYF7rLKmfkTFJLTLdPXCGEfwzsjezShSBHc-tJsyeiNU9GUTVT_kplnLeo1s-ZZsICUO3cjPiVcqsYg5z6f4f9vvpcQpatg4OcOpHPOzX4OedXvUpdPGWM8v73Mmec8XNxTLwRH8o8mXbQDgspUUd7jAtKz5O6zK0k_pVloOOuis1rz9PMaa9WhQ4Nj9GUhsmLRBq9vB25m_htdL7V5MM6Q3C-T1QFuMtzJTlOkLV0ZYcvV8"
     source = "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1MzcyODQyZWUxYTgwMzgzOGU2NDU4MzYxNGMxEgsSBxCC073tpAEYAZIBJAoKcHJvamVjdF9pZBIWQhQxMzI3NTk2MTEwMDYyMjI5MDM0OA&filename=&opi=89354086"
     mime = "text/html"
-    category = "web-desktop-flow"
+    category = "mobile-flow"
   }
   @{
     id = "b8877dd4369e479fbbddf4dcc3a5e5eb"
     title = "Mobile Market (Polished v2)"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 3568
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLsGeZWld7glzuOTtMk_dhTmz8bgzMJDHHDCvMKaCg694ZIXgY_ae_AnepApcuKdaRNTMx5u6aHUxldTdZtwI0tKzjGH8rdnkz2nh5U4w_1qxIT5nezg5jXf9SDEOInmDNRUB6KSgReD-PUN_wPWjhfiSowFHhLvzhBtpQmbmMhgA9xYWe653D_H8J0lLukMIENs8Rw5LpVE949l6-CJ20OpTaxUIQIeLqJNo5ZLiu5YqjXG77vGCiQ2MnRP"
@@ -261,7 +261,7 @@ $screens = @(
   @{
     id = "eff431efe77f47858d47809096cfad7a"
     title = "M&D Profile & Pet Profile - Polished Mobile Set v4"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 3568
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLsOfO7I3OfMDqQORpCJuyXc2Z7XAsJC56QXr1MG9t7vBnVmorxYup0PZEf2-hgW_Cg69OhvEB_CiSS9zJDAjchzgzRIBCoSAaNZqkLLRnGvRRUw0VQnVHXW14ChJ66a_nIzG5caS1m_U6OP1a3mnp11PTBorTJVvRQ0NLTDrRCMWYgyr_e8soIv5Wi1WlchGNdtc_-lk2vDscxdws3E8Ir1GR3G3rn4beHB87uFltR4Vdy6NihM0RbZLVqZ"
@@ -327,13 +327,13 @@ $screens = @(
   @{
     id = "72bf00c20d734bc7b1312be642a918fc"
     title = "M&D Auth & Onboarding - Polished Honey Set v3"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 5384
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLtqDKAXVX5CzmTxxQ9ugpdZESQYq3-COeYABmV3wFVPUgraGuTWyG3HGRCBW_WCG4UkSrd3QZHcuFR9auwwLKhoBpgEyYLnozC2OJXku5BMuuYqV1WVzEkd0GGTqODKxgSvLpoxF6djq9VHjSn_Q1B4pMxQBvCoCwnXtpLAn93i_7rE1Fhem6xuch77HBdNgURsrOTEo56Pig43nk8zJqttAg5PfiYPD50003G0AeKMjXEaEKAcvjV770vP"
     source = "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1MzcyODNjZjEzYmIwMzc0OWEwZWMwMjBmMjM0EgsSBxCC073tpAEYAZIBJAoKcHJvamVjdF9pZBIWQhQxMzI3NTk2MTEwMDYyMjI5MDM0OA&filename=&opi=89354086"
     mime = "text/html"
-    category = "web-desktop-flow"
+    category = "mobile-flow"
   }
   @{
     id = "fc4bc839c77a423abb2b1d3c4664d714"
@@ -360,7 +360,7 @@ $screens = @(
   @{
     id = "7fd1dc0283124395bfbfcd4ce753d0ce"
     title = "M&D Product Flows - Polished Mobile Set v4"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 3568
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLu7cyv85CrXvqWy3AgDv_9lN1p_oXY7EyHBpR_W4ey1OxFJfeY6yerCikE87nRl71VmNDDF4igSzB7R0FQQVBRqLunTbyyGXIkxl46dzimUQ7sGzVo9zWuIg6v0M-tu99EolGaEFWKFF6PrDl_DE9mP8dTuwXW0M51DNvHUxqLan2JZ8AfLm1Bdg8QuncK1VHVyVNlqeKLenW4Y0jy7a2GXEzpeKAatAHurLd_PsOSEaOSBiy9HqLoe3EU"
@@ -371,13 +371,13 @@ $screens = @(
   @{
     id = "8d7449b2407243bd8f827d38bf4f509c"
     title = "M&D Honey Messages - Polished Set v2"
-    device = "DESKTOP"
+    device = "MOBILE"
     width = 2560
     height = 3568
     screenshot = "https://lh3.googleusercontent.com/aida/AP1WRLsxtpq_ejR0Qr92im6RtgwDrL0sZlsYxwV40A6sF-YCHQbnH5wCaQKFqvdsup5NzaJ4ynkvsXR0QqRdMTNTh4leSrHQzxPyM_pwiXqehSEtBNQJDb4GIu3pxQt7imGUMEM8ot8MMlr28PtR9YZz2vf112GKIZVtUDNxBgucu7jR2UV7P8N4HoZ-UNg2kE3vlIMuINkrgyQRPnr8UYXZGa3CmC4jd53ab5xTZeb30Vy1jm7ZCSvQn2pBYIWz"
     source = "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1MzcyODRkZDYyODcwODlhZjdiNDM4MTYzY2YwEgsSBxCC073tpAEYAZIBJAoKcHJvamVjdF9pZBIWQhQxMzI3NTk2MTEwMDYyMjI5MDM0OA&filename=&opi=89354086"
     mime = "text/html"
-    category = "web-desktop-flow"
+    category = "mobile-flow"
   }
   @{
     id = "339cebfa1f904aaca1cd353b15e1858a"
@@ -491,8 +491,13 @@ $project = [pscustomobject]@{
 }
 
 $metadataPath = Join-Path $assetRoot "metadata.json"
-$project | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $metadataPath -Encoding UTF8
+$metadataJson = $project | ConvertTo-Json -Depth 8
+$metadataJson | Set-Content -LiteralPath $metadataPath -Encoding UTF8
 Copy-Item -LiteralPath $metadataPath -Destination (Join-Path $stitchRoot "metadata.json") -Force
 Copy-Item -LiteralPath $metadataPath -Destination (Join-Path $webAssetRoot "metadata.json") -Force
+
+$metadataJsPath = Join-Path $assetRoot "metadata.js"
+"window.__STITCH_REMOTE_METADATA__ = $metadataJson;" | Set-Content -LiteralPath $metadataJsPath -Encoding UTF8
+Copy-Item -LiteralPath $metadataJsPath -Destination (Join-Path $webAssetRoot "metadata.js") -Force
 
 Write-Host "Synced $($records.Count) Stitch remote records into $assetRoot and $webAssetRoot"

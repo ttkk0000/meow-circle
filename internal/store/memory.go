@@ -855,6 +855,28 @@ func (s *MemoryStore) ListFollowingIDs(followerID int64) []int64 {
 	return out
 }
 
+func (s *MemoryStore) CountFollowers(userID int64) int64 {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	var count int64
+	for _, set := range s.follows {
+		if _, ok := set[userID]; ok {
+			count++
+		}
+	}
+	return count
+}
+
+func (s *MemoryStore) CountFollowing(userID int64) int64 {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	if set, ok := s.follows[userID]; ok {
+		return int64(len(set))
+	}
+	return 0
+}
+
+
 func (s *MemoryStore) TogglePostLike(userID, postID int64) (liked bool, count int64, ok bool) {
 	s.mu.Lock()
 	defer s.mu.Unlock()

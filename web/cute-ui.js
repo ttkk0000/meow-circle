@@ -1,15 +1,7 @@
 (function () {
   const root = document.documentElement;
   const validThemes = new Set(["honey", "mint", "night", "neutral"]);
-  const viewThemes = {
-    feed: "honey",
-    market: "mint",
-    messages: "honey",
-    orders: "honey",
-    profile: "honey",
-    compose: "honey",
-    safety: "neutral",
-  };
+  const validViews = new Set(["feed", "market", "messages", "orders", "profile", "auth", "compose", "safety"]);
 
   function normalizeTheme(theme) {
     if (theme === "sugar") return "honey";
@@ -20,7 +12,7 @@
   function setTheme(theme, isManual = false) {
     const next = normalizeTheme(theme);
     root.dataset.theme = next;
-    if (isManual) localStorage.setItem("mnd_theme_preview", next);
+    if (isManual) localStorage.removeItem("mnd_theme_override");
     localStorage.setItem("mnd_theme", next);
     document.querySelectorAll("[data-theme-choice]").forEach((button) => {
       const active = button.dataset.themeChoice === next;
@@ -30,14 +22,13 @@
   }
 
   function setView(view) {
-    const next = viewThemes[view] ? view : "feed";
+    const next = validViews.has(view) ? view : "feed";
     document.querySelectorAll("[data-view-panel]").forEach((panel) => {
       panel.classList.toggle("is-active", panel.dataset.viewPanel === next);
     });
     document.querySelectorAll("[data-view]").forEach((button) => {
       button.classList.toggle("is-active", button.dataset.view === next);
     });
-    setTheme(viewThemes[next]);
     if (location.hash.slice(1) !== next) history.replaceState(null, "", `#${next}`);
     if (matchMedia("(max-width: 1080px)").matches) window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -54,6 +45,18 @@
   }
 
   document.addEventListener("click", (event) => {
+    const trigger = event.target.closest(".settings-trigger");
+    const dropdown = document.querySelector(".settings-popup");
+    if (trigger) {
+      const isHidden = dropdown.style.display === "none" || !dropdown.style.display;
+      dropdown.style.display = isHidden ? "flex" : "none";
+      return;
+    }
+
+    if (dropdown && !event.target.closest(".settings-dropdown")) {
+      dropdown.style.display = "none";
+    }
+
     const themeButton = event.target.closest("[data-theme-choice]");
     if (themeButton) {
       setTheme(themeButton.dataset.themeChoice, true);
@@ -73,7 +76,11 @@
   });
 
   const startView = location.hash.slice(1);
-  setTheme(normalizeTheme(root.dataset.theme));
+  const initialTheme =
+    localStorage.getItem("mnd_theme") ||
+    localStorage.getItem("mnd_theme_override") ||
+    normalizeTheme(root.dataset.theme);
+  setTheme(initialTheme);
   setProfileBackground(localStorage.getItem("mnd_profile_bg") || root.dataset.profileBg);
-  setView(viewThemes[startView] ? startView : "feed");
+  setView(validViews.has(startView) ? startView : "feed");
 })();

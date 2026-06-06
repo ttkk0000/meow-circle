@@ -121,7 +121,7 @@ val NeutralDesktopColors = DesktopStitchColors(
 val LocalDesktopStitchColors = staticCompositionLocalOf { HoneyDesktopColors }
 
 object MndDesktopShape {
-    val card = RoundedCornerShape(8.dp)
+    val card = RoundedCornerShape(16.dp)
     val panel = RoundedCornerShape(8.dp)
     val field = RoundedCornerShape(8.dp)
     val pill = RoundedCornerShape(999.dp)

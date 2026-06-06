@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
+import {Alert, Pressable, RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {router, useRouter} from 'expo-router';
 import {MaterialIcons} from '@expo/vector-icons';
@@ -19,6 +19,7 @@ export default function MarketScreen() {
   const [err, setErr] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [q, setQ] = useState('');
+  const [buyingId, setBuyingId] = useState<number | null>(null);
 
   const load = useCallback(async () => {
     setErr(null);
@@ -58,7 +59,23 @@ export default function MarketScreen() {
   const canBack = nav.canGoBack();
   const goBack = () => {
     if (canBack) router.back();
-    else router.replace('/(tabs)/discover');
+    else router.replace('/(tabs)');
+  };
+
+  const buyListing = async (listing: Listing) => {
+    setBuyingId(listing.id);
+    try {
+      const order = await api.orders.create(listing.id, '来自 M&D 移动端的订单');
+      Alert.alert('订单已创建', `订单 #${order.id} 已进入订单页。`, [
+        { text: '继续浏览', style: 'cancel' },
+        { text: '查看订单', onPress: () => router.push('/(tabs)/orders') },
+      ]);
+    } catch (e) {
+      if (e instanceof HttpError) Alert.alert('购买失败', e.payload.message);
+      else Alert.alert('购买失败', '暂时无法创建订单，请稍后再试。');
+    } finally {
+      setBuyingId(null);
+    }
   };
 
   return (
@@ -106,6 +123,7 @@ export default function MarketScreen() {
           ) : (
             filtered.map((listing) => {
               const canDm = user && listing.seller_id !== user.id;
+              const canBuy = canDm && listing.price_cents > 0 && listing.type !== 'adopt';
               return (
                 <Card key={listing.id} style={styles.listingCard}>
                   <View style={styles.listingTop}>
@@ -124,14 +142,25 @@ export default function MarketScreen() {
                       卖家 #{listing.seller_id}
                     </Txt>
                   </View>
-                  {canDm ? (
-                    <Button
-                      title="私信卖家"
-                      icon="forum"
-                      variant="secondary"
-                      onPress={() => router.push(`/(tabs)/messages/${listing.seller_id}`)}
-                    />
-                  ) : null}
+                  <View style={styles.actionRow}>
+                    {canBuy ? (
+                      <Button
+                        title="立即购买"
+                        icon="bolt"
+                        loading={buyingId === listing.id}
+                        onPress={() => buyListing(listing)}
+                      />
+                    ) : null}
+                    {canDm ? (
+                      <Button
+                        title="私信卖家"
+                        icon="forum"
+                        variant="secondary"
+                        disabled={buyingId === listing.id}
+                        onPress={() => router.push(`/(tabs)/messages/${listing.seller_id}`)}
+                      />
+                    ) : null}
+                  </View>
                 </Card>
               );
             })
@@ -208,6 +237,11 @@ function makeStyles(colors: MndColors) {
       gap: spacing.md,
     },
     listingTop: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: spacing.sm,
+    },
+    actionRow: {
       flexDirection: 'row',
       flexWrap: 'wrap',
       gap: spacing.sm,

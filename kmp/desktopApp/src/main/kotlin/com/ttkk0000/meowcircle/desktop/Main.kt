@@ -5,34 +5,11 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,11 +20,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import com.ttkk0000.meowcircle.MeowCircleSdk
+import com.ttkk0000.meowcircle.User
+import com.ttkk0000.meowcircle.desktop.screens.*
 
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "M&D Desktop",
+        title = "M&D Desktop Client",
     ) {
         DesktopApp()
     }
@@ -56,18 +36,68 @@ fun main() = application {
 @Composable
 @Preview
 fun DesktopApp() {
-    var themeMode by remember { mutableStateOf(MndDesktopThemeMode.Honey) }
+    val sdk = remember {
+        MeowCircleSdk(defaultBaseUrl = "http://127.0.0.1:8080").apply {
+            if (sessionStore().getApiUrl("").contains("localhost")) {
+                sessionStore().setApiUrl("http://127.0.0.1:8080")
+            }
+        }
+    }
+    var themeMode by remember { mutableStateOf(themeModeFromSession(sdk.getTheme())) }
+    val apiClient = remember { MndApiClient(sdk) }
+    var currentUser by remember { mutableStateOf<User?>(sdk.cachedUser()) }
+
+    LaunchedEffect(Unit) {
+        currentUser = sdk.restoreSession()
+    }
+
     MndDesktopTheme(themeMode) {
-        MndDesktopShell(themeMode = themeMode, onThemeChange = { themeMode = it })
+        MndDesktopShell(
+            sdk = sdk,
+            apiClient = apiClient,
+            currentUser = currentUser,
+            onLoginSuccess = { currentUser = it },
+            onLogout = { currentUser = null },
+            themeMode = themeMode,
+            onThemeChange = {
+                sdk.setTheme(it.sessionValue)
+                themeMode = it
+            }
+        )
     }
 }
 
+private fun themeModeFromSession(value: String): MndDesktopThemeMode =
+    when (value.trim().lowercase()) {
+        "mint" -> MndDesktopThemeMode.Mint
+        "night" -> MndDesktopThemeMode.Night
+        "neutral", "system" -> MndDesktopThemeMode.Neutral
+        else -> MndDesktopThemeMode.Honey
+    }
+
+private val MndDesktopThemeMode.sessionValue: String
+    get() =
+        when (this) {
+            MndDesktopThemeMode.Honey -> "honey"
+            MndDesktopThemeMode.Mint -> "mint"
+            MndDesktopThemeMode.Night -> "night"
+            MndDesktopThemeMode.Neutral -> "neutral"
+        }
+
 @Composable
 private fun MndDesktopShell(
+    sdk: MeowCircleSdk,
+    apiClient: MndApiClient,
+    currentUser: User?,
+    onLoginSuccess: (User) -> Unit,
+    onLogout: () -> Unit,
     themeMode: MndDesktopThemeMode,
     onThemeChange: (MndDesktopThemeMode) -> Unit,
 ) {
     val colors = LocalDesktopStitchColors.current
+    var activeScreen by remember { mutableStateOf("feed") }
+    var profileBg by remember { mutableStateOf(sdk.sessionStore().getProfileBackground().ifBlank { "picnic" }) }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = colors.canvas,
@@ -76,17 +106,74 @@ private fun MndDesktopShell(
             modifier = Modifier.fillMaxSize().padding(24.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            DesktopRail(themeMode = themeMode, onThemeChange = onThemeChange)
-            MainFeedColumn()
-            RightWorkspaceColumn()
+            DesktopRail(
+                activeScreen = activeScreen,
+                onScreenChange = { activeScreen = it },
+                themeMode = themeMode,
+                onThemeChange = onThemeChange,
+                profileBg = profileBg,
+                onProfileBgChange = { profileBg = it },
+                currentUser = currentUser,
+                sdk = sdk
+            )
+            Box(
+                modifier = Modifier.weight(1f).fillMaxHeight()
+            ) {
+                when (activeScreen) {
+                    "feed" -> FeedScreen(sdk = sdk, apiClient = apiClient, onNavigateToCompose = { activeScreen = if (currentUser == null) "auth" else "publish" })
+                    "market" -> MarketScreen(sdk = sdk, apiClient = apiClient, onNavigateToPublish = { activeScreen = if (currentUser == null) "auth" else "publish" })
+                    "messages" -> {
+                        val user = currentUser
+                        if (user == null) {
+                            AuthScreen(sdk = sdk, onAuthSuccess = { onLoginSuccess(it); activeScreen = "messages" })
+                        } else {
+                            MessagesScreen(sdk = sdk, apiClient = apiClient)
+                        }
+                    }
+                    "orders" -> {
+                        val user = currentUser
+                        if (user == null) {
+                            AuthScreen(sdk = sdk, onAuthSuccess = { onLoginSuccess(it); activeScreen = "orders" })
+                        } else {
+                            OrdersScreen(sdk = sdk, apiClient = apiClient)
+                        }
+                    }
+                    "profile" -> {
+                        val user = currentUser
+                        if (user == null) {
+                            AuthScreen(sdk = sdk, onAuthSuccess = { onLoginSuccess(it); activeScreen = "profile" })
+                        } else {
+                            ProfileScreen(sdk = sdk, apiClient = apiClient, profileBg = profileBg, onLogout = onLogout)
+                        }
+                    }
+                    "safety" -> SafetyScreen(apiClient = apiClient)
+                    "publish" -> {
+                        val user = currentUser
+                        if (user == null) {
+                            AuthScreen(sdk = sdk, onAuthSuccess = { onLoginSuccess(it); activeScreen = "publish" })
+                        } else {
+                            PublishScreen(sdk = sdk, apiClient = apiClient, onPublishSuccess = { activeScreen = "feed" })
+                        }
+                    }
+                    "auth" -> {
+                        AuthScreen(sdk = sdk, onAuthSuccess = { onLoginSuccess(it); activeScreen = "feed" })
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
 private fun DesktopRail(
+    activeScreen: String,
+    onScreenChange: (String) -> Unit,
     themeMode: MndDesktopThemeMode,
     onThemeChange: (MndDesktopThemeMode) -> Unit,
+    profileBg: String,
+    onProfileBgChange: (String) -> Unit,
+    currentUser: User?,
+    sdk: MeowCircleSdk,
 ) {
     val colors = LocalDesktopStitchColors.current
     Card(
@@ -108,22 +195,137 @@ private fun DesktopRail(
                 }
             }
             Text(
-                text = "Stitch desktop reference",
+                text = "M&D Stitch V2 Board",
                 color = colors.onSurfaceVariant,
                 fontSize = 12.sp,
             )
-            RailItem("Feed", "cat-first stories", selected = true)
-            RailItem("Market", "services and goods")
-            RailItem("Messages", "orders and chat")
-            RailItem("Review", "safety queue")
+            Divider(color = colors.outlineVariant)
+
+            RailItem("Feed", "cat-first stories", selected = activeScreen == "feed") {
+                onScreenChange("feed")
+            }
+            RailItem("Market", "services and goods", selected = activeScreen == "market") {
+                onScreenChange("market")
+            }
+            RailItem("Messages", "orders and chat", selected = activeScreen == "messages") {
+                onScreenChange("messages")
+            }
+            RailItem("Orders", "purchased items", selected = activeScreen == "orders") {
+                onScreenChange("orders")
+            }
+            if (currentUser == null) {
+                RailItem("Login / Register", "sign in to account", selected = activeScreen == "auth") {
+                    onScreenChange("auth")
+                }
+            } else {
+                RailItem("Profile", "personal settings", selected = activeScreen == "profile") {
+                    onScreenChange("profile")
+                }
+            }
+            RailItem("Review", "safety queue", selected = activeScreen == "safety") {
+                onScreenChange("safety")
+            }
+
             Spacer(Modifier.weight(1f))
-            Text("Theme", color = colors.onSurface, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-            MndDesktopThemeMode.entries.forEach { mode ->
-                ThemeChoice(
-                    mode = mode,
-                    selected = themeMode == mode,
-                    onClick = { onThemeChange(mode) },
-                )
+            Box {
+                var showSettings by remember { mutableStateOf(false) }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(MndDesktopShape.panel)
+                        .background(colors.surfaceLow)
+                        .border(1.dp, colors.outlineVariant, MndDesktopShape.panel)
+                        .clickable { showSettings = true }
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    BrandDot(12.dp, colors.brand)
+                    Spacer(Modifier.width(10.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Style Settings", color = colors.onSurface, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Text("global theme & profile cover", color = colors.onSurfaceVariant, fontSize = 10.sp)
+                    }
+                    Text("⚙️", fontSize = 14.sp)
+                }
+
+                DropdownMenu(
+                    expanded = showSettings,
+                    onDismissRequest = { showSettings = false },
+                    modifier = Modifier.width(220.dp).background(colors.surface).border(1.dp, colors.outlineVariant, RoundedCornerShape(8.dp))
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text(
+                            text = "APP THEME",
+                            color = colors.onSurfaceVariant,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(bottom = 6.dp)
+                        )
+                        MndDesktopThemeMode.entries.forEach { mode ->
+                            val isSelected = themeMode == mode
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clip(RoundedCornerShape(4.dp))
+                                    .background(if (isSelected) colors.brandMuted else Color.Transparent)
+                                    .clickable {
+                                        onThemeChange(mode)
+                                    }
+                                    .padding(vertical = 6.dp, horizontal = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                BrandDot(10.dp, colorsFor(mode).brand)
+                                Spacer(Modifier.width(8.dp))
+                                Text(
+                                    text = mode.label,
+                                    color = if (isSelected) colors.brand else colors.onSurface,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+
+                        Divider(modifier = Modifier.padding(vertical = 8.dp), color = colors.outlineVariant)
+
+                        Text(
+                            text = "PROFILE COVER",
+                            color = colors.onSurfaceVariant,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(bottom = 6.dp)
+                        )
+                        listOf("picnic" to "Picnic 🍑", "desk" to "Desk 🖥️", "arcade" to "Arcade 🕹️", "garden" to "Garden 🏡").forEach { (bgId, bgName) ->
+                            val isSelected = profileBg == bgId
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clip(RoundedCornerShape(4.dp))
+                                    .background(if (isSelected) colors.brandMuted else Color.Transparent)
+                                    .clickable {
+                                        onProfileBgChange(bgId)
+                                        sdk.sessionStore().setProfileBackground(bgId)
+                                    }
+                                    .padding(vertical = 6.dp, horizontal = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                BrandDot(10.dp, when (bgId) {
+                                    "picnic" -> Color(0xFFFFECE0)
+                                    "desk" -> Color(0xFFE0F2FE)
+                                    "arcade" -> Color(0xFFF3E8FF)
+                                    "garden" -> Color(0xFFDCFCE7)
+                                    else -> colors.outline
+                                })
+                                Spacer(Modifier.width(8.dp))
+                                Text(
+                                    text = bgName,
+                                    color = if (isSelected) colors.brand else colors.onSurface,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -134,15 +336,17 @@ private fun RailItem(
     title: String,
     subtitle: String,
     selected: Boolean = false,
+    onClick: () -> Unit,
 ) {
     val colors = LocalDesktopStitchColors.current
     val background = if (selected) colors.brandMuted else Color.Transparent
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(MndDesktopShape.card)
+            .clip(MndDesktopShape.panel)
             .background(background)
-            .border(1.dp, if (selected) colors.brand else colors.outlineVariant, MndDesktopShape.card)
+            .border(1.dp, if (selected) colors.brand else colors.outlineVariant, MndDesktopShape.panel)
+            .clickable(onClick = onClick)
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -166,205 +370,16 @@ private fun ThemeChoice(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(MndDesktopShape.card)
+            .clip(MndDesktopShape.panel)
             .clickable(onClick = onClick)
             .background(if (selected) colors.surfaceLow else Color.Transparent)
-            .border(1.dp, if (selected) colors.brand else colors.outlineVariant, MndDesktopShape.card)
+            .border(1.dp, if (selected) colors.brand else colors.outlineVariant, MndDesktopShape.panel)
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         BrandDot(14.dp, modeColors.brand)
         Spacer(Modifier.width(10.dp))
         Text(mode.label, color = colors.onSurface, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-    }
-}
-
-@Composable
-private fun MainFeedColumn() {
-    val colors = LocalDesktopStitchColors.current
-    Column(
-        modifier = Modifier.weight(1f).fillMaxHeight().verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
-        Card(
-            shape = MndDesktopShape.panel,
-            colors = CardDefaults.cardColors(containerColor = colors.surface),
-            border = BorderStroke(1.dp, colors.outlineVariant),
-        ) {
-            Column(Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(
-                    text = "M&D desktop client",
-                    color = colors.onSurface,
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Black,
-                )
-                Text(
-                    text = "Cat-first community, doggie-friendly market, dense desktop controls.",
-                    color = colors.onSurfaceVariant,
-                    fontSize = 14.sp,
-                )
-                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    PrimaryAction("New post")
-                    SecondaryAction("Open market")
-                    SecondaryAction("Review queue")
-                }
-            }
-        }
-        FeedCard(
-            author = "Mika & Toast",
-            title = "Morning window patrol",
-            body = "Toast claimed the sunny desk corner. The desktop layout keeps feed reading calm while still leaving room for orders and messages.",
-            tags = listOf("cat-first", "honey", "desktop"),
-        )
-        FeedCard(
-            author = "Nori Studio",
-            title = "Carrier training checklist",
-            body = "Reusable cards stay at 8dp radius. Theme colors never mix across Honey, Mint, Night, and Neutral.",
-            tags = listOf("care", "guide", "neutral-ready"),
-        )
-        FeedCard(
-            author = "Doggie branch",
-            title = "Weekend walking service",
-            body = "Doggie content remains a companion branch for services, marketplace items, and local activities.",
-            tags = listOf("doggie", "market", "mint"),
-        )
-    }
-}
-
-@Composable
-private fun RightWorkspaceColumn() {
-    val colors = LocalDesktopStitchColors.current
-    Column(
-        modifier = Modifier.widthIn(min = 320.dp, max = 360.dp).fillMaxHeight(),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
-        Panel("Stitch refs") {
-            RefRow("Project", STITCH_MCP_MND_PROJECT_ID)
-            RefRow("Feed", StitchDesktopScreens.SOCIAL_FEED)
-            RefRow("Market desktop", StitchDesktopScreens.MARKET_DESKTOP)
-            RefRow("Neutral theme", StitchDesktopThemeScreens.NEUTRAL)
-        }
-        Panel("Orders") {
-            StatusRow("Paid", "2", colors.brand)
-            StatusRow("Shipping", "5", colors.gold)
-            StatusRow("Review", "1", colors.error)
-        }
-        Panel("Safety") {
-            Text(
-                "Neutral is a first-class theme for dense tools and true admin/moderation screens.",
-                color = colors.onSurfaceVariant,
-                fontSize = 13.sp,
-                lineHeight = 18.sp,
-            )
-        }
-    }
-}
-
-@Composable
-private fun FeedCard(
-    author: String,
-    title: String,
-    body: String,
-    tags: List<String>,
-) {
-    val colors = LocalDesktopStitchColors.current
-    Card(
-        shape = MndDesktopShape.card,
-        colors = CardDefaults.cardColors(containerColor = colors.surface),
-        border = BorderStroke(1.dp, colors.outlineVariant),
-    ) {
-        Column(Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                BrandMark(38.dp)
-                Spacer(Modifier.width(10.dp))
-                Column {
-                    Text(author, color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                    Text("M&D circle", color = colors.onSurfaceVariant, fontSize = 11.sp)
-                }
-            }
-            Text(title, color = colors.onSurface, fontSize = 20.sp, fontWeight = FontWeight.Black)
-            Text(body, color = colors.onSurfaceVariant, fontSize = 13.sp, lineHeight = 20.sp)
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                tags.forEach { Chip(it) }
-            }
-        }
-    }
-}
-
-@Composable
-private fun Panel(title: String, content: @Composable Column.() -> Unit) {
-    val colors = LocalDesktopStitchColors.current
-    Card(
-        shape = MndDesktopShape.panel,
-        colors = CardDefaults.cardColors(containerColor = colors.surface),
-        border = BorderStroke(1.dp, colors.outlineVariant),
-    ) {
-        Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(title, color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Black)
-            content()
-        }
-    }
-}
-
-@Composable
-private fun RefRow(label: String, value: String) {
-    val colors = LocalDesktopStitchColors.current
-    Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-        Text(label, color = colors.onSurface, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-        Text(value, color = colors.onSurfaceVariant, fontSize = 10.sp, lineHeight = 14.sp)
-    }
-}
-
-@Composable
-private fun StatusRow(label: String, value: String, color: Color) {
-    val colors = LocalDesktopStitchColors.current
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            BrandDot(10.dp, color)
-            Spacer(Modifier.width(8.dp))
-            Text(label, color = colors.onSurfaceVariant, fontSize = 13.sp)
-        }
-        Text(value, color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Black)
-    }
-}
-
-@Composable
-private fun Chip(label: String) {
-    val colors = LocalDesktopStitchColors.current
-    Text(
-        text = label,
-        modifier = Modifier
-            .clip(MndDesktopShape.pill)
-            .background(colors.brandMuted)
-            .border(1.dp, colors.outlineVariant, MndDesktopShape.pill)
-            .padding(horizontal = 10.dp, vertical = 5.dp),
-        color = colors.onSurface,
-        fontSize = 11.sp,
-        fontWeight = FontWeight.SemiBold,
-    )
-}
-
-@Composable
-private fun PrimaryAction(label: String) {
-    val colors = LocalDesktopStitchColors.current
-    Button(
-        onClick = {},
-        shape = MndDesktopShape.pill,
-        colors = ButtonDefaults.buttonColors(containerColor = colors.brand, contentColor = Color.White),
-    ) {
-        Text(label, fontWeight = FontWeight.Bold)
-    }
-}
-
-@Composable
-private fun SecondaryAction(label: String) {
-    val colors = LocalDesktopStitchColors.current
-    TextButton(onClick = {}, shape = MndDesktopShape.pill) {
-        Text(label, color = colors.onSurface, fontWeight = FontWeight.Bold)
     }
 }
 

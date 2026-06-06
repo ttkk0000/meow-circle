@@ -90,6 +90,9 @@ type Store interface {
 	Unfollow(followerID, followingID int64) bool
 	IsFollowing(followerID, followingID int64) bool
 	ListFollowingIDs(followerID int64) []int64
+	CountFollowers(userID int64) int64
+	CountFollowing(userID int64) int64
+
 
 	TogglePostLike(userID, postID int64) (liked bool, count int64, ok bool)
 	BatchPostLikeCounts(postIDs []int64) map[int64]int64

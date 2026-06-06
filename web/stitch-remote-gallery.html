@@ -64,9 +64,14 @@
       gap: 8px;
       justify-content: end;
     }
+    button {
+      font: inherit;
+    }
     .top-actions a,
     .filters button,
-    .links a {
+    .links a,
+    .viewer-actions a,
+    .viewer-close {
       display: inline-flex;
       min-height: 40px;
       align-items: center;
@@ -79,6 +84,22 @@
       font-size: 13px;
       font-weight: 800;
       cursor: pointer;
+    }
+    .top-actions a:hover,
+    .filters button:hover,
+    .links a:hover,
+    .viewer-actions a:hover,
+    .viewer-close:hover {
+      border-color: #4b5563;
+    }
+    .top-actions a:focus-visible,
+    .filters button:focus-visible,
+    .links a:focus-visible,
+    .preview:focus-visible,
+    .viewer-actions a:focus-visible,
+    .viewer-close:focus-visible {
+      outline: 3px solid rgba(249, 115, 22, .28);
+      outline-offset: 3px;
     }
     .filters {
       width: min(1500px, calc(100% - 28px));
@@ -119,9 +140,14 @@
     }
     .preview {
       display: block;
+      width: 100%;
       height: 560px;
+      margin: 0;
+      padding: 0;
+      border: 0;
       border-bottom: 1px solid var(--border);
       background: #fff8f2;
+      cursor: zoom-in;
     }
     .preview img {
       display: block;
@@ -129,6 +155,11 @@
       height: 100%;
       object-fit: contain;
       object-position: top center;
+      transition: transform .18s ease;
+    }
+    .preview:hover img,
+    .preview:focus-visible img {
+      transform: scale(1.01);
     }
     .meta {
       display: grid;
@@ -167,6 +198,94 @@
       background: #fff1e6;
       color: var(--accent);
     }
+    body.is-viewer-open {
+      overflow: hidden;
+    }
+    .viewer[hidden] {
+      display: none;
+    }
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(17, 24, 39, .72);
+    }
+    .viewer-panel {
+      width: min(1360px, 100%);
+      height: min(900px, calc(100vh - 40px));
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+    .viewer-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .viewer-title {
+      min-width: 0;
+    }
+    .viewer-title h2 {
+      overflow: hidden;
+      font-size: 20px;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .viewer-title p {
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .viewer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: end;
+    }
+    .viewer-close {
+      background: var(--surface-variant);
+    }
+    .viewer-media {
+      overflow: auto;
+      background: var(--surface-variant);
+    }
+    .viewer-media img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      background: var(--surface);
+    }
+    .viewer-media iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: var(--surface);
+    }
+    .viewer-empty {
+      display: grid;
+      min-height: 320px;
+      place-items: center;
+      padding: 24px;
+      color: var(--muted);
+      font-weight: 800;
+      text-align: center;
+    }
+    .is-hidden {
+      display: none !important;
+    }
     @media (max-width: 1100px) {
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
@@ -175,6 +294,18 @@
       .top-actions { justify-content: start; }
       .grid { grid-template-columns: 1fr; }
       .preview { height: min(680px, 74vh); }
+      .viewer {
+        padding: 10px;
+      }
+      .viewer-panel {
+        height: calc(100vh - 20px);
+      }
+      .viewer-bar {
+        grid-template-columns: 1fr;
+      }
+      .viewer-actions {
+        justify-content: start;
+      }
     }
   </style>
 </head>
@@ -194,11 +325,11 @@
   <nav class="filters" aria-label="Asset filters">
     <button type="button" class="is-active" data-filter="all">All</button>
     <button type="button" data-filter="mobile-flow">Mobile</button>
-    <button type="button" data-filter="web-desktop-flow">Web/Desktop</button>
     <button type="button" data-filter="theme-board">Themes</button>
     <button type="button" data-filter="component-library">Components</button>
     <button type="button" data-filter="design-system">Design System</button>
     <button type="button" data-filter="global-requirements">Docs</button>
+    <button type="button" data-filter="image-asset">Images</button>
     <button type="button" data-filter="icon">Icons</button>
   </nav>
 
@@ -207,15 +338,40 @@
     <section class="grid" id="gallery" aria-live="polite"></section>
   </main>
 
+  <aside class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
+    <div class="viewer-panel">
+      <div class="viewer-bar">
+        <div class="viewer-title">
+          <h2 id="viewer-title"></h2>
+          <p id="viewer-meta"></p>
+        </div>
+        <div class="viewer-actions">
+          <a id="viewer-png" href="#" target="_blank" rel="noopener">Open PNG</a>
+          <a id="viewer-source" href="#" target="_blank" rel="noopener">Open source</a>
+          <button type="button" class="viewer-close" id="viewer-close">Close</button>
+        </div>
+      </div>
+      <div class="viewer-media" id="viewer-media"></div>
+    </div>
+  </aside>
+
+  <script src="assets/stitch-remote/metadata.js"></script>
   <script>
     const gallery = document.querySelector("#gallery");
     const statusNode = document.querySelector("#status");
     const filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
+    const viewer = document.querySelector("#viewer");
+    const viewerTitle = document.querySelector("#viewer-title");
+    const viewerMeta = document.querySelector("#viewer-meta");
+    const viewerMedia = document.querySelector("#viewer-media");
+    const viewerPng = document.querySelector("#viewer-png");
+    const viewerSource = document.querySelector("#viewer-source");
+    const viewerClose = document.querySelector("#viewer-close");
     let records = [];
+    let lastFocusedNode = null;
 
     const order = [
       "mobile-flow",
-      "web-desktop-flow",
       "theme-board",
       "component-library",
       "design-system",
@@ -224,6 +380,19 @@
       "image-asset",
       "icon"
     ];
+    const filterAliases = {
+      "theme-board": ["theme-board", "theme-flow"]
+    };
+    const categoryLabels = {
+      "mobile-flow": "Mobile",
+      "theme-board": "Themes",
+      "theme-flow": "Themes",
+      "component-library": "Components",
+      "design-system": "Design System",
+      "global-requirements": "Docs",
+      "image-asset": "Images",
+      icon: "Icons"
+    };
 
     function escapeHtml(value) {
       return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -241,30 +410,76 @@
       return a.title.localeCompare(b.title);
     }
 
+    function matchesFilter(record, filter) {
+      if (filter === "all") return true;
+      return (filterAliases[filter] || [filter]).includes(record.category);
+    }
+
+    function setOptionalLink(node, href) {
+      if (href) {
+        node.href = href;
+        node.classList.remove("is-hidden");
+      } else {
+        node.removeAttribute("href");
+        node.classList.add("is-hidden");
+      }
+    }
+
+    function openRecord(record) {
+      if (!record) return;
+
+      lastFocusedNode = document.activeElement;
+      viewerTitle.textContent = record.title;
+      viewerMeta.textContent = `${categoryLabels[record.category] || record.category} / ${record.deviceType || "SOURCE"} / ${record.width || "?"} x ${record.height || "?"}`;
+      setOptionalLink(viewerPng, record.webScreenshot);
+      setOptionalLink(viewerSource, record.webSource);
+
+      if (record.webScreenshot) {
+        viewerMedia.innerHTML = `<img src="${escapeHtml(record.webScreenshot)}" alt="${escapeHtml(record.title)}">`;
+      } else if (record.webSource) {
+        viewerMedia.innerHTML = `<iframe src="${escapeHtml(record.webSource)}" title="${escapeHtml(record.title)} source"></iframe>`;
+      } else {
+        viewerMedia.innerHTML = `<div class="viewer-empty">No local preview is available for this Stitch record.</div>`;
+      }
+
+      viewer.hidden = false;
+      document.body.classList.add("is-viewer-open");
+      viewerClose.focus();
+    }
+
+    function closeViewer() {
+      viewer.hidden = true;
+      document.body.classList.remove("is-viewer-open");
+      viewerMedia.innerHTML = "";
+      if (lastFocusedNode && typeof lastFocusedNode.focus === "function") {
+        lastFocusedNode.focus();
+      }
+    }
+
     function render(filter = "all") {
       const visible = records
-        .filter((record) => filter === "all" || record.category === filter)
+        .filter((record) => matchesFilter(record, filter))
         .sort(sortRecords);
 
       statusNode.textContent = `${visible.length} of ${records.length} Stitch records shown. Open a screenshot for the full-resolution PNG, or open source for the exact Stitch HTML/SVG/Markdown.`;
       gallery.innerHTML = visible.map((record, index) => {
         const title = escapeHtml(record.title);
-        const category = escapeHtml(record.category);
+        const category = escapeHtml(categoryLabels[record.category] || record.category);
         const deviceType = escapeHtml(record.deviceType || "SOURCE");
         const id = escapeHtml(record.id);
         const loading = index < 6 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`;
         const image = record.webScreenshot
-          ? `<a class="preview" href="${record.webScreenshot}"><img src="${record.webScreenshot}" alt="${title}" ${loading} decoding="async"></a>`
-          : `<a class="preview" href="${record.webSource || "#"}"><img src="assets/stitch-remote/screens/11310ac2a2284e809a68589261f12e31.png" alt="" ${loading} decoding="async"></a>`;
+          ? `<button type="button" class="preview" data-action="view" aria-label="Preview ${title}"><img src="${escapeHtml(record.webScreenshot)}" alt="${title}" ${loading} decoding="async"></button>`
+          : `<button type="button" class="preview" data-action="view" aria-label="Preview ${title}"><img src="assets/stitch-remote/screens/11310ac2a2284e809a68589261f12e31.png" alt="" ${loading} decoding="async"></button>`;
         const sourceLink = record.webSource
-          ? `<a href="${record.webSource}">Open source</a>`
+          ? `<a href="${escapeHtml(record.webSource)}" target="_blank" rel="noopener">Open source</a>`
           : "";
         const imageLink = record.webScreenshot
-          ? `<a href="${record.webScreenshot}">Open PNG</a>`
+          ? `<a href="${escapeHtml(record.webScreenshot)}" target="_blank" rel="noopener">Open PNG</a>`
           : "";
 
         return `
-          <article>
+          <article data-record-index="${record.galleryIndex}">
             ${image}
             <div class="meta">
               <h2>${title}</h2>
@@ -284,6 +499,24 @@
       }).join("");
     }
 
+    gallery.addEventListener("click", (event) => {
+      const previewButton = event.target.closest("[data-action='view']");
+      if (!previewButton) return;
+
+      const card = previewButton.closest("[data-record-index]");
+      openRecord(records[Number(card.dataset.recordIndex)]);
+    });
+
+    viewerClose.addEventListener("click", closeViewer);
+
+    viewer.addEventListener("click", (event) => {
+      if (event.target === viewer) closeViewer();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !viewer.hidden) closeViewer();
+    });
+
     filterButtons.forEach((button) => {
       button.addEventListener("click", () => {
         filterButtons.forEach((item) => item.classList.remove("is-active"));
@@ -292,17 +525,28 @@
       });
     });
 
-    fetch("assets/stitch-remote/metadata.json")
+    function normalizeMetadata(metadata) {
+      records = (metadata.screens || []).map((record, galleryIndex) => ({
+        ...record,
+        galleryIndex
+      }));
+      render("all");
+    }
+
+    const bundledMetadata = window.__STITCH_REMOTE_METADATA__;
+    const metadataRequest = bundledMetadata && Array.isArray(bundledMetadata.screens)
+      ? Promise.resolve(bundledMetadata)
+      : fetch("assets/stitch-remote/metadata.json")
       .then((response) => {
         if (!response.ok) throw new Error(`Metadata request failed: ${response.status}`);
-        return response.json();
+        return response.text();
       })
-      .then((metadata) => {
-        records = metadata.screens || [];
-        render("all");
-      })
+      .then((text) => JSON.parse(text.replace(/^\uFEFF/, "")));
+
+    metadataRequest
+      .then(normalizeMetadata)
       .catch((error) => {
-        statusNode.textContent = error.message;
+        statusNode.textContent = `${error.message}. If this page was opened directly from the filesystem, confirm assets/stitch-remote/metadata.js exists or open it through a local static server.`;
       });
   </script>
 </body>

@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
  */
 object StitchShape {
     val pill = RoundedCornerShape(999.dp)
+    val card = RoundedCornerShape(16.dp)
     val cardFeed = RoundedCornerShape(8.dp)
     /** 与 [cardFeed] 顶部圆角一致，用于封面图 clip。 */
     val cardFeedTop = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)

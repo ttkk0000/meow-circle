@@ -17,6 +17,10 @@ dependencies {
     implementation(project(":shared"))
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
+    implementation(libs.ktorClientCore)
+    implementation(libs.ktorClientContentNegotiation)
+    implementation(libs.ktorSerializationKotlinxJson)
+    implementation(libs.ktorClientOkhttp)
 }
 
 compose.desktop {
@@ -25,7 +29,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "MND Desktop"
-            packageVersion = "0.1.0"
+            packageVersion = "1.0.0"
             description = "M&D desktop client aligned to the Stitch V2 design system."
             vendor = "meow & doggie"
         }

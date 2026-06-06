@@ -218,6 +218,140 @@ class MeowCircleSdk(
             updated
         }
 
+    suspend fun createListing(
+        type: String,
+        title: String,
+        description: String,
+        priceCents: Long,
+        currency: String = "CNY",
+        mediaIds: List<Long> = emptyList(),
+    ): Result<Listing> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/listings",
+                    auth = true,
+                    body = CreateListingBody(type, title, description, priceCents, currency, mediaIds)
+                )
+            )
+        }
+
+    suspend fun createOrder(listingId: Long, note: String = ""): Result<Order> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/orders",
+                    auth = true,
+                    body = CreateOrderBody(listingId, note)
+                )
+            )
+        }
+
+    suspend fun payOrder(orderId: Long, method: String = "mock"): Result<Order> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/orders/$orderId/pay",
+                    auth = true,
+                    body = PayOrderBody(method)
+                )
+            )
+        }
+
+    suspend fun cancelOrder(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(
+                httpPostEmpty(
+                    "/api/v1/orders/$orderId/cancel",
+                    auth = true
+                )
+            )
+        }
+
+    suspend fun shipOrder(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(
+                httpPostEmpty(
+                    "/api/v1/orders/$orderId/ship",
+                    auth = true
+                )
+            )
+        }
+
+    suspend fun completeOrder(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(
+                httpPostEmpty(
+                    "/api/v1/orders/$orderId/complete",
+                    auth = true
+                )
+            )
+        }
+
+    suspend fun refundOrder(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(
+                httpPostEmpty(
+                    "/api/v1/orders/$orderId/refund",
+                    auth = true
+                )
+            )
+        }
+
+    suspend fun fetchOrders(role: String): Result<List<Order>> =
+        runCatching {
+            val page: OrdersPage = unwrapData(
+                httpGet(
+                    "/api/v1/me/orders?role=$role",
+                    auth = true
+                )
+            )
+            page.items.orEmpty()
+        }
+
+    suspend fun myListings(): Result<List<Listing>> =
+        runCatching {
+            val page: ListingsPage = unwrapData(
+                httpGet(
+                    "/api/v1/me/listings",
+                    auth = true
+                )
+            )
+            page.items.orEmpty()
+        }
+
+    suspend fun fetchUserStats(userId: Long): Result<UserStats> =
+        runCatching {
+            unwrapData(
+                httpGet(
+                    "/api/v1/users/$userId/stats",
+                    auth = true
+                )
+            )
+        }
+
+    suspend fun fetchConversationDetails(peerId: Long): Result<ConversationDetails> =
+        runCatching {
+            unwrapData(
+                httpGet(
+                    "/api/v1/me/conversations/$peerId",
+                    auth = true
+                )
+            )
+        }
+
+    suspend fun sendMessage(recipientId: Long, content: String): Result<Boolean> =
+        runCatching {
+            readResponse(
+                http.post("$root/api/v1/messages") {
+                    contentType(ContentType.Application.Json)
+                    attachBearer()
+                    setBody(mapOf("recipient_id" to recipientId, "content" to content))
+                }
+            )
+            true
+        }
+
     private suspend fun httpGet(
         path: String,
         auth: Boolean,

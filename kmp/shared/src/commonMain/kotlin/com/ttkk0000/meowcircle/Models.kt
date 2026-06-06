@@ -168,3 +168,70 @@ data class UpdateMeBody(
     @SerialName("avatar_url") val avatarUrl: String = "",
     val bio: String = "",
 )
+
+@Serializable
+data class UserStats(
+    val followers: Long,
+    val following: Long,
+)
+
+@Serializable
+data class Order(
+    val id: Long,
+    @SerialName("buyer_id") val buyerId: Long,
+    @SerialName("seller_id") val sellerId: Long,
+    @SerialName("listing_id") val listingId: Long,
+    @SerialName("listing_title") val listingTitle: String = "",
+    @SerialName("amount_cents") val amountCents: Long,
+    val currency: String = "CNY",
+    val status: String,
+    @SerialName("payment_method") val paymentMethod: String? = null,
+    @SerialName("payment_tx_id") val paymentTxId: String? = null,
+    val note: String? = null,
+    @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String,
+    @SerialName("paid_at") val paidAt: String? = null,
+    @SerialName("shipped_at") val shippedAt: String? = null,
+    @SerialName("completed_at") val completedAt: String? = null,
+)
+
+@Serializable
+data class OrdersPage(
+    val items: List<Order>? = null,
+)
+
+@Serializable
+data class CreateOrderBody(
+    @SerialName("listing_id") val listingId: Long,
+    val note: String = "",
+)
+
+@Serializable
+data class PayOrderBody(
+    val method: String = "mock",
+)
+
+@Serializable
+data class CreateListingBody(
+    val type: String,
+    val title: String,
+    val description: String,
+    @SerialName("price_cents") val priceCents: Long,
+    val currency: String = "CNY",
+    @SerialName("media_ids") val mediaIds: List<Long> = emptyList(),
+)
+
+@Serializable
+data class Message(
+    val id: Long,
+    @SerialName("sender_id") val senderId: Long,
+    @SerialName("recipient_id") val recipientId: Long,
+    val content: String,
+    @SerialName("created_at") val createdAt: String,
+)
+
+@Serializable
+data class ConversationDetails(
+    val messages: List<Message>? = null,
+    val peer: User,
+)
