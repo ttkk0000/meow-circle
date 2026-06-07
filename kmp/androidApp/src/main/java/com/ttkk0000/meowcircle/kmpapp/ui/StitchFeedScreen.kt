@@ -64,6 +64,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.ApiException
+import com.ttkk0000.meowcircle.ActionCounts
 import com.ttkk0000.meowcircle.Conversation
 import com.ttkk0000.meowcircle.Listing
 import com.ttkk0000.meowcircle.MeowCircleSdk
@@ -189,6 +190,7 @@ fun StitchFeedScreen(
     var convLoading by remember { mutableStateOf(false) }
     var profilePosts by remember { mutableStateOf<List<PostFeedItem>?>(null) }
     var profileLoading by remember { mutableStateOf(false) }
+    var actionCounts by remember { mutableStateOf<ActionCounts?>(null) }
     var mockMode by remember { mutableStateOf(false) }
     var feedRetrySignal by remember { mutableStateOf(0) }
 
@@ -408,6 +410,10 @@ fun StitchFeedScreen(
         return
     }
 
+    LaunchedEffect(user.id, tab) {
+        sdk.actionCounts().onSuccess { actionCounts = it }
+    }
+
     val (barTitle, barSubtitle) =
         when (tab) {
             StitchMainTab.Market -> "市集" to "安心好物交易"
@@ -433,6 +439,12 @@ fun StitchFeedScreen(
                 onSelect = { t ->
                     tab = t
                 },
+                badges =
+                    mapOf(
+                        StitchMainTab.Messages to
+                            ((actionCounts?.unreadMessages ?: 0) + (actionCounts?.unreadNotifications ?: 0)),
+                        StitchMainTab.Orders to (actionCounts?.orderActions ?: 0),
+                    ),
             )
         },
     ) { inner ->

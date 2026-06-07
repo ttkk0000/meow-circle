@@ -116,6 +116,11 @@ class MeowCircleSdk(
             page.items.orEmpty()
         }
 
+    suspend fun listingDetail(listingId: Long): Result<ListingDetailData> =
+        runCatching {
+            unwrapData(httpGet("/api/v1/listings/$listingId", auth = false))
+        }
+
     suspend fun register(
         username: String,
         password: String,
@@ -307,6 +312,16 @@ class MeowCircleSdk(
                 )
             )
             page.items.orEmpty()
+        }
+
+    suspend fun orderDetail(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(httpGet("/api/v1/orders/$orderId", auth = true))
+        }
+
+    suspend fun actionCounts(): Result<ActionCounts> =
+        runCatching {
+            unwrapData(httpGet("/api/v1/me/action-counts", auth = true))
         }
 
     suspend fun myListings(): Result<List<Listing>> =

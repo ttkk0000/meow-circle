@@ -11,6 +11,8 @@ const titleInput = form ? form.querySelector('input[name="title"]') : null;
 const contentInput = form ? form.querySelector('textarea[name="content"]') : null;
 const categoryInput = form ? form.querySelector('select[name="category"]') : null;
 const tagsInput = form ? form.querySelector('input[name="tags"]') : null;
+const priceCard = document.querySelector("#compose-price-card");
+const priceInput = document.querySelector("#compose-price-yuan");
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -76,6 +78,14 @@ function parseMediaIds(raw) {
     .filter((n) => !Number.isNaN(n));
 }
 
+function parsePriceToCents(raw) {
+  const normalized = String(raw || "").trim().replace(",", ".");
+  if (!normalized) return null;
+  const amount = Number(normalized);
+  if (!Number.isFinite(amount)) return null;
+  return Math.round(amount * 100);
+}
+
 function setMediaIds(ids) {
   if (!mediaIdsInput) return;
   mediaIdsInput.value = ids.join(",");
@@ -103,9 +113,16 @@ function writeDraft() {
     category: String(fd.get("category") || "daily_share"),
     tags: String(fd.get("tags") || ""),
     media_ids: String(fd.get("media_ids") || ""),
+    price_yuan: String(fd.get("price_yuan") || ""),
   };
   localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
   notify(t("alert.draft_saved"), "success");
+}
+
+function syncCategoryMode() {
+  const isTrade = categoryInput && categoryInput.value === "trade";
+  priceCard?.classList.toggle("hidden", !isTrade);
+  tagsInput?.closest(".bg-white")?.classList.toggle("opacity-60", !!isTrade);
 }
 
 async function onPickMedia(file) {
@@ -137,6 +154,25 @@ form.addEventListener("submit", async (ev) => {
     media_ids: parseMediaIds(fd.get("media_ids")),
   };
   try {
+    if (payload.category === "trade") {
+      const priceCents = parsePriceToCents(fd.get("price_yuan"));
+      if (!priceCents || priceCents <= 0) {
+        notify("请填写有效价格。", "error");
+        return;
+      }
+      const listing = await apiCall("/api/v1/listings", "POST", {
+        type: "product",
+        title: payload.title,
+        description: payload.content,
+        price_cents: priceCents,
+        currency: "CNY",
+        media_ids: payload.media_ids,
+      });
+      localStorage.removeItem(DRAFT_KEY);
+      notify(t("alert.publish_success"), "success");
+      location.href = `/market.html?live=1#l${listing.id}`;
+      return;
+    }
     const post = await apiCall("/api/v1/posts", "POST", payload);
     localStorage.removeItem(DRAFT_KEY);
     notify(t("alert.publish_success"), "success");
@@ -161,5 +197,8 @@ if (draft) {
   if (categoryInput) categoryInput.value = draft.category || "daily_share";
   if (tagsInput) tagsInput.value = draft.tags || "";
   if (mediaIdsInput) mediaIdsInput.value = draft.media_ids || "";
+  if (priceInput) priceInput.value = draft.price_yuan || "";
 }
+categoryInput?.addEventListener("change", syncCategoryMode);
+syncCategoryMode();
 setMediaIds(parseMediaIds(mediaIdsInput ? mediaIdsInput.value : ""));

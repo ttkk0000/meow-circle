@@ -5,6 +5,7 @@ import {router} from 'expo-router';
 import {api, HttpError, type Order} from '@/api';
 import {useAuth} from '@/auth';
 import {Button, Card, Pill, Txt} from '@/components';
+import {hrefOrderDetail} from '@/href';
 import {StitchTopBar} from '@/stitch';
 import {type MndColors, radius, spacing, useMndTheme} from '@/theme';
 
@@ -240,6 +241,13 @@ function OrderCard({
       </View>
       <Txt muted>{statusCopy(order.status, role)}</Txt>
       <View style={styles.actions}>
+        <Button
+          title="详情"
+          icon="info"
+          variant="secondary"
+          disabled={busy}
+          onPress={() => router.push(hrefOrderDetail(order.id))}
+        />
         {role === 'buyer' && order.status === 'pending_payment' ? (
           <>
             <Button title="立即支付" loading={busy} onPress={() => onAction('立即支付', () => api.orders.pay(order.id))} />

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import com.ttkk0000.meowcircle.ActionCounts
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.desktop.screens.*
@@ -97,6 +98,15 @@ private fun MndDesktopShell(
     val colors = LocalDesktopStitchColors.current
     var activeScreen by remember { mutableStateOf("feed") }
     var profileBg by remember { mutableStateOf(sdk.sessionStore().getProfileBackground().ifBlank { "picnic" }) }
+    var actionCounts by remember(currentUser?.id) { mutableStateOf(ActionCounts()) }
+
+    LaunchedEffect(currentUser?.id, activeScreen) {
+        if (currentUser == null) {
+            actionCounts = ActionCounts()
+        } else {
+            sdk.actionCounts().onSuccess { actionCounts = it }
+        }
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -114,6 +124,7 @@ private fun MndDesktopShell(
                 profileBg = profileBg,
                 onProfileBgChange = { profileBg = it },
                 currentUser = currentUser,
+                actionCounts = actionCounts,
                 sdk = sdk
             )
             Box(
@@ -173,9 +184,13 @@ private fun DesktopRail(
     profileBg: String,
     onProfileBgChange: (String) -> Unit,
     currentUser: User?,
+    actionCounts: ActionCounts,
     sdk: MeowCircleSdk,
 ) {
     val colors = LocalDesktopStitchColors.current
+    val messageBadge =
+        if (currentUser == null) 0 else actionCounts.unreadMessages + actionCounts.unreadNotifications
+    val orderBadge = if (currentUser == null) 0 else actionCounts.orderActions
     Card(
         modifier = Modifier.width(248.dp).fillMaxHeight(),
         shape = MndDesktopShape.panel,
@@ -207,10 +222,10 @@ private fun DesktopRail(
             RailItem("Market", "services and goods", selected = activeScreen == "market") {
                 onScreenChange("market")
             }
-            RailItem("Messages", "orders and chat", selected = activeScreen == "messages") {
+            RailItem("Messages", "orders and chat", selected = activeScreen == "messages", badge = messageBadge) {
                 onScreenChange("messages")
             }
-            RailItem("Orders", "purchased items", selected = activeScreen == "orders") {
+            RailItem("Orders", "purchased items", selected = activeScreen == "orders", badge = orderBadge) {
                 onScreenChange("orders")
             }
             if (currentUser == null) {
@@ -336,6 +351,7 @@ private fun RailItem(
     title: String,
     subtitle: String,
     selected: Boolean = false,
+    badge: Int = 0,
     onClick: () -> Unit,
 ) {
     val colors = LocalDesktopStitchColors.current
@@ -352,9 +368,28 @@ private fun RailItem(
     ) {
         BrandDot(12.dp, if (selected) colors.brand else colors.outline)
         Spacer(Modifier.width(10.dp))
-        Column {
+        Column(modifier = Modifier.weight(1f)) {
             Text(title, color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Bold)
             Text(subtitle, color = colors.onSurfaceVariant, fontSize = 11.sp)
+        }
+        if (badge > 0) {
+            Spacer(Modifier.width(8.dp))
+            Box(
+                modifier = Modifier
+                    .height(22.dp)
+                    .defaultMinSize(minWidth = 22.dp)
+                    .clip(MndDesktopShape.pill)
+                    .background(colors.error)
+                    .padding(horizontal = 7.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = if (badge > 99) "99+" else badge.toString(),
+                    color = Color.White,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Black,
+                )
+            }
         }
     }
 }

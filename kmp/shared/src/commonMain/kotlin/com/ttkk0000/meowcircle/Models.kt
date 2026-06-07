@@ -86,6 +86,12 @@ data class ListingsPage(
 )
 
 @Serializable
+data class ListingDetailData(
+    val listing: Listing,
+    val media: List<Media> = emptyList(),
+)
+
+@Serializable
 data class LoginBody(
     val username: String,
     val password: String,
@@ -234,4 +240,15 @@ data class Message(
 data class ConversationDetails(
     val messages: List<Message>? = null,
     val peer: User,
+)
+
+@Serializable
+data class ActionCounts(
+    @SerialName("unread_notifications") val unreadNotifications: Int = 0,
+    @SerialName("unread_messages") val unreadMessages: Int = 0,
+    @SerialName("buyer_order_actions") val buyerOrderActions: Int = 0,
+    @SerialName("seller_order_actions") val sellerOrderActions: Int = 0,
+    @SerialName("order_actions") val orderActions: Int = 0,
+    val total: Int = 0,
+    @SerialName("generated_at") val generatedAt: String = "",
 )

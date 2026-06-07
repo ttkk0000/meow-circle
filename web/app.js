@@ -558,8 +558,16 @@ const bottomNotifDot = document.querySelector("#bottom-notif-dot");
 async function refreshNotifCount() {
   if (!getToken()) return;
   try {
-    const data = await apiCall("/api/v1/notifications?unread=true", "GET");
-    const c = data && typeof data.unread_count === "number" ? data.unread_count : (data.items || []).length;
+    const data =
+      window.MeowShared && typeof window.MeowShared.fetchActionCounts === "function"
+        ? await window.MeowShared.fetchActionCounts()
+        : await apiCall("/api/v1/notifications?unread=true", "GET");
+    const c =
+      data && typeof data.total === "number"
+        ? data.total
+        : data && typeof data.unread_count === "number"
+          ? data.unread_count
+          : (data.items || []).length;
     const on = c > 0;
     if (sidebarNotifDot) sidebarNotifDot.classList.toggle("hidden", !on);
     if (bottomNotifDot) bottomNotifDot.classList.toggle("hidden", !on);

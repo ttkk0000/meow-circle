@@ -32,7 +32,13 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "M&D needs photo library access so you can attach cat-first photos and videos to posts and listings."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

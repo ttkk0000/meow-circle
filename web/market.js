@@ -77,6 +77,24 @@ function typeLabel(type) {
   return labels[type] || type || "好物";
 }
 
+async function enrichListingImages(items) {
+  return Promise.all(
+    items.map(async (listing) => {
+      const firstId = Array.isArray(listing.media_ids) && listing.media_ids.length ? Number(listing.media_ids[0]) : 0;
+      if (!firstId || listing.image) return listing;
+      try {
+        const media = await apiCall(`/api/v1/media/${firstId}`, "GET");
+        if (media && media.kind === "image" && media.url) {
+          return { ...listing, image: media.url };
+        }
+      } catch (_) {
+        // Media is optional for listing cards.
+      }
+      return listing;
+    }),
+  );
+}
+
 async function buyListing(listing) {
   if (!getToken()) {
     notify(t("alert.login_first"), "error");
@@ -154,7 +172,7 @@ async function load() {
   try {
     const data = await apiCall("/api/v1/listings?page=1&page_size=30", "GET");
     const items = data.items || [];
-    listings = items.length ? items : FALLBACK_LISTINGS;
+    listings = items.length ? await enrichListingImages(items) : FALLBACK_LISTINGS;
     renderListings();
     const hash = location.hash.replace(/^#l/, "");
     if (hash) {

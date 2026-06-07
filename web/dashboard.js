@@ -1755,8 +1755,11 @@ if (refreshNotificationsBtn) refreshNotificationsBtn.addEventListener("click", l
 async function refreshNotifBadge() {
   if (!getToken() || !notifBtn) return;
   try {
-    const data = await apiCall("/api/v1/notifications?unread=true", "GET");
-    const c = (data && typeof data.unread_count === "number") ? data.unread_count : (data.items || []).length;
+    const data =
+      window.MeowShared && typeof window.MeowShared.fetchActionCounts === "function"
+        ? await window.MeowShared.fetchActionCounts()
+        : await apiCall("/api/v1/notifications?unread=true", "GET");
+    const c = (data && typeof data.unread_notifications === "number") ? data.unread_notifications : (data.items || []).length;
     if (notifUnreadDot) notifUnreadDot.hidden = c <= 0;
     if (notifCount) {
       if (c > 0) {

@@ -1,117 +1,133 @@
-# Meow Circle Mobile
+# M&D Mobile
 
-A cross-platform (iOS + Android + Web) client for the Meow Circle Go
-backend, built with **Expo SDK 52**, **React Native 0.76** (new
-architecture), **TypeScript** and **Expo Router**.
+A cross-platform (iOS + Android + Web) client for **M&D = meow & doggie**,
+built with **Expo SDK 52**, **React Native 0.76** (new architecture),
+**TypeScript**, and **Expo Router**.
 
-## Why Expo and not "bare" React Native
+The product is cat-first and doggie-friendly. Runtime UI follows the Stitch V2
+contract: one active global theme at a time, chosen from Honey, Mint, Night, or
+Neutral.
 
-| Feature                  | Expo                            | Bare RN              |
-| ------------------------ | ------------------------------- | -------------------- |
-| iOS builds from Windows  | ✅ via EAS Build (cloud)         | ❌ need a Mac         |
-| OTA (over-the-air) fixes | ✅ `eas update`                  | 🟡 DIY CodePush      |
-| File-based routing       | ✅ Expo Router                   | 🟡 DIY / react-navigation |
-| Web output               | ✅ same codebase → `expo export --platform web` | 🟡 RNW manual setup |
-| Typed routes             | ✅ `experiments.typedRoutes`     | 🟡                    |
-| SecureStore / Fonts      | ✅ first-party modules           | 🟡 community pkgs     |
+## Why Expo and not bare React Native
 
-You can always "eject" (`npx expo prebuild`) later if you hit a limit.
+| Feature | Expo | Bare RN |
+| --- | --- | --- |
+| iOS cloud builds | EAS Build | Usually needs a Mac |
+| OTA fixes | `eas update` | DIY |
+| File-based routing | Expo Router | DIY / react-navigation |
+| Web output | `expo export --platform web` | RNW setup |
+| Typed routes | `experiments.typedRoutes` | Manual |
+| SecureStore / media picker | First-party modules | Community packages |
+
+You can eject later with `npx expo prebuild` if a native limitation appears.
 
 ## Structure
 
-```
+```text
 mobile/
-├── app/                     # Expo Router — files = routes
-│   ├── _layout.tsx          # Root stack + <AuthProvider>
-│   ├── index.tsx            # Auth-gate redirect
-│   ├── (auth)/              # Public group
+├── app/
+│   ├── _layout.tsx
+│   ├── index.tsx
+│   ├── (auth)/
 │   │   ├── _layout.tsx
 │   │   ├── login.tsx
 │   │   └── register.tsx
-│   └── (tabs)/              # Private group (tab bar)
+│   └── (tabs)/
 │       ├── _layout.tsx
-│       ├── index.tsx        # Feed
+│       ├── index.tsx
 │       ├── market.tsx
-│       ├── messages.tsx
+│       ├── listing/[id].tsx
+│       ├── messages/
+│       ├── orders.tsx
+│       ├── order/[id].tsx
+│       ├── compose.tsx
 │       └── profile.tsx
 └── src/
-    ├── api.ts               # typed fetch client + token storage
-    ├── auth.tsx             # <AuthProvider> + useAuth()
-    ├── components.tsx       # Screen, Card, Button, Input, Txt, Pill
-    └── theme.ts             # Cursor Design System tokens
+    ├── api.ts
+    ├── auth.tsx
+    ├── components.tsx
+    ├── href.ts
+    └── theme.ts
 ```
 
 ## Setup
 
 ```bash
 cd mobile
-npm install          # or: pnpm i / bun i / yarn
-cp .env.example .env # point EXPO_PUBLIC_API_URL at your Go backend
-npm start            # opens the Expo DevTools
+npm install
+cp .env.example .env
+npm start
 ```
 
-Then:
+Then press `i` for iOS simulator on macOS, `a` for Android emulator, or `w` for
+web.
 
-- Press **`i`** to launch the iOS simulator (macOS only).
-- Press **`a`** to launch an Android emulator.
-- Press **`w`** to launch the web build in your browser.
-- Scan the QR code with the [Expo Go](https://expo.dev/client) app on
-  your phone for hot-reload on-device.
+### API base URL
 
-### Pointing at a local backend
-
-The app reads `EXPO_PUBLIC_API_URL` at bundle-build time. If you omit it,
-`src/api.ts` falls back to `http://<lan-host>:8080` so Expo Go on your
-phone can hit your dev machine. For **Android emulator** specifically
-use `http://10.0.2.2:8080`.
-
-To run the backend from the repo root:
-
-```bash
-# repo root
-make run           # in-memory store, no external deps
-# …or with Postgres + Redis:
-make up            # docker compose: postgres + redis
-DATABASE_URL=postgres://meow:meowpass@localhost:5432/meow?sslmode=disable \
-REDIS_URL=redis://localhost:6379/0 \
-make run
-```
+The app reads `EXPO_PUBLIC_API_URL` at bundle-build time. If omitted,
+`src/api.ts` falls back to Expo's LAN host for devices and
+`http://10.0.2.2:8080` for Android emulators.
 
 ## Design system
 
-`src/theme.ts` mirrors `web/theme.css`: warm-cream surfaces, near-black
-ink, crimson hover/destructive, diffused shadows. Spacing uses `s1`–`s10`
-(same pixel steps as `--space-1`…`--space-10` on web); `xs`/`sm`/…/`xxl`
-remain aliases for older callsites. The three-font system
-currently resolves to platform defaults (`System` / `Georgia` / `Menlo`);
-swap in the Cursor trio (Söhne / Source Serif / JetBrains Mono) via
-`expo-font` when the assets are ready.
+`src/theme.ts` mirrors the Stitch V2 M&D token system:
 
-## Building for stores
+- Themes: Honey, Mint, Night, Neutral.
+- Runtime rule: exactly one active global theme; do not hardcode page-specific
+  Feed/Market colors.
+- Radius: compact Stitch panels/cards use 8px on this client.
+- Copy: visible brand stays `M&D`, supporting copy stays `meow & doggie`.
+- Content: cats lead feed/profile identity; doggie content belongs in services,
+  activities, marketplace, adoption, and secondary stories.
 
-Once you have an [EAS](https://expo.dev) account:
+Compose supports post creation, listing creation, and image/video selection via
+`expo-image-picker`. Uploaded media is sent to `POST /api/v1/media` and linked
+by `media_ids`.
+
+## Building
+
+Once you have an EAS account:
 
 ```bash
 npm i -g eas-cli
 eas login
 eas build:configure
-eas build --platform android  # cloud build, no local Gradle needed
-eas build --platform ios      # cloud build, no Mac needed
+eas build --platform android
+eas build --platform ios
 ```
 
-Shipping updates without re-submitting to the stores:
+From the repo root, the Makefile aliases are:
 
 ```bash
-eas update --branch main --message "fix: typo in feed"
+make package-rn-web
+make package-rn-android
+make package-rn-android-eas
+make package-rn-ios        # macOS/Xcode local build
+make package-rn-ios-eas
+```
+
+Shipping updates without re-submitting to stores:
+
+```bash
+eas update --branch main --message "fix: mobile copy"
 ```
 
 ## Scripts
 
-| Script            | What it does                               |
-| ----------------- | ------------------------------------------ |
-| `npm start`       | Launch Expo dev server                     |
-| `npm run android` | Dev server + target Android                |
-| `npm run ios`     | Dev server + target iOS                    |
-| `npm run web`     | Dev server + target web                    |
-| `npm run typecheck` | `tsc --noEmit`                           |
-| `npm run fix-deps` | `expo install --fix` — realign SDK peers  |
+| Script | What it does |
+| --- | --- |
+| `npm start` | Launch Expo dev server |
+| `npm run android` | Dev server + target Android |
+| `npm run ios` | Dev server + target iOS |
+| `npm run web` | Dev server + target web |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run fix-deps` | `expo install --fix` to realign SDK peers |
+
+## Local verification notes
+
+This repo's agent rules forbid running local Go build/run/test and Gradle on
+the current machine. For mobile work here, prefer:
+
+```bash
+npm --prefix mobile run typecheck
+```

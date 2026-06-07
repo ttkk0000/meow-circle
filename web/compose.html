@@ -75,6 +75,14 @@
           <input name="tags" class="w-full rounded-2xl bg-surface-container-low border-none py-3 px-4 focus:ring-2 focus:ring-primary-container" data-i18n-placeholder="form.tags" placeholder="逗号分隔" />
         </div>
       </div>
+      <div id="compose-price-card" class="hidden bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)]">
+        <label class="block text-label-md font-semibold text-on-surface-variant mb-2" data-i18n="form.stitch_price_yuan">价格（元）</label>
+        <div class="flex items-center rounded-2xl bg-surface-container-low px-4 focus-within:ring-2 focus-within:ring-primary-container">
+          <span class="text-headline-lg font-bold text-on-surface">¥</span>
+          <input id="compose-price-yuan" name="price_yuan" inputmode="decimal" class="w-full border-none bg-transparent py-3 px-3 text-headline-lg font-bold text-on-surface placeholder:text-outline focus:ring-0" placeholder="68.00" />
+        </div>
+        <p class="mt-2 text-label-md text-on-surface-variant" data-i18n="form.stitch_price_minor_hint">金额将按所选币种以「分」为单位提交</p>
+      </div>
       <div class="bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)]">
         <label class="block text-label-md font-semibold text-on-surface-variant mb-2" data-i18n="media.attach_hint">媒体 ID</label>
         <input id="compose-media-ids" name="media_ids" class="w-full rounded-2xl bg-surface-container-low border-none py-3 px-4 focus:ring-2 focus:ring-primary-container" placeholder="1,2,3" />

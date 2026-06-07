@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -266,6 +267,116 @@ func TestProtectedRouteRequiresBearer(t *testing.T) {
 	h.ServeHTTP(rec, req)
 	if rec.Code != http.StatusUnauthorized {
 		t.Fatalf("unauth status = %d, want 401", rec.Code)
+	}
+}
+
+func TestActionCountsAggregatesUnreadAndOrders(t *testing.T) {
+	h := setupTestServer(t)
+
+	register := func(username string) (string, int64) {
+		t.Helper()
+		body := fmt.Sprintf(`{"username":%q,"password":"hunter22","nickname":%q}`, username, username)
+		req := httptest.NewRequest(http.MethodPost, "/api/v1/auth/register", strings.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		if rec.Code != http.StatusCreated {
+			t.Fatalf("register %s: status=%d body=%s", username, rec.Code, rec.Body.String())
+		}
+		env := decodeEnvelope(t, rec.Body.Bytes())
+		var data struct {
+			Token string `json:"token"`
+			User  struct {
+				ID int64 `json:"id"`
+			} `json:"user"`
+		}
+		if err := json.Unmarshal(env.Data, &data); err != nil {
+			t.Fatalf("decode register data: %v", err)
+		}
+		return data.Token, data.User.ID
+	}
+
+	doJSON := func(method, path, token, body string) apiEnvelope {
+		t.Helper()
+		req := httptest.NewRequest(method, path, strings.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+		if token != "" {
+			req.Header.Set("Authorization", "Bearer "+token)
+		}
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		if rec.Code < 200 || rec.Code >= 300 {
+			t.Fatalf("%s %s: status=%d body=%s", method, path, rec.Code, rec.Body.String())
+		}
+		return decodeEnvelope(t, rec.Body.Bytes())
+	}
+
+	sellerToken, sellerID := register("seller_action_counts")
+	buyerToken, buyerID := register("buyer_action_counts")
+
+	env := doJSON(
+		http.MethodPost,
+		"/api/v1/listings",
+		sellerToken,
+		`{"type":"product","title":"Action count cat toy","description":"safe toy","price_cents":6800,"currency":"CNY"}`,
+	)
+	var listing struct {
+		ID int64 `json:"id"`
+	}
+	if err := json.Unmarshal(env.Data, &listing); err != nil {
+		t.Fatalf("decode listing: %v", err)
+	}
+
+	env = doJSON(
+		http.MethodPost,
+		"/api/v1/orders",
+		buyerToken,
+		fmt.Sprintf(`{"listing_id":%d,"note":"badge test"}`, listing.ID),
+	)
+	var order struct {
+		ID int64 `json:"id"`
+	}
+	if err := json.Unmarshal(env.Data, &order); err != nil {
+		t.Fatalf("decode order: %v", err)
+	}
+
+	doJSON(
+		http.MethodPost,
+		"/api/v1/messages",
+		sellerToken,
+		fmt.Sprintf(`{"recipient_id":%d,"content":"Order is ready"}`, buyerID),
+	)
+
+	env = doJSON(http.MethodGet, "/api/v1/me/action-counts", buyerToken, "")
+	var buyerCounts actionCountsResponse
+	if err := json.Unmarshal(env.Data, &buyerCounts); err != nil {
+		t.Fatalf("decode buyer counts: %v", err)
+	}
+	if buyerCounts.BuyerOrderActions != 1 || buyerCounts.OrderActions != 1 {
+		t.Fatalf("buyer order actions = %+v, want buyer=1 total=1", buyerCounts)
+	}
+	if buyerCounts.UnreadMessages != 1 {
+		t.Fatalf("buyer unread messages = %d, want 1", buyerCounts.UnreadMessages)
+	}
+	if buyerCounts.UnreadNotifications == 0 || buyerCounts.Total < 3 {
+		t.Fatalf("buyer aggregate counts look wrong: %+v", buyerCounts)
+	}
+
+	doJSON(http.MethodPost, fmt.Sprintf("/api/v1/orders/%d/pay", order.ID), buyerToken, `{"method":"mock"}`)
+
+	env = doJSON(http.MethodGet, "/api/v1/me/action-counts", sellerToken, "")
+	var sellerCounts actionCountsResponse
+	if err := json.Unmarshal(env.Data, &sellerCounts); err != nil {
+		t.Fatalf("decode seller counts: %v", err)
+	}
+	if sellerCounts.SellerOrderActions != 1 || sellerCounts.OrderActions != 1 {
+		t.Fatalf("seller order actions = %+v, want seller=1 total=1", sellerCounts)
+	}
+	if sellerCounts.UnreadMessages != 0 {
+		t.Fatalf("seller unread messages = %d, want 0", sellerCounts.UnreadMessages)
+	}
+	if sellerID == buyerID {
+		t.Fatal("test users should be distinct")
 	}
 }
 

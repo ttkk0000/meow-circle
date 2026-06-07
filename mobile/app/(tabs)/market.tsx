@@ -6,6 +6,7 @@ import {MaterialIcons} from '@expo/vector-icons';
 import {api, HttpError, type Listing} from '@/api';
 import {useAuth} from '@/auth';
 import {Button, Card, Pill, Txt} from '@/components';
+import {hrefListingDetail} from '@/href';
 import {StitchSearchField} from '@/stitch';
 import {type MndColors, radius, spacing, useMndTheme} from '@/theme';
 
@@ -143,6 +144,13 @@ export default function MarketScreen() {
                     </Txt>
                   </View>
                   <View style={styles.actionRow}>
+                    <Button
+                      title="查看详情"
+                      icon="info"
+                      variant="secondary"
+                      disabled={buyingId === listing.id}
+                      onPress={() => router.push(hrefListingDetail(listing.id))}
+                    />
                     {canBuy ? (
                       <Button
                         title="立即购买"

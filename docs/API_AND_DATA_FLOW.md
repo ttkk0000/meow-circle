@@ -56,6 +56,7 @@ Clients that unwrap the envelope:
 | `POST` | `/api/v1/auth/login` | no | Login and return JWT + user. |
 | `GET` | `/api/v1/auth/me` | bearer | Current user. |
 | `PATCH` | `/api/v1/me` | bearer | Update nickname/avatar/bio. |
+| `GET` | `/api/v1/me/action-counts` | bearer | Compact badge counts for unread notifications, unread messages, and order actions. |
 | `GET` | `/api/v1/users/{id}` | no | Public profile. |
 
 ### Search

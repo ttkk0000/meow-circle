@@ -1,6 +1,6 @@
 # M&D Docs Hub
 
-Last updated: 2026-06-06
+Last updated: 2026-06-07
 
 This folder is the documentation entry point for **M&D = meow & doggie**.
 The product is cat-first and doggie-friendly: cats lead the emotional identity,
@@ -17,6 +17,8 @@ activities, services, marketplace, adoption, and secondary stories.
 | Expo mobile | `FRONTEND_SURFACE_MAP.md` | `RUNBOOK.md`, `design/MND_UI_ALIGNMENT_GUIDE.md` |
 | KMP Android | `PROJECT_STRUCTURE.md` | `FRONTEND_SURFACE_MAP.md`, `RUNBOOK.md` |
 | Future agents | `../AGENTS.md` | `design/MND_STITCH_AI_RULES.md`, `design/MND_DESIGN_MEMORY.md` |
+| Product engineering roadmap | `TECHNICAL_IMPROVEMENT_OUTLINE.md` | `API_AND_DATA_FLOW.md`, `FRONTEND_SURFACE_MAP.md` |
+| Client parity tracking | `CLIENT_PARITY_CHECKLIST.md` | `TECHNICAL_IMPROVEMENT_OUTLINE.md`, `FRONTEND_SURFACE_MAP.md` |
 
 ## Current Source Map
 
@@ -25,6 +27,8 @@ activities, services, marketplace, adoption, and secondary stories.
 | Project structure | `PROJECT_STRUCTURE.md` |
 | API and data flow | `API_AND_DATA_FLOW.md` |
 | Frontend surface map | `FRONTEND_SURFACE_MAP.md` |
+| Technical improvement outline | `TECHNICAL_IMPROVEMENT_OUTLINE.md` |
+| Client parity checklist | `CLIENT_PARITY_CHECKLIST.md` |
 | Runbook | `RUNBOOK.md` |
 | Figma/design index | `design/MND_FIGMA_DESIGN_DOCUMENT.md` |
 | AI Stitch design rules | `design/MND_STITCH_AI_RULES.md` |
@@ -40,6 +44,7 @@ activities, services, marketplace, adoption, and secondary stories.
 | Expo tokens | `../mobile/src/theme.ts` |
 | KMP Android tokens | `../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/theme` |
 | KMP Desktop client | `../kmp/desktopApp` |
+| Packaging commands | `../Makefile` targets `package-kmp`, `package-kmp-android`, `package-kmp-desktop`, `package-kmp-ios-framework`, `package-rn-web`, `package-rn-android`, `package-rn-ios`, `package-rn-android-eas`, `package-rn-ios-eas` |
 
 ## Current UI Status
 

@@ -266,6 +266,7 @@ func (r *Router) routes() {
 
 	r.mux.HandleFunc("/api/v1/payments/methods", r.handlePaymentMethods)
 
+	r.mux.HandleFunc("/api/v1/me/action-counts", r.requireAuth(r.handleMyActionCounts))
 	r.mux.HandleFunc("/api/v1/me/posts", r.requireAuth(r.handleMyPosts))
 	r.mux.HandleFunc("/api/v1/me/follow/", r.requireAuth(r.handleMeFollow))
 	r.mux.HandleFunc("/api/v1/me/listings", r.requireAuth(r.handleMyListings))

@@ -155,6 +155,12 @@ export interface MediaItem {
   created_at: string;
 }
 
+export interface MediaUploadInput {
+  uri: string;
+  name?: string | null;
+  type?: string | null;
+}
+
 export interface Comment {
   id: number;
   post_id: number;
@@ -182,6 +188,11 @@ export interface Listing {
   currency: string;
   media_ids?: number[];
   created_at: string;
+}
+
+export interface ListingDetailData {
+  listing: Listing;
+  media: MediaItem[];
 }
 
 export type OrderStatus =
@@ -227,6 +238,16 @@ export interface Message {
   content: string;
   read: boolean;
   created_at: string;
+}
+
+export interface ActionCounts {
+  unread_notifications: number;
+  unread_messages: number;
+  buyer_order_actions: number;
+  seller_order_actions: number;
+  order_actions: number;
+  total: number;
+  generated_at: string;
 }
 
 export interface ApiError {
@@ -298,6 +319,68 @@ async function request<T>(path: string, opts: Options = {}): Promise<T> {
   }
 
   return unwrapEnvelope(data) as T;
+}
+
+async function uploadRequest<T>(path: string, file: MediaUploadInput): Promise<T> {
+  const h: Record<string, string> = {
+    Accept: 'application/json',
+  };
+  const token = await tokenStore.get();
+  if (token) h.Authorization = `Bearer ${token}`;
+
+  const name = file.name?.trim() || inferFilename(file.uri);
+  const type = file.type?.trim() || inferMimeFromFilename(name);
+  const form = new FormData();
+  form.append(
+    'file',
+    {
+      uri: file.uri,
+      name,
+      type,
+    } as unknown as Blob,
+  );
+
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: 'POST',
+    headers: h,
+    body: form,
+  });
+  const text = await res.text();
+  const data = text ? safeJson(text) : null;
+
+  if (!res.ok) {
+    const raw = data && typeof data === 'object' ? (data as Record<string, unknown>) : null;
+    const err: ApiError = raw
+      ? {
+          code: typeof raw.code === 'number' ? raw.code : res.status,
+          message: typeof raw.message === 'string' ? raw.message : text || 'upload failed',
+        }
+      : { code: res.status, message: text || 'upload failed' };
+    if (res.status === 401) {
+      await tokenStore.clear();
+      await userStore.clear();
+    }
+    throw new HttpError(res.status, err);
+  }
+
+  return unwrapEnvelope(data) as T;
+}
+
+function inferFilename(uri: string): string {
+  const clean = uri.split('?')[0] ?? uri;
+  const last = clean.split('/').filter(Boolean).pop();
+  return last && last.includes('.') ? last : `mnd-media-${Date.now()}.jpg`;
+}
+
+function inferMimeFromFilename(name: string): string {
+  const lower = name.toLowerCase();
+  if (lower.endsWith('.png')) return 'image/png';
+  if (lower.endsWith('.webp')) return 'image/webp';
+  if (lower.endsWith('.gif')) return 'image/gif';
+  if (lower.endsWith('.mp4')) return 'video/mp4';
+  if (lower.endsWith('.webm')) return 'video/webm';
+  if (lower.endsWith('.mov')) return 'video/quicktime';
+  return 'image/jpeg';
 }
 
 function safeJson(s: string): unknown {
@@ -384,6 +467,7 @@ export const api = {
         '/api/v1/listings',
         { auth: false },
       ).then((p) => p.items),
+    get: (id: number) => request<ListingDetailData>(`/api/v1/listings/${id}`, { auth: false }),
     create: (body: Partial<Listing> & { title: string; price_cents: number }) =>
       request<Listing>('/api/v1/listings', { method: 'POST', body }),
   },
@@ -393,6 +477,7 @@ export const api = {
       request<{ items: Order[]; role?: string }>(
         `/api/v1/me/orders?role=${encodeURIComponent(role)}`,
       ).then((p) => p.items),
+    get: (id: number) => request<Order>(`/api/v1/orders/${id}`),
     create: (listingId: number, note = '') =>
       request<Order>('/api/v1/orders', {
         method: 'POST',
@@ -422,11 +507,19 @@ export const api = {
       request<Message>('/api/v1/messages', { method: 'POST', body }),
   },
 
+  media: {
+    upload: (file: MediaUploadInput) => uploadRequest<MediaItem>('/api/v1/media', file),
+  },
+
   notifications: {
     unreadCount: () =>
       request<{ items: unknown[]; unread_count: number }>('/api/v1/notifications?unread=true')
         .then((d) => ({ count: d.unread_count }))
         .catch(() => ({ count: 0 })),
+  },
+
+  actionCounts: {
+    get: () => request<ActionCounts>('/api/v1/me/action-counts'),
   },
 
   /** POST follow / DELETE unfollow (auth). */

@@ -6,6 +6,9 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.MailOutline
 import androidx.compose.material.icons.outlined.Receipt
 import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -14,6 +17,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 
@@ -41,10 +45,12 @@ private val NAV_ITEMS =
     )
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun StitchBottomNav(
     selected: StitchMainTab,
     onSelect: (StitchMainTab) -> Unit,
     modifier: Modifier = Modifier,
+    badges: Map<StitchMainTab, Int> = emptyMap(),
 ) {
     NavigationBar(
         modifier = modifier,
@@ -53,14 +59,28 @@ fun StitchBottomNav(
     ) {
         NAV_ITEMS.forEach { spec ->
             val sel = spec.tab == selected
+            val badgeCount = badges[spec.tab]?.coerceAtLeast(0) ?: 0
             NavigationBarItem(
                 selected = sel,
                 onClick = { onSelect(spec.tab) },
                 icon = {
-                    Icon(
-                        imageVector = spec.icon,
-                        contentDescription = spec.label,
-                    )
+                    BadgedBox(
+                        badge = {
+                            if (badgeCount > 0) {
+                                Badge(
+                                    containerColor = StitchPalette.Error,
+                                    contentColor = Color.White,
+                                ) {
+                                    Text(formatBadgeCount(badgeCount), style = MaterialTheme.typography.labelSmall)
+                                }
+                            }
+                        },
+                    ) {
+                        Icon(
+                            imageVector = spec.icon,
+                            contentDescription = spec.label,
+                        )
+                    }
                 },
                 label = { Text(spec.label, style = MaterialTheme.typography.labelMedium) },
                 colors =
@@ -75,3 +95,6 @@ fun StitchBottomNav(
         }
     }
 }
+
+private fun formatBadgeCount(value: Int): String =
+    if (value > 99) "99+" else value.toString()

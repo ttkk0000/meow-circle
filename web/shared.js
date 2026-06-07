@@ -1597,6 +1597,38 @@
     }
   }
 
+  function zeroActionCounts() {
+    return {
+      unread_notifications: 0,
+      unread_messages: 0,
+      buyer_order_actions: 0,
+      seller_order_actions: 0,
+      order_actions: 0,
+      total: 0,
+      generated_at: "",
+    };
+  }
+
+  async function fetchActionCounts() {
+    const token = localStorage.getItem("meow_token");
+    if (!token) return zeroActionCounts();
+    const res = await fetch("/api/v1/me/action-counts", {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("meow_token");
+      localStorage.removeItem("meow_user");
+      applyGlobalAuthState();
+      return zeroActionCounts();
+    }
+    if (!res.ok) return zeroActionCounts();
+    const body = await res.json().catch(() => null);
+    return (body && body.data) || zeroActionCounts();
+  }
+
   // Expose globally
   window.MeowShared = {
     t,
@@ -1619,6 +1651,7 @@
     SUPPORTED_THEMES,
     SUPPORTED_LANGS,
     applyGlobalAuthState,
+    fetchActionCounts,
   };
 
   // Apply theme immediately (before paint)
@@ -1641,4 +1674,3 @@
     }
   });
 })();
-

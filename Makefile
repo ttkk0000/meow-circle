@@ -98,6 +98,13 @@ package-kmp-android-debug: ## Package KMP Android debug APK
 package-kmp-desktop: ## Package KMP desktop app for the current OS
 	cd $(KMP_DIR) && $(KMP_GRADLE) :desktopApp:packageDistributionForCurrentOS
 
+.PHONY: package-kmp
+package-kmp: package-kmp-android package-kmp-desktop ## Package KMP Android release APK + desktop distribution
+
+.PHONY: package-kmp-ios-framework
+package-kmp-ios-framework: ## Build/sign KMP shared iOS framework for Xcode (macOS/Xcode only)
+	cd $(KMP_DIR) && $(KMP_GRADLE) :shared:embedAndSignAppleFrameworkForXcode
+
 .PHONY: package-rn-web
 package-rn-web: ## Export RN/Expo web static bundle
 	cd $(MOBILE_DIR) && $(EXPO) export --platform web
@@ -109,6 +116,17 @@ package-rn-android: ## Build RN/Expo Android release locally
 .PHONY: package-rn-android-eas
 package-rn-android-eas: ## Build RN/Expo Android with EAS
 	cd $(MOBILE_DIR) && $(EAS) build --platform android
+
+.PHONY: package-rn-ios
+package-rn-ios: ## Build RN/Expo iOS release locally (macOS/Xcode only)
+	cd $(MOBILE_DIR) && $(EXPO) run:ios --configuration Release
+
+.PHONY: package-rn-ios-eas
+package-rn-ios-eas: ## Build RN/Expo iOS with EAS
+	cd $(MOBILE_DIR) && $(EAS) build --platform ios
+
+.PHONY: package-rn
+package-rn: package-rn-web package-rn-android ## Export RN/Expo web + local Android release
 
 # ----- Meta -------------------------------------------------------------------
 
