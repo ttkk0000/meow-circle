@@ -1,52 +1,46 @@
 package com.ttkk0000.meowcircle.kmpapp.ui.components
 
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.AddCircleOutline
-import androidx.compose.material.icons.outlined.Explore
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.MailOutline
+import androidx.compose.material.icons.filled.Pets
+import androidx.compose.material.icons.outlined.ChatBubbleOutline
+import androidx.compose.material.icons.outlined.ReceiptLong
+import androidx.compose.material.icons.outlined.RssFeed
+import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 
 enum class StitchMainTab {
-    Home,
-    Discover,
-    Compose,
+    Feed,
+    Market,
     Messages,
+    Orders,
     Profile,
 }
 
 private data class NavSpec(
     val tab: StitchMainTab,
-    val label: String,
+    val labelRes: Int,
     val icon: ImageVector,
 )
 
 private val NAV_ITEMS =
     listOf(
-        NavSpec(StitchMainTab.Home, "首页", Icons.Outlined.Home),
-        NavSpec(StitchMainTab.Discover, "发现", Icons.Outlined.Explore),
-        NavSpec(StitchMainTab.Compose, "发布", Icons.Outlined.AddCircleOutline),
-        NavSpec(StitchMainTab.Messages, "消息", Icons.Outlined.MailOutline),
-        NavSpec(StitchMainTab.Profile, "我的", Icons.Outlined.AccountCircle),
+        NavSpec(StitchMainTab.Feed, R.string.nav_feed, Icons.Outlined.RssFeed),
+        NavSpec(StitchMainTab.Market, R.string.nav_market, Icons.Outlined.Storefront),
+        NavSpec(StitchMainTab.Messages, R.string.nav_messages, Icons.Outlined.ChatBubbleOutline),
+        NavSpec(StitchMainTab.Orders, R.string.nav_orders, Icons.Outlined.ReceiptLong),
+        NavSpec(StitchMainTab.Profile, R.string.nav_profile, Icons.Filled.Pets),
     )
 
 @Composable
@@ -62,44 +56,22 @@ fun StitchBottomNav(
     ) {
         NAV_ITEMS.forEach { spec ->
             val sel = spec.tab == selected
+            val label = stringResource(spec.labelRes)
             NavigationBarItem(
                 selected = sel,
                 onClick = { onSelect(spec.tab) },
                 icon = {
-                    if (spec.tab == StitchMainTab.Compose) {
-                        Surface(
-                            modifier =
-                                Modifier
-                                    .size(44.dp)
-                                    .border(1.dp, StitchPalette.Brand.copy(alpha = 0.2f), CircleShape),
-                            shape = CircleShape,
-                            color = if (sel) StitchPalette.Brand else StitchPalette.SurfaceLow,
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Icon(
-                                    imageVector = spec.icon,
-                                    contentDescription = spec.label,
-                                    tint = if (sel) Color.White else StitchPalette.Brand,
-                                    modifier = Modifier.size(25.dp),
-                                )
-                            }
-                        }
-                    } else {
-                        Icon(
-                            imageVector = spec.icon,
-                            contentDescription = spec.label,
-                        )
-                    }
+                    Icon(
+                        imageVector = spec.icon,
+                        contentDescription = label,
+                    )
                 },
-                label = { Text(spec.label, style = MaterialTheme.typography.labelMedium) },
+                label = { Text(label, style = MaterialTheme.typography.labelMedium) },
                 colors =
                     NavigationBarItemDefaults.colors(
                         selectedIconColor = StitchPalette.Brand,
                         selectedTextColor = StitchPalette.Brand,
-                        indicatorColor = if (spec.tab == StitchMainTab.Compose) Color.Transparent else StitchPalette.BrandMuted,
+                        indicatorColor = StitchPalette.BrandMuted,
                         unselectedIconColor = StitchPalette.Outline,
                         unselectedTextColor = StitchPalette.OnSurfaceVariant,
                     ),

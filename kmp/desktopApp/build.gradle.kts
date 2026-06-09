@@ -1,5 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
     alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.composeMultiplatform)
@@ -23,11 +21,15 @@ compose.desktop {
     application {
         mainClass = "com.ttkk0000.meowcircle.desktop.MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            // targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "MND Desktop"
-            packageVersion = "0.1.0"
+            packageVersion = "1.0.0"
             description = "M&D desktop client aligned to the Stitch V2 design system."
             vendor = "meow & doggie"
         }
     }
+}
+
+rootProject.tasks.matching { it.name.contains("wix", ignoreCase = true) }.configureEach {
+    enabled = false
 }

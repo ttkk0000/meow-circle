@@ -1,8 +1,12 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,31 +16,26 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.outlined.AddCircleOutline
-import androidx.compose.material.icons.outlined.ChatBubbleOutline
-import androidx.compose.material.icons.outlined.ChevronRight
-import androidx.compose.material.icons.outlined.Groups
-import androidx.compose.material.icons.automirrored.outlined.Label
+import androidx.compose.material.icons.outlined.AddPhotoAlternate
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Public
-import androidx.compose.material.icons.outlined.SaveAlt
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,20 +45,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.humanizeClientFailure
-import com.ttkk0000.meowcircle.kmpapp.BuildConfig
-import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
+import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import kotlinx.coroutines.launch
 
-/** MOBILE「M&D 发布帖子」：猫猫优先的 Material 3 表单 + 调用 `POST /api/v1/posts`。 */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StitchComposeScreen(
     sdk: MeowCircleSdk,
@@ -68,70 +67,75 @@ fun StitchComposeScreen(
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
-    var title by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
     var categoryKey by remember { mutableStateOf("daily_share") }
+    var visibilityKey by remember { mutableStateOf("public") }
+    var hasLocation by remember { mutableStateOf(false) }
+    var pickedMediaCount by remember { mutableStateOf(1) }
     var busy by remember { mutableStateOf(false) }
     var err by remember { mutableStateOf<String?>(null) }
-    var pickedMediaCount by remember { mutableStateOf(0) }
-    var tagsSummary by remember { mutableStateOf("M&D、猫猫、新手…") }
-    var locationSummary by remember { mutableStateOf("分享你所在的位置") }
-    var circleSummary by remember { mutableStateOf("猫猫新手村") }
-    var visibilitySummary by remember { mutableStateOf("公开") }
-    var saveToAlbum by remember { mutableStateOf(false) }
+    val defaultPostTitle = stringResource(R.string.compose_default_title)
+    val visibilityValue = stringResource(if (visibilityKey == "public") R.string.compose_public else R.string.compose_friends)
+    val locationValue = stringResource(if (hasLocation) R.string.compose_location_shanghai else R.string.compose_add_location)
+
+    fun publish() {
+        val body = content.trim()
+        if (body.isBlank()) return
+        val title = body.lineSequence().firstOrNull()?.take(42)?.ifBlank { defaultPostTitle } ?: defaultPostTitle
+        err = null
+        busy = true
+        scope.launch {
+            sdk.createPost(title = title, content = body, category = categoryKey).fold(
+                onSuccess = {
+                    onPosted()
+                    onClose()
+                },
+                onFailure = { e ->
+                    err = (e as? ApiException)?.message ?: humanizeClientFailure(e, sdk.baseUrl)
+                },
+            )
+            busy = false
+        }
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        containerColor = StitchLoginRef.Background,
+        containerColor = StitchPalette.Canvas,
         topBar = {
-            TopAppBar(
-                title = { Text("M&D 发布台", fontWeight = FontWeight.SemiBold) },
-                navigationIcon = {
-                    IconButton(onClick = onClose, enabled = !busy) {
-                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "关闭")
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(StitchPalette.Surface)
+                        .border(1.dp, StitchPalette.BorderHairline)
+                        .padding(horizontal = 10.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(onClick = onClose, enabled = !busy, modifier = Modifier.size(44.dp)) {
+                    Icon(Icons.Outlined.Close, contentDescription = stringResource(R.string.common_close), tint = StitchPalette.PrimaryDark)
+                }
+                Text(
+                    stringResource(R.string.compose_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = StitchPalette.PrimaryDark,
+                    fontWeight = FontWeight.Black,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                )
+                Button(
+                    onClick = ::publish,
+                    enabled = !busy && content.isNotBlank(),
+                    shape = StitchShape.pill,
+                    colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+                    modifier = Modifier.height(42.dp),
+                ) {
+                    if (busy) {
+                        CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
+                    } else {
+                        Text(stringResource(R.string.compose_post), color = Color.White, fontWeight = FontWeight.Bold)
                     }
-                },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            err = null
-                            scope.launch {
-                                busy = true
-                                sdk
-                                    .createPost(title, content, category = categoryKey)
-                                    .fold(
-                                        onSuccess = {
-                                            onPosted()
-                                            onClose()
-                                        },
-                                        onFailure = { e ->
-                                            err =
-                                                (e as? ApiException)?.message
-                                                    ?: humanizeClientFailure(e, sdk.baseUrl)
-                                        },
-                                    )
-                                busy = false
-                            }
-                        },
-                        enabled = !busy && title.isNotBlank() && content.isNotBlank(),
-                    ) {
-                        if (busy) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.padding(8.dp),
-                                strokeWidth = 2.dp,
-                                color = StitchLoginRef.PrimaryContainer,
-                            )
-                        } else {
-                            Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "发布", tint = StitchLoginRef.PrimaryContainer)
-                        }
-                    }
-                },
-                colors =
-                    TopAppBarDefaults.topAppBarColors(
-                        containerColor = StitchLoginRef.Background,
-                        titleContentColor = StitchLoginRef.OnSurface,
-                    ),
-            )
+                }
+            }
         },
     ) { inner ->
         Column(
@@ -139,206 +143,143 @@ fun StitchComposeScreen(
                 .fillMaxSize()
                 .padding(inner)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Surface(
+                shape = StitchShape.field,
+                color = StitchPalette.Surface,
+                border = BorderStroke(1.dp, StitchPalette.BorderHairline),
                 modifier = Modifier.fillMaxWidth(),
-                shape = StitchShape.container,
-                color = StitchLoginRef.SurfaceContainerLow,
             ) {
-                Column(Modifier.padding(16.dp)) {
-                    Text(
-                        "COMPOSE · M&D",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = StitchLoginRef.PrimaryContainer,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Spacer(Modifier.height(6.dp))
-                    Text(
-                        "写给猫猫宇宙的一条新动态",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = StitchLoginRef.OnSurface,
-                    )
-                    Text(
-                        "猫猫是主角，doggie 也可以一起入镜。",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = StitchLoginRef.Outline,
-                    )
+                Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Box(Modifier.size(48.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
+                        Text("P", color = StitchPalette.Brand, fontWeight = FontWeight.Black)
+                    }
+                    Column(Modifier.padding(start = 12.dp).weight(1f)) {
+                        Text(stringResource(R.string.compose_identity), style = MaterialTheme.typography.titleSmall, color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.compose_posting_to_feed), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
+                    }
+                    Icon(Icons.Outlined.ExpandMore, contentDescription = stringResource(R.string.compose_change_identity), tint = StitchPalette.OnSurfaceVariant)
                 }
             }
-            Spacer(Modifier.height(16.dp))
-            OutlinedTextField(
-                value = title,
-                onValueChange = { title = it },
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("标题") },
-                placeholder = { Text("今天想记录哪一刻？") },
-                singleLine = true,
-                shape = StitchShape.field,
-                colors =
-                    OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = StitchLoginRef.PrimaryContainer,
-                        unfocusedBorderColor = StitchLoginRef.Outline.copy(alpha = 0.4f),
-                        cursorColor = StitchLoginRef.PrimaryContainer,
-                    ),
-            )
-            Spacer(Modifier.height(12.dp))
+
             OutlinedTextField(
                 value = content,
                 onValueChange = { content = it },
-                modifier = Modifier.fillMaxWidth().height(220.dp),
-                label = { Text("正文") },
-                placeholder = { Text("写下猫猫日常、求助、活动，doggie 也欢迎出镜。") },
-                minLines = 8,
-                shape = StitchShape.field,
+                modifier = Modifier.fillMaxWidth().height(178.dp),
+                placeholder = { Text(stringResource(R.string.compose_placeholder)) },
+                minLines = 6,
+                shape = StitchShape.cardFeed,
                 colors =
                     OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = StitchLoginRef.PrimaryContainer,
-                        unfocusedBorderColor = StitchLoginRef.Outline.copy(alpha = 0.4f),
-                        cursorColor = StitchLoginRef.PrimaryContainer,
+                        focusedBorderColor = Color.Transparent,
+                        unfocusedBorderColor = Color.Transparent,
+                        focusedContainerColor = StitchPalette.Canvas,
+                        unfocusedContainerColor = StitchPalette.Canvas,
+                        cursorColor = StitchPalette.Brand,
                     ),
             )
+
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                repeat(2) { index ->
+                    Box(
+                        modifier =
+                            Modifier
+                                .size(86.dp)
+                                .clip(StitchShape.field)
+                                .background(if (index < pickedMediaCount) StitchPalette.SurfaceLow else StitchPalette.Canvas)
+                                .border(
+                                    1.dp,
+                                    if (index < pickedMediaCount) StitchPalette.BorderHairline else StitchPalette.OutlineVariant,
+                                    StitchShape.field,
+                                )
+                                .clickable { pickedMediaCount = (pickedMediaCount + 1).coerceAtMost(2) },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = stringResource(R.string.feed_add_photo), tint = StitchPalette.Brand)
+                    }
+                }
+            }
+
+            ComposeSettingRow(
+                icon = Icons.Outlined.Public,
+                title = stringResource(R.string.compose_visibility),
+                value = visibilityValue,
+                onClick = { visibilityKey = if (visibilityKey == "public") "friends" else "public" },
+            )
+            HorizontalDivider(color = StitchPalette.BorderHairline)
+            ComposeSettingRow(
+                icon = Icons.Outlined.LocationOn,
+                title = stringResource(R.string.compose_add_location),
+                value = locationValue,
+                onClick = { hasLocation = !hasLocation },
+            )
+
             err?.let {
-                Spacer(Modifier.height(8.dp))
                 Text(it, color = StitchPalette.Error, style = MaterialTheme.typography.bodySmall)
             }
-            Spacer(Modifier.height(20.dp))
-            HorizontalDivider(color = StitchLoginRef.SurfaceVariant)
-            Spacer(Modifier.height(12.dp))
-            ComposeMetaRow(
-                Icons.AutoMirrored.Outlined.Label,
-                "分类",
-                composeCategoryLabel(categoryKey),
-            ) {
-                categoryKey = nextComposeCategory(categoryKey)
-            }
-            ComposeMetaRow(
-                Icons.AutoMirrored.Outlined.Label,
-                "标签",
-                tagsSummary,
-            ) {
-                tagsSummary =
-                    if (tagsSummary.startsWith("M&D")) {
-                        "晒猫日常、幼猫成长"
-                    } else {
-                        "M&D、猫猫、新手…"
-                    }
-            }
-            ComposeMetaRow(
-                Icons.Outlined.AddCircleOutline,
-                "媒体",
-                if (pickedMediaCount == 0) "照片或视频" else "已选择 $pickedMediaCount 个媒体",
-            ) { pickedMediaCount = (pickedMediaCount + 1) % 10 }
-            ComposeMetaRow(
-                Icons.Outlined.LocationOn,
-                "添加地点",
-                locationSummary,
-            ) {
-                locationSummary =
-                    if (locationSummary.startsWith("分享")) {
-                        "上海 · 徐汇"
-                    } else {
-                        "分享你所在的位置"
-                    }
-            }
-            ComposeMetaRow(
-                Icons.Outlined.Groups,
-                "发布到圈子",
-                circleSummary,
-            ) {
-                circleSummary =
-                    if (circleSummary.startsWith("猫猫")) {
-                        "M&D 发现圈子"
-                    } else {
-                        "猫猫新手村"
-                    }
-            }
-            ComposeMetaRow(
-                Icons.Outlined.Public,
-                "谁可以看",
-                visibilitySummary,
-            ) {
-                visibilitySummary =
-                    when (visibilitySummary) {
-                        "公开" -> "仅好友"
-                        "仅好友" -> "仅自己"
-                        else -> "公开"
-                    }
-            }
-            ComposeMetaRow(
-                Icons.Outlined.SaveAlt,
-                "保存到相册",
-                if (saveToAlbum) "已开启" else "未开启",
-            ) { saveToAlbum = !saveToAlbum }
-            Spacer(Modifier.height(12.dp))
+
+            Spacer(Modifier.height(190.dp))
+            Text(
+                stringResource(R.string.compose_draft_saved),
+                style = MaterialTheme.typography.bodySmall,
+                color = StitchPalette.OnSurfaceVariant,
+                fontStyle = FontStyle.Italic,
+            )
+            Text(stringResource(R.string.compose_suggested_tags), style = MaterialTheme.typography.titleSmall, color = StitchPalette.OnSurfaceVariant)
             Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .clip(StitchShape.container)
-                        .background(StitchLoginRef.SurfaceContainerLow)
-                        .clickable(enabled = !busy && title.isNotBlank() && content.isNotBlank()) {}
-                        .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Icon(Icons.Outlined.ChatBubbleOutline, contentDescription = null, tint = StitchLoginRef.PrimaryContainer)
-                Spacer(Modifier.size(8.dp))
-                Text("发布到 M&D", style = MaterialTheme.typography.titleMedium, color = StitchLoginRef.OnSurface)
+                listOf(
+                    R.string.compose_tag_cat to "daily_share",
+                    R.string.compose_tag_daily to "daily_share",
+                    R.string.compose_tag_cozy to "activity",
+                ).forEach { (labelRes, category) ->
+                    val tag = stringResource(labelRes)
+                    val active = categoryKey == category && labelRes == R.string.compose_tag_cat
+                    Surface(
+                        shape = StitchShape.pill,
+                        color = if (active) StitchPalette.BrandMuted else StitchPalette.Surface,
+                        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+                        modifier = Modifier.clickable {
+                            categoryKey = category
+                        },
+                    ) {
+                        Text(
+                            tag,
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = if (active) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-private fun ComposeMetaRow(
-    icon: ImageVector,
+private fun ComposeSettingRow(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
     title: String,
-    subtitle: String?,
+    value: String,
     onClick: () -> Unit,
 ) {
-    Surface(
+    Row(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(vertical = 4.dp)
-                .clickable(onClick = onClick),
-        shape = StitchShape.field,
-        color = StitchLoginRef.SurfaceContainerLowest,
+                .clip(StitchShape.field)
+                .clickable(onClick = onClick)
+                .padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(icon, contentDescription = null, tint = StitchLoginRef.PrimaryContainer, modifier = Modifier.size(24.dp))
-            Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                Text(title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold, color = StitchLoginRef.OnSurface)
-                if (subtitle != null) {
-                    Text(subtitle, style = MaterialTheme.typography.bodySmall, color = StitchLoginRef.Outline)
-                }
-            }
-            Icon(
-                Icons.Outlined.ChevronRight,
-                contentDescription = null,
-                tint = StitchLoginRef.Outline,
-                modifier = Modifier.size(20.dp),
-            )
-        }
+        Icon(icon, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(24.dp))
+        Text(title, style = MaterialTheme.typography.bodyLarge, color = StitchPalette.OnSurface, modifier = Modifier.padding(start = 14.dp).weight(1f))
+        Text(value, style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
+        Icon(Icons.Outlined.ExpandMore, contentDescription = null, tint = StitchPalette.OnSurfaceVariant, modifier = Modifier.size(20.dp))
     }
 }
-
-private fun composeCategoryLabel(category: String): String =
-    when (category) {
-        "help" -> "求助"
-        "activity" -> "活动"
-        "trade" -> "好物交易"
-        else -> "猫猫日常"
-    }
-
-private fun nextComposeCategory(category: String): String =
-    when (category) {
-        "daily_share" -> "help"
-        "help" -> "activity"
-        "activity" -> "trade"
-        else -> "daily_share"
-    }

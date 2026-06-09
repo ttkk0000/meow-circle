@@ -116,6 +116,44 @@ class MeowCircleSdk(
             page.items.orEmpty()
         }
 
+    suspend fun listingDetail(listingId: Long): Result<ListingDetailData> =
+        runCatching {
+            val authed = !session.getToken().isNullOrBlank()
+            unwrapData(httpGet("/api/v1/listings/$listingId", auth = authed))
+        }
+
+    suspend fun myListings(): Result<List<Listing>> =
+        runCatching {
+            val page: ListingsPage = unwrapData(httpGet("/api/v1/me/listings", auth = true))
+            page.items.orEmpty()
+        }
+
+    suspend fun createListing(
+        type: String = "product",
+        title: String,
+        description: String,
+        priceCents: Long,
+        currency: String = "CNY",
+        mediaIds: List<Long> = emptyList(),
+    ): Result<Listing> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/listings",
+                    auth = true,
+                    body =
+                        CreateListingBody(
+                            type = type.trim().ifBlank { "product" },
+                            title = title.trim(),
+                            description = description.trim(),
+                            priceCents = priceCents.coerceAtLeast(0L),
+                            currency = currency.trim().ifBlank { "CNY" },
+                            mediaIds = mediaIds,
+                        ),
+                ),
+            )
+        }
+
     suspend fun register(
         username: String,
         password: String,
@@ -193,6 +231,36 @@ class MeowCircleSdk(
         runCatching {
             val payload: ConversationsPayload = unwrapData(httpGet("/api/v1/me/conversations", auth = true))
             payload.items.orEmpty()
+        }
+
+    suspend fun conversationWithPeer(peerId: Long): Result<ConversationDetailData> =
+        runCatching {
+            unwrapData(httpGet("/api/v1/me/conversations/$peerId", auth = true))
+        }
+
+    suspend fun sendMessage(
+        recipientId: Long,
+        content: String,
+    ): Result<Message> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/messages",
+                    auth = true,
+                    body = SendMessageBody(recipientId = recipientId, content = content.trim()),
+                ),
+            )
+        }
+
+    suspend fun notifications(unreadOnly: Boolean = false): Result<NotificationsPayload> =
+        runCatching {
+            val suffix = if (unreadOnly) "?unread=true" else ""
+            unwrapData(httpGet("/api/v1/notifications$suffix", auth = true))
+        }
+
+    suspend fun publicUser(userId: Long): Result<User> =
+        runCatching {
+            unwrapData(httpGet("/api/v1/users/$userId", auth = false))
         }
 
     suspend fun updateMe(
@@ -309,4 +377,57 @@ class MeowCircleSdk(
         val data = env.data ?: throw ApiException(0, "empty data")
         return json.decodeFromJsonElement(serializer<T>(), data)
     }
+
+    suspend fun myOrders(role: String = "buyer"): Result<List<Order>> =
+        runCatching {
+            val payload: OrdersPayload = unwrapData(httpGet("/api/v1/me/orders?role=$role", auth = true))
+            payload.items.orEmpty()
+        }
+
+    suspend fun orderDetail(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(httpGet("/api/v1/orders/$orderId", auth = true))
+        }
+
+    suspend fun createOrder(listingId: Long, note: String = ""): Result<Order> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/orders",
+                    auth = true,
+                    body = CreateOrderBody(listingId = listingId, note = note)
+                )
+            )
+        }
+
+    suspend fun payOrder(orderId: Long, method: String = "mock"): Result<Order> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/orders/$orderId/pay",
+                    auth = true,
+                    body = PayOrderBody(method = method)
+                )
+            )
+        }
+
+    suspend fun cancelOrder(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(httpPostEmpty("/api/v1/orders/$orderId/cancel", auth = true))
+        }
+
+    suspend fun shipOrder(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(httpPostEmpty("/api/v1/orders/$orderId/ship", auth = true))
+        }
+
+    suspend fun completeOrder(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(httpPostEmpty("/api/v1/orders/$orderId/complete", auth = true))
+        }
+
+    suspend fun refundOrder(orderId: Long): Result<Order> =
+        runCatching {
+            unwrapData(httpPostEmpty("/api/v1/orders/$orderId/refund", auth = true))
+        }
 }

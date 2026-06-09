@@ -44,7 +44,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktorClientOkhttp)
         }
-        desktopMain.dependencies {
+        getByName("desktopMain").dependencies {
             implementation(libs.ktorClientOkhttp)
         }
         iosMain.dependencies {

@@ -8,6 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -180,7 +182,7 @@ private fun ThemeChoice(
 }
 
 @Composable
-private fun MainFeedColumn() {
+private fun RowScope.MainFeedColumn() {
     val colors = LocalDesktopStitchColors.current
     Column(
         modifier = Modifier.weight(1f).fillMaxHeight().verticalScroll(rememberScrollState()),
@@ -292,7 +294,7 @@ private fun FeedCard(
 }
 
 @Composable
-private fun Panel(title: String, content: @Composable Column.() -> Unit) {
+private fun Panel(title: String, content: @Composable ColumnScope.() -> Unit) {
     val colors = LocalDesktopStitchColors.current
     Card(
         shape = MndDesktopShape.panel,

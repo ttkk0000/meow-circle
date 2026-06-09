@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.outlined.ChevronRight
+import androidx.compose.material.icons.outlined.AddPhotoAlternate
 import androidx.compose.material.icons.outlined.PersonAdd
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CircularProgressIndicator
@@ -44,6 +45,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.runtime.Composable
@@ -56,10 +58,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -71,24 +76,29 @@ import com.ttkk0000.meowcircle.Post
 import com.ttkk0000.meowcircle.PostFeedItem
 import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.humanizeClientFailure
+import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.BuildConfig
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShadows
+import com.ttkk0000.meowcircle.kmpapp.theme.MeowStitchTheme
+import com.ttkk0000.meowcircle.kmpapp.theme.MeowTheme
 import com.ttkk0000.meowcircle.kmpapp.ui.components.FeedTileCard
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchBottomNav
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchMainTab
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchSearchField
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchTopBar
+import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchFab
 import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
 import com.ttkk0000.meowcircle.kmpapp.util.formatConversationListTime
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
+import androidx.compose.foundation.BorderStroke
 import kotlinx.coroutines.launch
 import kotlin.collections.emptyList
 
 private data class FeedFilter(
     val key: String,
-    val label: String,
+    val labelRes: Int,
 )
 
 private data class HomeSignal(
@@ -99,15 +109,15 @@ private data class HomeSignal(
 
 private data class ProfileBackgroundOption(
     val key: String,
-    val label: String,
-    val note: String,
+    val labelRes: Int,
+    val noteRes: Int,
 )
 
 private val FEED_FILTERS =
     listOf(
-        FeedFilter("rec", "推荐"),
-        FeedFilter("new", "最新"),
-        FeedFilter("follow", "关注"),
+        FeedFilter("follow", R.string.feed_filter_following),
+        FeedFilter("new", R.string.feed_filter_nearby),
+        FeedFilter("rec", R.string.feed_filter_popular),
     )
 
 /** M&D「发现」热门圈子，本地展示，后续可接圈子接口。 */
@@ -116,15 +126,15 @@ private val DISCOVER_CIRCLE_LABELS =
 
 private val PROFILE_BACKGROUND_OPTIONS =
     listOf(
-        ProfileBackgroundOption("picnic", "Picnic", "野餐毯和晒太阳的猫猫"),
-        ProfileBackgroundOption("desk", "Desk", "书桌边的键盘搭子"),
-        ProfileBackgroundOption("arcade", "Arcade", "夜间游戏感名片"),
-        ProfileBackgroundOption("garden", "Garden", "花园角落，doggie 友好"),
+        ProfileBackgroundOption("picnic", R.string.profile_bg_picnic, R.string.profile_bg_picnic_note),
+        ProfileBackgroundOption("desk", R.string.profile_bg_desk, R.string.profile_bg_desk_note),
+        ProfileBackgroundOption("arcade", R.string.profile_bg_arcade, R.string.profile_bg_arcade_note),
+        ProfileBackgroundOption("garden", R.string.profile_bg_garden, R.string.profile_bg_garden_note),
     )
 
 private val FEED_PAGE_PADDING = 20.dp
-private val FEED_CARD_RADIUS = RoundedCornerShape(8.dp)
-private val FEED_SECTION_RADIUS = RoundedCornerShape(8.dp)
+private val FEED_CARD_RADIUS = StitchShape.cardFeed
+private val FEED_SECTION_RADIUS = StitchShape.cardFeed
 private val FEED_CARD_CONTENT_PADDING = PaddingValues(horizontal = 16.dp, vertical = 12.dp)
 
 private fun feedErrorMessage(
@@ -165,10 +175,11 @@ fun StitchFeedScreen(
     onThemeChanged: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     var apiBase by remember { mutableStateOf(sdk.baseUrl) }
     val scope = rememberCoroutineScope()
     var profileUser by remember(user.id) { mutableStateOf(user) }
-    var tab by remember { mutableStateOf(StitchMainTab.Home) }
+    var tab by remember { mutableStateOf(StitchMainTab.Feed) }
     var filter by remember { mutableStateOf("rec") }
     var q by remember { mutableStateOf("") }
     var selectedCircle by remember { mutableStateOf<String?>(null) }
@@ -193,6 +204,25 @@ fun StitchFeedScreen(
     var profileLoading by remember { mutableStateOf(false) }
     var mockMode by remember { mutableStateOf(false) }
     var feedRetrySignal by remember { mutableStateOf(0) }
+    var currentGlobalTheme by remember { mutableStateOf(sdk.getTheme()) }
+
+    val activeTheme = remember(tab, currentGlobalTheme) {
+        val globalThemeLower = currentGlobalTheme.lowercase()
+        val isNightOrNeutral = globalThemeLower in listOf("night", "neutral", "system")
+        if (isNightOrNeutral) {
+            when (globalThemeLower) {
+                "night" -> MeowTheme.Night
+                "neutral", "system" -> MeowTheme.Neutral
+                else -> MeowTheme.Neutral
+            }
+        } else {
+            if (tab == StitchMainTab.Market) {
+                MeowTheme.Mint
+            } else {
+                MeowTheme.Honey
+            }
+        }
+    }
 
     fun createMockPosts(): List<PostFeedItem> {
         val author1 = User(1L, "peachlatte", "桃子和拿铁", "", "两只猫的日常记录员", "2026-05-27T00:00:00Z")
@@ -280,7 +310,7 @@ fun StitchFeedScreen(
                 description = "有基础照护记录，可同时帮 doggie 换水。",
                 priceCents = 12000L,
                 currency = "CNY",
-                createdAt = "2026-06-01T12:00:00Z",
+                createdAt = "2026-06-02T10:00:00Z",
             ),
             Listing(
                 id = 3L,
@@ -296,13 +326,13 @@ fun StitchFeedScreen(
 
     val effectiveFilter =
         when (tab) {
-            StitchMainTab.Discover -> "new"
-            StitchMainTab.Home -> filter
+            StitchMainTab.Market -> "new"
+            StitchMainTab.Feed -> filter
             else -> filter
         }
 
     LaunchedEffect(effectiveFilter, tab, feedReloadSignal, mockMode, feedRetrySignal) {
-        if (tab != StitchMainTab.Home && tab != StitchMainTab.Discover) return@LaunchedEffect
+        if (tab != StitchMainTab.Feed && tab != StitchMainTab.Market) return@LaunchedEffect
         if (mockMode) {
             rawItems = createMockPosts()
             err = null
@@ -323,7 +353,7 @@ fun StitchFeedScreen(
     }
 
     LaunchedEffect(tab, mockMode) {
-        if (tab != StitchMainTab.Discover) return@LaunchedEffect
+        if (tab != StitchMainTab.Market) return@LaunchedEffect
         if (mockMode) {
             listings = createMockListings()
             listingsErr = null
@@ -386,7 +416,7 @@ fun StitchFeedScreen(
 
     val filtered =
         remember(rawItems, q, selectedCircle) {
-            val list = rawItems ?: return@remember emptyList()
+            val list = rawItems ?: return@remember emptyList<PostFeedItem>()
             val s = q.trim().lowercase()
             val queried =
                 if (s.isEmpty()) {
@@ -407,137 +437,125 @@ fun StitchFeedScreen(
             }
         }
 
-    val (barTitle, barSubtitle) =
-        when (tab) {
-            StitchMainTab.Discover -> "发现" to "看看新鲜事"
-            StitchMainTab.Messages -> "消息" to "私信与通知"
-            StitchMainTab.Profile -> "我的" to profileUser.nickname.ifBlank { profileUser.username }
-            else -> "M&D" to "meow & doggie"
-        }
-
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        containerColor = StitchPalette.Canvas,
-        bottomBar = {
-            StitchBottomNav(
-                selected = tab,
-                onSelect = { t ->
-                    if (t == StitchMainTab.Compose) {
-                        onCompose()
-                    } else {
+    MeowStitchTheme(theme = activeTheme) {
+        Scaffold(
+            modifier = modifier.fillMaxSize(),
+            containerColor = StitchPalette.Canvas,
+            bottomBar = {
+                StitchBottomNav(
+                    selected = tab,
+                    onSelect = { t ->
                         tab = t
-                    }
-                },
-            )
-        },
-    ) { inner ->
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(bottom = inner.calculateBottomPadding()),
-        ) {
-            when (tab) {
-                StitchMainTab.Profile ->
-                    Column(Modifier.fillMaxSize()) {
-                        StitchTopBar(
-                            apiBase = apiBase,
-                            user = profileUser,
-                            title = barTitle,
-                            subtitle = barSubtitle,
-                            onAvatarPress = { /* already on profile */ },
-                            onNotifyPress = {
-                                tab = StitchMainTab.Messages
-                                messageQuery = ""
-                                messageSection = MessageSection.Notifications
-                            },
-                        )
-                        ProfilePanel(
-                            apiBase = apiBase,
-                            user = profileUser,
-                            gridPosts = profilePosts,
-                            gridLoading = profileLoading,
-                            profileBackground = profileBackground,
-                            onLogout = onLogout,
-                            onOpenPost = onOpenPost,
-                            onEditProfile = { showEditProfile = true },
-                            onSettings = { showThemeDialog = true },
-                            onProfileBackgroundChanged = {
-                                sdk.sessionStore().setProfileBackground(it)
-                                profileBackground = sdk.sessionStore().getProfileBackground()
-                            },
-                            hint = profileHint,
-                            modifier = Modifier.fillMaxWidth().weight(1f),
-                        )
-                    }
-                StitchMainTab.Messages ->
-                    Column(Modifier.fillMaxSize()) {
-                        StitchTopBar(
-                            apiBase = apiBase,
-                            user = profileUser,
-                            title = barTitle,
-                            subtitle = barSubtitle,
-                            onAvatarPress = { tab = StitchMainTab.Profile },
-                            onNotifyPress = {
-                                messageQuery = ""
-                                messageSection = MessageSection.Notifications
-                            },
-                        )
-                        MessagesPane(
+                    },
+                )
+            },
+            floatingActionButton = {
+                if (tab == StitchMainTab.Feed) {
+                    StitchFab(
+                        onClick = onCompose,
+                    )
+                }
+            }
+        ) { inner ->
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(bottom = inner.calculateBottomPadding()),
+            ) {
+                when (tab) {
+                    StitchMainTab.Profile ->
+                        Column(Modifier.fillMaxSize()) {
+                            StitchTopBar(
+                                apiBase = apiBase,
+                                user = profileUser,
+                                title = stringResource(R.string.feed_profile_title),
+                                subtitle = profileUser.nickname.ifBlank { profileUser.username },
+                                onAvatarPress = { /* already on profile */ },
+                                onNotifyPress = {
+                                    tab = StitchMainTab.Messages
+                                    messageQuery = ""
+                                    messageSection = MessageSection.Notifications
+                                },
+                            )
+                            ProfilePanel(
+                                apiBase = apiBase,
+                                user = profileUser,
+                                gridPosts = profilePosts,
+                                gridLoading = profileLoading,
+                                profileBackground = profileBackground,
+                                onLogout = onLogout,
+                                onOpenPost = onOpenPost,
+                                onEditProfile = { showEditProfile = true },
+                                onSettings = { showThemeDialog = true },
+                                onProfileBackgroundChanged = {
+                                    sdk.sessionStore().setProfileBackground(it)
+                                    profileBackground = sdk.sessionStore().getProfileBackground()
+                                },
+                                hint = profileHint,
+                                modifier = Modifier.fillMaxWidth().weight(1f),
+                            )
+                        }
+                    StitchMainTab.Messages ->
+                        StitchMessagesScreen(
+                            sdk = sdk,
+                            currentUser = profileUser,
                             loading = convLoading,
                             err = convErr,
                             items = conversations,
-                            query = messageQuery,
-                            section = messageSection,
-                            modifier = Modifier.fillMaxWidth().weight(1f),
-                            onShortcut = { label ->
-                                messageQuery = ""
-                                messageSection =
-                                    when (label) {
-                                        "赞和收藏" -> MessageSection.LikesFavorites
-                                        "新增粉丝" -> MessageSection.NewFollowers
-                                        "通知中心" -> MessageSection.Notifications
-                                        else -> MessageSection.Chats
-                                    }
-                            },
-                            onToggleMock = { mockMode = true },
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
+                            onOpenMarket = { tab = StitchMainTab.Market },
+                            onOpenOrders = { tab = StitchMainTab.Orders },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    StitchMainTab.Orders -> {
+                        StitchOrdersScreen(
+                            sdk = sdk,
+                            onOpenMarket = { tab = StitchMainTab.Market },
+                            onOpenMessages = { tab = StitchMainTab.Messages },
+                            modifier = Modifier.fillMaxSize(),
                         )
                     }
-                else ->
-                    Column(Modifier.fillMaxSize()) {
-                        StitchTopBar(
-                            apiBase = apiBase,
+                    StitchMainTab.Market -> {
+                        StitchMarketScreen(
+                            sdk = sdk,
                             user = profileUser,
-                            title = barTitle,
-                            subtitle = barSubtitle,
+                            apiBase = apiBase,
+                            listings = listings,
+                            loading = listingsLoading,
+                            err = listingsErr,
+                            query = q,
+                            onQueryChange = { q = it },
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
                             onAvatarPress = { tab = StitchMainTab.Profile },
-                            onNotifyPress = {
-                                tab = StitchMainTab.Messages
-                                messageQuery = ""
-                                messageSection = MessageSection.Notifications
-                            },
+                            onNotifyPress = { tab = StitchMainTab.Messages },
+                            onOpenOrders = { tab = StitchMainTab.Orders },
+                            onOpenMessages = { tab = StitchMainTab.Messages },
+                            modifier = Modifier.fillMaxSize(),
                         )
-                        Column(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = FEED_PAGE_PADDING),
-                        ) {
-                            if (tab == StitchMainTab.Discover) {
-                                DiscoverFeedHeader(
-                                    query = q,
-                                    onQueryChange = { q = it },
-                                    selectedCircle = selectedCircle,
-                                    onCircleSelect = { label ->
-                                        selectedCircle = if (selectedCircle == label) null else label
-                                    },
-                                    onResetCircles = { selectedCircle = null },
-                                    listings = listings,
-                                    listingsLoading = listingsLoading,
-                                    listingsErr = listingsErr,
-                                    onEnableMock = { mockMode = true },
-                                )
-                            } else {
+                    }
+                    StitchMainTab.Feed -> {
+                        Column(Modifier.fillMaxSize()) {
+                            StitchTopBar(
+                                apiBase = apiBase,
+                                user = profileUser,
+                                title = "M&D",
+                                subtitle = "meow & doggie",
+                                onAvatarPress = { tab = StitchMainTab.Profile },
+                                onNotifyPress = {
+                                    tab = StitchMainTab.Messages
+                                    messageQuery = ""
+                                    messageSection = MessageSection.Notifications
+                                },
+                            )
+                            Column(
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = FEED_PAGE_PADDING),
+                            ) {
                                 HomeFeedHeader(
                                     query = q,
                                     onQueryChange = { q = it },
@@ -546,63 +564,65 @@ fun StitchFeedScreen(
                                     items = rawItems.orEmpty(),
                                     mockMode = mockMode,
                                     onEnableMock = { mockMode = true },
+                                    onCompose = onCompose,
                                 )
+                                Spacer(Modifier.height(12.dp))
                             }
-                            Spacer(Modifier.height(12.dp))
-                        }
-                        Box(Modifier.weight(1f)) {
-                            when {
-                                loading && rawItems == null ->
-                                    FeedLoadingPane(Modifier.fillMaxSize())
-                                err != null && rawItems == null ->
-                                    FeedFailurePane(
-                                        message = err!!,
-                                        currentUrl = apiBase,
-                                        defaultUrl = BuildConfig.API_BASE_URL,
-                                        onUrlChanged = { newUrl ->
-                                            sdk.sessionStore().setApiUrl(newUrl)
-                                            apiBase = sdk.baseUrl
-                                            mockMode = false
-                                            feedRetrySignal += 1
-                                        },
-                                        onRetry = {
-                                            mockMode = false
-                                            feedRetrySignal += 1
-                                        },
-                                        onDemo = { mockMode = true },
-                                        modifier = Modifier.fillMaxSize(),
-                                    )
-                                filtered.isEmpty() ->
-                                    PlaceholderPane(
-                                        headline = if (q.isBlank()) "今天还没有动态" else "没有找到相关动态",
-                                        body =
-                                            if (q.isBlank()) {
-                                                "先去发布一条猫猫日常，或切到离线演示看看完整首页。"
-                                            } else {
-                                                "换个关键词，或者清空搜索后继续浏览 M&D。"
+                            Box(Modifier.weight(1f)) {
+                                when {
+                                    loading && rawItems == null ->
+                                        FeedLoadingPane(Modifier.fillMaxSize())
+                                    err != null && rawItems == null ->
+                                        FeedFailurePane(
+                                            message = err!!,
+                                            currentUrl = apiBase,
+                                            defaultUrl = BuildConfig.API_BASE_URL,
+                                            onUrlChanged = { newUrl ->
+                                                sdk.sessionStore().setApiUrl(newUrl)
+                                                apiBase = sdk.baseUrl
+                                                mockMode = false
+                                                feedRetrySignal += 1
                                             },
-                                        modifier = Modifier.fillMaxSize(),
-                                    )
-                                else ->
-                                    LazyColumn(
-                                        modifier = Modifier.fillMaxSize(),
-                                        contentPadding = PaddingValues(start = FEED_PAGE_PADDING, end = FEED_PAGE_PADDING, top = 4.dp, bottom = 16.dp),
-                                        verticalArrangement = Arrangement.spacedBy(14.dp),
-                                    ) {
-                                        items(
-                                            items = filtered,
-                                            key = { it.post.id },
-                                        ) { item ->
-                                            FeedTileCard(
-                                                apiBase = apiBase,
-                                                item = item,
-                                                onClick = { onOpenPost(item.post.id) },
-                                            )
+                                            onRetry = {
+                                                mockMode = false
+                                                feedRetrySignal += 1
+                                            },
+                                            onDemo = { mockMode = true },
+                                            modifier = Modifier.fillMaxSize(),
+                                        )
+                                    filtered.isEmpty() ->
+                                        PlaceholderPane(
+                                            headline = stringResource(if (q.isBlank()) R.string.feed_empty_title else R.string.feed_empty_search_title),
+                                            body =
+                                                if (q.isBlank()) {
+                                                    stringResource(R.string.feed_empty_body)
+                                                } else {
+                                                    stringResource(R.string.feed_empty_search_body)
+                                                },
+                                            modifier = Modifier.fillMaxSize(),
+                                        )
+                                    else ->
+                                        LazyColumn(
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentPadding = PaddingValues(start = FEED_PAGE_PADDING, end = FEED_PAGE_PADDING, top = 4.dp, bottom = 16.dp),
+                                            verticalArrangement = Arrangement.spacedBy(14.dp),
+                                        ) {
+                                            items(
+                                                items = filtered,
+                                                key = { it.post.id },
+                                            ) { item ->
+                                                FeedTileCard(
+                                                    apiBase = apiBase,
+                                                    item = item,
+                                                    onClick = { onOpenPost(item.post.id) },
+                                                )
+                                            }
                                         }
-                                    }
+                                }
                             }
                         }
                     }
+                }
             }
         }
         if (showEditProfile) {
@@ -623,7 +643,7 @@ fun StitchFeedScreen(
                             ).fold(
                                 onSuccess = { updated ->
                                     profileUser = updated
-                                    profileHint = "资料已更新"
+                                    profileHint = context.getString(R.string.profile_updated)
                                     showEditProfile = false
                                 },
                                 onFailure = { e ->
@@ -659,45 +679,8 @@ private fun HomeFeedHeader(
     items: List<PostFeedItem>,
     mockMode: Boolean,
     onEnableMock: () -> Unit,
+    onCompose: () -> Unit,
 ) {
-    val signals =
-        listOf(
-            HomeSignal("今日动态", items.size.coerceAtLeast(0).toString(), StitchPalette.Brand),
-            HomeSignal("新手求助", items.count { it.post.category == "help" }.toString(), StitchPalette.Secondary),
-            HomeSignal("好物交易", items.count { it.post.category == "trade" }.toString(), StitchPalette.PrimaryDark),
-        )
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column {
-            Text(
-                "今日猫猫编辑台",
-                style = MaterialTheme.typography.titleMedium,
-                color = StitchPalette.OnSurface,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                "先看猫猫日常，再处理求助和交易",
-                style = MaterialTheme.typography.bodySmall,
-                color = StitchPalette.OnSurfaceVariant,
-            )
-        }
-        TextButton(
-            onClick = onEnableMock,
-            colors =
-                ButtonDefaults.textButtonColors(
-                    containerColor = if (mockMode) StitchPalette.BrandMuted else StitchPalette.Surface,
-                    contentColor = StitchPalette.Brand,
-                ),
-            shape = FEED_SECTION_RADIUS,
-        ) {
-            Text(if (mockMode) "演示中" else "离线演示", style = MaterialTheme.typography.labelMedium)
-        }
-    }
-    Spacer(Modifier.height(12.dp))
     Surface(
         modifier =
             Modifier
@@ -713,20 +696,38 @@ private fun HomeFeedHeader(
         color = StitchPalette.Surface,
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier =
+                Modifier
+                    .clickable(onClick = onCompose)
+                    .padding(horizontal = 14.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Column(Modifier.weight(1f)) {
-                Text(
-                    "M&D 猫猫主角季",
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = StitchPalette.PrimaryDark,
+            Box(
+                modifier =
+                    Modifier
+                        .size(46.dp)
+                        .clip(CircleShape)
+                        .background(StitchPalette.BrandMuted)
+                        .border(1.dp, StitchPalette.BorderHairline, CircleShape),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Pets,
+                    contentDescription = null,
+                    tint = StitchPalette.Brand,
+                    modifier = Modifier.size(24.dp),
                 )
-                Spacer(Modifier.height(4.dp))
+            }
+            Surface(
+                modifier = Modifier.weight(1f),
+                shape = StitchShape.pill,
+                color = StitchPalette.SurfaceLow,
+                border = BorderStroke(1.dp, StitchPalette.OutlineVariant),
+            ) {
                 Text(
-                    "晒出今天最像杂志封面的一张照片，也欢迎 doggie 作为配角入镜。",
+                    stringResource(R.string.feed_share_prompt),
+                    modifier = Modifier.padding(horizontal = 18.dp, vertical = 13.dp),
                     style = MaterialTheme.typography.bodyMedium,
                     color = StitchPalette.OnSurfaceVariant,
                 )
@@ -734,55 +735,43 @@ private fun HomeFeedHeader(
             Box(
                 modifier =
                     Modifier
-                        .size(54.dp)
-                        .clip(FEED_SECTION_RADIUS)
+                        .size(46.dp)
+                        .clip(CircleShape)
                         .background(StitchPalette.BrandMuted),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Pets,
-                    contentDescription = null,
+                    imageVector = Icons.Outlined.AddPhotoAlternate,
+                    contentDescription = stringResource(R.string.feed_add_photo),
                     tint = StitchPalette.Brand,
-                    modifier = Modifier.size(28.dp),
+                    modifier = Modifier.size(24.dp),
                 )
             }
         }
     }
     Spacer(Modifier.height(12.dp))
     FeedFilterRow(selectedFilter = selectedFilter, onFilterChange = onFilterChange)
-    Spacer(Modifier.height(12.dp))
-    StitchSearchField(
-        value = query,
-        onValueChange = onQueryChange,
-        placeholder = "搜索猫猫动态、求助或标签",
-        modifier = Modifier.fillMaxWidth(),
-    )
-    Spacer(Modifier.height(12.dp))
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        signals.forEach { signal ->
-            Surface(
-                modifier = Modifier.weight(1f),
-                shape = FEED_SECTION_RADIUS,
-                color = StitchPalette.SurfaceLow,
-                border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
-            ) {
-                Column(Modifier.padding(horizontal = 10.dp, vertical = 9.dp)) {
-                    Text(
-                        signal.value,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = signal.tone,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Text(
-                        signal.label,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = StitchPalette.OnSurfaceVariant,
-                    )
-                }
-            }
+    if (mockMode) {
+        Spacer(Modifier.height(8.dp))
+        Text(
+            stringResource(R.string.feed_demo),
+            style = MaterialTheme.typography.labelMedium,
+            color = StitchPalette.Brand,
+            modifier =
+                Modifier
+                    .clip(StitchShape.pill)
+                    .background(StitchPalette.BrandMuted)
+                    .clickable(onClick = onEnableMock)
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+        )
+    } else {
+        query.takeIf { it.isNotBlank() }?.let {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                stringResource(R.string.feed_filtered_by, it),
+                style = MaterialTheme.typography.labelMedium,
+                color = StitchPalette.OnSurfaceVariant,
+            )
         }
     }
 }
@@ -806,7 +795,7 @@ private fun FeedFilterRow(
                 onClick = { onFilterChange(f.key) },
                 label = {
                     Text(
-                        f.label,
+                        stringResource(f.labelRes),
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.SemiBold,
                     )
@@ -1265,17 +1254,17 @@ private fun ThemeSelectionDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("切换主题色") },
+        title = { Text(stringResource(R.string.theme_title)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text("选择一个配色风格：", style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(R.string.theme_choose), style = MaterialTheme.typography.bodyMedium)
                 Row(
                     modifier = Modifier.fillMaxWidth().clickable { onSelect("honey") }.padding(vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFFFF8A3D)))
                     Spacer(Modifier.width(12.dp))
-                    Text("蜂蜜 (Honey)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "honey") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                    Text(stringResource(R.string.theme_honey), style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "honey") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth().clickable { onSelect("mint") }.padding(vertical = 12.dp),
@@ -1283,7 +1272,7 @@ private fun ThemeSelectionDialog(
                 ) {
                     Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFF2EC4A6)))
                     Spacer(Modifier.width(12.dp))
-                    Text("薄荷 (Mint)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "mint") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                    Text(stringResource(R.string.theme_mint), style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "mint") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth().clickable { onSelect("night") }.padding(vertical = 12.dp),
@@ -1291,7 +1280,7 @@ private fun ThemeSelectionDialog(
                 ) {
                     Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFF8B5CF6)))
                     Spacer(Modifier.width(12.dp))
-                    Text("暗夜 (Night)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "night") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                    Text(stringResource(R.string.theme_night), style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "night") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth().clickable { onSelect("neutral") }.padding(vertical = 12.dp),
@@ -1299,12 +1288,12 @@ private fun ThemeSelectionDialog(
                 ) {
                     Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(Color(0xFF4B5563)))
                     Spacer(Modifier.width(12.dp))
-                    Text("中性 (Neutral)", style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "neutral") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
+                    Text(stringResource(R.string.theme_neutral), style = MaterialTheme.typography.bodyLarge, fontWeight = if (normalizedTheme == "neutral") FontWeight.Bold else FontWeight.Normal, color = StitchPalette.OnSurface)
                 }
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("取消") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) }
         }
     )
 }
@@ -1322,27 +1311,27 @@ private fun EditProfileDialog(
     var avatarUrl by remember(user.id, user.avatarUrl) { mutableStateOf(user.avatarUrl) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("编辑资料") },
+        title = { Text(stringResource(R.string.profile_edit)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 OutlinedTextField(
                     value = nickname,
                     onValueChange = { nickname = it },
                     singleLine = true,
-                    label = { Text("昵称") },
+                    label = { Text(stringResource(R.string.profile_display_name)) },
                 )
                 OutlinedTextField(
                     value = bio,
                     onValueChange = { bio = it },
                     minLines = 2,
                     maxLines = 4,
-                    label = { Text("简介") },
+                    label = { Text(stringResource(R.string.profile_bio)) },
                 )
                 OutlinedTextField(
                     value = avatarUrl,
                     onValueChange = { avatarUrl = it },
                     singleLine = true,
-                    label = { Text("头像 URL") },
+                    label = { Text(stringResource(R.string.profile_avatar_url)) },
                 )
                 if (!error.isNullOrBlank()) {
                     Text(
@@ -1354,7 +1343,7 @@ private fun EditProfileDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss, enabled = !saving) { Text("取消") }
+            TextButton(onClick = onDismiss, enabled = !saving) { Text(stringResource(R.string.common_cancel)) }
         },
         confirmButton = {
             TextButton(
@@ -1362,7 +1351,7 @@ private fun EditProfileDialog(
                 onClick = {
                     onSave(nickname.trim().ifBlank { user.username }, bio.trim(), avatarUrl.trim())
                 },
-            ) { Text(if (saving) "保存中…" else "保存") }
+            ) { Text(if (saving) stringResource(R.string.profile_saving) else stringResource(R.string.profile_save)) }
         },
     )
 }
@@ -1451,13 +1440,13 @@ private fun ProfilePanel(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         Text(
-                            activeBackground.label,
+                            stringResource(activeBackground.labelRes),
                             style = MaterialTheme.typography.labelLarge,
                             color = StitchPalette.Brand,
                             fontWeight = FontWeight.Bold,
                         )
                         Text(
-                            activeBackground.note,
+                            stringResource(activeBackground.noteRes),
                             style = MaterialTheme.typography.labelMedium,
                             color = StitchPalette.OnSurfaceVariant,
                         )
@@ -1467,7 +1456,7 @@ private fun ProfilePanel(
         }
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                "个人背景",
+                stringResource(R.string.profile_background),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 color = StitchPalette.OnSurface,
@@ -1488,7 +1477,7 @@ private fun ProfilePanel(
                         modifier = Modifier.clickable { onProfileBackgroundChanged(option.key) },
                     ) {
                         Text(
-                            option.label,
+                            stringResource(option.labelRes),
                             modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
                             style = MaterialTheme.typography.labelLarge,
                             color = if (selected) Color.White else StitchPalette.OnSurfaceVariant,
@@ -1514,9 +1503,9 @@ private fun ProfilePanel(
                     .padding(vertical = 16.dp, horizontal = 8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            ProfileStatCell(formatCompactCount(likesTotal), "获赞")
-            ProfileStatCell("—", "关注")
-            ProfileStatCell("—", "粉丝")
+            ProfileStatCell(formatCompactCount(likesTotal), stringResource(R.string.profile_likes))
+            ProfileStatCell("—", stringResource(R.string.profile_following))
+            ProfileStatCell("—", stringResource(R.string.profile_followers))
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -1535,7 +1524,7 @@ private fun ProfilePanel(
             ) {
                 Box(Modifier.fillMaxWidth().padding(vertical = 12.dp), contentAlignment = Alignment.Center) {
                     Text(
-                        "编辑资料",
+                        stringResource(R.string.profile_edit),
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.SemiBold,
                         color = StitchPalette.Brand,
@@ -1565,7 +1554,7 @@ private fun ProfilePanel(
             )
         }
         Text(
-            "动态",
+            "Posts",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = StitchPalette.PrimaryDark,
@@ -1577,7 +1566,7 @@ private fun ProfilePanel(
                 }
             posts.isEmpty() ->
                 Text(
-                    "发布动态后会出现在这里",
+                    "Your posts will appear here.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = StitchPalette.OnSurfaceVariant,
                 )
@@ -1662,7 +1651,7 @@ private fun ProfilePanel(
             Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
         }
         Text(
-            "退出登录",
+            "Log out",
             style = MaterialTheme.typography.titleMedium,
             color = StitchPalette.Brand,
             modifier =
@@ -2027,5 +2016,283 @@ private fun PlaceholderPane(
             style = MaterialTheme.typography.bodyLarge,
             color = StitchPalette.OnSurfaceVariant,
         )
+    }
+}
+
+@Composable
+private fun MarketPane(
+    sdk: MeowCircleSdk,
+    listings: List<Listing>?,
+    loading: Boolean,
+    err: String?,
+    q: String,
+    onQueryChange: (String) -> Unit,
+    mockMode: Boolean,
+    onEnableMock: () -> Unit,
+    onBuySuccess: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val scope = rememberCoroutineScope()
+    var selectedType by remember { mutableStateOf("all") }
+    var orderDialogText by remember { mutableStateOf<String?>(null) }
+    var buyingListingId by remember { mutableStateOf<Long?>(null) }
+    var actionLoading by remember { mutableStateOf(false) }
+
+    val filteredListings = remember(listings, q, selectedType) {
+        val all = listings.orEmpty()
+        val queryKey = q.trim().lowercase()
+        val typeFiltered = if (selectedType == "all") {
+            all
+        } else {
+            all.filter { it.type == selectedType }
+        }
+        if (queryKey.isBlank()) {
+            typeFiltered
+        } else {
+            typeFiltered.filter {
+                it.title.lowercase().contains(queryKey) ||
+                    it.description.lowercase().contains(queryKey)
+            }
+        }
+    }
+
+    fun handleBuy(listing: Listing) {
+        if (mockMode) {
+            orderDialogText = "下单成功！已为您模拟创建订单，即将前往订单列表。"
+            buyingListingId = listing.id
+            return
+        }
+        actionLoading = true
+        scope.launch {
+            sdk.createOrder(listing.id).fold(
+                onSuccess = { order ->
+                    orderDialogText = "下单成功！已为您创建订单 #" + order.id + "，即将前往订单列表付款。"
+                    buyingListingId = listing.id
+                },
+                onFailure = { e ->
+                    val raw = (e as? ApiException)?.message ?: e.message.orEmpty()
+                    orderDialogText = "下单失败: " + raw
+                }
+            )
+            actionLoading = false
+        }
+    }
+
+    Column(modifier = modifier.fillMaxSize().background(StitchPalette.Canvas)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = FEED_PAGE_PADDING)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    "M&D 好物集市",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.OnSurface
+                )
+                TextButton(
+                    onClick = onEnableMock,
+                    colors = ButtonDefaults.textButtonColors(
+                        containerColor = if (mockMode) StitchPalette.BrandMuted else Color.Transparent,
+                        contentColor = StitchPalette.Brand
+                    ),
+                    shape = StitchShape.pill
+                ) {
+                    Text(if (mockMode) "演示模式" else "切换演示", style = MaterialTheme.typography.labelMedium)
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            StitchSearchField(
+                value = q,
+                onValueChange = onQueryChange,
+                placeholder = "搜索集市商品、服务或领养...",
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(Modifier.height(10.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                listOf(
+                    "all" to "全部好物",
+                    "product" to "闲置商品",
+                    "service" to "上门服务",
+                    "adopt" to "猫咪领养"
+                ).forEach { (key, label) ->
+                    val sel = selectedType == key
+                    Surface(
+                        shape = StitchShape.pill,
+                        color = if (sel) StitchPalette.Brand else StitchPalette.Surface,
+                        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+                        modifier = Modifier.clickable { selectedType = key }
+                    ) {
+                        Text(
+                            label,
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp),
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = if (sel) Color.White else StitchPalette.OnSurfaceVariant
+                        )
+                    }
+                }
+            }
+            Spacer(Modifier.height(12.dp))
+        }
+
+        Box(modifier = Modifier.weight(1f)) {
+            when {
+                loading && listings == null -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(color = StitchPalette.Brand)
+                    }
+                }
+                err != null && listings == null -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize().padding(24.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(err, color = StitchPalette.Error, style = MaterialTheme.typography.bodyMedium)
+                        Spacer(Modifier.height(14.dp))
+                        TextButton(onClick = onEnableMock) {
+                            Text("看离线演示")
+                        }
+                    }
+                }
+                filteredListings.isEmpty() -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text("没有找到匹配的物品", style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
+                    }
+                }
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(start = FEED_PAGE_PADDING, end = FEED_PAGE_PADDING, bottom = 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(filteredListings, key = { it.id }) { listing ->
+                            MarketListingItemCard(
+                                listing = listing,
+                                actionLoading = actionLoading,
+                                onBuyClick = { handleBuy(listing) }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (orderDialogText != null) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = {
+                orderDialogText = null
+                buyingListingId = null
+            },
+            title = { Text("提示") },
+            text = { Text(orderDialogText!!) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val isSuccess = orderDialogText?.contains("成功") == true
+                        orderDialogText = null
+                        buyingListingId = null
+                        if (isSuccess) {
+                            onBuySuccess()
+                        }
+                    }
+                ) {
+                    Text("好")
+                }
+            }
+        )
+    }
+}
+
+@Composable
+private fun MarketListingItemCard(
+    listing: Listing,
+    actionLoading: Boolean,
+    onBuyClick: () -> Unit,
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth().border(1.dp, StitchPalette.BorderHairline, StitchShape.cardFeed),
+        shape = StitchShape.cardFeed,
+        colors = CardDefaults.cardColors(containerColor = StitchPalette.Surface)
+    ) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Surface(
+                    shape = StitchShape.pill,
+                    color = if (listing.type == "adopt") StitchPalette.SecondaryContainer else StitchPalette.BrandMuted,
+                ) {
+                    Text(
+                        text = listingTypeLabel(listing.type),
+                        modifier = Modifier.padding(horizontal = 9.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (listing.type == "adopt") StitchPalette.PrimaryDark else StitchPalette.Brand,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+
+                Text(
+                    text = formatListingPrice(listing.priceCents, listing.currency),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = StitchPalette.Error,
+                    fontWeight = FontWeight.Black
+                )
+            }
+
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(
+                    listing.title,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.OnSurface
+                )
+                Text(
+                    listing.description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = StitchPalette.OnSurfaceVariant
+                )
+            }
+
+            HorizontalDivider(color = StitchPalette.BorderHairline)
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = onBuyClick,
+                    enabled = !actionLoading,
+                    shape = StitchShape.pill,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = StitchPalette.Brand,
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier.height(36.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
+                ) {
+                    Text(
+                        text = if (listing.type == "adopt") "申请领养" else "立即购买",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
     }
 }
