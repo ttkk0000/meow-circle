@@ -68,7 +68,10 @@ Use for Feed, Profile, Pet Profile, Messages normal mode, and Orders normal mode
 
 ### Mint
 
-Use for Market, Product List, Product Detail, Product Publish, product search, and unavailable product states.
+Mint is a global theme option. Some Stitch app boards show Market and product
+flows in Mint to demonstrate that theme, but KMP/Expo app screens must not force
+Market to Mint. Feed, Market, Messages, Orders, Profile, auth, and product
+flows all inherit the user's current global theme.
 
 - Primary: `#2EC4A6`
 - Background: `#F5FFFC`
@@ -139,7 +142,8 @@ Feed:
 
 Market:
 
-- Theme: Mint.
+- Theme: inherit the current global theme. Mint screenshots are theme examples,
+  not a Market-only override.
 - M&D Market is social commerce, not generic cart ecommerce.
 - Trade chips: Sell, Trade, Looking For, Free / Donation.
 - Actions: Buy Now, Contact Seller, Make Offer, View Details, Save.

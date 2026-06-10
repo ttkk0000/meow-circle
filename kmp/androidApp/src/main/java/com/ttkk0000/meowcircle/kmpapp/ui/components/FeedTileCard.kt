@@ -11,9 +11,9 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
@@ -92,25 +92,25 @@ fun FeedTileCard(
                     contentDescription = who,
                     modifier =
                         Modifier
-                            .size(42.dp)
-                            .clip(CircleShape)
-                            .border(2.dp, StitchPalette.Brand, CircleShape),
+                            .size(54.dp)
+                            .clip(StitchShape.field)
+                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field),
                     contentScale = ContentScale.Crop,
                 )
             } else {
                 Box(
                     modifier =
                         Modifier
-                            .size(42.dp)
-                            .clip(CircleShape)
-                            .background(StitchPalette.BrandMuted)
-                            .border(2.dp, StitchPalette.Brand, CircleShape),
+                            .size(54.dp)
+                            .clip(StitchShape.field)
+                            .background(StitchPalette.SurfaceLow)
+                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        who.take(1).uppercase(),
-                        style = MaterialTheme.typography.titleSmall,
-                        color = StitchPalette.Brand,
+                        stringResource(R.string.common_img),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = StitchPalette.OnSurfaceVariant,
                         fontWeight = FontWeight.Black,
                     )
                 }
@@ -125,7 +125,7 @@ fun FeedTileCard(
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    "$category · $twoHoursAgo",
+                    stringResource(R.string.feed_meta_format, category, twoHoursAgo),
                     style = MaterialTheme.typography.bodySmall,
                     color = StitchPalette.OnSurfaceVariant,
                     maxLines = 1,

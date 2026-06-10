@@ -26,14 +26,19 @@ import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -57,7 +62,7 @@ import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.Comment
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.PostDetailData
-import com.ttkk0000.meowcircle.kmpapp.BuildConfig
+import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
@@ -78,6 +83,8 @@ fun StitchPostDetailScreen(
     var err by remember { mutableStateOf<String?>(null) }
     var loading by remember { mutableStateOf(true) }
     var following by remember { mutableStateOf(false) }
+    var commentDraft by remember { mutableStateOf("") }
+    var localComments by remember { mutableStateOf<List<String>>(emptyList()) }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(postId) {
@@ -105,10 +112,10 @@ fun StitchPostDetailScreen(
         containerColor = StitchLoginRef.Background,
         topBar = {
             TopAppBar(
-                title = { },
+                title = { Text(stringResource(R.string.post_detail_title), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "返回")
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 colors =
@@ -119,12 +126,58 @@ fun StitchPostDetailScreen(
                     ),
             )
         },
+        bottomBar = {
+            if (detail != null) {
+                Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(StitchLoginRef.SurfaceVariant)
+                            .padding(horizontal = 12.dp, vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    OutlinedTextField(
+                        value = commentDraft,
+                        onValueChange = { commentDraft = it },
+                        placeholder = { Text(stringResource(R.string.post_add_comment)) },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(18.dp),
+                        colors =
+                            OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = StitchPalette.Brand,
+                                unfocusedBorderColor = StitchPalette.BorderHairline,
+                                cursorColor = StitchPalette.Brand,
+                                focusedContainerColor = StitchPalette.Surface,
+                                unfocusedContainerColor = StitchPalette.Surface,
+                            ),
+                    )
+                    Button(
+                        onClick = {
+                            val text = commentDraft.trim()
+                            if (text.isNotBlank()) {
+                                localComments = localComments + text
+                                commentDraft = ""
+                            }
+                        },
+                        enabled = commentDraft.isNotBlank(),
+                        shape = CircleShape,
+                        contentPadding = PaddingValues(0.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+                        modifier = Modifier.size(42.dp),
+                    ) {
+                        Text("↑", color = Color.White, fontWeight = FontWeight.Black)
+                    }
+                }
+            }
+        },
     ) { inner ->
         when {
             loading && detail == null ->
                 StitchLoadingScreen(
-                    title = "详情页加载中",
-                    subtitle = "正在加载帖子内容",
+                    title = stringResource(R.string.post_loading_title),
+                    subtitle = stringResource(R.string.post_loading_body),
                     modifier = Modifier.fillMaxSize().padding(inner),
                 )
             err != null && detail == null ->
@@ -226,7 +279,7 @@ fun StitchPostDetailScreen(
                                         fontWeight = FontWeight.Bold,
                                     )
                                     Text(
-                                        author.bio.ifBlank { "M&D 伙伴" },
+                                        author.bio.ifBlank { stringResource(R.string.post_author_fallback) },
                                         style = MaterialTheme.typography.bodySmall,
                                         color = StitchLoginRef.Outline,
                                     )
@@ -244,7 +297,7 @@ fun StitchPostDetailScreen(
                                     },
                                     shape = RoundedCornerShape(8.dp),
                                 ) {
-                                    Text(if (following) "已关注" else "关注")
+                                    Text(if (following) stringResource(R.string.post_following) else stringResource(R.string.post_follow))
                                 }
                             }
                         }
@@ -262,7 +315,7 @@ fun StitchPostDetailScreen(
                             }
                             Spacer(Modifier.height(4.dp))
                             Text(
-                                "发布于 ${d.post.createdAt.take(16).replace('T', ' ')}",
+                                stringResource(R.string.post_created_at, d.post.createdAt.take(16).replace('T', ' ')),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = StitchLoginRef.Outline,
                             )
@@ -276,18 +329,21 @@ fun StitchPostDetailScreen(
                                 PostStatChip(Icons.Outlined.FavoriteBorder, "${d.likeCount}")
                                 PostStatChip(Icons.Outlined.ChatBubbleOutline, "${d.comments.size}")
                                 PostStatChip(Icons.Outlined.StarOutline, "—")
-                                PostStatChip(Icons.Outlined.Share, "分享")
+                                PostStatChip(Icons.Outlined.Share, stringResource(R.string.common_share))
                             }
                         }
                         item {
                             HorizontalDivider(color = StitchLoginRef.SurfaceVariant)
                             Text(
-                                "共 ${d.comments.size} 条评论",
+                                stringResource(R.string.post_comments_count, d.comments.size + localComments.size),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.SemiBold,
                             )
                         }
                         items(d.comments, key = { it.id }) { c -> CommentRow(apiBase, c) }
+                        items(localComments) { text ->
+                            LocalCommentRow(text)
+                        }
                     }
                 }
             }
@@ -318,7 +374,7 @@ private fun CommentRow(
     c: Comment,
 ) {
     val label =
-        c.author?.let { it.nickname.ifBlank { it.username } } ?: "用户 ${c.authorId}"
+        c.author?.let { it.nickname.ifBlank { it.username } } ?: stringResource(R.string.feed_user_fallback, c.authorId)
     Column(
         modifier =
             Modifier
@@ -362,11 +418,49 @@ private fun CommentRow(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                "${c.createdAt.take(16).replace('T', ' ')} · 回复",
+                stringResource(R.string.post_comment_meta, c.createdAt.take(16).replace('T', ' ')),
                 style = MaterialTheme.typography.labelSmall,
                 color = StitchLoginRef.Outline,
             )
             Icon(Icons.Outlined.FavoriteBorder, contentDescription = null, tint = StitchLoginRef.Outline, modifier = Modifier.size(18.dp))
         }
+    }
+}
+
+@Composable
+private fun LocalCommentRow(text: String) {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .background(StitchPalette.BrandMuted)
+                .padding(12.dp),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier =
+                    Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .background(StitchPalette.Brand),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text("M", style = MaterialTheme.typography.labelLarge, color = Color.White, fontWeight = FontWeight.Bold)
+            }
+            Text(
+                stringResource(R.string.post_local_comment_author),
+                modifier = Modifier.padding(start = 8.dp),
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
+        Text(text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 6.dp))
+        Text(
+            stringResource(R.string.post_comment_sent),
+            style = MaterialTheme.typography.labelSmall,
+            color = StitchLoginRef.Outline,
+            modifier = Modifier.padding(top = 4.dp),
+        )
     }
 }

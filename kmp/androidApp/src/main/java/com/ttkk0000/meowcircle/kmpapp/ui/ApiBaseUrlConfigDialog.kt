@@ -21,8 +21,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ttkk0000.meowcircle.kmpapp.R
 
 @Composable
 fun ApiBaseUrlConfigDialog(
@@ -36,25 +38,25 @@ fun ApiBaseUrlConfigDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text("设置 API 基准地址", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.api_config_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text("配置调试时的 API 服务器路径：", style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(R.string.api_config_body), style = MaterialTheme.typography.bodyMedium)
                 
                 OutlinedTextField(
                     value = customUrl,
                     onValueChange = { customUrl = it },
                     singleLine = true,
-                    label = { Text("API 地址") },
+                    label = { Text(stringResource(R.string.api_config_label)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 
-                Text("快速预设：", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.api_config_presets), style = MaterialTheme.typography.labelMedium)
                 
                 val presets = listOf(
-                    "http://127.0.0.1:8080" to "127.0.0.1:8080 (MuMu / ADB)",
-                    "http://10.0.2.2:8080" to "10.0.2.2:8080 (官方模拟器)",
+                    "http://127.0.0.1:8080" to stringResource(R.string.api_config_preset_mumu),
+                    "http://10.0.2.2:8080" to stringResource(R.string.api_config_preset_emulator),
                 )
                 
                 presets.forEach { (url, label) ->
@@ -86,13 +88,13 @@ fun ApiBaseUrlConfigDialog(
                         onClick = { customUrl = defaultUrl }
                     )
                     Spacer(Modifier.width(8.dp))
-                    Text("恢复默认编译配置", style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(R.string.api_config_restore_default), style = MaterialTheme.typography.bodyMedium)
                 }
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("取消")
+                Text(stringResource(R.string.common_cancel))
             }
         },
         confirmButton = {
@@ -106,7 +108,7 @@ fun ApiBaseUrlConfigDialog(
                     }
                 }
             ) {
-                Text("保存")
+                Text(stringResource(R.string.common_save))
             }
         }
     )

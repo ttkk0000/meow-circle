@@ -42,6 +42,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -73,6 +75,8 @@ import kotlinx.coroutines.launch
 
 private data class OrderFilter(val key: String, val labelRes: Int)
 
+private data class SafetyOption(val key: String, val labelRes: Int)
+
 private val ORDER_FILTERS =
     listOf(
         OrderFilter("all", R.string.orders_filter_all),
@@ -81,6 +85,32 @@ private val ORDER_FILTERS =
         OrderFilter("shipped", R.string.orders_filter_shipped),
         OrderFilter("completed", R.string.orders_filter_completed),
     )
+
+private val REVIEW_TAGS =
+    listOf(
+        R.string.safety_review_tag_fast_reply,
+        R.string.safety_review_tag_accurate,
+        R.string.safety_review_tag_pickup,
+        R.string.safety_review_tag_quality,
+        R.string.safety_review_tag_friendly,
+    )
+
+private val REPORT_REASONS =
+    listOf(
+        SafetyOption("item", R.string.safety_report_reason_item),
+        SafetyOption("unresponsive", R.string.safety_report_reason_unresponsive),
+        SafetyOption("pickup", R.string.safety_report_reason_pickup),
+        SafetyOption("payment", R.string.safety_report_reason_payment),
+        SafetyOption("other", R.string.safety_report_reason_other),
+    )
+
+private enum class OrderSafetyRoute {
+    LeaveReview,
+    SellerReviews,
+    ReportIssue,
+    OpenDispute,
+    DisputeStatus,
+}
 
 @Composable
 fun StitchOrdersScreen(
@@ -100,6 +130,7 @@ fun StitchOrdersScreen(
     var refreshSignal by remember { mutableStateOf(0) }
     var selectedOrder by remember { mutableStateOf<Order?>(null) }
     var showTracking by remember { mutableStateOf(false) }
+    var safetyRoute by remember { mutableStateOf<OrderSafetyRoute?>(null) }
     var infoText by remember { mutableStateOf<String?>(null) }
     var actionBusy by remember { mutableStateOf(false) }
 
@@ -199,6 +230,58 @@ fun StitchOrdersScreen(
     }
 
     when {
+        safetyRoute != null && selectedOrder != null ->
+            when (safetyRoute) {
+                OrderSafetyRoute.LeaveReview ->
+                    LeaveReviewScreen(
+                        order = selectedOrder!!,
+                        onBack = { safetyRoute = null },
+                        onSellerReviews = { safetyRoute = OrderSafetyRoute.SellerReviews },
+                        onSubmit = {
+                            infoText = context.getString(R.string.safety_review_submitted)
+                            safetyRoute = null
+                        },
+                        modifier = modifier,
+                    )
+                OrderSafetyRoute.SellerReviews ->
+                    SellerReviewsScreen(
+                        order = selectedOrder!!,
+                        onBack = { safetyRoute = null },
+                        modifier = modifier,
+                    )
+                OrderSafetyRoute.ReportIssue ->
+                    ReportIssueScreen(
+                        order = selectedOrder!!,
+                        onBack = { safetyRoute = null },
+                        onSubmit = {
+                            infoText = context.getString(R.string.safety_report_submitted)
+                            safetyRoute = null
+                        },
+                        modifier = modifier,
+                    )
+                OrderSafetyRoute.OpenDispute ->
+                    OpenDisputeScreen(
+                        order = selectedOrder!!,
+                        onBack = { safetyRoute = null },
+                        onSubmit = { safetyRoute = OrderSafetyRoute.DisputeStatus },
+                        modifier = modifier,
+                    )
+                OrderSafetyRoute.DisputeStatus ->
+                    DisputeStatusScreen(
+                        order = selectedOrder!!,
+                        onBack = { safetyRoute = null },
+                        onOpenMessages = onOpenMessages,
+                        onAddEvidence = {
+                            infoText = context.getString(R.string.safety_evidence_added)
+                        },
+                        onCloseDispute = {
+                            infoText = context.getString(R.string.safety_dispute_closed)
+                            safetyRoute = null
+                        },
+                        modifier = modifier,
+                    )
+                null -> Unit
+            }
         showTracking && selectedOrder != null ->
             TrackingScreen(
                 order = selectedOrder!!,
@@ -214,6 +297,10 @@ fun StitchOrdersScreen(
                 onTrack = { showTracking = true },
                 onOpenMessages = onOpenMessages,
                 onAction = { updateOrder(it, selectedOrder!!) },
+                onLeaveReview = { safetyRoute = OrderSafetyRoute.LeaveReview },
+                onSellerReviews = { safetyRoute = OrderSafetyRoute.SellerReviews },
+                onReportIssue = { safetyRoute = OrderSafetyRoute.ReportIssue },
+                onOpenDispute = { safetyRoute = OrderSafetyRoute.OpenDispute },
                 modifier = modifier,
             )
         else ->
@@ -233,6 +320,7 @@ fun StitchOrdersScreen(
                 onEnableMock = { mockMode = true },
                 onOpenMarket = onOpenMarket,
                 onOpenMessages = onOpenMessages,
+                onAction = { action, order -> updateOrder(action, order) },
                 modifier = modifier,
             )
     }
@@ -266,6 +354,7 @@ private fun OrdersListScreen(
     onEnableMock: () -> Unit,
     onOpenMarket: () -> Unit,
     onOpenMessages: () -> Unit,
+    onAction: (String, Order) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
@@ -352,7 +441,13 @@ private fun OrdersListScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(orders, key = { it.id }) { order ->
-                        OrderListCard(order = order, role = role, onClick = { onOpenOrder(order) })
+                        OrderListCard(
+                            order = order,
+                            role = role,
+                            onClick = { onOpenOrder(order) },
+                            onAction = { action -> onAction(action, order) },
+                            onOpenMessages = onOpenMessages,
+                        )
                     }
                 }
             }
@@ -369,6 +464,10 @@ private fun OrderDetailScreen(
     onTrack: () -> Unit,
     onOpenMessages: () -> Unit,
     onAction: (String) -> Unit,
+    onLeaveReview: () -> Unit,
+    onSellerReviews: () -> Unit,
+    onReportIssue: () -> Unit,
+    onOpenDispute: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val sellerMode = role == "seller"
@@ -420,6 +519,14 @@ private fun OrderDetailScreen(
                     HorizontalDivider(color = StitchPalette.BorderHairline, modifier = Modifier.padding(vertical = 8.dp))
                     SummaryRow(stringResource(R.string.orders_total), formatOrderPrice(order.amountCents, order.currency), total = true)
                 }
+                InfoCard(title = stringResource(R.string.safety_feedback_title)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        SafetyActionRow(stringResource(R.string.safety_leave_review), onLeaveReview)
+                        SafetyActionRow(stringResource(R.string.safety_seller_reviews), onSellerReviews)
+                        SafetyActionRow(stringResource(R.string.safety_report_issue), onReportIssue)
+                        SafetyActionRow(stringResource(R.string.safety_open_dispute), onOpenDispute, danger = true)
+                    }
+                }
             }
         }
         OrderActionBar(
@@ -430,6 +537,262 @@ private fun OrderDetailScreen(
             onOpenMessages = onOpenMessages,
             onAction = onAction,
         )
+    }
+}
+
+@Composable
+private fun LeaveReviewScreen(
+    order: Order,
+    onBack: () -> Unit,
+    onSellerReviews: () -> Unit,
+    onSubmit: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var rating by remember { mutableStateOf(5) }
+    var review by remember { mutableStateOf("") }
+    var selectedTags by remember { mutableStateOf(setOf(REVIEW_TAGS[0], REVIEW_TAGS[1], REVIEW_TAGS[2], REVIEW_TAGS[3])) }
+    Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
+        Header(title = stringResource(R.string.safety_leave_review), onBack = onBack)
+        Column(
+            modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            OrderReviewSummary(order)
+            InfoCard(title = stringResource(R.string.safety_rating)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
+                    (1..5).forEach { index ->
+                        Text(
+                            text = "★",
+                            modifier = Modifier.clickable { rating = index }.padding(2.dp),
+                            style = MaterialTheme.typography.headlineMedium,
+                            color = if (index <= rating) StitchPalette.Brand else StitchPalette.OutlineVariant,
+                            fontWeight = FontWeight.Black,
+                        )
+                    }
+                }
+            }
+            InfoCard(title = stringResource(R.string.safety_write_review)) {
+                OutlinedTextField(
+                    value = review,
+                    onValueChange = { review = it },
+                    minLines = 4,
+                    placeholder = { Text(stringResource(R.string.safety_review_placeholder)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = StitchShape.field,
+                    colors = orderTextFieldColors(),
+                )
+                Spacer(Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    REVIEW_TAGS.forEach { labelRes ->
+                        val selected = labelRes in selectedTags
+                        SafetyChip(
+                            label = stringResource(labelRes),
+                            selected = selected,
+                            onClick = {
+                                selectedTags = if (selected) selectedTags - labelRes else selectedTags + labelRes
+                            },
+                        )
+                    }
+                }
+            }
+            TextButton(onClick = onSellerReviews, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.safety_seller_reviews), color = StitchPalette.Brand, fontWeight = FontWeight.Bold)
+            }
+        }
+        BottomTwoActions(
+            secondary = stringResource(R.string.safety_save_draft),
+            primary = stringResource(R.string.safety_submit_review),
+            onSecondary = onBack,
+            onPrimary = onSubmit,
+        )
+    }
+}
+
+@Composable
+private fun SellerReviewsScreen(
+    order: Order,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
+        Header(title = stringResource(R.string.safety_seller_reviews), onBack = onBack)
+        Column(
+            modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Box(Modifier.size(88.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
+                Text("J", style = MaterialTheme.typography.headlineMedium, color = StitchPalette.Brand, fontWeight = FontWeight.Black)
+            }
+            Text(stringResource(R.string.safety_seller_name), style = MaterialTheme.typography.headlineSmall, color = StitchPalette.PrimaryDark, fontWeight = FontWeight.Black)
+            Text(stringResource(R.string.market_verified_seller_rating), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                SellerMetric("4.8", stringResource(R.string.market_rating), Modifier.weight(1f))
+                SellerMetric("124", stringResource(R.string.market_sales), Modifier.weight(1f))
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                SafetyChip(stringResource(R.string.safety_review_filter_product), selected = true, onClick = {})
+                SafetyChip(stringResource(R.string.safety_review_filter_pickup), selected = false, onClick = {})
+                SafetyChip(stringResource(R.string.safety_review_filter_communication), selected = false, onClick = {})
+            }
+            ReviewCard(stringResource(R.string.safety_review_author_luna), stringResource(R.string.safety_review_luna_body))
+            ReviewCard(stringResource(R.string.safety_review_author_sarah), stringResource(R.string.safety_review_sarah_body))
+            OrderReviewSummary(order)
+        }
+    }
+}
+
+@Composable
+private fun ReportIssueScreen(
+    order: Order,
+    onBack: () -> Unit,
+    onSubmit: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var reason by remember { mutableStateOf("pickup") }
+    var details by remember { mutableStateOf("") }
+    Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
+        Header(title = stringResource(R.string.safety_report_issue), onBack = onBack)
+        Column(
+            modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            OrderReviewSummary(order)
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = StitchShape.cardFeed,
+                color = Color(0xFFFEF3C7),
+                border = BorderStroke(1.dp, Color(0x55F59E0B)),
+            ) {
+                Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(stringResource(R.string.safety_urgent_title), style = MaterialTheme.typography.titleSmall, color = Color(0xFFF59E0B), fontWeight = FontWeight.Black)
+                    Text(stringResource(R.string.safety_urgent_body), style = MaterialTheme.typography.bodySmall, color = Color(0xCCB45309))
+                }
+            }
+            InfoCard(title = stringResource(R.string.safety_issue_question)) {
+                REPORT_REASONS.forEach { option ->
+                    SafetySelectRow(
+                        label = stringResource(option.labelRes),
+                        selected = reason == option.key,
+                        onClick = { reason = option.key },
+                    )
+                }
+            }
+            OutlinedTextField(
+                value = details,
+                onValueChange = { details = it },
+                minLines = 4,
+                placeholder = { Text(stringResource(R.string.safety_report_placeholder)) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = StitchShape.field,
+                colors = orderTextFieldColors(),
+            )
+        }
+        BottomTwoActions(
+            secondary = stringResource(R.string.common_cancel),
+            primary = stringResource(R.string.safety_submit_report),
+            onSecondary = onBack,
+            onPrimary = onSubmit,
+        )
+    }
+}
+
+@Composable
+private fun OpenDisputeScreen(
+    order: Order,
+    onBack: () -> Unit,
+    onSubmit: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var resolution by remember { mutableStateOf("refund") }
+    var note by remember { mutableStateOf("") }
+    Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
+        Header(title = stringResource(R.string.safety_open_dispute), onBack = onBack)
+        Column(
+            modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            OrderReviewSummary(order)
+            Text(stringResource(R.string.safety_dispute_intro), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
+            InfoCard(title = stringResource(R.string.safety_dispute_reason)) {
+                SafetySelectRow(stringResource(R.string.safety_report_reason_unresponsive), selected = true, onClick = {})
+                SafetySelectRow(stringResource(R.string.safety_report_reason_pickup), selected = false, onClick = {})
+            }
+            InfoCard(title = stringResource(R.string.safety_requested_resolution)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
+                    DisputeResolutionCard(stringResource(R.string.safety_resolution_refund), resolution == "refund", Modifier.weight(1f)) { resolution = "refund" }
+                    DisputeResolutionCard(stringResource(R.string.safety_resolution_replace), resolution == "replace", Modifier.weight(1f)) { resolution = "replace" }
+                }
+                Spacer(Modifier.height(10.dp))
+                SummaryRow(stringResource(R.string.orders_total), formatOrderPrice(order.amountCents, order.currency), total = true)
+            }
+            OutlinedTextField(
+                value = note,
+                onValueChange = { note = it },
+                minLines = 3,
+                placeholder = { Text(stringResource(R.string.safety_dispute_note_placeholder)) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = StitchShape.field,
+                colors = orderTextFieldColors(),
+            )
+        }
+        BottomTwoActions(
+            secondary = stringResource(R.string.safety_save_draft),
+            primary = stringResource(R.string.safety_submit_dispute),
+            onSecondary = onBack,
+            onPrimary = onSubmit,
+        )
+    }
+}
+
+@Composable
+private fun DisputeStatusScreen(
+    order: Order,
+    onBack: () -> Unit,
+    onOpenMessages: () -> Unit,
+    onAddEvidence: () -> Unit,
+    onCloseDispute: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
+        Header(title = stringResource(R.string.safety_dispute_status), onBack = onBack)
+        Column(
+            modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            InfoCard(title = stringResource(R.string.safety_dispute_id, order.id)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(R.string.orders_order_number, order.id), modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    Surface(shape = StitchShape.pill, color = Color(0xFFFEF3C7)) {
+                        Text(stringResource(R.string.safety_under_review), modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp), color = Color(0xFFF59E0B), style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                    }
+                }
+                Text(stringResource(R.string.safety_under_review_body), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
+            }
+            InfoCard(title = stringResource(R.string.safety_timeline)) {
+                TrackingStep(stringResource(R.string.safety_step_submitted), stringResource(R.string.orders_step_placed), true)
+                TrackingStep(stringResource(R.string.safety_step_seller_notified), stringResource(R.string.messages_today), true)
+                TrackingStep(stringResource(R.string.safety_step_under_review), stringResource(R.string.safety_support_reviewing), true)
+                TrackingStep(stringResource(R.string.safety_step_resolution), stringResource(R.string.safety_waiting_resolution), false, isLast = true)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
+                OutlinedButton(onClick = onOpenMessages, shape = StitchShape.field, modifier = Modifier.weight(1f).height(48.dp), border = BorderStroke(1.dp, StitchPalette.BorderHairline)) {
+                    Text(stringResource(R.string.safety_message_seller), color = StitchPalette.OnSurface)
+                }
+                OutlinedButton(onClick = onAddEvidence, shape = StitchShape.field, modifier = Modifier.weight(1f).height(48.dp), border = BorderStroke(1.dp, StitchPalette.Brand)) {
+                    Text(stringResource(R.string.safety_add_evidence), color = StitchPalette.Brand, fontWeight = FontWeight.Bold)
+                }
+            }
+            OutlinedButton(onClick = onCloseDispute, shape = StitchShape.field, modifier = Modifier.fillMaxWidth().height(48.dp), border = BorderStroke(1.dp, StitchPalette.BorderHairline)) {
+                Text(stringResource(R.string.safety_close_dispute), color = StitchPalette.OnSurfaceVariant)
+            }
+        }
     }
 }
 
@@ -455,7 +818,7 @@ private fun TrackingScreen(
                     TrackingStep(stringResource(R.string.orders_step_placed), order.createdAt.take(16).replace('T', ' '), true)
                     TrackingStep(stringResource(R.string.orders_step_paid), order.paidAt?.take(16)?.replace('T', ' ') ?: stringResource(R.string.orders_awaiting_payment), order.paidAt != null)
                     TrackingStep(stringResource(R.string.orders_step_shipped), stringResource(R.string.orders_in_transit), order.status in listOf("shipped", "completed"))
-                    TrackingStep(stringResource(R.string.orders_step_completed), stringResource(R.string.orders_awaiting_delivery), order.status == "completed")
+                    TrackingStep(stringResource(R.string.orders_step_completed), stringResource(R.string.orders_awaiting_delivery), order.status == "completed", isLast = true)
                 }
             }
         }
@@ -467,6 +830,8 @@ private fun OrderListCard(
     order: Order,
     role: String,
     onClick: () -> Unit,
+    onAction: (String) -> Unit,
+    onOpenMessages: () -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
@@ -477,7 +842,11 @@ private fun OrderListCard(
         Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "${stringResource(R.string.orders_order_number, order.id)} · ${if (role == "buyer") "Jordan M." else "Sarah P."}",
+                    stringResource(
+                        R.string.orders_card_meta,
+                        stringResource(R.string.orders_order_number, order.id),
+                        if (role == "buyer") "Jordan M." else "Sarah P.",
+                    ),
                     style = MaterialTheme.typography.labelMedium,
                     color = StitchPalette.OnSurfaceVariant,
                     modifier = Modifier.weight(1f),
@@ -494,9 +863,12 @@ private fun OrderListCard(
                 }
             }
             when (order.status) {
-                "shipped" -> ButtonLine(stringResource(R.string.orders_confirm_receipt))
-                "paid" -> OutlinedButtonLine(stringResource(R.string.orders_contact_seller))
-                "pending_payment" -> ButtonLine(stringResource(R.string.orders_pay_now))
+                "shipped" -> ButtonLine(stringResource(R.string.orders_confirm_receipt), onClick = { onAction("complete") })
+                "paid" -> OutlinedButtonLine(
+                    if (role == "seller") stringResource(R.string.orders_contact_buyer) else stringResource(R.string.orders_contact_seller),
+                    onClick = onOpenMessages,
+                )
+                "pending_payment" -> ButtonLine(stringResource(R.string.orders_pay_now), onClick = { onAction("pay") })
             }
         }
     }
@@ -586,6 +958,192 @@ private fun SummaryRow(label: String, value: String, total: Boolean = false) {
 }
 
 @Composable
+private fun OrderReviewSummary(order: Order) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = StitchShape.cardFeed,
+        color = StitchPalette.Surface,
+        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.size(62.dp).clip(StitchShape.field).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
+                Icon(Icons.Outlined.ShoppingBag, contentDescription = null, tint = StitchPalette.Brand)
+            }
+            Column(Modifier.padding(start = 12.dp).weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                Text(stringResource(R.string.orders_order_number, order.id), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
+                Text(order.listingTitle, style = MaterialTheme.typography.titleSmall, color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.orders_seller_name), style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+            }
+            Text(formatOrderPrice(order.amountCents, order.currency), style = MaterialTheme.typography.titleMedium, color = StitchPalette.Brand, fontWeight = FontWeight.Black)
+        }
+    }
+}
+
+@Composable
+private fun SafetyActionRow(
+    label: String,
+    onClick: () -> Unit,
+    danger: Boolean = false,
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        shape = StitchShape.field,
+        color = if (danger) StitchPalette.GoldWeak else StitchPalette.SurfaceLow,
+        border = BorderStroke(1.dp, if (danger) StitchPalette.Gold else StitchPalette.BorderHairline),
+    ) {
+        Row(Modifier.padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(label, modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium, color = if (danger) StitchPalette.PrimaryDark else StitchPalette.OnSurface, fontWeight = FontWeight.SemiBold)
+            Text("›", style = MaterialTheme.typography.titleLarge, color = StitchPalette.Outline)
+        }
+    }
+}
+
+@Composable
+private fun SafetyChip(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(
+        shape = StitchShape.pill,
+        color = if (selected) StitchPalette.BrandMuted else StitchPalette.Surface,
+        border = BorderStroke(1.dp, if (selected) StitchPalette.Brand else StitchPalette.BorderHairline),
+        modifier = Modifier.clickable(onClick = onClick),
+    ) {
+        Text(
+            label,
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+            style = MaterialTheme.typography.labelMedium,
+            color = if (selected) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+@Composable
+private fun SellerMetric(
+    value: String,
+    label: String,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier,
+        shape = StitchShape.field,
+        color = StitchPalette.Surface,
+        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Column(Modifier.padding(vertical = 12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(value, style = MaterialTheme.typography.titleLarge, color = StitchPalette.PrimaryDark, fontWeight = FontWeight.Black)
+            Text(label, style = MaterialTheme.typography.labelSmall, color = StitchPalette.OnSurfaceVariant)
+        }
+    }
+}
+
+@Composable
+private fun ReviewCard(
+    author: String,
+    body: String,
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = StitchShape.cardFeed,
+        color = StitchPalette.Surface,
+        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(author, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleSmall, color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
+                Text("★★★★★", color = StitchPalette.Brand, style = MaterialTheme.typography.labelLarge)
+            }
+            Text(body, style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurface)
+        }
+    }
+}
+
+@Composable
+private fun SafetySelectRow(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(StitchShape.field)
+                .background(if (selected) StitchPalette.BrandMuted else StitchPalette.Surface)
+                .border(1.dp, if (selected) StitchPalette.Brand else StitchPalette.BorderHairline, StitchShape.field)
+                .clickable(onClick = onClick)
+                .padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            Modifier
+                .size(20.dp)
+                .clip(CircleShape)
+                .background(if (selected) StitchPalette.Brand else StitchPalette.Surface)
+                .border(1.dp, if (selected) StitchPalette.Brand else StitchPalette.Outline, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (selected) Box(Modifier.size(8.dp).clip(CircleShape).background(Color.White))
+        }
+        Text(label, modifier = Modifier.padding(start = 10.dp), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurface)
+    }
+}
+
+@Composable
+private fun DisputeResolutionCard(
+    label: String,
+    selected: Boolean,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = modifier.clickable(onClick = onClick),
+        shape = StitchShape.field,
+        color = if (selected) StitchPalette.BrandMuted else StitchPalette.Surface,
+        border = BorderStroke(1.dp, if (selected) StitchPalette.Brand else StitchPalette.BorderHairline),
+    ) {
+        Column(Modifier.padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Box(Modifier.size(30.dp).clip(CircleShape).background(if (selected) StitchPalette.Brand else StitchPalette.SurfaceLow))
+            Text(label, textAlign = TextAlign.Center, style = MaterialTheme.typography.labelLarge, color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+@Composable
+private fun BottomTwoActions(
+    secondary: String,
+    primary: String,
+    onSecondary: () -> Unit,
+    onPrimary: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().background(StitchPalette.Surface).border(1.dp, StitchPalette.BorderHairline).padding(14.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        OutlinedButton(onClick = onSecondary, shape = StitchShape.field, modifier = Modifier.weight(1f).height(48.dp), border = BorderStroke(1.dp, StitchPalette.BorderHairline)) {
+            Text(secondary, color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
+        }
+        Button(onClick = onPrimary, shape = StitchShape.field, modifier = Modifier.weight(1f).height(48.dp), colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand)) {
+            Text(primary, color = Color.White, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+@Composable
+private fun orderTextFieldColors() =
+    OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = StitchPalette.Brand,
+        unfocusedBorderColor = StitchPalette.BorderHairline,
+        cursorColor = StitchPalette.Brand,
+        focusedContainerColor = StitchPalette.Surface,
+        unfocusedContainerColor = StitchPalette.Surface,
+        focusedTextColor = StitchPalette.OnSurface,
+        unfocusedTextColor = StitchPalette.OnSurface,
+    )
+
+@Composable
 private fun OrderActionBar(
     order: Order,
     sellerMode: Boolean,
@@ -634,15 +1192,32 @@ private fun OrderActionBar(
 }
 
 @Composable
-private fun TrackingStep(title: String, body: String, done: Boolean) {
-    Row(verticalAlignment = Alignment.Top) {
-        Box(
-            modifier = Modifier.size(30.dp).clip(CircleShape).background(if (done) StitchPalette.Brand else StitchPalette.SurfaceLow).border(1.dp, StitchPalette.BorderHairline, CircleShape),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(if (done) "✓" else "", color = Color.White, fontWeight = FontWeight.Black)
+private fun TrackingStep(
+    title: String,
+    body: String,
+    done: Boolean,
+    isLast: Boolean = false,
+) {
+    Row(Modifier.fillMaxWidth().height(72.dp), verticalAlignment = Alignment.Top) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                modifier = Modifier.size(30.dp).clip(CircleShape).background(if (done) StitchPalette.Brand else StitchPalette.SurfaceLow).border(1.dp, StitchPalette.BorderHairline, CircleShape),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (done) {
+                    Box(Modifier.size(9.dp).clip(CircleShape).background(Color.White))
+                }
+            }
+            if (!isLast) {
+                Box(
+                    Modifier
+                        .width(2.dp)
+                        .height(42.dp)
+                        .background(if (done) StitchPalette.Brand.copy(alpha = 0.7f) else StitchPalette.BorderHairline),
+                )
+            }
         }
-        Column(Modifier.padding(start = 12.dp)) {
+        Column(Modifier.padding(start = 12.dp, top = 2.dp).weight(1f)) {
             Text(title, style = MaterialTheme.typography.titleSmall, color = if (done) StitchPalette.Brand else StitchPalette.OnSurfaceVariant, fontWeight = FontWeight.Black)
             Text(body, style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
         }
@@ -708,9 +1283,9 @@ private fun StatusPill(status: String) {
 }
 
 @Composable
-private fun ButtonLine(text: String) {
+private fun ButtonLine(text: String, onClick: () -> Unit) {
     Button(
-        onClick = {},
+        onClick = onClick,
         shape = StitchShape.field,
         colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
         modifier = Modifier.fillMaxWidth().height(38.dp),
@@ -720,9 +1295,9 @@ private fun ButtonLine(text: String) {
 }
 
 @Composable
-private fun OutlinedButtonLine(text: String) {
+private fun OutlinedButtonLine(text: String, onClick: () -> Unit) {
     OutlinedButton(
-        onClick = {},
+        onClick = onClick,
         shape = StitchShape.field,
         border = BorderStroke(1.dp, StitchPalette.BorderHairline),
         modifier = Modifier.fillMaxWidth().height(38.dp),

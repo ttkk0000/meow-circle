@@ -3,17 +3,20 @@ package com.ttkk0000.meowcircle.kmpapp.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pets
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.NotificationsNone
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,19 +26,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.User
+import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
-import com.ttkk0000.meowcircle.kmpapp.theme.StitchShadows
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 
-/** 顶部栏：M&D = meow & doggie，猫猫优先的移动端品牌栏。 */
+enum class StitchTopBarLeading {
+    Menu,
+    Paw,
+    Avatar,
+}
+
+enum class StitchTopBarTrailing {
+    Bell,
+    Settings,
+}
+
+/** Mobile app header matching the Stitch phone frames. */
 @Composable
 fun StitchTopBar(
     apiBase: String,
@@ -44,87 +57,105 @@ fun StitchTopBar(
     onNotifyPress: () -> Unit,
     modifier: Modifier = Modifier,
     title: String = "M&D",
-    subtitle: String = "meow & doggie",
+    leading: StitchTopBarLeading = StitchTopBarLeading.Paw,
+    trailing: StitchTopBarTrailing = StitchTopBarTrailing.Bell,
 ) {
     val avatarUrl = resolveMediaUrl(apiBase, user?.avatarUrl?.takeIf { it.isNotBlank() })
-    Column(
+    val leadingDescription =
+        when (leading) {
+            StitchTopBarLeading.Menu -> stringResource(R.string.common_menu)
+            StitchTopBarLeading.Paw -> stringResource(R.string.app_name)
+            StitchTopBarLeading.Avatar -> user?.nickname?.ifBlank { user.username } ?: stringResource(R.string.nav_profile)
+        }
+    val trailingDescription =
+        when (trailing) {
+            StitchTopBarTrailing.Bell -> stringResource(R.string.common_notifications)
+            StitchTopBarTrailing.Settings -> stringResource(R.string.common_settings)
+        }
+    Row(
         modifier =
             modifier
                 .fillMaxWidth()
-                .shadow(
-                    elevation = 2.dp,
-                    shape = RectangleShape,
-                    ambientColor = StitchShadows.headerAmbientColor,
-                    spotColor = StitchShadows.headerAmbientColor,
-                )
                 .background(StitchPalette.Canvas.copy(alpha = 0.98f)),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
             modifier =
                 Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
-                    .padding(horizontal = 20.dp, vertical = 8.dp),
+                    .padding(horizontal = 20.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onAvatarPress, modifier = Modifier.size(44.dp)) {
-                if (avatarUrl != null) {
-                    AsyncImage(
-                        model = avatarUrl,
-                        contentDescription = "头像",
-                        modifier =
-                            Modifier
-                                .size(36.dp)
-                                .clip(CircleShape)
-                                .border(1.dp, StitchPalette.BorderHairline, CircleShape),
-                        contentScale = ContentScale.Crop,
-                    )
-                } else {
-                    Box(
-                        modifier =
-                            Modifier
-                                .size(36.dp)
-                                .shadow(
-                                    elevation = 2.dp,
-                                    shape = CircleShape,
-                                    ambientColor = StitchShadows.avatarGlowColor,
-                                    spotColor = StitchShadows.avatarGlowColor,
-                                )
-                                .clip(CircleShape)
-                                .background(StitchPalette.Surface)
-                                .border(1.dp, StitchPalette.BorderHairline, CircleShape),
-                        contentAlignment = Alignment.Center,
-                    ) {
+                when (leading) {
+                    StitchTopBarLeading.Menu ->
+                        Icon(
+                            imageVector = Icons.Outlined.Menu,
+                            contentDescription = leadingDescription,
+                            tint = StitchPalette.Brand,
+                            modifier = Modifier.size(34.dp),
+                        )
+                    StitchTopBarLeading.Paw ->
                         Icon(
                             imageVector = Icons.Filled.Pets,
-                            contentDescription = null,
+                            contentDescription = leadingDescription,
                             tint = StitchPalette.Brand,
-                            modifier = Modifier.size(21.dp),
+                            modifier = Modifier.size(34.dp),
                         )
-                    }
+                    StitchTopBarLeading.Avatar ->
+                        if (avatarUrl != null) {
+                            AsyncImage(
+                                model = avatarUrl,
+                                contentDescription = leadingDescription,
+                                modifier =
+                                    Modifier
+                                        .size(38.dp)
+                                        .clip(CircleShape)
+                                        .border(2.dp, StitchPalette.Surface, CircleShape),
+                                contentScale = ContentScale.Crop,
+                            )
+                        } else {
+                            Box(
+                                modifier =
+                                    Modifier
+                                        .size(38.dp)
+                                        .clip(CircleShape)
+                                        .background(StitchPalette.BrandMuted)
+                                        .border(1.dp, StitchPalette.BorderHairline, CircleShape),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Pets,
+                                    contentDescription = null,
+                                    tint = StitchPalette.Brand,
+                                    modifier = Modifier.size(23.dp),
+                                )
+                            }
+                        }
                 }
             }
-            Column(
+            Row(
                 modifier =
                     Modifier
                         .weight(1f)
                         .padding(horizontal = 4.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
+                Icon(
+                    imageVector = Icons.Filled.Pets,
+                    contentDescription = null,
+                    tint = StitchPalette.Brand,
+                    modifier = Modifier.size(29.dp),
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
                     title,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.headlineSmall,
                     color = StitchPalette.Brand,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    subtitle,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = StitchPalette.Stone500,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
                 )
             }
             IconButton(
@@ -135,16 +166,13 @@ fun StitchTopBar(
                         .clip(RoundedCornerShape(8.dp)),
             ) {
                 Icon(
-                    imageVector = Icons.Outlined.NotificationsNone,
-                    contentDescription = "通知",
+                    imageVector = if (trailing == StitchTopBarTrailing.Settings) Icons.Outlined.Settings else Icons.Outlined.NotificationsNone,
+                    contentDescription = trailingDescription,
                     tint = StitchPalette.Brand,
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.size(31.dp),
                 )
             }
         }
-        HorizontalDivider(
-            thickness = 1.dp,
-            color = StitchPalette.HeaderBorder,
-        )
     }
+    HorizontalDivider(thickness = 1.dp, color = StitchPalette.HeaderBorder)
 }

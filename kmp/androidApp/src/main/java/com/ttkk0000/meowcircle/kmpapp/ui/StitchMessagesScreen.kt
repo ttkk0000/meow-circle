@@ -25,7 +25,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.AddCircleOutline
-import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.MailOutline
 import androidx.compose.material.icons.outlined.MoreVert
@@ -45,7 +44,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -307,6 +305,8 @@ private fun ChatDetailScreen(
     var draft by remember(conversation.peer.id) { mutableStateOf("") }
     var sending by remember { mutableStateOf(false) }
     var sendError by remember { mutableStateOf<String?>(null) }
+    val moreComingSoon = stringResource(R.string.messages_more_coming_soon)
+    val attachComingSoon = stringResource(R.string.messages_attach_coming_soon)
     val peer = detail?.peer ?: conversation.peer
     val messages = detail?.messages.orEmpty()
 
@@ -361,7 +361,7 @@ private fun ChatDetailScreen(
                 Text(peer.nickname.ifBlank { peer.username }, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
                 Text(stringResource(R.string.messages_online), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
             }
-            IconButton(onClick = {}, modifier = Modifier.size(44.dp)) {
+            IconButton(onClick = { sendError = moreComingSoon }, modifier = Modifier.size(44.dp)) {
                 Icon(Icons.Outlined.MoreVert, contentDescription = stringResource(R.string.common_more), tint = StitchPalette.OnSurface)
             }
         }
@@ -413,7 +413,7 @@ private fun ChatDetailScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            IconButton(onClick = {}, modifier = Modifier.size(42.dp)) {
+            IconButton(onClick = { sendError = attachComingSoon }, modifier = Modifier.size(42.dp)) {
                 Icon(Icons.Outlined.AddCircleOutline, contentDescription = stringResource(R.string.messages_attach), tint = StitchPalette.Brand)
             }
             OutlinedTextField(

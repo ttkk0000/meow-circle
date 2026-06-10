@@ -49,6 +49,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -61,6 +62,7 @@ import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.humanizeClientFailure
 import com.ttkk0000.meowcircle.kmpapp.BuildConfig
+import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import kotlinx.coroutines.launch
@@ -88,6 +90,14 @@ fun StitchLoginScreen(
     var apiBase by remember { mutableStateOf(sdk.baseUrl) }
     var showApiConfig by remember { mutableStateOf(false) }
     var localHealthHint by remember(healthHint) { mutableStateOf(healthHint) }
+    val backendConnectingText = stringResource(R.string.login_backend_connecting)
+    val backendServicePrefix = stringResource(R.string.login_backend_service_prefix)
+    val backendStatusTitle = stringResource(R.string.login_backend_status_title)
+    val forgotPasswordTitle = stringResource(R.string.login_forgot_password)
+    val forgotPasswordBody = stringResource(R.string.login_forgot_password_body)
+    val loginFailedTitle = stringResource(R.string.login_failed_title)
+    val socialTitle = stringResource(R.string.login_social_title)
+    val socialBody = stringResource(R.string.login_social_body)
 
     Box(modifier.fillMaxSize()) {
         Column(
@@ -103,7 +113,7 @@ fun StitchLoginScreen(
                     fullText = hint,
                     color = if (isBad) StitchPalette.Error else StitchLoginRef.Outline,
                     modifier = Modifier.padding(bottom = 8.dp),
-                    onTapDetail = { hintDialog = ("后端状态" to hint) },
+                    onTapDetail = { hintDialog = (backendStatusTitle to hint) },
                 )
             }
 
@@ -137,7 +147,7 @@ fun StitchLoginScreen(
                     )
                 }
                 Text(
-                    "登录回到你的猫猫宇宙",
+                    stringResource(R.string.login_subtitle),
                     style = MaterialTheme.typography.bodyLarge,
                     color = StitchLoginRef.Outline,
                 )
@@ -152,7 +162,7 @@ fun StitchLoginScreen(
                     modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp),
                     placeholder = {
                         Text(
-                            "手机号/邮箱",
+                            stringResource(R.string.login_account_placeholder),
                             style = MaterialTheme.typography.bodyLarge,
                             color = StitchLoginRef.Outline.copy(alpha = 0.6f),
                         )
@@ -188,7 +198,7 @@ fun StitchLoginScreen(
                     modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp),
                     placeholder = {
                         Text(
-                            "密码",
+                            stringResource(R.string.login_password_placeholder),
                             style = MaterialTheme.typography.bodyLarge,
                             color = StitchLoginRef.Outline.copy(alpha = 0.6f),
                         )
@@ -205,7 +215,7 @@ fun StitchLoginScreen(
                         IconButton(onClick = { showPw = !showPw }) {
                             Icon(
                                 imageVector = if (showPw) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,
-                                contentDescription = if (showPw) "隐藏密码" else "显示密码",
+                                contentDescription = if (showPw) stringResource(R.string.login_hide_password) else stringResource(R.string.login_show_password),
                                 tint = StitchLoginRef.Outline.copy(alpha = 0.6f),
                                 modifier = Modifier.size(20.dp),
                             )
@@ -231,7 +241,7 @@ fun StitchLoginScreen(
 
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     Text(
-                        "忘记密码？",
+                        stringResource(R.string.login_forgot_password),
                         style =
                             MaterialTheme.typography.labelMedium.copy(
                                 fontWeight = FontWeight.SemiBold,
@@ -240,7 +250,7 @@ fun StitchLoginScreen(
                                 letterSpacing = 0.2.sp,
                             ),
                         color = StitchLoginRef.PrimaryContainer,
-                        modifier = Modifier.clickable(enabled = !busy) { /* M&D placeholder */ },
+                        modifier = Modifier.clickable(enabled = !busy) { hintDialog = (forgotPasswordTitle to forgotPasswordBody) },
                     )
                 }
 
@@ -249,7 +259,7 @@ fun StitchLoginScreen(
                         fullText = msg,
                         color = StitchPalette.Error,
                         modifier = Modifier.fillMaxWidth(),
-                        onTapDetail = { hintDialog = ("登录失败" to msg) },
+                        onTapDetail = { hintDialog = (loginFailedTitle to msg) },
                     )
                 }
 
@@ -297,7 +307,7 @@ fun StitchLoginScreen(
                         )
                     } else {
                         Text(
-                            "登录",
+                            stringResource(R.string.login_button),
                             style =
                                 MaterialTheme.typography.headlineMedium.copy(
                                     fontWeight = FontWeight.Bold,
@@ -322,7 +332,7 @@ fun StitchLoginScreen(
                     thickness = 1.dp,
                 )
                 Text(
-                    "或使用以下方式登录",
+                    stringResource(R.string.login_social_divider),
                     style =
                         MaterialTheme.typography.labelMedium.copy(
                             fontWeight = FontWeight.SemiBold,
@@ -348,15 +358,15 @@ fun StitchLoginScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                SocialCircle(onClick = { /* Stitch decorative */ }) {
+                SocialCircle(onClick = { hintDialog = (socialTitle to socialBody) }) {
                     Icon(Icons.Filled.ChatBubble, null, tint = StitchLoginRef.WeChat, modifier = Modifier.size(28.dp))
                 }
                 Spacer(Modifier.size(24.dp))
-                SocialCircle(onClick = { }) {
+                SocialCircle(onClick = { hintDialog = (socialTitle to socialBody) }) {
                     Icon(Icons.Filled.Pets, null, tint = StitchLoginRef.QqBlue, modifier = Modifier.size(28.dp))
                 }
                 Spacer(Modifier.size(24.dp))
-                SocialCircle(onClick = { }) {
+                SocialCircle(onClick = { hintDialog = (socialTitle to socialBody) }) {
                     Icon(
                         Icons.Outlined.Smartphone,
                         null,
@@ -373,10 +383,10 @@ fun StitchLoginScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("还没有账号？", style = MaterialTheme.typography.bodyMedium, color = StitchLoginRef.Outline)
+                Text(stringResource(R.string.login_no_account), style = MaterialTheme.typography.bodyMedium, color = StitchLoginRef.Outline)
                 Spacer(Modifier.size(4.dp))
                 Text(
-                    "立即注册",
+                    stringResource(R.string.login_register_now),
                     style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                     color = StitchLoginRef.PrimaryContainer,
                     modifier = Modifier.clickable(enabled = !busy) { onNavigateRegister() },
@@ -384,7 +394,7 @@ fun StitchLoginScreen(
             }
 
             Text(
-                "后端 $apiBase (点击配置)",
+                stringResource(R.string.login_backend_config, apiBase),
                 style = MaterialTheme.typography.labelSmall,
                 color = StitchLoginRef.Outline.copy(alpha = 0.55f),
                 modifier =
@@ -402,7 +412,7 @@ fun StitchLoginScreen(
                 onDismissRequest = { hintDialog = null },
                 confirmButton = {
                     TextButton(onClick = { hintDialog = null }) {
-                        Text("知道了")
+                        Text(stringResource(R.string.common_ok))
                     }
                 },
                 title = { Text(title, style = MaterialTheme.typography.titleMedium) },
@@ -432,9 +442,9 @@ fun StitchLoginScreen(
                     showApiConfig = false
                     
                     scope.launch {
-                        localHealthHint = "正在连接新后端..."
+                        localHealthHint = backendConnectingText
                         sdk.health().fold(
-                            onSuccess = { localHealthHint = "服务 ${it.status} · ${it.store}" },
+                            onSuccess = { localHealthHint = "$backendServicePrefix ${it.status} · ${it.store}" },
                             onFailure = { localHealthHint = humanizeClientFailure(it, resolved) }
                         )
                     }

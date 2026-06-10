@@ -27,18 +27,28 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Article
+import androidx.compose.material.icons.outlined.CreditCard
 import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Pets
+import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.AddPhotoAlternate
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.outlined.PersonAdd
+import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Shield
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -88,6 +98,8 @@ import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchBottomNav
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchMainTab
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchSearchField
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchTopBar
+import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchTopBarLeading
+import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchTopBarTrailing
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchFab
 import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
 import com.ttkk0000.meowcircle.kmpapp.util.formatConversationListTime
@@ -164,6 +176,20 @@ private enum class MessageSection {
     Notifications,
 }
 
+private enum class ProfileRoute {
+    Main,
+    EditProfile,
+    PetDetail,
+    Connections,
+    Settings,
+    AccountSecurity,
+    LinkedAccounts,
+    Appearance,
+    Notifications,
+    Privacy,
+    UserNotice,
+}
+
 @Composable
 fun StitchFeedScreen(
     sdk: MeowCircleSdk,
@@ -187,6 +213,8 @@ fun StitchFeedScreen(
     var messageSection by remember { mutableStateOf(MessageSection.Chats) }
     var profileHint by remember { mutableStateOf<String?>(null) }
     var profileBackground by remember { mutableStateOf(sdk.sessionStore().getProfileBackground()) }
+    var profileRoute by remember { mutableStateOf(ProfileRoute.Main) }
+    var marketChromeVisible by remember { mutableStateOf(true) }
     var showEditProfile by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
     var profileSaving by remember { mutableStateOf(false) }
@@ -206,21 +234,13 @@ fun StitchFeedScreen(
     var feedRetrySignal by remember { mutableStateOf(0) }
     var currentGlobalTheme by remember { mutableStateOf(sdk.getTheme()) }
 
-    val activeTheme = remember(tab, currentGlobalTheme) {
-        val globalThemeLower = currentGlobalTheme.lowercase()
-        val isNightOrNeutral = globalThemeLower in listOf("night", "neutral", "system")
-        if (isNightOrNeutral) {
-            when (globalThemeLower) {
-                "night" -> MeowTheme.Night
-                "neutral", "system" -> MeowTheme.Neutral
-                else -> MeowTheme.Neutral
-            }
-        } else {
-            if (tab == StitchMainTab.Market) {
-                MeowTheme.Mint
-            } else {
-                MeowTheme.Honey
-            }
+    val activeTheme = remember(currentGlobalTheme) {
+        when (currentGlobalTheme.lowercase()) {
+            "honey", "sugar" -> MeowTheme.Honey
+            "mint" -> MeowTheme.Mint
+            "night" -> MeowTheme.Night
+            "neutral", "system" -> MeowTheme.Neutral
+            else -> MeowTheme.Honey
         }
     }
 
@@ -438,16 +458,28 @@ fun StitchFeedScreen(
         }
 
     MeowStitchTheme(theme = activeTheme) {
+        val showBottomChrome =
+            when (tab) {
+                StitchMainTab.Profile -> profileRoute == ProfileRoute.Main
+                StitchMainTab.Market -> marketChromeVisible
+                else -> true
+            }
         Scaffold(
             modifier = modifier.fillMaxSize(),
             containerColor = StitchPalette.Canvas,
             bottomBar = {
-                StitchBottomNav(
-                    selected = tab,
-                    onSelect = { t ->
-                        tab = t
-                    },
-                )
+                if (showBottomChrome) {
+                    StitchBottomNav(
+                        selected = tab,
+                        onSelect = { t ->
+                            tab = t
+                            marketChromeVisible = true
+                            if (t != StitchMainTab.Profile) {
+                                profileRoute = ProfileRoute.Main
+                            }
+                        },
+                    )
+                }
             },
             floatingActionButton = {
                 if (tab == StitchMainTab.Feed) {
@@ -465,36 +497,165 @@ fun StitchFeedScreen(
             ) {
                 when (tab) {
                     StitchMainTab.Profile ->
-                        Column(Modifier.fillMaxSize()) {
-                            StitchTopBar(
-                                apiBase = apiBase,
-                                user = profileUser,
-                                title = stringResource(R.string.feed_profile_title),
-                                subtitle = profileUser.nickname.ifBlank { profileUser.username },
-                                onAvatarPress = { /* already on profile */ },
-                                onNotifyPress = {
-                                    tab = StitchMainTab.Messages
-                                    messageQuery = ""
-                                    messageSection = MessageSection.Notifications
-                                },
-                            )
-                            ProfilePanel(
-                                apiBase = apiBase,
-                                user = profileUser,
-                                gridPosts = profilePosts,
-                                gridLoading = profileLoading,
-                                profileBackground = profileBackground,
-                                onLogout = onLogout,
-                                onOpenPost = onOpenPost,
-                                onEditProfile = { showEditProfile = true },
-                                onSettings = { showThemeDialog = true },
-                                onProfileBackgroundChanged = {
-                                    sdk.sessionStore().setProfileBackground(it)
-                                    profileBackground = sdk.sessionStore().getProfileBackground()
-                                },
-                                hint = profileHint,
-                                modifier = Modifier.fillMaxWidth().weight(1f),
-                            )
+                        when (profileRoute) {
+                            ProfileRoute.Main ->
+                                Column(Modifier.fillMaxSize()) {
+                                    StitchTopBar(
+                                        apiBase = apiBase,
+                                        user = profileUser,
+                                        title = "M&D",
+                                        leading = StitchTopBarLeading.Paw,
+                                        trailing = StitchTopBarTrailing.Settings,
+                                        onAvatarPress = { /* already on profile */ },
+                                        onNotifyPress = { profileRoute = ProfileRoute.Settings },
+                                    )
+                                    ProfilePanel(
+                                        apiBase = apiBase,
+                                        user = profileUser,
+                                        gridPosts = profilePosts,
+                                        gridLoading = profileLoading,
+                                        profileBackground = profileBackground,
+                                        onLogout = onLogout,
+                                        onOpenPost = onOpenPost,
+                                        onEditProfile = { profileRoute = ProfileRoute.EditProfile },
+                                        onOpenPetProfile = { profileRoute = ProfileRoute.PetDetail },
+                                        onOpenConnections = { profileRoute = ProfileRoute.Connections },
+                                        onSettings = { profileRoute = ProfileRoute.Settings },
+                                        onProfileBackgroundChanged = {
+                                            sdk.sessionStore().setProfileBackground(it)
+                                            profileBackground = sdk.sessionStore().getProfileBackground()
+                                        },
+                                        hint = profileHint,
+                                        modifier = Modifier.fillMaxWidth().weight(1f),
+                                    )
+                                }
+                            ProfileRoute.EditProfile ->
+                                ProfileEditScreen(
+                                    user = profileUser,
+                                    saving = profileSaving,
+                                    error = profileSaveErr,
+                                    onBack = { profileRoute = ProfileRoute.Main },
+                                    onSave = { nickname, bio, avatarUrl ->
+                                        profileSaveErr = null
+                                        scope.launch {
+                                            profileSaving = true
+                                            sdk
+                                                .updateMe(
+                                                    nickname = nickname,
+                                                    bio = bio,
+                                                    avatarUrl = avatarUrl,
+                                                ).fold(
+                                                    onSuccess = { updated ->
+                                                        profileUser = updated
+                                                        profileHint = context.getString(R.string.profile_updated)
+                                                        profileRoute = ProfileRoute.Main
+                                                    },
+                                                    onFailure = { e ->
+                                                        profileSaveErr =
+                                                            (e as? ApiException)?.message
+                                                                ?: humanizeClientFailure(e, apiBase)
+                                                    },
+                                                )
+                                            profileSaving = false
+                                        }
+                                    },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.PetDetail ->
+                                ProfilePetDetailScreen(
+                                    onBack = { profileRoute = ProfileRoute.Main },
+                                    onEditProfile = { profileRoute = ProfileRoute.EditProfile },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Connections ->
+                                ProfileConnectionsScreen(
+                                    onBack = { profileRoute = ProfileRoute.Main },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Settings ->
+                                ProfileSettingsScreen(
+                                    user = profileUser,
+                                    onBack = { profileRoute = ProfileRoute.Main },
+                                    onEditProfile = { profileRoute = ProfileRoute.EditProfile },
+                                    onOpenPetProfile = { profileRoute = ProfileRoute.PetDetail },
+                                    onOpenAccountSecurity = { profileRoute = ProfileRoute.AccountSecurity },
+                                    onOpenLinkedAccounts = { profileRoute = ProfileRoute.LinkedAccounts },
+                                    onOpenAppearance = { profileRoute = ProfileRoute.Appearance },
+                                    onOpenNotifications = { profileRoute = ProfileRoute.Notifications },
+                                    onOpenPrivacy = { profileRoute = ProfileRoute.Privacy },
+                                    onOpenUserNotice = { profileRoute = ProfileRoute.UserNotice },
+                                    onLogout = onLogout,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.AccountSecurity ->
+                                ProfileDetailListScreen(
+                                    title = stringResource(R.string.settings_account_security),
+                                    subtitle = stringResource(R.string.settings_account_security_subtitle),
+                                    icon = Icons.Outlined.Shield,
+                                    rows =
+                                        listOf(
+                                            stringResource(R.string.settings_security_phone),
+                                            stringResource(R.string.settings_security_password),
+                                            stringResource(R.string.settings_security_devices),
+                                            stringResource(R.string.settings_security_payment),
+                                            stringResource(R.string.settings_delete_account),
+                                        ),
+                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.LinkedAccounts ->
+                                ProfileDetailListScreen(
+                                    title = stringResource(R.string.settings_linked_accounts),
+                                    subtitle = stringResource(R.string.settings_linked_accounts_subtitle),
+                                    icon = Icons.Outlined.CreditCard,
+                                    rows =
+                                        listOf(
+                                            stringResource(R.string.settings_linked_wechat),
+                                            stringResource(R.string.settings_linked_apple),
+                                            stringResource(R.string.settings_linked_google),
+                                        ),
+                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Appearance ->
+                                ProfileAppearanceScreen(
+                                    currentTheme = currentGlobalTheme,
+                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    onSelectTheme = {
+                                        onThemeChanged(it)
+                                        currentGlobalTheme = it
+                                    },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Notifications ->
+                                ProfileDetailListScreen(
+                                    title = stringResource(R.string.settings_notifications),
+                                    subtitle = stringResource(R.string.settings_notifications_subtitle),
+                                    icon = Icons.Outlined.Notifications,
+                                    rows =
+                                        listOf(
+                                            stringResource(R.string.settings_notifications_messages),
+                                            stringResource(R.string.settings_notifications_orders),
+                                            stringResource(R.string.settings_notifications_social),
+                                            stringResource(R.string.settings_notifications_market),
+                                        ),
+                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Privacy ->
+                                ProfileDocumentScreen(
+                                    title = stringResource(R.string.settings_privacy_policy),
+                                    body = stringResource(R.string.settings_privacy_policy_body),
+                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.UserNotice ->
+                                ProfileDocumentScreen(
+                                    title = stringResource(R.string.settings_user_notice),
+                                    body = stringResource(R.string.settings_user_notice_body),
+                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
                         }
                     StitchMainTab.Messages ->
                         StitchMessagesScreen(
@@ -529,10 +690,23 @@ fun StitchFeedScreen(
                             onQueryChange = { q = it },
                             mockMode = mockMode,
                             onEnableMock = { mockMode = true },
-                            onAvatarPress = { tab = StitchMainTab.Profile },
-                            onNotifyPress = { tab = StitchMainTab.Messages },
-                            onOpenOrders = { tab = StitchMainTab.Orders },
-                            onOpenMessages = { tab = StitchMainTab.Messages },
+                            onAvatarPress = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Profile
+                            },
+                            onNotifyPress = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Messages
+                            },
+                            onOpenOrders = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Orders
+                            },
+                            onOpenMessages = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Messages
+                            },
+                            onChromeVisibleChange = { marketChromeVisible = it },
                             modifier = Modifier.fillMaxSize(),
                         )
                     }
@@ -542,7 +716,8 @@ fun StitchFeedScreen(
                                 apiBase = apiBase,
                                 user = profileUser,
                                 title = "M&D",
-                                subtitle = "meow & doggie",
+                                leading = StitchTopBarLeading.Menu,
+                                trailing = StitchTopBarTrailing.Bell,
                                 onAvatarPress = { tab = StitchMainTab.Profile },
                                 onNotifyPress = {
                                     tab = StitchMainTab.Messages
@@ -663,6 +838,7 @@ fun StitchFeedScreen(
                 onDismiss = { showThemeDialog = false },
                 onSelect = {
                     onThemeChanged(it)
+                    currentGlobalTheme = it
                     showThemeDialog = false
                 }
             )
@@ -1366,6 +1542,8 @@ private fun ProfilePanel(
     onLogout: () -> Unit,
     onOpenPost: (Long) -> Unit,
     onEditProfile: () -> Unit,
+    onOpenPetProfile: () -> Unit,
+    onOpenConnections: () -> Unit,
     onSettings: () -> Unit,
     onProfileBackgroundChanged: (String) -> Unit,
     hint: String?,
@@ -1504,8 +1682,12 @@ private fun ProfilePanel(
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             ProfileStatCell(formatCompactCount(likesTotal), stringResource(R.string.profile_likes))
-            ProfileStatCell("—", stringResource(R.string.profile_following))
-            ProfileStatCell("—", stringResource(R.string.profile_followers))
+            Box(Modifier.clickable(onClick = onOpenConnections)) {
+                ProfileStatCell("128", stringResource(R.string.profile_following))
+            }
+            Box(Modifier.clickable(onClick = onOpenConnections)) {
+                ProfileStatCell("2.4K", stringResource(R.string.profile_followers))
+            }
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -1542,7 +1724,7 @@ private fun ProfilePanel(
                         },
             ) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Icon(Icons.Outlined.Settings, contentDescription = "设置", tint = StitchPalette.OnSurface)
+                    Icon(Icons.Outlined.Settings, contentDescription = stringResource(R.string.common_settings), tint = StitchPalette.OnSurface)
                 }
             }
         }
@@ -1554,7 +1736,60 @@ private fun ProfilePanel(
             )
         }
         Text(
-            "Posts",
+            stringResource(R.string.profile_my_pets),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = StitchPalette.PrimaryDark,
+        )
+        Surface(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .shadow(
+                        elevation = StitchShadows.cardAmbientY,
+                        shape = FEED_SECTION_RADIUS,
+                        ambientColor = StitchShadows.cardAmbientColor,
+                        spotColor = StitchShadows.cardAmbientColor,
+                    )
+                    .clickable(onClick = onOpenPetProfile),
+            shape = FEED_SECTION_RADIUS,
+            color = StitchPalette.Surface,
+            border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+        ) {
+            Row(
+                modifier = Modifier.padding(14.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Box(
+                    modifier =
+                        Modifier
+                            .size(58.dp)
+                            .clip(CircleShape)
+                            .background(StitchPalette.SecondaryContainer)
+                            .border(1.dp, StitchPalette.BorderHairline, CircleShape),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(Icons.Filled.Pets, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(30.dp))
+                }
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                    Text(
+                        stringResource(R.string.profile_pet_latte_name),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = StitchPalette.OnSurface,
+                    )
+                    Text(
+                        stringResource(R.string.profile_pet_latte_meta),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = StitchPalette.OnSurfaceVariant,
+                    )
+                }
+                Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
+            }
+        }
+        Text(
+            stringResource(R.string.profile_recent_posts),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = StitchPalette.PrimaryDark,
@@ -1566,7 +1801,7 @@ private fun ProfilePanel(
                 }
             posts.isEmpty() ->
                 Text(
-                    "Your posts will appear here.",
+                    stringResource(R.string.profile_posts_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = StitchPalette.OnSurfaceVariant,
                 )
@@ -1651,7 +1886,7 @@ private fun ProfilePanel(
             Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
         }
         Text(
-            "Log out",
+            stringResource(R.string.profile_logout),
             style = MaterialTheme.typography.titleMedium,
             color = StitchPalette.Brand,
             modifier =
@@ -1660,6 +1895,551 @@ private fun ProfilePanel(
                     .clip(RoundedCornerShape(16.dp))
                     .clickable(onClick = onLogout)
                     .padding(vertical = 8.dp),
+        )
+    }
+}
+
+@Composable
+private fun ProfileEditScreen(
+    user: User,
+    saving: Boolean,
+    error: String?,
+    onBack: () -> Unit,
+    onSave: (nickname: String, bio: String, avatarUrl: String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var nickname by remember(user.id, user.nickname) { mutableStateOf(user.nickname) }
+    var bio by remember(user.id, user.bio) { mutableStateOf(user.bio) }
+    var avatarUrl by remember(user.id, user.avatarUrl) { mutableStateOf(user.avatarUrl) }
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = stringResource(R.string.profile_edit),
+            onBack = onBack,
+        )
+        Column(
+            modifier =
+                modifier
+                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 16.dp)
+                    .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Box(
+                modifier =
+                    Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .background(StitchPalette.BrandMuted)
+                        .border(3.dp, StitchPalette.Brand, CircleShape),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    nickname.take(1).ifBlank { user.username.take(1) }.uppercase(),
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Black,
+                    color = StitchPalette.Brand,
+                )
+            }
+            OutlinedTextField(
+                value = nickname,
+                onValueChange = { nickname = it },
+                singleLine = true,
+                label = { Text(stringResource(R.string.profile_display_name)) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = StitchShape.field,
+            )
+            OutlinedTextField(
+                value = bio,
+                onValueChange = { bio = it },
+                minLines = 3,
+                label = { Text(stringResource(R.string.profile_bio)) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = StitchShape.field,
+            )
+            OutlinedTextField(
+                value = avatarUrl,
+                onValueChange = { avatarUrl = it },
+                singleLine = true,
+                label = { Text(stringResource(R.string.profile_avatar_url)) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = StitchShape.field,
+            )
+            if (!error.isNullOrBlank()) {
+                Text(error, color = StitchPalette.Error, style = MaterialTheme.typography.bodySmall)
+            }
+            Button(
+                onClick = { onSave(nickname.trim().ifBlank { user.username }, bio.trim(), avatarUrl.trim()) },
+                enabled = !saving,
+                shape = StitchShape.field,
+                modifier = Modifier.fillMaxWidth().height(52.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+            ) {
+                Text(if (saving) stringResource(R.string.profile_saving) else stringResource(R.string.profile_save), color = Color.White, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfilePetDetailScreen(
+    onBack: () -> Unit,
+    onEditProfile: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = stringResource(R.string.profile_pet_detail),
+            onBack = onBack,
+        )
+        Column(
+            modifier =
+                modifier
+                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
+                    .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = FEED_SECTION_RADIUS,
+                color = StitchPalette.Surface,
+                border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+            ) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .size(86.dp)
+                                    .clip(CircleShape)
+                                    .background(StitchPalette.SecondaryContainer)
+                                    .border(1.dp, StitchPalette.BorderHairline, CircleShape),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Icon(Icons.Filled.Pets, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(42.dp))
+                        }
+                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Text(
+                                stringResource(R.string.profile_pet_latte_name),
+                                style = MaterialTheme.typography.headlineSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = StitchPalette.PrimaryDark,
+                            )
+                            Surface(shape = StitchShape.pill, color = StitchPalette.BrandMuted) {
+                                Text(
+                                    stringResource(R.string.profile_pet_badge),
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = StitchPalette.Brand,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            Text(
+                                stringResource(R.string.profile_pet_latte_meta),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = StitchPalette.OnSurfaceVariant,
+                            )
+                        }
+                    }
+                    Text(
+                        stringResource(R.string.profile_pet_story),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StitchPalette.OnSurface,
+                    )
+                    HorizontalDivider(color = StitchPalette.OutlineVariant)
+                    Text(
+                        stringResource(R.string.profile_pet_stats),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = StitchPalette.OnSurfaceVariant,
+                    )
+                    Button(
+                        onClick = onEditProfile,
+                        shape = FEED_SECTION_RADIUS,
+                        colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand, contentColor = Color.White),
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                    ) {
+                        Text(stringResource(R.string.profile_edit), fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
+                ProfileMiniMetric("3", stringResource(R.string.feed_category_daily_share), Modifier.weight(1f))
+                ProfileMiniMetric("28", stringResource(R.string.profile_likes), Modifier.weight(1f))
+                ProfileMiniMetric("12", stringResource(R.string.profile_followers), Modifier.weight(1f))
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileConnectionsScreen(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val rows =
+        listOf(
+            stringResource(R.string.profile_connection_peach) to stringResource(R.string.profile_connection_peach_note),
+            stringResource(R.string.profile_connection_sunday) to stringResource(R.string.profile_connection_sunday_note),
+            stringResource(R.string.profile_connection_momo) to stringResource(R.string.profile_connection_momo_note),
+        )
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = stringResource(R.string.profile_connections_title),
+            onBack = onBack,
+        )
+        Column(
+            modifier =
+                modifier
+                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
+                    .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                ProfileSegmentChip(stringResource(R.string.profile_connections_followers), selected = true)
+                ProfileSegmentChip(stringResource(R.string.profile_connections_following), selected = false)
+            }
+            rows.forEachIndexed { index, row ->
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = FEED_SECTION_RADIUS,
+                    color = StitchPalette.Surface,
+                    border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+                ) {
+                    Row(
+                        modifier = Modifier.padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .size(48.dp)
+                                    .clip(CircleShape)
+                                    .background(if (index == 1) StitchPalette.BrandMuted else StitchPalette.SecondaryContainer),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(row.first.take(1), color = StitchPalette.Brand, fontWeight = FontWeight.Bold)
+                        }
+                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                            Text(row.first, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
+                            Text(row.second, style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+                        }
+                        Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileSettingsScreen(
+    user: User,
+    onBack: () -> Unit,
+    onEditProfile: () -> Unit,
+    onOpenPetProfile: () -> Unit,
+    onOpenAccountSecurity: () -> Unit,
+    onOpenLinkedAccounts: () -> Unit,
+    onOpenAppearance: () -> Unit,
+    onOpenNotifications: () -> Unit,
+    onOpenPrivacy: () -> Unit,
+    onOpenUserNotice: () -> Unit,
+    onLogout: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = stringResource(R.string.settings_title),
+            onBack = onBack,
+        )
+        Column(
+            modifier =
+                modifier
+                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
+                    .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                stringResource(R.string.settings_subtitle),
+                style = MaterialTheme.typography.bodyMedium,
+                color = StitchPalette.OnSurfaceVariant,
+            )
+            Surface(
+                modifier = Modifier.fillMaxWidth().clickable(onClick = onEditProfile),
+                shape = FEED_SECTION_RADIUS,
+                color = StitchPalette.Surface,
+                border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+            ) {
+                Row(
+                    modifier = Modifier.padding(14.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Box(
+                        modifier = Modifier.size(52.dp).clip(CircleShape).background(StitchPalette.BrandMuted),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            user.nickname.take(1).ifBlank { user.username.take(1) }.uppercase(),
+                            color = StitchPalette.Brand,
+                            fontWeight = FontWeight.Black,
+                        )
+                    }
+                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(user.nickname.ifBlank { user.username }, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
+                        Text(stringResource(R.string.settings_profile_section), style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+                    }
+                    Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
+                }
+            }
+            SettingsActionRow(Icons.Outlined.Badge, stringResource(R.string.settings_pet_profile), stringResource(R.string.settings_pet_profile_subtitle), onOpenPetProfile)
+            SettingsActionRow(Icons.Outlined.Shield, stringResource(R.string.settings_account_security), stringResource(R.string.settings_account_security_subtitle), onOpenAccountSecurity)
+            SettingsActionRow(Icons.Outlined.CreditCard, stringResource(R.string.settings_linked_accounts), stringResource(R.string.settings_linked_accounts_subtitle), onOpenLinkedAccounts)
+            SettingsActionRow(Icons.Outlined.Palette, stringResource(R.string.settings_appearance), stringResource(R.string.settings_appearance_subtitle), onOpenAppearance)
+            SettingsActionRow(Icons.Outlined.Notifications, stringResource(R.string.settings_notifications), stringResource(R.string.settings_notifications_subtitle), onOpenNotifications)
+            SettingsActionRow(Icons.Outlined.PrivacyTip, stringResource(R.string.settings_privacy_policy), "", onOpenPrivacy)
+            SettingsActionRow(Icons.Outlined.Article, stringResource(R.string.settings_user_notice), "", onOpenUserNotice)
+            TextButton(
+                onClick = onLogout,
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                colors = ButtonDefaults.textButtonColors(contentColor = StitchPalette.Brand),
+            ) {
+                Text(stringResource(R.string.profile_logout), fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileAppearanceScreen(
+    currentTheme: String,
+    onBack: () -> Unit,
+    onSelectTheme: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val normalizedTheme =
+        when (currentTheme.lowercase()) {
+            "sugar" -> "honey"
+            "system" -> "neutral"
+            else -> currentTheme.lowercase()
+        }
+    var pendingTheme by remember(normalizedTheme) { mutableStateOf(normalizedTheme) }
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = stringResource(R.string.settings_appearance),
+            onBack = onBack,
+        )
+        Column(
+            modifier =
+                modifier
+                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
+                    .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(stringResource(R.string.theme_choose), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
+            ThemeChoiceCard("honey", stringResource(R.string.theme_honey), Color(0xFFFF8A3D), pendingTheme == "honey") { pendingTheme = it }
+            ThemeChoiceCard("mint", stringResource(R.string.theme_mint), Color(0xFF2EC4A6), pendingTheme == "mint") { pendingTheme = it }
+            ThemeChoiceCard("night", stringResource(R.string.theme_night), Color(0xFF8B5CF6), pendingTheme == "night") { pendingTheme = it }
+            ThemeChoiceCard("neutral", stringResource(R.string.theme_neutral), Color(0xFF4B5563), pendingTheme == "neutral") { pendingTheme = it }
+            Button(
+                onClick = { onSelectTheme(pendingTheme) },
+                shape = StitchShape.field,
+                modifier = Modifier.fillMaxWidth().height(52.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+            ) {
+                Text(stringResource(R.string.settings_apply_theme), color = Color.White, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileDetailListScreen(
+    title: String,
+    subtitle: String,
+    icon: ImageVector,
+    rows: List<String>,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(title = title, onBack = onBack)
+        Column(
+            modifier =
+                modifier
+                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
+                    .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = FEED_SECTION_RADIUS,
+                color = StitchPalette.Surface,
+                border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+            ) {
+                Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Box(Modifier.size(46.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
+                        Icon(icon, contentDescription = null, tint = StitchPalette.Brand)
+                    }
+                    Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant, modifier = Modifier.weight(1f))
+                }
+            }
+            rows.forEach { row ->
+                SettingsActionRow(Icons.Outlined.ChevronRight, row, "", onClick = {})
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileDocumentScreen(
+    title: String,
+    body: String,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(title = title, onBack = onBack)
+        Surface(
+            modifier =
+                modifier
+                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
+                    .fillMaxWidth(),
+            shape = FEED_SECTION_RADIUS,
+            color = StitchPalette.Surface,
+            border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+        ) {
+            Text(
+                text = body,
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.bodyLarge,
+                color = StitchPalette.OnSurface,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ProfileBackHeader(
+    title: String,
+    onBack: () -> Unit,
+) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(StitchPalette.Surface)
+                .border(1.dp, StitchPalette.HeaderBorder)
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(onClick = onBack) {
+            Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
+        }
+        Text(
+            title,
+            modifier = Modifier.weight(1f),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = StitchPalette.OnSurface,
+        )
+        Spacer(Modifier.size(48.dp))
+    }
+}
+
+@Composable
+private fun SettingsActionRow(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        shape = FEED_SECTION_RADIUS,
+        color = StitchPalette.Surface,
+        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Row(
+            modifier = Modifier.padding(14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Box(Modifier.size(42.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
+                Icon(icon, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(22.dp))
+            }
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
+                if (subtitle.isNotBlank()) {
+                    Text(subtitle, style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+                }
+            }
+            Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
+        }
+    }
+}
+
+@Composable
+private fun ThemeChoiceCard(
+    key: String,
+    label: String,
+    swatch: Color,
+    selected: Boolean,
+    onSelect: (String) -> Unit,
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth().clickable { onSelect(key) },
+        shape = FEED_SECTION_RADIUS,
+        color = if (selected) StitchPalette.BrandMuted else StitchPalette.Surface,
+        border = BorderStroke(1.dp, if (selected) StitchPalette.Brand else StitchPalette.BorderHairline),
+    ) {
+        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Box(Modifier.size(28.dp).clip(CircleShape).background(swatch))
+            Text(label, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
+            if (selected) {
+                Surface(shape = StitchShape.pill, color = StitchPalette.Brand) {
+                    Text(stringResource(R.string.common_selected), modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp), color = Color.White, style = MaterialTheme.typography.labelMedium)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileMiniMetric(
+    value: String,
+    label: String,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier,
+        shape = FEED_SECTION_RADIUS,
+        color = StitchPalette.Surface,
+        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Column(Modifier.padding(vertical = 12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
+            Text(label, style = MaterialTheme.typography.labelSmall, color = StitchPalette.OnSurfaceVariant)
+        }
+    }
+}
+
+@Composable
+private fun ProfileSegmentChip(
+    label: String,
+    selected: Boolean,
+) {
+    Surface(
+        shape = StitchShape.pill,
+        color = if (selected) StitchPalette.Brand else StitchPalette.Surface,
+        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Text(
+            label,
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = if (selected) Color.White else StitchPalette.OnSurfaceVariant,
         )
     }
 }
