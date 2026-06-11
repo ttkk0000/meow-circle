@@ -57,6 +57,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.Comment

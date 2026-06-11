@@ -214,6 +214,21 @@ fun StitchFeedScreen(
     var profileHint by remember { mutableStateOf<String?>(null) }
     var profileBackground by remember { mutableStateOf(sdk.sessionStore().getProfileBackground()) }
     var profileRoute by remember { mutableStateOf(ProfileRoute.Main) }
+    var profileRouteHistory by remember { mutableStateOf(emptyList<ProfileRoute>()) }
+
+    val navigateToProfileRoute: (ProfileRoute) -> Unit = { target ->
+        profileRouteHistory = profileRouteHistory + profileRoute
+        profileRoute = target
+    }
+
+    val popProfileRoute: () -> Unit = {
+        if (profileRouteHistory.isNotEmpty()) {
+            profileRoute = profileRouteHistory.last()
+            profileRouteHistory = profileRouteHistory.dropLast(1)
+        } else {
+            profileRoute = ProfileRoute.Main
+        }
+    }
     var marketChromeVisible by remember { mutableStateOf(true) }
     var showEditProfile by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
@@ -476,6 +491,7 @@ fun StitchFeedScreen(
                             marketChromeVisible = true
                             if (t != StitchMainTab.Profile) {
                                 profileRoute = ProfileRoute.Main
+                                profileRouteHistory = emptyList()
                             }
                         },
                     )
@@ -507,7 +523,7 @@ fun StitchFeedScreen(
                                         leading = StitchTopBarLeading.Paw,
                                         trailing = StitchTopBarTrailing.Settings,
                                         onAvatarPress = { /* already on profile */ },
-                                        onNotifyPress = { profileRoute = ProfileRoute.Settings },
+                                        onNotifyPress = { navigateToProfileRoute(ProfileRoute.Settings) },
                                     )
                                     ProfilePanel(
                                         apiBase = apiBase,
@@ -517,10 +533,10 @@ fun StitchFeedScreen(
                                         profileBackground = profileBackground,
                                         onLogout = onLogout,
                                         onOpenPost = onOpenPost,
-                                        onEditProfile = { profileRoute = ProfileRoute.EditProfile },
-                                        onOpenPetProfile = { profileRoute = ProfileRoute.PetDetail },
-                                        onOpenConnections = { profileRoute = ProfileRoute.Connections },
-                                        onSettings = { profileRoute = ProfileRoute.Settings },
+                                        onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
+                                        onOpenPetProfile = { navigateToProfileRoute(ProfileRoute.PetDetail) },
+                                        onOpenConnections = { navigateToProfileRoute(ProfileRoute.Connections) },
+                                        onSettings = { navigateToProfileRoute(ProfileRoute.Settings) },
                                         onProfileBackgroundChanged = {
                                             sdk.sessionStore().setProfileBackground(it)
                                             profileBackground = sdk.sessionStore().getProfileBackground()
@@ -534,7 +550,7 @@ fun StitchFeedScreen(
                                     user = profileUser,
                                     saving = profileSaving,
                                     error = profileSaveErr,
-                                    onBack = { profileRoute = ProfileRoute.Main },
+                                    onBack = popProfileRoute,
                                     onSave = { nickname, bio, avatarUrl ->
                                         profileSaveErr = null
                                         scope.launch {
@@ -548,7 +564,7 @@ fun StitchFeedScreen(
                                                     onSuccess = { updated ->
                                                         profileUser = updated
                                                         profileHint = context.getString(R.string.profile_updated)
-                                                        profileRoute = ProfileRoute.Main
+                                                        popProfileRoute()
                                                     },
                                                     onFailure = { e ->
                                                         profileSaveErr =
@@ -563,27 +579,27 @@ fun StitchFeedScreen(
                                 )
                             ProfileRoute.PetDetail ->
                                 ProfilePetDetailScreen(
-                                    onBack = { profileRoute = ProfileRoute.Main },
-                                    onEditProfile = { profileRoute = ProfileRoute.EditProfile },
+                                    onBack = popProfileRoute,
+                                    onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.Connections ->
                                 ProfileConnectionsScreen(
-                                    onBack = { profileRoute = ProfileRoute.Main },
+                                    onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.Settings ->
                                 ProfileSettingsScreen(
                                     user = profileUser,
-                                    onBack = { profileRoute = ProfileRoute.Main },
-                                    onEditProfile = { profileRoute = ProfileRoute.EditProfile },
-                                    onOpenPetProfile = { profileRoute = ProfileRoute.PetDetail },
-                                    onOpenAccountSecurity = { profileRoute = ProfileRoute.AccountSecurity },
-                                    onOpenLinkedAccounts = { profileRoute = ProfileRoute.LinkedAccounts },
-                                    onOpenAppearance = { profileRoute = ProfileRoute.Appearance },
-                                    onOpenNotifications = { profileRoute = ProfileRoute.Notifications },
-                                    onOpenPrivacy = { profileRoute = ProfileRoute.Privacy },
-                                    onOpenUserNotice = { profileRoute = ProfileRoute.UserNotice },
+                                    onBack = popProfileRoute,
+                                    onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
+                                    onOpenPetProfile = { navigateToProfileRoute(ProfileRoute.PetDetail) },
+                                    onOpenAccountSecurity = { navigateToProfileRoute(ProfileRoute.AccountSecurity) },
+                                    onOpenLinkedAccounts = { navigateToProfileRoute(ProfileRoute.LinkedAccounts) },
+                                    onOpenAppearance = { navigateToProfileRoute(ProfileRoute.Appearance) },
+                                    onOpenNotifications = { navigateToProfileRoute(ProfileRoute.Notifications) },
+                                    onOpenPrivacy = { navigateToProfileRoute(ProfileRoute.Privacy) },
+                                    onOpenUserNotice = { navigateToProfileRoute(ProfileRoute.UserNotice) },
                                     onLogout = onLogout,
                                     modifier = Modifier.fillMaxSize(),
                                 )
@@ -600,7 +616,7 @@ fun StitchFeedScreen(
                                             stringResource(R.string.settings_security_payment),
                                             stringResource(R.string.settings_delete_account),
                                         ),
-                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.LinkedAccounts ->
@@ -614,13 +630,13 @@ fun StitchFeedScreen(
                                             stringResource(R.string.settings_linked_apple),
                                             stringResource(R.string.settings_linked_google),
                                         ),
-                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.Appearance ->
                                 ProfileAppearanceScreen(
                                     currentTheme = currentGlobalTheme,
-                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    onBack = popProfileRoute,
                                     onSelectTheme = {
                                         onThemeChanged(it)
                                         currentGlobalTheme = it
@@ -639,21 +655,21 @@ fun StitchFeedScreen(
                                             stringResource(R.string.settings_notifications_social),
                                             stringResource(R.string.settings_notifications_market),
                                         ),
-                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.Privacy ->
                                 ProfileDocumentScreen(
                                     title = stringResource(R.string.settings_privacy_policy),
                                     body = stringResource(R.string.settings_privacy_policy_body),
-                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.UserNotice ->
                                 ProfileDocumentScreen(
                                     title = stringResource(R.string.settings_user_notice),
                                     body = stringResource(R.string.settings_user_notice_body),
-                                    onBack = { profileRoute = ProfileRoute.Settings },
+                                    onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                         }
