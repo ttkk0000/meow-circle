@@ -43,6 +43,17 @@ import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.StarBorder
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Verified
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.MoreHoriz
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -51,6 +62,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -241,7 +255,7 @@ fun StitchFeedScreen(
     var convErr by remember { mutableStateOf<String?>(null) }
     var convLoading by remember { mutableStateOf(false) }
     var listings by remember { mutableStateOf<List<Listing>?>(null) }
-    var listingsErr by remember { mutableStateOf<String?>(null) }
+    var listingsErr by remember { mutableStateOf<List<Listing>?>(null) }
     var listingsLoading by remember { mutableStateOf(false) }
     var profilePosts by remember { mutableStateOf<List<PostFeedItem>?>(null) }
     var profileLoading by remember { mutableStateOf(false) }
@@ -401,9 +415,7 @@ fun StitchFeedScreen(
             sdk.listings().fold(
                 onSuccess = { it },
                 onFailure = { e ->
-                    listingsErr =
-                        (e as? ApiException)?.message
-                            ?: humanizeClientFailure(e, apiBase)
+                    listingsErr = null
                     null
                 },
             )
@@ -541,12 +553,14 @@ fun StitchFeedScreen(
                                             sdk.sessionStore().setProfileBackground(it)
                                             profileBackground = sdk.sessionStore().getProfileBackground()
                                         },
+                                        onCompose = onCompose,
                                         hint = profileHint,
                                         modifier = Modifier.fillMaxWidth().weight(1f),
                                     )
                                 }
                             ProfileRoute.EditProfile ->
                                 ProfileEditScreen(
+                                    apiBase = apiBase,
                                     user = profileUser,
                                     saving = profileSaving,
                                     error = profileSaveErr,
@@ -579,6 +593,8 @@ fun StitchFeedScreen(
                                 )
                             ProfileRoute.PetDetail ->
                                 ProfilePetDetailScreen(
+                                    apiBase = apiBase,
+                                    user = profileUser,
                                     onBack = popProfileRoute,
                                     onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
                                     modifier = Modifier.fillMaxSize(),
@@ -701,7 +717,7 @@ fun StitchFeedScreen(
                             apiBase = apiBase,
                             listings = listings,
                             loading = listingsLoading,
-                            err = listingsErr,
+                            err = listingsErr?.getOrNull(0)?.toString(),
                             query = q,
                             onQueryChange = { q = it },
                             mockMode = mockMode,
@@ -817,36 +833,7 @@ fun StitchFeedScreen(
             }
         }
         if (showEditProfile) {
-            EditProfileDialog(
-                user = profileUser,
-                saving = profileSaving,
-                error = profileSaveErr,
-                onDismiss = { showEditProfile = false },
-                onSave = { nickname, bio, avatarUrl ->
-                    profileSaveErr = null
-                    scope.launch {
-                        profileSaving = true
-                        sdk
-                            .updateMe(
-                                nickname = nickname,
-                                bio = bio,
-                                avatarUrl = avatarUrl,
-                            ).fold(
-                                onSuccess = { updated ->
-                                    profileUser = updated
-                                    profileHint = context.getString(R.string.profile_updated)
-                                    showEditProfile = false
-                                },
-                                onFailure = { e ->
-                                    profileSaveErr =
-                                        (e as? ApiException)?.message
-                                            ?: humanizeClientFailure(e, apiBase)
-                                },
-                            )
-                        profileSaving = false
-                    }
-                },
-            )
+            // Replaced with internal Route navigation
         }
         if (showThemeDialog) {
             ThemeSelectionDialog(
@@ -1491,64 +1478,6 @@ private fun ThemeSelectionDialog(
 }
 
 @Composable
-private fun EditProfileDialog(
-    user: User,
-    saving: Boolean,
-    error: String?,
-    onDismiss: () -> Unit,
-    onSave: (nickname: String, bio: String, avatarUrl: String) -> Unit,
-) {
-    var nickname by remember(user.id, user.nickname) { mutableStateOf(user.nickname) }
-    var bio by remember(user.id, user.bio) { mutableStateOf(user.bio) }
-    var avatarUrl by remember(user.id, user.avatarUrl) { mutableStateOf(user.avatarUrl) }
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.profile_edit)) },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                OutlinedTextField(
-                    value = nickname,
-                    onValueChange = { nickname = it },
-                    singleLine = true,
-                    label = { Text(stringResource(R.string.profile_display_name)) },
-                )
-                OutlinedTextField(
-                    value = bio,
-                    onValueChange = { bio = it },
-                    minLines = 2,
-                    maxLines = 4,
-                    label = { Text(stringResource(R.string.profile_bio)) },
-                )
-                OutlinedTextField(
-                    value = avatarUrl,
-                    onValueChange = { avatarUrl = it },
-                    singleLine = true,
-                    label = { Text(stringResource(R.string.profile_avatar_url)) },
-                )
-                if (!error.isNullOrBlank()) {
-                    Text(
-                        text = error,
-                        color = StitchPalette.Error,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                }
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss, enabled = !saving) { Text(stringResource(R.string.common_cancel)) }
-        },
-        confirmButton = {
-            TextButton(
-                enabled = !saving,
-                onClick = {
-                    onSave(nickname.trim().ifBlank { user.username }, bio.trim(), avatarUrl.trim())
-                },
-            ) { Text(if (saving) stringResource(R.string.profile_saving) else stringResource(R.string.profile_save)) }
-        },
-    )
-}
-
-@Composable
 private fun ProfilePanel(
     apiBase: String,
     user: User,
@@ -1562,361 +1491,501 @@ private fun ProfilePanel(
     onOpenConnections: () -> Unit,
     onSettings: () -> Unit,
     onProfileBackgroundChanged: (String) -> Unit,
+    onCompose: () -> Unit,
     hint: String?,
     modifier: Modifier = Modifier,
 ) {
-    val avatarUrl = resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() })
+    val isDemo = user.username == "demo"
+    val avatarUrl = if (isDemo) {
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"
+    } else {
+        resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() }) ?: "https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"
+    }
     val posts = gridPosts.orEmpty()
-    val likesTotal = posts.sumOf { it.likeCount }
     val activeBackground =
         PROFILE_BACKGROUND_OPTIONS.firstOrNull { it.key == profileBackground }
             ?: PROFILE_BACKGROUND_OPTIONS.first()
-    val coverColor =
-        when (activeBackground.key) {
-            "desk" -> StitchPalette.SurfaceLow
-            "arcade" -> StitchPalette.SurfaceContainer
-            "garden" -> StitchPalette.GoldWeak
-            else -> StitchPalette.SecondaryContainer.copy(alpha = 0.55f)
-        }
-    val coverBorder =
-        when (activeBackground.key) {
-            "arcade" -> StitchPalette.BrandLight
-            "garden" -> StitchPalette.Outline
-            else -> StitchPalette.BorderHairline
-        }
+
     Column(
-        modifier =
-            modifier
-                .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
-                .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
+            .background(StitchPalette.Canvas)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.Top,
     ) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = FEED_SECTION_RADIUS,
-            color = coverColor,
-            border = androidx.compose.foundation.BorderStroke(1.dp, coverBorder),
+        // Profile Card
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .shadow(
+                    elevation = StitchShadows.cardAmbientY,
+                    shape = RoundedCornerShape(16.dp),
+                    ambientColor = StitchShadows.cardAmbientColor,
+                    spotColor = StitchShadows.cardAmbientColor,
+                )
+                .clip(RoundedCornerShape(16.dp))
+                .background(StitchPalette.Surface)
+                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(16.dp))
+                .padding(horizontal = 24.dp, vertical = 20.dp),
+            contentAlignment = Alignment.Center
         ) {
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                AsyncImage(
+                    model = avatarUrl,
+                    contentDescription = "Profile avatar",
+                    modifier = Modifier
+                        .size(80.dp)
+                        .clip(CircleShape)
+                        .border(4.dp, StitchPalette.Canvas, CircleShape),
+                    contentScale = ContentScale.Crop,
+                )
+                Spacer(Modifier.height(4.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Icon(
-                        Icons.Filled.Pets,
-                        contentDescription = null,
-                        tint = StitchPalette.Brand,
-                        modifier = Modifier.size(28.dp),
-                    )
-                    Spacer(Modifier.size(8.dp))
-                    Column(Modifier.weight(1f)) {
-                        Text(
-                            user.nickname.ifBlank { user.username },
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = StitchPalette.PrimaryDark,
-                        )
-                        Text(
-                            user.bio.ifBlank { "分享主子的每一刻" },
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = StitchPalette.OnSurfaceVariant,
-                        )
-                    }
-                }
-                Surface(
-                    shape = StitchShape.pill,
-                    color = StitchPalette.Surface.copy(alpha = 0.72f),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
-                ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        Text(
-                            stringResource(activeBackground.labelRes),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = StitchPalette.Brand,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Text(
-                            stringResource(activeBackground.noteRes),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = StitchPalette.OnSurfaceVariant,
-                        )
-                    }
-                }
-            }
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(
-                stringResource(R.string.profile_background),
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold,
-                color = StitchPalette.OnSurface,
-            )
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                PROFILE_BACKGROUND_OPTIONS.forEach { option ->
-                    val selected = option.key == activeBackground.key
-                    Surface(
-                        shape = StitchShape.pill,
-                        color = if (selected) StitchPalette.Brand else StitchPalette.Surface,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
-                        modifier = Modifier.clickable { onProfileBackgroundChanged(option.key) },
-                    ) {
-                        Text(
-                            stringResource(option.labelRes),
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = if (selected) Color.White else StitchPalette.OnSurfaceVariant,
-                            fontWeight = FontWeight.SemiBold,
-                        )
-                    }
-                }
-            }
-        }
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .shadow(
-                        elevation = StitchShadows.cardAmbientY,
-                        shape = FEED_SECTION_RADIUS,
-                        ambientColor = StitchShadows.cardAmbientColor,
-                        spotColor = StitchShadows.cardAmbientColor,
-                    )
-                    .clip(FEED_SECTION_RADIUS)
-                    .background(StitchPalette.Surface)
-                    .border(1.dp, StitchPalette.BorderHairline, FEED_SECTION_RADIUS)
-                    .padding(vertical = 16.dp, horizontal = 8.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            ProfileStatCell(formatCompactCount(likesTotal), stringResource(R.string.profile_likes))
-            Box(Modifier.clickable(onClick = onOpenConnections)) {
-                ProfileStatCell("128", stringResource(R.string.profile_following))
-            }
-            Box(Modifier.clickable(onClick = onOpenConnections)) {
-                ProfileStatCell("2.4K", stringResource(R.string.profile_followers))
-            }
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Surface(
-                shape = FEED_CARD_RADIUS,
-                color = StitchPalette.Brand.copy(alpha = 0.12f),
-                modifier =
-                    Modifier
-                        .weight(1f)
-                        .clickable {
-                            onEditProfile()
-                        },
-            ) {
-                Box(Modifier.fillMaxWidth().padding(vertical = 12.dp), contentAlignment = Alignment.Center) {
                     Text(
-                        stringResource(R.string.profile_edit),
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = StitchPalette.Brand,
-                    )
-                }
-            }
-            Surface(
-                shape = CircleShape,
-                color = StitchPalette.SurfaceContainer,
-                modifier =
-                    Modifier
-                        .size(44.dp)
-                        .clickable {
-                            onSettings()
-                        },
-            ) {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Icon(Icons.Outlined.Settings, contentDescription = stringResource(R.string.common_settings), tint = StitchPalette.OnSurface)
-                }
-            }
-        }
-        if (!hint.isNullOrBlank()) {
-            Text(
-                hint,
-                style = MaterialTheme.typography.bodySmall,
-                color = StitchPalette.OnSurfaceVariant,
-            )
-        }
-        Text(
-            stringResource(R.string.profile_my_pets),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = StitchPalette.PrimaryDark,
-        )
-        Surface(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .shadow(
-                        elevation = StitchShadows.cardAmbientY,
-                        shape = FEED_SECTION_RADIUS,
-                        ambientColor = StitchShadows.cardAmbientColor,
-                        spotColor = StitchShadows.cardAmbientColor,
-                    )
-                    .clickable(onClick = onOpenPetProfile),
-            shape = FEED_SECTION_RADIUS,
-            color = StitchPalette.Surface,
-            border = BorderStroke(1.dp, StitchPalette.BorderHairline),
-        ) {
-            Row(
-                modifier = Modifier.padding(14.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                Box(
-                    modifier =
-                        Modifier
-                            .size(58.dp)
-                            .clip(CircleShape)
-                            .background(StitchPalette.SecondaryContainer)
-                            .border(1.dp, StitchPalette.BorderHairline, CircleShape),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(Icons.Filled.Pets, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(30.dp))
-                }
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                    Text(
-                        stringResource(R.string.profile_pet_latte_name),
-                        style = MaterialTheme.typography.titleMedium,
+                        text = if (isDemo) "Peach & Latte" else (user.nickname.ifBlank { user.username }),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
                         fontWeight = FontWeight.Bold,
                         color = StitchPalette.OnSurface,
                     )
-                    Text(
-                        stringResource(R.string.profile_pet_latte_meta),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = StitchPalette.OnSurfaceVariant,
+                    Icon(
+                        imageVector = Icons.Filled.Verified,
+                        contentDescription = "Verified Badge",
+                        tint = StitchPalette.Brand,
+                        modifier = Modifier.size(16.dp)
                     )
                 }
-                Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
-            }
-        }
-        Text(
-            stringResource(R.string.profile_recent_posts),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = StitchPalette.PrimaryDark,
-        )
-        when {
-            gridLoading ->
-                Box(Modifier.fillMaxWidth().height(120.dp), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = StitchPalette.Brand)
-                }
-            posts.isEmpty() ->
                 Text(
-                    stringResource(R.string.profile_posts_empty),
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = if (isDemo) "@peachlatte" else "@${user.username}",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
                     color = StitchPalette.OnSurfaceVariant,
                 )
-            else ->
-                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    posts.chunked(2).forEach { rowItems ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        ) {
-                            rowItems.forEach { item ->
-                                ProfileGridCell(
-                                    apiBase = apiBase,
-                                    item = item,
-                                    modifier =
-                                        Modifier
-                                            .weight(1f)
-                                            .aspectRatio(0.85f)
-                                            .clip(FEED_CARD_RADIUS)
-                                            .clickable { onOpenPost(item.post.id) },
-                                )
-                            }
-                            if (rowItems.size == 1) {
-                                Spacer(Modifier.weight(1f))
-                            }
-                        }
-                    }
-                }
-        }
-        HorizontalDivider(color = StitchPalette.OutlineVariant)
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .clip(FEED_SECTION_RADIUS)
-                    .background(StitchPalette.Surface)
-                    .border(1.dp, StitchPalette.BorderHairline, FEED_SECTION_RADIUS)
-                    .clickable(onClick = onLogout)
-                    .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            if (avatarUrl != null) {
-                AsyncImage(
-                    model = avatarUrl,
-                    contentDescription = "头像",
-                    modifier =
-                        Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .border(1.dp, StitchPalette.BorderHairline, CircleShape),
-                    contentScale = ContentScale.Crop,
-                )
-            } else {
-                Box(
-                    modifier =
-                        Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(StitchPalette.Brand),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        user.nickname.take(1).ifBlank { user.username.take(1) }.uppercase(),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-            }
-            Column(Modifier.padding(start = 12.dp).weight(1f)) {
+                Spacer(Modifier.height(4.dp))
                 Text(
-                    user.nickname.ifBlank { user.username },
-                    style = MaterialTheme.typography.titleMedium,
+                    text = if (isDemo) "Documenting the daily life of two cats." else (user.bio.ifBlank { "Documenting the daily life of two cats." }),
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.OnSurface,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+        }
+
+        // Stats Card
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 24.dp)
+                .shadow(
+                    elevation = StitchShadows.cardAmbientY,
+                    shape = RoundedCornerShape(12.dp),
+                    ambientColor = StitchShadows.cardAmbientColor,
+                    spotColor = StitchShadows.cardAmbientColor,
+                )
+                .clip(RoundedCornerShape(12.dp))
+                .background(StitchPalette.Surface)
+                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = if (isDemo) "128" else "${posts.size.coerceAtLeast(3)}",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
                     color = StitchPalette.OnSurface,
                 )
                 Text(
-                    "@${user.username}",
-                    style = MaterialTheme.typography.bodySmall,
+                    text = "Posts",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
                     color = StitchPalette.OnSurfaceVariant,
                 )
             }
-            Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
+            Spacer(Modifier.width(1.dp).height(24.dp).background(StitchPalette.BorderHairline))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.weight(1f).clickable { onOpenConnections() }
+            ) {
+                Text(
+                    text = "42",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.OnSurface,
+                )
+                Text(
+                    text = "Followers",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.OnSurfaceVariant,
+                )
+            }
+            Spacer(Modifier.width(1.dp).height(24.dp).background(StitchPalette.BorderHairline))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.weight(1f).clickable { onOpenPetProfile() }
+            ) {
+                Text(
+                    text = "2",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.OnSurface,
+                )
+                Text(
+                    text = "Pets",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.OnSurfaceVariant,
+                )
+            }
         }
-        Text(
-            stringResource(R.string.profile_logout),
-            style = MaterialTheme.typography.titleMedium,
-            color = StitchPalette.Brand,
-            modifier =
-                Modifier
+
+        // My Pets Section
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.profile_my_pets),
+                style = MaterialTheme.typography.titleMedium.copy(
+                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                ),
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.OnSurface,
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp)
+            )
+            Row(
+                modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .clickable(onClick = onLogout)
-                    .padding(vertical = 8.dp),
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Spacer(Modifier.width(4.dp)) // Content padding start
+                // Pet 1: Latte
+                Column(
+                    modifier = Modifier
+                        .width(144.dp)
+                        .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
+                        .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                        .clickable { onOpenPetProfile() }
+                        .padding(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    AsyncImage(
+                        model = "https://lh3.googleusercontent.com/aida-public/AB6AXuB_wAN_GxnnAAUC824gbkwKFBcuWOJGQ0P1VB2v7oscnhDCzvDnEu78e5PfbGGecz_vxsffrH6Ekn63ujTmXmGIOyfJNmWeyWo1EbSXiA5WM9EGs_sl39Zs_3yfBED72CpR4QnmRQWUhTNrxz5BtyVdvMLA32_B6imJq25qKaYdAzATcz4o7oZXZbLOvopydTTYhDNuIxwa91SClCI9x3uVkJXicK5z9P5qe-P7NYnmtN9JbGDWHuozanfFF6EilSx0jhg-Xgg-rQpO",
+                        contentDescription = "Latte",
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.profile_pet_latte_name),
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        fontWeight = FontWeight.Bold,
+                        color = StitchPalette.OnSurface,
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = "Domestic Shorthair\n3 yrs",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        color = StitchPalette.OnSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+                // Pet 2: Peach
+                Column(
+                    modifier = Modifier
+                        .width(144.dp)
+                        .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
+                        .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                        .clickable { onOpenPetProfile() }
+                        .padding(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    AsyncImage(
+                        model = "https://lh3.googleusercontent.com/aida-public/AB6AXuAOZ15aXqXrVuGnghhPqYq2I8RSXUPCYbpNi3W6hdaAxLKsCEKEYc4sFx53xyt5ACKTcWUU6A56prfOSauE7fyyEdNzQ84vs4-PDb6s7zraJYKPF1YQgvY5Tp4AUsB2D9Fjp0fclhq0JXKPjFJ7ugI2UpG27sGCXk5dA4cNiOFoNLnBkj15QDgc_0DlFcXsiRzeoMbPQ1-15I-3gA6KnNNr247JxHhOWM8KTPFpTp8wD3RQx0OkUBNVnZAXsJd28_1zFPLg8YuNbsrt",
+                        contentDescription = "Peach",
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        text = "Peach",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        fontWeight = FontWeight.Bold,
+                        color = StitchPalette.OnSurface,
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = "Persian\n5 yrs",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        color = StitchPalette.OnSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+                Spacer(Modifier.width(4.dp)) // Content padding end
+            }
+        }
+
+        // Recent Posts Section
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.profile_recent_posts),
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.OnSurface,
+                )
+                Text(
+                    text = "View All",
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.Brand,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.clickable { /* Action View All */ }
+                )
+            }
+
+            // Grid Layout (Rows)
+            val mockPostImages = listOf(
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuDjFUxPZD7WKpURiK9oADQE3UTeeFoWDtIkg_63asTeLfBRFcxypdEhiM6x92BuTaPIngkzpUzGsTk4uuxulyi6q1b_Wu1s4oCciPwP2ObAGcuPQQn9F65yXcB1H9d8V_DBbLd34QxO_zWmigSvPrtZ2k9ZPmLp6tIO-SeKSiTYBbslmb6Sg8JYI3eg1kfOeRIPWneSTS3yHhx6sALI2JlW1y9tSNhyLHlwIZ7BB-LwPnhkR4VdCo0fpwEVUNYJ-a0Ee3E5af4KhrNJ",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuBlRlaf196K6eZPQAdq8ZIdy70MmlIDIP2SImazVGlXE6RyAQUKMdMabX6s7tfDUYjUXVEYGfajD738p4erjpQlGS2kVy34byMmD0SOeEL7H2JxKQIFajKd53tTCN7f72SFbswag99XQ14HuAD_6mSySoJTchwJtyCrdfILaR7OBeeLs2WDJLyVfaeyWOjEt34UTmzxbozGp8s0SN3_uNrDvwU2vfMvP6L602EN9CJiy17dWkeC-ZGsDSgSQdofa2RRfKJl_8lYyKYn",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuCV0BL-Lv_xBxCh8g1ScoAkdHuFcyPzUMKGHRCCjTNTBz861blUlFWL9P9LUFcm5CHakwmGEj6VjV_1Fyun2ZLkM0c0X2C6rfAhkYtsc0-C09HIW1uADm-5MmrNn_yPeETkQLd2yjkGzY6fYktxoAKvpOapWdIS32gBCSaGvfOrTs0OgKj6jlhaE73FptGz0hKGkQNFe2qhMGDQ009rdK-3DeAHOMBfYdXSAkMDSN1dZ5uJ3WiRqIhqqBgCBOEN5T5jwoSZtHU8xbEN"
+            )
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // Item 1
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(StitchPalette.SurfaceContainer)
+                            .clickable {
+                                if (posts.isNotEmpty()) onOpenPost(posts[0].post.id)
+                            }
+                    ) {
+                        val imgUrl = if (posts.isNotEmpty() && posts[0].firstMedia?.url != null) {
+                            resolveMediaUrl(apiBase, posts[0].firstMedia?.url)
+                        } else {
+                            mockPostImages[0]
+                        }
+                        AsyncImage(
+                            model = imgUrl,
+                            contentDescription = "Post image 1",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    // Item 2
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(StitchPalette.SurfaceContainer)
+                            .clickable {
+                                if (posts.size > 1) onOpenPost(posts[1].post.id)
+                            }
+                    ) {
+                        val imgUrl = if (posts.size > 1 && posts[1].firstMedia?.url != null) {
+                            resolveMediaUrl(apiBase, posts[1].firstMedia?.url)
+                        } else {
+                            mockPostImages[1]
+                        }
+                        AsyncImage(
+                            model = imgUrl,
+                            contentDescription = "Post image 2",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // Item 3
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(StitchPalette.SurfaceContainer)
+                            .clickable {
+                                if (posts.size > 2) onOpenPost(posts[2].post.id)
+                            }
+                    ) {
+                        val imgUrl = if (posts.size > 2 && posts[2].firstMedia?.url != null) {
+                            resolveMediaUrl(apiBase, posts[2].firstMedia?.url)
+                        } else {
+                            mockPostImages[2]
+                        }
+                        AsyncImage(
+                            model = imgUrl,
+                            contentDescription = "Post image 3",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    // Add Post Button
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .background(StitchPalette.Surface, shape = RoundedCornerShape(8.dp))
+                            .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(8.dp))
+                            .clickable { onCompose() },
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.AddCircle,
+                            contentDescription = "Add Post",
+                            tint = StitchPalette.Brand,
+                            modifier = Modifier.size(30.dp)
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = "Add Post",
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            color = StitchPalette.Brand,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+                }
+            }
+        }
+
+        Spacer(Modifier.height(16.dp))
+        if (!hint.isNullOrBlank()) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = hint,
+                style = MaterialTheme.typography.bodySmall.copy(
+                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                ),
+                color = StitchPalette.Brand,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
+    }
+}
+
+@Composable
+private fun EditField(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    singleLine: Boolean = true,
+    minLines: Int = 1,
+    readOnly: Boolean = false,
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge.copy(
+                platformStyle = PlatformTextStyle(includeFontPadding = false)
+            ),
+            color = StitchPalette.OnSurfaceVariant,
+            fontWeight = FontWeight.SemiBold
+        )
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            singleLine = singleLine,
+            minLines = minLines,
+            readOnly = readOnly,
+            textStyle = MaterialTheme.typography.bodyLarge.copy(
+                platformStyle = PlatformTextStyle(includeFontPadding = false)
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = Color(0xFFFFF8F2),
+                unfocusedContainerColor = Color(0xFFFFF8F2),
+                focusedBorderColor = StitchPalette.Brand,
+                unfocusedBorderColor = Color(0xFFF1D8C8),
+                focusedTextColor = StitchPalette.PrimaryDark,
+                unfocusedTextColor = StitchPalette.PrimaryDark,
+                disabledContainerColor = Color(0xFFFFF8F2),
+                disabledBorderColor = Color(0xFFF1D8C8),
+                disabledTextColor = StitchPalette.PrimaryDark
+            ),
+            shape = RoundedCornerShape(8.dp)
         )
     }
 }
 
 @Composable
 private fun ProfileEditScreen(
+    apiBase: String,
     user: User,
     saving: Boolean,
     error: String?,
@@ -1927,70 +1996,313 @@ private fun ProfileEditScreen(
     var nickname by remember(user.id, user.nickname) { mutableStateOf(user.nickname) }
     var bio by remember(user.id, user.bio) { mutableStateOf(user.bio) }
     var avatarUrl by remember(user.id, user.avatarUrl) { mutableStateOf(user.avatarUrl) }
+
+    var publicProfile by remember { mutableStateOf(true) }
+    var showPets by remember { mutableStateOf(true) }
+
     Column(modifier.background(StitchPalette.Canvas)) {
-        ProfileBackHeader(
-            title = stringResource(R.string.profile_edit),
-            onBack = onBack,
-        )
-        Column(
-            modifier =
-                modifier
-                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 16.dp)
-                    .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        // AppBar: Close, Title, Save
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .background(StitchPalette.Surface)
+                .border(width = 1.dp, color = StitchPalette.BorderHairline)
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Box(
-                modifier =
-                    Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .background(StitchPalette.BrandMuted)
-                        .border(3.dp, StitchPalette.Brand, CircleShape),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    nickname.take(1).ifBlank { user.username.take(1) }.uppercase(),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Black,
-                    color = StitchPalette.Brand,
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.Outlined.Close,
+                    contentDescription = "Close",
+                    tint = StitchPalette.PrimaryDark
                 )
             }
-            OutlinedTextField(
-                value = nickname,
-                onValueChange = { nickname = it },
-                singleLine = true,
-                label = { Text(stringResource(R.string.profile_display_name)) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = StitchShape.field,
+            Text(
+                text = stringResource(R.string.profile_edit),
+                style = MaterialTheme.typography.titleMedium.copy(
+                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                ),
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.PrimaryDark
             )
-            OutlinedTextField(
+            TextButton(
+                onClick = { onSave(nickname.trim().ifBlank { user.username }, bio.trim(), avatarUrl.trim()) },
+                enabled = !saving
+            ) {
+                Text(
+                    text = if (saving) stringResource(R.string.profile_saving) else stringResource(R.string.profile_save),
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = if (saving) StitchPalette.OnSurfaceVariant else StitchPalette.Brand,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(horizontal = FEED_PAGE_PADDING)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            // Avatar container
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
+            ) {
+                Box(
+                    modifier = Modifier.size(80.dp),
+                    contentAlignment = Alignment.BottomEnd
+                ) {
+                    val displayAvatarUrl = resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() }) ?: "https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"
+                    AsyncImage(
+                        model = avatarUrl.ifBlank { displayAvatarUrl },
+                        contentDescription = "Avatar",
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .border(2.dp, StitchPalette.Brand, CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(CircleShape)
+                            .background(StitchPalette.Brand)
+                            .border(2.dp, Color.White, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Edit,
+                            contentDescription = "Edit Avatar",
+                            tint = Color.White,
+                            modifier = Modifier.size(14.dp)
+                        )
+                    }
+                }
+                Text(
+                    text = "Change photo",
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.Brand,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.clickable { /* Photo change action could show dialog, or let user edit URL */ }
+                )
+            }
+
+            // Input fields
+            EditField(
+                label = stringResource(R.string.profile_display_name),
+                value = nickname,
+                onValueChange = { nickname = it }
+            )
+
+            EditField(
+                label = "Handle",
+                value = "@${user.username}",
+                onValueChange = {},
+                readOnly = true
+            )
+
+            EditField(
+                label = stringResource(R.string.profile_bio),
                 value = bio,
                 onValueChange = { bio = it },
-                minLines = 3,
-                label = { Text(stringResource(R.string.profile_bio)) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = StitchShape.field,
+                singleLine = false,
+                minLines = 3
             )
-            OutlinedTextField(
+
+            EditField(
+                label = stringResource(R.string.profile_avatar_url),
                 value = avatarUrl,
-                onValueChange = { avatarUrl = it },
-                singleLine = true,
-                label = { Text(stringResource(R.string.profile_avatar_url)) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = StitchShape.field,
+                onValueChange = { avatarUrl = it }
             )
+
             if (!error.isNullOrBlank()) {
                 Text(error, color = StitchPalette.Error, style = MaterialTheme.typography.bodySmall)
             }
-            Button(
-                onClick = { onSave(nickname.trim().ifBlank { user.username }, bio.trim(), avatarUrl.trim()) },
-                enabled = !saving,
-                shape = StitchShape.field,
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+
+            // Linked Pets
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(if (saving) stringResource(R.string.profile_saving) else stringResource(R.string.profile_save), color = Color.White, fontWeight = FontWeight.Bold)
+                Text(
+                    text = "Linked Pets",
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.OnSurfaceVariant,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Pet 1 (Latte)
+                    Box(
+                        modifier = Modifier.size(56.dp)
+                    ) {
+                        AsyncImage(
+                            model = "https://lh3.googleusercontent.com/aida-public/AB6AXuBP3UueOkcQpWo0ST4oE6FzjjExScD0El8LM2m3HjqJyvnB3OiNvbyOrNNsO78sGvievO640Qk7_P0u6-Q7qTB_-p1IOru9wcXgjiyw6hQAu89vXdPfFFLSZUMTvIiFO-h6-Wik0g3ixnG2n6lN3daCXBLCfVIfLzlbvYAclvV5RG_3dENtwOH6p1NCxQeHq8EFLUG8RHiFENs3hF4-Or9NbqJCme7ZabMEgLkJYKZNR-xqm-SQhWZMMHC4-HlmWU-cJWIA_dQ83Fvb",
+                            contentDescription = "Latte",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(8.dp))
+                                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(16.dp)
+                                .align(Alignment.TopEnd)
+                                .clip(CircleShape)
+                                .background(StitchPalette.Brand),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.CheckCircle,
+                                contentDescription = "Selected",
+                                tint = Color.White,
+                                modifier = Modifier.size(12.dp)
+                            )
+                        }
+                    }
+                    
+                    // Pet 2 (Peach)
+                    Box(
+                        modifier = Modifier.size(56.dp)
+                    ) {
+                        AsyncImage(
+                            model = "https://lh3.googleusercontent.com/aida-public/AB6AXuAOZ15aXqXrVuGnghhPqYq2I8RSXUPCYbpNi3W6hdaAxLKsCEKEYc4sFx53xyt5ACKTcWUU6A56prfOSauE7fyyEdNzQ84vs4-PDb6s7zraJYKPF1YQgvY5Tp4AUsB2D9Fjp0fclhq0JXKPjFJ7ugI2UpG27sGCXk5dA4cNiOFoNLnBkj15QDgc_0DlFcXsiRzeoMbPQ1-15I-3gA6KnNNr247JxHhOWM8KTPFpTp8wD3RQx0OkUBNVnZAXsJd28_1zFPLg8YuNbsrt",
+                            contentDescription = "Peach",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(8.dp))
+                                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(16.dp)
+                                .align(Alignment.TopEnd)
+                                .clip(CircleShape)
+                                .background(StitchPalette.Brand),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.CheckCircle,
+                                contentDescription = "Selected",
+                                tint = Color.White,
+                                modifier = Modifier.size(12.dp)
+                            )
+                        }
+                    }
+
+                    // Add button
+                    Box(
+                        modifier = Modifier
+                            .size(56.dp)
+                            .background(Color(0xFFFFF8F2), shape = RoundedCornerShape(8.dp))
+                            .border(1.dp, StitchPalette.Brand, shape = RoundedCornerShape(8.dp))
+                            .clickable { /* Add pet link */ },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.AddCircle,
+                            contentDescription = "Add Pet",
+                            tint = StitchPalette.Brand,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+            }
+
+            // Toggles
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        Text(
+                            text = "Public profile",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            color = StitchPalette.PrimaryDark,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Allow everyone to see your profile details.",
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            color = StitchPalette.OnSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = publicProfile,
+                        onCheckedChange = { publicProfile = it },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = StitchPalette.Brand,
+                            uncheckedThumbColor = Color.White,
+                            uncheckedTrackColor = Color(0xFFE5D5C5)
+                        )
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        Text(
+                            text = "Show pets on profile",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            color = StitchPalette.PrimaryDark,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Display your linked pets in a dedicated row.",
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            color = StitchPalette.OnSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = showPets,
+                        onCheckedChange = { showPets = it },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = StitchPalette.Brand,
+                            uncheckedThumbColor = Color.White,
+                            uncheckedTrackColor = Color(0xFFE5D5C5)
+                        )
+                    )
+                }
             }
         }
     }
@@ -1998,89 +2310,383 @@ private fun ProfileEditScreen(
 
 @Composable
 private fun ProfilePetDetailScreen(
+    apiBase: String,
+    user: User,
     onBack: () -> Unit,
     onEditProfile: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier.background(StitchPalette.Canvas)) {
-        ProfileBackHeader(
-            title = stringResource(R.string.profile_pet_detail),
-            onBack = onBack,
-        )
-        Column(
-            modifier =
-                modifier
-                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
-                    .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+    val petName = stringResource(R.string.profile_pet_latte_name)
+    val petBreed = "Domestic Shorthair"
+    val petAge = "3 yrs"
+    val petAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuB_wAN_GxnnAAUC824gbkwKFBcuWOJGQ0P1VB2v7oscnhDCzvDnEu78e5PfbGGecz_vxsffrH6Ekn63ujTmXmGIOyfJNmWeyWo1EbSXiA5WM9EGs_sl39Zs_3yfBED72CpR4QnmRQWUhTNrxz5BtyVdvMLA32_B6imJq25qKaYdAzATcz4o7oZXZbLOvopydTTYhDNuIxwa91SClCI9x3uVkJXicK5z9P5qe-P7NYnmtN9JbGDWHuozanfFF6EilSx0jhg-Xgg-rQpO"
+
+    Column(
+        modifier = modifier
+            .background(StitchPalette.Canvas)
+            .verticalScroll(rememberScrollState())
+    ) {
+        // AppBar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .background(StitchPalette.Surface)
+                .border(width = 1.dp, color = StitchPalette.BorderHairline)
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = FEED_SECTION_RADIUS,
-                color = StitchPalette.Surface,
-                border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = "Back",
+                    tint = StitchPalette.PrimaryDark
+                )
+            }
+            Text(
+                text = petName,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                ),
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.PrimaryDark
+            )
+            IconButton(onClick = { /* More actions */ }) {
+                Icon(
+                    imageVector = Icons.Outlined.MoreHoriz,
+                    contentDescription = "More",
+                    tint = StitchPalette.PrimaryDark
+                )
+            }
+        }
+
+        // Cover Card
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
+                .background(StitchPalette.Surface)
+                .border(
+                    BorderStroke(1.dp, StitchPalette.BorderHairline),
+                    RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)
+                )
+                .padding(bottom = 24.dp),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 20.dp)
             ) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                // Large Avatar with 4dp border & shadow
+                Box(
+                    modifier = Modifier
+                        .size(96.dp)
+                        .shadow(4.dp, CircleShape)
+                        .clip(CircleShape)
+                        .background(StitchPalette.Surface)
+                        .border(4.dp, Color.White, CircleShape)
+                ) {
+                    AsyncImage(
+                        model = petAvatar,
+                        contentDescription = petName,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+
+                Text(
+                    text = petName,
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.PrimaryDark
+                )
+
+                Text(
+                    text = "$petBreed · $petAge",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.OnSurfaceVariant
+                )
+
+                // Tags row
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    listOf("Cozy", "Curious", "Sunny").forEach { tag ->
                         Box(
-                            modifier =
-                                Modifier
-                                    .size(86.dp)
-                                    .clip(CircleShape)
-                                    .background(StitchPalette.SecondaryContainer)
-                                    .border(1.dp, StitchPalette.BorderHairline, CircleShape),
-                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .background(Color(0xFFFFF8F2), shape = CircleShape)
+                                .border(1.dp, Color(0xFFF1D8C8), CircleShape)
+                                .padding(horizontal = 12.dp, vertical = 4.dp)
                         ) {
-                            Icon(Icons.Filled.Pets, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(42.dp))
-                        }
-                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                             Text(
-                                stringResource(R.string.profile_pet_latte_name),
-                                style = MaterialTheme.typography.headlineSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = StitchPalette.PrimaryDark,
-                            )
-                            Surface(shape = StitchShape.pill, color = StitchPalette.BrandMuted) {
-                                Text(
-                                    stringResource(R.string.profile_pet_badge),
-                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = StitchPalette.Brand,
-                                    fontWeight = FontWeight.Bold,
-                                )
-                            }
-                            Text(
-                                stringResource(R.string.profile_pet_latte_meta),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = StitchPalette.OnSurfaceVariant,
+                                text = tag,
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                                ),
+                                color = StitchPalette.Brand,
+                                fontWeight = FontWeight.Bold
                             )
                         }
-                    }
-                    Text(
-                        stringResource(R.string.profile_pet_story),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = StitchPalette.OnSurface,
-                    )
-                    HorizontalDivider(color = StitchPalette.OutlineVariant)
-                    Text(
-                        stringResource(R.string.profile_pet_stats),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = StitchPalette.OnSurfaceVariant,
-                    )
-                    Button(
-                        onClick = onEditProfile,
-                        shape = FEED_SECTION_RADIUS,
-                        colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand, contentColor = Color.White),
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
-                    ) {
-                        Text(stringResource(R.string.profile_edit), fontWeight = FontWeight.Bold)
                     }
                 }
+
+                Spacer(Modifier.height(4.dp))
+
+                var isFollowing by remember { mutableStateOf(false) }
+                Button(
+                    onClick = { isFollowing = !isFollowing },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (isFollowing) StitchPalette.SurfaceLow else StitchPalette.Brand
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Text(
+                        text = if (isFollowing) "Following" else "Follow",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = if (isFollowing) StitchPalette.Brand else Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-                ProfileMiniMetric("3", stringResource(R.string.feed_category_daily_share), Modifier.weight(1f))
-                ProfileMiniMetric("28", stringResource(R.string.profile_likes), Modifier.weight(1f))
-                ProfileMiniMetric("12", stringResource(R.string.profile_followers), Modifier.weight(1f))
+        }
+
+        // Stats Card
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .shadow(
+                    elevation = StitchShadows.cardAmbientY,
+                    shape = RoundedCornerShape(12.dp),
+                    ambientColor = StitchShadows.cardAmbientColor,
+                    spotColor = StitchShadows.cardAmbientColor,
+                )
+                .clip(RoundedCornerShape(12.dp))
+                .background(StitchPalette.Surface)
+                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "38",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.PrimaryDark,
+                )
+                Text(
+                    text = "Moments",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.OnSurfaceVariant,
+                )
+            }
+            Spacer(Modifier.width(1.dp).height(24.dp).background(StitchPalette.BorderHairline))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "2.4k",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.PrimaryDark,
+                )
+                Text(
+                    text = "Likes",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.OnSurfaceVariant,
+                )
+            }
+            Spacer(Modifier.width(1.dp).height(24.dp).background(StitchPalette.BorderHairline))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "12",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.PrimaryDark,
+                )
+                Text(
+                    text = "Badges",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    color = StitchPalette.OnSurfaceVariant,
+                )
+            }
+        }
+
+        // Owner Card
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            Text(
+                text = "Owner",
+                style = MaterialTheme.typography.titleSmall.copy(
+                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                ),
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.PrimaryDark,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            val ownerAvatar = resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() }) ?: "https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(
+                        elevation = StitchShadows.cardAmbientY,
+                        shape = RoundedCornerShape(12.dp),
+                        ambientColor = StitchShadows.cardAmbientColor,
+                        spotColor = StitchShadows.cardAmbientColor,
+                    )
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(StitchPalette.Surface)
+                    .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                    .padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    AsyncImage(
+                        model = ownerAvatar,
+                        contentDescription = user.nickname,
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(
+                            text = user.nickname.ifBlank { user.username },
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            fontWeight = FontWeight.Bold,
+                            color = StitchPalette.PrimaryDark
+                        )
+                        Text(
+                            text = "@${user.username}",
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            color = StitchPalette.OnSurfaceVariant
+                        )
+                    }
+                }
+
+                Button(
+                    onClick = onBack, // Pops back to User Profile
+                    shape = RoundedCornerShape(8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFF1E6),
+                        contentColor = StitchPalette.Brand
+                    ),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
+                    modifier = Modifier.height(32.dp)
+                ) {
+                    Text(
+                        text = "View",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+
+        // Recent Moments Section
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Recent Moments",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                ),
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.PrimaryDark,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+
+            val momentImages = listOf(
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuDjFUxPZD7WKpURiK9oADQE3UTeeFoWDtIkg_63asTeLfBRFcxypdEhiM6x92BuTaPIngkzpUzGsTk4uuxulyi6q1b_Wu1s4oCciPwP2ObAGcuPQQn9F65yXcB1H9d8V_DBbLd34QxO_zWmigSvPrtZ2k9ZPmLp6tIO-SeKSiTYBbslmb6Sg8JYI3eg1kfOeRIPWneSTS3yHhx6sALI2JlW1y9tSNhyLHlwIZ7BB-LwPnhkR4VdCo0fpwEVUNYJ-a0Ee3E5af4KhrNJ",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuBlRlaf196K6eZPQAdq8ZIdy70MmlIDIP2SImazVGlXE6RyAQUKMdMabX6s7tfDUYjUXVEYGfajD738p4erjpQlGS2kVy34byMmD0SOeEL7H2JxKQIFajKd53tTCN7f72SFbswag99XQ14HuAD_6mSySoJTchwJtyCrdfILaR7OBeeLs2WDJLyVfaeyWOjEt34UTmzxbozGp8s0SN3_uNrDvwU2vfMvP6L602EN9CJiy17dWkeC-ZGsDSgSQdofa2RRfKJl_8lYyKYn",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuCV0BL-Lv_xBxCh8g1ScoAkdHuFcyPzUMKGHRCCjTNTBz861blUlFWL9P9LUFcm5CHakwmGEj6VjV_1Fyun2ZLkM0c0X2C6rfAhkYtsc0-C09HIW1uADm-5MmrNn_yPeETkQLd2yjkGzY6fYktxoAKvpOapWdIS32gBCSaGvfOrTs0OgKj6jlhaE73FptGz0hKGkQNFe2qhMGDQ009rdK-3DeAHOMBfYdXSAkMDSN1dZ5uJ3WiRqIhqqBgCBOEN5T5jwoSZtHU8xbEN",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuB_wAN_GxnnAAUC824gbkwKFBcuWOJGQ0P1VB2v7oscnhDCzvDnEu78e5PfbGGecz_vxsffrH6Ekn63ujTmXmGIOyfJNmWeyWo1EbSXiA5WM9EGs_sl39Zs_3yfBED72CpR4QnmRQWUhTNrxz5BtyVdvMLA32_B6imJq25qKaYdAzATcz4o7oZXZbLOvopydTTYhDNuIxwa91SClCI9x3uVkJXicK5z9P5qe-P7NYnmtN9JbGDWHuozanfFF6EilSx0jhg-Xgg-rQpO"
+            )
+
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(StitchPalette.SurfaceContainer)
+                    ) {
+                        AsyncImage(
+                            model = momentImages[0],
+                            contentDescription = "Moment 1",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(StitchPalette.SurfaceContainer)
+                    ) {
+                        AsyncImage(
+                            model = momentImages[1],
+                            contentDescription = "Moment 2",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
             }
         }
     }
@@ -2091,55 +2697,297 @@ private fun ProfileConnectionsScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val rows =
-        listOf(
-            stringResource(R.string.profile_connection_peach) to stringResource(R.string.profile_connection_peach_note),
-            stringResource(R.string.profile_connection_sunday) to stringResource(R.string.profile_connection_sunday_note),
-            stringResource(R.string.profile_connection_momo) to stringResource(R.string.profile_connection_momo_note),
+    var isFollowersTab by remember { mutableStateOf(true) }
+    var searchQuery by remember { mutableStateOf("") }
+
+    // High fidelity mock structures matching the HTML spec
+    data class ConnectionItem(
+        val name: String,
+        val handleAndDesc: String,
+        val avatarUrl: String,
+        val isVerified: Boolean,
+        val isFollowing: Boolean
+    )
+
+    val followersList = listOf(
+        ConnectionItem(
+            name = "Milo & Friends",
+            handleAndDesc = "@milo_paws · Cat creator",
+            avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBqOpKzJg3eoebYOf4tdwW8rrO54rCO8tS4PsQPSG900aAmMkurveX2Ns9y0XDoJe7OHL91KBKfbGaNHAaybdbA9eX47hmb8R7sb5oa-TCt5Rr_ETjWTokbvGSK3-szIVkCGIL3NR0G64Uu9ht2eS0IPiH55RKt-6aBn11NeS7xE5JGzi76SYgz4KbGJV4AvhKTRi1MkbuLdPPtKpRvXk1yotvH-2wJCb5I63qwu7Y_3Yb15HlvRA5r473zadIYO6Ss4h2p6S9H1WC7",
+            isVerified = true,
+            isFollowing = false
+        ),
+        ConnectionItem(
+            name = "Luna the Tabby",
+            handleAndDesc = "@luna_tabby · Domestic Shorthair",
+            avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuC_Ai24A5Goj2zvd8555z3DwYugKUa-FIrdg-1wlLDqCIRA2ElHWJKIe0mymOZ8qpazvAhWZr93BIQY0fd3oNeohlHX2e_cg5a5Ws_8N8DpeVsbIe8B6nQgkLYdj71NDa3T2iKzi8nZMjxpUKZFC3yu9O1rX74t45TsUU_eejW_jfFZtfo5CwYzGRWjaVOGpmOHXnJK0t9ayshjLRkBl_qf1SMLCMYHDbH4_BqnJb1eWnWlYe-BFR4aT-nx7hiI69sx6pncCaXo1qZy",
+            isVerified = false,
+            isFollowing = true
+        ),
+        ConnectionItem(
+            name = "Whiskers Daily",
+            handleAndDesc = "@whiskers · Cozy cat moments",
+            avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuA6YREznxgaU1PbkV7g5W32xTfySiCiMfF9MECjWuVEZ5oke8nLphRo2iMq7vgjdmk3pZ-ungauGG5dh9RJEfQndyztfAg8JRRrpVSmcHTrXCmmB7wavGILTfPnqGwfJacsf26XUM0usxUsibbkd0pLSoh0DWyI59AVCNvCZo6sdz9E50aiSHRhRpMKJ_yvR1aEKu4xzKJSta-tmew3m1vWxBZ4r6KsW6KOydAJnC61e7q0WyWgCvo3tt7JAEE4VOYmCDFdO8RTrdls",
+            isVerified = false,
+            isFollowing = false
+        ),
+        ConnectionItem(
+            name = "Maple & Co.",
+            handleAndDesc = "@mapleco · Pet family",
+            avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBJ6o8pnwlxS1HaaPj0ki6qCtJ-Cg1mxWYO752Rbin7gUElvMpWyXIPuXY7LQeVIRLWyr6CIF0omS1D73qWU3f4EfGWfMJkWRp0XyboXDi_zPW3JojXY2E8sd8smY3ck0zuTG9qJtijJ-zYmrnvCg9yj0mqyy1MmxqHGAz-cs7QG08iivtBlrItpqxoA5bCF_7033CHeBN8mt_zh3Pk8a_Z60EtgfloalLr_ihEqZue7P4V63w8VzP4oYTwT2rraLLodxfFwsWo5DVH",
+            isVerified = false,
+            isFollowing = true
         )
-    Column(modifier.background(StitchPalette.Canvas)) {
-        ProfileBackHeader(
-            title = stringResource(R.string.profile_connections_title),
-            onBack = onBack,
-        )
-        Column(
-            modifier =
-                modifier
-                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
-                    .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+    )
+
+    val activeList = if (isFollowersTab) followersList else followersList.filter { it.isFollowing }
+    val filteredList = activeList.filter {
+        it.name.contains(searchQuery, ignoreCase = true) || it.handleAndDesc.contains(searchQuery, ignoreCase = true)
+    }
+
+    Column(
+        modifier = modifier
+            .background(StitchPalette.Canvas)
+    ) {
+        // AppBar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .background(StitchPalette.Surface)
+                .border(width = 1.dp, color = StitchPalette.BorderHairline)
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                ProfileSegmentChip(stringResource(R.string.profile_connections_followers), selected = true)
-                ProfileSegmentChip(stringResource(R.string.profile_connections_following), selected = false)
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = "Back",
+                    tint = StitchPalette.PrimaryDark
+                )
             }
-            rows.forEachIndexed { index, row ->
-                Surface(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = FEED_SECTION_RADIUS,
-                    color = StitchPalette.Surface,
-                    border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+            Text(
+                text = if (isFollowersTab) "Followers" else "Following",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                ),
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.PrimaryDark
+            )
+            IconButton(onClick = { /* Search shortcut focus */ }) {
+                Icon(
+                    imageVector = Icons.Outlined.Search,
+                    contentDescription = "Search",
+                    tint = StitchPalette.PrimaryDark
+                )
+            }
+        }
+
+        // Sticky Tab and Search input section
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(StitchPalette.Surface)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // Segmented Tab
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFFFFF8F2), shape = RoundedCornerShape(12.dp))
+                    .padding(4.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(36.dp)
+                        .shadow(
+                            elevation = if (isFollowersTab) 2.dp else 0.dp,
+                            shape = RoundedCornerShape(8.dp),
+                            ambientColor = StitchPalette.PrimaryDark.copy(alpha = 0.1f),
+                            spotColor = StitchPalette.PrimaryDark.copy(alpha = 0.1f)
+                        )
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(if (isFollowersTab) Color.White else Color.Transparent)
+                        .clickable { isFollowersTab = true },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Followers",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        color = if (isFollowersTab) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(36.dp)
+                        .shadow(
+                            elevation = if (!isFollowersTab) 2.dp else 0.dp,
+                            shape = RoundedCornerShape(8.dp),
+                            ambientColor = StitchPalette.PrimaryDark.copy(alpha = 0.1f),
+                            spotColor = StitchPalette.PrimaryDark.copy(alpha = 0.1f)
+                        )
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(if (!isFollowersTab) Color.White else Color.Transparent)
+                        .clickable { isFollowersTab = false },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Following",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        color = if (!isFollowersTab) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            // Search field
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                placeholder = {
+                    Text(
+                        text = "Search connections...",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            platformStyle = PlatformTextStyle(includeFontPadding = false)
+                        ),
+                        color = StitchPalette.OnSurfaceVariant
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Search,
+                        contentDescription = "Search",
+                        tint = StitchPalette.OnSurfaceVariant,
+                        modifier = Modifier.size(18.dp)
+                    )
+                },
+                trailingIcon = {
+                    if (searchQuery.isNotEmpty()) {
+                        IconButton(onClick = { searchQuery = "" }) {
+                            Icon(
+                                imageVector = Icons.Outlined.Close,
+                                contentDescription = "Clear",
+                                tint = StitchPalette.OnSurfaceVariant,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                    }
+                },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = Color(0xFFFFF8F2),
+                    unfocusedContainerColor = Color(0xFFFFF8F2),
+                    focusedBorderColor = Color.Transparent,
+                    unfocusedBorderColor = Color.Transparent,
+                    focusedTextColor = StitchPalette.PrimaryDark,
+                    unfocusedTextColor = StitchPalette.PrimaryDark
+                ),
+                shape = RoundedCornerShape(12.dp)
+            )
+        }
+
+        // Connections List
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(StitchPalette.Canvas),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(filteredList) { connection ->
+                var localFollowingState by remember(connection.name) { mutableStateOf(connection.isFollowing) }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .shadow(
+                            elevation = StitchShadows.cardAmbientY,
+                            shape = RoundedCornerShape(12.dp),
+                            ambientColor = StitchShadows.cardAmbientColor,
+                            spotColor = StitchShadows.cardAmbientColor
+                        )
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(StitchPalette.Surface)
+                        .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Row(
-                        modifier = Modifier.padding(14.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier.weight(1f)
                     ) {
-                        Box(
-                            modifier =
-                                Modifier
-                                    .size(48.dp)
-                                    .clip(CircleShape)
-                                    .background(if (index == 1) StitchPalette.BrandMuted else StitchPalette.SecondaryContainer),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Text(row.first.take(1), color = StitchPalette.Brand, fontWeight = FontWeight.Bold)
+                        AsyncImage(
+                            model = connection.avatarUrl,
+                            contentDescription = connection.name,
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(CircleShape)
+                                .border(1.dp, StitchPalette.BorderHairline, CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(
+                                    text = connection.name,
+                                    style = MaterialTheme.typography.titleMedium.copy(
+                                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                                    ),
+                                    fontWeight = FontWeight.Bold,
+                                    color = StitchPalette.PrimaryDark
+                                )
+                                if (connection.isVerified) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Verified,
+                                        contentDescription = "Verified",
+                                        tint = StitchPalette.Brand,
+                                        modifier = Modifier.size(14.dp)
+                                    )
+                                }
+                            }
+                            Text(
+                                text = connection.handleAndDesc,
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                                ),
+                                color = StitchPalette.OnSurfaceVariant
+                            )
                         }
-                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                            Text(row.first, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
-                            Text(row.second, style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
-                        }
-                        Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
+                    }
+
+                    // Connection Action Button
+                    Button(
+                        onClick = { localFollowingState = !localFollowingState },
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (localFollowingState) Color(0xFFFFF8F2) else StitchPalette.Brand,
+                            contentColor = if (localFollowingState) StitchPalette.Brand else Color.White
+                        ),
+                        border = if (localFollowingState) BorderStroke(1.dp, Color(0xFFF1D8C8)) else null,
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
+                        modifier = Modifier.height(32.dp)
+                    ) {
+                        Text(
+                            text = if (localFollowingState) "Following" else "Follow",
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }

@@ -255,6 +255,24 @@ fun MeowStitchTheme(
         MeowTheme.Night -> NightStitchColors
         MeowTheme.Neutral -> NeutralStitchColors
     }
+    val darkTheme = theme == MeowTheme.Night
+    val view = androidx.compose.ui.platform.LocalView.current
+    if (!view.isInEditMode) {
+        androidx.compose.runtime.SideEffect {
+            var context = view.context
+            while (context is android.content.ContextWrapper) {
+                if (context is android.app.Activity) {
+                    break
+                }
+                context = context.baseContext
+            }
+            if (context is android.app.Activity) {
+                val window = context.window
+                androidx.core.view.WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            }
+        }
+    }
+
     CompositionLocalProvider(LocalStitchColors provides stitchColors) {
         MaterialTheme(
             colorScheme = scheme,

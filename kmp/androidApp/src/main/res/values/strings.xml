@@ -66,14 +66,14 @@
     <string name="profile_bg_arcade_note">夜间游戏感名片</string>
     <string name="profile_bg_garden">花园 Garden</string>
     <string name="profile_bg_garden_note">花园角落，doggie 友好</string>
-    <string name="profile_my_pets">我的宠物</string>
+    <string name="profile_my_pets">My Pets</string>
     <string name="profile_pet_latte_name">Latte</string>
     <string name="profile_pet_latte_meta">橘猫 · 3 岁 · 最爱晒太阳</string>
     <string name="profile_pet_detail">宠物档案</string>
     <string name="profile_pet_badge">主角猫猫</string>
     <string name="profile_pet_story">Latte 是家里的气氛组，喜欢在窗台巡逻，也会陪 doggie 朋友一起散步。</string>
     <string name="profile_pet_stats">健康记录 · 喜好 · 日常相册</string>
-    <string name="profile_recent_posts">近期动态</string>
+    <string name="profile_recent_posts">Recent Posts</string>
     <string name="profile_posts_empty">你的动态会显示在这里。</string>
     <string name="profile_connections_title">关注与粉丝</string>
     <string name="profile_connections_followers">粉丝</string>

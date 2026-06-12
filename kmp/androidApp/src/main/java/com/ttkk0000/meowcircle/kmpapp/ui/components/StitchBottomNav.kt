@@ -85,7 +85,7 @@ fun StitchBottomNav(
             modifier = Modifier
                 .fillMaxWidth()
                 .windowInsetsPadding(NavigationBarDefaults.windowInsets)
-                .padding(vertical = 6.dp),
+                .padding(top = 4.dp, bottom = 6.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -106,7 +106,10 @@ fun StitchBottomNav(
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
                             .background(if (sel) StitchPalette.SurfaceLow else Color.Transparent)
-                            .padding(horizontal = 12.dp, vertical = 1.dp)
+                            .padding(
+                                horizontal = if (sel) 10.dp else 8.dp,
+                                vertical = 4.dp
+                            )
                     ) {
                         Icon(
                             imageVector = if (sel) spec.filledIcon else spec.outlinedIcon,
@@ -114,10 +117,10 @@ fun StitchBottomNav(
                             tint = if (sel) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
                             modifier = Modifier.size(18.dp)
                         )
-                        Spacer(modifier = Modifier.height(1.dp))
+                        Spacer(modifier = Modifier.height(9.dp))
                         Text(
                             text = spec.label,
-                            fontSize = 9.sp,
+                            fontSize = 10.sp,
                             color = if (sel) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
                             fontWeight = if (sel) FontWeight.Medium else FontWeight.Normal,
                             style = TextStyle(
