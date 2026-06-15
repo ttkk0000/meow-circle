@@ -39,9 +39,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -164,17 +164,12 @@ fun StitchRegisterScreen(
         modifier = modifier.fillMaxSize(),
         containerColor = StitchLoginRef.Background,
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text =
-                            when (step) {
-                                1 -> stringResource(R.string.register_step_role)
-                                2 -> stringResource(R.string.register_step_pet)
-                                3 -> stringResource(R.string.register_step_feed)
-                                else -> stringResource(R.string.register_step_account)
-                            },
-                        fontWeight = FontWeight.SemiBold,
+                        text = "M&D",
+                        fontWeight = FontWeight.Bold,
+                        color = StitchLoginRef.PrimaryContainer,
                     )
                 },
                 navigationIcon = {
@@ -187,10 +182,13 @@ fun StitchRegisterScreen(
                         Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
+                actions = {
+                    Spacer(Modifier.size(48.dp))
+                },
                 colors =
-                    TopAppBarDefaults.topAppBarColors(
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
                         containerColor = StitchLoginRef.Background,
-                        titleContentColor = StitchLoginRef.OnSurface,
+                        titleContentColor = StitchLoginRef.PrimaryContainer,
                         navigationIconContentColor = StitchLoginRef.OnSurface,
                     ),
             )
@@ -453,17 +451,13 @@ private fun PrimaryRegisterButton(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .height(56.dp)
-                .background(
-                    Brush.horizontalGradient(listOf(StitchLoginRef.PrimaryContainer, StitchLoginRef.InversePrimary)),
-                    RoundedCornerShape(8.dp),
-                ),
-        shape = RoundedCornerShape(8.dp),
+                .height(48.dp),
+        shape = RoundedCornerShape(12.dp),
         colors =
             ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
+                containerColor = StitchLoginRef.PrimaryContainer,
                 contentColor = Color.White,
-                disabledContainerColor = Color.Transparent,
+                disabledContainerColor = StitchLoginRef.PrimaryContainer.copy(alpha = 0.5f),
             ),
     ) {
         if (busy) {
@@ -487,7 +481,7 @@ private fun RegField(
     modifier: Modifier = Modifier,
     isPassword: Boolean = false,
 ) {
-    TextField(
+    OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier.heightIn(min = 56.dp),
@@ -497,17 +491,18 @@ private fun RegField(
         },
         singleLine = true,
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         colors =
-            TextFieldDefaults.colors(
+            OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
-                unfocusedContainerColor = StitchLoginRef.SurfaceContainerLow,
+                unfocusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
                 focusedTextColor = StitchLoginRef.OnSurface,
                 unfocusedTextColor = StitchLoginRef.OnSurface,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
+                focusedBorderColor = StitchLoginRef.PrimaryContainer,
+                unfocusedBorderColor = StitchPalette.BorderHairline,
                 cursorColor = StitchLoginRef.PrimaryContainer,
+                focusedLeadingIconColor = StitchLoginRef.PrimaryContainer,
+                unfocusedLeadingIconColor = StitchLoginRef.Outline,
             ),
     )
 }

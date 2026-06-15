@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,6 +61,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
+import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.Conversation
 import com.ttkk0000.meowcircle.ConversationDetailData
@@ -88,6 +92,7 @@ private val MESSAGE_FILTERS =
 fun StitchMessagesScreen(
     sdk: MeowCircleSdk,
     currentUser: User,
+    apiBase: String,
     loading: Boolean,
     err: String?,
     items: List<Conversation>?,
@@ -150,6 +155,7 @@ fun StitchMessagesScreen(
         ChatDetailScreen(
             sdk = sdk,
             currentUser = currentUser,
+            apiBase = apiBase,
             conversation = activeConversation!!,
             detail = activeDetail,
             loading = detailLoading,
@@ -174,6 +180,7 @@ fun StitchMessagesScreen(
         query = query,
         filter = filter,
         mockMode = mockMode,
+        apiBase = apiBase,
         onQueryChange = { query = it },
         onFilterChange = { filter = it },
         onOpenConversation = { activeConversation = it },
@@ -192,6 +199,7 @@ private fun MessagesListScreen(
     query: String,
     filter: String,
     mockMode: Boolean,
+    apiBase: String,
     onQueryChange: (String) -> Unit,
     onFilterChange: (String) -> Unit,
     onOpenConversation: (Conversation) -> Unit,
@@ -279,7 +287,7 @@ private fun MessagesListScreen(
                     contentPadding = PaddingValues(bottom = 18.dp),
                 ) {
                     items(conversations, key = { it.peer.id }) { convo ->
-                        ConversationRow(convo = convo, onClick = { onOpenConversation(convo) })
+                        ConversationRow(convo = convo, apiBase = apiBase, onClick = { onOpenConversation(convo) })
                     }
                 }
             }
@@ -291,6 +299,7 @@ private fun MessagesListScreen(
 private fun ChatDetailScreen(
     sdk: MeowCircleSdk,
     currentUser: User,
+    apiBase: String,
     conversation: Conversation,
     detail: ConversationDetailData?,
     loading: Boolean,
@@ -356,7 +365,7 @@ private fun ChatDetailScreen(
             IconButton(onClick = onBack, modifier = Modifier.size(44.dp)) {
                 Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
             }
-            AvatarBubble(peer)
+            AvatarBubble(peer, apiBase)
             Column(Modifier.padding(start = 10.dp).weight(1f)) {
                 Text(peer.nickname.ifBlank { peer.username }, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
                 Text(stringResource(R.string.messages_online), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
@@ -366,7 +375,7 @@ private fun ChatDetailScreen(
             }
         }
         if (conversation.lastMessage.contains("order", ignoreCase = true) || conversation.lastMessage.contains("订单") || messages.any { it.content.contains("order", ignoreCase = true) || it.content.contains("订单") }) {
-            OrderContextCard(onOpenOrders = onOpenOrders)
+            OrderContextCard(apiBase = apiBase, onOpenOrders = onOpenOrders)
         }
         Box(Modifier.weight(1f)) {
             when {
@@ -450,6 +459,7 @@ private fun ChatDetailScreen(
 @Composable
 private fun ConversationRow(
     convo: Conversation,
+    apiBase: String,
     onClick: () -> Unit,
 ) {
     Row(
@@ -461,7 +471,7 @@ private fun ConversationRow(
                 .padding(horizontal = 18.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        AvatarBubble(convo.peer)
+        AvatarBubble(convo.peer, apiBase)
         Column(Modifier.padding(start = 12.dp).weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
@@ -532,7 +542,11 @@ private fun MessageBubble(
 }
 
 @Composable
-private fun OrderContextCard(onOpenOrders: () -> Unit) {
+private fun OrderContextCard(
+    apiBase: String,
+    onOpenOrders: () -> Unit,
+) {
+    val imageUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
     Card(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 10.dp).clickable(onClick = onOpenOrders),
         shape = StitchShape.cardFeed,
@@ -541,7 +555,12 @@ private fun OrderContextCard(onOpenOrders: () -> Unit) {
     ) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.size(58.dp).clip(StitchShape.field).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.common_img), color = StitchPalette.OnSurfaceVariant, style = MaterialTheme.typography.labelSmall)
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = stringResource(R.string.messages_order_context_title),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
             }
             Column(Modifier.padding(start = 12.dp).weight(1f)) {
                 Text(stringResource(R.string.messages_order_context_id), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
@@ -562,7 +581,7 @@ private fun MessagesEmptyState(
     onSecondary: (() -> Unit)?,
 ) {
     Column(
-        Modifier.fillMaxSize().padding(30.dp),
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(30.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -609,7 +628,9 @@ private fun MessagesEmptyState(
 }
 
 @Composable
-private fun AvatarBubble(user: User) {
+private fun AvatarBubble(user: User, apiBase: String) {
+    val avatarUrl = resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() })
+        ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
     Box(
         modifier =
             Modifier
@@ -618,11 +639,11 @@ private fun AvatarBubble(user: User) {
                 .background(StitchPalette.BrandMuted),
         contentAlignment = Alignment.Center,
     ) {
-        Text(
-            user.nickname.ifBlank { user.username }.take(1).uppercase(),
-            style = MaterialTheme.typography.titleSmall,
-            color = StitchPalette.Brand,
-            fontWeight = FontWeight.Black,
+        AsyncImage(
+            model = avatarUrl,
+            contentDescription = user.nickname,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
         )
     }
 }

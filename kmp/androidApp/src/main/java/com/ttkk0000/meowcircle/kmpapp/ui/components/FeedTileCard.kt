@@ -57,6 +57,7 @@ fun FeedTileCard(
     val category = localizedCategoryLabel(post.category)
     val twoHoursAgo = stringResource(R.string.feed_two_hours_ago)
     val avatarUrl = resolveMediaUrl(apiBase, author.avatarUrl.takeIf { it.isNotBlank() })
+        ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
     val thumb =
         resolveMediaUrl(apiBase, item.firstMedia?.url)?.takeIf {
             item.firstMedia?.kind == "image" ||
@@ -86,35 +87,16 @@ fun FeedTileCard(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            if (avatarUrl != null) {
-                AsyncImage(
-                    model = avatarUrl,
-                    contentDescription = who,
-                    modifier =
-                        Modifier
-                            .size(54.dp)
-                            .clip(StitchShape.field)
-                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field),
-                    contentScale = ContentScale.Crop,
-                )
-            } else {
-                Box(
-                    modifier =
-                        Modifier
-                            .size(54.dp)
-                            .clip(StitchShape.field)
-                            .background(StitchPalette.SurfaceLow)
-                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        stringResource(R.string.common_img),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = StitchPalette.OnSurfaceVariant,
-                        fontWeight = FontWeight.Black,
-                    )
-                }
-            }
+            AsyncImage(
+                model = avatarUrl ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png",
+                contentDescription = who,
+                modifier =
+                    Modifier
+                        .size(54.dp)
+                        .clip(StitchShape.field)
+                        .border(1.dp, StitchPalette.BorderHairline, StitchShape.field),
+                contentScale = ContentScale.Crop,
+            )
             Column(Modifier.padding(start = 10.dp).weight(1f)) {
                 Text(
                     "@${author.username.ifBlank { who }}",

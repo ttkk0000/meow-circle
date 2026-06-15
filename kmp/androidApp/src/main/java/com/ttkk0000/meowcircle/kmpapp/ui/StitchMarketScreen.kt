@@ -250,6 +250,7 @@ fun StitchMarketScreen(
         showOffer && selectedListing != null ->
             MakeOfferScreen(
                 listing = selectedListing!!,
+                apiBase = apiBase,
                 busy = actionLoading,
                 onDismiss = { showOffer = false },
                 onSend = { offerCents, message ->
@@ -267,6 +268,7 @@ fun StitchMarketScreen(
             SellerProfileScreen(
                 seller = seller ?: mockSeller(selectedListing!!.sellerId),
                 listings = visibleListings.filter { it.sellerId == selectedListing!!.sellerId }.ifEmpty { visibleListings.take(2) },
+                apiBase = apiBase,
                 onBack = { showSellerProfile = false },
                 onMessageSeller = {
                     selectedListing?.let { listing ->
@@ -318,6 +320,7 @@ fun StitchMarketScreen(
                 selectedCategory = selectedCategory,
                 selectedTrade = selectedTrade,
                 mockMode = mockMode,
+                apiBase = apiBase,
                 onQueryChange = onQueryChange,
                 onCategoryChange = { selectedCategory = it },
                 onTradeChange = { selectedTrade = it },
@@ -357,6 +360,7 @@ private fun MarketListScreen(
     selectedCategory: String,
     selectedTrade: String,
     mockMode: Boolean,
+    apiBase: String,
     onQueryChange: (String) -> Unit,
     onCategoryChange: (String) -> Unit,
     onTradeChange: (String) -> Unit,
@@ -372,7 +376,7 @@ private fun MarketListScreen(
     val filterSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
         StitchTopBar(
-            apiBase = "",
+            apiBase = apiBase,
             user = user,
             title = "M&D",
             leading = StitchTopBarLeading.Paw,
@@ -454,6 +458,8 @@ private fun MarketListScreen(
                         MarketHeroCard(
                             listing = listing,
                             featured = listing == listings.first(),
+                            apiBase = apiBase,
+                            mockMode = mockMode,
                             onClick = { onSelectListing(listing) },
                             onBuyNow = { onBuyNow(listing) },
                         )
@@ -562,7 +568,13 @@ private fun ProductDetailScreen(
     modifier: Modifier = Modifier,
 ) {
     val listing = detail.listing
-    val imageUrl = resolveMediaUrl(apiBase, detail.media.firstOrNull()?.url)
+    val mediaUrl = detail.media.firstOrNull()?.url ?: when (listing.id) {
+        1L -> "mock-images/mock_image_4.png"
+        2L -> "mock-images/mock_image_5.png"
+        3L -> "mock-images/mock_image_2.png"
+        else -> "mock-images/mock_image_3.png"
+    }
+    val imageUrl = resolveMediaUrl(apiBase, mediaUrl)
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
         ProductDetailHeader(title = stringResource(R.string.market_product_detail), onBack = onBack, onSave = onSave, onShare = onShare)
         Column(
@@ -576,16 +588,12 @@ private fun ProductDetailScreen(
                         .background(StitchPalette.Surface),
                 contentAlignment = Alignment.Center,
             ) {
-                if (imageUrl != null) {
-                    AsyncImage(
-                        model = imageUrl,
-                        contentDescription = listing.title,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop,
-                    )
-                } else {
-                    Text(stringResource(R.string.common_img), color = StitchPalette.OnSurfaceVariant)
-                }
+                AsyncImage(
+                    model = imageUrl ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
+                    contentDescription = listing.title,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
                 Row(
                     modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 14.dp),
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -627,7 +635,7 @@ private fun ProductDetailScreen(
                     ProductPill(stringResource(R.string.market_shipping_available), Icons.Outlined.LocalShipping)
                     ProductPill(stringResource(R.string.market_local_pickup))
                 }
-                SellerCard(seller = seller, sellerId = listing.sellerId, loading = loading, onClick = onSeller)
+                SellerCard(seller = seller, sellerId = listing.sellerId, apiBase = apiBase, loading = loading, onClick = onSeller)
                 Card(
                     shape = StitchShape.cardFeed,
                     colors = CardDefaults.cardColors(containerColor = StitchPalette.Surface),
@@ -819,6 +827,7 @@ private fun PublishProductScreen(
 @Composable
 private fun MakeOfferScreen(
     listing: Listing,
+    apiBase: String,
     busy: Boolean,
     onDismiss: () -> Unit,
     onSend: (Long, String) -> Unit,
@@ -848,7 +857,32 @@ private fun MakeOfferScreen(
                 border = BorderStroke(1.dp, StitchPalette.BorderHairline),
             ) {
                 Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
-                    ProductImagePlaceholder(Modifier.size(64.dp))
+                    val imageUrl = remember(listing.id, apiBase) {
+                        when (listing.id) {
+                            1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                            2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                            3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                            else -> {
+                                when {
+                                    listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                                    listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                                    listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                                    else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+                                }
+                            }
+                        }
+                    }
+                    Box(Modifier.size(64.dp).clip(StitchShape.field).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
+                        AsyncImage(
+                            model = imageUrl,
+                            contentDescription = listing.title,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop,
+                        )
+                    }
                     Column(Modifier.padding(start = 12.dp).weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                         Text(listing.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
                         Text(stringResource(R.string.market_listed_price, localizedListingPrice(listing.priceCents, listing.currency)), style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
@@ -965,9 +999,32 @@ private fun OfferSegment(
 private fun MarketHeroCard(
     listing: Listing,
     featured: Boolean,
+    apiBase: String,
+    mockMode: Boolean,
     onClick: () -> Unit,
     onBuyNow: () -> Unit,
 ) {
+    val imageUrl = remember(listing.id, mockMode, apiBase) {
+        if (mockMode) {
+            when (listing.id) {
+                1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+            }
+        } else {
+            when {
+                listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+            }
+        }
+    }
+
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = StitchShape.cardFeed,
@@ -982,11 +1039,11 @@ private fun MarketHeroCard(
                     .aspectRatio(if (featured) 1.28f else 1.18f)
                     .background(if (featured) StitchPalette.SurfaceLow else Color(0xFFCFCFCF)),
         ) {
-            Text(
-                stringResource(R.string.common_img),
-                color = if (featured) StitchPalette.Brand.copy(alpha = 0.45f) else Color(0xFF111111),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.align(Alignment.Center),
+            AsyncImage(
+                model = imageUrl ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
+                contentDescription = listing.title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
             )
             MarketBadge(
                 label = stringResource(tradeTypeLabelRes(listing.type)),
@@ -1044,9 +1101,32 @@ private fun MarketHeroCard(
 @Composable
 private fun FeaturedMarketCard(
     listing: Listing,
+    apiBase: String,
+    mockMode: Boolean,
     onClick: () -> Unit,
     onBuyNow: () -> Unit,
 ) {
+    val imageUrl = remember(listing.id, mockMode, apiBase) {
+        if (mockMode) {
+            when (listing.id) {
+                1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+            }
+        } else {
+            when {
+                listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+            }
+        }
+    }
+
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = StitchShape.cardFeed,
@@ -1056,7 +1136,12 @@ private fun FeaturedMarketCard(
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Box(Modifier.fillMaxWidth().aspectRatio(1.82f).clip(StitchShape.cardFeed).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.common_img), color = StitchPalette.OnSurfaceVariant)
+                AsyncImage(
+                    model = imageUrl ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
+                    contentDescription = listing.title,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
                 MarketBadge(stringResource(tradeTypeLabelRes(listing.type)), Modifier.align(Alignment.TopStart).padding(10.dp))
             }
             Row(verticalAlignment = Alignment.Top) {
@@ -1101,6 +1186,7 @@ private fun FeaturedMarketCard(
 @Composable
 private fun CompactMarketCard(
     listing: Listing,
+    apiBase: String,
     onClick: () -> Unit,
 ) {
     Card(
@@ -1110,7 +1196,32 @@ private fun CompactMarketCard(
         border = BorderStroke(1.dp, StitchPalette.BorderHairline),
     ) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            ProductImagePlaceholder(Modifier.size(92.dp))
+            val imageUrl = remember(listing.id, apiBase) {
+                when (listing.id) {
+                    1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                    2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                    3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                    else -> {
+                        when {
+                            listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                                "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                            listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                                "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                            listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                                "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                            else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+                        }
+                    }
+                }
+            }
+            Box(Modifier.size(92.dp).clip(StitchShape.field).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = listing.title,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+            }
             Column(Modifier.padding(start = 14.dp).weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(listing.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 Text(localizedListingPrice(listing.priceCents, listing.currency), style = MaterialTheme.typography.titleMedium, color = StitchPalette.Brand, fontWeight = FontWeight.Black)
@@ -1234,6 +1345,7 @@ private fun MarketEmptyState(
 private fun SellerProfileScreen(
     seller: User,
     listings: List<Listing>,
+    apiBase: String,
     onBack: () -> Unit,
     onMessageSeller: () -> Unit,
     onSelectListing: (Listing) -> Unit,
@@ -1249,6 +1361,8 @@ private fun SellerProfileScreen(
         ) {
             item {
                 Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                    val avatarUrl = resolveMediaUrl(apiBase, seller.avatarUrl.takeIf { it.isNotBlank() })
+                        ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
                     Box(
                         modifier =
                             Modifier
@@ -1258,7 +1372,12 @@ private fun SellerProfileScreen(
                                 .border(3.dp, StitchPalette.Brand, CircleShape),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text(displayName.take(1), style = MaterialTheme.typography.headlineMedium, color = StitchPalette.Brand, fontWeight = FontWeight.Black)
+                        AsyncImage(
+                            model = avatarUrl,
+                            contentDescription = displayName,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop,
+                        )
                     }
                     Spacer(Modifier.height(14.dp))
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
@@ -1313,6 +1432,7 @@ private fun SellerProfileScreen(
                         rowListings.forEach { listing ->
                             SellerListingCard(
                                 listing = listing,
+                                apiBase = apiBase,
                                 onClick = { onSelectListing(listing) },
                                 modifier = Modifier.weight(1f),
                             )
@@ -1349,9 +1469,28 @@ private fun SellerStat(
 @Composable
 private fun SellerListingCard(
     listing: Listing,
+    apiBase: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val imageUrl = remember(listing.id, apiBase) {
+        when (listing.id) {
+            1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+            2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+            3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+            else -> {
+                when {
+                    listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
+                    listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
+                    listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                    else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+                }
+            }
+        }
+    }
     Card(
         modifier = modifier.clickable(onClick = onClick),
         shape = StitchShape.cardFeed,
@@ -1363,7 +1502,12 @@ private fun SellerListingCard(
                 modifier = Modifier.fillMaxWidth().aspectRatio(1f).background(StitchPalette.SurfaceLow),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(stringResource(R.string.common_img), color = StitchPalette.OnSurfaceVariant)
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = listing.title,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
             }
             Column(Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(listing.title, style = MaterialTheme.typography.labelLarge, color = StitchPalette.OnSurface, fontWeight = FontWeight.Black, maxLines = 2, overflow = TextOverflow.Ellipsis)
@@ -1377,9 +1521,14 @@ private fun SellerListingCard(
 private fun SellerCard(
     seller: User?,
     sellerId: Long,
+    apiBase: String,
     loading: Boolean,
     onClick: () -> Unit,
 ) {
+    val avatarUrl = remember(seller?.id, apiBase) {
+        resolveMediaUrl(apiBase, seller?.avatarUrl?.takeIf { it.isNotBlank() })
+            ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
+    }
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = StitchShape.cardFeed,
@@ -1388,7 +1537,12 @@ private fun SellerCard(
     ) {
         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.size(48.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
-                Text((seller?.nickname ?: "J").take(1), color = StitchPalette.Brand, fontWeight = FontWeight.Black)
+                AsyncImage(
+                    model = avatarUrl,
+                    contentDescription = seller?.nickname,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
             }
             Column(Modifier.padding(start = 12.dp).weight(1f)) {
                 Text(seller?.nickname?.ifBlank { seller.username } ?: stringResource(R.string.market_seller_id, sellerId), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)

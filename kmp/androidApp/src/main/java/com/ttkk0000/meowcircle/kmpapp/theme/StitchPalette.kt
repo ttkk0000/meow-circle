@@ -168,6 +168,7 @@ object StitchLoginRef {
     val Primary: Color @Composable get() = StitchPalette.Brand
     val InversePrimary: Color @Composable get() = StitchPalette.BrandLight
     val OnSurface: Color @Composable get() = StitchPalette.OnSurface
+    val OnSurfaceVariant: Color @Composable get() = StitchPalette.OnSurfaceVariant
     val Outline: Color @Composable get() = StitchPalette.Outline
     val SurfaceContainerLow: Color @Composable get() = StitchPalette.SurfaceLow
     val SurfaceContainerLowest: Color @Composable get() = StitchPalette.Surface

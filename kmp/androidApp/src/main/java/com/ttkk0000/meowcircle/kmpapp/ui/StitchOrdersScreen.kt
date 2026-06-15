@@ -64,6 +64,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.Order
@@ -115,6 +117,9 @@ private enum class OrderSafetyRoute {
 @Composable
 fun StitchOrdersScreen(
     sdk: MeowCircleSdk,
+    apiBase: String,
+    mockMode: Boolean,
+    onEnableMock: () -> Unit,
     onOpenMarket: () -> Unit = {},
     onOpenMessages: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -126,7 +131,7 @@ fun StitchOrdersScreen(
     var orders by remember { mutableStateOf<List<Order>?>(null) }
     var loading by remember { mutableStateOf(true) }
     var err by remember { mutableStateOf<String?>(null) }
-    var mockMode by remember { mutableStateOf(false) }
+    var localMockMode by remember(mockMode) { mutableStateOf(mockMode) }
     var refreshSignal by remember { mutableStateOf(0) }
     var selectedOrder by remember { mutableStateOf<Order?>(null) }
     var showTracking by remember { mutableStateOf(false) }
@@ -178,8 +183,8 @@ fun StitchOrdersScreen(
             ),
         )
 
-    LaunchedEffect(role, refreshSignal, mockMode) {
-        if (mockMode) {
+    LaunchedEffect(role, refreshSignal, localMockMode) {
+        if (localMockMode) {
             orders = createMockOrders().filter { if (role == "buyer") it.buyerId == 1L else it.sellerId == 1L }
             err = null
             loading = false
@@ -199,7 +204,7 @@ fun StitchOrdersScreen(
     }
 
     fun updateOrder(action: String, order: Order) {
-        if (mockMode) {
+        if (localMockMode) {
             infoText = context.getString(R.string.orders_demo_action, action)
             refreshSignal++
             return
@@ -293,6 +298,7 @@ fun StitchOrdersScreen(
                 order = selectedOrder!!,
                 role = role,
                 actionBusy = actionBusy,
+                apiBase = apiBase,
                 onBack = { selectedOrder = null },
                 onTrack = { showTracking = true },
                 onOpenMessages = onOpenMessages,
@@ -310,14 +316,18 @@ fun StitchOrdersScreen(
                 orders = orders.orEmpty().filter { filter == "all" || it.status == filter },
                 loading = loading,
                 err = err,
-                mockMode = mockMode,
+                mockMode = localMockMode,
+                apiBase = apiBase,
                 onRoleToggle = {
                     role = if (role == "buyer") "seller" else "buyer"
                     selectedOrder = null
                 },
                 onFilterChange = { filter = it },
                 onOpenOrder = { selectedOrder = it },
-                onEnableMock = { mockMode = true },
+                onEnableMock = {
+                    localMockMode = true
+                    onEnableMock()
+                },
                 onOpenMarket = onOpenMarket,
                 onOpenMessages = onOpenMessages,
                 onAction = { action, order -> updateOrder(action, order) },
@@ -348,6 +358,7 @@ private fun OrdersListScreen(
     loading: Boolean,
     err: String?,
     mockMode: Boolean,
+    apiBase: String,
     onRoleToggle: () -> Unit,
     onFilterChange: (String) -> Unit,
     onOpenOrder: (Order) -> Unit,
@@ -444,6 +455,7 @@ private fun OrdersListScreen(
                         OrderListCard(
                             order = order,
                             role = role,
+                            apiBase = apiBase,
                             onClick = { onOpenOrder(order) },
                             onAction = { action -> onAction(action, order) },
                             onOpenMessages = onOpenMessages,
@@ -460,6 +472,7 @@ private fun OrderDetailScreen(
     order: Order,
     role: String,
     actionBusy: Boolean,
+    apiBase: String,
     onBack: () -> Unit,
     onTrack: () -> Unit,
     onOpenMessages: () -> Unit,
@@ -478,7 +491,7 @@ private fun OrderDetailScreen(
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             StatusBanner(order, sellerMode)
-            OrderProductCard(order, sellerMode)
+            OrderProductCard(order, sellerMode, apiBase)
             if (sellerMode) {
                 InfoCard(title = stringResource(R.string.orders_shipping_requirement)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -829,10 +842,23 @@ private fun TrackingScreen(
 private fun OrderListCard(
     order: Order,
     role: String,
+    apiBase: String,
     onClick: () -> Unit,
     onAction: (String) -> Unit,
     onOpenMessages: () -> Unit,
 ) {
+    val imageUrl = remember(order.id, order.listingTitle) {
+        when {
+            order.id == 4824L || order.listingTitle.contains("项圈") || order.listingTitle.contains("Collar") -> 
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+            order.id == 9810L || order.listingTitle.contains("碗") || order.listingTitle.contains("Bowl") -> 
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+            order.id == 832L || order.listingTitle.contains("胸背") || order.listingTitle.contains("Harness") -> 
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_6.png"
+            else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+        }
+    }
+
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = StitchShape.cardFeed,
@@ -855,7 +881,12 @@ private fun OrderListCard(
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.size(74.dp).clip(StitchShape.field).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
-                    Icon(Icons.Outlined.ShoppingBag, contentDescription = null, tint = StitchPalette.Brand)
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = order.listingTitle,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+                    )
                 }
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
                     Text(order.listingTitle, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
@@ -910,7 +941,19 @@ private fun StatusBanner(order: Order, sellerMode: Boolean) {
 }
 
 @Composable
-private fun OrderProductCard(order: Order, sellerMode: Boolean) {
+private fun OrderProductCard(order: Order, sellerMode: Boolean, apiBase: String) {
+    val imageUrl = remember(order.id, order.listingTitle) {
+        when {
+            order.id == 4824L || order.listingTitle.contains("项圈") || order.listingTitle.contains("Collar") -> 
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+            order.id == 9810L || order.listingTitle.contains("碗") || order.listingTitle.contains("Bowl") -> 
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+            order.id == 832L || order.listingTitle.contains("胸背") || order.listingTitle.contains("Harness") -> 
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_6.png"
+            else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
+        }
+    }
+
     Card(
         shape = StitchShape.cardFeed,
         colors = CardDefaults.cardColors(containerColor = StitchPalette.Surface),
@@ -919,7 +962,12 @@ private fun OrderProductCard(order: Order, sellerMode: Boolean) {
     ) {
         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.size(76.dp).clip(StitchShape.field).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.common_img), color = StitchPalette.OnSurfaceVariant)
+                AsyncImage(
+                    model = imageUrl ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
+                    contentDescription = order.listingTitle,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
             }
             Column(Modifier.padding(start = 14.dp).weight(1f)) {
                 Text(stringResource(R.string.orders_order_number, order.id), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)

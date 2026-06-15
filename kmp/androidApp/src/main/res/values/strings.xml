@@ -154,6 +154,11 @@
     <string name="post_comment_sent">刚刚 · 已发送</string>
 
     <string name="login_subtitle">欢迎回到你的猫猫宇宙</string>
+    <string name="login_welcome_title">Welcome to M&amp;D</string>
+    <string name="login_welcome_subtitle">A warm community for pets, people, and trusted local finds.</string>
+    <string name="login_continue_email">Continue with Email</string>
+    <string name="login_terms_footer">By continuing, you agree to Terms and Privacy.</string>
+    <string name="login_back_title">欢迎回来</string>
     <string name="login_account_placeholder">手机号 / 邮箱</string>
     <string name="login_password_placeholder">密码</string>
     <string name="login_show_password">显示密码</string>

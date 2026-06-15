@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -121,6 +122,28 @@ import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 import androidx.compose.foundation.BorderStroke
 import kotlinx.coroutines.launch
 import kotlin.collections.emptyList
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.GridView
+import androidx.compose.material.icons.outlined.Link
+import androidx.compose.material.icons.outlined.Payment
+import androidx.compose.material.icons.outlined.Language
+import androidx.compose.material.icons.outlined.Gavel
+import androidx.compose.material.icons.outlined.DeleteSweep
+import androidx.compose.material.icons.outlined.Logout
+import androidx.compose.material.icons.outlined.Mail
+import androidx.compose.material.icons.outlined.PhoneIphone
+import androidx.compose.material.icons.outlined.Password
+import androidx.compose.material.icons.outlined.VerifiedUser
+import androidx.compose.material.icons.outlined.NotificationsActive
+import androidx.compose.material.icons.outlined.Devices
+import androidx.compose.material.icons.outlined.History
+import androidx.compose.material.icons.outlined.Eco
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.SettingsSuggest
+import androidx.compose.material.icons.outlined.Storefront
+import androidx.compose.material.icons.outlined.GppGood
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.ui.unit.sp
 
 private data class FeedFilter(
     val key: String,
@@ -601,11 +624,13 @@ fun StitchFeedScreen(
                                 )
                             ProfileRoute.Connections ->
                                 ProfileConnectionsScreen(
+                                    apiBase = apiBase,
                                     onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.Settings ->
                                 ProfileSettingsScreen(
+                                    apiBase = apiBase,
                                     user = profileUser,
                                     onBack = popProfileRoute,
                                     onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
@@ -619,33 +644,8 @@ fun StitchFeedScreen(
                                     onLogout = onLogout,
                                     modifier = Modifier.fillMaxSize(),
                                 )
-                            ProfileRoute.AccountSecurity ->
-                                ProfileDetailListScreen(
-                                    title = stringResource(R.string.settings_account_security),
-                                    subtitle = stringResource(R.string.settings_account_security_subtitle),
-                                    icon = Icons.Outlined.Shield,
-                                    rows =
-                                        listOf(
-                                            stringResource(R.string.settings_security_phone),
-                                            stringResource(R.string.settings_security_password),
-                                            stringResource(R.string.settings_security_devices),
-                                            stringResource(R.string.settings_security_payment),
-                                            stringResource(R.string.settings_delete_account),
-                                        ),
-                                    onBack = popProfileRoute,
-                                    modifier = Modifier.fillMaxSize(),
-                                )
-                            ProfileRoute.LinkedAccounts ->
-                                ProfileDetailListScreen(
-                                    title = stringResource(R.string.settings_linked_accounts),
-                                    subtitle = stringResource(R.string.settings_linked_accounts_subtitle),
-                                    icon = Icons.Outlined.CreditCard,
-                                    rows =
-                                        listOf(
-                                            stringResource(R.string.settings_linked_wechat),
-                                            stringResource(R.string.settings_linked_apple),
-                                            stringResource(R.string.settings_linked_google),
-                                        ),
+                            ProfileRoute.AccountSecurity, ProfileRoute.LinkedAccounts ->
+                                ProfileAccountSecurityScreen(
                                     onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
@@ -660,31 +660,17 @@ fun StitchFeedScreen(
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.Notifications ->
-                                ProfileDetailListScreen(
-                                    title = stringResource(R.string.settings_notifications),
-                                    subtitle = stringResource(R.string.settings_notifications_subtitle),
-                                    icon = Icons.Outlined.Notifications,
-                                    rows =
-                                        listOf(
-                                            stringResource(R.string.settings_notifications_messages),
-                                            stringResource(R.string.settings_notifications_orders),
-                                            stringResource(R.string.settings_notifications_social),
-                                            stringResource(R.string.settings_notifications_market),
-                                        ),
+                                ProfileNotificationsScreen(
                                     onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.Privacy ->
-                                ProfileDocumentScreen(
-                                    title = stringResource(R.string.settings_privacy_policy),
-                                    body = stringResource(R.string.settings_privacy_policy_body),
+                                ProfilePrivacyPolicyScreen(
                                     onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.UserNotice ->
-                                ProfileDocumentScreen(
-                                    title = stringResource(R.string.settings_user_notice),
-                                    body = stringResource(R.string.settings_user_notice_body),
+                                ProfileUserNoticeScreen(
                                     onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
@@ -693,6 +679,7 @@ fun StitchFeedScreen(
                         StitchMessagesScreen(
                             sdk = sdk,
                             currentUser = profileUser,
+                            apiBase = apiBase,
                             loading = convLoading,
                             err = convErr,
                             items = conversations,
@@ -705,6 +692,9 @@ fun StitchFeedScreen(
                     StitchMainTab.Orders -> {
                         StitchOrdersScreen(
                             sdk = sdk,
+                            apiBase = apiBase,
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
                             onOpenMarket = { tab = StitchMainTab.Market },
                             onOpenMessages = { tab = StitchMainTab.Messages },
                             modifier = Modifier.fillMaxSize(),
@@ -1497,9 +1487,9 @@ private fun ProfilePanel(
 ) {
     val isDemo = user.username == "demo"
     val avatarUrl = if (isDemo) {
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"
+        "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
     } else {
-        resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() }) ?: "https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"
+        resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() }) ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
     }
     val posts = gridPosts.orEmpty()
     val activeBackground =
@@ -1701,7 +1691,7 @@ private fun ProfilePanel(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     AsyncImage(
-                        model = "https://lh3.googleusercontent.com/aida-public/AB6AXuB_wAN_GxnnAAUC824gbkwKFBcuWOJGQ0P1VB2v7oscnhDCzvDnEu78e5PfbGGecz_vxsffrH6Ekn63ujTmXmGIOyfJNmWeyWo1EbSXiA5WM9EGs_sl39Zs_3yfBED72CpR4QnmRQWUhTNrxz5BtyVdvMLA32_B6imJq25qKaYdAzATcz4o7oZXZbLOvopydTTYhDNuIxwa91SClCI9x3uVkJXicK5z9P5qe-P7NYnmtN9JbGDWHuozanfFF6EilSx0jhg-Xgg-rQpO",
+                        model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png",
                         contentDescription = "Latte",
                         modifier = Modifier
                             .size(64.dp)
@@ -1738,7 +1728,7 @@ private fun ProfilePanel(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     AsyncImage(
-                        model = "https://lh3.googleusercontent.com/aida-public/AB6AXuAOZ15aXqXrVuGnghhPqYq2I8RSXUPCYbpNi3W6hdaAxLKsCEKEYc4sFx53xyt5ACKTcWUU6A56prfOSauE7fyyEdNzQ84vs4-PDb6s7zraJYKPF1YQgvY5Tp4AUsB2D9Fjp0fclhq0JXKPjFJ7ugI2UpG27sGCXk5dA4cNiOFoNLnBkj15QDgc_0DlFcXsiRzeoMbPQ1-15I-3gA6KnNNr247JxHhOWM8KTPFpTp8wD3RQx0OkUBNVnZAXsJd28_1zFPLg8YuNbsrt",
+                        model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
                         contentDescription = "Peach",
                         modifier = Modifier
                             .size(64.dp)
@@ -1803,9 +1793,9 @@ private fun ProfilePanel(
 
             // Grid Layout (Rows)
             val mockPostImages = listOf(
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuDjFUxPZD7WKpURiK9oADQE3UTeeFoWDtIkg_63asTeLfBRFcxypdEhiM6x92BuTaPIngkzpUzGsTk4uuxulyi6q1b_Wu1s4oCciPwP2ObAGcuPQQn9F65yXcB1H9d8V_DBbLd34QxO_zWmigSvPrtZ2k9ZPmLp6tIO-SeKSiTYBbslmb6Sg8JYI3eg1kfOeRIPWneSTS3yHhx6sALI2JlW1y9tSNhyLHlwIZ7BB-LwPnhkR4VdCo0fpwEVUNYJ-a0Ee3E5af4KhrNJ",
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuBlRlaf196K6eZPQAdq8ZIdy70MmlIDIP2SImazVGlXE6RyAQUKMdMabX6s7tfDUYjUXVEYGfajD738p4erjpQlGS2kVy34byMmD0SOeEL7H2JxKQIFajKd53tTCN7f72SFbswag99XQ14HuAD_6mSySoJTchwJtyCrdfILaR7OBeeLs2WDJLyVfaeyWOjEt34UTmzxbozGp8s0SN3_uNrDvwU2vfMvP6L602EN9CJiy17dWkeC-ZGsDSgSQdofa2RRfKJl_8lYyKYn",
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuCV0BL-Lv_xBxCh8g1ScoAkdHuFcyPzUMKGHRCCjTNTBz861blUlFWL9P9LUFcm5CHakwmGEj6VjV_1Fyun2ZLkM0c0X2C6rfAhkYtsc0-C09HIW1uADm-5MmrNn_yPeETkQLd2yjkGzY6fYktxoAKvpOapWdIS32gBCSaGvfOrTs0OgKj6jlhaE73FptGz0hKGkQNFe2qhMGDQ009rdK-3DeAHOMBfYdXSAkMDSN1dZ5uJ3WiRqIhqqBgCBOEN5T5jwoSZtHU8xbEN"
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_6.png"
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(
@@ -1968,17 +1958,78 @@ private fun EditField(
             ),
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color(0xFFFFF8F2),
-                unfocusedContainerColor = Color(0xFFFFF8F2),
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
                 focusedBorderColor = StitchPalette.Brand,
-                unfocusedBorderColor = Color(0xFFF1D8C8),
-                focusedTextColor = StitchPalette.PrimaryDark,
-                unfocusedTextColor = StitchPalette.PrimaryDark,
-                disabledContainerColor = Color(0xFFFFF8F2),
-                disabledBorderColor = Color(0xFFF1D8C8),
-                disabledTextColor = StitchPalette.PrimaryDark
+                unfocusedBorderColor = Color(0xFFF5E2D5),
+                focusedTextColor = StitchPalette.OnSurface,
+                unfocusedTextColor = StitchPalette.OnSurface,
+                disabledContainerColor = Color.White,
+                disabledBorderColor = Color(0xFFF5E2D5),
+                disabledTextColor = StitchPalette.OnSurface
             ),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(12.dp)
+        )
+    }
+}
+
+@Composable
+private fun PetAvatarEditItem(
+    name: String,
+    avatarUrl: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier.width(72.dp)
+    ) {
+        AsyncImage(
+            model = avatarUrl,
+            contentDescription = name,
+            modifier = Modifier
+                .size(64.dp)
+                .clip(CircleShape)
+                .border(1.dp, Color(0xFFF5E2D5), CircleShape),
+            contentScale = ContentScale.Crop
+        )
+        Text(
+            text = name,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Medium,
+            color = StitchPalette.OnSurface
+        )
+    }
+}
+
+@Composable
+private fun AddPetEditItem(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier.width(72.dp).clickable(onClick = onClick)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(64.dp)
+                .background(Color.White, CircleShape)
+                .border(BorderStroke(1.dp, StitchPalette.Brand), CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = "Add Pet",
+                tint = StitchPalette.Brand,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Text(
+            text = "Add Pet",
+            style = MaterialTheme.typography.bodyMedium,
+            color = StitchPalette.OnSurfaceVariant
         )
     }
 }
@@ -1993,82 +2044,60 @@ private fun ProfileEditScreen(
     onSave: (nickname: String, bio: String, avatarUrl: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var nickname by remember(user.id, user.nickname) { mutableStateOf(user.nickname) }
-    var bio by remember(user.id, user.bio) { mutableStateOf(user.bio) }
+    val isDemo = user.username == "demo"
+    var nickname by remember(user.id, user.nickname) {
+        mutableStateOf(
+            if (isDemo) "Peach & Latte"
+            else if (user.nickname.isNotBlank()) user.nickname
+            else "Peach & Latte"
+        )
+    }
+    var bio by remember(user.id, user.bio) {
+        mutableStateOf(
+            if (isDemo) "Documenting the daily life of two cats."
+            else if (user.bio.isNotBlank()) user.bio
+            else "Documenting the daily life of two cats."
+        )
+    }
     var avatarUrl by remember(user.id, user.avatarUrl) { mutableStateOf(user.avatarUrl) }
+    var location by remember { mutableStateOf("Seattle, WA") }
 
-    var publicProfile by remember { mutableStateOf(true) }
-    var showPets by remember { mutableStateOf(true) }
+    val context = LocalContext.current
+    
+    val displayAvatarUrl = user.avatarUrl.takeIf { it.isNotBlank() } 
+        ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_7.png"
 
     Column(modifier.background(StitchPalette.Canvas)) {
-        // AppBar: Close, Title, Save
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .background(StitchPalette.Surface)
-                .border(width = 1.dp, color = StitchPalette.BorderHairline)
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = Icons.Outlined.Close,
-                    contentDescription = "Close",
-                    tint = StitchPalette.PrimaryDark
-                )
-            }
-            Text(
-                text = stringResource(R.string.profile_edit),
-                style = MaterialTheme.typography.titleMedium.copy(
-                    platformStyle = PlatformTextStyle(includeFontPadding = false)
-                ),
-                fontWeight = FontWeight.Bold,
-                color = StitchPalette.PrimaryDark
-            )
-            TextButton(
-                onClick = { onSave(nickname.trim().ifBlank { user.username }, bio.trim(), avatarUrl.trim()) },
-                enabled = !saving
-            ) {
-                Text(
-                    text = if (saving) stringResource(R.string.profile_saving) else stringResource(R.string.profile_save),
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        platformStyle = PlatformTextStyle(includeFontPadding = false)
-                    ),
-                    color = if (saving) StitchPalette.OnSurfaceVariant else StitchPalette.Brand,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-
+        ProfileBackHeader(
+            title = "Edit Profile",
+            onBack = onBack,
+        )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .padding(horizontal = FEED_PAGE_PADDING)
+                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // Avatar container
+            // Avatar Edit
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
             ) {
                 Box(
-                    modifier = Modifier.size(80.dp),
+                    modifier = Modifier.size(96.dp),
                     contentAlignment = Alignment.BottomEnd
                 ) {
-                    val displayAvatarUrl = resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() }) ?: "https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"
                     AsyncImage(
                         model = avatarUrl.ifBlank { displayAvatarUrl },
                         contentDescription = "Avatar",
                         modifier = Modifier
-                            .size(80.dp)
+                            .size(96.dp)
                             .clip(CircleShape)
-                            .border(2.dp, StitchPalette.Brand, CircleShape),
+                            .border(4.dp, Color.White, CircleShape),
                         contentScale = ContentScale.Crop
                     )
                     Box(
@@ -2076,7 +2105,10 @@ private fun ProfileEditScreen(
                             .size(28.dp)
                             .clip(CircleShape)
                             .background(StitchPalette.Brand)
-                            .border(2.dp, Color.White, CircleShape),
+                            .border(2.dp, Color.White, CircleShape)
+                            .clickable {
+                                android.widget.Toast.makeText(context, "Change Photo features will be available in a future version", android.widget.Toast.LENGTH_SHORT).show()
+                            },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -2088,32 +2120,33 @@ private fun ProfileEditScreen(
                     }
                 }
                 Text(
-                    text = "Change photo",
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    text = "Change Photo",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.SemiBold
                     ),
                     color = StitchPalette.Brand,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.clickable { /* Photo change action could show dialog, or let user edit URL */ }
+                    modifier = Modifier.clickable {
+                        android.widget.Toast.makeText(context, "Change Photo features will be available in a future version", android.widget.Toast.LENGTH_SHORT).show()
+                    }
                 )
             }
 
             // Input fields
             EditField(
-                label = stringResource(R.string.profile_display_name),
+                label = "Display Name",
                 value = nickname,
                 onValueChange = { nickname = it }
             )
 
             EditField(
                 label = "Handle",
-                value = "@${user.username}",
+                value = if (isDemo) "@peachlatte" else if (user.username.isNotBlank()) "@${user.username}" else "@peachlatte",
                 onValueChange = {},
                 readOnly = true
             )
 
             EditField(
-                label = stringResource(R.string.profile_bio),
+                label = "Bio",
                 value = bio,
                 onValueChange = { bio = it },
                 singleLine = false,
@@ -2121,9 +2154,9 @@ private fun ProfileEditScreen(
             )
 
             EditField(
-                label = stringResource(R.string.profile_avatar_url),
-                value = avatarUrl,
-                onValueChange = { avatarUrl = it }
+                label = "Location",
+                value = location,
+                onValueChange = { location = it }
             )
 
             if (!error.isNullOrBlank()) {
@@ -2137,173 +2170,54 @@ private fun ProfileEditScreen(
             ) {
                 Text(
                     text = "Linked Pets",
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.SemiBold
                     ),
-                    color = StitchPalette.OnSurfaceVariant,
-                    fontWeight = FontWeight.SemiBold
+                    color = Color(0xFF564338),
+                    modifier = Modifier.padding(start = 8.dp)
                 )
                 Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
+                        .padding(vertical = 4.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Pet 1 (Latte)
-                    Box(
-                        modifier = Modifier.size(56.dp)
-                    ) {
-                        AsyncImage(
-                            model = "https://lh3.googleusercontent.com/aida-public/AB6AXuBP3UueOkcQpWo0ST4oE6FzjjExScD0El8LM2m3HjqJyvnB3OiNvbyOrNNsO78sGvievO640Qk7_P0u6-Q7qTB_-p1IOru9wcXgjiyw6hQAu89vXdPfFFLSZUMTvIiFO-h6-Wik0g3ixnG2n6lN3daCXBLCfVIfLzlbvYAclvV5RG_3dENtwOH6p1NCxQeHq8EFLUG8RHiFENs3hF4-Or9NbqJCme7ZabMEgLkJYKZNR-xqm-SQhWZMMHC4-HlmWU-cJWIA_dQ83Fvb",
-                            contentDescription = "Latte",
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(8.dp))
-                                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(8.dp)),
-                            contentScale = ContentScale.Crop
-                        )
-                        Box(
-                            modifier = Modifier
-                                .size(16.dp)
-                                .align(Alignment.TopEnd)
-                                .clip(CircleShape)
-                                .background(StitchPalette.Brand),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.CheckCircle,
-                                contentDescription = "Selected",
-                                tint = Color.White,
-                                modifier = Modifier.size(12.dp)
-                            )
+                    PetAvatarEditItem(
+                        name = "Latte",
+                        avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_8.png"
+                    )
+                    PetAvatarEditItem(
+                        name = "Peach",
+                        avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_9.png"
+                    )
+                    AddPetEditItem(
+                        onClick = {
+                            android.widget.Toast.makeText(context, "Add Pet feature will be available in a future version", android.widget.Toast.LENGTH_SHORT).show()
                         }
-                    }
-                    
-                    // Pet 2 (Peach)
-                    Box(
-                        modifier = Modifier.size(56.dp)
-                    ) {
-                        AsyncImage(
-                            model = "https://lh3.googleusercontent.com/aida-public/AB6AXuAOZ15aXqXrVuGnghhPqYq2I8RSXUPCYbpNi3W6hdaAxLKsCEKEYc4sFx53xyt5ACKTcWUU6A56prfOSauE7fyyEdNzQ84vs4-PDb6s7zraJYKPF1YQgvY5Tp4AUsB2D9Fjp0fclhq0JXKPjFJ7ugI2UpG27sGCXk5dA4cNiOFoNLnBkj15QDgc_0DlFcXsiRzeoMbPQ1-15I-3gA6KnNNr247JxHhOWM8KTPFpTp8wD3RQx0OkUBNVnZAXsJd28_1zFPLg8YuNbsrt",
-                            contentDescription = "Peach",
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(8.dp))
-                                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(8.dp)),
-                            contentScale = ContentScale.Crop
-                        )
-                        Box(
-                            modifier = Modifier
-                                .size(16.dp)
-                                .align(Alignment.TopEnd)
-                                .clip(CircleShape)
-                                .background(StitchPalette.Brand),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.CheckCircle,
-                                contentDescription = "Selected",
-                                tint = Color.White,
-                                modifier = Modifier.size(12.dp)
-                            )
-                        }
-                    }
-
-                    // Add button
-                    Box(
-                        modifier = Modifier
-                            .size(56.dp)
-                            .background(Color(0xFFFFF8F2), shape = RoundedCornerShape(8.dp))
-                            .border(1.dp, StitchPalette.Brand, shape = RoundedCornerShape(8.dp))
-                            .clickable { /* Add pet link */ },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.AddCircle,
-                            contentDescription = "Add Pet",
-                            tint = StitchPalette.Brand,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
+                    )
                 }
             }
 
-            // Toggles
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+            Spacer(Modifier.height(16.dp))
+
+            Button(
+                onClick = { onSave(nickname.trim(), bio.trim(), avatarUrl.trim()) },
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+                enabled = !saving
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
-                        Text(
-                            text = "Public profile",
-                            style = MaterialTheme.typography.bodyLarge.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            color = StitchPalette.PrimaryDark,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Allow everyone to see your profile details.",
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            color = StitchPalette.OnSurfaceVariant
-                        )
-                    }
-                    Switch(
-                        checked = publicProfile,
-                        onCheckedChange = { publicProfile = it },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
-                            checkedTrackColor = StitchPalette.Brand,
-                            uncheckedThumbColor = Color.White,
-                            uncheckedTrackColor = Color(0xFFE5D5C5)
-                        )
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
-                        Text(
-                            text = "Show pets on profile",
-                            style = MaterialTheme.typography.bodyLarge.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            color = StitchPalette.PrimaryDark,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Display your linked pets in a dedicated row.",
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            color = StitchPalette.OnSurfaceVariant
-                        )
-                    }
-                    Switch(
-                        checked = showPets,
-                        onCheckedChange = { showPets = it },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
-                            checkedTrackColor = StitchPalette.Brand,
-                            uncheckedThumbColor = Color.White,
-                            uncheckedTrackColor = Color(0xFFE5D5C5)
-                        )
-                    )
-                }
+                Text(
+                    text = if (saving) "Saving Changes..." else "Save Changes",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
             }
+            Spacer(Modifier.height(16.dp))
         }
     }
 }
@@ -2319,7 +2233,7 @@ private fun ProfilePetDetailScreen(
     val petName = stringResource(R.string.profile_pet_latte_name)
     val petBreed = "Domestic Shorthair"
     val petAge = "3 yrs"
-    val petAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuB_wAN_GxnnAAUC824gbkwKFBcuWOJGQ0P1VB2v7oscnhDCzvDnEu78e5PfbGGecz_vxsffrH6Ekn63ujTmXmGIOyfJNmWeyWo1EbSXiA5WM9EGs_sl39Zs_3yfBED72CpR4QnmRQWUhTNrxz5BtyVdvMLA32_B6imJq25qKaYdAzATcz4o7oZXZbLOvopydTTYhDNuIxwa91SClCI9x3uVkJXicK5z9P5qe-P7NYnmtN9JbGDWHuozanfFF6EilSx0jhg-Xgg-rQpO"
+    val petAvatar = "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
 
     Column(
         modifier = modifier
@@ -2563,7 +2477,7 @@ private fun ProfilePetDetailScreen(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            val ownerAvatar = resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() }) ?: "https://lh3.googleusercontent.com/aida-public/AB6AXuBqRAWSwwO2kp90leNz1Gvy95ksn_jfPaOt0JB3fyFKyld1xfEKWe8JR5lR6g2Kyh6pGFl0Y1K8Ywvx95tcxD1qBBJbeRKVH7M8Ec_3IKJPDWx_b_kBwWCOpkJ3nrtSaunLNZ_wIpiuSEAVrx2IR8BORBCtNiXDq4WwDleUsV2nzClP010bhJYIomGPjSSJfRUu5x_AvLSGQLP_z0TYRB65z4UcsMeUYOsjpu7gA6O2KgoRX1DclHYTCKbQCfI1KJr97HAbFytq73E9"
+            val ownerAvatar = resolveMediaUrl(apiBase, user.avatarUrl.takeIf { it.isNotBlank() }) ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -2647,10 +2561,10 @@ private fun ProfilePetDetailScreen(
             )
 
             val momentImages = listOf(
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuDjFUxPZD7WKpURiK9oADQE3UTeeFoWDtIkg_63asTeLfBRFcxypdEhiM6x92BuTaPIngkzpUzGsTk4uuxulyi6q1b_Wu1s4oCciPwP2ObAGcuPQQn9F65yXcB1H9d8V_DBbLd34QxO_zWmigSvPrtZ2k9ZPmLp6tIO-SeKSiTYBbslmb6Sg8JYI3eg1kfOeRIPWneSTS3yHhx6sALI2JlW1y9tSNhyLHlwIZ7BB-LwPnhkR4VdCo0fpwEVUNYJ-a0Ee3E5af4KhrNJ",
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuBlRlaf196K6eZPQAdq8ZIdy70MmlIDIP2SImazVGlXE6RyAQUKMdMabX6s7tfDUYjUXVEYGfajD738p4erjpQlGS2kVy34byMmD0SOeEL7H2JxKQIFajKd53tTCN7f72SFbswag99XQ14HuAD_6mSySoJTchwJtyCrdfILaR7OBeeLs2WDJLyVfaeyWOjEt34UTmzxbozGp8s0SN3_uNrDvwU2vfMvP6L602EN9CJiy17dWkeC-ZGsDSgSQdofa2RRfKJl_8lYyKYn",
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuCV0BL-Lv_xBxCh8g1ScoAkdHuFcyPzUMKGHRCCjTNTBz861blUlFWL9P9LUFcm5CHakwmGEj6VjV_1Fyun2ZLkM0c0X2C6rfAhkYtsc0-C09HIW1uADm-5MmrNn_yPeETkQLd2yjkGzY6fYktxoAKvpOapWdIS32gBCSaGvfOrTs0OgKj6jlhaE73FptGz0hKGkQNFe2qhMGDQ009rdK-3DeAHOMBfYdXSAkMDSN1dZ5uJ3WiRqIhqqBgCBOEN5T5jwoSZtHU8xbEN",
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuB_wAN_GxnnAAUC824gbkwKFBcuWOJGQ0P1VB2v7oscnhDCzvDnEu78e5PfbGGecz_vxsffrH6Ekn63ujTmXmGIOyfJNmWeyWo1EbSXiA5WM9EGs_sl39Zs_3yfBED72CpR4QnmRQWUhTNrxz5BtyVdvMLA32_B6imJq25qKaYdAzATcz4o7oZXZbLOvopydTTYhDNuIxwa91SClCI9x3uVkJXicK5z9P5qe-P7NYnmtN9JbGDWHuozanfFF6EilSx0jhg-Xgg-rQpO"
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_6.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
             )
 
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -2694,6 +2608,7 @@ private fun ProfilePetDetailScreen(
 
 @Composable
 private fun ProfileConnectionsScreen(
+    apiBase: String,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -2713,28 +2628,28 @@ private fun ProfileConnectionsScreen(
         ConnectionItem(
             name = "Milo & Friends",
             handleAndDesc = "@milo_paws · Cat creator",
-            avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBqOpKzJg3eoebYOf4tdwW8rrO54rCO8tS4PsQPSG900aAmMkurveX2Ns9y0XDoJe7OHL91KBKfbGaNHAaybdbA9eX47hmb8R7sb5oa-TCt5Rr_ETjWTokbvGSK3-szIVkCGIL3NR0G64Uu9ht2eS0IPiH55RKt-6aBn11NeS7xE5JGzi76SYgz4KbGJV4AvhKTRi1MkbuLdPPtKpRvXk1yotvH-2wJCb5I63qwu7Y_3Yb15HlvRA5r473zadIYO6Ss4h2p6S9H1WC7",
+            avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_10.png",
             isVerified = true,
             isFollowing = false
         ),
         ConnectionItem(
             name = "Luna the Tabby",
             handleAndDesc = "@luna_tabby · Domestic Shorthair",
-            avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuC_Ai24A5Goj2zvd8555z3DwYugKUa-FIrdg-1wlLDqCIRA2ElHWJKIe0mymOZ8qpazvAhWZr93BIQY0fd3oNeohlHX2e_cg5a5Ws_8N8DpeVsbIe8B6nQgkLYdj71NDa3T2iKzi8nZMjxpUKZFC3yu9O1rX74t45TsUU_eejW_jfFZtfo5CwYzGRWjaVOGpmOHXnJK0t9ayshjLRkBl_qf1SMLCMYHDbH4_BqnJb1eWnWlYe-BFR4aT-nx7hiI69sx6pncCaXo1qZy",
+            avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_11.png",
             isVerified = false,
             isFollowing = true
         ),
         ConnectionItem(
             name = "Whiskers Daily",
             handleAndDesc = "@whiskers · Cozy cat moments",
-            avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuA6YREznxgaU1PbkV7g5W32xTfySiCiMfF9MECjWuVEZ5oke8nLphRo2iMq7vgjdmk3pZ-ungauGG5dh9RJEfQndyztfAg8JRRrpVSmcHTrXCmmB7wavGILTfPnqGwfJacsf26XUM0usxUsibbkd0pLSoh0DWyI59AVCNvCZo6sdz9E50aiSHRhRpMKJ_yvR1aEKu4xzKJSta-tmew3m1vWxBZ4r6KsW6KOydAJnC61e7q0WyWgCvo3tt7JAEE4VOYmCDFdO8RTrdls",
+            avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_12.png",
             isVerified = false,
             isFollowing = false
         ),
         ConnectionItem(
             name = "Maple & Co.",
             handleAndDesc = "@mapleco · Pet family",
-            avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBJ6o8pnwlxS1HaaPj0ki6qCtJ-Cg1mxWYO752Rbin7gUElvMpWyXIPuXY7LQeVIRLWyr6CIF0omS1D73qWU3f4EfGWfMJkWRp0XyboXDi_zPW3JojXY2E8sd8smY3ck0zuTG9qJtijJ-zYmrnvCg9yj0mqyy1MmxqHGAz-cs7QG08iivtBlrItpqxoA5bCF_7033CHeBN8mt_zh3Pk8a_Z60EtgfloalLr_ihEqZue7P4V63w8VzP4oYTwT2rraLLodxfFwsWo5DVH",
+            avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_13.png",
             isVerified = false,
             isFollowing = true
         )
@@ -2996,7 +2911,185 @@ private fun ProfileConnectionsScreen(
 }
 
 @Composable
+private fun SettingCard(
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = StitchPalette.Surface,
+        border = BorderStroke(1.dp, StitchPalette.BorderHairline)
+    ) {
+        Column(modifier = Modifier.fillMaxWidth(), content = content)
+    }
+}
+
+@Composable
+private fun SettingRow(
+    icon: ImageVector,
+    title: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    rightContent: @Composable (() -> Unit)? = null,
+    titleColor: Color = StitchPalette.OnSurface,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(28.dp)
+                .clip(RoundedCornerShape(6.dp))
+                .background(StitchPalette.BrandMuted),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = if (titleColor == StitchPalette.Error) StitchPalette.Error else StitchPalette.Brand,
+                modifier = Modifier.size(18.dp)
+            )
+        }
+        Spacer(Modifier.width(12.dp))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+            color = titleColor,
+            modifier = Modifier.weight(1f)
+        )
+        if (rightContent != null) {
+            rightContent()
+        } else {
+            Icon(
+                imageVector = Icons.Outlined.ChevronRight,
+                contentDescription = null,
+                tint = StitchPalette.Outline.copy(alpha = 0.5f),
+                modifier = Modifier.size(20.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun SettingSectionTitle(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = text.uppercase(),
+        style = MaterialTheme.typography.labelMedium.copy(
+            fontWeight = FontWeight.SemiBold,
+            letterSpacing = 0.5.sp
+        ),
+        color = StitchPalette.OnSurfaceVariant,
+        modifier = modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 8.dp)
+    )
+}
+
+@Composable
+private fun SettingProfileCard(
+    apiBase: String,
+    user: User,
+    onEditProfile: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val isDemo = user.username == "demo"
+    val displayAvatarUrl = user.avatarUrl.takeIf { it.isNotBlank() } 
+        ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_7.png"
+    
+    val displayName = if (isDemo) "Peach & Latte" else if (user.nickname.isNotBlank()) user.nickname else "Peach & Latte"
+    val displayHandle = if (isDemo) "@peachlatte" else if (user.username.isNotBlank()) "@${user.username}" else "@peachlatte"
+    val displayBio = if (isDemo) "Documenting the daily life of two cats." else if (user.bio.isNotBlank()) user.bio else "Documenting the daily life of two cats."
+
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = Color.White,
+        border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            AsyncImage(
+                model = displayAvatarUrl,
+                contentDescription = displayName,
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, StitchPalette.Brand, CircleShape),
+                contentScale = ContentScale.Crop
+            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = displayName,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = StitchPalette.OnSurface
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Verified,
+                        contentDescription = "Verified",
+                        tint = StitchPalette.Brand,
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+                Text(
+                    text = displayHandle,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = StitchPalette.OnSurfaceVariant
+                )
+                Text(
+                    text = displayBio,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = StitchPalette.Outline,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Button(
+                onClick = onEditProfile,
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(1.dp, Color(0xFFF5E2D5)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+                    .height(38.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = StitchPalette.Brand
+                )
+            ) {
+                Text(
+                    text = "Edit Profile",
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                    color = StitchPalette.Brand
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun ProfileSettingsScreen(
+    apiBase: String,
     user: User,
     onBack: () -> Unit,
     onEditProfile: () -> Unit,
@@ -3010,64 +3103,292 @@ private fun ProfileSettingsScreen(
     onLogout: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var cacheSize by remember { mutableStateOf("124 MB") }
+    val context = LocalContext.current
+
     Column(modifier.background(StitchPalette.Canvas)) {
         ProfileBackHeader(
-            title = stringResource(R.string.settings_title),
+            title = "My Settings",
             onBack = onBack,
         )
         Column(
-            modifier =
-                modifier
-                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
-                    .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 24.dp),
         ) {
-            Text(
-                stringResource(R.string.settings_subtitle),
-                style = MaterialTheme.typography.bodyMedium,
-                color = StitchPalette.OnSurfaceVariant,
+            Spacer(Modifier.height(8.dp))
+            SettingProfileCard(
+                apiBase = apiBase,
+                user = user,
+                onEditProfile = onEditProfile
             )
-            Surface(
-                modifier = Modifier.fillMaxWidth().clickable(onClick = onEditProfile),
-                shape = FEED_SECTION_RADIUS,
-                color = StitchPalette.Surface,
-                border = BorderStroke(1.dp, StitchPalette.BorderHairline),
-            ) {
-                Row(
-                    modifier = Modifier.padding(14.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Box(
-                        modifier = Modifier.size(52.dp).clip(CircleShape).background(StitchPalette.BrandMuted),
-                        contentAlignment = Alignment.Center,
-                    ) {
+            
+            SettingSectionTitle("Profile")
+            SettingCard {
+                SettingRow(
+                    icon = Icons.Outlined.Person,
+                    title = "Edit Profile",
+                    onClick = onEditProfile
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Filled.Pets,
+                    title = "My Pets",
+                    onClick = onOpenPetProfile
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.GridView,
+                    title = "My Posts",
+                    onClick = onBack
+                )
+            }
+
+            SettingSectionTitle("Account")
+            SettingCard {
+                SettingRow(
+                    icon = Icons.Outlined.Shield,
+                    title = "Account & Security",
+                    onClick = onOpenAccountSecurity
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.Link,
+                    title = "Linked Accounts",
+                    onClick = onOpenLinkedAccounts
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.Payment,
+                    title = "Payment Methods",
+                    onClick = {
+                        android.widget.Toast.makeText(context, "Payment methods will be linked in a future version", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
+
+            SettingSectionTitle("Preferences")
+            SettingCard {
+                SettingRow(
+                    icon = Icons.Outlined.Palette,
+                    title = "Appearance & Theme",
+                    onClick = onOpenAppearance
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.Notifications,
+                    title = "Notifications",
+                    onClick = onOpenNotifications
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.Language,
+                    title = "Language",
+                    onClick = {
+                        android.widget.Toast.makeText(context, "Language selection will be available in a future version", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
+
+            SettingSectionTitle("Privacy & Terms")
+            SettingCard {
+                SettingRow(
+                    icon = Icons.Outlined.PrivacyTip,
+                    title = "Privacy Policy",
+                    onClick = onOpenPrivacy
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.Article,
+                    title = "User Notice",
+                    onClick = onOpenUserNotice
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.Gavel,
+                    title = "Community Guidelines",
+                    onClick = onOpenUserNotice
+                )
+            }
+
+            SettingSectionTitle("Other")
+            SettingCard {
+                SettingRow(
+                    icon = Icons.Outlined.DeleteSweep,
+                    title = "Clear Cache",
+                    onClick = {
+                        if (cacheSize != "0 MB") {
+                            cacheSize = "0 MB"
+                            android.widget.Toast.makeText(context, "Cache cleared!", android.widget.Toast.LENGTH_SHORT).show()
+                        } else {
+                            android.widget.Toast.makeText(context, "Cache is empty", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    rightContent = {
                         Text(
-                            user.nickname.take(1).ifBlank { user.username.take(1) }.uppercase(),
-                            color = StitchPalette.Brand,
-                            fontWeight = FontWeight.Black,
+                            text = cacheSize,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = StitchPalette.OnSurfaceVariant,
+                            modifier = Modifier.padding(end = 8.dp)
                         )
                     }
-                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        Text(user.nickname.ifBlank { user.username }, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
-                        Text(stringResource(R.string.settings_profile_section), style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.Logout,
+                    title = "Log Out",
+                    titleColor = StitchPalette.Error,
+                    onClick = onLogout
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ThemeUIPreviewCard(
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = Color(0xFFFFF8F2),
+        border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(Color.White, CircleShape)
+                        .border(1.dp, Color(0xFFF5E2D5), CircleShape)
+                )
+                Box(
+                    modifier = Modifier
+                        .size(width = 96.dp, height = 16.dp)
+                        .background(Color.White, RoundedCornerShape(4.dp))
+                        .border(1.dp, Color(0xFFF5E2D5), RoundedCornerShape(4.dp))
+                )
+            }
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
+                color = Color.White,
+                border = BorderStroke(1.dp, Color(0xFFF5E2D5)),
+                shadowElevation = 2.dp
+            ) {
+                Row(
+                    modifier = Modifier.padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(StitchPalette.Brand.copy(alpha = 0.2f))
+                    )
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(width = 80.dp, height = 12.dp)
+                                .background(StitchPalette.Brand, RoundedCornerShape(4.dp))
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(0.75f)
+                                .height(8.dp)
+                                .background(Color(0xFFDDC1B3), RoundedCornerShape(3.dp))
+                        )
                     }
-                    Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
                 }
             }
-            SettingsActionRow(Icons.Outlined.Badge, stringResource(R.string.settings_pet_profile), stringResource(R.string.settings_pet_profile_subtitle), onOpenPetProfile)
-            SettingsActionRow(Icons.Outlined.Shield, stringResource(R.string.settings_account_security), stringResource(R.string.settings_account_security_subtitle), onOpenAccountSecurity)
-            SettingsActionRow(Icons.Outlined.CreditCard, stringResource(R.string.settings_linked_accounts), stringResource(R.string.settings_linked_accounts_subtitle), onOpenLinkedAccounts)
-            SettingsActionRow(Icons.Outlined.Palette, stringResource(R.string.settings_appearance), stringResource(R.string.settings_appearance_subtitle), onOpenAppearance)
-            SettingsActionRow(Icons.Outlined.Notifications, stringResource(R.string.settings_notifications), stringResource(R.string.settings_notifications_subtitle), onOpenNotifications)
-            SettingsActionRow(Icons.Outlined.PrivacyTip, stringResource(R.string.settings_privacy_policy), "", onOpenPrivacy)
-            SettingsActionRow(Icons.Outlined.Article, stringResource(R.string.settings_user_notice), "", onOpenUserNotice)
-            TextButton(
-                onClick = onLogout,
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                colors = ButtonDefaults.textButtonColors(contentColor = StitchPalette.Brand),
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .size(width = 32.dp, height = 4.dp)
+                    .background(StitchPalette.Brand, CircleShape)
+            )
+        }
+    }
+}
+
+@Composable
+private fun ThemeGridItem(
+    name: String,
+    icon: ImageVector,
+    iconColor: Color,
+    bgColor: Color,
+    borderColor: Color,
+    textColor: Color,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier
+            .clickable(onClick = onClick)
+            .aspectRatio(1.3f),
+        shape = RoundedCornerShape(12.dp),
+        color = bgColor,
+        border = BorderStroke(if (isSelected) 2.dp else 1.dp, if (isSelected) iconColor else borderColor),
+        shadowElevation = if (isSelected) 2.dp else 0.dp
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            if (isSelected) {
+                Icon(
+                    imageVector = Icons.Filled.CheckCircle,
+                    contentDescription = "Selected",
+                    tint = iconColor,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .size(20.dp)
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(stringResource(R.string.profile_logout), fontWeight = FontWeight.Bold)
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .background(bgColor, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = name,
+                        tint = iconColor,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                    color = textColor
+                )
             }
         }
     }
@@ -3087,97 +3408,815 @@ private fun ProfileAppearanceScreen(
             else -> currentTheme.lowercase()
         }
     var pendingTheme by remember(normalizedTheme) { mutableStateOf(normalizedTheme) }
+
     Column(modifier.background(StitchPalette.Canvas)) {
         ProfileBackHeader(
-            title = stringResource(R.string.settings_appearance),
+            title = "Appearance & Theme",
             onBack = onBack,
         )
         Column(
-            modifier =
-                modifier
-                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
-                    .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(stringResource(R.string.theme_choose), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
-            ThemeChoiceCard("honey", stringResource(R.string.theme_honey), Color(0xFFFF8A3D), pendingTheme == "honey") { pendingTheme = it }
-            ThemeChoiceCard("mint", stringResource(R.string.theme_mint), Color(0xFF2EC4A6), pendingTheme == "mint") { pendingTheme = it }
-            ThemeChoiceCard("night", stringResource(R.string.theme_night), Color(0xFF8B5CF6), pendingTheme == "night") { pendingTheme = it }
-            ThemeChoiceCard("neutral", stringResource(R.string.theme_neutral), Color(0xFF4B5563), pendingTheme == "neutral") { pendingTheme = it }
-            Button(
-                onClick = { onSelectTheme(pendingTheme) },
-                shape = StitchShape.field,
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+            Spacer(Modifier.height(8.dp))
+            ThemeUIPreviewCard()
+            
+            SettingSectionTitle("Select Theme")
+            
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Text(stringResource(R.string.settings_apply_theme), color = Color.White, fontWeight = FontWeight.Bold)
-            }
-        }
-    }
-}
-
-@Composable
-private fun ProfileDetailListScreen(
-    title: String,
-    subtitle: String,
-    icon: ImageVector,
-    rows: List<String>,
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier.background(StitchPalette.Canvas)) {
-        ProfileBackHeader(title = title, onBack = onBack)
-        Column(
-            modifier =
-                modifier
-                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
-                    .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = FEED_SECTION_RADIUS,
-                color = StitchPalette.Surface,
-                border = BorderStroke(1.dp, StitchPalette.BorderHairline),
-            ) {
-                Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Box(Modifier.size(46.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
-                        Icon(icon, contentDescription = null, tint = StitchPalette.Brand)
-                    }
-                    Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant, modifier = Modifier.weight(1f))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    ThemeGridItem(
+                        name = "Honey",
+                        icon = Icons.Filled.Pets,
+                        iconColor = Color(0xFFFF8A3D),
+                        bgColor = Color(0xFFFFF1E6),
+                        borderColor = Color(0xFFF1D8C8),
+                        textColor = Color(0xFF231F20),
+                        isSelected = pendingTheme == "honey",
+                        onClick = { pendingTheme = "honey" },
+                        modifier = Modifier.weight(1f)
+                    )
+                    ThemeGridItem(
+                        name = "Mint",
+                        icon = Icons.Outlined.Eco,
+                        iconColor = Color(0xFF2EC4A6),
+                        bgColor = Color(0xFFE8FAF4),
+                        borderColor = Color(0xFFD5EFE8),
+                        textColor = Color(0xFF12312B),
+                        isSelected = pendingTheme == "mint",
+                        onClick = { pendingTheme = "mint" },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    ThemeGridItem(
+                        name = "Night",
+                        icon = Icons.Outlined.DarkMode,
+                        iconColor = Color(0xFF8B5CF6),
+                        bgColor = Color(0xFF12121A),
+                        borderColor = Color(0xFF2A2A36),
+                        textColor = Color.White,
+                        isSelected = pendingTheme == "night",
+                        onClick = { pendingTheme = "night" },
+                        modifier = Modifier.weight(1f)
+                    )
+                    ThemeGridItem(
+                        name = "Neutral",
+                        icon = Icons.Outlined.SettingsSuggest,
+                        iconColor = Color(0xFF64748B),
+                        bgColor = Color(0xFFF1F3F5),
+                        borderColor = Color(0xFFE2E8F0),
+                        textColor = Color(0xFF111827),
+                        isSelected = pendingTheme == "neutral",
+                        onClick = { pendingTheme = "neutral" },
+                        modifier = Modifier.weight(1f)
+                    )
                 }
             }
-            rows.forEach { row ->
-                SettingsActionRow(Icons.Outlined.ChevronRight, row, "", onClick = {})
+            
+            Spacer(Modifier.weight(1f))
+            
+            Button(
+                onClick = { onSelectTheme(pendingTheme) },
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+            ) {
+                Text("Apply Theme", color = Color.White, fontWeight = FontWeight.Bold)
             }
         }
     }
 }
 
 @Composable
-private fun ProfileDocumentScreen(
+private fun SettingRowWithRightText(
+    icon: ImageVector,
+    title: String,
+    rightText: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(28.dp)
+                .clip(RoundedCornerShape(6.dp))
+                .background(StitchPalette.BrandMuted),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = StitchPalette.Brand,
+                modifier = Modifier.size(18.dp)
+            )
+        }
+        Spacer(Modifier.width(12.dp))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+            color = StitchPalette.OnSurface,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            text = rightText,
+            style = MaterialTheme.typography.bodyMedium,
+            color = StitchPalette.OnSurfaceVariant,
+            modifier = Modifier.padding(end = 8.dp)
+        )
+        Icon(
+            imageVector = Icons.Outlined.ChevronRight,
+            contentDescription = null,
+            tint = StitchPalette.Outline.copy(alpha = 0.5f),
+            modifier = Modifier.size(20.dp)
+        )
+    }
+}
+
+@Composable
+private fun SettingRowWithToggle(
+    icon: ImageVector,
+    title: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(28.dp)
+                .clip(RoundedCornerShape(6.dp))
+                .background(StitchPalette.BrandMuted),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = StitchPalette.Brand,
+                modifier = Modifier.size(18.dp)
+            )
+        }
+        Spacer(Modifier.width(12.dp))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+            color = StitchPalette.OnSurface,
+            modifier = Modifier.weight(1f)
+        )
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = StitchPalette.Brand,
+                uncheckedThumbColor = Color.White,
+                uncheckedTrackColor = Color(0xFFE5D5C5)
+            )
+        )
+    }
+}
+
+@Composable
+private fun SettingRowWithSocial(
+    letter: String,
+    color: Color,
+    title: String,
+    linked: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(24.dp)
+                .clip(CircleShape)
+                .background(color),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = letter,
+                color = Color.White,
+                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold)
+            )
+        }
+        Spacer(Modifier.width(16.dp))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+            color = StitchPalette.OnSurface,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            text = if (linked) "Linked" else "Link",
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (linked) StitchPalette.OnSurfaceVariant else StitchPalette.Brand,
+            modifier = Modifier.padding(end = 8.dp),
+            fontWeight = if (linked) FontWeight.Normal else FontWeight.Bold
+        )
+        Icon(
+            imageVector = Icons.Outlined.ChevronRight,
+            contentDescription = null,
+            tint = StitchPalette.Outline.copy(alpha = 0.5f),
+            modifier = Modifier.size(20.dp)
+        )
+    }
+}
+
+@Composable
+private fun ProfileAccountSecurityScreen(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var twoFactorEnabled by remember { mutableStateOf(true) }
+    var loginAlertsEnabled by remember { mutableStateOf(true) }
+    var wechatLinked by remember { mutableStateOf(true) }
+    var appleLinked by remember { mutableStateOf(false) }
+    var googleLinked by remember { mutableStateOf(false) }
+
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = "Account & Security",
+            onBack = onBack,
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 24.dp),
+        ) {
+            SettingSectionTitle("Login Info")
+            SettingCard {
+                SettingRowWithRightText(
+                    icon = Icons.Outlined.Mail,
+                    title = "Email",
+                    rightText = "peachlatte@example.com",
+                    onClick = {}
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRowWithRightText(
+                    icon = Icons.Outlined.PhoneIphone,
+                    title = "Phone Number",
+                    rightText = "+1 204 *** 44",
+                    onClick = {}
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRowWithRightText(
+                    icon = Icons.Outlined.Password,
+                    title = "Password",
+                    rightText = "Updated 2 months ago",
+                    onClick = {}
+                )
+            }
+
+            SettingSectionTitle("Security")
+            SettingCard {
+                SettingRowWithToggle(
+                    icon = Icons.Outlined.VerifiedUser,
+                    title = "Two-Factor Auth (2FA)",
+                    checked = twoFactorEnabled,
+                    onCheckedChange = { twoFactorEnabled = it }
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRowWithToggle(
+                    icon = Icons.Outlined.NotificationsActive,
+                    title = "Login Alerts",
+                    checked = loginAlertsEnabled,
+                    onCheckedChange = { loginAlertsEnabled = it }
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.Devices,
+                    title = "Trusted Devices",
+                    onClick = {}
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRow(
+                    icon = Icons.Outlined.History,
+                    title = "Recent Login Activity",
+                    onClick = {}
+                )
+            }
+
+            SettingSectionTitle("Connected Accounts")
+            SettingCard {
+                SettingRowWithSocial(
+                    letter = "W",
+                    color = Color(0xFF07C160),
+                    title = "WeChat",
+                    linked = wechatLinked,
+                    onClick = { wechatLinked = !wechatLinked }
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRowWithSocial(
+                    letter = "A",
+                    color = Color.Black,
+                    title = "Apple",
+                    linked = appleLinked,
+                    onClick = { appleLinked = !appleLinked }
+                )
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SettingRowWithSocial(
+                    letter = "G",
+                    color = Color(0xFF4285F4),
+                    title = "Google",
+                    linked = googleLinked,
+                    onClick = { googleLinked = !googleLinked }
+                )
+            }
+
+            Spacer(Modifier.height(32.dp))
+            
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Delete Account",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Medium
+                    ),
+                    color = StitchPalette.Error,
+                    modifier = Modifier
+                        .clickable { /* action */ }
+                        .padding(vertical = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SimpleToggleRow(
+    title: String,
+    checked: Boolean,
+    modifier: Modifier = Modifier,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+            color = StitchPalette.OnSurface
+        )
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = StitchPalette.Brand,
+                uncheckedThumbColor = Color.White,
+                uncheckedTrackColor = Color(0xFFE5D5C5)
+            )
+        )
+    }
+}
+
+@Composable
+private fun ProfileNotificationsScreen(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var newMessages by remember { mutableStateOf(true) }
+    var sellerReplies by remember { mutableStateOf(true) }
+    var buyerQuestions by remember { mutableStateOf(false) }
+    
+    var paymentUpdates by remember { mutableStateOf(true) }
+    var shippingUpdates by remember { mutableStateOf(true) }
+    
+    var newFollowers by remember { mutableStateOf(true) }
+    var postComments by remember { mutableStateOf(true) }
+    
+    var recommendations by remember { mutableStateOf(false) }
+    var localHighlights by remember { mutableStateOf(false) }
+
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = "Notifications",
+            onBack = onBack,
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 24.dp),
+        ) {
+            SettingSectionTitle("Messages")
+            SettingCard {
+                SimpleToggleRow("New messages", newMessages) { newMessages = it }
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SimpleToggleRow("Seller replies", sellerReplies) { sellerReplies = it }
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SimpleToggleRow("Buyer questions", buyerQuestions) { buyerQuestions = it }
+            }
+
+            SettingSectionTitle("Orders")
+            SettingCard {
+                SimpleToggleRow("Payment updates", paymentUpdates) { paymentUpdates = it }
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SimpleToggleRow("Shipping updates", shippingUpdates) { shippingUpdates = it }
+            }
+
+            SettingSectionTitle("Community")
+            SettingCard {
+                SimpleToggleRow("New followers", newFollowers) { newFollowers = it }
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SimpleToggleRow("Post comments", postComments) { postComments = it }
+            }
+
+            SettingSectionTitle("Marketplace")
+            SettingCard {
+                SimpleToggleRow("Recommendations", recommendations) { recommendations = it }
+                HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
+                SimpleToggleRow("Local Highlights", localHighlights) { localHighlights = it }
+            }
+
+            Spacer(Modifier.height(16.dp))
+            
+            Button(
+                onClick = onBack,
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+            ) {
+                Text("Save Preferences", color = Color.White, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+}
+
+@Composable
+private fun PrivacySectionBlock(
     title: String,
     body: String,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        color = Color.White,
+        border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Medium,
+                color = StitchPalette.OnSurface
+            )
+            Text(
+                text = body,
+                style = MaterialTheme.typography.bodyMedium,
+                color = StitchPalette.OnSurfaceVariant
+            )
+        }
+    }
+}
+
+@Composable
+private fun ProfilePrivacyPolicyScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier.background(StitchPalette.Canvas)) {
-        ProfileBackHeader(title = title, onBack = onBack)
-        Surface(
-            modifier =
-                modifier
-                    .padding(horizontal = FEED_PAGE_PADDING, vertical = 12.dp)
-                    .fillMaxWidth(),
-            shape = FEED_SECTION_RADIUS,
-            color = StitchPalette.Surface,
-            border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+        ProfileBackHeader(
+            title = "Privacy Policy",
+            onBack = onBack,
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                shape = RoundedCornerShape(16.dp),
+                color = Color.White,
+                border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(64.dp)
+                            .background(Color(0xFFFFF8F2), CircleShape)
+                            .border(1.dp, StitchPalette.Brand, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.PrivacyTip,
+                            contentDescription = null,
+                            tint = StitchPalette.Brand,
+                            modifier = Modifier.size(32.dp)
+                        )
+                    }
+                    Text(
+                        text = "Our commitment to your privacy",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = StitchPalette.OnSurface,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = "We keep your M&D experience private, safe, and transparent.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StitchPalette.OnSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                PrivacySectionBlock(
+                    title = "1. Information we collect",
+                    body = "We collect information you provide directly to us, such as when you create an account, build a pet profile, or communicate with others in the community."
+                )
+                PrivacySectionBlock(
+                    title = "2. How we use information",
+                    body = "We use the information we collect to provide, maintain, and improve our services, and to develop new features that benefit our pet-loving community."
+                )
+                PrivacySectionBlock(
+                    title = "3. Your controls",
+                    body = "You have control over your data. You can delete your account, manage your visibility settings, and request a copy of your personal data at any time."
+                )
+                PrivacySectionBlock(
+                    title = "4. Contact",
+                    body = "Questions about privacy? Reach out to our dedicated privacy team at privacy@mdpets.com."
+                )
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            Button(
+                onClick = onBack,
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+            ) {
+                Text("I Understand", color = Color.White, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+}
+
+@Composable
+private fun BulletRuleBlock(
+    icon: ImageVector,
+    title: String,
+    rules: List<String>,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(28.dp)
+                    .clip(RoundedCornerShape(6.dp))
+                    .background(StitchPalette.BrandMuted),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = StitchPalette.Brand,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
             Text(
-                text = body,
-                modifier = Modifier.padding(16.dp),
+                text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                color = StitchPalette.OnSurface,
+                fontWeight = FontWeight.Medium,
+                color = StitchPalette.OnSurface
             )
+        }
+        Column(
+            modifier = Modifier.padding(start = 40.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            rules.forEach { rule ->
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.Top
+                ) {
+                    Text(
+                        text = "•",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StitchPalette.OnSurfaceVariant
+                    )
+                    Text(
+                        text = rule,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StitchPalette.OnSurfaceVariant,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileUserNoticeScreen(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = "User Notice",
+            onBack = onBack,
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                shape = RoundedCornerShape(16.dp),
+                color = Color.White,
+                border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "Community Guidelines",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = StitchPalette.Brand,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = "Please follow these guidelines to keep M&D safe, friendly, and trustworthy.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StitchPalette.OnSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                shape = RoundedCornerShape(16.dp),
+                color = Color.White,
+                border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+            ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    BulletRuleBlock(
+                        icon = Icons.Filled.Favorite,
+                        title = "Community Behavior",
+                        rules = listOf(
+                            "Be kind and respectful.",
+                            "Bullying, harassment, or hateful content will result in immediate account suspension."
+                        )
+                    )
+                    HorizontalDivider(color = Color(0xFFF5E2D5), thickness = 1.dp)
+                    BulletRuleBlock(
+                        icon = Icons.Outlined.Storefront,
+                        title = "Marketplace Rules",
+                        rules = listOf(
+                            "Only list genuine pet-related items.",
+                            "Selling live animals is strictly prohibited on our platform."
+                        )
+                    )
+                    HorizontalDivider(color = Color(0xFFF5E2D5), thickness = 1.dp)
+                    BulletRuleBlock(
+                        icon = Icons.Filled.Pets,
+                        title = "Pet Content",
+                        rules = listOf(
+                            "Content showing animal abuse, neglect, or harm will be removed and reported to authorities."
+                        )
+                    )
+                    HorizontalDivider(color = Color(0xFFF5E2D5), thickness = 1.dp)
+                    BulletRuleBlock(
+                        icon = Icons.Outlined.GppGood,
+                        title = "Account Safety",
+                        rules = listOf(
+                            "Never share your password or financial information in public chats or comments."
+                        )
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Button(
+                    onClick = onBack,
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+                ) {
+                    Text("I Agree", color = Color.White, fontWeight = FontWeight.Bold)
+                }
+                
+                Button(
+                    onClick = {},
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
+                    border = BorderStroke(1.dp, Color(0xFFF1D8C8)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = StitchPalette.Brand
+                    ),
+                ) {
+                    Text("Contact Support", color = StitchPalette.Brand, fontWeight = FontWeight.Bold)
+                }
+            }
         }
     }
 }
@@ -3188,84 +4227,30 @@ private fun ProfileBackHeader(
     onBack: () -> Unit,
 ) {
     Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.HeaderBorder)
-                .padding(horizontal = 12.dp, vertical = 10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(StitchPalette.Canvas)
+            .statusBarsPadding()
+            .height(56.dp)
+            .padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(onClick = onBack) {
-            Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
+            Icon(
+                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                contentDescription = stringResource(R.string.common_back),
+                tint = StitchPalette.OnSurface
+            )
         }
         Text(
-            title,
+            text = title,
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = StitchPalette.OnSurface,
         )
         Spacer(Modifier.size(48.dp))
-    }
-}
-
-@Composable
-private fun SettingsActionRow(
-    icon: ImageVector,
-    title: String,
-    subtitle: String,
-    onClick: () -> Unit,
-) {
-    Surface(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-        shape = FEED_SECTION_RADIUS,
-        color = StitchPalette.Surface,
-        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
-    ) {
-        Row(
-            modifier = Modifier.padding(14.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Box(Modifier.size(42.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
-                Icon(icon, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(22.dp))
-            }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
-                if (subtitle.isNotBlank()) {
-                    Text(subtitle, style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
-                }
-            }
-            Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.Outline)
-        }
-    }
-}
-
-@Composable
-private fun ThemeChoiceCard(
-    key: String,
-    label: String,
-    swatch: Color,
-    selected: Boolean,
-    onSelect: (String) -> Unit,
-) {
-    Surface(
-        modifier = Modifier.fillMaxWidth().clickable { onSelect(key) },
-        shape = FEED_SECTION_RADIUS,
-        color = if (selected) StitchPalette.BrandMuted else StitchPalette.Surface,
-        border = BorderStroke(1.dp, if (selected) StitchPalette.Brand else StitchPalette.BorderHairline),
-    ) {
-        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Box(Modifier.size(28.dp).clip(CircleShape).background(swatch))
-            Text(label, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
-            if (selected) {
-                Surface(shape = StitchShape.pill, color = StitchPalette.Brand) {
-                    Text(stringResource(R.string.common_selected), modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp), color = Color.White, style = MaterialTheme.typography.labelMedium)
-                }
-            }
-        }
     }
 }
 

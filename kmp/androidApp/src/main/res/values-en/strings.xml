@@ -154,6 +154,11 @@
     <string name="post_comment_sent">Just now · Sent</string>
 
     <string name="login_subtitle">Welcome back to your cat universe</string>
+    <string name="login_welcome_title">Welcome to M&amp;D</string>
+    <string name="login_welcome_subtitle">A warm community for pets, people, and trusted local finds.</string>
+    <string name="login_continue_email">Continue with Email</string>
+    <string name="login_terms_footer">By continuing, you agree to Terms and Privacy.</string>
+    <string name="login_back_title">Welcome Back</string>
     <string name="login_account_placeholder">Phone / Email</string>
     <string name="login_password_placeholder">Password</string>
     <string name="login_show_password">Show password</string>

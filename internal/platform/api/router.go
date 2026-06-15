@@ -72,21 +72,180 @@ func NewRouter() http.Handler {
 }
 
 func ensureDefaultUser(st store.Store) {
-	if _, exists := st.FindUserByUsername(defaultSeedUsername); exists {
-		return
+	// 1. Seed Users
+	usersToSeed := []struct {
+		username string
+		nickname string
+		bio      string
+		avatar   string
+	}{
+		{"demo", "Demo User", "Documenting the daily life of two cats.", ""},
+		{"peachlatte", "桃子和拿铁", "两只猫 of the daily life of two cats.", ""},
+		{"puff_bakery", "泡芙小店", "提供猫罐头和零食", ""},
+		{"sunday_walk", "周日散步社", "组织小型宠物活动", ""},
+		{"clean_corner", "干净角落", "二手猫用品整理中", ""},
 	}
+
+	createdUsers := make(map[string]domain.User)
 	hash, salt, err := auth.HashPassword(defaultSeedPassword)
 	if err != nil {
 		log.Printf("seed: failed to hash default user password: %v", err)
 		return
 	}
-	if _, ok := st.CreateUser(domain.User{
-		Username:     defaultSeedUsername,
-		Nickname:     defaultSeedNickname,
-		PasswordHash: hash,
-		PasswordSalt: salt,
-	}); ok {
-		log.Printf("seed: default user ready (username=%s)", defaultSeedUsername)
+
+	for _, u := range usersToSeed {
+		existing, exists := st.FindUserByUsername(u.username)
+		if exists {
+			createdUsers[u.username] = existing
+			continue
+		}
+		created, ok := st.CreateUser(domain.User{
+			Username:     u.username,
+			Nickname:     u.nickname,
+			Bio:          u.bio,
+			AvatarURL:    u.avatar,
+			PasswordHash: hash,
+			PasswordSalt: salt,
+		})
+		if ok {
+			createdUsers[u.username] = created
+			log.Printf("seed: user ready (username=%s)", u.username)
+		}
+	}
+
+	// 2. If it's a fresh database/memory store (e.g. no posts exist), seed posts, comments, listings, and follows
+	if len(st.ListPosts()) == 0 {
+		// Seed Posts
+		postsToSeed := []struct {
+			username string
+			title    string
+			content  string
+			category domain.PostCategory
+			tags     []string
+		}{
+			{"peachlatte", "猫猫第一次学会开门，家里从此没有秘密", "给门把手加了保护套，顺便记录一下这个聪明小脑袋。它先观察了我们两天，然后第三天就开始自己尝试。", domain.CategoryDailyShare, []string{"日常", "聪明猫"}},
+			{"puff_bakery", "猫猫新手村：接猫回家第一周需要准备什么？", "接猫回家前，猫砂盆、航空箱、幼猫粮和水碗必不可少。最重要的是给主子一个安静的角落适应新环境。", domain.CategoryHelp, []string{"新手", "养猫技巧"}},
+			{"sunday_walk", "周末猫猫摄影散步局，doggie 也可以来当气氛组", "小区花园集合，拍照为主，不强社交。胆小猫可以只坐航空箱里观察。", domain.CategoryActivity, []string{"活动", "摄影"}},
+			{"clean_corner", "出一个 9 成新的开放式猫砂盆，适合小户型", "已彻底清洁消毒，同城可自提，附送未拆封猫砂铲。", domain.CategoryTrade, []string{"二手", "猫砂盆"}},
+		}
+
+		createdPosts := make([]domain.Post, 0)
+		postMediaMap := map[string]string{
+			"猫猫第一次学会开门，家里从此没有秘密":        "mock_image_4.png",
+			"猫猫新手村：接猫回家第一周需要准备什么？":      "mock_image_5.png",
+			"周末猫猫摄影散步局，doggie 也可以来当气氛组": "mock_image_6.png",
+			"出一个 9 成新的开放式猫砂盆，适合小户型":     "mock_image_3.png",
+		}
+
+		for _, p := range postsToSeed {
+			user, ok := createdUsers[p.username]
+			if !ok {
+				continue
+			}
+			var mediaIDs []int64
+			if img, exists := postMediaMap[p.title]; exists {
+				med := st.CreateMedia(domain.Media{
+					OwnerID:   user.ID,
+					Kind:      domain.MediaKindImage,
+					MIME:      "image/png",
+					Filename:  img,
+					URL:       "/mock-images/" + img,
+					Status:    domain.MediaStatusApproved,
+					CreatedAt: time.Now().UTC(),
+				})
+				mediaIDs = []int64{med.ID}
+			}
+
+			createdPost := st.CreatePost(domain.Post{
+				AuthorID:  user.ID,
+				Title:     p.title,
+				Content:   p.content,
+				Category:  p.category,
+				Tags:      p.tags,
+				MediaIDs:  mediaIDs,
+				CreatedAt: time.Now().UTC(),
+			})
+			createdPosts = append(createdPosts, createdPost)
+			log.Printf("seed: created post: %s", p.title)
+		}
+
+		// Seed Comments
+		if len(createdPosts) >= 1 {
+			if u, ok := createdUsers["demo"]; ok {
+				st.AddComment(domain.Comment{
+					PostID:    createdPosts[0].ID,
+					AuthorID:  u.ID,
+					Content:   "好聪明的猫猫，我家猫只会开柜门翻零食。",
+					CreatedAt: time.Now().UTC(),
+				})
+			}
+			if u, ok := createdUsers["sunday_walk"]; ok {
+				st.AddComment(domain.Comment{
+					PostID:    createdPosts[0].ID,
+					AuthorID:  u.ID,
+					Content:   "可以给它准备些益智玩具，消耗精力。",
+					CreatedAt: time.Now().UTC(),
+				})
+			}
+		}
+		if len(createdPosts) >= 2 {
+			if u, ok := createdUsers["peachlatte"]; ok {
+				st.AddComment(domain.Comment{
+					PostID:    createdPosts[1].ID,
+					AuthorID:  u.ID,
+					Content:   "支持，当时接我家猫的时候也是手忙脚乱，有这个指南方便多了。",
+					CreatedAt: time.Now().UTC(),
+				})
+			}
+		}
+
+		// Seed Listings
+		listingsToSeed := []struct {
+			username    string
+			title       string
+			description string
+			priceCents  int64
+			listType    domain.ListingType
+		}{
+			{"puff_bakery", "未拆封猫罐头 6 罐组合", "猫猫优先，适合换粮过渡；同城可自提。", 6800, domain.ListingTypeProduct},
+			{"sunday_walk", "周末上门喂猫与铲砂", "有基础照护记录，可同时帮 doggie 换水。", 12000, domain.ListingTypeService},
+			{"clean_corner", "三个月橘猫找稳定家庭", "已驱虫，性格亲人，需要领养回访。", 0, domain.ListingTypeAdopt},
+		}
+
+		for _, l := range listingsToSeed {
+			user, ok := createdUsers[l.username]
+			if !ok {
+				continue
+			}
+			st.CreateListing(domain.Listing{
+				SellerID:    user.ID,
+				Title:       l.title,
+				Description: l.description,
+				PriceCents:  l.priceCents,
+				Currency:    "CNY",
+				Type:        l.listType,
+				CreatedAt:   time.Now().UTC(),
+			})
+			log.Printf("seed: created listing: %s", l.title)
+		}
+
+		// Seed Follows
+		demoUser, demoOk := createdUsers["demo"]
+		peachlatteUser, peachOk := createdUsers["peachlatte"]
+		puffUser, puffOk := createdUsers["puff_bakery"]
+		sundayUser, sundayOk := createdUsers["sunday_walk"]
+
+		if demoOk && peachOk {
+			st.Follow(demoUser.ID, peachlatteUser.ID)
+			st.Follow(peachlatteUser.ID, demoUser.ID)
+		}
+		if demoOk && puffOk {
+			st.Follow(demoUser.ID, puffUser.ID)
+			st.Follow(puffUser.ID, demoUser.ID)
+		}
+		if demoOk && sundayOk {
+			st.Follow(demoUser.ID, sundayUser.ID)
+		}
 	}
 }
 
