@@ -212,12 +212,13 @@ func ensureDefaultUser(st store.Store) {
 			{"clean_corner", "三个月橘猫找稳定家庭", "已驱虫，性格亲人，需要领养回访。", 0, domain.ListingTypeAdopt},
 		}
 
+		createdListings := make(map[string]domain.Listing)
 		for _, l := range listingsToSeed {
 			user, ok := createdUsers[l.username]
 			if !ok {
 				continue
 			}
-			st.CreateListing(domain.Listing{
+			list := st.CreateListing(domain.Listing{
 				SellerID:    user.ID,
 				Title:       l.title,
 				Description: l.description,
@@ -226,6 +227,7 @@ func ensureDefaultUser(st store.Store) {
 				Type:        l.listType,
 				CreatedAt:   time.Now().UTC(),
 			})
+			createdListings[l.title] = list
 			log.Printf("seed: created listing: %s", l.title)
 		}
 
@@ -245,6 +247,68 @@ func ensureDefaultUser(st store.Store) {
 		}
 		if demoOk && sundayOk {
 			st.Follow(demoUser.ID, sundayUser.ID)
+		}
+
+		// Seed Orders for demo user (so that the Android app's real orders page isn't empty)
+		if demoOk {
+			// Order 1: Canned food order (shipped)
+			if puffUserOk, puffOk := createdUsers["puff_bakery"]; puffOk {
+				listing, listingOk := createdListings["未拆封猫罐头 6 罐组合"]
+				if listingOk {
+					paidTime := time.Now().Add(-24 * time.Hour).UTC()
+					st.CreateOrder(domain.Order{
+						BuyerID:      demoUser.ID,
+						SellerID:     puffUserOk.ID,
+						ListingID:    listing.ID,
+						ListingTitle: listing.Title,
+						AmountCents:  listing.PriceCents,
+						Currency:     "CNY",
+						Status:       domain.OrderStatusShipped,
+						CreatedAt:    time.Now().Add(-48 * time.Hour).UTC(),
+						UpdatedAt:    time.Now().Add(-24 * time.Hour).UTC(),
+						PaidAt:       &paidTime,
+						ShippedAt:    &paidTime,
+					})
+				}
+			}
+			// Order 2: Feeding service order (completed)
+			if sundayUserOk, sundayOk := createdUsers["sunday_walk"]; sundayOk {
+				listing, listingOk := createdListings["周末上门喂猫与铲砂"]
+				if listingOk {
+					paidTime := time.Now().Add(-4 * 24 * time.Hour).UTC()
+					st.CreateOrder(domain.Order{
+						BuyerID:      demoUser.ID,
+						SellerID:     sundayUserOk.ID,
+						ListingID:    listing.ID,
+						ListingTitle: listing.Title,
+						AmountCents:  listing.PriceCents,
+						Currency:     "CNY",
+						Status:       domain.OrderStatusCompleted,
+						CreatedAt:    time.Now().Add(-5 * 24 * time.Hour).UTC(),
+						UpdatedAt:    time.Now().Add(-4 * 24 * time.Hour).UTC(),
+						PaidAt:       &paidTime,
+						ShippedAt:    &paidTime,
+						CompletedAt:  &paidTime,
+					})
+				}
+			}
+			// Order 3: Cat adoption order (pending_payment)
+			if cleanUserOk, cleanOk := createdUsers["clean_corner"]; cleanOk {
+				listing, listingOk := createdListings["三个月橘猫找稳定家庭"]
+				if listingOk {
+					st.CreateOrder(domain.Order{
+						BuyerID:      demoUser.ID,
+						SellerID:     cleanUserOk.ID,
+						ListingID:    listing.ID,
+						ListingTitle: listing.Title,
+						AmountCents:  listing.PriceCents,
+						Currency:     "CNY",
+						Status:       domain.OrderStatusPendingPayment,
+						CreatedAt:    time.Now().UTC(),
+						UpdatedAt:    time.Now().UTC(),
+					})
+				}
+			}
 		}
 	}
 }

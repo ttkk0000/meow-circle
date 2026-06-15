@@ -2241,38 +2241,44 @@ private fun ProfilePetDetailScreen(
             .verticalScroll(rememberScrollState())
     ) {
         // AppBar
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
                 .background(StitchPalette.Surface)
-                .border(width = 1.dp, color = StitchPalette.BorderHairline)
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .statusBarsPadding()
         ) {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    contentDescription = "Back",
-                    tint = StitchPalette.PrimaryDark
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                        contentDescription = "Back",
+                        tint = StitchPalette.PrimaryDark
+                    )
+                }
+                Text(
+                    text = petName,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.PrimaryDark
                 )
+                IconButton(onClick = { /* More actions */ }) {
+                    Icon(
+                        imageVector = Icons.Outlined.MoreHoriz,
+                        contentDescription = "More",
+                        tint = StitchPalette.PrimaryDark
+                    )
+                }
             }
-            Text(
-                text = petName,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    platformStyle = PlatformTextStyle(includeFontPadding = false)
-                ),
-                fontWeight = FontWeight.Bold,
-                color = StitchPalette.PrimaryDark
-            )
-            IconButton(onClick = { /* More actions */ }) {
-                Icon(
-                    imageVector = Icons.Outlined.MoreHoriz,
-                    contentDescription = "More",
-                    tint = StitchPalette.PrimaryDark
-                )
-            }
+            HorizontalDivider(color = StitchPalette.BorderHairline)
         }
 
         // Cover Card
@@ -2665,38 +2671,44 @@ private fun ProfileConnectionsScreen(
             .background(StitchPalette.Canvas)
     ) {
         // AppBar
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
                 .background(StitchPalette.Surface)
-                .border(width = 1.dp, color = StitchPalette.BorderHairline)
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .statusBarsPadding()
         ) {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    contentDescription = "Back",
-                    tint = StitchPalette.PrimaryDark
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                        contentDescription = "Back",
+                        tint = StitchPalette.PrimaryDark
+                    )
+                }
+                Text(
+                    text = if (isFollowersTab) "Followers" else "Following",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        platformStyle = PlatformTextStyle(includeFontPadding = false)
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    color = StitchPalette.PrimaryDark
                 )
+                IconButton(onClick = { /* Search shortcut focus */ }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Search,
+                        contentDescription = "Search",
+                        tint = StitchPalette.PrimaryDark
+                    )
+                }
             }
-            Text(
-                text = if (isFollowersTab) "Followers" else "Following",
-                style = MaterialTheme.typography.titleMedium.copy(
-                    platformStyle = PlatformTextStyle(includeFontPadding = false)
-                ),
-                fontWeight = FontWeight.Bold,
-                color = StitchPalette.PrimaryDark
-            )
-            IconButton(onClick = { /* Search shortcut focus */ }) {
-                Icon(
-                    imageVector = Icons.Outlined.Search,
-                    contentDescription = "Search",
-                    tint = StitchPalette.PrimaryDark
-                )
-            }
+            HorizontalDivider(color = StitchPalette.BorderHairline)
         }
 
         // Sticky Tab and Search input section

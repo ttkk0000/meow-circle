@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -209,23 +210,29 @@ private fun MessagesListScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(StitchPalette.Surface)
-                    .padding(horizontal = 18.dp, vertical = 14.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(StitchPalette.Surface)
+                .statusBarsPadding()
         ) {
-            Text(
-                stringResource(R.string.messages_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Black,
-                color = StitchPalette.OnSurface,
-                modifier = Modifier.weight(1f),
-            )
-            IconButton(onClick = onEnableMock, modifier = Modifier.size(42.dp)) {
-                Icon(Icons.Outlined.Edit, contentDescription = stringResource(R.string.messages_compose), tint = StitchPalette.Brand)
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 18.dp, vertical = 14.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    stringResource(R.string.messages_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Black,
+                    color = StitchPalette.OnSurface,
+                    modifier = Modifier.weight(1f),
+                )
+                IconButton(onClick = onEnableMock, modifier = Modifier.size(42.dp)) {
+                    Icon(Icons.Outlined.Edit, contentDescription = stringResource(R.string.messages_compose), tint = StitchPalette.Brand)
+                }
             }
         }
         Column(
@@ -353,26 +360,32 @@ private fun ChatDetailScreen(
     }
 
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(StitchPalette.Surface)
-                    .border(1.dp, StitchPalette.BorderHairline)
-                    .padding(horizontal = 8.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(StitchPalette.Surface)
+                .statusBarsPadding()
         ) {
-            IconButton(onClick = onBack, modifier = Modifier.size(44.dp)) {
-                Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(onClick = onBack, modifier = Modifier.size(44.dp)) {
+                    Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
+                }
+                AvatarBubble(peer, apiBase)
+                Column(Modifier.padding(start = 10.dp).weight(1f)) {
+                    Text(peer.nickname.ifBlank { peer.username }, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
+                    Text(stringResource(R.string.messages_online), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
+                }
+                IconButton(onClick = { sendError = moreComingSoon }, modifier = Modifier.size(44.dp)) {
+                    Icon(Icons.Outlined.MoreVert, contentDescription = stringResource(R.string.common_more), tint = StitchPalette.OnSurface)
+                }
             }
-            AvatarBubble(peer, apiBase)
-            Column(Modifier.padding(start = 10.dp).weight(1f)) {
-                Text(peer.nickname.ifBlank { peer.username }, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
-                Text(stringResource(R.string.messages_online), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
-            }
-            IconButton(onClick = { sendError = moreComingSoon }, modifier = Modifier.size(44.dp)) {
-                Icon(Icons.Outlined.MoreVert, contentDescription = stringResource(R.string.common_more), tint = StitchPalette.OnSurface)
-            }
+            HorizontalDivider(color = StitchPalette.BorderHairline)
         }
         if (conversation.lastMessage.contains("order", ignoreCase = true) || conversation.lastMessage.contains("订单") || messages.any { it.content.contains("order", ignoreCase = true) || it.content.contains("订单") }) {
             OrderContextCard(apiBase = apiBase, onOpenOrders = onOpenOrders)

@@ -17,6 +17,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.DoneAll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -369,24 +374,30 @@ private fun OrdersListScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(StitchPalette.Surface)
-                    .padding(horizontal = 16.dp, vertical = 14.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(StitchPalette.Surface)
+                .statusBarsPadding()
         ) {
-            Spacer(Modifier.width(44.dp))
-            Text(
-                stringResource(R.string.orders_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Black,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.weight(1f),
-            )
-            IconButton(onClick = onRoleToggle, modifier = Modifier.size(44.dp)) {
-                Icon(Icons.Outlined.FilterList, contentDescription = stringResource(R.string.orders_toggle_role), tint = StitchPalette.OnSurface)
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 14.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Spacer(Modifier.width(44.dp))
+                Text(
+                    stringResource(R.string.orders_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Black,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                )
+                IconButton(onClick = onRoleToggle, modifier = Modifier.size(44.dp)) {
+                    Icon(Icons.Outlined.FilterList, contentDescription = stringResource(R.string.orders_toggle_role), tint = StitchPalette.OnSurface)
+                }
             }
         }
         Row(
@@ -789,10 +800,37 @@ private fun DisputeStatusScreen(
                 Text(stringResource(R.string.safety_under_review_body), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
             }
             InfoCard(title = stringResource(R.string.safety_timeline)) {
-                TrackingStep(stringResource(R.string.safety_step_submitted), stringResource(R.string.orders_step_placed), true)
-                TrackingStep(stringResource(R.string.safety_step_seller_notified), stringResource(R.string.messages_today), true)
-                TrackingStep(stringResource(R.string.safety_step_under_review), stringResource(R.string.safety_support_reviewing), true)
-                TrackingStep(stringResource(R.string.safety_step_resolution), stringResource(R.string.safety_waiting_resolution), false, isLast = true)
+                Column(Modifier.padding(vertical = 8.dp)) {
+                    TrackingStep(
+                        title = stringResource(R.string.safety_step_submitted),
+                        body = stringResource(R.string.orders_step_placed),
+                        state = StepState.COMPLETED,
+                        icon = Icons.Outlined.Check,
+                        connectorDone = true,
+                    )
+                    TrackingStep(
+                        title = stringResource(R.string.safety_step_seller_notified),
+                        body = stringResource(R.string.messages_today),
+                        state = StepState.COMPLETED,
+                        icon = Icons.Outlined.Check,
+                        connectorDone = true,
+                    )
+                    TrackingStep(
+                        title = stringResource(R.string.safety_step_under_review),
+                        body = stringResource(R.string.safety_support_reviewing),
+                        state = StepState.ACTIVE,
+                        icon = Icons.Outlined.Check,
+                        connectorDone = false,
+                    )
+                    TrackingStep(
+                        title = stringResource(R.string.safety_step_resolution),
+                        body = stringResource(R.string.safety_waiting_resolution),
+                        state = StepState.FUTURE,
+                        icon = Icons.Outlined.DoneAll,
+                        connectorDone = false,
+                        isLast = true,
+                    )
+                }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
                 OutlinedButton(onClick = onOpenMessages, shape = StitchShape.field, modifier = Modifier.weight(1f).height(48.dp), border = BorderStroke(1.dp, StitchPalette.BorderHairline)) {
@@ -809,17 +847,64 @@ private fun DisputeStatusScreen(
     }
 }
 
+private enum class StepState {
+    COMPLETED,
+    ACTIVE,
+    FUTURE
+}
+
 @Composable
 private fun TrackingScreen(
     order: Order,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val status = order.status
+    val isPaid = order.paidAt != null
+
+    val step1State = StepState.COMPLETED
+    val step2State = when {
+        isPaid -> StepState.COMPLETED
+        status == "pending_payment" || status == "placed" -> StepState.ACTIVE
+        else -> StepState.FUTURE
+    }
+    val step3State = when {
+        status == "completed" -> StepState.COMPLETED
+        status == "shipped" -> StepState.ACTIVE
+        else -> StepState.FUTURE
+    }
+    val step4State = when {
+        status == "completed" -> StepState.ACTIVE
+        else -> StepState.FUTURE
+    }
+
+    val connector1Done = isPaid
+    val connector2Done = status in listOf("shipped", "completed")
+    val connector3Done = status == "completed"
+
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
         Header(title = stringResource(R.string.orders_tracking), onBack = onBack, close = true)
         Column(Modifier.fillMaxSize().padding(18.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            InfoCard(title = stringResource(R.string.orders_tracking_number)) {
-                Text("940123456", style = MaterialTheme.typography.titleLarge, color = StitchPalette.Brand, fontWeight = FontWeight.Black)
+            Card(
+                shape = StitchShape.cardFeed,
+                colors = CardDefaults.cardColors(containerColor = StitchPalette.Surface),
+                border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Column(Modifier.padding(20.dp)) {
+                    Text(
+                        text = stringResource(R.string.orders_tracking_number),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = StitchPalette.OnSurfaceVariant,
+                        modifier = Modifier.padding(bottom = 4.dp),
+                    )
+                    Text(
+                        text = "9400123456",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = StitchPalette.Brand,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
             Card(
                 shape = StitchShape.cardFeed,
@@ -827,11 +912,41 @@ private fun TrackingScreen(
                 border = BorderStroke(1.dp, StitchPalette.BorderHairline),
                 modifier = Modifier.fillMaxWidth().weight(1f),
             ) {
-                Column(Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
-                    TrackingStep(stringResource(R.string.orders_step_placed), order.createdAt.take(16).replace('T', ' '), true)
-                    TrackingStep(stringResource(R.string.orders_step_paid), order.paidAt?.take(16)?.replace('T', ' ') ?: stringResource(R.string.orders_awaiting_payment), order.paidAt != null)
-                    TrackingStep(stringResource(R.string.orders_step_shipped), stringResource(R.string.orders_in_transit), order.status in listOf("shipped", "completed"))
-                    TrackingStep(stringResource(R.string.orders_step_completed), stringResource(R.string.orders_awaiting_delivery), order.status == "completed", isLast = true)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp, vertical = 24.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    TrackingStep(
+                        title = stringResource(R.string.orders_step_placed),
+                        body = order.createdAt.take(16).replace('T', ' '),
+                        state = step1State,
+                        icon = Icons.Outlined.Check,
+                        connectorDone = connector1Done,
+                    )
+                    TrackingStep(
+                        title = stringResource(R.string.orders_step_paid),
+                        body = order.paidAt?.take(16)?.replace('T', ' ') ?: stringResource(R.string.orders_awaiting_payment),
+                        state = step2State,
+                        icon = Icons.Outlined.ReceiptLong,
+                        connectorDone = connector2Done,
+                    )
+                    TrackingStep(
+                        title = stringResource(R.string.orders_step_shipped),
+                        body = if (status in listOf("shipped", "completed")) stringResource(R.string.orders_in_transit) else stringResource(R.string.orders_step_shipped),
+                        state = step3State,
+                        icon = Icons.Outlined.LocalShipping,
+                        connectorDone = connector3Done,
+                    )
+                    TrackingStep(
+                        title = stringResource(R.string.orders_step_completed),
+                        body = if (status == "completed") stringResource(R.string.orders_step_completed) else stringResource(R.string.orders_awaiting_delivery),
+                        state = step4State,
+                        icon = Icons.Outlined.DoneAll,
+                        connectorDone = false,
+                        isLast = true,
+                    )
                 }
             }
         }
@@ -911,15 +1026,23 @@ private fun Header(
     onBack: () -> Unit,
     close: Boolean = false,
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth().background(StitchPalette.Surface).padding(horizontal = 10.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(StitchPalette.Surface)
+            .statusBarsPadding()
     ) {
-        IconButton(onClick = onBack, modifier = Modifier.size(44.dp)) {
-            Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = if (close) stringResource(R.string.common_close) else stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onBack, modifier = Modifier.size(44.dp)) {
+                Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = if (close) stringResource(R.string.common_close) else stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
+            }
+            Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
+            Spacer(Modifier.width(44.dp))
         }
-        Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
-        Spacer(Modifier.width(44.dp))
+        HorizontalDivider(color = StitchPalette.BorderHairline)
     }
 }
 
@@ -1243,31 +1366,92 @@ private fun OrderActionBar(
 private fun TrackingStep(
     title: String,
     body: String,
-    done: Boolean,
+    state: StepState,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    connectorDone: Boolean = false,
     isLast: Boolean = false,
 ) {
-    Row(Modifier.fillMaxWidth().height(72.dp), verticalAlignment = Alignment.Top) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max),
+        verticalAlignment = Alignment.Top
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(32.dp)
+        ) {
             Box(
-                modifier = Modifier.size(30.dp).clip(CircleShape).background(if (done) StitchPalette.Brand else StitchPalette.SurfaceLow).border(1.dp, StitchPalette.BorderHairline, CircleShape),
-                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(CircleShape)
+                    .background(
+                        when (state) {
+                            StepState.COMPLETED -> Color(0xFFFF8A3D)
+                            StepState.ACTIVE -> Color.White
+                            StepState.FUTURE -> Color.White
+                        }
+                    )
+                    .border(
+                        width = if (state == StepState.COMPLETED) 0.dp else 2.dp,
+                        color = when (state) {
+                            StepState.COMPLETED -> Color.Transparent
+                            StepState.ACTIVE -> Color(0xFFFF8A3D)
+                            StepState.FUTURE -> Color(0xFFD6C7BE)
+                        },
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
             ) {
-                if (done) {
-                    Box(Modifier.size(9.dp).clip(CircleShape).background(Color.White))
-                }
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = when (state) {
+                        StepState.COMPLETED -> Color.White
+                        StepState.ACTIVE -> Color(0xFFFF8A3D)
+                        StepState.FUTURE -> Color(0xFFD6C7BE)
+                    },
+                    modifier = Modifier.size(16.dp)
+                )
             }
             if (!isLast) {
                 Box(
-                    Modifier
+                    modifier = Modifier
                         .width(2.dp)
-                        .height(42.dp)
-                        .background(if (done) StitchPalette.Brand.copy(alpha = 0.7f) else StitchPalette.BorderHairline),
+                        .weight(1f)
+                        .background(
+                            if (connectorDone) Color(0xFFFF8A3D) else Color(0xFFF5E2D5)
+                        )
                 )
             }
         }
-        Column(Modifier.padding(start = 12.dp, top = 2.dp).weight(1f)) {
-            Text(title, style = MaterialTheme.typography.titleSmall, color = if (done) StitchPalette.Brand else StitchPalette.OnSurfaceVariant, fontWeight = FontWeight.Black)
-            Text(body, style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+        Column(
+            modifier = Modifier
+                .padding(start = 16.dp, top = 4.dp, bottom = 24.dp)
+                .weight(1f)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = when (state) {
+                    StepState.COMPLETED -> Color(0xFF231F20)
+                    StepState.ACTIVE -> Color(0xFFFF8A3D)
+                    StepState.FUTURE -> Color(0xFF9A8A80)
+                },
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = body,
+                style = MaterialTheme.typography.bodyMedium,
+                color = when (state) {
+                    StepState.COMPLETED -> Color(0xFF6B5E57)
+                    StepState.ACTIVE -> Color(0xFF6B5E57)
+                    StepState.FUTURE -> Color(0xFF9A8A80)
+                }
+            )
         }
     }
 }

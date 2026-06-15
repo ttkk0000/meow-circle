@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -102,39 +103,45 @@ fun StitchComposeScreen(
         modifier = modifier.fillMaxSize(),
         containerColor = StitchPalette.Canvas,
         topBar = {
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .background(StitchPalette.Surface)
-                        .border(1.dp, StitchPalette.BorderHairline)
-                        .padding(horizontal = 10.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(StitchPalette.Surface)
+                    .statusBarsPadding()
             ) {
-                IconButton(onClick = onClose, enabled = !busy, modifier = Modifier.size(44.dp)) {
-                    Icon(Icons.Outlined.Close, contentDescription = stringResource(R.string.common_close), tint = StitchPalette.PrimaryDark)
-                }
-                Text(
-                    stringResource(R.string.compose_title),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = StitchPalette.PrimaryDark,
-                    fontWeight = FontWeight.Black,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                )
-                Button(
-                    onClick = ::publish,
-                    enabled = !busy && content.isNotBlank(),
-                    shape = StitchShape.pill,
-                    colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
-                    modifier = Modifier.height(42.dp),
+                Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp, vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    if (busy) {
-                        CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
-                    } else {
-                        Text(stringResource(R.string.compose_post), color = Color.White, fontWeight = FontWeight.Bold)
+                    IconButton(onClick = onClose, enabled = !busy, modifier = Modifier.size(44.dp)) {
+                        Icon(Icons.Outlined.Close, contentDescription = stringResource(R.string.common_close), tint = StitchPalette.PrimaryDark)
+                    }
+                    Text(
+                        stringResource(R.string.compose_title),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = StitchPalette.PrimaryDark,
+                        fontWeight = FontWeight.Black,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Button(
+                        onClick = ::publish,
+                        enabled = !busy && content.isNotBlank(),
+                        shape = StitchShape.pill,
+                        colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+                        modifier = Modifier.height(42.dp),
+                    ) {
+                        if (busy) {
+                            CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
+                        } else {
+                            Text(stringResource(R.string.compose_post), color = Color.White, fontWeight = FontWeight.Bold)
+                        }
                     }
                 }
+                HorizontalDivider(color = StitchPalette.BorderHairline)
             }
         },
     ) { inner ->

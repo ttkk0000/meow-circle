@@ -505,9 +505,15 @@ func (s *MemoryStore) CreateOrder(order domain.Order) domain.Order {
 	s.orderSeq++
 	now := time.Now().UTC()
 	order.ID = s.orderSeq
-	order.Status = domain.OrderStatusPendingPayment
-	order.CreatedAt = now
-	order.UpdatedAt = now
+	if order.Status == "" {
+		order.Status = domain.OrderStatusPendingPayment
+	}
+	if order.CreatedAt.IsZero() {
+		order.CreatedAt = now
+	}
+	if order.UpdatedAt.IsZero() {
+		order.UpdatedAt = now
+	}
 	s.orders[order.ID] = order
 	return order
 }

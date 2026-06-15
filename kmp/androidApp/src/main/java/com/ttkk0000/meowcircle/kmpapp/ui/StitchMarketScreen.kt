@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -701,32 +702,38 @@ private fun ProductDetailHeader(
     onSave: () -> Unit,
     onShare: () -> Unit,
 ) {
-    Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline)
-                .padding(horizontal = 8.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(StitchPalette.Surface)
     ) {
-        IconButton(onClick = onBack, modifier = Modifier.size(44.dp).clip(CircleShape).background(StitchPalette.SurfaceLow)) {
-            Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
+        Spacer(Modifier.statusBarsPadding())
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onBack, modifier = Modifier.size(44.dp).clip(CircleShape).background(StitchPalette.SurfaceLow)) {
+                Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back), tint = StitchPalette.OnSurface)
+            }
+            Text(
+                title,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Black,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(1f),
+            )
+            IconButton(onClick = onSave, modifier = Modifier.size(44.dp).clip(CircleShape).background(StitchPalette.SurfaceLow)) {
+                Icon(Icons.Outlined.FavoriteBorder, contentDescription = stringResource(R.string.common_save), tint = StitchPalette.OnSurface)
+            }
+            Spacer(Modifier.width(6.dp))
+            IconButton(onClick = onShare, modifier = Modifier.size(44.dp).clip(CircleShape).background(StitchPalette.SurfaceLow)) {
+                Icon(Icons.Outlined.Share, contentDescription = stringResource(R.string.common_share), tint = StitchPalette.OnSurface)
+            }
         }
-        Text(
-            title,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Black,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.weight(1f),
-        )
-        IconButton(onClick = onSave, modifier = Modifier.size(44.dp).clip(CircleShape).background(StitchPalette.SurfaceLow)) {
-            Icon(Icons.Outlined.FavoriteBorder, contentDescription = stringResource(R.string.common_save), tint = StitchPalette.OnSurface)
-        }
-        Spacer(Modifier.width(6.dp))
-        IconButton(onClick = onShare, modifier = Modifier.size(44.dp).clip(CircleShape).background(StitchPalette.SurfaceLow)) {
-            Icon(Icons.Outlined.Share, contentDescription = stringResource(R.string.common_share), tint = StitchPalette.OnSurface)
-        }
+        HorizontalDivider(color = StitchPalette.BorderHairline)
     }
 }
 
@@ -1246,34 +1253,40 @@ private fun DetailHeader(
     action: String? = null,
     close: Boolean = false,
 ) {
-    Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline)
-                .padding(horizontal = 12.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(StitchPalette.Surface)
     ) {
-        IconButton(onClick = onBack, modifier = Modifier.size(44.dp)) {
-            Icon(
-                if (close) Icons.Outlined.Close else Icons.AutoMirrored.Outlined.ArrowBack,
-                contentDescription = if (close) stringResource(R.string.common_close) else stringResource(R.string.common_back),
-                tint = StitchPalette.OnSurface,
+        Spacer(Modifier.statusBarsPadding())
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onBack, modifier = Modifier.size(44.dp)) {
+                Icon(
+                    if (close) Icons.Outlined.Close else Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = if (close) stringResource(R.string.common_close) else stringResource(R.string.common_back),
+                    tint = StitchPalette.OnSurface,
+                )
+            }
+            Text(
+                title,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Black,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(1f),
             )
+            if (action != null) {
+                Text(action, color = StitchPalette.Brand, fontWeight = FontWeight.Bold, modifier = Modifier.padding(end = 8.dp))
+            } else {
+                Spacer(Modifier.width(44.dp))
+            }
         }
-        Text(
-            title,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Black,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.weight(1f),
-        )
-        if (action != null) {
-            Text(action, color = StitchPalette.Brand, fontWeight = FontWeight.Bold, modifier = Modifier.padding(end = 8.dp))
-        } else {
-            Spacer(Modifier.width(44.dp))
-        }
+        HorizontalDivider(color = StitchPalette.BorderHairline)
     }
 }
 
