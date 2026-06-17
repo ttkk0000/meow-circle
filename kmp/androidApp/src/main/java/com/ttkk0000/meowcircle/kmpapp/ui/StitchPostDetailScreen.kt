@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.aspectRatio
@@ -27,7 +28,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -236,7 +237,7 @@ fun StitchPostDetailScreen(
                         d.media.filter { it.kind == "image" || it.mime.startsWith("image/") }
                     LazyColumn(
                         modifier = Modifier.fillMaxSize().padding(inner),
-                        contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 24.dp),
+                        contentPadding = PaddingValues(0.dp, 8.dp, 0.dp, 24.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         if (imageMedia.isNotEmpty()) {
@@ -246,8 +247,7 @@ fun StitchPostDetailScreen(
                                     modifier =
                                         Modifier
                                             .fillMaxWidth()
-                                            .aspectRatio(1f)
-                                            .clip(StitchShape.neutralCard)
+                                            .aspectRatio(1.18f)
                                             .background(StitchLoginRef.SurfaceContainerLow),
                                 ) {
                                     HorizontalPager(
@@ -283,7 +283,7 @@ fun StitchPostDetailScreen(
                             }
                         }
                         item {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
                                 val av = resolveMediaUrl(apiBase, author.avatarUrl.takeIf { it.isNotBlank() })
                                 if (av != null) {
                                     AsyncImage(
@@ -316,7 +316,7 @@ fun StitchPostDetailScreen(
                                         fontWeight = FontWeight.Bold,
                                     )
                                     Text(
-                                        author.bio.ifBlank { stringResource(R.string.post_author_fallback) },
+                                        "@${author.username.ifBlank { who }}",
                                         style = MaterialTheme.typography.bodySmall,
                                         color = StitchLoginRef.Outline,
                                     )
@@ -339,36 +339,12 @@ fun StitchPostDetailScreen(
                             }
                         }
                         item {
-                            Text(d.post.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                            Spacer(Modifier.height(8.dp))
-                            Text(d.post.content, style = MaterialTheme.typography.bodyLarge, color = StitchLoginRef.OnSurface)
-                            if (d.post.tags.isNotEmpty()) {
-                                Spacer(Modifier.height(8.dp))
-                                Text(
-                                    d.post.tags.joinToString(" ") { "#$it" },
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = StitchLoginRef.Outline,
-                                )
-                            }
-                            Spacer(Modifier.height(4.dp))
-                            Text(
-                                stringResource(R.string.post_created_at, d.post.createdAt.take(16).replace('T', ' ')),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = StitchLoginRef.Outline,
-                            )
-                        }
-                        item {
                             Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                PostStatChip(
-                                    icon = if (liked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                                    label = formatCompactCount(likeCount),
-                                    selected = liked,
-                                    enabled = !likeBusy,
-                                    onClick = {
+                                Row(
+                                    modifier = Modifier.clickable(enabled = !likeBusy) {
                                         likeBusy = true
                                         actionMessage = null
                                         scope.launch {
@@ -388,32 +364,97 @@ fun StitchPostDetailScreen(
                                             likeBusy = false
                                         }
                                     },
-                                )
-                                PostStatChip(
-                                    icon = Icons.Outlined.ChatBubbleOutline,
-                                    label = "${d.comments.size + localComments.size}",
-                                    onClick = {
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        imageVector = if (liked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                                        contentDescription = stringResource(R.string.post_like_action),
+                                        tint = if (liked) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                                        modifier = Modifier.size(28.dp),
+                                    )
+                                }
+                                Spacer(Modifier.width(18.dp))
+                                Row(
+                                    modifier = Modifier.clickable {
                                         actionMessage = context.getString(R.string.post_comment_focus_hint)
                                         actionError = false
                                     },
-                                )
-                                PostStatChip(
-                                    icon = Icons.Outlined.BookmarkBorder,
-                                    label = if (saved) stringResource(R.string.post_saved) else stringResource(R.string.common_save),
-                                    selected = saved,
-                                    onClick = {
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.ChatBubbleOutline,
+                                        contentDescription = stringResource(R.string.post_add_comment),
+                                        tint = StitchPalette.OnSurfaceVariant,
+                                        modifier = Modifier.size(28.dp),
+                                    )
+                                }
+                                Spacer(Modifier.width(18.dp))
+                                Row(
+                                    modifier = Modifier.clickable {
+                                        actionMessage = context.getString(R.string.common_share_ready)
+                                        actionError = false
+                                    },
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Outlined.Send,
+                                        contentDescription = stringResource(R.string.common_share),
+                                        tint = StitchPalette.OnSurfaceVariant,
+                                        modifier = Modifier.size(28.dp),
+                                    )
+                                }
+                                Spacer(Modifier.weight(1f))
+                                Icon(
+                                    imageVector = Icons.Outlined.BookmarkBorder,
+                                    contentDescription = stringResource(R.string.common_save),
+                                    tint = if (saved) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                                    modifier = Modifier.size(28.dp).clickable {
                                         saved = !saved
                                         actionMessage = context.getString(if (saved) R.string.post_saved else R.string.post_unsaved)
                                         actionError = false
                                     },
                                 )
-                                PostStatChip(
-                                    icon = Icons.Outlined.Share,
-                                    label = stringResource(R.string.common_share),
-                                    onClick = {
-                                        actionMessage = context.getString(R.string.common_share_ready)
-                                        actionError = false
-                                    },
+                            }
+                        }
+                        item {
+                            if (likeCount > 0) {
+                                Text(
+                                    "${formatCompactCount(likeCount)} likes",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = StitchPalette.OnSurface,
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                )
+                            } else {
+                                Text(
+                                    "45k likes", // mock
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = StitchPalette.OnSurface,
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                )
+                            }
+                        }
+                        item {
+                            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                                Text(
+                                    d.post.content.ifBlank { d.post.title },
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = StitchLoginRef.OnSurface
+                                )
+                                if (d.post.tags.isNotEmpty()) {
+                                    Spacer(Modifier.height(8.dp))
+                                    Text(
+                                        d.post.tags.joinToString(" ") { "#$it" },
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = StitchLoginRef.Outline,
+                                    )
+                                }
+                                Spacer(Modifier.height(4.dp))
+                                Text(
+                                    stringResource(R.string.post_created_at, d.post.createdAt.take(16).replace('T', ' ')),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = StitchLoginRef.Outline,
                                 )
                             }
                         }
@@ -426,6 +467,7 @@ fun StitchPostDetailScreen(
                                     modifier =
                                         Modifier
                                             .fillMaxWidth()
+                                            .padding(horizontal = 16.dp)
                                             .clip(StitchShape.field)
                                             .background(if (actionError) StitchPalette.Error.copy(alpha = 0.08f) else StitchPalette.SurfaceContainer)
                                             .padding(12.dp),
@@ -438,6 +480,7 @@ fun StitchPostDetailScreen(
                                 stringResource(R.string.post_comments_count, d.comments.size + localComments.size),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(horizontal = 16.dp),
                             )
                         }
                         items(d.comments, key = { it.id }) { c -> CommentRow(apiBase, c) }

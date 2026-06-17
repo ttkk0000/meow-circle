@@ -21,7 +21,7 @@ import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.material.icons.outlined.PlayCircle
-import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -78,15 +78,7 @@ fun FeedTileCard(
         modifier =
             modifier
                 .fillMaxWidth()
-                .shadow(
-                    elevation = StitchShadows.cardAmbientY,
-                    shape = StitchShape.cardFeed,
-                    ambientColor = StitchShadows.cardAmbientColor,
-                    spotColor = StitchShadows.cardAmbientColor,
-                )
-                .clip(StitchShape.cardFeed)
                 .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline, StitchShape.cardFeed)
                 .clickable(onClick = onClick),
     ) {
         Row(
@@ -127,23 +119,13 @@ fun FeedTileCard(
                 modifier = Modifier.size(24.dp),
             )
         }
-        Text(
-            post.content.ifBlank { post.title },
-            style = MaterialTheme.typography.bodyLarge,
-            color = StitchPalette.OnSurface,
-            modifier = Modifier.padding(horizontal = 16.dp),
-            maxLines = 4,
-            overflow = TextOverflow.Ellipsis,
-        )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(8.dp))
         if (thumb != null) {
             Box(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .aspectRatio(1.18f)
-                        .clip(StitchShape.cardFeed),
+                        .aspectRatio(1.18f),
             ) {
                 AsyncImage(
                     model = thumb,
@@ -168,9 +150,7 @@ fun FeedTileCard(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
                         .aspectRatio(1.55f)
-                        .clip(StitchShape.cardFeed)
                         .background(StitchPalette.SurfaceLow),
             ) {
                 Icon(
@@ -204,14 +184,13 @@ fun FeedTileCard(
                 }
             }
         }
-        Spacer(Modifier.height(12.dp))
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FeedActionIcon(
                 icon = if (item.liked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                label = formatCompactCount(item.likeCount),
+                label = if (item.likeCount > 0) formatCompactCount(item.likeCount) else "45k", // Using mock design values if 0
                 tint = if (item.liked) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
                 contentDescription = stringResource(R.string.post_like_action),
                 onClick = onLike,
@@ -219,14 +198,14 @@ fun FeedTileCard(
             Spacer(Modifier.width(18.dp))
             FeedActionIcon(
                 icon = Icons.Outlined.ChatBubbleOutline,
-                label = "",
+                label = "45",
                 tint = StitchPalette.OnSurfaceVariant,
                 contentDescription = stringResource(R.string.post_add_comment),
                 onClick = onComment,
             )
             Spacer(Modifier.width(18.dp))
             FeedActionIcon(
-                icon = Icons.Outlined.Share,
+                icon = Icons.AutoMirrored.Outlined.Send,
                 label = "",
                 tint = StitchPalette.OnSurfaceVariant,
                 contentDescription = stringResource(R.string.common_share),
@@ -243,6 +222,15 @@ fun FeedTileCard(
                         .clickable(onClick = onSave),
             )
         }
+        Text(
+            post.content.ifBlank { post.title },
+            style = MaterialTheme.typography.bodyLarge,
+            color = StitchPalette.OnSurface,
+            modifier = Modifier.padding(horizontal = 16.dp),
+            maxLines = 4,
+            overflow = TextOverflow.Ellipsis,
+        )
+        Spacer(Modifier.height(16.dp))
     }
 }
 

@@ -19,10 +19,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
@@ -54,7 +56,7 @@ import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -859,14 +861,9 @@ fun StitchFeedScreen(
                                             modifier = Modifier.fillMaxSize(),
                                         )
                                     filtered.isEmpty() ->
-                                        PlaceholderPane(
-                                            headline = stringResource(if (q.isBlank()) R.string.feed_empty_title else R.string.feed_empty_search_title),
-                                            body =
-                                                if (q.isBlank()) {
-                                                    stringResource(R.string.feed_empty_body)
-                                                } else {
-                                                    stringResource(R.string.feed_empty_search_body)
-                                                },
+                                        FeedEmptyStatePane(
+                                            apiBase = apiBase,
+                                            onCompose = onCompose,
                                             modifier = Modifier.fillMaxSize(),
                                         )
                                     else ->
@@ -944,19 +941,8 @@ private fun HomeFeedHeader(
     onEnableMock: () -> Unit,
     onCompose: () -> Unit,
 ) {
-    Surface(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .shadow(
-                    elevation = StitchShadows.cardAmbientY,
-                    shape = FEED_SECTION_RADIUS,
-                    ambientColor = StitchShadows.cardAmbientColor,
-                    spotColor = StitchShadows.cardAmbientColor,
-                )
-                .border(1.dp, StitchPalette.BorderHairline, FEED_SECTION_RADIUS),
-        shape = FEED_SECTION_RADIUS,
-        color = StitchPalette.Surface,
+    Column(
+        modifier = Modifier.fillMaxWidth().background(StitchPalette.Canvas),
     ) {
         Row(
             modifier =
@@ -971,12 +957,11 @@ private fun HomeFeedHeader(
                     Modifier
                         .size(46.dp)
                         .clip(CircleShape)
-                        .background(StitchPalette.BrandMuted)
-                        .border(1.dp, StitchPalette.BorderHairline, CircleShape),
+                        .border(1.dp, StitchPalette.Brand, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Pets,
+                    imageVector = Icons.Outlined.Person,
                     contentDescription = null,
                     tint = StitchPalette.Brand,
                     modifier = Modifier.size(24.dp),
@@ -986,7 +971,6 @@ private fun HomeFeedHeader(
                 modifier = Modifier.weight(1f),
                 shape = StitchShape.pill,
                 color = StitchPalette.SurfaceLow,
-                border = BorderStroke(1.dp, StitchPalette.OutlineVariant),
             ) {
                 Text(
                     stringResource(R.string.feed_share_prompt),
@@ -996,11 +980,7 @@ private fun HomeFeedHeader(
                 )
             }
             Box(
-                modifier =
-                    Modifier
-                        .size(46.dp)
-                        .clip(CircleShape)
-                        .background(StitchPalette.BrandMuted),
+                modifier = Modifier.size(46.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
@@ -4792,6 +4772,115 @@ private fun MessageShortcutRow(
             contentDescription = null,
             tint = StitchPalette.Outline,
         )
+    }
+}
+
+@Composable
+private fun FeedEmptyStatePane(
+    apiBase: String,
+    onCompose: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxSize().background(StitchPalette.Canvas).padding(top = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .clip(StitchShape.cardFeed)
+                .background(StitchPalette.Surface)
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(CircleShape)
+                    .background(StitchPalette.BrandMuted),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(Icons.Filled.Pets, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(32.dp))
+            }
+            Spacer(Modifier.height(16.dp))
+            Text(
+                "Follow pets and creators",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = StitchPalette.OnSurface,
+                textAlign = TextAlign.Center,
+            )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                "Your feed is empty. Find accounts you love to start building your personalized feed.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = StitchPalette.OnSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+            Spacer(Modifier.height(24.dp))
+            Button(
+                onClick = { /* TODO */ },
+                modifier = Modifier.fillMaxWidth().height(48.dp),
+                shape = StitchShape.pill,
+                colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+            ) {
+                Text("Find pets to follow", fontWeight = FontWeight.Bold)
+            }
+            Spacer(Modifier.height(12.dp))
+            OutlinedButton(
+                onClick = onCompose,
+                modifier = Modifier.fillMaxWidth().height(48.dp),
+                shape = StitchShape.pill,
+                border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.OutlineVariant),
+            ) {
+                Text("Create your first post", color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
+            }
+        }
+        
+        Spacer(Modifier.height(32.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text("Suggested Creators", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface, modifier = Modifier.weight(1f))
+        }
+        Spacer(Modifier.height(16.dp))
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            items(5) { index ->
+                Column(
+                    modifier = Modifier
+                        .width(140.dp)
+                        .clip(StitchShape.cardFeed)
+                        .background(StitchPalette.Surface)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    AsyncImage(
+                        model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_${index + 1}.png",
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp).clip(CircleShape).background(StitchPalette.SurfaceLow),
+                        contentScale = ContentScale.Crop,
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Text("Creator ${index + 1}", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text("@creator${index + 1}", style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Spacer(Modifier.height(16.dp))
+                    OutlinedButton(
+                        onClick = { /* TODO */ },
+                        modifier = Modifier.fillMaxWidth().height(36.dp),
+                        shape = StitchShape.pill,
+                        contentPadding = PaddingValues(0.dp),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.Brand),
+                    ) {
+                        Text("Follow", color = StitchPalette.Brand, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -61,6 +61,12 @@ import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import com.ttkk0000.meowcircle.kmpapp.ui.components.dashedBorder
 import kotlinx.coroutines.launch
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import android.net.Uri
+import coil.compose.AsyncImage
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun StitchComposeScreen(
@@ -74,7 +80,7 @@ fun StitchComposeScreen(
     var categoryKey by remember { mutableStateOf("daily_share") }
     var visibilityKey by remember { mutableStateOf("public") }
     var hasLocation by remember { mutableStateOf(false) }
-    var pickedMediaCount by remember { mutableStateOf(0) }
+    var selectedUris by remember { mutableStateOf<List<Uri>>(emptyList()) }
     var mediaIdsText by remember { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
     var err by remember { mutableStateOf<String?>(null) }
@@ -86,7 +92,8 @@ fun StitchComposeScreen(
         val body = content.trim()
         if (body.isBlank()) return
         val title = body.lineSequence().firstOrNull()?.take(42)?.ifBlank { defaultPostTitle } ?: defaultPostTitle
-        val mediaIds = parseMediaIds(mediaIdsText)
+        // Mock media IDs for the selected URIs since there is no backend upload yet
+        val mediaIds = selectedUris.map { System.currentTimeMillis() }
         err = null
         busy = true
         scope.launch {
@@ -100,6 +107,14 @@ fun StitchComposeScreen(
                 },
             )
             busy = false
+        }
+    }
+
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickMultipleVisualMedia(maxItems = 2)
+    ) { uris ->
+        if (uris.isNotEmpty()) {
+            selectedUris = (selectedUris + uris).take(2)
         }
     }
 
@@ -197,22 +212,34 @@ fun StitchComposeScreen(
             )
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                repeat(2) { index ->
+                selectedUris.forEach { uri ->
                     Box(
-                        modifier =
-                            Modifier
-                                .size(86.dp)
-                                .let {
-                                    if (index < pickedMediaCount) {
-                                        it.clip(StitchShape.field)
-                                          .background(StitchPalette.SurfaceLow)
-                                          .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
-                                    } else {
-                                        it.background(StitchPalette.BrandMuted.copy(alpha = 0.5f), StitchShape.field)
-                                          .dashedBorder(StitchPalette.Brand.copy(alpha = 0.4f), 1.5.dp, 12.dp)
-                                    }
-                                }
-                                .clickable { pickedMediaCount = (pickedMediaCount + 1).coerceAtMost(2) },
+                        modifier = Modifier
+                            .size(86.dp)
+                            .clip(StitchShape.field)
+                            .background(StitchPalette.SurfaceLow)
+                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
+                    ) {
+                        AsyncImage(
+                            model = uri,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+                
+                if (selectedUris.size < 2) {
+                    Box(
+                        modifier = Modifier
+                            .size(86.dp)
+                            .background(StitchPalette.BrandMuted.copy(alpha = 0.5f), StitchShape.field)
+                            .dashedBorder(StitchPalette.Brand.copy(alpha = 0.4f), 1.5.dp, 12.dp)
+                            .clickable {
+                                photoPickerLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                )
+                            },
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = stringResource(R.string.feed_add_photo), tint = StitchPalette.Brand)
