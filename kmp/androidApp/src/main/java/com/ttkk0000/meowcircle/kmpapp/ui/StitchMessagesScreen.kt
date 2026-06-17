@@ -321,14 +321,18 @@ private fun ChatDetailScreen(
     var draft by remember(conversation.peer.id) { mutableStateOf("") }
     var sending by remember { mutableStateOf(false) }
     var sendError by remember { mutableStateOf<String?>(null) }
-    val moreComingSoon = stringResource(R.string.messages_more_coming_soon)
-    val attachComingSoon = stringResource(R.string.messages_attach_coming_soon)
+    var actionInfo by remember { mutableStateOf<String?>(null) }
+    val moreActionsHint = stringResource(R.string.messages_more_actions_hint)
+    val attachmentDraft = stringResource(R.string.messages_attachment_draft)
+    val attachmentReady = stringResource(R.string.messages_attachment_ready)
     val peer = detail?.peer ?: conversation.peer
     val messages = detail?.messages.orEmpty()
 
     fun send() {
         val text = draft.trim()
         if (text.isBlank()) return
+        actionInfo = null
+        sendError = null
         if (mockMode) {
             val local =
                 Message(
@@ -344,7 +348,6 @@ private fun ChatDetailScreen(
             return
         }
         sending = true
-        sendError = null
         scope.launch {
             sdk.sendMessage(peer.id, text).fold(
                 onSuccess = { sent ->
@@ -381,7 +384,13 @@ private fun ChatDetailScreen(
                     Text(peer.nickname.ifBlank { peer.username }, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
                     Text(stringResource(R.string.messages_online), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
                 }
-                IconButton(onClick = { sendError = moreComingSoon }, modifier = Modifier.size(44.dp)) {
+                IconButton(
+                    onClick = {
+                        actionInfo = moreActionsHint
+                        sendError = null
+                    },
+                    modifier = Modifier.size(44.dp),
+                ) {
                     Icon(Icons.Outlined.MoreVert, contentDescription = stringResource(R.string.common_more), tint = StitchPalette.OnSurface)
                 }
             }
@@ -423,6 +432,9 @@ private fun ChatDetailScreen(
                 }
             }
         }
+        actionInfo?.let {
+            Text(it, modifier = Modifier.padding(horizontal = 18.dp, vertical = 4.dp), color = StitchPalette.OnSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+        }
         sendError?.let {
             Text(it, modifier = Modifier.padding(horizontal = 18.dp, vertical = 4.dp), color = StitchPalette.Error, style = MaterialTheme.typography.bodySmall)
         }
@@ -435,7 +447,14 @@ private fun ChatDetailScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            IconButton(onClick = { sendError = attachComingSoon }, modifier = Modifier.size(42.dp)) {
+            IconButton(
+                onClick = {
+                    draft = if (draft.isBlank()) attachmentDraft else "$draft $attachmentDraft"
+                    actionInfo = attachmentReady
+                    sendError = null
+                },
+                modifier = Modifier.size(42.dp),
+            ) {
                 Icon(Icons.Outlined.AddCircleOutline, contentDescription = stringResource(R.string.messages_attach), tint = StitchPalette.Brand)
             }
             OutlinedTextField(

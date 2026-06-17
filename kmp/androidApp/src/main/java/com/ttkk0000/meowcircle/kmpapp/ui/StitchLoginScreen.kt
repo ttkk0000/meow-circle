@@ -68,7 +68,6 @@ import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import kotlinx.coroutines.launch
-import coil.compose.AsyncImage
 
 /**
  * M&D mobile login: cat-first lockup, icon fields, CTA, social row, register footer.
@@ -79,6 +78,7 @@ fun StitchLoginScreen(
     healthHint: String?,
     onLoggedIn: (User) -> Unit,
     onNavigateRegister: () -> Unit = {},
+    onThemeChanged: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
@@ -86,8 +86,11 @@ fun StitchLoginScreen(
     var password by remember { mutableStateOf("123456") }
     var busy by remember { mutableStateOf(false) }
     var err by remember { mutableStateOf<String?>(null) }
+    var errDetail by remember { mutableStateOf<String?>(null) }
     var showPw by remember { mutableStateOf(false) }
     var hintDialog by remember { mutableStateOf<Pair<String, String>?>(null) }
+    var showThemePicker by remember { mutableStateOf(false) }
+    var currentTheme by remember { mutableStateOf(sdk.getTheme()) }
     val scroll = rememberScrollState()
 
     var apiBase by remember { mutableStateOf(sdk.baseUrl) }
@@ -114,16 +117,6 @@ fun StitchLoginScreen(
                 .padding(horizontal = 20.dp)
                 .padding(top = 16.dp, bottom = 28.dp),
         ) {
-            localHealthHint?.let { hint ->
-                val isBad = hint.contains("超时") || hint.contains("无法连接") || hint.contains("失败")
-                CompactHintLine(
-                    fullText = hint,
-                    color = if (isBad) StitchPalette.Error else StitchLoginRef.OnSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    onTapDetail = { hintDialog = (backendStatusTitle to hint) },
-                )
-            }
-
             if (!showEmailLogin) {
                 // State 1: Welcome Screen (Stitch V3 Mockup Screen 1)
                 Column(
@@ -135,7 +128,7 @@ fun StitchLoginScreen(
                     // Logo Box (bg #FFF1E6, 16dp rounded, pets icon, "M&D")
                     Box(
                         modifier = Modifier
-                            .size(96.dp)
+                            .size(64.dp)
                             .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp))
                             .clip(RoundedCornerShape(16.dp))
                             .background(StitchLoginRef.SurfaceContainerLow)
@@ -150,14 +143,14 @@ fun StitchLoginScreen(
                                 imageVector = Icons.Filled.Pets,
                                 contentDescription = null,
                                 tint = StitchLoginRef.PrimaryContainer,
-                                modifier = Modifier.size(36.dp)
+                                modifier = Modifier.size(24.dp)
                             )
                             Text(
                                 "M&D",
-                                fontSize = 18.sp,
+                                fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = StitchLoginRef.PrimaryContainer,
-                                letterSpacing = (-1).sp
+                                letterSpacing = 0.sp
                             )
                         }
                     }
@@ -168,7 +161,8 @@ fun StitchLoginScreen(
                         stringResource(R.string.login_welcome_title), // "Welcome to M&D"
                         style = MaterialTheme.typography.headlineMedium.copy(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 28.sp
+                            fontSize = 22.sp,
+                            lineHeight = 28.sp,
                         ),
                         color = StitchLoginRef.OnSurface,
                         textAlign = TextAlign.Center
@@ -178,7 +172,7 @@ fun StitchLoginScreen(
 
                     Text(
                         stringResource(R.string.login_welcome_subtitle), // "A warm community for pets, people, and trusted local finds."
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 13.sp, lineHeight = 18.sp),
                         color = StitchLoginRef.OnSurfaceVariant,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(horizontal = 24.dp)
@@ -190,25 +184,22 @@ fun StitchLoginScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp)
+                            .height(132.dp)
                             .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp))
                             .clip(RoundedCornerShape(16.dp))
+                            .background(Color(0xFFCFCFCF)),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        AsyncImage(
-                            model = "${apiBase.removeSuffix("/")}/login_hero.png",
-                            contentDescription = "Friendly cat looking at camera",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = androidx.compose.ui.layout.ContentScale.Crop
-                        )
+                        Text("img", style = MaterialTheme.typography.labelSmall, color = Color(0xFF333333))
                     }
 
-                    Spacer(Modifier.height(24.dp))
+                    Spacer(Modifier.height(22.dp))
 
                     // Continue with Email Button
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(48.dp)
+                            .height(40.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .background(StitchLoginRef.PrimaryContainer)
                             .clickable { showEmailLogin = true },
@@ -218,8 +209,8 @@ fun StitchLoginScreen(
                             stringResource(R.string.login_continue_email), // "Continue with Email"
                             style = MaterialTheme.typography.headlineMedium.copy(
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp,
-                                lineHeight = 22.sp,
+                                fontSize = 13.sp,
+                                lineHeight = 18.sp,
                             ),
                             color = StitchLoginRef.OnPrimaryButton,
                         )
@@ -230,17 +221,20 @@ fun StitchLoginScreen(
                     // Social login row
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         SocialCircle(label = "WeChat", onClick = { hintDialog = (socialTitle to socialBody) }) {
-                            Icon(Icons.Filled.ChatBubble, null, tint = StitchLoginRef.WeChat, modifier = Modifier.size(26.dp))
+                            Icon(Icons.Filled.ChatBubble, null, tint = StitchLoginRef.WeChat, modifier = Modifier.size(20.dp))
                         }
                         SocialCircle(label = "QQ", onClick = { hintDialog = (socialTitle to socialBody) }) {
-                            Icon(Icons.Filled.Pets, null, tint = StitchLoginRef.QqBlue, modifier = Modifier.size(26.dp))
+                            Icon(Icons.Filled.Pets, null, tint = StitchLoginRef.QqBlue, modifier = Modifier.size(20.dp))
                         }
                         SocialCircle(label = "Google", onClick = { hintDialog = (socialTitle to socialBody) }) {
-                            Icon(Icons.Filled.AutoAwesome, null, tint = StitchLoginRef.PrimaryContainer, modifier = Modifier.size(26.dp))
+                            Icon(Icons.Filled.AutoAwesome, null, tint = StitchLoginRef.PrimaryContainer, modifier = Modifier.size(20.dp))
+                        }
+                        SocialCircle(label = "Apple", onClick = { hintDialog = (socialTitle to socialBody) }) {
+                            Text("A", color = StitchLoginRef.OnSurface, fontWeight = FontWeight.Black, fontSize = 18.sp)
                         }
                     }
 
@@ -278,7 +272,7 @@ fun StitchLoginScreen(
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = StitchLoginRef.PrimaryContainer,
-                            letterSpacing = (-1).sp
+                            letterSpacing = 0.sp
                         )
                         Spacer(Modifier.weight(1f))
                         Spacer(Modifier.size(48.dp)) // Spacer for balance
@@ -400,7 +394,7 @@ fun StitchLoginScreen(
                                     fontWeight = FontWeight.SemiBold,
                                     fontSize = 12.sp,
                                     lineHeight = 16.sp,
-                                    letterSpacing = 0.2.sp,
+                                    letterSpacing = 0.sp,
                                 ),
                                 color = StitchLoginRef.PrimaryContainer,
                                 modifier = Modifier.clickable(enabled = !busy) { hintDialog = (forgotPasswordTitle to forgotPasswordBody) },
@@ -412,7 +406,7 @@ fun StitchLoginScreen(
                                 fullText = msg,
                                 color = StitchPalette.Error,
                                 modifier = Modifier.fillMaxWidth(),
-                                onTapDetail = { hintDialog = (loginFailedTitle to msg) },
+                                onTapDetail = { hintDialog = (loginFailedTitle to (errDetail ?: msg)) },
                             )
                         }
 
@@ -431,14 +425,15 @@ fun StitchLoginScreen(
                                 .clickable(enabled = !busy) {
                                     scope.launch {
                                         err = null
+                                        errDetail = null
                                         busy = true
                                         sdk
                                             .login(username.trim(), password)
                                             .fold(
                                                 onSuccess = { onLoggedIn(it) },
                                                 onFailure = { e ->
-                                                    err = (e as? ApiException)?.message
-                                                        ?: humanizeClientFailure(e, apiBase)
+                                                    errDetail = humanizeClientFailure(e, apiBase)
+                                                    err = loginErrorSummary(e, apiBase)
                                                 },
                                             )
                                         busy = false
@@ -483,7 +478,7 @@ fun StitchLoginScreen(
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 12.sp,
                                 lineHeight = 16.sp,
-                                letterSpacing = 0.2.sp,
+                                letterSpacing = 0.sp,
                             ),
                             color = StitchLoginRef.OnSurfaceVariant,
                             modifier = Modifier.padding(horizontal = 12.dp),
@@ -504,13 +499,16 @@ fun StitchLoginScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         SocialCircle(label = "WeChat", onClick = { hintDialog = (socialTitle to socialBody) }) {
-                            Icon(Icons.Filled.ChatBubble, null, tint = StitchLoginRef.WeChat, modifier = Modifier.size(26.dp))
+                            Icon(Icons.Filled.ChatBubble, null, tint = StitchLoginRef.WeChat, modifier = Modifier.size(20.dp))
                         }
                         SocialCircle(label = "QQ", onClick = { hintDialog = (socialTitle to socialBody) }) {
-                            Icon(Icons.Filled.Pets, null, tint = StitchLoginRef.QqBlue, modifier = Modifier.size(26.dp))
+                            Icon(Icons.Filled.Pets, null, tint = StitchLoginRef.QqBlue, modifier = Modifier.size(20.dp))
                         }
                         SocialCircle(label = "Google", onClick = { hintDialog = (socialTitle to socialBody) }) {
-                            Icon(Icons.Filled.AutoAwesome, null, tint = StitchLoginRef.PrimaryContainer, modifier = Modifier.size(26.dp))
+                            Icon(Icons.Filled.AutoAwesome, null, tint = StitchLoginRef.PrimaryContainer, modifier = Modifier.size(20.dp))
+                        }
+                        SocialCircle(label = "Apple", onClick = { hintDialog = (socialTitle to socialBody) }) {
+                            Text("A", color = StitchLoginRef.OnSurface, fontWeight = FontWeight.Black, fontSize = 18.sp)
                         }
                     }
 
@@ -543,6 +541,17 @@ fun StitchLoginScreen(
                     .padding(top = 20.dp, bottom = 8.dp),
                 textAlign = TextAlign.Center,
             )
+            Text(
+                "${stringResource(R.string.theme_title)} · ${loginThemeLabel(currentTheme)}",
+                style = MaterialTheme.typography.labelSmall,
+                color = StitchLoginRef.Outline.copy(alpha = 0.68f),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable { showThemePicker = true }
+                        .padding(bottom = 8.dp),
+                textAlign = TextAlign.Center,
+            )
         }
 
         hintDialog?.let { (title, body) ->
@@ -565,6 +574,19 @@ fun StitchLoginScreen(
                                 .heightIn(max = 360.dp)
                                 .verticalScroll(dialogScroll),
                     )
+                },
+            )
+        }
+
+        if (showThemePicker) {
+            LoginThemePickerDialog(
+                currentTheme = currentTheme,
+                onDismiss = { showThemePicker = false },
+                onSelect = { theme ->
+                    currentTheme = theme
+                    sdk.setTheme(theme)
+                    onThemeChanged(theme)
+                    showThemePicker = false
                 },
             )
         }
@@ -634,7 +656,7 @@ private fun SocialCircle(
     ) {
         Box(
             modifier = Modifier
-                .size(48.dp)
+                .size(40.dp)
                 .clip(CircleShape)
                 .background(StitchLoginRef.SurfaceContainerLowest)
                 .clickable(onClick = onClick)
@@ -645,9 +667,102 @@ private fun SocialCircle(
         }
         Text(
             text = label,
-            fontSize = 12.sp,
+            fontSize = 10.sp,
             color = StitchLoginRef.OnSurfaceVariant,
             fontWeight = FontWeight.Medium,
         )
     }
+}
+
+@Composable
+private fun loginThemeLabel(theme: String): String =
+    when (theme.lowercase()) {
+        "honey", "sugar" -> stringResource(R.string.theme_honey)
+        "mint" -> stringResource(R.string.theme_mint)
+        "night" -> stringResource(R.string.theme_night)
+        "neutral", "system" -> stringResource(R.string.theme_neutral)
+        else -> stringResource(R.string.theme_honey)
+    }
+
+private fun loginErrorSummary(
+    throwable: Throwable,
+    apiBaseUrl: String,
+): String {
+    val raw = throwable.message.orEmpty()
+    val isBackendConnection =
+        raw.contains("[Fiddler]", ignoreCase = true) ||
+            raw.contains("<html", ignoreCase = true) ||
+            raw.contains("connection refused", ignoreCase = true) ||
+            raw.contains("connectionrefused", ignoreCase = true) ||
+            raw.contains("failed to connect", ignoreCase = true) ||
+            raw.contains("积极拒绝", ignoreCase = true)
+    return when {
+        isBackendConnection -> "无法连接后端，点击查看配置。"
+        throwable is ApiException && raw.isNotBlank() -> raw.take(80)
+        else -> humanizeClientFailure(throwable, apiBaseUrl).lineSequence().firstOrNull().orEmpty().ifBlank { "登录失败，请稍后再试。" }
+    }
+}
+
+@Composable
+private fun LoginThemePickerDialog(
+    currentTheme: String,
+    onDismiss: () -> Unit,
+    onSelect: (String) -> Unit,
+) {
+    val normalized =
+        when (currentTheme.lowercase()) {
+            "honey", "sugar" -> "honey"
+            "mint" -> "mint"
+            "night" -> "night"
+            "neutral", "system" -> "neutral"
+            else -> "honey"
+        }
+    val options =
+        listOf(
+            "honey" to stringResource(R.string.theme_honey),
+            "mint" to stringResource(R.string.theme_mint),
+            "night" to stringResource(R.string.theme_night),
+            "neutral" to stringResource(R.string.theme_neutral),
+        )
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.theme_title), style = MaterialTheme.typography.titleMedium) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(
+                    stringResource(R.string.theme_choose),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = StitchLoginRef.OnSurfaceVariant,
+                )
+                options.forEach { (key, label) ->
+                    TextButton(
+                        onClick = { onSelect(key) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                label,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = StitchLoginRef.OnSurface,
+                                modifier = Modifier.weight(1f),
+                            )
+                            if (normalized == key) {
+                                Text(
+                                    stringResource(R.string.common_selected),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = StitchLoginRef.PrimaryContainer,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.common_cancel))
+            }
+        },
+    )
 }

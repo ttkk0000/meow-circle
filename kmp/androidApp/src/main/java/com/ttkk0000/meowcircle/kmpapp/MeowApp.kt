@@ -76,6 +76,10 @@ fun MeowApp(sdk: MeowCircleSdk) {
                                 authScreen = AuthScreen.Login
                             },
                             onNavigateRegister = { authScreen = AuthScreen.Register },
+                            onThemeChanged = {
+                                sdk.setTheme(it)
+                                activeThemeStr = it
+                            },
                             modifier = Modifier.fillMaxSize(),
                         )
                     AuthScreen.Register ->

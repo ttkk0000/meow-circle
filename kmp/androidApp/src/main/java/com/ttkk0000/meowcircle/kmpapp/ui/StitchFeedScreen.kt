@@ -285,6 +285,7 @@ fun StitchFeedScreen(
     var mockMode by remember { mutableStateOf(false) }
     var feedRetrySignal by remember { mutableStateOf(0) }
     var currentGlobalTheme by remember { mutableStateOf(sdk.getTheme()) }
+    var savedPostIds by remember { mutableStateOf<Set<Long>>(emptySet()) }
 
     val activeTheme = remember(currentGlobalTheme) {
         when (currentGlobalTheme.lowercase()) {
@@ -395,6 +396,41 @@ fun StitchFeedScreen(
                 createdAt = "2026-05-31T18:30:00Z",
             ),
         )
+
+    fun updatePostInFeeds(
+        postId: Long,
+        transform: (PostFeedItem) -> PostFeedItem,
+    ) {
+        rawItems = rawItems?.map { item -> if (item.post.id == postId) transform(item) else item }
+        profilePosts = profilePosts?.map { item -> if (item.post.id == postId) transform(item) else item }
+    }
+
+    fun toggleFeedLike(item: PostFeedItem) {
+        if (mockMode) {
+            updatePostInFeeds(item.post.id) { current ->
+                val nextLiked = !current.liked
+                val nextCount = (current.likeCount + if (nextLiked) 1L else -1L).coerceAtLeast(0L)
+                current.copy(liked = nextLiked, likeCount = nextCount)
+            }
+            return
+        }
+        scope.launch {
+            sdk.togglePostLike(item.post.id).fold(
+                onSuccess = { result ->
+                    updatePostInFeeds(item.post.id) { current ->
+                        current.copy(liked = result.liked, likeCount = result.likeCount)
+                    }
+                },
+                onFailure = { e ->
+                    android.widget.Toast.makeText(
+                        context,
+                        (e as? ApiException)?.message ?: humanizeClientFailure(e, sdk.baseUrl),
+                        android.widget.Toast.LENGTH_SHORT,
+                    ).show()
+                },
+            )
+        }
+    }
 
     val effectiveFilter =
         when (tab) {
@@ -812,6 +848,29 @@ fun StitchFeedScreen(
                                                     apiBase = apiBase,
                                                     item = item,
                                                     onClick = { onOpenPost(item.post.id) },
+                                                    saved = savedPostIds.contains(item.post.id),
+                                                    onLike = { toggleFeedLike(item) },
+                                                    onComment = { onOpenPost(item.post.id) },
+                                                    onShare = {
+                                                        android.widget.Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.common_share_ready),
+                                                            android.widget.Toast.LENGTH_SHORT,
+                                                        ).show()
+                                                    },
+                                                    onSave = {
+                                                        savedPostIds =
+                                                            if (savedPostIds.contains(item.post.id)) {
+                                                                savedPostIds - item.post.id
+                                                            } else {
+                                                                savedPostIds + item.post.id
+                                                            }
+                                                        android.widget.Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.common_saved),
+                                                            android.widget.Toast.LENGTH_SHORT,
+                                                        ).show()
+                                                    },
                                                 )
                                             }
                                         }
@@ -2061,11 +2120,24 @@ private fun ProfileEditScreen(
     }
     var avatarUrl by remember(user.id, user.avatarUrl) { mutableStateOf(user.avatarUrl) }
     var location by remember { mutableStateOf("Seattle, WA") }
-
-    val context = LocalContext.current
+    var addedPet by remember { mutableStateOf(false) }
+    var avatarPickIndex by remember { mutableStateOf(0) }
     
     val displayAvatarUrl = user.avatarUrl.takeIf { it.isNotBlank() } 
         ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_7.png"
+    val avatarChoices =
+        remember(apiBase) {
+            listOf(
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_7.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_8.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_9.png",
+            )
+        }
+
+    fun chooseNextAvatar() {
+        avatarPickIndex = (avatarPickIndex + 1) % avatarChoices.size
+        avatarUrl = avatarChoices[avatarPickIndex]
+    }
 
     Column(modifier.background(StitchPalette.Canvas)) {
         ProfileBackHeader(
@@ -2106,9 +2178,7 @@ private fun ProfileEditScreen(
                             .clip(CircleShape)
                             .background(StitchPalette.Brand)
                             .border(2.dp, Color.White, CircleShape)
-                            .clickable {
-                                android.widget.Toast.makeText(context, "Change Photo features will be available in a future version", android.widget.Toast.LENGTH_SHORT).show()
-                            },
+                            .clickable { chooseNextAvatar() },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -2125,9 +2195,7 @@ private fun ProfileEditScreen(
                         fontWeight = FontWeight.SemiBold
                     ),
                     color = StitchPalette.Brand,
-                    modifier = Modifier.clickable {
-                        android.widget.Toast.makeText(context, "Change Photo features will be available in a future version", android.widget.Toast.LENGTH_SHORT).show()
-                    }
+                    modifier = Modifier.clickable { chooseNextAvatar() }
                 )
             }
 
@@ -2192,10 +2260,14 @@ private fun ProfileEditScreen(
                         name = "Peach",
                         avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_9.png"
                     )
+                    if (addedPet) {
+                        PetAvatarEditItem(
+                            name = "Miso",
+                            avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_9.png"
+                        )
+                    }
                     AddPetEditItem(
-                        onClick = {
-                            android.widget.Toast.makeText(context, "Add Pet feature will be available in a future version", android.widget.Toast.LENGTH_SHORT).show()
-                        }
+                        onClick = { addedPet = true }
                     )
                 }
             }
@@ -2999,7 +3071,7 @@ private fun SettingSectionTitle(
         text = text.uppercase(),
         style = MaterialTheme.typography.labelMedium.copy(
             fontWeight = FontWeight.SemiBold,
-            letterSpacing = 0.5.sp
+            letterSpacing = 0.sp
         ),
         color = StitchPalette.OnSurfaceVariant,
         modifier = modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 8.dp)
@@ -3175,9 +3247,7 @@ private fun ProfileSettingsScreen(
                 SettingRow(
                     icon = Icons.Outlined.Payment,
                     title = "Payment Methods",
-                    onClick = {
-                        android.widget.Toast.makeText(context, "Payment methods will be linked in a future version", android.widget.Toast.LENGTH_SHORT).show()
-                    }
+                    onClick = onOpenAccountSecurity
                 )
             }
 
@@ -3198,9 +3268,7 @@ private fun ProfileSettingsScreen(
                 SettingRow(
                     icon = Icons.Outlined.Language,
                     title = "Language",
-                    onClick = {
-                        android.widget.Toast.makeText(context, "Language selection will be available in a future version", android.widget.Toast.LENGTH_SHORT).show()
-                    }
+                    onClick = onOpenAppearance
                 )
             }
 

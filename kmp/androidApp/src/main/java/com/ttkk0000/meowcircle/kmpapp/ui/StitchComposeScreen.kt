@@ -72,7 +72,8 @@ fun StitchComposeScreen(
     var categoryKey by remember { mutableStateOf("daily_share") }
     var visibilityKey by remember { mutableStateOf("public") }
     var hasLocation by remember { mutableStateOf(false) }
-    var pickedMediaCount by remember { mutableStateOf(1) }
+    var pickedMediaCount by remember { mutableStateOf(0) }
+    var mediaIdsText by remember { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
     var err by remember { mutableStateOf<String?>(null) }
     val defaultPostTitle = stringResource(R.string.compose_default_title)
@@ -83,10 +84,11 @@ fun StitchComposeScreen(
         val body = content.trim()
         if (body.isBlank()) return
         val title = body.lineSequence().firstOrNull()?.take(42)?.ifBlank { defaultPostTitle } ?: defaultPostTitle
+        val mediaIds = parseMediaIds(mediaIdsText)
         err = null
         busy = true
         scope.launch {
-            sdk.createPost(title = title, content = body, category = categoryKey).fold(
+            sdk.createPost(title = title, content = body, category = categoryKey, mediaIds = mediaIds).fold(
                 onSuccess = {
                     onPosted()
                     onClose()
@@ -209,6 +211,27 @@ fun StitchComposeScreen(
                 }
             }
 
+            OutlinedTextField(
+                value = mediaIdsText,
+                onValueChange = {
+                    mediaIdsText = it
+                    pickedMediaCount = parseMediaIds(it).size.coerceAtMost(2)
+                },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(stringResource(R.string.compose_media_ids)) },
+                placeholder = { Text(stringResource(R.string.compose_media_ids_placeholder)) },
+                singleLine = true,
+                shape = StitchShape.field,
+                colors =
+                    OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = StitchPalette.Brand,
+                        unfocusedBorderColor = StitchPalette.BorderHairline,
+                        cursorColor = StitchPalette.Brand,
+                        focusedContainerColor = StitchPalette.Surface,
+                        unfocusedContainerColor = StitchPalette.Surface,
+                    ),
+            )
+
             ComposeSettingRow(
                 icon = Icons.Outlined.Public,
                 title = stringResource(R.string.compose_visibility),
@@ -290,3 +313,9 @@ private fun ComposeSettingRow(
         Icon(Icons.Outlined.ExpandMore, contentDescription = null, tint = StitchPalette.OnSurfaceVariant, modifier = Modifier.size(20.dp))
     }
 }
+
+private fun parseMediaIds(raw: String): List<Long> =
+    raw
+        .split(Regex("[,\\s]+"))
+        .mapNotNull { it.trim().toLongOrNull() }
+        .distinct()

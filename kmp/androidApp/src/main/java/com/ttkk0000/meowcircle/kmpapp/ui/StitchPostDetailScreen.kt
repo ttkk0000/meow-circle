@@ -2,6 +2,7 @@ package com.ttkk0000.meowcircle.kmpapp.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,10 +23,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Share
-import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -55,6 +57,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
@@ -66,6 +69,7 @@ import com.ttkk0000.meowcircle.PostDetailData
 import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
+import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 import com.ttkk0000.meowcircle.humanizeClientFailure
 import kotlinx.coroutines.launch
@@ -80,12 +84,20 @@ fun StitchPostDetailScreen(
     modifier: Modifier = Modifier,
 ) {
     val apiBase = sdk.baseUrl
+    val context = LocalContext.current
     var detail by remember { mutableStateOf<PostDetailData?>(null) }
     var err by remember { mutableStateOf<String?>(null) }
     var loading by remember { mutableStateOf(true) }
     var following by remember { mutableStateOf(false) }
     var commentDraft by remember { mutableStateOf("") }
-    var localComments by remember { mutableStateOf<List<String>>(emptyList()) }
+    var localComments by remember { mutableStateOf<List<Comment>>(emptyList()) }
+    var commentBusy by remember { mutableStateOf(false) }
+    var liked by remember { mutableStateOf(false) }
+    var likeCount by remember { mutableStateOf(0L) }
+    var likeBusy by remember { mutableStateOf(false) }
+    var saved by remember { mutableStateOf(false) }
+    var actionMessage by remember { mutableStateOf<String?>(null) }
+    var actionError by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(postId) {
@@ -106,6 +118,8 @@ fun StitchPostDetailScreen(
 
     LaunchedEffect(detail) {
         following = detail?.followingAuthor ?: false
+        liked = detail?.liked ?: false
+        likeCount = detail?.likeCount ?: 0L
     }
 
     Scaffold(
@@ -158,17 +172,38 @@ fun StitchPostDetailScreen(
                         onClick = {
                             val text = commentDraft.trim()
                             if (text.isNotBlank()) {
-                                localComments = localComments + text
-                                commentDraft = ""
+                                commentBusy = true
+                                actionMessage = null
+                                scope.launch {
+                                    sdk.addComment(postId, text).fold(
+                                        onSuccess = { comment ->
+                                            localComments = localComments + comment
+                                            commentDraft = ""
+                                            actionMessage = comment.content.take(36).ifBlank { text.take(36) }
+                                            actionError = false
+                                        },
+                                        onFailure = { e ->
+                                            actionMessage =
+                                                (e as? ApiException)?.message
+                                                    ?: humanizeClientFailure(e, apiBase)
+                                            actionError = true
+                                        },
+                                    )
+                                    commentBusy = false
+                                }
                             }
                         },
-                        enabled = commentDraft.isNotBlank(),
+                        enabled = commentDraft.isNotBlank() && !commentBusy,
                         shape = CircleShape,
                         contentPadding = PaddingValues(0.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
                         modifier = Modifier.size(42.dp),
                     ) {
-                        Text("↑", color = Color.White, fontWeight = FontWeight.Black)
+                        if (commentBusy) {
+                            CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
+                        } else {
+                            Text("↑", color = Color.White, fontWeight = FontWeight.Black)
+                        }
                     }
                 }
             }
@@ -327,10 +362,73 @@ fun StitchPostDetailScreen(
                                 horizontalArrangement = Arrangement.SpaceEvenly,
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                PostStatChip(Icons.Outlined.FavoriteBorder, "${d.likeCount}")
-                                PostStatChip(Icons.Outlined.ChatBubbleOutline, "${d.comments.size}")
-                                PostStatChip(Icons.Outlined.StarOutline, "—")
-                                PostStatChip(Icons.Outlined.Share, stringResource(R.string.common_share))
+                                PostStatChip(
+                                    icon = if (liked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                                    label = formatCompactCount(likeCount),
+                                    selected = liked,
+                                    enabled = !likeBusy,
+                                    onClick = {
+                                        likeBusy = true
+                                        actionMessage = null
+                                        scope.launch {
+                                            sdk.togglePostLike(postId).fold(
+                                                onSuccess = { result ->
+                                                    liked = result.liked
+                                                    likeCount = result.likeCount
+                                                    actionError = false
+                                                },
+                                                onFailure = { e ->
+                                                    actionMessage =
+                                                        (e as? ApiException)?.message
+                                                            ?: humanizeClientFailure(e, apiBase)
+                                                    actionError = true
+                                                },
+                                            )
+                                            likeBusy = false
+                                        }
+                                    },
+                                )
+                                PostStatChip(
+                                    icon = Icons.Outlined.ChatBubbleOutline,
+                                    label = "${d.comments.size + localComments.size}",
+                                    onClick = {
+                                        actionMessage = context.getString(R.string.post_comment_focus_hint)
+                                        actionError = false
+                                    },
+                                )
+                                PostStatChip(
+                                    icon = Icons.Outlined.BookmarkBorder,
+                                    label = if (saved) stringResource(R.string.post_saved) else stringResource(R.string.common_save),
+                                    selected = saved,
+                                    onClick = {
+                                        saved = !saved
+                                        actionMessage = context.getString(if (saved) R.string.post_saved else R.string.post_unsaved)
+                                        actionError = false
+                                    },
+                                )
+                                PostStatChip(
+                                    icon = Icons.Outlined.Share,
+                                    label = stringResource(R.string.common_share),
+                                    onClick = {
+                                        actionMessage = context.getString(R.string.common_share_ready)
+                                        actionError = false
+                                    },
+                                )
+                            }
+                        }
+                        actionMessage?.let { message ->
+                            item {
+                                Text(
+                                    message,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = if (actionError) StitchPalette.Error else StitchPalette.OnSurfaceVariant,
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .clip(RoundedCornerShape(12.dp))
+                                            .background(if (actionError) StitchPalette.Error.copy(alpha = 0.08f) else StitchPalette.SurfaceContainer)
+                                            .padding(12.dp),
+                                )
                             }
                         }
                         item {
@@ -342,9 +440,7 @@ fun StitchPostDetailScreen(
                             )
                         }
                         items(d.comments, key = { it.id }) { c -> CommentRow(apiBase, c) }
-                        items(localComments) { text ->
-                            LocalCommentRow(text)
-                        }
+                        items(localComments, key = { it.id }) { c -> CommentRow(apiBase, c) }
                     }
                 }
             }
@@ -356,14 +452,29 @@ fun StitchPostDetailScreen(
 private fun PostStatChip(
     icon: ImageVector,
     label: String,
+    selected: Boolean = false,
+    enabled: Boolean = true,
+    onClick: () -> Unit = {},
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(icon, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(22.dp))
+    Column(
+        modifier =
+            Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .clickable(enabled = enabled, onClick = onClick)
+                .padding(horizontal = 8.dp, vertical = 6.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(
+            icon,
+            contentDescription = label,
+            tint = if (selected) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+            modifier = Modifier.size(22.dp),
+        )
         if (label.isNotBlank()) {
             Text(
                 label,
                 style = MaterialTheme.typography.labelMedium,
-                color = StitchLoginRef.OnSurface,
+                color = if (selected) StitchPalette.Brand else StitchLoginRef.OnSurface,
             )
         }
     }
@@ -425,43 +536,5 @@ private fun CommentRow(
             )
             Icon(Icons.Outlined.FavoriteBorder, contentDescription = null, tint = StitchLoginRef.Outline, modifier = Modifier.size(18.dp))
         }
-    }
-}
-
-@Composable
-private fun LocalCommentRow(text: String) {
-    Column(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp))
-                .background(StitchPalette.BrandMuted)
-                .padding(12.dp),
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(
-                modifier =
-                    Modifier
-                        .size(32.dp)
-                        .clip(CircleShape)
-                        .background(StitchPalette.Brand),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text("M", style = MaterialTheme.typography.labelLarge, color = Color.White, fontWeight = FontWeight.Bold)
-            }
-            Text(
-                stringResource(R.string.post_local_comment_author),
-                modifier = Modifier.padding(start = 8.dp),
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.SemiBold,
-            )
-        }
-        Text(text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 6.dp))
-        Text(
-            stringResource(R.string.post_comment_sent),
-            style = MaterialTheme.typography.labelSmall,
-            color = StitchLoginRef.Outline,
-            modifier = Modifier.padding(top = 4.dp),
-        )
     }
 }

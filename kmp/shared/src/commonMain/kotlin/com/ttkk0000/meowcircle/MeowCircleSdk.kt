@@ -210,6 +210,7 @@ class MeowCircleSdk(
         content: String,
         category: String = "daily_share",
         tags: List<String> = emptyList(),
+        mediaIds: List<Long> = emptyList(),
     ): Result<Post> =
         runCatching {
             unwrapData(
@@ -222,9 +223,29 @@ class MeowCircleSdk(
                             content = content.trim(),
                             category = category,
                             tags = tags,
+                            mediaIds = mediaIds,
                         ),
                 ),
             )
+        }
+
+    suspend fun addComment(
+        postId: Long,
+        content: String,
+    ): Result<Comment> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/posts/$postId/comments",
+                    auth = true,
+                    body = CreateCommentBody(content = content.trim()),
+                ),
+            )
+        }
+
+    suspend fun togglePostLike(postId: Long): Result<LikeActionResult> =
+        runCatching {
+            unwrapData(httpPostEmpty("/api/v1/posts/$postId/like", auth = true))
         }
 
     suspend fun conversations(): Result<List<Conversation>> =
@@ -429,5 +450,25 @@ class MeowCircleSdk(
     suspend fun refundOrder(orderId: Long): Result<Order> =
         runCatching {
             unwrapData(httpPostEmpty("/api/v1/orders/$orderId/refund", auth = true))
+        }
+
+    suspend fun createReport(
+        targetKind: String,
+        targetId: Long,
+        reason: String,
+    ): Result<Report> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/reports",
+                    auth = true,
+                    body =
+                        ReportBody(
+                            targetKind = targetKind.trim(),
+                            targetId = targetId,
+                            reason = reason.trim(),
+                        ),
+                ),
+            )
         }
 }

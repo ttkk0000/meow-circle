@@ -754,6 +754,7 @@ private fun PublishProductScreen(
     var category by remember { mutableStateOf("care") }
     var tradeType by remember { mutableStateOf("sell") }
     var condition by remember { mutableStateOf("new") }
+    var mediaIdsText by remember { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
 
     Column(modifier.fillMaxSize().background(StitchPalette.Surface)) {
@@ -775,6 +776,11 @@ private fun PublishProductScreen(
                     Icon(Icons.Outlined.Close, contentDescription = null, tint = StitchPalette.OnSurfaceVariant)
                 }
             }
+            PublishField(
+                label = stringResource(R.string.market_media_ids),
+                value = mediaIdsText,
+                onValueChange = { mediaIdsText = it },
+            )
             PublishField(stringResource(R.string.market_field_title), title, onValueChange = { title = it })
             PublishField(stringResource(R.string.market_field_price), price, onValueChange = { price = it })
             Text(stringResource(R.string.market_field_category), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
@@ -810,6 +816,7 @@ private fun PublishProductScreen(
                                 title = title,
                                 description = "$description\n${context.getString(R.string.market_backend_meta, category, condition)}",
                                 priceCents = cents,
+                                mediaIds = parseMarketMediaIds(mediaIdsText),
                             ).fold(
                                 onSuccess = { onPublished() },
                                 onFailure = { e ->
@@ -1722,6 +1729,12 @@ private fun localizedListingPrice(
     cents: Long,
     currency: String,
 ): String = if (cents <= 0L) stringResource(R.string.common_free) else formatListingPrice(cents, currency)
+
+private fun parseMarketMediaIds(raw: String): List<Long> =
+    raw
+        .split(Regex("[,\\s]+"))
+        .mapNotNull { it.trim().toLongOrNull() }
+        .distinct()
 
 private fun mockSeller(id: Long): User =
     User(

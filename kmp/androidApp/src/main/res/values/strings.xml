@@ -133,6 +133,8 @@
     <string name="compose_public">公开</string>
     <string name="compose_friends">好友</string>
     <string name="compose_add_location">添加位置</string>
+    <string name="compose_media_ids">媒体 ID</string>
+    <string name="compose_media_ids_placeholder">例如 12, 18（可选）</string>
     <string name="compose_location_shanghai">上海 · 徐汇</string>
     <string name="compose_draft_saved">草稿已自动保存</string>
     <string name="compose_suggested_tags">推荐标签</string>
@@ -149,6 +151,10 @@
     <string name="post_created_at">发布于 %1$s</string>
     <string name="post_comments_count">共 %1$d 条评论</string>
     <string name="post_add_comment">添加评论...</string>
+    <string name="post_like_action">点赞</string>
+    <string name="post_comment_focus_hint">在底部输入框写下评论。</string>
+    <string name="post_saved">已收藏</string>
+    <string name="post_unsaved">已取消收藏</string>
     <string name="post_comment_meta">%1$s · 回复</string>
     <string name="post_local_comment_author">我</string>
     <string name="post_comment_sent">刚刚 · 已发送</string>
@@ -164,12 +170,12 @@
     <string name="login_show_password">显示密码</string>
     <string name="login_hide_password">隐藏密码</string>
     <string name="login_forgot_password">忘记密码？</string>
-    <string name="login_forgot_password_body">密码找回流程会在后续版本接入。现在可以使用 demo / 123456 或已注册账号登录。</string>
+    <string name="login_forgot_password_body">请先使用 demo / 123456 或已注册账号登录；如需重置密码，请联系 M&amp;D 支持。</string>
     <string name="login_failed_title">登录失败</string>
     <string name="login_button">登录</string>
     <string name="login_social_divider">或使用以下方式登录</string>
     <string name="login_social_title">第三方登录</string>
-    <string name="login_social_body">第三方登录入口已按设计展示，真实授权会在后续版本接入。</string>
+    <string name="login_social_body">第三方登录入口已按设计展示；当前请使用手机号、邮箱或用户名登录。</string>
     <string name="login_no_account">还没有账号？</string>
     <string name="login_register_now">立即注册</string>
     <string name="login_backend_config">后端 %1$s（点击配置）</string>
@@ -264,6 +270,7 @@
     <string name="market_publish_title">发布商品</string>
     <string name="market_drafts">草稿</string>
     <string name="market_add_photo">添加照片</string>
+    <string name="market_media_ids">媒体 ID（可选）</string>
     <string name="market_field_title">标题</string>
     <string name="market_field_price">价格</string>
     <string name="market_field_category">分类</string>
@@ -322,8 +329,11 @@
     <string name="messages_today">今天</string>
     <string name="messages_empty_chat">打个招呼开始对话。</string>
     <string name="messages_attach">添加附件</string>
-    <string name="messages_attach_coming_soon">附件功能会在后续版本接入。</string>
-    <string name="messages_more_coming_soon">更多会话操作会在后续版本接入。</string>
+    <string name="messages_attach_coming_soon">附件说明已加入草稿。</string>
+    <string name="messages_more_coming_soon">可使用建议开场或订单入口继续处理。</string>
+    <string name="messages_more_actions_hint">可使用建议开场，也可以打开订单查看交易上下文。</string>
+    <string name="messages_attachment_draft">[附件] </string>
+    <string name="messages_attachment_ready">附件说明已加入输入框，可随消息发送。</string>
     <string name="messages_type_placeholder">输入消息...</string>
     <string name="messages_send">发送</string>
     <string name="messages_order_badge">订单 #4829 · 已付款</string>

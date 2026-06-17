@@ -133,6 +133,8 @@
     <string name="compose_public">Public</string>
     <string name="compose_friends">Friends</string>
     <string name="compose_add_location">Add Location</string>
+    <string name="compose_media_ids">Media IDs</string>
+    <string name="compose_media_ids_placeholder">e.g. 12, 18 (optional)</string>
     <string name="compose_location_shanghai">Shanghai · Xuhui</string>
     <string name="compose_draft_saved">Draft saved automatically</string>
     <string name="compose_suggested_tags">Suggested Tags</string>
@@ -149,6 +151,10 @@
     <string name="post_created_at">Posted at %1$s</string>
     <string name="post_comments_count">%1$d comments</string>
     <string name="post_add_comment">Add a comment...</string>
+    <string name="post_like_action">Like</string>
+    <string name="post_comment_focus_hint">Write a comment in the bottom input.</string>
+    <string name="post_saved">Saved</string>
+    <string name="post_unsaved">Removed from saved</string>
     <string name="post_comment_meta">%1$s · Reply</string>
     <string name="post_local_comment_author">Me</string>
     <string name="post_comment_sent">Just now · Sent</string>
@@ -164,12 +170,12 @@
     <string name="login_show_password">Show password</string>
     <string name="login_hide_password">Hide password</string>
     <string name="login_forgot_password">Forgot password?</string>
-    <string name="login_forgot_password_body">Password recovery will be connected in a later version. For now, use demo / 123456 or an existing account.</string>
+    <string name="login_forgot_password_body">Use demo / 123456 or an existing account for now. Contact M&amp;D support if you need a password reset.</string>
     <string name="login_failed_title">Login failed</string>
     <string name="login_button">Log in</string>
     <string name="login_social_divider">Or continue with</string>
     <string name="login_social_title">Third-party sign-in</string>
-    <string name="login_social_body">Third-party sign-in is shown per design. Real authorization will be connected in a later version.</string>
+    <string name="login_social_body">Third-party sign-in is shown per design. Use phone, email, or username sign-in right now.</string>
     <string name="login_no_account">No account yet?</string>
     <string name="login_register_now">Create one</string>
     <string name="login_backend_config">Backend %1$s (tap to configure)</string>
@@ -264,6 +270,7 @@
     <string name="market_publish_title">Publish Product</string>
     <string name="market_drafts">Drafts</string>
     <string name="market_add_photo">Add Photo</string>
+    <string name="market_media_ids">Media IDs (optional)</string>
     <string name="market_field_title">Title</string>
     <string name="market_field_price">Price</string>
     <string name="market_field_category">Category</string>
@@ -322,8 +329,11 @@
     <string name="messages_today">Today</string>
     <string name="messages_empty_chat">Say hello to start the conversation.</string>
     <string name="messages_attach">Attach</string>
-    <string name="messages_attach_coming_soon">Attachments will be connected in a later version.</string>
-    <string name="messages_more_coming_soon">More conversation actions will be connected in a later version.</string>
+    <string name="messages_attach_coming_soon">Attachment note added to the draft.</string>
+    <string name="messages_more_coming_soon">Use starters or the Orders entry for context.</string>
+    <string name="messages_more_actions_hint">Use the suggested starters, or open Orders to review the trade context.</string>
+    <string name="messages_attachment_draft">[Attachment] </string>
+    <string name="messages_attachment_ready">Attachment note added to the input. Send it with your message.</string>
     <string name="messages_type_placeholder">Type a message...</string>
     <string name="messages_send">Send</string>
     <string name="messages_order_badge">Order #4829 · Paid</string>

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -50,6 +51,11 @@ fun FeedTileCard(
     item: PostFeedItem,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    saved: Boolean = false,
+    onLike: () -> Unit = {},
+    onComment: () -> Unit = {},
+    onShare: () -> Unit = {},
+    onSave: () -> Unit = {},
 ) {
     val post = item.post
     val author = item.author
@@ -203,17 +209,38 @@ fun FeedTileCard(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            FeedActionIcon(Icons.Outlined.FavoriteBorder, formatCompactCount(item.likeCount), StitchPalette.Brand)
+            FeedActionIcon(
+                icon = if (item.liked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                label = formatCompactCount(item.likeCount),
+                tint = if (item.liked) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                contentDescription = stringResource(R.string.post_like_action),
+                onClick = onLike,
+            )
             Spacer(Modifier.width(18.dp))
-            FeedActionIcon(Icons.Outlined.ChatBubbleOutline, "42", StitchPalette.OnSurfaceVariant)
+            FeedActionIcon(
+                icon = Icons.Outlined.ChatBubbleOutline,
+                label = "",
+                tint = StitchPalette.OnSurfaceVariant,
+                contentDescription = stringResource(R.string.post_add_comment),
+                onClick = onComment,
+            )
             Spacer(Modifier.width(18.dp))
-            FeedActionIcon(Icons.Outlined.Share, "", StitchPalette.OnSurfaceVariant)
+            FeedActionIcon(
+                icon = Icons.Outlined.Share,
+                label = "",
+                tint = StitchPalette.OnSurfaceVariant,
+                contentDescription = stringResource(R.string.common_share),
+                onClick = onShare,
+            )
             Spacer(Modifier.weight(1f))
             Icon(
                 imageVector = Icons.Outlined.BookmarkBorder,
                 contentDescription = stringResource(R.string.common_save),
-                tint = StitchPalette.OnSurfaceVariant,
-                modifier = Modifier.size(28.dp),
+                tint = if (saved) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                modifier =
+                    Modifier
+                        .size(28.dp)
+                        .clickable(onClick = onSave),
             )
         }
     }
@@ -234,11 +261,16 @@ private fun FeedActionIcon(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     tint: androidx.compose.ui.graphics.Color,
+    contentDescription: String,
+    onClick: () -> Unit,
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Icon(
             imageVector = icon,
-            contentDescription = null,
+            contentDescription = contentDescription,
             tint = tint,
             modifier = Modifier.size(28.dp),
         )

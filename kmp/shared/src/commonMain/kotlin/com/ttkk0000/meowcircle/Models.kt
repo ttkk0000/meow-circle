@@ -120,6 +120,17 @@ data class Comment(
 )
 
 @Serializable
+data class CreateCommentBody(
+    val content: String,
+)
+
+@Serializable
+data class LikeActionResult(
+    val liked: Boolean,
+    @SerialName("like_count") val likeCount: Long,
+)
+
+@Serializable
 data class PostDetailData(
     val post: Post,
     val media: List<Media> = emptyList(),
@@ -265,4 +276,25 @@ data class CreateOrderBody(
 @Serializable
 data class PayOrderBody(
     val method: String = "mock",
+)
+
+@Serializable
+data class ReportBody(
+    @SerialName("target_kind") val targetKind: String,
+    @SerialName("target_id") val targetId: Long,
+    val reason: String,
+)
+
+@Serializable
+data class Report(
+    val id: Long,
+    @SerialName("reporter_id") val reporterId: Long,
+    @SerialName("target_kind") val targetKind: String,
+    @SerialName("target_id") val targetId: Long,
+    val reason: String,
+    val status: String,
+    @SerialName("handled_by") val handledBy: String = "",
+    val resolution: String = "",
+    @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String,
 )

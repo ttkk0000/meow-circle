@@ -263,9 +263,44 @@ fun StitchOrdersScreen(
                     ReportIssueScreen(
                         order = selectedOrder!!,
                         onBack = { safetyRoute = null },
-                        onSubmit = {
-                            infoText = context.getString(R.string.safety_report_submitted)
-                            safetyRoute = null
+                        busy = actionBusy,
+                        onSubmit = { reason, details ->
+                            if (!actionBusy) {
+                                val selectedReason =
+                                    REPORT_REASONS
+                                        .firstOrNull { it.key == reason }
+                                        ?.let { context.getString(it.labelRes) }
+                                        ?: reason
+                                val detailText = details.trim()
+                                val reportReason =
+                                    if (detailText.isBlank()) {
+                                        selectedReason
+                                    } else {
+                                        "$selectedReason\n$detailText"
+                                    }
+                                if (localMockMode) {
+                                    infoText = context.getString(R.string.safety_report_submitted)
+                                    safetyRoute = null
+                                } else {
+                                    actionBusy = true
+                                    scope.launch {
+                                        sdk.createReport(
+                                            targetKind = "listing",
+                                            targetId = selectedOrder!!.listingId,
+                                            reason = reportReason,
+                                        ).fold(
+                                            onSuccess = {
+                                                infoText = context.getString(R.string.safety_report_submitted)
+                                                safetyRoute = null
+                                            },
+                                            onFailure = { e ->
+                                                infoText = (e as? ApiException)?.message ?: humanizeClientFailure(e, sdk.baseUrl)
+                                            },
+                                        )
+                                        actionBusy = false
+                                    }
+                                }
+                            }
                         },
                         modifier = modifier,
                     )
@@ -676,7 +711,8 @@ private fun SellerReviewsScreen(
 private fun ReportIssueScreen(
     order: Order,
     onBack: () -> Unit,
-    onSubmit: () -> Unit,
+    busy: Boolean,
+    onSubmit: (String, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var reason by remember { mutableStateOf("pickup") }
@@ -720,9 +756,10 @@ private fun ReportIssueScreen(
         }
         BottomTwoActions(
             secondary = stringResource(R.string.common_cancel),
-            primary = stringResource(R.string.safety_submit_report),
+            primary = if (busy) stringResource(R.string.common_loading) else stringResource(R.string.safety_submit_report),
             onSecondary = onBack,
-            onPrimary = onSubmit,
+            onPrimary = { onSubmit(reason, details) },
+            primaryEnabled = !busy,
         )
     }
 }
@@ -1288,6 +1325,7 @@ private fun BottomTwoActions(
     primary: String,
     onSecondary: () -> Unit,
     onPrimary: () -> Unit,
+    primaryEnabled: Boolean = true,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().background(StitchPalette.Surface).border(1.dp, StitchPalette.BorderHairline).padding(14.dp),
@@ -1296,7 +1334,7 @@ private fun BottomTwoActions(
         OutlinedButton(onClick = onSecondary, shape = StitchShape.field, modifier = Modifier.weight(1f).height(48.dp), border = BorderStroke(1.dp, StitchPalette.BorderHairline)) {
             Text(secondary, color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
         }
-        Button(onClick = onPrimary, shape = StitchShape.field, modifier = Modifier.weight(1f).height(48.dp), colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand)) {
+        Button(onClick = onPrimary, enabled = primaryEnabled, shape = StitchShape.field, modifier = Modifier.weight(1f).height(48.dp), colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand)) {
             Text(primary, color = Color.White, fontWeight = FontWeight.Bold)
         }
     }
