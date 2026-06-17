@@ -463,8 +463,8 @@ fun StitchFeedScreen(
                 },
             )
         val elapsed = System.currentTimeMillis() - loadStart
-        if (elapsed < 1000L) {
-            kotlinx.coroutines.delay(1000L - elapsed)
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
         }
         loading = false
     }
@@ -489,8 +489,8 @@ fun StitchFeedScreen(
                 },
             )
         val elapsed = System.currentTimeMillis() - loadStart
-        if (elapsed < 1000L) {
-            kotlinx.coroutines.delay(1000L - elapsed)
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
         }
         listingsLoading = false
     }
@@ -517,8 +517,8 @@ fun StitchFeedScreen(
                 },
             )
         val elapsed = System.currentTimeMillis() - loadStart
-        if (elapsed < 1000L) {
-            kotlinx.coroutines.delay(1000L - elapsed)
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
         }
         convLoading = false
     }
