@@ -65,6 +65,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.ttkk0000.meowcircle.kmpapp.theme.stitchSkeleton
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -1052,7 +1053,7 @@ private fun MarketHeroCard(
                 Modifier
                     .fillMaxWidth()
                     .aspectRatio(if (featured) 1.28f else 1.18f)
-                    .background(if (featured) StitchPalette.SurfaceLow else Color(0xFFCFCFCF)),
+                    .background(if (featured) StitchPalette.SurfaceLow else StitchPalette.SurfaceLow),
         ) {
             AsyncImage(
                 model = imageUrl ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
@@ -1771,3 +1772,26 @@ private fun mockSeller(id: Long): User =
         bio = "Verified Seller",
         createdAt = "2026-06-01T00:00:00Z",
     )
+
+
+@Composable
+fun MarketSkeletonCard() {
+    Surface(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = StitchShape.cardFeed,
+        color = StitchPalette.Surface,
+        border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline)
+    ) {
+        Row(modifier = Modifier.padding(16.dp)) {
+            Box(modifier = Modifier.size(80.dp).clip(StitchShape.neutralCard).stitchSkeleton())
+            Spacer(modifier = Modifier.width(16.dp))
+            Column {
+                Box(modifier = Modifier.height(18.dp).fillMaxWidth(0.6f).clip(StitchShape.pill).stitchSkeleton())
+                Spacer(modifier = Modifier.height(8.dp))
+                Box(modifier = Modifier.height(14.dp).fillMaxWidth(0.8f).clip(StitchShape.pill).stitchSkeleton())
+                Spacer(modifier = Modifier.height(8.dp))
+                Box(modifier = Modifier.height(14.dp).width(60.dp).clip(StitchShape.pill).stitchSkeleton())
+            }
+        }
+    }
+}

@@ -49,7 +49,7 @@ fun StitchLoadingScreen(
                 modifier =
                     Modifier
                         .size(52.dp)
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(StitchShape.cardFeed)
                         .background(StitchLoginRef.PrimaryContainer.copy(alpha = 0.15f)),
                 contentAlignment = Alignment.Center,
             ) {

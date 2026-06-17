@@ -124,6 +124,8 @@ func (s *Store) GetUsers(ids []int64) map[int64]domain.User { return s.inner.Get
 func (s *Store) UpdateUserProfile(id int64, n, a, b string) (domain.User, bool) {
 	return s.inner.UpdateUserProfile(id, n, a, b)
 }
+func (s *Store) GetUserStats(id int64) domain.UserStats { return s.inner.GetUserStats(id) }
+func (s *Store) GetUserPets(id int64) []domain.Pet      { return s.inner.GetUserPets(id) }
 
 // ===== Posts =====
 

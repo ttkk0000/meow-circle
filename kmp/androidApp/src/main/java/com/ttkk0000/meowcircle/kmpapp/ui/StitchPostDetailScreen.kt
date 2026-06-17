@@ -69,6 +69,7 @@ import com.ttkk0000.meowcircle.PostDetailData
 import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
+import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 import com.ttkk0000.meowcircle.humanizeClientFailure
@@ -158,7 +159,7 @@ fun StitchPostDetailScreen(
                         placeholder = { Text(stringResource(R.string.post_add_comment)) },
                         singleLine = true,
                         modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(18.dp),
+                        shape = StitchShape.cardFeed,
                         colors =
                             OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = StitchPalette.Brand,
@@ -246,7 +247,7 @@ fun StitchPostDetailScreen(
                                         Modifier
                                             .fillMaxWidth()
                                             .aspectRatio(1f)
-                                            .clip(RoundedCornerShape(8.dp))
+                                            .clip(StitchShape.neutralCard)
                                             .background(StitchLoginRef.SurfaceContainerLow),
                                 ) {
                                     HorizontalPager(
@@ -274,7 +275,7 @@ fun StitchPostDetailScreen(
                                                 .padding(10.dp)
                                                 .background(
                                                     Color.Black.copy(alpha = 0.45f),
-                                                    RoundedCornerShape(8.dp),
+                                                    StitchShape.neutralCard,
                                                 )
                                                 .padding(horizontal = 8.dp, vertical = 4.dp),
                                     )
@@ -331,7 +332,7 @@ fun StitchPostDetailScreen(
                                                 )
                                         }
                                     },
-                                    shape = RoundedCornerShape(8.dp),
+                                    shape = StitchShape.neutralCard,
                                 ) {
                                     Text(if (following) stringResource(R.string.post_following) else stringResource(R.string.post_follow))
                                 }
@@ -425,7 +426,7 @@ fun StitchPostDetailScreen(
                                     modifier =
                                         Modifier
                                             .fillMaxWidth()
-                                            .clip(RoundedCornerShape(12.dp))
+                                            .clip(StitchShape.field)
                                             .background(if (actionError) StitchPalette.Error.copy(alpha = 0.08f) else StitchPalette.SurfaceContainer)
                                             .padding(12.dp),
                                 )
@@ -459,7 +460,7 @@ private fun PostStatChip(
     Column(
         modifier =
             Modifier
-                .clip(RoundedCornerShape(12.dp))
+                .clip(StitchShape.field)
                 .clickable(enabled = enabled, onClick = onClick)
                 .padding(horizontal = 8.dp, vertical = 6.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -491,7 +492,7 @@ private fun CommentRow(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp))
+                .clip(StitchShape.field)
                 .background(StitchLoginRef.SurfaceContainerLow)
                 .padding(12.dp),
     ) {

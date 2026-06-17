@@ -55,6 +55,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.ttkk0000.meowcircle.kmpapp.theme.stitchSkeleton
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -279,9 +280,9 @@ private fun MessagesListScreen(
         }
         Box(Modifier.weight(1f)) {
             when {
-                loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = StitchPalette.Brand)
-                }
+loading -> LazyColumn(modifier = Modifier.fillMaxSize()) {
+items(7) { MessageSkeletonItem() }
+}
                 err != null && !mockMode -> MessagesEmptyState(
                     title = stringResource(R.string.messages_unavailable_title),
                     body = err,
@@ -410,9 +411,9 @@ private fun ChatDetailScreen(
         }
         Box(Modifier.weight(1f)) {
             when {
-                loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = StitchPalette.Brand)
-                }
+loading -> LazyColumn(modifier = Modifier.fillMaxSize()) {
+items(5) { MessageBubbleSkeletonItem(isMe = it % 2 == 0) }
+}
                 error != null -> Text(
                     error,
                     modifier = Modifier.align(Alignment.Center).padding(24.dp),
@@ -527,12 +528,12 @@ private fun ConversationRow(
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (convo.lastMessage.contains("order", ignoreCase = true) || convo.lastMessage.contains("订单")) {
-                    Surface(shape = StitchShape.pill, color = Color(0xFFE3F1FF)) {
+                    Surface(shape = StitchShape.pill, color = StitchPalette.SecondaryContainer) {
                         Text(
                             stringResource(R.string.messages_order_badge),
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                             style = MaterialTheme.typography.labelSmall,
-                            color = Color(0xFF2F7FD5),
+                            color = StitchPalette.Secondary,
                             fontWeight = FontWeight.Bold,
                         )
                     }
@@ -607,7 +608,7 @@ private fun OrderContextCard(
                 Text(stringResource(R.string.messages_order_context_id), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
                 Text(stringResource(R.string.messages_order_context_title), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
             }
-            Text(stringResource(R.string.messages_order_context_status), style = MaterialTheme.typography.labelSmall, color = Color(0xFF2F7FD5), fontWeight = FontWeight.Black)
+            Text(stringResource(R.string.messages_order_context_status), style = MaterialTheme.typography.labelSmall, color = StitchPalette.Secondary, fontWeight = FontWeight.Black)
         }
     }
 }
@@ -705,3 +706,36 @@ private fun mockConversationDetail(
                 Message(3L, currentUserId, peer.id, shipTomorrowMessage, true, "2026-06-09T10:42:00Z"),
             ),
     )
+
+
+@Composable
+fun MessageSkeletonItem() {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(modifier = Modifier.size(50.dp).clip(androidx.compose.foundation.shape.CircleShape).stitchSkeleton())
+        Spacer(modifier = Modifier.width(16.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Box(modifier = Modifier.height(16.dp).fillMaxWidth(0.5f).clip(StitchShape.pill).stitchSkeleton())
+            Spacer(modifier = Modifier.height(6.dp))
+            Box(modifier = Modifier.height(14.dp).fillMaxWidth(0.8f).clip(StitchShape.pill).stitchSkeleton())
+        }
+    }
+}
+
+@Composable
+fun MessageBubbleSkeletonItem(isMe: Boolean) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 8.dp),
+        horizontalArrangement = if (isMe) Arrangement.End else Arrangement.Start
+    ) {
+        if (!isMe) {
+            Box(modifier = Modifier.size(36.dp).clip(androidx.compose.foundation.shape.CircleShape).stitchSkeleton())
+            Spacer(modifier = Modifier.width(12.dp))
+        }
+        Box(
+            modifier = Modifier.height(40.dp).width(200.dp).clip(StitchShape.cardFeed).stitchSkeleton()
+        )
+    }
+}

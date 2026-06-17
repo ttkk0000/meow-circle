@@ -67,6 +67,7 @@ import com.ttkk0000.meowcircle.kmpapp.BuildConfig
 import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
+import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import kotlinx.coroutines.launch
 
 /**
@@ -129,8 +130,8 @@ fun StitchLoginScreen(
                     Box(
                         modifier = Modifier
                             .size(64.dp)
-                            .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp))
-                            .clip(RoundedCornerShape(16.dp))
+                            .shadow(elevation = 2.dp, shape = StitchShape.cardFeed)
+                            .clip(StitchShape.cardFeed)
                             .background(StitchLoginRef.SurfaceContainerLow)
                             .padding(8.dp),
                         contentAlignment = Alignment.Center
@@ -185,12 +186,12 @@ fun StitchLoginScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(132.dp)
-                            .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp))
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(Color(0xFFCFCFCF)),
+                            .shadow(elevation = 2.dp, shape = StitchShape.cardFeed)
+                            .clip(StitchShape.cardFeed)
+                            .background(StitchPalette.SurfaceLow),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text("img", style = MaterialTheme.typography.labelSmall, color = Color(0xFF333333))
+                        Text("img", style = MaterialTheme.typography.labelSmall, color = StitchPalette.OnSurfaceVariant)
                     }
 
                     Spacer(Modifier.height(22.dp))
@@ -200,7 +201,7 @@ fun StitchLoginScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(40.dp)
-                            .clip(RoundedCornerShape(12.dp))
+                            .clip(StitchShape.field)
                             .background(StitchLoginRef.PrimaryContainer)
                             .clickable { showEmailLogin = true },
                         contentAlignment = Alignment.Center,
@@ -328,7 +329,7 @@ fun StitchLoginScreen(
                                 )
                             },
                             singleLine = true,
-                            shape = RoundedCornerShape(12.dp),
+                            shape = StitchShape.field,
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
                                 unfocusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
@@ -373,7 +374,7 @@ fun StitchLoginScreen(
                             },
                             visualTransformation = if (showPw) VisualTransformation.None else PasswordVisualTransformation(),
                             singleLine = true,
-                            shape = RoundedCornerShape(12.dp),
+                            shape = StitchShape.field,
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
                                 unfocusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
@@ -416,11 +417,11 @@ fun StitchLoginScreen(
                                 .height(48.dp)
                                 .shadow(
                                     elevation = 4.dp,
-                                    shape = RoundedCornerShape(12.dp),
+                                    shape = StitchShape.field,
                                     spotColor = StitchLoginRef.PrimaryContainer.copy(alpha = 0.2f),
                                     ambientColor = StitchLoginRef.PrimaryContainer.copy(alpha = 0.1f),
                                 )
-                                .clip(RoundedCornerShape(12.dp))
+                                .clip(StitchShape.field)
                                 .background(StitchLoginRef.PrimaryContainer)
                                 .clickable(enabled = !busy) {
                                     scope.launch {

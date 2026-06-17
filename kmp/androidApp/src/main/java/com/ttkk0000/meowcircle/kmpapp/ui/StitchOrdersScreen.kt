@@ -61,6 +61,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.ttkk0000.meowcircle.kmpapp.theme.stitchSkeleton
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -727,12 +728,12 @@ private fun ReportIssueScreen(
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = StitchShape.cardFeed,
-                color = Color(0xFFFEF3C7),
-                border = BorderStroke(1.dp, Color(0x55F59E0B)),
+                color = StitchPalette.GoldWeak,
+                border = BorderStroke(1.dp, StitchPalette.GoldWeak),
             ) {
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(stringResource(R.string.safety_urgent_title), style = MaterialTheme.typography.titleSmall, color = Color(0xFFF59E0B), fontWeight = FontWeight.Black)
-                    Text(stringResource(R.string.safety_urgent_body), style = MaterialTheme.typography.bodySmall, color = Color(0xCCB45309))
+                    Text(stringResource(R.string.safety_urgent_title), style = MaterialTheme.typography.titleSmall, color = StitchPalette.Gold, fontWeight = FontWeight.Black)
+                    Text(stringResource(R.string.safety_urgent_body), style = MaterialTheme.typography.bodySmall, color = StitchPalette.GoldWeak)
                 }
             }
             InfoCard(title = stringResource(R.string.safety_issue_question)) {
@@ -830,8 +831,8 @@ private fun DisputeStatusScreen(
             InfoCard(title = stringResource(R.string.safety_dispute_id, order.id)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.orders_order_number, order.id), modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-                    Surface(shape = StitchShape.pill, color = Color(0xFFFEF3C7)) {
-                        Text(stringResource(R.string.safety_under_review), modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp), color = Color(0xFFF59E0B), style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                    Surface(shape = StitchShape.pill, color = StitchPalette.GoldWeak) {
+                        Text(stringResource(R.string.safety_under_review), modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp), color = StitchPalette.Gold, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
                     }
                 }
                 Text(stringResource(R.string.safety_under_review_body), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
@@ -1085,7 +1086,7 @@ private fun Header(
 
 @Composable
 private fun StatusBanner(order: Order, sellerMode: Boolean) {
-    val tint = if (order.status in listOf("paid", "shipped")) Color(0xFF2F7FD5) else StitchPalette.Brand
+    val tint = if (order.status in listOf("paid", "shipped")) StitchPalette.Secondary else StitchPalette.Brand
     Surface(
         shape = StitchShape.field,
         color = tint.copy(alpha = 0.16f),
@@ -1293,7 +1294,7 @@ private fun SafetySelectRow(
                 .border(1.dp, if (selected) StitchPalette.Brand else StitchPalette.Outline, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            if (selected) Box(Modifier.size(8.dp).clip(CircleShape).background(Color.White))
+            if (selected) Box(Modifier.size(8.dp).clip(CircleShape).background(StitchPalette.Surface))
         }
         Text(label, modifier = Modifier.padding(start = 10.dp), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurface)
     }
@@ -1427,7 +1428,7 @@ private fun TrackingStep(
                     .clip(CircleShape)
                     .background(
                         when (state) {
-                            StepState.COMPLETED -> Color(0xFFFF8A3D)
+                            StepState.COMPLETED -> StitchPalette.Brand
                             StepState.ACTIVE -> Color.White
                             StepState.FUTURE -> Color.White
                         }
@@ -1436,8 +1437,8 @@ private fun TrackingStep(
                         width = if (state == StepState.COMPLETED) 0.dp else 2.dp,
                         color = when (state) {
                             StepState.COMPLETED -> Color.Transparent
-                            StepState.ACTIVE -> Color(0xFFFF8A3D)
-                            StepState.FUTURE -> Color(0xFFD6C7BE)
+                            StepState.ACTIVE -> StitchPalette.Brand
+                            StepState.FUTURE -> StitchPalette.OutlineVariant
                         },
                         shape = CircleShape
                     ),
@@ -1448,8 +1449,8 @@ private fun TrackingStep(
                     contentDescription = null,
                     tint = when (state) {
                         StepState.COMPLETED -> Color.White
-                        StepState.ACTIVE -> Color(0xFFFF8A3D)
-                        StepState.FUTURE -> Color(0xFFD6C7BE)
+                        StepState.ACTIVE -> StitchPalette.Brand
+                        StepState.FUTURE -> StitchPalette.OutlineVariant
                     },
                     modifier = Modifier.size(16.dp)
                 )
@@ -1460,7 +1461,7 @@ private fun TrackingStep(
                         .width(2.dp)
                         .weight(1f)
                         .background(
-                            if (connectorDone) Color(0xFFFF8A3D) else Color(0xFFF5E2D5)
+                            if (connectorDone) StitchPalette.Brand else StitchPalette.OutlineVariant
                         )
                 )
             }
@@ -1474,9 +1475,9 @@ private fun TrackingStep(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
                 color = when (state) {
-                    StepState.COMPLETED -> Color(0xFF231F20)
-                    StepState.ACTIVE -> Color(0xFFFF8A3D)
-                    StepState.FUTURE -> Color(0xFF9A8A80)
+                    StepState.COMPLETED -> StitchPalette.OnSurface
+                    StepState.ACTIVE -> StitchPalette.Brand
+                    StepState.FUTURE -> StitchPalette.Stone500
                 },
                 fontWeight = FontWeight.Bold
             )
@@ -1485,9 +1486,9 @@ private fun TrackingStep(
                 text = body,
                 style = MaterialTheme.typography.bodyMedium,
                 color = when (state) {
-                    StepState.COMPLETED -> Color(0xFF6B5E57)
-                    StepState.ACTIVE -> Color(0xFF6B5E57)
-                    StepState.FUTURE -> Color(0xFF9A8A80)
+                    StepState.COMPLETED -> StitchPalette.OnSurfaceVariant
+                    StepState.ACTIVE -> StitchPalette.OnSurfaceVariant
+                    StepState.FUTURE -> StitchPalette.Stone500
                 }
             )
         }
@@ -1591,10 +1592,10 @@ private fun statusLabel(status: String): String =
 @Composable
 private fun statusColor(status: String): Color =
     when (status) {
-        "pending_payment" -> Color(0xFFF59E0B)
-        "paid" -> Color(0xFF2F7FD5)
-        "shipped" -> Color(0xFF2F7FD5)
-        "completed" -> Color(0xFF22C55E)
+        "pending_payment" -> StitchPalette.Gold
+        "paid" -> StitchPalette.Secondary
+        "shipped" -> StitchPalette.Secondary
+        "completed" -> StitchPalette.Brand
         "cancelled" -> StitchPalette.OnSurfaceVariant
         "refunded" -> StitchPalette.Error
         else -> StitchPalette.Brand
@@ -1604,4 +1605,36 @@ private fun formatOrderPrice(cents: Long, currency: String): String {
     val symbol = if (currency.uppercase() == "CNY") "$" else currency.uppercase()
     val amount = cents / 100.0
     return "$symbol${amount.toString().trimEnd('0').trimEnd('.')}"
+}
+
+
+@Composable
+fun OrderSkeletonCard() {
+    Surface(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = StitchShape.cardFeed,
+        color = StitchPalette.Surface,
+        border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Box(modifier = Modifier.height(16.dp).width(100.dp).clip(StitchShape.pill).stitchSkeleton())
+                Box(modifier = Modifier.height(16.dp).width(60.dp).clip(StitchShape.pill).stitchSkeleton())
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(modifier = Modifier.size(60.dp).clip(StitchShape.neutralCard).stitchSkeleton())
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Box(modifier = Modifier.height(16.dp).width(120.dp).clip(StitchShape.pill).stitchSkeleton())
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Box(modifier = Modifier.height(14.dp).width(80.dp).clip(StitchShape.pill).stitchSkeleton())
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                Box(modifier = Modifier.height(32.dp).width(80.dp).clip(StitchShape.pill).stitchSkeleton())
+            }
+        }
+    }
 }

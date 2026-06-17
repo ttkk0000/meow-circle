@@ -82,6 +82,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.ttkk0000.meowcircle.kmpapp.theme.stitchSkeleton
 import androidx.compose.ui.draw.clip
 
 import androidx.compose.ui.draw.shadow
@@ -1362,20 +1363,31 @@ private fun formatListingPrice(
 private fun FeedLoadingPane(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.padding(horizontal = FEED_PAGE_PADDING, vertical = 10.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        repeat(3) { index ->
+        repeat(3) {
             Surface(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(if (index == 0) 176.dp else 132.dp),
-                shape = FEED_SECTION_RADIUS,
-                color = StitchPalette.SurfaceLow,
-                border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline),
+                modifier = Modifier.fillMaxWidth(),
+                shape = StitchShape.cardFeed,
+                color = StitchPalette.Surface,
+                border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.BorderHairline)
             ) {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = StitchPalette.Brand, modifier = Modifier.size(24.dp))
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(modifier = Modifier.size(40.dp).clip(androidx.compose.foundation.shape.CircleShape).stitchSkeleton())
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column {
+                            Box(modifier = Modifier.height(14.dp).width(120.dp).clip(StitchShape.pill).stitchSkeleton())
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Box(modifier = Modifier.height(10.dp).width(80.dp).clip(StitchShape.pill).stitchSkeleton())
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Box(modifier = Modifier.height(14.dp).fillMaxWidth().clip(StitchShape.pill).stitchSkeleton())
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Box(modifier = Modifier.height(14.dp).fillMaxWidth(0.7f).clip(StitchShape.pill).stitchSkeleton())
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Box(modifier = Modifier.height(200.dp).fillMaxWidth().clip(StitchShape.neutralCard).stitchSkeleton())
                 }
             }
         }
@@ -1588,13 +1600,13 @@ private fun ProfilePanel(
                 .padding(16.dp)
                 .shadow(
                     elevation = StitchShadows.cardAmbientY,
-                    shape = RoundedCornerShape(16.dp),
+                    shape = StitchShape.cardFeed,
                     ambientColor = StitchShadows.cardAmbientColor,
                     spotColor = StitchShadows.cardAmbientColor,
                 )
-                .clip(RoundedCornerShape(16.dp))
+                .clip(StitchShape.cardFeed)
                 .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(16.dp))
+                .border(1.dp, StitchPalette.BorderHairline, StitchShape.cardFeed)
                 .padding(horizontal = 24.dp, vertical = 20.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -1659,13 +1671,13 @@ private fun ProfilePanel(
                 .padding(bottom = 24.dp)
                 .shadow(
                     elevation = StitchShadows.cardAmbientY,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = StitchShape.field,
                     ambientColor = StitchShadows.cardAmbientColor,
                     spotColor = StitchShadows.cardAmbientColor,
                 )
-                .clip(RoundedCornerShape(12.dp))
+                .clip(StitchShape.field)
                 .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
                 .padding(vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
@@ -1764,8 +1776,8 @@ private fun ProfilePanel(
                     Column(
                         modifier = Modifier
                             .width(144.dp)
-                            .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
-                            .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                            .background(StitchPalette.Surface, shape = StitchShape.field)
+                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
                             .clickable { onOpenPetProfile(null) }
                             .padding(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -1800,8 +1812,8 @@ private fun ProfilePanel(
                     Column(
                         modifier = Modifier
                             .width(144.dp)
-                            .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
-                            .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                            .background(StitchPalette.Surface, shape = StitchShape.field)
+                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
                             .clickable { onOpenPetProfile(null) }
                             .padding(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -1837,8 +1849,8 @@ private fun ProfilePanel(
                         Column(
                             modifier = Modifier
                                 .width(144.dp)
-                                .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
-                                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                                .background(StitchPalette.Surface, shape = StitchShape.field)
+                                .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
                                 .clickable { onOpenPetProfile(pet.id) }
                                 .padding(12.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
@@ -1925,7 +1937,7 @@ private fun ProfilePanel(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(StitchShape.neutralCard)
                             .background(StitchPalette.SurfaceContainer)
                             .clickable {
                                 if (posts.isNotEmpty()) onOpenPost(posts[0].post.id)
@@ -1949,7 +1961,7 @@ private fun ProfilePanel(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(StitchShape.neutralCard)
                             .background(StitchPalette.SurfaceContainer)
                             .clickable {
                                 if (posts.size > 1) onOpenPost(posts[1].post.id)
@@ -1977,7 +1989,7 @@ private fun ProfilePanel(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(StitchShape.neutralCard)
                             .background(StitchPalette.SurfaceContainer)
                             .clickable {
                                 if (posts.size > 2) onOpenPost(posts[2].post.id)
@@ -2001,8 +2013,8 @@ private fun ProfilePanel(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .background(StitchPalette.Surface, shape = RoundedCornerShape(8.dp))
-                            .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(8.dp))
+                            .background(StitchPalette.Surface, shape = StitchShape.neutralCard)
+                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.neutralCard)
                             .clickable { onCompose() },
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
@@ -2077,16 +2089,16 @@ private fun EditField(
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
+                unfocusedContainerColor = StitchPalette.Surface,
                 focusedBorderColor = StitchPalette.Brand,
-                unfocusedBorderColor = Color(0xFFF5E2D5),
+                unfocusedBorderColor = StitchPalette.OutlineVariant,
                 focusedTextColor = StitchPalette.OnSurface,
                 unfocusedTextColor = StitchPalette.OnSurface,
-                disabledContainerColor = Color.White,
-                disabledBorderColor = Color(0xFFF5E2D5),
+                disabledContainerColor = StitchPalette.Surface,
+                disabledBorderColor = StitchPalette.OutlineVariant,
                 disabledTextColor = StitchPalette.OnSurface
             ),
-            shape = RoundedCornerShape(12.dp)
+            shape = StitchShape.field
         )
     }
 }
@@ -2108,7 +2120,7 @@ private fun PetAvatarEditItem(
             modifier = Modifier
                 .size(64.dp)
                 .clip(CircleShape)
-                .border(1.dp, Color(0xFFF5E2D5), CircleShape),
+                .border(1.dp, StitchPalette.OutlineVariant, CircleShape),
             contentScale = ContentScale.Crop
         )
         Text(
@@ -2133,7 +2145,7 @@ private fun AddPetEditItem(
         Box(
             modifier = Modifier
                 .size(64.dp)
-                .background(Color.White, CircleShape)
+                .background(StitchPalette.Surface, CircleShape)
                 .border(BorderStroke(1.dp, StitchPalette.Brand), CircleShape),
             contentAlignment = Alignment.Center
         ) {
@@ -2300,7 +2312,7 @@ private fun ProfileEditScreen(
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.SemiBold
                     ),
-                    color = Color(0xFF564338),
+                    color = StitchPalette.OnSurfaceVariant,
                     modifier = Modifier.padding(start = 8.dp)
                 )
                 Row(
@@ -2335,7 +2347,7 @@ private fun ProfileEditScreen(
 
             Button(
                 onClick = { onSave(nickname.trim(), bio.trim(), avatarUrl.trim()) },
-                shape = RoundedCornerShape(12.dp),
+                shape = StitchShape.field,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -2417,11 +2429,11 @@ private fun ProfilePetDetailScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
+                .clip(StitchShape.cardFeed)
                 .background(StitchPalette.Surface)
                 .border(
                     BorderStroke(1.dp, StitchPalette.BorderHairline),
-                    RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)
+                    StitchShape.cardFeed
                 )
                 .padding(bottom = 24.dp),
             contentAlignment = Alignment.TopCenter
@@ -2476,8 +2488,8 @@ private fun ProfilePetDetailScreen(
                     tags.forEach { tag ->
                         Box(
                             modifier = Modifier
-                                .background(Color(0xFFFFF8F2), shape = CircleShape)
-                                .border(1.dp, Color(0xFFF1D8C8), CircleShape)
+                                .background(StitchPalette.Canvas, shape = CircleShape)
+                                .border(1.dp, StitchPalette.BorderHairline, CircleShape)
                                 .padding(horizontal = 12.dp, vertical = 4.dp)
                         ) {
                             Text(
@@ -2497,7 +2509,7 @@ private fun ProfilePetDetailScreen(
                 var isFollowing by remember { mutableStateOf(false) }
                 Button(
                     onClick = { isFollowing = !isFollowing },
-                    shape = RoundedCornerShape(12.dp),
+                    shape = StitchShape.field,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (isFollowing) StitchPalette.SurfaceLow else StitchPalette.Brand
                     ),
@@ -2522,13 +2534,13 @@ private fun ProfilePetDetailScreen(
                 .padding(16.dp)
                 .shadow(
                     elevation = StitchShadows.cardAmbientY,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = StitchShape.field,
                     ambientColor = StitchShadows.cardAmbientColor,
                     spotColor = StitchShadows.cardAmbientColor,
                 )
-                .clip(RoundedCornerShape(12.dp))
+                .clip(StitchShape.field)
                 .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
                 .padding(vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
@@ -2622,13 +2634,13 @@ private fun ProfilePetDetailScreen(
                     .fillMaxWidth()
                     .shadow(
                         elevation = StitchShadows.cardAmbientY,
-                        shape = RoundedCornerShape(12.dp),
+                        shape = StitchShape.field,
                         ambientColor = StitchShadows.cardAmbientColor,
                         spotColor = StitchShadows.cardAmbientColor,
                     )
-                    .clip(RoundedCornerShape(12.dp))
+                    .clip(StitchShape.field)
                     .background(StitchPalette.Surface)
-                    .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                    .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
                     .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -2666,9 +2678,9 @@ private fun ProfilePetDetailScreen(
 
                 Button(
                     onClick = onBack, // Pops back to User Profile
-                    shape = RoundedCornerShape(8.dp),
+                    shape = StitchShape.neutralCard,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFFF1E6),
+                        containerColor = StitchPalette.SurfaceLow,
                         contentColor = StitchPalette.Brand
                     ),
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
@@ -2715,7 +2727,7 @@ private fun ProfilePetDetailScreen(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(StitchShape.neutralCard)
                             .background(StitchPalette.SurfaceContainer)
                     ) {
                         AsyncImage(
@@ -2729,7 +2741,7 @@ private fun ProfilePetDetailScreen(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(StitchShape.neutralCard)
                             .background(StitchPalette.SurfaceContainer)
                     ) {
                         AsyncImage(
@@ -2856,7 +2868,7 @@ private fun ProfileConnectionsScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFFFFF8F2), shape = RoundedCornerShape(12.dp))
+                    .background(StitchPalette.Canvas, shape = StitchShape.field)
                     .padding(4.dp)
             ) {
                 Box(
@@ -2865,11 +2877,11 @@ private fun ProfileConnectionsScreen(
                         .height(36.dp)
                         .shadow(
                             elevation = if (isFollowersTab) 2.dp else 0.dp,
-                            shape = RoundedCornerShape(8.dp),
+                            shape = StitchShape.neutralCard,
                             ambientColor = StitchPalette.PrimaryDark.copy(alpha = 0.1f),
                             spotColor = StitchPalette.PrimaryDark.copy(alpha = 0.1f)
                         )
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(StitchShape.neutralCard)
                         .background(if (isFollowersTab) Color.White else Color.Transparent)
                         .clickable { isFollowersTab = true },
                     contentAlignment = Alignment.Center
@@ -2890,11 +2902,11 @@ private fun ProfileConnectionsScreen(
                         .height(36.dp)
                         .shadow(
                             elevation = if (!isFollowersTab) 2.dp else 0.dp,
-                            shape = RoundedCornerShape(8.dp),
+                            shape = StitchShape.neutralCard,
                             ambientColor = StitchPalette.PrimaryDark.copy(alpha = 0.1f),
                             spotColor = StitchPalette.PrimaryDark.copy(alpha = 0.1f)
                         )
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(StitchShape.neutralCard)
                         .background(if (!isFollowersTab) Color.White else Color.Transparent)
                         .clickable { isFollowersTab = false },
                     contentAlignment = Alignment.Center
@@ -2948,14 +2960,14 @@ private fun ProfileConnectionsScreen(
                     .fillMaxWidth()
                     .height(48.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color(0xFFFFF8F2),
-                    unfocusedContainerColor = Color(0xFFFFF8F2),
+                    focusedContainerColor = StitchPalette.Canvas,
+                    unfocusedContainerColor = StitchPalette.Canvas,
                     focusedBorderColor = Color.Transparent,
                     unfocusedBorderColor = Color.Transparent,
                     focusedTextColor = StitchPalette.PrimaryDark,
                     unfocusedTextColor = StitchPalette.PrimaryDark
                 ),
-                shape = RoundedCornerShape(12.dp)
+                shape = StitchShape.field
             )
         }
 
@@ -2974,13 +2986,13 @@ private fun ProfileConnectionsScreen(
                         .fillMaxWidth()
                         .shadow(
                             elevation = StitchShadows.cardAmbientY,
-                            shape = RoundedCornerShape(12.dp),
+                            shape = StitchShape.field,
                             ambientColor = StitchShadows.cardAmbientColor,
                             spotColor = StitchShadows.cardAmbientColor
                         )
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(StitchShape.field)
                         .background(StitchPalette.Surface)
-                        .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                        .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
                         .padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -3034,12 +3046,12 @@ private fun ProfileConnectionsScreen(
                     // Connection Action Button
                     Button(
                         onClick = { localFollowingState = !localFollowingState },
-                        shape = RoundedCornerShape(8.dp),
+                        shape = StitchShape.neutralCard,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (localFollowingState) Color(0xFFFFF8F2) else StitchPalette.Brand,
+                            containerColor = if (localFollowingState) StitchPalette.Canvas else StitchPalette.Brand,
                             contentColor = if (localFollowingState) StitchPalette.Brand else Color.White
                         ),
-                        border = if (localFollowingState) BorderStroke(1.dp, Color(0xFFF1D8C8)) else null,
+                        border = if (localFollowingState) BorderStroke(1.dp, StitchPalette.BorderHairline) else null,
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
                         modifier = Modifier.height(32.dp)
                     ) {
@@ -3064,7 +3076,7 @@ private fun SettingCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(16.dp),
+        shape = StitchShape.cardFeed,
         color = StitchPalette.Surface,
         border = BorderStroke(1.dp, StitchPalette.BorderHairline)
     ) {
@@ -3092,7 +3104,7 @@ private fun SettingRow(
         Box(
             modifier = Modifier
                 .size(28.dp)
-                .clip(RoundedCornerShape(6.dp))
+                .clip(StitchShape.neutralCard)
                 .background(StitchPalette.BrandMuted),
             contentAlignment = Alignment.Center
         ) {
@@ -3158,9 +3170,9 @@ private fun SettingProfileCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(16.dp),
+        shape = StitchShape.cardFeed,
         color = Color.White,
-        border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+        border = BorderStroke(1.dp, StitchPalette.OutlineVariant)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -3211,14 +3223,14 @@ private fun SettingProfileCard(
             }
             Button(
                 onClick = onEditProfile,
-                shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color(0xFFF5E2D5)),
+                shape = StitchShape.neutralCard,
+                border = BorderStroke(1.dp, StitchPalette.OutlineVariant),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp)
                     .height(38.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
+                    containerColor = StitchPalette.Surface,
                     contentColor = StitchPalette.Brand
                 )
             ) {
@@ -3396,9 +3408,9 @@ private fun ThemeUIPreviewCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(16.dp),
-        color = Color(0xFFFFF8F2),
-        border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+        shape = StitchShape.cardFeed,
+        color = StitchPalette.Canvas,
+        border = BorderStroke(1.dp, StitchPalette.OutlineVariant)
     ) {
         Column(
             modifier = Modifier
@@ -3413,21 +3425,21 @@ private fun ThemeUIPreviewCard(
                 Box(
                     modifier = Modifier
                         .size(32.dp)
-                        .background(Color.White, CircleShape)
-                        .border(1.dp, Color(0xFFF5E2D5), CircleShape)
+                        .background(StitchPalette.Surface, CircleShape)
+                        .border(1.dp, StitchPalette.OutlineVariant, CircleShape)
                 )
                 Box(
                     modifier = Modifier
                         .size(width = 96.dp, height = 16.dp)
-                        .background(Color.White, RoundedCornerShape(4.dp))
-                        .border(1.dp, Color(0xFFF5E2D5), RoundedCornerShape(4.dp))
+                        .background(StitchPalette.Surface, StitchShape.neutralCard)
+                        .border(1.dp, StitchPalette.OutlineVariant, StitchShape.neutralCard)
                 )
             }
             Surface(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
+                shape = StitchShape.field,
                 color = Color.White,
-                border = BorderStroke(1.dp, Color(0xFFF5E2D5)),
+                border = BorderStroke(1.dp, StitchPalette.OutlineVariant),
                 shadowElevation = 2.dp
             ) {
                 Row(
@@ -3438,7 +3450,7 @@ private fun ThemeUIPreviewCard(
                     Box(
                         modifier = Modifier
                             .size(48.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(StitchShape.neutralCard)
                             .background(StitchPalette.Brand.copy(alpha = 0.2f))
                     )
                     Column(
@@ -3448,13 +3460,13 @@ private fun ThemeUIPreviewCard(
                         Box(
                             modifier = Modifier
                                 .size(width = 80.dp, height = 12.dp)
-                                .background(StitchPalette.Brand, RoundedCornerShape(4.dp))
+                                .background(StitchPalette.Brand, StitchShape.neutralCard)
                         )
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth(0.75f)
                                 .height(8.dp)
-                                .background(Color(0xFFDDC1B3), RoundedCornerShape(3.dp))
+                                .background(StitchPalette.Outline, StitchShape.neutralCard)
                         )
                     }
                 }
@@ -3485,7 +3497,7 @@ private fun ThemeGridItem(
         modifier = modifier
             .clickable(onClick = onClick)
             .aspectRatio(1.3f),
-        shape = RoundedCornerShape(12.dp),
+        shape = StitchShape.field,
         color = bgColor,
         border = BorderStroke(if (isSelected) 2.dp else 1.dp, if (isSelected) iconColor else borderColor),
         shadowElevation = if (isSelected) 2.dp else 0.dp
@@ -3634,7 +3646,7 @@ private fun ProfileAppearanceScreen(
             
             Button(
                 onClick = { onSelectTheme(pendingTheme) },
-                shape = RoundedCornerShape(12.dp),
+                shape = StitchShape.field,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -3666,7 +3678,7 @@ private fun SettingRowWithRightText(
         Box(
             modifier = Modifier
                 .size(28.dp)
-                .clip(RoundedCornerShape(6.dp))
+                .clip(StitchShape.neutralCard)
                 .background(StitchPalette.BrandMuted),
             contentAlignment = Alignment.Center
         ) {
@@ -3717,7 +3729,7 @@ private fun SettingRowWithToggle(
         Box(
             modifier = Modifier
                 .size(28.dp)
-                .clip(RoundedCornerShape(6.dp))
+                .clip(StitchShape.neutralCard)
                 .background(StitchPalette.BrandMuted),
             contentAlignment = Alignment.Center
         ) {
@@ -3742,7 +3754,7 @@ private fun SettingRowWithToggle(
                 checkedThumbColor = Color.White,
                 checkedTrackColor = StitchPalette.Brand,
                 uncheckedThumbColor = Color.White,
-                uncheckedTrackColor = Color(0xFFE5D5C5)
+                uncheckedTrackColor = StitchPalette.OutlineVariant
             )
         )
     }
@@ -3952,7 +3964,7 @@ private fun SimpleToggleRow(
                 checkedThumbColor = Color.White,
                 checkedTrackColor = StitchPalette.Brand,
                 uncheckedThumbColor = Color.White,
-                uncheckedTrackColor = Color(0xFFE5D5C5)
+                uncheckedTrackColor = StitchPalette.OutlineVariant
             )
         )
     }
@@ -4022,7 +4034,7 @@ private fun ProfileNotificationsScreen(
             
             Button(
                 onClick = onBack,
-                shape = RoundedCornerShape(12.dp),
+                shape = StitchShape.field,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
@@ -4043,9 +4055,9 @@ private fun PrivacySectionBlock(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = StitchShape.field,
         color = Color.White,
-        border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+        border = BorderStroke(1.dp, StitchPalette.OutlineVariant)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -4088,9 +4100,9 @@ private fun ProfilePrivacyPolicyScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                shape = RoundedCornerShape(16.dp),
+                shape = StitchShape.cardFeed,
                 color = Color.White,
-                border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+                border = BorderStroke(1.dp, StitchPalette.OutlineVariant)
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -4100,7 +4112,7 @@ private fun ProfilePrivacyPolicyScreen(
                     Box(
                         modifier = Modifier
                             .size(64.dp)
-                            .background(Color(0xFFFFF8F2), CircleShape)
+                            .background(StitchPalette.Canvas, CircleShape)
                             .border(1.dp, StitchPalette.Brand, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
@@ -4155,7 +4167,7 @@ private fun ProfilePrivacyPolicyScreen(
 
             Button(
                 onClick = onBack,
-                shape = RoundedCornerShape(12.dp),
+                shape = StitchShape.field,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
@@ -4188,7 +4200,7 @@ private fun BulletRuleBlock(
             Box(
                 modifier = Modifier
                     .size(28.dp)
-                    .clip(RoundedCornerShape(6.dp))
+                    .clip(StitchShape.neutralCard)
                     .background(StitchPalette.BrandMuted),
                 contentAlignment = Alignment.Center
             ) {
@@ -4254,9 +4266,9 @@ private fun ProfileUserNoticeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                shape = RoundedCornerShape(16.dp),
+                shape = StitchShape.cardFeed,
                 color = Color.White,
-                border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+                border = BorderStroke(1.dp, StitchPalette.OutlineVariant)
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -4283,9 +4295,9 @@ private fun ProfileUserNoticeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                shape = RoundedCornerShape(16.dp),
+                shape = StitchShape.cardFeed,
                 color = Color.White,
-                border = BorderStroke(1.dp, Color(0xFFF5E2D5))
+                border = BorderStroke(1.dp, StitchPalette.OutlineVariant)
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     BulletRuleBlock(
@@ -4296,7 +4308,7 @@ private fun ProfileUserNoticeScreen(
                             "Bullying, harassment, or hateful content will result in immediate account suspension."
                         )
                     )
-                    HorizontalDivider(color = Color(0xFFF5E2D5), thickness = 1.dp)
+                    HorizontalDivider(color = StitchPalette.OutlineVariant, thickness = 1.dp)
                     BulletRuleBlock(
                         icon = Icons.Outlined.Storefront,
                         title = "Marketplace Rules",
@@ -4305,7 +4317,7 @@ private fun ProfileUserNoticeScreen(
                             "Selling live animals is strictly prohibited on our platform."
                         )
                     )
-                    HorizontalDivider(color = Color(0xFFF5E2D5), thickness = 1.dp)
+                    HorizontalDivider(color = StitchPalette.OutlineVariant, thickness = 1.dp)
                     BulletRuleBlock(
                         icon = Icons.Filled.Pets,
                         title = "Pet Content",
@@ -4313,7 +4325,7 @@ private fun ProfileUserNoticeScreen(
                             "Content showing animal abuse, neglect, or harm will be removed and reported to authorities."
                         )
                     )
-                    HorizontalDivider(color = Color(0xFFF5E2D5), thickness = 1.dp)
+                    HorizontalDivider(color = StitchPalette.OutlineVariant, thickness = 1.dp)
                     BulletRuleBlock(
                         icon = Icons.Outlined.GppGood,
                         title = "Account Safety",
@@ -4334,7 +4346,7 @@ private fun ProfileUserNoticeScreen(
             ) {
                 Button(
                     onClick = onBack,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = StitchShape.field,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),
@@ -4345,13 +4357,13 @@ private fun ProfileUserNoticeScreen(
                 
                 Button(
                     onClick = {},
-                    shape = RoundedCornerShape(12.dp),
+                    shape = StitchShape.field,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),
-                    border = BorderStroke(1.dp, Color(0xFFF1D8C8)),
+                    border = BorderStroke(1.dp, StitchPalette.BorderHairline),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,
+                        containerColor = StitchPalette.Surface,
                         contentColor = StitchPalette.Brand
                     ),
                 ) {
@@ -4556,7 +4568,7 @@ private fun MessagesPane(
                         containerColor = StitchPalette.Brand.copy(alpha = 0.1f),
                         contentColor = StitchPalette.Brand
                     ),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = StitchShape.neutralCard
                 ) {
                     Text("看离线演示", fontWeight = FontWeight.Bold)
                 }

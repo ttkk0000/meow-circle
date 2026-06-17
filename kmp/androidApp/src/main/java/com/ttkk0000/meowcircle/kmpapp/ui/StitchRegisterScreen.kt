@@ -452,7 +452,7 @@ private fun PrimaryRegisterButton(
             Modifier
                 .fillMaxWidth()
                 .height(48.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = StitchShape.field,
         colors =
             ButtonDefaults.buttonColors(
                 containerColor = StitchLoginRef.PrimaryContainer,
@@ -491,7 +491,7 @@ private fun RegField(
         },
         singleLine = true,
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        shape = RoundedCornerShape(12.dp),
+        shape = StitchShape.field,
         colors =
             OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = StitchLoginRef.SurfaceContainerLowest,
