@@ -209,6 +209,13 @@ private fun MessagesListScreen(
     onOpenOrders: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val showMessageControls =
+        conversations.isNotEmpty() ||
+            query.isNotBlank() ||
+            filter != "all" ||
+            loading ||
+            (err != null && !mockMode)
+
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
         Column(
             modifier = Modifier
@@ -235,35 +242,37 @@ private fun MessagesListScreen(
                 }
             }
         }
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            StitchSearchField(
-                value = query,
-                onValueChange = onQueryChange,
-                placeholder = stringResource(R.string.messages_search_placeholder),
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+        if (showMessageControls) {
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                MESSAGE_FILTERS.forEach { f ->
-                    val selected = filter == f.key
-                    Surface(
-                        shape = StitchShape.pill,
-                        color = if (selected) StitchPalette.Brand else StitchPalette.Surface,
-                        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
-                        modifier = Modifier.clickable { onFilterChange(f.key) },
-                    ) {
-                        Text(
-                            stringResource(f.labelRes),
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 9.dp),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = if (selected) Color.White else StitchPalette.OnSurfaceVariant,
-                            fontWeight = FontWeight.Bold,
-                        )
+                StitchSearchField(
+                    value = query,
+                    onValueChange = onQueryChange,
+                    placeholder = stringResource(R.string.messages_search_placeholder),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    MESSAGE_FILTERS.forEach { f ->
+                        val selected = filter == f.key
+                        Surface(
+                            shape = StitchShape.pill,
+                            color = if (selected) StitchPalette.Brand else StitchPalette.Surface,
+                            border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+                            modifier = Modifier.clickable { onFilterChange(f.key) },
+                        ) {
+                            Text(
+                                stringResource(f.labelRes),
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 9.dp),
+                                style = MaterialTheme.typography.labelLarge,
+                                color = if (selected) Color.White else StitchPalette.OnSurfaceVariant,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
                     }
                 }
             }

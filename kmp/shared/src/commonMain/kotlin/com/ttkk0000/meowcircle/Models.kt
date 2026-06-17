@@ -2,6 +2,11 @@ package com.ttkk0000.meowcircle
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonTransformingSerializer
 
 @Serializable
 data class ApiEnvelope(
@@ -46,6 +51,11 @@ data class Media(
     @SerialName("created_at") val createdAt: String,
 )
 
+object MediaListAsEmptySerializer : JsonTransformingSerializer<List<Media>>(ListSerializer(Media.serializer())) {
+    override fun transformDeserialize(element: JsonElement): JsonElement =
+        if (element is JsonNull) JsonArray(emptyList()) else element
+}
+
 @Serializable
 data class PostFeedItem(
     val post: Post,
@@ -80,6 +90,7 @@ data class Listing(
 @Serializable
 data class ListingDetailData(
     val listing: Listing,
+    @Serializable(with = MediaListAsEmptySerializer::class)
     val media: List<Media> = emptyList(),
 )
 
@@ -133,6 +144,7 @@ data class LikeActionResult(
 @Serializable
 data class PostDetailData(
     val post: Post,
+    @Serializable(with = MediaListAsEmptySerializer::class)
     val media: List<Media> = emptyList(),
     val comments: List<Comment> = emptyList(),
     @SerialName("like_count") val likeCount: Long = 0,
