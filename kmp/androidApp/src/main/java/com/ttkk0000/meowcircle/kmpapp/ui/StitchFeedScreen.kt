@@ -100,6 +100,7 @@ import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.Post
 import com.ttkk0000.meowcircle.PostFeedItem
 import com.ttkk0000.meowcircle.User
+import com.ttkk0000.meowcircle.Pet
 import com.ttkk0000.meowcircle.humanizeClientFailure
 import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.BuildConfig
@@ -281,6 +282,8 @@ fun StitchFeedScreen(
     var listingsErr by remember { mutableStateOf<List<Listing>?>(null) }
     var listingsLoading by remember { mutableStateOf(false) }
     var profilePosts by remember { mutableStateOf<List<PostFeedItem>?>(null) }
+    var profilePets by remember { mutableStateOf<List<Pet>?>(null) }
+    var selectedPetId by remember { mutableStateOf<Long?>(null) }
     var profileLoading by remember { mutableStateOf(false) }
     var mockMode by remember { mutableStateOf(false) }
     var feedRetrySignal by remember { mutableStateOf(0) }
@@ -512,6 +515,17 @@ fun StitchFeedScreen(
             return@LaunchedEffect
         }
         profileLoading = true
+        val fullUserRes = sdk.userProfile(profileUser.id)
+        if (fullUserRes.isSuccess) {
+            val fullUser = fullUserRes.getOrNull()
+            if (fullUser != null) {
+                profileUser = fullUser
+            }
+        }
+        val petsRes = sdk.getUserPets(profileUser.id)
+        if (petsRes.isSuccess) {
+            profilePets = petsRes.getOrNull()
+        }
         profilePosts =
             sdk.feedPosts("new").fold(
                 onSuccess = { items -> items.filter { it.author.id == profileUser.id } },
@@ -599,13 +613,17 @@ fun StitchFeedScreen(
                                     ProfilePanel(
                                         apiBase = apiBase,
                                         user = profileUser,
+                                        pets = profilePets,
                                         gridPosts = profilePosts,
                                         gridLoading = profileLoading,
                                         profileBackground = profileBackground,
                                         onLogout = onLogout,
                                         onOpenPost = onOpenPost,
                                         onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
-                                        onOpenPetProfile = { navigateToProfileRoute(ProfileRoute.PetDetail) },
+                                        onOpenPetProfile = { petId -> 
+                                            selectedPetId = petId
+                                            navigateToProfileRoute(ProfileRoute.PetDetail) 
+                                        },
                                         onOpenConnections = { navigateToProfileRoute(ProfileRoute.Connections) },
                                         onSettings = { navigateToProfileRoute(ProfileRoute.Settings) },
                                         onProfileBackgroundChanged = {
@@ -654,6 +672,7 @@ fun StitchFeedScreen(
                                 ProfilePetDetailScreen(
                                     apiBase = apiBase,
                                     user = profileUser,
+                                    pet = profilePets?.find { it.id == selectedPetId },
                                     onBack = popProfileRoute,
                                     onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
                                     modifier = Modifier.fillMaxSize(),
@@ -1530,13 +1549,14 @@ private fun ThemeSelectionDialog(
 private fun ProfilePanel(
     apiBase: String,
     user: User,
+    pets: List<Pet>?,
     gridPosts: List<PostFeedItem>?,
     gridLoading: Boolean,
     profileBackground: String,
     onLogout: () -> Unit,
     onOpenPost: (Long) -> Unit,
     onEditProfile: () -> Unit,
-    onOpenPetProfile: () -> Unit,
+    onOpenPetProfile: (Long?) -> Unit,
     onOpenConnections: () -> Unit,
     onSettings: () -> Unit,
     onProfileBackgroundChanged: (String) -> Unit,
@@ -1656,7 +1676,7 @@ private fun ProfilePanel(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = if (isDemo) "128" else "${posts.size.coerceAtLeast(3)}",
+                    text = "${user.stats?.moments ?: if (isDemo) 128 else gridPosts?.size ?: 0}",
                     style = MaterialTheme.typography.titleMedium.copy(
                         platformStyle = PlatformTextStyle(includeFontPadding = false)
                     ),
@@ -1678,7 +1698,7 @@ private fun ProfilePanel(
                 modifier = Modifier.weight(1f).clickable { onOpenConnections() }
             ) {
                 Text(
-                    text = "42",
+                    text = "${user.stats?.followers ?: if (isDemo) 42 else 0}",
                     style = MaterialTheme.typography.titleMedium.copy(
                         platformStyle = PlatformTextStyle(includeFontPadding = false)
                     ),
@@ -1697,10 +1717,10 @@ private fun ProfilePanel(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(2.dp),
-                modifier = Modifier.weight(1f).clickable { onOpenPetProfile() }
+                modifier = Modifier.weight(1f).clickable { onOpenPetProfile(null) }
             ) {
                 Text(
-                    text = "2",
+                    text = "${pets?.size ?: if (isDemo) 2 else 0}",
                     style = MaterialTheme.typography.titleMedium.copy(
                         platformStyle = PlatformTextStyle(includeFontPadding = false)
                     ),
@@ -1739,79 +1759,118 @@ private fun ProfilePanel(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Spacer(Modifier.width(4.dp)) // Content padding start
-                // Pet 1: Latte
-                Column(
-                    modifier = Modifier
-                        .width(144.dp)
-                        .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
-                        .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
-                        .clickable { onOpenPetProfile() }
-                        .padding(12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    AsyncImage(
-                        model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png",
-                        contentDescription = "Latte",
+                if (isDemo || pets == null || pets.isEmpty()) {
+                    // Pet 1: Latte
+                    Column(
                         modifier = Modifier
-                            .size(64.dp)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(R.string.profile_pet_latte_name),
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            platformStyle = PlatformTextStyle(includeFontPadding = false)
-                        ),
-                        fontWeight = FontWeight.Bold,
-                        color = StitchPalette.OnSurface,
-                    )
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        text = "Domestic Shorthair\n3 yrs",
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            platformStyle = PlatformTextStyle(includeFontPadding = false)
-                        ),
-                        color = StitchPalette.OnSurfaceVariant,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-                // Pet 2: Peach
-                Column(
-                    modifier = Modifier
-                        .width(144.dp)
-                        .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
-                        .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
-                        .clickable { onOpenPetProfile() }
-                        .padding(12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    AsyncImage(
-                        model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
-                        contentDescription = "Peach",
+                            .width(144.dp)
+                            .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
+                            .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                            .clickable { onOpenPetProfile(null) }
+                            .padding(12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        AsyncImage(
+                            model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png",
+                            contentDescription = "Latte",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape)
+                                .background(StitchPalette.Canvas),
+                            contentScale = ContentScale.Crop,
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = stringResource(R.string.profile_pet_latte_name),
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            fontWeight = FontWeight.Bold,
+                            color = StitchPalette.OnSurface,
+                        )
+                        Text(
+                            text = "3 yrs",
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            color = StitchPalette.OnSurfaceVariant,
+                        )
+                    }
+                    // Pet 2: Peach
+                    Column(
                         modifier = Modifier
-                            .size(64.dp)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = "Peach",
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            platformStyle = PlatformTextStyle(includeFontPadding = false)
-                        ),
-                        fontWeight = FontWeight.Bold,
-                        color = StitchPalette.OnSurface,
-                    )
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        text = "Persian\n5 yrs",
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            platformStyle = PlatformTextStyle(includeFontPadding = false)
-                        ),
-                        color = StitchPalette.OnSurfaceVariant,
-                        textAlign = TextAlign.Center,
-                    )
+                            .width(144.dp)
+                            .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
+                            .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                            .clickable { onOpenPetProfile(null) }
+                            .padding(12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        AsyncImage(
+                            model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
+                            contentDescription = "Peach",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape)
+                                .background(StitchPalette.Canvas),
+                            contentScale = ContentScale.Crop,
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = "Peach",
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            fontWeight = FontWeight.Bold,
+                            color = StitchPalette.OnSurface,
+                        )
+                        Text(
+                            text = "1.5 yrs",
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                platformStyle = PlatformTextStyle(includeFontPadding = false)
+                            ),
+                            color = StitchPalette.OnSurfaceVariant,
+                        )
+                    }
+                } else {
+                    pets.forEach { pet ->
+                        Column(
+                            modifier = Modifier
+                                .width(144.dp)
+                                .background(StitchPalette.Surface, shape = RoundedCornerShape(12.dp))
+                                .border(1.dp, StitchPalette.BorderHairline, RoundedCornerShape(12.dp))
+                                .clickable { onOpenPetProfile(pet.id) }
+                                .padding(12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            val petAvatar = resolveMediaUrl(apiBase, pet.avatarUrl.takeIf { it.isNotBlank() }) ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                            AsyncImage(
+                                model = petAvatar,
+                                contentDescription = pet.name,
+                                modifier = Modifier
+                                    .size(64.dp)
+                                    .clip(CircleShape)
+                                    .background(StitchPalette.Canvas),
+                                contentScale = ContentScale.Crop,
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = pet.name,
+                                style = MaterialTheme.typography.titleSmall.copy(
+                                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                                ),
+                                fontWeight = FontWeight.Bold,
+                                color = StitchPalette.OnSurface,
+                            )
+                            Text(
+                                text = pet.age.ifBlank { "0 yrs" },
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    platformStyle = PlatformTextStyle(includeFontPadding = false)
+                                ),
+                                color = StitchPalette.OnSurfaceVariant,
+                            )
+                        }
+                    }
                 }
                 Spacer(Modifier.width(4.dp)) // Content padding end
             }
@@ -2298,14 +2357,15 @@ private fun ProfileEditScreen(
 private fun ProfilePetDetailScreen(
     apiBase: String,
     user: User,
+    pet: Pet?,
     onBack: () -> Unit,
     onEditProfile: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val petName = stringResource(R.string.profile_pet_latte_name)
-    val petBreed = "Domestic Shorthair"
-    val petAge = "3 yrs"
-    val petAvatar = "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+    val petName = pet?.name ?: stringResource(R.string.profile_pet_latte_name)
+    val petBreed = pet?.breed ?: "Domestic Shorthair"
+    val petAge = pet?.age?.ifBlank { "0 yrs" } ?: "3 yrs"
+    val petAvatar = resolveMediaUrl(apiBase, pet?.avatarUrl?.takeIf { it.isNotBlank() }) ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
 
     Column(
         modifier = modifier
@@ -2412,7 +2472,8 @@ private fun ProfilePetDetailScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    listOf("Cozy", "Curious", "Sunny").forEach { tag ->
+                    val tags = pet?.tags?.takeIf { it.isNotEmpty() } ?: listOf("Cozy", "Curious", "Sunny")
+                    tags.forEach { tag ->
                         Box(
                             modifier = Modifier
                                 .background(Color(0xFFFFF8F2), shape = CircleShape)

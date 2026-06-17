@@ -150,6 +150,45 @@ func (s *MemoryStore) GetUsers(ids []int64) map[int64]domain.User {
 	return out
 }
 
+func (s *MemoryStore) GetUserStats(id int64) domain.UserStats {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	// Mock implementation
+	return domain.UserStats{
+		Moments:   12,
+		Likes:     1024,
+		Badges:    5,
+		Followers: 256,
+		Following: 128,
+	}
+}
+
+func (s *MemoryStore) GetUserPets(id int64) []domain.Pet {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	// Mock implementation
+	return []domain.Pet{
+		{
+			ID:        1,
+			OwnerID:   id,
+			Name:      "Latte",
+			Breed:     "Domestic Shorthair",
+			Age:       "3 yrs",
+			Tags:      []string{"Cozy", "Curious", "Sunny"},
+			AvatarURL: "/mock-images/mock_image_2.png",
+		},
+		{
+			ID:        2,
+			OwnerID:   id,
+			Name:      "Peach",
+			Breed:     "Persian",
+			Age:       "1.5 yrs",
+			Tags:      []string{"Sleepy", "Fluffy"},
+			AvatarURL: "/mock-images/mock_image_3.png",
+		},
+	}
+}
+
 func (s *MemoryStore) CreatePost(input domain.Post) domain.Post {
 	s.mu.Lock()
 	defer s.mu.Unlock()

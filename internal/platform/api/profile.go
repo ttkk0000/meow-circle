@@ -59,12 +59,27 @@ func (r *Router) handleUserPublic(w http.ResponseWriter, req *http.Request) {
 		writeError(w, http.StatusNotFound, "user not found")
 		return
 	}
-	writeOK(w, map[string]any{
-		"id":         u.ID,
-		"username":   u.Username,
-		"nickname":   u.Nickname,
-		"avatar_url": u.AvatarURL,
-		"bio":        u.Bio,
-		"created_at": u.CreatedAt,
-	})
+	stats := r.store.GetUserStats(id)
+	u.Stats = &stats
+	writeOK(w, u)
+}
+
+// GET /api/v1/users/{id}/pets
+func (r *Router) handleUserPets(w http.ResponseWriter, req *http.Request) {
+	if req.Method != http.MethodGet {
+		writeError(w, http.StatusMethodNotAllowed, "method not allowed")
+		return
+	}
+	parts := strings.Split(strings.Trim(req.URL.Path, "/"), "/")
+	if len(parts) < 4 {
+		writeError(w, http.StatusBadRequest, "invalid url")
+		return
+	}
+	id, err := strconv.ParseInt(parts[3], 10, 64)
+	if err != nil {
+		writeError(w, http.StatusBadRequest, "invalid user id")
+		return
+	}
+	pets := r.store.GetUserPets(id)
+	writeOK(w, pets)
 }

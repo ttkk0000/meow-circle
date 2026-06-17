@@ -20,6 +20,8 @@ type Store interface {
 	UpdateUserProfile(id int64, nickname, avatarURL, bio string) (domain.User, bool)
 	CountUsers() int
 	GetUsers(ids []int64) map[int64]domain.User
+	GetUserStats(id int64) domain.UserStats
+	GetUserPets(id int64) []domain.Pet
 
 	// Posts
 	CreatePost(input domain.Post) domain.Post

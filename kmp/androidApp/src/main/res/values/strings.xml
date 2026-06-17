@@ -236,9 +236,10 @@
 
     <string name="market_title">M&amp;D 市集</string>
     <string name="market_search_placeholder">搜索玩具、食物、护理...</string>
-    <string name="market_publish_product">发布商品</string>
+    <string name="market_publish_product">发布</string>
+    <string name="market_category_all">全部</string>
     <string name="market_category_toys">玩具</string>
-    <string name="market_category_food">食物</string>
+    <string name="market_category_food">食品</string>
     <string name="market_category_apparel">服饰</string>
     <string name="market_category_care">护理</string>
     <string name="market_trade_sell">出售</string>

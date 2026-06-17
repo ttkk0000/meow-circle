@@ -12,6 +12,25 @@ type User struct {
 	PasswordHash string    `json:"-"`
 	PasswordSalt string    `json:"-"`
 	CreatedAt    time.Time `json:"created_at"`
+	Stats        *UserStats `json:"stats,omitempty"`
+}
+
+type UserStats struct {
+	Moments   int64 `json:"moments"`
+	Likes     int64 `json:"likes"`
+	Badges    int64 `json:"badges"`
+	Followers int64 `json:"followers"`
+	Following int64 `json:"following"`
+}
+
+type Pet struct {
+	ID        int64    `json:"id"`
+	OwnerID   int64    `json:"owner_id"`
+	Name      string   `json:"name"`
+	Breed     string   `json:"breed"`
+	Age       string   `json:"age"`
+	Tags      []string `json:"tags"`
+	AvatarURL string   `json:"avatar_url,omitempty"`
 }
 
 type PostCategory string
@@ -55,6 +74,7 @@ type Listing struct {
 	ID          int64       `json:"id"`
 	SellerID    int64       `json:"seller_id"`
 	Type        ListingType `json:"type"`
+	Category    string      `json:"category"`
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
 	PriceCents  int64       `json:"price_cents"`

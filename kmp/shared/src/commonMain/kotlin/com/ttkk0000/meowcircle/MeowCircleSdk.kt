@@ -110,9 +110,17 @@ class MeowCircleSdk(
             page.items.orEmpty()
         }
 
-    suspend fun listings(): Result<List<Listing>> =
+    suspend fun listings(type: String? = null, category: String? = null): Result<List<Listing>> =
         runCatching {
-            val page: ListingsPage = unwrapData(httpGet("/api/v1/listings", auth = false))
+            var url = "/api/v1/listings"
+            val params = mutableListOf<String>()
+            if (type != null) params.add("type=$type")
+            if (category != null) params.add("category=$category")
+            if (params.isNotEmpty()) {
+                url += "?" + params.joinToString("&")
+            }
+            val authed = !session.getToken().isNullOrBlank()
+            val page: ListingsPage = unwrapData(httpGet(url, auth = authed))
             page.items.orEmpty()
         }
 
@@ -246,6 +254,18 @@ class MeowCircleSdk(
     suspend fun togglePostLike(postId: Long): Result<LikeActionResult> =
         runCatching {
             unwrapData(httpPostEmpty("/api/v1/posts/$postId/like", auth = true))
+        }
+
+    suspend fun userProfile(userId: Long): Result<User> =
+        runCatching {
+            val authed = !session.getToken().isNullOrBlank()
+            unwrapData(httpGet("/api/v1/users/$userId", auth = authed))
+        }
+
+    suspend fun getUserPets(userId: Long): Result<List<Pet>> =
+        runCatching {
+            val authed = !session.getToken().isNullOrBlank()
+            unwrapData(httpGet("/api/v1/users/$userId/pets", auth = authed))
         }
 
     suspend fun conversations(): Result<List<Conversation>> =

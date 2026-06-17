@@ -60,15 +60,6 @@ AI agents may give product or design opinions, but they must label them as sugge
 - Existing auth storage keys remain `meow_token` and `meow_user` to avoid breaking backend-facing flows.
 - The local Go tool previously failed on this machine with `invalid go version '1.25.0': must match format 1.23`; validate static UI with Node/Playwright when Go cannot run.
 
-## Forbidden Commands
-
-> HARD RULE - applies to ALL agents, ALL sessions, no exceptions.
-
-- NEVER run `gradle`, `gradlew`, `./gradlew`, `gradlew.bat`, or any Gradle wrapper/command. Gradle builds spawn JVM processes that consume 3-6 GB+ RAM on this machine and have repeatedly caused full system freezes. If you need to verify Android/KMP code, do static analysis only (read files, lint with ktlint, check syntax). Do NOT attempt compilation.
-- Do not run `go build`, `go run`, or `go test` - the local Go toolchain version is incompatible (`1.25.0` vs required `1.23` format). Validate static UI with Node/Playwright instead.
-
-If the user explicitly asks you to run Gradle, remind them of this rule and ask for confirmation before proceeding.
-
 ## Key Docs
 
 - `docs/design/MND_FIGMA_DESIGN_DOCUMENT.md`: current design-doc index to point users/agents to the right handoff files.

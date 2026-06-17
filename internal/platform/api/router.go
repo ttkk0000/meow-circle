@@ -463,7 +463,14 @@ func (r *Router) routes() {
 	r.mux.HandleFunc("/api/v1/auth/login", r.handleLogin)
 	r.mux.HandleFunc("/api/v1/auth/me", r.requireAuth(r.handleMe))
 	r.mux.HandleFunc("/api/v1/me", r.requireAuth(r.handleUpdateMe))
-	r.mux.HandleFunc("/api/v1/users/", r.handleUserPublic)
+	r.mux.HandleFunc("/api/v1/users/", func(w http.ResponseWriter, req *http.Request) {
+		path := req.URL.Path
+		if strings.HasSuffix(path, "/pets") {
+			r.handleUserPets(w, req)
+		} else {
+			r.handleUserPublic(w, req)
+		}
+	})
 
 	r.mux.HandleFunc("/api/v1/search", r.handleSearch)
 

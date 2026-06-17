@@ -96,6 +96,7 @@ private data class MarketOption(val key: String, val labelRes: Int)
 
 private val MARKET_CATEGORIES =
     listOf(
+        MarketOption("all", R.string.market_category_all),
         MarketOption("toys", R.string.market_category_toys),
         MarketOption("food", R.string.market_category_food),
         MarketOption("apparel", R.string.market_category_apparel),
@@ -1156,7 +1157,17 @@ private fun FeaturedMarketCard(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                 )
-                MarketBadge(stringResource(tradeTypeLabelRes(listing.type)), Modifier.align(Alignment.TopStart).padding(10.dp))
+                Row(Modifier.align(Alignment.TopStart).padding(10.dp), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    MarketBadge(stringResource(tradeTypeLabelRes(listing.type)))
+                    if (listing.category.isNotBlank()) {
+                        MarketBadge(
+                            label = stringResource(
+                                MARKET_CATEGORIES.find { it.key.equals(listing.category, ignoreCase = true) }?.labelRes 
+                                    ?: R.string.market_category_toys
+                            )
+                        )
+                    }
+                }
             }
             Row(verticalAlignment = Alignment.Top) {
                 Text(
@@ -1247,7 +1258,17 @@ private fun CompactMarketCard(
             Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.SpaceBetween) {
                 Icon(Icons.Outlined.FavoriteBorder, contentDescription = stringResource(R.string.common_save), tint = StitchPalette.OnSurfaceVariant)
                 Spacer(Modifier.height(18.dp))
-                MarketBadge(stringResource(tradeTypeLabelRes(listing.type)))
+                Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    MarketBadge(stringResource(tradeTypeLabelRes(listing.type)))
+                    if (listing.category.isNotBlank()) {
+                        MarketBadge(
+                            label = stringResource(
+                                MARKET_CATEGORIES.find { it.key.equals(listing.category, ignoreCase = true) }?.labelRes 
+                                    ?: R.string.market_category_toys
+                            )
+                        )
+                    }
+                }
             }
         }
     }
@@ -1695,6 +1716,11 @@ private fun Listing.matchesTradeType(key: String): Boolean =
     }
 
 private fun Listing.matchesCategory(key: String): Boolean {
+    if (key == "all") return true
+    if (category.isNotBlank() && category.equals(key, ignoreCase = true)) {
+        return true
+    }
+    // Fallback to searching title/description/type
     val haystack = "$title $description $type".lowercase()
     return when (key) {
         "toys" -> haystack.contains("toy") || haystack.contains("collar") || haystack.contains("harness") || haystack.contains("carrier") || haystack.contains("product")

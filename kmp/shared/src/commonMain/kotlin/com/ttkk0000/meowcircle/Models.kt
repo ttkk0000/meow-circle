@@ -22,7 +22,28 @@ data class User(
     val nickname: String,
     @SerialName("avatar_url") val avatarUrl: String = "",
     val bio: String = "",
-    @SerialName("created_at") val createdAt: String,
+    @SerialName("created_at") val createdAt: String = "",
+    val stats: UserStats? = null
+)
+
+@Serializable
+data class UserStats(
+    val moments: Long = 0,
+    val likes: Long = 0,
+    val badges: Long = 0,
+    val followers: Long = 0,
+    val following: Long = 0
+)
+
+@Serializable
+data class Pet(
+    val id: Long,
+    @SerialName("owner_id") val ownerId: Long,
+    val name: String,
+    val breed: String,
+    val age: String,
+    val tags: List<String> = emptyList(),
+    @SerialName("avatar_url") val avatarUrl: String = ""
 )
 
 @Serializable
@@ -79,6 +100,7 @@ data class Listing(
     val id: Long,
     @SerialName("seller_id") val sellerId: Long,
     val type: String,
+    val category: String = "",
     val title: String,
     val description: String,
     @SerialName("price_cents") val priceCents: Long,
