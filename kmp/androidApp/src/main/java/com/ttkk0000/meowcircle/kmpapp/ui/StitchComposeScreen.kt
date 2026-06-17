@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddPhotoAlternate
+import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material.icons.outlined.LocationOn
@@ -58,6 +59,7 @@ import com.ttkk0000.meowcircle.humanizeClientFailure
 import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
+import com.ttkk0000.meowcircle.kmpapp.ui.components.dashedBorder
 import kotlinx.coroutines.launch
 
 @Composable
@@ -161,15 +163,19 @@ fun StitchComposeScreen(
                 border = BorderStroke(1.dp, StitchPalette.BorderHairline),
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Box(Modifier.size(48.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
+                Row(Modifier.padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Box(Modifier.size(36.dp).clip(CircleShape).background(StitchPalette.BrandMuted), contentAlignment = Alignment.Center) {
                         Text("P", color = StitchPalette.Brand, fontWeight = FontWeight.Black)
                     }
-                    Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                        Text(stringResource(R.string.compose_identity), style = MaterialTheme.typography.titleSmall, color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
-                        Text(stringResource(R.string.compose_posting_to_feed), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)
-                    }
-                    Icon(Icons.Outlined.ExpandMore, contentDescription = stringResource(R.string.compose_change_identity), tint = StitchPalette.OnSurfaceVariant)
+                    Text(
+                        "Peach & Latte",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = StitchPalette.OnSurface,
+                        fontWeight = FontWeight.Black,
+                        modifier = Modifier.padding(start = 12.dp, end = 8.dp)
+                    )
+                    Icon(Icons.Outlined.ExpandMore, contentDescription = stringResource(R.string.compose_change_identity), tint = StitchPalette.OnSurfaceVariant, modifier = Modifier.size(20.dp))
+                    Spacer(Modifier.weight(1f))
                 }
             }
 
@@ -196,13 +202,16 @@ fun StitchComposeScreen(
                         modifier =
                             Modifier
                                 .size(86.dp)
-                                .clip(StitchShape.field)
-                                .background(if (index < pickedMediaCount) StitchPalette.SurfaceLow else StitchPalette.Canvas)
-                                .border(
-                                    1.dp,
-                                    if (index < pickedMediaCount) StitchPalette.BorderHairline else StitchPalette.OutlineVariant,
-                                    StitchShape.field,
-                                )
+                                .let {
+                                    if (index < pickedMediaCount) {
+                                        it.clip(StitchShape.field)
+                                          .background(StitchPalette.SurfaceLow)
+                                          .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
+                                    } else {
+                                        it.background(StitchPalette.BrandMuted.copy(alpha = 0.5f), StitchShape.field)
+                                          .dashedBorder(StitchPalette.Brand.copy(alpha = 0.4f), 1.5.dp, 12.dp)
+                                    }
+                                }
                                 .clickable { pickedMediaCount = (pickedMediaCount + 1).coerceAtMost(2) },
                         contentAlignment = Alignment.Center,
                     ) {
@@ -210,27 +219,6 @@ fun StitchComposeScreen(
                     }
                 }
             }
-
-            OutlinedTextField(
-                value = mediaIdsText,
-                onValueChange = {
-                    mediaIdsText = it
-                    pickedMediaCount = parseMediaIds(it).size.coerceAtMost(2)
-                },
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(stringResource(R.string.compose_media_ids)) },
-                placeholder = { Text(stringResource(R.string.compose_media_ids_placeholder)) },
-                singleLine = true,
-                shape = StitchShape.field,
-                colors =
-                    OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = StitchPalette.Brand,
-                        unfocusedBorderColor = StitchPalette.BorderHairline,
-                        cursorColor = StitchPalette.Brand,
-                        focusedContainerColor = StitchPalette.Surface,
-                        unfocusedContainerColor = StitchPalette.Surface,
-                    ),
-            )
 
             ComposeSettingRow(
                 icon = Icons.Outlined.Public,
@@ -268,11 +256,11 @@ fun StitchComposeScreen(
                     R.string.compose_tag_cozy to "activity",
                 ).forEach { (labelRes, category) ->
                     val tag = stringResource(labelRes)
-                    val active = categoryKey == category && labelRes == R.string.compose_tag_cat
+                    val active = categoryKey == category
                     Surface(
                         shape = StitchShape.pill,
                         color = if (active) StitchPalette.BrandMuted else StitchPalette.Surface,
-                        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+                        border = BorderStroke(1.dp, StitchPalette.Brand.copy(alpha = if (active) 0.6f else 0.3f)),
                         modifier = Modifier.clickable {
                             categoryKey = category
                         },
@@ -281,7 +269,7 @@ fun StitchComposeScreen(
                             tag,
                             modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
                             style = MaterialTheme.typography.labelLarge,
-                            color = if (active) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                            color = StitchPalette.Brand.copy(alpha = if (active) 1.0f else 0.8f),
                             fontWeight = FontWeight.Bold,
                         )
                     }
@@ -310,7 +298,7 @@ private fun ComposeSettingRow(
         Icon(icon, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(24.dp))
         Text(title, style = MaterialTheme.typography.bodyLarge, color = StitchPalette.OnSurface, modifier = Modifier.padding(start = 14.dp).weight(1f))
         Text(value, style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
-        Icon(Icons.Outlined.ExpandMore, contentDescription = null, tint = StitchPalette.OnSurfaceVariant, modifier = Modifier.size(20.dp))
+        Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = StitchPalette.OnSurfaceVariant, modifier = Modifier.size(20.dp))
     }
 }
 
