@@ -196,6 +196,7 @@ fun StitchOrdersScreen(
             loading = false
             return@LaunchedEffect
         }
+        val loadStart = System.currentTimeMillis()
         loading = true
         err = null
         orders =
@@ -206,6 +207,10 @@ fun StitchOrdersScreen(
                     null
                 },
             )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 1000L) {
+            kotlinx.coroutines.delay(1000L - elapsed)
+        }
         loading = false
     }
 

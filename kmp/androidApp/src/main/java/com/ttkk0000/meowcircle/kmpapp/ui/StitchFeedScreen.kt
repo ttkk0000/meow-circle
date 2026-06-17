@@ -451,6 +451,7 @@ fun StitchFeedScreen(
             loading = false
             return@LaunchedEffect
         }
+        val loadStart = System.currentTimeMillis()
         loading = true
         err = null
         rawItems =
@@ -461,6 +462,10 @@ fun StitchFeedScreen(
                     null
                 },
             )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 1000L) {
+            kotlinx.coroutines.delay(1000L - elapsed)
+        }
         loading = false
     }
 
@@ -472,6 +477,7 @@ fun StitchFeedScreen(
             listingsLoading = false
             return@LaunchedEffect
         }
+        val loadStart = System.currentTimeMillis()
         listingsLoading = true
         listingsErr = null
         listings =
@@ -482,6 +488,10 @@ fun StitchFeedScreen(
                     null
                 },
             )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 1000L) {
+            kotlinx.coroutines.delay(1000L - elapsed)
+        }
         listingsLoading = false
     }
 
@@ -493,6 +503,7 @@ fun StitchFeedScreen(
             convLoading = false
             return@LaunchedEffect
         }
+        val loadStart = System.currentTimeMillis()
         convLoading = true
         convErr = null
         conversations =
@@ -505,6 +516,10 @@ fun StitchFeedScreen(
                     null
                 },
             )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 1000L) {
+            kotlinx.coroutines.delay(1000L - elapsed)
+        }
         convLoading = false
     }
 

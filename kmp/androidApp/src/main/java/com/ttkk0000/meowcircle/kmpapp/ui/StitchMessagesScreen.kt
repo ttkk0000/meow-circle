@@ -711,14 +711,17 @@ private fun mockConversationDetail(
 @Composable
 fun MessageSkeletonItem() {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(StitchPalette.Surface)
+            .padding(horizontal = 18.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(modifier = Modifier.size(50.dp).clip(androidx.compose.foundation.shape.CircleShape).stitchSkeleton())
-        Spacer(modifier = Modifier.width(16.dp))
+        Box(modifier = Modifier.size(48.dp).clip(androidx.compose.foundation.shape.CircleShape).stitchSkeleton())
+        Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
-            Box(modifier = Modifier.height(16.dp).fillMaxWidth(0.5f).clip(StitchShape.pill).stitchSkeleton())
-            Spacer(modifier = Modifier.height(6.dp))
+            Box(modifier = Modifier.height(18.dp).fillMaxWidth(0.4f).clip(StitchShape.pill).stitchSkeleton())
+            Spacer(modifier = Modifier.height(8.dp))
             Box(modifier = Modifier.height(14.dp).fillMaxWidth(0.8f).clip(StitchShape.pill).stitchSkeleton())
         }
     }
@@ -727,7 +730,7 @@ fun MessageSkeletonItem() {
 @Composable
 fun MessageBubbleSkeletonItem(isMe: Boolean) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 8.dp),
+        modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
         horizontalArrangement = if (isMe) Arrangement.End else Arrangement.Start
     ) {
         if (!isMe) {
