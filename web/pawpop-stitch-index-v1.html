@@ -372,244 +372,9 @@
       color: #b7791f;
     }
 
-    .jump a[href="#feature-modes"] {
-      background: var(--honey-soft);
-      color: var(--honey);
-    }
-
     .chip.neutral {
       background: var(--surface-variant);
       color: var(--neutral);
-    }
-
-    .mode-brief {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .mode-brief .asset-card {
-      min-height: 100%;
-    }
-
-    .mode-icon {
-      display: inline-grid;
-      width: 42px;
-      height: 42px;
-      place-items: center;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--surface-variant);
-      color: var(--honey);
-      font-family: "Outfit", "Inter", system-ui, sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .mode-icon.mint {
-      background: var(--mint-soft);
-      color: var(--mint);
-    }
-
-    .mode-icon.neutral {
-      background: var(--surface-variant);
-      color: var(--neutral);
-    }
-
-    .mode-nav {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .mode-nav-row {
-      display: grid;
-      grid-template-columns: 116px 1fr;
-      gap: 10px;
-      align-items: center;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-      padding: 10px;
-    }
-
-    .mode-nav-row b {
-      font-family: "Outfit", "Inter", system-ui, sans-serif;
-      font-size: 15px;
-    }
-
-    .mode-nav-row span {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .mode-note {
-      margin-top: 14px;
-      border: 1px solid var(--mint);
-      border-radius: 16px;
-      background: var(--mint-soft);
-      color: #176f60;
-      padding: 14px;
-      line-height: 1.55;
-    }
-
-    .flow-rule {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .flow-rule-item {
-      min-height: 112px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--surface);
-      padding: 14px;
-    }
-
-    .flow-rule-item b {
-      display: block;
-      margin-bottom: 6px;
-      font-family: "Outfit", "Inter", system-ui, sans-serif;
-      font-size: 16px;
-      line-height: 1.25;
-    }
-
-    .flow-rule-item span {
-      display: block;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .mode-card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .mode-card-top h3 {
-      font-size: 22px;
-      line-height: 1.15;
-    }
-
-    .mode-scope,
-    .mode-status-grid {
-      display: grid;
-      gap: 8px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .mode-scope li,
-    .mode-status-grid span {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--surface-variant);
-      padding: 9px 10px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.35;
-    }
-
-    .mode-status-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .mode-matrix {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
-      gap: 16px;
-      align-items: start;
-      margin-top: 16px;
-    }
-
-    .mode-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
-    .mode-table th,
-    .mode-table td {
-      border-top: 1px solid var(--border);
-      padding: 11px 10px;
-      text-align: left;
-      vertical-align: top;
-      line-height: 1.45;
-    }
-
-    .mode-table th {
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-    }
-
-    .mode-table td:first-child {
-      width: 132px;
-      color: var(--text);
-      font-weight: 800;
-    }
-
-    .reference-strip {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .reference-card {
-      display: grid;
-      gap: 8px;
-      min-height: 118px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--surface);
-      padding: 12px;
-    }
-
-    .reference-token {
-      display: inline-flex;
-      width: fit-content;
-      min-height: 28px;
-      align-items: center;
-      border-radius: 999px;
-      background: var(--honey-soft);
-      color: var(--honey);
-      padding: 0 10px;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .reference-card b {
-      display: block;
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.35;
-    }
-
-    .reference-card small {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
-      overflow-wrap: anywhere;
-    }
-
-    .handoff-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .handoff-grid code {
-      display: block;
-      overflow-wrap: anywhere;
     }
 
     .asset-id {
@@ -634,11 +399,7 @@
 
     @media (max-width: 1180px) {
       .grid,
-      .collection.is-app .grid,
-      .mode-brief,
-      .flow-rule,
-      .reference-strip,
-      .handoff-grid {
+      .collection.is-app .grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -651,8 +412,7 @@
       .topbar .shell,
       header.hero,
       .utility,
-      .collection-head,
-      .mode-matrix {
+      .collection-head {
         grid-template-columns: 1fr;
       }
 
@@ -693,22 +453,8 @@
 
       .stats,
       .grid,
-      .collection.is-app .grid,
-      .mode-brief,
-      .flow-rule,
-      .mode-status-grid,
-      .reference-strip,
-      .handoff-grid,
-      .mode-matrix {
+      .collection.is-app .grid {
         grid-template-columns: 1fr;
-      }
-
-      .mode-table {
-        min-width: 680px;
-      }
-
-      .mode-matrix .asset-card:first-child {
-        overflow-x: auto;
       }
 
       .hero p {
@@ -735,10 +481,6 @@
       .asset-preview,
       .collection.is-app .asset-preview {
         height: min(560px, 72vh);
-      }
-
-      .mode-nav-row {
-        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -777,158 +519,12 @@
     <section class="utility" aria-label="Source locations">
       <p>Source project: <code>projects/13275961100622290348</code>. Local PNGs live in <code>web/assets/stitch-remote/screens</code>; source files live in <code>web/assets/stitch-remote/sources</code>.</p>
       <nav class="jump" aria-label="Image categories">
-        <a href="#feature-modes">Feature Modes</a>
         <a href="#app-mobile">App</a>
         <a href="#themes">Themes</a>
         <a href="#components">Components</a>
         <a href="#design-system">Design System</a>
         <a href="#assets-icons">Assets</a>
       </nav>
-    </section>
-
-    <section class="collection" id="feature-modes">
-      <div class="collection-head">
-        <div>
-          <span class="collection-kicker">Post-login app modes</span>
-          <h2>三大功能主题 / KMP Android UI 设计规格</h2>
-          <p class="collection-copy">这里不是新增外观主题，而是登录后的三套功能入口：宠物交流、宠物收养、宠物交易。页面用原 Stitch 索引的卡片语言表达，下面的 13 张 App 设计图继续作为视觉风格和组件来源。</p>
-        </div>
-        <span class="count">3 modes + 13 refs</span>
-      </div>
-
-      <div class="flow-rule">
-        <div class="flow-rule-item"><b>1. 登录成功</b><span>读取本地或后端偏好 <code>mnd_app_mode</code>，有值时直接进入对应 App Shell。</span></div>
-        <div class="flow-rule-item"><b>2. 首次选择</b><span>没有默认功能主题时，展示三卡选择页：宠物交流、宠物收养、宠物交易。</span></div>
-        <div class="flow-rule-item"><b>3. 进入独立页面栈</b><span>不同功能主题拥有不同底部导航、首页内容、详情页和消息上下文。</span></div>
-        <div class="flow-rule-item"><b>4. 设置中切换</b><span>“默认功能主题”和 Honey/Mint/Night/Neutral 外观主题分开保存，切换后重建导航栈。</span></div>
-      </div>
-
-      <div class="mode-brief">
-        <article class="asset-card">
-          <div class="asset-meta">
-            <div class="mode-card-top">
-              <div>
-                <span class="collection-kicker">Community mode</span>
-                <h3>宠物交流</h3>
-              </div>
-              <span class="mode-icon">C</span>
-            </div>
-            <div class="chips"><span class="chip app">cat-first</span><span class="chip">Honey default</span><span class="chip">social feed</span></div>
-            <p class="collection-copy">面向猫猫日常、圈子互动和内容发布，延续现有 Feed / Profile / Messages 的 Honey 视觉语言。</p>
-            <div class="mode-nav">
-              <div class="mode-nav-row"><b>底部导航</b><span>动态 / 圈子 / 发布 / 消息 / 我的</span></div>
-              <div class="mode-nav-row"><b>页面栈</b><span>FeedHome, CircleHome, ComposePost, Messages, Profile</span></div>
-              <div class="mode-nav-row"><b>详情页</b><span>PostDetail, CommentThread, CircleDetail, PetProfile</span></div>
-            </div>
-            <ul class="mode-scope">
-              <li>保留发布入口、推荐/最新/关注 tabs、媒体卡片、评论、收藏、关注。</li>
-              <li>消息页默认上下文是评论、关注、圈子回复和私聊。</li>
-              <li>空态、骨架屏、发布失败、媒体加载失败都要有同风格占位。</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="asset-card">
-          <div class="asset-meta">
-            <div class="mode-card-top">
-              <div>
-                <span class="collection-kicker">Adoption mode</span>
-                <h3>宠物收养</h3>
-              </div>
-              <span class="mode-icon mint">A</span>
-            </div>
-            <div class="chips"><span class="chip app">missing module</span><span class="chip">safety-first</span><span class="chip">not marketplace</span></div>
-            <p class="collection-copy">新增完整收养模块，面向待领养、救助进展、申请管理和救助方沟通。它不能做成 Market filter，也不能使用交易话术。</p>
-            <div class="mode-nav">
-              <div class="mode-nav-row"><b>底部导航</b><span>领养 / 救助 / 申请 / 消息 / 我的</span></div>
-              <div class="mode-nav-row"><b>页面栈</b><span>AdoptionHome, RescueHome, ApplicationCenter, Messages, Profile</span></div>
-              <div class="mode-nav-row"><b>详情页</b><span>AdoptPetDetail, RescueDetail, ApplyForm, ApplicationTimeline</span></div>
-            </div>
-            <ul class="mode-scope">
-              <li>首页包含城市/品种/年龄/健康状态筛选、救助方标识、安全提示和待领养卡片。</li>
-              <li>主 CTA 固定为“申请领养”；消息上下文使用“领养申请”，不出现购物车、支付、立即购买或交易订单。</li>
-              <li>申请态要覆盖草稿、已提交、审核中、需补充、已通过、未通过、已撤回。</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="asset-card">
-          <div class="asset-meta">
-            <div class="mode-card-top">
-              <div>
-                <span class="collection-kicker">Trade mode</span>
-                <h3>宠物交易</h3>
-              </div>
-              <span class="mode-icon neutral">T</span>
-            </div>
-            <div class="chips"><span class="chip app">social commerce</span><span class="chip">theme inherits</span><span class="chip">orders</span></div>
-            <p class="collection-copy">对应现有 Market / Product / Orders 设计，但作为独立功能主题进入，底部导航和发布流程聚焦用品、服务、交换和同城交易。</p>
-            <div class="mode-nav">
-              <div class="mode-nav-row"><b>底部导航</b><span>市集 / 发布 / 消息 / 订单 / 我的</span></div>
-              <div class="mode-nav-row"><b>页面栈</b><span>MarketHome, PublishListing, TradeMessages, Orders, Profile</span></div>
-              <div class="mode-nav-row"><b>详情页</b><span>ProductDetail, SellerProfile, OfferSheet, OrderDetail</span></div>
-            </div>
-            <ul class="mode-scope">
-              <li>分类 chips 使用 Sell / Trade / Looking For / Free / Donation，不把 Market 强制成 Mint。</li>
-              <li>主动作按商品状态显示 Buy Now、Contact Seller、Make Offer、Save。</li>
-              <li>订单态只使用 pending_payment、paid、cancelled、shipped、refunded、completed。</li>
-            </ul>
-          </div>
-        </article>
-      </div>
-
-      <div class="mode-matrix">
-        <article class="asset-card">
-          <div class="asset-meta">
-            <span class="collection-kicker">KMP route and state matrix</span>
-            <h3>入口、切换和状态矩阵</h3>
-            <table class="mode-table">
-              <thead><tr><th>场景</th><th>界面要求</th><th>KMP 行为</th></tr></thead>
-              <tbody>
-                <tr><td>未登录</td><td>保留现有登录/注册页，可在登录页底部露出“登录后选择功能主题”的轻提示。</td><td>不创建 App Shell，不写入功能主题。</td></tr>
-                <tr><td>登录成功且无默认值</td><td>进入三大功能主题选择页，三张卡必须展示名称、说明、底部导航预览和推荐标签。</td><td>保存 <code>mnd_app_mode</code> 后进入对应 graph。</td></tr>
-                <tr><td>登录成功且有默认值</td><td>跳过选择页，直接进入上次使用的功能主题首页。</td><td><code>MndAppMode</code> 驱动 root nav graph。</td></tr>
-                <tr><td>设置切换</td><td>设置页新增“默认功能主题”，位置和外观主题相邻但语义分开。</td><td>更新偏好后清空当前 tab stack 并进入新 graph 首页。</td></tr>
-                <tr><td>消息入口</td><td>三套功能主题都保留消息，但消息列表和上下文标签跟随当前功能主题。</td><td>消息详情接收 <code>modeContext</code>。</td></tr>
-                <tr><td>异常/空态</td><td>每套主题必须有加载、空列表、网络错误、权限不足和操作失败状态。</td><td>复用 Stitch 组件状态，文案按功能主题切换。</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-
-        <article class="asset-card">
-          <div class="asset-meta">
-            <span class="collection-kicker">Visual source references</span>
-            <h3>仍以原 13 张 App 图为视觉依据</h3>
-            <p class="collection-copy">新增收养和三大功能主题时，组件形状、字号、卡片密度、按钮和状态都从这些 Stitch 参考中继承。这里保留 3 个源图入口，完整 13 张 App 设计图在下方 App 区域。</p>
-            <div class="reference-strip">
-              <a class="reference-card" href="assets/stitch-remote/screens/2cbf0afac9824702b850d2f0d9d06942.png"><span class="reference-token">Feed</span><b>交流 / Mobile Home</b><small>用于动态首页、底部导航密度和 Feed 卡片样式。</small></a>
-              <a class="reference-card" href="assets/stitch-remote/screens/e57b8cd42f6f45c08949322cbcc3b89f.png"><span class="reference-token">Market</span><b>交易 / Mobile Market</b><small>用于市集首页、商品卡片、价格和交易 CTA。</small></a>
-              <a class="reference-card" href="assets/stitch-remote/screens/fd8cd509a0c24d61b789ae22f4146c80.png"><span class="reference-token">Safety</span><b>收养 / Review &amp; Safety</b><small>用于收养安全提示、审核状态、举报和可信度表达。</small></a>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <div class="asset-card" style="margin-top: 16px;">
-        <div class="asset-meta">
-          <span class="collection-kicker">Implementation handoff</span>
-          <h3>KMP Android 落地边界</h3>
-          <p class="collection-copy">实现时不要只在 Feed 顶部加三个按钮，也不要把收养做成 Market filter。三大功能主题需要切换整套底部导航、首页信息架构、详情页和消息上下文。</p>
-          <div class="handoff-grid">
-            <code>MndAppMode.community -> CommunityNavGraph</code>
-            <code>MndAppMode.adoption -> AdoptionNavGraph</code>
-            <code>MndAppMode.trade -> TradeNavGraph</code>
-          </div>
-          <div class="mode-status-grid">
-            <span>外观主题：Honey / Mint / Night / Neutral 仍是全局 visual theme。</span>
-            <span>功能主题：Community / Adoption / Trade 是 post-login app mode。</span>
-            <span>收养模块：申请、救助、安全提示、救助方沟通必须独立建模。</span>
-            <span>交易模块：订单和支付语义只在 Trade mode 出现。</span>
-          </div>
-          <div class="mode-note"><b>收养禁用交易语义：</b>不出现购物车、支付、立即购买或交易订单。主动作使用“申请领养”，消息上下文使用“领养申请”。</div>
-        </div>
-      </div>
     </section>
 
     <section class="collection is-app" id="app-mobile">

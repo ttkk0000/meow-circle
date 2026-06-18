@@ -61,6 +61,8 @@ fun FeedTileCard(
     val author = item.author
     val who = author.nickname.ifBlank { author.username.ifBlank { stringResource(R.string.feed_user_fallback, post.authorId) } }
     val category = localizedCategoryLabel(post.category)
+    val headline = post.title.trim()
+    val body = post.content.trim()
     val twoHoursAgo = stringResource(R.string.feed_two_hours_ago)
     val avatarUrl = resolveMediaUrl(apiBase, author.avatarUrl.takeIf { it.isNotBlank() })
         ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
@@ -75,10 +77,18 @@ fun FeedTileCard(
         item.firstMedia?.kind == "video" || (item.firstMedia?.mime?.startsWith("video/") == true)
 
     Column(
-        modifier =
+            modifier =
             modifier
                 .fillMaxWidth()
+                .shadow(
+                    elevation = StitchShadows.cardAmbientY,
+                    shape = StitchShape.cardFeed,
+                    ambientColor = StitchShadows.cardAmbientColor,
+                    spotColor = StitchShadows.cardAmbientColor,
+                )
+                .clip(StitchShape.cardFeed)
                 .background(StitchPalette.Surface)
+                .border(1.dp, StitchPalette.BorderHairline, StitchShape.cardFeed)
                 .clickable(onClick = onClick),
     ) {
         Row(
@@ -119,13 +129,46 @@ fun FeedTileCard(
                 modifier = Modifier.size(24.dp),
             )
         }
-        Spacer(Modifier.height(8.dp))
+        if (headline.isNotBlank() || body.isNotBlank()) {
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 12.dp),
+            ) {
+                if (headline.isNotBlank()) {
+                    Text(
+                        headline,
+                        style = MaterialTheme.typography.titleSmall,
+                        color = StitchPalette.OnSurface,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                if (body.isNotBlank()) {
+                    if (headline.isNotBlank()) {
+                        Spacer(Modifier.height(4.dp))
+                    }
+                    Text(
+                        body,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StitchPalette.OnSurface,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
         if (thumb != null) {
             Box(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1.18f),
+                        .padding(horizontal = 16.dp)
+                        .clip(StitchShape.cardFeed)
+                        .aspectRatio(1.52f),
             ) {
                 AsyncImage(
                     model = thumb,
@@ -150,6 +193,8 @@ fun FeedTileCard(
                 modifier =
                     Modifier
                         .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .clip(StitchShape.cardFeed)
                         .aspectRatio(1.55f)
                         .background(StitchPalette.SurfaceLow),
             ) {
@@ -222,14 +267,6 @@ fun FeedTileCard(
                         .clickable(onClick = onSave),
             )
         }
-        Text(
-            post.content.ifBlank { post.title },
-            style = MaterialTheme.typography.bodyLarge,
-            color = StitchPalette.OnSurface,
-            modifier = Modifier.padding(horizontal = 16.dp),
-            maxLines = 4,
-            overflow = TextOverflow.Ellipsis,
-        )
         Spacer(Modifier.height(16.dp))
     }
 }

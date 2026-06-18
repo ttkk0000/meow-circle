@@ -406,9 +406,9 @@
     <string name="messages_starter_product">Ask a seller about product details</string>
     <string name="messages_starter_order">Check order updates</string>
     <string name="messages_starter_follow">Follow a pet creator</string>
-    <string name="messages_mock_paid">Hi! I just paid for Order #4829. So excited for the new cat tree!</string>
-    <string name="messages_mock_payment_received">Thanks so much for your order. We\'ve received the payment.</string>
-    <string name="messages_mock_ship_tomorrow">I\'ll pack it safely and ship it tomorrow morning.</string>
+    <string name="messages_mock_paid">Hi! I just paid for Order #4829. So excited for the new feeding corner!</string>
+    <string name="messages_mock_payment_received">Thanks so much for your order. We have received the payment.</string>
+    <string name="messages_mock_ship_tomorrow">I will pack it safely and ship it tomorrow morning.</string>
 
     <string name="orders_title">Orders</string>
     <string name="orders_toggle_role">Toggle role</string>

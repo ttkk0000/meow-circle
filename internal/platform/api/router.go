@@ -316,19 +316,19 @@ func ensureDefaultUser(st store.Store) {
 				st.CreateMessage(domain.Message{
 					SenderID:    demoUser.ID,
 					RecipientID: puffUser.ID,
-					Content:     "Hi! I just paid for this bowl set. So excited for the new feeding corner!",
+					Content:     "你好！我刚付了订单 #4829，已经开始期待新的喂食角落了。",
 					Read:        true,
 				})
 				st.CreateMessage(domain.Message{
 					SenderID:    puffUser.ID,
 					RecipientID: demoUser.ID,
-					Content:     "Thanks so much for your order. We have received the payment.",
+					Content:     "谢谢下单，我们已经收到付款。",
 					Read:        false,
 				})
 				st.CreateMessage(domain.Message{
 					SenderID:    puffUser.ID,
 					RecipientID: demoUser.ID,
-					Content:     "I will pack it safely and ship it tomorrow morning.",
+					Content:     "我会安全打包，明天上午发出。",
 					Read:        false,
 				})
 			}

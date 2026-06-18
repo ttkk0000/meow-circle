@@ -92,6 +92,13 @@ private val MESSAGE_FILTERS =
         MessageFilter("unread", R.string.messages_filter_unread),
     )
 
+private const val SEED_PAID_MESSAGE =
+    "Hi! I just paid for this bowl set. So excited for the new feeding corner!"
+private const val SEED_PAYMENT_RECEIVED_MESSAGE =
+    "Thanks so much for your order. We have received the payment."
+private const val SEED_SHIP_TOMORROW_MESSAGE =
+    "I will pack it safely and ship it tomorrow morning."
+
 @Composable
 fun StitchMessagesScreen(
     sdk: MeowCircleSdk,
@@ -520,6 +527,12 @@ private fun ConversationRow(
     apiBase: String,
     onClick: () -> Unit,
 ) {
+    val preview = localizedSeedMessage(convo.lastMessage)
+    val isOrderPreview =
+        convo.lastMessage.contains("order", ignoreCase = true) ||
+            convo.lastMessage.contains("订单") ||
+            isSeedOrderMessage(convo.lastMessage)
+
     Row(
         modifier =
             Modifier
@@ -543,7 +556,7 @@ private fun ConversationRow(
                 Text(formatConversationListTime(convo.updatedAt), style = MaterialTheme.typography.labelSmall, color = StitchPalette.OnSurfaceVariant)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (convo.lastMessage.contains("order", ignoreCase = true) || convo.lastMessage.contains("订单")) {
+                if (isOrderPreview) {
                     Surface(shape = StitchShape.pill, color = StitchPalette.SecondaryContainer) {
                         Text(
                             stringResource(R.string.messages_order_badge),
@@ -556,7 +569,7 @@ private fun ConversationRow(
                     Spacer(Modifier.width(8.dp))
                 }
                 Text(
-                    convo.lastMessage,
+                    preview,
                     style = MaterialTheme.typography.bodyMedium,
                     color = StitchPalette.OnSurfaceVariant,
                     maxLines = 1,
@@ -578,6 +591,8 @@ private fun MessageBubble(
     message: Message,
     mine: Boolean,
 ) {
+    val content = localizedSeedMessage(message.content)
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = if (mine) Arrangement.End else Arrangement.Start,
@@ -590,7 +605,7 @@ private fun MessageBubble(
             modifier = Modifier.fillMaxWidth(0.78f),
         ) {
             Text(
-                message.content,
+                content,
                 modifier = Modifier.padding(horizontal = 14.dp, vertical = 11.dp),
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (mine) Color.White else StitchPalette.OnSurface,
@@ -598,6 +613,20 @@ private fun MessageBubble(
         }
     }
 }
+
+@Composable
+private fun localizedSeedMessage(content: String): String =
+    when (content) {
+        SEED_PAID_MESSAGE -> stringResource(R.string.messages_mock_paid)
+        SEED_PAYMENT_RECEIVED_MESSAGE -> stringResource(R.string.messages_mock_payment_received)
+        SEED_SHIP_TOMORROW_MESSAGE -> stringResource(R.string.messages_mock_ship_tomorrow)
+        else -> content
+    }
+
+private fun isSeedOrderMessage(content: String): Boolean =
+    content == SEED_PAID_MESSAGE ||
+        content == SEED_PAYMENT_RECEIVED_MESSAGE ||
+        content == SEED_SHIP_TOMORROW_MESSAGE
 
 @Composable
 private fun OrderContextCard(
