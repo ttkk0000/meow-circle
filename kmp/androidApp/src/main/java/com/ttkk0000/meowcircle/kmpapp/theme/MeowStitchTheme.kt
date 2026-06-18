@@ -15,14 +15,20 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 
 val OutfitFontFamily = FontFamily(
-    Font(R.font.outfit, FontWeight.Normal),
-    Font(R.font.outfit, FontWeight.Medium),
-    Font(R.font.outfit, FontWeight.Bold)
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_medium, FontWeight.Medium),
+    Font(R.font.inter_bold, FontWeight.SemiBold),
+    Font(R.font.inter_bold, FontWeight.Bold),
+    Font(R.font.inter_bold, FontWeight.ExtraBold),
+    Font(R.font.inter_bold, FontWeight.Black),
 )
 val InterFontFamily = FontFamily(
     Font(R.font.inter_regular, FontWeight.Normal),
     Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_bold, FontWeight.Bold)
+    Font(R.font.inter_bold, FontWeight.SemiBold),
+    Font(R.font.inter_bold, FontWeight.Bold),
+    Font(R.font.inter_bold, FontWeight.ExtraBold),
+    Font(R.font.inter_bold, FontWeight.Black),
 )
 enum class MeowTheme {
     Honey,

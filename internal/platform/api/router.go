@@ -206,10 +206,11 @@ func ensureDefaultUser(st store.Store) {
 			description string
 			priceCents  int64
 			listType    domain.ListingType
+			category    string
 		}{
-			{"puff_bakery", "未拆封猫罐头 6 罐组合", "猫猫优先，适合换粮过渡；同城可自提。", 6800, domain.ListingTypeProduct},
-			{"sunday_walk", "周末上门喂猫与铲砂", "有基础照护记录，可同时帮 doggie 换水。", 12000, domain.ListingTypeService},
-			{"clean_corner", "三个月橘猫找稳定家庭", "已驱虫，性格亲人，需要领养回访。", 0, domain.ListingTypeAdopt},
+			{"puff_bakery", "手工皮革狗项圈", "Verified Seller · 可发货，也支持同城自提。", 12800, domain.ListingTypeProduct, "toys"},
+			{"sunday_walk", "陶瓷高脚食碗套装", "给猫猫和 doggie 都友好的稳定食碗。", 6800, domain.ListingTypeProduct, "food"},
+			{"clean_corner", "高级人体工学狗胸背", "轻量透气，适合日常散步和训练。", 4500, domain.ListingTypeProduct, "apparel"},
 		}
 
 		createdListings := make(map[string]domain.Listing)
@@ -225,6 +226,7 @@ func ensureDefaultUser(st store.Store) {
 				PriceCents:  l.priceCents,
 				Currency:    "CNY",
 				Type:        l.listType,
+				Category:    l.category,
 				CreatedAt:   time.Now().UTC(),
 			})
 			createdListings[l.title] = list
@@ -251,9 +253,9 @@ func ensureDefaultUser(st store.Store) {
 
 		// Seed Orders for demo user (so that the Android app's real orders page isn't empty)
 		if demoOk {
-			// Order 1: Canned food order (shipped)
+			// Order 1: Leather collar order (shipped)
 			if puffUserOk, puffOk := createdUsers["puff_bakery"]; puffOk {
-				listing, listingOk := createdListings["未拆封猫罐头 6 罐组合"]
+				listing, listingOk := createdListings["手工皮革狗项圈"]
 				if listingOk {
 					paidTime := time.Now().Add(-24 * time.Hour).UTC()
 					st.CreateOrder(domain.Order{
@@ -271,9 +273,9 @@ func ensureDefaultUser(st store.Store) {
 					})
 				}
 			}
-			// Order 2: Feeding service order (completed)
+			// Order 2: Ceramic bowl set (paid)
 			if sundayUserOk, sundayOk := createdUsers["sunday_walk"]; sundayOk {
-				listing, listingOk := createdListings["周末上门喂猫与铲砂"]
+				listing, listingOk := createdListings["陶瓷高脚食碗套装"]
 				if listingOk {
 					paidTime := time.Now().Add(-4 * 24 * time.Hour).UTC()
 					st.CreateOrder(domain.Order{
@@ -283,19 +285,18 @@ func ensureDefaultUser(st store.Store) {
 						ListingTitle: listing.Title,
 						AmountCents:  listing.PriceCents,
 						Currency:     "CNY",
-						Status:       domain.OrderStatusCompleted,
+						Status:       domain.OrderStatusPaid,
 						CreatedAt:    time.Now().Add(-5 * 24 * time.Hour).UTC(),
 						UpdatedAt:    time.Now().Add(-4 * 24 * time.Hour).UTC(),
 						PaidAt:       &paidTime,
-						ShippedAt:    &paidTime,
-						CompletedAt:  &paidTime,
 					})
 				}
 			}
-			// Order 3: Cat adoption order (pending_payment)
+			// Order 3: Ergonomic dog harness (paid)
 			if cleanUserOk, cleanOk := createdUsers["clean_corner"]; cleanOk {
-				listing, listingOk := createdListings["三个月橘猫找稳定家庭"]
+				listing, listingOk := createdListings["高级人体工学狗胸背"]
 				if listingOk {
+					paidTime := time.Now().Add(-2 * 24 * time.Hour).UTC()
 					st.CreateOrder(domain.Order{
 						BuyerID:      demoUser.ID,
 						SellerID:     cleanUserOk.ID,
@@ -303,11 +304,33 @@ func ensureDefaultUser(st store.Store) {
 						ListingTitle: listing.Title,
 						AmountCents:  listing.PriceCents,
 						Currency:     "CNY",
-						Status:       domain.OrderStatusPendingPayment,
-						CreatedAt:    time.Now().UTC(),
-						UpdatedAt:    time.Now().UTC(),
+						Status:       domain.OrderStatusPaid,
+						CreatedAt:    time.Now().Add(-3 * 24 * time.Hour).UTC(),
+						UpdatedAt:    time.Now().Add(-2 * 24 * time.Hour).UTC(),
+						PaidAt:       &paidTime,
 					})
 				}
+			}
+
+			if puffOk {
+				st.CreateMessage(domain.Message{
+					SenderID:    demoUser.ID,
+					RecipientID: puffUser.ID,
+					Content:     "Hi! I just paid for this bowl set. So excited for the new feeding corner!",
+					Read:        true,
+				})
+				st.CreateMessage(domain.Message{
+					SenderID:    puffUser.ID,
+					RecipientID: demoUser.ID,
+					Content:     "Thanks so much for your order. We have received the payment.",
+					Read:        false,
+				})
+				st.CreateMessage(domain.Message{
+					SenderID:    puffUser.ID,
+					RecipientID: demoUser.ID,
+					Content:     "I will pack it safely and ship it tomorrow morning.",
+					Read:        false,
+				})
 			}
 		}
 	}

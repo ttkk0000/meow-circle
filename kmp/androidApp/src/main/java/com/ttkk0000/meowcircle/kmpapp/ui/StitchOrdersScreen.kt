@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -53,6 +54,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -120,6 +122,19 @@ private enum class OrderSafetyRoute {
     DisputeStatus,
 }
 
+private fun orderImageUrl(apiBase: String, order: Order): String {
+    val base = apiBase.removeSuffix("/")
+    return when {
+        order.id == 4824L || order.listingTitle.contains("项圈") || order.listingTitle.contains("Collar") ->
+            "$base/mock-images/mock_image_14.png"
+        order.id == 9810L || order.listingTitle.contains("食碗") || order.listingTitle.contains("Bowl") ->
+            "$base/mock-images/mock_image_15.png"
+        order.id == 832L || order.listingTitle.contains("胸背") || order.listingTitle.contains("Harness") ->
+            "$base/mock-images/mock_image_16.png"
+        else -> "$base/mock-images/mock_image_3.png"
+    }
+}
+
 @Composable
 fun StitchOrdersScreen(
     sdk: MeowCircleSdk,
@@ -128,6 +143,7 @@ fun StitchOrdersScreen(
     onEnableMock: () -> Unit,
     onOpenMarket: () -> Unit = {},
     onOpenMessages: () -> Unit = {},
+    onChromeVisibleChange: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -144,6 +160,23 @@ fun StitchOrdersScreen(
     var safetyRoute by remember { mutableStateOf<OrderSafetyRoute?>(null) }
     var infoText by remember { mutableStateOf<String?>(null) }
     var actionBusy by remember { mutableStateOf(false) }
+    val detailChromeHidden = selectedOrder != null || showTracking || safetyRoute != null
+
+    LaunchedEffect(detailChromeHidden) {
+        onChromeVisibleChange(!detailChromeHidden)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { onChromeVisibleChange(true) }
+    }
+
+    BackHandler(enabled = selectedOrder != null || showTracking || safetyRoute != null) {
+        when {
+            safetyRoute != null -> safetyRoute = null
+            showTracking -> showTracking = false
+            else -> selectedOrder = null
+        }
+    }
 
     fun createMockOrders(): List<Order> =
         listOf(
@@ -251,6 +284,7 @@ fun StitchOrdersScreen(
                 OrderSafetyRoute.LeaveReview ->
                     LeaveReviewScreen(
                         order = selectedOrder!!,
+                        apiBase = apiBase,
                         onBack = { safetyRoute = null },
                         onSellerReviews = { safetyRoute = OrderSafetyRoute.SellerReviews },
                         onSubmit = {
@@ -262,12 +296,14 @@ fun StitchOrdersScreen(
                 OrderSafetyRoute.SellerReviews ->
                     SellerReviewsScreen(
                         order = selectedOrder!!,
+                        apiBase = apiBase,
                         onBack = { safetyRoute = null },
                         modifier = modifier,
                     )
                 OrderSafetyRoute.ReportIssue ->
                     ReportIssueScreen(
                         order = selectedOrder!!,
+                        apiBase = apiBase,
                         onBack = { safetyRoute = null },
                         busy = actionBusy,
                         onSubmit = { reason, details ->
@@ -313,6 +349,7 @@ fun StitchOrdersScreen(
                 OrderSafetyRoute.OpenDispute ->
                     OpenDisputeScreen(
                         order = selectedOrder!!,
+                        apiBase = apiBase,
                         onBack = { safetyRoute = null },
                         onSubmit = { safetyRoute = OrderSafetyRoute.DisputeStatus },
                         modifier = modifier,
@@ -608,6 +645,7 @@ private fun OrderDetailScreen(
 @Composable
 private fun LeaveReviewScreen(
     order: Order,
+    apiBase: String,
     onBack: () -> Unit,
     onSellerReviews: () -> Unit,
     onSubmit: () -> Unit,
@@ -622,7 +660,7 @@ private fun LeaveReviewScreen(
             modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(18.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            OrderReviewSummary(order)
+            OrderReviewSummary(order, apiBase)
             InfoCard(title = stringResource(R.string.safety_rating)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
                     (1..5).forEach { index ->
@@ -679,9 +717,12 @@ private fun LeaveReviewScreen(
 @Composable
 private fun SellerReviewsScreen(
     order: Order,
+    apiBase: String,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var activeReviewFilter by remember { mutableStateOf("product") }
+
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
         Header(title = stringResource(R.string.safety_seller_reviews), onBack = onBack)
         Column(
@@ -702,13 +743,25 @@ private fun SellerReviewsScreen(
                 modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                SafetyChip(stringResource(R.string.safety_review_filter_product), selected = true, onClick = {})
-                SafetyChip(stringResource(R.string.safety_review_filter_pickup), selected = false, onClick = {})
-                SafetyChip(stringResource(R.string.safety_review_filter_communication), selected = false, onClick = {})
+                SafetyChip(
+                    stringResource(R.string.safety_review_filter_product),
+                    selected = activeReviewFilter == "product",
+                    onClick = { activeReviewFilter = "product" },
+                )
+                SafetyChip(
+                    stringResource(R.string.safety_review_filter_pickup),
+                    selected = activeReviewFilter == "pickup",
+                    onClick = { activeReviewFilter = "pickup" },
+                )
+                SafetyChip(
+                    stringResource(R.string.safety_review_filter_communication),
+                    selected = activeReviewFilter == "communication",
+                    onClick = { activeReviewFilter = "communication" },
+                )
             }
             ReviewCard(stringResource(R.string.safety_review_author_luna), stringResource(R.string.safety_review_luna_body))
             ReviewCard(stringResource(R.string.safety_review_author_sarah), stringResource(R.string.safety_review_sarah_body))
-            OrderReviewSummary(order)
+            OrderReviewSummary(order, apiBase)
         }
     }
 }
@@ -716,6 +769,7 @@ private fun SellerReviewsScreen(
 @Composable
 private fun ReportIssueScreen(
     order: Order,
+    apiBase: String,
     onBack: () -> Unit,
     busy: Boolean,
     onSubmit: (String, String) -> Unit,
@@ -729,7 +783,7 @@ private fun ReportIssueScreen(
             modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(18.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            OrderReviewSummary(order)
+            OrderReviewSummary(order, apiBase)
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = StitchShape.cardFeed,
@@ -773,11 +827,13 @@ private fun ReportIssueScreen(
 @Composable
 private fun OpenDisputeScreen(
     order: Order,
+    apiBase: String,
     onBack: () -> Unit,
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var resolution by remember { mutableStateOf("refund") }
+    var disputeReason by remember { mutableStateOf("unresponsive") }
     var note by remember { mutableStateOf("") }
     Column(modifier.fillMaxSize().background(StitchPalette.Canvas)) {
         Header(title = stringResource(R.string.safety_open_dispute), onBack = onBack)
@@ -785,11 +841,19 @@ private fun OpenDisputeScreen(
             modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(18.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            OrderReviewSummary(order)
+            OrderReviewSummary(order, apiBase)
             Text(stringResource(R.string.safety_dispute_intro), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
             InfoCard(title = stringResource(R.string.safety_dispute_reason)) {
-                SafetySelectRow(stringResource(R.string.safety_report_reason_unresponsive), selected = true, onClick = {})
-                SafetySelectRow(stringResource(R.string.safety_report_reason_pickup), selected = false, onClick = {})
+                SafetySelectRow(
+                    stringResource(R.string.safety_report_reason_unresponsive),
+                    selected = disputeReason == "unresponsive",
+                    onClick = { disputeReason = "unresponsive" },
+                )
+                SafetySelectRow(
+                    stringResource(R.string.safety_report_reason_pickup),
+                    selected = disputeReason == "pickup",
+                    onClick = { disputeReason = "pickup" },
+                )
             }
             InfoCard(title = stringResource(R.string.safety_requested_resolution)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
@@ -840,6 +904,9 @@ private fun DisputeStatusScreen(
                         Text(stringResource(R.string.safety_under_review), modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp), color = StitchPalette.Gold, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
                     }
                 }
+                Text(order.listingTitle, style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+                HorizontalDivider(color = StitchPalette.BorderHairline)
+                SummaryRow(stringResource(R.string.safety_requested_refund), formatOrderPrice(order.amountCents, order.currency), total = true)
                 Text(stringResource(R.string.safety_under_review_body), style = MaterialTheme.typography.bodyMedium, color = StitchPalette.OnSurfaceVariant)
             }
             InfoCard(title = stringResource(R.string.safety_timeline)) {
@@ -1005,17 +1072,7 @@ private fun OrderListCard(
     onAction: (String) -> Unit,
     onOpenMessages: () -> Unit,
 ) {
-    val imageUrl = remember(order.id, order.listingTitle) {
-        when {
-            order.id == 4824L || order.listingTitle.contains("项圈") || order.listingTitle.contains("Collar") -> 
-                "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
-            order.id == 9810L || order.listingTitle.contains("碗") || order.listingTitle.contains("Bowl") -> 
-                "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
-            order.id == 832L || order.listingTitle.contains("胸背") || order.listingTitle.contains("Harness") -> 
-                "${apiBase.removeSuffix("/")}/mock-images/mock_image_6.png"
-            else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
-        }
-    }
+    val imageUrl = remember(apiBase, order.id, order.listingTitle) { orderImageUrl(apiBase, order) }
 
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
@@ -1108,17 +1165,7 @@ private fun StatusBanner(order: Order, sellerMode: Boolean) {
 
 @Composable
 private fun OrderProductCard(order: Order, sellerMode: Boolean, apiBase: String) {
-    val imageUrl = remember(order.id, order.listingTitle) {
-        when {
-            order.id == 4824L || order.listingTitle.contains("项圈") || order.listingTitle.contains("Collar") -> 
-                "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
-            order.id == 9810L || order.listingTitle.contains("碗") || order.listingTitle.contains("Bowl") -> 
-                "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
-            order.id == 832L || order.listingTitle.contains("胸背") || order.listingTitle.contains("Harness") -> 
-                "${apiBase.removeSuffix("/")}/mock-images/mock_image_6.png"
-            else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
-        }
-    }
+    val imageUrl = remember(apiBase, order.id, order.listingTitle) { orderImageUrl(apiBase, order) }
 
     Card(
         shape = StitchShape.cardFeed,
@@ -1129,7 +1176,7 @@ private fun OrderProductCard(order: Order, sellerMode: Boolean, apiBase: String)
         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.size(76.dp).clip(StitchShape.field).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
                 AsyncImage(
-                    model = imageUrl ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
+                    model = imageUrl,
                     contentDescription = order.listingTitle,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
@@ -1172,7 +1219,8 @@ private fun SummaryRow(label: String, value: String, total: Boolean = false) {
 }
 
 @Composable
-private fun OrderReviewSummary(order: Order) {
+private fun OrderReviewSummary(order: Order, apiBase: String) {
+    val imageUrl = remember(apiBase, order.id, order.listingTitle) { orderImageUrl(apiBase, order) }
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = StitchShape.cardFeed,
@@ -1181,7 +1229,12 @@ private fun OrderReviewSummary(order: Order) {
     ) {
         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.size(62.dp).clip(StitchShape.field).background(StitchPalette.SurfaceLow), contentAlignment = Alignment.Center) {
-                Icon(Icons.Outlined.ShoppingBag, contentDescription = null, tint = StitchPalette.Brand)
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = order.listingTitle,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
             }
             Column(Modifier.padding(start = 12.dp).weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                 Text(stringResource(R.string.orders_order_number, order.id), style = MaterialTheme.typography.labelMedium, color = StitchPalette.OnSurfaceVariant)

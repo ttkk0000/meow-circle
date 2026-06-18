@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -51,6 +52,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -68,6 +70,7 @@ import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
+import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 
 /**
@@ -108,6 +111,10 @@ fun StitchLoginScreen(
 
     // Two-state login flow state
     var showEmailLogin by remember { mutableStateOf(false) }
+
+    BackHandler(enabled = showEmailLogin) {
+        showEmailLogin = false
+    }
 
     Box(modifier.fillMaxSize().background(StitchLoginRef.Background)) {
         Column(
@@ -181,7 +188,6 @@ fun StitchLoginScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    // Mockup welcome cat image
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -191,7 +197,12 @@ fun StitchLoginScreen(
                             .background(StitchPalette.SurfaceLow),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text("img", style = MaterialTheme.typography.labelSmall, color = StitchPalette.OnSurfaceVariant)
+                        AsyncImage(
+                            model = "${apiBase.removeSuffix("/")}/login_hero.png",
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop,
+                        )
                     }
 
                     Spacer(Modifier.height(22.dp))

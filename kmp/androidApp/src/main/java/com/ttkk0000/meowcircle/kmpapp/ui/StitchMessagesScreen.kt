@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -47,6 +48,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -102,6 +104,7 @@ fun StitchMessagesScreen(
     onEnableMock: () -> Unit,
     onOpenMarket: () -> Unit,
     onOpenOrders: () -> Unit,
+    onChromeVisibleChange: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var query by remember { mutableStateOf("") }
@@ -113,6 +116,23 @@ fun StitchMessagesScreen(
     val mockPaid = stringResource(R.string.messages_mock_paid)
     val mockPaymentReceived = stringResource(R.string.messages_mock_payment_received)
     val mockShipTomorrow = stringResource(R.string.messages_mock_ship_tomorrow)
+    val closeConversation = {
+        activeConversation = null
+        activeDetail = null
+        detailError = null
+    }
+
+    LaunchedEffect(activeConversation != null) {
+        onChromeVisibleChange(activeConversation == null)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { onChromeVisibleChange(true) }
+    }
+
+    BackHandler(enabled = activeConversation != null) {
+        closeConversation()
+    }
 
     val visible =
         remember(items, query, filter) {
@@ -163,11 +183,7 @@ fun StitchMessagesScreen(
             loading = detailLoading,
             error = detailError,
             mockMode = mockMode,
-            onBack = {
-                activeConversation = null
-                activeDetail = null
-                detailError = null
-            },
+            onBack = closeConversation,
             onOpenOrders = onOpenOrders,
             onDetailChanged = { activeDetail = it },
             modifier = modifier,

@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -88,10 +89,13 @@ import com.ttkk0000.meowcircle.kmpapp.theme.stitchSkeleton
 import androidx.compose.ui.draw.clip
 
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -119,7 +123,6 @@ import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchSearchField
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchTopBar
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchTopBarLeading
 import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchTopBarTrailing
-import com.ttkk0000.meowcircle.kmpapp.ui.components.StitchFab
 import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
 import com.ttkk0000.meowcircle.kmpapp.util.formatConversationListTime
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
@@ -256,6 +259,8 @@ fun StitchFeedScreen(
     var profileBackground by remember { mutableStateOf(sdk.sessionStore().getProfileBackground()) }
     var profileRoute by remember { mutableStateOf(ProfileRoute.Main) }
     var profileRouteHistory by remember { mutableStateOf(emptyList<ProfileRoute>()) }
+    var messagesChromeVisible by remember { mutableStateOf(true) }
+    var ordersChromeVisible by remember { mutableStateOf(true) }
 
     val navigateToProfileRoute: (ProfileRoute) -> Unit = { target ->
         profileRouteHistory = profileRouteHistory + profileRoute
@@ -269,6 +274,10 @@ fun StitchFeedScreen(
         } else {
             profileRoute = ProfileRoute.Main
         }
+    }
+
+    BackHandler(enabled = tab == StitchMainTab.Profile && profileRoute != ProfileRoute.Main) {
+        popProfileRoute()
     }
     var marketChromeVisible by remember { mutableStateOf(true) }
     var showEditProfile by remember { mutableStateOf(false) }
@@ -580,6 +589,8 @@ fun StitchFeedScreen(
             when (tab) {
                 StitchMainTab.Profile -> profileRoute == ProfileRoute.Main
                 StitchMainTab.Market -> marketChromeVisible
+                StitchMainTab.Messages -> messagesChromeVisible
+                StitchMainTab.Orders -> ordersChromeVisible
                 else -> true
             }
         Scaffold(
@@ -592,6 +603,8 @@ fun StitchFeedScreen(
                         onSelect = { t ->
                             tab = t
                             marketChromeVisible = true
+                            messagesChromeVisible = true
+                            ordersChromeVisible = true
                             if (t != StitchMainTab.Profile) {
                                 profileRoute = ProfileRoute.Main
                                 profileRouteHistory = emptyList()
@@ -600,13 +613,6 @@ fun StitchFeedScreen(
                     )
                 }
             },
-            floatingActionButton = {
-                if (tab == StitchMainTab.Feed) {
-                    StitchFab(
-                        onClick = onCompose,
-                    )
-                }
-            }
         ) { inner ->
             Column(
                 modifier =
@@ -760,6 +766,7 @@ fun StitchFeedScreen(
                             onEnableMock = { mockMode = true },
                             onOpenMarket = { tab = StitchMainTab.Market },
                             onOpenOrders = { tab = StitchMainTab.Orders },
+                            onChromeVisibleChange = { messagesChromeVisible = it },
                             modifier = Modifier.fillMaxSize(),
                         )
                     StitchMainTab.Orders -> {
@@ -770,6 +777,7 @@ fun StitchFeedScreen(
                             onEnableMock = { mockMode = true },
                             onOpenMarket = { tab = StitchMainTab.Market },
                             onOpenMessages = { tab = StitchMainTab.Messages },
+                            onChromeVisibleChange = { ordersChromeVisible = it },
                             modifier = Modifier.fillMaxSize(),
                         )
                     }
@@ -863,6 +871,11 @@ fun StitchFeedScreen(
                                     filtered.isEmpty() ->
                                         FeedEmptyStatePane(
                                             apiBase = apiBase,
+                                            onFindPets = {
+                                                tab = StitchMainTab.Profile
+                                                profileRouteHistory = listOf(ProfileRoute.Main)
+                                                profileRoute = ProfileRoute.Connections
+                                            },
                                             onCompose = onCompose,
                                             modifier = Modifier.fillMaxSize(),
                                         )
@@ -2369,10 +2382,45 @@ private fun ProfilePetDetailScreen(
     onEditProfile: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    var showPetActions by remember { mutableStateOf(false) }
     val petName = pet?.name ?: stringResource(R.string.profile_pet_latte_name)
     val petBreed = pet?.breed ?: "Domestic Shorthair"
     val petAge = pet?.age?.ifBlank { "0 yrs" } ?: "3 yrs"
     val petAvatar = resolveMediaUrl(apiBase, pet?.avatarUrl?.takeIf { it.isNotBlank() }) ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+
+    if (showPetActions) {
+        AlertDialog(
+            onDismissRequest = { showPetActions = false },
+            title = { Text(stringResource(R.string.profile_pet_actions_title)) },
+            text = { Text(stringResource(R.string.profile_pet_actions_body)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showPetActions = false
+                        onEditProfile()
+                    },
+                ) {
+                    Text(stringResource(R.string.profile_pet_actions_edit))
+                }
+            },
+            dismissButton = {
+                val linkReadyText = stringResource(R.string.profile_pet_link_ready)
+                TextButton(
+                    onClick = {
+                        showPetActions = false
+                        android.widget.Toast.makeText(context, linkReadyText, android.widget.Toast.LENGTH_SHORT).show()
+                    },
+                ) {
+                    Text(stringResource(R.string.profile_pet_actions_share))
+                }
+            },
+            shape = StitchShape.dialog,
+            containerColor = StitchPalette.Surface,
+            titleContentColor = StitchPalette.OnSurface,
+            textContentColor = StitchPalette.OnSurfaceVariant,
+        )
+    }
 
     Column(
         modifier = modifier
@@ -2409,7 +2457,7 @@ private fun ProfilePetDetailScreen(
                     fontWeight = FontWeight.Bold,
                     color = StitchPalette.PrimaryDark
                 )
-                IconButton(onClick = { /* More actions */ }) {
+                IconButton(onClick = { showPetActions = true }) {
                     Icon(
                         imageVector = Icons.Outlined.MoreHoriz,
                         contentDescription = "More",
@@ -2760,6 +2808,8 @@ private fun ProfileConnectionsScreen(
 ) {
     var isFollowersTab by remember { mutableStateOf(true) }
     var searchQuery by remember { mutableStateOf("") }
+    val searchFocusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     // High fidelity mock structures matching the HTML spec
     data class ConnectionItem(
@@ -2840,7 +2890,12 @@ private fun ProfileConnectionsScreen(
                     fontWeight = FontWeight.Bold,
                     color = StitchPalette.PrimaryDark
                 )
-                IconButton(onClick = { /* Search shortcut focus */ }) {
+                IconButton(
+                    onClick = {
+                        searchFocusRequester.requestFocus()
+                        keyboardController?.show()
+                    },
+                ) {
                     Icon(
                         imageVector = Icons.Outlined.Search,
                         contentDescription = "Search",
@@ -2923,7 +2978,7 @@ private fun ProfileConnectionsScreen(
                 onValueChange = { searchQuery = it },
                 placeholder = {
                     Text(
-                        text = "Search connections...",
+                        text = stringResource(R.string.profile_connections_search_placeholder),
                         style = MaterialTheme.typography.bodyMedium.copy(
                             platformStyle = PlatformTextStyle(includeFontPadding = false)
                         ),
@@ -2953,7 +3008,8 @@ private fun ProfileConnectionsScreen(
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
+                    .height(48.dp)
+                    .focusRequester(searchFocusRequester),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = StitchPalette.Canvas,
                     unfocusedContainerColor = StitchPalette.Canvas,
@@ -3230,7 +3286,7 @@ private fun SettingProfileCard(
                 )
             ) {
                 Text(
-                    text = "Edit Profile",
+                    text = stringResource(R.string.profile_edit),
                     style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
                     color = StitchPalette.Brand
                 )
@@ -3260,7 +3316,7 @@ private fun ProfileSettingsScreen(
 
     Column(modifier.background(StitchPalette.Canvas)) {
         ProfileBackHeader(
-            title = "My Settings",
+            title = stringResource(R.string.settings_title),
             onBack = onBack,
         )
         Column(
@@ -3277,101 +3333,103 @@ private fun ProfileSettingsScreen(
                 onEditProfile = onEditProfile
             )
             
-            SettingSectionTitle("Profile")
+            SettingSectionTitle(stringResource(R.string.settings_profile_section))
             SettingCard {
                 SettingRow(
                     icon = Icons.Outlined.Person,
-                    title = "Edit Profile",
+                    title = stringResource(R.string.profile_edit),
                     onClick = onEditProfile
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Filled.Pets,
-                    title = "My Pets",
+                    title = stringResource(R.string.profile_my_pets),
                     onClick = onOpenPetProfile
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.GridView,
-                    title = "My Posts",
+                    title = stringResource(R.string.settings_my_posts),
                     onClick = onBack
                 )
             }
 
-            SettingSectionTitle("Account")
+            SettingSectionTitle(stringResource(R.string.settings_section_account))
             SettingCard {
                 SettingRow(
                     icon = Icons.Outlined.Shield,
-                    title = "Account & Security",
+                    title = stringResource(R.string.settings_account_security),
                     onClick = onOpenAccountSecurity
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.Link,
-                    title = "Linked Accounts",
+                    title = stringResource(R.string.settings_linked_accounts),
                     onClick = onOpenLinkedAccounts
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.Payment,
-                    title = "Payment Methods",
+                    title = stringResource(R.string.settings_payment_methods),
                     onClick = onOpenAccountSecurity
                 )
             }
 
-            SettingSectionTitle("Preferences")
+            SettingSectionTitle(stringResource(R.string.settings_section_preferences))
             SettingCard {
                 SettingRow(
                     icon = Icons.Outlined.Palette,
-                    title = "Appearance & Theme",
+                    title = stringResource(R.string.settings_appearance),
                     onClick = onOpenAppearance
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.Notifications,
-                    title = "Notifications",
+                    title = stringResource(R.string.settings_notifications),
                     onClick = onOpenNotifications
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.Language,
-                    title = "Language",
+                    title = stringResource(R.string.settings_language),
                     onClick = onOpenAppearance
                 )
             }
 
-            SettingSectionTitle("Privacy & Terms")
+            SettingSectionTitle(stringResource(R.string.settings_section_privacy_terms))
             SettingCard {
                 SettingRow(
                     icon = Icons.Outlined.PrivacyTip,
-                    title = "Privacy Policy",
+                    title = stringResource(R.string.settings_privacy_policy),
                     onClick = onOpenPrivacy
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.Article,
-                    title = "User Notice",
+                    title = stringResource(R.string.settings_user_notice),
                     onClick = onOpenUserNotice
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.Gavel,
-                    title = "Community Guidelines",
+                    title = stringResource(R.string.settings_community_guidelines),
                     onClick = onOpenUserNotice
                 )
             }
 
-            SettingSectionTitle("Other")
+            SettingSectionTitle(stringResource(R.string.settings_section_other))
             SettingCard {
+                val cacheClearedText = stringResource(R.string.settings_cache_cleared)
+                val cacheEmptyText = stringResource(R.string.settings_cache_empty)
                 SettingRow(
                     icon = Icons.Outlined.DeleteSweep,
-                    title = "Clear Cache",
+                    title = stringResource(R.string.settings_clear_cache),
                     onClick = {
                         if (cacheSize != "0 MB") {
                             cacheSize = "0 MB"
-                            android.widget.Toast.makeText(context, "Cache cleared!", android.widget.Toast.LENGTH_SHORT).show()
+                            android.widget.Toast.makeText(context, cacheClearedText, android.widget.Toast.LENGTH_SHORT).show()
                         } else {
-                            android.widget.Toast.makeText(context, "Cache is empty", android.widget.Toast.LENGTH_SHORT).show()
+                            android.widget.Toast.makeText(context, cacheEmptyText, android.widget.Toast.LENGTH_SHORT).show()
                         }
                     },
                     rightContent = {
@@ -3386,7 +3444,7 @@ private fun ProfileSettingsScreen(
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.Logout,
-                    title = "Log Out",
+                    title = stringResource(R.string.profile_logout),
                     titleColor = StitchPalette.Error,
                     onClick = onLogout
                 )
@@ -3648,7 +3706,7 @@ private fun ProfileAppearanceScreen(
                     .height(52.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
             ) {
-                Text("Apply Theme", color = Color.White, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.settings_apply_theme), color = Color.White, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -3793,7 +3851,7 @@ private fun SettingRowWithSocial(
             modifier = Modifier.weight(1f)
         )
         Text(
-            text = if (linked) "Linked" else "Link",
+            text = if (linked) stringResource(R.string.settings_linked) else stringResource(R.string.settings_link),
             style = MaterialTheme.typography.bodyMedium,
             color = if (linked) StitchPalette.OnSurfaceVariant else StitchPalette.Brand,
             modifier = Modifier.padding(end = 8.dp),
@@ -3813,15 +3871,54 @@ private fun ProfileAccountSecurityScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     var twoFactorEnabled by remember { mutableStateOf(true) }
     var loginAlertsEnabled by remember { mutableStateOf(true) }
     var wechatLinked by remember { mutableStateOf(true) }
     var appleLinked by remember { mutableStateOf(false) }
     var googleLinked by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    val emailChangeNotice = stringResource(R.string.settings_email_change_notice)
+    val phoneVerificationNotice = stringResource(R.string.settings_phone_verification_notice)
+    val passwordResetNotice = stringResource(R.string.settings_password_reset_notice)
+    val trustedDeviceNotice = stringResource(R.string.settings_trusted_device_notice)
+    val recentActivityNotice = stringResource(R.string.settings_recent_activity_notice)
+    val supportReviewNotice = stringResource(R.string.settings_support_review_notice)
+
+    fun showSecurityNotice(message: String) {
+        android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_SHORT).show()
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text(stringResource(R.string.settings_delete_account_title)) },
+            text = { Text(stringResource(R.string.settings_delete_account_body)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog = false
+                        showSecurityNotice(supportReviewNotice)
+                    },
+                ) {
+                    Text(stringResource(R.string.settings_request_review), color = StitchPalette.Error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            },
+            shape = StitchShape.dialog,
+            containerColor = StitchPalette.Surface,
+            titleContentColor = StitchPalette.OnSurface,
+            textContentColor = StitchPalette.OnSurfaceVariant,
+        )
+    }
 
     Column(modifier.background(StitchPalette.Canvas)) {
         ProfileBackHeader(
-            title = "Account & Security",
+            title = stringResource(R.string.settings_account_security),
             onBack = onBack,
         )
         Column(
@@ -3831,60 +3928,60 @@ private fun ProfileAccountSecurityScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 24.dp),
         ) {
-            SettingSectionTitle("Login Info")
+            SettingSectionTitle(stringResource(R.string.settings_login_info))
             SettingCard {
                 SettingRowWithRightText(
                     icon = Icons.Outlined.Mail,
-                    title = "Email",
+                    title = stringResource(R.string.settings_email),
                     rightText = "peachlatte@example.com",
-                    onClick = {}
+                    onClick = { showSecurityNotice(emailChangeNotice) }
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRowWithRightText(
                     icon = Icons.Outlined.PhoneIphone,
-                    title = "Phone Number",
+                    title = stringResource(R.string.settings_phone_number),
                     rightText = "+1 204 *** 44",
-                    onClick = {}
+                    onClick = { showSecurityNotice(phoneVerificationNotice) }
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRowWithRightText(
                     icon = Icons.Outlined.Password,
-                    title = "Password",
-                    rightText = "Updated 2 months ago",
-                    onClick = {}
+                    title = stringResource(R.string.settings_password),
+                    rightText = stringResource(R.string.settings_password_updated),
+                    onClick = { showSecurityNotice(passwordResetNotice) }
                 )
             }
 
-            SettingSectionTitle("Security")
+            SettingSectionTitle(stringResource(R.string.settings_section_security))
             SettingCard {
                 SettingRowWithToggle(
                     icon = Icons.Outlined.VerifiedUser,
-                    title = "Two-Factor Auth (2FA)",
+                    title = stringResource(R.string.settings_two_factor),
                     checked = twoFactorEnabled,
                     onCheckedChange = { twoFactorEnabled = it }
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRowWithToggle(
                     icon = Icons.Outlined.NotificationsActive,
-                    title = "Login Alerts",
+                    title = stringResource(R.string.settings_login_alerts),
                     checked = loginAlertsEnabled,
                     onCheckedChange = { loginAlertsEnabled = it }
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.Devices,
-                    title = "Trusted Devices",
-                    onClick = {}
+                    title = stringResource(R.string.settings_trusted_devices),
+                    onClick = { showSecurityNotice(trustedDeviceNotice) }
                 )
                 HorizontalDivider(color = StitchPalette.BorderHairline, thickness = 1.dp)
                 SettingRow(
                     icon = Icons.Outlined.History,
-                    title = "Recent Login Activity",
-                    onClick = {}
+                    title = stringResource(R.string.settings_recent_login_activity),
+                    onClick = { showSecurityNotice(recentActivityNotice) }
                 )
             }
 
-            SettingSectionTitle("Connected Accounts")
+            SettingSectionTitle(stringResource(R.string.settings_connected_accounts))
             SettingCard {
                 SettingRowWithSocial(
                     letter = "W",
@@ -3918,13 +4015,13 @@ private fun ProfileAccountSecurityScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Delete Account",
+                    text = stringResource(R.string.settings_delete_account),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Medium
                     ),
                     color = StitchPalette.Error,
                     modifier = Modifier
-                        .clickable { /* action */ }
+                        .clickable { showDeleteDialog = true }
                         .padding(vertical = 8.dp)
                 )
             }
@@ -4244,9 +4341,11 @@ private fun ProfileUserNoticeScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+
     Column(modifier.background(StitchPalette.Canvas)) {
         ProfileBackHeader(
-            title = "User Notice",
+            title = stringResource(R.string.settings_user_notice),
             onBack = onBack,
         )
         Column(
@@ -4271,14 +4370,14 @@ private fun ProfileUserNoticeScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "Community Guidelines",
+                        text = stringResource(R.string.settings_community_guidelines),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = StitchPalette.Brand,
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "Please follow these guidelines to keep M&D safe, friendly, and trustworthy.",
+                        text = stringResource(R.string.settings_community_guidelines_subtitle),
                         style = MaterialTheme.typography.bodyMedium,
                         color = StitchPalette.OnSurfaceVariant,
                         textAlign = TextAlign.Center
@@ -4297,35 +4396,35 @@ private fun ProfileUserNoticeScreen(
                 Column(modifier = Modifier.fillMaxWidth()) {
                     BulletRuleBlock(
                         icon = Icons.Filled.Favorite,
-                        title = "Community Behavior",
+                        title = stringResource(R.string.settings_behavior_title),
                         rules = listOf(
-                            "Be kind and respectful.",
-                            "Bullying, harassment, or hateful content will result in immediate account suspension."
+                            stringResource(R.string.settings_behavior_rule_kind),
+                            stringResource(R.string.settings_behavior_rule_harassment),
                         )
                     )
                     HorizontalDivider(color = StitchPalette.OutlineVariant, thickness = 1.dp)
                     BulletRuleBlock(
                         icon = Icons.Outlined.Storefront,
-                        title = "Marketplace Rules",
+                        title = stringResource(R.string.settings_marketplace_rules_title),
                         rules = listOf(
-                            "Only list genuine pet-related items.",
-                            "Selling live animals is strictly prohibited on our platform."
+                            stringResource(R.string.settings_market_rule_genuine),
+                            stringResource(R.string.settings_market_rule_live_animals),
                         )
                     )
                     HorizontalDivider(color = StitchPalette.OutlineVariant, thickness = 1.dp)
                     BulletRuleBlock(
                         icon = Icons.Filled.Pets,
-                        title = "Pet Content",
+                        title = stringResource(R.string.settings_pet_content_title),
                         rules = listOf(
-                            "Content showing animal abuse, neglect, or harm will be removed and reported to authorities."
+                            stringResource(R.string.settings_pet_content_rule),
                         )
                     )
                     HorizontalDivider(color = StitchPalette.OutlineVariant, thickness = 1.dp)
                     BulletRuleBlock(
                         icon = Icons.Outlined.GppGood,
-                        title = "Account Safety",
+                        title = stringResource(R.string.settings_account_safety_title),
                         rules = listOf(
-                            "Never share your password or financial information in public chats or comments."
+                            stringResource(R.string.settings_account_safety_rule),
                         )
                     )
                 }
@@ -4347,11 +4446,17 @@ private fun ProfileUserNoticeScreen(
                         .height(52.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
                 ) {
-                    Text("I Agree", color = Color.White, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.settings_i_agree), color = Color.White, fontWeight = FontWeight.Bold)
                 }
                 
                 Button(
-                    onClick = {},
+                    onClick = {
+                        android.widget.Toast.makeText(
+                            context,
+                            context.getString(R.string.settings_support_handoff_notice),
+                            android.widget.Toast.LENGTH_SHORT,
+                        ).show()
+                    },
                     shape = StitchShape.field,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -4362,7 +4467,7 @@ private fun ProfileUserNoticeScreen(
                         contentColor = StitchPalette.Brand
                     ),
                 ) {
-                    Text("Contact Support", color = StitchPalette.Brand, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.settings_contact_support), color = StitchPalette.Brand, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -4778,9 +4883,12 @@ private fun MessageShortcutRow(
 @Composable
 private fun FeedEmptyStatePane(
     apiBase: String,
+    onFindPets: () -> Unit,
     onCompose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var followedCreatorIndexes by remember { mutableStateOf(setOf<Int>()) }
+
     Column(
         modifier = modifier.fillMaxSize().background(StitchPalette.Canvas).padding(top = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -4805,7 +4913,7 @@ private fun FeedEmptyStatePane(
             }
             Spacer(Modifier.height(16.dp))
             Text(
-                "Follow pets and creators",
+                stringResource(R.string.feed_empty_follow_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = StitchPalette.OnSurface,
@@ -4813,19 +4921,19 @@ private fun FeedEmptyStatePane(
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "Your feed is empty. Find accounts you love to start building your personalized feed.",
+                stringResource(R.string.feed_empty_follow_body),
                 style = MaterialTheme.typography.bodyMedium,
                 color = StitchPalette.OnSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(24.dp))
             Button(
-                onClick = { /* TODO */ },
+                onClick = onFindPets,
                 modifier = Modifier.fillMaxWidth().height(48.dp),
                 shape = StitchShape.pill,
                 colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
             ) {
-                Text("Find pets to follow", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.feed_empty_find_pets), fontWeight = FontWeight.Bold)
             }
             Spacer(Modifier.height(12.dp))
             OutlinedButton(
@@ -4834,7 +4942,7 @@ private fun FeedEmptyStatePane(
                 shape = StitchShape.pill,
                 border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.OutlineVariant),
             ) {
-                Text("Create your first post", color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.feed_empty_create_first), color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
             }
         }
         
@@ -4843,7 +4951,7 @@ private fun FeedEmptyStatePane(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("Suggested Creators", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface, modifier = Modifier.weight(1f))
+            Text(stringResource(R.string.feed_suggested_creators), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface, modifier = Modifier.weight(1f))
         }
         Spacer(Modifier.height(16.dp))
         LazyRow(
@@ -4851,6 +4959,7 @@ private fun FeedEmptyStatePane(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(5) { index ->
+                val following = followedCreatorIndexes.contains(index)
                 Column(
                     modifier = Modifier
                         .width(140.dp)
@@ -4866,17 +4975,33 @@ private fun FeedEmptyStatePane(
                         contentScale = ContentScale.Crop,
                     )
                     Spacer(Modifier.height(12.dp))
-                    Text("Creator ${index + 1}", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text("@creator${index + 1}", style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.feed_creator_name_format, index + 1), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.feed_creator_handle_format, index + 1), style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Spacer(Modifier.height(16.dp))
                     OutlinedButton(
-                        onClick = { /* TODO */ },
+                        onClick = {
+                            followedCreatorIndexes =
+                                if (following) {
+                                    followedCreatorIndexes - index
+                                } else {
+                                    followedCreatorIndexes + index
+                                }
+                        },
                         modifier = Modifier.fillMaxWidth().height(36.dp),
                         shape = StitchShape.pill,
                         contentPadding = PaddingValues(0.dp),
                         border = androidx.compose.foundation.BorderStroke(1.dp, StitchPalette.Brand),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            containerColor = if (following) StitchPalette.Brand else Color.Transparent,
+                            contentColor = if (following) Color.White else StitchPalette.Brand,
+                        ),
                     ) {
-                        Text("Follow", color = StitchPalette.Brand, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                        Text(
+                            if (following) stringResource(R.string.feed_following) else stringResource(R.string.feed_follow),
+                            color = if (following) Color.White else StitchPalette.Brand,
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold,
+                        )
                     }
                 }
             }

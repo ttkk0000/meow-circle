@@ -33,9 +33,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.kmpapp.R
+import com.ttkk0000.meowcircle.kmpapp.theme.InterFontFamily
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 
@@ -96,14 +98,14 @@ fun StitchTopBar(
                             imageVector = Icons.Outlined.Menu,
                             contentDescription = leadingDescription,
                             tint = StitchPalette.Brand,
-                            modifier = Modifier.size(34.dp),
+                            modifier = Modifier.size(30.dp),
                         )
                     StitchTopBarLeading.Paw ->
                         Icon(
                             imageVector = Icons.Filled.Pets,
                             contentDescription = leadingDescription,
                             tint = StitchPalette.Brand,
-                            modifier = Modifier.size(34.dp),
+                            modifier = Modifier.size(30.dp),
                         )
                     StitchTopBarLeading.Avatar ->
                         if (avatarUrl != null) {
@@ -147,9 +149,13 @@ fun StitchTopBar(
             ) {
                 Text(
                     title,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = StitchPalette.OnSurface,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontFamily = InterFontFamily,
+                        fontSize = 24.sp,
+                        lineHeight = 30.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                    ),
+                    color = StitchPalette.Brand,
                     textAlign = TextAlign.Center,
                 )
             }
@@ -164,7 +170,7 @@ fun StitchTopBar(
                     imageVector = if (trailing == StitchTopBarTrailing.Settings) Icons.Outlined.Settings else Icons.Outlined.NotificationsNone,
                     contentDescription = trailingDescription,
                     tint = StitchPalette.OnSurfaceVariant,
-                    modifier = Modifier.size(28.dp),
+                    modifier = Modifier.size(26.dp),
                 )
             }
         }

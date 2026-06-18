@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -122,6 +123,12 @@ fun StitchRegisterScreen(
     val usernameShortError = stringResource(R.string.register_username_short)
     val passwordShortError = stringResource(R.string.register_password_short)
     val passwordMismatchError = stringResource(R.string.register_password_mismatch)
+
+    BackHandler {
+        if (!busy) {
+            if (step == 0) onBack() else step -= 1
+        }
+    }
 
     fun validateAccount(): Boolean {
         err =

@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,6 +27,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.AddPhotoAlternate
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.ChevronRight
@@ -151,7 +153,7 @@ fun StitchMarketScreen(
     var showSellerProfile by remember { mutableStateOf(false) }
     var infoText by remember { mutableStateOf<String?>(null) }
     var actionLoading by remember { mutableStateOf(false) }
-    val chromeVisible = !showPublish && !showOffer && !showSellerProfile && selectedListing == null
+    val chromeVisible = !showPublish && !showOffer
 
     val visibleListings =
         remember(listings, query, selectedCategory, selectedTrade) {
@@ -167,6 +169,15 @@ fun StitchMarketScreen(
 
     LaunchedEffect(chromeVisible) {
         onChromeVisibleChange(chromeVisible)
+    }
+
+    BackHandler(enabled = showPublish || showOffer || showSellerProfile || selectedListing != null) {
+        when {
+            showPublish -> showPublish = false
+            showOffer -> showOffer = false
+            showSellerProfile -> showSellerProfile = false
+            else -> selectedListing = null
+        }
     }
 
     LaunchedEffect(selectedListing?.id, mockMode) {
@@ -403,6 +414,16 @@ private fun MarketListScreen(
                     modifier = Modifier.weight(1f),
                 )
                 Surface(
+                    modifier = Modifier.size(48.dp).clickable(onClick = onPublish),
+                    shape = CircleShape,
+                    color = StitchPalette.Brand,
+                    border = BorderStroke(1.dp, StitchPalette.Brand),
+                ) {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Icon(Icons.Outlined.Add, contentDescription = stringResource(R.string.market_publish_product), tint = Color.White)
+                    }
+                }
+                Surface(
                     modifier = Modifier.size(48.dp).clickable { showFilters = true },
                     shape = CircleShape,
                     color = StitchPalette.Surface,
@@ -572,9 +593,9 @@ private fun ProductDetailScreen(
 ) {
     val listing = detail.listing
     val mediaUrl = detail.media.firstOrNull()?.url ?: when (listing.id) {
-        1L -> "mock-images/mock_image_4.png"
-        2L -> "mock-images/mock_image_5.png"
-        3L -> "mock-images/mock_image_2.png"
+        1L -> "mock-images/mock_image_14.png"
+        2L -> "mock-images/mock_image_15.png"
+        3L -> "mock-images/mock_image_16.png"
         else -> "mock-images/mock_image_3.png"
     }
     val imageUrl = resolveMediaUrl(apiBase, mediaUrl)
@@ -875,16 +896,22 @@ private fun MakeOfferScreen(
                 Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                     val imageUrl = remember(listing.id, apiBase) {
                         when (listing.id) {
-                            1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                            2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                            3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                            1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                            2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                            3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
                             else -> {
                                 when {
-                                    listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                                    listing.title.contains("项圈") || listing.title.contains("Collar") ->
+                                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                                    listing.title.contains("食碗") || listing.title.contains("Bowl") ->
+                                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                                    listing.title.contains("胸背") || listing.title.contains("Harness") ->
+                                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
+                                    listing.title.contains("罐头") || listing.title.contains("Can") ->
                                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                                    listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                                    listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                                    listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                                    listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
                                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
                                     else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                                 }
@@ -1023,18 +1050,24 @@ private fun MarketHeroCard(
     val imageUrl = remember(listing.id, mockMode, apiBase) {
         if (mockMode) {
             when (listing.id) {
-                1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
                 else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
             }
         } else {
             when {
-                listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                listing.title.contains("项圈") || listing.title.contains("Collar") ->
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                listing.title.contains("食碗") || listing.title.contains("Bowl") ->
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                listing.title.contains("胸背") || listing.title.contains("Harness") ->
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
+                listing.title.contains("罐头") || listing.title.contains("Can") ->
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
                 else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
             }
@@ -1125,18 +1158,24 @@ private fun FeaturedMarketCard(
     val imageUrl = remember(listing.id, mockMode, apiBase) {
         if (mockMode) {
             when (listing.id) {
-                1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
                 else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
             }
         } else {
             when {
-                listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                listing.title.contains("项圈") || listing.title.contains("Collar") ->
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                listing.title.contains("食碗") || listing.title.contains("Bowl") ->
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                listing.title.contains("胸背") || listing.title.contains("Harness") ->
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
+                listing.title.contains("罐头") || listing.title.contains("Can") ->
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
                 else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
             }
@@ -1163,7 +1202,7 @@ private fun FeaturedMarketCard(
                     if (listing.category.isNotBlank()) {
                         MarketBadge(
                             label = stringResource(
-                                MARKET_CATEGORIES.find { it.key.equals(listing.category, ignoreCase = true) }?.labelRes 
+                                MARKET_CATEGORIES.find { it.key.equals(listing.category, ignoreCase = true) }?.labelRes
                                     ?: R.string.market_category_toys
                             )
                         )
@@ -1224,16 +1263,22 @@ private fun CompactMarketCard(
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             val imageUrl = remember(listing.id, apiBase) {
                 when (listing.id) {
-                    1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                    2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                    3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                    1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                    2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                    3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
                     else -> {
                         when {
-                            listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                            listing.title.contains("项圈") || listing.title.contains("Collar") ->
+                                "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                            listing.title.contains("食碗") || listing.title.contains("Bowl") ->
+                                "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                            listing.title.contains("胸背") || listing.title.contains("Harness") ->
+                                "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
+                            listing.title.contains("罐头") || listing.title.contains("Can") ->
                                 "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                            listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                            listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                                 "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                            listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                            listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
                                 "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
                             else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                         }
@@ -1264,7 +1309,7 @@ private fun CompactMarketCard(
                     if (listing.category.isNotBlank()) {
                         MarketBadge(
                             label = stringResource(
-                                MARKET_CATEGORIES.find { it.key.equals(listing.category, ignoreCase = true) }?.labelRes 
+                                MARKET_CATEGORIES.find { it.key.equals(listing.category, ignoreCase = true) }?.labelRes
                                     ?: R.string.market_category_toys
                             )
                         )
@@ -1517,16 +1562,22 @@ private fun SellerListingCard(
 ) {
     val imageUrl = remember(listing.id, apiBase) {
         when (listing.id) {
-            1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-            2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-            3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+            1L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+            2L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+            3L -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
             else -> {
                 when {
-                    listing.title.contains("罐头") || listing.title.contains("Can") -> 
+                    listing.title.contains("项圈") || listing.title.contains("Collar") ->
+                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_14.png"
+                    listing.title.contains("食碗") || listing.title.contains("Bowl") ->
+                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_15.png"
+                    listing.title.contains("胸背") || listing.title.contains("Harness") ->
+                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_16.png"
+                    listing.title.contains("罐头") || listing.title.contains("Can") ->
                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
-                    listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") -> 
+                    listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                    listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") -> 
+                    listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
                     else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                 }

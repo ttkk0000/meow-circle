@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -101,6 +102,10 @@ fun StitchPostDetailScreen(
     var actionMessage by remember { mutableStateOf<String?>(null) }
     var actionError by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+
+    BackHandler {
+        onBack()
+    }
 
     LaunchedEffect(postId) {
         loading = true

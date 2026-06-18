@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -87,6 +88,10 @@ fun StitchComposeScreen(
     val defaultPostTitle = stringResource(R.string.compose_default_title)
     val visibilityValue = stringResource(if (visibilityKey == "public") R.string.compose_public else R.string.compose_friends)
     val locationValue = stringResource(if (hasLocation) R.string.compose_location_shanghai else R.string.compose_add_location)
+
+    BackHandler {
+        onClose()
+    }
 
     fun publish() {
         val body = content.trim()
