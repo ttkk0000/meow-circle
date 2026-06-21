@@ -4,29 +4,13 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ListAlt
 import androidx.compose.material.icons.automirrored.outlined.ListAlt
-import androidx.compose.material.icons.filled.ChatBubble
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Pets
-import androidx.compose.material.icons.filled.Storefront
-import androidx.compose.material.icons.outlined.ChatBubbleOutline
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Pets
-import androidx.compose.material.icons.outlined.Storefront
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarDefaults
@@ -45,37 +29,57 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
+import com.ttkk0000.meowcircle.kmpapp.ui.MndAppMode
 
 enum class StitchMainTab {
-    Feed,
-    Market,
-    Messages,
-    Orders,
-    Profile,
+    // Community
+    Feed, Circle, Compose, Messages, Profile,
+    // Adoption
+    AdoptHome, RescueHome, Applications,
+    // Trade
+    Market, Orders
 }
 
-private data class NavSpec(
+data class NavSpec(
     val tab: StitchMainTab,
     val label: String,
     val outlinedIcon: ImageVector,
     val filledIcon: ImageVector,
 )
 
-private val NAV_ITEMS =
-    listOf(
-        NavSpec(StitchMainTab.Feed, "Feed", Icons.Outlined.Home, Icons.Filled.Home),
-        NavSpec(StitchMainTab.Market, "Market", Icons.Outlined.Storefront, Icons.Filled.Storefront),
-        NavSpec(StitchMainTab.Messages, "Messages", Icons.Outlined.ChatBubbleOutline, Icons.Filled.ChatBubble),
-        NavSpec(StitchMainTab.Orders, "Orders", Icons.AutoMirrored.Outlined.ListAlt, Icons.AutoMirrored.Filled.ListAlt),
-        NavSpec(StitchMainTab.Profile, "Profile", Icons.Outlined.Pets, Icons.Filled.Pets),
+fun getTabsForMode(mode: MndAppMode): List<NavSpec> = when(mode) {
+    MndAppMode.Community -> listOf(
+        NavSpec(StitchMainTab.Feed, "动态", Icons.Outlined.Home, Icons.Filled.Home),
+        NavSpec(StitchMainTab.Circle, "圈子", Icons.Outlined.Group, Icons.Filled.Group),
+        NavSpec(StitchMainTab.Compose, "发布", Icons.Outlined.AddCircle, Icons.Filled.AddCircle),
+        NavSpec(StitchMainTab.Messages, "消息", Icons.Outlined.ChatBubbleOutline, Icons.Filled.ChatBubble),
+        NavSpec(StitchMainTab.Profile, "我的", Icons.Outlined.Pets, Icons.Filled.Pets),
     )
+    MndAppMode.Adoption -> listOf(
+        NavSpec(StitchMainTab.AdoptHome, "领养", Icons.Outlined.FavoriteBorder, Icons.Filled.Favorite),
+        NavSpec(StitchMainTab.RescueHome, "救助", Icons.Outlined.MedicalServices, Icons.Filled.MedicalServices),
+        NavSpec(StitchMainTab.Applications, "申请", Icons.Outlined.Article, Icons.Filled.Article),
+        NavSpec(StitchMainTab.Messages, "消息", Icons.Outlined.ChatBubbleOutline, Icons.Filled.ChatBubble),
+        NavSpec(StitchMainTab.Profile, "我的", Icons.Outlined.Pets, Icons.Filled.Pets),
+    )
+    MndAppMode.Trade -> listOf(
+        NavSpec(StitchMainTab.Market, "市集", Icons.Outlined.Storefront, Icons.Filled.Storefront),
+        NavSpec(StitchMainTab.Compose, "发布", Icons.Outlined.AddCircle, Icons.Filled.AddCircle),
+        NavSpec(StitchMainTab.Messages, "消息", Icons.Outlined.ChatBubbleOutline, Icons.Filled.ChatBubble),
+        NavSpec(StitchMainTab.Orders, "订单", Icons.AutoMirrored.Outlined.ListAlt, Icons.AutoMirrored.Filled.ListAlt),
+        NavSpec(StitchMainTab.Profile, "我的", Icons.Outlined.Pets, Icons.Filled.Pets),
+    )
+}
 
 @Composable
 fun StitchBottomNav(
+    mode: MndAppMode,
     selected: StitchMainTab,
     onSelect: (StitchMainTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val items = remember(mode) { getTabsForMode(mode) }
+
     Surface(
         modifier = modifier.fillMaxWidth(),
         color = StitchPalette.Surface,
@@ -89,7 +93,7 @@ fun StitchBottomNav(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            NAV_ITEMS.forEach { spec ->
+            items.forEach { spec ->
                 val sel = spec.tab == selected
                 Box(
                     modifier = Modifier
@@ -135,4 +139,3 @@ fun StitchBottomNav(
         }
     }
 }
-

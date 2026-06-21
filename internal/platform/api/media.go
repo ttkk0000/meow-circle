@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"kitty-circle/internal/domain"
@@ -128,9 +129,29 @@ func (r *Router) uploadMedia(w http.ResponseWriter, req *http.Request) {
 }
 
 func (r *Router) handleMediaChild(w http.ResponseWriter, req *http.Request) {
-	id, err := parseID(req.URL.Path, "/api/v1/media/")
+	parts := strings.Split(strings.Trim(strings.TrimPrefix(req.URL.Path, "/api/v1/media/"), "/"), "/")
+	if len(parts) == 0 || parts[0] == "" || len(parts) > 2 {
+		writeError(w, http.StatusBadRequest, "invalid media id")
+		return
+	}
+
+	id, err := strconv.ParseInt(parts[0], 10, 64)
 	if err != nil {
 		writeError(w, http.StatusBadRequest, "invalid media id")
+		return
+	}
+	if len(parts) == 2 {
+		if parts[1] != "content" || req.Method != http.MethodGet {
+			writeError(w, http.StatusMethodNotAllowed, "method not allowed")
+			return
+		}
+		m, ok := r.store.GetMedia(id)
+		if !ok || strings.TrimSpace(m.URL) == "" {
+			writeError(w, http.StatusNotFound, "media not found")
+			return
+		}
+		// Keep metadata and binary access separate so clients can render a media ID directly.
+		http.Redirect(w, req, m.URL, http.StatusFound)
 		return
 	}
 

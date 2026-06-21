@@ -611,7 +611,11 @@ private fun OrderDetailScreen(
                         Spacer(Modifier.width(10.dp))
                         Column {
                             Text(stringResource(R.string.orders_status_format, statusLabel(order.status)), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-                            Text(stringResource(R.string.orders_arrival), style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+                            Text(
+                                if (order.status == "completed") stringResource(R.string.orders_completed_detail) else stringResource(R.string.orders_arrival),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = StitchPalette.OnSurfaceVariant,
+                            )
                         }
                     }
                 }
@@ -1158,7 +1162,15 @@ private fun StatusBanner(order: Order, sellerMode: Boolean) {
             Icon(if (order.status == "shipped") Icons.Outlined.LocalShipping else Icons.Outlined.ReceiptLong, contentDescription = null, tint = tint)
             Spacer(Modifier.width(10.dp))
             Text(statusLabel(order.status), style = MaterialTheme.typography.titleMedium, color = tint, fontWeight = FontWeight.Black, modifier = Modifier.weight(1f))
-            Text(if (sellerMode) stringResource(R.string.orders_ship_by) else stringResource(R.string.orders_est_aug), style = MaterialTheme.typography.labelSmall, color = tint.copy(alpha = 0.7f))
+            Text(
+                when {
+                    order.status == "completed" -> stringResource(R.string.orders_received_confirmed)
+                    sellerMode -> stringResource(R.string.orders_ship_by)
+                    else -> stringResource(R.string.orders_est_aug)
+                },
+                style = MaterialTheme.typography.labelSmall,
+                color = tint.copy(alpha = 0.7f),
+            )
         }
     }
 }

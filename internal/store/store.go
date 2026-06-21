@@ -96,4 +96,15 @@ type Store interface {
 	TogglePostLike(userID, postID int64) (liked bool, count int64, ok bool)
 	BatchPostLikeCounts(postIDs []int64) map[int64]int64
 	BatchUserLikedPosts(userID int64, postIDs []int64) map[int64]bool
+
+	// Adoption
+	CreateAdoptionPet(pet domain.AdoptionPet) domain.AdoptionPet
+	GetAdoptionPet(id int64) (domain.AdoptionPet, bool)
+	ListAdoptionPets() []domain.AdoptionPet
+	ListAdoptionPetsByRescuer(rescuerID int64) []domain.AdoptionPet
+	CreateAdoptionApplication(app domain.AdoptionApplication) domain.AdoptionApplication
+	GetAdoptionApplication(id int64) (domain.AdoptionApplication, bool)
+	ListAdoptionApplicationsByApplicant(applicantID int64) []domain.AdoptionApplication
+	ListAdoptionApplicationsByRescuer(rescuerID int64) []domain.AdoptionApplication
+	UpdateAdoptionApplicationStatus(id int64, status domain.ApplicationStatus) bool
 }

@@ -246,3 +246,45 @@ type AuditLog struct {
 	IP         string    `json:"ip,omitempty"`
 	CreatedAt  time.Time `json:"created_at"`
 }
+
+// ===== Adoption =====
+
+type AdoptionPet struct {
+	ID          int64     `json:"id"`
+	RescuerID   int64     `json:"rescuer_id"` // User ID of the rescuer/shelter
+	Name        string    `json:"name"`
+	Species     string    `json:"species"`
+	Breed       string    `json:"breed"`
+	Age         string    `json:"age"`
+	City        string    `json:"city"`
+	Health      string    `json:"health"` // e.g., "Vaccinated, Spayed"
+	Description string    `json:"description"`
+	MediaIDs    []int64   `json:"media_ids,omitempty"`
+	Status      string    `json:"status"` // e.g., "available", "adopted"
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+type ApplicationStatus string
+
+const (
+	ApplicationStatusDraft     ApplicationStatus = "draft"
+	ApplicationStatusSubmitted ApplicationStatus = "submitted"
+	ApplicationStatusReviewing ApplicationStatus = "reviewing"
+	ApplicationStatusNeedsInfo ApplicationStatus = "needs_info"
+	ApplicationStatusApproved  ApplicationStatus = "approved"
+	ApplicationStatusRejected  ApplicationStatus = "rejected"
+	ApplicationStatusWithdrawn ApplicationStatus = "withdrawn"
+)
+
+type AdoptionApplication struct {
+	ID          int64             `json:"id"`
+	PetID       int64             `json:"pet_id"`
+	ApplicantID int64             `json:"applicant_id"`
+	RescuerID   int64             `json:"rescuer_id"` // Denormalized for easy querying
+	Status      ApplicationStatus `json:"status"`
+	Message     string            `json:"message"`
+	ContactInfo string            `json:"contact_info,omitempty"`
+	CreatedAt   time.Time         `json:"created_at"`
+	UpdatedAt   time.Time         `json:"updated_at"`
+}

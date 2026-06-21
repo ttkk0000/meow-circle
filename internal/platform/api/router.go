@@ -334,6 +334,184 @@ func ensureDefaultUser(st store.Store) {
 			}
 		}
 	}
+
+	ensureDefaultListings(st, createdUsers)
+	ensureDefaultAdoption(st, createdUsers)
+}
+
+func ensureDefaultListings(st store.Store, users map[string]domain.User) {
+	if len(st.ListListings()) > 0 {
+		return
+	}
+
+	type listingSeed struct {
+		username    string
+		title       string
+		description string
+		priceCents  int64
+		listType    domain.ListingType
+		category    string
+	}
+
+	seeds := []listingSeed{
+		{
+			username:    "puff_bakery",
+			title:       "未拆封猫罐头 6 罐组合",
+			description: "猫猫优先，适合换粮过渡；同城可自提。",
+			priceCents:  6800,
+			listType:    domain.ListingTypeProduct,
+			category:    "product",
+		},
+		{
+			username:    "sunday_walk",
+			title:       "周末上门喂猫与铲砂",
+			description: "有基础照护记录，可同时帮 doggie 换水。",
+			priceCents:  12000,
+			listType:    domain.ListingTypeService,
+			category:    "service",
+		},
+		{
+			username:    "clean_corner",
+			title:       "清洗后的航空箱可自提",
+			description: "适合短途看诊或搬家周转，同城自提，已消毒。",
+			priceCents:  0,
+			listType:    domain.ListingType("free"),
+			category:    "free",
+		},
+		{
+			username:    "sunday_walk",
+			title:       "同城交换轻量牵引绳",
+			description: "希望交换猫抓板或未拆封猫砂，线下当面确认。",
+			priceCents:  0,
+			listType:    domain.ListingType("trade"),
+			category:    "trade",
+		},
+	}
+
+	for _, seed := range seeds {
+		user, ok := users[seed.username]
+		if !ok {
+			continue
+		}
+		st.CreateListing(domain.Listing{
+			SellerID:    user.ID,
+			Type:        seed.listType,
+			Category:    seed.category,
+			Title:       seed.title,
+			Description: seed.description,
+			PriceCents:  seed.priceCents,
+			Currency:    "CNY",
+			CreatedAt:   time.Now().UTC(),
+		})
+		log.Printf("seed: created default listing: %s", seed.title)
+	}
+}
+
+func ensureDefaultAdoption(st store.Store, users map[string]domain.User) {
+	if len(st.ListAdoptionPets()) > 0 {
+		return
+	}
+
+	type adoptionSeed struct {
+		username    string
+		name        string
+		species     string
+		breed       string
+		age         string
+		city        string
+		health      string
+		description string
+		status      string
+		image       string
+	}
+
+	seeds := []adoptionSeed{
+		{
+			username:    "sunday_walk",
+			name:        "Orange",
+			species:     "cat",
+			breed:       "orange tabby",
+			age:         "3 months",
+			city:        "Shanghai",
+			health:      "Dewormed, vaccinated, pending neuter",
+			description: "A gentle kitten rescued near a garden path. Best for a patient indoor family.",
+			status:      "available",
+			image:       "mock_image_4.png",
+		},
+		{
+			username:    "peachlatte",
+			name:        "Doubao",
+			species:     "doggie",
+			breed:       "small mixed breed",
+			age:         "1 year",
+			city:        "Hangzhou",
+			health:      "Vaccinated, neutered",
+			description: "Friendly with cats and calm around people. Needs regular walks and a stable routine.",
+			status:      "available",
+			image:       "mock_image_6.png",
+		},
+		{
+			username:    "puff_bakery",
+			name:        "Snowball",
+			species:     "cat",
+			breed:       "British shorthair mix",
+			age:         "2 years",
+			city:        "Beijing",
+			health:      "Checked, mild rhinitis under observation",
+			description: "Quiet adult cat, clean habits, prefers a low-noise home with window perches.",
+			status:      "available",
+			image:       "mock_image_5.png",
+		},
+	}
+
+	var firstPet *domain.AdoptionPet
+	for _, seed := range seeds {
+		rescuer, ok := users[seed.username]
+		if !ok {
+			continue
+		}
+		media := st.CreateMedia(domain.Media{
+			OwnerID:   rescuer.ID,
+			Kind:      domain.MediaKindImage,
+			MIME:      "image/png",
+			Filename:  seed.image,
+			URL:       "/mock-images/" + seed.image,
+			Status:    domain.MediaStatusApproved,
+			CreatedAt: time.Now().UTC(),
+		})
+		pet := st.CreateAdoptionPet(domain.AdoptionPet{
+			RescuerID:   rescuer.ID,
+			Name:        seed.name,
+			Species:     seed.species,
+			Breed:       seed.breed,
+			Age:         seed.age,
+			City:        seed.city,
+			Health:      seed.health,
+			Description: seed.description,
+			MediaIDs:    []int64{media.ID},
+			Status:      seed.status,
+			CreatedAt:   time.Now().UTC(),
+		})
+		log.Printf("seed: created adoption pet: %s", pet.Name)
+		if firstPet == nil {
+			copy := pet
+			firstPet = &copy
+		}
+	}
+
+	demoUser, demoOK := users["demo"]
+	if demoOK && firstPet != nil && firstPet.RescuerID != demoUser.ID {
+		if len(st.ListAdoptionApplicationsByApplicant(demoUser.ID)) == 0 {
+			st.CreateAdoptionApplication(domain.AdoptionApplication{
+				PetID:       firstPet.ID,
+				ApplicantID: demoUser.ID,
+				RescuerID:   firstPet.RescuerID,
+				Status:      domain.ApplicationStatusReviewing,
+				Message:     "I can provide an indoor home, daily updates, and a patient adjustment period.",
+				ContactInfo: "demo@example.com",
+			})
+		}
+	}
 }
 
 // buildStore wires a persistence backend based on environment variables:
@@ -523,6 +701,11 @@ func (r *Router) routes() {
 	r.mux.HandleFunc("/api/v1/me/follow/", r.requireAuth(r.handleMeFollow))
 	r.mux.HandleFunc("/api/v1/me/listings", r.requireAuth(r.handleMyListings))
 	r.mux.HandleFunc("/api/v1/me/orders", r.requireAuth(r.handleMyOrders))
+	r.mux.HandleFunc("/api/v1/me/adoption/applications", r.requireAuth(r.handleMyAdoptionApplications))
+
+	r.mux.HandleFunc("/api/v1/adoption/pets", r.handleAdoptionPets)
+	r.mux.HandleFunc("/api/v1/adoption/pets/", r.handleAdoptionPetChild)
+	r.mux.HandleFunc("/api/v1/adoption/applications", r.requireAuth(r.handleAdoptionApplications))
 
 	r.mux.HandleFunc("/api/v1/admin/summary", r.handleAdminSummary)
 	r.mux.HandleFunc("/api/v1/admin/posts", r.handleAdminPosts)
@@ -1006,6 +1189,22 @@ func (r *Router) handleListings(w http.ResponseWriter, req *http.Request) {
 	case http.MethodGet:
 		page, size := parsePagination(req)
 		all := r.store.ListListings()
+		query := req.URL.Query()
+		typeFilter := strings.ToLower(strings.TrimSpace(query.Get("type")))
+		categoryFilter := strings.ToLower(strings.TrimSpace(query.Get("category")))
+		if typeFilter != "" && typeFilter != "all" || categoryFilter != "" && categoryFilter != "all" {
+			filtered := make([]domain.Listing, 0, len(all))
+			for _, listing := range all {
+				if typeFilter != "" && typeFilter != "all" && strings.ToLower(string(listing.Type)) != typeFilter {
+					continue
+				}
+				if categoryFilter != "" && categoryFilter != "all" && strings.ToLower(listing.Category) != categoryFilter {
+					continue
+				}
+				filtered = append(filtered, listing)
+			}
+			all = filtered
+		}
 		items, total := paginateListings(all, page, size)
 		writeOK(w, map[string]any{
 			"items":     items,
@@ -1021,6 +1220,7 @@ func (r *Router) handleListings(w http.ResponseWriter, req *http.Request) {
 		}
 		var payload struct {
 			Type        domain.ListingType `json:"type"`
+			Category    string             `json:"category"`
 			Title       string             `json:"title"`
 			Description string             `json:"description"`
 			PriceCents  int64              `json:"price_cents"`
@@ -1050,6 +1250,7 @@ func (r *Router) handleListings(w http.ResponseWriter, req *http.Request) {
 		listing := r.store.CreateListing(domain.Listing{
 			SellerID:    claims.UserID,
 			Type:        payload.Type,
+			Category:    strings.TrimSpace(payload.Category),
 			Title:       strings.TrimSpace(payload.Title),
 			Description: strings.TrimSpace(payload.Description),
 			PriceCents:  payload.PriceCents,
@@ -1472,7 +1673,7 @@ type envelope struct {
 }
 
 func writeJSON(w http.ResponseWriter, status int, value any) {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(value)
 }

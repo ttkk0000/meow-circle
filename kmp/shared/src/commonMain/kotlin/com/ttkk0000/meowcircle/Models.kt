@@ -196,6 +196,7 @@ data class CreatePostBody(
 @Serializable
 data class CreateListingBody(
     val type: String = "product",
+    val category: String = "product",
     val title: String,
     val description: String = "",
     @SerialName("price_cents") val priceCents: Long,
@@ -331,4 +332,59 @@ data class Report(
     val resolution: String = "",
     @SerialName("created_at") val createdAt: String,
     @SerialName("updated_at") val updatedAt: String,
+)
+
+// ===== Adoption =====
+
+@Serializable
+data class AdoptionPet(
+    val id: Long,
+    @SerialName("rescuer_id") val rescuerId: Long,
+    val name: String,
+    val species: String,
+    val breed: String,
+    val age: String,
+    val city: String,
+    val health: String,
+    val description: String,
+    @SerialName("media_ids") val mediaIds: List<Long>? = null,
+    val status: String,
+    @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String,
+)
+
+@Serializable
+data class AdoptionPetDetailData(
+    val pet: AdoptionPet,
+    val rescuer: User? = null,
+)
+
+@Serializable
+data class AdoptionApplication(
+    val id: Long,
+    @SerialName("pet_id") val petId: Long,
+    @SerialName("applicant_id") val applicantId: Long,
+    @SerialName("rescuer_id") val rescuerId: Long,
+    val status: String,
+    val message: String,
+    @SerialName("contact_info") val contactInfo: String? = null,
+    @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String,
+)
+
+@Serializable
+data class ApplyAdoptionBody(
+    @SerialName("pet_id") val petId: Long,
+    val message: String,
+    @SerialName("contact_info") val contactInfo: String? = null,
+)
+
+@Serializable
+data class AdoptionPetsPayload(
+    val pets: List<AdoptionPet>? = null,
+)
+
+@Serializable
+data class AdoptionApplicationsPayload(
+    val applications: List<AdoptionApplication>? = null,
 )

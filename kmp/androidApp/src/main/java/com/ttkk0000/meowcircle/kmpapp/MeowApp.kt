@@ -15,8 +15,12 @@ import com.ttkk0000.meowcircle.humanizeClientFailure
 import com.ttkk0000.meowcircle.kmpapp.theme.MeowStitchTheme
 import com.ttkk0000.meowcircle.kmpapp.theme.MeowTheme
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchComposeScreen
-import com.ttkk0000.meowcircle.kmpapp.ui.StitchFeedScreen
+import com.ttkk0000.meowcircle.kmpapp.ui.AdoptionNavGraph
+import com.ttkk0000.meowcircle.kmpapp.ui.CommunityNavGraph
+import com.ttkk0000.meowcircle.kmpapp.ui.TradeNavGraph
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchLoginScreen
+import com.ttkk0000.meowcircle.kmpapp.ui.StitchModeSelectScreen
+import com.ttkk0000.meowcircle.kmpapp.ui.MndAppMode
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchPostDetailScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchRegisterScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchSplashScreen
@@ -38,6 +42,17 @@ fun MeowApp(sdk: MeowCircleSdk) {
     var composeOpen by remember { mutableStateOf(false) }
     var feedReloadSignal by remember { mutableIntStateOf(0) }
     var activeThemeStr by remember { mutableStateOf(sdk.getTheme()) }
+    
+    // mode routing
+    var appModeStr by remember { mutableStateOf(sdk.sessionStore().getAppMode()) }
+    val appMode = remember(appModeStr) {
+        when(appModeStr) {
+            "Community" -> MndAppMode.Community
+            "Adoption" -> MndAppMode.Adoption
+            "Trade" -> MndAppMode.Trade
+            else -> null
+        }
+    }
 
     val activeTheme = when (activeThemeStr.lowercase()) {
         "honey", "sugar" -> MeowTheme.Honey
@@ -93,6 +108,17 @@ fun MeowApp(sdk: MeowCircleSdk) {
                             modifier = Modifier.fillMaxSize(),
                         )
                 }
+            appMode == null -> 
+                StitchModeSelectScreen(
+                    apiBase = sdk.baseUrl,
+                    user = user!!,
+                    onModeSelected = { selectedMode -> 
+                        val name = selectedMode.name
+                        sdk.sessionStore().setAppMode(name)
+                        appModeStr = name
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
             composeOpen ->
                 StitchComposeScreen(
                     sdk = sdk,
@@ -107,24 +133,81 @@ fun MeowApp(sdk: MeowCircleSdk) {
                     onBack = { postDetailId = null },
                     modifier = Modifier.fillMaxSize(),
                 )
-            else ->
-                StitchFeedScreen(
-                    sdk = sdk,
-                    user = user!!,
-                    feedReloadSignal = feedReloadSignal,
-                    onLogout = {
-                        sdk.logout()
-                        user = null
-                        authScreen = AuthScreen.Login
-                    },
-                    onOpenPost = { postDetailId = it },
-                    onCompose = { composeOpen = true },
-                    onThemeChanged = {
-                        sdk.setTheme(it)
-                        activeThemeStr = it
-                    },
-                    modifier = Modifier.fillMaxSize(),
-                )
+            else -> {
+                when (appMode) {
+                    MndAppMode.Community -> {
+                        CommunityNavGraph(
+                            sdk = sdk,
+                            user = user!!,
+                            feedReloadSignal = feedReloadSignal,
+                            onLogout = {
+                                sdk.logout()
+                                user = null
+                                authScreen = AuthScreen.Login
+                            },
+                            onOpenPost = { postDetailId = it },
+                            onCompose = { composeOpen = true },
+                            onThemeChanged = {
+                                sdk.setTheme(it)
+                                activeThemeStr = it
+                            },
+                            onChangeMode = { selectedMode ->
+                                sdk.sessionStore().setAppMode(selectedMode.name)
+                                appModeStr = selectedMode.name
+                            },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                    MndAppMode.Adoption -> {
+                        AdoptionNavGraph(
+                            sdk = sdk,
+                            user = user!!,
+                            feedReloadSignal = feedReloadSignal,
+                            onLogout = {
+                                sdk.logout()
+                                user = null
+                                authScreen = AuthScreen.Login
+                            },
+                            onOpenPost = { postDetailId = it },
+                            onCompose = { composeOpen = true },
+                            onThemeChanged = {
+                                sdk.setTheme(it)
+                                activeThemeStr = it
+                            },
+                            onChangeMode = { selectedMode ->
+                                sdk.sessionStore().setAppMode(selectedMode.name)
+                                appModeStr = selectedMode.name
+                            },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                    MndAppMode.Trade -> {
+                        TradeNavGraph(
+                            sdk = sdk,
+                            user = user!!,
+                            feedReloadSignal = feedReloadSignal,
+                            onLogout = {
+                                sdk.logout()
+                                user = null
+                                authScreen = AuthScreen.Login
+                            },
+                            onOpenPost = { postDetailId = it },
+                            onCompose = { composeOpen = true },
+                            onThemeChanged = {
+                                sdk.setTheme(it)
+                                activeThemeStr = it
+                            },
+                            
+                            onChangeMode = { selectedMode ->
+                                sdk.sessionStore().setAppMode(selectedMode.name)
+                                appModeStr = selectedMode.name
+                            },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                    null -> {}
+                }
+            }
         }
     }
 }

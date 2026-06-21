@@ -14,6 +14,8 @@ services:
       - ./migrations/002_social.sql:/docker-entrypoint-initdb.d/002_social.sql:ro
       - ./migrations/003_user_phone.sql:/docker-entrypoint-initdb.d/003_user_phone.sql:ro
       - ./migrations/004_notifications_actor_image.sql:/docker-entrypoint-initdb.d/004_notifications_actor_image.sql:ro
+      - ./migrations/005_adoption.sql:/docker-entrypoint-initdb.d/005_adoption.sql:ro
+      - ./migrations/006_listing_category.sql:/docker-entrypoint-initdb.d/006_listing_category.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U meow -d meow"]
       interval: 5s

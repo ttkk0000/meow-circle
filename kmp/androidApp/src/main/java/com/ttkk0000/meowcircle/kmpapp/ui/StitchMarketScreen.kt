@@ -100,19 +100,24 @@ private data class MarketOption(val key: String, val labelRes: Int)
 private val MARKET_CATEGORIES =
     listOf(
         MarketOption("all", R.string.market_category_all),
-        MarketOption("toys", R.string.market_category_toys),
-        MarketOption("food", R.string.market_category_food),
-        MarketOption("apparel", R.string.market_category_apparel),
-        MarketOption("care", R.string.market_category_care),
+        MarketOption("product", R.string.market_segment_product),
+        MarketOption("service", R.string.market_segment_service),
+        MarketOption("trade", R.string.market_segment_trade),
+        MarketOption("free", R.string.market_segment_free),
     )
+
+private val PUBLISH_CATEGORIES = MARKET_CATEGORIES.filterNot { it.key == "all" }
 
 private val TRADE_TYPES =
     listOf(
+        MarketOption("all", R.string.market_trade_all),
         MarketOption("sell", R.string.market_trade_sell),
         MarketOption("trade", R.string.market_trade_trade),
         MarketOption("looking_for", R.string.market_trade_looking_for),
         MarketOption("free", R.string.market_trade_free),
     )
+
+private val PUBLISH_TRADE_TYPES = TRADE_TYPES.filterNot { it.key == "all" }
 
 private val CONDITIONS =
     listOf(
@@ -137,13 +142,15 @@ fun StitchMarketScreen(
     onNotifyPress: () -> Unit,
     onOpenOrders: () -> Unit,
     onOpenMessages: () -> Unit,
+    publishRequest: Int = 0,
+    onListingPublished: () -> Unit = {},
     onChromeVisibleChange: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    var selectedCategory by remember { mutableStateOf("toys") }
-    var selectedTrade by remember { mutableStateOf("sell") }
+    var selectedCategory by remember { mutableStateOf("all") }
+    var selectedTrade by remember { mutableStateOf("all") }
     var selectedListing by remember { mutableStateOf<Listing?>(null) }
     var detail by remember { mutableStateOf<ListingDetailData?>(null) }
     var detailLoading by remember { mutableStateOf(false) }
@@ -155,9 +162,24 @@ fun StitchMarketScreen(
     var actionLoading by remember { mutableStateOf(false) }
     val chromeVisible = !showPublish && !showOffer
 
+    LaunchedEffect(publishRequest) {
+        if (publishRequest > 0) {
+            showPublish = true
+        }
+    }
+
+    val marketSourceListings =
+        remember(listings, loading, err, mockMode) {
+            when {
+                mockMode -> listings.orEmpty()
+                !loading && err == null && listings.isNullOrEmpty() -> createTradeFallbackListings()
+                else -> listings.orEmpty()
+            }
+        }
+
     val visibleListings =
-        remember(listings, query, selectedCategory, selectedTrade) {
-            listings.orEmpty()
+        remember(marketSourceListings, query, selectedCategory, selectedTrade) {
+            marketSourceListings
                 .filter { listing ->
                     query.isBlank() ||
                         listing.title.contains(query, ignoreCase = true) ||
@@ -257,6 +279,7 @@ fun StitchMarketScreen(
                 onPublished = {
                     showPublish = false
                     infoText = context.getString(R.string.market_published)
+                    onListingPublished()
                 },
                 onError = { infoText = it },
                 modifier = modifier,
@@ -269,7 +292,7 @@ fun StitchMarketScreen(
                 onDismiss = { showOffer = false },
                 onSend = { offerCents, message ->
                     val listing = selectedListing ?: return@MakeOfferScreen
-                    val offer = formatListingPrice(offerCents, listing.currency)
+                    val offer = formatMarketListingPrice(offerCents, listing.currency)
                     sendSellerMessage(
                         listing,
                         context.getString(R.string.market_offer_message_template, listing.title, offer, message).trim(),
@@ -392,7 +415,7 @@ private fun MarketListScreen(
         StitchTopBar(
             apiBase = apiBase,
             user = user,
-            title = "M&D",
+            title = stringResource(R.string.market_title),
             leading = StitchTopBarLeading.Paw,
             trailing = StitchTopBarTrailing.Bell,
             onAvatarPress = onAvatarPress,
@@ -469,9 +492,10 @@ private fun MarketListScreen(
                     secondary = stringResource(R.string.market_browse_all),
                     onPrimary = {
                         onQueryChange("")
-                        onTradeChange("sell")
+                        onTradeChange("all")
+                        onCategoryChange("all")
                     },
-                    onSecondary = { onCategoryChange("toys") },
+                    onSecondary = { onCategoryChange("all") },
                 )
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -508,8 +532,8 @@ private fun MarketListScreen(
                 onApply = { showFilters = false },
                 onClear = {
                     onQueryChange("")
-                    onCategoryChange("toys")
-                    onTradeChange("sell")
+                    onCategoryChange("all")
+                    onTradeChange("all")
                     showFilters = false
                 },
             )
@@ -712,7 +736,7 @@ private fun ProductDetailScreen(
                 modifier = Modifier.weight(1f).height(48.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
             ) {
-                Text(if (actionLoading) "..." else stringResource(R.string.market_buy_now), color = Color.White, fontWeight = FontWeight.Bold)
+                Text(if (actionLoading) "..." else stringResource(listingActionLabelRes(listing)), color = Color.White, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -774,7 +798,7 @@ private fun PublishProductScreen(
     var title by remember { mutableStateOf(context.getString(R.string.market_sample_title)) }
     var price by remember { mutableStateOf("128.00") }
     var description by remember { mutableStateOf(context.getString(R.string.market_sample_description)) }
-    var category by remember { mutableStateOf("care") }
+    var category by remember { mutableStateOf("product") }
     var tradeType by remember { mutableStateOf("sell") }
     var condition by remember { mutableStateOf("new") }
     var mediaIdsText by remember { mutableStateOf("") }
@@ -807,9 +831,9 @@ private fun PublishProductScreen(
             PublishField(stringResource(R.string.market_field_title), title, onValueChange = { title = it })
             PublishField(stringResource(R.string.market_field_price), price, onValueChange = { price = it })
             Text(stringResource(R.string.market_field_category), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
-            OptionRow(MARKET_CATEGORIES, category, onSelect = { category = it })
+            OptionRow(PUBLISH_CATEGORIES, category, onSelect = { category = it })
             Text(stringResource(R.string.market_field_trade_type), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
-            OptionRow(TRADE_TYPES, tradeType, onSelect = { tradeType = it })
+            OptionRow(PUBLISH_TRADE_TYPES, tradeType, onSelect = { tradeType = it })
             Text(stringResource(R.string.market_field_condition), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
             OptionRow(CONDITIONS, condition, onSelect = { condition = it })
             PublishField(stringResource(R.string.market_field_description), description, onValueChange = { description = it }, minLines = 4)
@@ -833,9 +857,17 @@ private fun PublishProductScreen(
                         onPublished()
                     } else {
                         busy = true
+                        val listingType =
+                            when (category) {
+                                "service" -> "service"
+                                "trade" -> "trade"
+                                "free" -> "free"
+                                else -> tradeType
+                            }
                         scope.launch {
                             sdk.createListing(
-                                type = tradeType,
+                                type = listingType,
+                                category = category,
                                 title = title,
                                 description = "$description\n${context.getString(R.string.market_backend_meta, category, condition)}",
                                 priceCents = cents,
@@ -878,7 +910,7 @@ private fun MakeOfferScreen(
         }
     var offerCents by remember(listing.id) { mutableStateOf(presets.getOrNull(1) ?: listing.priceCents) }
     var delivery by remember(listing.id) { mutableStateOf("pickup") }
-    val defaultOfferPrice = formatListingPrice(offerCents, listing.currency)
+    val defaultOfferPrice = formatMarketListingPrice(offerCents, listing.currency)
     val defaultOfferMessage = stringResource(R.string.market_default_offer_message, defaultOfferPrice)
     var message by remember(listing.id, defaultOfferMessage) { mutableStateOf(defaultOfferMessage) }
 
@@ -911,8 +943,8 @@ private fun MakeOfferScreen(
                                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
                                     listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                                    listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
-                                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                                    listing.title.contains("航空箱") || listing.title.contains("Carrier") ->
+                                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                                     else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                                 }
                             }
@@ -934,7 +966,7 @@ private fun MakeOfferScreen(
             }
             Text(stringResource(R.string.market_your_offer), style = MaterialTheme.typography.labelLarge, color = StitchPalette.OnSurface, fontWeight = FontWeight.Black)
             Text(
-                formatListingPrice(offerCents, listing.currency),
+                formatMarketListingPrice(offerCents, listing.currency),
                 style = MaterialTheme.typography.displaySmall,
                 color = StitchPalette.Brand,
                 fontWeight = FontWeight.Black,
@@ -953,7 +985,7 @@ private fun MakeOfferScreen(
                         modifier = Modifier.weight(1f).clickable { offerCents = preset },
                     ) {
                         Text(
-                            formatListingPrice(preset, listing.currency),
+                            formatMarketListingPrice(preset, listing.currency),
                             modifier = Modifier.padding(vertical = 10.dp),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.labelLarge,
@@ -1067,8 +1099,8 @@ private fun MarketHeroCard(
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
                 listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
-                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                listing.title.contains("航空箱") || listing.title.contains("Carrier") ->
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                 else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
             }
         }
@@ -1140,7 +1172,7 @@ private fun MarketHeroCard(
                     colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
                     modifier = Modifier.height(56.dp).width(132.dp),
                 ) {
-                    Text(stringResource(R.string.market_buy_now), color = Color.White, fontWeight = FontWeight.Black)
+                    Text(stringResource(listingActionLabelRes(listing)), color = Color.White, fontWeight = FontWeight.Black)
                 }
             }
         }
@@ -1175,8 +1207,8 @@ private fun FeaturedMarketCard(
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
                 listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                     "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
-                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                listing.title.contains("航空箱") || listing.title.contains("Carrier") ->
+                    "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                 else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
             }
         }
@@ -1203,7 +1235,7 @@ private fun FeaturedMarketCard(
                         MarketBadge(
                             label = stringResource(
                                 MARKET_CATEGORIES.find { it.key.equals(listing.category, ignoreCase = true) }?.labelRes
-                                    ?: R.string.market_category_toys
+                                    ?: R.string.market_segment_product
                             )
                         )
                     }
@@ -1242,7 +1274,7 @@ private fun FeaturedMarketCard(
                 colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
                 modifier = Modifier.fillMaxWidth().height(46.dp),
             ) {
-                Text(stringResource(R.string.market_buy_now), color = Color.White, fontWeight = FontWeight.Bold)
+                Text(stringResource(listingActionLabelRes(listing)), color = Color.White, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -1278,8 +1310,8 @@ private fun CompactMarketCard(
                                 "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
                             listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                                 "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                            listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
-                                "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                            listing.title.contains("航空箱") || listing.title.contains("Carrier") ->
+                                "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                             else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                         }
                     }
@@ -1310,7 +1342,7 @@ private fun CompactMarketCard(
                         MarketBadge(
                             label = stringResource(
                                 MARKET_CATEGORIES.find { it.key.equals(listing.category, ignoreCase = true) }?.labelRes
-                                    ?: R.string.market_category_toys
+                                    ?: R.string.market_segment_product
                             )
                         )
                     }
@@ -1577,8 +1609,8 @@ private fun SellerListingCard(
                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png"
                     listing.title.contains("上门") || listing.title.contains("铲砂") || listing.title.contains("Feed") ->
                         "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png"
-                    listing.title.contains("橘猫") || listing.title.contains("领养") || listing.title.contains("Adopt") ->
-                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
+                    listing.title.contains("航空箱") || listing.title.contains("Carrier") ->
+                        "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                     else -> "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png"
                 }
             }
@@ -1748,6 +1780,54 @@ private fun PublishField(
     }
 }
 
+private fun createTradeFallbackListings(): List<Listing> =
+    listOf(
+        Listing(
+            id = 9001L,
+            sellerId = 2L,
+            type = "product",
+            category = "product",
+            title = "未拆封猫罐头 6 罐组合",
+            description = "猫猫优先，适合换粮过渡；同城可自提。",
+            priceCents = 6800L,
+            currency = "CNY",
+            createdAt = "2026-06-02T10:00:00Z",
+        ),
+        Listing(
+            id = 9002L,
+            sellerId = 3L,
+            type = "service",
+            category = "service",
+            title = "周末上门喂猫与铲砂",
+            description = "有基础照护记录，可同时帮 doggie 换水。",
+            priceCents = 12000L,
+            currency = "CNY",
+            createdAt = "2026-06-02T10:00:00Z",
+        ),
+        Listing(
+            id = 9003L,
+            sellerId = 4L,
+            type = "trade",
+            category = "trade",
+            title = "同城交换轻量牵引绳",
+            description = "希望交换猫抓板或未拆封猫砂，线下当面确认。",
+            priceCents = 0L,
+            currency = "CNY",
+            createdAt = "2026-06-01T16:00:00Z",
+        ),
+        Listing(
+            id = 9004L,
+            sellerId = 5L,
+            type = "free",
+            category = "free",
+            title = "清洗后的航空箱可自提",
+            description = "适合短途看诊或搬家周转，同城自提，已消毒。",
+            priceCents = 0L,
+            currency = "CNY",
+            createdAt = "2026-05-31T18:30:00Z",
+        ),
+    )
+
 @Composable
 private fun mintTextFieldColors() =
     OutlinedTextFieldDefaults.colors(
@@ -1760,10 +1840,11 @@ private fun mintTextFieldColors() =
 
 private fun Listing.matchesTradeType(key: String): Boolean =
     when (key) {
-        "sell" -> type in listOf("sell", "product", "service") && priceCents > 0L
+        "all" -> true
+        "sell" -> type in listOf("sell", "product") && priceCents > 0L
         "trade" -> type == "trade"
         "looking_for" -> type == "looking_for"
-        "free" -> type in listOf("free", "adopt") || priceCents <= 0L
+        "free" -> type == "free" || priceCents <= 0L
         else -> true
     }
 
@@ -1772,32 +1853,59 @@ private fun Listing.matchesCategory(key: String): Boolean {
     if (category.isNotBlank() && category.equals(key, ignoreCase = true)) {
         return true
     }
-    // Fallback to searching title/description/type
     val haystack = "$title $description $type".lowercase()
     return when (key) {
-        "toys" -> haystack.contains("toy") || haystack.contains("collar") || haystack.contains("harness") || haystack.contains("carrier") || haystack.contains("product")
-        "food" -> haystack.contains("food") || haystack.contains("bowl") || haystack.contains("treat") || haystack.contains("can")
-        "apparel" -> haystack.contains("apparel") || haystack.contains("wear") || haystack.contains("collar") || haystack.contains("harness")
-        "care" -> haystack.contains("care") || haystack.contains("service") || haystack.contains("feed") || haystack.contains("adopt")
+        "product" -> type in listOf("product", "sell") ||
+            haystack.contains("罐头") ||
+            haystack.contains("食碗") ||
+            haystack.contains("项圈") ||
+            haystack.contains("胸背") ||
+            haystack.contains("toy") ||
+            haystack.contains("bowl") ||
+            haystack.contains("collar") ||
+            haystack.contains("harness")
+        "service" -> type == "service" ||
+            haystack.contains("服务") ||
+            haystack.contains("上门") ||
+            haystack.contains("铲砂") ||
+            haystack.contains("feed") ||
+            haystack.contains("care")
+        "trade" -> type in listOf("trade", "looking_for") ||
+            haystack.contains("交换") ||
+            haystack.contains("求购")
+        "free" -> type == "free" ||
+            priceCents <= 0L ||
+            haystack.contains("赠送") ||
+            haystack.contains("自提")
         else -> true
     }
 }
 
 private fun tradeTypeLabelRes(type: String): Int =
     when (type) {
-        "sell", "product", "service" -> R.string.market_trade_sell
+        "sell", "product" -> R.string.market_segment_product
+        "service" -> R.string.market_segment_service
         "trade" -> R.string.market_trade_trade
         "looking_for" -> R.string.market_trade_looking_for
-        "free", "adopt" -> R.string.market_trade_free
-        else -> R.string.market_trade_sell
+        "free" -> R.string.market_segment_free
+        else -> R.string.market_segment_product
     }
 
-private fun formatListingPrice(
+private fun listingActionLabelRes(listing: Listing): Int =
+    when {
+        listing.type == "service" -> R.string.market_book_service
+        listing.type == "trade" -> R.string.market_contact_trade
+        listing.type == "looking_for" -> R.string.market_contact_seller
+        listing.type == "free" || listing.priceCents <= 0L -> R.string.market_contact_claim
+        else -> R.string.market_buy_now
+    }
+
+private fun formatMarketListingPrice(
     cents: Long,
     currency: String,
 ): String {
     if (cents <= 0L) return "Free"
-    val symbol = if (currency.uppercase() == "CNY") "$" else currency.uppercase()
+    val symbol = if (currency.uppercase() == "CNY") "¥" else currency.uppercase()
     val amount = cents / 100.0
     return "$symbol${amount.toString().trimEnd('0').trimEnd('.')}"
 }
@@ -1806,7 +1914,7 @@ private fun formatListingPrice(
 private fun localizedListingPrice(
     cents: Long,
     currency: String,
-): String = if (cents <= 0L) stringResource(R.string.common_free) else formatListingPrice(cents, currency)
+): String = if (cents <= 0L) stringResource(R.string.common_free) else formatMarketListingPrice(cents, currency)
 
 private fun parseMarketMediaIds(raw: String): List<Long> =
     raw

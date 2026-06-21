@@ -138,6 +138,7 @@ class MeowCircleSdk(
 
     suspend fun createListing(
         type: String = "product",
+        category: String = "product",
         title: String,
         description: String,
         priceCents: Long,
@@ -152,6 +153,7 @@ class MeowCircleSdk(
                     body =
                         CreateListingBody(
                             type = type.trim().ifBlank { "product" },
+                            category = category.trim().ifBlank { "product" },
                             title = title.trim(),
                             description = description.trim(),
                             priceCents = priceCents.coerceAtLeast(0L),
@@ -490,5 +492,48 @@ class MeowCircleSdk(
                         ),
                 ),
             )
+        }
+
+    // ===== Adoption =====
+
+    suspend fun getAdoptionPets(
+        species: String? = null,
+        city: String? = null,
+        status: String? = null,
+    ): Result<List<AdoptionPet>> =
+        runCatching {
+            val params = mutableListOf<String>()
+            species?.trim()?.takeIf { it.isNotEmpty() }?.let { params.add("species=$it") }
+            city?.trim()?.takeIf { it.isNotEmpty() }?.let { params.add("city=$it") }
+            status?.trim()?.takeIf { it.isNotEmpty() }?.let { params.add("status=$it") }
+            val suffix = if (params.isEmpty()) "" else "?" + params.joinToString("&")
+            val payload: AdoptionPetsPayload = unwrapData(httpGet("/api/v1/adoption/pets$suffix", auth = false))
+            payload.pets ?: emptyList()
+        }
+
+    suspend fun getAdoptionPet(id: Long): Result<AdoptionPetDetailData> =
+        runCatching {
+            unwrapData(httpGet("/api/v1/adoption/pets/$id", auth = false))
+        }
+
+    suspend fun applyForAdoption(petId: Long, message: String, contactInfo: String? = null): Result<AdoptionApplication> =
+        runCatching {
+            unwrapData(
+                httpPost(
+                    "/api/v1/adoption/applications",
+                    auth = true,
+                    body = ApplyAdoptionBody(
+                        petId = petId,
+                        message = message.trim(),
+                        contactInfo = contactInfo?.trim(),
+                    )
+                )
+            )
+        }
+
+    suspend fun getMyAdoptionApplications(): Result<List<AdoptionApplication>> =
+        runCatching {
+            val payload: AdoptionApplicationsPayload = unwrapData(httpGet("/api/v1/me/adoption/applications", auth = true))
+            payload.applications ?: emptyList()
         }
 }

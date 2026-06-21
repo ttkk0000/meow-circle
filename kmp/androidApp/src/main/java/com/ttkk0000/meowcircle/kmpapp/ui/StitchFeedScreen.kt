@@ -48,6 +48,7 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.outlined.Dashboard
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
@@ -193,7 +194,7 @@ private val FEED_CARD_RADIUS = StitchShape.cardFeed
 private val FEED_SECTION_RADIUS = StitchShape.cardFeed
 private val FEED_CARD_CONTENT_PADDING = PaddingValues(horizontal = 16.dp, vertical = 12.dp)
 
-private fun feedErrorMessage(
+internal fun feedErrorMessage(
     e: Throwable,
     apiBase: String,
 ): String {
@@ -213,14 +214,20 @@ private fun feedErrorMessage(
     }
 }
 
-private enum class MessageSection {
+internal enum class MessageSection {
     Chats,
     LikesFavorites,
     NewFollowers,
     Notifications,
 }
 
-private enum class ProfileRoute {
+private sealed class AdoptionRoute {
+    data object Home : AdoptionRoute()
+    data class Detail(val petId: Long) : AdoptionRoute()
+    data class Form(val petId: Long) : AdoptionRoute()
+}
+
+enum class ProfileRoute {
     Main,
     EditProfile,
     PetDetail,
@@ -232,10 +239,11 @@ private enum class ProfileRoute {
     Notifications,
     Privacy,
     UserNotice,
+    AppMode,
 }
 
 @Composable
-fun StitchFeedScreen(
+fun CommunityNavGraph(
     sdk: MeowCircleSdk,
     user: User,
     feedReloadSignal: Int = 0,
@@ -243,6 +251,7 @@ fun StitchFeedScreen(
     onOpenPost: (Long) -> Unit = {},
     onCompose: () -> Unit = {},
     onThemeChanged: (String) -> Unit = {},
+    onChangeMode: (MndAppMode) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -596,11 +605,17 @@ fun StitchFeedScreen(
         Scaffold(
             modifier = modifier.fillMaxSize(),
             containerColor = StitchPalette.Canvas,
+            
             bottomBar = {
                 if (showBottomChrome) {
                     StitchBottomNav(
+                        mode = MndAppMode.Community,
                         selected = tab,
                         onSelect = { t ->
+                            if (t == StitchMainTab.Compose) {
+                                onCompose()
+                                return@StitchBottomNav
+                            }
                             tab = t
                             marketChromeVisible = true
                             messagesChromeVisible = true
@@ -621,6 +636,20 @@ fun StitchFeedScreen(
                         .padding(bottom = inner.calculateBottomPadding()),
             ) {
                 when (tab) {
+                    StitchMainTab.Circle ->
+                        CommunityCircleScreen(
+                            apiBase = apiBase,
+                            user = profileUser,
+                            onAvatarPress = { tab = StitchMainTab.Profile },
+                            onNotifyPress = { tab = StitchMainTab.Messages },
+                            onCompose = onCompose,
+                            onOpenFeed = { tab = StitchMainTab.Feed },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    StitchMainTab.Compose,
+                    StitchMainTab.AdoptHome,
+                    StitchMainTab.RescueHome,
+                    StitchMainTab.Applications -> Unit
                     StitchMainTab.Profile ->
                         when (profileRoute) {
                             ProfileRoute.Main ->
@@ -642,6 +671,7 @@ fun StitchFeedScreen(
                                         gridLoading = profileLoading,
                                         profileBackground = profileBackground,
                                         onLogout = onLogout,
+                                    onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
                                         onOpenPost = onOpenPost,
                                         onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
                                         onOpenPetProfile = { petId -> 
@@ -707,6 +737,17 @@ fun StitchFeedScreen(
                                     onBack = popProfileRoute,
                                     modifier = Modifier.fillMaxSize(),
                                 )
+
+                            ProfileRoute.AppMode ->
+                                ProfileAppModeScreen(
+                                    currentMode = sdk.sessionStore().getAppMode(),
+                                    onSelectMode = { modeEnum ->
+                                        sdk.sessionStore().setAppMode(modeEnum.name)
+                                        onChangeMode(modeEnum)
+                                    },
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
                             ProfileRoute.Settings ->
                                 ProfileSettingsScreen(
                                     apiBase = apiBase,
@@ -721,6 +762,7 @@ fun StitchFeedScreen(
                                     onOpenPrivacy = { navigateToProfileRoute(ProfileRoute.Privacy) },
                                     onOpenUserNotice = { navigateToProfileRoute(ProfileRoute.UserNotice) },
                                     onLogout = onLogout,
+                                    onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
                                     modifier = Modifier.fillMaxSize(),
                                 )
                             ProfileRoute.AccountSecurity, ProfileRoute.LinkedAccounts ->
@@ -944,7 +986,1561 @@ fun StitchFeedScreen(
 }
 
 @Composable
-private fun HomeFeedHeader(
+
+
+fun AdoptionNavGraph(
+    sdk: MeowCircleSdk,
+    user: User,
+    feedReloadSignal: Int = 0,
+    onLogout: () -> Unit,
+    onOpenPost: (Long) -> Unit = {},
+    /*
+
+                                        StitchMainTab.AdoptHome -> {
+                        when (val route = adoptionRoute) {
+                            is AdoptionRoute.Home -> {
+                                StitchAdoptHomeTab(
+                                    sdk = sdk,
+                                    apiBase = apiBase,
+                                    user = profileUser,
+                                    onAvatarPress = { tab = StitchMainTab.Profile },
+                                    onNotifyPress = { tab = StitchMainTab.Messages },
+                                    onPetClick = { pet -> adoptionRoute = AdoptionRoute.Detail(pet.id) },
+                                    modifier = androidx.compose.ui.Modifier.fillMaxSize()
+                                )
+                            }
+                            is AdoptionRoute.Detail -> {
+                                StitchAdoptionDetailScreen(
+                                    sdk = sdk,
+                                    apiBase = apiBase,
+                                    petId = route.petId,
+                                    onBack = { adoptionRoute = AdoptionRoute.Home },
+                                    onApply = { adoptionRoute = AdoptionRoute.Form(it) }
+                                )
+                            }
+                            is AdoptionRoute.Form -> {
+                                StitchAdoptionFormScreen(
+                                    sdk = sdk,
+                                    petId = route.petId,
+                                    onBack = { adoptionRoute = AdoptionRoute.Detail(route.petId) },
+                                    onSubmitSuccess = { adoptionRoute = AdoptionRoute.Home }
+                                )
+                            }
+                        }
+                    }
+                    StitchMainTab.RescueHome -> {
+                        androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) { androidx.compose.material3.Text("救助功能开发中", color = StitchPalette.OnSurfaceVariant) }
+                    }
+                    StitchMainTab.Applications -> {
+                        androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) { androidx.compose.material3.Text("领养申请功能开发中", color = StitchPalette.OnSurfaceVariant) }
+                    }
+
+*/
+    onCompose: () -> Unit = {},
+    onThemeChanged: (String) -> Unit = {},
+    onChangeMode: (MndAppMode) -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    var apiBase by remember { mutableStateOf(sdk.baseUrl) }
+    val scope = rememberCoroutineScope()
+    var profileUser by remember(user.id) { mutableStateOf(user) }
+    var tab by remember { mutableStateOf(StitchMainTab.AdoptHome) }
+    var filter by remember { mutableStateOf("rec") }
+    var q by remember { mutableStateOf("") }
+    var selectedCircle by remember { mutableStateOf<String?>(null) }
+    var messageQuery by remember { mutableStateOf("") }
+    var messageSection by remember { mutableStateOf(MessageSection.Chats) }
+    var profileHint by remember { mutableStateOf<String?>(null) }
+    var profileBackground by remember { mutableStateOf(sdk.sessionStore().getProfileBackground()) }
+    var profileRoute by remember { mutableStateOf(ProfileRoute.Main) }
+    var profileRouteHistory by remember { mutableStateOf(emptyList<ProfileRoute>()) }
+    var messagesChromeVisible by remember { mutableStateOf(true) }
+    var ordersChromeVisible by remember { mutableStateOf(true) }
+
+    val navigateToProfileRoute: (ProfileRoute) -> Unit = { target ->
+        profileRouteHistory = profileRouteHistory + profileRoute
+        profileRoute = target
+    }
+
+    val popProfileRoute: () -> Unit = {
+        if (profileRouteHistory.isNotEmpty()) {
+            profileRoute = profileRouteHistory.last()
+            profileRouteHistory = profileRouteHistory.dropLast(1)
+        } else {
+            profileRoute = ProfileRoute.Main
+        }
+    }
+
+    BackHandler(enabled = tab == StitchMainTab.Profile && profileRoute != ProfileRoute.Main) {
+        popProfileRoute()
+    }
+    var marketChromeVisible by remember { mutableStateOf(true) }
+    var showEditProfile by remember { mutableStateOf(false) }
+    var showThemeDialog by remember { mutableStateOf(false) }
+    var profileSaving by remember { mutableStateOf(false) }
+    var profileSaveErr by remember { mutableStateOf<String?>(null) }
+    var rawItems by remember { mutableStateOf<List<PostFeedItem>?>(null) }
+    var loading by remember { mutableStateOf(false) }
+    var err by remember { mutableStateOf<String?>(null) }
+    var conversations by remember { mutableStateOf<List<Conversation>?>(null) }
+    var convErr by remember { mutableStateOf<String?>(null) }
+    var convLoading by remember { mutableStateOf(false) }
+    var listings by remember { mutableStateOf<List<Listing>?>(null) }
+    var listingsErr by remember { mutableStateOf<List<Listing>?>(null) }
+    var listingsLoading by remember { mutableStateOf(false) }
+    var profilePosts by remember { mutableStateOf<List<PostFeedItem>?>(null) }
+    var profilePets by remember { mutableStateOf<List<Pet>?>(null) }
+    var selectedPetId by remember { mutableStateOf<Long?>(null) }
+    var profileLoading by remember { mutableStateOf(false) }
+    var mockMode by remember { mutableStateOf(false) }
+    var feedRetrySignal by remember { mutableStateOf(0) }
+    var currentGlobalTheme by remember { mutableStateOf(sdk.getTheme()) }
+    var savedPostIds by remember { mutableStateOf<Set<Long>>(emptySet()) }
+
+    val activeTheme = remember(currentGlobalTheme) {
+        when (currentGlobalTheme.lowercase()) {
+            "honey", "sugar" -> MeowTheme.Honey
+            "mint" -> MeowTheme.Mint
+            "night" -> MeowTheme.Night
+            "neutral", "system" -> MeowTheme.Neutral
+            else -> MeowTheme.Honey
+        }
+    }
+
+    fun createMockPosts(): List<PostFeedItem> {
+        val author1 = User(1L, "peachlatte", "桃子和拿铁", "", "两只猫的日常记录员", "2026-05-27T00:00:00Z")
+        val author2 = User(2L, "puff_bakery", "泡芙小店", "", "提供猫罐头和零食", "2026-05-27T00:00:00Z")
+        val author3 = User(3L, "sunday_walk", "周日散步社", "", "组织小型宠物活动", "2026-05-27T00:00:00Z")
+        val author4 = User(4L, "clean_corner", "干净角落", "", "二手猫用品整理中", "2026-05-27T00:00:00Z")
+        val post1 = Post(
+          id = 1L,
+          authorId = 1L,
+          title = "猫猫第一次学会开门，家里从此没有秘密",
+          content = "给门把手加了保护套，顺便记录一下这个聪明小脑袋。它先观察了我们两天，然后第三天就开始自己尝试。",
+          category = "daily_share",
+          tags = listOf("日常", "聪明猫"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T10:00:00Z",
+          lastReplyAt = "2026-06-02T10:30:00Z"
+        )
+        val post2 = Post(
+          id = 2L,
+          authorId = 2L,
+          title = "猫猫新手村：接猫回家第一周需要准备什么？",
+          content = "接猫回家前，猫砂盆、航空箱、幼猫粮和水碗必不可少。最重要的是给主子一个安静的角落适应新环境。",
+          category = "help",
+          tags = listOf("新手", "养猫技巧"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T09:00:00Z",
+          lastReplyAt = "2026-06-02T09:15:00Z"
+        )
+        val post3 = Post(
+          id = 3L,
+          authorId = 3L,
+          title = "周末猫猫摄影散步局，doggie 也可以来当气氛组",
+          content = "小区花园集合，拍照为主，不强社交。胆小猫可以只坐航空箱里观察。",
+          category = "activity",
+          tags = listOf("活动", "摄影"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T08:30:00Z",
+          lastReplyAt = "2026-06-02T08:45:00Z"
+        )
+        val post4 = Post(
+          id = 4L,
+          authorId = 4L,
+          title = "出一个 9 成新的开放式猫砂盆，适合小户型",
+          content = "已彻底清洁消毒，同城可自提，附送未拆封猫砂铲。",
+          category = "trade",
+          tags = listOf("二手", "猫砂盆"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T08:00:00Z",
+          lastReplyAt = "2026-06-02T08:10:00Z"
+        )
+        return listOf(
+            PostFeedItem(post1, author1, 128L, true, null),
+            PostFeedItem(post2, author2, 45L, false, null),
+            PostFeedItem(post3, author3, 68L, false, null),
+            PostFeedItem(post4, author4, 16L, false, null)
+        )
+    }
+
+    fun createMockConversations(): List<Conversation> {
+        val peer1 = User(2L, "puff_bakery", "泡芙小店", "", "提供猫罐头和零食", "2026-05-27T00:00:00Z")
+        val peer2 = User(3L, "xiaoman", "小满", "", "橘猫大联盟盟主", "2026-05-27T00:00:00Z")
+        return listOf(
+            Conversation(peer1, "地址发你啦，今晚可自提。", 2L, 1, "2026-06-02T10:00:00Z"),
+            Conversation(peer2, "谢谢！", 3L, 0, "2026-06-02T09:00:00Z")
+        )
+    }
+
+    fun createMockListings(): List<Listing> =
+        listOf(
+            Listing(
+                id = 1L,
+                sellerId = 2L,
+                type = "product",
+                title = "未拆封猫罐头 6 罐组合",
+                description = "猫猫优先，适合换粮过渡；同城可自提。",
+                priceCents = 6800L,
+                currency = "CNY",
+                createdAt = "2026-06-02T10:00:00Z",
+            ),
+            Listing(
+                id = 2L,
+                sellerId = 5L,
+                type = "service",
+                title = "周末上门喂猫与铲砂",
+                description = "有基础照护记录，可同时帮 doggie 换水。",
+                priceCents = 12000L,
+                currency = "CNY",
+                createdAt = "2026-06-02T10:00:00Z",
+            ),
+            Listing(
+                id = 3L,
+                sellerId = 8L,
+                type = "adopt",
+                title = "三个月橘猫找稳定家庭",
+                description = "已驱虫，性格亲人，需要领养回访。",
+                priceCents = 0L,
+                currency = "CNY",
+                createdAt = "2026-05-31T18:30:00Z",
+            ),
+        )
+
+    fun updatePostInFeeds(
+        postId: Long,
+        transform: (PostFeedItem) -> PostFeedItem,
+    ) {
+        rawItems = rawItems?.map { item -> if (item.post.id == postId) transform(item) else item }
+        profilePosts = profilePosts?.map { item -> if (item.post.id == postId) transform(item) else item }
+    }
+
+    fun toggleFeedLike(item: PostFeedItem) {
+        if (mockMode) {
+            updatePostInFeeds(item.post.id) { current ->
+                val nextLiked = !current.liked
+                val nextCount = (current.likeCount + if (nextLiked) 1L else -1L).coerceAtLeast(0L)
+                current.copy(liked = nextLiked, likeCount = nextCount)
+            }
+            return
+        }
+        scope.launch {
+            sdk.togglePostLike(item.post.id).fold(
+                onSuccess = { result ->
+                    updatePostInFeeds(item.post.id) { current ->
+                        current.copy(liked = result.liked, likeCount = result.likeCount)
+                    }
+                },
+                onFailure = { e ->
+                    android.widget.Toast.makeText(
+                        context,
+                        (e as? ApiException)?.message ?: humanizeClientFailure(e, sdk.baseUrl),
+                        android.widget.Toast.LENGTH_SHORT,
+                    ).show()
+                },
+            )
+        }
+    }
+
+    val effectiveFilter =
+        when (tab) {
+            StitchMainTab.Market -> "new"
+            StitchMainTab.Feed -> filter
+            else -> filter
+        }
+
+    LaunchedEffect(effectiveFilter, tab, feedReloadSignal, mockMode, feedRetrySignal) {
+        if (tab != StitchMainTab.Feed && tab != StitchMainTab.Market) return@LaunchedEffect
+        if (mockMode) {
+            rawItems = createMockPosts()
+            err = null
+            loading = false
+            return@LaunchedEffect
+        }
+        val loadStart = System.currentTimeMillis()
+        loading = true
+        err = null
+        rawItems =
+            sdk.feedPosts(effectiveFilter).fold(
+                onSuccess = { it },
+                onFailure = { e ->
+                    err = feedErrorMessage(e, apiBase)
+                    null
+                },
+            )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
+        }
+        loading = false
+    }
+
+    LaunchedEffect(tab, mockMode) {
+        if (tab != StitchMainTab.Market) return@LaunchedEffect
+        if (mockMode) {
+            listings = createMockListings()
+            listingsErr = null
+            listingsLoading = false
+            return@LaunchedEffect
+        }
+        val loadStart = System.currentTimeMillis()
+        listingsLoading = true
+        listingsErr = null
+        listings =
+            sdk.listings().fold(
+                onSuccess = { it },
+                onFailure = { e ->
+                    listingsErr = null
+                    null
+                },
+            )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
+        }
+        listingsLoading = false
+    }
+
+    LaunchedEffect(tab, feedReloadSignal, mockMode) {
+        if (tab != StitchMainTab.Messages) return@LaunchedEffect
+        if (mockMode) {
+            conversations = createMockConversations()
+            convErr = null
+            convLoading = false
+            return@LaunchedEffect
+        }
+        val loadStart = System.currentTimeMillis()
+        convLoading = true
+        convErr = null
+        conversations =
+            sdk.conversations().fold(
+                onSuccess = { it },
+                onFailure = { e ->
+                    convErr =
+                        (e as? ApiException)?.message
+                            ?: humanizeClientFailure(e, apiBase)
+                    null
+                },
+            )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
+        }
+        convLoading = false
+    }
+
+    LaunchedEffect(tab, profileUser.id, feedReloadSignal, mockMode) {
+        if (tab != StitchMainTab.Profile) return@LaunchedEffect
+        if (mockMode) {
+            profilePosts = createMockPosts().filter { it.author.id == profileUser.id }
+            profileLoading = false
+            return@LaunchedEffect
+        }
+        profileLoading = true
+        val fullUserRes = sdk.userProfile(profileUser.id)
+        if (fullUserRes.isSuccess) {
+            val fullUser = fullUserRes.getOrNull()
+            if (fullUser != null) {
+                profileUser = fullUser
+            }
+        }
+        val petsRes = sdk.getUserPets(profileUser.id)
+        if (petsRes.isSuccess) {
+            profilePets = petsRes.getOrNull()
+        }
+        profilePosts =
+            sdk.feedPosts("new").fold(
+                onSuccess = { items -> items.filter { it.author.id == profileUser.id } },
+                onFailure = { null },
+            )
+        profileLoading = false
+    }
+
+    val filtered =
+        remember(rawItems, q, selectedCircle) {
+            val list = rawItems ?: return@remember emptyList<PostFeedItem>()
+            val s = q.trim().lowercase()
+            val queried =
+                if (s.isEmpty()) {
+                    list
+                } else {
+                    list.filter { item ->
+                        val p = item.post
+                        p.title.lowercase().contains(s) ||
+                            p.content.lowercase().contains(s) ||
+                            p.tags.any { it.lowercase().contains(s) }
+                    }
+                }
+            val circle = selectedCircle
+            if (circle.isNullOrBlank()) return@remember queried
+            queried.filter { item ->
+                val p = item.post
+                p.title.contains(circle) || p.content.contains(circle) || p.tags.any { it.contains(circle) }
+            }
+        }
+
+    MeowStitchTheme(theme = activeTheme) {
+        val showBottomChrome =
+            when (tab) {
+                StitchMainTab.Profile -> profileRoute == ProfileRoute.Main
+                StitchMainTab.Market -> marketChromeVisible
+                StitchMainTab.Messages -> messagesChromeVisible
+                StitchMainTab.Orders -> ordersChromeVisible
+                else -> true
+            }
+        Scaffold(
+            modifier = modifier.fillMaxSize(),
+            containerColor = StitchPalette.Canvas,
+            bottomBar = {
+                if (showBottomChrome) {
+                    StitchBottomNav(
+                        mode = MndAppMode.Adoption,
+                        selected = tab,
+                        onSelect = { t ->
+                            if (t == StitchMainTab.Compose) {
+                                return@StitchBottomNav
+                            }
+                            tab = t
+                            marketChromeVisible = true
+                            messagesChromeVisible = true
+                            ordersChromeVisible = true
+                            if (t != StitchMainTab.Profile) {
+                                profileRoute = ProfileRoute.Main
+                                profileRouteHistory = emptyList()
+                            }
+                        },
+                    )
+                }
+            },
+        ) { inner ->
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(bottom = inner.calculateBottomPadding()),
+            ) {
+                when (tab) {
+                    StitchMainTab.Circle,
+                    StitchMainTab.Compose -> Unit
+                    StitchMainTab.AdoptHome ->
+                        StitchAdoptHomeTab(
+                            sdk = sdk,
+                            apiBase = apiBase,
+                            user = profileUser,
+                            onAvatarPress = { tab = StitchMainTab.Profile },
+                            onNotifyPress = { tab = StitchMainTab.Messages },
+                            onPetClick = {},
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    StitchMainTab.RescueHome ->
+                        StitchAdoptionRescueTab(
+                            sdk = sdk,
+                            apiBase = apiBase,
+                            user = profileUser,
+                            onAvatarPress = { tab = StitchMainTab.Profile },
+                            onNotifyPress = { tab = StitchMainTab.Messages },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    StitchMainTab.Applications ->
+                        StitchAdoptionApplicationsTab(
+                            sdk = sdk,
+                            apiBase = apiBase,
+                            user = profileUser,
+                            onAvatarPress = { tab = StitchMainTab.Profile },
+                            onNotifyPress = { tab = StitchMainTab.Messages },
+                            onBrowsePets = { tab = StitchMainTab.AdoptHome },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    StitchMainTab.Profile ->
+                        when (profileRoute) {
+                            ProfileRoute.Main ->
+                                Column(Modifier.fillMaxSize()) {
+                                    StitchTopBar(
+                                        apiBase = apiBase,
+                                        user = profileUser,
+                                        title = "M&D",
+                                        leading = StitchTopBarLeading.Paw,
+                                        trailing = StitchTopBarTrailing.Settings,
+                                        onAvatarPress = { /* already on profile */ },
+                                        onNotifyPress = { navigateToProfileRoute(ProfileRoute.Settings) },
+                                    )
+                                    ProfilePanel(
+                                        apiBase = apiBase,
+                                        user = profileUser,
+                                        pets = profilePets,
+                                        gridPosts = profilePosts,
+                                        gridLoading = profileLoading,
+                                        profileBackground = profileBackground,
+                                        onLogout = onLogout,
+                                    onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
+                                        onOpenPost = onOpenPost,
+                                        onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
+                                        onOpenPetProfile = { petId -> 
+                                            selectedPetId = petId
+                                            navigateToProfileRoute(ProfileRoute.PetDetail) 
+                                        },
+                                        onOpenConnections = { navigateToProfileRoute(ProfileRoute.Connections) },
+                                        onSettings = { navigateToProfileRoute(ProfileRoute.Settings) },
+                                        onProfileBackgroundChanged = {
+                                            sdk.sessionStore().setProfileBackground(it)
+                                            profileBackground = sdk.sessionStore().getProfileBackground()
+                                        },
+                                        onCompose = onCompose,
+                                        hint = profileHint,
+                                        modifier = Modifier.fillMaxWidth().weight(1f),
+                                    )
+                                }
+                            ProfileRoute.EditProfile ->
+                                ProfileEditScreen(
+                                    apiBase = apiBase,
+                                    user = profileUser,
+                                    saving = profileSaving,
+                                    error = profileSaveErr,
+                                    onBack = popProfileRoute,
+                                    onSave = { nickname, bio, avatarUrl ->
+                                        profileSaveErr = null
+                                        scope.launch {
+                                            profileSaving = true
+                                            sdk
+                                                .updateMe(
+                                                    nickname = nickname,
+                                                    bio = bio,
+                                                    avatarUrl = avatarUrl,
+                                                ).fold(
+                                                    onSuccess = { updated ->
+                                                        profileUser = updated
+                                                        profileHint = context.getString(R.string.profile_updated)
+                                                        popProfileRoute()
+                                                    },
+                                                    onFailure = { e ->
+                                                        profileSaveErr =
+                                                            (e as? ApiException)?.message
+                                                                ?: humanizeClientFailure(e, apiBase)
+                                                    },
+                                                )
+                                            profileSaving = false
+                                        }
+                                    },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.PetDetail ->
+                                ProfilePetDetailScreen(
+                                    apiBase = apiBase,
+                                    user = profileUser,
+                                    pet = profilePets?.find { it.id == selectedPetId },
+                                    onBack = popProfileRoute,
+                                    onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Connections ->
+                                ProfileConnectionsScreen(
+                                    apiBase = apiBase,
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+
+                            ProfileRoute.AppMode ->
+                                ProfileAppModeScreen(
+                                    currentMode = sdk.sessionStore().getAppMode(),
+                                    onSelectMode = { modeEnum ->
+                                        sdk.sessionStore().setAppMode(modeEnum.name)
+                                        onChangeMode(modeEnum)
+                                    },
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Settings ->
+                                ProfileSettingsScreen(
+                                    apiBase = apiBase,
+                                    user = profileUser,
+                                    onBack = popProfileRoute,
+                                    onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
+                                    onOpenPetProfile = { navigateToProfileRoute(ProfileRoute.PetDetail) },
+                                    onOpenAccountSecurity = { navigateToProfileRoute(ProfileRoute.AccountSecurity) },
+                                    onOpenLinkedAccounts = { navigateToProfileRoute(ProfileRoute.LinkedAccounts) },
+                                    onOpenAppearance = { navigateToProfileRoute(ProfileRoute.Appearance) },
+                                    onOpenNotifications = { navigateToProfileRoute(ProfileRoute.Notifications) },
+                                    onOpenPrivacy = { navigateToProfileRoute(ProfileRoute.Privacy) },
+                                    onOpenUserNotice = { navigateToProfileRoute(ProfileRoute.UserNotice) },
+                                    onLogout = onLogout,
+                                    onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.AccountSecurity, ProfileRoute.LinkedAccounts ->
+                                ProfileAccountSecurityScreen(
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Appearance ->
+                                ProfileAppearanceScreen(
+                                    currentTheme = currentGlobalTheme,
+                                    onBack = popProfileRoute,
+                                    onSelectTheme = {
+                                        onThemeChanged(it)
+                                        currentGlobalTheme = it
+                                    },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Notifications ->
+                                ProfileNotificationsScreen(
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Privacy ->
+                                ProfilePrivacyPolicyScreen(
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.UserNotice ->
+                                ProfileUserNoticeScreen(
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                        }
+                    StitchMainTab.Messages ->
+                        StitchMessagesScreen(
+                            sdk = sdk,
+                            currentUser = profileUser,
+                            apiBase = apiBase,
+                            loading = convLoading,
+                            err = convErr,
+                            items = conversations,
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
+                            onOpenMarket = { tab = StitchMainTab.Market },
+                            onOpenOrders = { tab = StitchMainTab.Orders },
+                            onChromeVisibleChange = { messagesChromeVisible = it },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    StitchMainTab.Orders -> {
+                        StitchOrdersScreen(
+                            sdk = sdk,
+                            apiBase = apiBase,
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
+                            onOpenMarket = { tab = StitchMainTab.Market },
+                            onOpenMessages = { tab = StitchMainTab.Messages },
+                            onChromeVisibleChange = { ordersChromeVisible = it },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                    StitchMainTab.Market -> {
+                        StitchMarketScreen(
+                            sdk = sdk,
+                            user = profileUser,
+                            apiBase = apiBase,
+                            listings = listings,
+                            loading = listingsLoading,
+                            err = listingsErr?.getOrNull(0)?.toString(),
+                            query = q,
+                            onQueryChange = { q = it },
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
+                            onAvatarPress = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Profile
+                            },
+                            onNotifyPress = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Messages
+                            },
+                            onOpenOrders = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Orders
+                            },
+                            onOpenMessages = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Messages
+                            },
+                            onChromeVisibleChange = { marketChromeVisible = it },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                    StitchMainTab.Feed -> {
+                        Column(Modifier.fillMaxSize()) {
+                            StitchTopBar(
+                                apiBase = apiBase,
+                                user = profileUser,
+                                title = "M&D",
+                                leading = StitchTopBarLeading.Menu,
+                                trailing = StitchTopBarTrailing.Bell,
+                                onAvatarPress = { tab = StitchMainTab.Profile },
+                                onNotifyPress = {
+                                    tab = StitchMainTab.Messages
+                                    messageQuery = ""
+                                    messageSection = MessageSection.Notifications
+                                },
+                            )
+                            Column(
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = FEED_PAGE_PADDING),
+                            ) {
+                                HomeFeedHeader(
+                                    query = q,
+                                    onQueryChange = { q = it },
+                                    selectedFilter = filter,
+                                    onFilterChange = { filter = it },
+                                    items = rawItems.orEmpty(),
+                                    mockMode = mockMode,
+                                    onEnableMock = { mockMode = true },
+                                    onCompose = onCompose,
+                                )
+                                Spacer(Modifier.height(12.dp))
+                            }
+                            Box(Modifier.weight(1f)) {
+                                when {
+                                    loading && rawItems == null ->
+                                        FeedLoadingPane(Modifier.fillMaxSize())
+                                    err != null && rawItems == null ->
+                                        FeedFailurePane(
+                                            message = err!!,
+                                            currentUrl = apiBase,
+                                            defaultUrl = BuildConfig.API_BASE_URL,
+                                            onUrlChanged = { newUrl ->
+                                                sdk.sessionStore().setApiUrl(newUrl)
+                                                apiBase = sdk.baseUrl
+                                                mockMode = false
+                                                feedRetrySignal += 1
+                                            },
+                                            onRetry = {
+                                                mockMode = false
+                                                feedRetrySignal += 1
+                                            },
+                                            onDemo = { mockMode = true },
+                                            modifier = Modifier.fillMaxSize(),
+                                        )
+                                    filtered.isEmpty() ->
+                                        FeedEmptyStatePane(
+                                            apiBase = apiBase,
+                                            onFindPets = {
+                                                tab = StitchMainTab.Profile
+                                                profileRouteHistory = listOf(ProfileRoute.Main)
+                                                profileRoute = ProfileRoute.Connections
+                                            },
+                                            onCompose = onCompose,
+                                            modifier = Modifier.fillMaxSize(),
+                                        )
+                                    else ->
+                                        LazyColumn(
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentPadding = PaddingValues(start = FEED_PAGE_PADDING, end = FEED_PAGE_PADDING, top = 4.dp, bottom = 16.dp),
+                                            verticalArrangement = Arrangement.spacedBy(14.dp),
+                                        ) {
+                                            items(
+                                                items = filtered,
+                                                key = { it.post.id },
+                                            ) { item ->
+                                                FeedTileCard(
+                                                    apiBase = apiBase,
+                                                    item = item,
+                                                    onClick = { onOpenPost(item.post.id) },
+                                                    saved = savedPostIds.contains(item.post.id),
+                                                    onLike = { toggleFeedLike(item) },
+                                                    onComment = { onOpenPost(item.post.id) },
+                                                    onShare = {
+                                                        android.widget.Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.common_share_ready),
+                                                            android.widget.Toast.LENGTH_SHORT,
+                                                        ).show()
+                                                    },
+                                                    onSave = {
+                                                        savedPostIds =
+                                                            if (savedPostIds.contains(item.post.id)) {
+                                                                savedPostIds - item.post.id
+                                                            } else {
+                                                                savedPostIds + item.post.id
+                                                            }
+                                                        android.widget.Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.common_saved),
+                                                            android.widget.Toast.LENGTH_SHORT,
+                                                        ).show()
+                                                    },
+                                                )
+                                            }
+                                        }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (showEditProfile) {
+            // Replaced with internal Route navigation
+        }
+        if (showThemeDialog) {
+            ThemeSelectionDialog(
+                currentTheme = sdk.getTheme(),
+                onDismiss = { showThemeDialog = false },
+                onSelect = {
+                    onThemeChanged(it)
+                    currentGlobalTheme = it
+                    showThemeDialog = false
+                }
+            )
+        }
+    }
+}
+
+@Composable
+
+
+fun TradeNavGraph(
+    sdk: MeowCircleSdk,
+    user: User,
+    feedReloadSignal: Int = 0,
+    onLogout: () -> Unit,
+    onOpenPost: (Long) -> Unit = {},
+    onCompose: () -> Unit = {},
+    onThemeChanged: (String) -> Unit = {},
+    onChangeMode: (MndAppMode) -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    var apiBase by remember { mutableStateOf(sdk.baseUrl) }
+    val scope = rememberCoroutineScope()
+    var profileUser by remember(user.id) { mutableStateOf(user) }
+    var tab by remember { mutableStateOf(StitchMainTab.Market) }
+    var marketPublishRequest by remember { mutableStateOf(0) }
+    var filter by remember { mutableStateOf("rec") }
+    var q by remember { mutableStateOf("") }
+    var selectedCircle by remember { mutableStateOf<String?>(null) }
+    var messageQuery by remember { mutableStateOf("") }
+    var messageSection by remember { mutableStateOf(MessageSection.Chats) }
+    var profileHint by remember { mutableStateOf<String?>(null) }
+    var profileBackground by remember { mutableStateOf(sdk.sessionStore().getProfileBackground()) }
+    var profileRoute by remember { mutableStateOf(ProfileRoute.Main) }
+    var profileRouteHistory by remember { mutableStateOf(emptyList<ProfileRoute>()) }
+    var messagesChromeVisible by remember { mutableStateOf(true) }
+    var ordersChromeVisible by remember { mutableStateOf(true) }
+
+    val navigateToProfileRoute: (ProfileRoute) -> Unit = { target ->
+        profileRouteHistory = profileRouteHistory + profileRoute
+        profileRoute = target
+    }
+
+    val popProfileRoute: () -> Unit = {
+        if (profileRouteHistory.isNotEmpty()) {
+            profileRoute = profileRouteHistory.last()
+            profileRouteHistory = profileRouteHistory.dropLast(1)
+        } else {
+            profileRoute = ProfileRoute.Main
+        }
+    }
+
+    BackHandler(enabled = tab == StitchMainTab.Profile && profileRoute != ProfileRoute.Main) {
+        popProfileRoute()
+    }
+    var marketChromeVisible by remember { mutableStateOf(true) }
+    var showEditProfile by remember { mutableStateOf(false) }
+    var showThemeDialog by remember { mutableStateOf(false) }
+    var profileSaving by remember { mutableStateOf(false) }
+    var profileSaveErr by remember { mutableStateOf<String?>(null) }
+    var rawItems by remember { mutableStateOf<List<PostFeedItem>?>(null) }
+    var loading by remember { mutableStateOf(false) }
+    var err by remember { mutableStateOf<String?>(null) }
+    var conversations by remember { mutableStateOf<List<Conversation>?>(null) }
+    var convErr by remember { mutableStateOf<String?>(null) }
+    var convLoading by remember { mutableStateOf(false) }
+    var listings by remember { mutableStateOf<List<Listing>?>(null) }
+    var listingsErr by remember { mutableStateOf<List<Listing>?>(null) }
+    var listingsLoading by remember { mutableStateOf(false) }
+    var profilePosts by remember { mutableStateOf<List<PostFeedItem>?>(null) }
+    var profilePets by remember { mutableStateOf<List<Pet>?>(null) }
+    var selectedPetId by remember { mutableStateOf<Long?>(null) }
+    var profileLoading by remember { mutableStateOf(false) }
+    var mockMode by remember { mutableStateOf(false) }
+    var feedRetrySignal by remember { mutableStateOf(0) }
+    var currentGlobalTheme by remember { mutableStateOf(sdk.getTheme()) }
+    var savedPostIds by remember { mutableStateOf<Set<Long>>(emptySet()) }
+
+    val activeTheme = remember(currentGlobalTheme) {
+        when (currentGlobalTheme.lowercase()) {
+            "honey", "sugar" -> MeowTheme.Honey
+            "mint" -> MeowTheme.Mint
+            "night" -> MeowTheme.Night
+            "neutral", "system" -> MeowTheme.Neutral
+            else -> MeowTheme.Honey
+        }
+    }
+
+    fun createMockPosts(): List<PostFeedItem> {
+        val author1 = User(1L, "peachlatte", "桃子和拿铁", "", "两只猫的日常记录员", "2026-05-27T00:00:00Z")
+        val author2 = User(2L, "puff_bakery", "泡芙小店", "", "提供猫罐头和零食", "2026-05-27T00:00:00Z")
+        val author3 = User(3L, "sunday_walk", "周日散步社", "", "组织小型宠物活动", "2026-05-27T00:00:00Z")
+        val author4 = User(4L, "clean_corner", "干净角落", "", "二手猫用品整理中", "2026-05-27T00:00:00Z")
+        val post1 = Post(
+          id = 1L,
+          authorId = 1L,
+          title = "猫猫第一次学会开门，家里从此没有秘密",
+          content = "给门把手加了保护套，顺便记录一下这个聪明小脑袋。它先观察了我们两天，然后第三天就开始自己尝试。",
+          category = "daily_share",
+          tags = listOf("日常", "聪明猫"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T10:00:00Z",
+          lastReplyAt = "2026-06-02T10:30:00Z"
+        )
+        val post2 = Post(
+          id = 2L,
+          authorId = 2L,
+          title = "猫猫新手村：接猫回家第一周需要准备什么？",
+          content = "接猫回家前，猫砂盆、航空箱、幼猫粮和水碗必不可少。最重要的是给主子一个安静的角落适应新环境。",
+          category = "help",
+          tags = listOf("新手", "养猫技巧"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T09:00:00Z",
+          lastReplyAt = "2026-06-02T09:15:00Z"
+        )
+        val post3 = Post(
+          id = 3L,
+          authorId = 3L,
+          title = "周末猫猫摄影散步局，doggie 也可以来当气氛组",
+          content = "小区花园集合，拍照为主，不强社交。胆小猫可以只坐航空箱里观察。",
+          category = "activity",
+          tags = listOf("活动", "摄影"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T08:30:00Z",
+          lastReplyAt = "2026-06-02T08:45:00Z"
+        )
+        val post4 = Post(
+          id = 4L,
+          authorId = 4L,
+          title = "出一个 9 成新的开放式猫砂盆，适合小户型",
+          content = "已彻底清洁消毒，同城可自提，附送未拆封猫砂铲。",
+          category = "trade",
+          tags = listOf("二手", "猫砂盆"),
+          mediaIds = emptyList(),
+          createdAt = "2026-06-02T08:00:00Z",
+          lastReplyAt = "2026-06-02T08:10:00Z"
+        )
+        return listOf(
+            PostFeedItem(post1, author1, 128L, true, null),
+            PostFeedItem(post2, author2, 45L, false, null),
+            PostFeedItem(post3, author3, 68L, false, null),
+            PostFeedItem(post4, author4, 16L, false, null)
+        )
+    }
+
+    fun createMockConversations(): List<Conversation> {
+        val peer1 = User(2L, "puff_bakery", "泡芙小店", "", "提供猫罐头和零食", "2026-05-27T00:00:00Z")
+        val peer2 = User(3L, "xiaoman", "小满", "", "橘猫大联盟盟主", "2026-05-27T00:00:00Z")
+        return listOf(
+            Conversation(peer1, "地址发你啦，今晚可自提。", 2L, 1, "2026-06-02T10:00:00Z"),
+            Conversation(peer2, "谢谢！", 3L, 0, "2026-06-02T09:00:00Z")
+        )
+    }
+
+    fun createMockListings(): List<Listing> =
+        listOf(
+            Listing(
+                id = 1L,
+                sellerId = 2L,
+                type = "product",
+                title = "未拆封猫罐头 6 罐组合",
+                description = "猫猫优先，适合换粮过渡；同城可自提。",
+                priceCents = 6800L,
+                currency = "CNY",
+                createdAt = "2026-06-02T10:00:00Z",
+            ),
+            Listing(
+                id = 2L,
+                sellerId = 5L,
+                type = "service",
+                title = "周末上门喂猫与铲砂",
+                description = "有基础照护记录，可同时帮 doggie 换水。",
+                priceCents = 12000L,
+                currency = "CNY",
+                createdAt = "2026-06-02T10:00:00Z",
+            ),
+            Listing(
+                id = 3L,
+                sellerId = 8L,
+                type = "adopt",
+                title = "三个月橘猫找稳定家庭",
+                description = "已驱虫，性格亲人，需要领养回访。",
+                priceCents = 0L,
+                currency = "CNY",
+                createdAt = "2026-05-31T18:30:00Z",
+            ),
+        )
+
+    fun updatePostInFeeds(
+        postId: Long,
+        transform: (PostFeedItem) -> PostFeedItem,
+    ) {
+        rawItems = rawItems?.map { item -> if (item.post.id == postId) transform(item) else item }
+        profilePosts = profilePosts?.map { item -> if (item.post.id == postId) transform(item) else item }
+    }
+
+    fun toggleFeedLike(item: PostFeedItem) {
+        if (mockMode) {
+            updatePostInFeeds(item.post.id) { current ->
+                val nextLiked = !current.liked
+                val nextCount = (current.likeCount + if (nextLiked) 1L else -1L).coerceAtLeast(0L)
+                current.copy(liked = nextLiked, likeCount = nextCount)
+            }
+            return
+        }
+        scope.launch {
+            sdk.togglePostLike(item.post.id).fold(
+                onSuccess = { result ->
+                    updatePostInFeeds(item.post.id) { current ->
+                        current.copy(liked = result.liked, likeCount = result.likeCount)
+                    }
+                },
+                onFailure = { e ->
+                    android.widget.Toast.makeText(
+                        context,
+                        (e as? ApiException)?.message ?: humanizeClientFailure(e, sdk.baseUrl),
+                        android.widget.Toast.LENGTH_SHORT,
+                    ).show()
+                },
+            )
+        }
+    }
+
+    val effectiveFilter =
+        when (tab) {
+            StitchMainTab.Market -> "new"
+            StitchMainTab.Feed -> filter
+            else -> filter
+        }
+
+    LaunchedEffect(effectiveFilter, tab, feedReloadSignal, mockMode, feedRetrySignal) {
+        if (tab != StitchMainTab.Feed && tab != StitchMainTab.Market) return@LaunchedEffect
+        if (mockMode) {
+            rawItems = createMockPosts()
+            err = null
+            loading = false
+            return@LaunchedEffect
+        }
+        val loadStart = System.currentTimeMillis()
+        loading = true
+        err = null
+        rawItems =
+            sdk.feedPosts(effectiveFilter).fold(
+                onSuccess = { it },
+                onFailure = { e ->
+                    err = feedErrorMessage(e, apiBase)
+                    null
+                },
+            )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
+        }
+        loading = false
+    }
+
+    LaunchedEffect(tab, mockMode) {
+        if (tab != StitchMainTab.Market) return@LaunchedEffect
+        if (mockMode) {
+            listings = createMockListings()
+            listingsErr = null
+            listingsLoading = false
+            return@LaunchedEffect
+        }
+        val loadStart = System.currentTimeMillis()
+        listingsLoading = true
+        listingsErr = null
+        listings =
+            sdk.listings().fold(
+                onSuccess = { it },
+                onFailure = { e ->
+                    listingsErr = null
+                    null
+                },
+            )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
+        }
+        listingsLoading = false
+    }
+
+    LaunchedEffect(tab, feedReloadSignal, mockMode) {
+        if (tab != StitchMainTab.Messages) return@LaunchedEffect
+        if (mockMode) {
+            conversations = createMockConversations()
+            convErr = null
+            convLoading = false
+            return@LaunchedEffect
+        }
+        val loadStart = System.currentTimeMillis()
+        convLoading = true
+        convErr = null
+        conversations =
+            sdk.conversations().fold(
+                onSuccess = { it },
+                onFailure = { e ->
+                    convErr =
+                        (e as? ApiException)?.message
+                            ?: humanizeClientFailure(e, apiBase)
+                    null
+                },
+            )
+        val elapsed = System.currentTimeMillis() - loadStart
+        if (elapsed < 500L) {
+            kotlinx.coroutines.delay(500L - elapsed)
+        }
+        convLoading = false
+    }
+
+    LaunchedEffect(tab, profileUser.id, feedReloadSignal, mockMode) {
+        if (tab != StitchMainTab.Profile) return@LaunchedEffect
+        if (mockMode) {
+            profilePosts = createMockPosts().filter { it.author.id == profileUser.id }
+            profileLoading = false
+            return@LaunchedEffect
+        }
+        profileLoading = true
+        val fullUserRes = sdk.userProfile(profileUser.id)
+        if (fullUserRes.isSuccess) {
+            val fullUser = fullUserRes.getOrNull()
+            if (fullUser != null) {
+                profileUser = fullUser
+            }
+        }
+        val petsRes = sdk.getUserPets(profileUser.id)
+        if (petsRes.isSuccess) {
+            profilePets = petsRes.getOrNull()
+        }
+        profilePosts =
+            sdk.feedPosts("new").fold(
+                onSuccess = { items -> items.filter { it.author.id == profileUser.id } },
+                onFailure = { null },
+            )
+        profileLoading = false
+    }
+
+    val filtered =
+        remember(rawItems, q, selectedCircle) {
+            val list = rawItems ?: return@remember emptyList<PostFeedItem>()
+            val s = q.trim().lowercase()
+            val queried =
+                if (s.isEmpty()) {
+                    list
+                } else {
+                    list.filter { item ->
+                        val p = item.post
+                        p.title.lowercase().contains(s) ||
+                            p.content.lowercase().contains(s) ||
+                            p.tags.any { it.lowercase().contains(s) }
+                    }
+                }
+            val circle = selectedCircle
+            if (circle.isNullOrBlank()) return@remember queried
+            queried.filter { item ->
+                val p = item.post
+                p.title.contains(circle) || p.content.contains(circle) || p.tags.any { it.contains(circle) }
+            }
+        }
+
+    MeowStitchTheme(theme = activeTheme) {
+        val showBottomChrome =
+            when (tab) {
+                StitchMainTab.Profile -> profileRoute == ProfileRoute.Main
+                StitchMainTab.Market -> marketChromeVisible
+                StitchMainTab.Messages -> messagesChromeVisible
+                StitchMainTab.Orders -> ordersChromeVisible
+                else -> true
+            }
+        Scaffold(
+            modifier = modifier.fillMaxSize(),
+            containerColor = StitchPalette.Canvas,
+            
+            bottomBar = {
+                if (showBottomChrome) {
+                    StitchBottomNav(
+                        mode = MndAppMode.Trade,
+                        selected = tab,
+                        onSelect = { t ->
+                            if (t == StitchMainTab.Compose) {
+                                tab = StitchMainTab.Market
+                                marketPublishRequest += 1
+                                return@StitchBottomNav
+                            }
+                            tab = t
+                            marketChromeVisible = true
+                            messagesChromeVisible = true
+                            ordersChromeVisible = true
+                            if (t != StitchMainTab.Profile) {
+                                profileRoute = ProfileRoute.Main
+                                profileRouteHistory = emptyList()
+                            }
+                        },
+                    )
+                }
+            },
+        ) { inner ->
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(bottom = inner.calculateBottomPadding()),
+            ) {
+                when (tab) {
+                    StitchMainTab.Circle,
+                    StitchMainTab.Compose,
+                    StitchMainTab.AdoptHome,
+                    StitchMainTab.RescueHome,
+                    StitchMainTab.Applications -> Unit
+                    StitchMainTab.Profile ->
+                        when (profileRoute) {
+                            ProfileRoute.Main ->
+                                Column(Modifier.fillMaxSize()) {
+                                    StitchTopBar(
+                                        apiBase = apiBase,
+                                        user = profileUser,
+                                        title = "M&D",
+                                        leading = StitchTopBarLeading.Paw,
+                                        trailing = StitchTopBarTrailing.Settings,
+                                        onAvatarPress = { /* already on profile */ },
+                                        onNotifyPress = { navigateToProfileRoute(ProfileRoute.Settings) },
+                                    )
+                                    ProfilePanel(
+                                        apiBase = apiBase,
+                                        user = profileUser,
+                                        pets = profilePets,
+                                        gridPosts = profilePosts,
+                                        gridLoading = profileLoading,
+                                        profileBackground = profileBackground,
+                                        onLogout = onLogout,
+                                    onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
+                                        onOpenPost = onOpenPost,
+                                        onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
+                                        onOpenPetProfile = { petId -> 
+                                            selectedPetId = petId
+                                            navigateToProfileRoute(ProfileRoute.PetDetail) 
+                                        },
+                                        onOpenConnections = { navigateToProfileRoute(ProfileRoute.Connections) },
+                                        onSettings = { navigateToProfileRoute(ProfileRoute.Settings) },
+                                        onProfileBackgroundChanged = {
+                                            sdk.sessionStore().setProfileBackground(it)
+                                            profileBackground = sdk.sessionStore().getProfileBackground()
+                                        },
+                                        onCompose = onCompose,
+                                        hint = profileHint,
+                                        modifier = Modifier.fillMaxWidth().weight(1f),
+                                    )
+                                }
+                            ProfileRoute.EditProfile ->
+                                ProfileEditScreen(
+                                    apiBase = apiBase,
+                                    user = profileUser,
+                                    saving = profileSaving,
+                                    error = profileSaveErr,
+                                    onBack = popProfileRoute,
+                                    onSave = { nickname, bio, avatarUrl ->
+                                        profileSaveErr = null
+                                        scope.launch {
+                                            profileSaving = true
+                                            sdk
+                                                .updateMe(
+                                                    nickname = nickname,
+                                                    bio = bio,
+                                                    avatarUrl = avatarUrl,
+                                                ).fold(
+                                                    onSuccess = { updated ->
+                                                        profileUser = updated
+                                                        profileHint = context.getString(R.string.profile_updated)
+                                                        popProfileRoute()
+                                                    },
+                                                    onFailure = { e ->
+                                                        profileSaveErr =
+                                                            (e as? ApiException)?.message
+                                                                ?: humanizeClientFailure(e, apiBase)
+                                                    },
+                                                )
+                                            profileSaving = false
+                                        }
+                                    },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.PetDetail ->
+                                ProfilePetDetailScreen(
+                                    apiBase = apiBase,
+                                    user = profileUser,
+                                    pet = profilePets?.find { it.id == selectedPetId },
+                                    onBack = popProfileRoute,
+                                    onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Connections ->
+                                ProfileConnectionsScreen(
+                                    apiBase = apiBase,
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+
+                            ProfileRoute.AppMode ->
+                                ProfileAppModeScreen(
+                                    currentMode = sdk.sessionStore().getAppMode(),
+                                    onSelectMode = { modeEnum ->
+                                        sdk.sessionStore().setAppMode(modeEnum.name)
+                                        onChangeMode(modeEnum)
+                                    },
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Settings ->
+                                ProfileSettingsScreen(
+                                    apiBase = apiBase,
+                                    user = profileUser,
+                                    onBack = popProfileRoute,
+                                    onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
+                                    onOpenPetProfile = { navigateToProfileRoute(ProfileRoute.PetDetail) },
+                                    onOpenAccountSecurity = { navigateToProfileRoute(ProfileRoute.AccountSecurity) },
+                                    onOpenLinkedAccounts = { navigateToProfileRoute(ProfileRoute.LinkedAccounts) },
+                                    onOpenAppearance = { navigateToProfileRoute(ProfileRoute.Appearance) },
+                                    onOpenNotifications = { navigateToProfileRoute(ProfileRoute.Notifications) },
+                                    onOpenPrivacy = { navigateToProfileRoute(ProfileRoute.Privacy) },
+                                    onOpenUserNotice = { navigateToProfileRoute(ProfileRoute.UserNotice) },
+                                    onLogout = onLogout,
+                                    onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.AccountSecurity, ProfileRoute.LinkedAccounts ->
+                                ProfileAccountSecurityScreen(
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Appearance ->
+                                ProfileAppearanceScreen(
+                                    currentTheme = currentGlobalTheme,
+                                    onBack = popProfileRoute,
+                                    onSelectTheme = {
+                                        onThemeChanged(it)
+                                        currentGlobalTheme = it
+                                    },
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Notifications ->
+                                ProfileNotificationsScreen(
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.Privacy ->
+                                ProfilePrivacyPolicyScreen(
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            ProfileRoute.UserNotice ->
+                                ProfileUserNoticeScreen(
+                                    onBack = popProfileRoute,
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                        }
+                    StitchMainTab.Messages ->
+                        StitchMessagesScreen(
+                            sdk = sdk,
+                            currentUser = profileUser,
+                            apiBase = apiBase,
+                            loading = convLoading,
+                            err = convErr,
+                            items = conversations,
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
+                            onOpenMarket = { tab = StitchMainTab.Market },
+                            onOpenOrders = { tab = StitchMainTab.Orders },
+                            onChromeVisibleChange = { messagesChromeVisible = it },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    StitchMainTab.Orders -> {
+                        StitchOrdersScreen(
+                            sdk = sdk,
+                            apiBase = apiBase,
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
+                            onOpenMarket = { tab = StitchMainTab.Market },
+                            onOpenMessages = { tab = StitchMainTab.Messages },
+                            onChromeVisibleChange = { ordersChromeVisible = it },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                    StitchMainTab.Market -> {
+                        StitchMarketScreen(
+                            sdk = sdk,
+                            user = profileUser,
+                            apiBase = apiBase,
+                            listings = listings,
+                            loading = listingsLoading,
+                            err = listingsErr?.getOrNull(0)?.toString(),
+                            query = q,
+                            onQueryChange = { q = it },
+                            mockMode = mockMode,
+                            onEnableMock = { mockMode = true },
+                            onAvatarPress = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Profile
+                            },
+                            onNotifyPress = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Messages
+                            },
+                            onOpenOrders = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Orders
+                            },
+                            onOpenMessages = {
+                                marketChromeVisible = true
+                                tab = StitchMainTab.Messages
+                            },
+                            publishRequest = marketPublishRequest,
+                            onListingPublished = {
+                                if (mockMode) {
+                                    return@StitchMarketScreen
+                                }
+                                scope.launch {
+                                    listingsLoading = true
+                                    listingsErr = null
+                                    listings = sdk.listings().getOrNull()
+                                    listingsLoading = false
+                                }
+                            },
+                            onChromeVisibleChange = { marketChromeVisible = it },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                    StitchMainTab.Feed -> {
+                        Column(Modifier.fillMaxSize()) {
+                            StitchTopBar(
+                                apiBase = apiBase,
+                                user = profileUser,
+                                title = "M&D",
+                                leading = StitchTopBarLeading.Menu,
+                                trailing = StitchTopBarTrailing.Bell,
+                                onAvatarPress = { tab = StitchMainTab.Profile },
+                                onNotifyPress = {
+                                    tab = StitchMainTab.Messages
+                                    messageQuery = ""
+                                    messageSection = MessageSection.Notifications
+                                },
+                            )
+                            Column(
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = FEED_PAGE_PADDING),
+                            ) {
+                                HomeFeedHeader(
+                                    query = q,
+                                    onQueryChange = { q = it },
+                                    selectedFilter = filter,
+                                    onFilterChange = { filter = it },
+                                    items = rawItems.orEmpty(),
+                                    mockMode = mockMode,
+                                    onEnableMock = { mockMode = true },
+                                    onCompose = onCompose,
+                                )
+                                Spacer(Modifier.height(12.dp))
+                            }
+                            Box(Modifier.weight(1f)) {
+                                when {
+                                    loading && rawItems == null ->
+                                        FeedLoadingPane(Modifier.fillMaxSize())
+                                    err != null && rawItems == null ->
+                                        FeedFailurePane(
+                                            message = err!!,
+                                            currentUrl = apiBase,
+                                            defaultUrl = BuildConfig.API_BASE_URL,
+                                            onUrlChanged = { newUrl ->
+                                                sdk.sessionStore().setApiUrl(newUrl)
+                                                apiBase = sdk.baseUrl
+                                                mockMode = false
+                                                feedRetrySignal += 1
+                                            },
+                                            onRetry = {
+                                                mockMode = false
+                                                feedRetrySignal += 1
+                                            },
+                                            onDemo = { mockMode = true },
+                                            modifier = Modifier.fillMaxSize(),
+                                        )
+                                    filtered.isEmpty() ->
+                                        FeedEmptyStatePane(
+                                            apiBase = apiBase,
+                                            onFindPets = {
+                                                tab = StitchMainTab.Profile
+                                                profileRouteHistory = listOf(ProfileRoute.Main)
+                                                profileRoute = ProfileRoute.Connections
+                                            },
+                                            onCompose = onCompose,
+                                            modifier = Modifier.fillMaxSize(),
+                                        )
+                                    else ->
+                                        LazyColumn(
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentPadding = PaddingValues(start = FEED_PAGE_PADDING, end = FEED_PAGE_PADDING, top = 4.dp, bottom = 16.dp),
+                                            verticalArrangement = Arrangement.spacedBy(14.dp),
+                                        ) {
+                                            items(
+                                                items = filtered,
+                                                key = { it.post.id },
+                                            ) { item ->
+                                                FeedTileCard(
+                                                    apiBase = apiBase,
+                                                    item = item,
+                                                    onClick = { onOpenPost(item.post.id) },
+                                                    saved = savedPostIds.contains(item.post.id),
+                                                    onLike = { toggleFeedLike(item) },
+                                                    onComment = { onOpenPost(item.post.id) },
+                                                    onShare = {
+                                                        android.widget.Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.common_share_ready),
+                                                            android.widget.Toast.LENGTH_SHORT,
+                                                        ).show()
+                                                    },
+                                                    onSave = {
+                                                        savedPostIds =
+                                                            if (savedPostIds.contains(item.post.id)) {
+                                                                savedPostIds - item.post.id
+                                                            } else {
+                                                                savedPostIds + item.post.id
+                                                            }
+                                                        android.widget.Toast.makeText(
+                                                            context,
+                                                            context.getString(R.string.common_saved),
+                                                            android.widget.Toast.LENGTH_SHORT,
+                                                        ).show()
+                                                    },
+                                                )
+                                            }
+                                        }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (showEditProfile) {
+            // Replaced with internal Route navigation
+        }
+        if (showThemeDialog) {
+            ThemeSelectionDialog(
+                currentTheme = sdk.getTheme(),
+                onDismiss = { showThemeDialog = false },
+                onSelect = {
+                    onThemeChanged(it)
+                    currentGlobalTheme = it
+                    showThemeDialog = false
+                }
+            )
+        }
+    }
+}
+
+@Composable
+
+
+internal fun HomeFeedHeader(
     query: String,
     onQueryChange: (String) -> Unit,
     selectedFilter: String,
@@ -1033,7 +2629,7 @@ private fun HomeFeedHeader(
 }
 
 @Composable
-private fun FeedFilterRow(
+internal fun FeedFilterRow(
     selectedFilter: String,
     onFilterChange: (String) -> Unit,
 ) {
@@ -1077,7 +2673,7 @@ private fun FeedFilterRow(
 }
 
 @Composable
-private fun DiscoverFeedHeader(
+internal fun DiscoverFeedHeader(
     query: String,
     onQueryChange: (String) -> Unit,
     selectedCircle: String?,
@@ -1186,7 +2782,7 @@ private fun DiscoverFeedHeader(
 }
 
 @Composable
-private fun MarketPreviewSection(
+internal fun MarketPreviewSection(
     query: String,
     listings: List<Listing>?,
     loading: Boolean,
@@ -1302,7 +2898,7 @@ private fun MarketPreviewSection(
 }
 
 @Composable
-private fun ListingPreviewRow(item: Listing) {
+internal fun ListingPreviewRow(item: Listing) {
     Row(
         modifier =
             Modifier
@@ -1349,7 +2945,7 @@ private fun ListingPreviewRow(item: Listing) {
     }
 }
 
-private fun listingTypeLabel(type: String): String =
+internal fun listingTypeLabel(type: String): String =
     when (type) {
         "product" -> "商品"
         "service" -> "服务"
@@ -1357,7 +2953,7 @@ private fun listingTypeLabel(type: String): String =
         else -> type
     }
 
-private fun formatListingPrice(
+internal fun formatListingPrice(
     cents: Long,
     currency: String,
 ): String {
@@ -1368,7 +2964,7 @@ private fun formatListingPrice(
 }
 
 @Composable
-private fun FeedLoadingPane(modifier: Modifier = Modifier) {
+internal fun FeedLoadingPane(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.padding(horizontal = FEED_PAGE_PADDING, vertical = 10.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -1403,7 +2999,7 @@ private fun FeedLoadingPane(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun FeedFailurePane(
+internal fun FeedFailurePane(
     message: String,
     currentUrl: String,
     defaultUrl: String,
@@ -1507,7 +3103,7 @@ private fun FeedFailurePane(
 }
 
 @Composable
-private fun ThemeSelectionDialog(
+internal fun ThemeSelectionDialog(
     currentTheme: String,
     onDismiss: () -> Unit,
     onSelect: (String) -> Unit,
@@ -1566,7 +3162,7 @@ private fun ThemeSelectionDialog(
 }
 
 @Composable
-private fun ProfilePanel(
+internal fun ProfilePanel(
     apiBase: String,
     user: User,
     pets: List<Pet>?,
@@ -1574,6 +3170,7 @@ private fun ProfilePanel(
     gridLoading: Boolean,
     profileBackground: String,
     onLogout: () -> Unit,
+    onOpenAppMode: () -> Unit,
     onOpenPost: (Long) -> Unit,
     onEditProfile: () -> Unit,
     onOpenPetProfile: (Long?) -> Unit,
@@ -1601,21 +3198,11 @@ private fun ProfilePanel(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
     ) {
-        // Profile Card
+        // Identity follows the reference as an unframed profile block.
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-                .shadow(
-                    elevation = StitchShadows.cardAmbientY,
-                    shape = StitchShape.cardFeed,
-                    ambientColor = StitchShadows.cardAmbientColor,
-                    spotColor = StitchShadows.cardAmbientColor,
-                )
-                .clip(StitchShape.cardFeed)
-                .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline, StitchShape.cardFeed)
-                .padding(horizontal = 24.dp, vertical = 20.dp),
+                .padding(horizontal = 16.dp, vertical = 24.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(
@@ -1677,15 +3264,9 @@ private fun ProfilePanel(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 24.dp)
-                .shadow(
-                    elevation = StitchShadows.cardAmbientY,
-                    shape = StitchShape.field,
-                    ambientColor = StitchShadows.cardAmbientColor,
-                    spotColor = StitchShadows.cardAmbientColor,
-                )
-                .clip(StitchShape.field)
+                .clip(StitchShape.cardFeed)
                 .background(StitchPalette.Surface)
-                .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
+                .border(1.dp, StitchPalette.BorderHairline, StitchShape.cardFeed)
                 .padding(vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
@@ -1772,127 +3353,32 @@ private fun ProfilePanel(
                 color = StitchPalette.OnSurface,
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp)
             )
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                Spacer(Modifier.width(4.dp)) // Content padding start
                 if (isDemo || pets == null || pets.isEmpty()) {
-                    // Pet 1: Latte
-                    Column(
-                        modifier = Modifier
-                            .width(144.dp)
-                            .background(StitchPalette.Surface, shape = StitchShape.field)
-                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
-                            .clickable { onOpenPetProfile(null) }
-                            .padding(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        AsyncImage(
-                            model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png",
-                            contentDescription = "Latte",
-                            modifier = Modifier
-                                .size(64.dp)
-                                .clip(CircleShape)
-                                .background(StitchPalette.Canvas),
-                            contentScale = ContentScale.Crop,
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            text = stringResource(R.string.profile_pet_latte_name),
-                            style = MaterialTheme.typography.titleSmall.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            fontWeight = FontWeight.Bold,
-                            color = StitchPalette.OnSurface,
-                        )
-                        Text(
-                            text = "3 yrs",
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            color = StitchPalette.OnSurfaceVariant,
-                        )
-                    }
-                    // Pet 2: Peach
-                    Column(
-                        modifier = Modifier
-                            .width(144.dp)
-                            .background(StitchPalette.Surface, shape = StitchShape.field)
-                            .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
-                            .clickable { onOpenPetProfile(null) }
-                            .padding(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        AsyncImage(
-                            model = "${apiBase.removeSuffix("/")}/mock-images/mock_image_3.png",
-                            contentDescription = "Peach",
-                            modifier = Modifier
-                                .size(64.dp)
-                                .clip(CircleShape)
-                                .background(StitchPalette.Canvas),
-                            contentScale = ContentScale.Crop,
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            text = "Peach",
-                            style = MaterialTheme.typography.titleSmall.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            fontWeight = FontWeight.Bold,
-                            color = StitchPalette.OnSurface,
-                        )
-                        Text(
-                            text = "1.5 yrs",
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            color = StitchPalette.OnSurfaceVariant,
-                        )
-                    }
+                    ProfilePetRow(
+                        name = stringResource(R.string.profile_pet_latte_name),
+                        detail = "Domestic Shorthair · 3 yrs",
+                        avatarUrl = "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png",
+                        onClick = { onOpenPetProfile(null) },
+                    )
                 } else {
                     pets.forEach { pet ->
-                        Column(
-                            modifier = Modifier
-                                .width(144.dp)
-                                .background(StitchPalette.Surface, shape = StitchShape.field)
-                                .border(1.dp, StitchPalette.BorderHairline, StitchShape.field)
-                                .clickable { onOpenPetProfile(pet.id) }
-                                .padding(12.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            val petAvatar = resolveMediaUrl(apiBase, pet.avatarUrl.takeIf { it.isNotBlank() }) ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png"
-                            AsyncImage(
-                                model = petAvatar,
-                                contentDescription = pet.name,
-                                modifier = Modifier
-                                    .size(64.dp)
-                                    .clip(CircleShape)
-                                    .background(StitchPalette.Canvas),
-                                contentScale = ContentScale.Crop,
-                            )
-                            Spacer(Modifier.height(8.dp))
-                            Text(
-                                text = pet.name,
-                                style = MaterialTheme.typography.titleSmall.copy(
-                                    platformStyle = PlatformTextStyle(includeFontPadding = false)
-                                ),
-                                fontWeight = FontWeight.Bold,
-                                color = StitchPalette.OnSurface,
-                            )
-                            Text(
-                                text = pet.age.ifBlank { "0 yrs" },
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    platformStyle = PlatformTextStyle(includeFontPadding = false)
-                                ),
-                                color = StitchPalette.OnSurfaceVariant,
-                            )
-                        }
+                        ProfilePetRow(
+                            name = pet.name,
+                            detail = listOf(pet.breed, pet.age.ifBlank { "0 yrs" })
+                                .filter { it.isNotBlank() }
+                                .joinToString(" · "),
+                            avatarUrl = resolveMediaUrl(apiBase, pet.avatarUrl.takeIf { it.isNotBlank() })
+                                ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_2.png",
+                            onClick = { onOpenPetProfile(pet.id) },
+                        )
                     }
                 }
-                Spacer(Modifier.width(4.dp)) // Content padding end
             }
         }
 
@@ -1933,7 +3419,9 @@ private fun ProfilePanel(
             val mockPostImages = listOf(
                 "${apiBase.removeSuffix("/")}/mock-images/mock_image_4.png",
                 "${apiBase.removeSuffix("/")}/mock-images/mock_image_5.png",
-                "${apiBase.removeSuffix("/")}/mock-images/mock_image_6.png"
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_6.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_7.png",
+                "${apiBase.removeSuffix("/")}/mock-images/mock_image_8.png"
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(
@@ -1987,11 +3475,6 @@ private fun ProfilePanel(
                             contentScale = ContentScale.Crop
                         )
                     }
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
                     // Item 3
                     Box(
                         modifier = Modifier
@@ -2015,6 +3498,57 @@ private fun ProfilePanel(
                             contentScale = ContentScale.Crop
                         )
                     }
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // Item 4
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(StitchShape.neutralCard)
+                            .background(StitchPalette.SurfaceContainer)
+                            .clickable {
+                                if (posts.size > 3) onOpenPost(posts[3].post.id)
+                            }
+                    ) {
+                        val imgUrl = if (posts.size > 3 && posts[3].firstMedia?.url != null) {
+                            resolveMediaUrl(apiBase, posts[3].firstMedia?.url)
+                        } else {
+                            mockPostImages[3]
+                        }
+                        AsyncImage(
+                            model = imgUrl,
+                            contentDescription = "Post image 4",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    // Item 5
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(StitchShape.neutralCard)
+                            .background(StitchPalette.SurfaceContainer)
+                            .clickable {
+                                if (posts.size > 4) onOpenPost(posts[4].post.id)
+                            }
+                    ) {
+                        val imgUrl = if (posts.size > 4 && posts[4].firstMedia?.url != null) {
+                            resolveMediaUrl(apiBase, posts[4].firstMedia?.url)
+                        } else {
+                            mockPostImages[4]
+                        }
+                        AsyncImage(
+                            model = imgUrl,
+                            contentDescription = "Post image 5",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
 
                     // Add Post Button
                     Column(
@@ -2032,15 +3566,6 @@ private fun ProfilePanel(
                             contentDescription = "Add Post",
                             tint = StitchPalette.Brand,
                             modifier = Modifier.size(30.dp)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        Text(
-                            text = "Add Post",
-                            style = MaterialTheme.typography.labelMedium.copy(
-                                platformStyle = PlatformTextStyle(includeFontPadding = false)
-                            ),
-                            color = StitchPalette.Brand,
-                            fontWeight = FontWeight.Bold,
                         )
                     }
                 }
@@ -2065,7 +3590,55 @@ private fun ProfilePanel(
 }
 
 @Composable
-private fun EditField(
+private fun ProfilePetRow(
+    name: String,
+    detail: String,
+    avatarUrl: String,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        shape = StitchShape.cardFeed,
+        color = StitchPalette.SurfaceLow,
+        border = BorderStroke(1.dp, StitchPalette.BorderHairline),
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(14.dp),
+        ) {
+            AsyncImage(
+                model = avatarUrl,
+                contentDescription = name,
+                modifier = Modifier.size(64.dp).clip(CircleShape),
+                contentScale = ContentScale.Crop,
+            )
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = StitchPalette.OnSurface,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = detail,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = StitchPalette.OnSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            Icon(
+                imageVector = Icons.Outlined.ChevronRight,
+                contentDescription = null,
+                tint = StitchPalette.Brand,
+            )
+        }
+    }
+}
+
+@Composable
+internal fun EditField(
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
@@ -2112,7 +3685,7 @@ private fun EditField(
 }
 
 @Composable
-private fun PetAvatarEditItem(
+internal fun PetAvatarEditItem(
     name: String,
     avatarUrl: String,
     modifier: Modifier = Modifier
@@ -2141,7 +3714,7 @@ private fun PetAvatarEditItem(
 }
 
 @Composable
-private fun AddPetEditItem(
+internal fun AddPetEditItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -2173,7 +3746,7 @@ private fun AddPetEditItem(
 }
 
 @Composable
-private fun ProfileEditScreen(
+internal fun ProfileEditScreen(
     apiBase: String,
     user: User,
     saving: Boolean,
@@ -2374,7 +3947,7 @@ private fun ProfileEditScreen(
 }
 
 @Composable
-private fun ProfilePetDetailScreen(
+internal fun ProfilePetDetailScreen(
     apiBase: String,
     user: User,
     pet: Pet?,
@@ -2801,7 +4374,7 @@ private fun ProfilePetDetailScreen(
 }
 
 @Composable
-private fun ProfileConnectionsScreen(
+internal fun ProfileConnectionsScreen(
     apiBase: String,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -3119,7 +4692,7 @@ private fun ProfileConnectionsScreen(
 }
 
 @Composable
-private fun SettingCard(
+internal fun SettingCard(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -3136,7 +4709,7 @@ private fun SettingCard(
 }
 
 @Composable
-private fun SettingRow(
+internal fun SettingRow(
     icon: ImageVector,
     title: String,
     onClick: () -> Unit,
@@ -3187,7 +4760,7 @@ private fun SettingRow(
 }
 
 @Composable
-private fun SettingSectionTitle(
+internal fun SettingSectionTitle(
     text: String,
     modifier: Modifier = Modifier
 ) {
@@ -3203,7 +4776,7 @@ private fun SettingSectionTitle(
 }
 
 @Composable
-private fun SettingProfileCard(
+internal fun SettingProfileCard(
     apiBase: String,
     user: User,
     onEditProfile: () -> Unit,
@@ -3296,7 +4869,7 @@ private fun SettingProfileCard(
 }
 
 @Composable
-private fun ProfileSettingsScreen(
+internal fun ProfileSettingsScreen(
     apiBase: String,
     user: User,
     onBack: () -> Unit,
@@ -3308,6 +4881,7 @@ private fun ProfileSettingsScreen(
     onOpenNotifications: () -> Unit,
     onOpenPrivacy: () -> Unit,
     onOpenUserNotice: () -> Unit,
+    onOpenAppMode: () -> Unit,
     onLogout: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -3327,6 +4901,14 @@ private fun ProfileSettingsScreen(
                 .padding(bottom = 24.dp),
         ) {
             Spacer(Modifier.height(8.dp))
+
+            SettingCard {
+                SettingRow(
+                    icon = Icons.Outlined.Dashboard,
+                    title = "功能主题切换",
+                    onClick = onOpenAppMode,
+                )
+            }
             SettingProfileCard(
                 apiBase = apiBase,
                 user = user,
@@ -3454,7 +5036,7 @@ private fun ProfileSettingsScreen(
 }
 
 @Composable
-private fun ThemeUIPreviewCard(
+internal fun ThemeUIPreviewCard(
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -3535,7 +5117,7 @@ private fun ThemeUIPreviewCard(
 }
 
 @Composable
-private fun ThemeGridItem(
+internal fun ThemeGridItem(
     name: String,
     icon: ImageVector,
     iconColor: Color,
@@ -3601,7 +5183,7 @@ private fun ThemeGridItem(
 }
 
 @Composable
-private fun ProfileAppearanceScreen(
+internal fun ProfileAppearanceScreen(
     currentTheme: String,
     onBack: () -> Unit,
     onSelectTheme: (String) -> Unit,
@@ -3713,7 +5295,7 @@ private fun ProfileAppearanceScreen(
 }
 
 @Composable
-private fun SettingRowWithRightText(
+internal fun SettingRowWithRightText(
     icon: ImageVector,
     title: String,
     rightText: String,
@@ -3765,7 +5347,7 @@ private fun SettingRowWithRightText(
 }
 
 @Composable
-private fun SettingRowWithToggle(
+internal fun SettingRowWithToggle(
     icon: ImageVector,
     title: String,
     checked: Boolean,
@@ -3814,7 +5396,7 @@ private fun SettingRowWithToggle(
 }
 
 @Composable
-private fun SettingRowWithSocial(
+internal fun SettingRowWithSocial(
     letter: String,
     color: Color,
     title: String,
@@ -3867,7 +5449,7 @@ private fun SettingRowWithSocial(
 }
 
 @Composable
-private fun ProfileAccountSecurityScreen(
+internal fun ProfileAccountSecurityScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -4030,7 +5612,7 @@ private fun ProfileAccountSecurityScreen(
 }
 
 @Composable
-private fun SimpleToggleRow(
+internal fun SimpleToggleRow(
     title: String,
     checked: Boolean,
     modifier: Modifier = Modifier,
@@ -4063,7 +5645,7 @@ private fun SimpleToggleRow(
 }
 
 @Composable
-private fun ProfileNotificationsScreen(
+internal fun ProfileNotificationsScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -4140,7 +5722,7 @@ private fun ProfileNotificationsScreen(
 }
 
 @Composable
-private fun PrivacySectionBlock(
+internal fun PrivacySectionBlock(
     title: String,
     body: String,
     modifier: Modifier = Modifier
@@ -4171,7 +5753,7 @@ private fun PrivacySectionBlock(
 }
 
 @Composable
-private fun ProfilePrivacyPolicyScreen(
+internal fun ProfilePrivacyPolicyScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -4273,7 +5855,7 @@ private fun ProfilePrivacyPolicyScreen(
 }
 
 @Composable
-private fun BulletRuleBlock(
+internal fun BulletRuleBlock(
     icon: ImageVector,
     title: String,
     rules: List<String>,
@@ -4337,7 +5919,7 @@ private fun BulletRuleBlock(
 }
 
 @Composable
-private fun ProfileUserNoticeScreen(
+internal fun ProfileUserNoticeScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -4475,7 +6057,7 @@ private fun ProfileUserNoticeScreen(
 }
 
 @Composable
-private fun ProfileBackHeader(
+internal fun ProfileBackHeader(
     title: String,
     onBack: () -> Unit,
 ) {
@@ -4508,7 +6090,7 @@ private fun ProfileBackHeader(
 }
 
 @Composable
-private fun ProfileMiniMetric(
+internal fun ProfileMiniMetric(
     value: String,
     label: String,
     modifier: Modifier = Modifier,
@@ -4527,7 +6109,7 @@ private fun ProfileMiniMetric(
 }
 
 @Composable
-private fun ProfileSegmentChip(
+internal fun ProfileSegmentChip(
     label: String,
     selected: Boolean,
 ) {
@@ -4547,7 +6129,7 @@ private fun ProfileSegmentChip(
 }
 
 @Composable
-private fun ProfileStatCell(
+internal fun ProfileStatCell(
     value: String,
     label: String,
 ) {
@@ -4567,7 +6149,7 @@ private fun ProfileStatCell(
 }
 
 @Composable
-private fun ProfileGridCell(
+internal fun ProfileGridCell(
     apiBase: String,
     item: PostFeedItem,
     modifier: Modifier = Modifier,
@@ -4624,7 +6206,7 @@ private fun ProfileGridCell(
 }
 
 @Composable
-private fun MessagesPane(
+internal fun MessagesPane(
     loading: Boolean,
     err: String?,
     items: List<Conversation>?,
@@ -4839,7 +6421,7 @@ private fun MessagesPane(
 }
 
 @Composable
-private fun MessageShortcutRow(
+internal fun MessageShortcutRow(
     icon: ImageVector,
     title: String,
     subtitle: String?,
@@ -4881,7 +6463,7 @@ private fun MessageShortcutRow(
 }
 
 @Composable
-private fun FeedEmptyStatePane(
+internal fun FeedEmptyStatePane(
     apiBase: String,
     onFindPets: () -> Unit,
     onCompose: () -> Unit,
@@ -5010,7 +6592,7 @@ private fun FeedEmptyStatePane(
 }
 
 @Composable
-private fun PlaceholderPane(
+internal fun PlaceholderPane(
     headline: String,
     body: String,
     modifier: Modifier = Modifier,
@@ -5031,7 +6613,7 @@ private fun PlaceholderPane(
 }
 
 @Composable
-private fun MarketPane(
+internal fun MarketPane(
     sdk: MeowCircleSdk,
     listings: List<Listing>?,
     loading: Boolean,
@@ -5228,7 +6810,7 @@ private fun MarketPane(
 }
 
 @Composable
-private fun MarketListingItemCard(
+internal fun MarketListingItemCard(
     listing: Listing,
     actionLoading: Boolean,
     onBuyClick: () -> Unit,
@@ -5302,6 +6884,108 @@ private fun MarketListingItemCard(
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold
                     )
+                }
+            }
+        }
+    }
+}
+
+
+
+@Composable
+internal fun ProfileAppModeScreen(
+    currentMode: String?,
+    onSelectMode: (MndAppMode) -> Unit,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.background(StitchPalette.Canvas)) {
+        ProfileBackHeader(
+            title = "功能主题切换",
+            onBack = onBack,
+        )
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                "选择登录后默认进入的 M&D 功能区",
+                style = MaterialTheme.typography.bodyMedium,
+                color = StitchPalette.OnSurfaceVariant
+            )
+
+            val modes = listOf(
+                MndAppMode.Community to "宠物交流",
+                MndAppMode.Adoption to "宠物收养",
+                MndAppMode.Trade to "宠物交易"
+            )
+
+            modes.forEach { (mode, label) ->
+                val isSelected = (currentMode == mode.name) || (currentMode == null && mode == MndAppMode.Community)
+                val subtitle = when (mode) {
+                    MndAppMode.Community -> "分享猫咪日常、加入圈子互动，并发布你的宠物故事。"
+                    MndAppMode.Adoption -> "浏览待领养与救助进展，安全提交申请并跟进沟通。"
+                    MndAppMode.Trade -> "聚焦用品、市集服务、同城交换与订单管理。"
+                }
+                val navPreview = when (mode) {
+                    MndAppMode.Community -> "动态 / 圈子 / 发布 / 消息 / 我的"
+                    MndAppMode.Adoption -> "领养 / 救助 / 申请 / 消息 / 我的"
+                    MndAppMode.Trade -> "市集 / 发布 / 消息 / 订单 / 我的"
+                }
+                val icon = when (mode) {
+                    MndAppMode.Community -> Icons.Outlined.Dashboard
+                    MndAppMode.Adoption -> Icons.Filled.Favorite
+                    MndAppMode.Trade -> Icons.Outlined.Storefront
+                }
+                Surface(
+                    shape = StitchShape.container,
+                    color = if (isSelected) StitchPalette.SurfaceLow else StitchPalette.Surface,
+                    border = BorderStroke(1.dp, if (isSelected) StitchPalette.Brand else StitchPalette.OutlineVariant),
+                    modifier = Modifier.fillMaxWidth().clickable {
+                        onSelectMode(mode)
+                    },
+                ) {
+                    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                            Box(
+                                modifier = Modifier
+                                    .size(42.dp)
+                                    .clip(StitchShape.chip)
+                                    .background(StitchPalette.Brand.copy(alpha = 0.12f)),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Icon(icon, contentDescription = null, tint = StitchPalette.Brand)
+                            }
+                            Spacer(Modifier.width(12.dp))
+                            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text(label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = StitchPalette.OnSurface)
+                                    if (mode == MndAppMode.Community) {
+                                        Spacer(Modifier.width(8.dp))
+                                        Surface(shape = StitchShape.pill, color = StitchPalette.Brand) {
+                                            Text(
+                                                "推荐",
+                                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                                                style = MaterialTheme.typography.labelSmall,
+                                                color = Color.White,
+                                                fontWeight = FontWeight.Bold,
+                                            )
+                                        }
+                                    }
+                                }
+                                Text(subtitle, style = MaterialTheme.typography.bodySmall, color = StitchPalette.OnSurfaceVariant)
+                            }
+                            if (isSelected) {
+                                Icon(Icons.Filled.CheckCircle, contentDescription = "Selected", tint = StitchPalette.Brand)
+                            }
+                        }
+                        HorizontalDivider(color = StitchPalette.OutlineVariant)
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text("底部导航", style = MaterialTheme.typography.labelMedium, color = StitchPalette.Stone500)
+                            Spacer(Modifier.width(10.dp))
+                            Text(navPreview, style = MaterialTheme.typography.labelMedium, color = StitchPalette.Brand, fontWeight = FontWeight.Medium)
+                        }
+                    }
                 }
             }
         }
