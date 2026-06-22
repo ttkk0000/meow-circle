@@ -605,7 +605,7 @@ fun CommunityNavGraph(
         Scaffold(
             modifier = modifier.fillMaxSize(),
             containerColor = StitchPalette.Canvas,
-            
+
             bottomBar = {
                 if (showBottomChrome) {
                     StitchBottomNav(
@@ -674,9 +674,9 @@ fun CommunityNavGraph(
                                     onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
                                         onOpenPost = onOpenPost,
                                         onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
-                                        onOpenPetProfile = { petId -> 
+                                        onOpenPetProfile = { petId ->
                                             selectedPetId = petId
-                                            navigateToProfileRoute(ProfileRoute.PetDetail) 
+                                            navigateToProfileRoute(ProfileRoute.PetDetail)
                                         },
                                         onOpenConnections = { navigateToProfileRoute(ProfileRoute.Connections) },
                                         onSettings = { navigateToProfileRoute(ProfileRoute.Settings) },
@@ -994,48 +994,6 @@ fun AdoptionNavGraph(
     feedReloadSignal: Int = 0,
     onLogout: () -> Unit,
     onOpenPost: (Long) -> Unit = {},
-    /*
-
-                                        StitchMainTab.AdoptHome -> {
-                        when (val route = adoptionRoute) {
-                            is AdoptionRoute.Home -> {
-                                StitchAdoptHomeTab(
-                                    sdk = sdk,
-                                    apiBase = apiBase,
-                                    user = profileUser,
-                                    onAvatarPress = { tab = StitchMainTab.Profile },
-                                    onNotifyPress = { tab = StitchMainTab.Messages },
-                                    onPetClick = { pet -> adoptionRoute = AdoptionRoute.Detail(pet.id) },
-                                    modifier = androidx.compose.ui.Modifier.fillMaxSize()
-                                )
-                            }
-                            is AdoptionRoute.Detail -> {
-                                StitchAdoptionDetailScreen(
-                                    sdk = sdk,
-                                    apiBase = apiBase,
-                                    petId = route.petId,
-                                    onBack = { adoptionRoute = AdoptionRoute.Home },
-                                    onApply = { adoptionRoute = AdoptionRoute.Form(it) }
-                                )
-                            }
-                            is AdoptionRoute.Form -> {
-                                StitchAdoptionFormScreen(
-                                    sdk = sdk,
-                                    petId = route.petId,
-                                    onBack = { adoptionRoute = AdoptionRoute.Detail(route.petId) },
-                                    onSubmitSuccess = { adoptionRoute = AdoptionRoute.Home }
-                                )
-                            }
-                        }
-                    }
-                    StitchMainTab.RescueHome -> {
-                        androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) { androidx.compose.material3.Text("救助功能开发中", color = StitchPalette.OnSurfaceVariant) }
-                    }
-                    StitchMainTab.Applications -> {
-                        androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) { androidx.compose.material3.Text("领养申请功能开发中", color = StitchPalette.OnSurfaceVariant) }
-                    }
-
-*/
     onCompose: () -> Unit = {},
     onThemeChanged: (String) -> Unit = {},
     onChangeMode: (MndAppMode) -> Unit = {},
@@ -1046,6 +1004,7 @@ fun AdoptionNavGraph(
     val scope = rememberCoroutineScope()
     var profileUser by remember(user.id) { mutableStateOf(user) }
     var tab by remember { mutableStateOf(StitchMainTab.AdoptHome) }
+    var adoptionRoute by remember { mutableStateOf<AdoptionRoute>(AdoptionRoute.Home) }
     var filter by remember { mutableStateOf("rec") }
     var q by remember { mutableStateOf("") }
     var selectedCircle by remember { mutableStateOf<String?>(null) }
@@ -1423,16 +1382,38 @@ fun AdoptionNavGraph(
                 when (tab) {
                     StitchMainTab.Circle,
                     StitchMainTab.Compose -> Unit
-                    StitchMainTab.AdoptHome ->
-                        StitchAdoptHomeTab(
-                            sdk = sdk,
-                            apiBase = apiBase,
-                            user = profileUser,
-                            onAvatarPress = { tab = StitchMainTab.Profile },
-                            onNotifyPress = { tab = StitchMainTab.Messages },
-                            onPetClick = {},
-                            modifier = Modifier.fillMaxSize(),
-                        )
+                                        StitchMainTab.AdoptHome -> {
+                        when (val route = adoptionRoute) {
+                            is AdoptionRoute.Home -> {
+                                StitchAdoptHomeTab(
+                                    sdk = sdk,
+                                    apiBase = apiBase,
+                                    user = profileUser,
+                                    onAvatarPress = { tab = StitchMainTab.Profile },
+                                    onNotifyPress = { tab = StitchMainTab.Messages },
+                                    onPetClick = { petId -> adoptionRoute = AdoptionRoute.Detail(petId) },
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                            is AdoptionRoute.Detail -> {
+                                StitchAdoptionDetailScreen(
+                                    sdk = sdk,
+                                    apiBase = apiBase,
+                                    petId = route.petId,
+                                    onBack = { adoptionRoute = AdoptionRoute.Home },
+                                    onApply = { adoptionRoute = AdoptionRoute.Form(it) }
+                                )
+                            }
+                            is AdoptionRoute.Form -> {
+                                StitchAdoptionFormScreen(
+                                    sdk = sdk,
+                                    petId = route.petId,
+                                    onBack = { adoptionRoute = AdoptionRoute.Detail(route.petId) },
+                                    onSubmitSuccess = { adoptionRoute = AdoptionRoute.Home }
+                                )
+                            }
+                        }
+                    }
                     StitchMainTab.RescueHome ->
                         StitchAdoptionRescueTab(
                             sdk = sdk,
@@ -1476,9 +1457,9 @@ fun AdoptionNavGraph(
                                     onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
                                         onOpenPost = onOpenPost,
                                         onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
-                                        onOpenPetProfile = { petId -> 
+                                        onOpenPetProfile = { petId ->
                                             selectedPetId = petId
-                                            navigateToProfileRoute(ProfileRoute.PetDetail) 
+                                            navigateToProfileRoute(ProfileRoute.PetDetail)
                                         },
                                         onOpenConnections = { navigateToProfileRoute(ProfileRoute.Connections) },
                                         onSettings = { navigateToProfileRoute(ProfileRoute.Settings) },
@@ -2153,7 +2134,7 @@ fun TradeNavGraph(
         Scaffold(
             modifier = modifier.fillMaxSize(),
             containerColor = StitchPalette.Canvas,
-            
+
             bottomBar = {
                 if (showBottomChrome) {
                     StitchBottomNav(
@@ -2214,9 +2195,9 @@ fun TradeNavGraph(
                                     onOpenAppMode = { navigateToProfileRoute(ProfileRoute.AppMode) },
                                         onOpenPost = onOpenPost,
                                         onEditProfile = { navigateToProfileRoute(ProfileRoute.EditProfile) },
-                                        onOpenPetProfile = { petId -> 
+                                        onOpenPetProfile = { petId ->
                                             selectedPetId = petId
-                                            navigateToProfileRoute(ProfileRoute.PetDetail) 
+                                            navigateToProfileRoute(ProfileRoute.PetDetail)
                                         },
                                         onOpenConnections = { navigateToProfileRoute(ProfileRoute.Connections) },
                                         onSettings = { navigateToProfileRoute(ProfileRoute.Settings) },
@@ -3774,8 +3755,8 @@ internal fun ProfileEditScreen(
     var location by remember { mutableStateOf("Seattle, WA") }
     var addedPet by remember { mutableStateOf(false) }
     var avatarPickIndex by remember { mutableStateOf(0) }
-    
-    val displayAvatarUrl = user.avatarUrl.takeIf { it.isNotBlank() } 
+
+    val displayAvatarUrl = user.avatarUrl.takeIf { it.isNotBlank() }
         ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_7.png"
     val avatarChoices =
         remember(apiBase) {
@@ -4783,9 +4764,9 @@ internal fun SettingProfileCard(
     modifier: Modifier = Modifier
 ) {
     val isDemo = user.username == "demo"
-    val displayAvatarUrl = user.avatarUrl.takeIf { it.isNotBlank() } 
+    val displayAvatarUrl = user.avatarUrl.takeIf { it.isNotBlank() }
         ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_7.png"
-    
+
     val displayName = if (isDemo) "Peach & Latte" else if (user.nickname.isNotBlank()) user.nickname else "Peach & Latte"
     val displayHandle = if (isDemo) "@peachlatte" else if (user.username.isNotBlank()) "@${user.username}" else "@peachlatte"
     val displayBio = if (isDemo) "Documenting the daily life of two cats." else if (user.bio.isNotBlank()) user.bio else "Documenting the daily life of two cats."
@@ -4914,7 +4895,7 @@ internal fun ProfileSettingsScreen(
                 user = user,
                 onEditProfile = onEditProfile
             )
-            
+
             SettingSectionTitle(stringResource(R.string.settings_profile_section))
             SettingCard {
                 SettingRow(
@@ -5212,9 +5193,9 @@ internal fun ProfileAppearanceScreen(
         ) {
             Spacer(Modifier.height(8.dp))
             ThemeUIPreviewCard()
-            
+
             SettingSectionTitle("Select Theme")
-            
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -5276,9 +5257,9 @@ internal fun ProfileAppearanceScreen(
                     )
                 }
             }
-            
+
             Spacer(Modifier.weight(1f))
-            
+
             Button(
                 onClick = { onSelectTheme(pendingTheme) },
                 shape = StitchShape.field,
@@ -5591,7 +5572,7 @@ internal fun ProfileAccountSecurityScreen(
             }
 
             Spacer(Modifier.height(32.dp))
-            
+
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -5652,13 +5633,13 @@ internal fun ProfileNotificationsScreen(
     var newMessages by remember { mutableStateOf(true) }
     var sellerReplies by remember { mutableStateOf(true) }
     var buyerQuestions by remember { mutableStateOf(false) }
-    
+
     var paymentUpdates by remember { mutableStateOf(true) }
     var shippingUpdates by remember { mutableStateOf(true) }
-    
+
     var newFollowers by remember { mutableStateOf(true) }
     var postComments by remember { mutableStateOf(true) }
-    
+
     var recommendations by remember { mutableStateOf(false) }
     var localHighlights by remember { mutableStateOf(false) }
 
@@ -5705,7 +5686,7 @@ internal fun ProfileNotificationsScreen(
             }
 
             Spacer(Modifier.height(16.dp))
-            
+
             Button(
                 onClick = onBack,
                 shape = StitchShape.field,
@@ -6030,7 +6011,7 @@ internal fun ProfileUserNoticeScreen(
                 ) {
                     Text(stringResource(R.string.settings_i_agree), color = Color.White, fontWeight = FontWeight.Bold)
                 }
-                
+
                 Button(
                     onClick = {
                         android.widget.Toast.makeText(
@@ -6527,7 +6508,7 @@ internal fun FeedEmptyStatePane(
                 Text(stringResource(R.string.feed_empty_create_first), color = StitchPalette.OnSurface, fontWeight = FontWeight.Bold)
             }
         }
-        
+
         Spacer(Modifier.height(32.dp))
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),

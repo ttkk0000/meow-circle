@@ -39,6 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ttkk0000.meowcircle.AdoptionPetDetailData
+import com.ttkk0000.meowcircle.AdoptionPet
+import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
