@@ -635,7 +635,7 @@ fun CommunityNavGraph(
       ) {
         androidx.compose.animation.Crossfade(
           targetState = tab,
-          modifier = androidx.compose.ui.Modifier.fillMaxSize()
+          modifier = Modifier.fillMaxSize()
         ) { currentTab ->
           when (currentTab) {
             StitchMainTab.Circle ->
