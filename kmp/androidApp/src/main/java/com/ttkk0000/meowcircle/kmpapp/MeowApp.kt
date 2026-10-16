@@ -1,213 +1,175 @@
 package com.ttkk0000.meowcircle.kmpapp
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ttkk0000.meowcircle.MeowCircleSdk
-import com.ttkk0000.meowcircle.User
-import com.ttkk0000.meowcircle.humanizeClientFailure
 import com.ttkk0000.meowcircle.kmpapp.theme.MeowStitchTheme
-import com.ttkk0000.meowcircle.kmpapp.theme.MeowTheme
-import com.ttkk0000.meowcircle.kmpapp.ui.StitchComposeScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.AdoptionNavGraph
 import com.ttkk0000.meowcircle.kmpapp.ui.CommunityNavGraph
-import com.ttkk0000.meowcircle.kmpapp.ui.TradeNavGraph
+import com.ttkk0000.meowcircle.kmpapp.ui.MndAppMode
+import com.ttkk0000.meowcircle.kmpapp.ui.StitchComposeScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchLoginScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchModeSelectScreen
-import com.ttkk0000.meowcircle.kmpapp.ui.MndAppMode
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchPostDetailScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchRegisterScreen
 import com.ttkk0000.meowcircle.kmpapp.ui.StitchSplashScreen
-import kotlin.system.measureTimeMillis
-import kotlinx.coroutines.delay
+import com.ttkk0000.meowcircle.kmpapp.ui.TradeNavGraph
 
-private enum class AuthScreen {
-    Login,
-    Register,
+@Composable
+fun MeowApp(
+    sdk: MeowCircleSdk,
+    viewModel: MeowAppViewModel,
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(viewModel) {
+        viewModel.accept(MeowAppIntent.Bootstrap)
+    }
+    LaunchedEffect(viewModel, snackbarHostState) {
+        viewModel.effects.collect { effect ->
+            when (effect) {
+                is MeowAppEffect.ShowMessage -> snackbarHostState.showSnackbar(effect.message)
+            }
+        }
+    }
+
+    MeowStitchTheme(theme = state.theme) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            when {
+                state.restoring ->
+                    StitchSplashScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        loading = true,
+                    )
+                state.user == null ->
+                    when (state.authDestination) {
+                        AuthDestination.Login ->
+                            StitchLoginScreen(
+                                sdk = sdk,
+                                healthHint = state.healthHint,
+                                onLoggedIn = { viewModel.accept(MeowAppIntent.Authenticated(it)) },
+                                onNavigateRegister = {
+                                    viewModel.accept(MeowAppIntent.ShowAuth(AuthDestination.Register))
+                                },
+                                onThemeChanged = {
+                                    viewModel.accept(MeowAppIntent.ChangeTheme(it))
+                                },
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                        AuthDestination.Register ->
+                            StitchRegisterScreen(
+                                sdk = sdk,
+                                onBack = {
+                                    viewModel.accept(MeowAppIntent.ShowAuth(AuthDestination.Login))
+                                },
+                                onRegistered = {
+                                    viewModel.accept(MeowAppIntent.Authenticated(it))
+                                },
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                    }
+                state.appMode == null ->
+                    StitchModeSelectScreen(
+                        apiBase = sdk.baseUrl,
+                        user = checkNotNull(state.user),
+                        onModeSelected = { viewModel.accept(MeowAppIntent.SelectMode(it)) },
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                state.composeOpen ->
+                    StitchComposeScreen(
+                        sdk = sdk,
+                        onClose = { viewModel.accept(MeowAppIntent.CloseComposer) },
+                        onPosted = { viewModel.accept(MeowAppIntent.PostPublished) },
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                state.postDetailId != null ->
+                    StitchPostDetailScreen(
+                        sdk = sdk,
+                        postId = checkNotNull(state.postDetailId),
+                        onBack = { viewModel.accept(MeowAppIntent.ClosePost) },
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                else ->
+                    AppModeContent(
+                        sdk = sdk,
+                        state = state,
+                        dispatch = viewModel::accept,
+                    )
+            }
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .navigationBarsPadding()
+                        .padding(bottom = 88.dp),
+            )
+        }
+    }
 }
 
 @Composable
-fun MeowApp(sdk: MeowCircleSdk) {
-    var restoring by remember { mutableStateOf(true) }
-    var user by remember { mutableStateOf<User?>(sdk.cachedUser()) }
-    var healthHint by remember { mutableStateOf<String?>(null) }
-    var authScreen by remember { mutableStateOf(AuthScreen.Login) }
-    var postDetailId by remember { mutableStateOf<Long?>(null) }
-    var composeOpen by remember { mutableStateOf(false) }
-    var feedReloadSignal by remember { mutableIntStateOf(0) }
-    var activeThemeStr by remember { mutableStateOf(sdk.getTheme()) }
-    
-    // mode routing
-    var appModeStr by remember { mutableStateOf(sdk.sessionStore().getAppMode()) }
-    val appMode = remember(appModeStr) {
-        when(appModeStr) {
-            "Community" -> MndAppMode.Community
-            "Adoption" -> MndAppMode.Adoption
-            "Trade" -> MndAppMode.Trade
-            else -> null
-        }
-    }
+private fun AppModeContent(
+    sdk: MeowCircleSdk,
+    state: MeowAppState,
+    dispatch: (MeowAppIntent) -> Unit,
+) {
+    val user = checkNotNull(state.user)
+    val commonLogout = { dispatch(MeowAppIntent.Logout) }
+    val openPost = { id: Long -> dispatch(MeowAppIntent.OpenPost(id)) }
+    val openComposer = { dispatch(MeowAppIntent.OpenComposer) }
+    val changeTheme = { value: String -> dispatch(MeowAppIntent.ChangeTheme(value)) }
+    val changeMode = { mode: MndAppMode -> dispatch(MeowAppIntent.SelectMode(mode)) }
 
-    val activeTheme = when (activeThemeStr.lowercase()) {
-        "honey", "sugar" -> MeowTheme.Honey
-        "mint" -> MeowTheme.Mint
-        "night" -> MeowTheme.Night
-        "neutral", "system" -> MeowTheme.Neutral
-        else -> MeowTheme.Honey
-    }
-
-    LaunchedEffect(Unit) {
-        val elapsed =
-            measureTimeMillis {
-                user = runCatching { sdk.restoreSession() }.getOrNull() ?: sdk.cachedUser()
-                healthHint =
-                    sdk.health().fold(
-                        onSuccess = { "服务 ${it.status} · ${it.store}" },
-                        onFailure = { humanizeClientFailure(it, sdk.baseUrl) },
-                    )
-            }
-        val minSplashMs = 750L
-        if (elapsed < minSplashMs) delay(minSplashMs - elapsed)
-        restoring = false
-    }
-
-    MeowStitchTheme(theme = activeTheme) {
-        when {
-            restoring -> StitchSplashScreen(Modifier.fillMaxSize(), loading = true)
-            user == null ->
-                when (authScreen) {
-                    AuthScreen.Login ->
-                        StitchLoginScreen(
-                            sdk = sdk,
-                            healthHint = healthHint,
-                            onLoggedIn = {
-                                user = it
-                                authScreen = AuthScreen.Login
-                            },
-                            onNavigateRegister = { authScreen = AuthScreen.Register },
-                            onThemeChanged = {
-                                sdk.setTheme(it)
-                                activeThemeStr = it
-                            },
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                    AuthScreen.Register ->
-                        StitchRegisterScreen(
-                            sdk = sdk,
-                            onBack = { authScreen = AuthScreen.Login },
-                            onRegistered = {
-                                user = it
-                                authScreen = AuthScreen.Login
-                            },
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                }
-            appMode == null -> 
-                StitchModeSelectScreen(
-                    apiBase = sdk.baseUrl,
-                    user = user!!,
-                    onModeSelected = { selectedMode -> 
-                        val name = selectedMode.name
-                        sdk.sessionStore().setAppMode(name)
-                        appModeStr = name
-                    },
-                    modifier = Modifier.fillMaxSize()
-                )
-            composeOpen ->
-                StitchComposeScreen(
-                    sdk = sdk,
-                    onClose = { composeOpen = false },
-                    onPosted = { feedReloadSignal++ },
-                    modifier = Modifier.fillMaxSize(),
-                )
-            postDetailId != null ->
-                StitchPostDetailScreen(
-                    sdk = sdk,
-                    postId = postDetailId!!,
-                    onBack = { postDetailId = null },
-                    modifier = Modifier.fillMaxSize(),
-                )
-            else -> {
-                when (appMode) {
-                    MndAppMode.Community -> {
-                        CommunityNavGraph(
-                            sdk = sdk,
-                            user = user!!,
-                            feedReloadSignal = feedReloadSignal,
-                            onLogout = {
-                                sdk.logout()
-                                user = null
-                                authScreen = AuthScreen.Login
-                            },
-                            onOpenPost = { postDetailId = it },
-                            onCompose = { composeOpen = true },
-                            onThemeChanged = {
-                                sdk.setTheme(it)
-                                activeThemeStr = it
-                            },
-                            onChangeMode = { selectedMode ->
-                                sdk.sessionStore().setAppMode(selectedMode.name)
-                                appModeStr = selectedMode.name
-                            },
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                    }
-                    MndAppMode.Adoption -> {
-                        AdoptionNavGraph(
-                            sdk = sdk,
-                            user = user!!,
-                            feedReloadSignal = feedReloadSignal,
-                            onLogout = {
-                                sdk.logout()
-                                user = null
-                                authScreen = AuthScreen.Login
-                            },
-                            onOpenPost = { postDetailId = it },
-                            onCompose = { composeOpen = true },
-                            onThemeChanged = {
-                                sdk.setTheme(it)
-                                activeThemeStr = it
-                            },
-                            onChangeMode = { selectedMode ->
-                                sdk.sessionStore().setAppMode(selectedMode.name)
-                                appModeStr = selectedMode.name
-                            },
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                    }
-                    MndAppMode.Trade -> {
-                        TradeNavGraph(
-                            sdk = sdk,
-                            user = user!!,
-                            feedReloadSignal = feedReloadSignal,
-                            onLogout = {
-                                sdk.logout()
-                                user = null
-                                authScreen = AuthScreen.Login
-                            },
-                            onOpenPost = { postDetailId = it },
-                            onCompose = { composeOpen = true },
-                            onThemeChanged = {
-                                sdk.setTheme(it)
-                                activeThemeStr = it
-                            },
-                            
-                            onChangeMode = { selectedMode ->
-                                sdk.sessionStore().setAppMode(selectedMode.name)
-                                appModeStr = selectedMode.name
-                            },
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                    }
-                    null -> {}
-                }
-            }
-        }
+    when (checkNotNull(state.appMode)) {
+        MndAppMode.Community ->
+            CommunityNavGraph(
+                sdk = sdk,
+                user = user,
+                feedReloadSignal = state.feedReloadSignal,
+                onLogout = commonLogout,
+                onOpenPost = openPost,
+                onCompose = openComposer,
+                onThemeChanged = changeTheme,
+                onChangeMode = changeMode,
+                modifier = Modifier.fillMaxSize(),
+            )
+        MndAppMode.Adoption ->
+            AdoptionNavGraph(
+                sdk = sdk,
+                user = user,
+                feedReloadSignal = state.feedReloadSignal,
+                onLogout = commonLogout,
+                onOpenPost = openPost,
+                onCompose = openComposer,
+                onThemeChanged = changeTheme,
+                onChangeMode = changeMode,
+                modifier = Modifier.fillMaxSize(),
+            )
+        MndAppMode.Trade ->
+            TradeNavGraph(
+                sdk = sdk,
+                user = user,
+                feedReloadSignal = state.feedReloadSignal,
+                onLogout = commonLogout,
+                onOpenPost = openPost,
+                onCompose = openComposer,
+                onThemeChanged = changeTheme,
+                onChangeMode = changeMode,
+                modifier = Modifier.fillMaxSize(),
+            )
     }
 }

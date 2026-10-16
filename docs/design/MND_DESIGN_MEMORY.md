@@ -2,7 +2,253 @@
 
 Created: 2026-05-26
 
-Last updated: 2026-06-03
+Last updated: 2026-10-16
+
+## Pet Friends Circle and Own-pet Missing Flow — 2026-10-16 extension
+
+- User requested a carefully designed Moments-like pet friends circle and an
+  own-pet missing-status flow with downstream linkage. Continue design only;
+  application implementation remains gated on complete design confirmation.
+- Created two four-screen raster proposals in figma-study: pet-friends-circle-
+  concept-v2.png and pet-lost-linkage-concept-v2.png, with two standalone SVG
+  flow diagrams and detailed briefs. Built-in image_gen; illustrative photos
+  and data, not real pet records. Approved Friendly direction retained.
+- Circle defaults are review recommendations: mutual friends, chronological feed,
+  no contact import, separate following, exclusive per-entry audiences, shared
+  reaction/sticker patterns, no video. Public-post permission never opens a
+  private pet profile. Comment/history rules remain reviewable proposals.
+- Missing flow separates private status, public case, active sharing and receiver
+  subscription. Private leads are not comments or verified matches. Owner confirms
+  reunion, stops this case's alerts and updates linked cards; other closure is not
+  reunion. A repeat incident gets a new case. No background tracking by default;
+  the 5–100 km location model and caretaker scope remain pending decisions.
+- Figma editing transport repeatedly failed. No new native frames or prototype
+  routes from this extension. Existing 134 native states remain the prior range;
+  22 circle + 18 missing-flow scenarios are PLANNED, not completed frames.
+  Source/status: figma-study/pet-social-lost-design-status.json.
+
+## Social, DM, Groups and Phone Prototype — 2026-10-16
+
+- Later explicit scope: video is deferred. MVP pet diaries are text + multiple still
+  images; no video upload / playback / video messages / in-app verification-video
+  requirement. Static stickers first is a proposal, animated media remains deferred.
+  Images need compression / thumbnails / lazy loading when implemented; this does
+  not impose a business limit on the number of pets.
+- Newly stated requirements (not yet designed): each user can create multiple pets
+  without an artificial count cap; each pet has a diary and configurable profile
+  visibility; each entry has its own visibility; emoji / sticker UI shared across
+  posts, comments, adoption discussion, DM and groups. Private-profile / public-entry
+  interaction and caretaker permissions are still unconfirmed. Do not claim the
+  existing 134-state prototype implements these extensions.
+
+- User approved social / comments / likes / reports and one-to-one first, groups next,
+  and explicitly prohibited application-code work until all designs are confirmed.
+  User then requested true pill ends and a clickable phone preview.
+- Same learning Design, pages 10–11: six of the original 59 roots updated in place,
+  75 new states = 134 phone states. Added 12 reusable social mains. Cat-first feed,
+  dog / rabbit branches, context-specific reports and message-request privacy.
+- Buttons: 48px high / 24px radius, smoothing 0; cards and inputs remain 16px.
+  Token VariableID:104:314; focus keeps 3px gap / 2px stroke, 54h / 27r.
+  Minimal comparison and old 00–09 preserved. Do not revert to earlier 16px buttons.
+- [Current review + three flows](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=109-3347),
+  [handoff](figma-study/SOCIAL_CHAT_HANDOFF.md), current ledger social-chat-state.json.
+  Native routes / scrolling / like variants; preset drafts / outcomes, no real service.
+  Eight prototype entries include exceptions. No sharing-permission change.
+- Readback: 134 roots, no placeholders / missing fonts / checked horizontal overflows /
+  broken NODE targets. 589 NODE actions include CHANGE_TO and exclude BACK; 166
+  checked primary / secondary instances 48h / 24r. Final native export inspected.
+  Physical-phone / keyboard / reader acceptance and browser preview check incomplete.
+  No full WCAG claim. Production Stitch / application code unchanged.
+- Source: social-chat-content.json, components / allocation / batch-01…13, final-validation,
+  prototype-flows, polish and review-sync. Earlier 59-screen exports below are history.
+
+## Phone-first Mainland-use Redesign — earlier 2026-10-16 stage
+
+- Latest user request: apply the selected Friendly direction to ALL ordinary
+  phone screens. Completed on the existing 59 roots, keeping their IDs/positions.
+  Shared Action styling, field/panel corners and phone-only brand/accent aliases
+  unified; error semantics preserved. Original 329 navigation sources preserved,
+  plus one chat CTA = 330, no invalid destinations. Old Light/Dark unchanged.
+  Current [review](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=81-192),
+  [rollout](figma-study/FRIENDLY_MOBILE_ROLLOUT.md),
+  [validation](figma-study/friendly-mobile-validation.json).
+  Reviewed the full contact sheet and representative output; review button copies
+  now share the phone Action family. Other platforms and production code/Stitch
+  are unchanged. This is not runtime/usability acceptance.
+- Earlier workflow correction: agree phone-wide controls/styles with them BEFORE
+  generating further frames. Current 59 screens are structural drafts, not
+  approved visual design. Pause canvas expansion; confirm the style foundation,
+  then a compact control board and a few key screens before scaling the set.
+- User then rejected the existing buttons and requested BOTH earlier directions.
+  Built [01 friendly / 02 minimal button comparison](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=70-209)
+  on existing page 11: 14 isolated variants, common text/context, pressed/loading/
+  disabled/focus examples. No 59-screen replacement. User subsequently selected Friendly.
+  [Ledger](figma-study/button-comparison-state.json), [scope](figma-study/BUTTON_COMPARISON_BRIEF.md).
+- User then requested adjustment of BOTH focus outlines shown in the screenshot.
+  Replaced touching 3px blue strokes with #626873 neutral 2px rings, 3px offset,
+  corner-following geometry and stretch constraints. Updated both source variants
+  and inherited review instances; normal/pressed/loading/disabled and 59 screens
+  unchanged. Current export: button-comparison-focus-preview.png. Static only.
+- Before full rollout, selected 01 Friendly buttons were applied to three isolated
+  [phone key screens](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=81-192): home, adoption detail, application.
+  Detail uses secondary chat plus primary apply; coral/white, 16px radius, 48px height.
+  247 native nodes, 6 discrete photo fills, Noto Sans SC/Manrope, no missing fonts.
+  Full-board export inspected. Visual-only board, no prototype routes or real forms.
+  That stage retained the 59 source drafts; the later user request above supersedes
+  that limitation. Production remains untouched. Ledger: friendly-key-screens-state.json.
+- User rejected the uncomfortable dark-green/terracotta combination and asked
+  for a redesign grounded in mainland pet-owner contexts. Finish the ordinary
+  phone experience before expanding Pad, desktop, Web or dark mode.
+- Current entry: [mobile V2 review](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=61-12).
+  Same file, new pages 10–11; prior 00–09 preserved. Ordinary learning Design,
+  not native Specs. No client or Stitch migration.
+- Current clear neutral surfaces, dark Chinese text, sparse coral/white
+  actions, photo-led community, comparable adoption facts and left-aligned forms.
+  Recent iResearch/KPMG sources inform context, not a universal Chinese color preference.
+- 59 main reference screens: community 8, adoption 12, publishing 7, lost/help 8,
+  messages/trust 9, account 7, secondary paid listings 4, shared states 4.
+  A private-sighting receipt was added so a witness does not enter case-owner management.
+- Navigation proposal: four destinations plus central publishing action;
+  sales move to a secondary entry. Cat example is the main illustrated journey;
+  dog cards do not open cat identity. Non-cat field matrices remain follow-up.
+- 330 static navigation/back actions, no invalid destination in structural readback.
+  All roots 390×844 / Mobile Light V2; old Light/Dark actual values unchanged.
+  21 discrete photo nodes; 955 text / 546 instance / 451 vector / 1142 frame nodes.
+  No missing/wrong fonts. The initial mobile build reused/added 34 local mains,
+  including 22 Lucide icons and 12 controls; current ledgers cover later button
+  assets separately. No whole-UI raster substitution.
+- Twelve specified color pairs pass selected thresholds; primary-action white
+  text 4.60:1, control boundary 3.46:1. Not full WCAG acceptance.
+- Reviewed whole contact sheet and representative board; fixed transparent SVG
+  wrapper fills, header placement, quiet-action weight, active indicator and
+  verification method/date copy. Current exports are friendly-mobile-all-preview.png
+  and friendly-mobile-final-preview.png; original mobile-v2 exports are historical.
+- [Scope](figma-study/MOBILE_V2_BRIEF.md), [current ledger](figma-study/mobile-v2-state.json),
+  [readback](figma-study/friendly-mobile-validation.json), [handoff](figma-study/README.md).
+- No real crawling, map, SMS, input/submission/payment, device, build or test run.
+  Formal policy, detailed review outcomes, species matrices and accessibility
+  runtime acceptance remain follow-up; other platform expansion is deferred.
+
+## Four-platform Dark Design — 2026-10-16
+
+- User approved ordinary Figma Design after the native Spec workflow stopped:
+  this education team reports `specs_enabled: false`. No Spec API was used.
+- Same file `3OFOC3vu18Kx9sRPjummOC`; kept 00–04, added 05–09.
+  21 unique dark screens: phone 14, Pad 2, desktop client 2, Web 3.
+  Four editable comparison snapshots are not additional unique screens or auto-synced.
+- Reused all 59 variables, 7 text styles and old 10 main components;
+  added 5 local mains. Noto Sans SC / Manrope, existing Dark semantic mode.
+  No production code or Stitch contract migration.
+- Added honest cold-start, lost-list / ungeocodable-map empty states, auth / OTP
+  illustrations, item-scoped verification and reporting / acknowledgement screens.
+  No actual scraping, map, SMS, input, submission or payment integration.
+- Inspected platform exports and fixed instance child fill, narrow navigation
+  labels and comparison-row Hug sizing. Readback: all 21 roots explicitly Dark,
+  no missing fonts, 13 discrete pet-photo layers, 49 safe phone navigation/back
+  actions with structurally valid same-page top-level destinations.
+- Nine specified dark color pairs meet selected thresholds; this is not full
+  WCAG, device, screen-reader, keyboard, zoom or click-through acceptance.
+- [Current dark ledger](figma-study/night-state.json),
+  [final readback](figma-study/night-validation.json),
+  [scope and remaining work](figma-study/NIGHT_DESIGN_BRIEF.md).
+- Earlier entries below are dated stage history, not the current Figma inventory.
+  No build, tests, account/seat/share changes or deletions in this pass.
+
+## Cold Start, Lost Pets And Auth — 2026-10-16
+
+- User requested initial content supply, potential collection of lost-pet
+  information with map viewing, and improved login/platform rules.
+- User explicitly selected Wuhan and Shanghai. Keep city coverage, source
+  queues, filters and maintenance distinct; do not silently substitute other-city
+  posts as nearby content. Specific districts/sources/hours remain undecided.
+- Proposed: self-owned editorial baseline + authorized partner supply;
+  allowlisted ingestion only after source-level rights review. No collection ran.
+- Lost/found/sighting locations are timed event locations, not live tracking.
+  Preserve public/private coordinate boundaries, uncertain locations and
+  source/update distinctions; no precise pins invented from district names.
+- Proposed: guest reading, authentication at publishing/contact/private-sighting
+  boundaries, then return to the original draft without auto-submission.
+  Phone OTP sign-in requires new backend/provider work; current module says no
+  real SMS provider, and Expo currently gates the entry on login.
+- Delivered [rules addendum](MND_COLD_START_LOST_PETS_AND_AUTH_SPEC.md) and
+  [four static flow diagrams](flows/cold-start-and-auth.html). Source/SDK/legal
+  references were checked. No app code, map/SMS integration, scraping, Figma
+  edits, automation, build or tests in this pass. New screens remain backlog.
+- User additionally requested adoption authenticity and effective reporting.
+  Extended [trust rules](MND_TRUST_AND_DISCLOSURE_SPEC.md) to 1.1: item-scoped
+  evidence/expiry, publishing alternatives, immutable report context, protected
+  reporter channel, proportional temporary protection, independent review and
+  appeal. No universal truthful/healthy badge, no report-count guilt, and no
+  unsupported-report = malicious inference. Received means acknowledgement,
+  not a completed human review. Metrics cover sampling, response, inconsistency,
+  appeal changes and recurrence; actual verification/report cases were not run.
+
+## Figma Learning Exploration — 2026-10-16
+
+- User explicitly approved a new visual direction, not necessarily the old UI,
+  and inclusion of dogs and other pets while keeping cats primary.
+- Noncommercial learning only, in the existing kitty-circle education folder.
+- Created one Design file: `3OFOC3vu18Kx9sRPjummOC`, now named
+  `M&D｜产品与交互设计 V1｜非商业学习稿`. Five internal pages (00–04),
+  12 review screens plus a separate 12-screen demonstration snapshot.
+- New proposal: 社区 / 领养 / 找宠 / 消息 / 我的; independent Light/Dark,
+  warm paper/terracotta colors and Noto Sans SC/Manrope typography.
+- Followed Figma native design/component guidance: 59 variables, 7 text styles,
+  10 main components, editable text/layout and discrete pet photos; no whole-UI raster.
+- Final exports were inspected; component overflow and added-text clipping fixed.
+  32 navigation/back actions have structurally valid targets; not a complete
+  interaction or accessibility acceptance test. No real submissions simulated.
+- Existing kitty-circle and Team project folders were not created here. Three
+  other Untitled files (one Slides, two FigJam) have no creation record here
+  and were not modified. No deletion or sharing/seat changes performed.
+- Source of truth and scope: [learning brief](MND_FIGMA_STUDY_BRIEF.md),
+  [handoff index](MND_FIGMA_DESIGN_DOCUMENT.md), [node ledger](figma-study/state.json).
+  Production remains on Stitch V2 until a separate implementation decision.
+- No app code, build, tests, or devices were run in this design task.
+
+## Current Product Decision — 2026-10-15
+
+Current documents: [strategy](../bmad/research-report.md),
+[PRD 2.0](../bmad/prd.md), [UX 2.0](../bmad/ux-design.md),
+[trust/disclosure rules](MND_TRUST_AND_DISCLOSURE_SPEC.md), and
+[seven-flow overview](flows/index.html).
+
+- Community and adoption remain central; cat-sale/paid-transfer information
+  and appointments are a supporting capability.
+- Individuals, businesses, catteries, and disclosed authorized agents may
+  participate. Household keeping is not a trust prerequisite; hidden roles,
+  impersonation, misleading locations, bait-and-switch cats/prices are the concern.
+- Identity, the relationship to each cat, and verified evidence are distinct.
+  Legitimate staff, foster homes, and hospital meeting locations need not match.
+- Proposed navigation: 社区 / 领养 / 找猫 / 消息 / 我的. This remains a
+  documented proposal pending Stitch mapping; clients were not changed here.
+- Appointments keep immutable confirmation versions; key changes need renewed
+  agreement. Refusal is an exit, not a buyer no-show.
+- Verification discloses scope/method/time; video does not prove ownership,
+  household origin, no intermediary, or future health.
+- Initial no-payment/no-guarantee scope is a planning assumption, not a user
+  decision to provide payment services. Adoption and buyer-visit metrics remain separate.
+- The 2026-08 audit is historical evidence, not the current release backlog.
+
+### Scope And Validation Of This Pass
+
+Documentation and independent diagrams only, based on main at e4164ff and the
+existing working tree. Unrelated Android/iOS changes were preserved. No builds,
+project execution, tests, or device checks; no claims that new product flows
+are already implemented. Static results are reported in the task handoff.
+
+Static documentation checks found 34 unique functional requirements, 8 unique
+non-functional requirements and 14 candidate stories; every functional
+requirement has acceptance criteria and a story reference. Local Markdown
+links, UTF-8/no-BOM and whitespace checks passed across the 11 task documents.
+The seven SVG files parsed as XML; the overview's local targets, IDs and
+JavaScript syntax passed static inspection. Browser rendering remains unverified.
+
+## Historical Implementation Notes
+
+The records below describe earlier work. Old Sugar/crimson, 8dp consumer-card,
+three-mode, and commerce-first statements are historical, superseded by the
+current PRD and Stitch V2 contract where they conflict.
 
 ## Decision
 

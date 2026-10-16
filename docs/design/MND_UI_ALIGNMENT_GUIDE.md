@@ -1,8 +1,21 @@
 # M&D UI Alignment Guide
 
-Last updated: 2026-06-06
+Last updated: 2026-10-15 (document scope clarification; visual tokens unchanged)
 
 This is the implementation-facing guide for keeping Web, desktop boards, mobile clients, and future Stitch updates aligned.
+
+## Product And Visual Scope
+
+The current product proposal is defined in [PRD 2.0](../bmad/prd.md),
+[UX specification](../bmad/ux-design.md), and the
+[trust/disclosure specification](MND_TRUST_AND_DISCLOSURE_SPEC.md).
+It supports clearly disclosed adoption and cat sales by individuals, businesses,
+and authorized agents. Household keeping is not a trust prerequisite.
+
+This guide and the Stitch mirror remain the visual authority. The proposed
+unified navigation and trust/appointment screens require explicit mapping to
+existing Stitch components before implementation. This documentation update
+does not claim that remote designs or clients have already been migrated.
 
 ## Source Of Truth
 
@@ -57,7 +70,8 @@ Do not treat Primary, Secondary, Tertiary, and Neutral as four global M&D themes
 
 ### Honey
 
-Use for Feed, Profile, Pet Profile, Messages normal mode, and Orders normal mode.
+Honey references demonstrate Feed, Profile, Pet Profile, Messages, and legacy
+Orders. Consumer pages inherit the selected global theme rather than forcing Honey.
 
 - Primary: `#FF8A3D`
 - Background: `#FFF8F2`
@@ -121,9 +135,9 @@ Use for restrained neutral styling, documentation, dense information, creator to
 - Use borders and tonal layers first; use shadows subtly.
 - No decorative gradient blobs, glassmorphism, neon effects, glossy 3D, or heavy shadows.
 
-## Navigation
+## Existing Reference Navigation And Proposed Migration
 
-Mobile app navigation must be exactly:
+The current Stitch reference navigation is:
 
 - Feed
 - Market
@@ -131,13 +145,17 @@ Mobile app navigation must be exactly:
 - Orders
 - Profile
 
-Desktop can expand this into a side navigation, but the same core product areas must remain obvious.
+The product proposal recommends 社区 / 领养 / 找猫 / 消息 / 我的, with
+contextual publishing actions. This is a proposed business change, not an
+assertion that the Stitch reference has been updated. See the current UX
+specification for migration and historical-order access. Desktop mapping should
+preserve the same task meanings and permissions.
 
 ## Feature Mapping
 
 Feed:
 
-- Theme: Honey.
+- Theme: inherit the selected global theme; Honey is a reference example.
 - Required: composer entry, feed card, media grid, like, comment, share, save, follow, comments, filter tabs, empty state, skeleton state.
 
 Market:
@@ -151,12 +169,12 @@ Market:
 
 Messages:
 
-- Theme: Honey.
+- Theme: inherit the selected global theme; Honey is a reference example.
 - Include conversation item, message bubble, input bar, attachment, send, unread badge, chat header, compact order context, empty state, skeleton state.
 
 Orders:
 
-- Theme: Honey.
+- Theme: inherit the selected global theme; Honey is a reference example.
 - Official states: `pending_payment`, `paid`, `cancelled`, `shipped`, `refunded`, `completed`.
 - Do not use `delivered`.
 - Buyer/seller actions must match state rules from `.stitch/DESIGN.md`.
@@ -182,5 +200,7 @@ Legacy handmade references, old Stitch maps, and prior-generation design docs ha
 
 - Do not run Gradle.
 - Do not run Go build/run/test on this machine.
-- Use static checks and browser rendering for Web UI.
+- Follow the global execution boundary: without current user authorization,
+  use static source/document checks only. Historical browser-rendering records
+  are not a claim of fresh verification.
 - Validate local screenshots against `web/assets/stitch-remote/screens` and implementation details against `web/assets/stitch-remote/sources`.

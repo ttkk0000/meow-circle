@@ -1,6 +1,12 @@
 # M&D / meow & doggie Server (Go + Caddy)
 
-M&D = meow & doggie。项目定位为猫猫优先、狗狗陪伴的社区与交易服务端骨架：
+M&D = meow & doggie。项目为猫猫优先、doggie 友好的社区服务端与多端客户端。
+
+当前产品方案（2026-10-15）以交流与领养为主，补充可信找猫：允许个人、商家和已披露代理发布售猫/有偿转让信息，重点解决身份冒用、虚假地点、隐瞒关系、换猫和隐藏费用。家庭饲养不作为可信前提。首轮信息与预约、不代收款是规划假设，新方案尚未在客户端实施。
+
+先看[整体流程图](docs/design/flows/index.html)和[文档入口](docs/README.md)，需求以 [PRD 2.0](docs/bmad/prd.md) 为准。下文主要说明已有工程能力，不能将现有交易 API 视为已实现新核验与预约机制。
+
+已有基础包括：
 
 - 日常分享发帖
 - 评论互动
@@ -131,13 +137,12 @@ caddy reload
 - 用户名：`demo`
 - 密码：`123456`
 
-UI 基于 [Cursor Design System](https://getdesign.md/cursor/design-md) 构建（见根目录 `DESIGN.md`）：
+当前视觉权威为 [Stitch V2](.stitch/DESIGN.md)和 [M&D UI 对齐指南](docs/design/MND_UI_ALIGNMENT_GUIDE.md)：
 
-- **暖奶油主画布**（`#f2f1ed`）+ **近黑文本**（`#26251e`），替代传统冷色调界面；
-- 三字体系统：压缩感 Gothic（显示/UI）+ Serif（editorial 正文，带 `cswh` 花体替代字符）+ Mono（代码）；
-- 按钮 hover 统一位移到暖 crimson（`#cf2d56`）—— Cursor 标志性交互；
-- `oklab()` 空间的边框 token，带 rgba 回退；
-- 深色 / 暖色 / 浅色 三套主题（`data-theme` 属性切换），字体与语言独立持久化。
+- Honey、Mint、Night、Neutral 四主题；Neutral 是正式主题。
+- Outfit/Inter 与中文字体回退；消费者卡片 16px、Neutral 卡片 8px。
+- 页面继承全局主题；新业务页面需映射现有组件。
+- 历史页面与演示回退的实际行为以源码为准，不用早期 Cursor/crimson 规范覆盖当前设计。
 
 登录、注册页已从首页抽离：未登录用户无需离开首页就能阅读帖子与交易，只有发帖、评论、下单、个人中心等操作才会带着 `return_to` 参数跳转到独立的登录页，登录完成后自动回到原位置。
 
@@ -247,7 +252,7 @@ mobile/
     ├── api.ts          # 类型化 fetch + SecureStore token
     ├── auth.tsx        # <AuthProvider> + useAuth()
     ├── components.tsx  # Screen / Card / Button / Input / Txt / Pill
-    └── theme.ts        # Cursor 设计系统 token（和 web 同源）
+    └── theme.ts        # M&D 主题 token；参考 Stitch V2 对齐指南
 ```
 
 本地跑：
@@ -261,7 +266,7 @@ npm start              # 扫二维码即可在真机看到
 
 为什么选 Expo 而不是 bare RN：**Windows 上也能云构 iOS**（EAS Build）、**OTA 热更新**（EAS Update）、**文件路由**（Expo Router）、**SecureStore**、**web 输出**同一份代码——这些都是 bare RN 需要自己拼的东西。完整说明见 [`mobile/README.md`](./mobile/README.md)。
 
-设计系统完全复刻 `web/theme.css` 的 Cursor 风：奶油画布、近黑墨、crimson 破坏色、扩散阴影。按钮按下会切到 crimson，和 web 端的 hover 动作一致。
+移动端视觉按 M&D 四主题与 Stitch V2 对齐；当前实现和后续拟实施业务范围分别见源码及 PRD，不以本说明代替多端验证。
 
 ## 6) 开发、运维、CI
 
@@ -303,7 +308,7 @@ Dependabot (`.github/dependabot.yml`) 每周一早 9 点 (Asia/Shanghai) 扫描 
 - **项目规则（短、常驻上下文）**：`.cursor/rules/design-system.mdc`（token/组件/气质/文案格式）、`.cursor/rules/design-user-context.mdc`（仅用户心智与动效提要，避免与上重复）、`.cursor/rules/karpathy-guidelines.mdc`（Karpathy 四条提要；[上游](https://github.com/forrestchang/andrej-karpathy-skills)）——**Karpathy 与 design-user 的完整长文只在对应 SKILL，勿与 .mdc 双份维护**
 - **技能（按需读，勿与规则同轮重复全文）**：`.cursor/skills/karpathy-guidelines/SKILL.md`、`.cursor/skills/kitty-circle-design-user-context/SKILL.md`
 - **User Rules 粘贴块**（合并 Karpathy + kitty-circle）：`.cursor/USER_RULES_PASTE_DESIGN.md`；全局副本 `~/.cursor/USER_RULES_PASTE_DESIGN.md`
-- 完整设计文档：`DESIGN.md`
+- 当前设计权威：`.stitch/DESIGN.md`；产品/设计阅读顺序见 `docs/README.md`。历史 Cursor 资料不作为新 UI 的视觉权威。
 
 ## 7) API 稳定性约定
 

@@ -1,81 +1,45 @@
-# M&D Client Interaction Spec
+# M&D 客户端交互交接索引
 
-Last updated: 2026-06-03
+更新：2026-10-15｜状态：拟实施交互摘要
 
-This spec maps the Figma-ready M&D direction into the runtime clients, with KMP
-Android as the first implementation target and Expo as the matching follow-up.
+完整需求：[PRD](../bmad/prd.md)｜完整页面：[UX 规格](../bmad/ux-design.md)｜规则：[真实性与披露规范](MND_TRUST_AND_DISCLOSURE_SPEC.md)
 
-## 1. Home
+本文取代旧版 Sugar/crimson、全卡片 8dp、三模式和用品交易主线的交互指令。当前代码尚未完成本版迁移，不将本文视为已实现能力。
 
-Goal: make the first screen feel like a warm pet-life magazine that is still fast
-to use.
+## 页面与业务合同
 
-- Top bar stays compact: avatar, `M&D`, `meow & doggie`, notifications.
-- First content block is `今日猫猫编辑台`, not a large logo area.
-- Feed filters are `推荐`, `最新`, `关注`; selected state uses the warm crimson
-  brand color sparingly.
-- Search is a restrained 8dp input on a warm surface, not a large blue pill.
-- The editorial module promotes `M&D 猫猫主角季` with concise copy and one icon.
-- Feed tiles always have a cover area. If the API has no image, render an
-  editorial placeholder cover instead of a bare text card.
-- Loading uses skeleton-like warm surfaces.
-- Empty state explains what happened and how to continue.
-- Error state never exposes Kotlin/JSON/internal API strings. It offers `重试`
-  and `看离线演示`.
+| 领域 | 必须保持的语义 | 主要关联需求 |
+|---|---|---|
+| 全局入口 | 建议社区、领养、找猫、消息、我的；新用户不先选模式 | FR-001–003 |
+| 社区 | 日常/互助/救助/安家；商业关联明确性质 | FR-004–006 |
+| 详情 | 领养与出售分动作；主体关系、未知项、核验范围和费用可见 | FR-008、FR-012、FR-028–030 |
+| 发布 | 动态/领养/出售分模板、草稿、预览与缺项提示 | FR-005、FR-009 |
+| 领养 | 必要申请、撤回、可选试养、双方交接与回访 | FR-011–017、FR-020 |
+| 预约 | 同一版本明确双确认；报价、猫、接待方与地点可追溯 | FR-031 |
+| 变更 | 差异、新版本、待确认、拒绝出口；不以未回复为同意 | FR-032 |
+| 会话 | 按猫/申请/预约显示上下文，不以聊天替代确认 | FR-018–019 |
+| 反馈 | 分项一致/不符/不确定；无码也可举报 | FR-022、FR-033–034 |
+| 个人/工作台 | 账号身份与具体猫关系分开；权限不等于 App 模式 | FR-002、FR-007 |
+| 后台 | 证据复核、处理理由、申诉、最小权限与审计 | FR-023–024 |
 
-## 2. Discover
+## 跨端状态与反馈
 
-- Search targets circles, activities, and marketplace-adjacent content.
-- Circle chips are horizontal pills: `猫猫新手村`, `橘猫联盟`, `黑猫部`,
-  `猫咪摄影`, `领养中心`.
-- Selecting a circle filters the feed and updates the subheading.
-- The weekly topic block explains the current community theme and leads into
-  posts, not a generic hero card.
-- Empty state should distinguish "no posts in this circle" from "no search
-  results".
+Web、Expo、KMP Android、KMP Desktop 使用同一业务合同。服务端校验身份、授权、归属、状态和版本；客户端隐藏入口不能替代权限。
 
-## 3. Compose
+所有提交支持进行中、防重复、成功、失败保留输入和重试。所有列表区分未加载、空结果、失败、离线缓存与演示。已暂停或过期数据不能仍展示有效的申请/预约动作。
 
-- Compose is a first-class middle tab on KMP.
-- The first view should offer modes: `猫猫日常`, `求助问答`, `活动`, `好物交易`.
-- Validate title and body before submit.
-- Keep a local draft per mode.
-- Publish button has loading, success, and retry states.
-- Failed publish errors should say what to do next, not show HTTP internals.
+核验摘要使用具体事项及时间；“近期视频已审阅”“材料已上传”“来源已确认”不能混用。预计收款方只是声明，平台未接支付时不得标为已验证付款。
 
-## 4. Post Detail
+## 视觉与可访问性
 
-- Media leads when present; otherwise the title/content leads in an editorial
-  panel.
-- Author row includes follow and private-message affordances when allowed.
-- Like uses optimistic feedback and can roll back on failure.
-- Comments are part of the reading surface; the empty state invites the first
-  useful reply.
-- The comment composer is fixed at the bottom for signed-in users.
+沿用[UI 对齐指南](MND_UI_ALIGNMENT_GUIDE.md)和 Stitch V2。主题为 Honey、Mint、Night、Neutral，Sugar 仅兼容别名。消费者卡 16px、Neutral 卡 8px、按钮/输入 12px；不继续执行旧版“一律 8dp”。
 
-## 5. Messages
+关键文字保证对比度；48dp/44pt 原生目标；Web 关键触控区按项目 44px 目标；label、错误关联、键盘焦点、读屏状态、字体放大与 reduced-motion 见完整 UX 规格。
 
-- Message home has four sections: private chats, likes/saves, new followers,
-  notifications.
-- API failure offers the same offline demo affordance as Home.
-- Conversation rows show peer, last message, time, and unread count.
-- Product/market conversations may later include a compact listing card.
+## 开发前检查
 
-## 6. Profile
-
-- Profile is a hub: identity, bio, stats, posts, settings, theme switch, logout.
-- Theme switch labels should be clear: `Sugar`, `Mint`, `Night`.
-- Profile post grid should use image-first cells when possible and editorial
-  placeholders otherwise.
-- Logout is present but visually secondary until the settings section.
-
-## 7. Visual Rules
-
-- Standard cards, panels, inputs, and tiles use 8dp radius.
-- True pills are reserved for filters, chips, and compact actions.
-- Sugar theme uses warm cream, near-black text, and warm crimson; avoid large
-  candy-pink blocks.
-- Do not expose `Mock`, `JsonArray`, `JsonNull`, route names, or serializer
-  details on user-facing screens.
-- Doggie appears as companion content in activities, services, adoption, and
-  secondary stories; cats remain the emotional center.
+1. 看[流程总览](flows/index.html)，确认任务、异常和退出路径。
+2. 逐屏映射已有 Stitch 组件，新导航仍是方案而非远程设计事实。
+3. 确认旧模式、申请、订单和认证存储迁移，保留用户记录。
+4. 将每个操作绑定 PRD 的权限、状态与版本规则。
+5. 按全局规则做允许的静态检查；构建、运行、设备结果不得未经执行宣称通过。
