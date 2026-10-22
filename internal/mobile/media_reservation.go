@@ -42,10 +42,9 @@ func (s *Service) ReserveMedia(ctx context.Context, actor int64, token, key stri
 				out = r
 				return nil
 			}
-			if r.State != "uploading" || old.UploadLeaseUntil != nil && old.UploadLeaseUntil.After(s.Now()) {
+			if r.State != "upload_expired" && r.State != "uploading" || old.UploadLeaseUntil != nil && old.UploadLeaseUntil.After(s.Now()) {
 				return ErrConflict
 			}
-			file.Filename = old.Filename
 		} else if e != ErrNotFound {
 			return e
 		} else {
@@ -65,12 +64,14 @@ func (s *Service) ReserveMedia(ctx context.Context, actor int64, token, key stri
 			if e = tx.Save(Media, &r); e != nil {
 				return e
 			}
-			extension := ".jpg"
-			if file.MIME == "image/png" {
-				extension = ".png"
-			}
-			file.Filename = fmt.Sprintf("%d-%s%s", r.ID, file.SHA256, extension)
 		}
+		// 每次租约使用不同物理文件；旧进程迟到写入不能覆盖新一次重试。
+		extension := ".jpg"
+		if file.MIME == "image/png" {
+			extension = ".png"
+		}
+		file.Filename = fmt.Sprintf("mnd-%d-%d-%s%s", r.ID, r.Version+1, file.SHA256, extension)
+		r.State = "uploading"
 		until := s.Now().Add(2 * time.Minute)
 		file.UploadLeaseUntil = &until
 		if e = SetBody(&r, file); e != nil {

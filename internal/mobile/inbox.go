@@ -64,15 +64,17 @@ func (s *Service) ReadMessages(ctx context.Context, actor, id int64, group bool,
 }
 
 type Unread struct {
-	Pending         map[string]int `json:"pending"`
-	Direct          map[int64]int  `json:"direct"`
-	Groups          map[int64]int  `json:"groups"`
-	Notifications   map[string]int `json:"notifications"`
-	MessageRequests int            `json:"message_requests"`
+	Pending           map[string]int  `json:"pending"`
+	Direct            map[int64]int   `json:"direct"`
+	Groups            map[int64]int   `json:"groups"`
+	DirectFirstUnread map[int64]int64 `json:"direct_first_unread"`
+	GroupFirstUnread  map[int64]int64 `json:"group_first_unread"`
+	Notifications     map[string]int  `json:"notifications"`
+	MessageRequests   int             `json:"message_requests"`
 }
 
 func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err error) {
-	out = Unread{Direct: map[int64]int{}, Groups: map[int64]int{}, Notifications: map[string]int{}}
+	out = Unread{Direct: map[int64]int{}, Groups: map[int64]int{}, DirectFirstUnread: map[int64]int64{}, GroupFirstUnread: map[int64]int64{}, Notifications: map[string]int{}}
 	err = s.Repo.View(ctx, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
@@ -113,15 +115,25 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 					return e
 				}
 				count := 0
+				first := int64(0)
 				for _, m := range messages {
 					if m.OwnerID != actor {
 						count++
+						if first == 0 || m.ID < first {
+							first = m.ID
+						}
 					}
 				}
 				if k == Groups {
 					out.Groups[p.ID] = count
+					if first > 0 {
+						out.GroupFirstUnread[p.ID] = first
+					}
 				} else {
 					out.Direct[p.ID] = count
+					if first > 0 {
+						out.DirectFirstUnread[p.ID] = first
+					}
 					if p.State == "pending" && p.OwnerID != actor {
 						out.MessageRequests++
 					}

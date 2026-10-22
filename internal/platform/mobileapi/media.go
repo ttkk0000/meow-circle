@@ -127,7 +127,7 @@ func (h *Handler) uploadFor(w http.ResponseWriter, r *http.Request, actor int64,
 		return nil, e
 	}
 	target := filepath.Join(h.MediaDir, filename)
-	f, e := os.CreateTemp(h.MediaDir, ".upload-*")
+	f, e := os.CreateTemp(h.MediaDir, ".upload-"+filename+"-*")
 	if e != nil {
 		return nil, e
 	}
@@ -135,6 +135,9 @@ func (h *Handler) uploadFor(w http.ResponseWriter, r *http.Request, actor int64,
 	defer os.Remove(tempName)
 	{
 		_, writeErr := f.Write(encoded.Bytes())
+		if writeErr == nil {
+			writeErr = f.Sync()
+		}
 		closeErr := f.Close()
 		if writeErr != nil {
 			return nil, writeErr
@@ -144,9 +147,7 @@ func (h *Handler) uploadFor(w http.ResponseWriter, r *http.Request, actor int64,
 		}
 	}
 	if e = os.Rename(tempName, target); e != nil {
-		if _, statErr := os.Stat(target); statErr != nil {
-			return nil, e
-		}
+		return nil, e
 	}
 	record, e = h.Service.CompleteReservedMedia(r.Context(), actor, safetyToken, record.ID, record.Version)
 	if e != nil {

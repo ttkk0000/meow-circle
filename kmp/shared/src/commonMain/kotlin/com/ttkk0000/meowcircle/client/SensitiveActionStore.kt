@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.*
 /** Typed immutable review snapshots. A changed snapshot always requires new scope verification. */
 sealed interface SensitiveIntent {
     data class Account(val action: String, val input: AccountInput) : SensitiveIntent
-    data class Guardian(val id: Long, val input: GuardianDecision) : SensitiveIntent
-    data class Contract(val id: Long, val input: ContractInput) : SensitiveIntent
+    data class Guardian(val id: Long, val input: GuardianDecision, val reviewSummary: String = "") : SensitiveIntent
+    data class Contract(val id: Long, val input: ContractInput, val reviewSummary: String = "") : SensitiveIntent
     data class DataRequest(val input: DataRequestInput) : SensitiveIntent
     data class Rights(val token: String, val input: RightsInput, val authenticated: Boolean = false) : SensitiveIntent
 }

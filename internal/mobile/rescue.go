@@ -708,15 +708,31 @@ func (s *Service) Introduction(ctx context.Context, actor, petID int64, in Intro
 				return ErrForbidden
 			}
 		}
-		if e = s.attachments(tx, actor, in.MediaIDs); e != nil {
-			return e
+		// 协作者可保留当前宠物已附照片；新增照片仍必须属于本次操作者。
+		// 不据此授予读取其他宠物照片、私密健康记录或领养决定的权限。
+		if len(in.MediaIDs) > 9 || len(Unique(in.MediaIDs)) != len(in.MediaIDs) {
+			return Invalid("use up to 9 distinct images")
 		}
-		p.Bio = in.Bio
-		if p.Audience.Mode == "public" {
-			if e = s.publicAttachments(tx, actor, in.MediaIDs); e != nil {
+		for _, mediaID := range in.MediaIDs {
+			media, e := tx.Get(Media, mediaID)
+			if e != nil {
 				return e
 			}
+			if media.State != "ready" || media.OwnerID != actor && !Has(r.MediaIDs, mediaID) {
+				return ErrForbidden
+			}
+			file, e := Decode[MediaFile](media)
+			if e != nil {
+				return e
+			}
+			if p.Audience.Mode == "public" && file.Scope != "public" {
+				return Invalid("private evidence cannot be attached to a public introduction")
+			}
+			if file.KnownAI {
+				return Denied("generated_media_is_not_factual_evidence")
+			}
 		}
+		p.Bio = in.Bio
 		r.MediaIDs = in.MediaIDs
 		if e = save(tx, Pets, &r, p, actor, "adoption.introduction_changed"); e != nil {
 			return e

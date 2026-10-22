@@ -570,6 +570,11 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 		return nil, mobile.ErrForbidden
 	}
 	r = r.WithContext(mobile.WithOperator(r.Context(), op.ID))
+	if len(path) == 1 && path[0] == "upload-expiry" && r.Method == http.MethodPost {
+		return invoke(r, func(in mobile.UploadCleanupInput) (mobile.UploadCleanupResult, error) {
+			return h.cleanupUploads(r, op.ID, in)
+		})
+	}
 	if len(path) == 1 && (path[0] == "privacy-expiry" || path[0] == "challenge-expiry" || path[0] == "token-expiry") && r.Method == http.MethodPost {
 		in, e := payload[struct {
 			Cursor int64 `json:"cursor"`

@@ -81,7 +81,7 @@ func operatorRole(path []string) string {
 		return "authority_verifier"
 	case "deliveries", "outbox", "provider-revocations", "nearby-alerts":
 		return "worker"
-	case "data-requests", "legacy-erasure", "media-erasure", "privacy-expiry", "challenge-expiry", "token-expiry":
+	case "data-requests", "legacy-erasure", "media-erasure", "privacy-expiry", "challenge-expiry", "token-expiry", "upload-expiry":
 		return "privacy"
 	default:
 		return "moderator"

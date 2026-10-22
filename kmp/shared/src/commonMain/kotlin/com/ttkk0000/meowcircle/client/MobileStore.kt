@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.*
 import kotlin.random.Random
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 enum class MobileTab(val label: String) { Community("社区"), Adoption("领养"), Publish("发布"), Messages("消息"), Profile("我的") }
 
@@ -33,28 +35,37 @@ data class MobileState(
     val capabilities: LoginCapabilities = LoginCapabilities(), val capabilityError: String? = null,
     val eligibility: Eligibility? = null, val pendingOperations: List<CommandRecovery> = emptyList(),
     val publicationConfirmation: EntryInput? = null,
+    val composeAudienceValid: Boolean = true,
     val entries: PageState<EntryBody> = PageState(), val pets: PageState<PetBody> = PageState(),
     val myPets: PageState<PetBody> = PageState(), val applications: PageState<AdoptionBody> = PageState(),
     val cases: PageState<CaseBody> = PageState(), val conversations: PageState<ConversationBody> = PageState(),
     val groups: PageState<GroupBody> = PageState(), val messages: PageState<MessageBody> = PageState(),
     val comments: PageState<CommentBody> = PageState(), val notifications: PageState<NotificationBody> = PageState(),
-    val pet: MobileRecord<PetBody>? = null, val entry: MobileRecord<EntryBody>? = null,
+    val petChecks: List<VerificationSummary> = emptyList(), val pet: MobileRecord<PetBody>? = null, val entry: MobileRecord<EntryBody>? = null,
     val application: MobileRecord<AdoptionBody>? = null, val case: MobileRecord<CaseBody>? = null,
-    val conversation: MobileRecord<ConversationBody>? = null, val profile: MobileProfile? = null,
-    val metrics: Map<Long, EntryMetrics> = emptyMap(), val inbox: InboxSummary? = null,
-    val emoji: List<EmojiItem> = emptyList(), val detailLoading: Boolean = false, val detailError: String? = null,
+    val conversation: MobileRecord<ConversationBody>? = null, val group: MobileRecord<GroupBody>? = null, val profile: MobileProfile? = null,
+    val metrics: Map<Long, EntryMetrics> = emptyMap(), val inbox: InboxSummary? = null, val inboxError: String? = null,
+    val feedSpace: String = "community", val feedKeyword: String = "",
+    val emoji: List<EmojiItem> = emptyList(), val stickers: List<StickerItem> = emptyList(), val detailLoading: Boolean = false, val detailError: String? = null,
+    val expressionState: MobileRecord<ExpressionBody>? = null,
     val busy: Boolean = false, val notice: String? = null, val conflict: Boolean = false,
     val applying: Boolean = false, val applicationText: String = "", val actionNote: String = "",
-    val reply: String = "", val composeTitle: String = "", val composeText: String = "",
+    val reply: String = "", val replyTo: Long = 0, val replySticker: String = "", val replyPhotos: List<PhotoAttachment> = emptyList(), val composeEntry: EntryBody = EntryBody(""), val composeTitle: String = "", val composeText: String = "",
+    val replyDraftRestoring: Boolean = false, val replyDraftError: String? = null,
+    val replyDraftReady: Boolean = true,
+    val guestReplySuggestion: String? = null,
+    val savedReplyDestinations: List<MobileDestination> = emptyList(),
     val photos: List<PhotoAttachment> = emptyList(), val draftLoading: Boolean = false, val draftLoaded: Boolean = false,
     val composeEdited: Boolean = false,
     val confirmation: AdoptionCommand? = null,
 )
 
 /** One portable state owner. Rotation, tab layout and iPad resizing never create a second business store. */
-class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
+class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, private val localDrafts: LocalComposeDrafts? = null,
+    private val localWorkspaces: LocalWorkspaceDrafts? = null, private val localReplies: LocalWorkspaceDrafts? = null) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-    private val _state = MutableStateFlow(MobileState())
+    val features = MobileFeatureStore(api, scope, localWorkspaces)
+    private val _state = MutableStateFlow(MobileState(replyDraftReady = localReplies == null))
     val state = _state.asStateFlow()
     private val jobs = mutableMapOf<String, Job>()
     private var accountEpoch = 0L
@@ -67,17 +78,32 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
     private val photoBytes = mutableMapOf<String, SelectedPhoto>()
     private val replyDrafts = mutableMapOf<MobileDestination, String>()
     private val replyKeys = mutableMapOf<MobileDestination, String>()
+    private val richReplies = mutableMapOf<MobileDestination,Pair<Long,String>>()
+    private val replyPhotos = mutableMapOf<MobileDestination,List<PhotoAttachment>>()
+    private val replyPhotoBytes = mutableMapOf<String,SelectedPhoto>()
+    private val uncertainReplies = mutableSetOf<MobileDestination>()
     private val uploads = Semaphore(2)
+    private val localSaveMutex = Mutex()
+    private val expressionMutex = Mutex()
+    private var localRevision = 0L
+    private var localReady = localDrafts == null
+    private var localPublicationKey: String? = null
+    private val replySaveMutex = Mutex()
+    private var replyRevision = 0L
+    private var replyReady = localReplies == null
+    private var pendingGuestReply: Pair<MobileDestination,String>? = null
 
     init {
+        if (api.user.value == null) restoreReplyDrafts()
         scope.launch {
             api.user.collect { user ->
                 if (_state.value.user?.id != user?.id) accountChanged(user)
+                else if (_state.value.user != user) _state.update { it.copy(user = user) }
             }
         }
         refreshCapabilities()
         scope.launch {
-            try { val emoji = api.expressions().emoji; _state.update { it.copy(emoji = emoji) } }
+            try { val catalog = api.expressions(); _state.update { it.copy(emoji = catalog.emoji, stickers = catalog.stickers) } }
             catch (e: CancellationException) { throw e }
             catch (_: Exception) { /* Text input remains usable when the optional catalogue is unavailable. */ }
         }
@@ -91,23 +117,35 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
     }
 
     private fun accountChanged(user: MobileUser?) {
+        val previousOwner = _state.value.user?.id
+        val sensitiveSignOut = user == null && previousOwner != null && features.sensitive.state.value.stage == SensitiveStage.Submitting
         accountEpoch++
         jobs.filterKeys { it != "restore" && it != "capabilities" }.values.forEach { it.cancel() }
         jobs.keys.removeAll { it != "restore" && it != "capabilities" }
         history.clear()
         draftVersion = 0L
+        localRevision = 0L
+        localReady = localDrafts == null
+        localPublicationKey = null
         photoBytes.clear()
         replyDrafts.clear()
-        replyKeys.clear()
+        replyKeys.clear(); richReplies.clear(); replyPhotos.clear(); replyPhotoBytes.clear(); uncertainReplies.clear()
+        replyRevision = 0L; replyReady = localReplies == null
+        pendingGuestReply = null
         detailRevision++
         _state.update { old ->
             MobileState(restoring = old.restoring, user = user, tab = old.tab,
                 destination = old.destination, auth = if (user != null) AuthForm() else old.auth,
-                capabilities = old.capabilities, capabilityError = old.capabilityError, emoji = old.emoji)
+                capabilities = old.capabilities, capabilityError = old.capabilityError, emoji = old.emoji, stickers = old.stickers)
+        }
+        if (user != null && localDrafts != null) restoreLocalComposeDraft(user.id)
+        restoreReplyDrafts()
+        if (sensitiveSignOut && previousOwner != null) task("clear-signed-out-drafts") {
+            withContext(NonCancellable) { localDrafts?.clear(previousOwner); localWorkspaces?.clear(previousOwner); localReplies?.clear(previousOwner) }
         }
         refreshHome()
         reloadDetail()
-        if (user != null) refreshEligibility()
+        if (user != null) { refreshEligibility(); refreshInbox(); task("expressions") { val record = api.expressionState().items.firstOrNull(); _state.update { it.copy(expressionState = record) } } }
     }
 
     private fun task(key: String, block: suspend () -> Unit) {
@@ -136,21 +174,25 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
 
     fun select(tab: MobileTab) {
         if (_state.value.busy) return
+        pendingGuestReply = null
         history.clear()
         detailRevision++
-        _state.update { it.copy(tab = tab, destination = MobileDestination.Home, detailError = null, applying = false, confirmation = null) }
+        _state.update { it.copy(tab = tab, destination = MobileDestination.Home, detailError = null, applying = false, confirmation = null,guestReplySuggestion = null) }
         if (tab in listOf(MobileTab.Publish, MobileTab.Messages, MobileTab.Profile) && _state.value.user == null) showLogin()
         refreshHome()
     }
 
     fun open(destination: MobileDestination) {
         if (_state.value.busy || destination == _state.value.destination) return
+        pendingGuestReply = null
         history.add(_state.value.destination)
+        jobs.remove("comments")?.cancel(); jobs.remove("messages")?.cancel()
         detailRevision++
         replyKey = replyKeys.getOrPut(destination) { newKey() }
-        _state.update { it.copy(destination = destination, pet = null, entry = null, case = null, application = null,
-            conversation = null, comments = PageState(), messages = PageState(), reply = replyDrafts[destination].orEmpty(), actionNote = "",
-            applying = false, applicationText = "", detailError = null, conflict = false, confirmation = null) }
+        _state.update { it.copy(destination = destination, pet = null, petChecks = emptyList(), entry = null, case = null, application = null,
+            conversation = null, group = null, comments = PageState(), messages = PageState(), reply = replyDrafts[destination].orEmpty(),
+            replyTo = richReplies[destination]?.first ?: 0, replySticker = richReplies[destination]?.second.orEmpty(), replyPhotos = replyPhotos[destination].orEmpty(), actionNote = "",
+            applying = false, applicationText = "", detailError = null, conflict = false, confirmation = null,guestReplySuggestion = null) }
         reloadDetail()
     }
 
@@ -161,11 +203,13 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
         if (s.confirmation != null) { dismissConfirmation(); return true }
         if (s.applying) { _state.update { it.copy(applying = false) }; return true }
         if (s.destination == MobileDestination.Home) return false
+        jobs.remove("comments")?.cancel(); jobs.remove("messages")?.cancel()
         detailRevision++
         val previous = history.removeLastOrNull() ?: MobileDestination.Home
+        pendingGuestReply = null
         replyKey = replyKeys.getOrPut(previous) { newKey() }
-        _state.update { it.copy(destination = previous,
-            detailError = null, confirmation = null, applying = false, reply = replyDrafts[previous].orEmpty()) }
+        _state.update { it.copy(destination = previous,guestReplySuggestion = null,
+            detailError = null, confirmation = null, applying = false, reply = replyDrafts[previous].orEmpty(), replyTo = richReplies[previous]?.first ?: 0, replySticker = richReplies[previous]?.second.orEmpty(), replyPhotos = replyPhotos[previous].orEmpty()) }
         reloadDetail()
         return true
     }
@@ -174,19 +218,224 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
     fun cancelLogin() { if (_state.value.busy) return; resumeApply = null; _state.update { it.copy(auth = AuthForm()) } }
     fun editAuth(form: AuthForm) { _state.update { it.copy(auth = form.copy(error = null)) } }
     fun clearNotice() { _state.update { it.copy(notice = null) } }
+    fun rememberExpression(id: String) = task("expression-$id") {
+        if (_state.value.user == null) return@task
+        expressionMutex.withLock {
+            val record = api.expressionState().items.firstOrNull()
+            val body = record?.data ?: ExpressionBody()
+            val updated = api.saveExpressions(record?.version ?: 0, body.copy(recent = (listOf(id) + body.recent).distinct().take(50)))
+            _state.update { it.copy(expressionState = updated) }
+        }
+    }
+    fun favoriteExpression(id: String) = command {
+        expressionMutex.withLock {
+            val record = api.expressionState().items.firstOrNull()
+            val body = record?.data ?: ExpressionBody()
+            val updated = api.saveExpressions(record?.version ?: 0, body.copy(favorites = if (id in body.favorites) body.favorites - id else (body.favorites + id).distinct()))
+            _state.update { it.copy(expressionState = updated) }
+        }
+    }
+    fun filterFeed(space: String, keyword: String = _state.value.feedKeyword) {
+        require(space in listOf("community", "circle", "diary"))
+        if (keyword.encodeToByteArray().size > 120) { pickerFailed("搜索词过长，请缩短后重试"); return }
+        jobs.remove("entries")?.cancel()
+        _state.update { it.copy(feedSpace = space, feedKeyword = keyword, entries = PageState(), metrics = emptyMap()) }
+        refreshHome()
+    }
+    fun editComposeOptions(space: String, audience: Audience, petId: Long = 0, category: String = _state.value.composeEntry.category) {
+        if (!canEditCompose()) return
+        require(space in listOf("community", "circle", "diary"))
+        if (space == "community" && audience.mode != "public" || space == "circle" && audience.mode == "public") return
+        _state.update { it.copy(composeEntry = it.composeEntry.copy(space = space, audience = audience, petId = petId, category = category), composeEdited = true, publicationConfirmation = null, composeAudienceValid = true) }
+        scheduleLocalSave()
+    }
+    fun editComposeAudienceList(raw: String) {
+        val pieces = raw.split(',', '，', ' ', '\n').filter(String::isNotBlank)
+        val values = pieces.mapNotNull { it.toLongOrNull()?.takeIf { id -> id > 0 } }.distinct()
+        if (values.size != pieces.size || values.size > 200) {
+            _state.update { it.copy(composeAudienceValid = false, publicationConfirmation = null, notice = "好友名单格式有误，已暂停发布，请核对") }; return
+        }
+        val s = _state.value
+        editComposeOptions(s.composeEntry.space,s.composeEntry.audience.copy(userIds = values),s.composeEntry.petId,s.composeEntry.category)
+    }
+    fun dismissPublication() { if (!_state.value.busy) _state.update { it.copy(publicationConfirmation = null) } }
+    fun refreshInbox() = task("inbox") {
+        if (_state.value.user == null) return@task
+        try { val summary = api.inbox(); _state.update { it.copy(inbox = summary, inboxError = null) } }
+        catch (e: CancellationException) { throw e }
+        catch (e: Exception) { _state.update { it.copy(inboxError = e.mobileMessage()) } }
+    }
+    private fun canEditReply(): Boolean {
+        if (!replyReady) { pickerFailed("本机消息草稿尚未恢复，请先重试读取"); return false }
+        if (sending || _state.value.busy) return false
+        val destination = _state.value.destination
+        if (destination in uncertainReplies) { pickerFailed("原消息结果待核对，请先查询原编号，当前内容不能重复发送"); return false }
+        val path = when (destination) { is MobileDestination.Chat -> "${if (destination.group) "groups" else "conversations"}/${destination.id}/messages"; is MobileDestination.Entry -> "entries/${destination.id}/comments"; else -> return false }
+        if (api.recoverableCommands().any { it.command == path && it.phase in listOf("sent", "result_unknown") }) {
+            pickerFailed("原消息结果待核对，输入已保留，请先到待核对操作查看原请求"); return false
+        }
+        return true
+    }
+    fun replyTo(id: Long) {
+        if (!canEditReply()) return
+        richReplies[_state.value.destination] = id to _state.value.replySticker
+        replyKey = newKey(); replyKeys[_state.value.destination] = replyKey; _state.update { it.copy(replyTo = id) }
+        scheduleReplySave()
+    }
+    fun selectSticker(id: String) {
+        if (!canEditReply() || id.isNotBlank() && _state.value.stickers.none { it.id == id }) return
+        richReplies[_state.value.destination] = _state.value.replyTo to id
+        replyKey = newKey(); replyKeys[_state.value.destination] = replyKey; _state.update { it.copy(replySticker = id) }
+        scheduleReplySave()
+    }
+    fun addReplyPhotos(selected: List<SelectedPhoto>) {
+        val s = _state.value; val chat = s.destination as? MobileDestination.Chat ?: return
+        if (!canEditReply() || !requireInteractionContract() || !chat.group && s.conversation?.state != "accepted") return
+        replyKey = newKey(); replyKeys[chat] = replyKey
+        selected.take((9 - s.replyPhotos.size).coerceAtLeast(0)).forEach { photo ->
+            val key = newKey(); replyPhotoBytes[key] = photo
+            replyPhotos[chat] = replyPhotos[chat].orEmpty() + PhotoAttachment(key, photo.name, mime = photo.mime)
+            _state.update { it.copy(replyPhotos = replyPhotos[chat].orEmpty()) }; retryReplyPhoto(key)
+        }
+    }
+    fun retryReplyPhoto(key: String) {
+        if (!canEditReply()) return
+        val chat = _state.value.destination as? MobileDestination.Chat ?: return
+        val item = replyPhotos[chat].orEmpty().firstOrNull { it.key == key } ?: return
+        if (item.uploading || item.mediaId != null) return
+        val epoch = accountEpoch
+        fun update(change: (PhotoAttachment) -> PhotoAttachment) {
+            if (epoch != accountEpoch) return
+            replyPhotos[chat] = replyPhotos[chat].orEmpty().map { if (it.key == key) change(it) else it }
+            if (_state.value.destination == chat) _state.update { it.copy(replyPhotos = replyPhotos[chat].orEmpty()) }
+        }
+        update { it.copy(uploading = true,error = null) }
+        task("reply-photo-$key") {
+            try {
+                val photo = replyPhotoBytes[key] ?: localReplies?.photo(_state.value.user?.id ?: 0L,WorkspacePhoto(item.key,item.name,item.mime))?.also { replyPhotoBytes[key] = it }
+                    ?: throw LocalDraftException("原照片不可读，请移除后重新选择")
+                persistReplies()
+                val result = api.uploadPrivate(photo,key)
+                update { it.copy(uploading = false,mediaId = result.id) }
+                persistReplies()
+                if (epoch == accountEpoch) replyPhotoBytes.remove(key)
+            }
+            catch (e: CancellationException) { throw e }
+            catch (e: Exception) { update { it.copy(uploading = false,error = e.mobileMessage()) } }
+        }
+    }
+    fun removeReplyPhoto(key: String) {
+        if (!canEditReply() || _state.value.busy) return
+        val destination = _state.value.destination
+        jobs.remove("reply-photo-$key")?.cancel(); replyPhotoBytes.remove(key)
+        replyPhotos[destination] = replyPhotos[destination].orEmpty().filterNot { it.key == key }
+        replyKey = newKey(); replyKeys[destination] = replyKey; _state.update { it.copy(replyPhotos = replyPhotos[destination].orEmpty()) }
+        scheduleReplySave()
+    }
     fun editApplication(text: String) { if (withinLimit(text, 2000)) _state.update { it.copy(applicationText = text) } }
     fun editActionNote(text: String) { if (withinLimit(text, 3000)) _state.update { it.copy(actionNote = text) } }
     fun editReply(text: String): Boolean {
-        if (_state.value.busy || !withinLimit(text, 2000)) return false
+        if (_state.value.busy || !canEditReply() || !withinLimit(text, 2000)) return false
         if (text == _state.value.reply) return true
         replyKey = newKey()
         replyKeys[_state.value.destination] = replyKey
         replyDrafts[_state.value.destination] = text
         _state.update { it.copy(reply = text) }
+        scheduleReplySave()
         return true
     }
     fun editCompose(title: String, text: String) {
-        if (withinLimit(title, 80) && withinLimit(text, 5000)) _state.update { it.copy(composeTitle = title, composeText = text, composeEdited = true) }
+        if (!canEditCompose()) return
+        if (withinLimit(title, 80) && withinLimit(text, 5000)) {
+            _state.update { it.copy(composeTitle = title, composeText = text, composeEdited = true, publicationConfirmation = null) }
+            scheduleLocalSave()
+        }
+    }
+
+    private fun canEditCompose(): Boolean {
+        val notice = when {
+            !localReady -> "本地草稿尚未恢复，请解锁设备并重试载入，原文件不会被覆盖"
+            localPublicationKey != null || api.recoverableCommands().any { it.command == "entries" } -> "原发布结果待核对，请先核对原请求，勿重复提交"
+            else -> null
+        }
+        if (notice != null) _state.update { it.copy(notice = notice) }
+        return notice == null
+    }
+
+    private fun pendingCommands(): List<CommandRecovery> {
+        val pending = api.recoverableCommands().toMutableList()
+        uncertainReplies.forEach { destination ->
+            val key = replyKeys[destination] ?: return@forEach
+            if (pending.none { it.clientRequestId == key }) pending.add(CommandRecovery(key,replyPath(destination),"result_unknown",replayable = true))
+        }
+        val key = localPublicationKey ?: return pending
+        return if (pending.any { it.clientRequestId == key }) pending
+            else pending + CommandRecovery(key, "entries", "result_unknown", replayable = false)
+    }
+
+    private suspend fun persistCompose() {
+        val storage = localDrafts ?: return
+        val owner = _state.value.user?.id ?: return
+        val epoch = accountEpoch
+        localSaveMutex.withLock {
+            if (epoch != accountEpoch || !localReady) throw LocalDraftException("本地草稿尚未恢复，原文件未被覆盖")
+            val s = _state.value
+            val snapshot = LocalComposeDraft(server = api.storageScope, owner = owner,
+                cloudVersion = draftVersion, cloudLoaded = s.draftLoaded, title = s.composeTitle, text = s.composeText,
+                edited = s.composeEdited, photos = s.photos.map { LocalComposePhoto(it.key, it.name, it.mime, it.mediaId) },
+                publicationKey = localPublicationKey, entry = s.composeEntry)
+            val bytes = photoBytes.toMap()
+            try {
+                withContext(NonCancellable) {
+                    val saved = storage.save(localRevision, snapshot, bytes)
+                    if (epoch == accountEpoch) localRevision = saved.revision
+                }
+                if (epoch != accountEpoch) throw CancellationException("Account changed")
+            } catch (e: CancellationException) { throw e }
+            catch (e: LocalDraftException) { throw e }
+            catch (_: Exception) { throw LocalDraftException("设备草稿尚未保存，已保留当前输入，请解锁设备并重试") }
+        }
+    }
+
+    private fun scheduleLocalSave() {
+        if (localReady && _state.value.user != null && localDrafts != null) task("local-save") { persistCompose() }
+    }
+
+    private fun restoreLocalComposeDraft(owner: Long) = task("local-restore") {
+        val storage = localDrafts ?: return@task
+        val epoch = accountEpoch
+        try {
+            val draft = storage.load(owner)
+            val restoredBytes = mutableMapOf<String, SelectedPhoto>()
+            val restored = draft?.photos.orEmpty().map { photo ->
+                var error: String? = null
+                if (photo.mediaId == null) {
+                    try { restoredBytes[photo.key] = storage.photo(owner, photo) }
+                    catch (e: CancellationException) { throw e }
+                    catch (_: Exception) { error = "原照片暂不可读，请重试或移除后重新选择" }
+                }
+                PhotoAttachment(photo.key, photo.name, photo.mediaId, error = error ?: if (photo.mediaId == null) "上传未完成，请按原编号重试" else null, mime = photo.mime)
+            }
+            if (epoch != accountEpoch) return@task
+            photoBytes.putAll(restoredBytes)
+            localRevision = draft?.revision ?: 0L
+            draftVersion = draft?.cloudVersion ?: 0L
+            localPublicationKey = draft?.publicationKey ?: api.recoverableCommands().filter { it.command == "entries" }.singleOrNull()?.clientRequestId
+            localReady = true
+            _state.update { it.copy(composeTitle = draft?.title.orEmpty(), composeText = draft?.text.orEmpty(), photos = restored,
+                composeEdited = draft?.edited ?: false, draftLoaded = draft?.cloudLoaded ?: false, composeEntry = draft?.entry ?: EntryBody(""),
+                pendingOperations = pendingCommands(), notice = if (draft != null && restored.any { photo -> photo.mediaId == null }) "本地草稿和照片已恢复，未自动重新上传或发布" else it.notice) }
+            val status = localPublicationKey?.let(api::commandStatus)
+            if (status?.phase == "committed") finishRecoveredPublication(status.receipt)
+            else if (status?.phase == "rejected") {
+                localPublicationKey = null
+                persistCompose()
+                _state.update { it.copy(pendingOperations = pendingCommands()) }
+            }
+            if (_state.value.tab == MobileTab.Publish && !_state.value.draftLoaded) restoreComposeDraft()
+        } catch (e: CancellationException) { throw e }
+        catch (e: LocalDraftException) { throw e }
+        catch (_: Exception) { throw LocalDraftException("本地草稿暂不可读，请解锁设备后重试，原文件未被覆盖") }
     }
     private fun withinLimit(text: String, max: Int): Boolean {
         // Reject the edit as a unit; never split a surrogate, emoji sequence or IME composition with take().
@@ -198,16 +447,31 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
 
     fun login() {
         val form = _state.value.auth
+        authenticate { api.password(form.username.trim(), form.password) }
+    }
+
+    fun loginEmail(input: EmailAuthInput, register: Boolean = false) {
+        if (!_state.value.capabilities.email || register && (!_state.value.capabilities.registration || !input.acceptTerms)) return
+        authenticate { api.emailLogin(input, register) }
+    }
+    fun loginPhone(phone: String, code: String) {
+        if (!_state.value.capabilities.sms) return
+        authenticate { api.phoneLogin(PhoneLoginInput(phone.trim(), code)) }
+    }
+    private fun authenticate(login: suspend () -> LoginSession) {
         val guestReply = _state.value.takeIf { it.user == null }?.reply.orEmpty()
         val originalDestination = _state.value.destination
         if (_state.value.busy) return
         // Login changes the account epoch. It cannot be a cancellable resource-loading job.
-        _state.update { it.copy(busy = true) }
+        _state.update { it.copy(busy = true, auth = it.auth.copy(password = "")) }
         scope.launch {
             try {
-                val session = api.password(form.username.trim(), form.password)
+                val session = login()
                 if (_state.value.user?.id != session.user.id) accountChanged(session.user)
-                if (guestReply.isNotEmpty() && originalDestination == _state.value.destination && originalDestination is MobileDestination.Entry) editReply(guestReply)
+                if (guestReply.isNotEmpty() && originalDestination == _state.value.destination && originalDestination is MobileDestination.Entry) {
+                    if (replyReady) _state.update { it.copy(guestReplySuggestion = guestReply) }
+                    else pendingGuestReply = originalDestination to guestReply
+                }
                 _state.update { it.copy(auth = AuthForm(), notice = "登录成功，请确认后继续原任务") }
                 resumeApply?.let { id ->
                     resumeApply = null
@@ -222,10 +486,21 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
     }
 
     fun logout() = command {
+        val owner = _state.value.user?.id
         api.logout()
         if (_state.value.user != null) accountChanged(null)
-        _state.update { it.copy(tab = MobileTab.Community, destination = MobileDestination.Home, notice = "已退出登录") }
+        var notice = "已退出登录"
+        if (owner != null) try { withContext(NonCancellable) { localDrafts?.clear(owner); localWorkspaces?.clear(owner); localReplies?.clear(owner) } }
+        catch (_: Exception) { notice = "已退出登录，本地私有草稿暂未清理，请解锁设备后重试" }
+        _state.update { it.copy(tab = MobileTab.Community, destination = MobileDestination.Home, notice = notice) }
         refreshHome()
+    }
+
+    suspend fun logoutAll() {
+        val owner = _state.value.user?.id
+        api.logout(true)
+        withContext(NonCancellable) { if (owner != null) { localDrafts?.clear(owner); localWorkspaces?.clear(owner); localReplies?.clear(owner) } }
+        if (_state.value.user != null) accountChanged(null)
     }
 
     private fun command(block: suspend () -> Unit) {
@@ -237,13 +512,13 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
             catch (e: CancellationException) { throw e }
             catch (e: Exception) {
                 if (epoch == accountEpoch) _state.update { it.copy(notice = e.mobileMessage(), conflict = e is MobileApiException && e.status == 409) }
-            } finally { if (epoch == accountEpoch) _state.update { it.copy(busy = false, pendingOperations = api.recoverableCommands()) } }
+            } finally { if (epoch == accountEpoch) _state.update { it.copy(busy = false, pendingOperations = pendingCommands()) } }
         }
     }
 
     fun refreshHome(more: Boolean = false) {
         when (_state.value.tab) {
-            MobileTab.Community -> loadPage("entries", more, { it.entries }, { s, p -> s.copy(entries = p) }, { api.entries(it) }) {
+            MobileTab.Community -> loadPage("entries", more, { it.entries }, { s, p -> s.copy(entries = p) }, { api.feedPage(it,_state.value.feedSpace,_state.value.feedKeyword) }) {
                 val metrics = api.metrics(_state.value.entries.items.map { row -> row.id }).associateBy(EntryMetrics::entryId)
                 _state.update { it.copy(metrics = metrics) }
             }
@@ -252,7 +527,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
             MobileTab.Messages -> if (_state.value.user != null) {
                 loadPage("conversations", more, { it.conversations }, { s, p -> s.copy(conversations = p) }, { api.conversations(it) })
                 loadPage("groups", more, { it.groups }, { s, p -> s.copy(groups = p) }, { api.groups(it) })
-                task("inbox") { val inbox = api.inbox(); _state.update { it.copy(inbox = inbox) } }
+                refreshInbox()
             }
             MobileTab.Profile -> _state.value.user?.let { user ->
                 task("profile") { val profile = api.profile(); _state.update { it.copy(profile = profile) } }
@@ -309,7 +584,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
                 task("detail") {
                     try {
                         when (destination) {
-                            is MobileDestination.Pet -> { val record = api.pet(destination.id); if (current()) _state.update { it.copy(pet = record) } }
+                            is MobileDestination.Pet -> { val record = api.pet(destination.id); val checks = api.petVerifications(destination.id); if (current()) _state.update { it.copy(pet = record, petChecks = checks) } }
                             is MobileDestination.Entry -> {
                                 val record = api.entry(destination.id)
                                 val metrics = api.metrics(listOf(destination.id))
@@ -319,7 +594,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
                             is MobileDestination.Application -> { val record = api.adoption(destination.id); if (current()) _state.update { it.copy(application = record) } }
                             is MobileDestination.Case -> { val record = api.case(destination.id); if (current()) _state.update { it.copy(case = record) } }
                             is MobileDestination.Chat -> {
-                                if (!destination.group) {
+                                if (destination.group) { val record = api.group(destination.id); if (current()) _state.update { it.copy(group = record) } } else {
                                     val record = api.conversation(destination.id)
                                     if (current()) _state.update { it.copy(conversation = record) }
                                 }
@@ -329,8 +604,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
                         }
                     } catch (e: CancellationException) { throw e }
                     catch (e: Exception) {
-                        if (current()) _state.update { it.copy(pet = null, entry = null, application = null, case = null,
-                            conversation = null, comments = PageState(), messages = PageState(), detailError = e.mobileMessage()) }
+                        if (current()) _state.update { it.copy(pet = null, petChecks = emptyList(), entry = null, application = null, case = null,
+                            conversation = null, group = null, comments = PageState(), messages = PageState(), detailError = e.mobileMessage()) }
                     } finally { if (current()) _state.update { it.copy(detailLoading = false) } }
                 }
             }
@@ -341,9 +616,19 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
         val id = (_state.value.destination as? MobileDestination.Entry)?.id ?: return
         loadPage("comments", more, { it.comments }, { s, p -> s.copy(comments = p) }, { api.comments(id, it) })
     }
-    fun loadMessages(more: Boolean = false) {
+    fun loadMessages(more: Boolean = false, fromBeginning: Boolean = false) {
         val chat = _state.value.destination as? MobileDestination.Chat ?: return
-        loadPage("messages", more, { it.messages }, { s, p -> s.copy(messages = p) }, { api.messages(chat.id, chat.group, it) })
+        val epoch = accountEpoch
+        loadPage("messages", more, { it.messages }, { s, p -> s.copy(messages = p) }, { cursor ->
+            val first = if (!more && !fromBeginning) {
+                val summary = api.inbox()
+                currentCoroutineContext().ensureActive()
+                if (epoch != accountEpoch) throw CancellationException("Account changed")
+                _state.update { it.copy(inbox = summary,inboxError = null) }
+                (if(chat.group) summary.groupFirstUnread else summary.directFirstUnread)[chat.id.toString()]
+            } else null
+            api.messages(chat.id, chat.group, first?.takeIf { it > 0 }?.minus(1) ?: cursor)
+        })
     }
     fun beginApplication() {
         val pet = _state.value.pet ?: return
@@ -418,21 +703,32 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
         val s = _state.value
         if (s.user == null) { showLogin(); return }
         if (!requireInteractionContract()) return
-        if (s.reply.isBlank() || sending || s.busy) return
+        if (!canEditReply() || s.reply.isBlank() && s.replySticker.isBlank() && s.replyPhotos.isEmpty() || sending || s.busy) return
+        if (s.replyPhotos.any { it.mediaId == null }) { pickerFailed("请先完成消息照片上传"); return }
         val key = replyKey
         command {
             sending = true
+            var sendAttempted = false
             try {
+                uncertainReplies.add(s.destination)
+                persistReplies()
+                sendAttempted = true
                 when (val destination = s.destination) {
-                    is MobileDestination.Entry -> { api.comment(destination.id, s.reply.trim(), key); loadComments() }
-                    is MobileDestination.Chat -> { api.send(destination.id, destination.group, s.reply.trim(), key); loadMessages() }
+                    is MobileDestination.Entry -> { api.richComment(destination.id, MessageBody(s.reply.trim(),s.replySticker), key,s.replyTo); loadComments() }
+                    is MobileDestination.Chat -> { api.richMessage(destination.id, destination.group, MessageBody(s.reply.trim(),s.replySticker),s.replyPhotos.mapNotNull { it.mediaId },key); loadMessages() }
                     else -> return@command
                 }
                 replyKey = newKey()
+                uncertainReplies.remove(s.destination)
                 replyDrafts.remove(s.destination)
                 replyKeys.remove(s.destination)
-                _state.update { it.copy(reply = "") }
-            } finally { sending = false }
+                richReplies.remove(s.destination); replyPhotos.remove(s.destination)
+                _state.update { it.copy(reply = "",replyTo = 0,replySticker = "",replyPhotos = emptyList()) }
+                persistReplies()
+            } catch (e: Exception) {
+                if (!sendAttempted || e is MobileApiException && e.status in listOf(400,401,403,404,409,422,429)) uncertainReplies.remove(s.destination)
+                throw e
+            } finally { sending = false; scheduleReplySave() }
         }
     }
     fun markChatRead() = command {
@@ -465,43 +761,79 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
     fun readNotification(record: MobileRecord<NotificationBody>) = command {
         val updated = api.readNotification(record.id, record.version)
         _state.update { it.copy(notifications = it.notifications.copy(items = it.notifications.items.map { row -> if (row.id == updated.id) updated else row })) }
+        refreshInbox()
     }
     fun publish() {
         val s = _state.value
         if (s.user == null) { showLogin(); return }
-        if (!requireInteractionContract()) return
+        if (!canEditCompose()) return
+        if (s.composeEntry.audience.mode != "private" && !requireInteractionContract()) return
+        if (!s.composeAudienceValid || s.composeEntry.audience.mode == "selected" && s.composeEntry.audience.userIds.isEmpty() || s.composeEntry.space == "diary" && s.composeEntry.petId <= 0) { pickerFailed("请核对可见好友名单及日记所属宠物"); return }
         if (s.composeText.isBlank() && s.photos.isEmpty()) return
         if (s.photos.any { it.mediaId == null }) { _state.update { it.copy(notice = "请先完成照片上传，或移除上传失败的照片") }; return }
         command {
-            val input = EntryInput(EntryBody(text = s.composeText.trim(), title = s.composeTitle.trim()), mediaIds = s.photos.mapNotNull { it.mediaId }, clientRequestId = newRequestKey())
+            val input = EntryInput(s.composeEntry.copy(text = s.composeText.trim(), title = s.composeTitle.trim()), mediaIds = s.photos.mapNotNull { it.mediaId }, clientRequestId = newRequestKey())
             val preview = api.previewPublication(input)
             _state.update { it.copy(publicationConfirmation = input.copy(declaration = PublicationDeclaration(preview.manifestHash, preview.origin)), notice = "请核对当前内容与照片，并确认来源声明后发布") }
         }
     }
 
     fun confirmPublication(origin: String, confirmed: Boolean) = command {
-            if (!confirmed || !requireInteractionContract()) return@command
+            val epoch = accountEpoch
+            if (!confirmed || _state.value.composeEntry.audience.mode != "private" && !requireInteractionContract()) return@command
             val s = _state.value
             val pending = s.publicationConfirmation ?: return@command
-            if (pending.entry.text != s.composeText.trim() || pending.entry.title != s.composeTitle.trim() || pending.mediaIds != s.photos.mapNotNull { it.mediaId }) {
+            if (pending.entry.text != s.composeText.trim() || pending.entry.title != s.composeTitle.trim() || pending.entry != s.composeEntry.copy(text = s.composeText.trim(), title = s.composeTitle.trim()) || pending.mediaIds != s.photos.mapNotNull { it.mediaId }) {
                 _state.update { it.copy(publicationConfirmation = null, notice = "内容已改变，请重新核对发布内容") }; return@command
             }
             // A changed origin invalidates the old manifest and requires a new preview.
             if (origin != pending.declaration.origin) {
                 val revised = pending.copy(declaration = PublicationDeclaration(origin = origin))
                 val preview = api.previewPublication(revised)
+                if (epoch != accountEpoch) return@command
                 _state.update { it.copy(publicationConfirmation = revised.copy(declaration = PublicationDeclaration(preview.manifestHash, origin)), notice = "来源已改变，请重新确认当前声明") }
                 return@command
             }
-            val record = api.publish(pending.copy(declaration = pending.declaration.copy(confirmed = true)))
-            var notice = "已发布到社区"
-            try { draftVersion = api.saveComposeDraft(draftVersion, "", "", emptyList()).version }
-            catch (e: CancellationException) { throw e }
-            catch (_: Exception) { notice = "已发布到社区，云端旧草稿暂未清理" }
-            photoBytes.clear()
-            _state.update { it.copy(composeTitle = "", composeText = "", photos = emptyList(), composeEdited = false, publicationConfirmation = null, busy = false, notice = notice) }
+            val prepared = api.preparePublication(pending.copy(declaration = pending.declaration.copy(confirmed = true)))
+            if (epoch != accountEpoch) return@command
+            localPublicationKey = prepared.clientRequestId
+            persistCompose()
+            val record = try {
+                api.publish(prepared)
+            } catch (e: Exception) {
+                if (api.commandStatus(prepared.clientRequestId)?.phase == "rejected") {
+                    localPublicationKey = null
+                    withContext(NonCancellable) { persistCompose() }
+                }
+                throw e
+            }
+            if (epoch != accountEpoch) return@command
+            finishRecoveredPublication(OperationReceipt(prepared.clientRequestId, "entries", 0, "entries", record.id, record.version, "committed"))
+            if (epoch != accountEpoch) return@command
+            _state.update { it.copy(busy = false) }
             select(MobileTab.Community)
             open(MobileDestination.Entry(record.id))
+    }
+
+    private suspend fun finishRecoveredPublication(receipt: OperationReceipt?) {
+        if (receipt == null || receipt.state != "committed" || receipt.resultKind != "entries" || receipt.clientRequestId != localPublicationKey) return
+        val epoch = accountEpoch
+        localPublicationKey = null
+        photoBytes.clear()
+        _state.update { it.copy(composeTitle = "", composeText = "", composeEntry = EntryBody(""), photos = emptyList(), composeEdited = true, publicationConfirmation = null) }
+        // 先持久化已确认结果后的空草稿，避免清理云端前进程退出又显示旧稿。
+        try { persistCompose() }
+        catch (e: Exception) { if (epoch == accountEpoch) localReady = false; throw e }
+        var notice = "原发布已成功，本地草稿已清理"
+        try {
+            val cleared = api.saveComposeDraft(draftVersion, "", "", emptyList())
+            if (epoch != accountEpoch) throw CancellationException("Account changed")
+            draftVersion = cleared.version
+            _state.update { it.copy(composeEdited = false, draftLoaded = true) }
+            persistCompose()
+        } catch (e: CancellationException) { throw e }
+        catch (_: Exception) { notice = "原发布已成功，云端旧草稿暂未清理；本地不会自动恢复旧稿" }
+        _state.update { it.copy(pendingOperations = pendingCommands(), notice = notice) }
     }
 
     fun pickerFailed(message: String) { _state.update { it.copy(notice = message) } }
@@ -518,23 +850,59 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
     fun refreshEligibility() = task("eligibility") {
         if (_state.value.user == null) return@task
         val qualification = api.eligibility()
-        _state.update { it.copy(eligibility = qualification, pendingOperations = api.recoverableCommands()) }
+        _state.update { it.copy(eligibility = qualification, pendingOperations = pendingCommands()) }
     }
     fun reconcilePending(key: String) = command {
         try {
             val receipt = api.reconcileOperation(key)
-            _state.update { it.copy(pendingOperations = api.recoverableCommands(), notice = if (receipt.state == "committed") "已核对：原操作已成功，请查看原记录" else "原操作仍在处理中") }
+            features.operationResolved(receipt)
+            finishRecoveredReply(receipt)
+            finishRecoveredPublication(receipt)
+            _state.update { it.copy(pendingOperations = pendingCommands(), notice = if (receipt.state == "committed") "已核对：原操作已成功，请查看原记录" else "原操作仍在处理中") }
         } catch (e: MobileApiException) {
-            if (e.status == 404) _state.update { it.copy(pendingOperations = api.recoverableCommands(), notice = "暂未查到回执，结果仍待核对，请勿重复提交") } else throw e
+            if (e.status == 404) _state.update { it.copy(pendingOperations = pendingCommands(), notice = "暂未查到回执，结果仍待核对，请勿重复提交") } else throw e
         }
     }
     fun retryPending(key: String) = command {
-        api.retryOriginal(key)
-        _state.update { it.copy(pendingOperations = api.recoverableCommands(),notice = "已按原请求编号核对并重试，请查看原记录") }
+        val originalReply = replyKeys.entries.firstOrNull { it.value == key && it.key in uncertainReplies }?.key
+        val known = api.commandStatus(key)
+        val receipt = when {
+            known?.phase == "committed" -> known.receipt ?: api.reconcileOperation(key)
+            known == null && originalReply != null -> {
+                // 用户主动选择原编号重试；草稿已锁定，正文、贴纸、照片顺序与原请求一致。
+                val rich = richReplies[originalReply] ?: (0L to "")
+                val content = MessageBody(replyDrafts[originalReply].orEmpty().trim(),rich.second)
+                when (originalReply) {
+                    is MobileDestination.Entry -> api.richComment(originalReply.id,content,key,rich.first)
+                    is MobileDestination.Chat -> api.richMessage(originalReply.id,originalReply.group,content,replyPhotos[originalReply].orEmpty().mapNotNull { it.mediaId },key)
+                    else -> error("原消息草稿不可读")
+                }
+                api.commandStatus(key)?.receipt ?: throw OperationResultUnknown(key)
+            }
+            else -> api.retryOriginal(key)
+        }
+        features.operationResolved(receipt)
+        finishRecoveredReply(receipt)
+        finishRecoveredPublication(receipt)
+        _state.update { it.copy(pendingOperations = pendingCommands(),notice = "已按原请求编号核对并重试，请查看原记录") }
+    }
+
+    private fun finishRecoveredReply(receipt: OperationReceipt) {
+        if (receipt.state != "committed" || receipt.resultKind !in listOf("messages", "group_messages", "entry_comments")) return
+        val destination = replyKeys.entries.firstOrNull { it.value == receipt.clientRequestId }?.key ?: return
+        uncertainReplies.remove(destination)
+        replyDrafts.remove(destination); replyKeys.remove(destination); richReplies.remove(destination); replyPhotos.remove(destination)
+        scheduleReplySave()
+        if (_state.value.destination == destination) {
+            replyKey = newKey()
+            _state.update { it.copy(reply = "", replyTo = 0, replySticker = "", replyPhotos = emptyList()) }
+            reloadDetail()
+        }
     }
 
     fun addPhotos(selected: List<SelectedPhoto>) {
         if (_state.value.user == null) { showLogin(); return }
+        if (!canEditCompose()) return
         val free = 9 - _state.value.photos.size
         if (selected.size > free) _state.update { it.copy(notice = "每次发布最多 9 张照片") }
         selected.take(free.coerceAtLeast(0)).forEach { photo ->
@@ -543,23 +911,39 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
             } else {
                 val key = newKey()
                 photoBytes[key] = photo
-                _state.update { it.copy(photos = it.photos + PhotoAttachment(key, photo.name), composeEdited = true) }
+                _state.update { it.copy(photos = it.photos + PhotoAttachment(key, photo.name, mime = photo.mime), composeEdited = true, publicationConfirmation = null) }
                 retryPhoto(key)
             }
         }
     }
 
     fun retryPhoto(key: String) {
-        val photo = photoBytes[key] ?: return
+        if (!localReady) { canEditCompose(); return }
+        val item = _state.value.photos.find { it.key == key } ?: return
+        if (item.mediaId != null) {
+            task("photo-$key") {
+                persistCompose()
+                photoBytes.remove(key)
+                _state.update { it.copy(photos = it.photos.map { photo -> if (photo.key == key) photo.copy(error = null) else photo }) }
+            }
+            return
+        }
+        val owner = _state.value.user?.id ?: return
         if (_state.value.photos.find { it.key == key }?.uploading != false) return
         val epoch = accountEpoch
         _state.update { it.copy(photos = it.photos.map { item -> if (item.key == key) item.copy(uploading = true, error = null) else item }) }
         task("photo-$key") {
             try {
+                val photo = photoBytes[key] ?: localDrafts?.photo(owner, LocalComposePhoto(item.key, item.name, item.mime))
+                    ?: throw LocalDraftException("原照片暂不可读，请移除后重新选择")
+                if (epoch != accountEpoch) return@task
+                photoBytes[key] = photo
+                persistCompose()
                 val result = uploads.withPermit { api.upload(photo, key) }
                 if (epoch == accountEpoch) {
-                    photoBytes.remove(key)
                     _state.update { it.copy(photos = it.photos.map { item -> if (item.key == key) item.copy(mediaId = result.id, uploading = false) else item }) }
+                    persistCompose()
+                    photoBytes.remove(key)
                 }
             } catch (e: CancellationException) { throw e }
             catch (e: Exception) {
@@ -569,33 +953,39 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
     }
 
     fun removePhoto(key: String) {
-        if (_state.value.busy) return
+        if (_state.value.busy || !canEditCompose()) return
         jobs.remove("photo-$key")?.cancel()
         photoBytes.remove(key)
-        _state.update { it.copy(photos = it.photos.filterNot { item -> item.key == key }, composeEdited = true) }
+        _state.update { it.copy(photos = it.photos.filterNot { item -> item.key == key }, composeEdited = true, publicationConfirmation = null) }
+        scheduleLocalSave()
     }
     fun movePhoto(key: String, offset: Int) {
-        if (_state.value.busy) return
+        if (_state.value.busy || !canEditCompose()) return
         _state.update { s ->
             val list = s.photos.toMutableList()
             val index = list.indexOfFirst { it.key == key }
             val target = index + offset
             if (index >= 0 && target in list.indices) list.add(target, list.removeAt(index))
-            s.copy(photos = list, composeEdited = true)
+            s.copy(photos = list, composeEdited = true, publicationConfirmation = null)
         }
+        scheduleLocalSave()
     }
 
     fun saveComposeDraft() = command {
+        if (!canEditCompose()) return@command
         val s = _state.value
         if (!s.draftLoaded || s.photos.any { it.mediaId == null }) {
             _state.update { it.copy(notice = "请先载入草稿并完成照片上传") }; return@command
         }
-        val record = api.saveComposeDraft(draftVersion, s.composeTitle, s.composeText, s.photos.mapNotNull { it.mediaId })
+        val record = api.saveComposeDraft(draftVersion, s.composeTitle, s.composeText, s.photos.mapNotNull { it.mediaId }, s.composeEntry)
         draftVersion = record.version
         _state.update { it.copy(notice = "草稿已保存", composeEdited = false) }
+        persistCompose()
     }
     fun restoreComposeDraft(replaceInput: Boolean = false) {
         if (_state.value.user == null || _state.value.draftLoading || _state.value.busy) return
+        if (!localReady) { restoreLocalComposeDraft(_state.value.user!!.id); return }
+        if (localPublicationKey != null) { canEditCompose(); return }
         val epoch = accountEpoch
         _state.update { it.copy(draftLoading = true) }
         task("draft") {
@@ -612,18 +1002,104 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true) {
                 val content = record?.let { api.json.decodeFromString<ComposeDraftContent>(it.data.text) }
                 check(content == null || content.schema == 1) { "Unsupported draft schema" }
                 draftVersion = record?.version ?: 0L
-                if (content != null && (replaceInput || !_state.value.composeEdited)) {
+                if (replaceInput || !_state.value.composeEdited) {
                     _state.value.photos.forEach { jobs.remove("photo-${it.key}")?.cancel() }
                     photoBytes.clear()
-                    _state.update { it.copy(composeTitle = content.title, composeText = content.text,
-                        photos = record?.mediaIds.orEmpty().map { id -> PhotoAttachment("restored-$id", "已保存照片", id) }, composeEdited = false) }
+                    _state.update { it.copy(composeTitle = content?.title.orEmpty(), composeText = content?.text.orEmpty(), composeEntry = content?.entry ?: EntryBody(""),
+                        photos = record?.mediaIds.orEmpty().map { id -> PhotoAttachment(newKey(), "已保存照片", id) }, composeEdited = false) }
                 }
                 _state.update { it.copy(draftLoaded = true) }
+                persistCompose()
             } finally { if (epoch == accountEpoch) _state.update { it.copy(draftLoading = false) } }
         }
     }
+    private fun replyPath(destination: MobileDestination): String = when(destination) {
+        is MobileDestination.Entry -> "entries/${destination.id}/comments"
+        is MobileDestination.Chat -> "${if(destination.group) "groups" else "conversations"}/${destination.id}/messages"
+        else -> error("不是消息或评论入口")
+    }
+    private fun replyRoute(key: String): MobileDestination {
+        val parts = key.split(':'); require(parts.size == 2)
+        val id = parts[1].toLong(); require(id > 0)
+        return when(parts[0]) { "entry" -> MobileDestination.Entry(id); "chat" -> MobileDestination.Chat(id); "group" -> MobileDestination.Chat(id,true); else -> error("未知消息草稿") }
+    }
+    private fun replyWorkspace(): List<WorkspaceDraft> = (replyDrafts.keys + richReplies.keys + replyPhotos.keys + uncertainReplies).mapNotNull { destination ->
+        val text = replyDrafts[destination].orEmpty(); val rich = richReplies[destination] ?: (0L to "")
+        val photos = replyPhotos[destination].orEmpty()
+        if (text.isEmpty() && rich.first == 0L && rich.second.isEmpty() && photos.isEmpty() && destination !in uncertainReplies) return@mapNotNull null
+        val key = when(destination) { is MobileDestination.Entry -> "entry:${destination.id}"; is MobileDestination.Chat -> "${if(destination.group) "group" else "chat"}:${destination.id}"; else -> return@mapNotNull null }
+        WorkspaceDraft(key,mapOf("text" to text,"replyTo" to rich.first.toString(),"sticker" to rich.second),
+            photos = photos.map { WorkspacePhoto(it.key,it.name,it.mime,it.mediaId) },uncertain = destination in uncertainReplies,
+            requests = listOf(replyKeys.getOrPut(destination) { newKey() }))
+    }
+    private suspend fun persistReplies() {
+        val storage = localReplies ?: return
+        val epoch = accountEpoch; val owner = _state.value.user?.id ?: 0L
+        replySaveMutex.withLock {
+            if (!replyReady) throw LocalDraftException("本机消息草稿尚未恢复，原文件不会被覆盖")
+            if (epoch != accountEpoch) throw CancellationException("Account changed")
+            val drafts = replyWorkspace(); val bytes = replyPhotoBytes.toMap()
+            withContext(NonCancellable) {
+                val saved = storage.save(owner,replyRevision,drafts,bytes)
+                if (epoch == accountEpoch) { replyRevision = saved.revision; _state.update { it.copy(replyDraftError = null,savedReplyDestinations = drafts.map { d -> replyRoute(d.key) },pendingOperations = pendingCommands()) } }
+            }
+            if (epoch != accountEpoch) throw CancellationException("Account changed")
+        }
+    }
+    private fun scheduleReplySave() {
+        _state.update { it.copy(savedReplyDestinations = replyWorkspace().map { d -> replyRoute(d.key) },pendingOperations = pendingCommands()) }
+        if (localReplies == null || !replyReady) return
+        task("reply-save") {
+            try { persistReplies() }
+            catch (e: CancellationException) { throw e }
+            catch (e: Exception) { _state.update { it.copy(replyDraftError = "本机消息草稿未保存：${e.mobileMessage()}，当前输入保留") } }
+        }
+    }
+    fun retryReplySave() { scheduleReplySave() }
+    fun useGuestReply() {
+        val text = _state.value.guestReplySuggestion ?: return
+        if (editReply(text)) _state.update { it.copy(guestReplySuggestion = null) }
+    }
+    fun replaceWithSavedReplies() {
+        if (_state.value.busy || uncertainReplies.isNotEmpty()) { pickerFailed("请先核对原消息结果，再替换本机草稿"); return }
+        jobs.filterKeys { it.startsWith("reply-") }.values.forEach { it.cancel() }
+        replyDrafts.clear(); replyKeys.clear(); richReplies.clear(); replyPhotos.clear(); replyPhotoBytes.clear()
+        replyReady = false
+        _state.update { it.copy(reply = "",replyTo = 0,replySticker = "",replyPhotos = emptyList(),replyDraftReady = false,savedReplyDestinations = emptyList()) }
+        restoreReplyDrafts()
+    }
+    fun restoreReplyDrafts() {
+        val storage = localReplies ?: return
+        if (replyReady || jobs["reply-restore"]?.isActive == true) return
+        val epoch = accountEpoch; val owner = _state.value.user?.id ?: 0L
+        _state.update { it.copy(replyDraftRestoring = true,replyDraftReady = false,replyDraftError = null) }
+        task("reply-restore") {
+            try {
+                val saved = replySaveMutex.withLock { storage.load(owner) }
+                val drafts = saved?.drafts.orEmpty().associateBy { replyRoute(it.key) }
+                if (epoch != accountEpoch) return@task
+                drafts.forEach { (destination,draft) ->
+                    val key = draft.requests.singleOrNull() ?: newKey()
+                    if (api.commandStatus(key)?.phase == "committed") return@forEach
+                    replyDrafts[destination] = draft.values["text"].orEmpty()
+                    richReplies[destination] = (draft.values["replyTo"]?.toLongOrNull() ?: 0L) to draft.values["sticker"].orEmpty()
+                    replyKeys[destination] = key
+                    if (draft.uncertain) uncertainReplies.add(destination)
+                    replyPhotos[destination] = draft.photos.map { p -> PhotoAttachment(p.key,p.name,p.mediaId,error = if(p.mediaId == null) "原文件已保留，请按原编号重试上传" else null,mime = p.mime) }
+                }
+                replyRevision = saved?.revision ?: 0L; replyReady = true
+                val destination = _state.value.destination
+                replyKey = replyKeys.getOrPut(destination) { newKey() }
+                _state.update { it.copy(reply = replyDrafts[destination].orEmpty(),replyTo = richReplies[destination]?.first ?: 0L,replySticker = richReplies[destination]?.second.orEmpty(),
+                    replyPhotos = replyPhotos[destination].orEmpty(),replyDraftRestoring = false,replyDraftReady = true,savedReplyDestinations = replyWorkspace().map { d -> replyRoute(d.key) },pendingOperations = pendingCommands()) }
+                pendingGuestReply?.takeIf { it.first == destination }?.let { (_,text) -> _state.update { it.copy(guestReplySuggestion = text) } }
+                pendingGuestReply = null
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) { if (epoch == accountEpoch) _state.update { it.copy(replyDraftRestoring = false,replyDraftError = "本机消息草稿未恢复：${e.mobileMessage()}，原文件未被覆盖") } }
+        }
+    }
     suspend fun media(id: Long): ByteArray = api.media(id)
-    fun close() { scope.cancel(); if (ownsApi) api.close() }
+    fun close() { features.close(); scope.cancel(); if (ownsApi) api.close() }
     private fun newKey(): String = Random.nextBytes(16).joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
 }
 

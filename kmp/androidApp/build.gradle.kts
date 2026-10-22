@@ -78,4 +78,5 @@ dependencies {
     implementation(libs.androidxActivityCompose)
     implementation(libs.androidxLifecycleRuntimeCompose)
     implementation(libs.androidxLifecycleViewmodelCompose)
+    implementation("androidx.window:window:1.5.1")
 }

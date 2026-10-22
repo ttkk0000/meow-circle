@@ -18,6 +18,11 @@ import androidx.exifinterface.media.ExifInterface
 
 @Composable
 internal fun PhotoPickerButton(store: MobileStore, remaining: Int, enabled: Boolean) {
+    PhotoPickerButton(remaining, enabled, store::addPhotos, store::pickerFailed)
+}
+
+@Composable
+internal fun PhotoPickerButton(remaining: Int, enabled: Boolean, onPhotos: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit) {
     val resolver = LocalContext.current.contentResolver
     val scope = rememberCoroutineScope()
     var preparing by remember { mutableStateOf(false) }
@@ -40,6 +45,7 @@ internal fun PhotoPickerButton(store: MobileStore, remaining: Int, enabled: Bool
                             }
                             output.toByteArray()
                         } ?: error("No image data")
+                        val origin = AndroidImageOrigin.read(bytes,mime)
                         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
                         BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
                         require(bounds.outWidth > 0 && bounds.outHeight > 0)
@@ -65,12 +71,14 @@ internal fun PhotoPickerButton(store: MobileStore, remaining: Int, enabled: Bool
                         val png = mime == "image/png"
                         try { check(normalized.compress(if (png) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG, 90, output)) }
                         finally { if (normalized !== bitmap) normalized.recycle(); bitmap.recycle() }
-                        SelectedPhoto("照片 ${index + 1}", if (png) "image/png" else "image/jpeg", output.toByteArray())
+                        val normalizedBytes = AndroidImageOrigin.write(output.toByteArray(),png,origin)
+                        require(normalizedBytes.size <= 10 * 1024 * 1024)
+                        SelectedPhoto("照片 ${index + 1}", if (png) "image/png" else "image/jpeg", normalizedBytes)
                     }
                 }
-                store.addPhotos(photos)
+                onPhotos(photos)
             } catch (e: CancellationException) { throw e }
-            catch (_: Exception) { store.pickerFailed("请选择可读取且不超过 10 MiB 的 JPEG 或 PNG 照片") }
+            catch (_: Exception) { onError("请选择可读取且不超过 10 MiB 的 JPEG 或 PNG 照片") }
             finally { preparing = false }
         }
     }

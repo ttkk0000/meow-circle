@@ -1,0 +1,365 @@
+{
+  "task": "AI-20261022-ANDROID-COMPLETE",
+  "recorded_at": "2026-10-22T23:53:17+08:00",
+  "git_head": "f41de02eae069bfda82dccfd9c0b84b048b61493",
+  "branch": "main",
+  "uncommitted": true,
+  "pushed": false,
+  "scope": "Android手机／平板Compose页面、必要共享接线与恢复、Introduction与未读定位响应修正；此前上传恢复工作树保留，旧证据不重写。",
+  "status": "本批源码与静态检查完成；完整功能运行与平台验收未完成",
+  "feature_pages": [
+    "EntryEdit",
+    "Friends",
+    "Member",
+    "ProfileEdit",
+    "PetEdit",
+    "Collaborators",
+    "Invitations",
+    "GroupCreate",
+    "Group",
+    "Appointments",
+    "Appointment",
+    "AppointmentEdit",
+    "CaseEdit",
+    "CaseWork",
+    "Claim",
+    "AdoptionWork",
+    "ContractEdit",
+    "ReturnEdit",
+    "Offers",
+    "Offer",
+    "OfferEdit",
+    "Settings",
+    "Nearby",
+    "Reviews",
+    "Review",
+    "Safety",
+    "DataRequests",
+    "Security",
+    "Recovery",
+    "Expressions"
+  ],
+  "primary_tasks": [
+    "Community",
+    "Adoption",
+    "Publish",
+    "Messages",
+    "Profile"
+  ],
+  "checks": [
+    {
+      "name": "check_android_feature_static.py",
+      "exit_code": 0,
+      "pages": 30,
+      "meaning": "只读分派／方法引用／路由／资源／恢复接线检查"
+    },
+    {
+      "name": "check_kmp_client_static.py",
+      "exit_code": 0,
+      "client_source_files": 43,
+      "meaning": "只读源码与配置检查"
+    },
+    {
+      "name": "check_server_shared_contract_static.py",
+      "exit_code": 0,
+      "dto_pairs": 48
+    },
+    {
+      "name": "check_mobile_static.py",
+      "exit_code": 0,
+      "feature_tables": 42,
+      "paths": 200,
+      "operations": 227,
+      "schemas": 89,
+      "emoji": 128,
+      "stickers": 24
+    },
+    {
+      "name": "Tree-sitter Kotlin",
+      "parsed_source_files": 32,
+      "error_nodes": 0,
+      "type_checking": false,
+      "note": "临时二进制解析器，对多行catch／finally和open软关键字仅在内存等义适配，不改项目源码。"
+    },
+    {
+      "name": "gofmt -l",
+      "source_files": 4,
+      "output": "",
+      "tests_executed": false
+    },
+    {
+      "name": "git diff --check",
+      "exit_code": 0
+    },
+    {
+      "name": "git diff --name-only --diff-filter=U",
+      "exit_code": 0,
+      "unmerged_paths": []
+    },
+    {
+      "name": "选定源码冲突、BOM和尾随空白扫描",
+      "text_files": 41,
+      "conflict_markers": 0,
+      "note": "字体OFL保留上游原文及原有尾随空白，不作为自写源码空白检查对象。"
+    }
+  ],
+  "runtime": {
+    "gradle": false,
+    "compilation": false,
+    "type_checking": false,
+    "tests": false,
+    "lint": false,
+    "app_launch": false,
+    "emulator": false,
+    "server": false,
+    "migration": false,
+    "deployment": false
+  },
+  "not_run_reason": "用户／仓库规则默认不运行编译、测试、应用或服务；Gradle和Go构建命令另有禁止规则。",
+  "regression_sources_only": [
+    "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/LocalWorkspaceDraftsTest.kt",
+    "internal/mobile/introduction_collaboration_test.go",
+    "internal/mobile/inbox_position_test.go"
+  ],
+  "remaining": [
+    "正式协议HTTPS地址与注册开放配置",
+    "真实邮箱／短信／年龄监护和城市资格环境",
+    "微信／QQ官方SDK及应用回跳",
+    "系统推送供应商与设备token",
+    "地图／地理编码；无后端合同的关注／帖子收藏／全局全部已读",
+    "安全暂停解除的运营真实闭环",
+    "类型检查、接口联调与手机／平板横竖分屏／折叠／IME／大字／读屏／强杀／跨窗口恢复验收"
+  ],
+  "files": [
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "bytes": 735639,
+      "sha256": "59ff4d6d0b5e3b199ede3998bc6a3341e153ffbb5088765a62e55d590eef5cb6"
+    },
+    {
+      "path": "docs/client/ANDROID_FEATURES_2026_10_22.md",
+      "bytes": 12294,
+      "sha256": "1281be66d0738717935425167f01f37c3369487fb9d917614cbc7dec53829bef"
+    },
+    {
+      "path": "internal/mobile/inbox.go",
+      "bytes": 5568,
+      "sha256": "6d6dc7a3e630c1e4489cb0d982cf1656fc07a7e291485f67e40a352485d7efef"
+    },
+    {
+      "path": "internal/mobile/inbox_position_test.go",
+      "bytes": 2022,
+      "sha256": "62d5f5b35b3f01171211aeb5cade90dd1a1ebf66b4c9b9132d324b07c211d5d6"
+    },
+    {
+      "path": "internal/mobile/introduction_collaboration_test.go",
+      "bytes": 2672,
+      "sha256": "a0379300b7cd5a0a1435ad38a39002ff9353e8c216f5937eab94ff867887d896"
+    },
+    {
+      "path": "internal/mobile/rescue.go",
+      "bytes": 20789,
+      "sha256": "3b181ecb836c9ba59cfbac06ad5d0e804d771d5823457cf7b68dcbd0ab21ef98"
+    },
+    {
+      "path": "kmp/androidApp/build.gradle.kts",
+      "bytes": 2770,
+      "sha256": "a3f7b2ef4acb26f6042acd8c821eaa7b83137b7c9091611c2f63cdfcb9bf7b83"
+    },
+    {
+      "path": "kmp/androidApp/src/main/AndroidManifest.xml",
+      "bytes": 1402,
+      "sha256": "a5c70101058d1e5aef993597163d56af255832f6980b10c31dfc1ab7cafe2aeb"
+    },
+    {
+      "path": "kmp/androidApp/src/main/assets/fonts/NOTICE.md",
+      "bytes": 547,
+      "sha256": "ccc09df44bf5958c09ec7c36520fdb505ce3a3d8f4fe2eb7f01fdca0bc5749ca"
+    },
+    {
+      "path": "kmp/androidApp/src/main/assets/fonts/manrope-OFL.txt",
+      "bytes": 4387,
+      "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"
+    },
+    {
+      "path": "kmp/androidApp/src/main/assets/fonts/noto_sans_sc-OFL.txt",
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt",
+      "bytes": 1417,
+      "sha256": "ae53622a938fe032704ebfec0a1d6b00fd61a88530a5092823504f354e55846c"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "bytes": 26985,
+      "sha256": "996c8dd677468fba6bc3cea3be5f3f6b4fc376665ffa9e4fa213f188a9c19bdd"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAdaptiveWindow.kt",
+      "bytes": 2767,
+      "sha256": "c7732c6ef69754229beb01540ccad6aa40197cf767b892cd477e097aaf852f5e"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAuthDialog.kt",
+      "bytes": 7415,
+      "sha256": "cc0a87d9a521f8e3b7f24c61779e96571b6d9a4a72c019ebcd1cf7682f1a9d00"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "bytes": 28122,
+      "sha256": "801304ed7d596f6052d3ad750cd96cc6ab8e2eda6e74e23fa37bb6807af59137"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt",
+      "bytes": 12512,
+      "sha256": "7322387effe4333ecd03b61289ae910794c53b7e5e4b02824a8264c332a62c9e"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeDraftFiles.kt",
+      "bytes": 2297,
+      "sha256": "9fd66e80f8cee3f6ac2ff1ca645483cbe5a5043c5791e50dda55a8ae1874040e"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDialog.kt",
+      "bytes": 2056,
+      "sha256": "bf9f8437358c2ef591847c3eb0d18f3ef0cc17a128efd1abcfc3adee4694a906"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidFeatureContent.kt",
+      "bytes": 17848,
+      "sha256": "97dfe41e9864cf53e7e2b503f18d66d4fdec0893868aa868957eda38209cefb8"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidImageOrigin.kt",
+      "bytes": 6129,
+      "sha256": "94e2ad5d2fe8d3e7b0e7ccdbb8c8d6f1991eece527c609fce79a4d75177a341d"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMedia.kt",
+      "bytes": 2062,
+      "sha256": "e75983dbabc3e01737270d340c85767d006fba403ada1385fbdff516414b8f3d"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt",
+      "bytes": 48606,
+      "sha256": "ab66ab7299354c3dbdfa45308d03196e30b57fd0382d2d9e8272b9290e609a09"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidOfferFeatures.kt",
+      "bytes": 12597,
+      "sha256": "e14fdd8bcf5bf47fcbd13dd7d4f7e8e99a48988dd6d5c33a6540246624d7271a"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPhotoPicker.kt",
+      "bytes": 5453,
+      "sha256": "cb931998d12bfbc73cc0a77e490f963fb5b625c6920d4533122da29fbb4a742c"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSecretStorage.kt",
+      "bytes": 2387,
+      "sha256": "9a1064bd63adfccb394cd26826e83a24b8a9fae16e9144a9d2d087fc2e402c6d"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "bytes": 18908,
+      "sha256": "94cbb1278e73eb3e83e3140429f36cca1f7f80724bab9cabbbe9dd92463511f1"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MndApplication.kt",
+      "bytes": 1039,
+      "sha256": "33bc67901c38eb64561fce8dc43a1a468806cebf96db92530158ade269dc6821"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileTheme.kt",
+      "bytes": 2892,
+      "sha256": "53b1e3ead901d095316fbedfd9ab535cbc39fb2cb9fbcc8cfab7abc88339b199"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt",
+      "bytes": 5288,
+      "sha256": "aed822c7bd4719febf8d0b3e4403a2854dc00ef88aa692ef3faacc36779521e4"
+    },
+    {
+      "path": "kmp/androidApp/src/main/res/drawable-nodpi/mnd_cat_stickers.png",
+      "bytes": 2364782,
+      "sha256": "9cd455ed5f1f9fc469fc2d48ec92a98765a5677161992b2594360f09d1433a14"
+    },
+    {
+      "path": "kmp/androidApp/src/main/res/font/manrope.ttf",
+      "bytes": 164700,
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    },
+    {
+      "path": "kmp/androidApp/src/main/res/font/noto_sans_sc.ttf",
+      "bytes": 17772300,
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da"
+    },
+    {
+      "path": "kmp/androidApp/src/main/res/values/strings.xml",
+      "bytes": 37298,
+      "sha256": "bc0aa671b6707514893aceced7de964a81525765e3e9ad9ab25e713719610d9f"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/LocalComposeDrafts.kt",
+      "bytes": 5630,
+      "sha256": "b9887a0b13d08a48ab9f81a226e7168cbdf6e4442f3534d6f4e686bcb749fc18"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/LocalWorkspaceDrafts.kt",
+      "bytes": 6124,
+      "sha256": "2502930743e69ef22b489217698c8a07d3bf19982b1d33933db4b5a388aa0051"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "bytes": 35538,
+      "sha256": "dc052d92520e0f7d714dd41868e16d8b7f99da0d32a2bf49ee8a7cfa0d9a2a5f"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "bytes": 38017,
+      "sha256": "16df2bec190570b1975f4f9c3d3b177f99449537ccc58cc1611d0a2d99c162ed"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "bytes": 68151,
+      "sha256": "eb570f82d758cd01dc2b854129d4ea9b6b7e76b647e121b73790e207a9f5a866"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt",
+      "bytes": 9032,
+      "sha256": "9ee44c03c0e123c74217e2ebc7363ee763dea20542d670cfd2429fa5f76d7dd7"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/SensitiveActionStore.kt",
+      "bytes": 11336,
+      "sha256": "b02f53c6154e674f9fccd39bcf6a7cd6f7660c1fdfe8e04e3f61f757482b04b1"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/WorkspaceApi.kt",
+      "bytes": 3578,
+      "sha256": "b9880d4390545f3f7949e64703f2e4cd1d68a54c969c642857edd5b9fea32115"
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/LocalWorkspaceDraftsTest.kt",
+      "bytes": 4113,
+      "sha256": "bddea1c25541a1542aed37b18d512c60f754da81169a13cf70958d80ad238e55"
+    },
+    {
+      "path": "scripts/check_android_feature_static.py",
+      "bytes": 4715,
+      "sha256": "061803c0dde1a4e1a5fe9dacc0c04a168167ec7af1bbcafb39ff2a14743c2266"
+    },
+    {
+      "path": "scripts/check_server_shared_contract_static.py",
+      "bytes": 3602,
+      "sha256": "89ff5531495bdeebc1559719b4cb455a6855f483efdd0befcea0551d77d2bc1b"
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "bytes": 21254,
+      "sha256": "913fc22938e20c3ae0af21b8e51919d38bea0c6293a7f0ffc312d678ddb2c95c"
+    }
+  ]
+}

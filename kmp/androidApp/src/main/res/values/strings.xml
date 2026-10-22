@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">M&amp;D</string>
+    <!-- 正式发布前填写实际生效的 HTTPS 协议地址；空值时不开放注册。 -->
+    <string name="mnd_terms_url" translatable="false"></string>
+    <string name="mnd_privacy_url" translatable="false"></string>
 
     <string name="nav_feed">动态</string>
     <string name="nav_market">市集</string>

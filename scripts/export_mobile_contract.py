@@ -143,7 +143,8 @@ operation("/auth/capabilities", "get", "Only configured login providers", public
 operation("/auth/methods", "get", "Masked phone and linked provider record IDs")
 operation("/profile", "get", "Own profile and four-theme settings")
 operation("/profile", "patch", "Update own profile and public avatar", "ProfileInput")
-operation("/inbox-summary", "get", "Unread counts and stranger requests")
+inbox = operation("/inbox-summary", "get", "Unread counts, first unread message IDs and stranger requests")
+inbox["responses"]["200"]["content"]["application/json"]["schema"] = {"allOf": [ref("Envelope"), {"type": "object", "properties": {"data": dto("Unread")}}]}
 operation("/users/{id}", "get", "Public user profile; phone and credentials omitted", public=True)
 metrics_op = operation("/entry-metrics", "get", "ACL-aware reaction and comment counts for up to 50 entries", public=True)
 metrics_op["parameters"] = [{"name": "ids", "in": "query", "required": True, "schema": {"type": "string"}, "description": "Comma-separated entry IDs"}]
@@ -210,6 +211,7 @@ for action,body in (("process","StateInput"),("hold","DataHoldInput"),("external
     typed("/ops/data-requests/{id}/"+action,"post","Selective data lifecycle: "+action,body,staff=True)
 typed("/ops/legacy-erasure","post","Adapt historical payloads without pretending cleanup completed",{"type":"object","properties":{"cursor":{"type":"integer","format":"int64"}}},staff=True)
 typed("/ops/media-erasure/{id}/process","post","Remove only an unheld physical copy after reference checking",staff=True)
+typed("/ops/upload-expiry","post","Expire upload leases and sweep only old unreferenced managed files; privacy role and explicit scheduler required","UploadCleanupInput","UploadCleanupResult",staff=True)
 typed("/ops/rights-cases/{id}/decision","post","Record rights workflow decision and transfer status","RightsDecision",staff=True)
 typed("/ops/push/{id}/dispatch","post","Lookup before provider send; accepted is distinct from delivered",staff=True)
 item=typed("/safety/media","post","Private guest evidence JPEG/PNG; same metadata and size limits",access="safetyAccess")

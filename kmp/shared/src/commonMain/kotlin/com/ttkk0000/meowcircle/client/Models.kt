@@ -65,7 +65,7 @@ data class ConversationBody(@SerialName("requester_id") val requesterId: Long, @
 
 @Serializable
 data class GroupBody(val name: String, val notice: String = "", val members: List<Long> = emptyList(), val muted: List<Long> = emptyList(),
-    @SerialName("pending_transfer_to") val pendingTransferTo: Long = 0)
+    @SerialName("pending_transfer_to") val pendingTransferTo: Long = 0, @SerialName("transfer_expires_at") val transferExpiresAt: String? = null)
 
 @Serializable
 data class MessageBody(val text: String = "", @SerialName("sticker_id") val stickerId: String = "")
@@ -73,7 +73,8 @@ data class MessageBody(val text: String = "", @SerialName("sticker_id") val stic
 @Serializable
 data class CaseBody(val type: String, val title: String, val species: String, val description: String, val city: String, val area: String,
     val latitude: Double, val longitude: Double, @SerialName("occurred_at") val occurredAt: String,
-    @SerialName("pet_id") val petId: Long = 0, @SerialName("closure_reason") val closureReason: String = "")
+    @SerialName("pet_id") val petId: Long = 0, @SerialName("closure_reason") val closureReason: String = "",
+    @SerialName("private_location") val privateLocation: String = "", @SerialName("matched_claim_id") val matchedClaimId: Long = 0)
 
 @Serializable
 data class NotificationBody(val category: String, val text: String, val read: Boolean,
@@ -83,14 +84,19 @@ data class NotificationBody(val category: String, val text: String, val read: Bo
 @Serializable
 data class InboxSummary(val direct: Map<String, Int> = emptyMap(), val groups: Map<String, Int> = emptyMap(),
     val notifications: Map<String, Int> = emptyMap(), @SerialName("message_requests") val messageRequests: Int = 0,
-    val pending: Map<String,Int> = emptyMap())
+    val pending: Map<String,Int> = emptyMap(),
+    @SerialName("direct_first_unread") val directFirstUnread: Map<String,Long> = emptyMap(),
+    @SerialName("group_first_unread") val groupFirstUnread: Map<String,Long> = emptyMap())
 
 @Serializable
 data class EmojiItem(val id: String, @SerialName("text") val unicode: String = "", val label: String = "",
     @SerialName("asset_url") val assetUrl: String = "")
 
 @Serializable
-data class ExpressionCatalog(val emoji: List<EmojiItem> = emptyList())
+data class StickerItem(val id: String, val label: String = "", val column: Int = 0, val row: Int = 0)
+
+@Serializable
+data class ExpressionCatalog(val emoji: List<EmojiItem> = emptyList(), val stickers: List<StickerItem> = emptyList())
 
 @Serializable
 data class MediaBody(val scope: String, val mime: String, val size: Long, val width: Int, val height: Int,
@@ -134,11 +140,11 @@ data class DraftBody(@SerialName("context_kind") val contextKind: String, val te
     val audience: Audience = Audience(), val cursor: Int = 0,
     @SerialName("context_id") val contextId: Long = 0, @SerialName("pet_id") val petId: Long = 0)
 @Serializable
-internal data class ComposeDraftContent(val schema: Int = 1, val title: String, val text: String)
+internal data class ComposeDraftContent(val schema: Int = 1, val title: String, val text: String, val entry: EntryBody? = null)
 @Serializable
 internal data class DraftInput(val version: Long, val draft: DraftBody, val key: String = "community-compose-v1",
     @SerialName("media_ids") val mediaIds: List<Long> = emptyList())
 
 data class SelectedPhoto(val name: String, val mime: String, val bytes: ByteArray)
 data class PhotoAttachment(val key: String, val name: String, val mediaId: Long? = null,
-    val uploading: Boolean = false, val error: String? = null)
+    val uploading: Boolean = false, val error: String? = null, val mime: String = "image/jpeg")

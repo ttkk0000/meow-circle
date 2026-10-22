@@ -1,0 +1,90 @@
+{
+  "task": "AI-20261022-UPLOAD-RECOVERY",
+  "date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "baseline": "f41de02",
+  "scope": "服务器上传过期回收、Android/iOS公共KMP本地草稿与原编号恢复；源码与静态核对",
+  "checks": [
+    {
+      "name": "gofmt source parse/format",
+      "result": "passed",
+      "files": 9,
+      "boundary": "非类型检查；未编译或执行测试"
+    },
+    {
+      "name": "check_kmp_client_static.py",
+      "result": "passed",
+      "files": 29,
+      "boundary": "定界符、配置和接线静态核对"
+    },
+    {
+      "name": "check_mobile_static.py",
+      "result": "passed",
+      "tables": 42,
+      "paths": 200,
+      "operations": 227,
+      "schemas": 88
+    },
+    {
+      "name": "check_server_shared_contract_static.py",
+      "result": "passed",
+      "dto_pairs": 47
+    },
+    {
+      "name": "git diff --check / conflict markers / new-file whitespace",
+      "result": "passed"
+    }
+  ],
+  "regression_sources_only": [
+    "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/LocalComposeDraftsTest.kt",
+    "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/OperationRecoveryTest.kt",
+    "internal/mobile/media_cleanup_test.go",
+    "internal/platform/mobileapi/media_cleanup_test.go"
+  ],
+  "not_run": [
+    "编译/类型检查",
+    "应用或单元测试",
+    "lint",
+    "数据库迁移",
+    "服务/浏览器/设备启动",
+    "供应商调用",
+    "调度器配置或启动",
+    "部署",
+    "本批提交/推送"
+  ],
+  "remaining": [
+    "运行及平台验收",
+    "旧版无代号临时文件盘点",
+    "本地冲突/损坏文件完整UI出口",
+    "深链/完整导航恢复",
+    "其他作业及证据期限/保全衔接",
+    "其余旧写操作回执",
+    "真实网关/核验/运营配置"
+  ],
+  "sha256": {
+    "docs/api/mobile-v2.openapi.json": "6e78b83b126c719791fdf45c2a249aca60107d343c414a97be7f4e224d9ba770",
+    "docs/server/UPLOAD_RECOVERY_2026_10_22.md": "01404c3e9a272c6783ca2b3928e5b872ee0ee5e31b9820feba841a8b7e5a2ccc",
+    "internal/mobile/data_requests.go": "84c37651464d342a731942ef16890772e73c661c60a26619d323399b737fe7c3",
+    "internal/mobile/media_cleanup.go": "d504ab865796ae10a90213aed04f648b088142126c925c0ade7e167c09b83a75",
+    "internal/mobile/media_cleanup_test.go": "91432f2f7c15c31d373aee9bd300fc8324f56d55dced10f65d8dafad3e0b63e5",
+    "internal/mobile/media_reservation.go": "4fcc33ecd92af0685e582baf483bf7b7787c77290d4eb8ae0272e7506100e3e1",
+    "internal/platform/mobileapi/handler.go": "874f187f55fe86ee92bc60fbe4b20cdb6363875ef398e3feef08397b17c1f35f",
+    "internal/platform/mobileapi/media.go": "2c3dfaa91483a103508a6b76b063caeb5bbcdfd627b6c4416ef715b1adc7a087",
+    "internal/platform/mobileapi/media_cleanup.go": "564e09e8332ca816874bf796fa489a84a2f8070cf3106597951c00cc749652da",
+    "internal/platform/mobileapi/media_cleanup_test.go": "b421b91e4085a650e96d009f10b81e910fa33ebee0bbe8f7b8945dc463e3aa84",
+    "internal/platform/mobileapi/ops_auth.go": "fb1906b281593bf9712de8f21ce765f2ccf9162a00f496263b344c2a45f64aa8",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt": "dd107c58ddec265a4dc4cd81f76b3a7b534f418a99e1937abbc6573a939a76d8",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeDraftFiles.kt": "dbfef77e9daa5f46504abd020346ab0965d031fe17a11a874566a58ff4aeb51f",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MndApplication.kt": "6afcf822ef758180ee3e671b9624c6df53df27841b5093304b6dfdb30bb895f4",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt": "48b83daf31d8db07cc5b50dabbf1ab69f7eb59cf0414d014f4e8ef848caf164c",
+    "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosComposeDraftFiles.kt": "92df360ab83ba270f9177c3457166c27b4e7fecaf703f17c96c909522dc21fad",
+    "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/MainViewController.kt": "bc9f89ed748d78effbb02b9f4a93f3f669f5d48c400249e403c8ef381d32473e",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/LocalComposeDrafts.kt": "907fd992cbb7abbc73c2821c19384bfe596ae4cfb806e036dd62cb79d6b220de",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": "a36998c991793b83a7917b5d066639e8e575737810a49d865854a4585fea2749",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "fbe23e35a459163bd878884164f8adf9db76cfc4634e37573912fd30db76a8f1",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt": "6090ec1ae9fed4f58c8cd90a1ef13eedded86e9e1ffc68d9bf81d15d1d3af3be",
+    "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/LocalComposeDraftsTest.kt": "856868df9fc5ff3558e02cd58266f92d579009420be86942ea0e5bd0ce93cab9",
+    "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/OperationRecoveryTest.kt": "6652010a757957d07f0dc7ff101513caf81cfd6cd7fd63c9f3ef844f908796a1",
+    "scripts/export_mobile_contract.py": "5f888891276aba26c23e97a44d4417def598728d0d7d508fe9a795a612c021ce"
+  }
+}

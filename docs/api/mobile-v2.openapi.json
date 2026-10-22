@@ -18750,7 +18750,7 @@
     },
     "/api/v2/inbox-summary": {
       "get": {
-        "summary": "Unread counts and stranger requests",
+        "summary": "Unread counts, first unread message IDs and stranger requests",
         "operationId": "get_inbox_summary",
         "security": [
           {
@@ -18763,7 +18763,19 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Unread"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -25214,6 +25226,118 @@
         ]
       }
     },
+    "/api/v2/ops/upload-expiry": {
+      "post": {
+        "summary": "Expire upload leases and sweep only old unreferenced managed files; privacy role and explicit scheduler required",
+        "operationId": "post_ops_upload_expiry",
+        "security": [
+          {
+            "operatorToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/UploadCleanupResult"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Reload current version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadCleanupInput"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/ops/rights-cases/{id}/decision": {
       "post": {
         "summary": "Record rights workflow decision and transfer status",
@@ -27178,6 +27302,53 @@
           }
         }
       },
+      "Unread": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "pending": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "direct": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "groups": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "direct_first_unread": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "group_first_unread": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "notifications": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "message_requests": {
+            "type": "integer"
+          }
+        }
+      },
       "ReviewDecision": {
         "type": "object",
         "additionalProperties": false,
@@ -27802,6 +27973,38 @@
                 "type": "null"
               }
             ]
+          }
+        }
+      },
+      "UploadCleanupInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "after": {
+            "type": "string"
+          }
+        }
+      },
+      "UploadCleanupResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "next_cursor": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "expired": {
+            "type": "integer"
+          },
+          "next_file": {
+            "type": "string"
+          },
+          "removed": {
+            "type": "integer"
           }
         }
       },

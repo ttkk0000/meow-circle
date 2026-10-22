@@ -479,6 +479,23 @@ func (s *Service) SetDataHold(ctx context.Context, operator string, id int64, in
 		if e != nil {
 			return e
 		}
+		if in.Hold.Kind == Media && !in.Hold.Released {
+			media, e := tx.Get(Media, in.Hold.ID)
+			if e != nil {
+				return e
+			}
+			if media.OwnerID != r.OwnerID {
+				return ErrForbidden
+			}
+			file, e := Decode[MediaFile](media)
+			if e != nil {
+				return e
+			}
+			if HasString([]string{"erased", "deleting", "upload_expired"}, media.State) ||
+				media.State == "uploading" && (file.UploadLeaseUntil == nil || !file.UploadLeaseUntil.After(s.Now())) {
+				return Denied("media_retention_target_unavailable")
+			}
+		}
 		found := false
 		for i, h := range d.Holds {
 			if h.Kind == in.Hold.Kind && h.ID == in.Hold.ID {

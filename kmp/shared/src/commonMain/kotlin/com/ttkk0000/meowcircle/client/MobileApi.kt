@@ -33,6 +33,7 @@ class MobileStorageException : Exception("Secure storage unavailable")
 fun Throwable.mobileMessage(): String = when (this) {
 	 is OperationResultUnknown -> "提交结果待核对，输入已保留；请先核对原操作，勿重复提交"
     is MobileStorageException -> "设备安全存储暂不可用，请解锁设备后重试"
+    is LocalDraftException -> reason
     is MobileApiException -> when (code) {
         "phone_verification_required" -> "请先验证当前绑定手机号，已保留输入"
         "age_verification_required" -> "请先完成年龄资格核验，已保留输入"
@@ -65,13 +66,15 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     constructor(baseUrl: String, secrets: MobileSecretStorage, device: String) :
         this(baseUrl, secrets, device, createPlatformHttpClient(mobileJson()))
     private val root = baseUrl.trim().trimEnd('/')
+    val storageScope: String get() = root
     internal val json = mobileJson()
     private val sessionMutex = Mutex()
     private var storageUnavailable = false
     private var vault: ClientVault = try { readVault(secrets.read()) }
         catch (_: Exception) { storageUnavailable = true; ClientVault() }
     private var session: LoginSession? = vault.session
-    private val _user = MutableStateFlow<MobileUser?>(null)
+    // 缓存身份只用于恢复私有输入；交流资格仍须重新从服务端读取。
+    private val _user = MutableStateFlow<MobileUser?>(session?.user)
     val user = _user.asStateFlow()
     private var revision = 0L
     private var accountGeneration = 0L
@@ -197,6 +200,20 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         return result
     }
 
+    internal suspend inline fun <reified T, reified B> patch(path: String, body: B): T {
+        val account = session?.user?.id
+        val result = decode<T>(checked(path, HttpMethod.Patch, json.encodeToString(body), emptyMap(), true))
+        if (account != session?.user?.id) throw MobileApiException(401, "account changed")
+        return result
+    }
+
+    suspend fun removeResource(kind: String, id: Long, version: Long) {
+        require(kind in listOf("pets", "offers", "entries", "entry_comments", "drafts") && id > 0)
+        val account = session?.user?.id
+        decode<JsonElement>(checked("$kind/$id", HttpMethod.Delete, json.encodeToString(StateInput(version)), emptyMap(), true))
+        if (account != session?.user?.id) throw MobileApiException(401, "account changed")
+    }
+
     suspend fun capabilities(): LoginCapabilities = get("auth/capabilities", authenticated = false)
     suspend fun identityMethods(): IdentityMethods = get("auth/methods")
     suspend fun phoneLogin(input: PhoneLoginInput): LoginSession = sessionMutex.withLock {
@@ -305,6 +322,9 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     fun recoverableCommands(): List<CommandRecovery> = vault.commands.filter { it.owner == session?.user?.id && it.phase !in listOf("committed", "rejected") }
         .map { CommandRecovery(it.id, it.path, it.phase, it.receipt,it.replayable) }
 
+    fun commandStatus(key: String): CommandRecovery? = vault.commands.firstOrNull { it.owner == session?.user?.id && it.id == key }
+        ?.let { CommandRecovery(it.id, it.path, it.phase, it.receipt, it.replayable) }
+
     suspend fun retryOriginal(key: String): OperationReceipt {
         val owner = session?.user?.id ?: throw MobileApiException(401,"authentication required")
         val command = sessionMutex.withLock {
@@ -388,13 +408,22 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
             email = if (identifier.contains('@')) identifier else "",
             password = password, device = device), false).also { save(it) }
     }
-    suspend fun logout() {
+    suspend fun logout(all: Boolean = false) {
         // Do not erase a failed server revocation and present it as successful logout.
-        post<JsonElement, LogoutInput>("auth/logout", LogoutInput())
+        post<JsonElement, LogoutInput>("auth/logout", LogoutInput(all))
         sessionMutex.withLock { save(null) }
     }
     suspend fun forgetExpiredSession() = sessionMutex.withLock { save(null) }
     suspend fun profile(): MobileProfile = get("profile")
+    suspend fun editProfile(input: ProfileEdit): MobileProfile {
+        val profile = patch<MobileProfile,ProfileEdit>("profile",input)
+        sessionMutex.withLock {
+            val current = session ?: throw MobileApiException(401,"account changed")
+            if (current.user.id != profile.user.id) throw MobileApiException(401,"account changed")
+            save(current.copy(user = profile.user))
+        }
+        return profile
+    }
     suspend fun entries(cursor: Long = 0, space: String = "community"): MobilePage<EntryBody> = get("entries", mapOf("cursor" to "$cursor", "space" to space))
     suspend fun entry(id: Long): MobileRecord<EntryBody> = get("entries/$id")
     suspend fun metrics(ids: List<Long>): List<EntryMetrics> = if (ids.isEmpty()) emptyList() else get("entry-metrics", mapOf("ids" to ids.take(50).joinToString(",")))
@@ -402,6 +431,29 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun comment(id: Long, text: String, key: String): MobileRecord<CommentBody> = durablePost("entries/$id/comments", CommentInput(MessageBody(text), key), key)
     suspend fun react(id: Long, liked: Boolean): JsonElement = post("entries/$id/reaction", ReactionInput(liked))
     suspend fun previewPublication(input: EntryInput): PublicationPreview = post("entries/preview", input)
+    suspend fun preparePublication(input: EntryInput): EntryInput {
+        val owner = session?.user?.id ?: throw MobileApiException(401, "authentication required")
+        return sessionMutex.withLock {
+            if (session?.user?.id != owner) throw MobileApiException(401, "account changed")
+            require(input.clientRequestId.length in 8..100 && input.declaration.confirmed)
+            val body = json.encodeToString(input)
+            val existing = vault.commands.firstOrNull { it.owner == owner && it.id == input.clientRequestId }
+            if (existing != null && (existing.path != "entries" || existing.body != body)) {
+                throw MobileApiException(409, "request body changed", "idempotency_conflict")
+            }
+            val unresolved = vault.commands.firstOrNull { it.owner == owner && it.path == "entries" &&
+                logicalBody(it.body) == logicalBody(body) && it.phase !in listOf("committed", "rejected") }
+            val selected = existing ?: unresolved ?: DurableCommand(owner, input.clientRequestId, "entries", body)
+            if (selected.phase in listOf("sent", "result_unknown")) throw OperationResultUnknown(selected.id)
+            if (existing == null && unresolved == null) {
+                if (vault.commands.count { it.phase !in listOf("committed", "rejected") } >= 16) {
+                    throw MobileApiException(409, "reconcile pending commands before continuing", "pending_operations_limit")
+                }
+                persist(vault.copy(commands = vault.commands + selected))
+            }
+            json.decodeFromString<EntryInput>(selected.body)
+        }
+    }
     suspend fun publish(input: EntryInput): MobileRecord<EntryBody> = durablePost("entries", input, input.clientRequestId)
     suspend fun pets(cursor: Long = 0, owner: Long? = null): MobilePage<PetBody> = get("pets", buildMap {
         put("cursor", "$cursor"); if (owner != null) put("owner_id", "$owner")
@@ -433,21 +485,22 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun readNotification(id: Long, version: Long): MobileRecord<NotificationBody> = post("notifications/$id/read", StateInput(version))
     suspend fun expressions(): ExpressionCatalog = get("expression-catalog", authenticated = false)
     suspend fun drafts(cursor: Long = 0): MobilePage<DraftBody> = get("drafts", mapOf("cursor" to "$cursor"))
-    internal suspend fun saveComposeDraft(version: Long, title: String, text: String, ids: List<Long>): MobileRecord<DraftBody> {
+    internal suspend fun saveComposeDraft(version: Long, title: String, text: String, ids: List<Long>, entry: EntryBody? = null): MobileRecord<DraftBody> {
         val account = session?.user?.id
         val record = decode<MobileRecord<DraftBody>>(checked("drafts", HttpMethod.Put,
-            json.encodeToString(DraftInput(version, DraftBody("mnd.compose.community.v1", json.encodeToString(ComposeDraftContent(title = title, text = text))), mediaIds = ids)), emptyMap(), true))
+            json.encodeToString(DraftInput(version, DraftBody("mnd.compose.community.v1", json.encodeToString(ComposeDraftContent(title = title, text = text, entry = entry))), mediaIds = ids)), emptyMap(), true))
         if (account != session?.user?.id) throw MobileApiException(401, "account changed")
         return record
     }
 
     suspend fun upload(photo: SelectedPhoto,key: String): MobileRecord<MediaBody> = uploadScoped(photo,key,null)
+    suspend fun uploadPrivate(photo: SelectedPhoto,key: String): MobileRecord<MediaBody> = uploadScoped(photo,key,null,"private")
     suspend fun uploadSafetyEvidence(photo: SelectedPhoto,key: String,safetyToken: String): MobileRecord<MediaBody> = uploadScoped(photo,key,safetyToken)
-    private suspend fun uploadScoped(photo: SelectedPhoto, key: String, safetyToken: String?): MobileRecord<MediaBody> {
+    private suspend fun uploadScoped(photo: SelectedPhoto, key: String, safetyToken: String?, mediaScope: String = "public"): MobileRecord<MediaBody> {
         val account = session?.user?.id
         require(photo.mime in listOf("image/jpeg", "image/png") && photo.bytes.size in 1..10 * 1024 * 1024)
         val multipart = MultiPartFormDataContent(formData {
-            append("scope", if (safetyToken == null) "public" else "private")
+            append("scope", if (safetyToken == null) mediaScope else "private")
             append("file", photo.bytes, Headers.build {
                 append(HttpHeaders.ContentType, photo.mime)
                 append(HttpHeaders.ContentDisposition, "filename=\"${if (photo.mime == "image/png") "photo.png" else "photo.jpg"}\"")

@@ -37,7 +37,7 @@ mapping = {
     "DataRequestStatus":"DataRequestStatus", "RightsInput":"RightsInput", "RightsReceipt":"RightsReceipt",
     "PushDeviceInput":"PushDeviceInput", "PushDeviceReceipt":"PushDeviceReceipt", "Credential":"ProviderCredential",
     "OAuthStart":"ProviderStart", "OAuthFinish":"ProviderFinish", "OAuthResult":"ProviderResult", "ResolveInput":"ProviderResolve",
-    "EmailInput":"EmailAuthInput", "EmailOTPInput":"EmailOTPInput", "OTPInput":"PhoneOTPInput", "Feedback":"FeedbackInput",
+    "Unread":"InboxSummary", "EmailInput":"EmailAuthInput", "EmailOTPInput":"EmailOTPInput", "OTPInput":"PhoneOTPInput", "Feedback":"FeedbackInput",
 }
 for server, native in mapping.items():
     assert native in classes and server in schemas, (server,native)

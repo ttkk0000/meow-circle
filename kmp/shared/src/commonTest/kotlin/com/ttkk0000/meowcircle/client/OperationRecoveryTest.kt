@@ -16,6 +16,34 @@ class OperationRecoveryTest {
     private val headers = headersOf(HttpHeaders.ContentType,"application/json")
 
     @Test
+    fun publicationIsPreparedDurablyBeforeAnyNetworkWrite() = runTest {
+        val vault = Vault()
+        var writes = 0
+        val engine = MockEngine { request -> when (request.url.encodedPath) {
+            "/api/v2/auth/password" -> respond("""{"ok":true,"data":{"user":{"id":7,"username":"cat","nickname":"猫友"},"token":"access","refresh_token":"refresh","expires_at":"2026-11-01T00:00:00Z"}}""", headers = headers)
+            "/api/v2/entries" -> {
+                writes++
+                respond("""{"ok":true,"data":{"id":9007199254740993,"owner_id":7,"version":1,"state":"published","data":{"text":"原始草稿"}}}""", headers = headers)
+            }
+            else -> error("Unexpected request")
+        } }
+        val api = MobileApi("https://mnd.example", vault, "test", HttpClient(engine))
+        api.password("cat", "password")
+        val input = EntryInput(EntryBody("原始草稿"), clientRequestId = "prepared-publication",
+            declaration = PublicationDeclaration("manifest", "original", true))
+        val prepared = api.preparePublication(input)
+        assertEquals(input, prepared)
+        assertEquals("prepared", api.commandStatus(input.clientRequestId)?.phase)
+        assertEquals(0, writes)
+        val restored = MobileApi("https://mnd.example", vault, "test", HttpClient(engine))
+        assertEquals(7L, restored.user.value?.id)
+        assertEquals("prepared", restored.commandStatus(input.clientRequestId)?.phase)
+        assertEquals(9007199254740993, restored.publish(prepared).id)
+        assertEquals(1, writes)
+        api.close(); restored.close()
+    }
+
+    @Test
     fun lostPublishResponseSurvivesRestartAndIsNotReposted() = runTest {
         val vault = Vault()
         var writes = 0
