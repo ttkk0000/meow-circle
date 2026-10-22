@@ -4,6 +4,8 @@
 
 ## 一分钟恢复
 
+最新同步状态：Android／共享／上传恢复源码已经在本机提交为 `1a640cd`，但本轮推送因本机缺少GitHub身份验证失败，**尚未到远端**；当前恢复先看[项目快照](CONTEXT.md)与AI-20261022-ANDROID-PUSH记录。完成本机身份验证后按已授权范围正常推送，不强推、不重写历史。
+
 1. 在家里实际仓库核对`git status --short`、当前分支、`git log -1 --oneline`、`git worktree list`，确认包含这次提交。若已有本地改动先保留，不能硬重置或覆盖；同步按当时用户授权执行。
 2. 读当前环境全局规则、项目`AGENTS.md`、[AI入口](README.md)、[快照](CONTEXT.md)、[任务](TASKS.md)。旧机器`J:`及`C:/Users/ttkk0/AGENTS.md`不是家里路径；全局规则缺失时说明，不能假装读过。
 3. 优先读[本批源码与验证边界](../server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)、[证据指纹](../server/server-shared-evidence-2026-10-22.json)，再按需读[实施方案](../client/IMPLEMENTATION_PLAN.md)、[原任务编号](../client/TASKS.md)、[OpenAPI](../api/mobile-v2.openapi.json)。不要重建已有iosUi／ComposeApp或全部Figma稿。
