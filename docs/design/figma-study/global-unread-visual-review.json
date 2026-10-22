@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-20",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "groupsReviewed": [
+    {"nodeId":"356:7","name":"三类消息中心","passed":true,"notes":"分类、会话数字与全局99+可读；静音灰色计数与待处理独立。"},
+    {"nodeId":"364:233","name":"定位与阅读","passed":true,"notes":"修正遮罩透明度与详情底部导航后回看通过；确认231条含静音的文案又单独回看364:324。"},
+    {"nodeId":"368:334","name":"边界与同步","passed":true,"notes":"0隐藏、99保留、100/999显示99+；离线与已读失败保留缓存计数。"},
+    {"nodeId":"370:397","name":"四端全局入口","passed":true,"notes":"手机、Web、Desktop、平板入口对照无裁切；不是各平台全部新增状态页。"}
+  ],
+  "fonts": ["Noto Sans SC"],
+  "discreteImagesOnly": true,
+  "runtimePrototypeVerified": false,
+  "systemPushOrCrossDeviceVerified": false
+}

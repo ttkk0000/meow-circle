@@ -1,0 +1,174 @@
+{
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "fileName": "M&D｜产品与交互设计 V1｜非商业学习稿",
+  "updated": "2026-10-16",
+  "purpose": "non-commercial learning",
+  "status": "delivered",
+  "createdNodeIds": [
+    "14:2",
+    "14:3",
+    "14:4",
+    "14:74",
+    "14:75",
+    "14:76",
+    "14:77"
+  ],
+  "mutatedNodeIds": [
+    "0:1"
+  ],
+  "pages": {
+    "overview": "0:1",
+    "foundations": "14:2",
+    "core": "14:3",
+    "trust": "14:4"
+  },
+  "wrappers": {
+    "overview": "14:74",
+    "foundations": "14:75",
+    "core": "14:76",
+    "trust": "14:77"
+  },
+  "variables": {
+    "background": "VariableID:14:36",
+    "surface": "VariableID:14:37",
+    "subtle": "VariableID:14:38",
+    "ink": "VariableID:14:39",
+    "muted": "VariableID:14:40",
+    "brand": "VariableID:14:41",
+    "onBrand": "VariableID:14:42",
+    "brandSoft": "VariableID:14:43",
+    "success": "VariableID:14:44",
+    "successSoft": "VariableID:14:45",
+    "warning": "VariableID:14:46",
+    "warningSoft": "VariableID:14:47",
+    "danger": "VariableID:14:48",
+    "dangerSoft": "VariableID:14:49",
+    "border": "VariableID:14:50",
+    "controlBorder": "VariableID:14:51"
+  },
+  "geometry": {
+    "space/4": "VariableID:14:52",
+    "space/8": "VariableID:14:53",
+    "space/12": "VariableID:14:54",
+    "space/16": "VariableID:14:55",
+    "space/20": "VariableID:14:56",
+    "space/24": "VariableID:14:57",
+    "space/32": "VariableID:14:58",
+    "space/48": "VariableID:14:59",
+    "space/64": "VariableID:14:60",
+    "radius/8": "VariableID:14:61",
+    "radius/14": "VariableID:14:62",
+    "radius/20": "VariableID:14:63",
+    "radius/28": "VariableID:14:64",
+    "radius/999": "VariableID:14:65",
+    "size/touch": "VariableID:14:66"
+  },
+  "styles": {
+    "Display": "S:9466fb621fab9e2a0cfe34deaa82bccfcc5a623c,",
+    "Brand": "S:a77f6263c925c0763904745e15919f9645624083,",
+    "Title": "S:9ba9f6f87f03d9c51832a0e6c4cba223a839f5df,",
+    "Section": "S:2df419e6e43a4b1ea6eb387c9368587ce8ab132b,",
+    "Body": "S:4ec5595d1cb39f780f1ba2061e632d77abfda629,",
+    "Label": "S:b3c9f305d72ee074857292ed4345f9311f8b5500,",
+    "Caption": "S:e31250e9288e02c9954a72976177f3677be7fbd6,"
+  },
+  "collections": {
+    "primitives": "VariableCollectionId:14:5",
+    "color": "VariableCollectionId:14:6",
+    "geometry": "VariableCollectionId:14:7"
+  },
+  "modes": {
+    "Light": "14:1",
+    "Dark": "14:2"
+  },
+  "variableCount": 59,
+  "components": {
+    "primary": "17:39",
+    "secondary": "17:43",
+    "chip": "17:47",
+    "chipSelected": "17:51",
+    "input": "17:55",
+    "inputError": "17:59",
+    "status": "17:63",
+    "statusValid": "17:67",
+    "statusDisputed": "17:71",
+    "disabled": "17:75"
+  },
+  "screens": {
+    "community": "20:8",
+    "adoption": "20:28",
+    "find": "20:48",
+    "adoptionDetail": "20:69",
+    "petDetail": "20:78",
+    "mine": "20:87",
+    "apply": "21:8",
+    "appointment": "21:17",
+    "change": "21:26",
+    "chat": "21:36",
+    "publish": "21:45",
+    "complaint": "21:54"
+  },
+  "links": {
+    "community/nav/社区": "20:16",
+    "community/nav/领养": "20:18",
+    "community/nav/找宠": "20:20",
+    "community/nav/消息": "20:22",
+    "community/nav/我的": "20:24",
+    "adoption/nav/社区": "20:36",
+    "adoption/nav/领养": "20:38",
+    "adoption/nav/找宠": "20:40",
+    "adoption/nav/消息": "20:42",
+    "adoption/nav/我的": "20:44",
+    "find/nav/社区": "20:56",
+    "find/nav/领养": "20:58",
+    "find/nav/找宠": "20:60",
+    "find/nav/消息": "20:62",
+    "find/nav/我的": "20:64",
+    "mine/nav/社区": "20:95",
+    "mine/nav/领养": "20:97",
+    "mine/nav/找宠": "20:99",
+    "mine/nav/消息": "20:101",
+    "mine/nav/我的": "20:103",
+    "community/publish": "20:122",
+    "adoption/detail": "20:151",
+    "find/detail": "20:170",
+    "adoptionDetail/apply": "28:24",
+    "petDetail/appointment": "28:27",
+    "mine/appointment": "20:228",
+    "mine/publish": "20:239",
+    "apply/chat": "21:79",
+    "appointment/chat": "21:110",
+    "change/accept": "21:128",
+    "change/reject": "21:130",
+    "chat/change": "21:144"
+  },
+  "images": {
+    "cat": "d32a01799ceb219ad7006a3af2dbc366628290ac",
+    "dog": "199130c8db2b9260eaafceac7bc3010f8eb91098",
+    "rabbit": "d5fe57daf3628c3b34fcdf260f17d38514b0dcbc",
+    "catOffer": "74d0fae36364127579439d6c33bb4feabcc7f988"
+  },
+  "assetNodeIds": [
+    "16:2",
+    "16:3",
+    "16:4",
+    "19:2"
+  ],
+  "prototype": {
+    "pageId": "30:2",
+    "screens": {
+      "community": "30:3",
+      "adoption": "30:44",
+      "find": "30:95",
+      "adoptionDetail": "30:139",
+      "petDetail": "30:169",
+      "mine": "30:208",
+      "apply": "30:248",
+      "appointment": "30:283",
+      "change": "30:323",
+      "chat": "30:351",
+      "publish": "30:381",
+      "complaint": "30:425"
+    }
+  }
+}

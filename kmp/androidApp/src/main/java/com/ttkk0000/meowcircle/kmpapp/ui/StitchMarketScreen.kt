@@ -77,7 +77,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.Listing
 import com.ttkk0000.meowcircle.ListingDetailData

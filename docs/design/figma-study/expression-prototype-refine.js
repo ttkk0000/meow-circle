@@ -1,0 +1,11 @@
+// Inputs: OPACITY (all expression variables), PICKER_IDS, GLYPH_MAP.
+const p=await figma.getNodeByIdAsync("56:25");await figma.setCurrentPageAsync(p);
+const mutatedNodeIds=[],createdNodeIds=[];const selected=[];
+for(const n of p.findAllWithCriteria({types:["INSTANCE"]}).filter(n=>n.mainComponent?.id==="161:835")){
+const parent=n.parent;if(parent.name==="Selected expression / not auto-sent"){n.resize(144,144);parent.counterAxisAlignItems="CENTER";const label=parent.children.find(x=>x.type==="TEXT");if(label){for(const s of label.getStyledTextSegments(["fontName"]))await figma.loadFontAsync(s.fontName);const width=parent.width-parent.paddingLeft-parent.paddingRight-144-parent.itemSpacing;label.resize(width,24);label.textAutoResize="HEIGHT";label.layoutSizingHorizontal="FILL";mutatedNodeIds.push(label.id);}selected.push({id:n.id,width:n.width,height:n.height});mutatedNodeIds.push(parent.id);}else n.resize(48,48);mutatedNodeIds.push(n.id);}
+const opacityIds=new Set(Object.values(OPACITY));let entryCount=0,legacySelectionCount=0;
+function setFloat(id,value){return{type:"SET_VARIABLE",variableId:id,variableValue:{type:"FLOAT",resolvedType:"FLOAT",value}};}
+const allClear=()=>[...opacityIds].map(id=>setFloat(id,0));
+for(const n of p.findAll(x=>"reactions"in x&&x.reactions.length>0)){if(n.name.startsWith("Expression choice /"))continue;let changed=false;
+const reactions=n.reactions.map(r=>{const actions=r.actions||[];const entry=actions.some(a=>a.type==="NODE"&&PICKER_IDS.includes(a.destinationId));const glyph=actions.find(a=>a.type==="SET_VARIABLE"&&a.variableId==="VariableID:141:3");if(!entry&&!glyph)return r;changed=true;const kept=actions.filter(a=>a.type!=="SET_VARIABLE"||!opacityIds.has(a.variableId));if(entry){entryCount++;return{...r,actions:[...allClear(),...kept]};}const key=GLYPH_MAP[glyph.variableValue?.value]||"text";legacySelectionCount++;return{...r,actions:[...allClear(),setFloat(OPACITY[key]||OPACITY.text,100),...kept]};});if(changed){n.reactions=reactions;mutatedNodeIds.push(n.id);}}
+return{createdNodeIds,mutatedNodeIds,selectedDisplays:selected.length,pickerEntryResets:entryCount,legacySelectionRepairs:legacySelectionCount,selectionCount:Object.keys(OPACITY).length};

@@ -63,7 +63,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.Comment
 import com.ttkk0000.meowcircle.MeowCircleSdk

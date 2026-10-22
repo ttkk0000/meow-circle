@@ -1,0 +1,876 @@
+{
+  "updated": "2026-10-16",
+  "scope": "59-screen Friendly phone visual rollout",
+  "screenCount": 59,
+  "nodeTypeCounts": {
+    "FRAME": 1142,
+    "TEXT": 955,
+    "INSTANCE": 546,
+    "VECTOR": 451
+  },
+  "totalNodeCount": 3094,
+  "imageNodeCount": 21,
+  "fontFamilies": [
+    "Noto Sans SC",
+    "Manrope"
+  ],
+  "missingFonts": [],
+  "badFamilies": [],
+  "badButtonStyles": [],
+  "panelChangeCount": 179,
+  "navigation": {
+    "beforeSourceCount": 329,
+    "afterSourceCount": 330,
+    "reactionCount": 330,
+    "allExistingSourcesPreserved": true,
+    "invalidTargets": [],
+    "addedChatSourceId": "90:1387"
+  },
+  "otherThemeModesPreserved": true,
+  "contrast": [
+    {
+      "fg": "ink",
+      "bg": "background",
+      "foreground": "#202329",
+      "background": "#F7F8FA",
+      "ratio": 14.82,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "muted",
+      "bg": "surface",
+      "foreground": "#616771",
+      "background": "#FFFEFC",
+      "ratio": 5.65,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "brand",
+      "bg": "surface",
+      "foreground": "#9E382A",
+      "background": "#FFFEFC",
+      "ratio": 6.82,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "brand",
+      "bg": "brandSoft",
+      "foreground": "#9E382A",
+      "background": "#FFF1EB",
+      "ratio": 6.23,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "onAccent",
+      "bg": "accent",
+      "foreground": "#FFFEFC",
+      "background": "#C84B3D",
+      "ratio": 4.6,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "controlBorder",
+      "bg": "surface",
+      "foreground": "#838A94",
+      "background": "#FFFEFC",
+      "ratio": 3.46,
+      "target": 3,
+      "pass": true
+    },
+    {
+      "fg": "danger",
+      "bg": "dangerSoft",
+      "foreground": "#B42332",
+      "background": "#FDEEF0",
+      "ratio": 5.78,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "warning",
+      "bg": "warningSoft",
+      "foreground": "#86540A",
+      "background": "#FFF5DE",
+      "ratio": 5.89,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "success",
+      "bg": "successSoft",
+      "foreground": "#176C49",
+      "background": "#E8F4ED",
+      "ratio": 5.67,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "onSecondary",
+      "bg": "secondary",
+      "foreground": "#9E382A",
+      "background": "#FFF1EB",
+      "ratio": 6.23,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "secondaryBorder",
+      "bg": "secondary",
+      "foreground": "#B85F50",
+      "background": "#FFF1EB",
+      "ratio": 3.97,
+      "target": 3,
+      "pass": true
+    },
+    {
+      "fg": "focus",
+      "bg": "surface",
+      "foreground": "#626873",
+      "background": "#FFFEFC",
+      "ratio": 5.56,
+      "target": 3,
+      "pass": true
+    }
+  ],
+  "buttonChecks": [
+    {
+      "screen": "home",
+      "id": "56:27",
+      "buttonCount": 1,
+      "kinds": [
+        "Quiet"
+      ],
+      "minWidth": 132
+    },
+    {
+      "screen": "homeEmpty",
+      "id": "56:28",
+      "buttonCount": 2,
+      "kinds": [
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "city",
+      "id": "56:29",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "search",
+      "id": "56:30",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "results",
+      "id": "56:31",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "post",
+      "id": "56:32",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "composePost",
+      "id": "56:33",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "postPreview",
+      "id": "56:34",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "adopt",
+      "id": "56:35",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet"
+      ],
+      "minWidth": 173
+    },
+    {
+      "screen": "filter",
+      "id": "56:36",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "detail",
+      "id": "56:37",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 132
+    },
+    {
+      "screen": "verify",
+      "id": "56:38",
+      "buttonCount": 2,
+      "kinds": [
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "apply",
+      "id": "56:39",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "applyReview",
+      "id": "56:40",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "applySent",
+      "id": "56:41",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "application",
+      "id": "56:42",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "handover",
+      "id": "56:43",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "followup",
+      "id": "56:44",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "withdrawn",
+      "id": "56:45",
+      "buttonCount": 2,
+      "kinds": [
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "applicationDecision",
+      "id": "56:46",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "publishType",
+      "id": "56:47",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petBasics",
+      "id": "56:48",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petDisclosure",
+      "id": "56:49",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petEvidence",
+      "id": "56:50",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petPreview",
+      "id": "56:51",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petPending",
+      "id": "56:52",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "myPublishes",
+      "id": "56:53",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "lostList",
+      "id": "56:54",
+      "buttonCount": 5,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 173
+    },
+    {
+      "screen": "lostMap",
+      "id": "56:55",
+      "buttonCount": 4,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 173
+    },
+    {
+      "screen": "lostDetail",
+      "id": "56:56",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "sighting",
+      "id": "56:57",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "sightingReview",
+      "id": "56:58",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "lostPublish",
+      "id": "56:59",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "lostManage",
+      "id": "56:60",
+      "buttonCount": 2,
+      "kinds": [
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "messages",
+      "id": "56:61",
+      "buttonCount": 0,
+      "kinds": [],
+      "minWidth": null
+    },
+    {
+      "screen": "chat",
+      "id": "56:62",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "appointment",
+      "id": "56:63",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "change",
+      "id": "56:64",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "report",
+      "id": "56:65",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "reportReceipt",
+      "id": "56:66",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "reportProgress",
+      "id": "56:67",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "appeal",
+      "id": "56:68",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "publisherResponse",
+      "id": "56:69",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "login",
+      "id": "56:70",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "otp",
+      "id": "56:71",
+      "buttonCount": 4,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "otpError",
+      "id": "56:72",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "mine",
+      "id": "56:73",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet"
+      ],
+      "minWidth": 111.33333587646484
+    },
+    {
+      "screen": "petProfile",
+      "id": "56:74",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "settings",
+      "id": "56:75",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "privacy",
+      "id": "56:76",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "find",
+      "id": "56:77",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "saleDetail",
+      "id": "56:78",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "salePublish",
+      "id": "56:79",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "salePreview",
+      "id": "56:80",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "offline",
+      "id": "56:81",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "noResults",
+      "id": "56:82",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "contentUnavailable",
+      "id": "56:83",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "permission",
+      "id": "56:84",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "sightingSent",
+      "id": "63:1361",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    }
+  ],
+  "sourceScreens": {
+    "home": "56:27",
+    "homeEmpty": "56:28",
+    "city": "56:29",
+    "search": "56:30",
+    "results": "56:31",
+    "post": "56:32",
+    "composePost": "56:33",
+    "postPreview": "56:34",
+    "adopt": "56:35",
+    "filter": "56:36",
+    "detail": "56:37",
+    "verify": "56:38",
+    "apply": "56:39",
+    "applyReview": "56:40",
+    "applySent": "56:41",
+    "application": "56:42",
+    "handover": "56:43",
+    "followup": "56:44",
+    "withdrawn": "56:45",
+    "applicationDecision": "56:46",
+    "publishType": "56:47",
+    "petBasics": "56:48",
+    "petDisclosure": "56:49",
+    "petEvidence": "56:50",
+    "petPreview": "56:51",
+    "petPending": "56:52",
+    "myPublishes": "56:53",
+    "lostList": "56:54",
+    "lostMap": "56:55",
+    "lostDetail": "56:56",
+    "sighting": "56:57",
+    "sightingReview": "56:58",
+    "lostPublish": "56:59",
+    "lostManage": "56:60",
+    "messages": "56:61",
+    "chat": "56:62",
+    "appointment": "56:63",
+    "change": "56:64",
+    "report": "56:65",
+    "reportReceipt": "56:66",
+    "reportProgress": "56:67",
+    "appeal": "56:68",
+    "publisherResponse": "56:69",
+    "login": "56:70",
+    "otp": "56:71",
+    "otpError": "56:72",
+    "mine": "56:73",
+    "petProfile": "56:74",
+    "settings": "56:75",
+    "privacy": "56:76",
+    "find": "56:77",
+    "saleDetail": "56:78",
+    "salePublish": "56:79",
+    "salePreview": "56:80",
+    "offline": "56:81",
+    "noResults": "56:82",
+    "contentUnavailable": "56:83",
+    "permission": "56:84",
+    "sightingSent": "63:1361"
+  },
+  "reviewSourceSync": {
+    "createdNodeIds": [
+      "I82:446;56:186",
+      "I82:584;56:186",
+      "I82:621;56:185",
+      "I82:586;56:184",
+      "I82:647;56:184"
+    ],
+    "mutatedNodeIds": [
+      "82:446",
+      "82:584",
+      "82:621",
+      "82:586",
+      "82:647"
+    ],
+    "removedImplicitNodeIds": [
+      "I82:446;70:189",
+      "I82:446;70:190",
+      "I82:446;70:190;56:160",
+      "I82:446;70:190;56:161",
+      "I82:446;70:190;56:162",
+      "I82:584;70:189",
+      "I82:584;70:190",
+      "I82:584;70:190;56:160",
+      "I82:584;70:190;56:161",
+      "I82:584;70:190;56:162",
+      "I82:621;70:188",
+      "I82:586;70:187",
+      "I82:647;70:187"
+    ],
+    "boardId": "81:192",
+    "nodeTypeCounts": {
+      "FRAME": 87,
+      "TEXT": 72,
+      "INSTANCE": 45,
+      "VECTOR": 35
+    },
+    "totalNodeCount": 239,
+    "imageNodeIds": [
+      "I82:470;56:210",
+      "I82:471;56:210",
+      "I82:473;56:210",
+      "I82:474;56:210",
+      "82:564",
+      "I82:638;56:204"
+    ],
+    "buttonChecks": [
+      {
+        "id": "82:446",
+        "mainId": "56:181",
+        "label": "武汉",
+        "width": 132,
+        "height": 48,
+        "radius": 16
+      },
+      {
+        "id": "82:584",
+        "mainId": "56:181",
+        "label": "报告问题",
+        "width": 358,
+        "height": 48,
+        "radius": 16
+      },
+      {
+        "id": "82:621",
+        "mainId": "56:180",
+        "label": "先聊一聊",
+        "width": 132,
+        "height": 48,
+        "radius": 16
+      },
+      {
+        "id": "82:586",
+        "mainId": "56:179",
+        "label": "申请领养",
+        "width": 214,
+        "height": 48,
+        "radius": 16
+      },
+      {
+        "id": "82:647",
+        "mainId": "56:179",
+        "label": "检查申请摘要",
+        "width": 358,
+        "height": 48,
+        "radius": 16
+      }
+    ],
+    "width": 1330,
+    "height": 1194,
+    "buttonLabelProperty": "Label#56:0"
+  },
+  "visualReview": "3018x8748 all-phone export inspected plus 1330x1194 representative review. Original source IDs, explicit theme scopes and fixed scroll viewports retained.",
+  "limitations": [
+    "Static Figma navigation is not actual application functionality.",
+    "No real map, SMS, form/chat/report submission or payment integration.",
+    "No device, screen-reader, keyboard, zoom or complete WCAG runtime acceptance.",
+    "Production Stitch/client code and other platforms unchanged."
+  ]
+}

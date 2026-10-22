@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"kitty-circle/internal/domain"
+	"kitty-circle/internal/mobile"
 	"kitty-circle/internal/platform/phoneotp"
 )
 
@@ -14,7 +15,9 @@ import (
 var _ Store = (*MemoryStore)(nil)
 
 type MemoryStore struct {
-	mu sync.RWMutex
+	mobileRecords map[mobile.Kind]map[int64]mobile.Record
+	mobileSeq     int64
+	mu            sync.RWMutex
 
 	userSeq         int64
 	postSeq         int64

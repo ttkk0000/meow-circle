@@ -70,7 +70,7 @@ import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import kotlinx.coroutines.launch
 
 /**

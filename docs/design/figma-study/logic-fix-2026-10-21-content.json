@@ -1,0 +1,4544 @@
+{
+  "date": "2026-10-21",
+  "task": "AI-20261021-LOGIC-FIX",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "scope": "LR01–LR06 native editable design repairs; no backend or runtime delivery",
+  "screens": [
+    {
+      "id": "phoneCode",
+      "title": "验证当前手机号",
+      "group": "account",
+      "items": [
+        {
+          "type": "field",
+          "label": "当前手机号",
+          "value": "138 **** 0000 · 示例",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "短信验证码",
+          "value": "请输入验证码",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "用途：当前号码交流验证",
+          "body": "错误、过期或频控不会改变原账号；更换号码后旧号资格不自动沿用。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "验证码错误",
+          "value": "保留本次号码，重新输入",
+          "to": "smsInvalid"
+        },
+        {
+          "type": "row",
+          "label": "验证码已过期",
+          "value": "旧码作废，重新获取",
+          "to": "smsExpired"
+        },
+        {
+          "type": "row",
+          "label": "短信未到 / 发送频繁",
+          "value": "查看等待与重发",
+          "to": "smsDelivery"
+        }
+      ],
+      "footer": {
+        "label": "验证当前号码",
+        "to": "smsChecking"
+      },
+      "back": "phoneGate",
+      "context": {
+        "domain": "auth",
+        "purpose": "interaction_phone",
+        "entity": "currentPhone",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "smsInvalid",
+      "title": "验证码不正确",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "本次验证未通过",
+          "body": "当前号码及原任务保留，不会进入邮箱或创建新账号。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "field",
+          "label": "手机号",
+          "value": "138 **** 0000 · 本次交流验证",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "短信验证码",
+          "value": "请重新输入",
+          "error": true
+        },
+        {
+          "type": "row",
+          "label": "验证码已过期",
+          "value": "重新获取本次用途的新码",
+          "to": "smsExpired"
+        },
+        {
+          "type": "row",
+          "label": "暂不验证",
+          "value": "保留草稿并返回",
+          "to": "authResume"
+        }
+      ],
+      "footer": {
+        "label": "重新填写短信验证码",
+        "to": "phoneCode"
+      },
+      "back": "phoneCode"
+    },
+    {
+      "id": "smsExpired",
+      "title": "短信验证码已过期",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "旧验证码已失效",
+          "body": "重新获取只用于当前号码的交流资格验证，不更换账号绑定。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前号码",
+              "138 **** 0000"
+            ],
+            [
+              "原任务",
+              "保留，不自动提交"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "号码填写有误",
+          "value": "返回修改本次号码",
+          "to": "phoneGate"
+        }
+      ],
+      "footer": {
+        "label": "重新获取本次用途验证码",
+        "to": "smsSendPending"
+      },
+      "back": "phoneCode"
+    },
+    {
+      "id": "smsDelivery",
+      "title": "短信未到与重发",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "先确认发送结果",
+          "body": "当前示例：上次发送已确认，60秒内可再次请求；实际剩余时间由服务端返回。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "渠道 / 用途",
+              "短信 · 当前号交流验证"
+            ],
+            [
+              "等待 / 次数",
+              "倒计时和额度以本次发送记录为准"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "发送过于频繁",
+          "value": "显示本次返回的重试时间，不切换验证用途",
+          "to": "smsRateLimited"
+        },
+        {
+          "type": "row",
+          "label": "号码有误",
+          "value": "修改后重新核对",
+          "to": "phoneGate"
+        },
+        {
+          "type": "row",
+          "label": "已收到验证码",
+          "value": "回到本次号码填写",
+          "to": "phoneCode"
+        }
+      ],
+      "footer": {
+        "label": "核对本次重发条件",
+        "to": "smsRateLimited",
+        "kind": "secondary"
+      },
+      "back": "phoneCode",
+      "eventGate": {
+        "key": "smsResendAllowed",
+        "outcomes": {
+          "0": "smsRateLimited",
+          "1": "smsSendPending"
+        }
+      }
+    },
+    {
+      "id": "smsRateLimited",
+      "title": "请稍后再试",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "当前验证请求过于频繁",
+          "body": "保留号码与任务。恢复时间由服务端给出，倒计时结束前不能重发。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "可重试时间",
+              "本次返回的 retryAfter；示例尚有60秒"
+            ],
+            [
+              "当前资格",
+              "尚未验证，不改变原账号"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "已收到仍有效的验证码",
+          "value": "可以继续填写，不额外发送",
+          "to": "phoneCode"
+        }
+      ],
+      "footer": {
+        "label": "返回短信等待页",
+        "to": "smsDelivery",
+        "kind": "secondary"
+      },
+      "back": "smsDelivery"
+    },
+    {
+      "id": "smsChecking",
+      "title": "正在核对短信结果",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前号码",
+              "138 **** 0000"
+            ],
+            [
+              "用途",
+              "当前手机号交流资格"
+            ],
+            [
+              "原任务",
+              "验证后恢复，仍由你再次提交"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "smsChecking",
+        "kind": "secondary"
+      },
+      "back": "phoneCode",
+      "eventGate": {
+        "key": "smsResult",
+        "outcomes": {
+          "0": "smsChecking",
+          "1": "authResume",
+          "2": "smsInvalid",
+          "3": "smsExpired",
+          "4": "smsRateLimited",
+          "5": "smsUncertain"
+        }
+      },
+      "context": {
+        "domain": "auth",
+        "purpose": "interaction_phone",
+        "entity": "currentPhone",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "smsUncertain",
+      "title": "短信验证结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "暂时无法确认结果",
+          "body": "网络中断不表示验证失败。查询同一次结果，不重复验证、换绑或自动发布。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "查询本次验证",
+          "value": "保留本次请求与用途",
+          "to": "smsChecking"
+        },
+        {
+          "type": "row",
+          "label": "稍后再处理",
+          "value": "保留原编辑内容",
+          "to": "authResume"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "smsChecking",
+        "kind": "secondary"
+      },
+      "back": "phoneCode"
+    },
+    {
+      "id": "adultAssurance",
+      "title": "成年业务资格",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "年满18岁",
+          "body": "商业发布、预约与线下签约需有效成年资格，并继续检查角色和资料。",
+          "tone": "subtle"
+        },
+        {
+          "type": "text",
+          "text": "年龄核对完成后，才能办理需要成年人身份的事项。",
+          "role": "Label"
+        },
+        {
+          "type": "row",
+          "label": "开始年龄核对",
+          "value": "仅返回必要结果",
+          "to": "adultNotice"
+        },
+        {
+          "type": "row",
+          "label": "暂不核对",
+          "value": "继续日常浏览与交流流程",
+          "to": "phoneGate"
+        },
+        {
+          "type": "row",
+          "label": "核对有误或无法完成",
+          "value": "申请人工复核",
+          "to": "ageAppeal"
+        }
+      ],
+      "footer": {
+        "label": "返回原任务",
+        "to": "legacy:home",
+        "kind": "secondary"
+      },
+      "back": "ageRange"
+    },
+    {
+      "id": "adultNotice",
+      "title": "成年核对前说明",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "只为本次成年业务核对",
+          "body": "当前示例任务：小满的线下预约。普通浏览无需完成此核对。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "核对内容",
+              "成年资格结果、有效期与必要来源"
+            ],
+            [
+              "原始材料",
+              "在已确认的核验通道处理，不进入公开资料"
+            ],
+            [
+              "未完成的影响",
+              "保持成年业务受限，原预约草稿保留"
+            ]
+          ]
+        },
+        {
+          "type": "check",
+          "key": "adultNoticeConsent",
+          "label": "我已了解本次核对用途与资料范围"
+        },
+        {
+          "type": "row",
+          "label": "取消本次核对",
+          "value": "不改变年龄结果，也不提交预约",
+          "to": "adultCancelled"
+        }
+      ],
+      "footer": {
+        "label": "进入核验服务",
+        "to": "adultProvider",
+        "requires": "adultNoticeConsent"
+      },
+      "back": "adultAssurance",
+      "context": {
+        "domain": "age",
+        "purpose": "adult_business",
+        "entity": "appointment:AP-DEMO-01",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "adultProvider",
+      "title": "准备打开核验服务",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "核对服务可用后才继续",
+          "body": "运营方和服务配置未就绪时，不能展示为已验证。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原任务",
+              "预约 AP-DEMO-01 · 小满"
+            ],
+            [
+              "账号",
+              "mnd_sample · 本次会话"
+            ],
+            [
+              "回传",
+              "通过 / 未通过 / 处理中，不回传公开证件"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "取消并返回",
+          "value": "保留原任务与输入",
+          "to": "adultCancelled"
+        }
+      ],
+      "footer": {
+        "label": "打开本次核验",
+        "to": "adultUnsupported"
+      },
+      "back": "adultNotice",
+      "eventGate": {
+        "key": "adultService",
+        "outcomes": {
+          "0": "adultUnsupported",
+          "1": "adultPending"
+        }
+      }
+    },
+    {
+      "id": "adultPending",
+      "title": "成年资格核对中",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "请求",
+              "AGE-DEMO-01 · 当前账号与用途"
+            ],
+            [
+              "状态",
+              "等待核验服务返回结果"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "退出等待",
+          "value": "请求可能继续，返回后先查询，不自动取消核验",
+          "to": "adultCancelled"
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "adultPending",
+        "kind": "secondary"
+      },
+      "back": "adultProvider",
+      "eventGate": {
+        "key": "adultResult",
+        "outcomes": {
+          "0": "adultPending",
+          "1": "adultPassed",
+          "2": "adultFailed",
+          "3": "adultNotEligible",
+          "4": "adultExpired",
+          "5": "adultUnsupported"
+        }
+      },
+      "context": {
+        "domain": "age",
+        "purpose": "adult_business",
+        "entity": "appointment:AP-DEMO-01",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "adultCancelled",
+      "title": "核对尚未完成",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "原任务已保留",
+          "body": "取消授权或退出等待都不会把账号标成成年；如果请求已经发出，可查原请求。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查询已发出的核对",
+          "value": "不会重复创建",
+          "to": "adultPending"
+        },
+        {
+          "type": "row",
+          "label": "重新查看核对用途",
+          "value": "确认后才能再次授权",
+          "to": "adultNotice"
+        }
+      ],
+      "footer": {
+        "label": "返回成年业务资格",
+        "to": "adultAssurance",
+        "kind": "secondary"
+      },
+      "back": "adultAssurance"
+    },
+    {
+      "id": "adultFailed",
+      "title": "成年核对未通过",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "本次未获得有效结果",
+          "body": "可能是服务异常或材料无法核对；不公开材料，不自动更改年龄。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "重新核对",
+          "value": "确认本次用途后重试",
+          "to": "adultNotice"
+        },
+        {
+          "type": "row",
+          "label": "结果有误 / 无法完成",
+          "value": "申请必要的人工复核",
+          "to": "ageAppeal"
+        }
+      ],
+      "footer": {
+        "label": "保留原任务并返回",
+        "to": "adultAssurance",
+        "kind": "secondary"
+      },
+      "back": "adultAssurance"
+    },
+    {
+      "id": "adultUnsupported",
+      "title": "核对服务暂不可用",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "成年业务暂不可办理",
+          "body": "当前服务未配置、不可用或不支持本次核对时，保持受限；不让你把证件发到公开页面。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "需要帮助",
+          "value": "按实际公开渠道申请协助",
+          "to": "ageAppeal"
+        }
+      ],
+      "footer": {
+        "label": "返回并保留任务",
+        "to": "adultAssurance",
+        "kind": "secondary"
+      },
+      "back": "adultProvider"
+    },
+    {
+      "id": "adultNotEligible",
+      "title": "当前不符合成年业务范围",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "本次成年业务仍受限",
+          "body": "可以浏览与保留草稿；商业发布和线下签约由成年人用自己的账号办理。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "年龄结果有误",
+          "value": "按原结果申请复核",
+          "to": "ageAppeal"
+        },
+        {
+          "type": "row",
+          "label": "查看成年人办理范围",
+          "value": "不把本账号临时改成成人",
+          "to": "adultRequired"
+        }
+      ],
+      "footer": {
+        "label": "返回原任务说明",
+        "to": "adultAssurance",
+        "kind": "secondary"
+      },
+      "back": "adultAssurance"
+    },
+    {
+      "id": "adultExpired",
+      "title": "成年资格需要重新核对",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "原结果已失效",
+          "body": "不沿用旧结果放行新业务；原预约和必要历史仍保留。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "结果状态",
+              "失效 / 撤销 / 当前会话需重新验证"
+            ],
+            [
+              "下一步",
+              "重新核对或申请复核"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "重新核对本次用途",
+        "to": "adultNotice"
+      },
+      "back": "adultAssurance"
+    },
+    {
+      "id": "adultPassed",
+      "title": "成年资格有效",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "核验返回通过 · 设计示例",
+          "body": "只有核验服务的有效结果才能显示此状态；不是自行选择年龄后的结论。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "账号 / 用途",
+              "mnd_sample · 成年业务"
+            ],
+            [
+              "结果 / 时效",
+              "通过 · 有效期以核验结果为准"
+            ],
+            [
+              "原任务",
+              "预约 AP-DEMO-01 · 小满"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "返回同一预约核对",
+          "value": "仍需手机资格、角色与当前版本",
+          "to": "adultTaskReview"
+        }
+      ],
+      "footer": {
+        "label": "继续核对原预约",
+        "to": "adultTaskReview"
+      },
+      "back": "adultAssurance"
+    },
+    {
+      "id": "adultTaskReview",
+      "title": "继续原预约",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原任务",
+              "AP-DEMO-01 · 小满 · V1"
+            ],
+            [
+              "已核对",
+              "成年结果有效（示例）"
+            ],
+            [
+              "还需检查",
+              "当前手机号、办理角色、资料和版本"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "当前手机号仍未验证",
+          "value": "保留同一预约，进入交流验证",
+          "to": "phoneGate"
+        },
+        {
+          "type": "row",
+          "label": "资源或资格已变化",
+          "value": "不使用原确认按钮",
+          "to": "adultExpired"
+        }
+      ],
+      "footer": {
+        "label": "刷新原预约条件",
+        "to": "adultTaskReview",
+        "kind": "secondary"
+      },
+      "back": "adultPassed",
+      "eventGate": {
+        "key": "adultTask",
+        "outcomes": {
+          "0": "adultTaskReview",
+          "1": "legacy:appointment",
+          "2": "phoneGate",
+          "3": "adultExpired"
+        }
+      },
+      "context": {
+        "domain": "appointment",
+        "purpose": "resume",
+        "entity": "appointment:AP-DEMO-01",
+        "actor": "adultAccount",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "safetyHold",
+      "title": "预约已进入安全暂停",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "note",
+          "title": "先不要按原安排出发",
+          "body": "原地点不可用、主体 / 宠物不符、健康重大纠正或隐藏费用等需先核对。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原有效版本",
+              "保留为历史与处理依据"
+            ],
+            [
+              "当前动作",
+              "暂停出发确认，不自动转场"
+            ],
+            [
+              "解除条件",
+              "核对后双方确认新的有效版本"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "重新协商",
+          "value": "新版本逐项确认",
+          "to": "holdReproposal"
+        },
+        {
+          "type": "row",
+          "label": "取消本次预约",
+          "value": "先确认取消范围，不等于举报",
+          "to": "holdCancel"
+        },
+        {
+          "type": "row",
+          "label": "报告问题",
+          "value": "报告不会自动取消预约",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "查看安全问题与原记录",
+        "to": "holdReproposal",
+        "kind": "secondary"
+      },
+      "back": "legacy:appointment"
+    },
+    {
+      "id": "holdCancel",
+      "title": "确认取消这次预约",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "note",
+          "title": "当前仍为安全暂停",
+          "body": "退出此页或选择保留，只保留暂停状态，不恢复出发。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "预约",
+              "AP-DEMO-01 · 小满 · V1"
+            ],
+            [
+              "取消范围",
+              "仅本次预约；申请、会话与证据保留"
+            ],
+            [
+              "取消后",
+              "双方收到状态更新，不自动判为无故失约"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "取消原因",
+          "value": "地点 / 主体 / 费用或其他安全问题",
+          "error": false
+        },
+        {
+          "type": "check",
+          "key": "holdCancelConsent",
+          "label": "我确认取消本次预约，并了解原申请和会话仍保留"
+        },
+        {
+          "type": "action",
+          "label": "保留预约并继续暂停",
+          "to": "safetyHold",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认取消本次预约",
+        "to": "holdCancelPending",
+        "requires": "holdCancelConsent"
+      },
+      "back": "safetyHold",
+      "command": {
+        "domain": "appointment",
+        "purpose": "cancel_from_safety_hold",
+        "entity": "AP-DEMO-01@V1",
+        "actor": "participant",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "holdCancelPending",
+      "title": "取消结果待确认",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "预约",
+              "AP-DEMO-01 · V1"
+            ],
+            [
+              "原状态",
+              "安全暂停，查询期间仍不出发"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "holdCancelPending",
+        "kind": "secondary"
+      },
+      "back": "safetyHold",
+      "eventGate": {
+        "key": "holdCancelResult",
+        "outcomes": {
+          "0": "holdCancelPending",
+          "1": "holdCancelled",
+          "2": "holdCancelFailed",
+          "3": "holdReproposal"
+        }
+      }
+    },
+    {
+      "id": "holdCancelFailed",
+      "title": "取消暂未完成",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "note",
+          "title": "预约仍保持安全暂停",
+          "body": "本次明确失败，不显示取消成功；输入保留。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "查看原请求",
+          "value": "若结果不明先查询",
+          "to": "holdCancelPending"
+        }
+      ],
+      "footer": {
+        "label": "返回核对后重试",
+        "to": "holdCancel",
+        "kind": "secondary"
+      },
+      "back": "safetyHold"
+    },
+    {
+      "id": "holdCancelled",
+      "title": "本次预约已取消",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "note",
+          "title": "取消已确认 · 设计示例",
+          "body": "双方的本次安排已结束，申请、会话和必要证据保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "预约",
+              "AP-DEMO-01 · 已取消"
+            ],
+            [
+              "再次见面",
+              "必须重新提出新预约并双方确认"
+            ],
+            [
+              "报告问题",
+              "可独立提交，不因取消自动生成"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "报告相关问题",
+          "value": "仍关联本次预约",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "返回原预约记录",
+        "to": "legacy:appointment",
+        "kind": "secondary"
+      },
+      "back": "legacy:appointment"
+    },
+    {
+      "id": "holdReproposal",
+      "title": "安全核对与新安排",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "note",
+          "title": "安全暂停尚未解除",
+          "body": "修改提案、拒绝或超时都不能恢复按原安排出发。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原预约",
+              "AP-DEMO-01 · V1 · 暂停"
+            ],
+            [
+              "待核对",
+              "地点与接待方的具体更正"
+            ],
+            [
+              "解除要求",
+              "问题已核对、资格有效、双方同意新版本"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "更正后的地点",
+          "value": "公共会面点 A（示例）",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "接待方 / 宠物 / 费用更正",
+          "value": "分别核对，保持原记录",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "取消本次预约",
+          "value": "独立确认，不以举报代替",
+          "to": "holdCancel"
+        },
+        {
+          "type": "row",
+          "label": "需要报告或协助",
+          "value": "不自动解除暂停",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "提交新提案，继续保持暂停",
+        "to": "holdProposalWaiting"
+      },
+      "back": "safetyHold"
+    },
+    {
+      "id": "holdProposalWaiting",
+      "title": "新安排等待双方确认",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "预约",
+              "AP-DEMO-01 · 新提案V2"
+            ],
+            [
+              "当前保护",
+              "安全暂停保持"
+            ],
+            [
+              "未满足条件",
+              "问题核对完成与双方确认同一版本"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "holdProposalWaiting",
+        "kind": "secondary"
+      },
+      "back": "safetyHold",
+      "eventGate": {
+        "key": "holdProposalResult",
+        "outcomes": {
+          "0": "holdProposalWaiting",
+          "1": "holdReleased",
+          "2": "holdReproposal",
+          "3": "holdCancelPending"
+        }
+      }
+    },
+    {
+      "id": "holdReleased",
+      "title": "新安排已确认",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "note",
+          "title": "核对与双方确认已完成 · 示例",
+          "body": "仅当安全问题已核对且双方同意V2，才能解除本次暂停。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "有效版本",
+              "AP-DEMO-01 · V2"
+            ],
+            [
+              "双方确认",
+              "A与B确认同一版本"
+            ],
+            [
+              "再次变化",
+              "重新核对；旧确认不复用"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "查看新的预约记录",
+        "to": "legacy:appointment",
+        "kind": "secondary"
+      },
+      "back": "safetyHold"
+    },
+    {
+      "id": "returnRequest",
+      "title": "申请安全接回",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "先保证继续照护",
+          "body": "发送请求不会把宠物标成已接回，也不会立即重新公开匹配。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "接回原因与照护需要",
+          "value": "说明当前情况，敏感内容私密",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "可联系安排",
+          "value": "不在公开页面写精确地址",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "紧急健康 / 无人可接回",
+          "value": "联系实际诊疗资源并申请人工协助",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "继续填写接回方案",
+        "to": "returnEdit"
+      },
+      "back": "trialReserved",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnEdit",
+      "title": "填写具体接回方案",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原申请 / 宠物",
+              "AD-DEMO-01 · 小满"
+            ],
+            [
+              "当前操作人",
+              "申请接回方 A；仅提交提案，不代对方确认"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "接回时间与时区",
+          "value": "2026-10-25 14:00 · Asia/Shanghai",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "接回地点",
+          "value": "公园南门 · 接回点 A（仅双方可见）",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "实际接回人及授权",
+          "value": "原送养人 A · 由本次参与方确认",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "药品、用品与必要照护",
+          "value": "随宠物交还药品、用品与服药说明",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "费用与责任安排",
+          "value": "按原约定分别记录，新增项需双方明确同意",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "暂时无法确定",
+          "value": "保留草稿，不提交空方案",
+          "to": "returnRequest"
+        }
+      ],
+      "footer": {
+        "label": "预览本次接回提案",
+        "to": "returnProposal"
+      },
+      "back": "returnRequest",
+      "context": {
+        "domain": "return",
+        "purpose": "proposal",
+        "entity": "AD-DEMO-01",
+        "actor": "proposerA",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnProposal",
+      "title": "确认并发送接回提案",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R1 · 当前版本"
+            ],
+            [
+              "时间",
+              "2026-10-25 14:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "对方尚未确认",
+          "body": "你发送R1只代表本方提出方案，不代表接回安排已生效。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "returnR1Consent",
+          "label": "我确认提交以上R1方案，等待另一方明确回应"
+        },
+        {
+          "type": "row",
+          "label": "修改本次方案",
+          "value": "尚未发送，可继续编辑",
+          "to": "returnEdit"
+        },
+        {
+          "type": "row",
+          "label": "暂不提交",
+          "value": "保留草稿和当前照护责任",
+          "to": "returnRequest"
+        }
+      ],
+      "footer": {
+        "label": "发送R1，等待另一方回应",
+        "to": "returnProposalPending",
+        "requires": "returnR1Consent"
+      },
+      "back": "returnEdit",
+      "command": {
+        "domain": "return",
+        "purpose": "propose_R1",
+        "entity": "AD-DEMO-01:R1",
+        "actor": "proposerA",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "proposerA",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnProposalPending",
+      "title": "接回提案发送状态",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "提案 / 请求",
+              "AD-DEMO-01 · R1 · 同一请求"
+            ],
+            [
+              "当前安排",
+              "尚未生效，继续当前照护"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "returnProposalPending",
+        "kind": "secondary"
+      },
+      "back": "returnProposal",
+      "eventGate": {
+        "key": "returnSendResult",
+        "outcomes": {
+          "0": "returnProposalPending",
+          "1": "returnWaiting",
+          "2": "returnSendFailed",
+          "3": "returnConflict"
+        }
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnSendFailed",
+      "title": "接回提案尚未发出",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "本次明确发送失败",
+          "body": "R1草稿保留，不显示对方已收到。若不确定是否送达，先查询本次结果。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "结果仍不确定",
+          "value": "不重复创建提案",
+          "to": "returnProposalPending"
+        }
+      ],
+      "footer": {
+        "label": "回到R1预览后重试",
+        "to": "returnProposal",
+        "kind": "secondary"
+      },
+      "back": "returnProposal",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnWaiting",
+      "title": "R1等待对方回应",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R1 · 当前版本"
+            ],
+            [
+              "时间",
+              "2026-10-25 14:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "当前是发起方A",
+          "body": "已提出R1，不能在本账号替另一方确认。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "撤回尚未生效的R1",
+          "value": "仅撤回提案，照护责任与求助记录保留",
+          "to": "returnWithdraw"
+        },
+        {
+          "type": "row",
+          "label": "失联 / 安全问题",
+          "value": "人工协助，不靠超时完成",
+          "to": "returnDispute"
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "returnWaiting",
+        "kind": "secondary"
+      },
+      "back": "returnRequest",
+      "eventGate": {
+        "key": "returnR1State",
+        "outcomes": {
+          "0": "returnWaiting",
+          "1": "returnConfirmed",
+          "2": "returnDeclined",
+          "3": "returnConflict",
+          "4": "returnExpired",
+          "5": "returnWithdrawn"
+        }
+      },
+      "actor": "proposerA",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "proposerA",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnReview",
+      "title": "回应收到的R1",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R1 · 当前版本"
+            ],
+            [
+              "时间",
+              "2026-10-25 14:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "当前是接收方B",
+          "body": "仅此提案的另一方可回应。修改会生成R2；拒绝方案不等于拒绝全部接回责任。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "returnReceiverR1",
+          "label": "我已核对时间、地点、接回人和照护安排，同意R1"
+        },
+        {
+          "type": "row",
+          "label": "提出修改",
+          "value": "发送R2后等待原发起方确认",
+          "to": "returnEditR2"
+        },
+        {
+          "type": "row",
+          "label": "拒绝本次R1",
+          "value": "保留原因与照护协商",
+          "to": "returnReject"
+        }
+      ],
+      "footer": {
+        "label": "接受R1接回安排",
+        "to": "returnConfirmed",
+        "requires": "returnReceiverR1"
+      },
+      "back": "returnRequest",
+      "actor": "recipientB",
+      "command": {
+        "domain": "return",
+        "purpose": "accept_R1",
+        "entity": "AD-DEMO-01:R1",
+        "actor": "recipientB",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      },
+      "versionGate": {
+        "key": "returnR1Valid",
+        "valid": "returnConfirmed",
+        "invalid": "returnConflict"
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "recipientB",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnReject",
+      "title": "拒绝本次接回方案",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "方案",
+              "AD-DEMO-01 · R1"
+            ],
+            [
+              "当前操作人",
+              "接收方B"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "不接受的原因",
+          "value": "时间 / 地点 / 接回方或照护事项",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "继续必要照护与协商",
+          "body": "只拒绝R1，不自动结束求助、转送宠物或重新匹配。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回R1再核对",
+          "to": "returnReview",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认拒绝R1方案",
+        "to": "returnDeclined"
+      },
+      "back": "returnReview",
+      "versionGate": {
+        "key": "returnR1Valid",
+        "valid": "returnDeclined",
+        "invalid": "returnConflict"
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnDeclined",
+      "title": "R1未获接受",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "本次方案未生效",
+          "body": "双方仍需继续照护与协商；保留原方案和原因。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "重新提出具体安排",
+          "value": "生成新提案，不覆盖历史",
+          "to": "returnEdit"
+        },
+        {
+          "type": "row",
+          "label": "无法协商 / 无人接回",
+          "value": "申请人工协助",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "返回当前接回记录",
+        "to": "returnRequest",
+        "kind": "secondary"
+      },
+      "back": "returnRequest",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnEditR2",
+      "title": "修改为接回提案R2",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "基准提案",
+              "R1 · 14:00"
+            ],
+            [
+              "当前操作人",
+              "接收方B，修改后成为R2发起方"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "新的接回时间",
+          "value": "2026-10-25 16:00 · Asia/Shanghai",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "地点 / 接回人 / 照护",
+          "value": "保留R1未变项；变更逐项展示",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "修改不是替对方同意",
+          "body": "发送R2后，需原发起方A接受同一版本。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "预览R2变更",
+        "to": "returnPreviewR2"
+      },
+      "back": "returnReview",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnPreviewR2",
+      "title": "核对并发送R2",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R2 · 替代待确认R1"
+            ],
+            [
+              "时间",
+              "2026-10-25 16:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "变更对照",
+          "body": "时间14:00→16:00，其余仍按显示项核对；R1未生效且会被新提案替代。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "returnR2Consent",
+          "label": "我确认提出R2，并等待另一方对同一版本确认"
+        }
+      ],
+      "footer": {
+        "label": "发送R2并等待回应",
+        "to": "returnWaitingR2",
+        "requires": "returnR2Consent"
+      },
+      "back": "returnEditR2",
+      "command": {
+        "domain": "return",
+        "purpose": "propose_R2",
+        "entity": "AD-DEMO-01:R2",
+        "actor": "proposerB",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "proposerB",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnWaitingR2",
+      "title": "R2等待原发起方确认",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R2 · 替代待确认R1"
+            ],
+            [
+              "时间",
+              "2026-10-25 16:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "当前是R2发起方B",
+          "body": "不能替原发起方A接受。尚未确认前，不按R2出发。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "撤回当前R2",
+          "value": "保留历史与现有照护",
+          "to": "returnWithdrawR2"
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "returnWaitingR2",
+        "kind": "secondary"
+      },
+      "back": "returnRequest",
+      "eventGate": {
+        "key": "returnR2State",
+        "outcomes": {
+          "0": "returnWaitingR2",
+          "1": "returnConfirmedR2",
+          "2": "returnDeclined",
+          "3": "returnConflict",
+          "4": "returnExpired"
+        }
+      },
+      "actor": "proposerB",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "proposerB",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnReviewR2",
+      "title": "回应修改后的R2",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R2 · 替代待确认R1"
+            ],
+            [
+              "时间",
+              "2026-10-25 16:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "当前是接收方A",
+          "body": "对照R1到R2的变化，不能复用之前对R1的确认。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "returnReceiverR2",
+          "label": "我已核对R2的全部更正，同意按R2准备接回"
+        },
+        {
+          "type": "row",
+          "label": "不接受本次修改",
+          "value": "继续协商，不自动接回",
+          "to": "returnDeclined"
+        }
+      ],
+      "footer": {
+        "label": "接受R2接回安排",
+        "to": "returnConfirmedR2",
+        "requires": "returnReceiverR2"
+      },
+      "back": "returnRequest",
+      "actor": "recipientA",
+      "command": {
+        "domain": "return",
+        "purpose": "accept_R2",
+        "entity": "AD-DEMO-01:R2",
+        "actor": "recipientA",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      },
+      "versionGate": {
+        "key": "returnR2Valid",
+        "valid": "returnConfirmedR2",
+        "invalid": "returnConflict"
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "recipientA",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnConfirmedR2",
+      "title": "R2接回安排已确认",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "双方确认R2 · 设计示例",
+          "body": "约定已成立，仍未发生实际接回。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R2 · 替代待确认R1"
+            ],
+            [
+              "时间",
+              "2026-10-25 16:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "我已实际完成交接",
+          "value": "只登记本方，等待另一方确认",
+          "to": "returnPending"
+        },
+        {
+          "type": "row",
+          "label": "出现安全变化",
+          "value": "先暂停行动并申请协助",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "登记本方实际交接",
+        "to": "returnPending"
+      },
+      "back": "returnRequest",
+      "actor": "authorizedParticipant",
+      "context": {
+        "domain": "return",
+        "purpose": "handover",
+        "entity": "AD-DEMO-01:R2",
+        "actor": "authorizedParticipant",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnConfirmed",
+      "title": "接回安排已确认",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "双方确认R1 · 设计示例",
+          "body": "双方同意同一具体方案后才显示此状态；约定成立不等于实际接回。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R1 · 当前版本"
+            ],
+            [
+              "时间",
+              "2026-10-25 14:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "我已实际完成交接",
+          "value": "仅登记本方，等待对方",
+          "to": "returnPending"
+        },
+        {
+          "type": "row",
+          "label": "需要修改已确认安排",
+          "value": "另提新方案，旧版保留",
+          "to": "returnEdit"
+        },
+        {
+          "type": "row",
+          "label": "安排出现安全问题",
+          "value": "先暂停行动并寻求协助",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "登记本方实际交接",
+        "to": "returnPending"
+      },
+      "back": "returnRequest",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnConflict",
+      "title": "接回版本或资格已变化",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "旧操作没有生效",
+          "body": "R1已被修改／撤回、角色改变或资格失效时，不能按旧按钮确认。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前示例",
+              "R2待确认，旧R1只读"
+            ],
+            [
+              "你的输入",
+              "保留，但不自动套用旧确认"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看当前R2",
+          "value": "依据当前身份与版本重新处理",
+          "to": "returnLatest"
+        },
+        {
+          "type": "row",
+          "label": "资格 / 归属有争议",
+          "value": "保留记录转人工协助",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "查看最新方案",
+        "to": "returnLatest",
+        "kind": "secondary"
+      },
+      "back": "returnRequest",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnLatest",
+      "title": "当前接回方案只读",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物 / 原申请",
+              "小满 · AD-DEMO-01"
+            ],
+            [
+              "提案",
+              "R2 · 替代待确认R1"
+            ],
+            [
+              "时间",
+              "2026-10-25 16:00 · Asia/Shanghai"
+            ],
+            [
+              "地点",
+              "公园南门 · 接回点 A（示例，仅双方可见）"
+            ],
+            [
+              "接回人",
+              "原送养人 A · 接回授权有效（示例）"
+            ],
+            [
+              "照护事项",
+              "随宠物交还药品、用品与服药说明"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "先核对当前角色",
+          "body": "本页只展示最新方案，不提供替另一方确认；收到对应待办后由有权账号回应。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "重新协商",
+          "value": "提交新提案，不覆盖当前记录",
+          "to": "returnEdit"
+        },
+        {
+          "type": "row",
+          "label": "存在争议",
+          "value": "转人工协助",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "返回接回记录",
+        "to": "returnRequest",
+        "kind": "secondary"
+      },
+      "back": "returnRequest",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnExpired",
+      "title": "本次接回提案已过期",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "提案结束，接回未完成",
+          "body": "没有自动同意，不重新开放匹配；当前照护和必要求助继续。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "重新提出安排",
+          "value": "新版本重新确认",
+          "to": "returnEdit"
+        },
+        {
+          "type": "row",
+          "label": "对方失联 / 紧急情况",
+          "value": "独立升级协助",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "返回当前记录",
+        "to": "returnRequest",
+        "kind": "secondary"
+      },
+      "back": "returnRequest",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnWithdraw",
+      "title": "撤回未生效的R1",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "对象",
+              "AD-DEMO-01 · R1"
+            ],
+            [
+              "范围",
+              "只撤回本人发起、尚未生效的提案"
+            ],
+            [
+              "不改变",
+              "当前照护、求助、原申请与必要记录"
+            ]
+          ]
+        },
+        {
+          "type": "check",
+          "key": "withdrawR1",
+          "label": "我确认撤回本次未生效的R1"
+        },
+        {
+          "type": "action",
+          "label": "不撤回，继续等待",
+          "to": "returnWaiting",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认撤回R1",
+        "to": "returnWithdrawn",
+        "requires": "withdrawR1"
+      },
+      "back": "returnWaiting",
+      "versionGate": {
+        "key": "returnR1Valid",
+        "valid": "returnWithdrawn",
+        "invalid": "returnConflict"
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnWithdrawR2",
+      "title": "撤回未生效的R2",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "对象",
+              "AD-DEMO-01 · R2"
+            ],
+            [
+              "范围",
+              "只撤回本人发起、尚未生效的提案"
+            ],
+            [
+              "不改变",
+              "当前照护、求助、原申请与必要记录"
+            ]
+          ]
+        },
+        {
+          "type": "check",
+          "key": "withdrawR2",
+          "label": "我确认撤回本次未生效的R2"
+        },
+        {
+          "type": "action",
+          "label": "不撤回，继续等待",
+          "to": "returnWaitingR2",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认撤回R2",
+        "to": "returnWithdrawn",
+        "requires": "withdrawR2"
+      },
+      "back": "returnWaitingR2",
+      "versionGate": {
+        "key": "returnR2Valid",
+        "valid": "returnWithdrawn",
+        "invalid": "returnConflict"
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnWithdrawn",
+      "title": "提案已撤回",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "接回尚未完成",
+          "body": "只结束本人未生效提案；不会自动关闭求助、解除照护责任或重新匹配。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "重新提出具体方案",
+          "value": "生成新提案版本",
+          "to": "returnEdit"
+        }
+      ],
+      "footer": {
+        "label": "返回接回记录",
+        "to": "returnRequest",
+        "kind": "secondary"
+      },
+      "back": "returnRequest",
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "returnPending",
+      "title": "等待另一方确认接回",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "一方已确认实际接回",
+          "body": "在另一方确认或人工有据核对前，不显示接回完成。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "未实际接回 / 有争议",
+          "value": "保留原记录",
+          "to": "returnDispute"
+        },
+        {
+          "type": "note",
+          "title": "按实际确认结果更新",
+          "body": "等待期间不能替另一方确认；另一方否认或资格变化转协助。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次交接记录",
+        "to": "returnPending",
+        "kind": "secondary"
+      },
+      "back": "returnRequest",
+      "eventGate": {
+        "key": "returnHandoverResult",
+        "outcomes": {
+          "0": "returnPending",
+          "1": "returned",
+          "2": "returnDispute"
+        }
+      },
+      "context": {
+        "domain": "return",
+        "entity": "AD-DEMO-01",
+        "actor": "authorizedParticipant",
+        "requires": [
+          "accountId",
+          "sessionGeneration",
+          "placementId",
+          "proposalId",
+          "proposalVersion",
+          "currentRole"
+        ]
+      },
+      "versionRules": {
+        "proposalId": "new per submitted proposal",
+        "baseVersion": "read latest before command",
+        "newVersion": "strictly increasing; R1/R2 are fixtures only",
+        "revalidation": [
+          "placement",
+          "participantRole",
+          "currentProposalVersion",
+          "qualification"
+        ],
+        "retry": "same idempotency key for same intended command"
+      }
+    },
+    {
+      "id": "guestReceipt",
+      "title": "报告已收到 · 示例",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "回执 RP-DEMO-001",
+          "body": "只是收到请求，不代表人工核实或已作出事实结论。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "查询方式",
+              "保存私密回执，勿公开分享"
+            ],
+            [
+              "后续",
+              "分流、必要保护、核实与补充"
+            ],
+            [
+              "服务时间",
+              "以实际公开值守信息为准"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看处理进度",
+          "value": "只看本人有权获取的内容",
+          "to": "guestProgress"
+        },
+        {
+          "type": "row",
+          "label": "补充说明",
+          "value": "不重复创建报告",
+          "to": "reportSupplement"
+        }
+      ],
+      "footer": {
+        "label": "查看进度",
+        "to": "guestProgress",
+        "kind": "secondary"
+      },
+      "back": "guestReport"
+    },
+    {
+      "id": "reportSupplement",
+      "title": "补充原报告",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原回执",
+              "RP-DEMO-001"
+            ],
+            [
+              "操作",
+              "追加说明，不创建新报告"
+            ],
+            [
+              "权限",
+              "只补充本人有权访问的报告"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "补充内容",
+          "value": "说明新的事实或更正，原材料不覆盖",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "补充附件（可选）",
+          "value": "仅必要脱敏材料，私密追加",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "原记录保留",
+          "body": "回执、原处理阶段与已有证据不因补充而被重置。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查询凭据失效 / 无权补充",
+          "value": "不展示原材料，先核对访问",
+          "to": "reportAccess"
+        }
+      ],
+      "footer": {
+        "label": "提交到RP-DEMO-001",
+        "to": "reportSupplementPending"
+      },
+      "back": "guestReceipt",
+      "command": {
+        "domain": "report",
+        "purpose": "append",
+        "entity": "RP-DEMO-001",
+        "actor": "receiptHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "reportSupplementPending",
+      "title": "补充结果待确认",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原回执",
+              "RP-DEMO-001"
+            ],
+            [
+              "本次补充",
+              "ADD-DEMO-01 · 同一请求"
+            ],
+            [
+              "当前结果",
+              "不能确认是否已追加，原报告仍保留"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "reportSupplementPending",
+        "kind": "secondary"
+      },
+      "back": "reportSupplement",
+      "eventGate": {
+        "key": "reportAppendResult",
+        "outcomes": {
+          "0": "reportSupplementPending",
+          "1": "reportSupplemented",
+          "2": "reportSupplementFailed",
+          "3": "reportAccess"
+        }
+      },
+      "context": {
+        "domain": "report",
+        "purpose": "append",
+        "entity": "RP-DEMO-001",
+        "actor": "receiptHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "reportSupplementFailed",
+      "title": "补充尚未发送",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "本次明确失败",
+          "body": "原报告RP-DEMO-001不受影响，本次说明保留；没有生成新报告。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "仍不确定是否收到",
+          "value": "先查询本次补充",
+          "to": "reportSupplementPending"
+        }
+      ],
+      "footer": {
+        "label": "回到补充页核对后重试",
+        "to": "reportSupplement",
+        "kind": "secondary"
+      },
+      "back": "reportSupplement"
+    },
+    {
+      "id": "reportSupplemented",
+      "title": "原报告已收到补充",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原回执",
+              "RP-DEMO-001 · 保持不变"
+            ],
+            [
+              "本次补充",
+              "ADD-DEMO-01 · 已持久化（示例）"
+            ],
+            [
+              "原处理",
+              "保留处理阶段；收到补充不代表结论已改变"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "继续补充",
+          "value": "新补充追加到同一回执",
+          "to": "reportSupplement"
+        }
+      ],
+      "footer": {
+        "label": "查看同一报告进度",
+        "to": "guestProgress",
+        "kind": "secondary"
+      },
+      "back": "guestReceipt"
+    },
+    {
+      "id": "reportAccess",
+      "title": "核对原报告访问权限",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "暂不展示原报告",
+          "body": "凭据过期、丢失或无权限时不透露他人工单和材料。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "field",
+          "label": "已有私密回执 / 查询凭据",
+          "value": "仅本人保存的凭据；不公开分享",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "重新核对已有凭据",
+          "value": "不会创建新报告",
+          "to": "reportAccessPending"
+        },
+        {
+          "type": "row",
+          "label": "凭据丢失 / 无法恢复",
+          "value": "走实际公开人工渠道，先说明必要信息",
+          "to": "reportAccessHelp"
+        }
+      ],
+      "footer": {
+        "label": "核对原回执权限",
+        "to": "reportAccessPending"
+      },
+      "back": "privacy"
+    },
+    {
+      "id": "reportAccessPending",
+      "title": "原回执权限核对中",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "目的",
+              "恢复RP-DEMO-001的受限查询／追加权限"
+            ],
+            [
+              "未通过前",
+              "不显示原材料，不创建新报告"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "reportAccessPending",
+        "kind": "secondary"
+      },
+      "back": "reportAccess",
+      "eventGate": {
+        "key": "reportAccessResult",
+        "outcomes": {
+          "0": "reportAccessPending",
+          "1": "reportSupplement",
+          "2": "reportAccess"
+        }
+      }
+    },
+    {
+      "id": "reportAccessHelp",
+      "title": "原回执恢复帮助",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "按实际公开渠道协助",
+          "body": "不猜编号访问他人工单；无法提供有效凭据时按风险核对必要信息。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "需要帮助的情况",
+          "value": "回执丢失 / 无法核对访问权限",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "可选回联方式",
+          "value": "由你选择是否提供，不含公开证件",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "渠道尚未就绪时",
+          "body": "如实显示当前无法自动恢复；不伪造已提交或人工已接手。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回隐私与公开联系",
+        "to": "sdkList",
+        "kind": "secondary"
+      },
+      "back": "reportAccess"
+    },
+    {
+      "id": "dataDelete",
+      "title": "选择删除或注销范围",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "先选择本次动作",
+          "body": "选择范围和身份核对都不会立即提交删除或注销。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "只删除指定资料",
+          "value": "保留账号、登录方式及未选内容",
+          "to": "dataPartScope"
+        },
+        {
+          "type": "row",
+          "label": "注销整个M&D账号",
+          "value": "先查看影响和未完成事项",
+          "to": "dataAccountImpact"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "法定 / 争议记录",
+              "必要范围受限保留并说明依据"
+            ],
+            [
+              "取消",
+              "最终提交前退出，不创建请求"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "暂不办理，返回资料权利",
+        "to": "dataRights",
+        "kind": "secondary"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "dataPartScope",
+      "title": "指定资料删除范围",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "账号",
+              "mnd_sample"
+            ],
+            [
+              "本次类型",
+              "仅删除指定资料，保留账号"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "选择需要删除的资料",
+          "value": "申请附件、精确线索坐标（示例）",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "不删除的范围",
+          "value": "账号、登录方式、未选公开内容",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "先说明实际影响",
+          "body": "可能影响申请或线索处理；他人依法持有的必要记录不在本次直接删除范围。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "dataPartScopeConsent",
+          "label": "我已核对本次所选资料和影响"
+        }
+      ],
+      "footer": {
+        "label": "继续核对本人身份",
+        "to": "dataPartVerify",
+        "requires": "dataPartScopeConsent"
+      },
+      "back": "dataDelete",
+      "context": {
+        "domain": "data",
+        "purpose": "delete_selected",
+        "entity": "mnd_sample:selected_fields",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "dataAccountImpact",
+      "title": "注销前查看影响",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "账号",
+              "mnd_sample"
+            ],
+            [
+              "注销影响",
+              "账号及登录关联受控解除，不只是删几张照片"
+            ],
+            [
+              "未完成事项",
+              "1项照护协商、1项报告（设计示例）"
+            ],
+            [
+              "处理方式",
+              "逐项交接与必要记录保留，不静默结案"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "保留原因须具体",
+          "body": "必要法定或争议记录受限保留并说明条件；其余非必要资料按清单清理。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看未完成事项",
+          "value": "不因查看而取消照护或删除工单",
+          "to": "dataAccountTasks"
+        },
+        {
+          "type": "check",
+          "key": "dataAccountScopeConsent",
+          "label": "我已了解注销影响与未完成事项的处理方式"
+        }
+      ],
+      "footer": {
+        "label": "继续核对本人身份",
+        "to": "dataAccountVerify",
+        "requires": "dataAccountScopeConsent"
+      },
+      "back": "dataDelete",
+      "context": {
+        "domain": "data",
+        "purpose": "close_account",
+        "entity": "mnd_sample",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "dataAccountTasks",
+      "title": "注销涉及的未完成事项",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "照护协商",
+              "AD-DEMO-01 · 保留必要联系与当前照护责任"
+            ],
+            [
+              "原报告",
+              "RP-DEMO-001 · 保留回执和必要证据"
+            ],
+            [
+              "资料范围",
+              "本人的可删除资料与必要留存分别处理"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "不把注销当成结案",
+          "body": "记录具体处理方式、依据与反馈，不自动把宠物标成已交接。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回注销影响说明",
+        "to": "dataAccountImpact",
+        "kind": "secondary"
+      },
+      "back": "dataAccountImpact"
+    },
+    {
+      "id": "dataPartVerify",
+      "title": "核对本人：指定资料删除",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次动作",
+              "指定资料删除"
+            ],
+            [
+              "绑定范围",
+              "申请附件、精确线索坐标"
+            ],
+            [
+              "核验对象",
+              "当前账号与本次范围，不授权其他安全操作"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "已验证邮箱",
+          "value": "n***@example.com · 当前账号已有方式（示例）",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "本次安全验证码",
+          "value": "请输入仅用于本次指定资料删除的验证码",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "获取本次用途验证码",
+          "value": "仅用于所选资料删除，不沿用登录或交流验证码",
+          "to": "dataPartCodePending"
+        },
+        {
+          "type": "note",
+          "title": "按已有可用方式核对",
+          "body": "实际只列本账号已绑定可用方式，可使用短信、密码或已绑定第三方；不强制先绑定邮箱。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "核验失败 / 验证码过期",
+          "value": "保持本次范围，不使用交流验证凭据",
+          "to": "dataPartVerifyError"
+        },
+        {
+          "type": "row",
+          "label": "没有可用验证方式",
+          "value": "恢复原账号，不提交本次请求",
+          "to": "accountRecovery"
+        }
+      ],
+      "footer": {
+        "label": "核对本次身份与范围",
+        "to": "dataPartVerifyPending"
+      },
+      "back": "dataPartScope",
+      "command": {
+        "domain": "reauth",
+        "purpose": "delete_selected",
+        "entity": "申请附件、精确线索坐标",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "dataPartVerifyError",
+      "title": "本次身份核对未完成",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "指定资料删除尚未提交",
+          "body": "错误、过期或频控不改变账号和资料，已选范围保留。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次用途",
+              "指定资料删除"
+            ],
+            [
+              "当前状态",
+              "没有创建删除／注销申请"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "范围有误",
+          "value": "返回重新选择",
+          "to": "dataDelete"
+        }
+      ],
+      "footer": {
+        "label": "重新核对本次身份",
+        "to": "dataPartVerify",
+        "kind": "secondary"
+      },
+      "back": "dataPartVerify"
+    },
+    {
+      "id": "dataPartFinal",
+      "title": "最终确认删除所选资料",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "账号",
+              "mnd_sample"
+            ],
+            [
+              "本次类型",
+              "指定资料删除"
+            ],
+            [
+              "范围",
+              "申请附件、精确线索坐标"
+            ],
+            [
+              "身份核对",
+              "本次用途与范围已核对（设计示例）"
+            ],
+            [
+              "例外与备份",
+              "必要留存受限；备份按披露期限轮换"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "还没有提交请求",
+          "body": "最终提交只删除列出的资料，账号继续保留。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "check",
+          "key": "dataPartFinalConsent",
+          "label": "我确认仅提交以上指定资料的删除申请"
+        },
+        {
+          "type": "action",
+          "label": "不提交，返回修改范围",
+          "to": "dataPartScope",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "提交所选资料删除申请",
+        "to": "dataPartPending",
+        "requires": "dataPartFinalConsent"
+      },
+      "back": "dataPartVerify",
+      "command": {
+        "domain": "data",
+        "purpose": "delete_selected",
+        "entity": "申请附件、精确线索坐标",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      },
+      "versionGate": {
+        "key": "dataPartReauthValid",
+        "valid": "dataPartPending",
+        "invalid": "dataPartVerifyError"
+      }
+    },
+    {
+      "id": "dataPartPending",
+      "title": "指定资料删除结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次类型",
+              "指定资料删除"
+            ],
+            [
+              "范围",
+              "申请附件、精确线索坐标"
+            ],
+            [
+              "请求标识",
+              "DR-REQ-PART-01"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "提交超时不代表失败",
+          "body": "用同一次请求查询，未取得服务端回执前不显示已收到。",
+          "tone": "subtle"
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "dataPartPending",
+        "kind": "secondary"
+      },
+      "back": "dataRights",
+      "eventGate": {
+        "key": "dataPartSubmit",
+        "outcomes": {
+          "0": "dataPartPending",
+          "1": "dataProgress",
+          "2": "dataPartFailed",
+          "3": "dataPartVerifyError"
+        }
+      },
+      "context": {
+        "domain": "data",
+        "purpose": "delete_selected",
+        "entity": "申请附件、精确线索坐标",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "dataPartFailed",
+      "title": "指定资料删除暂未提交",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "本次明确失败",
+          "body": "没有受理回执，原账号和资料不因这次失败改变。输入与范围保留。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "结果不明",
+          "value": "先查询原请求，避免重复",
+          "to": "dataPartPending"
+        }
+      ],
+      "footer": {
+        "label": "回到最终确认后重试",
+        "to": "dataPartFinal",
+        "kind": "secondary"
+      },
+      "back": "dataPartFinal"
+    },
+    {
+      "id": "dataAccountVerify",
+      "title": "核对本人：账号注销",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次动作",
+              "账号注销"
+            ],
+            [
+              "绑定范围",
+              "mnd_sample整个账号"
+            ],
+            [
+              "核验对象",
+              "当前账号与本次范围，不授权其他安全操作"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "已验证邮箱",
+          "value": "n***@example.com · 当前账号已有方式（示例）",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "本次安全验证码",
+          "value": "请输入仅用于本次账号注销的验证码",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "获取本次用途验证码",
+          "value": "仅用于账号注销，不沿用登录或交流验证码",
+          "to": "dataAccountCodePending"
+        },
+        {
+          "type": "note",
+          "title": "按已有可用方式核对",
+          "body": "实际只列本账号已绑定可用方式，可使用短信、密码或已绑定第三方；不强制先绑定邮箱。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "核验失败 / 验证码过期",
+          "value": "保持本次范围，不使用交流验证凭据",
+          "to": "dataAccountVerifyError"
+        },
+        {
+          "type": "row",
+          "label": "没有可用验证方式",
+          "value": "恢复原账号，不提交本次请求",
+          "to": "accountRecovery"
+        }
+      ],
+      "footer": {
+        "label": "核对本次身份与范围",
+        "to": "dataAccountVerifyPending"
+      },
+      "back": "dataAccountImpact",
+      "command": {
+        "domain": "reauth",
+        "purpose": "close_account",
+        "entity": "mnd_sample整个账号",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "dataAccountVerifyError",
+      "title": "本次身份核对未完成",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "账号注销尚未提交",
+          "body": "错误、过期或频控不改变账号和资料，已选范围保留。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次用途",
+              "账号注销"
+            ],
+            [
+              "当前状态",
+              "没有创建删除／注销申请"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "范围有误",
+          "value": "返回重新选择",
+          "to": "dataDelete"
+        }
+      ],
+      "footer": {
+        "label": "重新核对本次身份",
+        "to": "dataAccountVerify",
+        "kind": "secondary"
+      },
+      "back": "dataAccountVerify"
+    },
+    {
+      "id": "dataAccountFinal",
+      "title": "最终确认提交账号注销",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "账号",
+              "mnd_sample"
+            ],
+            [
+              "本次类型",
+              "账号注销"
+            ],
+            [
+              "范围",
+              "mnd_sample整个账号"
+            ],
+            [
+              "身份核对",
+              "本次用途与范围已核对（设计示例）"
+            ],
+            [
+              "例外与备份",
+              "必要留存受限；备份按披露期限轮换"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "还没有提交请求",
+          "body": "最终提交将发起整个账号的注销处理，未完成事项按说明受控处理。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "check",
+          "key": "dataAccountFinalConsent",
+          "label": "我确认提交mnd_sample账号注销申请"
+        },
+        {
+          "type": "action",
+          "label": "不提交，返回修改范围",
+          "to": "dataAccountImpact",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认提交账号注销申请",
+        "to": "dataAccountPending",
+        "requires": "dataAccountFinalConsent"
+      },
+      "back": "dataAccountVerify",
+      "command": {
+        "domain": "data",
+        "purpose": "close_account",
+        "entity": "mnd_sample整个账号",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      },
+      "versionGate": {
+        "key": "dataAccountReauthValid",
+        "valid": "dataAccountPending",
+        "invalid": "dataAccountVerifyError"
+      }
+    },
+    {
+      "id": "dataAccountPending",
+      "title": "账号注销结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次类型",
+              "账号注销"
+            ],
+            [
+              "范围",
+              "mnd_sample整个账号"
+            ],
+            [
+              "请求标识",
+              "DR-REQ-ACCOUNT-01"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "提交超时不代表失败",
+          "body": "用同一次请求查询，未取得服务端回执前不显示已收到。",
+          "tone": "subtle"
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "dataAccountPending",
+        "kind": "secondary"
+      },
+      "back": "dataRights",
+      "eventGate": {
+        "key": "dataAccountSubmit",
+        "outcomes": {
+          "0": "dataAccountPending",
+          "1": "dataAccountProgress",
+          "2": "dataAccountFailed",
+          "3": "dataAccountVerifyError"
+        }
+      },
+      "context": {
+        "domain": "data",
+        "purpose": "close_account",
+        "entity": "mnd_sample整个账号",
+        "actor": "accountHolder",
+        "identityBinding": [
+          "accountId",
+          "sessionGeneration"
+        ],
+        "idempotency": true
+      }
+    },
+    {
+      "id": "dataAccountFailed",
+      "title": "账号注销暂未提交",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "本次明确失败",
+          "body": "没有受理回执，原账号和资料不因这次失败改变。输入与范围保留。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "结果不明",
+          "value": "先查询原请求，避免重复",
+          "to": "dataAccountPending"
+        }
+      ],
+      "footer": {
+        "label": "回到最终确认后重试",
+        "to": "dataAccountFinal",
+        "kind": "secondary"
+      },
+      "back": "dataAccountFinal"
+    },
+    {
+      "id": "dataProgress",
+      "title": "所选资料删除进度",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "请求已收到 · 设计示例",
+          "body": "仅在服务端持久化并返回回执后显示。收到不等于已经清理。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "回执",
+              "DR-PART-001"
+            ],
+            [
+              "类型 / 范围",
+              "仅删除申请附件、精确线索坐标"
+            ],
+            [
+              "账号",
+              "mnd_sample · 保留"
+            ],
+            [
+              "当前阶段",
+              "核对范围与执行清理"
+            ],
+            [
+              "公开隐藏 / 清理",
+              "分别显示完成、处理中或失败"
+            ],
+            [
+              "例外保留 / 备份",
+              "必要原因、结束条件和轮换进度分别显示"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "补充或对结果申诉",
+          "value": "明确携带DR-PART-001，不创建另一类型请求",
+          "to": "dataPartAppeal"
+        }
+      ],
+      "footer": {
+        "label": "返回资料权利",
+        "to": "dataRights",
+        "kind": "secondary"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "dataAccountProgress",
+      "title": "账号注销处理进度",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "注销申请已收到 · 示例",
+          "body": "只有服务端持久化并返回回执后才显示，注销尚未完成。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "回执",
+              "DR-ACCOUNT-001"
+            ],
+            [
+              "类型 / 对象",
+              "注销账号 mnd_sample"
+            ],
+            [
+              "未完成事项",
+              "按已说明的照护与工单交接处理"
+            ],
+            [
+              "登录状态",
+              "按服务端会话策略处理，回执查询通道保留"
+            ],
+            [
+              "清理 / 留存",
+              "分别显示进度、必要原因与备份轮换"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "补充或对结果申诉",
+          "value": "携带原注销回执，不当作新报告",
+          "to": "dataAccountAppeal"
+        }
+      ],
+      "footer": {
+        "label": "返回受控查询入口",
+        "to": "dataRights",
+        "kind": "secondary"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "dataPartAppeal",
+      "title": "补充原资料请求",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原回执",
+              "DR-PART-001"
+            ],
+            [
+              "本次操作",
+              "追加说明／请求人工复核，不重建申请"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "说明或申诉理由",
+          "value": "写明需要核对的范围或处理结果",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "原请求不被覆盖",
+          "body": "按原回执授权核对，必要材料私密补充。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "提交到原回执",
+        "to": "dataPartAppealPending"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "dataPartAppealPending",
+      "title": "原请求补充结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原回执",
+              "DR-PART-001"
+            ],
+            [
+              "追加请求",
+              "同一次补充标识"
+            ],
+            [
+              "未知时",
+              "保留说明，先查本次结果"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "dataPartAppealPending",
+        "kind": "secondary"
+      },
+      "back": "dataPartAppeal",
+      "eventGate": {
+        "key": "dataPartAppend",
+        "outcomes": {
+          "0": "dataPartAppealPending",
+          "1": "dataProgress",
+          "2": "dataPartAppeal"
+        }
+      }
+    },
+    {
+      "id": "dataAccountAppeal",
+      "title": "补充原资料请求",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原回执",
+              "DR-ACCOUNT-001"
+            ],
+            [
+              "本次操作",
+              "追加说明／请求人工复核，不重建申请"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "说明或申诉理由",
+          "value": "写明需要核对的范围或处理结果",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "原请求不被覆盖",
+          "body": "按原回执授权核对，必要材料私密补充。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "提交到原回执",
+        "to": "dataAccountAppealPending"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "dataAccountAppealPending",
+      "title": "原请求补充结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原回执",
+              "DR-ACCOUNT-001"
+            ],
+            [
+              "追加请求",
+              "同一次补充标识"
+            ],
+            [
+              "未知时",
+              "保留说明，先查本次结果"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "收到结果后才更新",
+          "body": "查询或退出等待不会替你确认成功；结果不明时保留本次请求。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "dataAccountAppealPending",
+        "kind": "secondary"
+      },
+      "back": "dataAccountAppeal",
+      "eventGate": {
+        "key": "dataAccountAppend",
+        "outcomes": {
+          "0": "dataAccountAppealPending",
+          "1": "dataAccountProgress",
+          "2": "dataAccountAppeal"
+        }
+      }
+    },
+    {
+      "id": "guestProgress",
+      "title": "报告处理进度",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "已收到",
+              "回执已生成"
+            ],
+            [
+              "分流 / 临时保护",
+              "按具体风险先隐藏必要字段"
+            ],
+            [
+              "人工核实",
+              "不是举报人数投票"
+            ],
+            [
+              "结论",
+              "支持 / 未获支持 / 无法判断"
+            ],
+            [
+              "申诉",
+              "保留依据与原记录"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "紧急情况独立升级",
+          "body": "依法需要立即采取的措施不因普通服务时段而延后；不承诺尚无能力的全天人工值守。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "对结论申请人工复核",
+          "value": "查看依据后提交",
+          "to": "ruleAppeal"
+        },
+        {
+          "type": "row",
+          "label": "补充原报告",
+          "value": "仅追加至RP-DEMO-001",
+          "to": "reportSupplement"
+        }
+      ],
+      "footer": {
+        "label": "返回报告入口",
+        "to": "guestReport",
+        "kind": "secondary"
+      },
+      "back": "guestReport"
+    },
+    {
+      "id": "authResume",
+      "title": "恢复验证前的任务",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "验证结果只用于原账号与本次用途",
+          "body": "验证不会自动发送、确认预约或替另一方同意。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原任务",
+              "由保留的原对象、草稿和版本恢复"
+            ],
+            [
+              "再次操作",
+              "重读权限与资源后，由你明确提交"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看隐私与年龄保护",
+          "value": "业务资格分别检查",
+          "to": "teenPrivacy"
+        }
+      ],
+      "footer": {
+        "label": "回到原任务核对",
+        "to": "legacy:composePost",
+        "kind": "secondary"
+      },
+      "back": "legacy:home",
+      "resumeGate": {
+        "key": "originalTask",
+        "outcomes": {
+          "0": "legacy:composePost",
+          "1": "adultTaskReview",
+          "2": "legacy:privateChat",
+          "3": "legacy:application",
+          "4": "legacy:lostPublish"
+        }
+      }
+    },
+    {
+      "id": "smsSendPending",
+      "title": "正在确认本次短信发送",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "用途：当前号交流验证",
+          "body": "同一次发送请求尚未确认，不能根据网络超时连续重发。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "号码",
+              "138 **** 0000"
+            ],
+            [
+              "请求",
+              "SMS-SEND-01 · 分用途发送"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "稍后再处理",
+          "value": "不会自动发送草稿或完成交流资格",
+          "to": "authResume"
+        }
+      ],
+      "footer": {
+        "label": "查询本次发送结果",
+        "to": "smsSendPending",
+        "kind": "secondary"
+      },
+      "back": "phoneGate",
+      "eventGate": {
+        "key": "smsSendResult",
+        "outcomes": {
+          "0": "smsSendPending",
+          "1": "phoneCode",
+          "2": "smsRateLimited",
+          "3": "smsSendUncertain"
+        }
+      }
+    },
+    {
+      "id": "smsSendUncertain",
+      "title": "短信发送结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "先查原发送请求",
+          "body": "当前无法确认送达；不改用邮箱验证，不立即创建另一次发送。",
+          "tone": "warningSoft"
+        }
+      ],
+      "footer": {
+        "label": "查询原发送结果",
+        "to": "smsSendPending",
+        "kind": "secondary"
+      },
+      "back": "smsDelivery"
+    },
+    {
+      "id": "dataPartCodePending",
+      "title": "发送本次安全验证码",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "分用途核验",
+          "body": "验证码只用于当前账号、本次资料删除和已确认的范围。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "渠道",
+              "本账号已有验证邮箱（示例）"
+            ],
+            [
+              "发送状态",
+              "未确认前不重复发送"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "查询本次发送状态",
+        "to": "dataPartCodePending",
+        "kind": "secondary"
+      },
+      "back": "dataPartVerify",
+      "eventGate": {
+        "key": "dataPartCode",
+        "outcomes": {
+          "0": "dataPartCodePending",
+          "1": "dataPartVerify",
+          "2": "dataPartVerifyError"
+        }
+      }
+    },
+    {
+      "id": "dataPartVerifyPending",
+      "title": "正在核对本次身份",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "尚未创建删除或注销申请",
+          "body": "身份核对只产生本次、分用途、绑定范围的短时凭据；随后还需用户最终确认。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次用途",
+              "仅删除所选资料"
+            ],
+            [
+              "取消 / 失败",
+              "不改变原资料，不生成受理回执"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "查询本次核对结果",
+        "to": "dataPartVerifyPending",
+        "kind": "secondary"
+      },
+      "back": "dataPartVerify",
+      "eventGate": {
+        "key": "dataPartReauth",
+        "outcomes": {
+          "0": "dataPartVerifyPending",
+          "1": "dataPartFinal",
+          "2": "dataPartVerifyError"
+        }
+      }
+    },
+    {
+      "id": "dataAccountCodePending",
+      "title": "发送本次安全验证码",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "分用途核验",
+          "body": "验证码只用于当前账号、本次账号注销和已确认的范围。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "渠道",
+              "本账号已有验证邮箱（示例）"
+            ],
+            [
+              "发送状态",
+              "未确认前不重复发送"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "查询本次发送状态",
+        "to": "dataAccountCodePending",
+        "kind": "secondary"
+      },
+      "back": "dataAccountVerify",
+      "eventGate": {
+        "key": "dataAccountCode",
+        "outcomes": {
+          "0": "dataAccountCodePending",
+          "1": "dataAccountVerify",
+          "2": "dataAccountVerifyError"
+        }
+      }
+    },
+    {
+      "id": "dataAccountVerifyPending",
+      "title": "正在核对本次身份",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "尚未创建删除或注销申请",
+          "body": "身份核对只产生本次、分用途、绑定范围的短时凭据；随后还需用户最终确认。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次用途",
+              "注销mnd_sample账号"
+            ],
+            [
+              "取消 / 失败",
+              "不改变原资料，不生成受理回执"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "查询本次核对结果",
+        "to": "dataAccountVerifyPending",
+        "kind": "secondary"
+      },
+      "back": "dataAccountVerify",
+      "eventGate": {
+        "key": "dataAccountReauth",
+        "outcomes": {
+          "0": "dataAccountVerifyPending",
+          "1": "dataAccountFinal",
+          "2": "dataAccountVerifyError"
+        }
+      }
+    }
+  ],
+  "invariants": [
+    "No SMS failure or retry route enters email login or SMS auto-signup",
+    "Waiting/unknown states cannot unconditionally become received/success via a user click",
+    "Safety cancel and report are independent; abort cancel retains safety_hold",
+    "Return proposer and recipient are separate roles; accept same version only; arrangement is not physical handover",
+    "Append report retains RP-DEMO-001 and append request id; does not call create report",
+    "Delete selected and close account use separate scopes, reauth purposes, confirmations, receipts",
+    "Final data submission requires explicit consent and current scope-bound reauth",
+    "Outcome examples live on reviewer board, outside customer frames"
+  ]
+}

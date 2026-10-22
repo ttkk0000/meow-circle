@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-22",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "images": [
+    {
+      "key": "homeP",
+      "nodeId": "311:25",
+      "path": "homeP.png",
+      "width": 834,
+      "height": 1194
+    },
+    {
+      "key": "homeL",
+      "nodeId": "311:26",
+      "path": "homeL.png",
+      "width": 1194,
+      "height": 834
+    },
+    {
+      "key": "safetyP",
+      "nodeId": "506:6792",
+      "path": "safetyP.png",
+      "width": 834,
+      "height": 1194
+    },
+    {
+      "key": "messagesL",
+      "nodeId": "311:379703",
+      "path": "messagesL.png",
+      "width": 1194,
+      "height": 834
+    }
+  ]
+}

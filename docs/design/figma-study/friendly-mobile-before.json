@@ -1,0 +1,741 @@
+{
+  "components": [
+    {
+      "id": "56:179",
+      "name": "Style=Primary",
+      "radius": 14,
+      "width": 96,
+      "height": 48,
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 0.5411764979362488,
+            "b": 0.3137255012989044
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:56:19"
+            }
+          }
+        }
+      ],
+      "strokes": [],
+      "children": [
+        {
+          "id": "56:184",
+          "name": "Strong / 主要操作",
+          "type": "TEXT"
+        }
+      ],
+      "texts": [
+        {
+          "id": "56:184",
+          "chars": "主要操作",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Bold",
+            "variationSettings": {
+              "wght": 700
+            }
+          },
+          "size": 16,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 24
+          },
+          "style": "S:09ac17cb5dbd83a9fb9f1911635c115cf59ac631,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.18431372940540314,
+                "g": 0.10588235408067703,
+                "b": 0.07450980693101883
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:56:21"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "instanceCount": 56,
+      "pages": {
+        "56:25": 55,
+        "56:26": 1
+      }
+    },
+    {
+      "id": "56:180",
+      "name": "Style=Secondary",
+      "radius": 14,
+      "width": 96,
+      "height": 48,
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.9411764740943909,
+            "g": 0.9490196108818054,
+            "b": 0.9607843160629272
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:14:38"
+            }
+          }
+        }
+      ],
+      "strokes": [],
+      "children": [
+        {
+          "id": "56:185",
+          "name": "Strong / 主要操作",
+          "type": "TEXT"
+        }
+      ],
+      "texts": [
+        {
+          "id": "56:185",
+          "chars": "主要操作",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Bold",
+            "variationSettings": {
+              "wght": 700
+            }
+          },
+          "size": 16,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 24
+          },
+          "style": "S:09ac17cb5dbd83a9fb9f1911635c115cf59ac631,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.125490203499794,
+                "g": 0.13725490868091583,
+                "b": 0.16078431904315948
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:39"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "instanceCount": 11,
+      "pages": {
+        "56:25": 11
+      }
+    },
+    {
+      "id": "56:181",
+      "name": "Style=Quiet",
+      "radius": 14,
+      "width": 88,
+      "height": 48,
+      "fills": [],
+      "strokes": [],
+      "children": [
+        {
+          "id": "56:186",
+          "name": "Strong / 主要操作",
+          "type": "TEXT"
+        }
+      ],
+      "texts": [
+        {
+          "id": "56:186",
+          "chars": "主要操作",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500
+            }
+          },
+          "size": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "style": "S:b3c9f305d72ee074857292ed4345f9311f8b5500,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.7333333492279053,
+                "g": 0.23529411852359772,
+                "b": 0.09019608050584793
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:41"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "instanceCount": 57,
+      "pages": {
+        "56:25": 52,
+        "56:26": 5
+      }
+    },
+    {
+      "id": "56:182",
+      "name": "Style=Disabled",
+      "radius": 14,
+      "width": 96,
+      "height": 48,
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.9411764740943909,
+            "g": 0.9490196108818054,
+            "b": 0.9607843160629272
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:14:38"
+            }
+          }
+        }
+      ],
+      "strokes": [],
+      "children": [
+        {
+          "id": "56:187",
+          "name": "Strong / 主要操作",
+          "type": "TEXT"
+        }
+      ],
+      "texts": [
+        {
+          "id": "56:187",
+          "chars": "主要操作",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Bold",
+            "variationSettings": {
+              "wght": 700
+            }
+          },
+          "size": 16,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 24
+          },
+          "style": "S:09ac17cb5dbd83a9fb9f1911635c115cf59ac631,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.3803921639919281,
+                "g": 0.40392157435417175,
+                "b": 0.4431372582912445
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:40"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "instanceCount": 0,
+      "pages": {}
+    },
+    {
+      "id": "56:188",
+      "name": "M&D Mobile V2 / Field / field",
+      "radius": 0,
+      "width": 358,
+      "height": 82,
+      "fills": [],
+      "strokes": [],
+      "children": [
+        {
+          "id": "56:189",
+          "name": "Label / 字段标签",
+          "type": "TEXT"
+        },
+        {
+          "id": "56:190",
+          "name": "Input control",
+          "type": "FRAME"
+        }
+      ],
+      "texts": [
+        {
+          "id": "56:189",
+          "chars": "字段标签",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500
+            }
+          },
+          "size": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "style": "S:b3c9f305d72ee074857292ed4345f9311f8b5500,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.125490203499794,
+                "g": 0.13725490868091583,
+                "b": 0.16078431904315948
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:39"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "56:191",
+          "chars": "请选择或填写",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400
+            }
+          },
+          "size": 16,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 26
+          },
+          "style": "S:4ec5595d1cb39f780f1ba2061e632d77abfda629,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.125490203499794,
+                "g": 0.13725490868091583,
+                "b": 0.16078431904315948
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:39"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "instanceCount": 24,
+      "pages": {
+        "56:25": 23,
+        "56:26": 1
+      }
+    },
+    {
+      "id": "56:192",
+      "name": "M&D Mobile V2 / Field / fieldError",
+      "radius": 0,
+      "width": 358,
+      "height": 82,
+      "fills": [],
+      "strokes": [],
+      "children": [
+        {
+          "id": "56:193",
+          "name": "Label / 字段标签",
+          "type": "TEXT"
+        },
+        {
+          "id": "56:194",
+          "name": "Input control",
+          "type": "FRAME"
+        }
+      ],
+      "texts": [
+        {
+          "id": "56:193",
+          "chars": "字段标签",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500
+            }
+          },
+          "size": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "style": "S:b3c9f305d72ee074857292ed4345f9311f8b5500,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.125490203499794,
+                "g": 0.13725490868091583,
+                "b": 0.16078431904315948
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:39"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "56:195",
+          "chars": "请选择或填写",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400
+            }
+          },
+          "size": 16,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 26
+          },
+          "style": "S:4ec5595d1cb39f780f1ba2061e632d77abfda629,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.125490203499794,
+                "g": 0.13725490868091583,
+                "b": 0.16078431904315948
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:39"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "instanceCount": 1,
+      "pages": {
+        "56:25": 1
+      }
+    },
+    {
+      "id": "56:196",
+      "name": "M&D Mobile V2 / Field / select",
+      "radius": 0,
+      "width": 358,
+      "height": 82,
+      "fills": [],
+      "strokes": [],
+      "children": [
+        {
+          "id": "56:197",
+          "name": "Label / 字段标签",
+          "type": "TEXT"
+        },
+        {
+          "id": "56:198",
+          "name": "Input control",
+          "type": "FRAME"
+        }
+      ],
+      "texts": [
+        {
+          "id": "56:197",
+          "chars": "字段标签",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500
+            }
+          },
+          "size": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "style": "S:b3c9f305d72ee074857292ed4345f9311f8b5500,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.125490203499794,
+                "g": 0.13725490868091583,
+                "b": 0.16078431904315948
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:39"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "56:199",
+          "chars": "请选择或填写",
+          "font": {
+            "family": "Noto Sans SC",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400
+            }
+          },
+          "size": 16,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 26
+          },
+          "style": "S:4ec5595d1cb39f780f1ba2061e632d77abfda629,",
+          "fill": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.125490203499794,
+                "g": 0.13725490868091583,
+                "b": 0.16078431904315948
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:14:39"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "instanceCount": 29,
+      "pages": {
+        "56:25": 26,
+        "56:26": 3
+      }
+    }
+  ],
+  "variables": [
+    {
+      "id": "VariableID:14:41",
+      "name": "color/brand",
+      "values": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:13"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:28"
+        },
+        "56:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:56:7"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:42",
+      "name": "color/onBrand",
+      "values": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:9"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:29"
+        },
+        "56:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:56:8"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:43",
+      "name": "color/brandSoft",
+      "values": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:14"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:29"
+        },
+        "56:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:56:9"
+        }
+      }
+    },
+    {
+      "id": "VariableID:56:20",
+      "name": "mobile-v2/onAccent",
+      "values": {
+        "14:0": {
+          "r": 0.18431372940540314,
+          "g": 0.10588235408067703,
+          "b": 0.07450980693101883,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:56:21",
+      "name": "color/onAccent",
+      "values": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:56:20"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:56:20"
+        },
+        "56:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:56:20"
+        }
+      }
+    }
+  ],
+  "actionProperties": {
+    "Label#56:0": {
+      "type": "TEXT",
+      "defaultValue": "主要操作"
+    },
+    "Style": {
+      "type": "VARIANT",
+      "defaultValue": "Primary",
+      "variantOptions": [
+        "Primary",
+        "Secondary",
+        "Quiet",
+        "Disabled"
+      ]
+    }
+  },
+  "guideRootPositions": [
+    {
+      "id": "56:85",
+      "name": "Mobile V2 / Construction",
+      "x": 2000,
+      "y": 120,
+      "w": 760,
+      "h": 2036
+    },
+    {
+      "id": "56:183",
+      "name": "M&D Mobile V2 / Action",
+      "x": 2850,
+      "y": 120,
+      "w": 1560,
+      "h": 128
+    },
+    {
+      "id": "61:12",
+      "name": "Mobile V2 / 视觉与交接",
+      "x": 446,
+      "y": -201,
+      "w": 1344,
+      "h": 1406
+    },
+    {
+      "id": "70:186",
+      "name": "M&D Button study / Direction & Sample",
+      "x": 4650,
+      "y": 120,
+      "w": 1688,
+      "h": 192
+    },
+    {
+      "id": "70:209",
+      "name": "M&D / Button directions 01-02",
+      "x": 446,
+      "y": 2396,
+      "w": 1200,
+      "h": 1120
+    },
+    {
+      "id": "81:192",
+      "name": "M&D / Friendly phone key screens",
+      "x": 446,
+      "y": 3756,
+      "w": 1330,
+      "h": 1194
+    }
+  ]
+}

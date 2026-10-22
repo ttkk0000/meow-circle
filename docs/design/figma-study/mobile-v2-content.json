@@ -1,0 +1,3036 @@
+[
+  {
+    "id": "home",
+    "group": "社区",
+    "title": "M&D",
+    "items": [
+      {
+        "type": "search",
+        "label": "搜养宠经验、领养和同城互助",
+        "to": "search"
+      },
+      {
+        "type": "chips",
+        "labels": [
+          "推荐",
+          "关注",
+          "同城"
+        ],
+        "active": 0
+      },
+      {
+        "type": "shortcuts",
+        "entries": [
+          [
+            "领养",
+            "heart-handshake",
+            "adopt"
+          ],
+          [
+            "走失互助",
+            "map-pin",
+            "lostList"
+          ],
+          [
+            "养宠指南",
+            "paw-print",
+            "post"
+          ]
+        ]
+      },
+      {
+        "type": "feed",
+        "entries": [
+          [
+            "迎接第一只猫，先准备好这 5 件事",
+            "编辑部 · 学习示例",
+            "cat",
+            "post"
+          ],
+          [
+            "狗狗出门前，一起做好这份清单",
+            "编辑部 · 学习示例",
+            "dog",
+            "post"
+          ],
+          [
+            "让猫咪拥有一个安静的小角落",
+            "编辑部 · 学习示例",
+            "catOffer",
+            "post"
+          ],
+          [
+            "其他宠物，也有自己的生活方式",
+            "编辑部 · 学习示例",
+            "rabbit",
+            "post"
+          ]
+        ]
+      }
+    ],
+    "footer": null,
+    "tab": "home"
+  },
+  {
+    "id": "homeEmpty",
+    "group": "社区",
+    "title": "社区",
+    "items": [
+      {
+        "type": "search",
+        "label": "搜索养宠经验",
+        "to": "search"
+      },
+      {
+        "type": "chips",
+        "labels": [
+          "推荐",
+          "关注",
+          "同城"
+        ],
+        "active": 0
+      },
+      {
+        "type": "empty",
+        "title": "这里的故事，等你开个头",
+        "body": "当前城市暂时还没有新动态。可以先看编辑指南，或分享你和宠物的日常。"
+      },
+      {
+        "type": "action",
+        "label": "看看养宠指南",
+        "to": "post",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "分享我的宠物",
+        "to": "composePost",
+        "kind": "primary"
+      }
+    ],
+    "footer": null,
+    "tab": "home"
+  },
+  {
+    "id": "city",
+    "group": "社区",
+    "title": "选择城市",
+    "items": [
+      {
+        "type": "text",
+        "text": "武汉、上海先开始",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "城市由你选择；拒绝定位也可以浏览。",
+        "role": "Label",
+        "color": "muted"
+      },
+      {
+        "type": "row",
+        "label": "武汉",
+        "value": "当前浏览城市",
+        "to": "home"
+      },
+      {
+        "type": "row",
+        "label": "上海",
+        "value": "切换后只显示上海内容",
+        "to": "homeEmpty"
+      },
+      {
+        "type": "note",
+        "title": "定位不等于公开地址",
+        "body": "不获取定位也能选择城市；不公开你的住址和持续位置。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "其他城市",
+        "value": "尚未开放，可继续游客浏览",
+        "to": "home"
+      }
+    ],
+    "footer": {
+      "label": "继续浏览武汉",
+      "to": "home"
+    },
+    "tab": null
+  },
+  {
+    "id": "search",
+    "group": "社区",
+    "title": "搜索",
+    "items": [
+      {
+        "type": "search",
+        "label": "猫咪 / 领养 / 走失互助",
+        "to": "results"
+      },
+      {
+        "type": "text",
+        "text": "搜索范围",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "chips",
+        "labels": [
+          "社区",
+          "领养",
+          "互助",
+          "出售"
+        ],
+        "active": 0
+      },
+      {
+        "type": "note",
+        "title": "没有搜索记录",
+        "body": "不展示虚构热搜；你可以直接输入关键词。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看“领养”结果示例",
+        "to": "results",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "搜索（示意）",
+      "to": "results"
+    },
+    "tab": null
+  },
+  {
+    "id": "results",
+    "group": "社区",
+    "title": "搜索结果",
+    "items": [
+      {
+        "type": "search",
+        "label": "领养 · 武汉",
+        "to": "search"
+      },
+      {
+        "type": "chips",
+        "labels": [
+          "综合",
+          "领养信息",
+          "经验"
+        ],
+        "active": 0
+      },
+      {
+        "type": "pet",
+        "name": "小满 · 等一个安稳的家",
+        "meta": "武汉 · 猫咪 · 8 个月",
+        "note": "资料示例 · 非真实领养信息",
+        "kind": "cat",
+        "to": "detail"
+      },
+      {
+        "type": "row",
+        "label": "领养前先确认什么",
+        "value": "编辑指南",
+        "to": "post"
+      },
+      {
+        "type": "action",
+        "label": "查看零结果状态",
+        "to": "noResults",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "调整筛选",
+      "to": "filter"
+    },
+    "tab": null
+  },
+  {
+    "id": "post",
+    "group": "社区",
+    "title": "养宠日常",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 256
+      },
+      {
+        "type": "text",
+        "text": "迎接第一只猫，先准备好这 5 件事",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "M&D 编辑部 · 学习内容示例",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "text",
+        "text": "先准备安静的休息区、饮水与猫砂盆，再给新伙伴一点适应的时间。别急着抱它，也别强迫互动。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "每只宠物节奏不同。涉及持续异常或健康问题，请寻求有资质的专业帮助。",
+        "role": "Label",
+        "color": "muted"
+      },
+      {
+        "type": "row",
+        "label": "评论",
+        "value": "暂时还没有评论",
+        "to": "login"
+      },
+      {
+        "type": "action",
+        "label": "收藏此指南（示意）",
+        "to": "mine",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "内容有问题？",
+        "to": "report",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "登录后参与交流",
+      "to": "login"
+    },
+    "tab": null
+  },
+  {
+    "id": "composePost",
+    "group": "社区",
+    "title": "分享日常",
+    "items": [
+      {
+        "type": "step",
+        "text": "记录你和宠物的小事"
+      },
+      {
+        "type": "field",
+        "label": "标题",
+        "value": "今天想分享什么？",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "正文",
+        "value": "写下经验、日常或想请教的问题",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "upload",
+        "label": "添加照片",
+        "hint": "可选；上传前检查住址、电话与他人隐私。"
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "猫咪",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "话题",
+        "value": "日常分享",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "可见范围",
+        "value": "公开；不展示精确位置",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "note",
+        "title": "草稿会保留",
+        "body": "离开前可保存；登录后返回原草稿，不自动发布。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "预览这篇内容",
+      "to": "postPreview"
+    },
+    "tab": null
+  },
+  {
+    "id": "postPreview",
+    "group": "社区",
+    "title": "发布预览",
+    "items": [
+      {
+        "type": "note",
+        "title": "发布前再看一眼",
+        "body": "以下为编辑草稿示意，尚未发布。",
+        "tone": "subtle"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "今天，终于等到它主动靠近",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "猫咪 · 日常分享",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "text",
+        "text": "正文与图片会一起公开；没有可识别住址和电话。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "composePost",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回社区，不实际发布",
+      "to": "home"
+    },
+    "tab": null
+  },
+  {
+    "id": "adopt",
+    "group": "领养",
+    "title": "领养",
+    "items": [
+      {
+        "type": "search",
+        "label": "武汉 · 搜名字或领养条件",
+        "to": "search"
+      },
+      {
+        "type": "chips",
+        "labels": [
+          "猫咪",
+          "狗狗",
+          "其他宠物"
+        ],
+        "active": 0
+      },
+      {
+        "type": "inlineActions",
+        "entries": [
+          [
+            "武汉",
+            "city"
+          ],
+          [
+            "区域与条件",
+            "filter"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "先了解，再决定",
+        "body": "健康、费用和领养条件，都能分别展开查看。",
+        "tone": "subtle",
+        "compact": true
+      },
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "武汉 · 母猫 · 8 个月",
+        "note": "救助送养 · 近期接触材料待核对",
+        "kind": "cat",
+        "to": "detail"
+      },
+      {
+        "type": "pet",
+        "name": "豆豆",
+        "meta": "武汉 · 公犬 · 2 岁",
+        "note": "原照护者送养 · 学习示例",
+        "kind": "dog",
+        "to": null
+      },
+      {
+        "type": "action",
+        "label": "出售 / 有偿转让信息",
+        "to": "find",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "tab": "adopt"
+  },
+  {
+    "id": "filter",
+    "group": "领养",
+    "title": "筛选领养",
+    "items": [
+      {
+        "type": "step",
+        "text": "按合适的生活条件筛选，不靠“可信分”排序"
+      },
+      {
+        "type": "field",
+        "label": "城市",
+        "value": "武汉",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "区域",
+        "value": "不限",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "猫咪",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "不限",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "照护条件",
+        "value": "可接受新手；其他条件不限",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "费用范围",
+        "value": "全部；明确展示必付项",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "action",
+        "label": "清空筛选",
+        "to": "adopt",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看筛选结果",
+      "to": "adopt"
+    },
+    "tab": null
+  },
+  {
+    "id": "detail",
+    "group": "领养",
+    "title": "领养详情",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "小满，想找一个安稳的家",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "救助领养 · 资料示例",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "位置",
+            "武汉 · 武昌区"
+          ],
+          [
+            "基本信息",
+            "母猫 · 约 8 个月"
+          ],
+          [
+            "健康情况",
+            "疫苗由发布者声明；医疗原件未核对"
+          ],
+          [
+            "必付费用",
+            "声明为 ¥0；不附带购买要求"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "真实性说明",
+        "value": "逐项看范围，不是一枚“保证真实”章",
+        "to": "verify"
+      },
+      {
+        "type": "row",
+        "label": "领养条件",
+        "value": "室内照护；接受后续沟通",
+        "to": "apply"
+      },
+      {
+        "type": "row",
+        "label": "发布者",
+        "value": "小满的照护人 · 关系待核对",
+        "to": "verify"
+      },
+      {
+        "type": "action",
+        "label": "报告问题",
+        "to": "report",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "申请领养",
+      "to": "apply",
+      "secondary": {
+        "label": "先聊一聊",
+        "to": "chat"
+      }
+    },
+    "tab": null
+  },
+  {
+    "id": "verify",
+    "group": "领养",
+    "title": "真实性说明",
+    "items": [
+      {
+        "type": "note",
+        "title": "说明范围，不保证结果",
+        "body": "联系方式核对不等于宠物归属确认；照片也不能保证健康。",
+        "tone": "subtle"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "联系方式",
+            "示例：短信验证可达 · 2026-10-16；不代表归属。"
+          ],
+          [
+            "发布关系",
+            "当前照护人（本人声明）；关系未核对，无有效核验日期。"
+          ],
+          [
+            "近期接触",
+            "近期实拍照片已上传、未查看；不证明归属或健康，无核验日期。"
+          ],
+          [
+            "健康资料",
+            "资料已上传，签发来源与时间待确认；不是健康认证。"
+          ],
+          [
+            "费用与状态",
+            "声明 ¥0、仍可申请；更新过期后需重新确认。"
+          ]
+        ]
+      },
+      {
+        "type": "text",
+        "text": "每项都应有对象、方法、日期和时效。过期、未知、待补与争议单独展示。",
+        "role": "Label",
+        "color": "muted"
+      },
+      {
+        "type": "action",
+        "label": "信息有疑点，报告问题",
+        "to": "report",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回领养详情",
+      "to": "detail"
+    },
+    "tab": null
+  },
+  {
+    "id": "apply",
+    "group": "领养",
+    "title": "申请领养",
+    "items": [
+      {
+        "type": "step",
+        "text": "1 / 2 · 了解彼此，不是考试"
+      },
+      {
+        "type": "pet",
+        "name": "申请认识小满",
+        "meta": "武汉 · 救助领养",
+        "note": "送出前可检查，之后也可以撤回",
+        "kind": "cat",
+        "to": "detail"
+      },
+      {
+        "type": "field",
+        "label": "居住与照护安排",
+        "value": "自住 / 合租 / 其他，请如实选择",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "共同居住者意见",
+        "value": "请选择；不需要上传身份证",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "已有宠物",
+        "value": "没有 / 有，按物种补充",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "想让照护者了解你",
+        "value": "可选，简单介绍照护计划",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "note",
+        "title": "只向对方提供必要摘要",
+        "body": "不公开住址、身份证或材料原件；不同意额外要求可以退出。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "检查申请摘要",
+      "to": "applyReview"
+    },
+    "tab": null
+  },
+  {
+    "id": "applyReview",
+    "group": "领养",
+    "title": "检查申请",
+    "items": [
+      {
+        "type": "step",
+        "text": "2 / 2 · 确认共享范围"
+      },
+      {
+        "type": "text",
+        "text": "这份摘要只发给当前发布者",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "申请对象",
+            "小满 · 当前版本"
+          ],
+          [
+            "居住安排",
+            "学习示例：稳定居住，已沟通"
+          ],
+          [
+            "照护计划",
+            "学习示例：室内照护、规律陪伴"
+          ],
+          [
+            "共享内容",
+            "上述摘要与站内昵称，不含精确住址"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "申请不等于领养成立",
+        "body": "对方可进一步沟通，也可拒绝；不得强制购买商品。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "apply",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "取消，回到详情",
+        "to": "detail",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看提交后示意",
+      "to": "applySent"
+    },
+    "tab": null
+  },
+  {
+    "id": "applySent",
+    "group": "领养",
+    "title": "申请已发送",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已送出，接下来慢慢认识",
+        "body": "这是申请成功状态示意。实际产品会保留申请版本与发送时间。"
+      },
+      {
+        "type": "note",
+        "title": "接下来做什么",
+        "body": "等待对方回应；可在站内沟通，未确认前不要付费或前往新地址。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "我的申请",
+        "value": "查看进度或撤回",
+        "to": "application"
+      },
+      {
+        "type": "row",
+        "label": "与照护者沟通",
+        "value": "当前宠物上下文始终可见",
+        "to": "chat"
+      }
+    ],
+    "footer": {
+      "label": "查看申请进度",
+      "to": "application"
+    },
+    "tab": null
+  },
+  {
+    "id": "application",
+    "group": "领养",
+    "title": "申请进度",
+    "items": [
+      {
+        "type": "step",
+        "text": "小满 · 申请版本 A1 · 学习示例"
+      },
+      {
+        "type": "timeline",
+        "entries": [
+          [
+            "申请已收到",
+            "系统回执，不是人工核验结论"
+          ],
+          [
+            "双方沟通中",
+            "待确认照护条件与具体安排"
+          ],
+          [
+            "交接待确认",
+            "双方确认后再进入交接"
+          ],
+          [
+            "后续关怀",
+            "按约定自愿回访"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "安排见面",
+        "value": "先确认地点、对象和接待方",
+        "to": "appointment"
+      },
+      {
+        "type": "action",
+        "label": "查看交接步骤示例",
+        "to": "handover",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "撤回申请",
+        "to": "withdrawn",
+        "kind": "quiet"
+      },
+      {
+        "type": "note",
+        "title": "如果不合适",
+        "body": "拒绝或主动退出不是失约，不公开羞辱任何一方。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "继续站内沟通",
+      "to": "chat"
+    },
+    "tab": null
+  },
+  {
+    "id": "handover",
+    "group": "领养",
+    "title": "交接确认",
+    "items": [
+      {
+        "type": "step",
+        "text": "双方在场检查；不自动完成"
+      },
+      {
+        "type": "pet",
+        "name": "小满 · 交接清单",
+        "meta": "武汉 · 双方确认的同一宠物",
+        "note": "以下均为学习示例",
+        "kind": "cat",
+        "to": "detail"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "宠物与材料",
+            "核对照片特征及可提供的照护资料"
+          ],
+          [
+            "健康未知项",
+            "未核对的检查结果继续保留未知"
+          ],
+          [
+            "照护责任",
+            "记录交接时间与双方理解的责任"
+          ],
+          [
+            "费用",
+            "声明 ¥0；有变化先暂停并重新确认"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "发现不同？先暂停",
+        "body": "宠物、费用、地点或责任不一致时，不要求继续交接。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "报告交接问题",
+        "to": "report",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看交接后关怀",
+      "to": "followup"
+    },
+    "tab": null
+  },
+  {
+    "id": "followup",
+    "group": "领养",
+    "title": "后续关怀",
+    "items": [
+      {
+        "type": "empty",
+        "title": "新生活，慢慢适应",
+        "body": "按事先约定自愿分享适应情况；不公开家庭地址和私人照片。"
+      },
+      {
+        "type": "field",
+        "label": "目前的适应情况",
+        "value": "可选：饮食、休息与日常相处",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "upload",
+        "label": "添加近况照片（可选）",
+        "hint": "仅向对方共享你主动选择的内容。"
+      },
+      {
+        "type": "note",
+        "title": "有困难，可以好好说",
+        "body": "申请帮助或讨论后续安排；不因一次未回访自动判定违约。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "联系原照护者",
+        "to": "chat",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "安全或隐私问题",
+        "to": "report",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回我的申请",
+      "to": "application"
+    },
+    "tab": null
+  },
+  {
+    "id": "withdrawn",
+    "group": "领养",
+    "title": "申请已撤回",
+    "items": [
+      {
+        "type": "empty",
+        "title": "决定留给你自己",
+        "body": "这是撤回状态示意。未成立的申请停止推进；已有安排需分别确认取消。"
+      },
+      {
+        "type": "note",
+        "title": "不会因此公开评价你",
+        "body": "撤回不自动记失约；必要历史与安全报告记录按规则保留。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看已有沟通",
+        "to": "chat",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "继续看看领养信息",
+      "to": "adopt"
+    }
+  },
+  {
+    "id": "applicationDecision",
+    "group": "领养",
+    "title": "回应领养申请",
+    "items": [
+      {
+        "type": "step",
+        "text": "发布者视角 · 不等于已经完成交接"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "申请对象",
+            "小满 · 申请 A1"
+          ],
+          [
+            "必要摘要",
+            "居住与照护安排；不包含精确地址"
+          ],
+          [
+            "继续了解",
+            "先站内沟通，再确认见面与责任"
+          ]
+        ]
+      },
+      {
+        "type": "field",
+        "label": "回应与说明",
+        "value": "不合适时简要说明，不公开私人情况"
+      },
+      {
+        "type": "action",
+        "label": "继续沟通",
+        "to": "chat",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "暂不匹配，回到沟通说明原因",
+        "to": "chat",
+        "kind": "quiet"
+      },
+      {
+        "type": "note",
+        "title": "接受申请不等于领养成立",
+        "body": "双方仍可检查信息、暂停安排，按约定完成交接。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "查看交接准备",
+      "to": "handover"
+    }
+  },
+  {
+    "id": "publishType",
+    "group": "发布",
+    "title": "选择发布类型",
+    "items": [
+      {
+        "type": "text",
+        "text": "把性质先说清楚",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "分享日常",
+        "value": "晒宠、经验与交流",
+        "to": "composePost"
+      },
+      {
+        "type": "row",
+        "label": "发布领养",
+        "value": "送养条件与费用如实披露",
+        "to": "petBasics"
+      },
+      {
+        "type": "row",
+        "label": "走失 / 拾获求助",
+        "value": "地点、时间与隐私分开",
+        "to": "lostPublish"
+      },
+      {
+        "type": "row",
+        "label": "出售 / 有偿转让",
+        "value": "允许合规商家和已披露代理",
+        "to": "salePublish"
+      },
+      {
+        "type": "note",
+        "title": "不以“家养”代替核验",
+        "body": "个人、商家、救助或受托发布，都要说明真实关系。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "开始发布领养",
+      "to": "petBasics"
+    },
+    "tab": null
+  },
+  {
+    "id": "petBasics",
+    "group": "发布",
+    "title": "宠物基本信息",
+    "items": [
+      {
+        "type": "step",
+        "text": "1 / 4 · 先认识这位小伙伴"
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "猫咪",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "给它一个称呼",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "性别与年龄",
+        "value": "已知才填写；未知也可选择",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "upload",
+        "label": "添加近期照片",
+        "hint": "拍清脸部、体态与可辨识特征；不使用盗图。"
+      },
+      {
+        "type": "field",
+        "label": "所在城市 / 区域",
+        "value": "武汉；公开到区域",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "note",
+        "title": "不知道，就标注未知",
+        "body": "不强迫填写品种、生日、疫苗或健康结论。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "下一步：关系与费用",
+      "to": "petDisclosure"
+    },
+    "tab": null
+  },
+  {
+    "id": "petDisclosure",
+    "group": "发布",
+    "title": "关系与领养条件",
+    "items": [
+      {
+        "type": "step",
+        "text": "2 / 4 · 不隐瞒人与宠物的关系"
+      },
+      {
+        "type": "field",
+        "label": "你与宠物的关系",
+        "value": "原照护者 / 救助 / 商家 / 授权代理",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "实际照护与接待方",
+        "value": "若不是本人，请分别说明",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "必付费用",
+        "value": "完全免费 / 有明确必要费用",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "领养条件",
+        "value": "写清必要条件，避免收集无关隐私",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "健康情况",
+        "value": "已知、未知、发布者声明分别填写",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "note",
+        "title": "有钱要付，就不能叫完全免费",
+        "body": "医疗支出等应列金额、依据与上限；不捆绑购买。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "下一步：支持材料",
+      "to": "petEvidence"
+    },
+    "tab": null
+  },
+  {
+    "id": "petEvidence",
+    "group": "发布",
+    "title": "支持材料",
+    "items": [
+      {
+        "type": "step",
+        "text": "3 / 4 · 材料越清楚，边界也要越清楚"
+      },
+      {
+        "type": "upload",
+        "label": "近期接触实拍照片",
+        "hint": "只证明某时刻的接触，不直接证明归属或健康。"
+      },
+      {
+        "type": "upload",
+        "label": "授权或照护关系材料",
+        "hint": "受托发布需对应到这只宠物；无法提供可说明原因。"
+      },
+      {
+        "type": "upload",
+        "label": "健康资料（有则提供）",
+        "hint": "遮盖不必要个人信息；上传不等于签发机构已确认。"
+      },
+      {
+        "type": "note",
+        "title": "暂时没有材料？",
+        "body": "允许保存草稿或说明缺失，不生成虚假的通过标记。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "下一步：公开预览",
+      "to": "petPreview"
+    },
+    "tab": null
+  },
+  {
+    "id": "petPreview",
+    "group": "发布",
+    "title": "检查公开信息",
+    "items": [
+      {
+        "type": "step",
+        "text": "4 / 4 · 公开什么，由你看清楚"
+      },
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "武汉 · 猫咪 · 年龄约 8 个月",
+        "note": "领养信息草稿 · 尚未发布",
+        "kind": "cat",
+        "to": "detail"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "发布关系",
+            "当前照护人（声明）"
+          ],
+          [
+            "费用与条件",
+            "¥0；室内照护，接受沟通"
+          ],
+          [
+            "材料状态",
+            "已上传／待核对分别标注"
+          ],
+          [
+            "隐私",
+            "公开区域；原件和联系方式不公开"
+          ]
+        ]
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "petDisclosure",
+        "kind": "quiet"
+      },
+      {
+        "type": "note",
+        "title": "发送后仍可维护",
+        "body": "审核不保证健康或归属；关键变更会暂停旧安排。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "查看审核状态示意",
+      "to": "petPending"
+    },
+    "tab": null
+  },
+  {
+    "id": "petPending",
+    "group": "发布",
+    "title": "发布状态",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已收到，等待查看",
+        "body": "这是材料受理状态示意，不代表已完成审核或真实性认证。"
+      },
+      {
+        "type": "timeline",
+        "entries": [
+          [
+            "材料已收到",
+            "系统回执"
+          ],
+          [
+            "待人工查看",
+            "如需补充，会说明具体事项"
+          ],
+          [
+            "审核结果",
+            "通过、退回补充或限制公开分别通知"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "补充材料",
+        "value": "不反复收集相同原件",
+        "to": "petEvidence"
+      },
+      {
+        "type": "row",
+        "label": "管理我的发布",
+        "value": "更新状态、暂停或结束",
+        "to": "myPublishes"
+      }
+    ],
+    "footer": {
+      "label": "查看我的发布",
+      "to": "myPublishes"
+    },
+    "tab": null
+  },
+  {
+    "id": "myPublishes",
+    "group": "发布",
+    "title": "我的发布",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满 · 仍可申请",
+        "meta": "领养 · 示例",
+        "note": "资料范围待补充",
+        "kind": "cat",
+        "to": "detail"
+      },
+      {
+        "type": "row",
+        "label": "修改资料或材料",
+        "value": "关键变更会生成新版本",
+        "to": "petDisclosure"
+      },
+      {
+        "type": "row",
+        "label": "处理申请",
+        "value": "沟通、接受或说明拒绝原因",
+        "to": "applicationDecision"
+      },
+      {
+        "type": "row",
+        "label": "暂停 / 结束发布",
+        "value": "不删除必要处理记录",
+        "to": "contentUnavailable"
+      },
+      {
+        "type": "row",
+        "label": "管理走失求助",
+        "value": "更新线索与找回状态",
+        "to": "lostManage"
+      },
+      {
+        "type": "note",
+        "title": "旧安排不会悄悄继续",
+        "body": "地点、宠物、接待人和费用变更后，双方需重确认。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "新建发布",
+      "to": "publishType"
+    },
+    "tab": null
+  },
+  {
+    "id": "lostList",
+    "group": "互助",
+    "title": "走失互助",
+    "items": [
+      {
+        "type": "inlineActions",
+        "entries": [
+          [
+            "武汉",
+            "city"
+          ],
+          [
+            "地图",
+            "lostMap"
+          ]
+        ]
+      },
+      {
+        "type": "chips",
+        "labels": [
+          "走失",
+          "拾获",
+          "目击"
+        ],
+        "active": 0
+      },
+      {
+        "type": "note",
+        "title": "当前没有真实求助数据",
+        "body": "首发按武汉／上海维护；不抓取未获许可内容，也不编造附近求助。",
+        "tone": "subtle"
+      },
+      {
+        "type": "empty",
+        "title": "暂时没有同城求助",
+        "body": "可以发布自己的求助，或了解怎样提供有效线索。"
+      },
+      {
+        "type": "action",
+        "label": "查看案例结构示例",
+        "to": "lostDetail",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "没有定位也能浏览",
+        "to": "permission",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "发布走失 / 拾获求助",
+      "to": "lostPublish"
+    },
+    "tab": null
+  },
+  {
+    "id": "lostMap",
+    "group": "互助",
+    "title": "互助地图",
+    "items": [
+      {
+        "type": "inlineActions",
+        "entries": [
+          [
+            "武汉",
+            "city"
+          ],
+          [
+            "返回列表",
+            "lostList"
+          ]
+        ]
+      },
+      {
+        "type": "chips",
+        "labels": [
+          "走失",
+          "拾获",
+          "目击"
+        ],
+        "active": 0
+      },
+      {
+        "type": "empty",
+        "title": "暂时没有可定位的案例",
+        "body": "地图服务尚未接入。仅有“武昌区”等区域描述时，不会生成精确针点。"
+      },
+      {
+        "type": "note",
+        "title": "地点是事件发生处",
+        "body": "不是宠物实时位置；私密目击坐标不公开。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看事件位置说明",
+        "to": "lostDetail",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList"
+    },
+    "tab": null
+  },
+  {
+    "id": "lostDetail",
+    "group": "互助",
+    "title": "求助详情",
+    "items": [
+      {
+        "type": "note",
+        "title": "案例结构示例",
+        "body": "非真实走失事件，不存在可执行导航或联系。",
+        "tone": "subtle"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "小满 · 走失求助示例",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "事件时间",
+            "示例：某日下午；不是抓取时间"
+          ],
+          [
+            "事件地点",
+            "武汉 · 武昌区；精度不足以导航"
+          ],
+          [
+            "特征",
+            "浅色短毛；以原照片为准"
+          ],
+          [
+            "来源与维护",
+            "发布者自行提交；状态需定期更新"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "提供私密线索",
+        "value": "不公开你的坐标与联系方式",
+        "to": "sighting"
+      },
+      {
+        "type": "row",
+        "label": "报告错误或撤回来源",
+        "value": "不需要预约码",
+        "to": "report"
+      }
+    ],
+    "footer": {
+      "label": "提供我看到的线索",
+      "to": "sighting"
+    },
+    "tab": null
+  },
+  {
+    "id": "sighting",
+    "group": "互助",
+    "title": "提供私密线索",
+    "items": [
+      {
+        "type": "step",
+        "text": "登录用于后续联系；安全／隐私报告可走独立入口"
+      },
+      {
+        "type": "field",
+        "label": "你看到的时间",
+        "value": "选择实际目击时间",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "你看到的地点",
+        "value": "可手动填写；精确位置仅私密共享",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "特征与方向",
+        "value": "你确认看到什么？不确定也请说明",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "upload",
+        "label": "添加现场材料（可选）",
+        "hint": "避开他人脸部、车牌和住址。"
+      },
+      {
+        "type": "note",
+        "title": "不公开你的原始位置",
+        "body": "不会自动覆盖原求助事件地点；不保证就是同一只宠物。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "检查线索共享范围",
+      "to": "sightingReview"
+    },
+    "tab": null
+  },
+  {
+    "id": "sightingReview",
+    "group": "互助",
+    "title": "线索共享确认",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "共享对象",
+            "当前求助者与必要审核人员"
+          ],
+          [
+            "目击时间 / 地点",
+            "与你填写的线索一致"
+          ],
+          [
+            "公开地图",
+            "不新增你的原始坐标"
+          ],
+          [
+            "不确定性",
+            "保留“可能是／尚不能确认”"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "线索不是认领凭证",
+        "body": "平台不自动判定宠物归属；可先通过站内联系核实。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "sighting",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看隐私与删除入口",
+        "to": "privacy",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看发送后示意",
+      "to": "sightingSent"
+    },
+    "tab": null
+  },
+  {
+    "id": "lostPublish",
+    "group": "互助",
+    "title": "发布互助求助",
+    "items": [
+      {
+        "type": "step",
+        "text": "走失 / 拾获 / 目击，分别记录"
+      },
+      {
+        "type": "field",
+        "label": "求助类型",
+        "value": "走失",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "物种与可识别特征",
+        "value": "猫咪；写明已知特征",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "upload",
+        "label": "添加宠物照片",
+        "hint": "非本人照片需有使用许可。"
+      },
+      {
+        "type": "field",
+        "label": "事件时间",
+        "value": "实际发生时间，不用发布时间替代",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "事件地点",
+        "value": "城市、区域与可用公共位置",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "公开范围",
+        "value": "公开区域，精确线索私密",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "note",
+        "title": "别公开住址和手机号",
+        "body": "站内联系优先；不承诺紧急救援或实时响应。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "检查发布与维护规则",
+      "to": "lostManage"
+    },
+    "tab": null
+  },
+  {
+    "id": "lostManage",
+    "group": "互助",
+    "title": "求助状态维护",
+    "items": [
+      {
+        "type": "step",
+        "text": "学习示例 · 不代表已发送真实求助"
+      },
+      {
+        "type": "row",
+        "label": "仍在寻找",
+        "value": "更新真实进展与可用时间",
+        "to": "lostDetail"
+      },
+      {
+        "type": "row",
+        "label": "已找回",
+        "value": "退出活跃列表，关闭公开联系",
+        "to": "contentUnavailable"
+      },
+      {
+        "type": "row",
+        "label": "结束 / 暂停",
+        "value": "与找回状态分开",
+        "to": "contentUnavailable"
+      },
+      {
+        "type": "row",
+        "label": "补充 / 更正信息",
+        "value": "保留原事件时间",
+        "to": "lostPublish"
+      },
+      {
+        "type": "note",
+        "title": "超过维护周期会提示更新",
+        "body": "无法联系或来源撤回时，停止活跃推荐，不把旧内容重新当新求助。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看收到的线索",
+        "to": "chat",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList"
+    },
+    "tab": null
+  },
+  {
+    "id": "messages",
+    "group": "沟通与安全",
+    "title": "消息",
+    "items": [
+      {
+        "type": "chips",
+        "labels": [
+          "会话",
+          "通知"
+        ],
+        "active": 0
+      },
+      {
+        "type": "row",
+        "label": "小满的照护者",
+        "value": "申请 A1 · 还没有确认见面",
+        "to": "chat"
+      },
+      {
+        "type": "row",
+        "label": "发布与材料通知",
+        "value": "材料已收到，不代表人工核实",
+        "to": "petPending"
+      },
+      {
+        "type": "row",
+        "label": "问题处理通知",
+        "value": "查看受理、补充和结论",
+        "to": "reportProgress"
+      },
+      {
+        "type": "row",
+        "label": "申请进度",
+        "value": "可撤回；不自动成立领养",
+        "to": "application"
+      },
+      {
+        "type": "note",
+        "title": "示例消息，不是实时通知",
+        "body": "实际产品需显示发送／送达失败，并保留未发出的草稿。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": null,
+    "tab": "messages"
+  },
+  {
+    "id": "chat",
+    "group": "沟通与安全",
+    "title": "小满的照护者",
+    "items": [
+      {
+        "type": "pet",
+        "name": "正在聊：小满",
+        "meta": "申请 A1 · 学习示例",
+        "note": "聊天内容不等于确认了安排",
+        "kind": "cat",
+        "to": "detail"
+      },
+      {
+        "type": "bubble",
+        "text": "你好，想先了解你的照护安排。",
+        "mine": false
+      },
+      {
+        "type": "bubble",
+        "text": "好的，也想确认一下健康未知项和见面地点。",
+        "mine": true
+      },
+      {
+        "type": "row",
+        "label": "当前见面安排",
+        "value": "尚未双方确认",
+        "to": "appointment"
+      },
+      {
+        "type": "row",
+        "label": "安排发生变化？",
+        "value": "对照新旧差异再决定",
+        "to": "change"
+      },
+      {
+        "type": "action",
+        "label": "拉黑 / 报告问题",
+        "to": "report",
+        "kind": "quiet"
+      },
+      {
+        "type": "field",
+        "label": "消息草稿",
+        "value": "输入消息；演示不会发送",
+        "kind": "input",
+        "hint": ""
+      }
+    ],
+    "footer": {
+      "label": "查看安排摘要",
+      "to": "appointment"
+    },
+    "tab": null
+  },
+  {
+    "id": "appointment",
+    "group": "沟通与安全",
+    "title": "确认见面安排",
+    "items": [
+      {
+        "type": "step",
+        "text": "版本 V1 · 待双方确认"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "宠物",
+            "小满 · 与当前档案一致"
+          ],
+          [
+            "双方与接待方",
+            "发布者本人；变更需另行披露"
+          ],
+          [
+            "时间与地点",
+            "实际确认后显示；本稿不提供真实地址"
+          ],
+          [
+            "费用",
+            "领养声明 ¥0；出售另列总额与收款方"
+          ],
+          [
+            "责任与退出",
+            "信息不一致可暂停，不强迫继续"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "双方确认同一版本才成立",
+        "body": "不要仅凭聊天中的新地址前往其它场所。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看变更示例",
+        "to": "change",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "存在疑点，先报告",
+        "to": "report",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回站内沟通",
+      "to": "chat"
+    },
+    "tab": null
+  },
+  {
+    "id": "change",
+    "group": "沟通与安全",
+    "title": "安排变更",
+    "items": [
+      {
+        "type": "step",
+        "text": "版本 V1 → V2 · 原安排暂停"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "原接待地点",
+            "双方曾确认的地点"
+          ],
+          [
+            "新接待地点",
+            "对方提出另一地点，尚未同意"
+          ],
+          [
+            "原接待方 → 新接待方",
+            "本人 → 另一接待人，需说明关系"
+          ],
+          [
+            "费用与责任",
+            "变化必须逐项列出，不允许隐藏"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "拒绝变更不计失约",
+        "body": "不默认同意，不继续沿用旧安排。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "拒绝变更并回到沟通",
+        "to": "chat",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "报告身份或地点不符",
+        "to": "report",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看并沟通，不自动接受",
+      "to": "chat"
+    },
+    "tab": null
+  },
+  {
+    "id": "report",
+    "group": "沟通与安全",
+    "title": "报告问题",
+    "items": [
+      {
+        "type": "step",
+        "text": "没有申请、预约码或付款也能报告"
+      },
+      {
+        "type": "field",
+        "label": "问题类型",
+        "value": "身份 / 地点 / 费用 / 隐私 / 其他",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "发生了什么",
+        "value": "写可核实的事实；不知道可标注不确定",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "upload",
+        "label": "补充证据（可稍后）",
+        "hint": "保留对应帖子版本与时间，不公开他人私密原件。"
+      },
+      {
+        "type": "note",
+        "title": "安全与隐私入口不强制注册",
+        "body": "可选择必要联系渠道；账号不是提交通用门槛。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看被报告的原信息",
+        "to": "detail",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看回执状态示意",
+      "to": "reportReceipt"
+    },
+    "tab": null
+  },
+  {
+    "id": "reportReceipt",
+    "group": "沟通与安全",
+    "title": "已收到报告",
+    "items": [
+      {
+        "type": "empty",
+        "title": "收到了，不等于已查实",
+        "body": "这里只展示回执状态。实际系统会保存报告内容与相关信息版本。"
+      },
+      {
+        "type": "note",
+        "title": "接下来分别告诉你",
+        "body": "待补材料、临时保护、人工结论与申诉不会混成一个“处理完成”。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "补充材料",
+        "value": "不必重新提交同一问题",
+        "to": "report"
+      },
+      {
+        "type": "row",
+        "label": "查看处理进度",
+        "value": "必要信息仅向授权人员提供",
+        "to": "reportProgress"
+      }
+    ],
+    "footer": {
+      "label": "查看处理进度",
+      "to": "reportProgress"
+    },
+    "tab": null
+  },
+  {
+    "id": "reportProgress",
+    "group": "沟通与安全",
+    "title": "处理进度",
+    "items": [
+      {
+        "type": "step",
+        "text": "案例示意 · 不是真实受理承诺"
+      },
+      {
+        "type": "timeline",
+        "entries": [
+          [
+            "已收到",
+            "自动回执"
+          ],
+          [
+            "人工查看中",
+            "可能需要补充具体事实"
+          ],
+          [
+            "必要的临时保护",
+            "与是否成立、是否处罚分开"
+          ],
+          [
+            "结论与后续",
+            "获支持 / 未获支持 / 无法判断"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "举报数量不等于事实成立",
+        "body": "未获支持也不等于恶意举报；结论应说明依据与纠错路径。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "补充信息",
+        "value": "保留已有版本和进度",
+        "to": "report"
+      },
+      {
+        "type": "row",
+        "label": "对结论有异议",
+        "value": "查看申诉与复核",
+        "to": "appeal"
+      }
+    ],
+    "footer": {
+      "label": "返回消息",
+      "to": "messages"
+    },
+    "tab": null
+  },
+  {
+    "id": "appeal",
+    "group": "沟通与安全",
+    "title": "申诉与复核",
+    "items": [
+      {
+        "type": "step",
+        "text": "针对具体结论说明异议，不公开争吵"
+      },
+      {
+        "type": "field",
+        "label": "对应处理结果",
+        "value": "选择已有结论或限制事项",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "你认为哪里不准确",
+        "value": "说明事实、范围或证据差异",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "upload",
+        "label": "补充新材料（可选）",
+        "hint": "保留原处理记录，不因申诉覆盖原结论。"
+      },
+      {
+        "type": "note",
+        "title": "独立复核",
+        "body": "复核者、结论变化与理由应留档；不承诺必然改判。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "发布者回应入口示意",
+        "to": "publisherResponse",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看复核进度示意",
+      "to": "reportProgress"
+    },
+    "tab": null
+  },
+  {
+    "id": "publisherResponse",
+    "group": "沟通与安全",
+    "title": "回应被报告事项",
+    "items": [
+      {
+        "type": "note",
+        "title": "先看具体争议",
+        "body": "只向你展示必要的问题摘要；举报人身份和私密原件不会全部开放。",
+        "tone": "subtle"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "对应内容",
+            "小满 · 原发布版本"
+          ],
+          [
+            "待核实事项",
+            "接待地点或接待方与原说明不一致"
+          ],
+          [
+            "当前保护措施",
+            "必要时暂停预约；不等于已判违规"
+          ]
+        ]
+      },
+      {
+        "type": "field",
+        "label": "你的事实说明",
+        "value": "逐项回应差异，不对举报者施压"
+      },
+      {
+        "type": "upload",
+        "label": "支持材料（可选）",
+        "hint": "提交相关授权、时间与场所说明；不覆盖原版本。"
+      },
+      {
+        "type": "action",
+        "label": "对最终结论有异议",
+        "to": "appeal",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看后续处理进度",
+      "to": "reportProgress"
+    }
+  },
+  {
+    "id": "login",
+    "group": "账号",
+    "title": "登录后继续",
+    "items": [
+      {
+        "type": "text",
+        "text": "认识新伙伴，不急着注册",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "继续申请小满；也可以先作为游客浏览。",
+        "role": "Body",
+        "color": "muted"
+      },
+      {
+        "type": "field",
+        "label": "中国大陆手机号",
+        "value": "+86 请输入手机号",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "consent",
+        "text": "我已阅读并同意用户协议与隐私政策。默认不勾选。"
+      },
+      {
+        "type": "note",
+        "title": "账号不是“真实宠物认证”",
+        "body": "手机号可达不代表宠物归属、健康或平台担保。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看协议与隐私",
+        "to": "privacy",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "暂不登录，继续浏览",
+        "to": "home",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看验证码步骤",
+      "to": "otp"
+    },
+    "tab": null
+  },
+  {
+    "id": "otp",
+    "group": "账号",
+    "title": "输入验证码",
+    "items": [
+      {
+        "type": "step",
+        "text": "继续原来的申请，不会自动提交"
+      },
+      {
+        "type": "field",
+        "label": "接收号码",
+        "value": "+86 1•• •••• ••••",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "验证码",
+        "value": "输入 6 位验证码",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "text",
+        "text": "本稿未接入短信，不展示可用验证码或倒计时承诺。",
+        "role": "Label",
+        "color": "muted"
+      },
+      {
+        "type": "action",
+        "label": "修改手机号",
+        "to": "login",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "收不到或验证码错误",
+        "to": "otpError",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "取消登录，保留阅读位置",
+        "to": "detail",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看登录后返回示意",
+      "to": "apply"
+    },
+    "tab": null
+  },
+  {
+    "id": "otpError",
+    "group": "账号",
+    "title": "验证码未通过",
+    "items": [
+      {
+        "type": "note",
+        "title": "验证码错误或已失效",
+        "body": "号码和申请意图会保留；不要反复盲试。",
+        "tone": "dangerSoft"
+      },
+      {
+        "type": "field",
+        "label": "验证码",
+        "value": "请重新输入",
+        "kind": "error",
+        "hint": "此处为错误状态示意，未实际验证。"
+      },
+      {
+        "type": "action",
+        "label": "修改号码",
+        "to": "login",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "稍后再试，保留当前位置",
+        "to": "detail",
+        "kind": "quiet"
+      },
+      {
+        "type": "note",
+        "title": "实际产品需有保护",
+        "body": "重发、错误次数和频率限制由生产认证服务执行，不能仅靠前端倒计时。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回验证码输入",
+      "to": "otp"
+    },
+    "tab": null
+  },
+  {
+    "id": "mine",
+    "group": "账号",
+    "title": "我的",
+    "items": [
+      {
+        "type": "profile",
+        "name": "小满的朋友",
+        "subtitle": "M&D · meow & doggie · 学习账号"
+      },
+      {
+        "type": "inlineActions",
+        "entries": [
+          [
+            "我的宠物",
+            "petProfile"
+          ],
+          [
+            "收藏",
+            "post"
+          ],
+          [
+            "草稿",
+            "composePost"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "我的领养申请",
+        "value": "进度、撤回与后续关怀",
+        "to": "application"
+      },
+      {
+        "type": "row",
+        "label": "我的发布",
+        "value": "申请、资料和可用状态",
+        "to": "myPublishes"
+      },
+      {
+        "type": "row",
+        "label": "我的互助",
+        "value": "线索与求助维护",
+        "to": "lostManage"
+      },
+      {
+        "type": "row",
+        "label": "报告与申诉",
+        "value": "查看处理过程",
+        "to": "reportProgress"
+      },
+      {
+        "type": "row",
+        "label": "设置与隐私",
+        "value": "账号、通知和数据",
+        "to": "settings"
+      }
+    ],
+    "footer": null,
+    "tab": "mine"
+  },
+  {
+    "id": "petProfile",
+    "group": "账号",
+    "title": "我的宠物",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "小满",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "猫咪 · 基本资料由你维护",
+        "role": "Label",
+        "color": "muted"
+      },
+      {
+        "type": "field",
+        "label": "物种 / 年龄",
+        "value": "已知才填写；未知可保留",
+        "kind": "select",
+        "hint": ""
+      },
+      {
+        "type": "field",
+        "label": "照护资料",
+        "value": "仅自己可见；分享时再选择范围",
+        "kind": "input",
+        "hint": ""
+      },
+      {
+        "type": "row",
+        "label": "添加狗狗或其他宠物",
+        "value": "不强迫套用猫咪字段",
+        "to": "petBasics"
+      },
+      {
+        "type": "note",
+        "title": "宠物档案不是权属凭证",
+        "body": "照片与用户录入不能自动证明归属、健康或品种。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回我的",
+      "to": "mine"
+    },
+    "tab": null
+  },
+  {
+    "id": "settings",
+    "group": "账号",
+    "title": "设置",
+    "items": [
+      {
+        "type": "row",
+        "label": "账号与登录",
+        "value": "手机号、安全与退出",
+        "to": "login"
+      },
+      {
+        "type": "row",
+        "label": "通知偏好",
+        "value": "会话、申请、互助分别控制",
+        "to": "privacy"
+      },
+      {
+        "type": "row",
+        "label": "位置与隐私",
+        "value": "手动城市可用，不强制 GPS",
+        "to": "privacy"
+      },
+      {
+        "type": "row",
+        "label": "内容与字体",
+        "value": "文字放大由客户端适配",
+        "to": "privacy"
+      },
+      {
+        "type": "row",
+        "label": "帮助与报告问题",
+        "value": "无需预约码",
+        "to": "report"
+      },
+      {
+        "type": "row",
+        "label": "数据与注销",
+        "value": "查看范围、影响与处理路径",
+        "to": "privacy"
+      },
+      {
+        "type": "note",
+        "title": "其它主题暂缓",
+        "body": "当前先确认普通手机主版本；不在本轮扩展其它端或暗色。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回我的",
+      "to": "mine"
+    },
+    "tab": null
+  },
+  {
+    "id": "privacy",
+    "group": "账号",
+    "title": "隐私与数据",
+    "items": [
+      {
+        "type": "text",
+        "text": "把共享范围说清楚",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "公开内容",
+            "你发布的正文、照片与选择公开的区域"
+          ],
+          [
+            "私密材料",
+            "申请摘要、线索坐标、核验原件按必要权限访问"
+          ],
+          [
+            "可选权限",
+            "定位、相机、相册分别按需请求，可拒绝"
+          ],
+          [
+            "数据操作",
+            "更正、撤回、删除与账号注销分别说明影响"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "这不是正式隐私协议",
+        "body": "上线前需定义处理者、保存期限、SDK 清单和实际权利通道。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "无账号隐私投诉",
+        "value": "不强迫注册",
+        "to": "report"
+      },
+      {
+        "type": "action",
+        "label": "查看定位拒绝状态",
+        "to": "permission",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回设置",
+      "to": "settings"
+    },
+    "tab": null
+  },
+  {
+    "id": "find",
+    "group": "出售补充",
+    "title": "出售与转让",
+    "items": [
+      {
+        "type": "note",
+        "title": "与免费领养清楚分开",
+        "body": "这里只展示出售／有偿转让；不提供平台代收或担保。",
+        "tone": "subtle"
+      },
+      {
+        "type": "chips",
+        "labels": [
+          "猫咪",
+          "狗狗",
+          "其他宠物"
+        ],
+        "active": 0
+      },
+      {
+        "type": "pet",
+        "name": "橘子 · 出售信息示例",
+        "meta": "武汉 · 商家发布",
+        "note": "声明总额 ¥2,400；待核对细项",
+        "kind": "catOffer",
+        "to": "saleDetail"
+      },
+      {
+        "type": "row",
+        "label": "发布这类信息",
+        "value": "须披露关系、场所、全部必付项",
+        "to": "salePublish"
+      },
+      {
+        "type": "action",
+        "label": "回到领养",
+        "to": "adopt",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看完整披露",
+      "to": "saleDetail"
+    },
+    "tab": null
+  },
+  {
+    "id": "saleDetail",
+    "group": "出售补充",
+    "title": "出售详情",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 232
+      },
+      {
+        "type": "text",
+        "text": "橘子 · 出售示例",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "声明总额 ¥2,400",
+        "role": "Section",
+        "color": "brand"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "发布 / 接待 / 照护",
+            "商家 / 本店人员 / 实际照护方分别披露"
+          ],
+          [
+            "完整费用",
+            "猫款与全部必付项；没有隐藏订金"
+          ],
+          [
+            "地点",
+            "公开区域；预约前核对具体场所"
+          ],
+          [
+            "证据边界",
+            "来源、健康与授权逐项说明"
+          ],
+          [
+            "收款方",
+            "预计收款主体为声明；未接入支付"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "查看分项核验",
+        "value": "不以商家或家养替代判断",
+        "to": "verify"
+      },
+      {
+        "type": "action",
+        "label": "报告身份、地点或费用不符",
+        "to": "report",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "先核对见面安排",
+      "to": "appointment"
+    },
+    "tab": null
+  },
+  {
+    "id": "salePublish",
+    "group": "出售补充",
+    "title": "发布出售 / 转让",
+    "items": [
+      {
+        "type": "step",
+        "text": "有偿性质始终保留，不套用免费领养"
+      },
+      {
+        "type": "field",
+        "label": "具体宠物与照片",
+        "value": "对应同一只宠物；补充年龄与未知项",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "发布 / 照护 / 接待关系",
+        "value": "分别写明主体与授权，不冒用家庭身份"
+      },
+      {
+        "type": "field",
+        "label": "总额与全部必付项",
+        "value": "猫款、必要服务、运送等逐项列明"
+      },
+      {
+        "type": "field",
+        "label": "具体场所与预计收款方",
+        "value": "说明实际性质；平台尚未代收"
+      },
+      {
+        "type": "note",
+        "title": "费用不清，先不公开",
+        "body": "不能藏订金、改地点加钱，或把出售包装成免费领养。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "检查出售披露",
+      "to": "salePreview"
+    }
+  },
+  {
+    "id": "salePreview",
+    "group": "出售补充",
+    "title": "检查出售信息",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "橘子 · 出售草稿",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "必付总额",
+            "声明 ¥2,400；猫款 ¥2,400，其余无"
+          ],
+          [
+            "实际关系",
+            "商家发布；本店接待；照护关系待核对"
+          ],
+          [
+            "地点与收款方",
+            "具体场所需确认；收款主体为声明"
+          ],
+          [
+            "健康与资料",
+            "未知、声明、已上传、已核对逐项区分"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "只是预览，尚未发布",
+        "body": "核对退订、争议与责任约定；本稿不执行收款或审核。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "salePublish",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看受理状态示意",
+      "to": "petPending"
+    }
+  },
+  {
+    "id": "offline",
+    "group": "共用状态",
+    "title": "连接暂时中断",
+    "items": [
+      {
+        "type": "empty",
+        "title": "网络没跟上，内容先留着",
+        "body": "已有草稿和阅读位置应保留；缓存内容要显示原更新时间，不能冒充最新。"
+      },
+      {
+        "type": "action",
+        "label": "查看重试后示意",
+        "to": "home",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "继续编辑已有草稿",
+        "to": "composePost",
+        "kind": "quiet"
+      },
+      {
+        "type": "note",
+        "title": "实际客户端待实现",
+        "body": "本稿没有执行联网重试，也不证明离线存储已经实现。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到社区示意",
+      "to": "home"
+    },
+    "tab": null
+  },
+  {
+    "id": "noResults",
+    "group": "共用状态",
+    "title": "没有匹配结果",
+    "items": [
+      {
+        "type": "empty",
+        "title": "这次还没有合适的结果",
+        "body": "可以放宽区域或条件；不把其他城市内容偷偷当成本地结果。"
+      },
+      {
+        "type": "action",
+        "label": "调整筛选",
+        "to": "filter",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "清空条件",
+        "to": "adopt",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到领养列表",
+      "to": "adopt"
+    },
+    "tab": null
+  },
+  {
+    "id": "contentUnavailable",
+    "group": "共用状态",
+    "title": "内容状态已变化",
+    "items": [
+      {
+        "type": "empty",
+        "title": "这条信息暂不可继续",
+        "body": "可能已结束、撤回或受限；不把旧预约、旧地址和旧费用继续当有效信息。"
+      },
+      {
+        "type": "row",
+        "label": "查看已有沟通",
+        "value": "保留必要处理记录",
+        "to": "chat"
+      },
+      {
+        "type": "row",
+        "label": "报告问题或申请复核",
+        "value": "区分内容撤回与处理结论",
+        "to": "report"
+      },
+      {
+        "type": "action",
+        "label": "找找其他领养信息",
+        "to": "adopt",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到社区",
+      "to": "home"
+    },
+    "tab": null
+  },
+  {
+    "id": "permission",
+    "group": "共用状态",
+    "title": "不提供定位也可以",
+    "items": [
+      {
+        "type": "empty",
+        "title": "手动选城市，一样能浏览",
+        "body": "不会因为拒绝定位阻止阅读。精确目击位置也可以手动说明。"
+      },
+      {
+        "type": "row",
+        "label": "武汉",
+        "value": "手动选择城市",
+        "to": "home"
+      },
+      {
+        "type": "row",
+        "label": "上海",
+        "value": "手动选择城市",
+        "to": "homeEmpty"
+      },
+      {
+        "type": "note",
+        "title": "按需请求权限",
+        "body": "只有你选择地图或拍照等动作时再解释原因；拒绝后提供替代。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "提供手动目击线索",
+        "to": "sighting",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "手动选择城市",
+      "to": "city"
+    },
+    "tab": null
+  },
+  {
+    "id": "sightingSent",
+    "group": "互助",
+    "title": "线索已收到",
+    "items": [
+      {
+        "type": "empty",
+        "title": "线索已送出，感谢留意",
+        "body": "这是私密线索发送后的状态示意；不代表已经找到宠物，也不会公开你的原始坐标。"
+      },
+      {
+        "type": "note",
+        "title": "求助状态仍由求助者维护",
+        "body": "提供线索不会获得修改、结束或认领他人求助的权限。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "查看原求助",
+        "value": "事件时间与地点不被你的线索覆盖",
+        "to": "lostDetail"
+      },
+      {
+        "type": "row",
+        "label": "继续站内沟通",
+        "value": "实际产品需保持同一求助上下文",
+        "to": "chat"
+      },
+      {
+        "type": "action",
+        "label": "更正或撤回自己的线索",
+        "to": "privacy",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList"
+    },
+    "tab": null
+  }
+]

@@ -1,0 +1,1673 @@
+{
+  "checkedAt": "2026-10-16",
+  "screenColumns": [
+    "key",
+    "id",
+    "width",
+    "height",
+    "mode",
+    "placeholder",
+    "nodeTypeCounts",
+    "fontFamilies",
+    "contentHeight",
+    "viewportHeight"
+  ],
+  "screens": [
+    [
+      "home",
+      "56:27",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 37,
+        "TEXT": 24,
+        "INSTANCE": 23,
+        "VECTOR": 21
+      },
+      [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      806,
+      676
+    ],
+    [
+      "homeEmpty",
+      "56:28",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 21,
+        "TEXT": 16,
+        "INSTANCE": 18,
+        "VECTOR": 18
+      },
+      [
+        "Noto Sans SC"
+      ],
+      474,
+      676
+    ],
+    [
+      "city",
+      "56:29",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 14,
+        "INSTANCE": 9,
+        "VECTOR": 7
+      },
+      [
+        "Noto Sans SC"
+      ],
+      438,
+      672
+    ],
+    [
+      "search",
+      "56:30",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 15,
+        "TEXT": 13,
+        "INSTANCE": 9,
+        "VECTOR": 6
+      },
+      [
+        "Noto Sans SC"
+      ],
+      344,
+      672
+    ],
+    [
+      "results",
+      "56:31",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 14,
+        "INSTANCE": 11,
+        "VECTOR": 7
+      },
+      [
+        "Noto Sans SC"
+      ],
+      432,
+      672
+    ],
+    [
+      "post",
+      "56:32",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 14,
+        "TEXT": 13,
+        "INSTANCE": 7,
+        "VECTOR": 5
+      },
+      [
+        "Noto Sans SC"
+      ],
+      792,
+      672
+    ],
+    [
+      "composePost",
+      "56:33",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 22,
+        "TEXT": 19,
+        "INSTANCE": 12,
+        "VECTOR": 9
+      },
+      [
+        "Noto Sans SC"
+      ],
+      774,
+      672
+    ],
+    [
+      "postPreview",
+      "56:34",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 13,
+        "TEXT": 11,
+        "INSTANCE": 4,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      606,
+      672
+    ],
+    [
+      "adopt",
+      "56:35",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 25,
+        "TEXT": 23,
+        "INSTANCE": 20,
+        "VECTOR": 14
+      },
+      [
+        "Noto Sans SC"
+      ],
+      658,
+      676
+    ],
+    [
+      "filter",
+      "56:36",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 23,
+        "TEXT": 18,
+        "INSTANCE": 16,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      706,
+      672
+    ],
+    [
+      "detail",
+      "56:37",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 23,
+        "TEXT": 22,
+        "INSTANCE": 10,
+        "VECTOR": 7
+      },
+      [
+        "Noto Sans SC"
+      ],
+      862,
+      672
+    ],
+    [
+      "verify",
+      "56:38",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 18,
+        "INSTANCE": 4,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      562,
+      672
+    ],
+    [
+      "apply",
+      "56:39",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 21,
+        "TEXT": 18,
+        "INSTANCE": 11,
+        "VECTOR": 7
+      },
+      [
+        "Noto Sans SC"
+      ],
+      696,
+      672
+    ],
+    [
+      "applyReview",
+      "56:40",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 18,
+        "INSTANCE": 5,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      482,
+      672
+    ],
+    [
+      "applySent",
+      "56:41",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 12,
+        "INSTANCE": 8,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      504,
+      672
+    ],
+    [
+      "application",
+      "56:42",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 27,
+        "TEXT": 23,
+        "INSTANCE": 7,
+        "VECTOR": 5
+      },
+      [
+        "Noto Sans SC"
+      ],
+      616,
+      672
+    ],
+    [
+      "handover",
+      "56:43",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 19,
+        "TEXT": 19,
+        "INSTANCE": 5,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      524,
+      672
+    ],
+    [
+      "followup",
+      "56:44",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 14,
+        "INSTANCE": 8,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      682,
+      672
+    ],
+    [
+      "withdrawn",
+      "56:45",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 14,
+        "TEXT": 9,
+        "INSTANCE": 5,
+        "VECTOR": 8
+      },
+      [
+        "Noto Sans SC"
+      ],
+      388,
+      672
+    ],
+    [
+      "applicationDecision",
+      "56:46",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 17,
+        "INSTANCE": 6,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      496,
+      672
+    ],
+    [
+      "publishType",
+      "56:47",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 20,
+        "TEXT": 15,
+        "INSTANCE": 11,
+        "VECTOR": 8
+      },
+      [
+        "Noto Sans SC"
+      ],
+      490,
+      672
+    ],
+    [
+      "petBasics",
+      "56:48",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 21,
+        "TEXT": 17,
+        "INSTANCE": 11,
+        "VECTOR": 9
+      },
+      [
+        "Noto Sans SC"
+      ],
+      676,
+      672
+    ],
+    [
+      "petDisclosure",
+      "56:49",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 19,
+        "TEXT": 17,
+        "INSTANCE": 10,
+        "VECTOR": 6
+      },
+      [
+        "Noto Sans SC"
+      ],
+      642,
+      672
+    ],
+    [
+      "petEvidence",
+      "56:50",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 13,
+        "INSTANCE": 6,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      548,
+      672
+    ],
+    [
+      "petPreview",
+      "56:51",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 19,
+        "TEXT": 19,
+        "INSTANCE": 5,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      524,
+      672
+    ],
+    [
+      "petPending",
+      "56:52",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 27,
+        "TEXT": 19,
+        "INSTANCE": 8,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      578,
+      672
+    ],
+    [
+      "myPublishes",
+      "56:53",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 22,
+        "TEXT": 17,
+        "INSTANCE": 12,
+        "VECTOR": 8
+      },
+      [
+        "Noto Sans SC"
+      ],
+      586,
+      672
+    ],
+    [
+      "lostList",
+      "56:54",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 16,
+        "TEXT": 15,
+        "INSTANCE": 11,
+        "VECTOR": 8
+      },
+      [
+        "Noto Sans SC"
+      ],
+      570,
+      672
+    ],
+    [
+      "lostMap",
+      "56:55",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 16,
+        "TEXT": 14,
+        "INSTANCE": 10,
+        "VECTOR": 8
+      },
+      [
+        "Noto Sans SC"
+      ],
+      508,
+      672
+    ],
+    [
+      "lostDetail",
+      "56:56",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 22,
+        "TEXT": 20,
+        "INSTANCE": 7,
+        "VECTOR": 6
+      },
+      [
+        "Noto Sans SC"
+      ],
+      758,
+      672
+    ],
+    [
+      "sighting",
+      "56:57",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 15,
+        "INSTANCE": 8,
+        "VECTOR": 7
+      },
+      [
+        "Noto Sans SC"
+      ],
+      578,
+      672
+    ],
+    [
+      "sightingReview",
+      "56:58",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 16,
+        "INSTANCE": 5,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      416,
+      672
+    ],
+    [
+      "lostPublish",
+      "56:59",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 23,
+        "TEXT": 19,
+        "INSTANCE": 13,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      774,
+      672
+    ],
+    [
+      "lostManage",
+      "56:60",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 20,
+        "TEXT": 16,
+        "INSTANCE": 12,
+        "VECTOR": 8
+      },
+      [
+        "Noto Sans SC"
+      ],
+      556,
+      672
+    ],
+    [
+      "messages",
+      "56:61",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 26,
+        "TEXT": 20,
+        "INSTANCE": 21,
+        "VECTOR": 16
+      },
+      [
+        "Noto Sans SC"
+      ],
+      490,
+      676
+    ],
+    [
+      "chat",
+      "56:62",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 20,
+        "TEXT": 16,
+        "INSTANCE": 10,
+        "VECTOR": 6
+      },
+      [
+        "Noto Sans SC"
+      ],
+      638,
+      672
+    ],
+    [
+      "appointment",
+      "56:63",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 19,
+        "INSTANCE": 5,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      500,
+      672
+    ],
+    [
+      "change",
+      "56:64",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 17,
+        "INSTANCE": 5,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      454,
+      672
+    ],
+    [
+      "report",
+      "56:65",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 14,
+        "INSTANCE": 8,
+        "VECTOR": 7
+      },
+      [
+        "Noto Sans SC"
+      ],
+      544,
+      672
+    ],
+    [
+      "reportReceipt",
+      "56:66",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 12,
+        "INSTANCE": 8,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      504,
+      672
+    ],
+    [
+      "reportProgress",
+      "56:67",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 29,
+        "TEXT": 23,
+        "INSTANCE": 7,
+        "VECTOR": 6
+      },
+      [
+        "Noto Sans SC"
+      ],
+      568,
+      672
+    ],
+    [
+      "appeal",
+      "56:68",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 14,
+        "INSTANCE": 8,
+        "VECTOR": 7
+      },
+      [
+        "Noto Sans SC"
+      ],
+      544,
+      672
+    ],
+    [
+      "publisherResponse",
+      "56:69",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 19,
+        "TEXT": 17,
+        "INSTANCE": 6,
+        "VECTOR": 6
+      },
+      [
+        "Noto Sans SC"
+      ],
+      546,
+      672
+    ],
+    [
+      "login",
+      "56:70",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 15,
+        "TEXT": 13,
+        "INSTANCE": 6,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      478,
+      672
+    ],
+    [
+      "otp",
+      "56:71",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 13,
+        "TEXT": 13,
+        "INSTANCE": 8,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      480,
+      672
+    ],
+    [
+      "otpError",
+      "56:72",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 14,
+        "TEXT": 13,
+        "INSTANCE": 6,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      494,
+      672
+    ],
+    [
+      "mine",
+      "56:73",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 30,
+        "TEXT": 23,
+        "INSTANCE": 24,
+        "VECTOR": 17
+      },
+      [
+        "Noto Sans SC"
+      ],
+      592,
+      676
+    ],
+    [
+      "petProfile",
+      "56:74",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 15,
+        "INSTANCE": 8,
+        "VECTOR": 6
+      },
+      [
+        "Noto Sans SC"
+      ],
+      776,
+      672
+    ],
+    [
+      "settings",
+      "56:75",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 24,
+        "TEXT": 18,
+        "INSTANCE": 15,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      594,
+      672
+    ],
+    [
+      "privacy",
+      "56:76",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 19,
+        "TEXT": 18,
+        "INSTANCE": 6,
+        "VECTOR": 5
+      },
+      [
+        "Noto Sans SC"
+      ],
+      574,
+      672
+    ],
+    [
+      "find",
+      "56:77",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 15,
+        "INSTANCE": 10,
+        "VECTOR": 5
+      },
+      [
+        "Noto Sans SC"
+      ],
+      466,
+      672
+    ],
+    [
+      "saleDetail",
+      "56:78",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 20,
+        "TEXT": 20,
+        "INSTANCE": 6,
+        "VECTOR": 5
+      },
+      [
+        "Noto Sans SC"
+      ],
+      766,
+      672
+    ],
+    [
+      "salePublish",
+      "56:79",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 15,
+        "INSTANCE": 8,
+        "VECTOR": 5
+      },
+      [
+        "Noto Sans SC"
+      ],
+      544,
+      672
+    ],
+    [
+      "salePreview",
+      "56:80",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 17,
+        "INSTANCE": 4,
+        "VECTOR": 4
+      },
+      [
+        "Noto Sans SC"
+      ],
+      714,
+      672
+    ],
+    [
+      "offline",
+      "56:81",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 14,
+        "TEXT": 10,
+        "INSTANCE": 6,
+        "VECTOR": 8
+      },
+      [
+        "Noto Sans SC"
+      ],
+      452,
+      672
+    ],
+    [
+      "noResults",
+      "56:82",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 13,
+        "TEXT": 8,
+        "INSTANCE": 6,
+        "VECTOR": 8
+      },
+      [
+        "Noto Sans SC"
+      ],
+      354,
+      672
+    ],
+    [
+      "contentUnavailable",
+      "56:83",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 17,
+        "TEXT": 11,
+        "INSTANCE": 9,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      450,
+      672
+    ],
+    [
+      "permission",
+      "56:84",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 13,
+        "INSTANCE": 9,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      568,
+      672
+    ],
+    [
+      "sightingSent",
+      "63:1361",
+      390,
+      844,
+      "56:0",
+      false,
+      {
+        "FRAME": 18,
+        "TEXT": 13,
+        "INSTANCE": 9,
+        "VECTOR": 10
+      },
+      [
+        "Noto Sans SC"
+      ],
+      548,
+      672
+    ]
+  ],
+  "imageColumns": [
+    "id",
+    "name",
+    "type",
+    "width",
+    "height"
+  ],
+  "images": [
+    [
+      "I56:284;56:210",
+      "Photo / feed",
+      "FRAME",
+      173,
+      198
+    ],
+    [
+      "I56:294;56:210",
+      "Photo / feed",
+      "FRAME",
+      173,
+      198
+    ],
+    [
+      "I56:289;56:210",
+      "Photo / feed",
+      "FRAME",
+      173,
+      198
+    ],
+    [
+      "I56:299;56:210",
+      "Photo / feed",
+      "FRAME",
+      173,
+      198
+    ],
+    [
+      "I56:556;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "56:592",
+      "Photo / cat / 非真实档案",
+      "FRAME",
+      358,
+      256
+    ],
+    [
+      "56:694",
+      "Photo / cat / 非真实档案",
+      "FRAME",
+      358,
+      240
+    ],
+    [
+      "I58:270;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "I58:276;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "58:414",
+      "Photo / cat / 非真实档案",
+      "FRAME",
+      358,
+      240
+    ],
+    [
+      "I58:519;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "I58:726;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "I60:725;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "I60:833;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "60:1468",
+      "Photo / cat / 非真实档案",
+      "FRAME",
+      358,
+      220
+    ],
+    [
+      "I60:1822;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "60:2315",
+      "Photo / cat / 非真实档案",
+      "FRAME",
+      64,
+      64
+    ],
+    [
+      "60:2425",
+      "Photo / cat / 非真实档案",
+      "FRAME",
+      358,
+      240
+    ],
+    [
+      "I60:2594;56:204",
+      "Photo / pet",
+      "FRAME",
+      96,
+      112
+    ],
+    [
+      "60:2630",
+      "Photo / catOffer / 非真实档案",
+      "FRAME",
+      358,
+      232
+    ],
+    [
+      "60:2724",
+      "Photo / catOffer / 非真实档案",
+      "FRAME",
+      358,
+      220
+    ]
+  ],
+  "totals": {
+    "FRAME": 1141,
+    "TEXT": 954,
+    "INSTANCE": 545,
+    "VECTOR": 451
+  },
+  "missingFonts": [],
+  "wrongFonts": [],
+  "badBounds": [],
+  "badLinks": [],
+  "actionCount": 329,
+  "colors": {
+    "background": {
+      "r": 0.9686274528503418,
+      "g": 0.9725490212440491,
+      "b": 0.9803921580314636,
+      "a": 1
+    },
+    "surface": {
+      "r": 1,
+      "g": 0.9960784316062927,
+      "b": 0.9882352948188782,
+      "a": 1
+    },
+    "subtle": {
+      "r": 0.9411764740943909,
+      "g": 0.9490196108818054,
+      "b": 0.9607843160629272,
+      "a": 1
+    },
+    "ink": {
+      "r": 0.125490203499794,
+      "g": 0.13725490868091583,
+      "b": 0.16078431904315948,
+      "a": 1
+    },
+    "muted": {
+      "r": 0.3803921639919281,
+      "g": 0.40392157435417175,
+      "b": 0.4431372582912445,
+      "a": 1
+    },
+    "brand": {
+      "r": 0.7333333492279053,
+      "g": 0.23529411852359772,
+      "b": 0.09019608050584793,
+      "a": 1
+    },
+    "onBrand": {
+      "r": 1,
+      "g": 0.9960784316062927,
+      "b": 0.9882352948188782,
+      "a": 1
+    },
+    "brandSoft": {
+      "r": 1,
+      "g": 0.9411764740943909,
+      "b": 0.9058823585510254,
+      "a": 1
+    },
+    "success": {
+      "r": 0.09019608050584793,
+      "g": 0.42352941632270813,
+      "b": 0.2862745225429535,
+      "a": 1
+    },
+    "successSoft": {
+      "r": 0.9098039269447327,
+      "g": 0.95686274766922,
+      "b": 0.929411768913269,
+      "a": 1
+    },
+    "warning": {
+      "r": 0.5254902243614197,
+      "g": 0.3294117748737335,
+      "b": 0.03921568766236305,
+      "a": 1
+    },
+    "warningSoft": {
+      "r": 1,
+      "g": 0.9607843160629272,
+      "b": 0.8705882430076599,
+      "a": 1
+    },
+    "danger": {
+      "r": 0.7058823704719543,
+      "g": 0.13725490868091583,
+      "b": 0.19607843458652496,
+      "a": 1
+    },
+    "dangerSoft": {
+      "r": 0.9921568632125854,
+      "g": 0.9333333373069763,
+      "b": 0.9411764740943909,
+      "a": 1
+    },
+    "border": {
+      "r": 0.8784313797950745,
+      "g": 0.8901960849761963,
+      "b": 0.9098039269447327,
+      "a": 1
+    },
+    "controlBorder": {
+      "r": 0.5137255191802979,
+      "g": 0.5411764979362488,
+      "b": 0.5803921818733215,
+      "a": 1
+    },
+    "accent": {
+      "r": 1,
+      "g": 0.5411764979362488,
+      "b": 0.3137255012989044,
+      "a": 1
+    },
+    "onAccent": {
+      "r": 0.18431372940540314,
+      "g": 0.10588235408067703,
+      "b": 0.07450980693101883,
+      "a": 1
+    }
+  },
+  "contrast": [
+    {
+      "fg": "ink",
+      "bg": "background",
+      "ratio": 14.82,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "muted",
+      "bg": "background",
+      "ratio": 5.36,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "muted",
+      "bg": "subtle",
+      "ratio": 5.08,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "brand",
+      "bg": "surface",
+      "ratio": 5.52,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "brand",
+      "bg": "brandSoft",
+      "ratio": 5,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "onAccent",
+      "bg": "accent",
+      "ratio": 7,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "success",
+      "bg": "successSoft",
+      "ratio": 5.67,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "danger",
+      "bg": "dangerSoft",
+      "ratio": 5.78,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "fg": "controlBorder",
+      "bg": "surface",
+      "ratio": 3.46,
+      "target": 3,
+      "pass": true
+    }
+  ],
+  "oldColors": {
+    "14:1": {
+      "background": [
+        0.9647058844566345,
+        0.95686274766922,
+        0.9372549057006836
+      ],
+      "surface": [
+        1,
+        1,
+        1
+      ],
+      "subtle": [
+        0.9333333373069763,
+        0.9254902005195618,
+        0.8980392217636108
+      ],
+      "ink": [
+        0.125490203499794,
+        0.1568627506494522,
+        0.13725490868091583
+      ],
+      "muted": [
+        0.3843137323856354,
+        0.42352941632270813,
+        0.3921568691730499
+      ],
+      "brand": [
+        0.6627451181411743,
+        0.2666666805744171,
+        0.16862745583057404
+      ],
+      "onBrand": [
+        1,
+        1,
+        1
+      ],
+      "brandSoft": [
+        0.9725490212440491,
+        0.9019607901573181,
+        0.8666666746139526
+      ],
+      "success": [
+        0.13725490868091583,
+        0.3607843220233917,
+        0.26274511218070984
+      ],
+      "successSoft": [
+        0.9098039269447327,
+        0.9450980424880981,
+        0.9137254953384399
+      ],
+      "warning": [
+        0.5254902243614197,
+        0.3294117748737335,
+        0.054901961237192154
+      ],
+      "warningSoft": [
+        1,
+        0.9450980424880981,
+        0.8392156958580017
+      ],
+      "danger": [
+        0.6078431606292725,
+        0.20392157137393951,
+        0.2078431397676468
+      ],
+      "dangerSoft": [
+        0.9882352948188782,
+        0.9215686321258545,
+        0.9254902005195618
+      ],
+      "border": [
+        0.8509804010391235,
+        0.8705882430076599,
+        0.843137264251709
+      ],
+      "controlBorder": [
+        0.5372549295425415,
+        0.5843137502670288,
+        0.5490196347236633
+      ]
+    },
+    "14:2": {
+      "background": [
+        0.08627451211214066,
+        0.10588235408067703,
+        0.0941176488995552
+      ],
+      "surface": [
+        0.13333334028720856,
+        0.16470588743686676,
+        0.14509804546833038
+      ],
+      "subtle": [
+        0.1882352977991104,
+        0.23137255012989044,
+        0.20000000298023224
+      ],
+      "ink": [
+        0.9529411792755127,
+        0.9647058844566345,
+        0.9490196108818054
+      ],
+      "muted": [
+        0.7372549176216125,
+        0.772549033164978,
+        0.7411764860153198
+      ],
+      "brand": [
+        0.8980392217636108,
+        0.6392157077789307,
+        0.5529412031173706
+      ],
+      "onBrand": [
+        0.1882352977991104,
+        0.0941176488995552,
+        0.05882352963089943
+      ],
+      "brandSoft": [
+        0.1882352977991104,
+        0.0941176488995552,
+        0.05882352963089943
+      ],
+      "success": [
+        0.658823549747467,
+        0.8235294222831726,
+        0.7215686440467834
+      ],
+      "successSoft": [
+        0.15294118225574493,
+        0.239215686917305,
+        0.1882352977991104
+      ],
+      "warning": [
+        0.9529411792755127,
+        0.7960784435272217,
+        0.5215686559677124
+      ],
+      "warningSoft": [
+        0.1882352977991104,
+        0.23137255012989044,
+        0.20000000298023224
+      ],
+      "danger": [
+        0.9529411792755127,
+        0.6549019813537598,
+        0.6549019813537598
+      ],
+      "dangerSoft": [
+        0.29019609093666077,
+        0.16078431904315948,
+        0.16862745583057404
+      ],
+      "border": [
+        0.2862745225429535,
+        0.3294117748737335,
+        0.2980392277240753
+      ],
+      "controlBorder": [
+        0.7372549176216125,
+        0.772549033164978,
+        0.7411764860153198
+      ]
+    }
+  },
+  "variableCount": 80,
+  "styleCount": 9,
+  "review": {
+    "id": "61:12",
+    "width": 1344,
+    "height": 1406,
+    "reactionCount": 0
+  },
+  "verificationCopyFinalGeometry": {
+    "id": "56:38",
+    "contentHeight": 562,
+    "textWidthsValid": true,
+    "missingFonts": []
+  },
+  "oldLightDarkUnchanged": true,
+  "visualReview": {
+    "all59ScreensContactSheetReviewed": true,
+    "reviewBoard": "mobile-v2-review-preview.png",
+    "contactSheet": "mobile-v2-all-preview.png",
+    "postFixVerification": "mobile-v2-verify-preview.png",
+    "contactSheetNote": "Whole-page composition export precedes the final verification-copy edit; the dedicated verification export is its final view.",
+    "fixes": "Transparent SVG wrapper fills cleared; auxiliary action weight and toolbar alignment refined; adoption note shortened; active navigation shape indicator added; private-sighting receipt separated from case-owner management."
+  },
+  "businessAPIsConnected": false,
+  "nativeSpecsUsed": false,
+  "realDeviceAccessibilityVerified": false
+}

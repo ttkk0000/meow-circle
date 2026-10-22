@@ -1,0 +1,61 @@
+{
+  "createdNodeIds": [],
+  "mutatedNodeIds": [
+    "17:37"
+  ],
+  "removedNodeIds": [],
+  "prototypeLinks": [],
+  "updatedLinks": {
+    "community/nav/社区": "20:16",
+    "community/nav/领养": "20:18",
+    "community/nav/找宠": "20:20",
+    "community/nav/消息": "20:22",
+    "community/nav/我的": "20:24",
+    "adoption/nav/社区": "20:36",
+    "adoption/nav/领养": "20:38",
+    "adoption/nav/找宠": "20:40",
+    "adoption/nav/消息": "20:42",
+    "adoption/nav/我的": "20:44",
+    "find/nav/社区": "20:56",
+    "find/nav/领养": "20:58",
+    "find/nav/找宠": "20:60",
+    "find/nav/消息": "20:62",
+    "find/nav/我的": "20:64",
+    "mine/nav/社区": "20:95",
+    "mine/nav/领养": "20:97",
+    "mine/nav/找宠": "20:99",
+    "mine/nav/消息": "20:101",
+    "mine/nav/我的": "20:103",
+    "community/publish": "20:122",
+    "adoption/detail": "20:151",
+    "find/detail": "20:170",
+    "adoptionDetail/apply": "20:191",
+    "petDetail/appointment": "20:219",
+    "mine/appointment": "20:228",
+    "mine/publish": "20:239",
+    "apply/chat": "21:79",
+    "appointment/chat": "21:110",
+    "change/accept": "21:128",
+    "change/reject": "21:130",
+    "chat/change": "21:144"
+  },
+  "validation": {
+    "descendants": 64,
+    "types": {
+      "TEXT": 35,
+      "FRAME": 11,
+      "RECTANGLE": 7,
+      "INSTANCE": 11
+    },
+    "imageNodes": [],
+    "fontFamilies": [
+      "Noto Sans SC"
+    ],
+    "fontPass": true,
+    "uiRasterPresent": false,
+    "bounds": {
+      "width": 1440,
+      "height": 1142
+    }
+  }
+}

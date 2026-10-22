@@ -1,0 +1,1962 @@
+[
+  {
+    "id": "login",
+    "title": "登录 / 注册",
+    "items": [
+      {
+        "type": "brand",
+        "name": "M&D",
+        "subtitle": "meow & doggie"
+      },
+      {
+        "type": "text",
+        "text": "和毛孩子，一起长大",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "登录后，继续收藏、记录和交流。",
+        "role": "Label",
+        "color": "muted"
+      },
+      {
+        "type": "field",
+        "label": "中国大陆手机号",
+        "value": "请输入手机号",
+        "variable": "authPhone",
+        "tap": "phoneFill",
+        "keyboard": "tel"
+      },
+      {
+        "type": "consent",
+        "key": "authAgree",
+        "text": "我已阅读并同意服务协议与隐私政策"
+      },
+      {
+        "type": "action",
+        "label": "获取验证码",
+        "to": "$phoneSubmit",
+        "kind": "primary",
+        "require": "authAgree"
+      },
+      {
+        "type": "providers",
+        "ios": false
+      },
+      {
+        "type": "action",
+        "label": "密码登录",
+        "to": "authPassword",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "先逛逛",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "module": 6,
+    "back": "$authCancel",
+    "phase": "auth",
+    "platform": 0
+  },
+  {
+    "id": "authIOS",
+    "title": "登录 / 注册",
+    "items": [
+      {
+        "type": "brand",
+        "name": "M&D",
+        "subtitle": "meow & doggie"
+      },
+      {
+        "type": "text",
+        "text": "和毛孩子，一起长大",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "登录后，继续收藏、记录和交流。",
+        "role": "Label",
+        "color": "muted"
+      },
+      {
+        "type": "field",
+        "label": "中国大陆手机号",
+        "value": "请输入手机号",
+        "variable": "authPhone",
+        "tap": "phoneFill",
+        "keyboard": "tel"
+      },
+      {
+        "type": "consent",
+        "key": "authAgree",
+        "text": "我已阅读并同意服务协议与隐私政策"
+      },
+      {
+        "type": "action",
+        "label": "获取验证码",
+        "to": "$phoneSubmit",
+        "kind": "primary",
+        "require": "authAgree"
+      },
+      {
+        "type": "providers",
+        "ios": true
+      },
+      {
+        "type": "action",
+        "label": "密码登录",
+        "to": "authPassword",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "先逛逛",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "module": 6,
+    "back": "$authCancel",
+    "phase": "auth",
+    "platform": 1
+  },
+  {
+    "id": "authKnown",
+    "title": "欢迎回来",
+    "items": [
+      {
+        "type": "profile",
+        "name": "布丁的铲屎官",
+        "subtitle": "上次使用微信登录"
+      },
+      {
+        "type": "note",
+        "title": "继续使用同一账号",
+        "body": "宠物、日记、收藏和聊天都会保留。",
+        "tone": "subtle"
+      },
+      {
+        "type": "consent",
+        "key": "authAgree",
+        "text": "我已阅读并同意服务协议与隐私政策"
+      },
+      {
+        "type": "providers",
+        "ios": true
+      },
+      {
+        "type": "action",
+        "label": "换用手机号",
+        "to": "login",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "module": 6,
+    "phase": "auth",
+    "onEnter": {
+      "authExisting": 1
+    }
+  },
+  {
+    "id": "authPhoneError",
+    "title": "请检查手机号",
+    "items": [
+      {
+        "type": "text",
+        "text": "手机号还没有填完整",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "field",
+        "label": "中国大陆手机号",
+        "value": "138 00",
+        "error": true,
+        "hint": "请填写可接收短信的完整手机号。",
+        "variable": "authPhone",
+        "tap": "phoneFill"
+      },
+      {
+        "type": "consent",
+        "key": "authAgree",
+        "text": "我已阅读并同意服务协议与隐私政策"
+      },
+      {
+        "type": "action",
+        "label": "重新获取验证码",
+        "to": "$phoneSubmit",
+        "kind": "primary",
+        "require": "authAgree"
+      },
+      {
+        "type": "action",
+        "label": "换个登录方式",
+        "to": "$authLanding",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "otp",
+    "title": "输入验证码",
+    "items": [
+      {
+        "type": "text",
+        "text": "验证码已发送",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "接收号码：138 **** 0000",
+        "role": "Label",
+        "color": "muted"
+      },
+      {
+        "type": "otp",
+        "variable": "authCode",
+        "tap": "codeFill"
+      },
+      {
+        "type": "text",
+        "text": "请填写短信中的6位验证码。",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "row",
+        "label": "更换手机号",
+        "value": "保留刚才的操作",
+        "to": "$authLanding"
+      },
+      {
+        "type": "row",
+        "label": "重新发送",
+        "value": "倒计时结束后可重发",
+        "to": "authCodeResent"
+      }
+    ],
+    "footer": {
+      "label": "验证并继续",
+      "to": "$otpSubmit"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authCodeResent",
+    "title": "验证码已重发",
+    "items": [
+      {
+        "type": "text",
+        "text": "请留意新的短信",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "138 **** 0000",
+        "role": "Strong",
+        "color": "ink"
+      },
+      {
+        "type": "otp",
+        "variable": "authCode",
+        "tap": "codeFill"
+      },
+      {
+        "type": "note",
+        "title": "使用最新验证码",
+        "body": "旧验证码不再使用；不要向他人提供验证码。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "更换登录方式",
+        "to": "$authLanding",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "验证并继续",
+      "to": "$otpSubmit"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "otp"
+  },
+  {
+    "id": "otpError",
+    "title": "验证码不正确",
+    "items": [
+      {
+        "type": "text",
+        "text": "验证码不正确",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "请检查刚才输入的6位数字，号码和返回位置已保留。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重新输入",
+      "to": "otp"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authCodeExpired",
+    "title": "验证码已过期",
+    "items": [
+      {
+        "type": "text",
+        "text": "验证码已过期",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "重新获取后填写最新验证码，无需重新开始刚才的操作。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重新获取",
+      "to": "authCodeResent"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authSmsDelayed",
+    "title": "暂时没有收到短信",
+    "items": [
+      {
+        "type": "text",
+        "text": "暂时没有收到短信",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "检查号码和短信收件箱，也可以换用微信、QQ或Apple登录。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回填写",
+      "to": "otp"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authRateLimited",
+    "title": "操作有些频繁",
+    "items": [
+      {
+        "type": "text",
+        "text": "操作有些频繁",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "请稍后再试。你也可以选择其他登录方式，刚才的内容会保留。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "换个方式",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authNetworkError",
+    "title": "连接暂时中断",
+    "items": [
+      {
+        "type": "text",
+        "text": "连接暂时中断",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "尚未完成登录，请检查网络后继续。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重新尝试",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authProviderUnavailable",
+    "title": "暂时无法使用这种方式",
+    "items": [
+      {
+        "type": "text",
+        "text": "暂时无法使用这种方式",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "检查对应应用是否可用，也可以改用手机号或其他方式。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "选择其他方式",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authProviderCancelled",
+    "title": "已取消授权",
+    "items": [
+      {
+        "type": "text",
+        "text": "已取消授权",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "你还没有登录，刚才正在看的页面和可保留的草稿仍在。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回登录",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authCallbackExpired",
+    "title": "授权已失效",
+    "items": [
+      {
+        "type": "text",
+        "text": "授权已失效",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "请重新发起授权，这次不会重复创建账号。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重新登录",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authSessionExpired",
+    "title": "登录状态已过期",
+    "items": [
+      {
+        "type": "text",
+        "text": "登录状态已过期",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "可以继续",
+        "body": "重新登录后返回当前任务，草稿不会自动提交。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回刚才的页面",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重新登录",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth",
+    "back": "$authLanding"
+  },
+  {
+    "id": "authProvider_wechat",
+    "title": "通过微信登录",
+    "items": [
+      {
+        "type": "providerHero",
+        "provider": "wechat"
+      },
+      {
+        "type": "text",
+        "text": "正在等待微信授权",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "请在授权页面确认允许的信息。完成后会回到M&D。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消本次登录",
+        "to": "authProviderCancelled",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回 M&D",
+      "to": "$authCallback"
+    },
+    "module": 6,
+    "phase": "auth",
+    "provider": "微信",
+    "back": "authProviderCancelled"
+  },
+  {
+    "id": "authProvider_qq",
+    "title": "通过QQ登录",
+    "items": [
+      {
+        "type": "providerHero",
+        "provider": "qq"
+      },
+      {
+        "type": "text",
+        "text": "正在等待QQ授权",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "请在授权页面确认允许的信息。完成后会回到M&D。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消本次登录",
+        "to": "authProviderCancelled",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回 M&D",
+      "to": "$authCallback"
+    },
+    "module": 6,
+    "phase": "auth",
+    "provider": "QQ",
+    "back": "authProviderCancelled"
+  },
+  {
+    "id": "authProvider_apple",
+    "title": "通过Apple登录",
+    "items": [
+      {
+        "type": "providerHero",
+        "provider": "apple"
+      },
+      {
+        "type": "text",
+        "text": "正在等待Apple授权",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "请在授权页面确认允许的信息。完成后会回到M&D。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "邮箱由你决定",
+        "body": "可在系统授权页选择隐藏邮箱。昵称和头像可以稍后完善。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消本次登录",
+        "to": "authProviderCancelled",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回 M&D",
+      "to": "$authCallback"
+    },
+    "module": 6,
+    "phase": "auth",
+    "provider": "Apple",
+    "back": "authProviderCancelled"
+  },
+  {
+    "id": "authFirst",
+    "title": "欢迎使用 M&D",
+    "items": [
+      {
+        "type": "brand",
+        "name": "M&D",
+        "subtitle": "meow & doggie"
+      },
+      {
+        "type": "text",
+        "text": "你的毛孩子日常，从这里开始",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "登录方式",
+            "",
+            "authProvider"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "首次使用",
+        "body": "继续将创建一个M&D账号。昵称、头像和宠物资料都可以稍后补充。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "我有账号，去关联",
+        "to": "authLinkExisting",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "继续并创建账号",
+      "to": "authSuccess",
+      "sets": {
+        "authLoggedIn": 1
+      }
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authSuccess",
+    "title": "登录成功",
+    "items": [
+      {
+        "type": "profile",
+        "name": "布丁的铲屎官",
+        "subtitle": "欢迎回来"
+      },
+      {
+        "type": "text",
+        "text": "继续刚才的事情",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "内容已保留",
+        "body": "你可以检查草稿后再发送或发布，不会自动完成上一步。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回并继续",
+      "to": "$authReturn"
+    },
+    "module": 6,
+    "phase": "auth",
+    "onEnter": {
+      "authLoggedIn": 1
+    }
+  },
+  {
+    "id": "authProfileOptional",
+    "title": "设置你的资料",
+    "items": [
+      {
+        "type": "profile",
+        "name": "新宠友",
+        "subtitle": "头像与昵称可随时修改"
+      },
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "新宠友"
+      },
+      {
+        "type": "row",
+        "label": "选择头像",
+        "value": "只读取你主动选择的照片",
+        "to": "mediaChoose"
+      },
+      {
+        "type": "action",
+        "label": "稍后再说",
+        "to": "authSuccess",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存并继续",
+      "to": "authSuccess"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authLinkExisting",
+    "title": "关联已有账号",
+    "items": [
+      {
+        "type": "text",
+        "text": "把资料留在原来的账号",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "验证你已有的M&D账号",
+        "body": "关联后继续使用原有宠物、日记和聊天，不按昵称或头像自动合并。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "原账号手机号",
+        "value": "138 **** 0000"
+      },
+      {
+        "type": "field",
+        "label": "验证码",
+        "value": "••••••"
+      },
+      {
+        "type": "action",
+        "label": "使用原账号密码验证",
+        "to": "authPassword",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "验证原账号",
+      "to": "authLinkConfirm"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authLinkConfirm",
+    "title": "确认账号关联",
+    "items": [
+      {
+        "type": "profile",
+        "name": "布丁的铲屎官",
+        "subtitle": "138 **** 0000"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "将关联的方式",
+            "",
+            "authProvider"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "只关联登录方式",
+        "body": "不会覆盖原有宠物、日记、群和历史消息。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消关联",
+        "to": "$authLanding",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认关联",
+      "to": "$bindAndContinue"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authConflict",
+    "title": "这个登录方式已有关联",
+    "items": [
+      {
+        "type": "text",
+        "text": "先确认你要使用的账号",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "不会覆盖任何资料",
+        "body": "这个方式已关联另一个M&D账号。请使用原方式登录，或通过账号恢复获得帮助。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "返回当前账号",
+        "to": "authAccounts",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "账号恢复帮助",
+        "to": "authRecovery",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "用其他方式登录",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authPassword",
+    "title": "密码登录",
+    "items": [
+      {
+        "type": "field",
+        "label": "手机号或用户名",
+        "value": "请输入已有账号"
+      },
+      {
+        "type": "field",
+        "label": "密码",
+        "value": "••••••••"
+      },
+      {
+        "type": "row",
+        "label": "忘记密码",
+        "value": "验证后设置新密码",
+        "to": "authPasswordRecovery"
+      },
+      {
+        "type": "action",
+        "label": "改用验证码",
+        "to": "$authLanding",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "登录",
+      "to": "authSuccess",
+      "sets": {
+        "authLoggedIn": 1
+      }
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authPasswordRecovery",
+    "title": "找回密码",
+    "items": [
+      {
+        "type": "field",
+        "label": "账号手机号",
+        "value": "138 **** 0000"
+      },
+      {
+        "type": "field",
+        "label": "短信验证码",
+        "value": "••••••"
+      },
+      {
+        "type": "note",
+        "title": "保护原账号",
+        "body": "验证通过后仅重设密码，不新建账号。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "原手机号不可用",
+        "to": "authRecovery",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "验证并重设",
+      "to": "authPasswordReset"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authPasswordReset",
+    "title": "设置新密码",
+    "items": [
+      {
+        "type": "field",
+        "label": "新密码",
+        "value": "输入新密码"
+      },
+      {
+        "type": "field",
+        "label": "再次确认",
+        "value": "再次输入新密码"
+      },
+      {
+        "type": "note",
+        "title": "下次登录",
+        "body": "可以继续使用已关联的快捷登录或新密码。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保存新密码",
+      "to": "authPasswordDone"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authPasswordDone",
+    "title": "密码已更新",
+    "items": [
+      {
+        "type": "text",
+        "text": "原来的资料都在",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "重新登录",
+        "body": "使用新密码或已关联的方式，回到刚才的页面。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回登录",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authRestricted",
+    "title": "账号暂时受限",
+    "items": [
+      {
+        "type": "text",
+        "text": "部分操作暂时不可用",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "影响范围",
+            "发布与发起新私信"
+          ],
+          [
+            "状态",
+            "等待复核"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "你可以查看与补充说明",
+        "body": "限制不等于事实结论。已有记录按权限保留。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "查看处理与申诉",
+        "value": "提交必要说明",
+        "to": "appeal"
+      }
+    ],
+    "footer": {
+      "label": "继续浏览",
+      "to": "home"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authPhoneSupplement",
+    "title": "验证手机号",
+    "items": [
+      {
+        "type": "text",
+        "text": "继续这次操作前验证",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "用于本次功能",
+        "body": "验证不会公开你的手机号，也不会改变内容受众或开启通知。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "手机号",
+        "value": "138 **** 0000"
+      },
+      {
+        "type": "field",
+        "label": "验证码",
+        "value": "••••••"
+      },
+      {
+        "type": "action",
+        "label": "暂不验证",
+        "to": "$authCancel",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "验证并回到任务",
+      "to": "$authReturn"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authAccounts",
+    "title": "账号与登录方式",
+    "items": [
+      {
+        "type": "profile",
+        "name": "布丁的铲屎官",
+        "subtitle": "同一个M&D账号"
+      },
+      {
+        "type": "row",
+        "label": "手机号",
+        "value": "138 **** 0000",
+        "to": "authChangePhone"
+      },
+      {
+        "type": "row",
+        "label": "微信",
+        "value": "未关联",
+        "to": "$bindWechat",
+        "variable": "wechatStatus"
+      },
+      {
+        "type": "row",
+        "label": "QQ",
+        "value": "未关联",
+        "to": "$bindQQ",
+        "variable": "qqStatus"
+      },
+      {
+        "type": "row",
+        "label": "Apple",
+        "value": "未关联",
+        "to": "$bindApple",
+        "variable": "appleStatus"
+      },
+      {
+        "type": "row",
+        "label": "密码与恢复",
+        "value": "更新密码或恢复登录",
+        "to": "authPasswordRecovery"
+      },
+      {
+        "type": "row",
+        "label": "退出当前账号",
+        "value": "保留公共浏览",
+        "to": "authLogoutConfirm"
+      }
+    ],
+    "footer": {
+      "label": "返回设置",
+      "to": "settings"
+    },
+    "module": 6,
+    "phase": "account",
+    "back": "settings"
+  },
+  {
+    "id": "authBindConfirm",
+    "title": "关联登录方式",
+    "items": [
+      {
+        "type": "profile",
+        "name": "布丁的铲屎官",
+        "subtitle": "当前账号"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "将关联的方式",
+            "",
+            "authProvider"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "确认是你本人的账号",
+        "body": "下次可用此方式登录同一个M&D账号。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "暂不关联",
+        "to": "authAccounts",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认关联",
+      "to": "$bindAccount"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authUnbindConfirm",
+    "title": "解除登录关联",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "登录方式",
+            "",
+            "authProvider"
+          ],
+          [
+            "其他可用方式",
+            "138 **** 0000（已验证）"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "解除后会怎样",
+        "body": "此方式将不能登录当前账号，资料和其他已关联方式保留。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "保留关联",
+        "to": "authAccounts",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认解除",
+      "to": "$unbindAccount",
+      "kind": "secondary"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authLastMethod",
+    "title": "先保留一种登录方式",
+    "items": [
+      {
+        "type": "text",
+        "text": "避免无法再登录",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "这是最后一种可用方式",
+        "body": "先关联并验证手机号或另一种方式，再解除当前关联。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "返回账号设置",
+        "to": "authAccounts",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "添加其他方式",
+      "to": "authChangePhone"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authChangePhone",
+    "title": "更换手机号",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "当前号码",
+            "138 **** 0000"
+          ]
+        ]
+      },
+      {
+        "type": "field",
+        "label": "当前号码验证码",
+        "value": "••••••"
+      },
+      {
+        "type": "note",
+        "title": "只更新登录号码",
+        "body": "宠物、日记和聊天仍属于这个M&D账号。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "旧号码已不能使用",
+        "to": "authRecovery",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "验证并填写新号码",
+      "to": "authNewPhone"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authNewPhone",
+    "title": "验证新手机号",
+    "items": [
+      {
+        "type": "field",
+        "label": "新的手机号",
+        "value": "139 **** 0000"
+      },
+      {
+        "type": "field",
+        "label": "验证码",
+        "value": "••••••"
+      },
+      {
+        "type": "note",
+        "title": "确认号码可用",
+        "body": "验证新号码后，旧号码不再用于当前账号登录。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "确认更换",
+      "to": "authPhoneChanged"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authPhoneChanged",
+    "title": "手机号已更新",
+    "items": [
+      {
+        "type": "text",
+        "text": "已更新为139 **** 0000",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "账号没有变",
+        "body": "你仍可使用已关联的微信、QQ或Apple登录。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回账号设置",
+      "to": "authAccounts"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authRecovery",
+    "title": "恢复账号访问",
+    "items": [
+      {
+        "type": "field",
+        "label": "原账号",
+        "value": "手机号或M&D账号"
+      },
+      {
+        "type": "field",
+        "label": "可联系你的方式",
+        "value": "仅用于本次恢复"
+      },
+      {
+        "type": "field",
+        "label": "情况说明",
+        "value": "简要说明原号码或登录方式为什么不可用"
+      },
+      {
+        "type": "note",
+        "title": "保护你的资料",
+        "body": "不会因相同昵称、头像或邮箱直接合并账号。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "提交恢复申请",
+      "to": "authRecoveryPending"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authRecoveryPending",
+    "title": "恢复申请已收到",
+    "items": [
+      {
+        "type": "text",
+        "text": "请保留回执",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "回执",
+            "MND-R-001"
+          ],
+          [
+            "状态",
+            "待核对"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "下一步",
+        "body": "按你提供的方式联系或在此补充必要信息，原资料不会被新账号覆盖。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "补充恢复信息",
+        "value": "只用于本次申请",
+        "to": "authRecovery"
+      }
+    ],
+    "footer": {
+      "label": "继续公开浏览",
+      "to": "home"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authLogoutConfirm",
+    "title": "退出当前账号",
+    "items": [
+      {
+        "type": "note",
+        "title": "退出后",
+        "body": "可继续浏览公开内容。当前账号的私密内容将从本机隐藏，草稿按账号保留。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "继续使用",
+        "to": "settings",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认退出",
+      "to": "authLoggedOut",
+      "sets": {
+        "authLoggedIn": 0
+      }
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authLoggedOut",
+    "title": "已退出登录",
+    "items": [
+      {
+        "type": "text",
+        "text": "随时回来，继续记录",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "重新登录",
+        "to": "$authLanding",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "先逛逛",
+      "to": "home"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authDeleteImpact",
+    "title": "注销账号前",
+    "items": [
+      {
+        "type": "text",
+        "text": "请确认你了解这些影响",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "宠物与日记",
+            "公开范围及保留方式将在处理结果中说明"
+          ],
+          [
+            "未完成事项",
+            "申请、求助和协作关系需受控处理"
+          ],
+          [
+            "必要历史",
+            "争议与审计所需记录按规则受限保留"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "查看未完成事项",
+        "value": "先了解影响，不会自动结案",
+        "to": "authActiveTasks"
+      },
+      {
+        "type": "consent",
+        "key": "deleteAgree",
+        "text": "我已了解注销影响，并确认提交申请"
+      }
+    ],
+    "footer": {
+      "label": "继续验证身份",
+      "to": "authDeleteVerify",
+      "require": "deleteAgree"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authActiveTasks",
+    "title": "账号中的未完成事项",
+    "items": [
+      {
+        "type": "row",
+        "label": "小满的走失求助",
+        "value": "查看维护或授权安排",
+        "to": "lostFromPetManage"
+      },
+      {
+        "type": "row",
+        "label": "领养沟通与约见",
+        "value": "查看当前申请",
+        "to": "application"
+      },
+      {
+        "type": "note",
+        "title": "不会自动确认任何结果",
+        "body": "提交注销不会把求助标成找回，也不会代替双方确认交接。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回注销说明",
+      "to": "authDeleteImpact"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authDeleteVerify",
+    "title": "确认本人操作",
+    "items": [
+      {
+        "type": "field",
+        "label": "已验证手机号",
+        "value": "138 **** 0000"
+      },
+      {
+        "type": "field",
+        "label": "验证码",
+        "value": "••••••"
+      },
+      {
+        "type": "action",
+        "label": "换用已关联方式验证",
+        "to": "authAccounts",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "提交注销申请",
+      "to": "authDeleteProcessing"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authDeleteProcessing",
+    "title": "注销申请处理中",
+    "items": [
+      {
+        "type": "text",
+        "text": "申请已受理",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "回执",
+            "MND-D-001"
+          ],
+          [
+            "当前状态",
+            "处理中"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "可在此查看结果",
+        "body": "不会把尚未处理完成显示为已全部删除。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "查看处理进度",
+        "value": "保留必要回执",
+        "to": "authDeleteStatus"
+      }
+    ],
+    "footer": {
+      "label": "返回公开浏览",
+      "to": "home"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authDeleteStatus",
+    "title": "注销处理结果",
+    "items": [
+      {
+        "type": "text",
+        "text": "账号注销已完成",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "回执",
+            "MND-D-001"
+          ],
+          [
+            "登录方式",
+            "已解除账号关联"
+          ],
+          [
+            "保留说明",
+            "必要记录仍受限，不对外公开"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "今后使用",
+        "body": "再次使用须重新创建或登录其他账号。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "浏览公开内容",
+      "to": "home"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authDeleteFailure",
+    "title": "注销暂未完成",
+    "items": [
+      {
+        "type": "text",
+        "text": "你的申请没有丢失",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "请重试或查看进度",
+        "body": "当前仍在受控处理中，不重复创建申请。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "row",
+        "label": "查看原回执",
+        "value": "MND-D-001",
+        "to": "authDeleteProcessing"
+      }
+    ],
+    "footer": {
+      "label": "安全重试",
+      "to": "authDeleteProcessing"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authRevoked",
+    "title": "登录授权已失效",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "受影响方式",
+            "",
+            "authProvider"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "可重新授权",
+        "body": "也可使用当前账号其他已验证方式，已有资料不会因此删除。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择其他方式",
+        "to": "$authLanding",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "重新授权",
+      "to": "$providerRetry"
+    },
+    "module": 6,
+    "phase": "account"
+  },
+  {
+    "id": "authReturnUnavailable",
+    "title": "原内容暂不可访问",
+    "items": [
+      {
+        "type": "text",
+        "text": "你已成功登录",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "内容可能已更新",
+        "body": "原内容已失效或访问范围变化。可保留的草稿仍在，不会自动提交。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "查看自己的草稿",
+        "value": "继续编辑前确认范围",
+        "to": "circleCompose"
+      }
+    ],
+    "footer": {
+      "label": "回到社区",
+      "to": "home"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authTerms",
+    "title": "服务协议与隐私",
+    "items": [
+      {
+        "type": "row",
+        "label": "服务协议",
+        "value": "账号、内容和社区规则",
+        "to": "authTermsDetails"
+      },
+      {
+        "type": "row",
+        "label": "隐私与数据说明",
+        "value": "用途、授权和资料控制",
+        "to": "privacy"
+      },
+      {
+        "type": "row",
+        "label": "第三方登录说明",
+        "value": "微信、QQ与Apple授权范围",
+        "to": "authSDKInfo"
+      }
+    ],
+    "footer": {
+      "label": "返回登录",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authTermsDetails",
+    "title": "M&D 服务协议",
+    "items": [
+      {
+        "type": "text",
+        "text": "使用前先了解",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "账号",
+            "本人使用并保护可用的登录方式"
+          ],
+          [
+            "内容与互动",
+            "遵守发布范围，尊重他人资料与权利"
+          ],
+          [
+            "退出与申诉",
+            "账号、内容和处理结果有对应入口"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "设计评审说明",
+        "body": "此为协议阅读位置与排版示例，正式协议需与实际服务流程一致。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回协议入口",
+      "to": "authTerms"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authSDKInfo",
+    "title": "第三方登录说明",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "微信 / QQ",
+            "仅处理本次授权返回的账号标识和你允许的资料"
+          ],
+          [
+            "Apple",
+            "支持隐藏邮箱，昵称和头像可稍后补充"
+          ],
+          [
+            "不会顺带做的事",
+            "不读取通讯录，不默认公开手机号或位置"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "管理已关联方式",
+        "value": "登录后可在账号设置中调整",
+        "to": "authAccounts"
+      }
+    ],
+    "footer": {
+      "label": "返回登录",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authIntentReview",
+    "title": "登录后回到哪里",
+    "items": [
+      {
+        "type": "row",
+        "label": "继续领养申请",
+        "value": "小满 · 检查共享范围",
+        "to": "login",
+        "sets": {
+          "authReturn": 1,
+          "authLoggedIn": 0
+        }
+      },
+      {
+        "type": "row",
+        "label": "继续圈子草稿",
+        "value": "保留宠物、文字和受众",
+        "to": "login",
+        "sets": {
+          "authReturn": 2,
+          "authLoggedIn": 0
+        }
+      },
+      {
+        "type": "row",
+        "label": "继续私信",
+        "value": "回原会话，不自动发送",
+        "to": "authIOS",
+        "sets": {
+          "authReturn": 4,
+          "authPlatform": 1,
+          "authLoggedIn": 0
+        }
+      },
+      {
+        "type": "row",
+        "label": "继续走失求助",
+        "value": "状态和公开同意分别确认",
+        "to": "login",
+        "sets": {
+          "authReturn": 6,
+          "authLoggedIn": 0
+        }
+      },
+      {
+        "type": "row",
+        "label": "继续附近提醒",
+        "value": "登录不会自动开启订阅",
+        "to": "login",
+        "sets": {
+          "authReturn": 7,
+          "authLoggedIn": 0
+        }
+      }
+    ],
+    "footer": {
+      "label": "返回评审入口",
+      "to": "completionHub"
+    },
+    "module": 6,
+    "phase": "review"
+  }
+]

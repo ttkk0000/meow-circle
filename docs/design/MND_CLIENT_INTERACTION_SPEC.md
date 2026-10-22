@@ -1,10 +1,14 @@
 # M&D 客户端交互交接索引
 
-更新：2026-10-15｜状态：拟实施交互摘要
+2026-10-20实施规划入口：[客户端代码完成标准](../client/README.md)。新目标为KMP共享逻辑、Android与iOS各自Compose UI、分别适配Android平板与iPad；Web独立TypeScript，Desktop延续Compose Desktop。当前默认使用最新手机设计主题，旧多主题仅预留参考；下文旧主题／导航摘要不作为新实施时覆盖最新手机稿的依据。第一批移动端源码已有交接，完整功能与运行仍未完成，本轮完善内容和设计不等于服务已经接通。
+
+更新：2026-10-19｜状态：拟实施交互摘要
 
 完整需求：[PRD](../bmad/prd.md)｜完整页面：[UX 规格](../bmad/ux-design.md)｜规则：[真实性与披露规范](MND_TRUST_AND_DISCLOSURE_SPEC.md)
 
 本文取代旧版 Sugar/crimson、全卡片 8dp、三模式和用品交易主线的交互指令。当前代码尚未完成本版迁移，不将本文视为已实现能力。
+
+2026-10-19手机设计已补：[本轮Figma评审与覆盖追踪](figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)。手机号／微信／QQ／iPhone Apple、账号、好友确认、拾获认领、预约交接、角色权限及异常已进入原生稿。输入和服务仍为固定样例；用户确认Figma后再实施客户端，不把设计状态当作运行能力。
 
 ## 页面与业务合同
 
@@ -32,14 +36,14 @@ Web、Expo、KMP Android、KMP Desktop 使用同一业务合同。服务端校�
 
 ## 视觉与可访问性
 
-沿用[UI 对齐指南](MND_UI_ALIGNMENT_GUIDE.md)和 Stitch V2。主题为 Honey、Mint、Night、Neutral，Sugar 仅兼容别名。消费者卡 16px、Neutral 卡 8px、按钮/输入 12px；不继续执行旧版“一律 8dp”。
+新移动端与本轮跨端设计沿用已批准Figma V2默认浅色，Noto Sans SC／Manrope、16px卡片／输入、48高／24圆角主次按钮，见[默认视觉与适配](../client/DESIGN_AND_ACCEPTANCE.md)。旧Stitch四主题只按未迁移旧端范围保留，不覆盖新入口。
 
-关键文字保证对比度；48dp/44pt 原生目标；Web 关键触控区按项目 44px 目标；label、错误关联、键盘焦点、读屏状态、字体放大与 reduced-motion 见完整 UX 规格。
+关键文字保证对比度；本轮设计控件按至少48的触控目标，原生系统规范与实际Insets分别核验；label、错误关联、键盘焦点、读屏状态、字体放大与 reduced-motion 见完整 UX 规格。
 
 ## 开发前检查
 
 1. 看[流程总览](flows/index.html)，确认任务、异常和退出路径。
-2. 逐屏映射已有 Stitch 组件，新导航仍是方案而非远程设计事实。
+2. 使用[当前Figma目录](MND_FIGMA_DESIGN_DOCUMENT.md)和[安全生命周期合同](MND_SAFETY_AND_LIFECYCLE_SPEC.md)逐屏映射已批准组件，普通改约／风险暂停、年龄资格与待实现服务分别记录；不恢复旧导航或主题。
 3. 确认旧模式、申请、订单和认证存储迁移，保留用户记录。
 4. 将每个操作绑定 PRD 的权限、状态与版本规则。
 5. 按全局规则做允许的静态检查；构建、运行、设备结果不得未经执行宣称通过。

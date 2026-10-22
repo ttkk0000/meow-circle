@@ -1,0 +1,1490 @@
+{
+  "module": "auth",
+  "start": 0,
+  "polish": {
+    "pageId": "295:2",
+    "createdNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "createdNodeIdsByPrefix": {
+      "331": {
+        "start": 299831,
+        "deltaBase36": "2.19.q.12.q.1.1.g.q.1.1.15.l.2.15.q.y.q.1.1.c.q.1.1.11.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.1b.q.14.q.1.1.i.q.1.1.17.l.2.19.q.12.q.1.1.g.q.1.1.15.l.2.14.q.x.q.1.1.b.q.1.1.10.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.14.q.x.q.1.1.b.q.1.1.10"
+      }
+    },
+    "mutatedNodeIdsByPrefix": {
+      "317": {
+        "start": 203716,
+        "deltaBase36": "1.11.2.1.v.2.1.3.2.2.1.1.6.1.5.2.1.3.l.1.1.1.1.1.2.1a.1.v.2.1.3.2.2.1.1.6.1.5.2.1.3.l.1.1.1.2.1b.1.3.2.2.1.1.6.1.5.2.1.3.l.1.1.1.2.1a.1.v.2.1.3.2.2.1.1.6.1.5.2.1.3.n.1.11.2.1.v.2.1.3.2.4.1.3.1.2.2.2.2.2.v.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.3.1.2.2.2.2.2.v.1.1.1.2.1b.1.3.2.4.1.3.1.2.2.2.2.2.v.1.1.1.2.1a.1.v.2.1.3.2.4.1.3.1.2.2.2.2.2.x.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.v7.1.11.2.1.v.2.1.3.2.2.1.1.6.1.5.2.1.3.3.n.1.1.1.1.1.2.1a.1.v.2.1.3.2.2.1.1.6.1.5.2.1.3.3.n.1.1.1.2.1b.1.3.2.2.1.1.6.1.5.2.1.3.3.n.1.1.1.2.1a.1.v.2.1.3.2.2.1.1.6.1.5.2.1.3.3.p.1.11.2.1.v.2.1.3.2.2.1.1.2.3.3.1.4.2.1.3.3.d.1.1.1.1.1.2.1a.1.v.2.1.3.2.2.1.1.2.3.3.1.4.2.1.3.3.d.1.1.1.2.1b.1.3.2.2.1.1.2.3.3.1.4.2.1.3.3.d.1.1.1.2.1a.1.v.2.1.3.2.2.1.1.2.3.3.1.4.2.1.3.3.f.1.11.2.1.v.2.1.3.2.2.1.4.1.h.1.1.1.1.1.2.1a.1.v.2.1.3.2.2.1.4.1.h.1.1.1.2.1b.1.3.2.2.1.4.1.h.1.1.1.2.1a.1.v.2.1.3.2.2.1.4.1.j.1.11.2.1.v.2.1.3.2.4.1.3.1.2.2.2.2.2.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.3.1.2.2.2.2.2.2.5.1.1.1.2.1b.1.3.2.4.1.3.1.2.2.2.2.2.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.3.1.2.2.2.2.2.2.7.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.7.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.7.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.7.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.7.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.7.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.7.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.7.1.11.2.1.v.2.1.3.2.4.1.2.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.1.1.2.1b.1.3.2.4.1.2.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.7.1.11.2.1.v.2.1.3.2.4.1.1.8.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.1.8.1.1.1.2.1b.1.3.2.4.1.1.8.1.1.1.2.1a.1.v.2.1.3.2.4.1.1"
+      }
+    },
+    "removedNodeIds": [],
+    "counts": {
+      "styles": 352,
+      "spacing": 2444,
+      "footers": 0,
+      "backTargets": 64,
+      "publishEntries": 64
+    }
+  },
+  "restored": {
+    "codec": "prefix-start-base36-delta-v1",
+    "restoredNodeIdsByPrefix": {
+      "311": {
+        "start": 379860,
+        "deltaBase36": "1.1.1.h.1.1.1.1.1.1.1.15.1.1.1"
+      },
+      "317": {
+        "start": 203794,
+        "deltaBase36": "d.3.1.4.3.3.1.7.2t.d.3.1.4.3.3.1.7.1u.d.3.1.4.3.3.1.7.2r.d.3.1.4.3.3.1.7.2i.3.7.s.7.2q.3.7.s.7.1r.3.7.s.7.2o.3.7.s.7.2f.3.9.2l.3.9.1m.3.9.2j.3.9.xa.d.3.1.4.3.3.3.1.7.2v.d.3.1.4.3.3.3.1.7.1w.d.3.1.4.3.3.3.1.7.2t.d.3.1.4.3.3.3.1.7.2k.f.3.4.3.3.3.2t.f.3.4.3.3.3.1u.f.3.4.3.3.3.2r.f.3.4.3.3.3.2i.a.3.1.1.6.2p.a.3.1.1.6.1q.a.3.1.1.6.2n.a.3.1.1.6.2e.3.7.g.2l.3.7.g.1m.3.7.g.2j.3.7.g.2a.3.9.2l.3.9.1m.3.9.2j.3.9.2a.3.9.2l.3.9.1m.3.9.2j.3.9.2a.3.9.2l.3.9.1m.3.9.2j.3.9.2a.3.9.2l.3.9.1m.3.9.2j.3.9.2a.3.9.2l.3.9.1m.3.9.2j.3.9.2a.3.9.2l.3.9.1m.3.9.2j.3.9.2a.3.9.2l.3.9.1m.3.9.2j.3.9.2a.3.9.2l.3.9.1m.3.9.2j.3.9.2a.3.9.2n.3.9.1o.3.9.2l.3.9"
+      },
+      "331": {
+        "start": 299878,
+        "deltaBase36": "1s.18.1x.1s.1o.14.1t.1p.1l.11.1q.1y.1u.1a.1z.1w.1s.18.1x.1r.1n.13.1s.1p.1l.11.1q.1p.1l.11.1q.1p.1l.11.1q.1p.1l.11.1q.1p.1l.11.1q.1p.1l.11.1q.1p.1l.11.1q.1p.1l.11.1q.1p.1l.11.1q.1r.1n.13.1s"
+      }
+    },
+    "createdNodeIdsByPrefix": {},
+    "unmapped": [],
+    "counts": {
+      "actions": 300,
+      "toolbarControls": 0,
+      "backGuards": 64
+    }
+  },
+  "route": {
+    "pageId": "295:2",
+    "mutatedNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "mutatedNodeIdsByPrefix": {
+      "317": {
+        "start": 203718,
+        "deltaBase36": "9.8.b.i.6.6.6.1t.9.8.b.8.h.6.6.6.1r.9.8.b.8.1t.9.8.b.8.h.6.6.6.1p.9.8.b.c.6.6.6.6.20.9.8.b.8.b.6.6.6.6.1y.9.8.b.8.20.9.8.b.8.b.6.6.6.6.1w.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.vu.9.8.b.c.6.6.6.6.1y.9.8.b.8.b.6.6.6.6.1w.9.8.b.8.1y.9.8.b.8.b.6.6.6.6.1u.9.8.b.c.6.6.6.6.1p.9.8.b.8.b.6.6.6.6.1n.9.8.b.8.1p.9.8.b.8.b.6.6.6.6.1l.9.8.b.c.6.6.6.6.1b.9.8.b.8.b.6.6.6.6.19.9.8.b.8.1b.9.8.b.8.b.6.6.6.6.17.9.8.b.c.6.6.6.6.1c.9.8.b.8.b.6.6.6.6.1a.9.8.b.8.1c.9.8.b.8.b.6.6.6.6.18.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.u.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.u.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.u.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.u.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.u.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.u.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.u.9.8.b.c.6.6.6.6.y.9.8.b.8.b.6.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.6.u.9.8.b.c.6.6.6.6.10.9.8.b.8.b.6.6.6.6.y.9.8.b.8.10.9.8.b.8.b.6.6.6.6"
+      },
+      "331": {
+        "start": 299831,
+        "deltaBase36": "2.1z.1s.18.1s.2.1v.1o.14.1o.2.1s.1l.11.1l.2.21.1u.1a.1u.2.1z.1s.18.1s.2.1u.1n.13.1n.2.1s.1l.11.1l.2.1s.1l.11.1l.2.1s.1l.11.1l.2.1s.1l.11.1l.2.1s.1l.11.1l.2.1s.1l.11.1l.2.1s.1l.11.1l.2.1s.1l.11.1l.2.1s.1l.11.1l.2.1u.1n.13"
+      }
+    },
+    "counts": {
+      "nodes": 0,
+      "reactions": 0,
+      "local": 0,
+      "crossModule": 0,
+      "back": 0,
+      "selfSkipped": 0
+    },
+    "unmapped": []
+  },
+  "validation": {
+    "pageId": "295:2",
+    "rootCount": 64,
+    "issueCount": 0,
+    "results": [
+      {
+        "id": "311:379860",
+        "key": "login",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 92,
+        "texts": 29,
+        "instances": 28,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 24,
+        "conditional": 22,
+        "issues": []
+      },
+      {
+        "id": "311:379861",
+        "key": "login",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 96,
+        "texts": 31,
+        "instances": 28,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 24,
+        "conditional": 22,
+        "issues": []
+      },
+      {
+        "id": "311:379862",
+        "key": "login",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 73,
+        "texts": 22,
+        "instances": 18,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 24,
+        "conditional": 22,
+        "issues": []
+      },
+      {
+        "id": "311:379863",
+        "key": "login",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 96,
+        "texts": 29,
+        "instances": 28,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 24,
+        "conditional": 22,
+        "issues": []
+      },
+      {
+        "id": "311:379864",
+        "key": "otp",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 90,
+        "texts": 30,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 14,
+        "missingText": 0,
+        "localLinks": 13,
+        "urlLinks": 6,
+        "conditional": 7,
+        "issues": []
+      },
+      {
+        "id": "311:379865",
+        "key": "otp",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 94,
+        "texts": 32,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 14,
+        "missingText": 0,
+        "localLinks": 13,
+        "urlLinks": 6,
+        "conditional": 7,
+        "issues": []
+      },
+      {
+        "id": "311:379866",
+        "key": "otp",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 71,
+        "texts": 23,
+        "instances": 15,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 14,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 6,
+        "conditional": 7,
+        "issues": []
+      },
+      {
+        "id": "311:379867",
+        "key": "otp",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 94,
+        "texts": 30,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 14,
+        "missingText": 0,
+        "localLinks": 13,
+        "urlLinks": 6,
+        "conditional": 7,
+        "issues": []
+      },
+      {
+        "id": "311:379868",
+        "key": "otpError",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379869",
+        "key": "otpError",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379870",
+        "key": "otpError",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379871",
+        "key": "otpError",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379880",
+        "key": "authIOS",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 96,
+        "texts": 30,
+        "instances": 29,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 14,
+        "missingText": 0,
+        "localLinks": 12,
+        "urlLinks": 24,
+        "conditional": 23,
+        "issues": []
+      },
+      {
+        "id": "311:379881",
+        "key": "authIOS",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 100,
+        "texts": 32,
+        "instances": 29,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 14,
+        "missingText": 0,
+        "localLinks": 12,
+        "urlLinks": 24,
+        "conditional": 23,
+        "issues": []
+      },
+      {
+        "id": "311:379882",
+        "key": "authIOS",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 77,
+        "texts": 23,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 14,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 24,
+        "conditional": 23,
+        "issues": []
+      },
+      {
+        "id": "311:379883",
+        "key": "authIOS",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 100,
+        "texts": 30,
+        "instances": 29,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 14,
+        "missingText": 0,
+        "localLinks": 12,
+        "urlLinks": 24,
+        "conditional": 23,
+        "issues": []
+      },
+      {
+        "id": "311:379884",
+        "key": "authKnown",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 91,
+        "texts": 26,
+        "instances": 27,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 6,
+        "conditional": 4,
+        "issues": []
+      },
+      {
+        "id": "311:379885",
+        "key": "authKnown",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 95,
+        "texts": 28,
+        "instances": 27,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 6,
+        "conditional": 4,
+        "issues": []
+      },
+      {
+        "id": "311:379886",
+        "key": "authKnown",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 72,
+        "texts": 19,
+        "instances": 17,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 4,
+        "issues": []
+      },
+      {
+        "id": "311:379887",
+        "key": "authKnown",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 95,
+        "texts": 26,
+        "instances": 27,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 6,
+        "conditional": 4,
+        "issues": []
+      },
+      {
+        "id": "311:379888",
+        "key": "authPhoneError",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 76,
+        "texts": 23,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 6,
+        "conditional": 4,
+        "issues": []
+      },
+      {
+        "id": "311:379889",
+        "key": "authPhoneError",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 80,
+        "texts": 25,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 6,
+        "conditional": 4,
+        "issues": []
+      },
+      {
+        "id": "311:379890",
+        "key": "authPhoneError",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 57,
+        "texts": 16,
+        "instances": 15,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 4,
+        "issues": []
+      },
+      {
+        "id": "311:379891",
+        "key": "authPhoneError",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 80,
+        "texts": 23,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 6,
+        "conditional": 4,
+        "issues": []
+      },
+      {
+        "id": "311:379892",
+        "key": "authCodeResent",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 82,
+        "texts": 28,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 11,
+        "urlLinks": 6,
+        "conditional": 5,
+        "issues": []
+      },
+      {
+        "id": "311:379893",
+        "key": "authCodeResent",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 86,
+        "texts": 30,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 11,
+        "urlLinks": 6,
+        "conditional": 5,
+        "issues": []
+      },
+      {
+        "id": "311:379894",
+        "key": "authCodeResent",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 63,
+        "texts": 21,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 6,
+        "conditional": 5,
+        "issues": []
+      },
+      {
+        "id": "311:379895",
+        "key": "authCodeResent",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 86,
+        "texts": 28,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 11,
+        "urlLinks": 6,
+        "conditional": 5,
+        "issues": []
+      },
+      {
+        "id": "311:379896",
+        "key": "authCodeExpired",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379897",
+        "key": "authCodeExpired",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379898",
+        "key": "authCodeExpired",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379899",
+        "key": "authCodeExpired",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379900",
+        "key": "authSmsDelayed",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379901",
+        "key": "authSmsDelayed",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379902",
+        "key": "authSmsDelayed",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379903",
+        "key": "authSmsDelayed",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 15,
+        "conditional": 11,
+        "issues": []
+      },
+      {
+        "id": "311:379904",
+        "key": "authRateLimited",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379905",
+        "key": "authRateLimited",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379906",
+        "key": "authRateLimited",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379907",
+        "key": "authRateLimited",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379908",
+        "key": "authNetworkError",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379909",
+        "key": "authNetworkError",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379910",
+        "key": "authNetworkError",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379911",
+        "key": "authNetworkError",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379912",
+        "key": "authProviderUnavailable",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379913",
+        "key": "authProviderUnavailable",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379914",
+        "key": "authProviderUnavailable",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379915",
+        "key": "authProviderUnavailable",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379916",
+        "key": "authProviderCancelled",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379917",
+        "key": "authProviderCancelled",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379918",
+        "key": "authProviderCancelled",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379919",
+        "key": "authProviderCancelled",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379920",
+        "key": "authCallbackExpired",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379921",
+        "key": "authCallbackExpired",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379922",
+        "key": "authCallbackExpired",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379923",
+        "key": "authCallbackExpired",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379924",
+        "key": "authSessionExpired",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379925",
+        "key": "authSessionExpired",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379926",
+        "key": "authSessionExpired",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379927",
+        "key": "authSessionExpired",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 15,
+        "conditional": 13,
+        "issues": []
+      },
+      {
+        "id": "311:379928",
+        "key": "authProvider_wechat",
+        "platform": "web",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 69,
+        "texts": 20,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 6,
+        "conditional": 6,
+        "issues": []
+      },
+      {
+        "id": "311:379929",
+        "key": "authProvider_wechat",
+        "platform": "desktop",
+        "pageId": "311:10",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 73,
+        "texts": 22,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 6,
+        "conditional": 6,
+        "issues": []
+      },
+      {
+        "id": "311:379930",
+        "key": "authProvider_wechat",
+        "platform": "tabletP",
+        "pageId": "311:10",
+        "w": 834,
+        "h": 1194,
+        "nodes": 50,
+        "texts": 13,
+        "instances": 15,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 6,
+        "issues": []
+      },
+      {
+        "id": "311:379931",
+        "key": "authProvider_wechat",
+        "platform": "tabletL",
+        "pageId": "311:10",
+        "w": 1194,
+        "h": 834,
+        "nodes": 73,
+        "texts": 20,
+        "instances": 25,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 10,
+        "urlLinks": 6,
+        "conditional": 6,
+        "issues": []
+      }
+    ]
+  }
+}

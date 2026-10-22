@@ -1,0 +1,76 @@
+[
+  {
+    "root": "311:379702",
+    "w": 834,
+    "h": 1194,
+    "header": "488:150349",
+    "pT": 16,
+    "pB": 16,
+    "children": [
+      {
+        "id": "488:150350",
+        "n": "MobileBrand / M&D",
+        "w": 160,
+        "h": 32,
+        "sizing": "FIXED",
+        "auto": "HEIGHT",
+        "grow": 0
+      },
+      {
+        "id": "488:150351",
+        "n": "Caption / meow & doggie",
+        "w": 200,
+        "h": 20,
+        "sizing": "FIXED",
+        "auto": "HEIGHT",
+        "grow": 0
+      },
+      {
+        "id": "488:150352",
+        "n": "Caption / 规则与安全 · 学习示意",
+        "w": 394,
+        "h": 20,
+        "sizing": "FIXED",
+        "auto": "HEIGHT",
+        "grow": 0
+      }
+    ]
+  },
+  {
+    "root": "311:379703",
+    "w": 1194,
+    "h": 834,
+    "header": "488:150472",
+    "pT": 16,
+    "pB": 16,
+    "children": [
+      {
+        "id": "488:150473",
+        "n": "MobileBrand / M&D",
+        "w": 160,
+        "h": 32,
+        "sizing": "FIXED",
+        "auto": "HEIGHT",
+        "grow": 0
+      },
+      {
+        "id": "488:150474",
+        "n": "Caption / meow & doggie",
+        "w": 200,
+        "h": 20,
+        "sizing": "FIXED",
+        "auto": "HEIGHT",
+        "grow": 0
+      },
+      {
+        "id": "488:150475",
+        "n": "Caption / 规则与安全 · 学习示意",
+        "w": 754,
+        "h": 20,
+        "sizing": "FIXED",
+        "auto": "HEIGHT",
+        "grow": 0
+      }
+    ]
+  }
+]

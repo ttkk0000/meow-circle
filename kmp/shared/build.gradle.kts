@@ -3,14 +3,17 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidKmpLibrary)
 }
 
 group = "com.ttkk0000.meowcircle"
 version = "0.1.0"
 
 kotlin {
-    androidTarget {
+    android {
+        namespace = "com.ttkk0000.meowcircle.shared"
+        compileSdk = 37
+        minSdk = 26
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -41,6 +44,11 @@ kotlin {
             implementation(libs.kotlinxSerializationJson)
             implementation(libs.multiplatformSettings)
         }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.ktorClientMock)
+            implementation(libs.kotlinxCoroutinesTest)
+        }
         androidMain.dependencies {
             implementation(libs.ktorClientOkhttp)
         }
@@ -50,17 +58,5 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktorClientDarwin)
         }
-    }
-}
-
-android {
-    namespace = "com.ttkk0000.meowcircle.shared"
-    compileSdk = 35
-    defaultConfig {
-        minSdk = 26
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 }

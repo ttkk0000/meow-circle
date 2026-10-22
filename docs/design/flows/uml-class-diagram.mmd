@@ -1,0 +1,128 @@
+classDiagram
+    direction TB
+
+    class User {
+        +int64 id
+        +string username
+        +string nickname
+        +string phone
+        +string avatar_url
+        +string bio
+        +UserStats stats
+        +time created_at
+    }
+
+    class UserStats {
+        +int64 moments
+        +int64 likes
+        +int64 badges
+        +int64 followers
+        +int64 following
+    }
+
+    class Pet {
+        +int64 id
+        +int64 owner_id
+        +string name
+        +string breed
+        +string age
+        +string[] tags
+        +string avatar_url
+    }
+
+    class AdoptionPet {
+        +int64 id
+        +int64 rescuer_id
+        +string name
+        +string species
+        +string breed
+        +string age
+        +string city
+        +string health
+        +string status
+        +int64[] media_ids
+    }
+
+    class AdoptionApplication {
+        +int64 id
+        +int64 pet_id
+        +int64 applicant_id
+        +int64 rescuer_id
+        +ApplicationStatus status
+        +string message
+        +string contact_info
+        +time created_at
+    }
+
+    class Post {
+        +int64 id
+        +int64 author_id
+        +string title
+        +string content
+        +PostCategory category
+        +string[] tags
+        +int64[] media_ids
+        +time created_at
+    }
+
+    class Comment {
+        +int64 id
+        +int64 post_id
+        +int64 author_id
+        +string content
+        +time created_at
+    }
+
+    class Listing {
+        +int64 id
+        +int64 seller_id
+        +ListingType type
+        +string category
+        +string title
+        +string description
+        +int64 price_cents
+        +string currency
+        +int64[] media_ids
+    }
+
+    class Conversation {
+        +int64 id
+        +int64 user_a_id
+        +int64 user_b_id
+        +string last_message
+        +int unread_count
+        +time updated_at
+    }
+
+    class Message {
+        +int64 id
+        +int64 conversation_id
+        +int64 sender_id
+        +int64 recipient_id
+        +string content
+        +time created_at
+    }
+
+    class Report {
+        +int64 id
+        +int64 reporter_id
+        +string target_kind
+        +int64 target_id
+        +string reason
+        +string status
+        +time created_at
+    }
+
+    User "1" *-- "1" UserStats : has
+    User "1" o-- "0..*" Pet : owns
+    User "1" o-- "0..*" Post : publishes
+    User "1" o-- "0..*" AdoptionApplication : applies
+    User "1" o-- "0..*" Listing : sells
+
+    Post "1" *-- "0..*" Comment : receives
+    AdoptionPet "1" o-- "0..*" AdoptionApplication : targets
+
+    Conversation "1" *-- "0..*" Message : contains
+    User "2" -- "0..*" Conversation : participates
+
+    User "1" o-- "0..*" Report : submits

@@ -1,0 +1,206 @@
+{
+  "foundations": {
+    "mutatedNodeIds": [
+      "17:37"
+    ],
+    "width": 1312,
+    "height": 244,
+    "layoutWrap": "WRAP",
+    "children": [
+      {
+        "id": "17:41",
+        "x": 24,
+        "y": 24,
+        "width": 350,
+        "height": 48
+      },
+      {
+        "id": "17:45",
+        "x": 398,
+        "y": 24,
+        "width": 350,
+        "height": 48
+      },
+      {
+        "id": "17:49",
+        "x": 772,
+        "y": 24,
+        "width": 124,
+        "height": 48
+      },
+      {
+        "id": "17:53",
+        "x": 920,
+        "y": 24,
+        "width": 124,
+        "height": 48
+      },
+      {
+        "id": "17:57",
+        "x": 24,
+        "y": 96,
+        "width": 350,
+        "height": 52
+      },
+      {
+        "id": "17:61",
+        "x": 398,
+        "y": 96,
+        "width": 350,
+        "height": 52
+      },
+      {
+        "id": "17:65",
+        "x": 772,
+        "y": 104,
+        "width": 350,
+        "height": 36
+      },
+      {
+        "id": "17:69",
+        "x": 24,
+        "y": 178,
+        "width": 350,
+        "height": 36
+      },
+      {
+        "id": "17:73",
+        "x": 398,
+        "y": 178,
+        "width": 350,
+        "height": 36
+      },
+      {
+        "id": "17:77",
+        "x": 772,
+        "y": 172,
+        "width": 350,
+        "height": 48
+      }
+    ]
+  },
+  "core": {
+    "mutatedNodeIds": [
+      "28:20",
+      "28:21",
+      "28:22"
+    ],
+    "texts": [
+      {
+        "id": "28:20",
+        "width": 318,
+        "height": 20,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:21",
+        "width": 318,
+        "height": 20,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:22",
+        "width": 318,
+        "height": 40,
+        "textAutoResize": "HEIGHT"
+      }
+    ]
+  },
+  "trust": {
+    "mutatedNodeIds": [
+      "28:57",
+      "28:60",
+      "28:61",
+      "28:63",
+      "28:64",
+      "28:67",
+      "28:68",
+      "28:70",
+      "28:71",
+      "28:74",
+      "28:75",
+      "28:77",
+      "28:78"
+    ],
+    "texts": [
+      {
+        "id": "28:57",
+        "width": 1312,
+        "height": 30,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:60",
+        "width": 604,
+        "height": 30,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:61",
+        "width": 604,
+        "height": 78,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:63",
+        "width": 604,
+        "height": 30,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:64",
+        "width": 604,
+        "height": 52,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:67",
+        "width": 604,
+        "height": 30,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:68",
+        "width": 604,
+        "height": 52,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:70",
+        "width": 604,
+        "height": 30,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:71",
+        "width": 604,
+        "height": 78,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:74",
+        "width": 604,
+        "height": 30,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:75",
+        "width": 604,
+        "height": 78,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:77",
+        "width": 604,
+        "height": 30,
+        "textAutoResize": "HEIGHT"
+      },
+      {
+        "id": "28:78",
+        "width": 604,
+        "height": 78,
+        "textAutoResize": "HEIGHT"
+      }
+    ]
+  }
+}

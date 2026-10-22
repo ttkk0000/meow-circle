@@ -58,6 +58,14 @@ func (s *TokenService) Parse(token string) (Claims, error) {
 	if len(parts) != 3 {
 		return Claims{}, errors.New("invalid token format")
 	}
+	headerBytes, err := base64.RawURLEncoding.DecodeString(parts[0])
+	var header struct {
+		Algorithm string `json:"alg"`
+		Type      string `json:"typ"`
+	}
+	if err != nil || json.Unmarshal(headerBytes, &header) != nil || header.Algorithm != "HS256" || header.Type != "JWT" {
+		return Claims{}, errors.New("invalid token header")
+	}
 
 	signingInput := parts[0] + "." + parts[1]
 	expected := s.sign(signingInput)
@@ -74,7 +82,8 @@ func (s *TokenService) Parse(token string) (Claims, error) {
 	if err := json.Unmarshal(payloadBytes, &claims); err != nil {
 		return Claims{}, errors.New("invalid token payload")
 	}
-	if time.Now().UTC().Unix() > claims.ExpiresAt {
+	now := time.Now().UTC().Unix()
+	if claims.UserID <= 0 || claims.IssuedAt <= 0 || claims.IssuedAt > now+60 || claims.ExpiresAt <= claims.IssuedAt || now >= claims.ExpiresAt {
 		return Claims{}, errors.New("token expired")
 	}
 	return claims, nil

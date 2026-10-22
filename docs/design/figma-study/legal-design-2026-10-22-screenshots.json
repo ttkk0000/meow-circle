@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-22",
+  "viewed": true,
+  "source": "Figma get_screenshot native image blocks; no remote media downloaded",
+  "screenshots": [
+    {
+      "platform": "web",
+      "path": "docs/design/figma-study/legal-design-2026-10-22-web.png",
+      "width": 1024,
+      "height": 712,
+      "node": "632:735037"
+    },
+    {
+      "platform": "tabletL",
+      "path": "docs/design/figma-study/legal-design-2026-10-22-tabletL.png",
+      "width": 1024,
+      "height": 716,
+      "node": "632:1838713"
+    },
+    {
+      "platform": "desktop",
+      "path": "docs/design/figma-study/legal-design-2026-10-22-desktop.png",
+      "width": 1024,
+      "height": 712,
+      "node": "632:1103790"
+    },
+    {
+      "platform": "phone",
+      "path": "docs/design/figma-study/legal-design-2026-10-22-phone.png",
+      "width": 390,
+      "height": 844,
+      "node": "632:357511"
+    },
+    {
+      "platform": "hub",
+      "path": "docs/design/figma-study/legal-design-2026-10-22-hub.png",
+      "width": 1024,
+      "height": 712,
+      "node": "662:398665"
+    },
+    {
+      "platform": "reviewBoard",
+      "path": "docs/design/figma-study/legal-design-2026-10-22-reviewBoard.png",
+      "width": 1024,
+      "height": 712,
+      "node": "661:1108463"
+    }
+  ]
+}

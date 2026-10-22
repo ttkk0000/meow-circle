@@ -1,0 +1,468 @@
+{
+  "date": "2026-10-16",
+  "verdict": "not-ready-for-complete-development-handoff",
+  "method": "current-native-screenshot-and-structure-audit; not live usability/device validation",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "pageId": "56:25",
+  "captures": [
+    {
+      "capture": "01",
+      "slug": "community-home",
+      "nodeId": "56:27",
+      "file": "01-community-home.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-27"
+    },
+    {
+      "capture": "02",
+      "slug": "comments",
+      "nodeId": "106:1393",
+      "file": "02-comments.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=106-1393"
+    },
+    {
+      "capture": "03",
+      "slug": "compose",
+      "nodeId": "56:33",
+      "file": "03-compose.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-33"
+    },
+    {
+      "capture": "04",
+      "slug": "pet-profile",
+      "nodeId": "56:74",
+      "file": "04-pet-profile.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-74"
+    },
+    {
+      "capture": "05",
+      "slug": "adoption-detail",
+      "nodeId": "56:37",
+      "file": "05-adoption-detail.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-37"
+    },
+    {
+      "capture": "06",
+      "slug": "application-review",
+      "nodeId": "56:40",
+      "file": "06-application-review.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-40"
+    },
+    {
+      "capture": "07",
+      "slug": "lost-map",
+      "nodeId": "56:55",
+      "file": "07-lost-map.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-55"
+    },
+    {
+      "capture": "08",
+      "slug": "lost-manage",
+      "nodeId": "56:60",
+      "file": "08-lost-manage.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-60"
+    },
+    {
+      "capture": "09",
+      "slug": "private-sighting",
+      "nodeId": "56:57",
+      "file": "09-private-sighting.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-57"
+    },
+    {
+      "capture": "10",
+      "slug": "private-chat",
+      "nodeId": "106:1409",
+      "file": "10-private-chat.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=106-1409"
+    },
+    {
+      "capture": "11",
+      "slug": "group-chat",
+      "nodeId": "106:1439",
+      "file": "11-group-chat.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=106-1439"
+    },
+    {
+      "capture": "12",
+      "slug": "login",
+      "nodeId": "56:70",
+      "file": "12-login.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-70"
+    },
+    {
+      "capture": "13",
+      "slug": "privacy",
+      "nodeId": "56:76",
+      "file": "13-privacy.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-76"
+    },
+    {
+      "capture": "14",
+      "slug": "report-progress",
+      "nodeId": "56:67",
+      "file": "14-report-progress.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-67"
+    },
+    {
+      "capture": "15",
+      "slug": "offline",
+      "nodeId": "56:81",
+      "file": "15-offline.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-81"
+    },
+    {
+      "capture": "16",
+      "slug": "adoption-chat",
+      "nodeId": "56:62",
+      "file": "16-adoption-chat.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-62"
+    },
+    {
+      "capture": "17",
+      "slug": "content-unavailable",
+      "nodeId": "56:83",
+      "file": "17-content-unavailable.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-83"
+    },
+    {
+      "capture": "18",
+      "slug": "reply-thread",
+      "nodeId": "106:1396",
+      "file": "18-reply-thread.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=106-1396"
+    },
+    {
+      "capture": "19",
+      "slug": "application-form",
+      "nodeId": "56:39",
+      "file": "19-application-form.png",
+      "width": 390,
+      "height": 844,
+      "status": "saved-and-visually-inspected-current-run",
+      "source": "Figma get_screenshot; current audit run",
+      "figmaUrl": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=56-39"
+    }
+  ],
+  "issues": [
+    {
+      "id": "F01",
+      "priority": "P1",
+      "title": "六屏黑底与浅色文字系统不一致",
+      "captures": [
+        "01",
+        "03"
+      ],
+      "nodes": [
+        "56:27",
+        "56:28",
+        "56:32",
+        "56:33",
+        "56:34",
+        "56:61"
+      ],
+      "evidence": "Current 134-root scan: six actual solid black fills; same bound token resolves to #F7F8FA.",
+      "recommendation": "修正根背景实际填充及生成时的回退颜色，保留变量绑定；重新检查六屏与主流程对比度。"
+    },
+    {
+      "id": "F02",
+      "priority": "P1",
+      "title": "走失线索进入错误的领养会话",
+      "captures": [
+        "08",
+        "16"
+      ],
+      "nodes": [
+        "60:1703",
+        "56:62"
+      ],
+      "evidence": "查看收到的线索 -> 56:62; destination title 小满的照护者 and application A1 adoption context.",
+      "recommendation": "独立的本次事件线索收件箱、私密详情及联系入口；传递同一个 case ID、pet ID 和线索上下文。"
+    },
+    {
+      "id": "F03",
+      "priority": "P1",
+      "title": "找回／结束缺专用确认、处理与结果状态",
+      "captures": [
+        "08",
+        "17"
+      ],
+      "nodes": [
+        "60:1679",
+        "60:1686",
+        "56:83"
+      ],
+      "evidence": "Both owner status actions navigate to generic content-unavailable page with other-adoption link.",
+      "recommendation": "拆分找回、其他结束和暂停；补确认、处理中、失败重试、已结案及全入口状态同步设计。"
+    },
+    {
+      "id": "F04",
+      "priority": "P1",
+      "title": "宠友圈尚未进入当前原生手机稿",
+      "captures": [
+        "01"
+      ],
+      "nodes": [
+        "56:27"
+      ],
+      "evidence": "Current top tabs are 推荐/关注/同城; 134-root inventory and text scan reveal no circle flow/audience/friend-request states.",
+      "recommendation": "补圈首页、双向好友、发布预览、可见范围、评论隐私与冷启动等原生状态和入口。"
+    },
+    {
+      "id": "F05",
+      "priority": "P1",
+      "title": "多宠管理、独立日记、可见性与自有走失入口未闭环",
+      "captures": [
+        "04"
+      ],
+      "nodes": [
+        "56:74",
+        "60:2440"
+      ],
+      "evidence": "Pet profile is a fixed 小满 page; 添加狗狗或其他宠物 routes to adoption publishing basics 56:48. No diary/audience/missing-state destinations.",
+      "recommendation": "独立宠物列表/切换/创建编辑；一宠一档日记、资料与日记受众、状态变更；不要复用领养发布代替个人宠物建档。"
+    },
+    {
+      "id": "F06",
+      "priority": "P1",
+      "title": "领养宠物详情缺持续介绍、更新与维护者补图",
+      "captures": [
+        "05",
+        "19",
+        "06"
+      ],
+      "nodes": [
+        "56:37"
+      ],
+      "evidence": "Full current detail text/actions contain static facts, verification, conditions, publisher, reporting and application; no update timeline/caretaker photo/comment thread.",
+      "recommendation": "在单只领养宠物下设计持续更新、照片来源与时间、评论回复、照护角色、编辑历史与举报复核；申请仍引用同一宠物。"
+    },
+    {
+      "id": "F07",
+      "priority": "P1",
+      "title": "附近提醒设置与正常地图体验缺失",
+      "captures": [
+        "07",
+        "13"
+      ],
+      "nodes": [
+        "56:55",
+        "56:75",
+        "56:76"
+      ],
+      "evidence": "Map is empty-state explanation only; current roots/settings routes contain no 5–100 km subscription, species, center, channel or pause states.",
+      "recommendation": "补粗略区域地图正常态、卡片联动与不可定位态；接收端独立订阅、5–100km范围、中心、物种、频率、权限拒绝和关闭设计。"
+    },
+    {
+      "id": "F08",
+      "priority": "P2",
+      "title": "全站表情和表态面板未设计到原生稿",
+      "captures": [
+        "02",
+        "10",
+        "11",
+        "18"
+      ],
+      "nodes": [
+        "106:1393",
+        "106:1409",
+        "106:1439"
+      ],
+      "evidence": "Current composers show input, camera and send only; native text inventory has no 表情 destination.",
+      "recommendation": "统一帖子/评论/回复/私信/群聊/领养讨论的表情入口、面板、选中待发、取消、更换表态、命名和不可用状态。"
+    },
+    {
+      "id": "F09",
+      "priority": "P2",
+      "title": "不同评论的回复都进入同一条原评论",
+      "captures": [
+        "02",
+        "18"
+      ],
+      "nodes": [
+        "I108:2951;105:356",
+        "I108:2970;105:356",
+        "I108:2989;105:356",
+        "106:1396"
+      ],
+      "evidence": "All three reply controls target same frame whose parent comment is 团子今天不拆家.",
+      "recommendation": "为不同回复对象提供对应上下文或限制示例入口；设计明确回复对象、取消回复、父评论被删/无权限及返回位置。"
+    },
+    {
+      "id": "F10",
+      "priority": "P2",
+      "title": "阅读领养条件误入申请表",
+      "captures": [
+        "05",
+        "19"
+      ],
+      "nodes": [
+        "58:438",
+        "56:39"
+      ],
+      "evidence": "领养条件 row navigates directly to 申请领养 form; no separate condition reading state.",
+      "recommendation": "提供可展开的完整条件或独立阅读页，确认理解后再进入申请，不让阅读入口承担隐式申请动作。"
+    }
+  ],
+  "reviewPaths": [
+    {
+      "step": 1,
+      "title": "社区、评论与回复",
+      "health": "未通过：黑底、圈子缺失、回复上下文错误",
+      "captures": [
+        "01",
+        "02",
+        "18"
+      ]
+    },
+    {
+      "step": 2,
+      "title": "图文发布",
+      "health": "未通过：黑底；独立受众和表情未齐",
+      "captures": [
+        "03"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "自己的宠物",
+      "health": "未通过：管理与状态链缺失",
+      "captures": [
+        "04"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "领养阅读、申请与共享确认",
+      "health": "部分具备：信任披露较清楚，内容维护未齐",
+      "captures": [
+        "05",
+        "19",
+        "06"
+      ]
+    },
+    {
+      "step": 5,
+      "title": "互助地图",
+      "health": "未通过：只有空态，无正常地图体验",
+      "captures": [
+        "07"
+      ]
+    },
+    {
+      "step": 6,
+      "title": "走失维护、私密线索与收尾",
+      "health": "未通过：错误上下文，找回闭环缺失",
+      "captures": [
+        "08",
+        "09",
+        "16",
+        "17"
+      ]
+    },
+    {
+      "step": 7,
+      "title": "站内私聊与群聊",
+      "health": "部分具备：基础交流可评审，表达能力未齐",
+      "captures": [
+        "10",
+        "11"
+      ]
+    },
+    {
+      "step": 8,
+      "title": "登录与隐私",
+      "health": "部分具备：告知清楚，权限和恢复路径待验证",
+      "captures": [
+        "12",
+        "13"
+      ]
+    },
+    {
+      "step": 9,
+      "title": "举报、复核与断网",
+      "health": "部分具备：有保护原则，状态仍为静态示例",
+      "captures": [
+        "14",
+        "15"
+      ]
+    }
+  ],
+  "changes": {
+    "figma": false,
+    "applicationCode": false
+  },
+  "structuralEvidenceFile": "native-structure.json",
+  "routeEvidenceFile": "native-routes.json"
+}

@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-22",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "purpose": "Actual final Figma page screenshots for canvas composition",
+  "images": [
+    {
+      "key": "mobile",
+      "nodeId": "56:25",
+      "path": "mobile.png",
+      "width": 399,
+      "height": 1800,
+      "originalWidth": 10476,
+      "originalHeight": 47356
+    },
+    {
+      "key": "library",
+      "nodeId": "14:2",
+      "path": "library.png",
+      "width": 1400,
+      "height": 1054,
+      "originalWidth": 9256,
+      "originalHeight": 6962
+    },
+    {
+      "key": "archive",
+      "nodeId": "0:1",
+      "path": "archive.png",
+      "width": 1400,
+      "height": 1232,
+      "originalWidth": 13916,
+      "originalHeight": 12246
+    },
+    {
+      "key": "index",
+      "nodeId": "403:5",
+      "path": "index.png",
+      "width": 194,
+      "height": 1800,
+      "originalWidth": 6344,
+      "originalHeight": 59002
+    }
+  ]
+}

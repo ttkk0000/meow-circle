@@ -1,0 +1,172 @@
+{
+  "createdNodeIds": [],
+  "mutatedNodeIds": [
+    "56:25"
+  ],
+  "screenCount": 134,
+  "nodes": 5896,
+  "broken": [],
+  "placeholders": [],
+  "missingFonts": [],
+  "overflows": [
+    {
+      "root": "post",
+      "id": "I108:1883;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "postLiked",
+      "id": "I108:2815;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "comments",
+      "id": "I108:2951;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "comments",
+      "id": "I108:2970;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "comments",
+      "id": "I108:2989;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "commentPosted",
+      "id": "I108:3083;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "commentPosted",
+      "id": "I108:3103;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "commentPosted",
+      "id": "I108:3122;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "commentPosted",
+      "id": "I108:3141;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "commentReplies",
+      "id": "I108:3178;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "commentReplies",
+      "id": "I108:3197;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "commentReplies",
+      "id": "I108:3216;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    },
+    {
+      "root": "commentActions",
+      "id": "I108:3282;105:355",
+      "name": "Comment actions",
+      "w": 334,
+      "contentW": 338
+    }
+  ],
+  "badSizes": [],
+  "fonts": [
+    {
+      "family": "Noto Sans SC",
+      "style": "Regular",
+      "variationSettings": {
+        "wght": 400
+      }
+    },
+    {
+      "family": "Manrope",
+      "style": "ExtraBold",
+      "variationSettings": {
+        "wght": 800
+      }
+    },
+    {
+      "family": "Noto Sans SC",
+      "style": "Medium",
+      "variationSettings": {
+        "wght": 500
+      }
+    },
+    {
+      "family": "Noto Sans SC",
+      "style": "Bold",
+      "variationSettings": {
+        "wght": 700
+      }
+    }
+  ],
+  "links": 572,
+  "buttonShapes": {
+    "48/24": 110
+  },
+  "reachableFromHome": 130,
+  "unreachableFromHome": [
+    "offline",
+    "privateUnavailable",
+    "mediaPermission",
+    "groupMuted"
+  ],
+  "flowStartingPoints": [
+    {
+      "nodeId": "56:27",
+      "name": "M&D · 手机完整体验"
+    },
+    {
+      "nodeId": "106:1435",
+      "name": "群聊 · 加入与交流"
+    },
+    {
+      "nodeId": "106:1447",
+      "name": "群主 · 建群与管理"
+    },
+    {
+      "nodeId": "106:1454",
+      "name": "群聊 · 禁言状态"
+    },
+    {
+      "nodeId": "56:28",
+      "name": "社区 · 冷启动空状态"
+    },
+    {
+      "nodeId": "106:1411",
+      "name": "私信 · 发送失败"
+    }
+  ]
+}

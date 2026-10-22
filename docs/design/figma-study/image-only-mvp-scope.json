@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-16",
+  "scope": "image-only MVP; video deferred",
+  "userConfirmed": {
+    "videoDeferred": true,
+    "petCountNoArtificialCap": true,
+    "perPetDiary": true,
+    "profileAndEntryVisibilityConfigurable": true,
+    "sharedEmojiStickers": true
+  },
+  "recommendations": {
+    "staticStickersFirst": true,
+    "imageOptimization": "compression, thumbnails, lazy loading; parameters not fixed"
+  },
+  "pendingDecisions": [
+    "private pet profile with public diary entry",
+    "caretaker collaboration permissions"
+  ],
+  "localUpdated": [
+    "SOCIAL_CHAT_DESIGN_PLAN.md",
+    "SOCIAL_CHAT_HANDOFF.md",
+    "social-chat-content.json",
+    "mobile-v2-content.json",
+    "social-chat-state.json",
+    "../MND_DESIGN_MEMORY.md"
+  ],
+  "figma": {
+    "status": "synchronized",
+    "priorFailedReadAttempts": 2,
+    "phonePage": "56:25",
+    "reviewPageChecked": "56:26",
+    "createdNodeIds": [],
+    "mutatedNodeIds": [
+      "108:4442",
+      "58:477",
+      "58:487",
+      "60:684",
+      "108:4562",
+      "108:4573",
+      "108:4437",
+      "60:679"
+    ],
+    "pending": [],
+    "ledger": "image-only-figma-sync.json",
+    "optionalReflowAttempt": { "status": "not-confirmed", "reason": "transport unavailable after six confirmed copy updates; no claim of additional edits" },
+    "oldPagesUntouched": "00–09",
+    "visualChecks": [
+      "photo-selection",
+      "adoption-verification"
+    ],
+    "previewFiles": [
+      "image-only-permission-preview.png",
+      "image-only-verify-preview.png"
+    ]
+  },
+  "applicationCodeChanged": false,
+  "buildOrTestsRun": false
+}

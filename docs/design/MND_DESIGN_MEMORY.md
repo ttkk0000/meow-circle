@@ -1,5 +1,80 @@
 # M&D Design Memory
 
+## Global Unread Design Supplement — 2026-10-20
+
+- User requested global unread with 99+ above 99, post replies, DMs and groups, asked to find omissions, then explicitly limited this task to design and requested a handoff to the responsive-design chat.
+- Added Figma page352:2, review352:3:8 phone states,1 boundary board,4 platform entry patterns; badge353:7 and message-row353:32 reuse current light fonts/tokens. Exact mapping and scope: figma-study/GLOBAL_UNREAD_HANDOFF_2026_10_20.md.
+- Categories cover chat/requests, replies/mentions/reactions, relations/invitations, adoption/appointments/lost-pet progress and moderation/security. Unread differs from pending work. Example107 active +124 muted =231 for mark-all; mute/global inclusion is a design recommendation pending user confirmation.
+- Native-layer, font, badge range/contrast and link-target checks passed; four composition groups visually reviewed and affected fixes rechecked. Review uses precise Figma-node URLs, not a verified running-app prototype. New full cross-platform state pages, API semantics, suppliers and app behavior remain unimplemented by this task.
+- Follow the state ledger and final validation; do not rerun generators just to recover IDs. No application source, build, runtime tests, commit or push in this task.
+
+## Android / iOS First Source Batch And Dependency Upgrade — 2026-10-20
+
+- User authorized mobile / tablet code after the planning and full visual adaptation work. Added shared v2 client models / transport / state, separate Android Compose and iosUi Compose surfaces, a thin Swift host with Keychain, Android Keystore, window-size navigation, native photo pickers, ordered uploads and versioned cloud drafts. Existing SwiftUI / v1 sources are preserved. These are first-batch sources, not full F00–F14 delivery.
+- Android compile / target 37 and minimum 26; dependencies upgraded to current stable artifacts within the documented KGP branches, including AGP 9.3.3 / Gradle 9.7.1 patch updates, Kotlin 2.4.21 and CMP 1.12.2. Exact patch compatibility, dependency resolution and native builds remain unverified. Read docs/client/DEPENDENCY_BASELINE_2026_10_20.md.
+- New mobile default is the approved Figma light mode. Legacy Stitch themes / preferences remain; no selector or automatic dark mode. Both tablet layouts use actual window size and remain independent platform implementations.
+- Server audit found B04 still absent for the newly confirmed three-identifier account and current-phone interaction rule. New login only exposes existing account-name / phone password behavior; email is not faked via username. Outward commands are blocked in the shared Store until a real server eligibility contract and write gate exist; reading / editing / private drafts remain usable at source level. User asked about WeChat-based posting eligibility; this was explained as a possible product rule, distinct from real-name verification, without silently changing the confirmed auth plan.
+- Read docs/client/MOBILE_IMPLEMENTATION_2026_10_20.md and docs/server/CLIENT_READINESS_2026_10_20.md for completed scope, remaining features and blockers. Source-only checks passed; four network regression test sources were added but not executed. No compilation, dependency installation, server / simulator launch, commit, push or delegation.
+
+## One Account, Three Login Identifiers — 2026-10-20
+
+- User confirmed one stable M&D account with unique account name, email and phone login identifiers. Nicknames remain separate and may repeat; identifier changes keep user_id and all resources.
+- Ordinary login does not force SMS. Verify the current phone before first posting/commenting/messaging and other outward interactions; reuse valid verification rather than sending SMS for every login or message. Phone changes require verification and preserve the old binding on failure.
+- Updated MND_MOBILE_AUTH_PLAN.md as the rule source and synchronized cold-start, client F01/B04 and server handoff requirements. Email login, database constraints/migration and server-side interaction gates remain unimplemented; existing Figma and APIs were not changed.
+- Documentation-only static review. No compilation, tests, provider calls, code, commit or push in this task.
+
+## Full Cross-platform Visual Coverage — 2026-10-20
+
+- User requested all missing platform styles. Added 569 product/interaction states in four native editable layouts (Web, Desktop, tablet portrait and landscape), plus 32 narrow/split-window samples: 2,308 target roots. Ten phone review keys map to the unified index rather than extra product screens.
+- All target roots have latest layout/content/font/basic-navigation checks with zero remaining issues and no missing source text; all 16 logical modules have screenshot samples. Chat bubbles now hug content with a width cap, conversation switching was added, and continuous emoji text overflow was corrected and rechecked.
+- Full control restoration passed for 15 ordinary modules. Rebinding all dense sticker internals repeatedly exceeded Figma MCP timeouts; do not claim complete cross-platform expression interaction or device/runtime verification. The phone source prototype and existing expression handoff remain the detailed behavior reference.
+- Current review root: 301:27; expression scene index: 343:2; file: 3OFOC3vu18Kx9sRPjummOC. Old 56 representative boards remain as historical references. Expression states were split into 16 context pages and a common-editing page; exact pageByKey and root IDs are preserved.
+- Read figma-study/CROSS_PLATFORM_FULL_REVIEW_2026_10_20.md, CROSS_PLATFORM_FULL_MAPPING.md, CROSS_PLATFORM_ADAPTIVE_CONTRACT.md and cross-platform-full-validation.json. Default light only; old themes reserved. No client code, build or runtime tests in this design task.
+
+## Cross-platform Coverage Correction — 2026-10-20
+
+- User noticed missing new-platform pages. Live Figma read confirms only18Web /17Desktop /21tablet reference frames. Full mobile-flow adaptation is incomplete; earlier “completed56” wording was too broad.
+- Tablet has12portrait834,8landscape1194 and1narrow744 sample. Only home/adopt/messages/compose have explicit paired orientations; the remaining task layouts and detailed states need mapping or additional design.
+- Added figma-study/CROSS_PLATFORM_COVERAGE_AUDIT_2026_10_20.md and cross-platform-coverage-audit.json:579merged mobile logical keys/root IDs, grouped with conservative reference-only / unmapped statuses. Review hubs and parameter variants are not independent required screens; no coverage percentage asserted.
+- Updated review/client entry points to distinguish representative designs, full design coverage and runtime adaptive implementation. This audit did not add missing Figma screens or change client code. Default light style remains the only current theme.
+
+## Client Implementation Plan And Default Theme — 2026-10-20
+
+- User requested detailed client completion/implementation documents before code, potentially for later Gemini collaboration. Created docs/client/README.md with architecture, feature matrix, design/adaptive acceptance, tasks and agent handoff. No client source/config changes, delegation or builds in this task.
+- Target: shared KMP business/data/session/feature logic; separate Android Jetpack Compose and iOS Compose Multiplatform UI; Android tablet and iPad each have independent adaptive implementation. Existing SwiftUI shell is retained as a migration source, not the new main UI target.
+- Proposed Desktop continues Compose Desktop/shared; Web uses a separate React/TypeScript/Vite app against the same v2 contract. Existing v1 SDK, static Desktop and Web demos are not v2 completion evidence.
+- Latest user steering: current effective appearance is the design default light style. Preserve Honey/Mint/Night/Neutral as historical references and future extension points, keep old preferences, but no current selector, automatic system dark mode or four-theme delivery requirement.
+- Plan records v1/v2 envelope/session migration, int64 browser precision, precise response types, browser auth/media and unauthenticated safety-report contract gaps. Public contracts and Gradle files have one modification owner when parallel work is explicitly authorized.
+- Read docs/client/AGENT_HANDOFF.md for scoped Gemini prompts. No messages were sent to Gemini/other threads; future code/build/run authorization remains separate.
+
+## Friendly Light Cross-platform Design — 2026-10-20
+
+- User requested Web, Desktop and tablet designs based on the existing phone style; dark mode deferred. This authorizes Figma design work, not client implementation or builds.
+- Added native Design pages 295:2–295:5 in file 3OFOC3vu18Kx9sRPjummOC. Review hub: 301:27. Web18, Desktop17, tablet21:56 page/state references, not56 independent complete flows or a copy of all579 mobile roots.
+- Reused Mobile Light V2 mode56:0, Noto Sans SC / Manrope, coral primary actions,16-radius cards and48-high controls. Kept phone and old dark pages unchanged; production Stitch and clients remain unmigrated.
+- Web uses capped content width; Desktop persistent navigation and conversation context; tablet834×1194 /1194×834 plus744-width single-reader fallback. Portrait/landscape specimens are static references, not runtime rotation support.
+- Final structure check: all56 roots present and populated; no missing fonts, invalid navigation destinations or auto-layout box overflows. Discrete pet photographs only; native editable UI layers. Representative pages inspected and local component sizing corrected.
+- Current handoff: figma-study/CROSS_PLATFORM_LIGHT_REVIEW_2026_10_20.md; state/config/nodes/validation files use cross-platform-light prefix. Preserve prior unread-badge work and all phone ledgers.
+- No app compilation, tests, real device, screen reader, system keyboard, arbitrary input or cross-device sync verification. Follow global no-self-build rule.
+
+## Unread Badge Alignment — 2026-10-20
+
+- User reported left-aligned unread numbers on the phone message list. Fixed shared component105:369: badge105:375 centers both axes; text105:376 centers horizontally and vertically.
+- All5 phone conversation instances inherited the correction with zero center offsets. Numeric values, size, theme bindings and prototype routes were preserved.
+- Evidence: figma-study/unread-badge-alignment-2026-10-20.json; screenshot: figma-study/messages-unread-centered-2026-10-20.png.
+- Figma and design records only. No client code, builds, tests or device runs.
+
+## Current Mobile Review And Authentication — 2026-10-19
+
+- User explicitly requires Figma review before client implementation. No client source, production Stitch, build or test execution in this task.
+- Native phone design completion is ready for user review: hub 238:371769, editable six-screen board 251:375655, file 3OFOC3vu18Kx9sRPjummOC, page 56:25.
+- Current mobile-completion-state.json tracks213 new/reworked states; mobile-completion-content.json is current. Static merge with historical ledgers found579 unique reference root IDs, none missing, empty or on another page. Counts include variants/overlays.
+- Phone, WeChat, QQ, iPhone Apple, first account/linking, recovery and account management now have native frames; no SMS/OAuth integration.
+- Friend pre-confirmation, found/reclaim, appointment V1/V2/V3, trial/handover,30-day private updates, group transfer/dissolution, recipient scopes, notifications, material outcomes, multi-photo recovery and commercial visit checks are supplemented.
+- Expressions retain128 Noto SVGs,24 cat stickers,16 live prototype contexts and23 composers. Added fixed continuous/cursor/delete/recent/favorite examples plus320-width and160% typography specimens; no arbitrary editor/device acceptance claim.
+- Final polish uses primary filled coral footers, neutral disabled borders,16-radius fields/cards. Field master controls56:190/194/198 now FILL their instance width;320 root yields288 field/control widths. Original role/entry guards must be preserved when reconstructing.
+- Read figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md for latest source, scope and remaining runtime/operational limits. Earlier13-item audit is a pre-completion baseline.
+
 Created: 2026-05-26
 
 Last updated: 2026-10-16

@@ -1,0 +1,4827 @@
+{
+  "date": "2026-10-20",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "platforms": [
+    {
+      "key": "web",
+      "label": "Web",
+      "w": 1440,
+      "h": 1000
+    },
+    {
+      "key": "desktop",
+      "label": "Desktop",
+      "w": 1440,
+      "h": 1000
+    },
+    {
+      "key": "tabletP",
+      "label": "平板竖屏",
+      "w": 834,
+      "h": 1194
+    },
+    {
+      "key": "tabletL",
+      "label": "平板横屏",
+      "w": 1194,
+      "h": 834
+    }
+  ],
+  "modules": {
+    "community": {
+      "label": "社区",
+      "menu": [
+        "home",
+        "following",
+        "localFeed",
+        "search"
+      ],
+      "pageName": "16 全流程 · 社区"
+    },
+    "publishing-media": {
+      "label": "发布与素材",
+      "menu": [
+        "publishType",
+        "composePost",
+        "myPublishes",
+        "mediaChoose"
+      ],
+      "pageName": "17 全流程 · 发布与素材"
+    },
+    "adoption": {
+      "label": "领养与照护",
+      "menu": [
+        "adopt",
+        "application",
+        "adoptionManage",
+        "careTeam",
+        "followup"
+      ],
+      "pageName": "18 全流程 · 领养与照护"
+    },
+    "verification-reports": {
+      "label": "核实与处理",
+      "menu": [
+        "verify",
+        "verificationSubmit",
+        "reportProgress",
+        "moderationProgress"
+      ],
+      "pageName": "19 全流程 · 核实与处理"
+    },
+    "pet-diary": {
+      "label": "宠物空间",
+      "menu": [
+        "mine",
+        "petsList",
+        "petProfile",
+        "petDiary"
+      ],
+      "pageName": "20 全流程 · 宠物空间"
+    },
+    "lost-found": {
+      "label": "走失与拾获",
+      "menu": [
+        "lostList",
+        "helpType",
+        "lostManage",
+        "foundManage",
+        "lostLeadInbox"
+      ],
+      "pageName": "21 全流程 · 走失与拾获"
+    },
+    "messages": {
+      "label": "消息",
+      "menu": [
+        "messages",
+        "messageRequests",
+        "interactionInbox",
+        "systemInbox"
+      ],
+      "pageName": "22 全流程 · 消息"
+    },
+    "appointments": {
+      "label": "预约安排",
+      "menu": [
+        "appointment",
+        "appointmentHistory",
+        "appointmentConfirmedV2"
+      ],
+      "pageName": "23 全流程 · 预约安排"
+    },
+    "auth": {
+      "label": "账号与登录",
+      "menu": [
+        "login",
+        "authAccounts",
+        "authPasswordRecovery",
+        "authChangePhone",
+        "authRecovery"
+      ],
+      "pageName": "24 全流程 · 账号与登录"
+    },
+    "settings-notifications": {
+      "label": "设置与通知",
+      "menu": [
+        "settings",
+        "privacy",
+        "notificationSettings",
+        "notificationFrequency"
+      ],
+      "pageName": "25 全流程 · 设置与通知"
+    },
+    "offers-visits": {
+      "label": "好物与到访",
+      "menu": [
+        "find",
+        "saleDetail",
+        "serviceConfirmed",
+        "serviceFeedback"
+      ],
+      "pageName": "26 全流程 · 好物与到访"
+    },
+    "global-states": {
+      "label": "内容与恢复",
+      "menu": [
+        "offline",
+        "noResults",
+        "contentUnavailable",
+        "permission"
+      ],
+      "pageName": "27 全流程 · 内容与恢复"
+    },
+    "groups": {
+      "label": "群聊与管理",
+      "menu": [
+        "groups",
+        "groupDiscover",
+        "groupChat",
+        "groupInfo",
+        "groupAdmin"
+      ],
+      "pageName": "28 全流程 · 群聊与管理"
+    },
+    "circle-friends": {
+      "label": "宠友圈",
+      "menu": [
+        "circleFeed",
+        "circleFriends",
+        "circleCompose",
+        "circleFriendSettings"
+      ],
+      "pageName": "29 全流程 · 宠友圈"
+    },
+    "nearby": {
+      "label": "附近提醒",
+      "menu": [
+        "nearbyAlertPreferences",
+        "nearbyAlertSetup",
+        "nearbyCenter",
+        "nearbyRadius",
+        "nearbySpecies"
+      ],
+      "pageName": "30 全流程 · 附近提醒"
+    },
+    "expressions": {
+      "label": "表情与输入",
+      "menu": [
+        "expressionTyping",
+        "expressionRecent",
+        "expressionFavorite",
+        "exprPrivate",
+        "exprGroup"
+      ],
+      "pageName": "31 全流程 · 表情与输入"
+    }
+  },
+  "entries": [
+    {
+      "mobileKey": "home",
+      "mobileId": "56:27",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "M&D"
+    },
+    {
+      "mobileKey": "homeEmpty",
+      "mobileId": "56:28",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "社区"
+    },
+    {
+      "mobileKey": "city",
+      "mobileId": "56:29",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "选择城市"
+    },
+    {
+      "mobileKey": "search",
+      "mobileId": "56:30",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "搜索"
+    },
+    {
+      "mobileKey": "results",
+      "mobileId": "56:31",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "搜索结果"
+    },
+    {
+      "mobileKey": "post",
+      "mobileId": "56:32",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "晒宠日常"
+    },
+    {
+      "mobileKey": "composePost",
+      "mobileId": "56:33",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "publishing-media",
+      "title": "晒晒我的宠物"
+    },
+    {
+      "mobileKey": "postPreview",
+      "mobileId": "56:34",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "publishing-media",
+      "title": "发布前预览"
+    },
+    {
+      "mobileKey": "adopt",
+      "mobileId": "56:35",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "领养"
+    },
+    {
+      "mobileKey": "filter",
+      "mobileId": "56:36",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "筛选领养"
+    },
+    {
+      "mobileKey": "detail",
+      "mobileId": "56:37",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "领养详情"
+    },
+    {
+      "mobileKey": "verify",
+      "mobileId": "56:38",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "真实性说明"
+    },
+    {
+      "mobileKey": "apply",
+      "mobileId": "56:39",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "申请领养"
+    },
+    {
+      "mobileKey": "applyReview",
+      "mobileId": "56:40",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "检查申请"
+    },
+    {
+      "mobileKey": "applySent",
+      "mobileId": "56:41",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "申请已发送"
+    },
+    {
+      "mobileKey": "application",
+      "mobileId": "56:42",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "申请进度"
+    },
+    {
+      "mobileKey": "handover",
+      "mobileId": "56:43",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "确认领养交接"
+    },
+    {
+      "mobileKey": "followup",
+      "mobileId": "56:44",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "记录照护更新"
+    },
+    {
+      "mobileKey": "withdrawn",
+      "mobileId": "56:45",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "申请已撤回"
+    },
+    {
+      "mobileKey": "applicationDecision",
+      "mobileId": "56:46",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "处理领养申请"
+    },
+    {
+      "mobileKey": "publishType",
+      "mobileId": "56:47",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "publishing-media",
+      "title": "选择发布类型"
+    },
+    {
+      "mobileKey": "petBasics",
+      "mobileId": "56:48",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "宠物基本信息"
+    },
+    {
+      "mobileKey": "petDisclosure",
+      "mobileId": "56:49",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "关系与领养条件"
+    },
+    {
+      "mobileKey": "petEvidence",
+      "mobileId": "56:50",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "支持材料"
+    },
+    {
+      "mobileKey": "petPreview",
+      "mobileId": "56:51",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "检查公开信息"
+    },
+    {
+      "mobileKey": "petPending",
+      "mobileId": "56:52",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "发布状态"
+    },
+    {
+      "mobileKey": "myPublishes",
+      "mobileId": "56:53",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "publishing-media",
+      "title": "我的发布"
+    },
+    {
+      "mobileKey": "lostList",
+      "mobileId": "56:54",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "走失互助"
+    },
+    {
+      "mobileKey": "lostMap",
+      "mobileId": "56:55",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "互助地图"
+    },
+    {
+      "mobileKey": "lostDetail",
+      "mobileId": "56:56",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "求助详情"
+    },
+    {
+      "mobileKey": "sighting",
+      "mobileId": "56:57",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "提供私密线索"
+    },
+    {
+      "mobileKey": "sightingReview",
+      "mobileId": "56:58",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "线索共享确认"
+    },
+    {
+      "mobileKey": "lostPublish",
+      "mobileId": "56:59",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "发布互助求助"
+    },
+    {
+      "mobileKey": "lostManage",
+      "mobileId": "56:60",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "求助状态维护"
+    },
+    {
+      "mobileKey": "messages",
+      "mobileId": "56:61",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "消息"
+    },
+    {
+      "mobileKey": "chat",
+      "mobileId": "56:62",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "小满的照护者"
+    },
+    {
+      "mobileKey": "appointment",
+      "mobileId": "56:63",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "确认见面预约"
+    },
+    {
+      "mobileKey": "change",
+      "mobileId": "56:64",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "提出预约变更"
+    },
+    {
+      "mobileKey": "report",
+      "mobileId": "56:65",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "报告问题"
+    },
+    {
+      "mobileKey": "reportReceipt",
+      "mobileId": "56:66",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "已收到报告"
+    },
+    {
+      "mobileKey": "reportProgress",
+      "mobileId": "56:67",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "处理进度"
+    },
+    {
+      "mobileKey": "appeal",
+      "mobileId": "56:68",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "申诉与复核"
+    },
+    {
+      "mobileKey": "publisherResponse",
+      "mobileId": "56:69",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "回应被报告事项"
+    },
+    {
+      "mobileKey": "login",
+      "mobileId": "56:70",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "登录 / 注册"
+    },
+    {
+      "mobileKey": "otp",
+      "mobileId": "56:71",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "输入验证码"
+    },
+    {
+      "mobileKey": "otpError",
+      "mobileId": "56:72",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "验证码不正确"
+    },
+    {
+      "mobileKey": "mine",
+      "mobileId": "56:73",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "我的"
+    },
+    {
+      "mobileKey": "petProfile",
+      "mobileId": "56:74",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "我的宠物"
+    },
+    {
+      "mobileKey": "settings",
+      "mobileId": "56:75",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "设置"
+    },
+    {
+      "mobileKey": "privacy",
+      "mobileId": "56:76",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "settings-notifications",
+      "title": "隐私与数据"
+    },
+    {
+      "mobileKey": "find",
+      "mobileId": "56:77",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "offers-visits",
+      "title": "出售与转让"
+    },
+    {
+      "mobileKey": "saleDetail",
+      "mobileId": "56:78",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "offers-visits",
+      "title": "出售详情"
+    },
+    {
+      "mobileKey": "salePublish",
+      "mobileId": "56:79",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "publishing-media",
+      "title": "发布出售 / 转让"
+    },
+    {
+      "mobileKey": "salePreview",
+      "mobileId": "56:80",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "publishing-media",
+      "title": "检查出售信息"
+    },
+    {
+      "mobileKey": "offline",
+      "mobileId": "56:81",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "global-states",
+      "title": "连接暂时中断"
+    },
+    {
+      "mobileKey": "noResults",
+      "mobileId": "56:82",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "global-states",
+      "title": "没有匹配结果"
+    },
+    {
+      "mobileKey": "contentUnavailable",
+      "mobileId": "56:83",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "global-states",
+      "title": "内容状态已变化"
+    },
+    {
+      "mobileKey": "permission",
+      "mobileId": "56:84",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "global-states",
+      "title": "不提供定位也可以"
+    },
+    {
+      "mobileKey": "sightingSent",
+      "mobileId": "63:1361",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "线索已收到"
+    },
+    {
+      "mobileKey": "following",
+      "mobileId": "106:1387",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "关注"
+    },
+    {
+      "mobileKey": "localFeed",
+      "mobileId": "106:1388",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "武汉同城"
+    },
+    {
+      "mobileKey": "postLiked",
+      "mobileId": "106:1389",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "晒宠日常"
+    },
+    {
+      "mobileKey": "postMine",
+      "mobileId": "106:1390",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "我的晒宠"
+    },
+    {
+      "mobileKey": "dogPost",
+      "mobileId": "106:1391",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "晒宠日常"
+    },
+    {
+      "mobileKey": "otherPost",
+      "mobileId": "106:1392",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "晒宠日常"
+    },
+    {
+      "mobileKey": "comments",
+      "mobileId": "106:1393",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "全部评论"
+    },
+    {
+      "mobileKey": "commentsWriting",
+      "mobileId": "106:1394",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "写评论"
+    },
+    {
+      "mobileKey": "commentPosted",
+      "mobileId": "106:1395",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "全部评论"
+    },
+    {
+      "mobileKey": "commentReplies",
+      "mobileId": "106:1396",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "评论与回复"
+    },
+    {
+      "mobileKey": "postActions",
+      "mobileId": "106:1397",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "内容操作"
+    },
+    {
+      "mobileKey": "commentActions",
+      "mobileId": "106:1398",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "评论操作"
+    },
+    {
+      "mobileKey": "ownPostActions",
+      "mobileId": "106:1399",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "我的内容操作"
+    },
+    {
+      "mobileKey": "deletePost",
+      "mobileId": "106:1400",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "删除这篇日常？"
+    },
+    {
+      "mobileKey": "contentHidden",
+      "mobileId": "106:1401",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "内容状态已变化"
+    },
+    {
+      "mobileKey": "authorProfile",
+      "mobileId": "106:1402",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "宠友主页"
+    },
+    {
+      "mobileKey": "dogProfile",
+      "mobileId": "106:1403",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "宠友主页"
+    },
+    {
+      "mobileKey": "otherProfile",
+      "mobileId": "106:1404",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "宠友主页"
+    },
+    {
+      "mobileKey": "authorFollowing",
+      "mobileId": "106:1405",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "宠友主页"
+    },
+    {
+      "mobileKey": "profileActions",
+      "mobileId": "106:1406",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "账号与隐私"
+    },
+    {
+      "mobileKey": "interactionInbox",
+      "mobileId": "106:1407",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "互动通知"
+    },
+    {
+      "mobileKey": "systemInbox",
+      "mobileId": "106:1408",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "系统通知"
+    },
+    {
+      "mobileKey": "privateChat",
+      "mobileId": "106:1409",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "布丁的铲屎官"
+    },
+    {
+      "mobileKey": "privateSent",
+      "mobileId": "106:1410",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "布丁的铲屎官"
+    },
+    {
+      "mobileKey": "privateFailed",
+      "mobileId": "106:1411",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "布丁的铲屎官"
+    },
+    {
+      "mobileKey": "messageRequests",
+      "mobileId": "106:1412",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "消息请求"
+    },
+    {
+      "mobileKey": "requestDetail",
+      "mobileId": "106:1413",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "新的私信请求"
+    },
+    {
+      "mobileKey": "requestAccepted",
+      "mobileId": "106:1414",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "奶糖饲养员"
+    },
+    {
+      "mobileKey": "requestSent",
+      "mobileId": "106:1415",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "布丁的铲屎官"
+    },
+    {
+      "mobileKey": "requestWaiting",
+      "mobileId": "106:1416",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "等待对方接受"
+    },
+    {
+      "mobileKey": "privateUnavailable",
+      "mobileId": "106:1417",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "暂时无法发私信"
+    },
+    {
+      "mobileKey": "privateSettings",
+      "mobileId": "106:1418",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "聊天隐私"
+    },
+    {
+      "mobileKey": "privateActions",
+      "mobileId": "106:1419",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "会话操作"
+    },
+    {
+      "mobileKey": "messageActions",
+      "mobileId": "106:1420",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "消息操作"
+    },
+    {
+      "mobileKey": "blockConfirm",
+      "mobileId": "106:1421",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "拉黑这位用户？"
+    },
+    {
+      "mobileKey": "blockedResult",
+      "mobileId": "106:1422",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "已限制联系"
+    },
+    {
+      "mobileKey": "postPublished",
+      "mobileId": "106:1423",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "日常已发布"
+    },
+    {
+      "mobileKey": "mediaPermission",
+      "mobileId": "106:1424",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "publishing-media",
+      "title": "照片选择说明"
+    },
+    {
+      "mobileKey": "careGuide",
+      "mobileId": "106:1425",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "community",
+      "title": "养宠指南"
+    },
+    {
+      "mobileKey": "reportPost",
+      "mobileId": "106:1426",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报内容"
+    },
+    {
+      "mobileKey": "reportPostSent",
+      "mobileId": "106:1427",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报已收到"
+    },
+    {
+      "mobileKey": "reportComment",
+      "mobileId": "106:1428",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报评论"
+    },
+    {
+      "mobileKey": "reportCommentSent",
+      "mobileId": "106:1429",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报已收到"
+    },
+    {
+      "mobileKey": "reportUser",
+      "mobileId": "106:1430",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报账号"
+    },
+    {
+      "mobileKey": "reportUserSent",
+      "mobileId": "106:1431",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报已收到"
+    },
+    {
+      "mobileKey": "reportMessage",
+      "mobileId": "106:1432",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报消息"
+    },
+    {
+      "mobileKey": "reportMessageSent",
+      "mobileId": "106:1433",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报已收到"
+    },
+    {
+      "mobileKey": "moderationProgress",
+      "mobileId": "106:1434",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报处理进度"
+    },
+    {
+      "mobileKey": "groups",
+      "mobileId": "106:1435",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "宠友群聊"
+    },
+    {
+      "mobileKey": "groupDiscover",
+      "mobileId": "106:1436",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "发现宠友群"
+    },
+    {
+      "mobileKey": "groupIntro",
+      "mobileId": "106:1437",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "武汉猫友日常"
+    },
+    {
+      "mobileKey": "groupJoinPending",
+      "mobileId": "106:1438",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "入群申请已收到"
+    },
+    {
+      "mobileKey": "groupChat",
+      "mobileId": "106:1439",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "武汉猫友日常"
+    },
+    {
+      "mobileKey": "groupSent",
+      "mobileId": "106:1440",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "武汉猫友日常"
+    },
+    {
+      "mobileKey": "groupInfo",
+      "mobileId": "106:1441",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "群资料"
+    },
+    {
+      "mobileKey": "groupNotice",
+      "mobileId": "106:1442",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "群公告"
+    },
+    {
+      "mobileKey": "groupMembers",
+      "mobileId": "106:1443",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "群成员"
+    },
+    {
+      "mobileKey": "groupMessageActions",
+      "mobileId": "106:1444",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "群消息操作"
+    },
+    {
+      "mobileKey": "groupCreate",
+      "mobileId": "106:1445",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "创建宠友群"
+    },
+    {
+      "mobileKey": "groupCreateReview",
+      "mobileId": "106:1446",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "检查群资料"
+    },
+    {
+      "mobileKey": "groupOwnerChat",
+      "mobileId": "106:1447",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "小满和朋友们"
+    },
+    {
+      "mobileKey": "groupAdmin",
+      "mobileId": "106:1448",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "管理宠友群"
+    },
+    {
+      "mobileKey": "groupNoticeEdit",
+      "mobileId": "106:1449",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "编辑群公告"
+    },
+    {
+      "mobileKey": "groupJoinReview",
+      "mobileId": "106:1450",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "审核入群申请"
+    },
+    {
+      "mobileKey": "groupAdminReviewed",
+      "mobileId": "106:1451",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "入群审核结果"
+    },
+    {
+      "mobileKey": "groupMemberManage",
+      "mobileId": "106:1452",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "成员管理"
+    },
+    {
+      "mobileKey": "groupMemberConfirm",
+      "mobileId": "106:1453",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "确认成员操作"
+    },
+    {
+      "mobileKey": "groupMuted",
+      "mobileId": "106:1454",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "本群暂不可发言"
+    },
+    {
+      "mobileKey": "groupLeave",
+      "mobileId": "106:1455",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "退出这个群？"
+    },
+    {
+      "mobileKey": "groupUnavailable",
+      "mobileId": "106:1456",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "群聊暂不可用"
+    },
+    {
+      "mobileKey": "groupDissolve",
+      "mobileId": "106:1457",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "groups",
+      "title": "群主转让与解散"
+    },
+    {
+      "mobileKey": "reportGroup",
+      "mobileId": "106:1458",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报群聊"
+    },
+    {
+      "mobileKey": "reportGroupSent",
+      "mobileId": "106:1459",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "群聊举报已收到"
+    },
+    {
+      "mobileKey": "reportGroupMessage",
+      "mobileId": "106:1460",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "举报群消息"
+    },
+    {
+      "mobileKey": "reportGroupMessageSent",
+      "mobileId": "106:1461",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "verification-reports",
+      "title": "群消息举报已收到"
+    },
+    {
+      "mobileKey": "circleFeed",
+      "mobileId": "142:2863",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "宠友圈"
+    },
+    {
+      "mobileKey": "circleEmpty",
+      "mobileId": "142:2864",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "宠友圈"
+    },
+    {
+      "mobileKey": "circleFriends",
+      "mobileId": "142:2865",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "我的宠友"
+    },
+    {
+      "mobileKey": "circleRequest",
+      "mobileId": "142:2866",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "添加宠友"
+    },
+    {
+      "mobileKey": "circleRequestWaiting",
+      "mobileId": "142:2867",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "等待对方确认"
+    },
+    {
+      "mobileKey": "circleRequestReceived",
+      "mobileId": "142:2868",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "circle-friends",
+      "title": "新的宠友申请"
+    },
+    {
+      "mobileKey": "circleFriendProfile",
+      "mobileId": "142:2869",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "宠友主页"
+    },
+    {
+      "mobileKey": "circleCompose",
+      "mobileId": "142:2870",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "写日常"
+    },
+    {
+      "mobileKey": "circlePhotoChoose",
+      "mobileId": "142:2871",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "选择照片"
+    },
+    {
+      "mobileKey": "circleAudience",
+      "mobileId": "142:2872",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "谁可以看"
+    },
+    {
+      "mobileKey": "circleAudiencePrivate",
+      "mobileId": "142:2873",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "仅自己可见"
+    },
+    {
+      "mobileKey": "circleSelectFriends",
+      "mobileId": "142:2874",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "选择本次宠友"
+    },
+    {
+      "mobileKey": "circlePrivatePetWarning",
+      "mobileId": "142:2875",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "仅分享这条内容"
+    },
+    {
+      "mobileKey": "circlePublicConfirm",
+      "mobileId": "142:2876",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "公开到社区"
+    },
+    {
+      "mobileKey": "circlePublicPreview",
+      "mobileId": "142:2877",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "公开日常预览"
+    },
+    {
+      "mobileKey": "circleLocation",
+      "mobileId": "142:2878",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "日常位置"
+    },
+    {
+      "mobileKey": "circlePreview",
+      "mobileId": "142:2879",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "日常预览"
+    },
+    {
+      "mobileKey": "circlePublished",
+      "mobileId": "142:2880",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "已发布给宠友"
+    },
+    {
+      "mobileKey": "circleDetail",
+      "mobileId": "142:2881",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "这条日常"
+    },
+    {
+      "mobileKey": "circleLiked",
+      "mobileId": "142:2882",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "这条日常"
+    },
+    {
+      "mobileKey": "circleComments",
+      "mobileId": "142:2883",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "评论与回复"
+    },
+    {
+      "mobileKey": "circleCommentReply",
+      "mobileId": "142:2884",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "回复团子"
+    },
+    {
+      "mobileKey": "circleCommentSent",
+      "mobileId": "142:2885",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "评论已发布"
+    },
+    {
+      "mobileKey": "circlePhotoViewer",
+      "mobileId": "142:2886",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "照片"
+    },
+    {
+      "mobileKey": "circleExpression",
+      "mobileId": "142:2887",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "全站表情"
+    },
+    {
+      "mobileKey": "circleOwnPostSettings",
+      "mobileId": "142:2888",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "管理这条日常"
+    },
+    {
+      "mobileKey": "circleTightenConfirm",
+      "mobileId": "142:2889",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "收紧这条日常"
+    },
+    {
+      "mobileKey": "circleDeleteConfirm",
+      "mobileId": "142:2890",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "删除日常"
+    },
+    {
+      "mobileKey": "circleUnavailable",
+      "mobileId": "142:2891",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "内容暂不可见"
+    },
+    {
+      "mobileKey": "circleFriendSettings",
+      "mobileId": "142:2892",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "宠友关系"
+    },
+    {
+      "mobileKey": "circleFriendRemove",
+      "mobileId": "142:2893",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "移除这位宠友"
+    },
+    {
+      "mobileKey": "circleReport",
+      "mobileId": "142:2894",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "报告这条日常"
+    },
+    {
+      "mobileKey": "circleDraftFailure",
+      "mobileId": "142:2895",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "保留日常草稿"
+    },
+    {
+      "mobileKey": "circleReactionPicker",
+      "mobileId": "142:2896",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "选择表态"
+    },
+    {
+      "mobileKey": "circlePostActions",
+      "mobileId": "142:2897",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "日常操作"
+    },
+    {
+      "mobileKey": "circleReplyAuthor",
+      "mobileId": "142:2898",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "回复布丁的铲屎官"
+    },
+    {
+      "mobileKey": "circleExcludeFriends",
+      "mobileId": "142:2899",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "不给谁看"
+    },
+    {
+      "mobileKey": "circlePartialPreview",
+      "mobileId": "142:2900",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "检查本条分享范围"
+    },
+    {
+      "mobileKey": "circleExcludedPreview",
+      "mobileId": "142:2901",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "检查本条分享范围"
+    },
+    {
+      "mobileKey": "circlePartialDone",
+      "mobileId": "142:2902",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "已发布日常"
+    },
+    {
+      "mobileKey": "circleExcludedDone",
+      "mobileId": "142:2903",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "circle-friends",
+      "title": "已发布日常"
+    },
+    {
+      "mobileKey": "petsList",
+      "mobileId": "142:2904",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "我的宠物"
+    },
+    {
+      "mobileKey": "petsEmpty",
+      "mobileId": "142:2905",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "我的宠物"
+    },
+    {
+      "mobileKey": "petCreate",
+      "mobileId": "142:2906",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "添加宠物"
+    },
+    {
+      "mobileKey": "petCreateCat",
+      "mobileId": "142:2907",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "填写宠物资料"
+    },
+    {
+      "mobileKey": "petCreateDog",
+      "mobileId": "142:2908",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "填写宠物资料"
+    },
+    {
+      "mobileKey": "petCreateOther",
+      "mobileId": "142:2909",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "填写宠物资料"
+    },
+    {
+      "mobileKey": "petCreated",
+      "mobileId": "142:2910",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "宠物档案已创建"
+    },
+    {
+      "mobileKey": "petEdit",
+      "mobileId": "142:2911",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "编辑小满资料"
+    },
+    {
+      "mobileKey": "petDog",
+      "mobileId": "142:2912",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "豆豆的主页"
+    },
+    {
+      "mobileKey": "petOther",
+      "mobileId": "142:2913",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "奶糖的主页"
+    },
+    {
+      "mobileKey": "petDogDiary",
+      "mobileId": "142:2914",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "豆豆的日记"
+    },
+    {
+      "mobileKey": "petOtherDiary",
+      "mobileId": "142:2915",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "奶糖的日记"
+    },
+    {
+      "mobileKey": "petVisibility",
+      "mobileId": "142:2916",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "宠物档案可见性"
+    },
+    {
+      "mobileKey": "petVisibilityReview",
+      "mobileId": "142:2917",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "检查资料共享"
+    },
+    {
+      "mobileKey": "petVisibilitySaved",
+      "mobileId": "142:2918",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "可见范围已保存"
+    },
+    {
+      "mobileKey": "petDiary",
+      "mobileId": "142:2919",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "小满的图文日记"
+    },
+    {
+      "mobileKey": "diaryEntry",
+      "mobileId": "142:2920",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "小满的这条日记"
+    },
+    {
+      "mobileKey": "diaryCompose",
+      "mobileId": "142:2921",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "写小满的日记"
+    },
+    {
+      "mobileKey": "diaryAudience",
+      "mobileId": "142:2922",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "日记可见性"
+    },
+    {
+      "mobileKey": "diaryShareWarning",
+      "mobileId": "142:2923",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "分享本条日记"
+    },
+    {
+      "mobileKey": "diaryPreview",
+      "mobileId": "142:2924",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "私密日记预览"
+    },
+    {
+      "mobileKey": "diarySharedPreview",
+      "mobileId": "142:2925",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "朋友日记预览"
+    },
+    {
+      "mobileKey": "diaryPublished",
+      "mobileId": "142:2926",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "日记已保存"
+    },
+    {
+      "mobileKey": "diaryEntryShared",
+      "mobileId": "142:2927",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "分享过的日常"
+    },
+    {
+      "mobileKey": "diaryDraftExit",
+      "mobileId": "142:2928",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "离开编辑"
+    },
+    {
+      "mobileKey": "diaryDraftFailure",
+      "mobileId": "142:2929",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "保存失败，内容还在"
+    },
+    {
+      "mobileKey": "diaryPrivateResult",
+      "mobileId": "142:2930",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "这条已改为仅自己"
+    },
+    {
+      "mobileKey": "diaryDeleteConfirm",
+      "mobileId": "142:2931",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "删除这条日记"
+    },
+    {
+      "mobileKey": "diaryDeleted",
+      "mobileId": "142:2932",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "这条日记已删除"
+    },
+    {
+      "mobileKey": "petStatus",
+      "mobileId": "142:2933",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "小满的当前状态"
+    },
+    {
+      "mobileKey": "petMarkMissing",
+      "mobileId": "142:2934",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "标记小满走失"
+    },
+    {
+      "mobileKey": "petMissingPrivate",
+      "mobileId": "142:2935",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "私人走失状态"
+    },
+    {
+      "mobileKey": "petMarkMistake",
+      "mobileId": "142:2936",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "撤销误标"
+    },
+    {
+      "mobileKey": "lostFromPetDraft",
+      "mobileId": "142:2937",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "发布小满走失求助"
+    },
+    {
+      "mobileKey": "lostPhotoEdit",
+      "mobileId": "142:2938",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "补充小满照片"
+    },
+    {
+      "mobileKey": "lostFromPetDisclosure",
+      "mobileId": "142:2939",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "确认公开范围"
+    },
+    {
+      "mobileKey": "lostPublicConsent",
+      "mobileId": "142:2940",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "同意展示本次求助"
+    },
+    {
+      "mobileKey": "lostFromPetPreview",
+      "mobileId": "142:2941",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "求助发布预览"
+    },
+    {
+      "mobileKey": "lostFromPetPending",
+      "mobileId": "142:2942",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "求助审核中"
+    },
+    {
+      "mobileKey": "lostSubmitFailure",
+      "mobileId": "142:2943",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "提交暂未完成"
+    },
+    {
+      "mobileKey": "lostDraftExit",
+      "mobileId": "142:2944",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "保留求助草稿"
+    },
+    {
+      "mobileKey": "lostFromPetActive",
+      "mobileId": "142:2945",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "小满的公开求助"
+    },
+    {
+      "mobileKey": "lostFromPetManage",
+      "mobileId": "142:2946",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "维护小满的求助"
+    },
+    {
+      "mobileKey": "lostPrivateLead",
+      "mobileId": "142:2947",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "我可能见过小满"
+    },
+    {
+      "mobileKey": "lostLeadPhoto",
+      "mobileId": "142:2948",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "线索照片说明"
+    },
+    {
+      "mobileKey": "lostLeadReview",
+      "mobileId": "142:2949",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "检查私密线索"
+    },
+    {
+      "mobileKey": "lostLeadFailure",
+      "mobileId": "142:2950",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "线索尚未发送"
+    },
+    {
+      "mobileKey": "lostLeadSent",
+      "mobileId": "142:2951",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "线索已收到"
+    },
+    {
+      "mobileKey": "lostLeadInbox",
+      "mobileId": "142:2952",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "小满的线索"
+    },
+    {
+      "mobileKey": "lostLeadEmpty",
+      "mobileId": "142:2953",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "还没有新线索"
+    },
+    {
+      "mobileKey": "lostLeadDetail",
+      "mobileId": "142:2954",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "核实这条线索"
+    },
+    {
+      "mobileKey": "lostLeadHelpful",
+      "mobileId": "142:2955",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "线索处理已记录"
+    },
+    {
+      "mobileKey": "lostLeadNotMatch",
+      "mobileId": "142:2956",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "线索处理已记录"
+    },
+    {
+      "mobileKey": "lostShareAudience",
+      "mobileId": "142:2957",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "分享小满的求助"
+    },
+    {
+      "mobileKey": "lostShareConfirm",
+      "mobileId": "142:2958",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "确认分享至宠友圈"
+    },
+    {
+      "mobileKey": "lostGroupShareConfirm",
+      "mobileId": "142:2959",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "确认分享至群聊"
+    },
+    {
+      "mobileKey": "lostShared",
+      "mobileId": "142:2960",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "求助卡已分享"
+    },
+    {
+      "mobileKey": "lostGroupShared",
+      "mobileId": "142:2961",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "群内求助卡"
+    },
+    {
+      "mobileKey": "lostFollowed",
+      "mobileId": "142:2962",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "已关注本次进展"
+    },
+    {
+      "mobileKey": "lostFoundConfirm",
+      "mobileId": "142:2963",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "确认小满已找回"
+    },
+    {
+      "mobileKey": "lostFoundReady",
+      "mobileId": "142:2964",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "结束小满的求助"
+    },
+    {
+      "mobileKey": "lostClosing",
+      "mobileId": "142:2965",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "结束处理中"
+    },
+    {
+      "mobileKey": "lostCloseFailure",
+      "mobileId": "142:2966",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "结束尚未全部完成"
+    },
+    {
+      "mobileKey": "lostFoundDone",
+      "mobileId": "142:2967",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "小满已找回"
+    },
+    {
+      "mobileKey": "petHomeFound",
+      "mobileId": "142:2968",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "小满回家了"
+    },
+    {
+      "mobileKey": "lostResolvedShare",
+      "mobileId": "142:2969",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "已更新的分享卡"
+    },
+    {
+      "mobileKey": "lostPauseConfirm",
+      "mobileId": "142:2970",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "暂停公开寻找"
+    },
+    {
+      "mobileKey": "lostPaused",
+      "mobileId": "142:2971",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "公开展示已暂停"
+    },
+    {
+      "mobileKey": "lostOtherEnd",
+      "mobileId": "142:2972",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "其他原因结束"
+    },
+    {
+      "mobileKey": "lostOtherConfirm",
+      "mobileId": "142:2973",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "确认其他原因结束"
+    },
+    {
+      "mobileKey": "lostOtherDone",
+      "mobileId": "142:2974",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "本次求助已结束"
+    },
+    {
+      "mobileKey": "petMissingAgain",
+      "mobileId": "142:2975",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "再次标记走失"
+    },
+    {
+      "mobileKey": "lostAgainDraft",
+      "mobileId": "142:2976",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "新的走失事件草稿"
+    },
+    {
+      "mobileKey": "lostAreaMap",
+      "mobileId": "142:2977",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "小满的区域地图"
+    },
+    {
+      "mobileKey": "lostLeadChat",
+      "mobileId": "142:2978",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "lost-found",
+      "title": "联系这位目击者"
+    },
+    {
+      "mobileKey": "nearbyAlertPreferences",
+      "mobileId": "142:2979",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "附近走失提醒"
+    },
+    {
+      "mobileKey": "nearbyAlertSetup",
+      "mobileId": "142:2980",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "设置附近提醒"
+    },
+    {
+      "mobileKey": "nearbyCenter",
+      "mobileId": "142:2981",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "选择提醒中心"
+    },
+    {
+      "mobileKey": "nearbyLocationExplain",
+      "mobileId": "142:2982",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "使用位置前"
+    },
+    {
+      "mobileKey": "nearbyPermissionDenied",
+      "mobileId": "142:2983",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "定位未授权"
+    },
+    {
+      "mobileKey": "nearbyRadius",
+      "mobileId": "142:2984",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "提醒距离"
+    },
+    {
+      "mobileKey": "nearbyRadiusCustom",
+      "mobileId": "142:2985",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "自定义范围"
+    },
+    {
+      "mobileKey": "nearbyRadiusError",
+      "mobileId": "142:2986",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "距离需要调整"
+    },
+    {
+      "mobileKey": "nearbyReview5",
+      "mobileId": "142:2987",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "检查提醒设置"
+    },
+    {
+      "mobileKey": "nearbyEnabled5",
+      "mobileId": "142:2988",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "附近提醒已开启"
+    },
+    {
+      "mobileKey": "nearbyReview10",
+      "mobileId": "142:2989",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "检查提醒设置"
+    },
+    {
+      "mobileKey": "nearbyEnabled10",
+      "mobileId": "142:2990",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "附近提醒已开启"
+    },
+    {
+      "mobileKey": "nearbyReview25",
+      "mobileId": "142:2991",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "检查提醒设置"
+    },
+    {
+      "mobileKey": "nearbyEnabled25",
+      "mobileId": "142:2992",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "附近提醒已开启"
+    },
+    {
+      "mobileKey": "nearbyReview32",
+      "mobileId": "142:2993",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "检查提醒设置"
+    },
+    {
+      "mobileKey": "nearbyEnabled32",
+      "mobileId": "142:2994",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "附近提醒已开启"
+    },
+    {
+      "mobileKey": "nearbyReview50",
+      "mobileId": "142:2995",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "检查提醒设置"
+    },
+    {
+      "mobileKey": "nearbyEnabled50",
+      "mobileId": "142:2996",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "附近提醒已开启"
+    },
+    {
+      "mobileKey": "nearbyReview100",
+      "mobileId": "142:2997",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "检查提醒设置"
+    },
+    {
+      "mobileKey": "nearbyEnabled100",
+      "mobileId": "142:2998",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "附近提醒已开启"
+    },
+    {
+      "mobileKey": "nearbyReviewShanghai",
+      "mobileId": "142:2999",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "上海提醒设置"
+    },
+    {
+      "mobileKey": "nearbyEnabledShanghai",
+      "mobileId": "142:3000",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "上海附近提醒"
+    },
+    {
+      "mobileKey": "nearbySpecies",
+      "mobileId": "142:3001",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "接收哪些宠物"
+    },
+    {
+      "mobileKey": "nearbySpeciesCat",
+      "mobileId": "142:3002",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "仅猫咪的提醒"
+    },
+    {
+      "mobileKey": "nearbyEnabledCat",
+      "mobileId": "142:3003",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "猫咪提醒已开启"
+    },
+    {
+      "mobileKey": "nearbyNotification",
+      "mobileId": "142:3004",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "提醒方式与频率"
+    },
+    {
+      "mobileKey": "nearbyNotificationExplain",
+      "mobileId": "142:3005",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "系统通知说明"
+    },
+    {
+      "mobileKey": "nearbyOffConfirm",
+      "mobileId": "142:3006",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "nearby",
+      "title": "关闭附近提醒"
+    },
+    {
+      "mobileKey": "adoptionConditions",
+      "mobileId": "142:3007",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "领养条件"
+    },
+    {
+      "mobileKey": "adoptionUpdates",
+      "mobileId": "142:3008",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "小满的持续介绍"
+    },
+    {
+      "mobileKey": "adoptionUpdateDetail",
+      "mobileId": "142:3009",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "小满的这次更新"
+    },
+    {
+      "mobileKey": "adoptionUpdateHistory",
+      "mobileId": "142:3010",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "资料更正记录"
+    },
+    {
+      "mobileKey": "adoptionComments",
+      "mobileId": "142:3011",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "小满的领养交流"
+    },
+    {
+      "mobileKey": "adoptionReply",
+      "mobileId": "142:3012",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "回复这位宠友"
+    },
+    {
+      "mobileKey": "adoptionCommentSent",
+      "mobileId": "142:3013",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "领养交流已发送"
+    },
+    {
+      "mobileKey": "adoptionManage",
+      "mobileId": "142:3014",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "维护这只领养宠物"
+    },
+    {
+      "mobileKey": "adoptionUpdateCompose",
+      "mobileId": "142:3015",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "补充小满介绍"
+    },
+    {
+      "mobileKey": "adoptionUpdatePreview",
+      "mobileId": "142:3016",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "检查新增介绍"
+    },
+    {
+      "mobileKey": "adoptionUpdateFailure",
+      "mobileId": "142:3017",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "更新暂未提交"
+    },
+    {
+      "mobileKey": "adoptionUpdatePending",
+      "mobileId": "142:3018",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "更新审核中"
+    },
+    {
+      "mobileKey": "adoptionUpdateDone",
+      "mobileId": "142:3019",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "adoption",
+      "title": "介绍已补充"
+    },
+    {
+      "mobileKey": "adoptionCaretakers",
+      "mobileId": "142:3020",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "领养介绍协作者"
+    },
+    {
+      "mobileKey": "adoptionCaretakerInvite",
+      "mobileId": "142:3021",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "邀请介绍协作者"
+    },
+    {
+      "mobileKey": "adoptionCaretakerPending",
+      "mobileId": "142:3022",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "等待协作者接受"
+    },
+    {
+      "mobileKey": "exprCircle",
+      "mobileId": "142:3023",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerCircle",
+      "mobileId": "142:3024",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprCircleReady",
+      "mobileId": "142:3025",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprCircleDone",
+      "mobileId": "142:3026",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprDiary",
+      "mobileId": "142:3027",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerDiary",
+      "mobileId": "142:3028",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprDiaryReady",
+      "mobileId": "142:3029",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprDiaryDone",
+      "mobileId": "142:3030",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "日记已保存"
+    },
+    {
+      "mobileKey": "exprCircleComment",
+      "mobileId": "142:3031",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerCircleComment",
+      "mobileId": "142:3032",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprCircleCommentReady",
+      "mobileId": "142:3033",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprCircleCommentDone",
+      "mobileId": "142:3034",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprCircleReply",
+      "mobileId": "142:3035",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerCircleReply",
+      "mobileId": "142:3036",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprCircleReplyReady",
+      "mobileId": "142:3037",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprCircleReplyDone",
+      "mobileId": "142:3038",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprCircleAuthorReply",
+      "mobileId": "142:3039",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerCircleAuthorReply",
+      "mobileId": "142:3040",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprCircleAuthorReplyReady",
+      "mobileId": "142:3041",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprCircleAuthorReplyDone",
+      "mobileId": "142:3042",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprDiaryComment",
+      "mobileId": "142:3043",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerDiaryComment",
+      "mobileId": "142:3044",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprDiaryCommentReady",
+      "mobileId": "142:3045",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprDiaryCommentDone",
+      "mobileId": "142:3046",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprAdoption",
+      "mobileId": "142:3047",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerAdoption",
+      "mobileId": "142:3048",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprAdoptionReady",
+      "mobileId": "142:3049",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprAdoptionDone",
+      "mobileId": "142:3050",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprPrivate",
+      "mobileId": "142:3051",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerPrivate",
+      "mobileId": "142:3052",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprPrivateReady",
+      "mobileId": "142:3053",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprPrivateDone",
+      "mobileId": "142:3054",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprGroup",
+      "mobileId": "142:3055",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerGroup",
+      "mobileId": "142:3056",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprGroupReady",
+      "mobileId": "142:3057",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprGroupDone",
+      "mobileId": "142:3058",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprLead",
+      "mobileId": "142:3059",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerLead",
+      "mobileId": "142:3060",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprLeadReady",
+      "mobileId": "142:3061",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprLeadDone",
+      "mobileId": "142:3062",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprMilkReply",
+      "mobileId": "142:3063",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerMilkReply",
+      "mobileId": "142:3064",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprMilkReplyReady",
+      "mobileId": "142:3065",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprMilkReplyDone",
+      "mobileId": "142:3066",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprAuthorReply",
+      "mobileId": "142:3067",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerAuthorReply",
+      "mobileId": "142:3068",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprAuthorReplyReady",
+      "mobileId": "142:3069",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprAuthorReplyDone",
+      "mobileId": "142:3070",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "replyMilk",
+      "mobileId": "142:3071",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "回复奶糖饲养员"
+    },
+    {
+      "mobileKey": "replyAuthor",
+      "mobileId": "142:3072",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "messages",
+      "title": "回复作者布丁"
+    },
+    {
+      "mobileKey": "ownDiaryComments",
+      "mobileId": "142:3073",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "小满的日常交流"
+    },
+    {
+      "mobileKey": "diaryPhotoViewer",
+      "mobileId": "142:3074",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "小满的照片"
+    },
+    {
+      "mobileKey": "petDogVisibility",
+      "mobileId": "142:3075",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "豆豆的资料权限"
+    },
+    {
+      "mobileKey": "petOtherVisibility",
+      "mobileId": "142:3076",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "pet-diary",
+      "title": "奶糖的资料权限"
+    },
+    {
+      "mobileKey": "exprPublicComment",
+      "mobileId": "151:2",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerPublicComment",
+      "mobileId": "151:3",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprPublicCommentReady",
+      "mobileId": "151:4",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprPublicCommentDone",
+      "mobileId": "151:5",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprPublicReply",
+      "mobileId": "151:6",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerPublicReply",
+      "mobileId": "151:7",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprPublicReplyReady",
+      "mobileId": "151:8",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprPublicReplyDone",
+      "mobileId": "151:9",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprAcceptedPrivate",
+      "mobileId": "151:10",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerAcceptedPrivate",
+      "mobileId": "151:11",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprAcceptedPrivateReady",
+      "mobileId": "151:12",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprAcceptedPrivateDone",
+      "mobileId": "151:13",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprOwnerGroup",
+      "mobileId": "151:14",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸"
+    },
+    {
+      "mobileKey": "stickerOwnerGroup",
+      "mobileId": "151:15",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "静态贴纸"
+    },
+    {
+      "mobileKey": "exprOwnerGroupReady",
+      "mobileId": "151:16",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "发送前检查"
+    },
+    {
+      "mobileKey": "exprOwnerGroupDone",
+      "mobileId": "151:17",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "表达已完成"
+    },
+    {
+      "mobileKey": "exprCircleClosed",
+      "mobileId": "210:141726",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprCircle · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprDiaryClosed",
+      "mobileId": "210:141727",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprDiary · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprCircleCommentClosed",
+      "mobileId": "210:141728",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprCircleComment · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprCircleReplyClosed",
+      "mobileId": "210:141729",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprCircleReply · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprCircleAuthorReplyClosed",
+      "mobileId": "210:141730",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprCircleAuthorReply · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprDiaryCommentClosed",
+      "mobileId": "210:141731",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprDiaryComment · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprAdoptionClosed",
+      "mobileId": "210:141732",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprAdoption · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprPrivateClosed",
+      "mobileId": "210:141733",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprPrivate · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprGroupClosed",
+      "mobileId": "210:141734",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprGroup · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprLeadClosed",
+      "mobileId": "210:141735",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprLead · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprMilkReplyClosed",
+      "mobileId": "210:141736",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprMilkReply · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprAuthorReplyClosed",
+      "mobileId": "210:141737",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprAuthorReply · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprPublicCommentClosed",
+      "mobileId": "210:141738",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprPublicComment · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprPublicReplyClosed",
+      "mobileId": "210:141739",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprPublicReply · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprAcceptedPrivateClosed",
+      "mobileId": "210:141740",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprAcceptedPrivate · 收起输入面板"
+    },
+    {
+      "mobileKey": "exprOwnerGroupClosed",
+      "mobileId": "210:141741",
+      "sourceLedger": "mobile-closure-state.json",
+      "module": "expressions",
+      "title": "exprOwnerGroup · 收起输入面板"
+    },
+    {
+      "mobileKey": "authIOS",
+      "mobileId": "238:371719",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "登录 / 注册"
+    },
+    {
+      "mobileKey": "authKnown",
+      "mobileId": "238:371720",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "欢迎回来"
+    },
+    {
+      "mobileKey": "authPhoneError",
+      "mobileId": "238:371721",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "请检查手机号"
+    },
+    {
+      "mobileKey": "authCodeResent",
+      "mobileId": "238:371722",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "验证码已重发"
+    },
+    {
+      "mobileKey": "authCodeExpired",
+      "mobileId": "238:371723",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "验证码已过期"
+    },
+    {
+      "mobileKey": "authSmsDelayed",
+      "mobileId": "238:371724",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "暂时没有收到短信"
+    },
+    {
+      "mobileKey": "authRateLimited",
+      "mobileId": "238:371725",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "操作有些频繁"
+    },
+    {
+      "mobileKey": "authNetworkError",
+      "mobileId": "238:371726",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "连接暂时中断"
+    },
+    {
+      "mobileKey": "authProviderUnavailable",
+      "mobileId": "238:371727",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "暂时无法使用这种方式"
+    },
+    {
+      "mobileKey": "authProviderCancelled",
+      "mobileId": "238:371728",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "已取消授权"
+    },
+    {
+      "mobileKey": "authCallbackExpired",
+      "mobileId": "238:371729",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "授权已失效"
+    },
+    {
+      "mobileKey": "authSessionExpired",
+      "mobileId": "238:371730",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "登录状态已过期"
+    },
+    {
+      "mobileKey": "authProvider_wechat",
+      "mobileId": "238:371731",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "通过微信登录"
+    },
+    {
+      "mobileKey": "authProvider_qq",
+      "mobileId": "238:371732",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "通过QQ登录"
+    },
+    {
+      "mobileKey": "authProvider_apple",
+      "mobileId": "238:371733",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "通过Apple登录"
+    },
+    {
+      "mobileKey": "authFirst",
+      "mobileId": "238:371734",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "欢迎使用 M&D"
+    },
+    {
+      "mobileKey": "authSuccess",
+      "mobileId": "238:371735",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "登录成功"
+    },
+    {
+      "mobileKey": "authProfileOptional",
+      "mobileId": "238:371736",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "设置你的资料"
+    },
+    {
+      "mobileKey": "authLinkExisting",
+      "mobileId": "238:371737",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "关联已有账号"
+    },
+    {
+      "mobileKey": "authLinkConfirm",
+      "mobileId": "238:371738",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "确认账号关联"
+    },
+    {
+      "mobileKey": "authConflict",
+      "mobileId": "238:371739",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "这个登录方式已有关联"
+    },
+    {
+      "mobileKey": "authPassword",
+      "mobileId": "238:371740",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "密码登录"
+    },
+    {
+      "mobileKey": "authPasswordRecovery",
+      "mobileId": "238:371741",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "找回密码"
+    },
+    {
+      "mobileKey": "authPasswordReset",
+      "mobileId": "238:371742",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "设置新密码"
+    },
+    {
+      "mobileKey": "authPasswordDone",
+      "mobileId": "238:371743",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "密码已更新"
+    },
+    {
+      "mobileKey": "authRestricted",
+      "mobileId": "238:371744",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "账号暂时受限"
+    },
+    {
+      "mobileKey": "authPhoneSupplement",
+      "mobileId": "238:371745",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "验证手机号"
+    },
+    {
+      "mobileKey": "authAccounts",
+      "mobileId": "238:371746",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "账号与登录方式"
+    },
+    {
+      "mobileKey": "authBindConfirm",
+      "mobileId": "238:371747",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "关联登录方式"
+    },
+    {
+      "mobileKey": "authUnbindConfirm",
+      "mobileId": "238:371748",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "解除登录关联"
+    },
+    {
+      "mobileKey": "authLastMethod",
+      "mobileId": "238:371749",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "先保留一种登录方式"
+    },
+    {
+      "mobileKey": "authChangePhone",
+      "mobileId": "238:371750",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "更换手机号"
+    },
+    {
+      "mobileKey": "authNewPhone",
+      "mobileId": "238:371751",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "验证新手机号"
+    },
+    {
+      "mobileKey": "authPhoneChanged",
+      "mobileId": "238:371752",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "手机号已更新"
+    },
+    {
+      "mobileKey": "authRecovery",
+      "mobileId": "238:371753",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "恢复账号访问"
+    },
+    {
+      "mobileKey": "authRecoveryPending",
+      "mobileId": "238:371754",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "恢复申请已收到"
+    },
+    {
+      "mobileKey": "authLogoutConfirm",
+      "mobileId": "238:371755",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "退出当前账号"
+    },
+    {
+      "mobileKey": "authLoggedOut",
+      "mobileId": "238:371756",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "已退出登录"
+    },
+    {
+      "mobileKey": "authDeleteImpact",
+      "mobileId": "238:371757",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "注销账号前"
+    },
+    {
+      "mobileKey": "authActiveTasks",
+      "mobileId": "238:371758",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "账号中的未完成事项"
+    },
+    {
+      "mobileKey": "authDeleteVerify",
+      "mobileId": "238:371759",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "确认本人操作"
+    },
+    {
+      "mobileKey": "authDeleteProcessing",
+      "mobileId": "238:371760",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "注销申请处理中"
+    },
+    {
+      "mobileKey": "authDeleteStatus",
+      "mobileId": "238:371761",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "注销处理结果"
+    },
+    {
+      "mobileKey": "authDeleteFailure",
+      "mobileId": "238:371762",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "注销暂未完成"
+    },
+    {
+      "mobileKey": "authRevoked",
+      "mobileId": "238:371763",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "登录授权已失效"
+    },
+    {
+      "mobileKey": "authReturnUnavailable",
+      "mobileId": "238:371764",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "原内容暂不可访问"
+    },
+    {
+      "mobileKey": "authTerms",
+      "mobileId": "238:371765",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "服务协议与隐私"
+    },
+    {
+      "mobileKey": "authTermsDetails",
+      "mobileId": "238:371766",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "M&D 服务协议"
+    },
+    {
+      "mobileKey": "authSDKInfo",
+      "mobileId": "238:371767",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "第三方登录说明"
+    },
+    {
+      "mobileKey": "authIntentReview",
+      "mobileId": "238:371768",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "登录后回到哪里"
+    },
+    {
+      "mobileKey": "friendUnconfirmed",
+      "mobileId": "240:368278",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "circle-friends",
+      "title": "宠友资料"
+    },
+    {
+      "mobileKey": "friendPending",
+      "mobileId": "240:368279",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "circle-friends",
+      "title": "等待宠友确认"
+    },
+    {
+      "mobileKey": "friendWithdrawConfirm",
+      "mobileId": "240:368280",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "circle-friends",
+      "title": "撤回申请"
+    },
+    {
+      "mobileKey": "friendRequestDecision",
+      "mobileId": "240:368281",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "circle-friends",
+      "title": "新的宠友申请"
+    },
+    {
+      "mobileKey": "friendRejected",
+      "mobileId": "240:368282",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "circle-friends",
+      "title": "申请已处理"
+    },
+    {
+      "mobileKey": "audienceChanged",
+      "mobileId": "240:368283",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "circle-friends",
+      "title": "可见范围已更新"
+    },
+    {
+      "mobileKey": "helpType",
+      "mobileId": "240:368284",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "发布互助"
+    },
+    {
+      "mobileKey": "foundForm",
+      "mobileId": "240:368285",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "发布拾获信息"
+    },
+    {
+      "mobileKey": "foundPreview",
+      "mobileId": "240:368286",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "确认公开范围"
+    },
+    {
+      "mobileKey": "foundActive",
+      "mobileId": "240:368287",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "拾获互助详情"
+    },
+    {
+      "mobileKey": "claimForm",
+      "mobileId": "240:368288",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "申请认领"
+    },
+    {
+      "mobileKey": "claimPending",
+      "mobileId": "240:368289",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "认领材料已提交"
+    },
+    {
+      "mobileKey": "foundManage",
+      "mobileId": "240:368290",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "管理拾获信息"
+    },
+    {
+      "mobileKey": "claimReview",
+      "mobileId": "240:368291",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "核实认领申请"
+    },
+    {
+      "mobileKey": "claimMatched",
+      "mobileId": "240:368292",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "已核实，等待交接"
+    },
+    {
+      "mobileKey": "claimHandoverWaiting",
+      "mobileId": "240:368293",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "等待另一方确认"
+    },
+    {
+      "mobileKey": "claimHandoverOther",
+      "mobileId": "240:368294",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "确认已接回小满"
+    },
+    {
+      "mobileKey": "claimClosed",
+      "mobileId": "240:368295",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "小满已安全回家"
+    },
+    {
+      "mobileKey": "claimRejected",
+      "mobileId": "240:368296",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "材料暂未匹配"
+    },
+    {
+      "mobileKey": "claimDispute",
+      "mobileId": "240:368297",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "申请核实协助"
+    },
+    {
+      "mobileKey": "claimDisputePending",
+      "mobileId": "240:368298",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "协助申请已记录"
+    },
+    {
+      "mobileKey": "foundWithdraw",
+      "mobileId": "240:368299",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "结束本次拾获求助"
+    },
+    {
+      "mobileKey": "appointmentWaiting",
+      "mobileId": "240:368300",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "等待另一方确认"
+    },
+    {
+      "mobileKey": "appointmentOther",
+      "mobileId": "240:368301",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "确认对方的预约"
+    },
+    {
+      "mobileKey": "appointmentConfirmed",
+      "mobileId": "240:368302",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "预约已确认"
+    },
+    {
+      "mobileKey": "appointmentChangeWaiting",
+      "mobileId": "240:368303",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "等待变更确认"
+    },
+    {
+      "mobileKey": "appointmentChangeReview",
+      "mobileId": "240:368304",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "对方提出变更"
+    },
+    {
+      "mobileKey": "appointmentChangeDeclined",
+      "mobileId": "240:368305",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "变更未通过"
+    },
+    {
+      "mobileKey": "appointmentCancelConfirm",
+      "mobileId": "240:368306",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "取消预约"
+    },
+    {
+      "mobileKey": "appointmentCancelled",
+      "mobileId": "240:368307",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "预约已取消"
+    },
+    {
+      "mobileKey": "appointmentExpired",
+      "mobileId": "240:368308",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "预约确认已过期"
+    },
+    {
+      "mobileKey": "appointmentConflict",
+      "mobileId": "240:368309",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "安排已被更新"
+    },
+    {
+      "mobileKey": "appointmentHistory",
+      "mobileId": "240:368310",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "预约版本记录"
+    },
+    {
+      "mobileKey": "adoptionDecision",
+      "mobileId": "240:368311",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "处理领养申请"
+    },
+    {
+      "mobileKey": "adoptionSupplement",
+      "mobileId": "240:368312",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "请申请人补充"
+    },
+    {
+      "mobileKey": "adoptionSupplementReceived",
+      "mobileId": "240:368313",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "补充领养申请"
+    },
+    {
+      "mobileKey": "adoptionReject",
+      "mobileId": "240:368314",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "暂不通过本次申请"
+    },
+    {
+      "mobileKey": "adoptionRejected",
+      "mobileId": "240:368315",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "本次申请未通过"
+    },
+    {
+      "mobileKey": "trialAgreement",
+      "mobileId": "240:368316",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "确认试养安排"
+    },
+    {
+      "mobileKey": "trialActive",
+      "mobileId": "240:368317",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "试养进行中"
+    },
+    {
+      "mobileKey": "trialExit",
+      "mobileId": "240:368318",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "协商结束试养"
+    },
+    {
+      "mobileKey": "handoverWaiting",
+      "mobileId": "240:368319",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "等待另一方确认"
+    },
+    {
+      "mobileKey": "handoverOther",
+      "mobileId": "240:368320",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "确认收到小满"
+    },
+    {
+      "mobileKey": "handoverComplete",
+      "mobileId": "240:368321",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "交接已完成"
+    },
+    {
+      "mobileKey": "followupSaved",
+      "mobileId": "240:368322",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "照护更新已发送"
+    },
+    {
+      "mobileKey": "adoptionSupport",
+      "mobileId": "240:368323",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "照护与接回协助"
+    },
+    {
+      "mobileKey": "adoptionSupportPending",
+      "mobileId": "240:368324",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "协助请求已发送"
+    },
+    {
+      "mobileKey": "groupTransferChoose",
+      "mobileId": "240:368325",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "选择新群主"
+    },
+    {
+      "mobileKey": "groupTransferConfirm",
+      "mobileId": "240:368326",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "确认转让群主"
+    },
+    {
+      "mobileKey": "groupTransferPending",
+      "mobileId": "240:368327",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "等待接收群主"
+    },
+    {
+      "mobileKey": "groupTransferReceived",
+      "mobileId": "240:368328",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "接收群主邀请"
+    },
+    {
+      "mobileKey": "groupTransferDone",
+      "mobileId": "240:368329",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "群主已转让"
+    },
+    {
+      "mobileKey": "groupTransferDeclined",
+      "mobileId": "240:368330",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "转让未被接受"
+    },
+    {
+      "mobileKey": "groupTransferRevoked",
+      "mobileId": "240:368331",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "转让邀请已撤回"
+    },
+    {
+      "mobileKey": "groupTransferExpired",
+      "mobileId": "240:368332",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "转让邀请已失效"
+    },
+    {
+      "mobileKey": "groupDissolveConfirm",
+      "mobileId": "240:368333",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "确认解散群聊"
+    },
+    {
+      "mobileKey": "groupDissolved",
+      "mobileId": "240:368334",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "群聊已解散"
+    },
+    {
+      "mobileKey": "caretakerInvite",
+      "mobileId": "240:368335",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "邀请照护者"
+    },
+    {
+      "mobileKey": "caretakerPending",
+      "mobileId": "240:368336",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "等待照护者接受"
+    },
+    {
+      "mobileKey": "caretakerReceived",
+      "mobileId": "240:368337",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "收到照护邀请"
+    },
+    {
+      "mobileKey": "caretakerActive",
+      "mobileId": "240:368338",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "已加入照护"
+    },
+    {
+      "mobileKey": "caretakerDeclined",
+      "mobileId": "240:368339",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "已婉拒邀请"
+    },
+    {
+      "mobileKey": "caretakerRevoke",
+      "mobileId": "240:368340",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "撤销照护授权"
+    },
+    {
+      "mobileKey": "caretakerRevoked",
+      "mobileId": "240:368341",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "授权已结束"
+    },
+    {
+      "mobileKey": "caretakerExpired",
+      "mobileId": "240:368342",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "邀请已失效"
+    },
+    {
+      "mobileKey": "notificationSettings",
+      "mobileId": "240:368343",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "notificationMuted",
+      "mobileId": "240:368344",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "notificationGroupMuted",
+      "mobileId": "240:368345",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "notificationProgressMuted",
+      "mobileId": "240:368346",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "notificationAllMuted",
+      "mobileId": "240:368347",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "notificationFrequency",
+      "mobileId": "240:368348",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "提醒频率"
+    },
+    {
+      "mobileKey": "notificationFrequencySaved",
+      "mobileId": "240:368349",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "已使用即时通知"
+    },
+    {
+      "mobileKey": "notificationSummarySaved",
+      "mobileId": "240:368350",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "已改为每日汇总"
+    },
+    {
+      "mobileKey": "notificationSettingsSummary",
+      "mobileId": "240:368351",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "notificationPermission",
+      "mobileId": "240:368352",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "系统通知未开启"
+    },
+    {
+      "mobileKey": "notificationPermissionHelp",
+      "mobileId": "240:368353",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "开启系统通知"
+    },
+    {
+      "mobileKey": "verificationExpired",
+      "mobileId": "240:368354",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "资料需要更新"
+    },
+    {
+      "mobileKey": "verificationSubmit",
+      "mobileId": "240:368355",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "补充核实材料"
+    },
+    {
+      "mobileKey": "verificationPending",
+      "mobileId": "240:368356",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "材料待核实"
+    },
+    {
+      "mobileKey": "verificationResult",
+      "mobileId": "240:368357",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "材料核实结果"
+    },
+    {
+      "mobileKey": "moderationResult",
+      "mobileId": "240:368358",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "举报处理结果"
+    },
+    {
+      "mobileKey": "moderationUnsupported",
+      "mobileId": "240:368359",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "举报处理结果"
+    },
+    {
+      "mobileKey": "appealResolved",
+      "mobileId": "240:368360",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "申诉已处理"
+    },
+    {
+      "mobileKey": "mediaChoose",
+      "mobileId": "238:371770",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "publishing-media",
+      "title": "选择照片"
+    },
+    {
+      "mobileKey": "mediaUploading",
+      "mobileId": "240:368361",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "publishing-media",
+      "title": "正在添加照片"
+    },
+    {
+      "mobileKey": "mediaPartialFailure",
+      "mobileId": "240:368362",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "publishing-media",
+      "title": "有 1 张照片未完成"
+    },
+    {
+      "mobileKey": "mediaReorder",
+      "mobileId": "240:368363",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "publishing-media",
+      "title": "调整照片顺序"
+    },
+    {
+      "mobileKey": "mediaRemoved",
+      "mobileId": "240:368364",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "publishing-media",
+      "title": "已移除 1 张照片"
+    },
+    {
+      "mobileKey": "mediaReady",
+      "mobileId": "240:368365",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "publishing-media",
+      "title": "照片已准备好"
+    },
+    {
+      "mobileKey": "mediaDraftSaved",
+      "mobileId": "240:368366",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "publishing-media",
+      "title": "草稿已保留"
+    },
+    {
+      "mobileKey": "appointmentConfirmedV2",
+      "mobileId": "240:368367",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "预约已确认"
+    },
+    {
+      "mobileKey": "notificationPrivateOnly",
+      "mobileId": "241:368279",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "notificationNoGroup",
+      "mobileId": "241:368280",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "notificationNoProgress",
+      "mobileId": "241:368281",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "settings-notifications",
+      "title": "通知偏好"
+    },
+    {
+      "mobileKey": "expressionReview",
+      "mobileId": "243:369060",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "表情与贴纸评审"
+    },
+    {
+      "mobileKey": "expressionTyping",
+      "mobileId": "243:369061",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "表情连续输入"
+    },
+    {
+      "mobileKey": "expressionCursor",
+      "mobileId": "243:369062",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "在光标位置插入"
+    },
+    {
+      "mobileKey": "expressionDeleted",
+      "mobileId": "243:369063",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "删除一个完整表情"
+    },
+    {
+      "mobileKey": "expressionDraftClosed",
+      "mobileId": "243:369064",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "回到文字输入"
+    },
+    {
+      "mobileKey": "expressionSent",
+      "mobileId": "243:369065",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "消息已发送"
+    },
+    {
+      "mobileKey": "expressionRecent",
+      "mobileId": "243:369066",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "最近与收藏"
+    },
+    {
+      "mobileKey": "expressionFavorite",
+      "mobileId": "243:369067",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "收藏的贴纸"
+    },
+    {
+      "mobileKey": "expressionFavoriteRemoved",
+      "mobileId": "243:369068",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "已移出收藏"
+    },
+    {
+      "mobileKey": "expressionStickerSent",
+      "mobileId": "243:369069",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "贴纸已发送"
+    },
+    {
+      "mobileKey": "expressionNarrow",
+      "mobileId": "243:369070",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "expressions",
+      "title": "表情面板"
+    },
+    {
+      "mobileKey": "authPrivacyDetails",
+      "mobileId": "243:369071",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "M&D 隐私政策"
+    },
+    {
+      "mobileKey": "serviceQuote",
+      "mobileId": "243:369052",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "offers-visits",
+      "title": "确认看猫报价与安排"
+    },
+    {
+      "mobileKey": "serviceConfirmed",
+      "mobileId": "243:369053",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "offers-visits",
+      "title": "看猫安排已确认"
+    },
+    {
+      "mobileKey": "serviceFeedback",
+      "mobileId": "243:369054",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "offers-visits",
+      "title": "到访逐项核对"
+    },
+    {
+      "mobileKey": "serviceQuestion",
+      "mobileId": "243:369055",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "offers-visits",
+      "title": "记录需要核对的项目"
+    },
+    {
+      "mobileKey": "serviceQuestionPending",
+      "mobileId": "243:369056",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "offers-visits",
+      "title": "不符事项已记录"
+    },
+    {
+      "mobileKey": "serviceNoShow",
+      "mobileId": "243:369057",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "offers-visits",
+      "title": "未按约接待"
+    },
+    {
+      "mobileKey": "serviceDone",
+      "mobileId": "243:369058",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "offers-visits",
+      "title": "本次核对已保存"
+    },
+    {
+      "mobileKey": "authNarrow",
+      "mobileId": "243:369072",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "登录 / 注册"
+    },
+    {
+      "mobileKey": "authLargeText",
+      "mobileId": "243:369073",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "auth",
+      "title": "登录 / 注册"
+    },
+    {
+      "mobileKey": "handoverLargeText",
+      "mobileId": "245:370289",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "确认领养交接"
+    },
+    {
+      "mobileKey": "appointmentNarrow",
+      "mobileId": "243:369059",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "确认见面预约"
+    },
+    {
+      "mobileKey": "careTeam",
+      "mobileId": "245:370290",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "小满的照护成员"
+    },
+    {
+      "mobileKey": "publisherCollabReceived",
+      "mobileId": "245:370291",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "收到介绍协作邀请"
+    },
+    {
+      "mobileKey": "publisherCollabActive",
+      "mobileId": "245:370292",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "已加入介绍协作"
+    },
+    {
+      "mobileKey": "publisherCollabDeclined",
+      "mobileId": "245:370293",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "已婉拒协作"
+    },
+    {
+      "mobileKey": "publisherCollabRevoke",
+      "mobileId": "245:370294",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "结束介绍协作"
+    },
+    {
+      "mobileKey": "publisherCollabRevoked",
+      "mobileId": "245:370295",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "介绍协作已结束"
+    },
+    {
+      "mobileKey": "foundBrowse",
+      "mobileId": "245:370304",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "拾获互助"
+    },
+    {
+      "mobileKey": "adoptionCaretakersEmpty",
+      "mobileId": "246:370289",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "领养介绍协作者"
+    },
+    {
+      "mobileKey": "careTeamEmpty",
+      "mobileId": "246:370290",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "小满的照护成员"
+    },
+    {
+      "mobileKey": "trialWaiting",
+      "mobileId": "246:370291",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "等待另一方确认试养"
+    },
+    {
+      "mobileKey": "trialOther",
+      "mobileId": "246:370292",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "adoption",
+      "title": "确认收到的试养安排"
+    },
+    {
+      "mobileKey": "foundMatchedPublic",
+      "mobileId": "246:370293",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "lost-found",
+      "title": "拾获核实进度"
+    },
+    {
+      "mobileKey": "groupMemberInfo",
+      "mobileId": "246:370294",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "宠友群资料"
+    },
+    {
+      "mobileKey": "groupTransferReceiverDone",
+      "mobileId": "250:375478",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "groups",
+      "title": "你已成为群主"
+    },
+    {
+      "mobileKey": "appointmentHistoryV2",
+      "mobileId": "252:371389",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "预约版本记录"
+    },
+    {
+      "mobileKey": "appointmentRestore",
+      "mobileId": "252:371390",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "按原时间重新约定"
+    },
+    {
+      "mobileKey": "appointmentRestoreWaiting",
+      "mobileId": "252:371391",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "V3 等待另一方确认"
+    },
+    {
+      "mobileKey": "appointmentRestoreReview",
+      "mobileId": "252:371392",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "确认新的 V3 安排"
+    },
+    {
+      "mobileKey": "appointmentConfirmedV3",
+      "mobileId": "252:371393",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "appointments",
+      "title": "预约已更新至 V3"
+    },
+    {
+      "mobileKey": "verificationNeedsInfo",
+      "mobileId": "252:371388",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "材料需要补充"
+    },
+    {
+      "mobileKey": "visitFeedbackConsistent",
+      "mobileId": "254:371430",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "记录一致的项目"
+    },
+    {
+      "mobileKey": "visitFeedbackUncertain",
+      "mobileId": "254:371431",
+      "sourceLedger": "mobile-completion-state.json",
+      "module": "verification-reports",
+      "title": "记录暂不能判断"
+    }
+  ],
+  "titles": {
+    "home": "M&D",
+    "homeEmpty": "社区",
+    "city": "选择城市",
+    "search": "搜索",
+    "results": "搜索结果",
+    "post": "晒宠日常",
+    "composePost": "晒晒我的宠物",
+    "postPreview": "发布前预览",
+    "adopt": "领养",
+    "filter": "筛选领养",
+    "detail": "领养详情",
+    "verify": "真实性说明",
+    "apply": "申请领养",
+    "applyReview": "检查申请",
+    "applySent": "申请已发送",
+    "application": "申请进度",
+    "handover": "确认领养交接",
+    "followup": "记录照护更新",
+    "withdrawn": "申请已撤回",
+    "applicationDecision": "处理领养申请",
+    "publishType": "选择发布类型",
+    "petBasics": "宠物基本信息",
+    "petDisclosure": "关系与领养条件",
+    "petEvidence": "支持材料",
+    "petPreview": "检查公开信息",
+    "petPending": "发布状态",
+    "myPublishes": "我的发布",
+    "lostList": "走失互助",
+    "lostMap": "互助地图",
+    "lostDetail": "求助详情",
+    "sighting": "提供私密线索",
+    "sightingReview": "线索共享确认",
+    "lostPublish": "发布互助求助",
+    "lostManage": "求助状态维护",
+    "messages": "消息",
+    "chat": "小满的照护者",
+    "appointment": "确认见面预约",
+    "change": "提出预约变更",
+    "report": "报告问题",
+    "reportReceipt": "已收到报告",
+    "reportProgress": "处理进度",
+    "appeal": "申诉与复核",
+    "publisherResponse": "回应被报告事项",
+    "login": "登录 / 注册",
+    "otp": "输入验证码",
+    "otpError": "验证码不正确",
+    "mine": "我的",
+    "petProfile": "我的宠物",
+    "settings": "设置",
+    "privacy": "隐私与数据",
+    "find": "出售与转让",
+    "saleDetail": "出售详情",
+    "salePublish": "发布出售 / 转让",
+    "salePreview": "检查出售信息",
+    "offline": "连接暂时中断",
+    "noResults": "没有匹配结果",
+    "contentUnavailable": "内容状态已变化",
+    "permission": "不提供定位也可以",
+    "sightingSent": "线索已收到",
+    "following": "关注",
+    "localFeed": "武汉同城",
+    "postLiked": "晒宠日常",
+    "postMine": "我的晒宠",
+    "dogPost": "晒宠日常",
+    "otherPost": "晒宠日常",
+    "comments": "全部评论",
+    "commentsWriting": "写评论",
+    "commentPosted": "全部评论",
+    "commentReplies": "评论与回复",
+    "postActions": "内容操作",
+    "commentActions": "评论操作",
+    "ownPostActions": "我的内容操作",
+    "deletePost": "删除这篇日常？",
+    "contentHidden": "内容状态已变化",
+    "authorProfile": "宠友主页",
+    "dogProfile": "宠友主页",
+    "otherProfile": "宠友主页",
+    "authorFollowing": "宠友主页",
+    "profileActions": "账号与隐私",
+    "interactionInbox": "互动通知",
+    "systemInbox": "系统通知",
+    "privateChat": "布丁的铲屎官",
+    "privateSent": "布丁的铲屎官",
+    "privateFailed": "布丁的铲屎官",
+    "messageRequests": "消息请求",
+    "requestDetail": "新的私信请求",
+    "requestAccepted": "奶糖饲养员",
+    "requestSent": "布丁的铲屎官",
+    "requestWaiting": "等待对方接受",
+    "privateUnavailable": "暂时无法发私信",
+    "privateSettings": "聊天隐私",
+    "privateActions": "会话操作",
+    "messageActions": "消息操作",
+    "blockConfirm": "拉黑这位用户？",
+    "blockedResult": "已限制联系",
+    "postPublished": "日常已发布",
+    "mediaPermission": "照片选择说明",
+    "careGuide": "养宠指南",
+    "reportPost": "举报内容",
+    "reportPostSent": "举报已收到",
+    "reportComment": "举报评论",
+    "reportCommentSent": "举报已收到",
+    "reportUser": "举报账号",
+    "reportUserSent": "举报已收到",
+    "reportMessage": "举报消息",
+    "reportMessageSent": "举报已收到",
+    "moderationProgress": "举报处理进度",
+    "groups": "宠友群聊",
+    "groupDiscover": "发现宠友群",
+    "groupIntro": "武汉猫友日常",
+    "groupJoinPending": "入群申请已收到",
+    "groupChat": "武汉猫友日常",
+    "groupSent": "武汉猫友日常",
+    "groupInfo": "群资料",
+    "groupNotice": "群公告",
+    "groupMembers": "群成员",
+    "groupMessageActions": "群消息操作",
+    "groupCreate": "创建宠友群",
+    "groupCreateReview": "检查群资料",
+    "groupOwnerChat": "小满和朋友们",
+    "groupAdmin": "管理宠友群",
+    "groupNoticeEdit": "编辑群公告",
+    "groupJoinReview": "审核入群申请",
+    "groupAdminReviewed": "入群审核结果",
+    "groupMemberManage": "成员管理",
+    "groupMemberConfirm": "确认成员操作",
+    "groupMuted": "本群暂不可发言",
+    "groupLeave": "退出这个群？",
+    "groupUnavailable": "群聊暂不可用",
+    "groupDissolve": "群主转让与解散",
+    "reportGroup": "举报群聊",
+    "reportGroupSent": "群聊举报已收到",
+    "reportGroupMessage": "举报群消息",
+    "reportGroupMessageSent": "群消息举报已收到",
+    "circleFeed": "宠友圈",
+    "circleEmpty": "宠友圈",
+    "circleFriends": "我的宠友",
+    "circleRequest": "添加宠友",
+    "circleRequestWaiting": "等待对方确认",
+    "circleRequestReceived": "新的宠友申请",
+    "circleFriendProfile": "宠友主页",
+    "circleCompose": "写日常",
+    "circlePhotoChoose": "选择照片",
+    "circleAudience": "谁可以看",
+    "circleAudiencePrivate": "仅自己可见",
+    "circleSelectFriends": "选择本次宠友",
+    "circlePrivatePetWarning": "仅分享这条内容",
+    "circlePublicConfirm": "公开到社区",
+    "circlePublicPreview": "公开日常预览",
+    "circleLocation": "日常位置",
+    "circlePreview": "日常预览",
+    "circlePublished": "已发布给宠友",
+    "circleDetail": "这条日常",
+    "circleLiked": "这条日常",
+    "circleComments": "评论与回复",
+    "circleCommentReply": "回复团子",
+    "circleCommentSent": "评论已发布",
+    "circlePhotoViewer": "照片",
+    "circleExpression": "全站表情",
+    "circleOwnPostSettings": "管理这条日常",
+    "circleTightenConfirm": "收紧这条日常",
+    "circleDeleteConfirm": "删除日常",
+    "circleUnavailable": "内容暂不可见",
+    "circleFriendSettings": "宠友关系",
+    "circleFriendRemove": "移除这位宠友",
+    "circleReport": "报告这条日常",
+    "circleDraftFailure": "保留日常草稿",
+    "circleReactionPicker": "选择表态",
+    "circlePostActions": "日常操作",
+    "circleReplyAuthor": "回复布丁的铲屎官",
+    "circleExcludeFriends": "不给谁看",
+    "circlePartialPreview": "检查本条分享范围",
+    "circleExcludedPreview": "检查本条分享范围",
+    "circlePartialDone": "已发布日常",
+    "circleExcludedDone": "已发布日常",
+    "petsList": "我的宠物",
+    "petsEmpty": "我的宠物",
+    "petCreate": "添加宠物",
+    "petCreateCat": "填写宠物资料",
+    "petCreateDog": "填写宠物资料",
+    "petCreateOther": "填写宠物资料",
+    "petCreated": "宠物档案已创建",
+    "petEdit": "编辑小满资料",
+    "petDog": "豆豆的主页",
+    "petOther": "奶糖的主页",
+    "petDogDiary": "豆豆的日记",
+    "petOtherDiary": "奶糖的日记",
+    "petVisibility": "宠物档案可见性",
+    "petVisibilityReview": "检查资料共享",
+    "petVisibilitySaved": "可见范围已保存",
+    "petDiary": "小满的图文日记",
+    "diaryEntry": "小满的这条日记",
+    "diaryCompose": "写小满的日记",
+    "diaryAudience": "日记可见性",
+    "diaryShareWarning": "分享本条日记",
+    "diaryPreview": "私密日记预览",
+    "diarySharedPreview": "朋友日记预览",
+    "diaryPublished": "日记已保存",
+    "diaryEntryShared": "分享过的日常",
+    "diaryDraftExit": "离开编辑",
+    "diaryDraftFailure": "保存失败，内容还在",
+    "diaryPrivateResult": "这条已改为仅自己",
+    "diaryDeleteConfirm": "删除这条日记",
+    "diaryDeleted": "这条日记已删除",
+    "petStatus": "小满的当前状态",
+    "petMarkMissing": "标记小满走失",
+    "petMissingPrivate": "私人走失状态",
+    "petMarkMistake": "撤销误标",
+    "lostFromPetDraft": "发布小满走失求助",
+    "lostPhotoEdit": "补充小满照片",
+    "lostFromPetDisclosure": "确认公开范围",
+    "lostPublicConsent": "同意展示本次求助",
+    "lostFromPetPreview": "求助发布预览",
+    "lostFromPetPending": "求助审核中",
+    "lostSubmitFailure": "提交暂未完成",
+    "lostDraftExit": "保留求助草稿",
+    "lostFromPetActive": "小满的公开求助",
+    "lostFromPetManage": "维护小满的求助",
+    "lostPrivateLead": "我可能见过小满",
+    "lostLeadPhoto": "线索照片说明",
+    "lostLeadReview": "检查私密线索",
+    "lostLeadFailure": "线索尚未发送",
+    "lostLeadSent": "线索已收到",
+    "lostLeadInbox": "小满的线索",
+    "lostLeadEmpty": "还没有新线索",
+    "lostLeadDetail": "核实这条线索",
+    "lostLeadHelpful": "线索处理已记录",
+    "lostLeadNotMatch": "线索处理已记录",
+    "lostShareAudience": "分享小满的求助",
+    "lostShareConfirm": "确认分享至宠友圈",
+    "lostGroupShareConfirm": "确认分享至群聊",
+    "lostShared": "求助卡已分享",
+    "lostGroupShared": "群内求助卡",
+    "lostFollowed": "已关注本次进展",
+    "lostFoundConfirm": "确认小满已找回",
+    "lostFoundReady": "结束小满的求助",
+    "lostClosing": "结束处理中",
+    "lostCloseFailure": "结束尚未全部完成",
+    "lostFoundDone": "小满已找回",
+    "petHomeFound": "小满回家了",
+    "lostResolvedShare": "已更新的分享卡",
+    "lostPauseConfirm": "暂停公开寻找",
+    "lostPaused": "公开展示已暂停",
+    "lostOtherEnd": "其他原因结束",
+    "lostOtherConfirm": "确认其他原因结束",
+    "lostOtherDone": "本次求助已结束",
+    "petMissingAgain": "再次标记走失",
+    "lostAgainDraft": "新的走失事件草稿",
+    "lostAreaMap": "小满的区域地图",
+    "lostLeadChat": "联系这位目击者",
+    "nearbyAlertPreferences": "附近走失提醒",
+    "nearbyAlertSetup": "设置附近提醒",
+    "nearbyCenter": "选择提醒中心",
+    "nearbyLocationExplain": "使用位置前",
+    "nearbyPermissionDenied": "定位未授权",
+    "nearbyRadius": "提醒距离",
+    "nearbyRadiusCustom": "自定义范围",
+    "nearbyRadiusError": "距离需要调整",
+    "nearbyReview5": "检查提醒设置",
+    "nearbyEnabled5": "附近提醒已开启",
+    "nearbyReview10": "检查提醒设置",
+    "nearbyEnabled10": "附近提醒已开启",
+    "nearbyReview25": "检查提醒设置",
+    "nearbyEnabled25": "附近提醒已开启",
+    "nearbyReview32": "检查提醒设置",
+    "nearbyEnabled32": "附近提醒已开启",
+    "nearbyReview50": "检查提醒设置",
+    "nearbyEnabled50": "附近提醒已开启",
+    "nearbyReview100": "检查提醒设置",
+    "nearbyEnabled100": "附近提醒已开启",
+    "nearbyReviewShanghai": "上海提醒设置",
+    "nearbyEnabledShanghai": "上海附近提醒",
+    "nearbySpecies": "接收哪些宠物",
+    "nearbySpeciesCat": "仅猫咪的提醒",
+    "nearbyEnabledCat": "猫咪提醒已开启",
+    "nearbyNotification": "提醒方式与频率",
+    "nearbyNotificationExplain": "系统通知说明",
+    "nearbyOffConfirm": "关闭附近提醒",
+    "adoptionConditions": "领养条件",
+    "adoptionUpdates": "小满的持续介绍",
+    "adoptionUpdateDetail": "小满的这次更新",
+    "adoptionUpdateHistory": "资料更正记录",
+    "adoptionComments": "小满的领养交流",
+    "adoptionReply": "回复这位宠友",
+    "adoptionCommentSent": "领养交流已发送",
+    "adoptionManage": "维护这只领养宠物",
+    "adoptionUpdateCompose": "补充小满介绍",
+    "adoptionUpdatePreview": "检查新增介绍",
+    "adoptionUpdateFailure": "更新暂未提交",
+    "adoptionUpdatePending": "更新审核中",
+    "adoptionUpdateDone": "介绍已补充",
+    "adoptionCaretakers": "领养介绍协作者",
+    "adoptionCaretakerInvite": "邀请介绍协作者",
+    "adoptionCaretakerPending": "等待协作者接受",
+    "exprCircle": "表情与贴纸",
+    "stickerCircle": "静态贴纸",
+    "exprCircleReady": "发送前检查",
+    "exprCircleDone": "表达已完成",
+    "exprDiary": "表情与贴纸",
+    "stickerDiary": "静态贴纸",
+    "exprDiaryReady": "发送前检查",
+    "exprDiaryDone": "日记已保存",
+    "exprCircleComment": "表情与贴纸",
+    "stickerCircleComment": "静态贴纸",
+    "exprCircleCommentReady": "发送前检查",
+    "exprCircleCommentDone": "表达已完成",
+    "exprCircleReply": "表情与贴纸",
+    "stickerCircleReply": "静态贴纸",
+    "exprCircleReplyReady": "发送前检查",
+    "exprCircleReplyDone": "表达已完成",
+    "exprCircleAuthorReply": "表情与贴纸",
+    "stickerCircleAuthorReply": "静态贴纸",
+    "exprCircleAuthorReplyReady": "发送前检查",
+    "exprCircleAuthorReplyDone": "表达已完成",
+    "exprDiaryComment": "表情与贴纸",
+    "stickerDiaryComment": "静态贴纸",
+    "exprDiaryCommentReady": "发送前检查",
+    "exprDiaryCommentDone": "表达已完成",
+    "exprAdoption": "表情与贴纸",
+    "stickerAdoption": "静态贴纸",
+    "exprAdoptionReady": "发送前检查",
+    "exprAdoptionDone": "表达已完成",
+    "exprPrivate": "表情与贴纸",
+    "stickerPrivate": "静态贴纸",
+    "exprPrivateReady": "发送前检查",
+    "exprPrivateDone": "表达已完成",
+    "exprGroup": "表情与贴纸",
+    "stickerGroup": "静态贴纸",
+    "exprGroupReady": "发送前检查",
+    "exprGroupDone": "表达已完成",
+    "exprLead": "表情与贴纸",
+    "stickerLead": "静态贴纸",
+    "exprLeadReady": "发送前检查",
+    "exprLeadDone": "表达已完成",
+    "exprMilkReply": "表情与贴纸",
+    "stickerMilkReply": "静态贴纸",
+    "exprMilkReplyReady": "发送前检查",
+    "exprMilkReplyDone": "表达已完成",
+    "exprAuthorReply": "表情与贴纸",
+    "stickerAuthorReply": "静态贴纸",
+    "exprAuthorReplyReady": "发送前检查",
+    "exprAuthorReplyDone": "表达已完成",
+    "replyMilk": "回复奶糖饲养员",
+    "replyAuthor": "回复作者布丁",
+    "ownDiaryComments": "小满的日常交流",
+    "diaryPhotoViewer": "小满的照片",
+    "petDogVisibility": "豆豆的资料权限",
+    "petOtherVisibility": "奶糖的资料权限",
+    "moduleHub": "M&D 手机设计总入口",
+    "exprPublicComment": "表情与贴纸",
+    "stickerPublicComment": "静态贴纸",
+    "exprPublicCommentReady": "发送前检查",
+    "exprPublicCommentDone": "表达已完成",
+    "exprPublicReply": "表情与贴纸",
+    "stickerPublicReply": "静态贴纸",
+    "exprPublicReplyReady": "发送前检查",
+    "exprPublicReplyDone": "表达已完成",
+    "exprAcceptedPrivate": "表情与贴纸",
+    "stickerAcceptedPrivate": "静态贴纸",
+    "exprAcceptedPrivateReady": "发送前检查",
+    "exprAcceptedPrivateDone": "表达已完成",
+    "exprOwnerGroup": "表情与贴纸",
+    "stickerOwnerGroup": "静态贴纸",
+    "exprOwnerGroupReady": "发送前检查",
+    "exprOwnerGroupDone": "表达已完成",
+    "authIOS": "登录 / 注册",
+    "authKnown": "欢迎回来",
+    "authPhoneError": "请检查手机号",
+    "authCodeResent": "验证码已重发",
+    "authCodeExpired": "验证码已过期",
+    "authSmsDelayed": "暂时没有收到短信",
+    "authRateLimited": "操作有些频繁",
+    "authNetworkError": "连接暂时中断",
+    "authProviderUnavailable": "暂时无法使用这种方式",
+    "authProviderCancelled": "已取消授权",
+    "authCallbackExpired": "授权已失效",
+    "authSessionExpired": "登录状态已过期",
+    "authProvider_wechat": "通过微信登录",
+    "authProvider_qq": "通过QQ登录",
+    "authProvider_apple": "通过Apple登录",
+    "authFirst": "欢迎使用 M&D",
+    "authSuccess": "登录成功",
+    "authProfileOptional": "设置你的资料",
+    "authLinkExisting": "关联已有账号",
+    "authLinkConfirm": "确认账号关联",
+    "authConflict": "这个登录方式已有关联",
+    "authPassword": "密码登录",
+    "authPasswordRecovery": "找回密码",
+    "authPasswordReset": "设置新密码",
+    "authPasswordDone": "密码已更新",
+    "authRestricted": "账号暂时受限",
+    "authPhoneSupplement": "验证手机号",
+    "authAccounts": "账号与登录方式",
+    "authBindConfirm": "关联登录方式",
+    "authUnbindConfirm": "解除登录关联",
+    "authLastMethod": "先保留一种登录方式",
+    "authChangePhone": "更换手机号",
+    "authNewPhone": "验证新手机号",
+    "authPhoneChanged": "手机号已更新",
+    "authRecovery": "恢复账号访问",
+    "authRecoveryPending": "恢复申请已收到",
+    "authLogoutConfirm": "退出当前账号",
+    "authLoggedOut": "已退出登录",
+    "authDeleteImpact": "注销账号前",
+    "authActiveTasks": "账号中的未完成事项",
+    "authDeleteVerify": "确认本人操作",
+    "authDeleteProcessing": "注销申请处理中",
+    "authDeleteStatus": "注销处理结果",
+    "authDeleteFailure": "注销暂未完成",
+    "authRevoked": "登录授权已失效",
+    "authReturnUnavailable": "原内容暂不可访问",
+    "authTerms": "服务协议与隐私",
+    "authTermsDetails": "M&D 服务协议",
+    "authSDKInfo": "第三方登录说明",
+    "authIntentReview": "登录后回到哪里",
+    "friendUnconfirmed": "宠友资料",
+    "friendPending": "等待宠友确认",
+    "friendWithdrawConfirm": "撤回申请",
+    "friendRequestDecision": "新的宠友申请",
+    "friendRejected": "申请已处理",
+    "audienceChanged": "可见范围已更新",
+    "helpType": "发布互助",
+    "foundForm": "发布拾获信息",
+    "foundPreview": "确认公开范围",
+    "foundActive": "拾获互助详情",
+    "claimForm": "申请认领",
+    "claimPending": "认领材料已提交",
+    "foundManage": "管理拾获信息",
+    "claimReview": "核实认领申请",
+    "claimMatched": "已核实，等待交接",
+    "claimHandoverWaiting": "等待另一方确认",
+    "claimHandoverOther": "确认已接回小满",
+    "claimClosed": "小满已安全回家",
+    "claimRejected": "材料暂未匹配",
+    "claimDispute": "申请核实协助",
+    "claimDisputePending": "协助申请已记录",
+    "foundWithdraw": "结束本次拾获求助",
+    "appointmentWaiting": "等待另一方确认",
+    "appointmentOther": "确认对方的预约",
+    "appointmentConfirmed": "预约已确认",
+    "appointmentChangeWaiting": "等待变更确认",
+    "appointmentChangeReview": "对方提出变更",
+    "appointmentChangeDeclined": "变更未通过",
+    "appointmentCancelConfirm": "取消预约",
+    "appointmentCancelled": "预约已取消",
+    "appointmentExpired": "预约确认已过期",
+    "appointmentConflict": "安排已被更新",
+    "appointmentHistory": "预约版本记录",
+    "adoptionDecision": "处理领养申请",
+    "adoptionSupplement": "请申请人补充",
+    "adoptionSupplementReceived": "补充领养申请",
+    "adoptionReject": "暂不通过本次申请",
+    "adoptionRejected": "本次申请未通过",
+    "trialAgreement": "确认试养安排",
+    "trialActive": "试养进行中",
+    "trialExit": "协商结束试养",
+    "handoverWaiting": "等待另一方确认",
+    "handoverOther": "确认收到小满",
+    "handoverComplete": "交接已完成",
+    "followupSaved": "照护更新已发送",
+    "adoptionSupport": "照护与接回协助",
+    "adoptionSupportPending": "协助请求已发送",
+    "groupTransferChoose": "选择新群主",
+    "groupTransferConfirm": "确认转让群主",
+    "groupTransferPending": "等待接收群主",
+    "groupTransferReceived": "接收群主邀请",
+    "groupTransferDone": "群主已转让",
+    "groupTransferDeclined": "转让未被接受",
+    "groupTransferRevoked": "转让邀请已撤回",
+    "groupTransferExpired": "转让邀请已失效",
+    "groupDissolveConfirm": "确认解散群聊",
+    "groupDissolved": "群聊已解散",
+    "caretakerInvite": "邀请照护者",
+    "caretakerPending": "等待照护者接受",
+    "caretakerReceived": "收到照护邀请",
+    "caretakerActive": "已加入照护",
+    "caretakerDeclined": "已婉拒邀请",
+    "caretakerRevoke": "撤销照护授权",
+    "caretakerRevoked": "授权已结束",
+    "caretakerExpired": "邀请已失效",
+    "notificationSettings": "通知偏好",
+    "notificationMuted": "通知偏好",
+    "notificationGroupMuted": "通知偏好",
+    "notificationProgressMuted": "通知偏好",
+    "notificationAllMuted": "通知偏好",
+    "notificationFrequency": "提醒频率",
+    "notificationFrequencySaved": "已使用即时通知",
+    "notificationSummarySaved": "已改为每日汇总",
+    "notificationSettingsSummary": "通知偏好",
+    "notificationPermission": "系统通知未开启",
+    "notificationPermissionHelp": "开启系统通知",
+    "verificationExpired": "资料需要更新",
+    "verificationSubmit": "补充核实材料",
+    "verificationPending": "材料待核实",
+    "verificationResult": "材料核实结果",
+    "moderationResult": "举报处理结果",
+    "moderationUnsupported": "举报处理结果",
+    "appealResolved": "申诉已处理",
+    "mediaChoose": "选择照片",
+    "mediaUploading": "正在添加照片",
+    "mediaPartialFailure": "有 1 张照片未完成",
+    "mediaReorder": "调整照片顺序",
+    "mediaRemoved": "已移除 1 张照片",
+    "mediaReady": "照片已准备好",
+    "mediaDraftSaved": "草稿已保留",
+    "appointmentConfirmedV2": "预约已确认",
+    "notificationPrivateOnly": "通知偏好",
+    "notificationNoGroup": "通知偏好",
+    "notificationNoProgress": "通知偏好",
+    "expressionReview": "表情与贴纸评审",
+    "expressionTyping": "表情连续输入",
+    "expressionCursor": "在光标位置插入",
+    "expressionDeleted": "删除一个完整表情",
+    "expressionDraftClosed": "回到文字输入",
+    "expressionSent": "消息已发送",
+    "expressionRecent": "最近与收藏",
+    "expressionFavorite": "收藏的贴纸",
+    "expressionFavoriteRemoved": "已移出收藏",
+    "expressionStickerSent": "贴纸已发送",
+    "expressionNarrow": "表情面板",
+    "authPrivacyDetails": "M&D 隐私政策",
+    "serviceQuote": "确认看猫报价与安排",
+    "serviceConfirmed": "看猫安排已确认",
+    "serviceFeedback": "到访逐项核对",
+    "serviceQuestion": "记录需要核对的项目",
+    "serviceQuestionPending": "不符事项已记录",
+    "serviceNoShow": "未按约接待",
+    "serviceDone": "本次核对已保存",
+    "authNarrow": "登录 / 注册",
+    "authLargeText": "登录 / 注册",
+    "handoverLargeText": "确认领养交接",
+    "appointmentNarrow": "确认见面预约",
+    "completionHub": "手机端设计评审",
+    "reviewAuth": "登录与账号评审",
+    "reviewAuthErrors": "登录异常评审",
+    "reviewInteraction": "表情与互动评审",
+    "reviewBusiness": "互助与领养评审",
+    "reviewAppointments": "预约状态评审",
+    "reviewStates": "权限与异常评审",
+    "reviewModeration": "处理结果评审",
+    "reviewResponsive": "窄屏与大字评审",
+    "careTeam": "小满的照护成员",
+    "publisherCollabReceived": "收到介绍协作邀请",
+    "publisherCollabActive": "已加入介绍协作",
+    "publisherCollabDeclined": "已婉拒协作",
+    "publisherCollabRevoke": "结束介绍协作",
+    "publisherCollabRevoked": "介绍协作已结束",
+    "foundBrowse": "拾获互助",
+    "adoptionCaretakersEmpty": "领养介绍协作者",
+    "careTeamEmpty": "小满的照护成员",
+    "trialWaiting": "等待另一方确认试养",
+    "trialOther": "确认收到的试养安排",
+    "foundMatchedPublic": "拾获核实进度",
+    "groupMemberInfo": "宠友群资料",
+    "groupTransferReceiverDone": "你已成为群主",
+    "appointmentHistoryV2": "预约版本记录",
+    "appointmentRestore": "按原时间重新约定",
+    "appointmentRestoreWaiting": "V3 等待另一方确认",
+    "appointmentRestoreReview": "确认新的 V3 安排",
+    "appointmentConfirmedV3": "预约已更新至 V3",
+    "verificationNeedsInfo": "材料需要补充",
+    "visitFeedbackConsistent": "记录一致的项目",
+    "visitFeedbackUncertain": "记录暂不能判断"
+  },
+  "narrowExamples": [
+    {
+      "module": "community",
+      "key": "post"
+    },
+    {
+      "module": "publishing-media",
+      "key": "mediaPartialFailure"
+    },
+    {
+      "module": "adoption",
+      "key": "handoverLargeText"
+    },
+    {
+      "module": "verification-reports",
+      "key": "verificationNeedsInfo"
+    },
+    {
+      "module": "pet-diary",
+      "key": "diaryCompose"
+    },
+    {
+      "module": "lost-found",
+      "key": "claimForm"
+    },
+    {
+      "module": "messages",
+      "key": "privateChat"
+    },
+    {
+      "module": "appointments",
+      "key": "appointmentNarrow"
+    },
+    {
+      "module": "auth",
+      "key": "authLargeText"
+    },
+    {
+      "module": "settings-notifications",
+      "key": "notificationSettings"
+    },
+    {
+      "module": "offers-visits",
+      "key": "serviceQuote"
+    },
+    {
+      "module": "global-states",
+      "key": "offline"
+    },
+    {
+      "module": "groups",
+      "key": "groupTransferConfirm"
+    },
+    {
+      "module": "circle-friends",
+      "key": "circleCompose"
+    },
+    {
+      "module": "nearby",
+      "key": "nearbyRadiusCustom"
+    },
+    {
+      "module": "expressions",
+      "key": "expressionNarrow"
+    }
+  ],
+  "narrowPlatforms": [
+    {
+      "key": "webN",
+      "label": "Web 窄窗",
+      "w": 390,
+      "h": 844
+    },
+    {
+      "key": "tabletN",
+      "label": "平板窄分屏",
+      "w": 744,
+      "h": 1133
+    }
+  ]
+}

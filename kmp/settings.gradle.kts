@@ -22,5 +22,6 @@ dependencyResolutionManagement {
 rootProject.name = "meow-circle-kmp"
 
 include(":shared")
+include(":iosUi")
 include(":androidApp")
 include(":desktopApp")

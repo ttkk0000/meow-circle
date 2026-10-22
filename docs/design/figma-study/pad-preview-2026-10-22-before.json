@@ -1,0 +1,982 @@
+{
+  "date": "2026-10-22",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "initial": {
+    "page": "403:3",
+    "flows": [
+      {
+        "nodeId": "311:25",
+        "name": "平板竖屏 · 完整交互流程"
+      },
+      {
+        "nodeId": "311:26",
+        "name": "平板横屏 · 完整交互流程"
+      },
+      {
+        "nodeId": "311:53",
+        "name": "全流程 · 社区 / Flow 2"
+      },
+      {
+        "nodeId": "311:378834",
+        "name": "全流程 · 发布与素材 / Flow 3"
+      },
+      {
+        "nodeId": "311:378835",
+        "name": "全流程 · 发布与素材 / Flow 4"
+      },
+      {
+        "nodeId": "311:378862",
+        "name": "全流程 · 发布与素材 / Flow 7"
+      },
+      {
+        "nodeId": "311:378863",
+        "name": "全流程 · 发布与素材 / Flow 8"
+      },
+      {
+        "nodeId": "311:379242",
+        "name": "全流程 · 宠物空间 / Flow 3"
+      },
+      {
+        "nodeId": "311:379243",
+        "name": "全流程 · 宠物空间 / Flow 4"
+      },
+      {
+        "nodeId": "311:379262",
+        "name": "全流程 · 宠物空间 / Flow 7"
+      },
+      {
+        "nodeId": "311:379263",
+        "name": "全流程 · 宠物空间 / Flow 8"
+      },
+      {
+        "nodeId": "311:379266",
+        "name": "Flow 11"
+      },
+      {
+        "nodeId": "311:379267",
+        "name": "Flow 12"
+      },
+      {
+        "nodeId": "311:378890",
+        "name": "全流程 · 领养与照护 / Flow 3"
+      },
+      {
+        "nodeId": "311:378891",
+        "name": "全流程 · 领养与照护 / Flow 4"
+      },
+      {
+        "nodeId": "311:378926",
+        "name": "全流程 · 领养与照护 / Flow 7"
+      },
+      {
+        "nodeId": "311:378927",
+        "name": "全流程 · 领养与照护 / Flow 8"
+      },
+      {
+        "nodeId": "311:378958",
+        "name": "全流程 · 领养与照护 / Flow 9"
+      },
+      {
+        "nodeId": "311:379050",
+        "name": "全流程 · 领养与照护 / Flow 12"
+      },
+      {
+        "nodeId": "311:379051",
+        "name": "全流程 · 领养与照护 / Flow 13"
+      },
+      {
+        "nodeId": "311:379058",
+        "name": "全流程 · 领养与照护 / Flow 16"
+      },
+      {
+        "nodeId": "311:379059",
+        "name": "全流程 · 领养与照护 / Flow 17"
+      },
+      {
+        "nodeId": "311:379090",
+        "name": "全流程 · 领养与照护 / Flow 20"
+      },
+      {
+        "nodeId": "311:379091",
+        "name": "全流程 · 领养与照护 / Flow 21"
+      },
+      {
+        "nodeId": "311:379126",
+        "name": "全流程 · 核实与处理 / Flow 3"
+      },
+      {
+        "nodeId": "311:379127",
+        "name": "全流程 · 核实与处理 / Flow 4"
+      },
+      {
+        "nodeId": "311:379150",
+        "name": "全流程 · 核实与处理 / Flow 7"
+      },
+      {
+        "nodeId": "311:379151",
+        "name": "全流程 · 核实与处理 / Flow 8"
+      },
+      {
+        "nodeId": "311:379158",
+        "name": "全流程 · 核实与处理 / Flow 11"
+      },
+      {
+        "nodeId": "311:379159",
+        "name": "全流程 · 核实与处理 / Flow 12"
+      },
+      {
+        "nodeId": "311:379166",
+        "name": "全流程 · 核实与处理 / Flow 15"
+      },
+      {
+        "nodeId": "311:379167",
+        "name": "全流程 · 核实与处理 / Flow 16"
+      },
+      {
+        "nodeId": "311:379174",
+        "name": "全流程 · 核实与处理 / Flow 19"
+      },
+      {
+        "nodeId": "311:379175",
+        "name": "全流程 · 核实与处理 / Flow 20"
+      },
+      {
+        "nodeId": "311:379186",
+        "name": "Flow 23"
+      },
+      {
+        "nodeId": "311:379187",
+        "name": "Flow 24"
+      },
+      {
+        "nodeId": "311:379194",
+        "name": "Flow 27"
+      },
+      {
+        "nodeId": "311:379195",
+        "name": "Flow 28"
+      },
+      {
+        "nodeId": "311:379202",
+        "name": "Flow 29"
+      },
+      {
+        "nodeId": "311:379418",
+        "name": "全流程 · 走失与拾获 / Flow 3"
+      },
+      {
+        "nodeId": "311:379419",
+        "name": "全流程 · 走失与拾获 / Flow 4"
+      },
+      {
+        "nodeId": "311:379430",
+        "name": "Flow 7"
+      },
+      {
+        "nodeId": "311:379431",
+        "name": "Flow 8"
+      },
+      {
+        "nodeId": "311:379438",
+        "name": "Flow 11"
+      },
+      {
+        "nodeId": "311:379439",
+        "name": "Flow 12"
+      },
+      {
+        "nodeId": "311:379442",
+        "name": "Flow 15"
+      },
+      {
+        "nodeId": "311:379443",
+        "name": "Flow 16"
+      },
+      {
+        "nodeId": "311:380158",
+        "name": "全流程 · 好物与到访 / Flow 3"
+      },
+      {
+        "nodeId": "311:380159",
+        "name": "全流程 · 好物与到访 / Flow 4"
+      },
+      {
+        "nodeId": "311:379702",
+        "name": "全流程 · 消息 / Flow 3"
+      },
+      {
+        "nodeId": "311:379703",
+        "name": "全流程 · 消息 / Flow 4"
+      },
+      {
+        "nodeId": "311:379742",
+        "name": "全流程 · 消息 / Flow 7"
+      },
+      {
+        "nodeId": "311:379743",
+        "name": "全流程 · 消息 / Flow 8"
+      },
+      {
+        "nodeId": "311:379782",
+        "name": "全流程 · 预约安排 / Flow 3"
+      },
+      {
+        "nodeId": "311:379783",
+        "name": "全流程 · 预约安排 / Flow 4"
+      },
+      {
+        "nodeId": "311:379790",
+        "name": "全流程 · 预约安排 / Flow 7"
+      },
+      {
+        "nodeId": "311:379791",
+        "name": "全流程 · 预约安排 / Flow 8"
+      },
+      {
+        "nodeId": "311:379798",
+        "name": "全流程 · 预约安排 / Flow 11"
+      },
+      {
+        "nodeId": "311:379799",
+        "name": "全流程 · 预约安排 / Flow 12"
+      },
+      {
+        "nodeId": "311:379806",
+        "name": "全流程 · 预约安排 / Flow 15"
+      },
+      {
+        "nodeId": "311:379807",
+        "name": "全流程 · 预约安排 / Flow 16"
+      },
+      {
+        "nodeId": "311:380210",
+        "name": "全流程 · 群聊与管理 / Flow 3"
+      },
+      {
+        "nodeId": "311:380211",
+        "name": "全流程 · 群聊与管理 / Flow 4"
+      },
+      {
+        "nodeId": "311:380270",
+        "name": "全流程 · 群聊与管理 / Flow 7"
+      },
+      {
+        "nodeId": "311:380271",
+        "name": "全流程 · 群聊与管理 / Flow 8"
+      },
+      {
+        "nodeId": "311:380310",
+        "name": "全流程 · 群聊与管理 / Flow 11"
+      },
+      {
+        "nodeId": "311:380311",
+        "name": "全流程 · 群聊与管理 / Flow 12"
+      },
+      {
+        "nodeId": "311:380314",
+        "name": "全流程 · 群聊与管理 / Flow 15"
+      },
+      {
+        "nodeId": "311:380315",
+        "name": "全流程 · 群聊与管理 / Flow 16"
+      },
+      {
+        "nodeId": "311:380318",
+        "name": "Flow 19"
+      },
+      {
+        "nodeId": "311:380319",
+        "name": "Flow 20"
+      },
+      {
+        "nodeId": "311:379862",
+        "name": "全流程 · 账号与登录 / Flow 3"
+      },
+      {
+        "nodeId": "311:379863",
+        "name": "全流程 · 账号与登录 / Flow 4"
+      },
+      {
+        "nodeId": "311:379866",
+        "name": "全流程 · 账号与登录 / Flow 7"
+      },
+      {
+        "nodeId": "311:379867",
+        "name": "Flow 8"
+      },
+      {
+        "nodeId": "311:379930",
+        "name": "Flow 11"
+      },
+      {
+        "nodeId": "311:379931",
+        "name": "Flow 12"
+      },
+      {
+        "nodeId": "311:379942",
+        "name": "Flow 15"
+      },
+      {
+        "nodeId": "311:379943",
+        "name": "Flow 16"
+      },
+      {
+        "nodeId": "311:379962",
+        "name": "Flow 17"
+      },
+      {
+        "nodeId": "311:380034",
+        "name": "Flow 20"
+      },
+      {
+        "nodeId": "311:380035",
+        "name": "Flow 21"
+      },
+      {
+        "nodeId": "311:380094",
+        "name": "全流程 · 设置与通知 / Flow 3"
+      },
+      {
+        "nodeId": "311:380095",
+        "name": "全流程 · 设置与通知 / Flow 4"
+      },
+      {
+        "nodeId": "311:380195",
+        "name": "全流程 · 内容与恢复 / Flow 3"
+      },
+      {
+        "nodeId": "311:380538",
+        "name": "Flow 3"
+      },
+      {
+        "nodeId": "311:380539",
+        "name": "Flow 4"
+      },
+      {
+        "nodeId": "312:325",
+        "name": "Flow 3"
+      }
+    ],
+    "rootCount": 1424,
+    "orientations": {
+      "平板竖屏": 703,
+      "平板横屏": 703,
+      "平板窄分屏": 16,
+      "tabletP": 1,
+      "tabletL": 1
+    },
+    "samples": [
+      {
+        "id": "311:25",
+        "n": "平板竖屏 / M&D [home]",
+        "w": 834,
+        "h": 1194,
+        "layout": "VERTICAL",
+        "clip": true,
+        "children": [
+          {
+            "id": "312:379545",
+            "t": "FRAME",
+            "n": "Platform header",
+            "x": 0,
+            "y": 0,
+            "w": 834,
+            "h": 72
+          },
+          {
+            "id": "312:379549",
+            "t": "FRAME",
+            "n": "Responsive workspace",
+            "x": 0,
+            "y": 72,
+            "w": 834,
+            "h": 1122
+          }
+        ]
+      },
+      {
+        "id": "311:26",
+        "n": "平板横屏 / M&D [home]",
+        "w": 1194,
+        "h": 834,
+        "layout": "VERTICAL",
+        "clip": true,
+        "children": [
+          {
+            "id": "312:379753",
+            "t": "FRAME",
+            "n": "Platform header",
+            "x": 0,
+            "y": 0,
+            "w": 1194,
+            "h": 72
+          },
+          {
+            "id": "312:379757",
+            "t": "FRAME",
+            "n": "Responsive workspace",
+            "x": 0,
+            "y": 72,
+            "w": 1194,
+            "h": 762
+          }
+        ]
+      }
+    ],
+    "index": [
+      {
+        "id": "425:1839921",
+        "t": "TEXT",
+        "n": "Title / M&D · 平板总览",
+        "w": 1440,
+        "h": 40,
+        "reactions": []
+      },
+      {
+        "id": "425:1839922",
+        "t": "TEXT",
+        "n": "Body / 按功能查找本端原稿，也可直接打开同状态的跨端对照。",
+        "w": 1440,
+        "h": 26,
+        "reactions": []
+      },
+      {
+        "id": "553:526",
+        "t": "TEXT",
+        "n": "入口 / 预览平板完整交互",
+        "w": 1440,
+        "h": 22,
+        "reactions": []
+      },
+      {
+        "id": "553:527",
+        "t": "TEXT",
+        "n": "入口 / 预览平板横屏",
+        "w": 1440,
+        "h": 22,
+        "reactions": []
+      },
+      {
+        "id": "425:1839923",
+        "t": "FRAME",
+        "n": "五个主入口",
+        "w": 1440,
+        "h": 52,
+        "reactions": []
+      },
+      {
+        "id": "425:1839959",
+        "t": "TEXT",
+        "n": "Label / 17 项功能 · 直接引用原稿 · 状态名称与功能对照保持一致",
+        "w": 1440,
+        "h": 22,
+        "reactions": []
+      },
+      {
+        "id": "426:8021",
+        "t": "FRAME",
+        "n": "功能 / 16 社区",
+        "w": 1440,
+        "h": 864,
+        "reactions": []
+      }
+    ]
+  },
+  "discovery": {
+    "pairs": "541:526|home,311:25,311:26;541:526|homeEmpty,311:33,311:34;541:526|city,311:43,311:44;541:526|search,311:53,311:54;541:526|results,311:63,311:64;541:526|post,311:73,311:74;541:526|filter,311:83,311:84;541:526|following,311:91,311:92;541:526|localFeed,311:99,311:100;541:526|postLiked,311:109,311:110;541:526|postMine,311:119,311:120;541:526|dogPost,311:125,311:126;541:526|otherPost,311:131,311:132;541:526|comments,311:141,311:142;541:526|commentsWriting,311:147,311:148;541:526|commentPosted,311:153,311:154;541:526|commentReplies,311:159,311:160;541:526|postActions,311:165,311:166;541:526|commentActions,311:171,311:172;541:526|ownPostActions,311:177,311:178;541:526|deletePost,311:183,311:184;541:526|contentHidden,311:189,311:190;541:526|postPublished,311:195,311:196;541:526|careGuide,311:201,311:202;541:526|authorProfile,311:379874,311:379875;541:526|authorFollowing,311:379878,311:379879;541:530|composePost,311:378834,311:378835;541:530|postPreview,311:378838,311:378839;541:530|publishType,311:378842,311:378843;541:530|myPublishes,311:378846,311:378847;541:530|salePublish,311:378850,311:378851;541:530|salePreview,311:378854,311:378855;541:530|mediaPermission,311:378858,311:378859;541:530|mediaChoose,311:378862,311:378863;541:530|mediaUploading,311:378866,311:378867;541:530|mediaPartialFailure,311:378870,311:378871;541:530|mediaReorder,311:378874,311:378875;541:530|mediaRemoved,311:378878,311:378879;541:530|mediaReady,311:378882,311:378883;541:530|mediaDraftSaved,311:378886,311:378887;541:534|adopt,311:378890,311:378891;541:534|detail,311:378894,311:378895;541:534|apply,311:378898,311:378899;541:534|applyReview,311:378902,311:378903;541:534|applySent,311:378906,311:378907;541:534|application,311:378910,311:378911;541:534|handover,311:378914,311:378915;541:534|followup,311:378918,311:378919;541:534|withdrawn,311:378922,311:378923;541:534|applicationDecision,311:378926,311:378927;541:534|adoptionConditions,311:378930,311:378931;541:534|adoptionUpdates,311:378934,311:378935;541:534|adoptionUpdateDetail,311:378938,311:378939;541:534|adoptionUpdateHistory,311:378942,311:378943;541:534|adoptionComments,311:378946,311:378947;541:534|adoptionReply,311:378950,311:378951;541:534|adoptionCommentSent,311:378954,311:378955;541:534|adoptionManage,311:378958,311:378959;541:534|adoptionUpdateCompose,311:378962,311:378963;541:534|adoptionUpdatePreview,311:378966,311:378967;541:534|adoptionUpdateFailure,311:378970,311:378971;541:534|adoptionUpdatePending,311:378974,311:378975;541:534|adoptionUpdateDone,311:378978,311:378979;541:534|adoptionCaretakers,311:378982,311:378983;541:534|adoptionCaretakerInvite,311:378986,311:378987;541:534|adoptionCaretakerPending,311:378990,311:378991;541:534|adoptionDecision,311:378994,311:378995;541:534|adoptionSupplement,311:378998,311:378999;541:534|adoptionSupplementReceived,311:379002,311:379003;541:534|adoptionReject,311:379006,311:379007;541:534|adoptionRejected,311:379010,311:379011;541:534|trialAgreement,311:379014,311:379015;541:534|trialActive,311:379018,311:379019;541:534|trialExit,311:379022,311:379023;541:534|handoverWaiting,311:379026,311:379027;541:534|handoverOther,311:379030,311:379031;541:534|handoverComplete,311:379034,311:379035;541:534|followupSaved,311:379038,311:379039;541:534|adoptionSupport,311:379042,311:379043;541:534|adoptionSupportPending,311:379046,311:379047;541:534|caretakerInvite,311:379050,311:379051;541:534|caretakerPending,311:379054,311:379055;541:534|caretakerReceived,311:379058,311:379059;541:534|caretakerActive,311:379062,311:379063;541:534|caretakerDeclined,311:379066,311:379067;541:534|caretakerRevoke,311:379070,311:379071;541:534|caretakerRevoked,311:379074,311:379075;541:534|caretakerExpired,311:379078,311:379079;541:534|handoverLargeText,311:379082,311:379083;541:534|careTeam,311:379086,311:379087;541:534|publisherCollabReceived,311:379090,311:379091;541:534|publisherCollabActive,311:379094,311:379095;541:534|publisherCollabDeclined,311:379098,311:379099;541:534|publisherCollabRevoke,311:379102,311:379103;541:534|publisherCollabRevoked,311:379106,311:379107;541:534|adoptionCaretakersEmpty,311:379110,311:379111;541:534|careTeamEmpty,311:379114,311:379115;541:534|trialWaiting,311:379118,311:379119;541:534|trialOther,311:379122,311:379123;541:538|verify,311:379126,311:379127;541:538|report,311:379130,311:379131;541:538|reportReceipt,311:379134,311:379135;541:538|reportProgress,311:379138,311:379139;541:538|appeal,311:379142,311:379143;541:538|publisherResponse,311:379146,311:379147;541:538|reportPost,311:379150,311:379151;541:538|reportPostSent,311:379154,311:379155;541:538|reportComment,311:379158,311:379159;541:538|reportCommentSent,311:379162,311:379163;541:538|reportUser,311:379166,311:379167;541:538|reportUserSent,311:379170,311:379171;541:538|reportMessage,311:379174,311:379175;541:538|reportMessageSent,311:379178,311:379179;541:538|moderationProgress,311:379182,311:379183;541:538|reportGroup,311:379186,311:379187;541:538|reportGroupSent,311:379190,311:379191;541:538|reportGroupMessage,311:379194,311:379195;541:538|reportGroupMessageSent,311:379198,311:379199;541:538|verificationExpired,311:379202,311:379203;541:538|verificationSubmit,311:379206,311:379207;541:538|verificationPending,311:379210,311:379211;541:538|verificationResult,311:379214,311:379215;541:538|moderationResult,311:379218,311:379219;541:538|moderationUnsupported,311:379222,311:379223;541:538|appealResolved,311:379226,311:379227;541:538|verificationNeedsInfo,311:379230,311:379231;541:538|visitFeedbackConsistent,311:379234,311:379235;541:538|visitFeedbackUncertain,311:379238,311:379239;541:542|petBasics,311:379242,311:379243;541:542|petDisclosure,311:379246,311:379247;541:542|petEvidence,311:379250,311:379251;541:542|petPreview,311:379254,311:379255;541:542|petPending,311:379258,311:379259;541:542|mine,311:379262,311:379263;541:542|petProfile,311:379266,311:379267;541:542|dogProfile,311:379270,311:379271;541:542|otherProfile,311:379274,311:379275;541:542|profileActions,311:379278,311:379279;541:542|petsList,311:379282,311:379283;541:542|petsEmpty,311:379286,311:379287;541:542|petCreate,311:379290,311:379291;541:542|petCreateCat,311:379294,311:379295;541:542|petCreateDog,311:379298,311:379299;541:542|petCreateOther,311:379302,311:379303;541:542|petCreated,311:379306,311:379307;541:542|petEdit,311:379310,311:379311;541:542|petDog,311:379314,311:379315;541:542|petOther,311:379318,311:379319;541:542|petDogDiary,311:379322,311:379323;541:542|petOtherDiary,311:379326,311:379327;541:542|petVisibility,311:379330,311:379331;541:542|petVisibilityReview,311:379334,311:379335;541:542|petVisibilitySaved,311:379338,311:379339;541:542|petDiary,311:379342,311:379343;541:542|diaryEntry,311:379346,311:379347;541:542|diaryCompose,311:379350,311:379351;541:542|diaryAudience,311:379354,311:379355;541:542|diaryShareWarning,311:379358,311:379359;541:542|diaryPreview,311:379362,311:379363;541:542|diarySharedPreview,311:379366,311:379367;541:542|diaryPublished,311:379370,311:379371;541:542|diaryEntryShared,311:379374,311:379375;541:542|diaryDraftExit,311:379378,311:379379;541:542|diaryDraftFailure,311:379382,311:379383;541:542|diaryPrivateResult,311:379386,311:379387;541:542|diaryDeleteConfirm,311:379390,311:379391;541:542|diaryDeleted,311:379394,311:379395;541:542|petStatus,311:379398,311:379399;541:542|ownDiaryComments,311:379402,311:379403;541:542|diaryPhotoViewer,311:379406,311:379407;541:542|petDogVisibility,311:379410,311:379411;541:542|petOtherVisibility,311:379414,311:379415;541:546|lostList,311:379418,311:379419;541:546|lostMap,311:379422,311:379423;541:546|lostDetail,311:379426,311:379427;541:546|sighting,311:379430,311:379431;541:546|sightingReview,311:379434,311:379435;541:546|lostPublish,311:379438,311:379439;541:546|lostManage,311:379442,311:379443;541:546|sightingSent,311:379446,311:379447;541:546|petMarkMissing,311:379450,311:379451;541:546|petMissingPrivate,311:379454,311:379455;541:546|petMarkMistake,311:379458,311:379459;541:546|lostFromPetDraft,311:379462,311:379463;541:546|lostPhotoEdit,311:379466,311:379467;541:546|lostFromPetDisclosure,311:379470,311:379471;541:546|lostPublicConsent,311:379474,311:379475;541:546|lostFromPetPreview,311:379478,311:379479;541:546|lostFromPetPending,311:379482,311:379483;541:546|lostSubmitFailure,311:379486,311:379487;541:546|lostDraftExit,311:379490,311:379491;541:546|lostFromPetActive,311:379494,311:379495;541:546|lostFromPetManage,311:379498,311:379499;541:546|lostPrivateLead,311:379502,311:379503;541:546|lostLeadPhoto,311:379506,311:379507;541:546|lostLeadReview,311:379510,311:379511;541:546|lostLeadFailure,311:379514,311:379515;541:546|lostLeadSent,311:379518,311:379519;541:546|lostLeadInbox,311:379522,311:379523;541:546|lostLeadEmpty,311:379526,311:379527;541:546|lostLeadDetail,311:379530,311:379531;541:546|lostLeadHelpful,311:379534,311:379535;541:546|lostLeadNotMatch,311:379538,311:379539;541:546|lostShareAudience,311:379542,311:379543;541:546|lostShareConfirm,311:379546,311:379547;541:546|lostGroupShareConfirm,311:379550,311:379551;541:546|lostShared,311:379554,311:379555;541:546|lostGroupShared,311:379558,311:379559;541:546|lostFollowed,311:379562,311:379563;541:546|lostFoundConfirm,311:379566,311:379567;541:546|lostFoundReady,311:379570,311:379571;541:546|lostClosing,311:379574,311:379575;541:546|lostCloseFailure,311:379578,311:379579;541:546|lostFoundDone,311:379582,311:379583;541:546|petHomeFound,311:379586,311:379587;541:546|lostResolvedShare,311:379590,311:379591;541:546|lostPauseConfirm,311:379594,311:379595;541:546|lostPaused,311:379598,311:379599;541:546|lostOtherEnd,311:379602,311:379603;541:546|lostOtherConfirm,311:379606,311:379607;541:546|lostOtherDone,311:379610,311:379611;541:546|petMissingAgain,311:379614,311:379615;541:546|lostAgainDraft,311:379618,311:379619;541:546|lostAreaMap,311:379622,311:379623;541:546|lostLeadChat,311:379626,311:379627;541:546|helpType,311:379630,311:379631;541:546|foundForm,311:379634,311:379635;541:546|foundPreview,311:379638,311:379639;541:546|foundActive,311:379642,311:379643;541:546|claimForm,311:379646,311:379647;541:546|claimPending,311:379650,311:379651;541:546|foundManage,311:379654,311:379655;541:546|claimReview,311:379658,311:379659;541:546|claimMatched,311:379662,311:379663;541:546|claimHandoverWaiting,311:379666,311:379667;541:546|claimHandoverOther,311:379670,311:379671;541:546|claimClosed,311:379674,311:379675;541:546|claimRejected,311:379678,311:379679;541:546|claimDispute,311:379682,311:379683;541:546|claimDisputePending,311:379686,311:379687;541:546|foundWithdraw,311:379690,311:379691;541:546|foundBrowse,311:379694,311:379695;541:546|foundMatchedPublic,311:379698,311:379699;541:550|chat,311:379706,311:379707;541:550|interactionInbox,311:379710,311:379711;541:550|systemInbox,311:379714,311:379715;541:550|privateChat,311:379718,311:379719;541:550|privateSent,311:379722,311:379723;541:550|privateFailed,311:379726,311:379727;541:550|messageRequests,311:379730,311:379731;541:550|requestDetail,311:379734,311:379735;541:550|requestAccepted,311:379738,311:379739;541:550|requestSent,311:379742,311:379743;541:550|requestWaiting,311:379746,311:379747;541:550|privateUnavailable,311:379750,311:379751;541:550|privateSettings,311:379754,311:379755;541:550|privateActions,311:379758,311:379759;541:550|messageActions,311:379762,311:379763;541:550|blockConfirm,311:379766,311:379767;541:550|blockedResult,311:379770,311:379771;541:550|replyMilk,311:379774,311:379775;541:550|replyAuthor,311:379778,311:379779;541:554|appointment,311:379782,311:379783;541:554|change,311:379786,311:379787;541:554|appointmentWaiting,311:379790,311:379791;541:554|appointmentOther,311:379794,311:379795;541:554|appointmentConfirmed,311:379798,311:379799;541:554|appointmentChangeWaiting,311:379802,311:379803;541:554|appointmentChangeReview,311:379806,311:379807;541:554|appointmentChangeDeclined,311:379810,311:379811;541:554|appointmentCancelConfirm,311:379814,311:379815;541:554|appointmentCancelled,311:379818,311:379819;541:554|appointmentExpired,311:379822,311:379823;541:554|appointmentConflict,311:379826,311:379827;541:554|appointmentHistory,311:379830,311:379831;541:554|appointmentConfirmedV2,311:379834,311:379835;541:554|appointmentNarrow,311:379838,311:379839;541:554|appointmentHistoryV2,311:379842,311:379843;541:554|appointmentRestore,311:379846,311:379847;541:554|appointmentRestoreWaiting,311:379850,311:379851;541:554|appointmentRestoreReview,311:379854,311:379855;541:554|appointmentConfirmedV3,311:379858,311:379859;541:558|closure:login,311:379862,311:379863;541:558|otp,311:379866,311:379867;541:558|otpError,311:379870,311:379871;541:558|closure:authIOS,311:379882,311:379883;541:558|authKnown,311:379886,311:379887;541:558|authPhoneError,311:379890,311:379891;541:558|authCodeResent,311:379894,311:379895;541:558|authCodeExpired,311:379898,311:379899;541:558|authSmsDelayed,311:379902,311:379903;541:558|authRateLimited,311:379906,311:379907;541:558|authNetworkError,311:379910,311:379911;541:558|authProviderUnavailable,311:379914,311:379915;541:558|authProviderCancelled,311:379918,311:379919;541:558|authCallbackExpired,311:379922,311:379923;541:558|authSessionExpired,311:379926,311:379927;541:558|authProvider_wechat,311:379930,311:379931;541:558|authProvider_qq,311:379934,311:379935;541:558|authProvider_apple,311:379938,311:379939;541:558|authFirst,311:379942,311:379943;541:558|authSuccess,311:379946,311:379947;541:558|authProfileOptional,311:379950,311:379951;541:558|authLinkExisting,311:379954,311:379955;541:558|authLinkConfirm,311:379958,311:379959;541:558|authConflict,311:379962,311:379963;541:558|authPassword,311:379966,311:379967;541:558|authPasswordRecovery,311:379970,311:379971;541:558|authPasswordReset,311:379974,311:379975;541:558|authPasswordDone,311:379978,311:379979;541:558|authRestricted,311:379982,311:379983;541:558|authPhoneSupplement,311:379986,311:379987;541:558|authAccounts,311:379990,311:379991;541:558|authBindConfirm,311:379994,311:379995;541:558|authUnbindConfirm,311:379998,311:379999;541:558|authLastMethod,311:380002,311:380003;541:558|authChangePhone,311:380006,311:380007;541:558|authNewPhone,311:380010,311:380011;541:558|authPhoneChanged,311:380014,311:380015;541:558|authRecovery,311:380018,311:380019;541:558|authRecoveryPending,311:380022,311:380023;541:558|authLogoutConfirm,311:380026,311:380027;541:558|authLoggedOut,311:380030,311:380031;541:558|authDeleteImpact,311:380034,311:380035;541:558|authActiveTasks,311:380038,311:380039;541:558|authDeleteVerify,311:380042,311:380043;541:558|authDeleteProcessing,311:380046,311:380047;541:558|authDeleteStatus,311:380050,311:380051;541:558|authDeleteFailure,311:380054,311:380055;541:558|authRevoked,311:380058,311:380059;541:558|authReturnUnavailable,311:380062,311:380063;541:558|authTerms,311:380066,311:380067;541:558|authTermsDetails,311:380070,311:380071;541:558|authSDKInfo,311:380074,311:380075;541:558|authIntentReview,311:380078,311:380079;541:558|authPrivacyDetails,311:380082,311:380083;541:558|authNarrow,311:380086,311:380087;541:558|authLargeText,311:380090,311:380091;542:526|settings,311:380094,311:380095;542:526|closure:privacy,311:380098,311:380099;542:526|notificationSettings,311:380102,311:380103;542:526|notificationMuted,311:380106,311:380107;542:526|notificationGroupMuted,311:380110,311:380111;542:526|notificationProgressMuted,311:380114,311:380115;542:526|notificationAllMuted,311:380118,311:380119;542:526|notificationFrequency,311:380122,311:380123;542:526|notificationFrequencySaved,311:380126,311:380127;542:526|notificationSummarySaved,311:380130,311:380131;542:526|notificationSettingsSummary,311:380134,311:380135;542:526|notificationPermission,311:380138,311:380139;542:526|notificationPermissionHelp,311:380142,311:380143;542:526|notificationPrivateOnly,311:380146,311:380147;542:526|notificationNoGroup,311:380150,311:380151;542:526|notificationNoProgress,311:380154,311:380155;542:530|find,311:380158,311:380159;542:530|saleDetail,311:380162,311:380163;542:530|serviceQuote,311:380166,311:380167;542:530|serviceConfirmed,311:380170,311:380171;542:530|serviceFeedback,311:380174,311:380175;542:530|serviceQuestion,311:380178,311:380179;542:530|serviceQuestionPending,311:380182,311:380183;542:530|serviceNoShow,311:380186,311:380187;542:530|serviceDone,311:380190,311:380191;542:534|offline,311:380194,311:380195;542:534|noResults,311:380198,311:380199;542:534|contentUnavailable,311:380202,311:380203;542:534|permission,311:380206,311:380207;542:538|groups,311:380210,311:380211;542:538|groupDiscover,311:380214,311:380215;542:538|groupIntro,311:380218,311:380219;542:538|groupJoinPending,311:380222,311:380223;542:538|groupChat,311:380226,311:380227;542:538|groupSent,311:380230,311:380231;542:538|groupInfo,311:380234,311:380235;542:538|groupNotice,311:380238,311:380239;542:538|groupMembers,311:380242,311:380243;542:538|groupMessageActions,311:380246,311:380247;542:538|groupCreate,311:380250,311:380251;542:538|groupCreateReview,311:380254,311:380255;542:538|groupOwnerChat,311:380258,311:380259;542:538|groupAdmin,311:380262,311:380263;542:538|groupNoticeEdit,311:380266,311:380267;542:538|groupJoinReview,311:380270,311:380271;542:538|groupAdminReviewed,311:380274,311:380275;542:538|groupMemberManage,311:380278,311:380279;542:538|groupMemberConfirm,311:380282,311:380283;542:538|groupMuted,311:380286,311:380287;542:538|groupLeave,311:380290,311:380291;542:538|groupUnavailable,311:380294,311:380295;542:538|groupDissolve,311:380298,311:380299;542:538|groupTransferChoose,311:380302,311:380303;542:538|groupTransferConfirm,311:380306,311:380307;542:538|groupTransferPending,311:380310,311:380311;542:538|groupTransferReceived,311:380314,311:380315;542:538|groupTransferDone,311:380318,311:380319;542:538|groupTransferDeclined,311:380322,311:380323;542:538|groupTransferRevoked,311:380326,311:380327;542:538|groupTransferExpired,311:380330,311:380331;542:538|groupDissolveConfirm,311:380334,311:380335;542:538|groupDissolved,311:380338,311:380339;542:538|groupMemberInfo,311:380342,311:380343;542:538|groupTransferReceiverDone,311:380346,311:380347;542:542|circleFeed,311:380350,311:380351;542:542|circleEmpty,311:380354,311:380355;542:542|circleFriends,311:380358,311:380359;542:542|circleRequest,311:380362,311:380363;542:542|circleRequestWaiting,311:380366,311:380367;542:542|circleRequestReceived,311:380370,311:380371;542:542|circleFriendProfile,311:380374,311:380375;542:542|circleCompose,311:380378,311:380379;542:542|circlePhotoChoose,311:380382,311:380383;542:542|circleAudience,311:380386,311:380387;542:542|circleAudiencePrivate,311:380390,311:380391;542:542|circleSelectFriends,311:380394,311:380395;542:542|circlePrivatePetWarning,311:380398,311:380399;542:542|circlePublicConfirm,311:380402,311:380403;542:542|circlePublicPreview,311:380406,311:380407;542:542|circleLocation,311:380410,311:380411;542:542|circlePreview,311:380414,311:380415;542:542|circlePublished,311:380418,311:380419;542:542|circleDetail,311:380422,311:380423;542:542|circleLiked,311:380426,311:380427;542:542|circleComments,311:380430,311:380431;542:542|circleCommentReply,311:380434,311:380435;542:542|circleCommentSent,311:380438,311:380439;542:542|circlePhotoViewer,311:380442,311:380443;542:542|circleExpression,311:380446,311:380447;542:542|circleOwnPostSettings,311:380450,311:380451;542:542|circleTightenConfirm,311:380454,311:380455;542:542|circleDeleteConfirm,311:380458,311:380459;542:542|circleUnavailable,311:380462,311:380463;542:542|circleFriendSettings,311:380466,311:380467;542:542|circleFriendRemove,311:380470,311:380471;542:542|circleReport,311:380474,311:380475;542:542|circleDraftFailure,311:380478,311:380479;542:542|circleReactionPicker,311:380482,311:380483;542:542|circlePostActions,311:380486,311:380487;542:542|circleReplyAuthor,311:380490,311:380491;542:542|circleExcludeFriends,311:380494,311:380495;542:542|circlePartialPreview,311:380498,311:380499;542:542|circleExcludedPreview,311:380502,311:380503;542:542|circlePartialDone,311:380506,311:380507;542:542|circleExcludedDone,311:380510,311:380511;542:542|friendUnconfirmed,311:380514,311:380515;542:542|friendPending,311:380518,311:380519;542:542|friendWithdrawConfirm,311:380522,311:380523;542:542|friendRequestDecision,311:380526,311:380527;542:542|friendRejected,311:380530,311:380531;542:542|audienceChanged,311:380534,311:380535;542:546|nearbyAlertPreferences,311:380538,311:380539;542:546|nearbyAlertSetup,311:380542,311:380543;542:546|nearbyCenter,311:380546,311:380547;542:546|nearbyLocationExplain,311:380550,311:380551;542:546|nearbyPermissionDenied,311:380554,311:380555;542:546|nearbyRadius,311:380558,311:380559;542:546|nearbyRadiusCustom,311:380562,311:380563;542:546|nearbyRadiusError,311:380566,311:380567;542:546|nearbyReview5,311:380570,311:380571;542:546|nearbyEnabled5,311:380574,311:380575;542:546|nearbyReview10,311:380578,311:380579;542:546|nearbyEnabled10,311:380582,311:380583;542:546|nearbyReview25,311:380586,311:380587;542:546|nearbyEnabled25,311:380590,311:380591;542:546|nearbyReview32,311:380594,311:380595;542:546|nearbyEnabled32,311:380598,311:380599;542:546|nearbyReview50,311:380602,311:380603;542:546|nearbyEnabled50,311:380606,311:380607;542:546|nearbyReview100,311:380610,311:380611;542:546|nearbyEnabled100,311:380614,311:380615;542:546|nearbyReviewShanghai,311:380618,311:380619;542:546|nearbyEnabledShanghai,311:380622,311:380623;542:546|nearbySpecies,311:380626,311:380627;542:546|nearbySpeciesCat,311:380630,311:380631;542:546|nearbyEnabledCat,311:380634,311:380635;542:546|nearbyNotification,311:380638,311:380639;542:546|nearbyNotificationExplain,311:380642,311:380643;542:546|nearbyOffConfirm,311:380646,311:380647;542:550|exprCircle,312:4,312:5;542:550|stickerCircle,312:8,312:9;542:550|exprCircleReady,312:12,312:13;542:550|exprCircleDone,312:16,312:17;542:550|exprCircleClosed,312:260,312:261;542:554|exprDiary,312:20,312:21;542:554|stickerDiary,312:24,312:25;542:554|exprDiaryReady,312:28,312:29;542:554|exprDiaryDone,312:32,312:33;542:554|exprDiaryClosed,312:264,312:265;542:558|exprCircleComment,312:36,312:37;542:558|stickerCircleComment,312:40,312:41;542:558|exprCircleCommentReady,312:44,312:45;542:558|exprCircleCommentDone,312:48,312:49;542:558|exprCircleCommentClosed,312:268,312:269;542:562|exprCircleReply,312:52,312:53;542:562|stickerCircleReply,312:56,312:57;542:562|exprCircleReplyReady,312:60,312:61;542:562|exprCircleReplyDone,312:64,312:65;542:562|exprCircleReplyClosed,312:272,312:273;542:566|exprCircleAuthorReply,312:68,312:69;542:566|stickerCircleAuthorReply,312:72,312:73;542:566|exprCircleAuthorReplyReady,312:76,312:77;542:566|exprCircleAuthorReplyDone,312:80,312:81;542:566|exprCircleAuthorReplyClosed,312:276,312:277;542:570|exprDiaryComment,312:84,312:85;542:570|stickerDiaryComment,312:88,312:89;542:570|exprDiaryCommentReady,312:92,312:93;542:570|exprDiaryCommentDone,312:96,312:97;542:570|exprDiaryCommentClosed,312:280,312:281;542:574|exprAdoption,312:100,312:101;542:574|stickerAdoption,312:104,312:105;542:574|exprAdoptionReady,312:108,312:109;542:574|exprAdoptionDone,312:112,312:113;542:574|exprAdoptionClosed,312:284,312:285;542:578|exprPrivate,312:116,312:117;542:578|stickerPrivate,312:120,312:121;542:578|exprPrivateReady,312:124,312:125;542:578|exprPrivateDone,312:128,312:129;542:578|exprPrivateClosed,312:288,312:289;542:582|exprGroup,312:132,312:133;542:582|stickerGroup,312:136,312:137;542:582|exprGroupReady,312:140,312:141;542:582|exprGroupDone,312:144,312:145;542:582|exprGroupClosed,312:292,312:293;542:586|exprLead,312:148,312:149;542:586|stickerLead,312:152,312:153;542:586|exprLeadReady,312:156,312:157;542:586|exprLeadDone,312:160,312:161;542:586|exprLeadClosed,312:296,312:297;542:590|exprMilkReply,312:164,312:165;542:590|stickerMilkReply,312:168,312:169;542:590|exprMilkReplyReady,312:172,312:173;542:590|exprMilkReplyDone,312:176,312:177;542:590|exprMilkReplyClosed,312:300,312:301;542:594|exprAuthorReply,312:180,312:181;542:594|stickerAuthorReply,312:184,312:185;542:594|exprAuthorReplyReady,312:188,312:189;542:594|exprAuthorReplyDone,312:192,312:193;542:594|exprAuthorReplyClosed,312:304,312:305;542:598|exprPublicComment,312:196,312:197;542:598|stickerPublicComment,312:200,312:201;542:598|exprPublicCommentReady,312:204,312:205;542:598|exprPublicCommentDone,312:208,312:209;542:598|exprPublicCommentClosed,312:308,312:309;542:602|exprPublicReply,312:212,312:213;542:602|stickerPublicReply,312:216,312:217;542:602|exprPublicReplyReady,312:220,312:221;542:602|exprPublicReplyDone,312:224,312:225;542:602|exprPublicReplyClosed,312:312,312:313;542:606|exprAcceptedPrivate,312:228,312:229;542:606|stickerAcceptedPrivate,312:232,312:233;542:606|exprAcceptedPrivateReady,312:236,312:237;542:606|exprAcceptedPrivateDone,312:240,312:241;542:606|exprAcceptedPrivateClosed,312:316,312:317;542:610|exprOwnerGroup,312:244,312:245;542:610|stickerOwnerGroup,312:248,312:249;542:610|exprOwnerGroupReady,312:252,312:253;542:610|exprOwnerGroupDone,312:256,312:257;542:610|exprOwnerGroupClosed,312:320,312:321;542:614|expressionReview,312:324,312:325;542:614|expressionTyping,312:328,312:329;542:614|expressionCursor,312:332,312:333;542:614|expressionDeleted,312:336,312:337;542:614|expressionDraftClosed,312:340,312:341;542:614|expressionSent,312:344,312:345;542:614|expressionRecent,312:348,312:349;542:614|expressionFavorite,312:352,312:353;542:614|expressionFavoriteRemoved,312:356,312:357;542:614|expressionStickerSent,312:360,312:361;542:614|expressionNarrow,312:364,312:365;542:622|closure:guestReport,460:68685,460:68686;542:622|closure:guestPending,460:68690,460:68691;542:622|closure:guestError,460:68695,460:68696;542:622|closure:guestReceipt,460:68700,460:68701;542:622|closure:guestProgress,460:68705,460:68706;542:622|closure:candidates,460:68710,460:68711;542:622|closure:trialReserved,460:68715,460:68716;542:622|closure:waitlist,460:68720,460:68721;542:622|closure:placementConflict,460:68725,460:68726;542:622|closure:returnRequest,460:68730,460:68731;542:622|closure:returnProposal,460:68735,460:68736;542:622|closure:returnConfirmed,460:68740,460:68741;542:622|closure:returnPending,460:68745,460:68746;542:622|closure:returned,460:68750,460:68751;542:622|closure:returnDispute,460:68755,460:68756;542:626|closure:returnEdit,506:60778,506:60779;542:626|closure:returnProposalPending,506:60783,506:60784;542:626|closure:returnSendFailed,506:60788,506:60789;542:626|closure:returnWaiting,506:60793,506:60794;542:626|closure:returnReview,506:60798,506:60799;542:626|closure:returnReject,506:60803,506:60804;542:626|closure:returnDeclined,506:60808,506:60809;542:626|closure:returnEditR2,506:60813,506:60814;542:626|closure:returnPreviewR2,506:60818,506:60819;542:626|closure:returnWaitingR2,506:60823,506:60824;542:626|closure:returnReviewR2,506:60828,506:60829;542:626|closure:returnConfirmedR2,506:60833,506:60834;542:626|closure:returnConflict,506:60838,506:60839;542:626|closure:returnLatest,506:60843,506:60844;542:626|closure:returnExpired,506:60848,506:60849;542:626|closure:returnWithdraw,506:60853,506:60854;542:626|closure:returnWithdrawR2,506:60858,506:60859;542:626|closure:returnWithdrawn,506:60863,506:60864;542:630|closure:lostApproximate,460:242510,460:242511;542:630|closure:lostUnknown,460:242515,460:242516;542:634|closure:safetyHold,460:211424,460:211425;542:634|closure:appointmentReview,460:211429,460:211430;542:637|closure:unreadChat,482:148675,482:148676;542:637|closure:unreadInteractions,482:148679,482:148680;542:637|closure:unreadNotifications,482:148683,482:148684;542:637|closure:unreadReply,482:148687,482:148688;542:637|closure:unreadMention,482:148691,482:148692;542:637|closure:unreadConfirmAll,482:148695,482:148696;542:637|closure:unreadEmpty,482:148699,482:148700;542:637|closure:unreadOffline,482:148703,482:148704;542:641|closure:holdCancel,506:205512,506:205513;542:641|closure:holdCancelPending,506:205517,506:205518;542:641|closure:holdCancelFailed,506:205522,506:205523;542:641|closure:holdCancelled,506:205527,506:205528;542:641|closure:holdReproposal,506:205532,506:205533;542:641|closure:holdProposalWaiting,506:205537,506:205538;542:641|closure:holdReleased,506:205542,506:205543;542:645|closure:emailStart,460:17321,460:17322;542:645|closure:emailCode,460:17326,460:17327;542:645|closure:emailError,460:17331,460:17332;542:645|closure:accountChoice,460:17336,460:17337;542:645|closure:accountConflict,460:17341,460:17342;542:645|closure:phoneGate,460:17346,460:17347;542:645|closure:phoneCode,460:17351,460:17352;542:645|closure:authResume,460:17356,460:17357;542:645|closure:accountIdentifiers,460:17361,460:17362;542:645|closure:emailBinding,460:17366,460:17367;542:645|closure:phoneChange,460:17371,460:17372;542:645|closure:accountRecovery,460:17376,460:17377;542:645|closure:ageRange,460:17381,460:17382;542:645|closure:guardianInvite,460:17386,460:17387;542:645|closure:guardianReview,460:17391,460:17392;542:645|closure:guardianWaiting,460:17396,460:17397;542:645|closure:guardianActive,460:17401,460:17402;542:645|closure:guardianRevoked,460:17406,460:17407;542:645|closure:teenPrivacy,460:17411,460:17412;542:645|closure:adultAssurance,460:17416,460:17417;542:645|closure:adultRequired,460:17421,460:17422;542:645|closure:ageAppeal,460:17426,460:17427;542:645|closure:dataInventory,460:17431,460:17432;542:645|closure:dataRights,460:17436,460:17437;542:645|closure:dataRequest,460:17441,460:17442;542:645|closure:dataDelete,460:17446,460:17447;542:645|closure:dataProgress,460:17451,460:17452;542:645|closure:sdkList,460:17456,460:17457;542:645|closure:serviceTerms,460:17461,460:17462;542:645|closure:rules,460:17466,460:17467;542:645|closure:ruleDetail,460:17471,460:17472;542:645|closure:ruleHistory,460:17476,460:17477;542:645|closure:ruleChange,460:17481,460:17482;542:645|closure:ruleAppeal,460:17486,460:17487;542:645|closure:linkExisting,486:5524,486:5525;542:645|closure:linkConfirm,486:5529,486:5530;542:649|closure:smsInvalid,506:6792,506:6793;542:649|closure:smsExpired,506:6797,506:6798;542:649|closure:smsDelivery,506:6802,506:6803;542:649|closure:smsRateLimited,506:6807,506:6808;542:649|closure:smsChecking,506:6812,506:6813;542:649|closure:smsUncertain,506:6817,506:6818;542:649|closure:adultNotice,506:6822,506:6823;542:649|closure:adultProvider,506:6827,506:6828;542:649|closure:adultPending,506:6832,506:6833;542:649|closure:adultCancelled,506:6837,506:6838;542:649|closure:adultFailed,506:6842,506:6843;542:649|closure:adultUnsupported,506:6847,506:6848;542:649|closure:adultNotEligible,506:6852,506:6853;542:649|closure:adultExpired,506:6857,506:6858;542:649|closure:adultPassed,506:6862,506:6863;542:649|closure:adultTaskReview,506:6867,506:6868;542:649|closure:reportSupplement,506:6872,506:6873;542:649|closure:reportSupplementPending,506:6877,506:6878;542:649|closure:reportSupplementFailed,506:6882,506:6883;542:649|closure:reportSupplemented,506:6887,506:6888;542:649|closure:reportAccess,506:6892,506:6893;542:649|closure:reportAccessPending,506:6897,506:6898;542:649|closure:reportAccessHelp,506:6902,506:6903;542:649|closure:dataPartScope,506:6907,506:6908;542:649|closure:dataAccountImpact,506:6912,506:6913;542:649|closure:dataAccountTasks,506:6917,506:6918;542:649|closure:dataPartVerify,506:6922,506:6923;542:649|closure:dataPartVerifyError,506:6927,506:6928;542:649|closure:dataPartFinal,506:6932,506:6933;542:649|closure:dataPartPending,506:6937,506:6938;542:649|closure:dataPartFailed,506:6942,506:6943;542:649|closure:dataAccountVerify,506:6947,506:6948;542:649|closure:dataAccountVerifyError,506:6952,506:6953;542:649|closure:dataAccountFinal,506:6957,506:6958;542:649|closure:dataAccountPending,506:6962,506:6963;542:649|closure:dataAccountFailed,506:6967,506:6968;542:649|closure:dataAccountProgress,506:6972,506:6973;542:649|closure:dataPartAppeal,506:6977,506:6978;542:649|closure:dataPartAppealPending,506:6982,506:6983;542:649|closure:dataAccountAppeal,506:6987,506:6988;542:649|closure:dataAccountAppealPending,506:6992,506:6993;542:649|closure:smsSendPending,506:6997,506:6998;542:649|closure:smsSendUncertain,506:7002,506:7003;542:649|closure:dataPartCodePending,506:7007,506:7008;542:649|closure:dataPartVerifyPending,506:7012,506:7013;542:649|closure:dataAccountCodePending,506:7017,506:7018;542:649|closure:dataAccountVerifyPending,506:7022,506:7023",
+    "pairCount": 703,
+    "unpaired": [],
+    "duplicates": [],
+    "headerCounts": {
+      "FRAME:3": 1424
+    },
+    "samples": [
+      {
+        "id": "311:25",
+        "n": "平板竖屏 / M&D [home]",
+        "w": 834,
+        "h": 1194,
+        "header": {
+          "id": "312:379545",
+          "n": "Platform header",
+          "l": "HORIZONTAL",
+          "w": 834,
+          "h": 72,
+          "pads": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "gap": 24,
+          "children": [
+            {
+              "id": "312:379546",
+              "t": "TEXT",
+              "n": "Brand / M&D",
+              "x": 16,
+              "y": 20,
+              "w": 94,
+              "h": 32,
+              "hs": "FIXED",
+              "txt": "M&D",
+              "font": {
+                "family": "Manrope",
+                "style": "ExtraBold",
+                "variationSettings": {
+                  "wght": 800
+                }
+              }
+            },
+            {
+              "id": "312:379547",
+              "t": "TEXT",
+              "n": "Section / 社区",
+              "x": 134,
+              "y": 21,
+              "w": 490,
+              "h": 30,
+              "hs": "FIXED",
+              "txt": "社区",
+              "font": {
+                "family": "Noto Sans SC",
+                "style": "Bold",
+                "variationSettings": {
+                  "wght": 700
+                }
+              }
+            },
+            {
+              "id": "312:379548",
+              "t": "TEXT",
+              "n": "Caption / meow & doggie",
+              "x": 648,
+              "y": 26,
+              "w": 170,
+              "h": 20,
+              "hs": "FIXED",
+              "txt": "meow & doggie",
+              "font": {
+                "family": "Noto Sans SC",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "311:26",
+        "n": "平板横屏 / M&D [home]",
+        "w": 1194,
+        "h": 834,
+        "header": {
+          "id": "312:379753",
+          "n": "Platform header",
+          "l": "HORIZONTAL",
+          "w": 1194,
+          "h": 72,
+          "pads": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "gap": 24,
+          "children": [
+            {
+              "id": "312:379754",
+              "t": "TEXT",
+              "n": "Brand / M&D",
+              "x": 16,
+              "y": 20,
+              "w": 94,
+              "h": 32,
+              "hs": "FIXED",
+              "txt": "M&D",
+              "font": {
+                "family": "Manrope",
+                "style": "ExtraBold",
+                "variationSettings": {
+                  "wght": 800
+                }
+              }
+            },
+            {
+              "id": "312:379755",
+              "t": "TEXT",
+              "n": "Section / 社区",
+              "x": 134,
+              "y": 21,
+              "w": 850,
+              "h": 30,
+              "hs": "FIXED",
+              "txt": "社区",
+              "font": {
+                "family": "Noto Sans SC",
+                "style": "Bold",
+                "variationSettings": {
+                  "wght": 700
+                }
+              }
+            },
+            {
+              "id": "312:379756",
+              "t": "TEXT",
+              "n": "Caption / meow & doggie",
+              "x": 1008,
+              "y": 26,
+              "w": 170,
+              "h": 20,
+              "hs": "FIXED",
+              "txt": "meow & doggie",
+              "font": {
+                "family": "Noto Sans SC",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "506:6792",
+        "n": "平板竖屏 / 验证码不正确 [closure:smsInvalid]",
+        "w": 834,
+        "h": 1194,
+        "header": {
+          "id": "510:1863191",
+          "n": "Platform header",
+          "l": "HORIZONTAL",
+          "w": 834,
+          "h": 72,
+          "pads": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "gap": 24,
+          "children": [
+            {
+              "id": "510:1863192",
+              "t": "TEXT",
+              "n": "MobileBrand / M&D",
+              "x": 16,
+              "y": 20,
+              "w": 160,
+              "h": 32,
+              "hs": "FIXED",
+              "txt": "M&D",
+              "font": {
+                "family": "Manrope",
+                "style": "ExtraBold",
+                "variationSettings": {
+                  "wght": 800
+                }
+              }
+            },
+            {
+              "id": "510:1863193",
+              "t": "TEXT",
+              "n": "Caption / meow & doggie",
+              "x": 200,
+              "y": 26,
+              "w": 200,
+              "h": 20,
+              "hs": "FIXED",
+              "txt": "meow & doggie",
+              "font": {
+                "family": "Noto Sans SC",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400
+                }
+              }
+            },
+            {
+              "id": "510:1863194",
+              "t": "TEXT",
+              "n": "Caption / 规则与安全 · 学习示意",
+              "x": 424,
+              "y": 26,
+              "w": 394,
+              "h": 20,
+              "hs": "FIXED",
+              "txt": "规则与安全 · 学习示意",
+              "font": {
+                "family": "Noto Sans SC",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "506:6793",
+        "n": "平板横屏 / 验证码不正确 [closure:smsInvalid]",
+        "w": 1194,
+        "h": 834,
+        "header": {
+          "id": "510:1863293",
+          "n": "Platform header",
+          "l": "HORIZONTAL",
+          "w": 1194,
+          "h": 72,
+          "pads": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "gap": 24,
+          "children": [
+            {
+              "id": "510:1863294",
+              "t": "TEXT",
+              "n": "MobileBrand / M&D",
+              "x": 16,
+              "y": 20,
+              "w": 160,
+              "h": 32,
+              "hs": "FIXED",
+              "txt": "M&D",
+              "font": {
+                "family": "Manrope",
+                "style": "ExtraBold",
+                "variationSettings": {
+                  "wght": 800
+                }
+              }
+            },
+            {
+              "id": "510:1863295",
+              "t": "TEXT",
+              "n": "Caption / meow & doggie",
+              "x": 200,
+              "y": 26,
+              "w": 200,
+              "h": 20,
+              "hs": "FIXED",
+              "txt": "meow & doggie",
+              "font": {
+                "family": "Noto Sans SC",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400
+                }
+              }
+            },
+            {
+              "id": "510:1863296",
+              "t": "TEXT",
+              "n": "Caption / 规则与安全 · 学习示意",
+              "x": 424,
+              "y": 26,
+              "w": 754,
+              "h": 20,
+              "hs": "FIXED",
+              "txt": "规则与安全 · 学习示意",
+              "font": {
+                "family": "Noto Sans SC",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "button": {
+      "id": "56:180",
+      "n": "Style=Secondary",
+      "type": "COMPONENT",
+      "w": 98,
+      "h": 48,
+      "props": {
+        "Label#56:0": {
+          "type": "TEXT",
+          "defaultValue": "主要操作"
+        },
+        "Style": {
+          "type": "VARIANT",
+          "defaultValue": "Primary",
+          "variantOptions": [
+            "Primary",
+            "Secondary",
+            "Quiet",
+            "Disabled"
+          ]
+        }
+      }
+    },
+    "instances": [
+      {
+        "id": "312:379551",
+        "n": "Navigate / 社区 → home",
+        "props": {
+          "Icon#296:11": {
+            "type": "INSTANCE_SWAP",
+            "value": "56:163",
+            "preferredValues": []
+          },
+          "Label#296:10": {
+            "type": "TEXT",
+            "value": ""
+          },
+          "State": {
+            "value": "Default",
+            "type": "VARIANT",
+            "boundVariables": {}
+          }
+        }
+      },
+      {
+        "id": "I312:379551;296:3",
+        "n": "M&D Mobile V2 / Icon / house",
+        "props": {}
+      },
+      {
+        "id": "312:379560",
+        "n": "Navigate / 领养 → adopt",
+        "props": {
+          "Icon#296:11": {
+            "type": "INSTANCE_SWAP",
+            "value": "56:150",
+            "preferredValues": []
+          },
+          "Label#296:10": {
+            "type": "TEXT",
+            "value": ""
+          },
+          "State": {
+            "value": "Default",
+            "type": "VARIANT",
+            "boundVariables": {}
+          }
+        }
+      },
+      {
+        "id": "I312:379560;296:3",
+        "n": "Nav icon",
+        "props": {}
+      },
+      {
+        "id": "326:480",
+        "n": "Instance / icon/circle-plus",
+        "props": {}
+      },
+      {
+        "id": "312:379579",
+        "n": "Navigate / 消息 → messages",
+        "props": {
+          "Icon#296:11": {
+            "type": "INSTANCE_SWAP",
+            "value": "56:125",
+            "preferredValues": []
+          },
+          "Label#296:10": {
+            "type": "TEXT",
+            "value": ""
+          },
+          "State": {
+            "value": "Default",
+            "type": "VARIANT",
+            "boundVariables": {}
+          }
+        }
+      },
+      {
+        "id": "I312:379579;296:3",
+        "n": "Nav icon",
+        "props": {}
+      },
+      {
+        "id": "312:379587",
+        "n": "Navigate / 我的 → mine",
+        "props": {
+          "Icon#296:11": {
+            "type": "INSTANCE_SWAP",
+            "value": "56:146",
+            "preferredValues": []
+          },
+          "Label#296:10": {
+            "type": "TEXT",
+            "value": ""
+          },
+          "State": {
+            "value": "Default",
+            "type": "VARIANT",
+            "boundVariables": {}
+          }
+        }
+      }
+    ],
+    "indexTexts": [
+      {
+        "id": "425:1839921",
+        "txt": "M&D · 平板原稿与交互",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        }
+      },
+      {
+        "id": "425:1839922",
+        "txt": "原稿按功能分区，完整交互在本页运行；功能目录保留跨端原稿链接。",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400
+          }
+        }
+      },
+      {
+        "id": "553:526",
+        "txt": "▶ 预览平板完整交互 →",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500
+          }
+        }
+      },
+      {
+        "id": "553:527",
+        "txt": "▶ 预览平板横屏完整交互 →",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500
+          }
+        }
+      },
+      {
+        "id": "425:1839959",
+        "txt": "17 项功能 · 直接引用原稿 · 状态名称与功能对照保持一致",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500
+          }
+        }
+      }
+    ]
+  }
+}

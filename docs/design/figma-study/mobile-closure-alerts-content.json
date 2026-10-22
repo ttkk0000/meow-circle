@@ -1,0 +1,917 @@
+[
+  {
+    "id": "nearbyAlertPreferences",
+    "title": "附近走失提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前关闭",
+        "body": "浏览互助地图不要求开启提醒，也不必授予GPS。",
+        "tone": "subtle"
+      },
+      {
+        "type": "text",
+        "text": "只提醒你愿意关注的范围",
+        "role": "Section"
+      },
+      {
+        "type": "text",
+        "text": "可选5–100公里、物种和频率；不会默认后台持续定位。",
+        "role": "Body"
+      },
+      {
+        "type": "row",
+        "label": "先设置提醒范围",
+        "value": "完成确认后才开启",
+        "to": "nearbyAlertSetup"
+      }
+    ],
+    "footer": {
+      "label": "返回设置",
+      "to": "settings",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyAlertSetup",
+    "title": "设置附近提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "row",
+        "label": "提醒中心",
+        "value": "武汉 · 洪山区 · 手动选择",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "范围",
+        "value": "25公里，支持5–100公里",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "物种",
+        "value": "猫咪、狗狗及其他宠物",
+        "to": "nearbySpecies"
+      },
+      {
+        "type": "row",
+        "label": "通知方式",
+        "value": "应用内为主，系统通知单独授权",
+        "to": "nearbyNotification"
+      },
+      {
+        "type": "note",
+        "title": "开启前说明",
+        "body": "按所选中心计算，不承诺实时距离；不发送全部历史案例或每条普通评论。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "放弃设置",
+        "to": "nearbyAlertPreferences",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查并开启25公里提醒",
+      "to": "nearbyReview25",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyCenter",
+    "title": "选择提醒中心",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "row",
+        "label": "手动：武汉洪山区",
+        "value": "不需要GPS",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "手动：上海徐汇区",
+        "value": "不需要GPS",
+        "to": "nearbyReviewShanghai"
+      },
+      {
+        "type": "row",
+        "label": "使用本次主动授权位置",
+        "value": "解释用途后申请，不开后台追踪",
+        "to": "nearbyLocationExplain"
+      },
+      {
+        "type": "note",
+        "title": "位置不是持续跟随",
+        "body": "可主动刷新，或保留手动中心；不会为了发日记索要定位。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留武汉手动中心",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyLocationExplain",
+    "title": "使用位置前",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "只更新本次提醒中心",
+        "body": "不用于公开住宅地址，不默认后台持续跟踪。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "拒绝并手动选择",
+        "to": "nearbyPermissionDenied",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看本次授权后的示例",
+      "to": "nearbyAlertSetup",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyPermissionDenied",
+    "title": "定位未授权",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "仍可使用手动中心",
+        "body": "基本浏览、草稿、互助地图及手动订阅不受影响；不反复弹权限。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "手动选择区域",
+      "to": "nearbyCenter",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyRadius",
+    "title": "提醒距离",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "text",
+        "text": "范围5–100公里",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "5公里",
+        "value": "点按检查该范围",
+        "to": "nearbyReview5"
+      },
+      {
+        "type": "row",
+        "label": "10公里",
+        "value": "点按检查该范围",
+        "to": "nearbyReview10"
+      },
+      {
+        "type": "row",
+        "label": "25公里",
+        "value": "推荐示例值",
+        "to": "nearbyReview25"
+      },
+      {
+        "type": "row",
+        "label": "50公里",
+        "value": "点按检查该范围",
+        "to": "nearbyReview50"
+      },
+      {
+        "type": "row",
+        "label": "100公里",
+        "value": "点按检查该范围",
+        "to": "nearbyReview100"
+      },
+      {
+        "type": "row",
+        "label": "自定义范围",
+        "value": "例32公里，仍在5–100内",
+        "to": "nearbyRadiusCustom"
+      },
+      {
+        "type": "note",
+        "title": "半径的含义",
+        "body": "相对你选的中心与事件区域，不是人与宠物的实时距离。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回设置",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyRadiusCustom",
+    "title": "自定义范围",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "field",
+        "label": "距离（公里）",
+        "value": "32"
+      },
+      {
+        "type": "note",
+        "title": "允许范围5–100",
+        "body": "越界时不给静默修正；说明原因并保留输入。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看越界错误",
+        "to": "nearbyRadiusError",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查32公里设置",
+      "to": "nearbyReview32",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyRadiusError",
+    "title": "距离需要调整",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "field",
+        "label": "距离（公里）",
+        "value": "101",
+        "kind": "error",
+        "hint": "请输入5至100之间的距离；当前输入保留。"
+      },
+      {
+        "type": "action",
+        "label": "取消自定义",
+        "to": "nearbyRadius",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回修改",
+      "to": "nearbyRadiusCustom",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyReview5",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：5公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启5公里",
+      "to": "nearbyEnabled5",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled5",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "5公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview10",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：10公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启10公里",
+      "to": "nearbyEnabled10",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled10",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "10公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview25",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：25公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启25公里",
+      "to": "nearbyEnabled25",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled25",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "25公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview32",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：32公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启32公里",
+      "to": "nearbyEnabled32",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled32",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "32公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview50",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：50公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启50公里",
+      "to": "nearbyEnabled50",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled50",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "50公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview100",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：100公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启100公里",
+      "to": "nearbyEnabled100",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled100",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "100公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReviewShanghai",
+    "title": "上海提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "手动中心：上海徐汇区",
+        "body": "范围25公里；不会因为选择上海而读取GPS或虚构当地案例。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回选择中心",
+        "to": "nearbyCenter",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启上海25公里",
+      "to": "nearbyEnabledShanghai",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabledShanghai",
+    "title": "上海附近提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "上海徐汇区 · 25公里（示意）",
+        "body": "无匹配时保持真实空态，不填入虚构走失信息。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "action",
+        "label": "关闭提醒",
+        "to": "nearbyOffConfirm",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbySpecies",
+    "title": "接收哪些宠物",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "row",
+        "label": "猫咪优先",
+        "value": "只查看猫咪的配置示例",
+        "to": "nearbySpeciesCat"
+      },
+      {
+        "type": "row",
+        "label": "所有支持的宠物",
+        "value": "猫、狗和其他宠物",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "note",
+        "title": "物种过滤与案例规则分开",
+        "body": "不把未知物种硬归为猫咪；其他物种可按真实资料标示。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保持所有物种",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbySpeciesCat",
+    "title": "仅猫咪的提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：25公里 · 武汉洪山区",
+        "body": "物种：仅猫咪；不更改别人案例的物种资料。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消变更",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存猫咪配置示例",
+      "to": "nearbyEnabledCat",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabledCat",
+    "title": "猫咪提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "仅猫咪 · 25公里（示意）",
+        "body": "中心：手动武汉洪山区。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择物种",
+        "to": "nearbySpecies",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "关闭提醒",
+        "to": "nearbyOffConfirm",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyNotification",
+    "title": "提醒方式与频率",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "row",
+        "label": "应用内摘要",
+        "value": "推荐默认，保持节制",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "系统通知",
+        "value": "说明权限与拒绝后的路径",
+        "to": "nearbyNotificationExplain"
+      },
+      {
+        "type": "note",
+        "title": "频率和去重",
+        "body": "同一事件合并更新，冷却期间不反复提醒；普通评论不触发广播。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留应用内摘要",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyNotificationExplain",
+    "title": "系统通知说明",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "系统权限单独控制",
+        "body": "这里不模拟真实系统授权弹窗。即使拒绝，也可在应用内查看互助消息。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "暂不开系统通知",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "了解并返回设置",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyOffConfirm",
+    "title": "关闭附近提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "关闭接收新提醒",
+        "body": "不删除手动中心，不影响浏览，也不替主人结束任何求助事件。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消关闭",
+        "to": "nearbyEnabled25",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认关闭",
+      "to": "nearbyAlertPreferences",
+      "kind": "primary"
+    }
+  }
+]

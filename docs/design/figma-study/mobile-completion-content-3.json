@@ -1,0 +1,821 @@
+[
+  {
+    "id": "appointment",
+    "title": "确认见面预约",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "领养申请 A1 · 仅双方可见",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "版本",
+            "V1",
+            "appointmentVersion"
+          ],
+          [
+            "时间",
+            "10 月 22 日 14:00"
+          ],
+          [
+            "地点",
+            "解放公园南门"
+          ],
+          [
+            "到场人员",
+            "申请人 1 位 · 送养人 1 位"
+          ],
+          [
+            "费用",
+            "无预约费用"
+          ]
+        ]
+      },
+      {
+        "type": "consent",
+        "key": "appointmentAgree",
+        "text": "我确认时间、地点和到场安排。"
+      },
+      {
+        "type": "action",
+        "label": "调整安排",
+        "to": "change",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认预约",
+      "to": "appointmentWaiting",
+      "require": "appointmentAgree"
+    },
+    "module": 5,
+    "back": "chat",
+    "onEnter": {
+      "appointmentVersion": "V1"
+    }
+  },
+  {
+    "id": "appointmentWaiting",
+    "title": "等待另一方确认",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "当前版本",
+            "V1",
+            "appointmentVersion"
+          ],
+          [
+            "你",
+            "已确认"
+          ],
+          [
+            "对方",
+            "待确认"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "暂未生效",
+        "body": "双方确认同一版本后，预约才会生效。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消本次预约",
+        "to": "appointmentCancelConfirm",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回会话",
+      "to": "chat"
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentOther",
+    "title": "确认对方的预约",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "版本",
+            "V1"
+          ],
+          [
+            "时间",
+            "10 月 22 日 14:00"
+          ],
+          [
+            "地点",
+            "解放公园南门"
+          ],
+          [
+            "对方",
+            "已确认"
+          ]
+        ]
+      },
+      {
+        "type": "consent",
+        "key": "appointmentAgree",
+        "text": "我同意这份安排，确认后双方预约生效。"
+      }
+    ],
+    "footer": {
+      "label": "同意并确认",
+      "to": "appointmentConfirmed",
+      "require": "appointmentAgree",
+      "sets": {
+        "appointmentVersion": "V1"
+      }
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentConfirmed",
+    "title": "预约已确认",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "生效版本",
+            "V1",
+            "appointmentVersion"
+          ],
+          [
+            "双方",
+            "均已确认"
+          ],
+          [
+            "时间",
+            "10 月 22 日 14:00"
+          ],
+          [
+            "地点",
+            "解放公园南门"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "查看历史版本",
+        "value": "保留原记录",
+        "to": "appointmentHistory"
+      },
+      {
+        "type": "action",
+        "label": "提出变更",
+        "to": "change",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消预约",
+        "to": "appointmentCancelConfirm",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回会话",
+      "to": "chat"
+    },
+    "module": 5
+  },
+  {
+    "id": "change",
+    "title": "提出预约变更",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "原版本",
+            "V1 · 已确认"
+          ],
+          [
+            "新版本",
+            "V2 · 待双方确认"
+          ]
+        ]
+      },
+      {
+        "type": "field",
+        "label": "新时间",
+        "value": "10 月 22 日 16:00"
+      },
+      {
+        "type": "field",
+        "label": "地点",
+        "value": "解放公园南门"
+      },
+      {
+        "type": "field",
+        "label": "变更原因",
+        "value": "下午两点临时有事，想往后延迟两小时。"
+      },
+      {
+        "type": "consent",
+        "key": "changeAgree",
+        "text": "我确认提交变更；对方同意前，以原生效安排为准。"
+      }
+    ],
+    "footer": {
+      "label": "发送变更申请",
+      "to": "appointmentChangeWaiting",
+      "require": "changeAgree"
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentChangeWaiting",
+    "title": "等待变更确认",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "生效安排",
+            "V1 · 14:00"
+          ],
+          [
+            "待确认安排",
+            "V2 · 16:00"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "原安排仍有效",
+        "body": "变更未获同意前，不会覆盖原时间。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "撤回本次变更",
+        "to": "appointmentConfirmed",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回会话",
+      "to": "chat"
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentChangeReview",
+    "title": "对方提出变更",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "原安排",
+            "V1 · 14:00"
+          ],
+          [
+            "新安排",
+            "V2 · 16:00"
+          ],
+          [
+            "地点",
+            "解放公园南门"
+          ]
+        ]
+      },
+      {
+        "type": "action",
+        "label": "不同意，保留原安排",
+        "to": "appointmentChangeDeclined",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "同意变更",
+      "to": "appointmentConfirmedV2",
+      "sets": {
+        "appointmentVersion": "V2"
+      }
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentChangeDeclined",
+    "title": "变更未通过",
+    "items": [
+      {
+        "type": "text",
+        "text": "变更未通过",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "V2 未生效，原 V1 安排保持有效。双方可重新沟通后提出新版本。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "查看当前安排",
+      "to": "appointmentConfirmed"
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentCancelConfirm",
+    "title": "取消预约",
+    "items": [
+      {
+        "type": "field",
+        "label": "取消原因",
+        "value": "行程冲突"
+      },
+      {
+        "type": "note",
+        "title": "双方都会收到更新",
+        "body": "取消仅针对本次预约，原申请和会话仍保留。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "保留预约",
+        "to": "appointmentConfirmed",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认取消",
+      "to": "appointmentCancelled",
+      "kind": "secondary"
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentCancelled",
+    "title": "预约已取消",
+    "items": [
+      {
+        "type": "text",
+        "text": "预约已取消",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "本次安排不再有效；如需见面，请重新提出预约并由双方确认。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "重新约时间",
+      "to": "appointment"
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentExpired",
+    "title": "预约确认已过期",
+    "items": [
+      {
+        "type": "note",
+        "title": "未获双方确认",
+        "body": "当前时间已过，不能继续确认旧安排。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "查看历史",
+        "value": "原版本仍可查询",
+        "to": "appointmentHistory"
+      }
+    ],
+    "footer": {
+      "label": "重新提出预约",
+      "to": "appointment"
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentConflict",
+    "title": "安排已被更新",
+    "items": [
+      {
+        "type": "note",
+        "title": "你打开的是旧版本",
+        "body": "对方刚更新了安排。请查看最新版本后再确认，避免覆盖新记录。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "查看最新变更",
+      "to": "appointmentChangeReview"
+    },
+    "module": 5
+  },
+  {
+    "id": "appointmentHistory",
+    "title": "预约版本记录",
+    "items": [
+      {
+        "type": "timeline",
+        "entries": [
+          [
+            "V2 · 待确认",
+            "16:00 · 对方提出的变更"
+          ],
+          [
+            "V1 · 生效中",
+            "14:00 · 双方已确认"
+          ]
+        ]
+      }
+    ],
+    "footer": {
+      "label": "查看当前安排",
+      "to": "appointmentConfirmed"
+    },
+    "module": 5
+  },
+  {
+    "id": "adoptionDecision",
+    "title": "处理领养申请",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "申请人：奶糖的朋友",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "按申请材料处理",
+        "body": "处理结果仅对本次申请双方可见。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "请对方补充材料",
+        "to": "adoptionSupplement",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "暂不通过",
+        "to": "adoptionReject",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "同意继续沟通",
+      "to": "chat"
+    },
+    "module": 3
+  },
+  {
+    "id": "adoptionSupplement",
+    "title": "请申请人补充",
+    "items": [
+      {
+        "type": "field",
+        "label": "需要补充的内容",
+        "value": "请补充同住家人的养宠意愿。"
+      },
+      {
+        "type": "note",
+        "title": "仅申请双方可见",
+        "body": "避免要求无关证件或完整家庭地址。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "发送补充请求",
+      "to": "adoptionSupplementReceived"
+    },
+    "module": 3
+  },
+  {
+    "id": "adoptionSupplementReceived",
+    "title": "补充领养申请",
+    "items": [
+      {
+        "type": "note",
+        "title": "送养人希望了解",
+        "body": "请补充同住家人的养宠意愿。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "家人已了解并支持共同照顾小满。"
+      }
+    ],
+    "footer": {
+      "label": "补充并重新提交",
+      "to": "applySent"
+    },
+    "module": 3
+  },
+  {
+    "id": "adoptionReject",
+    "title": "暂不通过本次申请",
+    "items": [
+      {
+        "type": "field",
+        "label": "原因",
+        "value": "当前照护安排与小满的需求暂不匹配。"
+      },
+      {
+        "type": "note",
+        "title": "只关闭本次申请",
+        "body": "不会公开申请人的材料，也不会替对方撤回其他申请。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回处理",
+        "to": "adoptionDecision",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认发送结果",
+      "to": "adoptionRejected",
+      "kind": "secondary"
+    },
+    "module": 3
+  },
+  {
+    "id": "adoptionRejected",
+    "title": "本次申请未通过",
+    "items": [
+      {
+        "type": "text",
+        "text": "本次申请未通过",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "送养人反馈：当前照护安排与小满的需求暂不匹配。材料仍按本次申请范围处理。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "继续浏览领养",
+      "to": "adopt"
+    },
+    "module": 3
+  },
+  {
+    "id": "trialAgreement",
+    "title": "确认试养安排",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "试养前双方确认",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "时间",
+            "10 月 22 日至 10 月 29 日"
+          ],
+          [
+            "照护",
+            "按原有喂养与用药说明"
+          ],
+          [
+            "费用",
+            "无额外收费"
+          ],
+          [
+            "退出方式",
+            "先私信沟通，协商安全接回"
+          ]
+        ]
+      },
+      {
+        "type": "consent",
+        "key": "trialAgree",
+        "text": "我理解试养期间的照护责任与退出方式。"
+      }
+    ],
+    "footer": {
+      "label": "确认试养安排",
+      "to": "trialActive",
+      "require": "trialAgree"
+    },
+    "module": 3
+  },
+  {
+    "id": "trialActive",
+    "title": "试养进行中",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "第 3 天 · 仅双方可见",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "row",
+        "label": "记录照护近况",
+        "value": "与送养人共享",
+        "to": "followup"
+      },
+      {
+        "type": "row",
+        "label": "遇到照护问题",
+        "value": "先沟通支持",
+        "to": "adoptionSupport"
+      },
+      {
+        "type": "row",
+        "label": "需要结束试养",
+        "value": "协商安全接回",
+        "to": "trialExit"
+      }
+    ],
+    "footer": {
+      "label": "准备正式交接",
+      "to": "handover"
+    },
+    "module": 3
+  },
+  {
+    "id": "trialExit",
+    "title": "协商结束试养",
+    "items": [
+      {
+        "type": "field",
+        "label": "目前情况",
+        "value": "家中原住民持续紧张，需要进一步评估。"
+      },
+      {
+        "type": "field",
+        "label": "建议接回时间",
+        "value": "10 月 25 日下午"
+      },
+      {
+        "type": "note",
+        "title": "先确认安全安排",
+        "body": "双方确认接回方式前，继续保障宠物照护，不直接标记交接完成。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "发送接回协商",
+      "to": "adoptionSupportPending"
+    },
+    "module": 3
+  },
+  {
+    "id": "handover",
+    "title": "确认领养交接",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "仅本次申请双方可见",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "资料",
+            "喂养与健康记录已共享"
+          ],
+          [
+            "用品",
+            "猫粮、猫砂与常用物品"
+          ],
+          [
+            "后续",
+            "30 天私密照护更新"
+          ],
+          [
+            "状态",
+            "双方均待确认"
+          ]
+        ]
+      },
+      {
+        "type": "consent",
+        "key": "handoverAgree",
+        "text": "我已核对实际交接情况，并确认宠物与资料已妥善交接。"
+      }
+    ],
+    "footer": {
+      "label": "确认我方已交接",
+      "to": "handoverWaiting",
+      "require": "handoverAgree"
+    },
+    "module": 3
+  },
+  {
+    "id": "handoverWaiting",
+    "title": "等待另一方确认",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "你已确认交接",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "等待对方确认",
+        "body": "双方都确认后，才会进入已完成状态。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "交接有问题",
+        "value": "保留记录并沟通",
+        "to": "adoptionSupport"
+      }
+    ],
+    "footer": {
+      "label": "返回申请进度",
+      "to": "application"
+    },
+    "module": 3
+  },
+  {
+    "id": "handoverOther",
+    "title": "确认收到小满",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "送养人已确认",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "consent",
+        "key": "handoverAgree",
+        "text": "我已安全接到小满，并收到约定资料与用品。"
+      },
+      {
+        "type": "action",
+        "label": "尚未完成交接",
+        "to": "adoptionSupport",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认交接完成",
+      "to": "handoverComplete",
+      "require": "handoverAgree"
+    },
+    "module": 3
+  },
+  {
+    "id": "handoverComplete",
+    "title": "交接已完成",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "双方已确认",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "接下来继续关心小满",
+        "body": "30 天照护更新仅向本次送养人及获授权的照护者共享。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "记录第一条照护更新",
+      "to": "followup"
+    },
+    "module": 3
+  }
+]

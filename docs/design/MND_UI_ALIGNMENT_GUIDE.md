@@ -2,6 +2,8 @@
 
 Last updated: 2026-10-15 (document scope clarification; visual tokens unchanged)
 
+2026-10-20 scoped mobile implementation update: the newly authorized Android / iOS entry follows the approved Figma phone V2 default light mode and [adaptive contract](figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md), as recorded in [mobile implementation](../client/MOBILE_IMPLEMENTATION_2026_10_20.md). The old four-theme rules below remain historical / legacy-client references for that scope; they do not override the user's current mobile default-style decision. The Stitch mirror is unchanged. Full feature and device acceptance remain incomplete.
+
 This is the implementation-facing guide for keeping Web, desktop boards, mobile clients, and future Stitch updates aligned.
 
 ## Product And Visual Scope

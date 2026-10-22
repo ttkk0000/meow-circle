@@ -1,0 +1,63 @@
+{
+  "variables": {
+    "background": "VariableID:14:36",
+    "surface": "VariableID:14:37",
+    "subtle": "VariableID:14:38",
+    "ink": "VariableID:14:39",
+    "muted": "VariableID:14:40",
+    "brand": "VariableID:14:41",
+    "onBrand": "VariableID:14:42",
+    "brandSoft": "VariableID:14:43",
+    "success": "VariableID:14:44",
+    "successSoft": "VariableID:14:45",
+    "warning": "VariableID:14:46",
+    "warningSoft": "VariableID:14:47",
+    "danger": "VariableID:14:48",
+    "dangerSoft": "VariableID:14:49",
+    "border": "VariableID:14:50",
+    "controlBorder": "VariableID:14:51",
+    "actionPrimary": "VariableID:70:149",
+    "actionOnPrimary": "VariableID:70:155"
+  },
+  "collection": "VariableCollectionId:14:6",
+  "styles": {
+    "Display": "S:9466fb621fab9e2a0cfe34deaa82bccfcc5a623c,",
+    "Brand": "S:a77f6263c925c0763904745e15919f9645624083,",
+    "Title": "S:9ba9f6f87f03d9c51832a0e6c4cba223a839f5df,",
+    "Section": "S:2df419e6e43a4b1ea6eb387c9368587ce8ab132b,",
+    "Body": "S:4ec5595d1cb39f780f1ba2061e632d77abfda629,",
+    "Label": "S:b3c9f305d72ee074857292ed4345f9311f8b5500,",
+    "Caption": "S:e31250e9288e02c9954a72976177f3677be7fbd6,",
+    "MobileBrand": "S:f342e1a98ed6a07320072500aa321ec1403e0fd1,",
+    "Strong": "S:09ac17cb5dbd83a9fb9f1911635c115cf59ac631,",
+    "ActionLabel": "S:6afb651a7afed11fb7b810ddf344ebca4b7927a6,"
+  },
+  "components": {
+    "primary": "56:179",
+    "secondary": "56:180",
+    "quiet": "56:181",
+    "disabled": "56:182",
+    "field": "56:188",
+    "fieldError": "56:192",
+    "row": "56:214",
+    "icon/check": "56:111",
+    "icon/chevron-left": "56:153",
+    "icon/house": "56:163",
+    "icon/heart-handshake": "56:150",
+    "icon/paw-print": "56:114",
+    "icon/message-circle": "56:125",
+    "icon/user-round": "56:146",
+    "wechat": "237:8982",
+    "qq": "237:8983",
+    "apple": "237:8984"
+  },
+  "textTemplates": {
+    "Caption": "506:7025",
+    "Section": "506:7026",
+    "MobileBrand": "506:7027",
+    "Title": "506:7028",
+    "Label": "506:7029",
+    "Strong": "506:7030",
+    "Body": "506:7031"
+  }
+}

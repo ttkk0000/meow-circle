@@ -4,23 +4,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.SystemBarStyle
+import android.graphics.Color
 import androidx.activity.viewModels
-import com.ttkk0000.meowcircle.MeowCircleSdk
+import com.ttkk0000.meowcircle.kmpapp.mobile.MndApplication
+import com.ttkk0000.meowcircle.kmpapp.mobile.MobileViewModel
+import com.ttkk0000.meowcircle.kmpapp.mobile.AndroidMobileApp
 
 class MainActivity : ComponentActivity() {
-    private val sdk by lazy { MeowCircleSdk(BuildConfig.API_BASE_URL) }
-    private val appViewModel by viewModels<MeowAppViewModel> {
-        MeowAppViewModel.Factory(sdk)
+    private val appViewModel by viewModels<MobileViewModel> {
+        MobileViewModel.Factory((application as MndApplication).mobileApi)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+        )
         setContent {
-            MeowApp(
-                sdk = sdk,
-                viewModel = appViewModel,
-            )
+            AndroidMobileApp(appViewModel.store)
         }
     }
 }

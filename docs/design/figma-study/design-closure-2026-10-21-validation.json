@@ -1,0 +1,2312 @@
+{
+  "expected": 327,
+  "checked": 327,
+  "rootPages": [
+    "420:5",
+    "471:524",
+    "420:2",
+    "420:4",
+    "420:3"
+  ],
+  "textCount": 3644,
+  "instanceCount": 4163,
+  "fontFamilies": [
+    "Noto Sans SC",
+    "Manrope"
+  ],
+  "reactiveCount": 3829,
+  "consentCount": 25,
+  "uniqueDestinations": 382,
+  "issues": [],
+  "roots": [
+    {
+      "id": "56:70",
+      "page": "420:5",
+      "platform": "phone",
+      "texts": 10,
+      "instances": 12
+    },
+    {
+      "id": "311:379860",
+      "page": "420:5",
+      "platform": "web",
+      "texts": 11,
+      "instances": 23
+    },
+    {
+      "id": "311:379861",
+      "page": "420:5",
+      "platform": "desktop",
+      "texts": 18,
+      "instances": 22
+    },
+    {
+      "id": "311:379862",
+      "page": "420:5",
+      "platform": "tabletP",
+      "texts": 11,
+      "instances": 17
+    },
+    {
+      "id": "311:379863",
+      "page": "420:5",
+      "platform": "tabletL",
+      "texts": 12,
+      "instances": 22
+    },
+    {
+      "id": "238:371719",
+      "page": "420:5",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 11
+    },
+    {
+      "id": "311:379880",
+      "page": "420:5",
+      "platform": "web",
+      "texts": 12,
+      "instances": 22
+    },
+    {
+      "id": "311:379881",
+      "page": "420:5",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 21
+    },
+    {
+      "id": "311:379882",
+      "page": "420:5",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 16
+    },
+    {
+      "id": "311:379883",
+      "page": "420:5",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 21
+    },
+    {
+      "id": "460:17318",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 7
+    },
+    {
+      "id": "460:17319",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 8,
+      "instances": 18
+    },
+    {
+      "id": "460:17320",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 17
+    },
+    {
+      "id": "460:17321",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 12
+    },
+    {
+      "id": "460:17322",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 17
+    },
+    {
+      "id": "460:17323",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 5
+    },
+    {
+      "id": "460:17324",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 8,
+      "instances": 16
+    },
+    {
+      "id": "460:17325",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 15
+    },
+    {
+      "id": "460:17326",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 10
+    },
+    {
+      "id": "460:17327",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 15
+    },
+    {
+      "id": "460:17328",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 5
+    },
+    {
+      "id": "460:17329",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 8,
+      "instances": 16
+    },
+    {
+      "id": "460:17330",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 15
+    },
+    {
+      "id": "460:17331",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 10
+    },
+    {
+      "id": "460:17332",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 15
+    },
+    {
+      "id": "460:17333",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 4
+    },
+    {
+      "id": "460:17334",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 8,
+      "instances": 15
+    },
+    {
+      "id": "460:17335",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 14
+    },
+    {
+      "id": "460:17336",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 9
+    },
+    {
+      "id": "460:17337",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 14
+    },
+    {
+      "id": "460:17338",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 6,
+      "instances": 4
+    },
+    {
+      "id": "460:17339",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:17340",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 14,
+      "instances": 14
+    },
+    {
+      "id": "460:17341",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 7,
+      "instances": 9
+    },
+    {
+      "id": "460:17342",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 8,
+      "instances": 14
+    },
+    {
+      "id": "460:17343",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 6,
+      "instances": 5
+    },
+    {
+      "id": "460:17344",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 7,
+      "instances": 16
+    },
+    {
+      "id": "460:17345",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 14,
+      "instances": 15
+    },
+    {
+      "id": "460:17346",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 7,
+      "instances": 10
+    },
+    {
+      "id": "460:17347",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 8,
+      "instances": 15
+    },
+    {
+      "id": "460:17348",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:17349",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:17350",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17351",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:17352",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:17353",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 4
+    },
+    {
+      "id": "460:17354",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 12,
+      "instances": 15
+    },
+    {
+      "id": "460:17355",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 14
+    },
+    {
+      "id": "460:17356",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 9
+    },
+    {
+      "id": "460:17357",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:17358",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 13,
+      "instances": 5
+    },
+    {
+      "id": "460:17359",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 14,
+      "instances": 16
+    },
+    {
+      "id": "460:17360",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 21,
+      "instances": 15
+    },
+    {
+      "id": "460:17361",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 14,
+      "instances": 10
+    },
+    {
+      "id": "460:17362",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 15,
+      "instances": 15
+    },
+    {
+      "id": "460:17363",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 6
+    },
+    {
+      "id": "460:17364",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 6,
+      "instances": 17
+    },
+    {
+      "id": "460:17365",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 16
+    },
+    {
+      "id": "460:17366",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 11
+    },
+    {
+      "id": "460:17367",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 16
+    },
+    {
+      "id": "460:17368",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 9,
+      "instances": 5
+    },
+    {
+      "id": "460:17369",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 10,
+      "instances": 16
+    },
+    {
+      "id": "460:17370",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 17,
+      "instances": 15
+    },
+    {
+      "id": "460:17371",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 10,
+      "instances": 10
+    },
+    {
+      "id": "460:17372",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 11,
+      "instances": 15
+    },
+    {
+      "id": "460:17373",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 6,
+      "instances": 5
+    },
+    {
+      "id": "460:17374",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 7,
+      "instances": 16
+    },
+    {
+      "id": "460:17375",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 14,
+      "instances": 15
+    },
+    {
+      "id": "460:17376",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 7,
+      "instances": 10
+    },
+    {
+      "id": "460:17377",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 8,
+      "instances": 15
+    },
+    {
+      "id": "460:17378",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 5
+    },
+    {
+      "id": "460:17379",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 8,
+      "instances": 16
+    },
+    {
+      "id": "460:17380",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 15
+    },
+    {
+      "id": "460:17381",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 10
+    },
+    {
+      "id": "460:17382",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 15
+    },
+    {
+      "id": "460:17383",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 5
+    },
+    {
+      "id": "460:17384",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 8,
+      "instances": 16
+    },
+    {
+      "id": "460:17385",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 15
+    },
+    {
+      "id": "460:17386",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 10
+    },
+    {
+      "id": "460:17387",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 15
+    },
+    {
+      "id": "460:17388",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 12,
+      "instances": 4
+    },
+    {
+      "id": "460:17389",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17390",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 20,
+      "instances": 14
+    },
+    {
+      "id": "460:17391",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 13,
+      "instances": 9
+    },
+    {
+      "id": "460:17392",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 14,
+      "instances": 14
+    },
+    {
+      "id": "460:17393",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:17394",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:17395",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17396",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:17397",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:17398",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 5
+    },
+    {
+      "id": "460:17399",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 12,
+      "instances": 16
+    },
+    {
+      "id": "460:17400",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 15
+    },
+    {
+      "id": "460:17401",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 10
+    },
+    {
+      "id": "460:17402",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17403",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:17404",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:17405",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17406",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:17407",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:17408",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 13,
+      "instances": 6
+    },
+    {
+      "id": "460:17409",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 14,
+      "instances": 17
+    },
+    {
+      "id": "460:17410",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 21,
+      "instances": 16
+    },
+    {
+      "id": "460:17411",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 14,
+      "instances": 11
+    },
+    {
+      "id": "460:17412",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 15,
+      "instances": 16
+    },
+    {
+      "id": "460:17413",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 6,
+      "instances": 5
+    },
+    {
+      "id": "460:17414",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 7,
+      "instances": 16
+    },
+    {
+      "id": "460:17415",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 14,
+      "instances": 15
+    },
+    {
+      "id": "460:17416",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 7,
+      "instances": 10
+    },
+    {
+      "id": "460:17417",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 8,
+      "instances": 15
+    },
+    {
+      "id": "460:17418",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:17419",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:17420",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17421",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:17422",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:17423",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:17424",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:17425",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17426",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:17427",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "56:76",
+      "page": "420:5",
+      "platform": "phone",
+      "texts": 14,
+      "instances": 7
+    },
+    {
+      "id": "311:380096",
+      "page": "420:5",
+      "platform": "web",
+      "texts": 15,
+      "instances": 18
+    },
+    {
+      "id": "311:380097",
+      "page": "420:5",
+      "platform": "desktop",
+      "texts": 22,
+      "instances": 17
+    },
+    {
+      "id": "311:380098",
+      "page": "420:5",
+      "platform": "tabletP",
+      "texts": 15,
+      "instances": 12
+    },
+    {
+      "id": "311:380099",
+      "page": "420:5",
+      "platform": "tabletL",
+      "texts": 16,
+      "instances": 17
+    },
+    {
+      "id": "460:17428",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 15,
+      "instances": 3
+    },
+    {
+      "id": "460:17429",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 16,
+      "instances": 14
+    },
+    {
+      "id": "460:17430",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 23,
+      "instances": 13
+    },
+    {
+      "id": "460:17431",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 16,
+      "instances": 8
+    },
+    {
+      "id": "460:17432",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 17,
+      "instances": 13
+    },
+    {
+      "id": "460:17433",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 3,
+      "instances": 7
+    },
+    {
+      "id": "460:17434",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 4,
+      "instances": 18
+    },
+    {
+      "id": "460:17435",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 11,
+      "instances": 17
+    },
+    {
+      "id": "460:17436",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 4,
+      "instances": 12
+    },
+    {
+      "id": "460:17437",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 5,
+      "instances": 17
+    },
+    {
+      "id": "460:17438",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:17439",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:17440",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17441",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:17442",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:17443",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 13,
+      "instances": 3
+    },
+    {
+      "id": "460:17444",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 14,
+      "instances": 14
+    },
+    {
+      "id": "460:17445",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 21,
+      "instances": 13
+    },
+    {
+      "id": "460:17446",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 14,
+      "instances": 8
+    },
+    {
+      "id": "460:17447",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 15,
+      "instances": 13
+    },
+    {
+      "id": "460:17448",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 15,
+      "instances": 3
+    },
+    {
+      "id": "460:17449",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 16,
+      "instances": 14
+    },
+    {
+      "id": "460:17450",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 23,
+      "instances": 13
+    },
+    {
+      "id": "460:17451",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 16,
+      "instances": 8
+    },
+    {
+      "id": "460:17452",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 17,
+      "instances": 13
+    },
+    {
+      "id": "460:17453",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 13,
+      "instances": 4
+    },
+    {
+      "id": "460:17454",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 14,
+      "instances": 15
+    },
+    {
+      "id": "460:17455",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 21,
+      "instances": 14
+    },
+    {
+      "id": "460:17456",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 14,
+      "instances": 9
+    },
+    {
+      "id": "460:17457",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 15,
+      "instances": 14
+    },
+    {
+      "id": "460:17458",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 14,
+      "instances": 4
+    },
+    {
+      "id": "460:17459",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 15,
+      "instances": 15
+    },
+    {
+      "id": "460:17460",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 22,
+      "instances": 14
+    },
+    {
+      "id": "460:17461",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 15,
+      "instances": 9
+    },
+    {
+      "id": "460:17462",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 16,
+      "instances": 14
+    },
+    {
+      "id": "460:17463",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 3,
+      "instances": 9
+    },
+    {
+      "id": "460:17464",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 4,
+      "instances": 20
+    },
+    {
+      "id": "460:17465",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 11,
+      "instances": 19
+    },
+    {
+      "id": "460:17466",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 4,
+      "instances": 14
+    },
+    {
+      "id": "460:17467",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 5,
+      "instances": 19
+    },
+    {
+      "id": "460:17468",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 15,
+      "instances": 3
+    },
+    {
+      "id": "460:17469",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 16,
+      "instances": 14
+    },
+    {
+      "id": "460:17470",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 23,
+      "instances": 13
+    },
+    {
+      "id": "460:17471",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 16,
+      "instances": 8
+    },
+    {
+      "id": "460:17472",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 17,
+      "instances": 13
+    },
+    {
+      "id": "460:17473",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:17474",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:17475",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:17476",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:17477",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:17478",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 4
+    },
+    {
+      "id": "460:17479",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 12,
+      "instances": 15
+    },
+    {
+      "id": "460:17480",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 14
+    },
+    {
+      "id": "460:17481",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 9
+    },
+    {
+      "id": "460:17482",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:17483",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 13,
+      "instances": 3
+    },
+    {
+      "id": "460:17484",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 14,
+      "instances": 14
+    },
+    {
+      "id": "460:17485",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 21,
+      "instances": 13
+    },
+    {
+      "id": "460:17486",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 14,
+      "instances": 8
+    },
+    {
+      "id": "460:17487",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 15,
+      "instances": 13
+    },
+    {
+      "id": "460:68682",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 6,
+      "instances": 8
+    },
+    {
+      "id": "460:68683",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 7,
+      "instances": 19
+    },
+    {
+      "id": "460:68684",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 14,
+      "instances": 18
+    },
+    {
+      "id": "460:68685",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 7,
+      "instances": 13
+    },
+    {
+      "id": "460:68686",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 8,
+      "instances": 18
+    },
+    {
+      "id": "460:68687",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 6,
+      "instances": 4
+    },
+    {
+      "id": "460:68688",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:68689",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 14,
+      "instances": 14
+    },
+    {
+      "id": "460:68690",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 7,
+      "instances": 9
+    },
+    {
+      "id": "460:68691",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 8,
+      "instances": 14
+    },
+    {
+      "id": "460:68692",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 4
+    },
+    {
+      "id": "460:68693",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 6,
+      "instances": 15
+    },
+    {
+      "id": "460:68694",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:68695",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 9
+    },
+    {
+      "id": "460:68696",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 14
+    },
+    {
+      "id": "460:68697",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 4
+    },
+    {
+      "id": "460:68698",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 12,
+      "instances": 15
+    },
+    {
+      "id": "460:68699",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 14
+    },
+    {
+      "id": "460:68700",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 9
+    },
+    {
+      "id": "460:68701",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:68702",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 15,
+      "instances": 3
+    },
+    {
+      "id": "460:68703",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 16,
+      "instances": 14
+    },
+    {
+      "id": "460:68704",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 23,
+      "instances": 13
+    },
+    {
+      "id": "460:68705",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 16,
+      "instances": 8
+    },
+    {
+      "id": "460:68706",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 17,
+      "instances": 13
+    },
+    {
+      "id": "460:68707",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 6,
+      "instances": 5
+    },
+    {
+      "id": "460:68708",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 7,
+      "instances": 16
+    },
+    {
+      "id": "460:68709",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 14,
+      "instances": 15
+    },
+    {
+      "id": "460:68710",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 7,
+      "instances": 10
+    },
+    {
+      "id": "460:68711",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 8,
+      "instances": 15
+    },
+    {
+      "id": "460:68712",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 5
+    },
+    {
+      "id": "460:68713",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 12,
+      "instances": 16
+    },
+    {
+      "id": "460:68714",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 15
+    },
+    {
+      "id": "460:68715",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 10
+    },
+    {
+      "id": "460:68716",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:68717",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 6,
+      "instances": 4
+    },
+    {
+      "id": "460:68718",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:68719",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 14,
+      "instances": 14
+    },
+    {
+      "id": "460:68720",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 7,
+      "instances": 9
+    },
+    {
+      "id": "460:68721",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 8,
+      "instances": 14
+    },
+    {
+      "id": "460:68722",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 4
+    },
+    {
+      "id": "460:68723",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 6,
+      "instances": 15
+    },
+    {
+      "id": "460:68724",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:68725",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 9
+    },
+    {
+      "id": "460:68726",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 14
+    },
+    {
+      "id": "460:68727",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:68728",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:68729",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:68730",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:68731",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:68732",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 13,
+      "instances": 4
+    },
+    {
+      "id": "460:68733",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 14,
+      "instances": 15
+    },
+    {
+      "id": "460:68734",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 21,
+      "instances": 14
+    },
+    {
+      "id": "460:68735",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 14,
+      "instances": 9
+    },
+    {
+      "id": "460:68736",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 15,
+      "instances": 14
+    },
+    {
+      "id": "460:68737",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 5
+    },
+    {
+      "id": "460:68738",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 6,
+      "instances": 16
+    },
+    {
+      "id": "460:68739",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "460:68740",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 10
+    },
+    {
+      "id": "460:68741",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 15
+    },
+    {
+      "id": "460:68742",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 4
+    },
+    {
+      "id": "460:68743",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 6,
+      "instances": 15
+    },
+    {
+      "id": "460:68744",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:68745",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 9
+    },
+    {
+      "id": "460:68746",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 14
+    },
+    {
+      "id": "460:68747",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 4
+    },
+    {
+      "id": "460:68748",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 12,
+      "instances": 15
+    },
+    {
+      "id": "460:68749",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 14
+    },
+    {
+      "id": "460:68750",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 9
+    },
+    {
+      "id": "460:68751",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:68752",
+      "page": "420:2",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 4
+    },
+    {
+      "id": "460:68753",
+      "page": "420:2",
+      "platform": "web",
+      "texts": 8,
+      "instances": 15
+    },
+    {
+      "id": "460:68754",
+      "page": "420:2",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 14
+    },
+    {
+      "id": "460:68755",
+      "page": "420:2",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 9
+    },
+    {
+      "id": "460:68756",
+      "page": "420:2",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 14
+    },
+    {
+      "id": "460:211421",
+      "page": "420:4",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 4
+    },
+    {
+      "id": "460:211422",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 12,
+      "instances": 15
+    },
+    {
+      "id": "460:211423",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 14
+    },
+    {
+      "id": "460:211424",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 9
+    },
+    {
+      "id": "460:211425",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:211426",
+      "page": "420:4",
+      "platform": "phone",
+      "texts": 11,
+      "instances": 4
+    },
+    {
+      "id": "460:211427",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 12,
+      "instances": 15
+    },
+    {
+      "id": "460:211428",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 14
+    },
+    {
+      "id": "460:211429",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 9
+    },
+    {
+      "id": "460:211430",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 14
+    },
+    {
+      "id": "460:242507",
+      "page": "420:3",
+      "platform": "phone",
+      "texts": 5,
+      "instances": 7
+    },
+    {
+      "id": "460:242508",
+      "page": "420:3",
+      "platform": "web",
+      "texts": 6,
+      "instances": 18
+    },
+    {
+      "id": "460:242509",
+      "page": "420:3",
+      "platform": "desktop",
+      "texts": 13,
+      "instances": 17
+    },
+    {
+      "id": "460:242510",
+      "page": "420:3",
+      "platform": "tabletP",
+      "texts": 6,
+      "instances": 12
+    },
+    {
+      "id": "460:242511",
+      "page": "420:3",
+      "platform": "tabletL",
+      "texts": 7,
+      "instances": 17
+    },
+    {
+      "id": "460:242512",
+      "page": "420:3",
+      "platform": "phone",
+      "texts": 13,
+      "instances": 3
+    },
+    {
+      "id": "460:242513",
+      "page": "420:3",
+      "platform": "web",
+      "texts": 14,
+      "instances": 14
+    },
+    {
+      "id": "460:242514",
+      "page": "420:3",
+      "platform": "desktop",
+      "texts": 21,
+      "instances": 13
+    },
+    {
+      "id": "460:242515",
+      "page": "420:3",
+      "platform": "tabletP",
+      "texts": 14,
+      "instances": 8
+    },
+    {
+      "id": "460:242516",
+      "page": "420:3",
+      "platform": "tabletL",
+      "texts": 15,
+      "instances": 13
+    },
+    {
+      "id": "486:5521",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 5
+    },
+    {
+      "id": "486:5522",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 8,
+      "instances": 16
+    },
+    {
+      "id": "486:5523",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 15
+    },
+    {
+      "id": "486:5524",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 10
+    },
+    {
+      "id": "486:5525",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 15
+    },
+    {
+      "id": "486:5526",
+      "page": "471:524",
+      "platform": "phone",
+      "texts": 12,
+      "instances": 4
+    },
+    {
+      "id": "486:5527",
+      "page": "471:524",
+      "platform": "web",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "486:5528",
+      "page": "471:524",
+      "platform": "desktop",
+      "texts": 20,
+      "instances": 14
+    },
+    {
+      "id": "486:5529",
+      "page": "471:524",
+      "platform": "tabletP",
+      "texts": 13,
+      "instances": 9
+    },
+    {
+      "id": "486:5530",
+      "page": "471:524",
+      "platform": "tabletL",
+      "texts": 14,
+      "instances": 14
+    },
+    {
+      "id": "482:148673",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 8,
+      "instances": 23
+    },
+    {
+      "id": "482:148674",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 22
+    },
+    {
+      "id": "482:148675",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 17
+    },
+    {
+      "id": "482:148676",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 22
+    },
+    {
+      "id": "482:148677",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 11,
+      "instances": 20
+    },
+    {
+      "id": "482:148678",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 18,
+      "instances": 19
+    },
+    {
+      "id": "482:148679",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 11,
+      "instances": 14
+    },
+    {
+      "id": "482:148680",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 12,
+      "instances": 19
+    },
+    {
+      "id": "482:148681",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 11,
+      "instances": 21
+    },
+    {
+      "id": "482:148682",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 18,
+      "instances": 20
+    },
+    {
+      "id": "482:148683",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 11,
+      "instances": 15
+    },
+    {
+      "id": "482:148684",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 12,
+      "instances": 20
+    },
+    {
+      "id": "482:148685",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 10,
+      "instances": 16
+    },
+    {
+      "id": "482:148686",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 17,
+      "instances": 15
+    },
+    {
+      "id": "482:148687",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 10,
+      "instances": 10
+    },
+    {
+      "id": "482:148688",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 11,
+      "instances": 15
+    },
+    {
+      "id": "482:148689",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 12,
+      "instances": 16
+    },
+    {
+      "id": "482:148690",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 19,
+      "instances": 15
+    },
+    {
+      "id": "482:148691",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 12,
+      "instances": 10
+    },
+    {
+      "id": "482:148692",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 13,
+      "instances": 15
+    },
+    {
+      "id": "482:148693",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 10,
+      "instances": 20
+    },
+    {
+      "id": "482:148694",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 17,
+      "instances": 19
+    },
+    {
+      "id": "482:148695",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 10,
+      "instances": 14
+    },
+    {
+      "id": "482:148696",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 11,
+      "instances": 19
+    },
+    {
+      "id": "482:148697",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 10,
+      "instances": 17
+    },
+    {
+      "id": "482:148698",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 17,
+      "instances": 16
+    },
+    {
+      "id": "482:148699",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 10,
+      "instances": 11
+    },
+    {
+      "id": "482:148700",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 11,
+      "instances": 16
+    },
+    {
+      "id": "482:148701",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 11,
+      "instances": 18
+    },
+    {
+      "id": "482:148702",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 18,
+      "instances": 17
+    },
+    {
+      "id": "482:148703",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 11,
+      "instances": 12
+    },
+    {
+      "id": "482:148704",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 12,
+      "instances": 17
+    },
+    {
+      "id": "56:61",
+      "page": "420:4",
+      "platform": "phone",
+      "texts": 7,
+      "instances": 16
+    },
+    {
+      "id": "311:379700",
+      "page": "420:4",
+      "platform": "web",
+      "texts": 8,
+      "instances": 23
+    },
+    {
+      "id": "311:379701",
+      "page": "420:4",
+      "platform": "desktop",
+      "texts": 15,
+      "instances": 22
+    },
+    {
+      "id": "311:379702",
+      "page": "420:4",
+      "platform": "tabletP",
+      "texts": 8,
+      "instances": 17
+    },
+    {
+      "id": "311:379703",
+      "page": "420:4",
+      "platform": "tabletL",
+      "texts": 9,
+      "instances": 22
+    }
+  ]
+}

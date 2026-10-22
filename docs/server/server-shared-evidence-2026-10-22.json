@@ -1,0 +1,400 @@
+{
+  "task": "AI-20261022-SERVER-KMP",
+  "recorded_at": "2026-10-22T10:32:51.689022+00:00",
+  "source_base": "ebfc469c9707bf0ea4a6b383840546077ae65782",
+  "branch": "main",
+  "level": "source_and_static_only",
+  "checks": {
+    "gofmt": "parsed/formatted; not type checking",
+    "mobile_static": "passed",
+    "kmp_static": "passed; 25 Kotlin/Swift files; lexical only",
+    "cross_language_static": "passed; 47 DTO pairs",
+    "paths": 199,
+    "operations": 226,
+    "schemas": 86,
+    "feature_tables": 42
+  },
+  "not_executed": [
+    "Go/Kotlin/Swift type checking",
+    "compilation/build/package/install",
+    "application tests",
+    "database migration",
+    "server or devices",
+    "real provider validation",
+    "deployment"
+  ],
+  "remaining": [
+    "C08 persistent picker file and process recovery",
+    "expired upload reservation/temp file cleanup",
+    "job scheduling and hold/evidence integration",
+    "other legacy write receipt coverage",
+    "real gateways, policy evidence and operational duties",
+    "full native UI and Web/Desktop migration"
+  ],
+  "source_fingerprints": [
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256": "b6cdc755c8646b63b029a4c856bf1c86f4393bcec6572829398ca4417c618c1e"
+    },
+    {
+      "path": "internal/identity/email.go",
+      "sha256": "e077af9bd75509acb5f28aec65940681a586342cdc6c889c075c3e25469d7366"
+    },
+    {
+      "path": "internal/identity/expiry.go",
+      "sha256": "8e4faa553a9d95098f7fef93e5e215264285f9d35d3d26bd88b1d0e87aafb65c"
+    },
+    {
+      "path": "internal/identity/legacy.go",
+      "sha256": "f8ccf000024757ad39a6795e389b616a74d52bb47170b1983a5f181a6bce7864"
+    },
+    {
+      "path": "internal/identity/link_scope.go",
+      "sha256": "65bb2c9e71d38c42e29ad250aa94d7a665a48fd30d7a6a10495898ccb04a3d8b"
+    },
+    {
+      "path": "internal/identity/profile.go",
+      "sha256": "b54b160f148736172f1c1c1b03be4f96fd4d8a7f1c08417a4673a2353db1238d"
+    },
+    {
+      "path": "internal/identity/rate.go",
+      "sha256": "ca8542f49f46eba44adfd0f503c0a2998ac27f6e5c0e7c5dbca104f48572cb67"
+    },
+    {
+      "path": "internal/identity/revocation.go",
+      "sha256": "9633cf885def9fa317c6ee4a39933de28440e20db44af55d7e65acfe8d0b1010"
+    },
+    {
+      "path": "internal/identity/safety_contact.go",
+      "sha256": "63431b3858aa40e9ee9ded0813a0343162f924f42f805a408bbdc37cd446c817"
+    },
+    {
+      "path": "internal/identity/service.go",
+      "sha256": "06234f01fc6cb683dff2dcc72c37454bc45e7fc8d44594d7ce0838463b86c278"
+    },
+    {
+      "path": "internal/identity/service_test.go",
+      "sha256": "2d7da162f107d97eca84f0f46f74f4382732476a72ff440fedc32761408bf6f3"
+    },
+    {
+      "path": "internal/mobile/aigc.go",
+      "sha256": "71db10bb2dd8399fb1cac09f68eb648b8ceb1bd29cae1d0642ba2f715bd030b0"
+    },
+    {
+      "path": "internal/mobile/appointment_admission.go",
+      "sha256": "d820b1ba36f25ce07ab3e615f46afd2829cee9ce55872e85c46a03530bf6e1cb"
+    },
+    {
+      "path": "internal/mobile/appointments.go",
+      "sha256": "2438f3019c0471ae3effcdece3f88e4ea66c5d5b96ed2c17a7a4ef4caf0a5368"
+    },
+    {
+      "path": "internal/mobile/authority.go",
+      "sha256": "e6bb7d1520b1dd309c8ab50e3cb94afef7dab97777c8ec5bb0076cedb74a01e7"
+    },
+    {
+      "path": "internal/mobile/catalog.go",
+      "sha256": "11758cbea3e62423d5b9b105d4193514aa17bafd1c69252c554358bd2b9326b0"
+    },
+    {
+      "path": "internal/mobile/commands.go",
+      "sha256": "6dcef3ec0bd7c9bd4b83801574d839645c66f6ae4d687986a49827741bc742d4"
+    },
+    {
+      "path": "internal/mobile/contracts.go",
+      "sha256": "c892bc9720e231d8105699a4b7c639cf1ab1244ed70c66b36f155bc859e7fc13"
+    },
+    {
+      "path": "internal/mobile/data_requests.go",
+      "sha256": "ef9928e6d051a00f1cc0c15bc9a3de59046c60981dc2854891418f6d6d12e039"
+    },
+    {
+      "path": "internal/mobile/delivery.go",
+      "sha256": "436402f92ca48e62bca7e1f550bbb381b605958bc043ff7ee6e66bbf3bbc062d"
+    },
+    {
+      "path": "internal/mobile/erasure.go",
+      "sha256": "66b8196011fbbcf21ea0b6b5aa99dfe2a88e8f54eb8e7588a89a99f0997b6241"
+    },
+    {
+      "path": "internal/mobile/events.go",
+      "sha256": "710ddebed62a74c8d4fa194ab4e42475485420ef3403450dadad62e17569f7f4"
+    },
+    {
+      "path": "internal/mobile/expiry.go",
+      "sha256": "c6c4a5d25e373eeab86c2bea740a530b7e915e690ed5089189ace505035e1a13"
+    },
+    {
+      "path": "internal/mobile/guardian.go",
+      "sha256": "1e3b9b5cbe60a8f73095dee3aee3ea06cfc93cebbaa4bf636fcbedde3ae9fa06"
+    },
+    {
+      "path": "internal/mobile/inbox.go",
+      "sha256": "61d9a4a40b2e1a3dff356371ad9d72ea816401e1373911ef89799b55c5befa61"
+    },
+    {
+      "path": "internal/mobile/media_reservation.go",
+      "sha256": "8dcdfd3a133a34afe16d730bac15de623328ec9a13868400b8faa500ee7d0579"
+    },
+    {
+      "path": "internal/mobile/metrics.go",
+      "sha256": "b9bc2e52caacc6bb96964a98928d523c3c05fc8e6a456ef66f3871a3848bbe16"
+    },
+    {
+      "path": "internal/mobile/models.go",
+      "sha256": "53f3497fdbeaabfa575f6d8f462d91493a203b0cc66536f3c37b7154a4f32c20"
+    },
+    {
+      "path": "internal/mobile/nearby.go",
+      "sha256": "6fa9722ff27cc73287f928e9a5fb473f6c10f19adc83ff5b05c1e14b3230d697"
+    },
+    {
+      "path": "internal/mobile/offers.go",
+      "sha256": "641c63ecf756e903f7c7d0c38bb58980b79db8722c28baa6e125d5dd5a3f4e03"
+    },
+    {
+      "path": "internal/mobile/outbox.go",
+      "sha256": "70afd4a45c08dd10494553c1c9d7e117a23303df8a9f544eb0950b708e808723"
+    },
+    {
+      "path": "internal/mobile/policy_test.go",
+      "sha256": "0068dc65d58534dc64f06e1b20467599ca52bef06c9f0ec4a04bb934e9acfa66"
+    },
+    {
+      "path": "internal/mobile/publication.go",
+      "sha256": "75ccb2722cd0dad6f6e3a6053711afb0795d2b18f7b77ed4bf96d6cb37053687"
+    },
+    {
+      "path": "internal/mobile/purpose.go",
+      "sha256": "12ca79945f2929a51179457c51022e8ff9a07dfa2d17dcc7f54389061ad35aa8"
+    },
+    {
+      "path": "internal/mobile/push.go",
+      "sha256": "b7a44aca17565b527fb1bb9250ce4a8fc533c5a152b0f3ab2ee4df16aab61601"
+    },
+    {
+      "path": "internal/mobile/qualification.go",
+      "sha256": "7bf6d3f4dafc730d93d45bab294f8fa7b5ac9c6679920112938131964850d7f3"
+    },
+    {
+      "path": "internal/mobile/query.go",
+      "sha256": "ec62351ed75776772855095a82575325519286787d9b9f5b54cd266322e630c0"
+    },
+    {
+      "path": "internal/mobile/repository.go",
+      "sha256": "fcbec1bb828baef94e32dca8759e493495a741df57e784bd504cd9cec9fd6567"
+    },
+    {
+      "path": "internal/mobile/rescue.go",
+      "sha256": "eec58b779235e8a844441d9a92e5e97be82141e69ddf93576e24fcae51f7d914"
+    },
+    {
+      "path": "internal/mobile/revenue.go",
+      "sha256": "1885fd5bb7a53f96bc2ce58e60118067539ee608380ad79301a0b496f2b0b76c"
+    },
+    {
+      "path": "internal/mobile/rights.go",
+      "sha256": "1feacae3fbff6d706a62586e01c26dacd3a936b55a1537441288af61efa97558"
+    },
+    {
+      "path": "internal/mobile/safety_media.go",
+      "sha256": "1f03d9189ef8cdcf7b4da4d3db0a140046aa7663b949779aa26d398fb9588060"
+    },
+    {
+      "path": "internal/mobile/service.go",
+      "sha256": "6fbcb0f408e94042b465befd8bd1581f6ca450eb09e96c14e0ee92b5f3d36221"
+    },
+    {
+      "path": "internal/mobile/service_test.go",
+      "sha256": "58386c633371414a1af360c3db01545918f23f3dedbfae21933da0386c497f73"
+    },
+    {
+      "path": "internal/mobile/share.go",
+      "sha256": "67a887e6d49a4c4a1bb7d515ff64ff00fb689f5dca6d4b2a0fb90030e428fb7c"
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "sha256": "747546792d2bce0681233354b06460a9e47be2b1c7073da9952a3bc53a33c18a"
+    },
+    {
+      "path": "internal/mobile/trust.go",
+      "sha256": "a460138b5e05c0ef20ae480382d1a98e804fb219d05f1834a5046608f0324503"
+    },
+    {
+      "path": "internal/mobile/verification.go",
+      "sha256": "f5c154176eea6ddf0ce0550cf1d93557d7da3ade15dae0c41d0a82b9b8697253"
+    },
+    {
+      "path": "internal/platform/api/router.go",
+      "sha256": "f7b32ac3ecfc0a1338bbe63c43234c44499272f22408ba004538b039a892c41e"
+    },
+    {
+      "path": "internal/platform/mobileapi/aigc.go",
+      "sha256": "9232a2855186bc0cd6ced8607a739cd5d077911ca8f4e73523fab77c4258da1f"
+    },
+    {
+      "path": "internal/platform/mobileapi/aigc_test.go",
+      "sha256": "44eca7c731e7011cb461df63b4307157e426801d7867808869ccffb5ae51d889"
+    },
+    {
+      "path": "internal/platform/mobileapi/assets.go",
+      "sha256": "37fd9bd57f5b932b1c2f91dfe5df641f8b7150dfb8156f5d132617c7e62a606e"
+    },
+    {
+      "path": "internal/platform/mobileapi/erasure.go",
+      "sha256": "7e0b80dbafdffa1489edaa6dcbdc240d76df9a7ae4ffd31a675e4f335140e537"
+    },
+    {
+      "path": "internal/platform/mobileapi/guardian.go",
+      "sha256": "9fb8659bd247146302f0379c2857ec4b87c816bd1b39b6b3ab6dfc41bc60399d"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256": "b8cb652444ca78bd6f80c536b3bec8c79393437859257e0e4ce966011307a83c"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler_test.go",
+      "sha256": "e3ff711448396652cc0f2e8b8e9b3af47e12c4e12bd5362e20874722cdb28e19"
+    },
+    {
+      "path": "internal/platform/mobileapi/media.go",
+      "sha256": "89630a2ac3f223c72780fe762deba5d7b161f28bab0e65051de5d7d0174e9d57"
+    },
+    {
+      "path": "internal/platform/mobileapi/ops_auth.go",
+      "sha256": "0a765938023ce80e28a933d887e2ee898620a1f666be276d1366625a255d6a7e"
+    },
+    {
+      "path": "internal/platform/mobileapi/policy.go",
+      "sha256": "947c81641cdc1c990648439de3921ce19da54cabaabb288cf7dfe32b7f015a1c"
+    },
+    {
+      "path": "internal/platform/mobileauth/apple_revocation.go",
+      "sha256": "7a5a6df86ab5e072b8182328936b98cb01fa0aa7e6f14fe6fbdf74e6d3c5031b"
+    },
+    {
+      "path": "internal/platform/mobileauth/providers.go",
+      "sha256": "d26f1e254207ebb8d684a9543929ab84930eb224606e2cdcd3325636d5030f29"
+    },
+    {
+      "path": "internal/platform/mobileauth/push.go",
+      "sha256": "fce522f412293bc053ee35f935058db270c4ddc57f4d782cb317e0b6515de264"
+    },
+    {
+      "path": "internal/store/cache/mobile.go",
+      "sha256": "b43f982b4046b0a71ab74ade8c26e18b60348323fd43d32a3473846f1261356c"
+    },
+    {
+      "path": "internal/store/mobile.go",
+      "sha256": "c99f2640e81833f599bed9248ffec55acb9f60a3aa8175aa1096c1cf6451c418"
+    },
+    {
+      "path": "internal/store/postgres/mobile.go",
+      "sha256": "698dbe50a1f5822deab5d4ecfa8bbed2f7e15c58204ddfe2fd62190609a29a62"
+    },
+    {
+      "path": "kmp/shared/src/androidMain/kotlin/com/ttkk0000/meowcircle/HttpClientFactory.android.kt",
+      "sha256": "d43f0ec8a91fe4c6c49ee28bdad1273431872c9223b41756083da42ffd6eeacd"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/ApiException.kt",
+      "sha256": "6dddc18bab4218296e7e616e1309a791b3890f436889bfa9276835d24de40833"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "sha256": "dae7b901958dd02dfb52e4bde7e20cb34d3a395e329f754555f5ca4467ef453b"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt",
+      "sha256": "39efcc37d66b8f43e03e9918ea3c30617c9c2999374af31f5c97be7b97641dd1"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/IdentityModels.kt",
+      "sha256": "220a5419bfd3dff6dde84a19f77919c7a036209602f1e8a713aaf2ea213d21bf"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256": "05d5fd80fa7bd1e8ca8eddd4e3ec475c6fc85f5f41ef56b93f1561958144695a"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "cf910646b7a3b7f9b2dce0277324c5407f2b999d7c623ee6938785ee24a794f0"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt",
+      "sha256": "bd28a1b4761e0327534bd17f4a5faac32771f16f685ace95fe92fd2d1a719622"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/PolicyModels.kt",
+      "sha256": "568e5174b1232cd54c823e24ee0a441f95470c61594493884a3e1c3bd49f8bf9"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/SensitiveActionStore.kt",
+      "sha256": "3800b6951f5ad58daf262598bacf453bc6897494fc7a6ddc6eab50363d132ee0"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/HttpClientFactory.kt",
+      "sha256": "4932ec1bd7c88dff19340286ccff287c9ff1905548f327cff86576d92170b21d"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/HumanizeClientFailure.kt",
+      "sha256": "6f0f03ddf2b7ba8fbca75f2cdccd8f613d5fdd3bd4976398e3bb94a951d2cf4e"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/MeowCircleSdk.kt",
+      "sha256": "fce55e1b26dbb072e6a4e90680cc425a94971e28584079f34a2093ad1be559d7"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/Models.kt",
+      "sha256": "2d3169e7cf1c249a62da5e6f213b06b6a4c55786b6303bcfddec8fbd69a308ef"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/SessionStore.kt",
+      "sha256": "a860ca8fc4a43a014bc778f2a1b353518819f9f83825575c73051213eb31c27d"
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/MobileApiContractTest.kt",
+      "sha256": "9342e7f5b600375e19dd5146d1290ede99734a74654f64b3d2b52845c337b097"
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/OperationRecoveryTest.kt",
+      "sha256": "b2b0907d3ab28912fb1347aaf2e8425c8eb8234a645638f2b17afbd43b5293d2"
+    },
+    {
+      "path": "kmp/shared/src/desktopMain/kotlin/com/ttkk0000/meowcircle/HttpClientFactory.desktop.kt",
+      "sha256": "d43f0ec8a91fe4c6c49ee28bdad1273431872c9223b41756083da42ffd6eeacd"
+    },
+    {
+      "path": "kmp/shared/src/iosMain/kotlin/com/ttkk0000/meowcircle/HttpClientFactory.ios.kt",
+      "sha256": "0aa6134c1081c4261bff7f372968ad30c53ef774120ed67c66ed531ccc13c329"
+    },
+    {
+      "path": "kmp/shared/src/iosMain/kotlin/com/ttkk0000/meowcircle/IosSdkBridge.kt",
+      "sha256": "ef7bf5f503a38a1c86abdf213732e274d34b8eea1d5970faa06399265537f81d"
+    },
+    {
+      "path": "migrations/007_mobile_modules.sql",
+      "sha256": "d69a30a6ba60dcce18fd93c37152450f780dc0bdd42b3b6b4a5c0c5644efce5b"
+    },
+    {
+      "path": "migrations/008_mobile_policy_commands.sql",
+      "sha256": "d4ea0a2a19d35f870a4009de92d421c5d8feac275c10f18ee325d68c54d50b7f"
+    },
+    {
+      "path": "scripts/check_kmp_client_static.py",
+      "sha256": "f955edf5d926407aaf3a7610ab535e658b055805bfa0b0dbd4ee3a541260f44a"
+    },
+    {
+      "path": "scripts/check_mobile_static.py",
+      "sha256": "3fe13d45014bfbdfad917f78d6881896b82d42cfd530bcc1373423cddb38c8bc"
+    },
+    {
+      "path": "scripts/check_server_shared_contract_static.py",
+      "sha256": "eaaf6701d0fccb7ed35221044ef909c454200c9ac48505433f71bbc83d549a53"
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256": "771d9e888e810a4b6629548322b9564bd3939ee98147f34760f0a2af44b679a6"
+    }
+  ]
+}

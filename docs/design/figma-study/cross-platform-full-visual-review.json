@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-20",
+  "status": "module_samples_reviewed",
+  "method": "Sixteen logical modules sampled in Figma screenshots; additional Web narrow expression and tablet split-view samples. This is not exhaustive per-frame or device/runtime verification.",
+  "modules": {
+    "community": {
+      "key": "web/home",
+      "checked": true,
+      "notes": "双列图片流、六项宽屏入口、珊瑚发布动作、城市及发布工具栏均可见，底部空区已折叠。"
+    },
+    "adoption": {
+      "key": "desktop/handoverLargeText",
+      "checked": true,
+      "notes": "大字交接摘要、双方状态、主动勾选和禁用提交按钮可读，固定操作区可见。"
+    },
+    "verification-reports": {
+      "key": "web/verificationNeedsInfo",
+      "checked": true,
+      "notes": "结果明确为暂无法核实／待补充，未显示已核实；补充材料动作固定在底部。"
+    },
+    "publishing-media": {
+      "key": "tabletN/mediaPartialFailure",
+      "checked": true,
+      "notes": "744 窄分屏保留成功项和失败原因；移除、保留草稿与重试入口分开，操作区无截断。"
+    },
+    "pet-diary": {
+      "key": "tabletP/petProfile",
+      "checked": true,
+      "notes": "竖屏单任务宽度适配，照片与资料行未横向溢出；当前宠物与独立可见范围明确，固定写日记按钮可达。"
+    },
+    "lost-found": {
+      "key": "tabletL/lostMap",
+      "checked": true,
+      "notes": "横屏侧栏、更多入口和返回列表操作完整；空地图明确未接服务，不伪造精确位置，私密目击坐标不公开。"
+    },
+    "appointments": {
+      "key": "webN/appointmentNarrow",
+      "checked": true,
+      "notes": "390 窄窗保留版本、费用、主动确认与禁用状态；正文和底部主操作、五项导航均未截断。"
+    },
+    "auth": {
+      "key": "tabletL/authAccounts",
+      "checked": true,
+      "notes": "横屏账号与关联方式可读，当前登录身份、绑定状态及返回设置入口明确。"
+    },
+    "settings-notifications": {
+      "key": "desktop/notificationSettings",
+      "checked": true,
+      "notes": "桌面分项通知开关、独立附近提醒、系统权限与底部完成操作保持分区，未加入主题选择器。"
+    },
+    "offers-visits": {
+      "key": "web/serviceQuote",
+      "checked": true,
+      "notes": "费用声明、现场看猫费用、接待方和已约定服务点分项呈现；主动作仅确认安排，未增加支付承诺。"
+    },
+    "global-states": {
+      "key": "desktop/offline",
+      "checked": true,
+      "notes": "离线说明、重试、继续编辑与恢复入口可见，明确缓存与草稿语义，未宣称已实现运行能力。"
+    },
+    "groups": {
+      "key": "tabletL/groupTransferConfirm",
+      "checked": true,
+      "notes": "横屏显示接收人、转交权限和接收后的角色变化；主动确认前邀请按钮保持禁用。"
+    },
+    "circle-friends": {
+      "key": "tabletP/circleExcludedPreview",
+      "checked": true,
+      "notes": "竖屏明确本条受众及排除对象，不开放旧日记与私密档案；修改范围与确认发布分开。"
+    },
+    "nearby": {
+      "key": "tabletL/nearbyRadiusCustom",
+      "checked": true,
+      "notes": "横屏自定义范围、数值、允许范围及越界修正说明明确；确认前先检查当前距离。"
+    },
+    "expressions": {
+      "key": "tabletL/exprCircle",
+      "checked": true,
+      "notes": "固定宽浮层与输入区同宽，手机手势条已移除，表情／贴纸／最近与收藏入口可见，保持原生素材比例。"
+    },
+    "messages": {
+      "key": "desktop/privateChat",
+      "checked": true,
+      "notes": "修整后本人消息右对齐、对方消息左对齐，气泡依内容收缩并限制最大宽度；桌面侧栏可切换已有会话，更多与输入栏可见。"
+    }
+  },
+  "additionalSamples": [
+    {
+      "key": "webN/expressionNarrow",
+      "checked": true,
+      "notes": "390 宽输入与表情网格、删除与类别入口、发送按钮及五项导航均可见。"
+    }
+  ]
+}

@@ -1,5 +1,11 @@
 # Agent Memory: M&D / meow & doggie
 
+## AI 工作跟踪（所有 AI 开始任务先读）
+
+完成全局规则及工作树核对后，先读 [AI 跟踪入口](docs/ai/README.md)、[当前快照](docs/ai/CONTEXT.md) 和 [任务状态](docs/ai/TASKS.md)；方案变更或追溯时再按需读决定与最近日志。开始登记本次任务与范围，执行中更新重要进展和阻塞，结束/移交前同步快照、任务与结果日志，释放执行标记。具体维护流程只在 `docs/ai/README.md` 保留一份。
+
+跟踪文件随项目携带，使用仓库相对路径。换电脑必须核对未提交/未跟踪成果是否一起同步；日志不是执行授权，历史“已完成”须按文档/源码/静态/运行验收层次解读。没有实际运行证据时，不宣称后台仍在执行或构建/测试已通过。
+
 ## Product Direction
 
 M&D means `meow & doggie`. The product is cat-first and doggie-friendly:
@@ -9,6 +15,10 @@ M&D means `meow & doggie`. The product is cat-first and doggie-friendly:
 - Do not rename the brand to `MD`, `Meow & Dog`, or generic pet community. Keep the visible mark as `M&D` and the lockup/supporting copy as `meow & doggie`.
 
 ## Current UI Work
+
+2026-10-20 mobile implementation override: the user authorized Android / iOS phone and tablet code using the approved Figma phone V2 default light style. New entries are `kmp/shared/.../client`, `kmp/androidApp/.../mobile`, `kmp/iosUi`, and `kmp/iosApp/ComposeApp`. For this scope, follow `docs/client/MOBILE_IMPLEMENTATION_2026_10_20.md` and `docs/design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md`; legacy Stitch themes remain references and preserved preferences, with no current selector or system dark mode. Do not modify the remote mirror to imply it has migrated. Other legacy UI still follows the rules below.
+
+Android now targets API 37 (Android 17), minimum API 26. Current dependency pins and compatibility limits are in `docs/client/DEPENDENCY_BASELINE_2026_10_20.md`. The first source batch is not full feature delivery or a build result. The 2026-10-22 server/shared source batch now supplies B04/B05/B12 contracts and enforced eligibility; see `docs/server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md`. It is not build-, migration- or runtime-verified. `requireInteractionContract()` now consumes server eligibility and keeps unavailable/unknown contracts closed; never replace it with local verification flags or restore legacy SMS auto-signup. Follow the latest auth plan; a WeChat-binding posting alternative discussed in this chat is a proposal until explicitly confirmed and backed by server policy.
 
 The current Stitch V2 remote-aligned UI direction lives in these repo-local entries:
 
@@ -61,6 +71,8 @@ AI agents may give product or design opinions, but they must label them as sugge
 - The local Go tool previously failed on this machine with `invalid go version '1.25.0': must match format 1.23`; validate static UI with Node/Playwright when Go cannot run.
 
 ## Key Docs
+
+- `docs/client/README.md`: 2026-10-20客户端实施规划；KMP共享逻辑，Android / iOS分别Compose UI与独立平板适配，Web / Desktop与Gemini交接见此入口。当前设计默认主题，多主题仅预留参考；文档存在不授予代码、构建或对外操作权限。
 
 - `docs/design/MND_FIGMA_DESIGN_DOCUMENT.md`: current design-doc index to point users/agents to the right handoff files.
 - `docs/design/MND_STITCH_AI_RULES.md`: AI guardrails for following Stitch without arbitrary redesign.

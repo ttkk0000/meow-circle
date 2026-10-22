@@ -1,0 +1,40 @@
+# Documentation only. The server reads process environment; it does not load this file.
+# Development is explicit. Production must set DATABASE_URL and strong secrets.
+APP_ENV=development
+APP_PORT=8080
+DATABASE_URL=
+REDIS_URL=
+JWT_SECRET=
+ADMIN_KEY=
+CORS_ALLOW_ORIGIN=http://localhost:8080
+
+# Keep these OFF for ordinary development; never enable in production.
+MND_SEED_DEMO=0
+MND_ENABLE_LEGACY_AUTH=0
+MND_ENABLE_MOCK_PAYMENT=0
+
+# HTTPS operator-owned SMS gateway; no code logging or fixed-code bypass in v2.
+SMS_GATEWAY_URL=
+SMS_GATEWAY_TOKEN=
+WECHAT_LOGIN_APP_ID=
+WECHAT_LOGIN_APP_SECRET=
+QQ_LOGIN_APP_ID=
+QQ_LOGIN_APP_SECRET=
+APPLE_LOGIN_CLIENT_ID=
+APPLE_LOGIN_CLIENT_SECRET=
+# Standard Base64 of a stable, random 32-byte encryption key. Back up securely.
+APPLE_TOKEN_ENCRYPTION_KEY=
+
+# v2 explicit registration/email OTP gateway. Must return accepted + message_id.
+EMAIL_GATEWAY_URL=
+EMAIL_GATEWAY_TOKEN=
+# Real registered propagator name/code compatible with GB45438 metadata.
+# Leave empty to keep marked/generated image handling unavailable.
+MND_CONTENT_PROPAGATOR=
+# Named operators: JSON array with id, token (>=32 bytes), roles, consumers.
+# Supply secrets through deployment secret management. Never ship in clients.
+MND_OPERATORS_JSON=
+# HTTPS push gateway implementing POST /lookup and /send with durable dedup.
+# A provider acceptance receipt is distinct from end-device delivery.
+PUSH_GATEWAY_URL=
+PUSH_GATEWAY_TOKEN=

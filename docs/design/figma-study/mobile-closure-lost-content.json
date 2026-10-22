@@ -1,0 +1,1486 @@
+[
+  {
+    "id": "petStatus",
+    "title": "小满的当前状态",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "row",
+        "label": "在家",
+        "value": "主人确认恢复照护，不是GPS位置",
+        "to": "petProfile"
+      },
+      {
+        "type": "row",
+        "label": "暂时找不到它",
+        "value": "确认后再决定是否公开求助",
+        "to": "petMarkMissing"
+      },
+      {
+        "type": "note",
+        "title": "状态分开",
+        "body": "走失不改变权属、领养性质或医疗结论。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保持原状态",
+      "to": "petProfile",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petMarkMissing",
+    "title": "标记小满走失",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "note",
+        "title": "先确认个人状态",
+        "body": "不公开私密档案、不发圈、不建群、不自动提醒别人。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "仅修改状态，暂不公开",
+        "to": "petMissingPrivate",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消，保持在家",
+        "to": "petProfile",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "标记走失并继续求助",
+      "to": "lostFromPetDraft",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petMissingPrivate",
+    "title": "私人走失状态",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "小满：走失（示意）",
+        "body": "尚未发布公开求助；资料和旧日记权限不变。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "action",
+        "label": "继续完善求助",
+        "to": "lostFromPetDraft",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "刚才标记有误",
+        "to": "petMarkMistake",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到我的宠物",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petMarkMistake",
+    "title": "撤销误标",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "尚未公开求助",
+        "body": "恢复在家，不发布虚假的找回消息。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "仍在寻找，不撤销",
+        "to": "petMissingPrivate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认误标并恢复",
+      "to": "petProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetDraft",
+    "title": "发布小满走失求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "petMissingPrivate"
+      },
+      {
+        "type": "field",
+        "label": "最后见到时间",
+        "value": "今天17:30；估计时段须说明"
+      },
+      {
+        "type": "field",
+        "label": "公开区域",
+        "value": "武汉 · 洪山区"
+      },
+      {
+        "type": "field",
+        "label": "识别特征",
+        "value": "黑白毛色，鼻尖有黑斑"
+      },
+      {
+        "type": "row",
+        "label": "补充近期照片",
+        "value": "照片不保证归属或健康",
+        "to": "lostPhotoEdit"
+      },
+      {
+        "type": "note",
+        "title": "不猜事实",
+        "body": "不把当前GPS和照片EXIF当作最后见到地点。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "保留草稿退出",
+        "to": "lostDraftExit",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查对外公开内容",
+      "to": "lostFromPetDisclosure",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostPhotoEdit",
+    "title": "补充小满照片",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 260
+      },
+      {
+        "type": "field",
+        "label": "照片说明",
+        "value": "本人近期照片；时间只填写已知情况"
+      },
+      {
+        "type": "note",
+        "title": "图文首版",
+        "body": "使用有权使用的照片；不支持视频。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消补图",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "使用照片并返回",
+      "to": "lostFromPetDraft",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetDisclosure",
+    "title": "确认公开范围",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "只发布本次求助快照",
+        "body": "不开放私密档案、旧日记、详细住址和手机号。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "允许进入列表与地图",
+        "value": "未同意；点按查看公开确认",
+        "to": "lostPublicConsent"
+      },
+      {
+        "type": "note",
+        "title": "分享另行选择",
+        "body": "发布通过后才可主动选择圈子或具体会话；不自动群发。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "附近提醒",
+        "body": "只给主动订阅且满足范围/物种/频率条件的人，不保证所有人收到。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "请先确认公开范围",
+      "to": null,
+      "kind": "disabled"
+    }
+  },
+  {
+    "id": "lostPublicConsent",
+    "title": "同意展示本次求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "拟公开内容",
+        "body": "小满选定照片、特征、最后见到时间及武汉洪山粗略区域。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "不会公开",
+        "body": "私密线索、精确住址、手机号和完整宠物档案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "不同意，返回草稿",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "同意并检查预览",
+      "to": "lostFromPetPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetPreview",
+    "title": "求助发布预览",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetDraft"
+      },
+      {
+        "type": "field",
+        "label": "最后见到",
+        "value": "今天17:30 · 非实时位置"
+      },
+      {
+        "type": "note",
+        "title": "已确认的公开范围",
+        "body": "列表和地图可展示本次快照，不自动发圈或建群。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看失败恢复",
+        "to": "lostSubmitFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认提交本次求助",
+      "to": "lostFromPetPending",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetPending",
+    "title": "求助审核中",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "已收到本次提交（示意）",
+        "body": "审核未通过前不公开分发；待审核不等于已推送。",
+        "tone": "subtle"
+      },
+      {
+        "type": "caseCard",
+        "title": "小满 · 待审核",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetDraft"
+      },
+      {
+        "type": "action",
+        "label": "补充资料",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "撤回公开申请",
+        "to": "lostDraftExit",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看通过后的示例",
+      "to": "lostFromPetManage",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostSubmitFailure",
+    "title": "提交暂未完成",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "草稿和资料仍在",
+        "body": "先核对本次操作结果，避免重复建案和提醒。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "返回编辑",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重试并检查预览",
+      "to": "lostFromPetPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostDraftExit",
+    "title": "保留求助草稿",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "公开求助尚未发布",
+        "body": "私人走失状态保留；放弃草稿不等于已经找回。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "继续编辑",
+        "to": "lostFromPetDraft",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "放弃草稿，保留走失状态",
+        "to": "petMissingPrivate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存草稿并退出",
+      "to": "petMissingPrivate",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostFromPetActive",
+    "title": "小满的公开求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostAreaMap"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "text",
+        "text": "最后见到：今天17:30 · 洪山区",
+        "role": "Strong"
+      },
+      {
+        "type": "note",
+        "title": "不代表实时位置",
+        "body": "疑似目击请私密提交；普通评论不算线索。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "粗略区域地图",
+        "value": "浏览无需GPS",
+        "to": "lostAreaMap"
+      },
+      {
+        "type": "row",
+        "label": "主动分享求助",
+        "value": "先选受众和会话",
+        "to": "lostShareAudience"
+      },
+      {
+        "type": "row",
+        "label": "关注本次进展",
+        "value": "可随时取消",
+        "to": "lostFollowed"
+      }
+    ],
+    "footer": {
+      "label": "我可能见过它",
+      "to": "lostPrivateLead",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetManage",
+    "title": "维护小满的求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "row",
+        "label": "1条待查看线索",
+        "value": "仅主人和授权人员可见",
+        "to": "lostLeadInbox"
+      },
+      {
+        "type": "row",
+        "label": "更新资料与照片",
+        "value": "保留原事件时间及更正记录",
+        "to": "lostFromPetDraft"
+      },
+      {
+        "type": "row",
+        "label": "主动分享求助卡",
+        "value": "不群发、不建群",
+        "to": "lostShareAudience"
+      },
+      {
+        "type": "row",
+        "label": "暂停公开展示",
+        "value": "不等于找回",
+        "to": "lostPauseConfirm"
+      },
+      {
+        "type": "row",
+        "label": "其他原因结束",
+        "value": "宠物可继续保持走失",
+        "to": "lostOtherEnd"
+      }
+    ],
+    "footer": {
+      "label": "我已找到小满",
+      "to": "lostFoundConfirm",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostPrivateLead",
+    "title": "我可能见过小满",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "field",
+        "label": "目击时间",
+        "value": "今天18:10"
+      },
+      {
+        "type": "field",
+        "label": "地点",
+        "value": "手动填写公共位置；精确信息私密共享"
+      },
+      {
+        "type": "field",
+        "label": "描述",
+        "value": "看到相似黑白猫，尚未确认是小满"
+      },
+      {
+        "type": "row",
+        "label": "可选现场照片",
+        "value": "避开人脸、车牌、住宅",
+        "to": "lostLeadPhoto"
+      },
+      {
+        "type": "note",
+        "title": "仅本案授权人员可查看",
+        "body": "站内联系优先，不需付费换线索。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "检查线索与共享范围",
+      "to": "lostLeadReview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadPhoto",
+    "title": "线索照片说明",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 260
+      },
+      {
+        "type": "note",
+        "title": "示例材料",
+        "body": "不表示识别成功；仅向本案授权人员提供有权使用的材料。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "不附照片继续",
+        "to": "lostPrivateLead",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "使用照片并返回",
+      "to": "lostPrivateLead",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadReview",
+    "title": "检查私密线索",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "提交给：小满 M01",
+        "role": "Strong"
+      },
+      {
+        "type": "note",
+        "title": "本次共享",
+        "body": "18:10目击描述、已选照片及手动地点；仅主人和授权人员可见。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "收到不等于匹配",
+        "body": "不移动公共标记或修改宠物状态。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "lostPrivateLead",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看发送失败",
+        "to": "lostLeadFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认私密提交",
+      "to": "lostLeadSent",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadFailure",
+    "title": "线索尚未发送",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "输入未清空",
+        "body": "未知结果先核对本次提交；不另发副本。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "回到表单",
+        "to": "lostPrivateLead",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重试检查摘要",
+      "to": "lostLeadReview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadSent",
+    "title": "线索已收到",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "已收到（示意）",
+        "body": "等待主人核实，不代表已确认是小满。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回本次求助",
+      "to": "lostFromPetActive",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadInbox",
+    "title": "小满的线索",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "仅本案授权人员可见",
+        "body": "不公开目击者原图、位置和联系信息。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "一位宠友 · 18:10",
+        "value": "待核实，看到相似黑白猫",
+        "to": "lostLeadDetail"
+      },
+      {
+        "type": "row",
+        "label": "无新线索空态",
+        "value": "不生成假目击或热度",
+        "to": "lostLeadEmpty"
+      }
+    ],
+    "footer": {
+      "label": "返回本次维护",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadEmpty",
+    "title": "还没有新线索",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "empty",
+        "title": "暂无新的目击线索",
+        "body": "可补照片、检查区域或主动分享，不能保证有人响应。"
+      }
+    ],
+    "footer": {
+      "label": "回到维护页",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadDetail",
+    "title": "核实这条线索",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满 M01 · 私密线索 L01",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "text",
+        "text": "宠友于18:10看到相似黑白猫，尚未确认是小满。",
+        "role": "Body"
+      },
+      {
+        "type": "note",
+        "title": "待核实",
+        "body": "不公开精确位置，不改变原始描述。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "标记有帮助",
+        "to": "lostLeadHelpful",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "标记不匹配",
+        "to": "lostLeadNotMatch",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "报告索费或骚扰",
+        "to": "reportMessage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "站内联系目击者",
+      "to": "lostLeadChat",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadHelpful",
+    "title": "线索处理已记录",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "有帮助（示意）",
+        "body": "仍不等于找回；不改写对方原话，不自动公开其位置。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回本次维护",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadNotMatch",
+    "title": "线索处理已记录",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "不匹配（示意）",
+        "body": "不是对目击者作违规认定，后续仍可继续核实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到线索列表",
+      "to": "lostLeadInbox",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostShareAudience",
+    "title": "分享小满的求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "row",
+        "label": "分享给宠友圈",
+        "value": "先确认受众",
+        "to": "lostShareConfirm"
+      },
+      {
+        "type": "row",
+        "label": "分享至已加入群",
+        "value": "只发给选中的会话",
+        "to": "lostGroupShareConfirm"
+      },
+      {
+        "type": "note",
+        "title": "当前为已发布案例示例",
+        "body": "未发布或未通过审核的草稿不能分享为有效案例卡。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "暂不分享",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostShareConfirm",
+    "title": "确认分享至宠友圈",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "note",
+        "title": "受众：互相确认的朋友",
+        "body": "只包含已公开快照，不包含私密线索和完整档案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消分享",
+        "to": "lostShareAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认分享本次求助卡",
+      "to": "lostShared",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostGroupShareConfirm",
+    "title": "确认分享至群聊",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "note",
+        "title": "会话：武汉猫友日常",
+        "body": "仅当前已加入群；不会群发或自动把成员加入提醒订阅。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消分享",
+        "to": "lostShareAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "发送到这个群（示意）",
+      "to": "lostGroupShared",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostShared",
+    "title": "求助卡已分享",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "已分享到宠友圈（示意）",
+        "body": "朋友不会因此自动订阅所有警报。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "继续维护求助",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostGroupShared",
+    "title": "群内求助卡",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "武汉猫友日常 · 示例",
+        "body": "仅演示选中会话的发送结果。",
+        "tone": "subtle"
+      },
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "返回本次求助",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostFollowed",
+    "title": "已关注本次进展",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "仅小满的本次M01",
+        "body": "可随时取消；普通评论、重复照片不会逐条提醒。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消本次关注",
+        "to": "lostFromPetActive",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回求助详情",
+      "to": "lostFromPetActive",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostFoundConfirm",
+    "title": "确认小满已找回",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "text",
+        "text": "是小满，而且已经接回了吗？",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "我已确认是小满并接回",
+        "value": "未勾选；点按确认",
+        "to": "lostFoundReady"
+      },
+      {
+        "type": "note",
+        "title": "确认后的影响",
+        "body": "恢复在家，停止本次提醒，活跃列表/地图退出寻找；分享卡更新。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "还没有找到，返回寻找",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "请先确认已接回",
+      "to": null,
+      "kind": "disabled"
+    }
+  },
+  {
+    "id": "lostFoundReady",
+    "title": "结束小满的求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "已确认：是小满并已接回",
+        "body": "正式结束前仍可取消。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "note",
+        "title": "只结束本次求助",
+        "body": "不关闭其他宠物提醒；私密线索始终受限。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消，继续寻找",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看同步失败示例",
+        "to": "lostCloseFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认找回并结束求助",
+      "to": "lostClosing",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostClosing",
+    "title": "结束处理中",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "正在关闭本次求助（示意）",
+        "body": "优先停止新增与排队警报，再同步各入口。",
+        "tone": "subtle"
+      },
+      {
+        "type": "text",
+        "text": "未全部同步前，不显示全部完成。",
+        "role": "Body"
+      },
+      {
+        "type": "action",
+        "label": "查看失败与重试",
+        "to": "lostCloseFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看完成后的状态",
+      "to": "lostFoundDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostCloseFailure",
+    "title": "结束尚未全部完成",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "本次警报保持停止",
+        "body": "部分卡片同步中；安全重试同一操作，不重新广播。",
+        "tone": "warningSoft"
+      }
+    ],
+    "footer": {
+      "label": "重试结束处理",
+      "to": "lostClosing",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFoundDone",
+    "title": "小满已找回",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 已找回",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01结案，公开联系入口关闭。",
+        "kind": "cat",
+        "to": "petHomeFound"
+      },
+      {
+        "type": "note",
+        "title": "收尾完成（示意）",
+        "body": "活跃列表/地图退出寻找；站内原卡显示已找回；线索仍私密。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "action",
+        "label": "查看更新的分享卡",
+        "to": "lostResolvedShare",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "可选：写团圆日记",
+        "to": "diaryCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回小满主页",
+      "to": "petHomeFound",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petHomeFound",
+    "title": "小满回家了",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "小满 · 在家",
+        "role": "Title"
+      },
+      {
+        "type": "row",
+        "label": "本次求助历史",
+        "value": "M01 · 已找回",
+        "to": "lostFoundDone"
+      },
+      {
+        "type": "row",
+        "label": "图文日记",
+        "value": "是否分享另行选择",
+        "to": "petDiary"
+      },
+      {
+        "type": "row",
+        "label": "如果再次走失",
+        "value": "新建事件，不复活旧地点",
+        "to": "petMissingAgain"
+      }
+    ],
+    "footer": {
+      "label": "回到宠物列表",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostResolvedShare",
+    "title": "已更新的分享卡",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 已找回",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "原事件M01的新状态，不再显示寻找中。",
+        "kind": "cat",
+        "to": "lostFoundDone"
+      },
+      {
+        "type": "note",
+        "title": "传播边界",
+        "body": "外部截图和已显示的锁屏通知无法召回，不自动向全城报喜。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回找回结果",
+      "to": "lostFoundDone",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostPauseConfirm",
+    "title": "暂停公开寻找",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "不代表小满已找回",
+        "body": "停止公开推荐及新提醒，私人走失状态保留，之后可恢复。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消暂停",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认暂停公开",
+      "to": "lostPaused",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostPaused",
+    "title": "公开展示已暂停",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 暂停公开",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "不再对新接收者分发，私人走失状态保留。",
+        "kind": "cat",
+        "to": "petMissingPrivate"
+      },
+      {
+        "type": "action",
+        "label": "恢复前重新检查公开内容",
+        "to": "lostFromPetPreview",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "其他原因结束",
+        "to": "lostOtherEnd",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到我的宠物",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostOtherEnd",
+    "title": "其他原因结束",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "field",
+        "label": "原因",
+        "value": "不再通过平台公开寻找"
+      },
+      {
+        "type": "note",
+        "title": "不要标成找回",
+        "body": "只关闭本次求助，宠物可继续保持走失。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查结束影响",
+      "to": "lostOtherConfirm",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostOtherConfirm",
+    "title": "确认其他原因结束",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "本次不是找回记录",
+        "body": "停止本案公开联系、提醒和推荐；小满私人状态仍走失。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消，继续寻找",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认结束本次公开求助",
+      "to": "lostOtherDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostOtherDone",
+    "title": "本次求助已结束",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 已结束，非找回",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "私人走失状态保留，没有虚假找回通知。",
+        "kind": "cat",
+        "to": "petMissingPrivate"
+      }
+    ],
+    "footer": {
+      "label": "查看私人走失状态",
+      "to": "petMissingPrivate",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petMissingAgain",
+    "title": "再次标记走失",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "新事件M02",
+        "body": "历史M01保持已找回；重新填写本次时间、区域和照片，不重推旧案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消，仍在家",
+        "to": "petHomeFound",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建新事件草稿",
+      "to": "lostAgainDraft",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostAgainDraft",
+    "title": "新的走失事件草稿",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "field",
+        "label": "本次最后见到时间",
+        "value": "重新填写，不沿用M01"
+      },
+      {
+        "type": "field",
+        "label": "本次区域",
+        "value": "重新选择，不沿用M01"
+      },
+      {
+        "type": "note",
+        "title": "新事件M02尚未公开",
+        "body": "保存草稿不复活M01，也不自动通知别人。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消新事件，返回在家",
+        "to": "petHomeFound",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保留新草稿并返回",
+      "to": "petMissingPrivate",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostAreaMap",
+    "title": "小满的区域地图",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "map",
+        "title": "武汉洪山示例区域",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "note",
+        "title": "粗略区域，不是精确针点",
+        "body": "底图为设计参考，不追踪宠物实时位置；案例M01为学习示例。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看不可定位空态",
+        "to": "lostMap",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回本次求助",
+      "to": "lostFromPetActive",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadChat",
+    "title": "联系这位目击者",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetManage"
+      },
+      {
+        "type": "note",
+        "title": "私密线索L01 · 不是领养会话",
+        "body": "保持站内联系，不先付费换线索。",
+        "tone": "subtle"
+      },
+      {
+        "type": "bubble",
+        "text": "谢谢线索，能描述一下看到它时的环境吗？",
+        "mine": true
+      },
+      {
+        "type": "bubble",
+        "text": "公共步道附近，但我还不能确定是小满。",
+        "mine": false
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复这位目击者…",
+      "context": "Lead"
+    }
+  }
+]

@@ -1,0 +1,1490 @@
+{
+  "module": "adoption",
+  "start": 64,
+  "polish": {
+    "pageId": "295:2",
+    "createdNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "createdNodeIdsByPrefix": {
+      "331": {
+        "start": 123043,
+        "deltaBase36": "2.11.q.u.q.1.1.8.q.1.1.x.l.2.19.q.12.q.1.1.g.q.1.1.15.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.13.q.w.q.1.1.a.q.1.1.z.l.2.11.q.u.q.1.1.8.q.1.1.x.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.11.q.u.q.1.1.8.q.1.1.x.l.2.15.q.y.q.1.1.c.q.1.1.11.l.2.11.q.u.q.1.1.8.q.1.1.x.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.13.q.w.q.1.1.a.q.1.1.z.l.2.11.q.u.q.1.1.8.q.1.1.x.l.2.11.q.u.q.1.1.8.q.1.1.x.l.2.12.q.v.q.1.1.9.q.1.1.y.l.2.11.q.u.q.1.1.8.q.1.1.x.l.2.13.q.w.q.1.1.a.q.1.1.z"
+      }
+    },
+    "mutatedNodeIdsByPrefix": {
+      "314": {
+        "start": 56355,
+        "deltaBase36": "1.11.2.1.v.2.1.3.2.4.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.5.1.1.1.2.1b.1.3.2.4.5.1.1.1.2.1a.1.v.2.1.3.2.4.7.1.11.2.1.v.2.1.3.2.4.1q.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1q.1.1.1.2.1b.1.3.2.4.1q.1.1.1.2.1a.1.v.2.1.3.2.4.1s.1.11.2.1.v.2.1.3.2.4.p.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.p.1.1.1.2.1b.1.3.2.4.p.1.1.1.2.1a.1.v.2.1.3.2.4.r.1.11.2.1.v.2.1.3.2.4.c.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.c.1.1.1.2.1b.1.3.2.4.c.1.1.1.2.1a.1.v.2.1.3.2.4.e.1.11.2.1.v.2.1.3.2.4.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.5.1.1.1.2.1b.1.3.2.4.5.1.1.1.2.1a.1.v.2.1.3.2.4.7.1.11.2.1.v.2.1.3.2.4.7.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.7.1.1.1.2.1b.1.3.2.4.7.1.1.1.2.1a.1.v.2.1.3.2.4.9.1.11.2.1.v.2.1.3.2.4.7.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.7.1.1.1.2.1b.1.3.2.4.7.1.1.1.2.1a.1.v.2.1.3.2.4.9.1.11.2.1.v.2.1.3.2.4.1.15.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.15.1.1.1.2.1b.1.3.2.4.1.15.1.1.1.2.1a.1.v.2.1.3.2.4.1.17.1.11.2.1.v.2.1.3.2.4.1.2.1.3.3.a.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.1.3.3.a.1.1.1.2.1b.1.3.2.4.1.2.1.3.3.a.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.1.3.3.c.1.11.2.1.v.2.1.3.2.4.1.1.5.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.1.5.1.1.1.2.1b.1.3.2.4.1.1.5.1.1.1.2.1a.1.v.2.1.3.2.4.1.1.7.1.11.2.1.v.2.1.3.2.4.1.2.i.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.i.1.1.1.2.1b.1.3.2.4.1.2.i.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.k.1.11.2.1.v.2.1.3.2.4.1.2.a.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.a.1.1.1.2.1b.1.3.2.4.1.2.a.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.c.1.11.2.1.v.2.1.3.2.4.1.1.b.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.1.b.1.1.1.2.1b.1.3.2.4.1.1.b.1.1.1.2.1a.1.v.2.1.3.2.4.1.1.d.1.11.2.1.v.2.1.3.2.4.1.2.c.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.c.1.1.1.2.1b.1.3.2.4.1.2.c.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.e.1.11.2.1.v.2.1.3.2.4.1.2.3.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.3.1.1.1.2.1b.1.3.2.4.1.2.3.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.5.1.11.2.1.v.2.1.3.2.4.1.2.1.3.3.3.3.1.h.1.1.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.1.3.3.3.3.1.h.1.1.1.2.1b.1.3.2.4.1.2.1.3.3.3.3.1.h.1.1.1.2.1a.1.v.2.1.3.2.4.1.2.1.3.3.3.3.1"
+      }
+    },
+    "removedNodeIds": [],
+    "counts": {
+      "styles": 352,
+      "spacing": 1732,
+      "footers": 0,
+      "backTargets": 64,
+      "publishEntries": 64
+    }
+  },
+  "restored": {
+    "codec": "prefix-start-base36-delta-v1",
+    "restoredNodeIdsByPrefix": {
+      "311": {
+        "start": 379012,
+        "deltaBase36": "1.1.1"
+      },
+      "314": {
+        "start": 56433,
+        "deltaBase36": "3.2r.3.1s.3.2p.3.2g.3.11.7.7.7.2q.3.11.7.7.7.1r.3.11.7.7.7.2o.3.11.7.7.7.2f.3.c.2z.3.c.20.3.c.2x.3.c.2o.3.b.1.2m.3.b.1.1n.3.b.1.2k.3.b.1.2b.3.2r.3.1s.3.2p.3.2g.3.8.2l.3.8.1m.3.8.2j.3.8.2a.3.2t.3.1u.3.2r.3.2i.3.v.7.2q.3.v.7.1r.3.v.7.2o.3.v.7.2f.3.36.3.27.3.34.3.2v.3.8.2l.3.8.1m.3.8.2j.3.8.2a.3.9.1.2x.3.9.1.1y.3.9.1.2v.3.9.1.2m.3.2z.3.20.3.2x.3.2o.3.2z.3.20.3.2x.3.2o.3.9.2s.3.9.1t.3.9.2q.3.9.2h.3.2s.3.1t.3.2q.3.2h.3.k.30.3.k.21.3.k.2y.3.k"
+      },
+      "331": {
+        "start": 123082,
+        "deltaBase36": "1k.10.1p.1w.1s.18.1x.1p.1l.11.1q.1q.1m.12.1r.1o.1k.10.1p.1p.1l.11.1q.1o.1k.10.1p.1s.1o.14.1t.1o.1k.10.1p.1p.1l.11.1q.1q.1m.12.1r.1o.1k.10.1p.1o.1k.10.1p.1p.1l.11.1q.1o.1k.10.1p.1q.1m.12.1r"
+      }
+    },
+    "createdNodeIdsByPrefix": {},
+    "unmapped": [],
+    "counts": {
+      "actions": 192,
+      "toolbarControls": 0,
+      "backGuards": 64
+    }
+  },
+  "route": {
+    "pageId": "295:2",
+    "mutatedNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "mutatedNodeIdsByPrefix": {
+      "314": {
+        "start": 56357,
+        "deltaBase36": "9.8.b.c.6.6.6.6.v.9.8.b.8.b.6.6.6.6.t.9.8.b.8.v.9.8.b.8.b.6.6.6.6.r.9.8.b.c.6.c.6.2g.9.8.b.8.b.6.c.6.2e.9.8.b.8.2g.9.8.b.8.b.6.c.6.2c.9.8.b.c.6.6.6.6.1f.9.8.b.8.b.6.6.6.6.1d.9.8.b.8.1f.9.8.b.8.b.6.6.6.6.1b.9.8.b.c.6.6.6.6.12.9.8.b.8.b.6.6.6.6.10.9.8.b.8.12.9.8.b.8.b.6.6.6.6.y.9.8.b.c.6.6.6.6.v.9.8.b.8.b.6.6.6.6.t.9.8.b.8.v.9.8.b.8.b.6.6.6.6.r.9.8.b.c.6.6.6.6.x.9.8.b.8.b.6.6.6.6.v.9.8.b.8.x.9.8.b.8.b.6.6.6.6.t.9.8.b.c.6.6.6.6.x.9.8.b.8.b.6.6.6.6.v.9.8.b.8.x.9.8.b.8.b.6.6.6.6.t.9.8.b.c.6.6.6.6.1w.9.8.b.8.b.6.6.6.6.1u.9.8.b.8.1w.9.8.b.8.b.6.6.6.6.1s.9.8.b.c.6.6.6.6.1a.9.8.b.8.b.6.6.6.6.18.9.8.b.8.1a.9.8.b.8.b.6.6.6.6.16.9.8.b.c.6.6.6.6.x.9.8.b.8.b.6.6.6.6.v.9.8.b.8.x.9.8.b.8.b.6.6.6.6.t.9.8.b.c.6.6.6.6.1b.9.8.b.8.b.6.6.6.6.19.9.8.b.8.1b.9.8.b.8.b.6.6.6.6.17.9.8.b.c.6.6.6.6.13.9.8.b.8.b.6.6.6.6.11.9.8.b.8.13.9.8.b.8.b.6.6.6.6.z.9.8.b.c.6.6.6.6.13.9.8.b.8.b.6.6.6.6.11.9.8.b.8.13.9.8.b.8.b.6.6.6.6.z.9.8.b.c.6.6.6.6.15.9.8.b.8.b.6.6.6.6.13.9.8.b.8.15.9.8.b.8.b.6.6.6.6.11.9.8.b.c.6.6.6.6.w.9.8.b.8.b.6.6.6.6.u.9.8.b.8.w.9.8.b.8.b.6.6.6.6.s.9.8.b.c.6.6.6.6.1o.9.8.b.8.b.6.6.6.6.1m.9.8.b.8.1o.9.8.b.8.b.6.6.6.6"
+      },
+      "331": {
+        "start": 123043,
+        "deltaBase36": "2.1r.1k.10.1k.2.1z.1s.18.1s.2.1s.1l.11.1l.2.1t.1m.12.1m.2.1r.1k.10.1k.2.1s.1l.11.1l.2.1r.1k.10.1k.2.1v.1o.14.1o.2.1r.1k.10.1k.2.1s.1l.11.1l.2.1t.1m.12.1m.2.1r.1k.10.1k.2.1r.1k.10.1k.2.1s.1l.11.1l.2.1r.1k.10.1k.2.1t.1m.12"
+      }
+    },
+    "counts": {
+      "nodes": 0,
+      "reactions": 0,
+      "local": 0,
+      "crossModule": 0,
+      "back": 0,
+      "selfSkipped": 0
+    },
+    "unmapped": []
+  },
+  "validation": {
+    "pageId": "295:2",
+    "rootCount": 64,
+    "issueCount": 0,
+    "results": [
+      {
+        "id": "311:378952",
+        "key": "adoptionCommentSent",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 65,
+        "texts": 19,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378953",
+        "key": "adoptionCommentSent",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 69,
+        "texts": 21,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378954",
+        "key": "adoptionCommentSent",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 46,
+        "texts": 12,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378955",
+        "key": "adoptionCommentSent",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 69,
+        "texts": 19,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378956",
+        "key": "adoptionManage",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 90,
+        "texts": 28,
+        "instances": 27,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378957",
+        "key": "adoptionManage",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 94,
+        "texts": 30,
+        "instances": 27,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378958",
+        "key": "adoptionManage",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 71,
+        "texts": 21,
+        "instances": 17,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378959",
+        "key": "adoptionManage",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 94,
+        "texts": 28,
+        "instances": 27,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378960",
+        "key": "adoptionUpdateCompose",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 77,
+        "texts": 25,
+        "instances": 24,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 9,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378961",
+        "key": "adoptionUpdateCompose",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 81,
+        "texts": 27,
+        "instances": 24,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 9,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378962",
+        "key": "adoptionUpdateCompose",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 58,
+        "texts": 18,
+        "instances": 14,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 9,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378963",
+        "key": "adoptionUpdateCompose",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 81,
+        "texts": 25,
+        "instances": 24,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 9,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378964",
+        "key": "adoptionUpdatePreview",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378965",
+        "key": "adoptionUpdatePreview",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 76,
+        "texts": 25,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378966",
+        "key": "adoptionUpdatePreview",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 53,
+        "texts": 16,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378967",
+        "key": "adoptionUpdatePreview",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 76,
+        "texts": 23,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378968",
+        "key": "adoptionUpdateFailure",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 65,
+        "texts": 19,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378969",
+        "key": "adoptionUpdateFailure",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 69,
+        "texts": 21,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378970",
+        "key": "adoptionUpdateFailure",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 46,
+        "texts": 12,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378971",
+        "key": "adoptionUpdateFailure",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 69,
+        "texts": 19,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378972",
+        "key": "adoptionUpdatePending",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 20,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378973",
+        "key": "adoptionUpdatePending",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 71,
+        "texts": 22,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378974",
+        "key": "adoptionUpdatePending",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 48,
+        "texts": 13,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378975",
+        "key": "adoptionUpdatePending",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 71,
+        "texts": 20,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378976",
+        "key": "adoptionUpdateDone",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 20,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378977",
+        "key": "adoptionUpdateDone",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 71,
+        "texts": 22,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378978",
+        "key": "adoptionUpdateDone",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 48,
+        "texts": 13,
+        "instances": 13,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378979",
+        "key": "adoptionUpdateDone",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 71,
+        "texts": 20,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378980",
+        "key": "adoptionCaretakers",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 80,
+        "texts": 24,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378981",
+        "key": "adoptionCaretakers",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 84,
+        "texts": 26,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378982",
+        "key": "adoptionCaretakers",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 61,
+        "texts": 17,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378983",
+        "key": "adoptionCaretakers",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 84,
+        "texts": 24,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 9,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378984",
+        "key": "adoptionCaretakerInvite",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 76,
+        "texts": 25,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 9,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378985",
+        "key": "adoptionCaretakerInvite",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 80,
+        "texts": 27,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 9,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378986",
+        "key": "adoptionCaretakerInvite",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 57,
+        "texts": 18,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 9,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378987",
+        "key": "adoptionCaretakerInvite",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 80,
+        "texts": 25,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 9,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378988",
+        "key": "adoptionCaretakerPending",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 20,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378989",
+        "key": "adoptionCaretakerPending",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 71,
+        "texts": 22,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378990",
+        "key": "adoptionCaretakerPending",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 48,
+        "texts": 13,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378991",
+        "key": "adoptionCaretakerPending",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 71,
+        "texts": 20,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378992",
+        "key": "adoptionDecision",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 75,
+        "texts": 24,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378993",
+        "key": "adoptionDecision",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 79,
+        "texts": 26,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378994",
+        "key": "adoptionDecision",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 56,
+        "texts": 17,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378995",
+        "key": "adoptionDecision",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 79,
+        "texts": 24,
+        "instances": 25,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378996",
+        "key": "adoptionSupplement",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 69,
+        "texts": 21,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378997",
+        "key": "adoptionSupplement",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 73,
+        "texts": 23,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378998",
+        "key": "adoptionSupplement",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 50,
+        "texts": 14,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:378999",
+        "key": "adoptionSupplement",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 73,
+        "texts": 21,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379000",
+        "key": "adoptionSupplementReceived",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 69,
+        "texts": 21,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379001",
+        "key": "adoptionSupplementReceived",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 73,
+        "texts": 23,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379002",
+        "key": "adoptionSupplementReceived",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 50,
+        "texts": 14,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379003",
+        "key": "adoptionSupplementReceived",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 73,
+        "texts": 21,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379004",
+        "key": "adoptionReject",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 71,
+        "texts": 22,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379005",
+        "key": "adoptionReject",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 75,
+        "texts": 24,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379006",
+        "key": "adoptionReject",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 52,
+        "texts": 15,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379007",
+        "key": "adoptionReject",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 75,
+        "texts": 22,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379008",
+        "key": "adoptionRejected",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 66,
+        "texts": 20,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379009",
+        "key": "adoptionRejected",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 70,
+        "texts": 22,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379010",
+        "key": "adoptionRejected",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 47,
+        "texts": 13,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379011",
+        "key": "adoptionRejected",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 70,
+        "texts": 20,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379012",
+        "key": "trialAgreement",
+        "platform": "web",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 87,
+        "texts": 29,
+        "instances": 24,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379013",
+        "key": "trialAgreement",
+        "platform": "desktop",
+        "pageId": "311:4",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 91,
+        "texts": 31,
+        "instances": 24,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379014",
+        "key": "trialAgreement",
+        "platform": "tabletP",
+        "pageId": "311:4",
+        "w": 834,
+        "h": 1194,
+        "nodes": 68,
+        "texts": 22,
+        "instances": 14,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379015",
+        "key": "trialAgreement",
+        "platform": "tabletL",
+        "pageId": "311:4",
+        "w": 1194,
+        "h": 834,
+        "nodes": 91,
+        "texts": 29,
+        "instances": 24,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 2,
+        "issues": []
+      }
+    ]
+  }
+}

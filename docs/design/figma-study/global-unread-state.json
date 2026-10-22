@@ -1,0 +1,142 @@
+{
+  "date": "2026-10-20",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "status": "design_complete_handoff_sent",
+  "scope": "Global unread phone UI, four-platform entry patterns, and previously documented identity rules; no application code changes.",
+  "handoffThread": {
+    "id": "01a1571c-37be-7072-864f-b50f58ff0a7f",
+    "hostId": "local",
+    "title": "完善手机端优先的响应式设计",
+    "authorization": "User explicitly requested notification after design completion.",
+    "sent": true,
+    "sentDate": "2026-10-20",
+    "delivery": "Accepted by send_message_to_thread; recipient integration is not verified."
+  },
+  "sourceRoots": {
+    "phoneMessages": "56:61",
+    "phoneInteraction": "106:1407",
+    "phoneSystem": "106:1408",
+    "phoneHome": "56:27",
+    "webMessages": "311:379700",
+    "desktopMessages": "311:379701",
+    "tabletPortraitMessages": "311:379702",
+    "tabletLandscapeMessages": "311:379703"
+  },
+  "completedChecks": [
+    "Existing phone and platform components inspected",
+    "No Code Connect mappings found for requested components",
+    "Local unread badge library search returned no matches",
+    "Existing Noto Sans SC and Manrope fonts and light theme tokens resolved",
+    "Account policy documentation: 6 UTF-8 files and 48 local links statically checked",
+    "Final review: 8 phone states, 4 platform entry cards, 7 numeric cases, 37 valid design links, 20 UTF-8/no-BOM files and 218 local links."
+  ],
+  "codeChanged": false,
+  "runtimeTested": false,
+  "page": {
+    "id": "352:2",
+    "name": "49 全局未读 · 消息中心",
+    "reviewRoot": "352:3"
+  },
+  "components": {
+    "badgeSet": "353:7",
+    "messageRowSet": "353:32",
+    "variants": 5
+  },
+  "screens": [
+    {
+      "id": "356:8",
+      "name": "UNREAD-01 / 聊天与全局99+",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "356:140",
+      "name": "UNREAD-02 / 互动分类",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "356:246",
+      "name": "UNREAD-03 / 通知与待处理",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "364:234",
+      "name": "UNREAD-04 / 回复定位",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "364:279",
+      "name": "UNREAD-05 / 首条未读与群提及",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "364:324",
+      "name": "UNREAD-06 / 全部已读确认",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "368:335",
+      "name": "UNREAD-07 / 零未读与历史",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "368:371",
+      "name": "UNREAD-08 / 离线与已读失败",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "boundaryBoard": "368:405",
+  "crossPlatformEntryCards": [
+    {
+      "id": "370:398",
+      "name": "Global entry / 手机"
+    },
+    {
+      "id": "370:414",
+      "name": "Global entry / Web"
+    },
+    {
+      "id": "370:430",
+      "name": "Global entry / Desktop"
+    },
+    {
+      "id": "370:443",
+      "name": "Global entry / 平板"
+    }
+  ],
+  "countsExample": {
+    "activeGlobal": 107,
+    "mutedExcluded": 124,
+    "allReadSnapshot": 231
+  },
+  "validation": {
+    "structuralFile": "global-unread-validation.json",
+    "visualFile": "global-unread-visual-review.json",
+    "fontPass": true,
+    "badgeBoundariesPass": true,
+    "badgeContrast": 4.59951814736654,
+    "missingLinkTargets": [],
+    "designReviewLinks": 37,
+    "documentStaticCheck": {
+      "status": "passed",
+      "files": 20,
+      "localLinks": 218,
+      "utf8NoBom": true,
+      "trackedWhitespacePassed": true
+    }
+  },
+  "remaining": [
+    "New states are not yet replicated into every complete Web/Desktop/tablet page.",
+    "Unread API semantics and app implementation are not changed by this design task.",
+    "Mute inclusion policy is a recommendation pending separate user confirmation.",
+    "Email login and account-security Figma screens were not added in this unread supplement.",
+    "Runtime prototype, device, push and cross-device behavior are unverified."
+  ]
+}

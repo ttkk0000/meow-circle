@@ -1,0 +1,2628 @@
+{
+  "date": "2026-10-22",
+  "task": "AI-20261022-TECH-PLAN",
+  "baseline": {
+    "date": "2026-10-22",
+    "branch": "main",
+    "head": "ebfc469c9707bf0ea4a6b383840546077ae65782",
+    "codegraph": {
+      "files": 155,
+      "limitedTo": "Code context surfaced legacy v1/Expo; new v2 and shared/client not covered; current disk used, no index rebuild."
+    },
+    "existing": {
+      "paths": 141,
+      "operations": 167,
+      "schemas": 50,
+      "modules": 32
+    },
+    "design": {
+      "screens": 45,
+      "layouts": 5,
+      "roots": 225,
+      "nativeFullChecks": 1770,
+      "repairChecks": 52,
+      "remainingIssues": 0
+    }
+  },
+  "boundary": "规划覆盖，不是源码交付、运行通过或合规证明；拟议路径未写入现行OpenAPI。",
+  "functionalRequirements": [
+    {
+      "id": "FR-001",
+      "title": "统一导航",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "共享客户端／平台UI",
+      "taskIds": [
+        "C02",
+        "F00",
+        "A01",
+        "I01",
+        "W01",
+        "D01"
+      ],
+      "implementationApproach": "共享任务目的地与平台导航适配；游客入口不强制模式选择，保留旧历史查询。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-002",
+      "title": "角色工作台",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "身份与准入／规则与运营",
+      "taskIds": [
+        "F04",
+        "B05",
+        "B11"
+      ],
+      "implementationApproach": "按账号、宠物关系和命令权限投影工作台；ops不暴露给消费者。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-003",
+      "title": "账号与发布权限",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "身份与准入",
+      "taskIds": [
+        "F01",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "implementationApproach": "服务端每条受限命令检查当前手机、年龄、监护、角色和发布资格。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-004",
+      "title": "社区浏览",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "共享客户端／媒体与来源",
+      "taskIds": [
+        "F02",
+        "B06",
+        "C03"
+      ],
+      "implementationApproach": "公开投影、游标和真实空错状态；广告／领养性质与来源标签分开。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-005",
+      "title": "发布与草稿",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "请求协议／媒体与来源",
+      "taskIds": [
+        "F10",
+        "B06",
+        "B12",
+        "C07"
+      ],
+      "implementationApproach": "私有版本草稿＋媒体清单＋来源声明＋同请求去重，失败保留输入。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-006",
+      "title": "内容关联与收藏",
+      "priority": "SHOULD",
+      "planningCoverage": "covered",
+      "component": "共享客户端",
+      "taskIds": [
+        "F02",
+        "F04",
+        "B12"
+      ],
+      "implementationApproach": "稳定pet引用、最新状态读取、明确收藏目标值和权限失效恢复。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-007",
+      "title": "分项核验",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "来源及准入／规则与运营",
+      "taskIds": [
+        "F13",
+        "B07",
+        "B11"
+      ],
+      "implementationApproach": "按对象、事项和版本记录结论、范围、时间及撤销，不使用总括保证。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-008",
+      "title": "结构化宠物档案",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "来源及准入",
+      "taskIds": [
+        "F04",
+        "F07",
+        "B07"
+      ],
+      "implementationApproach": "物种与未知项结构化；公开摘要与私密材料分离。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-009",
+      "title": "审核与版本",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "规则与运营／请求协议",
+      "taskIds": [
+        "F13",
+        "B11",
+        "B12"
+      ],
+      "implementationApproach": "关键变更留修订与审计，通过／补充／拒绝／暂停有理由。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-010",
+      "title": "可用性与交接状态",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "合同及生命周期",
+      "taskIds": [
+        "F07",
+        "F08",
+        "B07",
+        "B10"
+      ],
+      "implementationApproach": "可用性、审核、申请、预约、试养及交接分状态，在事务中检查合法转换。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-011",
+      "title": "领养发现",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "来源及准入／平台UI",
+      "taskIds": [
+        "F07",
+        "F09",
+        "B07"
+      ],
+      "implementationApproach": "城市和物种筛选，拒绝定位可手选；领养与有偿转让分开。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-012",
+      "title": "宠物详情",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "来源及准入／合同及生命周期",
+      "taskIds": [
+        "F07",
+        "F14",
+        "B07",
+        "B10"
+      ],
+      "implementationApproach": "主体、关系、核验范围、费用和下一动作可见；未知不显示确定结论。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-013",
+      "title": "领养申请",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "身份与准入／请求协议",
+      "taskIds": [
+        "F07",
+        "B04",
+        "B05",
+        "B12"
+      ],
+      "implementationApproach": "必要表单、最终同意、同猫同人活跃申请唯一和持久化回执。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-014",
+      "title": "补充、撤回与结束申请",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "数据权利／合同及生命周期",
+      "taskIds": [
+        "F07",
+        "B08",
+        "B12"
+      ],
+      "implementationApproach": "按原对象追加、显式撤回、权限及家庭资料到期处理。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-015",
+      "title": "救助方申请工作台",
+      "priority": "SHOULD",
+      "planningCoverage": "covered",
+      "component": "规则与运营／平台UI",
+      "taskIds": [
+        "F07",
+        "B11"
+      ],
+      "implementationApproach": "摘要优先，受控人工复核，不能批量导出无关敏感资料。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-016",
+      "title": "领养约见与试养",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "合同及生命周期",
+      "taskIds": [
+        "F07",
+        "F08",
+        "B10"
+      ],
+      "implementationApproach": "复用预约修订、可选试养期限和照护／退出约定。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-017",
+      "title": "交接与异常承接",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "合同及生命周期",
+      "taskIds": [
+        "F07",
+        "B10",
+        "B08"
+      ],
+      "implementationApproach": "双边同版本确认，安全接回分步骤，不覆盖原交接记录。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-018",
+      "title": "上下文会话",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "共享客户端／请求协议",
+      "taskIds": [
+        "F05",
+        "F06",
+        "B04",
+        "B12"
+      ],
+      "implementationApproach": "会话绑定宠物／申请／预约；消息幂等，聊天内容不替代条款确认。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-019",
+      "title": "关键通知",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "通知与作业",
+      "taskIds": [
+        "F12",
+        "B03",
+        "B12"
+      ],
+      "implementationApproach": "站内通知与业务同事务，按消费者投递，系统推送失败不回滚业务。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-020",
+      "title": "领养回访与到家反馈",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "合同及生命周期／规则与运营",
+      "taskIds": [
+        "F07",
+        "F14",
+        "B11"
+      ],
+      "implementationApproach": "30天私密回访可人工提醒，领养交接和买猫可选反馈分别统计。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-021",
+      "title": "安家故事",
+      "priority": "SHOULD",
+      "planningCoverage": "covered",
+      "component": "媒体与来源／数据权利",
+      "taskIds": [
+        "F02",
+        "F10",
+        "B06",
+        "B08"
+      ],
+      "implementationApproach": "从脱敏私密记录另建公开草稿，经明确选择和预览才发布。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-022",
+      "title": "举报、屏蔽与受理",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "安全／法律案件",
+      "taskIds": [
+        "F13",
+        "B02",
+        "B09",
+        "B11"
+      ],
+      "implementationApproach": "无需预约码的安全报告和匿名受限票据；私密身份与优先级处理。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-023",
+      "title": "复核、暂停与申诉",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "安全／法律案件／规则与运营",
+      "taskIds": [
+        "F13",
+        "B09",
+        "B11"
+      ],
+      "implementationApproach": "命名操作员按证据复核，临时保护与最终结论分开，改判有记录。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-024",
+      "title": "隐私与访问控制",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "身份与准入／数据权利",
+      "taskIds": [
+        "F01",
+        "B05",
+        "B08",
+        "B12"
+      ],
+      "implementationApproach": "用途授权、字段投影、保留计划、撤权清理与注销后限范围查进度。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-025",
+      "title": "透明售猫与反欺骗",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "来源及准入／合同及生命周期",
+      "taskIds": [
+        "F14",
+        "B07",
+        "B10",
+        "B11"
+      ],
+      "implementationApproach": "商业性质、每猫授权、完整费用与责任方披露；不按主体身份一概拒绝。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-026",
+      "title": "分享与深链",
+      "priority": "SHOULD",
+      "planningCoverage": "covered",
+      "component": "共享客户端／平台UI",
+      "taskIds": [
+        "W01",
+        "W03",
+        "B01",
+        "B02",
+        "F00"
+      ],
+      "implementationApproach": "脱敏公开页、撤回后失效缓存、登录后白名单任务续接。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-027",
+      "title": "事件与指标",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "通知与作业／规则与运营",
+      "taskIds": [
+        "F02",
+        "F14",
+        "B11",
+        "B12"
+      ],
+      "implementationApproach": "稳定ID／版本和依据分类；分母、反馈覆盖与未反馈分别保留。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-028",
+      "title": "每猫关系披露",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "来源及准入",
+      "taskIds": [
+        "F14",
+        "B07",
+        "B10"
+      ],
+      "implementationApproach": "主体、照护、代理、接待、预计收款与责任方关系分项核对。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-029",
+      "title": "近期材料与替代核验",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "媒体与来源／来源及准入",
+      "taskIds": [
+        "F13",
+        "B06",
+        "B07",
+        "B11"
+      ],
+      "implementationApproach": "材料绑定对象／任务／时间，支持受控人工替代；AI材料不充当真实核验。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-030",
+      "title": "完整价格与必要费用",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "合同及生命周期",
+      "taskIds": [
+        "F14",
+        "B10"
+      ],
+      "implementationApproach": "整数分／币种、必付与可选项，报价版本和完整总额进入确认摘要。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-031",
+      "title": "预约确认快照",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "合同及生命周期／请求协议",
+      "taskIds": [
+        "F08",
+        "B10",
+        "B12"
+      ],
+      "implementationApproach": "服务端生成不可变版本，双方确认同一版本；地址按需授权。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-032",
+      "title": "关键变更重新确认",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "合同及生命周期",
+      "taskIds": [
+        "F08",
+        "B10",
+        "B12"
+      ],
+      "implementationApproach": "effective与pending分离，安全事件独立hold，旧确认不覆盖新版本。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-033",
+      "title": "到访分项反馈",
+      "priority": "MUST",
+      "planningCoverage": "covered",
+      "component": "合同及生命周期",
+      "taskIds": [
+        "F14",
+        "B10",
+        "B12"
+      ],
+      "implementationApproach": "本人反馈一致／不符／不确定，未成交可反馈，卖方不能覆盖。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    },
+    {
+      "id": "FR-034",
+      "title": "有依据的评价与处理结果",
+      "priority": "SHOULD",
+      "planningCoverage": "covered",
+      "component": "安全／法律案件／规则与运营",
+      "taskIds": [
+        "F13",
+        "B09",
+        "B11"
+      ],
+      "implementationApproach": "按依据展示与脱敏，保留复核／申诉，不以评价资格阻断投诉。",
+      "implementationStatus": "部分旧源码或待实施；本轮不计代码完成",
+      "source": "docs/bmad/prd.md"
+    }
+  ],
+  "nonFunctionalRequirements": [
+    {
+      "id": "NFR-001",
+      "title": "响应性能",
+      "planningCoverage": "full",
+      "evidence": "docs/bmad/architecture.md §6",
+      "implementationStatus": "未运行验收",
+      "gap": null
+    },
+    {
+      "id": "NFR-002",
+      "title": "数据一致性",
+      "planningCoverage": "full",
+      "evidence": "docs/bmad/architecture.md §6",
+      "implementationStatus": "未运行验收",
+      "gap": null
+    },
+    {
+      "id": "NFR-003",
+      "title": "身份与权限",
+      "planningCoverage": "full",
+      "evidence": "docs/bmad/architecture.md §6",
+      "implementationStatus": "未运行验收",
+      "gap": null
+    },
+    {
+      "id": "NFR-004",
+      "title": "隐私与保留",
+      "planningCoverage": "partial",
+      "evidence": "docs/bmad/architecture.md §6",
+      "implementationStatus": "未运行验收",
+      "gap": "实际保留目的／期限／接收方待核定"
+    },
+    {
+      "id": "NFR-005",
+      "title": "恢复与审计",
+      "planningCoverage": "partial",
+      "evidence": "docs/bmad/architecture.md §6",
+      "implementationStatus": "未运行验收",
+      "gap": "RPO/RTO、备份地点／周期与恢复证据待落实"
+    },
+    {
+      "id": "NFR-006",
+      "title": "可访问性",
+      "planningCoverage": "full",
+      "evidence": "docs/bmad/architecture.md §6",
+      "implementationStatus": "未运行验收",
+      "gap": null
+    },
+    {
+      "id": "NFR-007",
+      "title": "多端与视觉",
+      "planningCoverage": "full",
+      "evidence": "docs/bmad/architecture.md §6",
+      "implementationStatus": "未运行验收",
+      "gap": null
+    },
+    {
+      "id": "NFR-008",
+      "title": "运营可执行性",
+      "planningCoverage": "partial",
+      "evidence": "docs/bmad/architecture.md §6",
+      "implementationStatus": "未运行验收",
+      "gap": "命名人员、值守、容量与实际时限待落实"
+    }
+  ],
+  "legalDesignStates": [
+    {
+      "key": "legalCenter",
+      "title": "规则与权益",
+      "staffOnly": false,
+      "component": "规则与运营",
+      "taskIds": [
+        "B11",
+        "C03",
+        "C06"
+      ],
+      "apiGroup": "规则及运营",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357494",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735011",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103754",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838692",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838693",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "aiChoice",
+      "title": "声明内容来源",
+      "staffOnly": false,
+      "component": "媒体与来源",
+      "taskIds": [
+        "B06",
+        "B12",
+        "C07",
+        "F10"
+      ],
+      "apiGroup": "来源与发布",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357495",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735012",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103755",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838694",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838695",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "aiReview",
+      "title": "AI内容声明确认",
+      "staffOnly": false,
+      "component": "媒体与来源",
+      "taskIds": [
+        "B06",
+        "B12",
+        "C07",
+        "F10"
+      ],
+      "apiGroup": "来源与发布",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "明确勾选后执行本次用途；新进入重置",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357496",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735013",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103756",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838696",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838697",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "aiClearReview",
+      "title": "普通内容来源确认",
+      "staffOnly": false,
+      "component": "媒体与来源",
+      "taskIds": [
+        "B06",
+        "B12",
+        "C07",
+        "F10"
+      ],
+      "apiGroup": "来源与发布",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "明确勾选后执行本次用途；新进入重置",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357497",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735014",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103757",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838698",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838699",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "aiChecking",
+      "title": "来源声明结果待确认",
+      "staffOnly": false,
+      "component": "媒体与来源",
+      "taskIds": [
+        "B06",
+        "B12",
+        "C07",
+        "F10"
+      ],
+      "apiGroup": "来源与发布",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "结果不明留在等待，按原operation查询",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357498",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735015",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103758",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838700",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838701",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "aiResult",
+      "title": "来源声明已记录",
+      "staffOnly": false,
+      "component": "媒体与来源",
+      "taskIds": [
+        "B06",
+        "B12",
+        "C07",
+        "F10"
+      ],
+      "apiGroup": "来源与发布",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357499",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735016",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103759",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838702",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838703",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "aiRestriction",
+      "title": "素材使用范围待核对",
+      "staffOnly": false,
+      "component": "媒体与来源",
+      "taskIds": [
+        "B06",
+        "B12",
+        "C07",
+        "F10"
+      ],
+      "apiGroup": "来源与发布",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357500",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735017",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103760",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838704",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838705",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "authority",
+      "title": "拾获与送养资格",
+      "staffOnly": false,
+      "component": "来源及准入",
+      "taskIds": [
+        "B07",
+        "B11",
+        "F07",
+        "F09",
+        "F14"
+      ],
+      "apiGroup": "资格与城市",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357501",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735018",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103761",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838706",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838707",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "authorityEvidence",
+      "title": "补充处分依据",
+      "staffOnly": false,
+      "component": "来源及准入",
+      "taskIds": [
+        "B07",
+        "B11",
+        "F07",
+        "F09",
+        "F14"
+      ],
+      "apiGroup": "资格与城市",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "同意、当前角色、用途与版本均成立才提交",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357502",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735019",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103762",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838708",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838709",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "authorityChecking",
+      "title": "处分资格核对中",
+      "staffOnly": false,
+      "component": "来源及准入",
+      "taskIds": [
+        "B07",
+        "B11",
+        "F07",
+        "F09",
+        "F14"
+      ],
+      "apiGroup": "资格与城市",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "结果不明留在等待，按原operation查询",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357503",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735020",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103763",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838710",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838711",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "authorityHold",
+      "title": "归属争议处理",
+      "staffOnly": false,
+      "component": "来源及准入",
+      "taskIds": [
+        "B07",
+        "B11",
+        "F07",
+        "F09",
+        "F14"
+      ],
+      "apiGroup": "资格与城市",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357504",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735021",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103764",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838712",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838713",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "dataMatters",
+      "title": "删除请求与未完事项",
+      "staffOnly": false,
+      "component": "数据权利",
+      "taskIds": [
+        "B05",
+        "B08",
+        "B12",
+        "F01",
+        "F13"
+      ],
+      "apiGroup": "数据权利",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357505",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735022",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103765",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838714",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838715",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "dataAssist",
+      "title": "注销事项协助",
+      "staffOnly": false,
+      "component": "数据权利",
+      "taskIds": [
+        "B05",
+        "B08",
+        "B12",
+        "F01",
+        "F13"
+      ],
+      "apiGroup": "数据权利",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "同意、当前角色、用途与版本均成立才提交",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357506",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735023",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103766",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838716",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838717",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "dataChecking",
+      "title": "协助请求结果待确认",
+      "staffOnly": false,
+      "component": "数据权利",
+      "taskIds": [
+        "B05",
+        "B08",
+        "B12",
+        "F01",
+        "F13"
+      ],
+      "apiGroup": "数据权利",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "结果不明留在等待，按原operation查询",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357507",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735024",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103767",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838718",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838719",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "dataReceipt",
+      "title": "注销事项协助进度",
+      "staffOnly": false,
+      "component": "数据权利",
+      "taskIds": [
+        "B05",
+        "B08",
+        "B12",
+        "F01",
+        "F13"
+      ],
+      "apiGroup": "数据权利",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357508",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735025",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103768",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838720",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838721",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "retention",
+      "title": "必要留存与复核",
+      "staffOnly": false,
+      "component": "数据权利",
+      "taskIds": [
+        "B05",
+        "B08",
+        "B12",
+        "F01",
+        "F13"
+      ],
+      "apiGroup": "数据权利",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357509",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735026",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103769",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838722",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838723",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsEntry",
+      "title": "侵权与安全求助",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357510",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735027",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103770",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838724",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838725",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsNotice",
+      "title": "正式侵权通知",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "明确勾选后执行本次用途；新进入重置",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357511",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735028",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103771",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838726",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838727",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsFinal",
+      "title": "确认本次侵权通知",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "同意、当前角色、用途与版本均成立才提交",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357512",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735029",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103772",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838728",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838729",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsChecking",
+      "title": "侵权通知结果待确认",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "结果不明留在等待，按原operation查询",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357513",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735030",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103773",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838730",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838731",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsReceipt",
+      "title": "侵权通知处理进度",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357514",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735031",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103774",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838732",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838733",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsRespond",
+      "title": "回应侵权通知",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "明确勾选后执行本次用途；新进入重置",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357515",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735032",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103775",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838734",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838735",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsCounterFinal",
+      "title": "确认不存在侵权声明",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "同意、当前角色、用途与版本均成立才提交",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357516",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735033",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103776",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838736",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838737",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "contractSelect",
+      "title": "选择本次约定",
+      "staffOnly": false,
+      "component": "合同及生命周期",
+      "taskIds": [
+        "B05",
+        "B07",
+        "B10",
+        "B12",
+        "F07",
+        "F08",
+        "F14"
+      ],
+      "apiGroup": "条款与生命周期",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357517",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735034",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103777",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838738",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838739",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "contractAdopt",
+      "title": "领养与试养约定",
+      "staffOnly": false,
+      "component": "合同及生命周期",
+      "taskIds": [
+        "B05",
+        "B07",
+        "B10",
+        "B12",
+        "F07",
+        "F08",
+        "F14"
+      ],
+      "apiGroup": "条款与生命周期",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357518",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735035",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103778",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838740",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838741",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "contractSale",
+      "title": "出售与有偿转让约定",
+      "staffOnly": false,
+      "component": "合同及生命周期",
+      "taskIds": [
+        "B05",
+        "B07",
+        "B10",
+        "B12",
+        "F07",
+        "F08",
+        "F14"
+      ],
+      "apiGroup": "条款与生命周期",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357519",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735036",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103779",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838742",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838743",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "contractFinal",
+      "title": "确认当前条款版本",
+      "staffOnly": false,
+      "component": "合同及生命周期",
+      "taskIds": [
+        "B05",
+        "B07",
+        "B10",
+        "B12",
+        "F07",
+        "F08",
+        "F14"
+      ],
+      "apiGroup": "条款与生命周期",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "同意、当前角色、用途与版本均成立才提交",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357520",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735037",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103780",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838744",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838745",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "contractChecking",
+      "title": "条款确认结果待确认",
+      "staffOnly": false,
+      "component": "合同及生命周期",
+      "taskIds": [
+        "B05",
+        "B07",
+        "B10",
+        "B12",
+        "F07",
+        "F08",
+        "F14"
+      ],
+      "apiGroup": "条款与生命周期",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "结果不明留在等待，按原operation查询",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357521",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735038",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103781",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838746",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838747",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "contractReceipt",
+      "title": "条款确认进度",
+      "staffOnly": false,
+      "component": "合同及生命周期",
+      "taskIds": [
+        "B05",
+        "B07",
+        "B10",
+        "B12",
+        "F07",
+        "F08",
+        "F14"
+      ],
+      "apiGroup": "条款与生命周期",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357522",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735039",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103782",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838748",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838749",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "contractStale",
+      "title": "条款或权限已变化",
+      "staffOnly": false,
+      "component": "合同及生命周期",
+      "taskIds": [
+        "B05",
+        "B07",
+        "B10",
+        "B12",
+        "F07",
+        "F08",
+        "F14"
+      ],
+      "apiGroup": "条款与生命周期",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357523",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735040",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103783",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838750",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838751",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "cityAdmission",
+      "title": "城市与动物准入",
+      "staffOnly": false,
+      "component": "来源及准入",
+      "taskIds": [
+        "B07",
+        "B11",
+        "F07",
+        "F09",
+        "F14"
+      ],
+      "apiGroup": "资格与城市",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357524",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735041",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103784",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838752",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838753",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "cityBlocked",
+      "title": "当前类别暂不开放",
+      "staffOnly": false,
+      "component": "来源及准入",
+      "taskIds": [
+        "B07",
+        "B11",
+        "F07",
+        "F09",
+        "F14"
+      ],
+      "apiGroup": "资格与城市",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357525",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735042",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103785",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838754",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838755",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "providerData",
+      "title": "第三方与数据去向",
+      "staffOnly": false,
+      "component": "规则与运营",
+      "taskIds": [
+        "B11",
+        "C03",
+        "C06"
+      ],
+      "apiGroup": "规则及运营",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357526",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735043",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103786",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838756",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838757",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "guardianProtection",
+      "title": "未成年人保护设置",
+      "staffOnly": false,
+      "component": "身份与准入",
+      "taskIds": [
+        "B04",
+        "B05",
+        "C03",
+        "F01"
+      ],
+      "apiGroup": "身份与资格",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357527",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735044",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103787",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838758",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838759",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "ruleChange",
+      "title": "规则变更与退出",
+      "staffOnly": false,
+      "component": "规则与运营",
+      "taskIds": [
+        "B11",
+        "C03",
+        "C06"
+      ],
+      "apiGroup": "规则及运营",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357528",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735045",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103788",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838760",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838761",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "sellerNotice",
+      "title": "经营与服务信息",
+      "staffOnly": false,
+      "component": "规则与运营",
+      "taskIds": [
+        "B11",
+        "C03",
+        "C06"
+      ],
+      "apiGroup": "规则及运营",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357529",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735046",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103789",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838762",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838763",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "opsReadiness",
+      "title": "运营准入核对",
+      "staffOnly": true,
+      "component": "规则与运营",
+      "taskIds": [
+        "B11",
+        "C03",
+        "C06"
+      ],
+      "apiGroup": "规则及运营",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "命名运营身份与最小权限，不接消费者入口",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357530",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735047",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103790",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838764",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838765",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "opsCase",
+      "title": "运营案件与资料保全",
+      "staffOnly": true,
+      "component": "规则与运营",
+      "taskIds": [
+        "B11",
+        "C03",
+        "C06"
+      ],
+      "apiGroup": "规则及运营",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "命名运营身份与最小权限，不接消费者入口",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357531",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735048",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103791",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838766",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838767",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "opsEmergency",
+      "title": "安全事件响应",
+      "staffOnly": true,
+      "component": "规则与运营",
+      "taskIds": [
+        "B11",
+        "C03",
+        "C06"
+      ],
+      "apiGroup": "规则及运营",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "命名运营身份与最小权限，不接消费者入口",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357532",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735049",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103792",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838768",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838769",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsCounterChecking",
+      "title": "声明结果待确认",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "结果不明留在等待，按原operation查询",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357533",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735050",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103793",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838770",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838771",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsCounterReceipt",
+      "title": "声明已受理",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "按当前对象和任务返回，真实事实未配置则不可用",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357534",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735051",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103794",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838772",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838773",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsSupplement",
+      "title": "补充原侵权通知",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "同意、当前角色、用途与版本均成立才提交",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357535",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735052",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103795",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838774",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838775",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "rightsSupplementChecking",
+      "title": "原通知补充待确认",
+      "staffOnly": false,
+      "component": "安全／法律案件",
+      "taskIds": [
+        "B02",
+        "B05",
+        "B09",
+        "B11",
+        "B12",
+        "F13"
+      ],
+      "apiGroup": "正式通知链／游客安全",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "结果不明留在等待，按原operation查询",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357536",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735053",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103796",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838776",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838777",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "dataAppend",
+      "title": "补充原事项协助",
+      "staffOnly": false,
+      "component": "数据权利",
+      "taskIds": [
+        "B05",
+        "B08",
+        "B12",
+        "F01",
+        "F13"
+      ],
+      "apiGroup": "数据权利",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "同意、当前角色、用途与版本均成立才提交",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357537",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735054",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103797",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838778",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838779",
+          "pageId": "403:3"
+        }
+      ]
+    },
+    {
+      "key": "dataAppendChecking",
+      "title": "协助补充结果待确认",
+      "staffOnly": false,
+      "component": "数据权利",
+      "taskIds": [
+        "B05",
+        "B08",
+        "B12",
+        "F01",
+        "F13"
+      ],
+      "apiGroup": "数据权利",
+      "planningCoverage": "mapped",
+      "implementationStatus": "拟实施，非Figma变量实现",
+      "contractInvariant": "结果不明留在等待，按原operation查询",
+      "layouts": [
+        {
+          "layout": "phone",
+          "rootId": "632:357538",
+          "pageId": "56:25"
+        },
+        {
+          "layout": "web",
+          "rootId": "632:735055",
+          "pageId": "403:2"
+        },
+        {
+          "layout": "desktop",
+          "rootId": "632:1103798",
+          "pageId": "403:4"
+        },
+        {
+          "layout": "tabletP",
+          "rootId": "632:1838780",
+          "pageId": "403:3"
+        },
+        {
+          "layout": "tabletL",
+          "rootId": "632:1838781",
+          "pageId": "403:3"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "frTotal": 34,
+    "frCovered": 34,
+    "nfrTotal": 8,
+    "nfrFull": 5,
+    "nfrPartial": 3,
+    "nfrMissing": 0,
+    "designStates": 45,
+    "layoutRoots": 225
+  },
+  "gate": {
+    "decision": "FAIL",
+    "scope": "全量业务客户端实施放行／公开运营准入，允许先关闭架构合同及服务端缺口",
+    "unresolvedBlockers": [
+      "G01",
+      "G02",
+      "G03",
+      "G04",
+      "G05"
+    ]
+  }
+}

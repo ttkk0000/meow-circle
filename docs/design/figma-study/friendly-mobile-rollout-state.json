@@ -1,0 +1,1017 @@
+{
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "updated": "2026-10-16",
+  "foundationLedger": "friendly-mobile-foundations.json",
+  "createdNodeIds": [
+    "90:1386",
+    "90:1387",
+    "I90:1387;56:185"
+  ],
+  "mutatedNodeIds": [
+    "56:240",
+    "56:248",
+    "56:262",
+    "56:267",
+    "56:273",
+    "56:356",
+    "56:364",
+    "56:441",
+    "56:446",
+    "56:470",
+    "56:488",
+    "56:493",
+    "56:501",
+    "56:517",
+    "56:530",
+    "56:535",
+    "56:543",
+    "56:579",
+    "56:584",
+    "56:617",
+    "56:622",
+    "56:639",
+    "56:667",
+    "56:678",
+    "56:683",
+    "56:691",
+    "58:241",
+    "58:249",
+    "58:267",
+    "58:335",
+    "58:340",
+    "58:401",
+    "58:406",
+    "58:462",
+    "58:467",
+    "58:475",
+    "58:505",
+    "58:510",
+    "58:550",
+    "58:561",
+    "58:566",
+    "58:589",
+    "58:604",
+    "58:609",
+    "58:626",
+    "58:651",
+    "58:656",
+    "58:701",
+    "58:712",
+    "58:717",
+    "58:745",
+    "58:758",
+    "58:763",
+    "58:784",
+    "58:791",
+    "58:806",
+    "58:811",
+    "58:828",
+    "58:841",
+    "58:846",
+    "58:873",
+    "60:504",
+    "60:509",
+    "60:546",
+    "60:557",
+    "60:562",
+    "60:589",
+    "60:603",
+    "60:614",
+    "60:619",
+    "60:654",
+    "60:665",
+    "60:670",
+    "60:679",
+    "60:686",
+    "60:693",
+    "60:700",
+    "60:711",
+    "60:716",
+    "60:746",
+    "60:757",
+    "60:762",
+    "60:820",
+    "60:825",
+    "60:867",
+    "60:1356",
+    "60:1361",
+    "60:1381",
+    "60:1405",
+    "60:1410",
+    "60:1439",
+    "60:1452",
+    "60:1457",
+    "60:1465",
+    "60:1506",
+    "60:1511",
+    "60:1535",
+    "60:1542",
+    "60:1553",
+    "60:1558",
+    "60:1579",
+    "60:1594",
+    "60:1599",
+    "60:1619",
+    "60:1647",
+    "60:1658",
+    "60:1663",
+    "60:1700",
+    "60:1714",
+    "60:1755",
+    "60:1809",
+    "60:1814",
+    "60:1860",
+    "60:1865",
+    "60:1890",
+    "60:1905",
+    "60:1910",
+    "60:1932",
+    "60:1947",
+    "60:1952",
+    "60:1972",
+    "60:1979",
+    "60:1992",
+    "60:1997",
+    "60:2014",
+    "60:2039",
+    "60:2044",
+    "60:2078",
+    "60:2103",
+    "60:2108",
+    "60:2128",
+    "60:2135",
+    "60:2148",
+    "60:2153",
+    "60:2161",
+    "60:2178",
+    "60:2195",
+    "60:2200",
+    "60:2217",
+    "60:2232",
+    "60:2237",
+    "60:2269",
+    "60:2274",
+    "60:2282",
+    "60:2294",
+    "60:2306",
+    "60:2412",
+    "60:2417",
+    "60:2447",
+    "60:2458",
+    "60:2463",
+    "60:2513",
+    "60:2524",
+    "60:2529",
+    "60:2551",
+    "60:2571",
+    "60:2576",
+    "60:2584",
+    "60:2617",
+    "60:2622",
+    "60:2667",
+    "60:2672",
+    "60:2700",
+    "60:2711",
+    "60:2716",
+    "60:2740",
+    "60:2753",
+    "60:2758",
+    "60:2779",
+    "60:2790",
+    "60:2795",
+    "60:2824",
+    "60:2829",
+    "60:2870",
+    "60:2875",
+    "60:2906",
+    "63:1366",
+    "63:1371",
+    "63:1388",
+    "58:455",
+    "58:454"
+  ],
+  "roots": {
+    "home": "56:27",
+    "homeEmpty": "56:28",
+    "city": "56:29",
+    "search": "56:30",
+    "results": "56:31",
+    "post": "56:32",
+    "composePost": "56:33",
+    "postPreview": "56:34",
+    "adopt": "56:35",
+    "filter": "56:36",
+    "detail": "56:37",
+    "verify": "56:38",
+    "apply": "56:39",
+    "applyReview": "56:40",
+    "applySent": "56:41",
+    "application": "56:42",
+    "handover": "56:43",
+    "followup": "56:44",
+    "withdrawn": "56:45",
+    "applicationDecision": "56:46",
+    "publishType": "56:47",
+    "petBasics": "56:48",
+    "petDisclosure": "56:49",
+    "petEvidence": "56:50",
+    "petPreview": "56:51",
+    "petPending": "56:52",
+    "myPublishes": "56:53",
+    "lostList": "56:54",
+    "lostMap": "56:55",
+    "lostDetail": "56:56",
+    "sighting": "56:57",
+    "sightingReview": "56:58",
+    "lostPublish": "56:59",
+    "lostManage": "56:60",
+    "messages": "56:61",
+    "chat": "56:62",
+    "appointment": "56:63",
+    "change": "56:64",
+    "report": "56:65",
+    "reportReceipt": "56:66",
+    "reportProgress": "56:67",
+    "appeal": "56:68",
+    "publisherResponse": "56:69",
+    "login": "56:70",
+    "otp": "56:71",
+    "otpError": "56:72",
+    "mine": "56:73",
+    "petProfile": "56:74",
+    "settings": "56:75",
+    "privacy": "56:76",
+    "find": "56:77",
+    "saleDetail": "56:78",
+    "salePublish": "56:79",
+    "salePreview": "56:80",
+    "offline": "56:81",
+    "noResults": "56:82",
+    "contentUnavailable": "56:83",
+    "permission": "56:84",
+    "sightingSent": "63:1361"
+  },
+  "pageId": "56:25",
+  "screenCount": 59,
+  "panelChangeCount": 179,
+  "detailActions": {
+    "rowId": "90:1386",
+    "primaryId": "58:455",
+    "secondaryId": "90:1387"
+  },
+  "buttonChecks": [
+    {
+      "screen": "home",
+      "id": "56:27",
+      "buttonCount": 1,
+      "kinds": [
+        "Quiet"
+      ],
+      "minWidth": 132
+    },
+    {
+      "screen": "homeEmpty",
+      "id": "56:28",
+      "buttonCount": 2,
+      "kinds": [
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "city",
+      "id": "56:29",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "search",
+      "id": "56:30",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "results",
+      "id": "56:31",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "post",
+      "id": "56:32",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "composePost",
+      "id": "56:33",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "postPreview",
+      "id": "56:34",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "adopt",
+      "id": "56:35",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet"
+      ],
+      "minWidth": 173
+    },
+    {
+      "screen": "filter",
+      "id": "56:36",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "detail",
+      "id": "56:37",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 132
+    },
+    {
+      "screen": "verify",
+      "id": "56:38",
+      "buttonCount": 2,
+      "kinds": [
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "apply",
+      "id": "56:39",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "applyReview",
+      "id": "56:40",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "applySent",
+      "id": "56:41",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "application",
+      "id": "56:42",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "handover",
+      "id": "56:43",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "followup",
+      "id": "56:44",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "withdrawn",
+      "id": "56:45",
+      "buttonCount": 2,
+      "kinds": [
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "applicationDecision",
+      "id": "56:46",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "publishType",
+      "id": "56:47",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petBasics",
+      "id": "56:48",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petDisclosure",
+      "id": "56:49",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petEvidence",
+      "id": "56:50",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petPreview",
+      "id": "56:51",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "petPending",
+      "id": "56:52",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "myPublishes",
+      "id": "56:53",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "lostList",
+      "id": "56:54",
+      "buttonCount": 5,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 173
+    },
+    {
+      "screen": "lostMap",
+      "id": "56:55",
+      "buttonCount": 4,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 173
+    },
+    {
+      "screen": "lostDetail",
+      "id": "56:56",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "sighting",
+      "id": "56:57",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "sightingReview",
+      "id": "56:58",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "lostPublish",
+      "id": "56:59",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "lostManage",
+      "id": "56:60",
+      "buttonCount": 2,
+      "kinds": [
+        "Secondary",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "messages",
+      "id": "56:61",
+      "buttonCount": 0,
+      "kinds": [],
+      "minWidth": null
+    },
+    {
+      "screen": "chat",
+      "id": "56:62",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "appointment",
+      "id": "56:63",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "change",
+      "id": "56:64",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "report",
+      "id": "56:65",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "reportReceipt",
+      "id": "56:66",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "reportProgress",
+      "id": "56:67",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "appeal",
+      "id": "56:68",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "publisherResponse",
+      "id": "56:69",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "login",
+      "id": "56:70",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "otp",
+      "id": "56:71",
+      "buttonCount": 4,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "otpError",
+      "id": "56:72",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "mine",
+      "id": "56:73",
+      "buttonCount": 3,
+      "kinds": [
+        "Quiet"
+      ],
+      "minWidth": 111.33333587646484
+    },
+    {
+      "screen": "petProfile",
+      "id": "56:74",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "settings",
+      "id": "56:75",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "privacy",
+      "id": "56:76",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "find",
+      "id": "56:77",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "saleDetail",
+      "id": "56:78",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "salePublish",
+      "id": "56:79",
+      "buttonCount": 1,
+      "kinds": [
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "salePreview",
+      "id": "56:80",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "offline",
+      "id": "56:81",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "noResults",
+      "id": "56:82",
+      "buttonCount": 3,
+      "kinds": [
+        "Secondary",
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "contentUnavailable",
+      "id": "56:83",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "permission",
+      "id": "56:84",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    },
+    {
+      "screen": "sightingSent",
+      "id": "63:1361",
+      "buttonCount": 2,
+      "kinds": [
+        "Quiet",
+        "Primary"
+      ],
+      "minWidth": 358
+    }
+  ],
+  "badButtonStyles": [],
+  "nodeTypeCounts": {
+    "FRAME": 1142,
+    "TEXT": 955,
+    "INSTANCE": 546,
+    "VECTOR": 451
+  },
+  "totalNodeCount": 3094,
+  "imageNodes": [
+    {
+      "id": "I56:284;56:210",
+      "name": "Photo / feed",
+      "type": "FRAME",
+      "width": 173,
+      "height": 198
+    },
+    {
+      "id": "I56:294;56:210",
+      "name": "Photo / feed",
+      "type": "FRAME",
+      "width": 173,
+      "height": 198
+    },
+    {
+      "id": "I56:289;56:210",
+      "name": "Photo / feed",
+      "type": "FRAME",
+      "width": 173,
+      "height": 198
+    },
+    {
+      "id": "I56:299;56:210",
+      "name": "Photo / feed",
+      "type": "FRAME",
+      "width": 173,
+      "height": 198
+    },
+    {
+      "id": "I56:556;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "56:592",
+      "name": "Photo / cat / 非真实档案",
+      "type": "FRAME",
+      "width": 358,
+      "height": 256
+    },
+    {
+      "id": "56:694",
+      "name": "Photo / cat / 非真实档案",
+      "type": "FRAME",
+      "width": 358,
+      "height": 240
+    },
+    {
+      "id": "I58:270;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "I58:276;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "58:414",
+      "name": "Photo / cat / 非真实档案",
+      "type": "FRAME",
+      "width": 358,
+      "height": 240
+    },
+    {
+      "id": "I58:519;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "I58:726;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "I60:725;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "I60:833;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "60:1468",
+      "name": "Photo / cat / 非真实档案",
+      "type": "FRAME",
+      "width": 358,
+      "height": 220
+    },
+    {
+      "id": "I60:1822;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "60:2315",
+      "name": "Photo / cat / 非真实档案",
+      "type": "FRAME",
+      "width": 64,
+      "height": 64
+    },
+    {
+      "id": "60:2425",
+      "name": "Photo / cat / 非真实档案",
+      "type": "FRAME",
+      "width": 358,
+      "height": 240
+    },
+    {
+      "id": "I60:2594;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    },
+    {
+      "id": "60:2630",
+      "name": "Photo / catOffer / 非真实档案",
+      "type": "FRAME",
+      "width": 358,
+      "height": 232
+    },
+    {
+      "id": "60:2724",
+      "name": "Photo / catOffer / 非真实档案",
+      "type": "FRAME",
+      "width": 358,
+      "height": 220
+    }
+  ],
+  "fontFamilies": [
+    "Noto Sans SC",
+    "Manrope"
+  ],
+  "missingFonts": [],
+  "badFamilies": [],
+  "navigation": {
+    "beforeSourceCount": 329,
+    "afterSourceCount": 330,
+    "reactionCount": 330,
+    "allExistingSourcesPreserved": true,
+    "invalidTargets": [],
+    "addedChatSourceId": "90:1387"
+  },
+  "status": "all 59 phone screens aligned / structural and visual checks passed",
+  "preview": {
+    "all": "friendly-mobile-all-preview.png",
+    "review": "friendly-mobile-final-preview.png"
+  },
+  "validation": "friendly-mobile-validation.json",
+  "reviewSourceSync": "friendly-mobile-review-source-sync.json",
+  "visualReview": "3018x8748 all-phone export inspected plus 1330x1194 representative review. Original source IDs, explicit theme scopes and fixed scroll viewports retained."
+}

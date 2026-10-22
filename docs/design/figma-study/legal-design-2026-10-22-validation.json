@@ -1,0 +1,622 @@
+{
+  "date": "2026-10-22",
+  "task": "AI-20261022-LEGAL-DESIGN",
+  "scope": "Native Figma structure and serialized reaction static evaluation. No prototype playback, API, build or device test.",
+  "fullReadback": [
+    {
+      "page": "56:25",
+      "expected": 45,
+      "checked": 45,
+      "checkedRootIds": [
+        "632:357494",
+        "632:357495",
+        "632:357496",
+        "632:357497",
+        "632:357498",
+        "632:357499",
+        "632:357500",
+        "632:357501",
+        "632:357502",
+        "632:357503",
+        "632:357504",
+        "632:357505",
+        "632:357506",
+        "632:357507",
+        "632:357508",
+        "632:357509",
+        "632:357510",
+        "632:357511",
+        "632:357512",
+        "632:357513",
+        "632:357514",
+        "632:357515",
+        "632:357516",
+        "632:357517",
+        "632:357518",
+        "632:357519",
+        "632:357520",
+        "632:357521",
+        "632:357522",
+        "632:357523",
+        "632:357524",
+        "632:357525",
+        "632:357526",
+        "632:357527",
+        "632:357528",
+        "632:357529",
+        "632:357530",
+        "632:357531",
+        "632:357532",
+        "632:357533",
+        "632:357534",
+        "632:357535",
+        "632:357536",
+        "632:357537",
+        "632:357538"
+      ],
+      "types": {
+        "FRAME": 813,
+        "TEXT": 631,
+        "INSTANCE": 267,
+        "VECTOR": 132
+      },
+      "fonts": [
+        "Noto Sans SC"
+      ],
+      "evaluated": 320,
+      "toggleChecks": 33,
+      "requestResetChecks": 9,
+      "ordinaryFooterChecks": 22,
+      "rowChecks": 76,
+      "consentChecks": 11,
+      "scopeChecks": 26,
+      "eventChecks": 27,
+      "originChecks": 75,
+      "orientationChecks": 0,
+      "publicationChecks": 30,
+      "uniqueDestinations": 74,
+      "issueCount": 0,
+      "issues": []
+    },
+    {
+      "page": "403:2",
+      "expected": 45,
+      "checked": 45,
+      "checkedRootIds": [
+        "632:735011",
+        "632:735012",
+        "632:735013",
+        "632:735014",
+        "632:735015",
+        "632:735016",
+        "632:735017",
+        "632:735018",
+        "632:735019",
+        "632:735020",
+        "632:735021",
+        "632:735022",
+        "632:735023",
+        "632:735024",
+        "632:735025",
+        "632:735026",
+        "632:735027",
+        "632:735028",
+        "632:735029",
+        "632:735030",
+        "632:735031",
+        "632:735032",
+        "632:735033",
+        "632:735034",
+        "632:735035",
+        "632:735036",
+        "632:735037",
+        "632:735038",
+        "632:735039",
+        "632:735040",
+        "632:735041",
+        "632:735042",
+        "632:735043",
+        "632:735044",
+        "632:735045",
+        "632:735046",
+        "632:735047",
+        "632:735048",
+        "632:735049",
+        "632:735050",
+        "632:735051",
+        "632:735052",
+        "632:735053",
+        "632:735054",
+        "632:735055"
+      ],
+      "types": {
+        "FRAME": 1353,
+        "TEXT": 1171,
+        "INSTANCE": 1032,
+        "VECTOR": 717
+      },
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "evaluated": 360,
+      "toggleChecks": 33,
+      "requestResetChecks": 9,
+      "ordinaryFooterChecks": 22,
+      "rowChecks": 76,
+      "consentChecks": 11,
+      "scopeChecks": 26,
+      "eventChecks": 27,
+      "originChecks": 75,
+      "orientationChecks": 0,
+      "publicationChecks": 70,
+      "uniqueDestinations": 76,
+      "issueCount": 1,
+      "issues": [
+        {
+          "root": "632:735033",
+          "test": "new request clears old outcome",
+          "actual": [
+            1
+          ],
+          "wanted": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "page": "403:4",
+      "expected": 45,
+      "checked": 45,
+      "checkedRootIds": [
+        "632:1103754",
+        "632:1103755",
+        "632:1103756",
+        "632:1103757",
+        "632:1103758",
+        "632:1103759",
+        "632:1103760",
+        "632:1103761",
+        "632:1103762",
+        "632:1103763",
+        "632:1103764",
+        "632:1103765",
+        "632:1103766",
+        "632:1103767",
+        "632:1103768",
+        "632:1103769",
+        "632:1103770",
+        "632:1103771",
+        "632:1103772",
+        "632:1103773",
+        "632:1103774",
+        "632:1103775",
+        "632:1103776",
+        "632:1103777",
+        "632:1103778",
+        "632:1103779",
+        "632:1103780",
+        "632:1103781",
+        "632:1103782",
+        "632:1103783",
+        "632:1103784",
+        "632:1103785",
+        "632:1103786",
+        "632:1103787",
+        "632:1103788",
+        "632:1103789",
+        "632:1103790",
+        "632:1103791",
+        "632:1103792",
+        "632:1103793",
+        "632:1103794",
+        "632:1103795",
+        "632:1103796",
+        "632:1103797",
+        "632:1103798"
+      ],
+      "types": {
+        "FRAME": 1353,
+        "TEXT": 1216,
+        "INSTANCE": 717,
+        "VECTOR": 537
+      },
+      "fonts": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "evaluated": 360,
+      "toggleChecks": 33,
+      "requestResetChecks": 9,
+      "ordinaryFooterChecks": 22,
+      "rowChecks": 76,
+      "consentChecks": 11,
+      "scopeChecks": 26,
+      "eventChecks": 27,
+      "originChecks": 75,
+      "orientationChecks": 0,
+      "publicationChecks": 70,
+      "uniqueDestinations": 76,
+      "issueCount": 1,
+      "issues": [
+        {
+          "root": "632:1103776",
+          "test": "new request clears old outcome",
+          "actual": [
+            1
+          ],
+          "wanted": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "page": "403:3",
+      "expected": 90,
+      "checked": 90,
+      "checkedRootIds": [
+        "632:1838692",
+        "632:1838694",
+        "632:1838696",
+        "632:1838698",
+        "632:1838700",
+        "632:1838702",
+        "632:1838704",
+        "632:1838706",
+        "632:1838708",
+        "632:1838710",
+        "632:1838712",
+        "632:1838714",
+        "632:1838716",
+        "632:1838718",
+        "632:1838720",
+        "632:1838722",
+        "632:1838724",
+        "632:1838726",
+        "632:1838728",
+        "632:1838730",
+        "632:1838732",
+        "632:1838734",
+        "632:1838736",
+        "632:1838738",
+        "632:1838740",
+        "632:1838742",
+        "632:1838744",
+        "632:1838746",
+        "632:1838748",
+        "632:1838750",
+        "632:1838752",
+        "632:1838754",
+        "632:1838756",
+        "632:1838758",
+        "632:1838760",
+        "632:1838762",
+        "632:1838764",
+        "632:1838766",
+        "632:1838768",
+        "632:1838770",
+        "632:1838772",
+        "632:1838774",
+        "632:1838776",
+        "632:1838778",
+        "632:1838780",
+        "632:1838693",
+        "632:1838695",
+        "632:1838697",
+        "632:1838699",
+        "632:1838701",
+        "632:1838703",
+        "632:1838705",
+        "632:1838707",
+        "632:1838709",
+        "632:1838711",
+        "632:1838713",
+        "632:1838715",
+        "632:1838717",
+        "632:1838719",
+        "632:1838721",
+        "632:1838723",
+        "632:1838725",
+        "632:1838727",
+        "632:1838729",
+        "632:1838731",
+        "632:1838733",
+        "632:1838735",
+        "632:1838737",
+        "632:1838739",
+        "632:1838741",
+        "632:1838743",
+        "632:1838745",
+        "632:1838747",
+        "632:1838749",
+        "632:1838751",
+        "632:1838753",
+        "632:1838755",
+        "632:1838757",
+        "632:1838759",
+        "632:1838761",
+        "632:1838763",
+        "632:1838765",
+        "632:1838767",
+        "632:1838769",
+        "632:1838771",
+        "632:1838773",
+        "632:1838775",
+        "632:1838777",
+        "632:1838779",
+        "632:1838781"
+      ],
+      "types": {
+        "FRAME": 2571,
+        "TEXT": 1712,
+        "INSTANCE": 1299,
+        "VECTOR": 1074
+      },
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "evaluated": 730,
+      "toggleChecks": 66,
+      "requestResetChecks": 18,
+      "ordinaryFooterChecks": 44,
+      "rowChecks": 152,
+      "consentChecks": 22,
+      "scopeChecks": 52,
+      "eventChecks": 54,
+      "originChecks": 150,
+      "orientationChecks": 90,
+      "publicationChecks": 60,
+      "uniqueDestinations": 150,
+      "issueCount": 2,
+      "issues": [
+        {
+          "root": "632:1838736",
+          "test": "new request clears old outcome",
+          "actual": [
+            1
+          ],
+          "wanted": [
+            0
+          ]
+        },
+        {
+          "root": "632:1838737",
+          "test": "new request clears old outcome",
+          "actual": [
+            1
+          ],
+          "wanted": [
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "repair": {
+    "reason": "The counterstatement pending state is outside the composing batch; all four non-phone submit actions now clear the old result before navigating.",
+    "affectedRootIds": [
+      "632:735033",
+      "632:1103776",
+      "632:1838736",
+      "632:1838737"
+    ],
+    "targetedRevalidation": [
+      {
+        "page": "403:2",
+        "expected": 2,
+        "checked": 2,
+        "checkedRootIds": [
+          "632:735033",
+          "632:735050"
+        ],
+        "types": {
+          "FRAME": 55,
+          "TEXT": 43,
+          "INSTANCE": 41,
+          "VECTOR": 30
+        },
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "evaluated": 12,
+        "toggleChecks": 3,
+        "requestResetChecks": 1,
+        "ordinaryFooterChecks": 0,
+        "rowChecks": 1,
+        "consentChecks": 1,
+        "scopeChecks": 2,
+        "eventChecks": 3,
+        "originChecks": 0,
+        "orientationChecks": 0,
+        "publicationChecks": 0,
+        "uniqueDestinations": 3,
+        "issueCount": 0,
+        "issues": []
+      },
+      {
+        "page": "403:4",
+        "expected": 2,
+        "checked": 2,
+        "checkedRootIds": [
+          "632:1103776",
+          "632:1103793"
+        ],
+        "types": {
+          "FRAME": 55,
+          "TEXT": 45,
+          "INSTANCE": 27,
+          "VECTOR": 22
+        },
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "evaluated": 12,
+        "toggleChecks": 3,
+        "requestResetChecks": 1,
+        "ordinaryFooterChecks": 0,
+        "rowChecks": 1,
+        "consentChecks": 1,
+        "scopeChecks": 2,
+        "eventChecks": 3,
+        "originChecks": 0,
+        "orientationChecks": 0,
+        "publicationChecks": 0,
+        "uniqueDestinations": 3,
+        "issueCount": 0,
+        "issues": []
+      },
+      {
+        "page": "403:3",
+        "expected": 4,
+        "checked": 4,
+        "checkedRootIds": [
+          "632:1838736",
+          "632:1838770",
+          "632:1838737",
+          "632:1838771"
+        ],
+        "types": {
+          "FRAME": 104,
+          "TEXT": 58,
+          "INSTANCE": 48,
+          "VECTOR": 44
+        },
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "evaluated": 28,
+        "toggleChecks": 6,
+        "requestResetChecks": 2,
+        "ordinaryFooterChecks": 0,
+        "rowChecks": 2,
+        "consentChecks": 2,
+        "scopeChecks": 4,
+        "eventChecks": 6,
+        "originChecks": 0,
+        "orientationChecks": 4,
+        "publicationChecks": 0,
+        "uniqueDestinations": 8,
+        "issueCount": 0,
+        "issues": []
+      }
+    ]
+  },
+  "auxiliary": {
+    "hub": {
+      "id": "662:398665",
+      "page": "403:5",
+      "section": "662:398664",
+      "x": 0,
+      "y": 58016
+    },
+    "boards": [
+      {
+        "id": "661:1108463",
+        "name": "法律设计 · 评审回调与角色样例 / phone",
+        "page": "56:25",
+        "section": "632:357493",
+        "width": 1440,
+        "height": 1000,
+        "buttonCount": 48
+      },
+      {
+        "id": "661:1870976",
+        "name": "法律设计 · 评审回调与角色样例 / web",
+        "page": "403:2",
+        "section": "632:735010",
+        "width": 1440,
+        "height": 1000,
+        "buttonCount": 48
+      },
+      {
+        "id": "661:1871153",
+        "name": "法律设计 · 评审回调与角色样例 / desktop",
+        "page": "403:4",
+        "section": "632:1103753",
+        "width": 1440,
+        "height": 1000,
+        "buttonCount": 48
+      },
+      {
+        "id": "661:1871330",
+        "name": "法律设计 · 评审回调与角色样例 / tabletP+tabletL",
+        "page": "403:3",
+        "section": "632:1838691",
+        "width": 1440,
+        "height": 1000,
+        "buttonCount": 96
+      }
+    ],
+    "sections": [
+      {
+        "page": "56:25",
+        "id": "632:357493",
+        "x": 1848,
+        "y": 47668,
+        "w": 2676,
+        "h": 8472,
+        "childCount": 46
+      },
+      {
+        "page": "403:2",
+        "id": "632:735010",
+        "x": 1848,
+        "y": 82104,
+        "w": 3040,
+        "h": 25920,
+        "childCount": 46
+      },
+      {
+        "page": "403:4",
+        "id": "632:1103753",
+        "x": 1848,
+        "y": 79912,
+        "w": 3040,
+        "h": 25920,
+        "childCount": 46
+      },
+      {
+        "page": "403:3",
+        "id": "632:1838691",
+        "x": 1848,
+        "y": 95291,
+        "w": 4312,
+        "h": 30382,
+        "childCount": 91
+      }
+    ],
+    "mutatedNodeIds": [
+      "662:398690",
+      "662:398693",
+      "662:398697",
+      "662:398700"
+    ],
+    "targetCount": 114,
+    "issueCount": 0,
+    "issues": []
+  },
+  "summary": {
+    "nativeRootsChecked": 225,
+    "fullConditionEvaluations": 1770,
+    "repairConditionEvaluations": 52,
+    "consentGates": 55,
+    "toggleAndFreshEntryChecks": 165,
+    "scopeChecks": 130,
+    "eventChecks": 135,
+    "newRequestChecks": 45,
+    "rowChecks": 380,
+    "orientationChecks": 90,
+    "publicationChecks": 230,
+    "exactSourceAndRelationChecks": 375,
+    "reviewButtons": 240,
+    "indexAndReviewTargets": 114,
+    "unresolvedIssueCount": 0
+  },
+  "unresolvedIssues": []
+}

@@ -1,0 +1,1975 @@
+{
+  "date": "2026-10-22",
+  "task": "AI-20261022-LEGAL-DESIGN",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "scope": "Editable native legal review additions; not production integration or legal certification",
+  "screens": [
+    {
+      "id": "legalCenter",
+      "title": "规则与权益",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "学习示意",
+          "body": "本页展示拟定流程；正式主体资料、渠道和政策按实际运营核定。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "主体与服务信息",
+          "value": "运营主体、公开联系及办理状态",
+          "to": "sellerNotice"
+        },
+        {
+          "type": "row",
+          "label": "隐私与第三方",
+          "value": "用途、接收方、地点与期限",
+          "to": "providerData"
+        },
+        {
+          "type": "row",
+          "label": "未成年人保护",
+          "value": "监护授权、陌生人联系和权利",
+          "to": "guardianProtection"
+        },
+        {
+          "type": "row",
+          "label": "资料删除与未完事项",
+          "value": "可以先提出请求，分别处理",
+          "to": "dataMatters"
+        },
+        {
+          "type": "row",
+          "label": "侵权与网暴求助",
+          "value": "普通安全报告与正式侵权通知",
+          "to": "rightsEntry"
+        },
+        {
+          "type": "row",
+          "label": "领养与商业合同",
+          "value": "按实际关系选择条款",
+          "to": "contractSelect"
+        },
+        {
+          "type": "row",
+          "label": "城市与动物准入",
+          "value": "武汉、上海分别核定",
+          "to": "cityAdmission"
+        },
+        {
+          "type": "row",
+          "label": "规则变更与退出",
+          "value": "当前、拟生效及历史版本",
+          "to": "ruleChange"
+        }
+      ],
+      "footer": {
+        "label": "返回我的",
+        "to": "legacy:mine"
+      },
+      "back": "legacy:mine"
+    },
+    {
+      "id": "aiChoice",
+      "title": "声明内容来源",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "帮助大家理解图片来源",
+          "body": "选择与你的文字、图片实际情况一致的声明；普通裁切调色不自动视为AI生成。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "包含AI生成或合成内容",
+          "value": "下一步查看展示与使用范围",
+          "to": "aiReview"
+        },
+        {
+          "type": "row",
+          "label": "未使用AI生成或合成内容",
+          "value": "确认图片来源与使用权",
+          "to": "aiClearReview"
+        },
+        {
+          "type": "note",
+          "title": "隐私与标识分别处理",
+          "body": "清除照片里的GPS等隐私信息，同时保留或重建适用的AI来源标识。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "暂不选择，返回草稿",
+        "to": "legacy:composePost"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "aiReview",
+      "title": "AI内容声明确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次内容",
+              "社区晒宠草稿 · 示例"
+            ],
+            [
+              "来源选择",
+              "包含AI生成或合成内容"
+            ],
+            [
+              "公开展示",
+              "内容周边显示相应AI提示"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "真实宠物材料另有要求",
+          "body": "AI示意图可作明确标注的内容；不能代替待领养宠物的近期实拍、来源或医疗证明。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "aiDisclosure",
+          "label": "我确认声明与本次内容相符，并有权发布相关素材"
+        },
+        {
+          "type": "row",
+          "label": "修改来源选择",
+          "value": "返回后保留草稿",
+          "to": "aiChoice"
+        }
+      ],
+      "footer": {
+        "label": "提交本次声明",
+        "to": "aiChecking",
+        "requires": "aiDisclosure"
+      },
+      "back": "aiChoice"
+    },
+    {
+      "id": "aiClearReview",
+      "title": "普通内容来源确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次内容",
+              "社区晒宠草稿 · 示例"
+            ],
+            [
+              "来源选择",
+              "未使用AI生成或合成内容"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "识别存在差异时",
+          "body": "发现生成标识或疑似痕迹时，先提示核对与申诉，不直接认定故意造假。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "originalDisclosure",
+          "label": "我确认来源声明属实，拥有必要素材权利"
+        },
+        {
+          "type": "row",
+          "label": "改为包含AI内容",
+          "value": "查看AI提示",
+          "to": "aiReview"
+        }
+      ],
+      "footer": {
+        "label": "提交来源声明",
+        "to": "aiChecking",
+        "requires": "originalDisclosure"
+      },
+      "back": "aiChoice"
+    },
+    {
+      "id": "aiChecking",
+      "title": "来源声明结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "先不要重复提交",
+          "body": "保留原草稿与本次请求标识；未拿到实际结果前，不显示声明已保存或内容已发布。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "返回来源选择",
+          "value": "保留内容，不自动发布",
+          "to": "aiChoice"
+        },
+        {
+          "type": "row",
+          "label": "了解适用限制",
+          "value": "真实宠物材料需单独核对",
+          "to": "aiRestriction"
+        }
+      ],
+      "footer": {
+        "label": "查询本次结果",
+        "to": "aiChecking"
+      },
+      "back": "aiChoice",
+      "eventGate": {
+        "key": "legal/ai",
+        "outcomes": {
+          "1": "aiResult",
+          "2": "aiRestriction",
+          "3": "aiChoice"
+        }
+      }
+    },
+    {
+      "id": "aiResult",
+      "title": "来源声明已记录",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "受理结果示例",
+          "body": "实际保存本次声明后显示；这不代表帖子已发布或素材权利已由平台保证。",
+          "tone": "successSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "关联内容",
+              "同一社区草稿 · 示例"
+            ],
+            [
+              "展示状态",
+              "按实际来源结果显示AI／疑似提示"
+            ],
+            [
+              "下一步",
+              "返回原稿检查受众、隐私和发布资格"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "更正来源声明",
+          "value": "产生新记录，不覆盖原有依据",
+          "to": "aiChoice"
+        }
+      ],
+      "footer": {
+        "label": "回到原草稿",
+        "to": "legacy:composePost"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "aiRestriction",
+      "title": "素材使用范围待核对",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "保留草稿，暂不用于真实性核验",
+          "body": "本次材料含生成痕迹或用途不符；可补近期实拍、说明来源或提出异议。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "重新选择并说明",
+          "value": "不会自动恢复核验章",
+          "to": "aiChoice"
+        },
+        {
+          "type": "row",
+          "label": "提出异议或求助",
+          "value": "通过安全报告补充必要说明",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "返回草稿",
+        "to": "legacy:composePost"
+      },
+      "back": "aiChoice"
+    },
+    {
+      "id": "authority",
+      "title": "拾获与送养资格",
+      "group": "lost",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前角色",
+              "临时照护拾获宠物 · 示例"
+            ],
+            [
+              "当前权限",
+              "发布拾获信息、核对认领、提供照护"
+            ],
+            [
+              "送养／出售资格",
+              "需另行核对处分依据"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "无人联系不自动取得所有权",
+          "body": "帖子到期或平台内交接确认，不能代替合法授权、归属处理或当地收容程序。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "补充来源与授权",
+          "value": "只提交必要材料",
+          "to": "authorityEvidence"
+        },
+        {
+          "type": "row",
+          "label": "存在认领或归属争议",
+          "value": "暂停转送养／出售，保留照护求助",
+          "to": "authorityHold"
+        }
+      ],
+      "footer": {
+        "label": "返回拾获互助",
+        "to": "legacy:lostList"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "authorityEvidence",
+      "title": "补充处分依据",
+      "group": "lost",
+      "items": [
+        {
+          "type": "field",
+          "label": "来源类型",
+          "value": "原主人明确授权／依法收容处理／其他依据"
+        },
+        {
+          "type": "field",
+          "label": "依据与授权范围",
+          "value": "说明对象、有效期与可核对来源；不公开证件"
+        },
+        {
+          "type": "field",
+          "label": "相关案例或通知",
+          "value": "关联原拾获案例，保留核对记录"
+        },
+        {
+          "type": "note",
+          "title": "必要材料私密提交",
+          "body": "暂未明确依据可继续照护与认领；不能仅勾选“无主”放开发布。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "authorityScope",
+          "label": "我确认材料针对当前宠物，并有权提交必要信息"
+        }
+      ],
+      "footer": {
+        "label": "提交资格核对",
+        "to": "authorityChecking",
+        "requires": "authorityScope"
+      },
+      "back": "authority",
+      "versionGate": {
+        "key": "legal/authorityScope",
+        "valid": "authorityChecking",
+        "invalid": "authorityHold"
+      }
+    },
+    {
+      "id": "authorityChecking",
+      "title": "处分资格核对中",
+      "group": "lost",
+      "items": [
+        {
+          "type": "note",
+          "title": "等待实际核对",
+          "body": "不自动转换为可领养或可出售；现有照护与认领通道保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "补充或修正材料",
+          "value": "原请求关联补充",
+          "to": "authorityEvidence"
+        },
+        {
+          "type": "row",
+          "label": "出现新的权利人主张",
+          "value": "先暂停并分流",
+          "to": "authorityHold"
+        }
+      ],
+      "footer": {
+        "label": "查询核对进度",
+        "to": "authorityChecking"
+      },
+      "back": "legalCenter",
+      "eventGate": {
+        "key": "legal/authority",
+        "outcomes": {
+          "1": "contractSelect",
+          "2": "authorityHold",
+          "3": "authorityEvidence"
+        }
+      }
+    },
+    {
+      "id": "authorityHold",
+      "title": "归属争议处理",
+      "group": "lost",
+      "items": [
+        {
+          "type": "note",
+          "title": "暂不办理送养或出售",
+          "body": "保护措施与最终归属结论分开；安全照护不因争议自动终止。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "补充认领与来源材料",
+          "value": "必要信息走私密通道",
+          "to": "authorityEvidence"
+        },
+        {
+          "type": "row",
+          "label": "请求人工协助",
+          "value": "失联、安全风险或程序不明",
+          "to": "guestReport"
+        },
+        {
+          "type": "note",
+          "title": "按当地程序办理",
+          "body": "不设置通用的“无人认领若干天即归照护者”倒计时。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回拾获记录",
+        "to": "legacy:lostList"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "dataMatters",
+      "title": "删除请求与未完事项",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "未完事项示例",
+              "群主职责／试养交接／待处理争议"
+            ],
+            [
+              "处理方式",
+              "请求可先受理，按资料与事项分别处理"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "先删除不相关资料",
+          "value": "保留账号和未选择内容",
+          "to": "dataPartScope"
+        },
+        {
+          "type": "row",
+          "label": "申请注销及事项协助",
+          "value": "列明影响，不要求对方无限期配合",
+          "to": "dataAssist"
+        },
+        {
+          "type": "row",
+          "label": "查看必要保留",
+          "value": "依据、范围、期限与申诉",
+          "to": "retention"
+        },
+        {
+          "type": "note",
+          "title": "安全照护另行安排",
+          "body": "提出权利请求不会自动把宠物转送他人，也不代表当前责任已免除。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回资料权利",
+        "to": "dataDelete"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "dataAssist",
+      "title": "注销事项协助",
+      "group": "account",
+      "items": [
+        {
+          "type": "field",
+          "label": "请求类型",
+          "value": "先请求协助处理未完事项；尚未提交正式注销"
+        },
+        {
+          "type": "field",
+          "label": "需要协助的事项",
+          "value": "对方失联／群主交接／安全接回 · 示例"
+        },
+        {
+          "type": "field",
+          "label": "可用回联方式",
+          "value": "选填；也可凭私密回执查询"
+        },
+        {
+          "type": "note",
+          "title": "资料分开处理",
+          "body": "不相关资料可先清理；必要业务与法定留存有具体依据、范围和复核时间。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "erasureAssist",
+          "label": "我确认提交本账号的事项协助请求；这不代替正式注销的身份核对与最终确认"
+        },
+        {
+          "type": "row",
+          "label": "继续正式注销",
+          "value": "按本次用途核对身份，再最终确认",
+          "to": "dataAccountVerify"
+        }
+      ],
+      "footer": {
+        "label": "仅提交事项协助请求",
+        "to": "dataChecking",
+        "requires": "erasureAssist"
+      },
+      "back": "dataMatters",
+      "versionGate": {
+        "key": "legal/assistScope",
+        "valid": "dataChecking",
+        "invalid": "dataMatters"
+      }
+    },
+    {
+      "id": "dataChecking",
+      "title": "协助请求结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "尚不能确认已受理",
+          "body": "只在实际持久化并取得回执后显示收到；当前保留输入和请求标识，不重复新建。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看未完事项处理方式",
+          "value": "不取消原请求",
+          "to": "dataMatters"
+        },
+        {
+          "type": "row",
+          "label": "查看必要留存说明",
+          "value": "逐项核定，不统一无限保留",
+          "to": "retention"
+        }
+      ],
+      "footer": {
+        "label": "核对本次请求",
+        "to": "dataChecking"
+      },
+      "back": "legalCenter",
+      "eventGate": {
+        "key": "legal/erasure",
+        "outcomes": {
+          "1": "dataReceipt",
+          "2": "dataAssist"
+        }
+      }
+    },
+    {
+      "id": "dataReceipt",
+      "title": "注销事项协助进度",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "回执示例 · DR-HELP-002",
+          "body": "仅为事项协助受理；没有自动提交正式注销，也不代表资料已删除。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "未完事项",
+              "分配负责人，反馈节点按真实渠道告知"
+            ],
+            [
+              "资料请求",
+              "可另行选择无关资料删除"
+            ],
+            [
+              "正式注销",
+              "仍需本次身份核对与最终确认"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看保留范围与复核",
+          "value": "主存、缓存和备份分别说明",
+          "to": "retention"
+        },
+        {
+          "type": "row",
+          "label": "对处理提出异议",
+          "value": "保留原DR回执，不新建普通安全举报",
+          "to": "dataAppend"
+        },
+        {
+          "type": "row",
+          "label": "继续正式注销",
+          "value": "不借用协助请求作为注销授权",
+          "to": "dataAccountVerify"
+        }
+      ],
+      "footer": {
+        "label": "返回权利中心",
+        "to": "legalCenter"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "retention",
+      "title": "必要留存与复核",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "一般资料",
+              "目的完成后清理非必要字段"
+            ],
+            [
+              "法定记录",
+              "按实际适用义务确定字段及起算点"
+            ],
+            [
+              "争议保全",
+              "仅关联资料，限权访问并定期复核"
+            ],
+            [
+              "备份",
+              "隔离、滚动过期，恢复时重应用删除标记"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "不把所有材料统一留三年",
+          "body": "儿童家庭材料、原始核验件与商品／交易记录按各自用途和依据处理。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "请求解释或更正范围",
+          "value": "不重复要求公开身份证",
+          "to": "dataMatters"
+        }
+      ],
+      "footer": {
+        "label": "返回当前权利事项",
+        "to": "dataMatters"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "rightsEntry",
+      "title": "侵权与安全求助",
+      "group": "reports",
+      "items": [
+        {
+          "type": "row",
+          "label": "隐私泄露／骚扰／网暴求助",
+          "value": "可先提交最小线索，无需注册",
+          "to": "guestReport"
+        },
+        {
+          "type": "row",
+          "label": "正式提出侵权通知",
+          "value": "必要身份、对象和初步证据",
+          "to": "rightsNotice"
+        },
+        {
+          "type": "row",
+          "label": "回应已转送的通知",
+          "value": "仅通知关联对象及有权限者",
+          "to": "rightsRespond"
+        },
+        {
+          "type": "note",
+          "title": "安全保护与归责分开",
+          "body": "临时隐藏、材料核对、正式结论各自记录；不以举报数量公开定罪。",
+          "tone": "subtle"
+        },
+        {
+          "type": "note",
+          "title": "未成年人优先保护",
+          "body": "隐私扩散或人身财产风险进入紧急分流；实际响应渠道与时段以运营公示为准。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回规则与权益",
+        "to": "legalCenter"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "rightsNotice",
+      "title": "正式侵权通知",
+      "group": "reports",
+      "items": [
+        {
+          "type": "field",
+          "label": "被主张侵权的对象",
+          "value": "内容链接／编号及具体位置"
+        },
+        {
+          "type": "field",
+          "label": "权利人与回联方式",
+          "value": "真实必要身份信息，私密核对"
+        },
+        {
+          "type": "field",
+          "label": "权利与初步证据",
+          "value": "图片权利／肖像隐私／其他具体权益"
+        },
+        {
+          "type": "field",
+          "label": "请求采取的必要措施",
+          "value": "删除／屏蔽／断开链接等"
+        },
+        {
+          "type": "note",
+          "title": "通知会依法转送",
+          "body": "按必要范围处理通知；证件原件和无关隐私不直接公开或整份转发。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "rightsTruth",
+          "label": "我确认所填主张与材料真实，并有权提出本次通知"
+        }
+      ],
+      "footer": {
+        "label": "查看最终提交内容",
+        "to": "rightsFinal",
+        "requires": "rightsTruth"
+      },
+      "back": "rightsEntry"
+    },
+    {
+      "id": "rightsFinal",
+      "title": "确认本次侵权通知",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "对象",
+              "上一页选择的同一内容与位置"
+            ],
+            [
+              "请求人",
+              "已完成必要核对的权利人或授权代理"
+            ],
+            [
+              "材料范围",
+              "仅本次选择的初步证据与必要回联"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "确认后再提交",
+          "body": "身份核对不等于受理；取消不会创建通知。错误通知责任按实际情况依法判断。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "rightsSubmit",
+          "label": "我确认对象、主张与材料范围无误，同意提交本次通知"
+        },
+        {
+          "type": "row",
+          "label": "返回修改",
+          "value": "范围变化需重新核对",
+          "to": "rightsNotice"
+        }
+      ],
+      "footer": {
+        "label": "提交侵权通知",
+        "to": "rightsChecking",
+        "requires": "rightsSubmit"
+      },
+      "back": "rightsNotice",
+      "versionGate": {
+        "key": "legal/rightsScope",
+        "valid": "rightsChecking",
+        "invalid": "rightsNotice"
+      }
+    },
+    {
+      "id": "rightsChecking",
+      "title": "侵权通知结果待确认",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "保留原通知与请求标识",
+          "body": "超时先核对结果，不自动重发，也不显示已受理或侵权成立。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "保留输入返回",
+          "value": "未取得结果前不创建第二份通知",
+          "to": "rightsNotice"
+        }
+      ],
+      "footer": {
+        "label": "查询本次通知",
+        "to": "rightsChecking"
+      },
+      "back": "legalCenter",
+      "eventGate": {
+        "key": "legal/rights",
+        "outcomes": {
+          "1": "rightsReceipt",
+          "2": "rightsNotice"
+        }
+      }
+    },
+    {
+      "id": "rightsReceipt",
+      "title": "侵权通知处理进度",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "回执示例 · IP-DEMO-001",
+          "body": "实际受理后展示；不代表平台或法院已认定侵权。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前阶段",
+              "已受理／依法转送／临时措施／复核，按实际结果显示"
+            ],
+            [
+              "对方回应",
+              "可提交不存在侵权声明"
+            ],
+            [
+              "后续",
+              "依法通知权利人并跟进投诉／诉讼材料及措施复核"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看通知与回应",
+          "value": "仅能查看依法可知的脱敏部分",
+          "to": "rightsRespond"
+        },
+        {
+          "type": "row",
+          "label": "补充材料",
+          "value": "关联原IP回执与对象",
+          "to": "rightsSupplement"
+        }
+      ],
+      "footer": {
+        "label": "返回权益中心",
+        "to": "legalCenter"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "rightsRespond",
+      "title": "回应侵权通知",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "通知示例",
+              "IP-DEMO-001 · 当前账号关联内容"
+            ],
+            [
+              "可执行者",
+              "被通知用户或有有效代理权限者"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "不存在侵权的说明",
+          "value": "逐项回应被主张内容"
+        },
+        {
+          "type": "field",
+          "label": "初步证据与必要身份",
+          "value": "私密提交；无需公开身份证"
+        },
+        {
+          "type": "note",
+          "title": "安全措施仍独立复核",
+          "body": "回应或超时不自动恢复所有内容；依法转送及合理期限由处理流程核定。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "counterTruth",
+          "label": "我确认声明与证据真实，并有权限回应当前通知"
+        }
+      ],
+      "footer": {
+        "label": "确认回应范围",
+        "to": "rightsCounterFinal",
+        "requires": "counterTruth"
+      },
+      "back": "rightsEntry"
+    },
+    {
+      "id": "rightsCounterFinal",
+      "title": "确认不存在侵权声明",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "关联通知",
+              "IP-DEMO-001 · 示例"
+            ],
+            [
+              "范围",
+              "当前被通知内容及本次选择的证据"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "按原通知链处理",
+          "body": "提交后应依法转送权利人并跟进，不作为普通封禁申诉覆盖原结论。",
+          "tone": "subtle"
+        },
+        {
+          "type": "check",
+          "key": "counterSubmit",
+          "label": "我确认这是对原通知的声明，已核对对象与材料范围"
+        }
+      ],
+      "footer": {
+        "label": "提交本次声明",
+        "to": "rightsCounterChecking",
+        "requires": "counterSubmit"
+      },
+      "back": "rightsRespond",
+      "versionGate": {
+        "key": "legal/counterScope",
+        "valid": "rightsCounterChecking",
+        "invalid": "rightsRespond"
+      }
+    },
+    {
+      "id": "contractSelect",
+      "title": "选择本次约定",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "row",
+          "label": "无偿领养／可选试养",
+          "value": "送养权限、照护与安全接回",
+          "to": "contractAdopt"
+        },
+        {
+          "type": "row",
+          "label": "出售／有偿转让",
+          "value": "实际卖方、费用、交付及售后",
+          "to": "contractSale"
+        },
+        {
+          "type": "row",
+          "label": "核对来源与处分资格",
+          "value": "拾获、受托与依法收容分别处理",
+          "to": "authority"
+        },
+        {
+          "type": "note",
+          "title": "由成年人独立办理",
+          "body": "继续检查成年资格、当前手机、角色与有效版本；监护授权不把儿童账号变成成人。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "成年资格与原任务",
+          "value": "复用现有验证流程",
+          "to": "adultAssurance"
+        }
+      ],
+      "footer": {
+        "label": "暂不签约，返回领养",
+        "to": "legacy:adopt"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "contractAdopt",
+      "title": "领养与试养约定",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当事人及依据",
+              "实际送养人、接收人、授权与宠物对应"
+            ],
+            [
+              "费用",
+              "无偿；必要医疗支出须逐项约定，不捆绑购买"
+            ],
+            [
+              "试养与照护",
+              "期限、用品、紧急就医决定和费用责任"
+            ],
+            [
+              "退出与接回",
+              "双方协商、安全交接与无法接回的协助"
+            ],
+            [
+              "回访与隐私",
+              "默认私密；不强制无限期家访或公开曝光"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "示例条款 · 非已生效合同",
+          "body": "完整模板需按实际关系核定，可保存对应版本；状态确认不等于司法确权。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看来源或城市资格",
+          "value": "返回时保留本次条款草稿",
+          "to": "cityAdmission"
+        }
+      ],
+      "footer": {
+        "label": "查看本次确认摘要",
+        "to": "contractFinal"
+      },
+      "back": "contractSelect"
+    },
+    {
+      "id": "contractSale",
+      "title": "出售与有偿转让约定",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "实际合同方",
+              "卖方、代理范围、收款与售后责任人"
+            ],
+            [
+              "完整价款",
+              "宠物价款＋全部必付项；可选项目分列"
+            ],
+            [
+              "交付条件",
+              "对象、地点、适用检疫、版本与双方确认"
+            ],
+            [
+              "售后与争议",
+              "已知情况、质量责任、退款／解除条件及证据"
+            ],
+            [
+              "收款说明",
+              "不将平台未接通的收款或担保能力写入承诺"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "不使用一概免责",
+          "body": "按实际交易核定无理由退货适用；质量瑕疵责任另行处理，不写“活体概不退赔”。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看商业发布者义务",
+          "value": "经营、税务、授权和资料保护",
+          "to": "sellerNotice"
+        }
+      ],
+      "footer": {
+        "label": "查看本次确认摘要",
+        "to": "contractFinal"
+      },
+      "back": "contractSelect"
+    },
+    {
+      "id": "contractFinal",
+      "title": "确认当前条款版本",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次条款",
+              "当前选择的领养／商业类型与版本 · 示例"
+            ],
+            [
+              "签约主体",
+              "已完成资格核对的本账号及相对方"
+            ],
+            [
+              "关键事项",
+              "费用、交付、照护或售后、争议处理"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "只确认所见版本",
+          "body": "任何关键变更均重新确认；另一方未回复不等于同意。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看完整文本与保存",
+          "value": "保留类型与版本，返回原草稿",
+          "to": "contractSelect"
+        },
+        {
+          "type": "check",
+          "key": "contractConsent",
+          "label": "我已查看完整条款和关键事项，确认本次对象、角色及版本"
+        }
+      ],
+      "footer": {
+        "label": "提交本方确认",
+        "to": "contractChecking",
+        "requires": "contractConsent"
+      },
+      "back": "contractSelect",
+      "versionGate": {
+        "key": "legal/contractVersion",
+        "valid": "contractChecking",
+        "invalid": "contractStale"
+      }
+    },
+    {
+      "id": "contractChecking",
+      "title": "条款确认结果待确认",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "尚未确认服务端结果",
+          "body": "保留本次对象和版本；未得到实际持久化结果前，不显示已签约或已交付。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "发现条款变化",
+          "value": "停止使用旧确认",
+          "to": "contractStale"
+        }
+      ],
+      "footer": {
+        "label": "查询本次确认",
+        "to": "contractChecking"
+      },
+      "back": "legalCenter",
+      "eventGate": {
+        "key": "legal/contract",
+        "outcomes": {
+          "1": "contractReceipt",
+          "2": "contractStale"
+        }
+      }
+    },
+    {
+      "id": "contractReceipt",
+      "title": "条款确认进度",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "确认结果示例",
+          "body": "本方确认与双方生效、实际交付、付款分别展示；不能相互替代。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本方确认",
+              "按实际服务端结果显示"
+            ],
+            [
+              "对方确认",
+              "待确认／已确认同一版本"
+            ],
+            [
+              "实际交付",
+              "另行办理，不自动完成"
+            ],
+            [
+              "保存与争议",
+              "可保存所确认文本及必要记录"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "条款发生变更",
+          "value": "查看差异后重新确认",
+          "to": "contractStale"
+        },
+        {
+          "type": "row",
+          "label": "发现隐瞒或安全问题",
+          "value": "保留证据与退出路径",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "返回本次宠物详情",
+        "to": "original:detail"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "contractStale",
+      "title": "条款或权限已变化",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "原确认不能用于新版本",
+          "body": "保留原记录与草稿，先查看变化；角色、资格或关键条款变化均重新核对。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "查看最新完整条款",
+          "value": "不预勾同意，不复用旧凭据",
+          "to": "contractSelect"
+        },
+        {
+          "type": "row",
+          "label": "暂不接受并求助",
+          "value": "不自动认定违约或收费",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "重新核对当前约定",
+        "to": "contractSelect"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "cityAdmission",
+      "title": "城市与动物准入",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前城市",
+              "武汉／上海 · 评审时选择的城市"
+            ],
+            [
+              "信息类型",
+              "猫／狗、领养／出售及实际业务分别核定"
+            ],
+            [
+              "材料区分",
+              "主体资格、免疫、检疫、来源授权分别核对"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "城市办理不由平台代替",
+          "body": "犬只登记、变更、禁限类别与当地收容程序按实际地点核定；犬只规则不直接套给猫咪。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看暂不支持的类别",
+          "value": "没有已核定准入表时不开放提交",
+          "to": "cityBlocked"
+        },
+        {
+          "type": "row",
+          "label": "补充来源与授权",
+          "value": "同城也不自动豁免适用要求",
+          "to": "authorityEvidence"
+        },
+        {
+          "type": "row",
+          "label": "查看本次合同范围",
+          "value": "材料核验不保证健康",
+          "to": "contractSelect"
+        }
+      ],
+      "footer": {
+        "label": "保留草稿，返回业务",
+        "to": "legacy:adopt"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "cityBlocked",
+      "title": "当前类别暂不开放",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "尚未具备当前类别的准入条件",
+          "body": "显示具体城市、物种、行为和原因；不能用普通“其他宠物”绕过。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "更正城市或类型",
+          "value": "保留已填写的草稿",
+          "to": "cityAdmission"
+        },
+        {
+          "type": "row",
+          "label": "对准入判断提出异议",
+          "value": "人工核对后有据更正，不自动放开",
+          "to": "guestReport"
+        },
+        {
+          "type": "note",
+          "title": "不自动跨城匹配",
+          "body": "另一城市已开放，不代表当前城市或该行为也已开放。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回准入说明",
+        "to": "cityAdmission"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "providerData",
+      "title": "第三方与数据去向",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "第三方清单示例",
+          "body": "正式运营时列明实际接收方、用途与数据去向；未接入的功能显示不可用。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "每项列明",
+              "接收方／受托方名称、用途与数据类别"
+            ],
+            [
+              "处理信息",
+              "触发时机、地点、期限、联系方式与规则"
+            ],
+            [
+              "身份与儿童资料",
+              "原件最小化，优先只取得必要资格结果"
+            ],
+            [
+              "权限选择",
+              "非必要定位／通知可拒绝，保留可用基本功能"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看与撤回授权",
+          "value": "必要用途及影响分项说明",
+          "to": "privacy"
+        },
+        {
+          "type": "row",
+          "label": "申请删除或解释",
+          "value": "按字段和实际接收方处理",
+          "to": "dataMatters"
+        },
+        {
+          "type": "row",
+          "label": "隐私投诉",
+          "value": "无需为删除泄露信息先注册",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "返回隐私与数据",
+        "to": "privacy"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "guardianProtection",
+      "title": "未成年人保护设置",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "未满14岁",
+              "有效监护授权与儿童专门规则"
+            ],
+            [
+              "14–17岁",
+              "继续适用未成年人保护"
+            ],
+            [
+              "陌生人联系",
+              "默认限制，支持屏蔽、举报与必要使用管理"
+            ],
+            [
+              "商业与线下签约",
+              "成年人以本人账号办理，不代点儿童确认"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看监护授权与撤回",
+          "value": "范围、版本及有效状态",
+          "to": "teenPrivacy"
+        },
+        {
+          "type": "row",
+          "label": "资料与侵害求助",
+          "value": "未成年人私密信息优先保护",
+          "to": "rightsEntry"
+        },
+        {
+          "type": "note",
+          "title": "保护与反馈",
+          "body": "监护授权有范围和有效期；需要更正年龄、调整授权或请求删除，可通过规则与权利渠道办理。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回未成年人规则",
+        "to": "teenPrivacy"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "ruleChange",
+      "title": "规则变更与退出",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前有效",
+              "版本、生效时间及完整文本"
+            ],
+            [
+              "拟变更",
+              "重要差异、征求意见与拟生效时间"
+            ],
+            [
+              "历史与记录",
+              "可检索、阅览、保存及提出意见"
+            ],
+            [
+              "异议与退出",
+              "说明既有事项、费用和权利处理"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "重大变化单独提示",
+          "body": "按实际适用规定安排公示和过渡；不默认同意，不追溯剥夺已产生权益。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看当前与历史规则",
+          "value": "返回原规则中心",
+          "to": "rules"
+        },
+        {
+          "type": "row",
+          "label": "表达意见或申诉",
+          "value": "公开实际受理方式和处理节点",
+          "to": "guestReport"
+        },
+        {
+          "type": "row",
+          "label": "退出或注销的影响",
+          "value": "未完事项分别处理",
+          "to": "dataMatters"
+        }
+      ],
+      "footer": {
+        "label": "返回规则中心",
+        "to": "rules"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "sellerNotice",
+      "title": "经营与服务信息",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "平台主体",
+              "真实名称、住所与公开联系 · 待实际配置"
+            ],
+            [
+              "业务范围",
+              "社区、信息与预约；实际支付介入需核定"
+            ],
+            [
+              "商业发布者",
+              "身份、实际经营属性、适用许可及授权"
+            ],
+            [
+              "税务与资料",
+              "依法核定报送范围，按必要字段受控处理"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "经营与报送信息说明",
+          "body": "按实际经营和交易依法处理必要资料；预约报价不代表已成交。你可以查看数据用途，并对错误信息申请更正。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看合同与售后",
+          "value": "费用、责任人与有效版本",
+          "to": "contractSelect"
+        },
+        {
+          "type": "row",
+          "label": "查看隐私与权利渠道",
+          "value": "税务／经营必要记录与一般资料分开",
+          "to": "providerData"
+        },
+        {
+          "type": "row",
+          "label": "查看规则变更",
+          "value": "持续公示、下载与申诉",
+          "to": "ruleChange"
+        }
+      ],
+      "footer": {
+        "label": "返回规则与权益",
+        "to": "legalCenter"
+      },
+      "back": "legalCenter"
+    },
+    {
+      "id": "opsReadiness",
+      "title": "运营准入核对",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "仅授权运营人员 · 评审示意",
+          "body": "真实后台需服务端权限；此稿不在消费者导航中暴露运营材料。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "主体／经营",
+              "主体、备案／适用许可、平台性质与双城业务"
+            ],
+            [
+              "未成年人",
+              "核验通道、保护责任人、年度审计与报告安排"
+            ],
+            [
+              "数据与供应商",
+              "处理清单、协议、影响评估及清理结果"
+            ],
+            [
+              "税务／规则",
+              "适用结论、口径、报送／版本发布记录"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "风险工单与留证",
+          "value": "责任人、升级与复核",
+          "to": "opsCase"
+        },
+        {
+          "type": "row",
+          "label": "安全事件分流",
+          "value": "法定报告与普通客服时限分开",
+          "to": "opsEmergency"
+        },
+        {
+          "type": "note",
+          "title": "资料缺失不放行",
+          "body": "逐功能记录缺失项与复核人，不用一键“全部合规”或样例数据放行。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回评审目录",
+        "to": "legalCenter"
+      },
+      "back": "legalCenter",
+      "staffOnly": true
+    },
+    {
+      "id": "opsCase",
+      "title": "运营案件与资料保全",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "仅授权运营人员",
+          "body": "同案关联报告、权利通知、声明及必要证据；按最小权限分工。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前对象",
+              "原案例／回执及对象版本 · 示例"
+            ],
+            [
+              "保护与结论",
+              "临时措施、事实核对和处理决定分别记录"
+            ],
+            [
+              "保全清单",
+              "字段、依据、起止／复核时间及访问审计"
+            ],
+            [
+              "交接",
+              "负责人、替补、下一反馈节点与外部依法协助"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "侵权通知链",
+          "value": "不能以普通申诉覆盖",
+          "to": "rightsEntry"
+        },
+        {
+          "type": "row",
+          "label": "删除请求冲突",
+          "value": "无关资料先处理，保全最小范围",
+          "to": "dataMatters"
+        },
+        {
+          "type": "row",
+          "label": "紧急安全事件",
+          "value": "按实际等级升级",
+          "to": "opsEmergency"
+        }
+      ],
+      "footer": {
+        "label": "返回运营核对",
+        "to": "opsReadiness"
+      },
+      "back": "legalCenter",
+      "staffOnly": true
+    },
+    {
+      "id": "opsEmergency",
+      "title": "安全事件响应",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "仅授权运营人员",
+          "body": "发现或获知后及时研判、止损、保护必要记录并通知负责人／替补。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "报告分流",
+              "按事件等级、主体与行业规则确定对象和时限"
+            ],
+            [
+              "普通平台示例",
+              "较大以上事件，适用其他网络运营者情形时最迟4小时报省级网信"
+            ],
+            [
+              "个人信息事件",
+              "补救、通知与报告另按适用规则履行"
+            ],
+            [
+              "供应商与总结",
+              "合同约定及时通报，记录补报与总结"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "不等待普通客服窗口",
+          "body": "24小时普通首响目标不能替代依法及时处置；不将关基1小时统一套给所有事件。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看案件与交接",
+          "value": "报告渠道和联系人须真实配置",
+          "to": "opsCase"
+        }
+      ],
+      "footer": {
+        "label": "返回运营核对",
+        "to": "opsReadiness"
+      },
+      "back": "legalCenter",
+      "staffOnly": true
+    },
+    {
+      "id": "rightsCounterChecking",
+      "title": "声明结果待确认",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "关联原通知 IP-DEMO-001",
+          "body": "只核对本次不存在侵权声明，不创建新的权利通知；结果不明保留本次请求标识。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "返回当前声明",
+          "value": "保留材料，不重复提交",
+          "to": "rightsRespond"
+        }
+      ],
+      "footer": {
+        "label": "查询本次声明",
+        "to": "rightsCounterChecking"
+      },
+      "back": "rightsRespond",
+      "eventGate": {
+        "key": "legal/counter",
+        "outcomes": {
+          "1": "rightsCounterReceipt",
+          "2": "rightsRespond"
+        }
+      }
+    },
+    {
+      "id": "rightsCounterReceipt",
+      "title": "声明已受理",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "声明回执示例 · CN-DEMO-001",
+          "body": "关联 IP-DEMO-001；实际服务端受理后显示，并依法转送权利人。",
+          "tone": "subtle"
+        },
+        {
+          "type": "note",
+          "title": "受理不等于恢复内容",
+          "body": "后续依法跟进投诉／诉讼通知及合理期限，临时保护和最终责任分开。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看原通知进度",
+          "value": "留存原通知和声明链",
+          "to": "rightsReceipt"
+        }
+      ],
+      "footer": {
+        "label": "返回权益中心",
+        "to": "legalCenter"
+      },
+      "back": "rightsRespond"
+    },
+    {
+      "id": "rightsSupplement",
+      "title": "补充原侵权通知",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "关联 IP-DEMO-001",
+          "body": "仅补充原通知，不改变其对象／类型或冒充不存在侵权声明。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "补充说明与证据",
+          "value": "必要内容；不附无关证件或家庭信息"
+        },
+        {
+          "type": "check",
+          "key": "rightsAppend",
+          "label": "我确认补充材料属于原通知范围，并有权提交"
+        }
+      ],
+      "footer": {
+        "label": "提交原通知补充",
+        "to": "rightsSupplementChecking",
+        "requires": "rightsAppend"
+      },
+      "back": "rightsReceipt",
+      "versionGate": {
+        "key": "legal/rightsAppendScope",
+        "valid": "rightsSupplementChecking",
+        "invalid": "rightsReceipt"
+      }
+    },
+    {
+      "id": "rightsSupplementChecking",
+      "title": "原通知补充待确认",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "保留 IP-DEMO-001",
+          "body": "未取得本次追加的持久化结果前，不显示补充已收到；核对原请求，不新建通知。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次补充",
+        "to": "rightsSupplementChecking"
+      },
+      "back": "rightsSupplement",
+      "eventGate": {
+        "key": "legal/rightsAppend",
+        "outcomes": {
+          "1": "rightsReceipt",
+          "2": "rightsSupplement"
+        }
+      }
+    },
+    {
+      "id": "dataAppend",
+      "title": "补充原事项协助",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "关联 DR-HELP-002",
+          "body": "只处理原协助请求的补充／异议；不改变为正式注销申请。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "说明或新的处理依据",
+          "value": "保留原类型与必要回联方式"
+        },
+        {
+          "type": "check",
+          "key": "dataAppend",
+          "label": "我确认补充属于本账号原协助事项"
+        }
+      ],
+      "footer": {
+        "label": "提交原协助补充",
+        "to": "dataAppendChecking",
+        "requires": "dataAppend"
+      },
+      "back": "dataReceipt",
+      "versionGate": {
+        "key": "legal/dataAppendScope",
+        "valid": "dataAppendChecking",
+        "invalid": "dataReceipt"
+      }
+    },
+    {
+      "id": "dataAppendChecking",
+      "title": "协助补充结果待确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "保留 DR-HELP-002",
+          "body": "结果不明时按原追加请求查询，不重复新建删除或协助申请。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查询本次追加",
+        "to": "dataAppendChecking"
+      },
+      "back": "dataAppend",
+      "eventGate": {
+        "key": "legal/dataAppend",
+        "outcomes": {
+          "1": "dataReceipt",
+          "2": "dataAppend"
+        }
+      }
+    }
+  ]
+}

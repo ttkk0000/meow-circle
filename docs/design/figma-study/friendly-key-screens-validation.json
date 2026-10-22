@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-16",
+  "boardId": "81:192",
+  "roots": {
+    "home": "82:440",
+    "detail": "82:552",
+    "apply": "82:625"
+  },
+  "sourceRoots": {
+    "home": "56:27",
+    "detail": "56:37",
+    "apply": "56:39"
+  },
+  "sourceScreensModified": false,
+  "dimensions": {
+    "board": [
+      1330,
+      1194
+    ],
+    "phones": [
+      390,
+      844
+    ]
+  },
+  "nodeTypeCounts": {
+    "FRAME": 89,
+    "TEXT": 72,
+    "INSTANCE": 47,
+    "VECTOR": 39
+  },
+  "totalNodeCount": 247,
+  "imageNodes": [
+    {
+      "id": "I82:470;56:210",
+      "name": "Photo / feed",
+      "type": "FRAME",
+      "width": 173,
+      "height": 198
+    },
+    {
+      "id": "I82:471;56:210",
+      "name": "Photo / feed",
+      "type": "FRAME",
+      "width": 173,
+      "height": 198
+    },
+    {
+      "id": "I82:473;56:210",
+      "name": "Photo / feed",
+      "type": "FRAME",
+      "width": 173,
+      "height": 198
+    },
+    {
+      "id": "I82:474;56:210",
+      "name": "Photo / feed",
+      "type": "FRAME",
+      "width": 173,
+      "height": 198
+    },
+    {
+      "id": "82:564",
+      "name": "Photo / cat / 非真实档案",
+      "type": "FRAME",
+      "width": 358,
+      "height": 240
+    },
+    {
+      "id": "I82:638;56:204",
+      "name": "Photo / pet",
+      "type": "FRAME",
+      "width": 96,
+      "height": 112
+    }
+  ],
+  "fontFamilies": [
+    "Noto Sans SC",
+    "Manrope"
+  ],
+  "missingFonts": [],
+  "badFonts": [],
+  "reactionCount": 0,
+  "componentChanges": [
+    {
+      "id": "82:446",
+      "screen": "home",
+      "previousMainId": "56:181",
+      "mainId": "70:174",
+      "label": "武汉",
+      "width": 132,
+      "height": 48
+    },
+    {
+      "id": "82:584",
+      "screen": "detail",
+      "previousMainId": "56:181",
+      "mainId": "70:174",
+      "label": "报告问题",
+      "width": 358,
+      "height": 48
+    },
+    {
+      "id": "82:586",
+      "screen": "detail",
+      "previousMainId": "56:179",
+      "mainId": "70:172",
+      "label": "申请领养",
+      "width": 214,
+      "height": 48
+    },
+    {
+      "id": "82:621",
+      "screen": "detail",
+      "mainId": "70:173",
+      "label": "先聊一聊",
+      "width": 132,
+      "height": 48
+    },
+    {
+      "id": "82:647",
+      "screen": "apply",
+      "previousMainId": "56:179",
+      "mainId": "70:172",
+      "label": "检查申请摘要",
+      "width": 358,
+      "height": 48
+    }
+  ],
+  "buttonContract": {
+    "direction": "Friendly",
+    "primary": "#C84B3D",
+    "onPrimary": "#FFFEFC",
+    "secondary": "#FFF1EB",
+    "onSecondary": "#9E382A",
+    "height": 48,
+    "radius": 16,
+    "labelStyle": "Noto Sans SC Medium 16/24",
+    "focus": "2px #626873 outline, 3px offset, only in focus state"
+  },
+  "contrastEvidence": "button-comparison-validation.json; unchanged component token values and label style reused",
+  "visualReview": "Full 1330x1194 composition inspected; native layers, 390x844 phone frames, no new button/text clipping or overlap. Intentional scroll viewport cropping retained.",
+  "limitations": [
+    "Visual review only; no prototype navigation, chat, filtering, forms or submission wired.",
+    "Other common controls and the overall 59-screen visual language remain unapproved.",
+    "No app code, Stitch authority, build, device or runtime accessibility testing changed."
+  ]
+}

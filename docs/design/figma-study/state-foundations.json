@@ -1,0 +1,81 @@
+{
+  "status": "created",
+  "createdNodeIds": [
+    "14:2",
+    "14:3",
+    "14:4",
+    "14:74",
+    "14:75",
+    "14:76",
+    "14:77"
+  ],
+  "mutatedNodeIds": [
+    "0:1"
+  ],
+  "pages": {
+    "overview": "0:1",
+    "foundations": "14:2",
+    "core": "14:3",
+    "trust": "14:4"
+  },
+  "wrappers": {
+    "overview": "14:74",
+    "foundations": "14:75",
+    "core": "14:76",
+    "trust": "14:77"
+  },
+  "variables": {
+    "background": "VariableID:14:36",
+    "surface": "VariableID:14:37",
+    "subtle": "VariableID:14:38",
+    "ink": "VariableID:14:39",
+    "muted": "VariableID:14:40",
+    "brand": "VariableID:14:41",
+    "onBrand": "VariableID:14:42",
+    "brandSoft": "VariableID:14:43",
+    "success": "VariableID:14:44",
+    "successSoft": "VariableID:14:45",
+    "warning": "VariableID:14:46",
+    "warningSoft": "VariableID:14:47",
+    "danger": "VariableID:14:48",
+    "dangerSoft": "VariableID:14:49",
+    "border": "VariableID:14:50",
+    "controlBorder": "VariableID:14:51"
+  },
+  "geometry": {
+    "space/4": "VariableID:14:52",
+    "space/8": "VariableID:14:53",
+    "space/12": "VariableID:14:54",
+    "space/16": "VariableID:14:55",
+    "space/20": "VariableID:14:56",
+    "space/24": "VariableID:14:57",
+    "space/32": "VariableID:14:58",
+    "space/48": "VariableID:14:59",
+    "space/64": "VariableID:14:60",
+    "radius/8": "VariableID:14:61",
+    "radius/14": "VariableID:14:62",
+    "radius/20": "VariableID:14:63",
+    "radius/28": "VariableID:14:64",
+    "radius/999": "VariableID:14:65",
+    "size/touch": "VariableID:14:66"
+  },
+  "styles": {
+    "Display": "S:9466fb621fab9e2a0cfe34deaa82bccfcc5a623c,",
+    "Brand": "S:a77f6263c925c0763904745e15919f9645624083,",
+    "Title": "S:9ba9f6f87f03d9c51832a0e6c4cba223a839f5df,",
+    "Section": "S:2df419e6e43a4b1ea6eb387c9368587ce8ab132b,",
+    "Body": "S:4ec5595d1cb39f780f1ba2061e632d77abfda629,",
+    "Label": "S:b3c9f305d72ee074857292ed4345f9311f8b5500,",
+    "Caption": "S:e31250e9288e02c9954a72976177f3677be7fbd6,"
+  },
+  "collections": {
+    "primitives": "VariableCollectionId:14:5",
+    "color": "VariableCollectionId:14:6",
+    "geometry": "VariableCollectionId:14:7"
+  },
+  "modes": {
+    "Light": "14:1",
+    "Dark": "14:2"
+  },
+  "variableCount": 59
+}

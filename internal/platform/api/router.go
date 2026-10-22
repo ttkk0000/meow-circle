@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -14,8 +15,12 @@ import (
 	"time"
 
 	"kitty-circle/internal/domain"
+	"kitty-circle/internal/identity"
+	"kitty-circle/internal/mobile"
 	"kitty-circle/internal/platform/audit"
 	"kitty-circle/internal/platform/auth"
+	"kitty-circle/internal/platform/mobileapi"
+	"kitty-circle/internal/platform/mobileauth"
 	"kitty-circle/internal/platform/payment"
 	"kitty-circle/internal/platform/phoneotp"
 	"kitty-circle/internal/store"
@@ -39,36 +44,75 @@ const (
 const maxRequestBody = 1 << 20 // 1 MiB
 
 type Router struct {
-	store       store.Store
-	storeKind   string
-	mux         *http.ServeMux
-	adminKey    string
-	tokens      *auth.TokenService
-	payments    *payment.Router
-	filter      *audit.Filter
-	loginLimit  *auth.LoginLimiter
-	phoneOTP    *phoneotp.Store
-	allowOrigin string
+	identity          *identity.Service
+	mobileAPI         *mobileapi.Handler
+	legacyDevelopment bool
+	store             store.Store
+	storeKind         string
+	mux               *http.ServeMux
+	adminKey          string
+	tokens            *auth.TokenService
+	payments          *payment.Router
+	filter            *audit.Filter
+	loginLimit        *auth.LoginLimiter
+	phoneOTP          *phoneotp.Store
+	allowOrigin       string
 }
 
 func NewRouter() http.Handler {
-	secret := getEnv("JWT_SECRET", "change-me-in-production")
-	st, kind := buildStore()
-	ensureDefaultUser(st)
+	r, err := NewRouterWithError()
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+
+func NewRouterWithError() (*Router, error) {
+	development := os.Getenv("APP_ENV") == "development"
+	secret := os.Getenv("JWT_SECRET")
+	if development && secret == "" {
+		secret = "development-only-not-for-production"
+	}
+	if len(secret) < 32 || secret == "change-me-in-production" {
+		return nil, fmt.Errorf("JWT_SECRET must contain at least 32 bytes")
+	}
+	adminKey := os.Getenv("ADMIN_KEY")
+	if !development && len(adminKey) < 32 {
+		return nil, fmt.Errorf("ADMIN_KEY must contain at least 32 bytes")
+	}
+	st, kind, err := buildStore()
+	if err != nil {
+		return nil, err
+	}
+	if development && os.Getenv("MND_SEED_DEMO") == "1" {
+		ensureDefaultUser(st)
+	}
+	identityService := mobileauth.FromEnvironment(st.MobileRepository(), secret)
 	r := &Router{
-		store:       st,
-		storeKind:   kind,
-		mux:         http.NewServeMux(),
-		adminKey:    getEnv("ADMIN_KEY", "admin123"),
-		tokens:      auth.NewTokenService(secret, 72*time.Hour),
-		payments:    buildPaymentRouter(),
-		filter:      audit.NewFilter(audit.DefaultKeywords()),
-		loginLimit:  auth.NewLoginLimiter(5, 10*time.Minute, 10*time.Minute),
-		phoneOTP:    phoneotp.NewStore(10 * time.Minute),
-		allowOrigin: getEnv("CORS_ALLOW_ORIGIN", "*"),
+		identity:          identityService,
+		legacyDevelopment: development && os.Getenv("MND_ENABLE_LEGACY_AUTH") == "1",
+		store:             st,
+		storeKind:         kind,
+		mux:               http.NewServeMux(),
+		adminKey:          adminKey,
+		tokens:            auth.NewTokenService(secret, 72*time.Hour),
+		payments:          buildPaymentRouter(),
+		filter:            audit.NewFilter(audit.DefaultKeywords()),
+		loginLimit:        auth.NewLoginLimiter(5, 10*time.Minute, 10*time.Minute),
+		phoneOTP:          phoneotp.NewStore(10 * time.Minute),
+		allowOrigin:       getEnv("CORS_ALLOW_ORIGIN", "*"),
+	}
+	r.mobileAPI = mobileapi.New(mobile.New(st.MobileRepository()), identityService, filepath.Join(getWorkingDir(), "data", "mobile-media"), adminKey)
+	r.mobileAPI.Service.Propagator = os.Getenv("MND_CONTENT_PROPAGATOR")
+	if endpoint, token := os.Getenv("PUSH_GATEWAY_URL"), os.Getenv("PUSH_GATEWAY_TOKEN"); strings.HasPrefix(endpoint, "https://") && token != "" {
+		r.mobileAPI.Service.Push = mobileauth.GatewayPush{Endpoint: endpoint, Token: token}
+	}
+	r.mobileAPI.Operators, err = mobileapi.OperatorsFromEnvironment()
+	if err != nil {
+		return nil, err
 	}
 	r.routes()
-	return r
+	return r, nil
 }
 
 func ensureDefaultUser(st store.Store) {
@@ -517,30 +561,36 @@ func ensureDefaultAdoption(st store.Store, users map[string]domain.User) {
 // buildStore wires a persistence backend based on environment variables:
 //   - DATABASE_URL set        → PostgreSQL (pgx pool)
 //   - REDIS_URL set in addition → Postgres wrapped by a Redis read-through cache
-//   - Neither set             → In-memory store (default, no external deps)
+//   - Neither set + explicit development → In-memory store
 //
 // The returned kind is one of "memory" / "postgres" / "postgres+redis"
 // and is surfaced via /healthz for operators.
-func buildStore() (store.Store, string) {
+func buildStore() (store.Store, string, error) {
 	dsn := strings.TrimSpace(os.Getenv("DATABASE_URL"))
 	redisURL := strings.TrimSpace(os.Getenv("REDIS_URL"))
 
 	if dsn == "" {
+		if os.Getenv("APP_ENV") != "development" {
+			return nil, "", fmt.Errorf("DATABASE_URL is required outside development")
+		}
 		log.Printf("store: using in-memory backend (set DATABASE_URL to enable PostgreSQL)")
-		return store.NewMemoryStore(), "memory"
+		return store.NewMemoryStore(), "memory", nil
 	}
 
 	pgCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	pg, err := postgres.New(pgCtx, dsn)
 	if err != nil {
-		log.Printf("store: postgres unavailable (%v), falling back to in-memory", err)
-		return store.NewMemoryStore(), "memory"
+		return nil, "", fmt.Errorf("configured PostgreSQL unavailable")
+	}
+	if err = pg.CheckMobileSchema(pgCtx); err != nil {
+		pg.Close()
+		return nil, "", err
 	}
 	log.Printf("store: connected to PostgreSQL")
 
 	if redisURL == "" {
-		return pg, "postgres"
+		return pg, "postgres", nil
 	}
 
 	rCtx, rCancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -548,35 +598,19 @@ func buildStore() (store.Store, string) {
 	cached, err := cache.New(rCtx, redisURL, pg)
 	if err != nil {
 		log.Printf("store: redis unavailable (%v), serving direct Postgres", err)
-		return pg, "postgres"
+		return pg, "postgres", nil
 	}
 	log.Printf("store: Redis read-through cache enabled")
-	return cached, "postgres+redis"
+	return cached, "postgres+redis", nil
 }
 
-// buildPaymentRouter wires the Mock provider by default, and opportunistically
-// registers Alipay / WeChat / Stripe when their credentials are supplied via
-// environment variables. This lets operators flip on real channels without
-// code changes.
+// buildPaymentRouter registers only an explicitly enabled development mock.
+// Existing real-channel structs are placeholders and must not receive funds.
 func buildPaymentRouter() *payment.Router {
-	providers := []payment.Provider{payment.MockProvider{}}
-	if appID := os.Getenv("ALIPAY_APP_ID"); appID != "" {
-		providers = append(providers, payment.AlipayProvider{
-			AppID:      appID,
-			PrivateKey: os.Getenv("ALIPAY_PRIVATE_KEY"),
-			Gateway:    getEnv("ALIPAY_GATEWAY", "https://openapi.alipay.com/gateway.do"),
-		})
+	if os.Getenv("APP_ENV") == "development" && os.Getenv("MND_ENABLE_MOCK_PAYMENT") == "1" {
+		return payment.NewRouter(payment.MockProvider{})
 	}
-	if mch := os.Getenv("WECHAT_MCH_ID"); mch != "" {
-		providers = append(providers, payment.WechatPayProvider{
-			MerchantID: mch,
-			APIKey:     os.Getenv("WECHAT_API_KEY"),
-		})
-	}
-	if sk := os.Getenv("STRIPE_SECRET_KEY"); sk != "" {
-		providers = append(providers, payment.StripeProvider{SecretKey: sk})
-	}
-	return payment.NewRouter(providers...)
+	return payment.NewRouter()
 }
 
 func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
@@ -586,9 +620,13 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 		return
 	}
+	if strings.HasPrefix(req.URL.Path, "/api/v1/") && !r.legacyDevelopment && req.Method != http.MethodGet && req.Method != http.MethodHead {
+		writeError(w, http.StatusGone, "legacy mutation disabled; use the mobile /api/v2 contracts")
+		return
+	}
 	// Cap JSON body size for every endpoint except media upload which
 	// runs its own multipart size check.
-	if !strings.HasPrefix(req.URL.Path, "/api/v1/media") && req.Body != nil {
+	if !(req.URL.Path == "/api/v1/media" || req.URL.Path == "/api/v2/media") && req.Body != nil {
 		req.Body = http.MaxBytesReader(w, req.Body, maxRequestBody)
 	}
 	lw := &loggingResponseWriter{ResponseWriter: w, status: http.StatusOK}
@@ -623,6 +661,7 @@ func (l *loggingResponseWriter) Write(b []byte) (int, error) {
 }
 
 func (r *Router) routes() {
+	r.mux.Handle("/api/v2/", r.mobileAPI)
 	webDir := filepath.Join(getWorkingDir(), "web")
 	uploadsDir := filepath.Join(getWorkingDir(), "data", "uploads")
 	r.mux.Handle("/", http.FileServer(http.Dir(webDir)))
@@ -653,9 +692,13 @@ func (r *Router) routes() {
 			"time":   time.Now().UTC().Format(time.RFC3339),
 		})
 	})
-	r.mux.HandleFunc("/readyz", func(w http.ResponseWriter, _ *http.Request) {
-		// Liveness + lightweight readiness: does the store respond?
-		r.store.CountUsers()
+	r.mux.HandleFunc("/readyz", func(w http.ResponseWriter, req *http.Request) {
+		ctx, cancel := context.WithTimeout(req.Context(), 3*time.Second)
+		defer cancel()
+		if err := r.store.MobileRepository().View(ctx, func(tx mobile.Tx) error { _, err := tx.List(mobile.Accounts, mobile.Filter{Limit: 1}); return err }); err != nil {
+			writeError(w, http.StatusServiceUnavailable, "storage unavailable")
+			return
+		}
 		writeOK(w, map[string]any{"status": "ready", "store": r.storeKind})
 	})
 
@@ -1515,14 +1558,16 @@ func (r *Router) requireAuth(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 		token := strings.TrimSpace(strings.TrimPrefix(header, "Bearer "))
-		claims, err := r.tokens.Parse(token)
+		user, err := r.identity.Authenticate(req.Context(), token)
+		claims := auth.Claims{UserID: user.ID, Username: user.Username}
+		if err != nil && r.legacyDevelopment {
+			claims, err = r.tokens.Parse(token)
+			if err == nil {
+				user, err = r.identity.LegacyUser(req.Context(), claims.UserID, time.Unix(claims.IssuedAt, 0))
+			}
+		}
 		if err != nil {
 			writeError(w, http.StatusUnauthorized, "invalid or expired token")
-			return
-		}
-		user, ok := r.store.GetUser(claims.UserID)
-		if !ok {
-			writeError(w, http.StatusUnauthorized, "user no longer exists")
 			return
 		}
 
@@ -1550,17 +1595,26 @@ func (r *Router) parseAuth(req *http.Request) (auth.Claims, bool) {
 		return auth.Claims{}, false
 	}
 	token := strings.TrimSpace(strings.TrimPrefix(header, "Bearer "))
-	claims, err := r.tokens.Parse(token)
-	if err != nil {
-		return auth.Claims{}, false
+	u, err := r.identity.Authenticate(req.Context(), token)
+	if err == nil {
+		return auth.Claims{UserID: u.ID, Username: u.Username}, true
 	}
-	return claims, true
+	if r.legacyDevelopment {
+		claims, e := r.tokens.Parse(token)
+		if e == nil {
+			_, e = r.identity.LegacyUser(req.Context(), claims.UserID, time.Unix(claims.IssuedAt, 0))
+			if e == nil {
+				return claims, true
+			}
+		}
+	}
+	return auth.Claims{}, false
 }
 
 // ===== Helpers =====
 
 func (r *Router) checkAdmin(w http.ResponseWriter, req *http.Request) bool {
-	if req.Header.Get("X-Admin-Key") == r.adminKey {
+	if r.adminKey != "" && req.Header.Get("X-Admin-Key") == r.adminKey {
 		return true
 	}
 	writeError(w, http.StatusUnauthorized, "unauthorized")
@@ -1697,7 +1751,8 @@ func (r *Router) setCORSHeaders(w http.ResponseWriter) {
 	}
 	w.Header().Set("Access-Control-Allow-Origin", origin)
 	w.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Admin-Key")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Admin-Key,Idempotency-Key,X-Safety-Token,X-Request-Access")
+	w.Header().Set("Access-Control-Expose-Headers", "X-Request-ID,Retry-After")
 	if origin != "*" {
 		w.Header().Set("Vary", "Origin")
 	}

@@ -2,6 +2,8 @@
 
 Last updated: 2026-06-06
 
+2026-10-20 explicit user override for the new Android / iOS mobile entry: implement the approved Figma phone V2 default light style and separate platform tablet layouts, per [implementation record](../client/MOBILE_IMPLEMENTATION_2026_10_20.md). Preserve the Stitch mirror, historical themes and old preferences. The legacy theme authority below continues for older surfaces; do not reapply its default colors or selector to the new mobile entry.
+
 This file tells AI agents how to work on M&D UI without drifting away from the
 current Stitch project.
 

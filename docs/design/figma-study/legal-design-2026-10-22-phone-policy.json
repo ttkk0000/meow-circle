@@ -1,0 +1,434 @@
+{
+  "policy": {
+    "variables": {
+      "prototype/orientationOnly": "VariableID:641:358149",
+      "prototype/staffAuthorized": "VariableID:641:358150",
+      "prototype/aiProposed": "VariableID:641:358151",
+      "prototype/aiSaved": "VariableID:641:358152",
+      "prototype/aiDraftCurrent": "VariableID:641:358153",
+      "prototype/aiLabel": "VariableID:641:358154",
+      "prototype/contractType": "VariableID:641:358155",
+      "prototype/contractKindSelected": "VariableID:641:358156",
+      "prototype/contract/adult": "VariableID:641:358157",
+      "prototype/contract/currentPhone": "VariableID:641:358158",
+      "prototype/contract/role": "VariableID:641:358159",
+      "prototype/contract/sourceAuthority": "VariableID:641:358160",
+      "prototype/contract/cityAdmission": "VariableID:641:358161",
+      "flow/legal/ai": "VariableID:641:358169",
+      "flow/legal/authority": "VariableID:641:358176",
+      "flow/legal/erasure": "VariableID:641:358182",
+      "flow/legal/rightsScope": "VariableID:641:358189",
+      "actor/rightsFinal/authorized": "VariableID:641:358190",
+      "flow/legal/rights": "VariableID:641:358193",
+      "flow/legal/counterScope": "VariableID:641:358198",
+      "actor/rightsCounterFinal/authorized": "VariableID:641:358199",
+      "flow/legal/contractVersion": "VariableID:641:358207",
+      "actor/contractFinal/authorized": "VariableID:641:358208",
+      "flow/legal/contract": "VariableID:641:358211",
+      "flow/legal/counter": "VariableID:641:358228",
+      "flow/legal/rightsAppendScope": "VariableID:641:358232",
+      "actor/rightsSupplement/authorized": "VariableID:641:358233",
+      "flow/legal/rightsAppend": "VariableID:641:358236",
+      "flow/legal/dataAppendScope": "VariableID:641:358239",
+      "actor/dataAppend/authorized": "VariableID:641:358240",
+      "flow/legal/dataAppend": "VariableID:641:358243"
+    },
+    "evidence": [
+      {
+        "key": "legalCenter",
+        "id": "632:357494",
+        "entry": 1,
+        "footer": "635:357597",
+        "reactions": 1
+      },
+      {
+        "key": "aiChoice",
+        "id": "632:357495",
+        "entry": 1,
+        "footer": "635:357634",
+        "reactions": 1
+      },
+      {
+        "key": "aiReview",
+        "id": "632:357496",
+        "entry": 1,
+        "footer": "633:357546",
+        "reactions": 1
+      },
+      {
+        "key": "aiClearReview",
+        "id": "632:357497",
+        "entry": 1,
+        "footer": "635:357678",
+        "reactions": 1
+      },
+      {
+        "key": "aiChecking",
+        "id": "632:357498",
+        "entry": 1,
+        "footer": "635:357712",
+        "reactions": 1
+      },
+      {
+        "key": "aiResult",
+        "id": "632:357499",
+        "entry": 1,
+        "footer": "635:357749",
+        "reactions": 1
+      },
+      {
+        "key": "aiRestriction",
+        "id": "632:357500",
+        "entry": 1,
+        "footer": "635:357783",
+        "reactions": 1
+      },
+      {
+        "key": "authority",
+        "id": "632:357501",
+        "entry": 1,
+        "footer": "635:357827",
+        "reactions": 1
+      },
+      {
+        "key": "authorityEvidence",
+        "id": "632:357502",
+        "entry": 1,
+        "footer": "635:357869",
+        "reactions": 1
+      },
+      {
+        "key": "authorityChecking",
+        "id": "632:357503",
+        "entry": 1,
+        "footer": "635:357903",
+        "reactions": 1
+      },
+      {
+        "key": "authorityHold",
+        "id": "632:357504",
+        "entry": 1,
+        "footer": "635:357940",
+        "reactions": 1
+      },
+      {
+        "key": "dataMatters",
+        "id": "632:357505",
+        "entry": 1,
+        "footer": "635:357988",
+        "reactions": 1
+      },
+      {
+        "key": "dataAssist",
+        "id": "632:357506",
+        "entry": 1,
+        "footer": "635:358037",
+        "reactions": 1
+      },
+      {
+        "key": "dataChecking",
+        "id": "632:357507",
+        "entry": 1,
+        "footer": "635:358071",
+        "reactions": 1
+      },
+      {
+        "key": "dataReceipt",
+        "id": "632:357508",
+        "entry": 1,
+        "footer": "635:358122",
+        "reactions": 1
+      },
+      {
+        "key": "retention",
+        "id": "632:357509",
+        "entry": 1,
+        "footer": "635:358162",
+        "reactions": 1
+      },
+      {
+        "key": "rightsEntry",
+        "id": "632:357510",
+        "entry": 1,
+        "footer": "637:357826",
+        "reactions": 1
+      },
+      {
+        "key": "rightsNotice",
+        "id": "632:357511",
+        "entry": 1,
+        "footer": "637:357872",
+        "reactions": 1
+      },
+      {
+        "key": "rightsFinal",
+        "id": "632:357512",
+        "entry": 1,
+        "footer": "637:357919",
+        "reactions": 1
+      },
+      {
+        "key": "rightsChecking",
+        "id": "632:357513",
+        "entry": 1,
+        "footer": "637:357946",
+        "reactions": 1
+      },
+      {
+        "key": "rightsReceipt",
+        "id": "632:357514",
+        "entry": 1,
+        "footer": "637:357990",
+        "reactions": 1
+      },
+      {
+        "key": "rightsRespond",
+        "id": "632:357515",
+        "entry": 1,
+        "footer": "637:358035",
+        "reactions": 1
+      },
+      {
+        "key": "rightsCounterFinal",
+        "id": "632:357516",
+        "entry": 1,
+        "footer": "637:358072",
+        "reactions": 1
+      },
+      {
+        "key": "contractSelect",
+        "id": "632:357517",
+        "entry": 1,
+        "footer": "637:358120",
+        "reactions": 1
+      },
+      {
+        "key": "contractAdopt",
+        "id": "632:357518",
+        "entry": 1,
+        "footer": "637:358163",
+        "reactions": 1
+      },
+      {
+        "key": "contractSale",
+        "id": "632:357519",
+        "entry": 1,
+        "footer": "637:358206",
+        "reactions": 1
+      },
+      {
+        "key": "contractFinal",
+        "id": "632:357520",
+        "entry": 1,
+        "footer": "633:357593",
+        "reactions": 1
+      },
+      {
+        "key": "contractChecking",
+        "id": "632:357521",
+        "entry": 1,
+        "footer": "637:358233",
+        "reactions": 1
+      },
+      {
+        "key": "contractReceipt",
+        "id": "632:357522",
+        "entry": 1,
+        "footer": "637:358280",
+        "reactions": 1
+      },
+      {
+        "key": "contractStale",
+        "id": "632:357523",
+        "entry": 1,
+        "footer": "637:358314",
+        "reactions": 1
+      },
+      {
+        "key": "cityAdmission",
+        "id": "632:357524",
+        "entry": 1,
+        "footer": "637:358365",
+        "reactions": 1
+      },
+      {
+        "key": "cityBlocked",
+        "id": "632:357525",
+        "entry": 1,
+        "footer": "637:1863431",
+        "reactions": 1
+      },
+      {
+        "key": "providerData",
+        "id": "632:357526",
+        "entry": 1,
+        "footer": "637:1863485",
+        "reactions": 1
+      },
+      {
+        "key": "guardianProtection",
+        "id": "632:357527",
+        "entry": 1,
+        "footer": "637:1863532",
+        "reactions": 1
+      },
+      {
+        "key": "ruleChange",
+        "id": "632:357528",
+        "entry": 1,
+        "footer": "637:1863586",
+        "reactions": 1
+      },
+      {
+        "key": "sellerNotice",
+        "id": "632:357529",
+        "entry": 1,
+        "footer": "637:1863640",
+        "reactions": 1
+      },
+      {
+        "key": "opsReadiness",
+        "id": "632:357530",
+        "entry": 1,
+        "footer": "637:1863690",
+        "reactions": 1
+      },
+      {
+        "key": "opsCase",
+        "id": "632:357531",
+        "entry": 1,
+        "footer": "637:1863744",
+        "reactions": 1
+      },
+      {
+        "key": "opsEmergency",
+        "id": "632:357532",
+        "entry": 1,
+        "footer": "637:1863787",
+        "reactions": 1
+      },
+      {
+        "key": "rightsCounterChecking",
+        "id": "632:357533",
+        "entry": 1,
+        "footer": "637:1863814",
+        "reactions": 1
+      },
+      {
+        "key": "rightsCounterReceipt",
+        "id": "632:357534",
+        "entry": 1,
+        "footer": "637:1863844",
+        "reactions": 1
+      },
+      {
+        "key": "rightsSupplement",
+        "id": "632:357535",
+        "entry": 1,
+        "footer": "637:1863878",
+        "reactions": 1
+      },
+      {
+        "key": "rightsSupplementChecking",
+        "id": "632:357536",
+        "entry": 1,
+        "footer": "637:1863898",
+        "reactions": 1
+      },
+      {
+        "key": "dataAppend",
+        "id": "632:357537",
+        "entry": 1,
+        "footer": "637:1863932",
+        "reactions": 1
+      },
+      {
+        "key": "dataAppendChecking",
+        "id": "632:357538",
+        "entry": 1,
+        "footer": "637:1863952",
+        "reactions": 1
+      }
+    ],
+    "collections": [
+      {
+        "id": "VariableCollectionId:633:357501",
+        "name": "M&D Legal consent / 357501 / 2026-10-22",
+        "count": 6
+      },
+      {
+        "id": "VariableCollectionId:635:357523",
+        "name": "M&D Legal consent / 357523 / 2026-10-22",
+        "count": 9
+      },
+      {
+        "id": "VariableCollectionId:637:357784",
+        "name": "M&D Legal consent / 357784 / 2026-10-22",
+        "count": 12
+      },
+      {
+        "id": "VariableCollectionId:637:1863396",
+        "name": "M&D Legal consent / 1863396 / 2026-10-22",
+        "count": 6
+      },
+      {
+        "id": "VariableCollectionId:641:358148",
+        "name": "M&D Legal flow fixtures / 2026-10-22",
+        "count": 31
+      }
+    ],
+    "texts": [
+      [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "未成年人保护设置",
+        "未满14岁",
+        "有效监护授权与儿童专门规则",
+        "14–17岁",
+        "继续适用未成年人保护",
+        "陌生人联系",
+        "默认限制，支持屏蔽、举报与必要使用管理",
+        "商业与线下签约",
+        "成年人以本人账号办理，不代点儿童确认",
+        "查看监护授权与撤回",
+        "范围、版本及有效状态",
+        "资料与侵害求助",
+        "未成年人私密信息优先保护",
+        "保护与反馈",
+        "监护授权有范围和有效期；需要更正年龄、调整授权或请求删除，可通过规则与权利渠道办理。",
+        "返回未成年人规则"
+      ],
+      [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "经营与服务信息",
+        "平台主体",
+        "真实名称、住所与公开联系 · 待实际配置",
+        "业务范围",
+        "社区、信息与预约；实际支付介入需核定",
+        "商业发布者",
+        "身份、实际经营属性、适用许可及授权",
+        "税务与资料",
+        "依法核定报送范围，按必要字段受控处理",
+        "经营与报送信息说明",
+        "按实际经营和交易依法处理必要资料；预约报价不代表已成交。你可以查看数据用途，并对错误信息申请更正。",
+        "查看合同与售后",
+        "费用、责任人与有效版本",
+        "查看隐私与权利渠道",
+        "税务／经营必要记录与一般资料分开",
+        "查看规则变更",
+        "持续公示、下载与申诉",
+        "返回规则与权益"
+      ]
+    ]
+  },
+  "recovery": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"variables\":{\"prototype/orientationOnly\":\"VariableID:641:358149\",\"prototype/staffAuthorized\":\"VariableID:641:358150\",\"prototype/aiProposed\":\"VariableID:641:358151\",\"prototype/aiSaved\":\"VariableID:641:358152\",\"prototype/aiDraftCurrent\":\"VariableID:641:358153\",\"prototype/aiLabel\":\"VariableID:641:358154\",\"prototype/contractType\":\"VariableID:641:358155\",\"prototype/contractKindSelected\":\"VariableID:641:358156\",\"prototype/contract/adult\":\"VariableID:641:358157\",\"prototype/contract/currentPhone\":\"VariableID:641:358158\",\"prototype/contract/role\":\"VariableID:641:358159\",\"prototype/contract/sourceAuthority\":\"VariableID:641:358160\",\"prototype/contract/cityAdmission\":\"VariableID:641:358161\",\"flow/legal/ai\":\"VariableID:641:358169\",\"flow/legal/authority\":\"VariableID:641:358176\",\"flow/legal/erasure\":\"VariableID:641:358182\",\"flow/legal/rightsScope\":\"VariableID:641:358189\",\"actor/rightsFinal/authorized\":\"VariableID:641:358190\",\"flow/legal/rights\":\"VariableID:641:358193\",\"flow/legal/counterScope\":\"VariableID:641:358198\",\"actor/rightsCounterFinal/authorized\":\"VariableID:641:358199\",\"flow/legal/contractVersion\":\"VariableID:641:358207\",\"actor/contractFinal/authorized\":\"VariableID:641:358208\",\"flow/legal/contract\":\"VariableID:641:358211\",\"flow/legal/counter\":\"VariableID:641:358228\",\"flow/legal/rightsAppendScope\":\"VariableID:641:358232\",\"actor/rightsSupplement/authorized\":\"VariableID:641:358233\",\"flow/legal/rightsAppend\":\"VariableID:641:358236\",\"flow/legal/dataAppendScope\":\"VariableID:641:358239\",\"actor/dataAppend/authorized\":\"VariableID:641:358240\",\"flow/legal/dataAppend\":\"VariableID:641:358243\"},\"evidence\":[{\"key\":\"legalCenter\",\"id\":\"632:357494\",\"entry\":1,\"footer\":\"635:357597\",\"reactions\":1},{\"key\":\"aiChoice\",\"id\":\"632:357495\",\"entry\":1,\"footer\":\"635:357634\",\"reactions\":1},{\"key\":\"aiReview\",\"id\":\"632:357496\",\"entry\":1,\"footer\":\"633:357546\",\"reactions\":1},{\"key\":\"aiClearReview\",\"id\":\"632:357497\",\"entry\":1,\"footer\":\"635:357678\",\"reactions\":1},{\"key\":\"aiChecking\",\"id\":\"632:357498\",\"entry\":1,\"footer\":\"635:357712\",\"reactions\":1},{\"key\":\"aiResult\",\"id\":\"632:357499\",\"entry\":1,\"footer\":\"635:357749\",\"reactions\":1},{\"key\":\"aiRestriction\",\"id\":\"632:357500\",\"entry\":1,\"footer\":\"635:357783\",\"reactions\":1},{\"key\":\"authority\",\"id\":\"632:357501\",\"entry\":1,\"footer\":\"635:357827\",\"reactions\":1},{\"key\":\"authorityEvidence\",\"id\":\"632:357502\",\"entry\":1,\"footer\":\"635:357869\",\"reactions\":1},{\"key\":\"authorityChecking\",\"id\":\"632:357503\",\"entry\":1,\"footer\":\"635:357903\",\"reactions\":1},{\"key\":\"authorityHold\",\"id\":\"632:357504\",\"entry\":1,\"footer\":\"635:357940\",\"reactions\":1},{\"key\":\"dataMatters\",\"id\":\"632:357505\",\"entry\":1,\"footer\":\"635:357988\",\"reactions\":1},{\"key\":\"dataAssist\",\"id\":\"632:357506\",\"entry\":1,\"footer\":\"635:358037\",\"reactions\":1},{\"key\":\"dataChecking\",\"id\":\"632:357507\",\"entry\":1,\"footer\":\"635:358071\",\"reactions\":1},{\"key\":\"dataReceipt\",\"id\":\"632:357508\",\"entry\":1,\"footer\":\"635:358122\",\"reactions\":1},{\"key\":\"retention\",\"id\":\"632:357509\",\"entry\":1,\"footer\":\"635:358162\",\"reactions\":1},{\"key\":\"rightsEntry\",\"id\":\"632:357510\",\"entry\":1,\"footer\":\"637:357826\",\"reactions\":1},{\"key\":\"rightsNotice\",\"id\":\"632:357511\",\"entry\":1,\"footer\":\"637:357872\",\"reactions\":1},{\"key\":\"rightsFinal\",\"id\":\"632:357512\",\"entry\":1,\"footer\":\"637:357919\",\"reactions\":1},{\"key\":\"rightsChecking\",\"id\":\"632:357513\",\"entry\":1,\"footer\":\"637:357946\",\"reactions\":1},{\"key\":\"rightsReceipt\",\"id\":\"632:357514\",\"entry\":1,\"footer\":\"637:357990\",\"reactions\":1},{\"key\":\"rightsRespond\",\"id\":\"632:357515\",\"entry\":1,\"footer\":\"637:358035\",\"reactions\":1},{\"key\":\"rightsCounterFinal\",\"id\":\"632:357516\",\"entry\":1,\"footer\":\"637:358072\",\"reactions\":1},{\"key\":\"contractSelect\",\"id\":\"632:357517\",\"entry\":1,\"footer\":\"637:358120\",\"reactions\":1},{\"key\":\"contractAdopt\",\"id\":\"632:357518\",\"entry\":1,\"footer\":\"637:358163\",\"reactions\":1},{\"key\":\"contractSale\",\"id\":\"632:357519\",\"entry\":1,\"footer\":\"637:358206\",\"reactions\":1},{\"key\":\"contractFinal\",\"id\":\"632:357520\",\"entry\":1,\"footer\":\"633:357593\",\"reactions\":1},{\"key\":\"contractChecking\",\"id\":\"632:357521\",\"entry\":1,\"footer\":\"637:358233\",\"reactions\":1},{\"key\":\"contractReceipt\",\"id\":\"632:357522\",\"entry\":1,\"footer\":\"637:358280\",\"reactions\":1},{\"key\":\"contractStale\",\"id\":\"632:357523\",\"entry\":1,\"footer\":\"637:358314\",\"reactions\":1},{\"key\":\"cityAdmission\",\"id\":\"632:357524\",\"entry\":1,\"footer\":\"637:358365\",\"reactions\":1},{\"key\":\"cityBlocked\",\"id\":\"632:357525\",\"entry\":1,\"footer\":\"637:1863431\",\"reactions\":1},{\"key\":\"providerData\",\"id\":\"632:357526\",\"entry\":1,\"footer\":\"637:1863485\",\"reactions\":1},{\"key\":\"guardianProtection\",\"id\":\"632:357527\",\"entry\":1,\"footer\":\"637:1863532\",\"reactions\":1},{\"key\":\"ruleChange\",\"id\":\"632:357528\",\"entry\":1,\"footer\":\"637:1863586\",\"reactions\":1},{\"key\":\"sellerNotice\",\"id\":\"632:357529\",\"entry\":1,\"footer\":\"637:1863640\",\"reactions\":1},{\"key\":\"opsReadiness\",\"id\":\"632:357530\",\"entry\":1,\"footer\":\"637:1863690\",\"reactions\":1},{\"key\":\"opsCase\",\"id\":\"632:357531\",\"entry\":1,\"footer\":\"637:1863744\",\"reactions\":1},{\"key\":\"opsEmergency\",\"id\":\"632:357532\",\"entry\":1,\"footer\":\"637:1863787\",\"reactions\":1},{\"key\":\"rightsCounterChecking\",\"id\":\"632:357533\",\"entry\":1,\"footer\":\"637:1863814\",\"reactions\":1},{\"key\":\"rightsCounterReceipt\",\"id\":\"632:357534\",\"entry\":1,\"footer\":\"637:1863844\",\"reactions\":1},{\"key\":\"rightsSupplement\",\"id\":\"632:357535\",\"entry\":1,\"footer\":\"637:1863878\",\"reactions\":1},{\"key\":\"rightsSupplementChecking\",\"id\":\"632:357536\",\"entry\":1,\"footer\":\"637:1863898\",\"reactions\":1},{\"key\":\"dataAppend\",\"id\":\"632:357537\",\"entry\":1,\"footer\":\"637:1863932\",\"reactions\":1},{\"key\":\"dataAppendChecking\",\"id\":\"632:357538\",\"entry\":1,\"footer\":\"637:1863952\",\"reactions\":1}],\"collections\":[{\"id\":\"VariableCollectionId:633:357501\",\"name\":\"M&D Legal consent / 357501 / 2026-10-22\",\"count\":6},{\"id\":\"VariableCollectionId:635:357523\",\"name\":\"M&D Legal consent / 357523 / 2026-10-22\",\"count\":9},{\"id\":\"VariableCollectionId:637:357784\",\"name\":\"M&D Legal consent / 357784 / 2026-10-22\",\"count\":12},{\"id\":\"VariableCollectionId:637:1863396\",\"name\":\"M&D Legal consent / 1863396 / 2026-10-22\",\"count\":6},{\"id\":\"VariableCollectionId:641:358148\",\"name\":\"M&D Legal flow fixtures / 2026-10-22\",\"count\":31}],\"texts\":[[\"9:41\",\"学习示意 · 非真实资料\",\"未成年人保护设置\",\"未满14岁\",\"有效监护授权与儿童专门规则\",\"14–17岁\",\"继续适用未成年人保护\",\"陌生人联系\",\"默认限制，支持屏蔽、举报与必要使用管理\",\"商业与线下签约\",\"成年人以本人账号办理，不代点儿童确认\",\"查看监护授权与撤回\",\"范围、版本及有效状态\",\"资料与侵害求助\",\"未成年人私密信息优先保护\",\"保护与反馈\",\"监护授权有范围和有效期；需要更正年龄、调整授权或请求删除，可通过规则与权利渠道办理。\",\"返回未成年人规则\"],[\"9:41\",\"学习示意 · 非真实资料\",\"经营与服务信息\",\"平台主体\",\"真实名称、住所与公开联系 · 待实际配置\",\"业务范围\",\"社区、信息与预约；实际支付介入需核定\",\"商业发布者\",\"身份、实际经营属性、适用许可及授权\",\"税务与资料\",\"依法核定报送范围，按必要字段受控处理\",\"经营与报送信息说明\",\"按实际经营和交易依法处理必要资料；预约报价不代表已成交。你可以查看数据用途，并对错误信息申请更正。\",\"查看合同与售后\",\"费用、责任人与有效版本\",\"查看隐私与权利渠道\",\"税务／经营必要记录与一般资料分开\",\"查看规则变更\",\"持续公示、下载与申诉\",\"返回规则与权益\"]]}"
+      }
+    ],
+    "isError": false
+  }
+}

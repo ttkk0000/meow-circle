@@ -1,0 +1,550 @@
+{
+  "pages": [
+    {
+      "id": "0:1",
+      "name": "00 设计总览"
+    },
+    {
+      "id": "14:2",
+      "name": "01 视觉与组件"
+    },
+    {
+      "id": "14:3",
+      "name": "02 核心体验"
+    },
+    {
+      "id": "14:4",
+      "name": "03 信任与异常"
+    },
+    {
+      "id": "30:2",
+      "name": "04 可点击原型（示意）"
+    }
+  ],
+  "variableCount": 59,
+  "collections": [
+    {
+      "id": "VariableCollectionId:14:5",
+      "name": "M&D Study / Primitives",
+      "count": 28,
+      "modes": [
+        {
+          "name": "Value",
+          "modeId": "14:0"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:14:6",
+      "name": "M&D Study / Color",
+      "count": 16,
+      "modes": [
+        {
+          "name": "Light",
+          "modeId": "14:1"
+        },
+        {
+          "name": "Dark",
+          "modeId": "14:2"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:14:7",
+      "name": "M&D Study / Geometry",
+      "count": 15,
+      "modes": [
+        {
+          "name": "Value",
+          "modeId": "14:3"
+        }
+      ]
+    }
+  ],
+  "styleCount": 7,
+  "colors": [
+    {
+      "mode": "Light",
+      "colors": {
+        "color/background": {
+          "r": 0.9647058844566345,
+          "g": 0.95686274766922,
+          "b": 0.9372549057006836,
+          "a": 1
+        },
+        "color/surface": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "color/subtle": {
+          "r": 0.9333333373069763,
+          "g": 0.9254902005195618,
+          "b": 0.8980392217636108,
+          "a": 1
+        },
+        "color/ink": {
+          "r": 0.125490203499794,
+          "g": 0.1568627506494522,
+          "b": 0.13725490868091583,
+          "a": 1
+        },
+        "color/muted": {
+          "r": 0.3843137323856354,
+          "g": 0.42352941632270813,
+          "b": 0.3921568691730499,
+          "a": 1
+        },
+        "color/brand": {
+          "r": 0.6627451181411743,
+          "g": 0.2666666805744171,
+          "b": 0.16862745583057404,
+          "a": 1
+        },
+        "color/onBrand": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "color/brandSoft": {
+          "r": 0.9725490212440491,
+          "g": 0.9019607901573181,
+          "b": 0.8666666746139526,
+          "a": 1
+        },
+        "color/success": {
+          "r": 0.13725490868091583,
+          "g": 0.3607843220233917,
+          "b": 0.26274511218070984,
+          "a": 1
+        },
+        "color/successSoft": {
+          "r": 0.9098039269447327,
+          "g": 0.9450980424880981,
+          "b": 0.9137254953384399,
+          "a": 1
+        },
+        "color/warning": {
+          "r": 0.5254902243614197,
+          "g": 0.3294117748737335,
+          "b": 0.054901961237192154,
+          "a": 1
+        },
+        "color/warningSoft": {
+          "r": 1,
+          "g": 0.9450980424880981,
+          "b": 0.8392156958580017,
+          "a": 1
+        },
+        "color/danger": {
+          "r": 0.6078431606292725,
+          "g": 0.20392157137393951,
+          "b": 0.2078431397676468,
+          "a": 1
+        },
+        "color/dangerSoft": {
+          "r": 0.9882352948188782,
+          "g": 0.9215686321258545,
+          "b": 0.9254902005195618,
+          "a": 1
+        },
+        "color/border": {
+          "r": 0.8509804010391235,
+          "g": 0.8705882430076599,
+          "b": 0.843137264251709,
+          "a": 1
+        },
+        "color/controlBorder": {
+          "r": 0.5372549295425415,
+          "g": 0.5843137502670288,
+          "b": 0.5490196347236633,
+          "a": 1
+        }
+      }
+    },
+    {
+      "mode": "Dark",
+      "colors": {
+        "color/background": {
+          "r": 0.08627451211214066,
+          "g": 0.10588235408067703,
+          "b": 0.0941176488995552,
+          "a": 1
+        },
+        "color/surface": {
+          "r": 0.13333334028720856,
+          "g": 0.16470588743686676,
+          "b": 0.14509804546833038,
+          "a": 1
+        },
+        "color/subtle": {
+          "r": 0.1882352977991104,
+          "g": 0.23137255012989044,
+          "b": 0.20000000298023224,
+          "a": 1
+        },
+        "color/ink": {
+          "r": 0.9529411792755127,
+          "g": 0.9647058844566345,
+          "b": 0.9490196108818054,
+          "a": 1
+        },
+        "color/muted": {
+          "r": 0.7372549176216125,
+          "g": 0.772549033164978,
+          "b": 0.7411764860153198,
+          "a": 1
+        },
+        "color/brand": {
+          "r": 0.8980392217636108,
+          "g": 0.6392157077789307,
+          "b": 0.5529412031173706,
+          "a": 1
+        },
+        "color/onBrand": {
+          "r": 0.1882352977991104,
+          "g": 0.0941176488995552,
+          "b": 0.05882352963089943,
+          "a": 1
+        },
+        "color/brandSoft": {
+          "r": 0.1882352977991104,
+          "g": 0.0941176488995552,
+          "b": 0.05882352963089943,
+          "a": 1
+        },
+        "color/success": {
+          "r": 0.658823549747467,
+          "g": 0.8235294222831726,
+          "b": 0.7215686440467834,
+          "a": 1
+        },
+        "color/successSoft": {
+          "r": 0.15294118225574493,
+          "g": 0.239215686917305,
+          "b": 0.1882352977991104,
+          "a": 1
+        },
+        "color/warning": {
+          "r": 0.9529411792755127,
+          "g": 0.7960784435272217,
+          "b": 0.5215686559677124,
+          "a": 1
+        },
+        "color/warningSoft": {
+          "r": 0.1882352977991104,
+          "g": 0.23137255012989044,
+          "b": 0.20000000298023224,
+          "a": 1
+        },
+        "color/danger": {
+          "r": 0.9529411792755127,
+          "g": 0.6549019813537598,
+          "b": 0.6549019813537598,
+          "a": 1
+        },
+        "color/dangerSoft": {
+          "r": 0.29019609093666077,
+          "g": 0.16078431904315948,
+          "b": 0.16862745583057404,
+          "a": 1
+        },
+        "color/border": {
+          "r": 0.2862745225429535,
+          "g": 0.3294117748737335,
+          "b": 0.2980392277240753,
+          "a": 1
+        },
+        "color/controlBorder": {
+          "r": 0.7372549176216125,
+          "g": 0.772549033164978,
+          "b": 0.7411764860153198,
+          "a": 1
+        }
+      }
+    }
+  ],
+  "wrappers": [
+    {
+      "id": "14:74",
+      "name": "M&D Study / overview",
+      "width": 1440,
+      "height": 2390,
+      "types": {
+        "TEXT": 46,
+        "FRAME": 27
+      },
+      "fontFamilies": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "18:10",
+          "name": "Photo / cat / 示例素材"
+        },
+        {
+          "id": "18:13",
+          "name": "Photo / cat / 示例素材"
+        },
+        {
+          "id": "18:17",
+          "name": "Photo / dog / 示例素材"
+        },
+        {
+          "id": "18:21",
+          "name": "Photo / rabbit / 示例素材"
+        }
+      ]
+    },
+    {
+      "id": "14:75",
+      "name": "M&D Study / foundations",
+      "width": 1440,
+      "height": 1286,
+      "types": {
+        "TEXT": 24,
+        "FRAME": 11,
+        "RECTANGLE": 7,
+        "INSTANCE": 11
+      },
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "id": "14:76",
+      "name": "M&D Study / core",
+      "width": 1440,
+      "height": 2180,
+      "types": {
+        "TEXT": 116,
+        "FRAME": 98,
+        "INSTANCE": 18
+      },
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "20:116",
+          "name": "Photo / cat / 示例素材"
+        },
+        {
+          "id": "20:137",
+          "name": "Photo / cat / 示例素材"
+        },
+        {
+          "id": "20:143",
+          "name": "Photo / dog / 示例素材"
+        },
+        {
+          "id": "20:164",
+          "name": "Photo / catOffer / 示例素材"
+        },
+        {
+          "id": "20:175",
+          "name": "Photo / cat / 示例素材"
+        },
+        {
+          "id": "20:195",
+          "name": "Photo / catOffer / 示例素材"
+        }
+      ]
+    },
+    {
+      "id": "14:77",
+      "name": "M&D Study / trust",
+      "width": 1440,
+      "height": 2758,
+      "types": {
+        "TEXT": 109,
+        "FRAME": 65,
+        "INSTANCE": 27,
+        "RECTANGLE": 1
+      },
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    }
+  ],
+  "prototype": {
+    "pageId": "30:2",
+    "screenCount": 12,
+    "flowStartingPoints": [
+      {
+        "nodeId": "30:3",
+        "name": "社区、领养与找宠"
+      },
+      {
+        "nodeId": "30:283",
+        "name": "预约信息与责任"
+      },
+      {
+        "nodeId": "30:351",
+        "name": "会话 → 安排变更"
+      },
+      {
+        "nodeId": "30:425",
+        "name": "无码也可报告（静态）"
+      }
+    ],
+    "actionCount": 32,
+    "invalidDestinations": [],
+    "businessSubmissionSimulated": false
+  },
+  "contrast": [
+    {
+      "mode": "Light",
+      "foreground": "ink",
+      "background": "background",
+      "ratio": 13.75,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "muted",
+      "background": "background",
+      "ratio": 4.96,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "muted",
+      "background": "subtle",
+      "ratio": 4.62,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "onBrand",
+      "background": "brand",
+      "ratio": 5.92,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "brand",
+      "background": "brandSoft",
+      "ratio": 4.89,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "success",
+      "background": "successSoft",
+      "ratio": 6.78,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "warning",
+      "background": "warningSoft",
+      "ratio": 5.72,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "danger",
+      "background": "dangerSoft",
+      "ratio": 6.21,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Light",
+      "foreground": "controlBorder",
+      "background": "surface",
+      "ratio": 3.12,
+      "target": 3,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "ink",
+      "background": "background",
+      "ratio": 16.01,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "muted",
+      "background": "background",
+      "ratio": 9.85,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "muted",
+      "background": "subtle",
+      "ratio": 6.59,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "onBrand",
+      "background": "brand",
+      "ratio": 7.88,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "brand",
+      "background": "brandSoft",
+      "ratio": 7.88,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "success",
+      "background": "successSoft",
+      "ratio": 7,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "warning",
+      "background": "warningSoft",
+      "ratio": 7.61,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "danger",
+      "background": "dangerSoft",
+      "ratio": 6.63,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "Dark",
+      "foreground": "controlBorder",
+      "background": "surface",
+      "ratio": 8.32,
+      "target": 3,
+      "pass": true
+    }
+  ]
+}

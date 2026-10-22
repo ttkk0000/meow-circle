@@ -1,0 +1,2340 @@
+{
+  "date": "2026-10-21",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "method": "Read current Figma actions and capture fixed states; no prototype playback or app execution.",
+  "phoneFlows": [
+    {
+      "key": "phoneCode",
+      "id": "460:17348",
+      "name": "手机 / 验证当前手机号 [closure:phoneCode]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "验证当前手机号",
+        "用途：当前号码交流验证",
+        "错误、过期或频控不会改变原账号；更换号码后旧号资格不自动沿用。"
+      ],
+      "actions": [
+        {
+          "id": "464:19581",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17343&starting-point-node-id=460-17343&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17343&starting-point-node-id=460-17343&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "464:19600",
+          "name": "Instance / row",
+          "text": "错误或短信未到 / 保留输入并更换方式",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17328&starting-point-node-id=460-17328&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17328&starting-point-node-id=460-17328&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "464:19609",
+          "name": "Instance / primary",
+          "text": "验证并返回原任务",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17353&starting-point-node-id=460-17353&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17353&starting-point-node-id=460-17353&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "emailError",
+      "id": "460:17328",
+      "name": "手机 / 验证码暂不可用 [closure:emailError]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "验证码暂不可用",
+        "未完成验证",
+        "验证码错误、已过期、发送频繁或网络异常时保持原账号与绑定。",
+        "保留当前任务",
+        "不会自动建号、合并账号或发送草稿。"
+      ],
+      "actions": [
+        {
+          "id": "463:1842379",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17323&starting-point-node-id=460-17323&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17323&starting-point-node-id=460-17323&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "463:1842398",
+          "name": "Instance / row",
+          "text": "邮件一直未到 / 检查地址或换登录方式",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-5&node-id=56-70&starting-point-node-id=56-70&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-5&node-id=56-70&starting-point-node-id=56-70&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "463:1842410",
+          "name": "Instance / primary",
+          "text": "重新填写验证码",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17323&starting-point-node-id=460-17323&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17323&starting-point-node-id=460-17323&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "safetyHold",
+      "id": "460:211421",
+      "name": "手机 / 预约已进入安全暂停 [closure:safetyHold]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "预约已进入安全暂停",
+        "先不要按原安排出发",
+        "原地点不可用、主体 / 宠物不符、健康重大纠正或隐藏费用等需先核对。",
+        "原有效版本",
+        "保留为历史与处理依据",
+        "当前动作",
+        "暂停出发确认，不自动转场",
+        "解除条件",
+        "核对后双方确认新的有效版本"
+      ],
+      "actions": [
+        {
+          "id": "463:1844936",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-4&node-id=56-63&starting-point-node-id=56-63&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-4&node-id=56-63&starting-point-node-id=56-63&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "463:1844957",
+          "name": "Instance / row",
+          "text": "重新协商 / 新版本逐项确认",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-4&node-id=460-211426&starting-point-node-id=460-211426&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-4&node-id=460-211426&starting-point-node-id=460-211426&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "463:1844965",
+          "name": "Instance / row",
+          "text": "取消 / 报告问题 / 不自动记作失约",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68682&starting-point-node-id=460-68682&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68682&starting-point-node-id=460-68682&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "463:1844974",
+          "name": "Instance / primary",
+          "text": "查看需要核对的安排",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-4&node-id=460-211426&starting-point-node-id=460-211426&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-4&node-id=460-211426&starting-point-node-id=460-211426&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "returnProposal",
+      "id": "460:68732",
+      "name": "手机 / 协商接回安排 [closure:returnProposal]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "协商接回安排",
+        "版本",
+        "接回提案 R1 · 待双方确认",
+        "时间",
+        "双方约定的日期与时区",
+        "地点",
+        "只向必要参与者显示",
+        "接回方",
+        "核对身份与接回授权",
+        "照护事项",
+        "药物、物品和必要说明另列"
+      ],
+      "actions": [
+        {
+          "id": "465:1843757",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68727&starting-point-node-id=460-68727&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68727&starting-point-node-id=460-68727&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "465:1843781",
+          "name": "Instance / row",
+          "text": "方案不合适 / 提出修改 / 拒绝方案不等于拒绝所有接回",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68727&starting-point-node-id=460-68727&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68727&starting-point-node-id=460-68727&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "465:1843789",
+          "name": "Instance / row",
+          "text": "对方失联或拒绝协商 / 转人工协助，不自动完成",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68752&starting-point-node-id=460-68752&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68752&starting-point-node-id=460-68752&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "465:1843798",
+          "name": "Instance / primary",
+          "text": "查看双方确认状态",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68737&starting-point-node-id=460-68737&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68737&starting-point-node-id=460-68737&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "guestReceipt",
+      "id": "460:68697",
+      "name": "手机 / 报告已收到 · 示例 [closure:guestReceipt]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "报告已收到 · 示例",
+        "回执 RP-DEMO-001",
+        "只是收到请求，不代表人工核实或已作出事实结论。",
+        "查询方式",
+        "保存私密回执，勿公开分享",
+        "后续",
+        "分流、必要保护、核实与补充",
+        "服务时间",
+        "以实际公开值守信息为准"
+      ],
+      "actions": [
+        {
+          "id": "469:1845756",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68682&starting-point-node-id=460-68682&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68682&starting-point-node-id=460-68682&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "469:1845777",
+          "name": "Instance / row",
+          "text": "查看处理进度 / 只看本人有权获取的内容",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68702&starting-point-node-id=460-68702&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68702&starting-point-node-id=460-68702&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "469:1845785",
+          "name": "Instance / row",
+          "text": "补充说明 / 不重复创建报告",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68682&starting-point-node-id=460-68682&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68682&starting-point-node-id=460-68682&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "469:1845794",
+          "name": "Instance / secondary",
+          "text": "查看进度",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68702&starting-point-node-id=460-68702&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-2&node-id=460-68702&starting-point-node-id=460-68702&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dataDelete",
+      "id": "460:17443",
+      "name": "手机 / 删除 / 注销前确认 [closure:dataDelete]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "删除 / 注销前确认",
+        "公开展示",
+        "移除相关公开内容与链接预览",
+        "非必要资料",
+        "按清单清理主存、缩略图和导出件",
+        "法定 / 争议记录",
+        "仅受控保留必要范围并说明原因",
+        "备份",
+        "隔离至轮换过期，不重新用于普通服务",
+        "删除并非一键销毁所有记录",
+        "可先选择删除指定资料；注销需要本次安全核对，不能冒称即时物理清空。"
+      ],
+      "actions": [
+        {
+          "id": "475:2497",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17433&starting-point-node-id=460-17433&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17433&starting-point-node-id=460-17433&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "475:2521",
+          "name": "Instance / row",
+          "text": "我只删除部分资料 / 保留账号",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17438&starting-point-node-id=460-17438&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17438&starting-point-node-id=460-17438&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "475:2530",
+          "name": "Instance / primary",
+          "text": "继续核对删除范围",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17448&starting-point-node-id=460-17448&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17448&starting-point-node-id=460-17448&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "adultAssurance",
+      "id": "460:17413",
+      "name": "手机 / 成年业务资格 [closure:adultAssurance]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "成年业务资格",
+        "年满18岁",
+        "商业发布、预约与线下签约需有效成年资格，并继续检查角色和资料。",
+        "年龄核对完成后，才能办理需要成年人身份的事项。"
+      ],
+      "actions": [
+        {
+          "id": "473:2383",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17378&starting-point-node-id=460-17378&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17378&starting-point-node-id=460-17378&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "473:2395",
+          "name": "Instance / row",
+          "text": "开始年龄核对 / 仅返回必要结果",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17358&starting-point-node-id=460-17358&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17358&starting-point-node-id=460-17358&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "473:2403",
+          "name": "Instance / row",
+          "text": "暂不核对 / 继续日常浏览与交流流程",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17343&starting-point-node-id=460-17343&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17343&starting-point-node-id=460-17343&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "473:2411",
+          "name": "Instance / row",
+          "text": "核对有误或无法完成 / 申请人工复核",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17423&starting-point-node-id=460-17423&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17423&starting-point-node-id=460-17423&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "473:2420",
+          "name": "Instance / secondary",
+          "text": "返回原任务",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-5&node-id=56-27&starting-point-node-id=56-27&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-5&node-id=56-27&starting-point-node-id=56-27&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "accountRecovery",
+      "id": "460:17373",
+      "name": "手机 / 找回账号 [closure:accountRecovery]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "找回账号",
+        "恢复你原来的账号",
+        "不索取公开原件",
+        "按风险核对必要证据；当前登录态或新号码不能直接授权接管。"
+      ],
+      "actions": [
+        {
+          "id": "468:19784",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-5&node-id=56-70&starting-point-node-id=56-70&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=420-5&node-id=56-70&starting-point-node-id=56-70&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "468:19804",
+          "name": "Instance / row",
+          "text": "资料不足 / 存在争议 / 进入人工帮助",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17423&starting-point-node-id=460-17423&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17423&starting-point-node-id=460-17423&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "468:19813",
+          "name": "Instance / primary",
+          "text": "继续验证原账号",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17318&starting-point-node-id=460-17318&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17318&starting-point-node-id=460-17318&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "guardianWaiting",
+      "id": "460:17393",
+      "name": "手机 / 等待监护授权 [closure:guardianWaiting]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "等待监护授权",
+        "邀请已发起 · 示例",
+        "等待监护人独立核对并确认；当前账号仍受限。"
+      ],
+      "actions": [
+        {
+          "id": "470:19079",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17383&starting-point-node-id=460-17383&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17383&starting-point-node-id=460-17383&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "470:19090",
+          "name": "Instance / row",
+          "text": "邀请过期 / 被拒绝 / 重新发起或退出",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17383&starting-point-node-id=460-17383&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17383&starting-point-node-id=460-17383&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "470:19098",
+          "name": "Instance / row",
+          "text": "查看授权生效状态 / 独立示例状态",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17398&starting-point-node-id=460-17398&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17398&starting-point-node-id=460-17398&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "470:19106",
+          "name": "Instance / row",
+          "text": "取消本次邀请 / 不会删除草稿",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-5&node-id=56-27&starting-point-node-id=56-27&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-5&node-id=56-27&starting-point-node-id=56-27&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "470:19115",
+          "name": "Instance / secondary",
+          "text": "继续浏览",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-5&node-id=56-27&starting-point-node-id=56-27&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-5&node-id=56-27&starting-point-node-id=56-27&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "guardianActive",
+      "id": "460:17398",
+      "name": "手机 / 监护授权与管理 [closure:guardianActive]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "监护授权与管理",
+        "授权状态",
+        "有效 · 设计示例",
+        "交流资格",
+        "仍需当前手机号验证",
+        "陌生人联系",
+        "默认关闭",
+        "定位",
+        "不公开精确位置"
+      ],
+      "actions": [
+        {
+          "id": "470:19125",
+          "name": "Back",
+          "text": "",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17408&starting-point-node-id=460-17408&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17408&starting-point-node-id=460-17408&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "470:19146",
+          "name": "Instance / row",
+          "text": "查看 / 调整保护设置 / 不能读取他人私密材料",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17408&starting-point-node-id=460-17408&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17408&starting-point-node-id=460-17408&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "470:19154",
+          "name": "Instance / row",
+          "text": "撤回授权 / 停止新增受限处理",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17403&starting-point-node-id=460-17403&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17403&starting-point-node-id=460-17403&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "470:19162",
+          "name": "Instance / row",
+          "text": "数据权利与投诉 / 按风险核对请求",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17433&starting-point-node-id=460-17433&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17433&starting-point-node-id=460-17433&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        },
+        {
+          "id": "470:19171",
+          "name": "Instance / primary",
+          "text": "验证当前手机号",
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17343&starting-point-node-id=460-17343&scaling=scale-down&content-scaling=fixed",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=471-524&node-id=460-17343&starting-point-node-id=460-17343&scaling=scale-down&content-scaling=fixed",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "crossLayoutFlows": [
+    {
+      "key": "phoneCode",
+      "platform": "phone",
+      "id": "460:17348",
+      "exists": true,
+      "links": [
+        {
+          "id": "464:19600",
+          "name": "Instance / row",
+          "label": "错误或短信未到 / 保留输入并更换方式",
+          "targets": [
+            "460:17328",
+            "460:17328"
+          ]
+        },
+        {
+          "id": "464:19609",
+          "name": "Instance / primary",
+          "label": "验证并返回原任务",
+          "targets": [
+            "460:17353",
+            "460:17353"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "phoneCode",
+      "platform": "web",
+      "id": "460:17349",
+      "exists": true,
+      "links": [
+        {
+          "id": "464:19656",
+          "name": "Instance / row",
+          "label": "错误或短信未到 / 保留输入并更换方式",
+          "targets": [
+            "460:17329",
+            "460:17329"
+          ]
+        },
+        {
+          "id": "464:19665",
+          "name": "Instance / primary",
+          "label": "验证并返回原任务",
+          "targets": [
+            "460:17354",
+            "460:17354"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "phoneCode",
+      "platform": "desktop",
+      "id": "460:17350",
+      "exists": true,
+      "links": [
+        {
+          "id": "464:19749",
+          "name": "Instance / row",
+          "label": "错误或短信未到 / 保留输入并更换方式",
+          "targets": [
+            "460:17330",
+            "460:17330"
+          ]
+        },
+        {
+          "id": "464:19758",
+          "name": "Instance / primary",
+          "label": "验证并返回原任务",
+          "targets": [
+            "460:17355",
+            "460:17355"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "phoneCode",
+      "platform": "tabletP",
+      "id": "460:17351",
+      "exists": true,
+      "links": [
+        {
+          "id": "464:19818",
+          "name": "Instance / row",
+          "label": "错误或短信未到 / 保留输入并更换方式",
+          "targets": [
+            "460:17331",
+            "460:17331"
+          ]
+        },
+        {
+          "id": "464:19827",
+          "name": "Instance / primary",
+          "label": "验证并返回原任务",
+          "targets": [
+            "460:17356",
+            "460:17356"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "phoneCode",
+      "platform": "tabletL",
+      "id": "460:17352",
+      "exists": true,
+      "links": [
+        {
+          "id": "464:19904",
+          "name": "Instance / row",
+          "label": "错误或短信未到 / 保留输入并更换方式",
+          "targets": [
+            "460:17332",
+            "460:17332"
+          ]
+        },
+        {
+          "id": "464:19913",
+          "name": "Instance / primary",
+          "label": "验证并返回原任务",
+          "targets": [
+            "460:17357",
+            "460:17357"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "safetyHold",
+      "platform": "phone",
+      "id": "460:211421",
+      "exists": true,
+      "links": [
+        {
+          "id": "463:1844957",
+          "name": "Instance / row",
+          "label": "重新协商 / 新版本逐项确认",
+          "targets": [
+            "460:211426",
+            "460:211426"
+          ]
+        },
+        {
+          "id": "463:1844965",
+          "name": "Instance / row",
+          "label": "取消 / 报告问题 / 不自动记作失约",
+          "targets": [
+            "460:68682",
+            "460:68682"
+          ]
+        },
+        {
+          "id": "463:1844974",
+          "name": "Instance / primary",
+          "label": "查看需要核对的安排",
+          "targets": [
+            "460:211426",
+            "460:211426"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "safetyHold",
+      "platform": "web",
+      "id": "460:211422",
+      "exists": true,
+      "links": [
+        {
+          "id": "463:1845023",
+          "name": "Instance / row",
+          "label": "重新协商 / 新版本逐项确认",
+          "targets": [
+            "460:211427",
+            "460:211427"
+          ]
+        },
+        {
+          "id": "463:1845031",
+          "name": "Instance / row",
+          "label": "取消 / 报告问题 / 不自动记作失约",
+          "targets": [
+            "460:68683",
+            "460:68683"
+          ]
+        },
+        {
+          "id": "463:1845040",
+          "name": "Instance / primary",
+          "label": "查看需要核对的安排",
+          "targets": [
+            "460:211427",
+            "460:211427"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "safetyHold",
+      "platform": "desktop",
+      "id": "460:211423",
+      "exists": true,
+      "links": [
+        {
+          "id": "463:1845126",
+          "name": "Instance / row",
+          "label": "重新协商 / 新版本逐项确认",
+          "targets": [
+            "460:211428",
+            "460:211428"
+          ]
+        },
+        {
+          "id": "463:1845134",
+          "name": "Instance / row",
+          "label": "取消 / 报告问题 / 不自动记作失约",
+          "targets": [
+            "460:68684",
+            "460:68684"
+          ]
+        },
+        {
+          "id": "463:1845143",
+          "name": "Instance / primary",
+          "label": "查看需要核对的安排",
+          "targets": [
+            "460:211428",
+            "460:211428"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "safetyHold",
+      "platform": "tabletP",
+      "id": "460:211424",
+      "exists": true,
+      "links": [
+        {
+          "id": "463:1845205",
+          "name": "Instance / row",
+          "label": "重新协商 / 新版本逐项确认",
+          "targets": [
+            "460:211429",
+            "460:211429"
+          ]
+        },
+        {
+          "id": "463:1845213",
+          "name": "Instance / row",
+          "label": "取消 / 报告问题 / 不自动记作失约",
+          "targets": [
+            "460:68685",
+            "460:68685"
+          ]
+        },
+        {
+          "id": "463:1845222",
+          "name": "Instance / primary",
+          "label": "查看需要核对的安排",
+          "targets": [
+            "460:211429",
+            "460:211429"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "safetyHold",
+      "platform": "tabletL",
+      "id": "460:211425",
+      "exists": true,
+      "links": [
+        {
+          "id": "463:1845301",
+          "name": "Instance / row",
+          "label": "重新协商 / 新版本逐项确认",
+          "targets": [
+            "460:211430",
+            "460:211430"
+          ]
+        },
+        {
+          "id": "463:1845309",
+          "name": "Instance / row",
+          "label": "取消 / 报告问题 / 不自动记作失约",
+          "targets": [
+            "460:68686",
+            "460:68686"
+          ]
+        },
+        {
+          "id": "463:1845318",
+          "name": "Instance / primary",
+          "label": "查看需要核对的安排",
+          "targets": [
+            "460:211430",
+            "460:211430"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "returnProposal",
+      "platform": "phone",
+      "id": "460:68732",
+      "exists": true,
+      "links": [
+        {
+          "id": "465:1843781",
+          "name": "Instance / row",
+          "label": "方案不合适 / 提出修改 / 拒绝方案不等于拒绝所有接回",
+          "targets": [
+            "460:68727",
+            "460:68727"
+          ]
+        },
+        {
+          "id": "465:1843789",
+          "name": "Instance / row",
+          "label": "对方失联或拒绝协商 / 转人工协助，不自动完成",
+          "targets": [
+            "460:68752",
+            "460:68752"
+          ]
+        },
+        {
+          "id": "465:1843798",
+          "name": "Instance / primary",
+          "label": "查看双方确认状态",
+          "targets": [
+            "460:68737",
+            "460:68737"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "returnProposal",
+      "platform": "web",
+      "id": "460:68733",
+      "exists": true,
+      "links": [
+        {
+          "id": "465:1843850",
+          "name": "Instance / row",
+          "label": "方案不合适 / 提出修改 / 拒绝方案不等于拒绝所有接回",
+          "targets": [
+            "460:68728",
+            "460:68728"
+          ]
+        },
+        {
+          "id": "465:1843858",
+          "name": "Instance / row",
+          "label": "对方失联或拒绝协商 / 转人工协助，不自动完成",
+          "targets": [
+            "460:68753",
+            "460:68753"
+          ]
+        },
+        {
+          "id": "465:1843867",
+          "name": "Instance / primary",
+          "label": "查看双方确认状态",
+          "targets": [
+            "460:68738",
+            "460:68738"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "returnProposal",
+      "platform": "desktop",
+      "id": "460:68734",
+      "exists": true,
+      "links": [
+        {
+          "id": "465:1843956",
+          "name": "Instance / row",
+          "label": "方案不合适 / 提出修改 / 拒绝方案不等于拒绝所有接回",
+          "targets": [
+            "460:68729",
+            "460:68729"
+          ]
+        },
+        {
+          "id": "465:1843964",
+          "name": "Instance / row",
+          "label": "对方失联或拒绝协商 / 转人工协助，不自动完成",
+          "targets": [
+            "460:68754",
+            "460:68754"
+          ]
+        },
+        {
+          "id": "465:1843973",
+          "name": "Instance / primary",
+          "label": "查看双方确认状态",
+          "targets": [
+            "460:68739",
+            "460:68739"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "returnProposal",
+      "platform": "tabletP",
+      "id": "460:68735",
+      "exists": true,
+      "links": [
+        {
+          "id": "465:1844038",
+          "name": "Instance / row",
+          "label": "方案不合适 / 提出修改 / 拒绝方案不等于拒绝所有接回",
+          "targets": [
+            "460:68730",
+            "460:68730"
+          ]
+        },
+        {
+          "id": "465:1844046",
+          "name": "Instance / row",
+          "label": "对方失联或拒绝协商 / 转人工协助，不自动完成",
+          "targets": [
+            "460:68755",
+            "460:68755"
+          ]
+        },
+        {
+          "id": "465:1844055",
+          "name": "Instance / primary",
+          "label": "查看双方确认状态",
+          "targets": [
+            "460:68740",
+            "460:68740"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "returnProposal",
+      "platform": "tabletL",
+      "id": "460:68736",
+      "exists": true,
+      "links": [
+        {
+          "id": "465:1844137",
+          "name": "Instance / row",
+          "label": "方案不合适 / 提出修改 / 拒绝方案不等于拒绝所有接回",
+          "targets": [
+            "460:68731",
+            "460:68731"
+          ]
+        },
+        {
+          "id": "465:1844145",
+          "name": "Instance / row",
+          "label": "对方失联或拒绝协商 / 转人工协助，不自动完成",
+          "targets": [
+            "460:68756",
+            "460:68756"
+          ]
+        },
+        {
+          "id": "465:1844154",
+          "name": "Instance / primary",
+          "label": "查看双方确认状态",
+          "targets": [
+            "460:68741",
+            "460:68741"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "adultAssurance",
+      "platform": "phone",
+      "id": "460:17413",
+      "exists": true,
+      "links": [
+        {
+          "id": "473:2395",
+          "name": "Instance / row",
+          "label": "开始年龄核对 / 仅返回必要结果",
+          "targets": [
+            "460:17358",
+            "460:17358"
+          ]
+        },
+        {
+          "id": "473:2403",
+          "name": "Instance / row",
+          "label": "暂不核对 / 继续日常浏览与交流流程",
+          "targets": [
+            "460:17343",
+            "460:17343"
+          ]
+        },
+        {
+          "id": "473:2411",
+          "name": "Instance / row",
+          "label": "核对有误或无法完成 / 申请人工复核",
+          "targets": [
+            "460:17423",
+            "460:17423"
+          ]
+        },
+        {
+          "id": "473:2420",
+          "name": "Instance / secondary",
+          "label": "返回原任务",
+          "targets": [
+            "56:27",
+            "56:27"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "adultAssurance",
+      "platform": "web",
+      "id": "460:17414",
+      "exists": true,
+      "links": [
+        {
+          "id": "479:3669",
+          "name": "Instance / row",
+          "label": "开始年龄核对 / 仅返回必要结果",
+          "targets": [
+            "460:17359",
+            "460:17359"
+          ]
+        },
+        {
+          "id": "479:3670",
+          "name": "Instance / row",
+          "label": "暂不核对 / 继续日常浏览与交流流程",
+          "targets": [
+            "460:17344",
+            "460:17344"
+          ]
+        },
+        {
+          "id": "479:3671",
+          "name": "Instance / row",
+          "label": "核对有误或无法完成 / 申请人工复核",
+          "targets": [
+            "460:17424",
+            "460:17424"
+          ]
+        },
+        {
+          "id": "479:3690",
+          "name": "Instance / secondary",
+          "label": "返回原任务",
+          "targets": [
+            "311:23",
+            "311:23"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "adultAssurance",
+      "platform": "desktop",
+      "id": "460:17415",
+      "exists": true,
+      "links": [
+        {
+          "id": "479:3792",
+          "name": "Instance / row",
+          "label": "开始年龄核对 / 仅返回必要结果",
+          "targets": [
+            "460:17360",
+            "460:17360"
+          ]
+        },
+        {
+          "id": "479:3793",
+          "name": "Instance / row",
+          "label": "暂不核对 / 继续日常浏览与交流流程",
+          "targets": [
+            "460:17345",
+            "460:17345"
+          ]
+        },
+        {
+          "id": "479:3794",
+          "name": "Instance / row",
+          "label": "核对有误或无法完成 / 申请人工复核",
+          "targets": [
+            "460:17425",
+            "460:17425"
+          ]
+        },
+        {
+          "id": "479:3813",
+          "name": "Instance / secondary",
+          "label": "返回原任务",
+          "targets": [
+            "311:24",
+            "311:24"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "adultAssurance",
+      "platform": "tabletP",
+      "id": "460:17416",
+      "exists": true,
+      "links": [
+        {
+          "id": "479:3901",
+          "name": "Instance / row",
+          "label": "开始年龄核对 / 仅返回必要结果",
+          "targets": [
+            "460:17361",
+            "460:17361"
+          ]
+        },
+        {
+          "id": "479:3902",
+          "name": "Instance / row",
+          "label": "暂不核对 / 继续日常浏览与交流流程",
+          "targets": [
+            "460:17346",
+            "460:17346"
+          ]
+        },
+        {
+          "id": "479:3903",
+          "name": "Instance / row",
+          "label": "核对有误或无法完成 / 申请人工复核",
+          "targets": [
+            "460:17426",
+            "460:17426"
+          ]
+        },
+        {
+          "id": "479:3922",
+          "name": "Instance / secondary",
+          "label": "返回原任务",
+          "targets": [
+            "311:25",
+            "311:25"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "adultAssurance",
+      "platform": "tabletL",
+      "id": "460:17417",
+      "exists": true,
+      "links": [
+        {
+          "id": "479:4017",
+          "name": "Instance / row",
+          "label": "开始年龄核对 / 仅返回必要结果",
+          "targets": [
+            "460:17362",
+            "460:17362"
+          ]
+        },
+        {
+          "id": "479:4018",
+          "name": "Instance / row",
+          "label": "暂不核对 / 继续日常浏览与交流流程",
+          "targets": [
+            "460:17347",
+            "460:17347"
+          ]
+        },
+        {
+          "id": "479:4019",
+          "name": "Instance / row",
+          "label": "核对有误或无法完成 / 申请人工复核",
+          "targets": [
+            "460:17427",
+            "460:17427"
+          ]
+        },
+        {
+          "id": "479:4038",
+          "name": "Instance / secondary",
+          "label": "返回原任务",
+          "targets": [
+            "311:26",
+            "311:26"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "guestReceipt",
+      "platform": "phone",
+      "id": "460:68697",
+      "exists": true,
+      "links": [
+        {
+          "id": "469:1845777",
+          "name": "Instance / row",
+          "label": "查看处理进度 / 只看本人有权获取的内容",
+          "targets": [
+            "460:68702",
+            "460:68702"
+          ]
+        },
+        {
+          "id": "469:1845785",
+          "name": "Instance / row",
+          "label": "补充说明 / 不重复创建报告",
+          "targets": [
+            "460:68682",
+            "460:68682"
+          ]
+        },
+        {
+          "id": "469:1845794",
+          "name": "Instance / secondary",
+          "label": "查看进度",
+          "targets": [
+            "460:68702",
+            "460:68702"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "guestReceipt",
+      "platform": "web",
+      "id": "460:68698",
+      "exists": true,
+      "links": [
+        {
+          "id": "469:1845843",
+          "name": "Instance / row",
+          "label": "查看处理进度 / 只看本人有权获取的内容",
+          "targets": [
+            "460:68703",
+            "460:68703"
+          ]
+        },
+        {
+          "id": "469:1845851",
+          "name": "Instance / row",
+          "label": "补充说明 / 不重复创建报告",
+          "targets": [
+            "460:68683",
+            "460:68683"
+          ]
+        },
+        {
+          "id": "469:1845860",
+          "name": "Instance / secondary",
+          "label": "查看进度",
+          "targets": [
+            "460:68703",
+            "460:68703"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "guestReceipt",
+      "platform": "desktop",
+      "id": "460:68699",
+      "exists": true,
+      "links": [
+        {
+          "id": "469:1845946",
+          "name": "Instance / row",
+          "label": "查看处理进度 / 只看本人有权获取的内容",
+          "targets": [
+            "460:68704",
+            "460:68704"
+          ]
+        },
+        {
+          "id": "469:1845954",
+          "name": "Instance / row",
+          "label": "补充说明 / 不重复创建报告",
+          "targets": [
+            "460:68684",
+            "460:68684"
+          ]
+        },
+        {
+          "id": "469:1845963",
+          "name": "Instance / secondary",
+          "label": "查看进度",
+          "targets": [
+            "460:68704",
+            "460:68704"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "guestReceipt",
+      "platform": "tabletP",
+      "id": "460:68700",
+      "exists": true,
+      "links": [
+        {
+          "id": "469:1846025",
+          "name": "Instance / row",
+          "label": "查看处理进度 / 只看本人有权获取的内容",
+          "targets": [
+            "460:68705",
+            "460:68705"
+          ]
+        },
+        {
+          "id": "469:1846033",
+          "name": "Instance / row",
+          "label": "补充说明 / 不重复创建报告",
+          "targets": [
+            "460:68685",
+            "460:68685"
+          ]
+        },
+        {
+          "id": "469:1846042",
+          "name": "Instance / secondary",
+          "label": "查看进度",
+          "targets": [
+            "460:68705",
+            "460:68705"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "guestReceipt",
+      "platform": "tabletL",
+      "id": "460:68701",
+      "exists": true,
+      "links": [
+        {
+          "id": "469:1846121",
+          "name": "Instance / row",
+          "label": "查看处理进度 / 只看本人有权获取的内容",
+          "targets": [
+            "460:68706",
+            "460:68706"
+          ]
+        },
+        {
+          "id": "469:1846129",
+          "name": "Instance / row",
+          "label": "补充说明 / 不重复创建报告",
+          "targets": [
+            "460:68686",
+            "460:68686"
+          ]
+        },
+        {
+          "id": "469:1846138",
+          "name": "Instance / secondary",
+          "label": "查看进度",
+          "targets": [
+            "460:68706",
+            "460:68706"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dataDelete",
+      "platform": "phone",
+      "id": "460:17443",
+      "exists": true,
+      "links": [
+        {
+          "id": "475:2521",
+          "name": "Instance / row",
+          "label": "我只删除部分资料 / 保留账号",
+          "targets": [
+            "460:17438",
+            "460:17438"
+          ]
+        },
+        {
+          "id": "475:2530",
+          "name": "Instance / primary",
+          "label": "继续核对删除范围",
+          "targets": [
+            "460:17448",
+            "460:17448"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dataDelete",
+      "platform": "web",
+      "id": "460:17444",
+      "exists": true,
+      "links": [
+        {
+          "id": "479:6307",
+          "name": "Instance / row",
+          "label": "我只删除部分资料 / 保留账号",
+          "targets": [
+            "460:17439",
+            "460:17439"
+          ]
+        },
+        {
+          "id": "479:6314",
+          "name": "Instance / primary",
+          "label": "继续核对删除范围",
+          "targets": [
+            "460:17449",
+            "460:17449"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dataDelete",
+      "platform": "desktop",
+      "id": "460:17445",
+      "exists": true,
+      "links": [
+        {
+          "id": "479:6426",
+          "name": "Instance / row",
+          "label": "我只删除部分资料 / 保留账号",
+          "targets": [
+            "460:17440",
+            "460:17440"
+          ]
+        },
+        {
+          "id": "479:6433",
+          "name": "Instance / primary",
+          "label": "继续核对删除范围",
+          "targets": [
+            "460:17450",
+            "460:17450"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dataDelete",
+      "platform": "tabletP",
+      "id": "460:17446",
+      "exists": true,
+      "links": [
+        {
+          "id": "479:6531",
+          "name": "Instance / row",
+          "label": "我只删除部分资料 / 保留账号",
+          "targets": [
+            "460:17441",
+            "460:17441"
+          ]
+        },
+        {
+          "id": "479:6538",
+          "name": "Instance / primary",
+          "label": "继续核对删除范围",
+          "targets": [
+            "460:17451",
+            "460:17451"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dataDelete",
+      "platform": "tabletL",
+      "id": "460:17447",
+      "exists": true,
+      "links": [
+        {
+          "id": "479:6643",
+          "name": "Instance / row",
+          "label": "我只删除部分资料 / 保留账号",
+          "targets": [
+            "460:17442",
+            "460:17442"
+          ]
+        },
+        {
+          "id": "479:6650",
+          "name": "Instance / primary",
+          "label": "继续核对删除范围",
+          "targets": [
+            "460:17452",
+            "460:17452"
+          ]
+        }
+      ]
+    }
+  ],
+  "legacyAndCurrentEntries": [
+    {
+      "id": "240:368306",
+      "name": "手机 / Mobile completion / 取消预约 [appointmentCancelConfirm]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实数据",
+        "取消预约",
+        "双方都会收到更新",
+        "取消仅针对本次预约，原申请和会话仍保留。"
+      ],
+      "actions": [
+        {
+          "id": "242:373621",
+          "name": "Back",
+          "label": "",
+          "targets": []
+        },
+        {
+          "id": "242:373640",
+          "name": "Instance / secondary",
+          "label": "确认取消",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "id": "238:371759",
+      "name": "手机 / Mobile completion / 确认本人操作 [authDeleteVerify]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实数据",
+        "确认本人操作"
+      ],
+      "actions": [
+        {
+          "id": "239:373741",
+          "name": "Back",
+          "label": "",
+          "targets": []
+        },
+        {
+          "id": "239:373761",
+          "name": "Instance / secondary",
+          "label": "提交注销申请",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "id": "56:75",
+      "name": "手机 / Mobile completion / 设置 [settings]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实数据",
+        "设置"
+      ],
+      "actions": [
+        {
+          "id": "243:369304",
+          "name": "Back",
+          "label": "",
+          "targets": []
+        },
+        {
+          "id": "243:369312",
+          "name": "Instance / row",
+          "label": "账号与登录 / 关联、换绑、恢复与退出",
+          "targets": [
+            "460:17358"
+          ]
+        },
+        {
+          "id": "243:369320",
+          "name": "Instance / row",
+          "label": "通知偏好 / 私信、群聊、申请与附近提醒",
+          "targets": []
+        },
+        {
+          "id": "243:369328",
+          "name": "Instance / row",
+          "label": "隐私与可见范围 / 个人资料和圈子内容",
+          "targets": [
+            "56:76"
+          ]
+        },
+        {
+          "id": "243:369336",
+          "name": "Instance / row",
+          "label": "账号数据与注销 / 查看影响，再验证身份",
+          "targets": [
+            "460:17433"
+          ]
+        },
+        {
+          "id": "243:369344",
+          "name": "Instance / row",
+          "label": "表情与贴纸 / 常用、收藏与输入方式",
+          "targets": [
+            "243:369060"
+          ]
+        },
+        {
+          "id": "495:17318",
+          "name": "M&D Mobile V2 / List row",
+          "label": "未成年人保护 / 年龄、监护与权限",
+          "targets": [
+            "460:17408"
+          ]
+        },
+        {
+          "id": "495:17326",
+          "name": "M&D Mobile V2 / List row",
+          "label": "平台规则 / 规则、历史与申诉",
+          "targets": [
+            "460:17463"
+          ]
+        },
+        {
+          "id": "495:17334",
+          "name": "M&D Mobile V2 / List row",
+          "label": "隐私与安全报告 / 游客也可报告与查询",
+          "targets": [
+            "460:68682"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "460:68682",
+      "name": "手机 / 安全 / 隐私报告 [closure:guestReport]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "安全 / 隐私报告",
+        "无需注册，也可以报告",
+        "先说明问题，证据可后补",
+        "请脱敏；不要为请求删除再次公开上传证件、门牌或儿童资料。"
+      ],
+      "actions": [
+        {
+          "id": "469:1844663",
+          "name": "Back",
+          "label": "",
+          "targets": [
+            "56:76"
+          ]
+        },
+        {
+          "id": "469:1844691",
+          "name": "Instance / row",
+          "label": "提交中 / 结果待确认 / 查看超时恢复",
+          "targets": [
+            "460:68687"
+          ]
+        },
+        {
+          "id": "469:1844699",
+          "name": "Instance / row",
+          "label": "网络失败示例 / 输入会保留",
+          "targets": [
+            "460:68692"
+          ]
+        },
+        {
+          "id": "469:1844708",
+          "name": "Instance / primary",
+          "label": "提交报告",
+          "targets": [
+            "460:68697"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "460:68727",
+      "name": "手机 / 申请安全接回 [closure:returnRequest]",
+      "texts": [
+        "9:41",
+        "学习示意 · 非真实资料",
+        "申请安全接回",
+        "先保证继续照护",
+        "发送请求不会把宠物标成已接回，也不会立即重新公开匹配。"
+      ],
+      "actions": [
+        {
+          "id": "463:1844595",
+          "name": "Back",
+          "label": "",
+          "targets": [
+            "460:68712"
+          ]
+        },
+        {
+          "id": "463:1844614",
+          "name": "Instance / row",
+          "label": "紧急健康 / 无人可接回 / 联系实际诊疗资源并申请人工协助",
+          "targets": [
+            "460:68752"
+          ]
+        },
+        {
+          "id": "463:1844623",
+          "name": "Instance / primary",
+          "label": "发送接回提议",
+          "targets": [
+            "460:68732"
+          ]
+        }
+      ]
+    }
+  ]
+}

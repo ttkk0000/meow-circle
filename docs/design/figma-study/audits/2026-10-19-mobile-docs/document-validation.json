@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-19",
+  "scope": "Static document/JSON/link inspection only",
+  "files": 21,
+  "bom": [],
+  "utf8Errors": [],
+  "json": 3,
+  "links": 211,
+  "missingLinks": [],
+  "syntaxRecipes": [
+    {
+      "file": "wechat-keyboard-shared.js",
+      "status": "parsed_without_execution"
+    },
+    {
+      "file": "wechat-keyboard-actions-final.js",
+      "status": "parsed_without_execution"
+    }
+  ],
+  "errors": [],
+  "trackedRootCount": 381,
+  "uniqueRootIds": 381,
+  "syntaxCheckNote": "Node REPL string compilation was unavailable; recipes were syntax-parsed without execution in the orchestration runtime."
+}

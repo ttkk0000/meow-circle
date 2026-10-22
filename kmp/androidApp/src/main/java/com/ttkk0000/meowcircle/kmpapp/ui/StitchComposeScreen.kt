@@ -66,7 +66,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import android.net.Uri
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
 
 @Composable

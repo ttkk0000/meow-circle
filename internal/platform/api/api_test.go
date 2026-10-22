@@ -39,7 +39,11 @@ func setupTestServer(t *testing.T) http.Handler {
 	t.Cleanup(func() { _ = os.Chdir(dir) })
 
 	// Deterministic JWT secret + admin key.
-	t.Setenv("JWT_SECRET", "test-secret")
+	t.Setenv("APP_ENV", "development")
+	t.Setenv("MND_ENABLE_LEGACY_AUTH", "1")
+	t.Setenv("MND_ENABLE_MOCK_PAYMENT", "1")
+	t.Setenv("MND_SEED_DEMO", "1")
+	t.Setenv("JWT_SECRET", "test-secret-at-least-thirty-two-bytes")
 	t.Setenv("ADMIN_KEY", "test-admin-key")
 	t.Setenv("DATABASE_URL", "") // force in-memory
 	t.Setenv("REDIS_URL", "")

@@ -2,16 +2,21 @@
 // (memory, PostgreSQL, Redis cache decorator, …) must implement.
 //
 // Design notes:
-//   - Signatures intentionally avoid returning error for the MVP. Backends that
+//   - Legacy signatures intentionally avoid returning error for the MVP. Backends that
 //     can fail (e.g. Postgres) log the error and return a zero value / false.
-//   - The interface is intentionally fat: splitting it up can be done later
-//     when a single module needs a narrower slice.
+//   - New mobile workflows use the context-aware transactional repository and
+//     typed commands instead of extending these legacy bool-returning methods.
 package store
 
-import "kitty-circle/internal/domain"
+import (
+	"kitty-circle/internal/domain"
+	"kitty-circle/internal/mobile"
+)
 
 // Store is the abstraction over the persistence layer used by the API.
 type Store interface {
+	// New phone workflows use context-aware, error-preserving transactions.
+	MobileRepository() mobile.Repository
 	// Users
 	CreateUser(user domain.User) (domain.User, bool)
 	FindUserByUsername(username string) (domain.User, bool)

@@ -1,0 +1,308 @@
+{
+  "createdNodeIds": [],
+  "mutatedNodeIds": [
+    "I153:5462;138:744",
+    "I153:5475;138:744",
+    "I153:5488;138:744",
+    "I153:5501;138:744",
+    "I153:5514;138:744",
+    "I153:5527;138:744",
+    "I153:5540;138:744",
+    "I153:5552;138:753",
+    "I153:5567;138:744",
+    "I153:5579;138:744",
+    "I153:5592;138:744",
+    "I153:5604;138:744",
+    "I144:4713;138:744",
+    "I144:4761;138:744",
+    "I144:4860;138:744",
+    "I144:4890;138:744",
+    "I145:3477;138:744",
+    "I145:7266;138:744",
+    "I145:8451;138:744",
+    "I145:8478;138:744",
+    "I145:10488;138:744",
+    "I145:10515;138:744",
+    "I145:10563;138:744",
+    "144:3103",
+    "142:2849"
+  ],
+  "changes": [
+    {
+      "key": "post",
+      "id": "I153:5462;138:744",
+      "ctx": "PublicComment"
+    },
+    {
+      "key": "postLiked",
+      "id": "I153:5475;138:744",
+      "ctx": "PublicComment"
+    },
+    {
+      "key": "comments",
+      "id": "I153:5488;138:744",
+      "ctx": "PublicComment"
+    },
+    {
+      "key": "commentPosted",
+      "id": "I153:5501;138:744",
+      "ctx": "PublicComment"
+    },
+    {
+      "key": "commentReplies",
+      "id": "I153:5514;138:744",
+      "ctx": "PublicReply"
+    },
+    {
+      "key": "privateChat",
+      "id": "I153:5527;138:744",
+      "ctx": "Private"
+    },
+    {
+      "key": "privateSent",
+      "id": "I153:5540;138:744",
+      "ctx": "Private"
+    },
+    {
+      "key": "privateFailed",
+      "id": "I153:5552;138:753",
+      "ctx": "Private"
+    },
+    {
+      "key": "requestAccepted",
+      "id": "I153:5567;138:744",
+      "ctx": "AcceptedPrivate"
+    },
+    {
+      "key": "groupChat",
+      "id": "I153:5579;138:744",
+      "ctx": "Group"
+    },
+    {
+      "key": "groupSent",
+      "id": "I153:5592;138:744",
+      "ctx": "Group"
+    },
+    {
+      "key": "groupOwnerChat",
+      "id": "I153:5604;138:744",
+      "ctx": "OwnerGroup"
+    },
+    {
+      "key": "circleDetail",
+      "id": "I144:4713;138:744",
+      "ctx": "CircleComment"
+    },
+    {
+      "key": "circleLiked",
+      "id": "I144:4761;138:744",
+      "ctx": "CircleComment"
+    },
+    {
+      "key": "circleComments",
+      "id": "I144:4860;138:744",
+      "ctx": "CircleComment"
+    },
+    {
+      "key": "circleCommentReply",
+      "id": "I144:4890;138:744",
+      "ctx": "CircleReply"
+    },
+    {
+      "key": "circleReplyAuthor",
+      "id": "I145:3477;138:744",
+      "ctx": "CircleAuthorReply"
+    },
+    {
+      "key": "lostLeadChat",
+      "id": "I145:7266;138:744",
+      "ctx": "Lead"
+    },
+    {
+      "key": "adoptionComments",
+      "id": "I145:8451;138:744",
+      "ctx": "Adoption"
+    },
+    {
+      "key": "adoptionReply",
+      "id": "I145:8478;138:744",
+      "ctx": "Adoption"
+    },
+    {
+      "key": "replyMilk",
+      "id": "I145:10488;138:744",
+      "ctx": "MilkReply"
+    },
+    {
+      "key": "replyAuthor",
+      "id": "I145:10515;138:744",
+      "ctx": "AuthorReply"
+    },
+    {
+      "key": "ownDiaryComments",
+      "id": "I145:10563;138:744",
+      "ctx": "DiaryComment"
+    },
+    {
+      "key": "circleCompose",
+      "id": "144:3103",
+      "to": "circlePrivatePetWarning"
+    }
+  ],
+  "flowStartingPoints": [
+    {
+      "nodeId": "142:3077",
+      "name": "00 · 模块总入口"
+    },
+    {
+      "nodeId": "56:27",
+      "name": "01 · 社区主线"
+    },
+    {
+      "nodeId": "142:2863",
+      "name": "01 · 宠友圈"
+    },
+    {
+      "nodeId": "142:2904",
+      "name": "02 · 我的宠物与日记"
+    },
+    {
+      "nodeId": "56:37",
+      "name": "03 · 领养闭环"
+    },
+    {
+      "nodeId": "142:2946",
+      "name": "04 · 走失与找回"
+    },
+    {
+      "nodeId": "142:2979",
+      "name": "04 · 附近5–100公里提醒"
+    },
+    {
+      "nodeId": "56:61",
+      "name": "05 · 消息与群聊"
+    },
+    {
+      "nodeId": "56:75",
+      "name": "06 · 账号隐私与异常"
+    },
+    {
+      "nodeId": "106:1435",
+      "name": "群聊 · 加入与交流"
+    },
+    {
+      "nodeId": "106:1447",
+      "name": "群主 · 建群与管理"
+    },
+    {
+      "nodeId": "106:1454",
+      "name": "群聊 · 禁言状态"
+    },
+    {
+      "nodeId": "56:28",
+      "name": "社区 · 冷启动空状态"
+    },
+    {
+      "nodeId": "106:1411",
+      "name": "私信 · 发送失败"
+    },
+    {
+      "nodeId": "56:81",
+      "name": "通用 · 离线状态"
+    },
+    {
+      "nodeId": "106:1417",
+      "name": "私信 · 接收受限"
+    },
+    {
+      "nodeId": "142:2864",
+      "name": "补充 · 宠友圈"
+    },
+    {
+      "nodeId": "142:2916",
+      "name": "补充 · 宠物档案可见性"
+    },
+    {
+      "nodeId": "142:2919",
+      "name": "补充 · 小满的图文日记"
+    },
+    {
+      "nodeId": "142:2945",
+      "name": "补充 · 小满的公开求助"
+    },
+    {
+      "nodeId": "142:3008",
+      "name": "补充 · 小满的持续介绍"
+    },
+    {
+      "nodeId": "142:3014",
+      "name": "补充 · 维护这只领养宠物"
+    },
+    {
+      "nodeId": "142:3043",
+      "name": "补充 · 表情与贴纸 · 评论小满的日常"
+    },
+    {
+      "nodeId": "142:3055",
+      "name": "补充 · 表情与贴纸 · 群聊：武汉猫友日常"
+    },
+    {
+      "nodeId": "142:3063",
+      "name": "补充 · 表情与贴纸 · 回复奶糖饲养员"
+    },
+    {
+      "nodeId": "142:3067",
+      "name": "补充 · 表情与贴纸 · 回复布丁作者评论"
+    },
+    {
+      "nodeId": "142:2891",
+      "name": "异常 · 宠友圈权限已变化"
+    },
+    {
+      "nodeId": "142:2887",
+      "name": "参考 · 共享表情使用范围"
+    },
+    {
+      "nodeId": "142:2885",
+      "name": "结果示例 · 文字评论完成"
+    },
+    {
+      "nodeId": "142:3013",
+      "name": "结果示例 · 领养文字答疑完成"
+    }
+  ],
+  "mapPersistent": true,
+  "mapFills": [
+    {
+      "type": "IMAGE",
+      "visible": true,
+      "opacity": 1,
+      "blendMode": "NORMAL",
+      "scaleMode": "FILL",
+      "scalingFactor": 1,
+      "rotation": 0,
+      "filters": {
+        "exposure": 0,
+        "contrast": 0,
+        "saturation": 0,
+        "temperature": 0,
+        "tint": 0,
+        "highlights": 0,
+        "shadows": 0
+      },
+      "imageTransform": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "imageHash": "f58065ed3f011ac0f50d2c8fc0563473d8f13756"
+    }
+  ]
+}

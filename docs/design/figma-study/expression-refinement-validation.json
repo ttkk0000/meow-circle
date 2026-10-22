@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-19",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "scope": "Figma phone interaction icons and expression pickers",
+  "status": "passed",
+  "checkedPickerScreens": 32,
+  "emojiChoices": 2048,
+  "stickerChoices": 384,
+  "readyAndDoneScreens": 32,
+  "homeRows": {
+    "558": [
+      {
+        "id": "108:1420",
+        "height": 326,
+        "footerY": 836,
+        "footerHeight": 48
+      },
+      {
+        "id": "108:1444",
+        "height": 326,
+        "footerY": 836,
+        "footerHeight": 48
+      }
+    ],
+    "900": [
+      {
+        "id": "108:1460",
+        "height": 326,
+        "footerY": 1178,
+        "footerHeight": 48
+      },
+      {
+        "id": "108:1476",
+        "height": 326,
+        "footerY": 1178,
+        "footerHeight": 48
+      }
+    ]
+  },
+  "categoryLabels": [
+    {
+      "text": "常用",
+      "width": 35,
+      "height": 24
+    },
+    {
+      "text": "情绪",
+      "width": 37,
+      "height": 22
+    },
+    {
+      "text": "手势",
+      "width": 37,
+      "height": 22
+    },
+    {
+      "text": "猫狗",
+      "width": 37,
+      "height": 22
+    },
+    {
+      "text": "心意",
+      "width": 37,
+      "height": 22
+    },
+    {
+      "text": "日常",
+      "width": 37,
+      "height": 22
+    }
+  ],
+  "errors": [],
+  "visualReview": {
+    "cards": "interaction-cards-refined.png",
+    "emoji": "noto-picker-refined.png",
+    "stickers": "cat-sticker-picker-refined.png",
+    "selected": "expression-preview-refined.png",
+    "commentsNode": "106:1393",
+    "checked": true
+  },
+  "limits": [
+    "Read-back and rendered-image inspection only; no exhaustive interactive prototype walk-through or device validation.",
+    "No application code migration or build/test run."
+  ],
+  "circleInlineActions": {
+    "componentId": "199:6440",
+    "likeCancelTarget": "142:2881",
+    "commentTarget": "142:2883",
+    "moreTarget": "142:2897",
+    "height": 48,
+    "visualReviewNode": "142:2882",
+    "passed": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "rootCount": 365,
+  "hubReachable": 355,
+  "hubUnreachable": [
+    "offline",
+    "privateFailed",
+    "privateUnavailable",
+    "groupMuted",
+    "circleEmpty",
+    "circlePrivatePetWarning",
+    "circleCommentSent",
+    "circleExpression",
+    "circleUnavailable",
+    "adoptionCommentSent"
+  ],
+  "flowsReachable": 360,
+  "flowsUnreachable": [
+    "circlePrivatePetWarning",
+    "circleCommentSent",
+    "circleExpression",
+    "circleUnavailable",
+    "adoptionCommentSent"
+  ],
+  "counts": {
+    "nodes": 13325,
+    "text": 4370,
+    "instances": 2409,
+    "images": 178,
+    "buttons": 558,
+    "nodeActions": 1427,
+    "backs": 336,
+    "variableActions": 304
+  },
+  "issues": []
+}

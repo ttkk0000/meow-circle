@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-22",
+  "timezone": "UTC+08:00",
+  "scope": "34 related artifact and entry/tracking files, before adding this evidence file; UTF-8 without BOM, replacement characters, trailing whitespace, JSON parse, PNG signature and local Markdown links. No build or application tests.",
+  "files": 34,
+  "json": 9,
+  "png": 6,
+  "localLinks": 183,
+  "issueCount": 0,
+  "gitDiffWhitespaceCheck": "passed for related tracked entry and tracking files",
+  "warning": "Git reported the existing LF-to-CRLF checkout conversion preference for the design index; no whitespace error."
+}

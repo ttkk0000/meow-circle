@@ -1,0 +1,1822 @@
+[
+  {
+    "id": "exprCircle",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的圈日常",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprCircleReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerCircle"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerCircle",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的圈日常",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprCircleReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprCircle",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "circleCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的圈日常",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。本条朋友可见，档案仍私密。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprCircle",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "circleCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布给宠友",
+      "to": "exprCircleDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprCircleDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "写小满的圈日常；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprDiary",
+    "title": "表情与贴纸",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的私密日记",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprDiaryReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerDiary"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "diaryCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerDiary",
+    "title": "静态贴纸",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的私密日记",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprDiaryReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprDiary",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "diaryCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprDiaryReady",
+    "title": "发送前检查",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的私密日记",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。本条默认仅自己。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprDiary",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "diaryCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认保存这条日记",
+      "to": "exprDiaryDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprDiaryDone",
+    "title": "日记已保存",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "写小满的私密日记；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      }
+    ],
+    "footer": {
+      "label": "返回小满日记",
+      "to": "petDiary",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleComment",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论布丁的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprCircleCommentReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerCircleComment"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerCircleComment",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论布丁的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprCircleCommentReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprCircleComment",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleCommentReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论布丁的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprCircleComment",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprCircleCommentDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprCircleCommentDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "评论布丁的日常；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复团子",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprCircleReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerCircleReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleCommentReply",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerCircleReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复团子",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprCircleReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprCircleReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "circleCommentReply",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复团子",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprCircleReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "circleCommentReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprCircleReplyDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprCircleReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "回复团子；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleAuthorReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprCircleAuthorReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerCircleAuthorReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleReplyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerCircleAuthorReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprCircleAuthorReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprCircleAuthorReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "circleReplyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleAuthorReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprCircleAuthorReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "circleReplyAuthor",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprCircleAuthorReplyDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprCircleAuthorReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "回复布丁的铲屎官；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprDiaryComment",
+    "title": "表情与贴纸",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论小满的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprDiaryCommentReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerDiaryComment"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "ownDiaryComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerDiaryComment",
+    "title": "静态贴纸",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论小满的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprDiaryCommentReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprDiaryComment",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "ownDiaryComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprDiaryCommentReady",
+    "title": "发送前检查",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论小满的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprDiaryComment",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "ownDiaryComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprDiaryCommentDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprDiaryCommentDone",
+    "title": "表达已完成",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "评论小满的日常；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "ownDiaryComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprAdoption",
+    "title": "表情与贴纸",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "待领养小满的交流",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprAdoptionReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerAdoption"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "adoptionComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerAdoption",
+    "title": "静态贴纸",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "待领养小满的交流",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprAdoptionReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprAdoption",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "adoptionComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprAdoptionReady",
+    "title": "发送前检查",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "待领养小满的交流",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprAdoption",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "adoptionComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprAdoptionDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprAdoptionDone",
+    "title": "表达已完成",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "待领养小满的交流；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "adoptionComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprPrivate",
+    "title": "表情与贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprPrivateReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerPrivate"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "privateChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerPrivate",
+    "title": "静态贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprPrivateReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprPrivate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "privateChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprPrivateReady",
+    "title": "发送前检查",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprPrivate",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "privateChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprPrivateDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprPrivateDone",
+    "title": "表达已完成",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "私信：布丁的铲屎官；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "privateChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprGroup",
+    "title": "表情与贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：武汉猫友日常",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprGroupReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerGroup"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "groupChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerGroup",
+    "title": "静态贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：武汉猫友日常",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprGroupReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprGroup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "groupChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprGroupReady",
+    "title": "发送前检查",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：武汉猫友日常",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprGroup",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "groupChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprGroupDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprGroupDone",
+    "title": "表达已完成",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "群聊：武汉猫友日常；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "groupChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprLead",
+    "title": "表情与贴纸",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满目击线索 L01",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprLeadReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerLead"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "lostLeadChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerLead",
+    "title": "静态贴纸",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满目击线索 L01",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprLeadReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprLead",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "lostLeadChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprLeadReady",
+    "title": "发送前检查",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满目击线索 L01",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprLead",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "lostLeadChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprLeadDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprLeadDone",
+    "title": "表达已完成",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "小满目击线索 L01；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "lostLeadChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprMilkReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprMilkReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerMilkReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "replyMilk",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerMilkReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprMilkReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprMilkReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "replyMilk",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprMilkReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprMilkReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "replyMilk",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprMilkReplyDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprMilkReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "回复奶糖饲养员；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "replyMilk",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprAuthorReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁作者评论",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprAuthorReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerAuthorReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "replyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerAuthorReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁作者评论",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprAuthorReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprAuthorReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "replyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprAuthorReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁作者评论",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprAuthorReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "replyAuthor",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprAuthorReplyDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprAuthorReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "回复布丁作者评论；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "replyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "replyMilk",
+    "title": "回复奶糖饲养员",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "原评论：奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "text",
+        "text": "我家也会追着太阳换位置，太有同感了。",
+        "role": "Body"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复奶糖饲养员…",
+      "context": "MilkReply"
+    }
+  },
+  {
+    "id": "replyAuthor",
+    "title": "回复作者布丁",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "原评论：布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "text",
+        "text": "谢谢喜欢，今天又被它治愈了。",
+        "role": "Body"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复布丁作者…",
+      "context": "AuthorReply"
+    }
+  },
+  {
+    "id": "ownDiaryComments",
+    "title": "小满的日常交流",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Strong"
+      },
+      {
+        "type": "note",
+        "title": "本条朋友可见",
+        "body": "不混入布丁的原帖；只显示有权查看的互动。",
+        "tone": "subtle"
+      },
+      {
+        "type": "comment",
+        "name": "布丁的铲屎官",
+        "body": "小满也找到自己的阳光位了！",
+        "meta": "今天 · 查看原日常",
+        "kind": "catOffer",
+        "to": "diaryEntryShared"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "就小满这条日常交流…",
+      "context": "DiaryComment"
+    }
+  },
+  {
+    "id": "diaryPhotoViewer",
+    "title": "小满的照片",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 450
+      },
+      {
+        "type": "text",
+        "text": "小满 · 本条第1张 · 学习素材",
+        "role": "Label"
+      }
+    ],
+    "footer": {
+      "label": "返回这条日记",
+      "to": "diaryEntryShared",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petDogVisibility",
+    "title": "豆豆的资料权限",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前仅自己",
+        "body": "仅这只宠物的资料范围，不更改小满或其他宠物。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "独立日记",
+        "body": "具体日记分享时逐条确认受众；不自动批量公开。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留私密并返回",
+      "to": "petDog",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petOtherVisibility",
+    "title": "奶糖的资料权限",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前仅自己",
+        "body": "仅这只宠物的资料范围，不更改小满或其他宠物。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "独立日记",
+        "body": "具体日记分享时逐条确认受众；不自动批量公开。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留私密并返回",
+      "to": "petOther",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "moduleHub",
+    "title": "M&D 手机设计总入口",
+    "phase": "hub",
+    "items": [
+      {
+        "type": "text",
+        "text": "meow & doggie",
+        "role": "Label"
+      },
+      {
+        "type": "text",
+        "text": "按模块看，也能串起来体验",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "01 社区与宠友圈",
+        "value": "发现、朋友日常、评论与范围",
+        "to": "circleFeed"
+      },
+      {
+        "type": "row",
+        "label": "02 我的宠物与日记",
+        "value": "多宠、独立资料与隐私",
+        "to": "petsList"
+      },
+      {
+        "type": "row",
+        "label": "03 领养与照护更新",
+        "value": "持续介绍、讨论、申请与协作",
+        "to": "detail"
+      },
+      {
+        "type": "row",
+        "label": "04 走失互助",
+        "value": "求助、私密线索、找回与提醒",
+        "to": "lostFromPetManage"
+      },
+      {
+        "type": "row",
+        "label": "05 私信与群聊",
+        "value": "消息请求、交流与群管理",
+        "to": "messages"
+      },
+      {
+        "type": "row",
+        "label": "06 账号、隐私与异常",
+        "value": "登录、权限、举报和恢复",
+        "to": "settings"
+      },
+      {
+        "type": "note",
+        "title": "仅非商业学习原型",
+        "body": "输入与服务为固定状态；视频延期。不代表发布/定位/推送已经接通。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "从社区开始完整体验",
+      "to": "home",
+      "kind": "primary"
+    }
+  }
+]
