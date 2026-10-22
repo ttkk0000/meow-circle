@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-16",
+  "status": "design-proposal-not-native",
+  "screenCount": 18,
+  "screens": [
+    {
+      "key": "petStatusHome",
+      "title": "宠物主页／在家",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "petMarkMissing",
+      "title": "标记走失确认",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "petMissingPrivate",
+      "title": "仅保存走失状态",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostFromPetDraft",
+      "title": "从宠物预填求助",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostFromPetDisclosure",
+      "title": "公开内容与区域",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostFromPetPreview",
+      "title": "本次求助预览",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostFromPetPending",
+      "title": "提交与待审核",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostFromPetActive",
+      "title": "寻找中详情",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostFromPetManage",
+      "title": "主人维护与线索",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostShareAudience",
+      "title": "圈子／会话分享确认",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "nearbyAlertPreferences",
+      "title": "附近提醒独立设置",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostPrivateLead",
+      "title": "私密线索提交",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostLeadReview",
+      "title": "线索核实与联系",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostFoundConfirm",
+      "title": "主人确认已接回",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostClosing",
+      "title": "结束处理中",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostFoundDone",
+      "title": "已找回及卡片收尾",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "lostOtherEnd",
+      "title": "其他原因结束",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    },
+    {
+      "key": "petMissingAgain",
+      "title": "再次走失新建事件",
+      "width": 390,
+      "height": 844,
+      "status": "planned-not-created-in-figma"
+    }
+  ]
+}

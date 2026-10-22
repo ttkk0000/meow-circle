@@ -243,6 +243,9 @@ fun FeedScreen(
                                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
+                                    Text(if (likedState) "♥" else "♡", fontSize = 14.sp)
+                                    Text(likeCountState.toString(), color = colors.onSurfaceVariant, fontSize = 12.sp)
+                                }
                                 Row(
                                     modifier = Modifier.clickable { showComments = !showComments },
                                     horizontalArrangement = Arrangement.spacedBy(4.dp),

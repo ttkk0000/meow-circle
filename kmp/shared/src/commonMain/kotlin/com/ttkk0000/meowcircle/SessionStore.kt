@@ -49,6 +49,16 @@ class SessionStore(private val settings: Settings = Settings()) {
         }
     }
 
+    fun getAppMode(): String? = settings.getStringOrNull(KEY_APP_MODE)
+
+    fun setAppMode(value: String?) {
+        if (value == null) {
+            settings.remove(KEY_APP_MODE)
+        } else {
+            settings[KEY_APP_MODE] = value
+        }
+    }
+
     fun clear() {
         settings.remove(KEY_TOKEN)
         settings.remove(KEY_USER)
@@ -60,6 +70,7 @@ class SessionStore(private val settings: Settings = Settings()) {
         const val KEY_THEME = "meow.theme"
         const val KEY_PROFILE_BACKGROUND = "meow.profile_background"
         const val KEY_API_URL = "meow.api_url"
+        const val KEY_APP_MODE = "mnd.app_mode"
 
         fun normalizeTheme(value: String): String =
             when (value.trim().lowercase()) {

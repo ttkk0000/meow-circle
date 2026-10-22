@@ -1,0 +1,388 @@
+{
+  "auditedAt": "2026-10-21T12:02:20+08:00",
+  "taskId": "AI-20261021-DOC-DESIGN-AUDIT",
+  "worktree": "J:/GolandProjects/kitty-circle",
+  "branch": "main",
+  "head": "ebfc469c9707bf0ea4a6b383840546077ae65782",
+  "remoteAccess": "Read-only Figma Plugin API; no canvas mutations or generation scripts executed",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "pages": [
+    {
+      "id": "395:2",
+      "name": "00 项目总览"
+    },
+    {
+      "id": "56:25",
+      "name": "01 手机总览"
+    },
+    {
+      "id": "403:2",
+      "name": "02 Web 总览"
+    },
+    {
+      "id": "403:3",
+      "name": "03 平板总览"
+    },
+    {
+      "id": "403:4",
+      "name": "04 桌面总览"
+    },
+    {
+      "id": "403:5",
+      "name": "05A 原稿 · 社区、发布与宠物空间"
+    },
+    {
+      "id": "420:2",
+      "name": "05B 原稿 · 领养、照护与核实"
+    },
+    {
+      "id": "420:3",
+      "name": "05C 原稿 · 走失互助与好物"
+    },
+    {
+      "id": "420:4",
+      "name": "05D 原稿 · 消息、群聊与预约"
+    },
+    {
+      "id": "420:5",
+      "name": "05E 原稿 · 账号、设置与异常"
+    },
+    {
+      "id": "420:6",
+      "name": "05F 原稿 · 宠友圈与附近提醒"
+    },
+    {
+      "id": "420:7",
+      "name": "05G 原稿 · 表情发布与评论"
+    },
+    {
+      "id": "434:3209",
+      "name": "05H 原稿 · 表情聊天"
+    },
+    {
+      "id": "434:3211",
+      "name": "05I 原稿 · 表情回复与编辑"
+    },
+    {
+      "id": "14:2",
+      "name": "06 规范与组件"
+    },
+    {
+      "id": "30:2",
+      "name": "07 可点击原型（示意）"
+    },
+    {
+      "id": "0:1",
+      "name": "08 历史归档"
+    }
+  ],
+  "overviewRoots": [
+    {
+      "key": "project",
+      "id": "395:2",
+      "name": "00 项目总览",
+      "children": [
+        {
+          "id": "395:3",
+          "name": "M&D / 功能与跨端总览 / 原稿链接",
+          "type": "FRAME",
+          "width": 1536,
+          "height": 3474
+        },
+        {
+          "id": "14:74",
+          "name": "M&D Study / overview",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 2390
+        },
+        {
+          "id": "301:27",
+          "name": "M&D / 全平台完整流程索引 · 默认浅色 · 2026-10-20",
+          "type": "FRAME",
+          "width": 1496,
+          "height": 3269.0361328125
+        }
+      ]
+    },
+    {
+      "key": "phone",
+      "id": "56:25",
+      "name": "01 手机总览",
+      "children": [
+        {
+          "id": "425:1839840",
+          "name": "M&D / 手机总览 / 原稿索引",
+          "type": "FRAME",
+          "width": 1536,
+          "height": 20988
+        }
+      ]
+    },
+    {
+      "key": "web",
+      "id": "403:2",
+      "name": "02 Web 总览",
+      "children": [
+        {
+          "id": "425:1839880",
+          "name": "M&D / Web总览 / 原稿索引",
+          "type": "FRAME",
+          "width": 1536,
+          "height": 20802
+        }
+      ]
+    },
+    {
+      "key": "tablet",
+      "id": "403:3",
+      "name": "03 平板总览",
+      "children": [
+        {
+          "id": "425:1839920",
+          "name": "M&D / 平板总览 / 原稿索引",
+          "type": "FRAME",
+          "width": 1536,
+          "height": 20802
+        }
+      ]
+    },
+    {
+      "key": "desktop",
+      "id": "403:4",
+      "name": "04 桌面总览",
+      "children": [
+        {
+          "id": "425:1839960",
+          "name": "M&D / 桌面总览 / 原稿索引",
+          "type": "FRAME",
+          "width": 1536,
+          "height": 20802
+        }
+      ]
+    }
+  ],
+  "sampledNodes": [
+    {
+      "id": "395:3",
+      "exists": true,
+      "name": "M&D / 功能与跨端总览 / 原稿链接",
+      "type": "FRAME",
+      "page": {
+        "id": "395:2",
+        "name": "00 项目总览"
+      },
+      "width": 1536,
+      "height": 3474
+    },
+    {
+      "id": "56:27",
+      "exists": true,
+      "name": "手机 / 01-A01 推荐首页 [home]",
+      "type": "FRAME",
+      "page": {
+        "id": "403:5",
+        "name": "05A 原稿 · 社区、发布与宠物空间"
+      },
+      "width": 390,
+      "height": 844,
+      "fonts": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "sampledTexts": [
+        "9:41",
+        "学习示意 · 非真实数据",
+        "M&D",
+        "推荐",
+        "关注",
+        "宠友圈",
+        "同城",
+        "晒晒今天的小可爱…",
+        "晒晒日常，也聊聊养宠的小事"
+      ]
+    },
+    {
+      "id": "238:371769",
+      "exists": true,
+      "name": "Mobile completion / 手机端设计评审 [completionHub]",
+      "type": "FRAME",
+      "page": {
+        "id": "403:5",
+        "name": "05A 原稿 · 社区、发布与宠物空间"
+      },
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "301:27",
+      "exists": true,
+      "name": "M&D / 全平台完整流程索引 · 默认浅色 · 2026-10-20",
+      "type": "FRAME",
+      "page": {
+        "id": "395:2",
+        "name": "00 项目总览"
+      },
+      "width": 1496,
+      "height": 3269.0361328125
+    },
+    {
+      "id": "311:2",
+      "exists": false
+    },
+    {
+      "id": "311:23",
+      "exists": true,
+      "name": "Web / M&D [home]",
+      "type": "FRAME",
+      "page": {
+        "id": "403:5",
+        "name": "05A 原稿 · 社区、发布与宠物空间"
+      },
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "352:2",
+      "exists": false
+    },
+    {
+      "id": "352:3",
+      "exists": true,
+      "name": "M&D / 全局未读设计评审 / 2026-10-20",
+      "type": "FRAME",
+      "page": {
+        "id": "420:4",
+        "name": "05D 原稿 · 消息、群聊与预约"
+      },
+      "width": 1320,
+      "height": 3106
+    },
+    {
+      "id": "356:8",
+      "exists": true,
+      "name": "UNREAD-01 / 聊天与全局99+",
+      "type": "FRAME",
+      "page": {
+        "id": "420:4",
+        "name": "05D 原稿 · 消息、群聊与预约"
+      },
+      "width": 390,
+      "height": 844,
+      "fonts": [
+        "Noto Sans SC"
+      ],
+      "sampledTexts": [
+        "9:41",
+        "学习示意 · 非真实数据",
+        "消息",
+        "聊天",
+        "互动",
+        "通知",
+        "全部消息"
+      ]
+    }
+  ],
+  "currentOverviewScope": {
+    "texts": [
+      {
+        "id": "396:8",
+        "text": "17 项功能"
+      },
+      {
+        "id": "439:5284",
+        "text": "17 项功能 · 569 个对照状态"
+      },
+      {
+        "id": "439:5286",
+        "text": "原画板只保留一份；未收录的端或状态明确标注。"
+      },
+      {
+        "id": "396:416",
+        "text": "09  账号与登录"
+      },
+      {
+        "id": "396:725",
+        "text": "场景索引及 17 个子场景"
+      },
+      {
+        "id": "396:768",
+        "text": "17  全局未读 · 消息中心"
+      },
+      {
+        "id": "396:779",
+        "text": "未收录入口"
+      },
+      {
+        "id": "396:781",
+        "text": "未收录入口"
+      },
+      {
+        "id": "396:783",
+        "text": "未收录入口"
+      },
+      {
+        "id": "396:785",
+        "text": "未收录入口"
+      },
+      {
+        "id": "396:789",
+        "text": "全局未读：目前关联该专题中的手机原稿，其他设备列标为“未收录入口”。"
+      },
+      {
+        "id": "439:5300",
+        "text": "账号、设置与异常 →"
+      }
+    ]
+  },
+  "currentWebUnreadScope": {
+    "texts": [
+      {
+        "id": "426:5761",
+        "text": "有 1 张照片未完成 [mediaPartialFailure]"
+      },
+      {
+        "id": "426:6401",
+        "text": "提交暂未完成 [lostSubmitFailure]"
+      },
+      {
+        "id": "426:6963",
+        "text": "账号中的未完成事项 [authActiveTasks]"
+      },
+      {
+        "id": "426:6979",
+        "text": "注销暂未完成 [authDeleteFailure]"
+      },
+      {
+        "id": "426:8016",
+        "text": "全局未读 · 消息中心"
+      },
+      {
+        "id": "426:8018",
+        "text": "本端尚未收录独立稿，可查看现有手机设计作参考"
+      },
+      {
+        "id": "426:8020",
+        "text": "所有入口均链接现有画板。比较时请使用同一状态；未收录项保持明确标注。"
+      }
+    ]
+  },
+  "currentMessageGroups": {
+    "roots": [
+      {
+        "id": "416:1841280",
+        "name": "功能 22 · 消息"
+      },
+      {
+        "id": "424:3",
+        "name": "功能 49 · 全局未读与消息中心"
+      }
+    ]
+  },
+  "limits": [
+    "Only listed node IDs checked for existence; no exhaustive node/prototype validation.",
+    "Directories and selected properties read; no screenshots captured in this audit.",
+    "Historical validation artifacts were not rerun.",
+    "No compilation, build, tests, services or devices run."
+  ]
+}

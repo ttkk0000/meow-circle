@@ -1,7 +1,9 @@
 package com.ttkk0000.meowcircle.kmpapp.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.aspectRatio
@@ -22,18 +25,24 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Share
-import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material.icons.automirrored.outlined.Send
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -50,16 +59,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import androidx.compose.ui.res.stringResource
+import coil3.compose.AsyncImage
 import com.ttkk0000.meowcircle.ApiException
 import com.ttkk0000.meowcircle.Comment
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.PostDetailData
-import com.ttkk0000.meowcircle.kmpapp.BuildConfig
+import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchLoginRef
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
+import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
+import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 import com.ttkk0000.meowcircle.humanizeClientFailure
 import kotlinx.coroutines.launch
@@ -74,11 +87,25 @@ fun StitchPostDetailScreen(
     modifier: Modifier = Modifier,
 ) {
     val apiBase = sdk.baseUrl
+    val context = LocalContext.current
     var detail by remember { mutableStateOf<PostDetailData?>(null) }
     var err by remember { mutableStateOf<String?>(null) }
     var loading by remember { mutableStateOf(true) }
     var following by remember { mutableStateOf(false) }
+    var commentDraft by remember { mutableStateOf("") }
+    var localComments by remember { mutableStateOf<List<Comment>>(emptyList()) }
+    var commentBusy by remember { mutableStateOf(false) }
+    var liked by remember { mutableStateOf(false) }
+    var likeCount by remember { mutableStateOf(0L) }
+    var likeBusy by remember { mutableStateOf(false) }
+    var saved by remember { mutableStateOf(false) }
+    var actionMessage by remember { mutableStateOf<String?>(null) }
+    var actionError by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+
+    BackHandler {
+        onBack()
+    }
 
     LaunchedEffect(postId) {
         loading = true
@@ -98,6 +125,8 @@ fun StitchPostDetailScreen(
 
     LaunchedEffect(detail) {
         following = detail?.followingAuthor ?: false
+        liked = detail?.liked ?: false
+        likeCount = detail?.likeCount ?: 0L
     }
 
     Scaffold(
@@ -105,10 +134,10 @@ fun StitchPostDetailScreen(
         containerColor = StitchLoginRef.Background,
         topBar = {
             TopAppBar(
-                title = { },
+                title = { Text(stringResource(R.string.post_detail_title), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "返回")
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 colors =
@@ -119,12 +148,79 @@ fun StitchPostDetailScreen(
                     ),
             )
         },
+        bottomBar = {
+            if (detail != null) {
+                Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(StitchLoginRef.SurfaceVariant)
+                            .padding(horizontal = 12.dp, vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    OutlinedTextField(
+                        value = commentDraft,
+                        onValueChange = { commentDraft = it },
+                        placeholder = { Text(stringResource(R.string.post_add_comment)) },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                        shape = StitchShape.cardFeed,
+                        colors =
+                            OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = StitchPalette.Brand,
+                                unfocusedBorderColor = StitchPalette.BorderHairline,
+                                cursorColor = StitchPalette.Brand,
+                                focusedContainerColor = StitchPalette.Surface,
+                                unfocusedContainerColor = StitchPalette.Surface,
+                            ),
+                    )
+                    Button(
+                        onClick = {
+                            val text = commentDraft.trim()
+                            if (text.isNotBlank()) {
+                                commentBusy = true
+                                actionMessage = null
+                                scope.launch {
+                                    sdk.addComment(postId, text).fold(
+                                        onSuccess = { comment ->
+                                            localComments = localComments + comment
+                                            commentDraft = ""
+                                            actionMessage = comment.content.take(36).ifBlank { text.take(36) }
+                                            actionError = false
+                                        },
+                                        onFailure = { e ->
+                                            actionMessage =
+                                                (e as? ApiException)?.message
+                                                    ?: humanizeClientFailure(e, apiBase)
+                                            actionError = true
+                                        },
+                                    )
+                                    commentBusy = false
+                                }
+                            }
+                        },
+                        enabled = commentDraft.isNotBlank() && !commentBusy,
+                        shape = CircleShape,
+                        contentPadding = PaddingValues(0.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = StitchPalette.Brand),
+                        modifier = Modifier.size(42.dp),
+                    ) {
+                        if (commentBusy) {
+                            CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
+                        } else {
+                            Text("↑", color = Color.White, fontWeight = FontWeight.Black)
+                        }
+                    }
+                }
+            }
+        },
     ) { inner ->
         when {
             loading && detail == null ->
                 StitchLoadingScreen(
-                    title = "详情页加载中",
-                    subtitle = "正在加载帖子内容",
+                    title = stringResource(R.string.post_loading_title),
+                    subtitle = stringResource(R.string.post_loading_body),
                     modifier = Modifier.fillMaxSize().padding(inner),
                 )
             err != null && detail == null ->
@@ -146,7 +242,7 @@ fun StitchPostDetailScreen(
                         d.media.filter { it.kind == "image" || it.mime.startsWith("image/") }
                     LazyColumn(
                         modifier = Modifier.fillMaxSize().padding(inner),
-                        contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 24.dp),
+                        contentPadding = PaddingValues(0.dp, 8.dp, 0.dp, 24.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         if (imageMedia.isNotEmpty()) {
@@ -156,8 +252,7 @@ fun StitchPostDetailScreen(
                                     modifier =
                                         Modifier
                                             .fillMaxWidth()
-                                            .aspectRatio(1f)
-                                            .clip(RoundedCornerShape(8.dp))
+                                            .aspectRatio(1.18f)
                                             .background(StitchLoginRef.SurfaceContainerLow),
                                 ) {
                                     HorizontalPager(
@@ -185,7 +280,7 @@ fun StitchPostDetailScreen(
                                                 .padding(10.dp)
                                                 .background(
                                                     Color.Black.copy(alpha = 0.45f),
-                                                    RoundedCornerShape(8.dp),
+                                                    StitchShape.neutralCard,
                                                 )
                                                 .padding(horizontal = 8.dp, vertical = 4.dp),
                                     )
@@ -193,7 +288,7 @@ fun StitchPostDetailScreen(
                             }
                         }
                         item {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
                                 val av = resolveMediaUrl(apiBase, author.avatarUrl.takeIf { it.isNotBlank() })
                                 if (av != null) {
                                     AsyncImage(
@@ -226,7 +321,7 @@ fun StitchPostDetailScreen(
                                         fontWeight = FontWeight.Bold,
                                     )
                                     Text(
-                                        author.bio.ifBlank { "M&D 伙伴" },
+                                        "@${author.username.ifBlank { who }}",
                                         style = MaterialTheme.typography.bodySmall,
                                         color = StitchLoginRef.Outline,
                                     )
@@ -242,52 +337,159 @@ fun StitchPostDetailScreen(
                                                 )
                                         }
                                     },
-                                    shape = RoundedCornerShape(8.dp),
+                                    shape = StitchShape.neutralCard,
                                 ) {
-                                    Text(if (following) "已关注" else "关注")
+                                    Text(if (following) stringResource(R.string.post_following) else stringResource(R.string.post_follow))
                                 }
                             }
                         }
                         item {
-                            Text(d.post.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                            Spacer(Modifier.height(8.dp))
-                            Text(d.post.content, style = MaterialTheme.typography.bodyLarge, color = StitchLoginRef.OnSurface)
-                            if (d.post.tags.isNotEmpty()) {
-                                Spacer(Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Row(
+                                    modifier = Modifier.clickable(enabled = !likeBusy) {
+                                        likeBusy = true
+                                        actionMessage = null
+                                        scope.launch {
+                                            sdk.togglePostLike(postId).fold(
+                                                onSuccess = { result ->
+                                                    liked = result.liked
+                                                    likeCount = result.likeCount
+                                                    actionError = false
+                                                },
+                                                onFailure = { e ->
+                                                    actionMessage =
+                                                        (e as? ApiException)?.message
+                                                            ?: humanizeClientFailure(e, apiBase)
+                                                    actionError = true
+                                                },
+                                            )
+                                            likeBusy = false
+                                        }
+                                    },
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        imageVector = if (liked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                                        contentDescription = stringResource(R.string.post_like_action),
+                                        tint = if (liked) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                                        modifier = Modifier.size(28.dp),
+                                    )
+                                }
+                                Spacer(Modifier.width(18.dp))
+                                Row(
+                                    modifier = Modifier.clickable {
+                                        actionMessage = context.getString(R.string.post_comment_focus_hint)
+                                        actionError = false
+                                    },
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.ChatBubbleOutline,
+                                        contentDescription = stringResource(R.string.post_add_comment),
+                                        tint = StitchPalette.OnSurfaceVariant,
+                                        modifier = Modifier.size(28.dp),
+                                    )
+                                }
+                                Spacer(Modifier.width(18.dp))
+                                Row(
+                                    modifier = Modifier.clickable {
+                                        actionMessage = context.getString(R.string.common_share_ready)
+                                        actionError = false
+                                    },
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Outlined.Send,
+                                        contentDescription = stringResource(R.string.common_share),
+                                        tint = StitchPalette.OnSurfaceVariant,
+                                        modifier = Modifier.size(28.dp),
+                                    )
+                                }
+                                Spacer(Modifier.weight(1f))
+                                Icon(
+                                    imageVector = Icons.Outlined.BookmarkBorder,
+                                    contentDescription = stringResource(R.string.common_save),
+                                    tint = if (saved) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                                    modifier = Modifier.size(28.dp).clickable {
+                                        saved = !saved
+                                        actionMessage = context.getString(if (saved) R.string.post_saved else R.string.post_unsaved)
+                                        actionError = false
+                                    },
+                                )
+                            }
+                        }
+                        item {
+                            if (likeCount > 0) {
                                 Text(
-                                    d.post.tags.joinToString(" ") { "#$it" },
+                                    "${formatCompactCount(likeCount)} likes",
                                     style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = StitchPalette.OnSurface,
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                )
+                            } else {
+                                Text(
+                                    "45k likes", // mock
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = StitchPalette.OnSurface,
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                )
+                            }
+                        }
+                        item {
+                            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                                Text(
+                                    d.post.content.ifBlank { d.post.title },
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = StitchLoginRef.OnSurface
+                                )
+                                if (d.post.tags.isNotEmpty()) {
+                                    Spacer(Modifier.height(8.dp))
+                                    Text(
+                                        d.post.tags.joinToString(" ") { "#$it" },
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = StitchLoginRef.Outline,
+                                    )
+                                }
+                                Spacer(Modifier.height(4.dp))
+                                Text(
+                                    stringResource(R.string.post_created_at, d.post.createdAt.take(16).replace('T', ' ')),
+                                    style = MaterialTheme.typography.labelSmall,
                                     color = StitchLoginRef.Outline,
                                 )
                             }
-                            Spacer(Modifier.height(4.dp))
-                            Text(
-                                "发布于 ${d.post.createdAt.take(16).replace('T', ' ')}",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = StitchLoginRef.Outline,
-                            )
                         }
-                        item {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                PostStatChip(Icons.Outlined.FavoriteBorder, "${d.likeCount}")
-                                PostStatChip(Icons.Outlined.ChatBubbleOutline, "${d.comments.size}")
-                                PostStatChip(Icons.Outlined.StarOutline, "—")
-                                PostStatChip(Icons.Outlined.Share, "分享")
+                        actionMessage?.let { message ->
+                            item {
+                                Text(
+                                    message,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = if (actionError) StitchPalette.Error else StitchPalette.OnSurfaceVariant,
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 16.dp)
+                                            .clip(StitchShape.field)
+                                            .background(if (actionError) StitchPalette.Error.copy(alpha = 0.08f) else StitchPalette.SurfaceContainer)
+                                            .padding(12.dp),
+                                )
                             }
                         }
                         item {
                             HorizontalDivider(color = StitchLoginRef.SurfaceVariant)
                             Text(
-                                "共 ${d.comments.size} 条评论",
+                                stringResource(R.string.post_comments_count, d.comments.size + localComments.size),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(horizontal = 16.dp),
                             )
                         }
                         items(d.comments, key = { it.id }) { c -> CommentRow(apiBase, c) }
+                        items(localComments, key = { it.id }) { c -> CommentRow(apiBase, c) }
                     }
                 }
             }
@@ -299,14 +501,29 @@ fun StitchPostDetailScreen(
 private fun PostStatChip(
     icon: ImageVector,
     label: String,
+    selected: Boolean = false,
+    enabled: Boolean = true,
+    onClick: () -> Unit = {},
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(icon, contentDescription = null, tint = StitchPalette.Brand, modifier = Modifier.size(22.dp))
+    Column(
+        modifier =
+            Modifier
+                .clip(StitchShape.field)
+                .clickable(enabled = enabled, onClick = onClick)
+                .padding(horizontal = 8.dp, vertical = 6.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(
+            icon,
+            contentDescription = label,
+            tint = if (selected) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+            modifier = Modifier.size(22.dp),
+        )
         if (label.isNotBlank()) {
             Text(
                 label,
                 style = MaterialTheme.typography.labelMedium,
-                color = StitchLoginRef.OnSurface,
+                color = if (selected) StitchPalette.Brand else StitchLoginRef.OnSurface,
             )
         }
     }
@@ -318,12 +535,12 @@ private fun CommentRow(
     c: Comment,
 ) {
     val label =
-        c.author?.let { it.nickname.ifBlank { it.username } } ?: "用户 ${c.authorId}"
+        c.author?.let { it.nickname.ifBlank { it.username } } ?: stringResource(R.string.feed_user_fallback, c.authorId)
     Column(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp))
+                .clip(StitchShape.field)
                 .background(StitchLoginRef.SurfaceContainerLow)
                 .padding(12.dp),
     ) {
@@ -362,7 +579,7 @@ private fun CommentRow(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                "${c.createdAt.take(16).replace('T', ' ')} · 回复",
+                stringResource(R.string.post_comment_meta, c.createdAt.take(16).replace('T', ' ')),
                 style = MaterialTheme.typography.labelSmall,
                 color = StitchLoginRef.Outline,
             )

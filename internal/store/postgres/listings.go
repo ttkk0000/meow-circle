@@ -9,13 +9,13 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-const listingCols = "id, seller_id, type, title, description, price_cents, currency, media_ids, created_at"
+const listingCols = "id, seller_id, type, category, title, description, price_cents, currency, media_ids, created_at"
 
 func scanListing(row pgx.Row) (domain.Listing, error) {
 	var l domain.Listing
 	var t string
 	var mediaIDs []int64
-	err := row.Scan(&l.ID, &l.SellerID, &t, &l.Title, &l.Description, &l.PriceCents, &l.Currency, &mediaIDs, &l.CreatedAt)
+	err := row.Scan(&l.ID, &l.SellerID, &t, &l.Category, &l.Title, &l.Description, &l.PriceCents, &l.Currency, &mediaIDs, &l.CreatedAt)
 	if err != nil {
 		return domain.Listing{}, err
 	}
@@ -30,11 +30,14 @@ func (s *Store) CreateListing(input domain.Listing) domain.Listing {
 	if input.Currency == "" {
 		input.Currency = "CNY"
 	}
+	if input.Category == "" {
+		input.Category = "product"
+	}
 	row := s.pool.QueryRow(ctx, `
-		INSERT INTO listings (seller_id, type, title, description, price_cents, currency, media_ids)
-		VALUES ($1, $2, $3, $4, $5, $6, $7)
+		INSERT INTO listings (seller_id, type, category, title, description, price_cents, currency, media_ids)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 		RETURNING `+listingCols,
-		input.SellerID, string(input.Type), input.Title, input.Description,
+		input.SellerID, string(input.Type), input.Category, input.Title, input.Description,
 		input.PriceCents, input.Currency, nonNilInt64s(input.MediaIDs))
 	l, err := scanListing(row)
 	if err != nil {
@@ -70,9 +73,9 @@ func (s *Store) UpdateListing(listing domain.Listing) bool {
 	ctx, cancel := bg()
 	defer cancel()
 	tag, err := s.pool.Exec(ctx, `
-		UPDATE listings SET type=$2, title=$3, description=$4, price_cents=$5, currency=$6, media_ids=$7
+		UPDATE listings SET type=$2, category=$3, title=$4, description=$5, price_cents=$6, currency=$7, media_ids=$8
 		WHERE id=$1`,
-		listing.ID, string(listing.Type), listing.Title, listing.Description,
+		listing.ID, string(listing.Type), listing.Category, listing.Title, listing.Description,
 		listing.PriceCents, listing.Currency, nonNilInt64s(listing.MediaIDs))
 	if err != nil {
 		logErr("UpdateListing", err)

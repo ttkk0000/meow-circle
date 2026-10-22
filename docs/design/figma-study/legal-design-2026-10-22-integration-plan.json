@@ -1,0 +1,146 @@
+{
+  "sources": [
+    {
+      "key": "composePost",
+      "group": 1,
+      "label": "社区晒宠草稿 · 示例",
+      "publish": false,
+      "code": 1
+    },
+    {
+      "key": "postPreview",
+      "group": 1,
+      "label": "社区发布预览 · 示例",
+      "publish": true,
+      "code": 2
+    },
+    {
+      "key": "diaryCompose",
+      "group": 2,
+      "label": "宠物日记草稿 · 示例",
+      "publish": false,
+      "code": 3
+    },
+    {
+      "key": "diaryPreview",
+      "group": 2,
+      "label": "日记预览 · 示例",
+      "publish": true,
+      "code": 4
+    },
+    {
+      "key": "diarySharedPreview",
+      "group": 2,
+      "label": "日记分享预览 · 示例",
+      "publish": true,
+      "code": 5
+    },
+    {
+      "key": "circleCompose",
+      "group": 3,
+      "label": "圈子动态草稿 · 示例",
+      "publish": false,
+      "code": 6
+    },
+    {
+      "key": "circlePreview",
+      "group": 3,
+      "label": "圈子动态预览 · 示例",
+      "publish": true,
+      "code": 7
+    },
+    {
+      "key": "circlePublicPreview",
+      "group": 3,
+      "label": "圈子公开预览 · 示例",
+      "publish": true,
+      "code": 8
+    },
+    {
+      "key": "circlePartialPreview",
+      "group": 3,
+      "label": "圈子部分受众预览 · 示例",
+      "publish": true,
+      "code": 9
+    },
+    {
+      "key": "circleExcludedPreview",
+      "group": 3,
+      "label": "圈子排除受众预览 · 示例",
+      "publish": true,
+      "code": 10
+    },
+    {
+      "key": "adoptionUpdateCompose",
+      "group": 4,
+      "label": "领养近况草稿 · 示例",
+      "publish": false,
+      "code": 11
+    },
+    {
+      "key": "adoptionUpdatePreview",
+      "group": 4,
+      "label": "领养近况预览 · 示例",
+      "publish": true,
+      "code": 12
+    }
+  ],
+  "entries": [
+    {
+      "from": "rules",
+      "to": "legalCenter",
+      "label": "权益、服务与安全",
+      "value": "主体、数据、投诉与合同",
+      "at": 1
+    },
+    {
+      "from": "privacy",
+      "to": "providerData",
+      "label": "第三方与数据去向",
+      "value": "逐项查看用途与处理范围",
+      "replace": "SDK与第三方"
+    },
+    {
+      "from": "dataAccountTasks",
+      "to": "dataMatters",
+      "label": "先受理资料与事项请求",
+      "value": "不相关资料可先处理；协助与注销分开",
+      "at": 0
+    },
+    {
+      "from": "guestReport",
+      "to": "rightsEntry",
+      "label": "正式侵权通知与回应",
+      "value": "普通安全求助仍可使用本页",
+      "at": 0
+    },
+    {
+      "from": "original:detail",
+      "to": "contractAdopt",
+      "label": "领养与试养约定",
+      "value": "照护、就医、退出与版本确认",
+      "at": 3
+    },
+    {
+      "from": "original:saleDetail",
+      "to": "contractSale",
+      "label": "商业条款与售后",
+      "value": "合同方、完整价款、交付和争议",
+      "at": 3
+    },
+    {
+      "from": "original:foundActive",
+      "to": "authority",
+      "label": "拾获宠物的来源与处置",
+      "value": "照护、认领与送养资格分别核对",
+      "at": 2
+    },
+    {
+      "from": "original:foundManage",
+      "to": "authority",
+      "label": "送养前核对处分依据",
+      "value": "没有统一的私人无人认领倒计时",
+      "at": 1
+    }
+  ]
+}

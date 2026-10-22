@@ -1,0 +1,844 @@
+[
+  {
+    "id": "authTermsDetails",
+    "title": "M&D 服务协议",
+    "items": [
+      {
+        "type": "text",
+        "text": "使用前先了解",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "账号",
+            "本人使用并保护可用的登录方式"
+          ],
+          [
+            "内容与互动",
+            "遵守发布范围，尊重他人资料与权利"
+          ],
+          [
+            "退出与申诉",
+            "账号、内容和处理结果有对应入口"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "隐私与选择",
+        "body": "你可以在设置中管理登录方式、通知和账号数据。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回协议入口",
+      "to": "authTerms"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authSDKInfo",
+    "title": "第三方登录说明",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "微信 / QQ",
+            "仅处理本次授权返回的账号标识和你允许的资料"
+          ],
+          [
+            "Apple",
+            "支持隐藏邮箱，昵称和头像可稍后补充"
+          ],
+          [
+            "不会顺带做的事",
+            "不读取通讯录，不默认公开手机号或位置"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "管理已关联方式",
+        "value": "登录后可在账号设置中调整",
+        "to": "authAccounts"
+      }
+    ],
+    "footer": {
+      "label": "返回登录",
+      "to": "$authLanding"
+    },
+    "module": 6,
+    "phase": "auth"
+  },
+  {
+    "id": "authIntentReview",
+    "title": "登录后回到哪里",
+    "items": [
+      {
+        "type": "row",
+        "label": "继续领养申请",
+        "value": "小满 · 检查共享范围",
+        "to": "login",
+        "sets": {
+          "authReturn": 1,
+          "authLoggedIn": 0
+        }
+      },
+      {
+        "type": "row",
+        "label": "继续圈子草稿",
+        "value": "保留宠物、文字和受众",
+        "to": "login",
+        "sets": {
+          "authReturn": 2,
+          "authLoggedIn": 0
+        }
+      },
+      {
+        "type": "row",
+        "label": "继续私信",
+        "value": "回原会话，不自动发送",
+        "to": "authIOS",
+        "sets": {
+          "authReturn": 4,
+          "authPlatform": 1,
+          "authLoggedIn": 0
+        }
+      },
+      {
+        "type": "row",
+        "label": "继续走失求助",
+        "value": "状态和公开同意分别确认",
+        "to": "login",
+        "sets": {
+          "authReturn": 6,
+          "authLoggedIn": 0
+        }
+      },
+      {
+        "type": "row",
+        "label": "继续附近提醒",
+        "value": "登录不会自动开启订阅",
+        "to": "login",
+        "sets": {
+          "authReturn": 7,
+          "authLoggedIn": 0
+        }
+      }
+    ],
+    "footer": {
+      "label": "返回评审入口",
+      "to": "completionHub"
+    },
+    "module": 6,
+    "phase": "review"
+  },
+  {
+    "id": "friendUnconfirmed",
+    "title": "宠友资料",
+    "items": [
+      {
+        "type": "pet",
+        "name": "奶糖",
+        "meta": "英短 · 武汉",
+        "kind": "catOffer",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "还不是宠友",
+        "body": "互相确认后，才会共享彼此圈子中的宠物日常。",
+        "tone": "subtle"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "公开资料",
+            "昵称、头像与公开宠物名片"
+          ],
+          [
+            "圈子内容",
+            "未共享"
+          ]
+        ]
+      }
+    ],
+    "footer": {
+      "label": "发送宠友申请",
+      "to": "friendPending"
+    },
+    "module": 1
+  },
+  {
+    "id": "friendPending",
+    "title": "等待宠友确认",
+    "items": [
+      {
+        "type": "pet",
+        "name": "奶糖",
+        "meta": "申请已发送",
+        "kind": "catOffer",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "等待对方确认",
+        "body": "圈子内容仍未开放；对方确认后会通知你。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "撤回申请",
+        "to": "friendWithdrawConfirm",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回宠友圈",
+      "to": "circleFeed"
+    },
+    "module": 1
+  },
+  {
+    "id": "friendWithdrawConfirm",
+    "title": "撤回申请",
+    "items": [
+      {
+        "type": "note",
+        "title": "确认撤回？",
+        "body": "撤回后，对方不能通过这条申请建立宠友关系。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "保留申请",
+        "to": "friendPending",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "撤回申请",
+      "to": "friendUnconfirmed",
+      "kind": "secondary"
+    },
+    "module": 1
+  },
+  {
+    "id": "friendRequestDecision",
+    "title": "新的宠友申请",
+    "items": [
+      {
+        "type": "pet",
+        "name": "奶糖的朋友",
+        "meta": "想和你分享奶糖的日常",
+        "kind": "catOffer",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "确认后共享什么",
+        "body": "仅开放设为宠友可见的内容；私密日记仍只有你可见。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "暂不接受",
+        "to": "friendRejected",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "接受并成为宠友",
+      "to": "circleFriendProfile"
+    },
+    "module": 1
+  },
+  {
+    "id": "friendRejected",
+    "title": "申请已处理",
+    "items": [
+      {
+        "type": "text",
+        "text": "申请已处理",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "没有建立宠友关系，圈子内容未共享。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回宠友圈",
+      "to": "circleFeed"
+    },
+    "module": 1
+  },
+  {
+    "id": "audienceChanged",
+    "title": "可见范围已更新",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前内容已设为私密",
+        "body": "原来的圈子分享入口已失效；已写的评论草稿仍保留在本机。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回圈子",
+        "to": "circleFeed",
+        "kind": "secondary"
+      }
+    ],
+    "footer": null,
+    "module": 1
+  },
+  {
+    "id": "helpType",
+    "title": "发布互助",
+    "items": [
+      {
+        "type": "note",
+        "title": "选择求助类型",
+        "body": "走失与拾获使用不同表单，便于附近的人准确提供帮助。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "我的宠物走失",
+        "value": "从宠物档案带入资料",
+        "to": "lostFromPetDraft"
+      },
+      {
+        "type": "row",
+        "label": "我拾获了宠物",
+        "value": "寻找宠物的家人",
+        "to": "foundForm"
+      }
+    ],
+    "footer": null,
+    "module": 4
+  },
+  {
+    "id": "foundForm",
+    "title": "发布拾获信息",
+    "items": [
+      {
+        "type": "upload",
+        "label": "添加拾获宠物照片",
+        "hint": "优先上传清晰的正面与花色照片",
+        "to": "mediaChoose",
+        "sets": {
+          "mediaReturn": 2
+        }
+      },
+      {
+        "type": "field",
+        "label": "宠物类型",
+        "value": "猫 · 黑白相间"
+      },
+      {
+        "type": "field",
+        "label": "拾获时间",
+        "value": "今天 16:30"
+      },
+      {
+        "type": "field",
+        "label": "公开区域",
+        "value": "武汉 · 解放公园附近"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "暂时安置在安全处，可核实特征后联系。"
+      },
+      {
+        "type": "note",
+        "title": "保留核实线索",
+        "body": "特殊体征、芯片号与准确安置点不公开，留给认领时核验。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "预览拾获信息",
+      "to": "foundPreview"
+    },
+    "module": 4
+  },
+  {
+    "id": "foundPreview",
+    "title": "确认公开范围",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 200
+      },
+      {
+        "type": "text",
+        "text": "黑白猫正在等家人",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "拾获区域",
+            "解放公园附近 · 约 1 km"
+          ],
+          [
+            "联系入口",
+            "通过 M&D 私信"
+          ],
+          [
+            "不公开",
+            "准确地址、手机号和核实材料"
+          ]
+        ]
+      }
+    ],
+    "footer": {
+      "label": "发布拾获信息",
+      "to": "foundActive"
+    },
+    "module": 4,
+    "back": "foundForm"
+  },
+  {
+    "id": "foundActive",
+    "title": "拾获互助详情",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "黑白猫正在等家人",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "状态",
+            "等待家人认领"
+          ],
+          [
+            "区域",
+            "解放公园附近"
+          ],
+          [
+            "安置",
+            "暂时安全"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "认领前先核实",
+        "body": "认领材料只发给发布人；不要公开身份证、住址或完整芯片信息。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "我是发布人",
+        "value": "查看认领申请",
+        "to": "foundManage"
+      }
+    ],
+    "footer": {
+      "label": "这是我的宠物，申请认领",
+      "to": "claimForm"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimForm",
+    "title": "申请认领",
+    "items": [
+      {
+        "type": "pet",
+        "name": "待认领的黑白猫",
+        "meta": "解放公园附近拾获",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "field",
+        "label": "宠物名字",
+        "value": "小满"
+      },
+      {
+        "type": "field",
+        "label": "能核实的特征",
+        "value": "左后脚黑色小斑，戴过深蓝色项圈。"
+      },
+      {
+        "type": "upload",
+        "label": "补充历史照片或记录",
+        "hint": "仅发布人可见，可遮挡无关个人信息",
+        "to": "mediaChoose",
+        "sets": {
+          "mediaReturn": 3
+        }
+      },
+      {
+        "type": "consent",
+        "key": "claimAgree",
+        "text": "我确认资料真实，并同意仅向发布人共享本次核实材料。"
+      }
+    ],
+    "footer": {
+      "label": "提交认领材料",
+      "to": "claimPending",
+      "require": "claimAgree"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimPending",
+    "title": "认领材料已提交",
+    "items": [
+      {
+        "type": "pet",
+        "name": "待认领的黑白猫",
+        "meta": "仅双方可见",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "等待发布人核实",
+        "body": "在确认身份前，信息不会标为已找回。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "补充核实材料",
+        "value": "通过原认领入口补充",
+        "to": "claimForm"
+      },
+      {
+        "type": "row",
+        "label": "出现争议",
+        "value": "申请协助核实",
+        "to": "claimDispute"
+      }
+    ],
+    "footer": {
+      "label": "返回拾获信息",
+      "to": "foundActive"
+    },
+    "module": 4
+  },
+  {
+    "id": "foundManage",
+    "title": "管理拾获信息",
+    "items": [
+      {
+        "type": "note",
+        "title": "收到 1 条认领申请",
+        "body": "小满的家人提交了历史照片与特征说明。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "核实申请",
+        "value": "仅你与申请人可见",
+        "to": "claimReview"
+      },
+      {
+        "type": "row",
+        "label": "暂无匹配",
+        "value": "继续保留拾获信息",
+        "to": "foundActive"
+      },
+      {
+        "type": "row",
+        "label": "结束公开求助",
+        "value": "撤下公开区域与联系入口",
+        "to": "foundWithdraw"
+      }
+    ],
+    "footer": null,
+    "module": 4
+  },
+  {
+    "id": "claimReview",
+    "title": "核实认领申请",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "申请人",
+            "小满的家人"
+          ],
+          [
+            "历史照片",
+            "2 张 · 已遮挡无关信息"
+          ],
+          [
+            "特征说明",
+            "左后脚黑斑、深蓝色项圈"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "请逐项核对",
+        "body": "照片相似不等于归属确认；必要时结合病历、芯片或线下核实。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "材料尚不匹配",
+        "to": "claimRejected",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "需要协助",
+        "to": "claimDispute",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "核实匹配，安排交接",
+      "to": "claimMatched"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimMatched",
+    "title": "已核实，等待交接",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "与认领资料匹配",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "见面地点",
+            "双方约定的公共场所"
+          ],
+          [
+            "交接状态",
+            "双方尚未确认"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "交接后再关闭求助",
+        "body": "请确认宠物状态与实际接回情况。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "我已完成交接",
+      "to": "claimHandoverWaiting"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimHandoverWaiting",
+    "title": "等待另一方确认",
+    "items": [
+      {
+        "type": "note",
+        "title": "你的交接确认已记录",
+        "body": "另一方确认前，不会显示为已找回。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "发现问题",
+        "value": "保留材料并申请协助",
+        "to": "claimDispute"
+      }
+    ],
+    "footer": {
+      "label": "返回拾获详情",
+      "to": "foundActive"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimHandoverOther",
+    "title": "确认已接回小满",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "发布人已确认交接",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "请按实际情况确认",
+        "body": "确认后将结束公开求助，并撤下公开位置。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "还没有接回",
+        "to": "claimDispute",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "已安全接回",
+      "to": "claimClosed"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimClosed",
+    "title": "小满已安全回家",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满已安全回家",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "双方已确认交接。公开求助已结束，核实材料仍按原共享范围处理。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回互助",
+      "to": "lostList"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimRejected",
+    "title": "材料暂未匹配",
+    "items": [
+      {
+        "type": "text",
+        "text": "材料暂未匹配",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "可补充能核实的历史记录；拾获信息仍在公开寻找家人。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "补充材料",
+      "to": "claimForm"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimDispute",
+    "title": "申请核实协助",
+    "items": [
+      {
+        "type": "field",
+        "label": "情况说明",
+        "value": "双方对特征存在疑问，暂不交接。"
+      },
+      {
+        "type": "upload",
+        "label": "保留相关材料",
+        "hint": "仅用于本次核实",
+        "to": "mediaChoose",
+        "sets": {
+          "mediaReturn": 1
+        }
+      },
+      {
+        "type": "note",
+        "title": "先保障宠物安全",
+        "body": "核实未完成前，保留安置状态和原记录。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "提交协助申请",
+      "to": "claimDisputePending"
+    },
+    "module": 4
+  },
+  {
+    "id": "claimDisputePending",
+    "title": "协助申请已记录",
+    "items": [
+      {
+        "type": "text",
+        "text": "协助申请已记录",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "等待处理期间，交接确认保持未完成。你可在进度页补充材料。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "查看原记录",
+      "to": "foundManage"
+    },
+    "module": 4
+  },
+  {
+    "id": "foundWithdraw",
+    "title": "结束本次拾获求助",
+    "items": [
+      {
+        "type": "field",
+        "label": "结束原因",
+        "value": "信息重复"
+      },
+      {
+        "type": "note",
+        "title": "公开信息将撤下",
+        "body": "尚未完成的认领申请会收到状态更新，历史记录仍可查询。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "继续寻找家人",
+        "to": "foundManage",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认结束",
+      "to": "lostList",
+      "kind": "secondary"
+    },
+    "module": 4
+  }
+]

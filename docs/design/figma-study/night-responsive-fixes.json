@@ -1,0 +1,106 @@
+{
+  "componentFillFix": {
+    "mutatedNodeIds": [
+      "36:31",
+      "36:32",
+      "36:33",
+      "36:34",
+      "36:35",
+      "36:37",
+      "36:38",
+      "36:39",
+      "36:41",
+      "36:42",
+      "36:43",
+      "36:45",
+      "36:47"
+    ],
+    "nav": [
+      {
+        "width": 71.5999984741211,
+        "text": [
+          {
+            "x": 8,
+            "width": 55.599998474121094,
+            "align": "CENTER"
+          }
+        ]
+      },
+      {
+        "width": 71.5999984741211,
+        "text": [
+          {
+            "x": 8,
+            "width": 55.599998474121094,
+            "align": "CENTER"
+          }
+        ]
+      },
+      {
+        "width": 71.5999984741211,
+        "text": [
+          {
+            "x": 8,
+            "width": 55.599998474121094,
+            "align": "CENTER"
+          }
+        ]
+      },
+      {
+        "width": 71.5999984741211,
+        "text": [
+          {
+            "x": 8,
+            "width": 55.599998474121094,
+            "align": "CENTER"
+          }
+        ]
+      },
+      {
+        "width": 71.5999984741211,
+        "text": [
+          {
+            "x": 8,
+            "width": 55.599998474121094,
+            "align": "CENTER"
+          }
+        ]
+      }
+    ],
+    "padPhotos": [
+      {
+        "id": "39:207",
+        "width": 484
+      }
+    ]
+  },
+  "comparisonRowFix": {
+    "mutatedNodeIds": [
+      "44:244",
+      "44:357"
+    ],
+    "rows": [
+      {
+        "id": "44:244",
+        "x": 48,
+        "y": 178,
+        "width": 1344,
+        "height": 886,
+        "layoutSizingVertical": "HUG"
+      },
+      {
+        "id": "44:357",
+        "x": 48,
+        "y": 1096,
+        "width": 1344,
+        "height": 502.79998779296875,
+        "layoutSizingVertical": "HUG"
+      }
+    ]
+  },
+  "notes": [
+    "Set direct children on new main components to FILL, allowing instance widths to adapt natively.",
+    "Instance-child resize alone was insufficient; main-component child layout is authoritative.",
+    "Comparison rows explicitly HUG vertically after changing layout mode."
+  ]
+}

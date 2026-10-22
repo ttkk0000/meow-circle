@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.composeCompiler)
 }
 
@@ -25,16 +24,20 @@ val meowApiBaseUrl: String =
 
 android {
     namespace = "com.ttkk0000.meowcircle.kmpapp"
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         applicationId = "com.ttkk0000.meowcircle.kmpapp"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 37
+        manifestPlaceholders["allowCleartextTraffic"] = "false"
         versionCode = 1
         versionName = "0.1.0"
         buildConfigField("String", "API_BASE_URL", "\"$meowApiBaseUrl\"")
     }
     buildTypes {
+        debug {
+            manifestPlaceholders["allowCleartextTraffic"] = "true"
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -66,9 +69,12 @@ dependencies {
     implementation(libs.composeUiToolingPreview)
     debugImplementation(libs.composeUiTooling)
     implementation(libs.composeMaterial3)
-    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.composeIcons)
     implementation("androidx.compose.foundation:foundation")
-    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation(libs.coilCompose)
+    implementation(libs.coilNetwork)
+    implementation(libs.androidxExif)
+    implementation(libs.kotlinxCoroutinesAndroid)
     implementation(libs.androidxActivityCompose)
     implementation(libs.androidxLifecycleRuntimeCompose)
     implementation(libs.androidxLifecycleViewmodelCompose)

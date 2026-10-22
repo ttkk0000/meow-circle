@@ -1,0 +1,510 @@
+[
+  {
+    "id": "adoptionConditions",
+    "title": "领养条件",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满 · 当前发布版本",
+        "role": "Section"
+      },
+      {
+        "type": "note",
+        "title": "先阅读，再决定是否申请",
+        "body": "室内照护、家庭成员知情、接受必要的后续沟通。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "费用与边界",
+        "body": "发布者声明¥0，不附带强制购买；可拒绝额外要求并退出。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "只阅读，返回详情",
+        "to": "detail",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "理解条件，开始申请",
+      "to": "apply",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdates",
+    "title": "小满的持续介绍",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 180
+      },
+      {
+        "type": "text",
+        "text": "每一次更新，都对应这只小满",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "今天 · 适应新环境的记录",
+        "value": "照护人更新 · 照片为学习素材",
+        "to": "adoptionUpdateDetail"
+      },
+      {
+        "type": "row",
+        "label": "昨天 · 已知习惯与照护",
+        "value": "保留更新时间和未知事项",
+        "to": "adoptionUpdateDetail"
+      },
+      {
+        "type": "row",
+        "label": "评论与交流",
+        "value": "对本宠物的持续讨论",
+        "to": "adoptionComments"
+      },
+      {
+        "type": "note",
+        "title": "更新不等于认证",
+        "body": "说明来源/时间/发布角色；更正有记录，不用爱心数证明真实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回领养详情",
+      "to": "detail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionUpdateDetail",
+    "title": "小满的这次更新",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "发布者：小满的照护人",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 230
+      },
+      {
+        "type": "text",
+        "text": "今天适应得更好了，愿意主动靠近熟悉的人。",
+        "role": "Body"
+      },
+      {
+        "type": "note",
+        "title": "资料说明",
+        "body": "示例照片，拍摄时间由照护人声明；未知健康项仍保持未知，不写成平台核验。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "更正记录",
+        "value": "保留前后版本说明",
+        "to": "adoptionUpdateHistory"
+      },
+      {
+        "type": "action",
+        "label": "报告照片或描述问题",
+        "to": "reportPost",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "讨论这次更新",
+      "to": "adoptionComments",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdateHistory",
+    "title": "资料更正记录",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前版本",
+        "body": "今天补充适应行为描述和照片来源；不覆盖原始事件时间。",
+        "tone": "subtle"
+      },
+      {
+        "type": "text",
+        "text": "历史版本仍由必要权限保存；对外只展示需要理解的更正摘要。",
+        "role": "Body"
+      }
+    ],
+    "footer": {
+      "label": "返回这次介绍",
+      "to": "adoptionUpdateDetail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionComments",
+    "title": "小满的领养交流",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "正在讨论：待领养的小满",
+        "role": "Strong"
+      },
+      {
+        "type": "comment",
+        "name": "一位宠友",
+        "body": "小满平时喜欢躲在安静的角落吗？",
+        "meta": "今天 · 回复",
+        "kind": "cat",
+        "to": "adoptionReply"
+      },
+      {
+        "type": "comment",
+        "name": "小满的照护人",
+        "body": "刚来时会躲藏，现在会主动靠近熟悉的人。",
+        "meta": "照护人 · 查看介绍",
+        "kind": "cat",
+        "to": "adoptionUpdateDetail"
+      },
+      {
+        "type": "note",
+        "title": "评论不能替代医疗资料",
+        "body": "想了解具体情况可站内联系，不公开证件和家庭地址。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "就小满的情况友好交流…",
+      "context": "Adoption"
+    }
+  },
+  {
+    "id": "adoptionReply",
+    "title": "回复这位宠友",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复：一位宠友",
+        "role": "Strong"
+      },
+      {
+        "type": "text",
+        "text": "小满平时喜欢躲在安静的角落吗？",
+        "role": "Body"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "adoptionComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复这位宠友…",
+      "context": "Adoption"
+    }
+  },
+  {
+    "id": "adoptionCommentSent",
+    "title": "领养交流已发送",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "评论已发送（示意）",
+        "body": "仍属于待领养小满的讨论，不混入其他宠物或圈帖。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "回到小满的交流",
+      "to": "adoptionComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionManage",
+    "title": "维护这只领养宠物",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满 · 发布者维护视角",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "补充介绍与照片",
+        "value": "按角色记录更新时间",
+        "to": "adoptionUpdateCompose"
+      },
+      {
+        "type": "row",
+        "label": "持续评论与答疑",
+        "value": "不能无记录改写他人发言",
+        "to": "adoptionComments"
+      },
+      {
+        "type": "row",
+        "label": "照护协作",
+        "value": "仅邀请授权人员",
+        "to": "adoptionCaretakers"
+      },
+      {
+        "type": "row",
+        "label": "真实性与材料",
+        "value": "事项、来源和核对范围分开",
+        "to": "verify"
+      },
+      {
+        "type": "note",
+        "title": "找不到宠物时",
+        "body": "暂停新预约/交接的设计建议；不自动改变所有权或冻结整个账号。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回我的发布",
+      "to": "myPublishes",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionUpdateCompose",
+    "title": "补充小满介绍",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "field",
+        "label": "本次更新",
+        "value": "今天适应得更好，愿意靠近熟悉的人。"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "field",
+        "label": "照片来源与拍摄时间",
+        "value": "本人有权使用；按已知时间说明"
+      },
+      {
+        "type": "note",
+        "title": "角色：授权照护人",
+        "body": "可补图和事实；不能冒充平台认证、改所有权或代主人结案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消，保留草稿",
+        "to": "adoptionManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "预览本次介绍",
+      "to": "adoptionUpdatePreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdatePreview",
+    "title": "检查新增介绍",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 190
+      },
+      {
+        "type": "text",
+        "text": "小满 · 本次适应行为介绍",
+        "role": "Section"
+      },
+      {
+        "type": "note",
+        "title": "对外可见内容",
+        "body": "文字、选定照片、来源/时间声明及发布角色；不含住址和证件。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "adoptionUpdateCompose",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看提交失败",
+        "to": "adoptionUpdateFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "提交本次更新",
+      "to": "adoptionUpdatePending",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdateFailure",
+    "title": "更新暂未提交",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "草稿与照片仍保留",
+        "body": "按同一次操作核对结果，不重复制造更新。",
+        "tone": "warningSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回预览重试",
+      "to": "adoptionUpdatePreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdatePending",
+    "title": "更新审核中",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "已收到更新（示意）",
+        "body": "未通过展示条件前，不把它推送成已核实事实。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回维护",
+        "to": "adoptionManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看通过后状态的示例",
+      "to": "adoptionUpdateDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdateDone",
+    "title": "介绍已补充",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "更新完成（示意）",
+        "body": "时间线增加本次介绍；旧版本按必要权限保留。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      }
+    ],
+    "footer": {
+      "label": "查看持续介绍",
+      "to": "adoptionUpdates",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionCaretakers",
+    "title": "照护协作",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "row",
+        "label": "发布者：小满的照护人",
+        "value": "管理本宠物发布与授权",
+        "to": "adoptionManage"
+      },
+      {
+        "type": "row",
+        "label": "新增协作照护人",
+        "value": "仅补图、事实与答疑",
+        "to": "adoptionCaretakerInvite"
+      },
+      {
+        "type": "note",
+        "title": "权限最小化",
+        "body": "不默认共享私密原件，不自动允许更改所有权或确认找回。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回维护",
+      "to": "adoptionManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionCaretakerInvite",
+    "title": "邀请照护协作者",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "field",
+        "label": "站内账号",
+        "value": "用户主动指定的宠友"
+      },
+      {
+        "type": "note",
+        "title": "授予范围",
+        "body": "仅本只宠物的介绍、照片和答疑；不扩展到其他宠物或完整私密档案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消邀请",
+        "to": "adoptionCaretakers",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认邀请（示意）",
+      "to": "adoptionCaretakerPending",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionCaretakerPending",
+    "title": "等待协作者确认",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "邀请已记录（示意）",
+        "body": "未接受前没有协作权限；本稿不向真实账号发送邀请。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "撤回邀请",
+        "to": "adoptionCaretakers",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回协作管理",
+      "to": "adoptionCaretakers",
+      "kind": "secondary"
+    }
+  }
+]

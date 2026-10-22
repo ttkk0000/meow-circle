@@ -1,0 +1,104 @@
+{
+  "module": "expressions",
+  "polish": {
+    "pageId": "295:2",
+    "createdNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "createdNodeIdsByPrefix": {
+      "337": {
+        "start": 315,
+        "deltaBase36": "2.44z"
+      }
+    },
+    "mutatedNodeIdsByPrefix": {
+      "319": {
+        "start": 775287,
+        "deltaBase36": "1.11.2.1.v.2.1.3.1.1.1.1.1.25z.1"
+      }
+    },
+    "removedNodeIds": [],
+    "counts": {
+      "styles": 7,
+      "spacing": 27,
+      "footers": 1,
+      "backTargets": 1,
+      "publishEntries": 1
+    }
+  },
+  "restored": {
+    "codec": "prefix-start-base36-delta-v1",
+    "restoredNodeIdsByPrefix": {
+      "312": {
+        "start": 6,
+        "deltaBase36": ""
+      },
+      "319": {
+        "start": 778178,
+        "deltaBase36": "4.2"
+      },
+      "I319:775373;216": {
+        "start": 149146,
+        "deltaBase36": "5.5.5.6.5.5.5.7.5.5.5.6.5.5.5.7.5.5.5.6.5.5.5"
+      }
+    },
+    "createdNodeIdsByPrefix": {},
+    "unmapped": [],
+    "counts": {
+      "actions": 28,
+      "retainedActions": 3,
+      "toolbarControls": 0,
+      "backGuards": 0
+    }
+  },
+  "route": {
+    "pageId": "295:2",
+    "mutatedNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "mutatedNodeIdsByPrefix": {
+      "319": {
+        "start": 775289,
+        "deltaBase36": "9.8.b.c.6.6.6.6"
+      },
+      "337": {
+        "start": 315,
+        "deltaBase36": "2.44z"
+      }
+    },
+    "counts": {
+      "nodes": 0,
+      "reactions": 0,
+      "local": 0,
+      "crossModule": 0,
+      "back": 1,
+      "selfSkipped": 0
+    },
+    "unmapped": []
+  },
+  "validation": {
+    "pageId": "295:2",
+    "rootCount": 1,
+    "issueCount": 0,
+    "results": [
+      {
+        "id": "312:6",
+        "key": "stickerCircle",
+        "platform": "web",
+        "pageId": "321:2",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 459,
+        "texts": 52,
+        "instances": 206,
+        "photos": 49,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 34,
+        "missingText": 0,
+        "localLinks": 52,
+        "urlLinks": 11,
+        "conditional": 376,
+        "issues": []
+      }
+    ]
+  }
+}

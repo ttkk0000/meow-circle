@@ -1,0 +1,224 @@
+[
+  {
+    "id": "lostManage",
+    "title": "我的求助 · 小满",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "row",
+        "label": "1条待查看线索",
+        "value": "仅主人和授权人员可见",
+        "to": "lostLeadInbox"
+      },
+      {
+        "type": "row",
+        "label": "更新资料与照片",
+        "value": "保留原事件时间及更正记录",
+        "to": "lostFromPetDraft"
+      },
+      {
+        "type": "row",
+        "label": "主动分享求助卡",
+        "value": "不群发、不建群",
+        "to": "lostShareAudience"
+      },
+      {
+        "type": "row",
+        "label": "暂停公开展示",
+        "value": "不等于找回",
+        "to": "lostPauseConfirm"
+      },
+      {
+        "type": "row",
+        "label": "其他原因结束",
+        "value": "宠物可继续保持走失",
+        "to": "lostOtherEnd"
+      }
+    ],
+    "footer": {
+      "label": "我已找到小满",
+      "to": "lostFoundConfirm",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostDetail",
+    "title": "求助详情 · 小满",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostAreaMap"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "text",
+        "text": "最后见到：今天17:30 · 洪山区",
+        "role": "Strong"
+      },
+      {
+        "type": "note",
+        "title": "不代表实时位置",
+        "body": "疑似目击请私密提交；普通评论不算线索。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "粗略区域地图",
+        "value": "浏览无需GPS",
+        "to": "lostAreaMap"
+      },
+      {
+        "type": "row",
+        "label": "主动分享求助",
+        "value": "先选受众和会话",
+        "to": "lostShareAudience"
+      },
+      {
+        "type": "row",
+        "label": "关注本次进展",
+        "value": "可随时取消",
+        "to": "lostFollowed"
+      }
+    ],
+    "footer": {
+      "label": "我可能见过它",
+      "to": "lostPrivateLead",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostPublish",
+    "title": "发布求助 · 小满示例",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "petMissingPrivate"
+      },
+      {
+        "type": "field",
+        "label": "最后见到时间",
+        "value": "今天17:30；估计时段须说明"
+      },
+      {
+        "type": "field",
+        "label": "公开区域",
+        "value": "武汉 · 洪山区"
+      },
+      {
+        "type": "field",
+        "label": "识别特征",
+        "value": "黑白毛色，鼻尖有黑斑"
+      },
+      {
+        "type": "row",
+        "label": "补充近期照片",
+        "value": "照片不保证归属或健康",
+        "to": "lostPhotoEdit"
+      },
+      {
+        "type": "note",
+        "title": "不猜事实",
+        "body": "不把当前GPS和照片EXIF当作最后见到地点。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "保留草稿退出",
+        "to": "lostDraftExit",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查对外公开内容",
+      "to": "lostFromPetDisclosure",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petProfile",
+    "title": "小满的主页",
+    "phase": "pets",
+    "back": "petsList",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 200
+      },
+      {
+        "type": "text",
+        "text": "小满",
+        "role": "Title"
+      },
+      {
+        "type": "text",
+        "text": "猫咪 · 在家 · 档案仅自己",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "row",
+        "label": "小满的图文日记",
+        "value": "独立记录，每条单独设置范围",
+        "to": "petDiary"
+      },
+      {
+        "type": "row",
+        "label": "当前状态",
+        "value": "在家 / 暂时找不到它",
+        "to": "petStatus"
+      },
+      {
+        "type": "row",
+        "label": "编辑资料",
+        "value": "只修改小满，不影响其他宠物",
+        "to": "petEdit"
+      },
+      {
+        "type": "row",
+        "label": "资料可见性",
+        "value": "与单条日记、公开求助分别设置",
+        "to": "petVisibility"
+      },
+      {
+        "type": "row",
+        "label": "切换或添加宠物",
+        "value": "猫咪、狗狗和其他宠物",
+        "to": "petsList"
+      },
+      {
+        "type": "note",
+        "title": "自己的记录，不是认证",
+        "body": "本页为主人视角；档案、照片和爱心数不构成真实性担保。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "给小满写日记",
+      "to": "diaryCompose",
+      "kind": "primary"
+    }
+  }
+]

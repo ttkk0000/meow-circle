@@ -1,0 +1,7767 @@
+[
+  {
+    "id": "circleFeed",
+    "title": "宠友圈",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "switch",
+        "entries": [
+          [
+            "推荐",
+            "home"
+          ],
+          [
+            "关注",
+            "following"
+          ],
+          [
+            "宠友圈",
+            "circleFeed"
+          ],
+          [
+            "同城",
+            "localFeed"
+          ]
+        ],
+        "active": "宠友圈"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 80
+      },
+      {
+        "type": "text",
+        "text": "朋友之间，分享毛孩子的小日子",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "inlineActions",
+        "entries": [
+          [
+            "宠友",
+            "circleFriends"
+          ],
+          [
+            "新朋友",
+            "circleRequestReceived"
+          ],
+          [
+            "写日常",
+            "circleCompose"
+          ]
+        ]
+      },
+      {
+        "type": "circleCard",
+        "author": "布丁的铲屎官",
+        "meta": "今天 12:20 · 朋友可见",
+        "body": "布丁把今天最好的阳光位占好了。你家的小家伙也会找光斑吗？",
+        "pet": "布丁 · 图文日常",
+        "kind": "catOffer",
+        "to": "circleDetail",
+        "commentTo": "circleComments",
+        "likeTo": "circleLiked",
+        "moreTo": "circlePostActions",
+        "photoTo": "circlePhotoViewer"
+      },
+      {
+        "type": "circleCard",
+        "author": "豆豆的朋友",
+        "meta": "今天 12:20 · 朋友可见",
+        "body": "今天带豆豆去公园散步，认识了新的小伙伴。",
+        "pet": "豆豆 · 狗狗日常",
+        "kind": "dog",
+        "to": "dogPost",
+        "commentTo": "dogPost",
+        "likeTo": "dogPost",
+        "moreTo": "profileActions",
+        "photoTo": "dogPost"
+      }
+    ],
+    "tab": "home",
+    "brand": true
+  },
+  {
+    "id": "circleEmpty",
+    "title": "宠友圈",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "empty",
+        "title": "还没有朋友的新日常",
+        "body": "不生成假好友或假互动。可以先记录自己的宠物生活。"
+      },
+      {
+        "type": "action",
+        "label": "写自己的日记",
+        "to": "diaryCompose",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "去社区认识宠友",
+        "to": "home",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看新朋友",
+        "to": "circleRequestReceived",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到宠友圈",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleFriends",
+    "title": "我的宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "互相确认，才成为宠友",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "pet",
+        "name": "布丁的铲屎官",
+        "meta": "已互相确认 · 布丁",
+        "kind": "catOffer",
+        "to": "circleFriendProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "pet",
+        "name": "团子今天不拆家",
+        "meta": "已互相确认 · 团子",
+        "kind": "cat",
+        "to": "circleFriendProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "row",
+        "label": "收到的请求",
+        "value": "待你确认",
+        "to": "circleRequestReceived"
+      },
+      {
+        "type": "row",
+        "label": "添加宠友",
+        "value": "从站内主页或邀请入口发起",
+        "to": "circleRequest"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleRequest",
+    "title": "添加宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "pet",
+        "name": "布丁的铲屎官",
+        "meta": "公开资料 · 非认证保证",
+        "kind": "catOffer",
+        "to": "circleFriendProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "field",
+        "label": "申请理由",
+        "value": "也想交流晒太阳的小日常",
+        "kind": "field"
+      },
+      {
+        "type": "note",
+        "title": "不会读取通讯录",
+        "body": "关注和好友是两种关系；未接受前不开放圈动态。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "发送好友请求",
+      "to": "circleRequestWaiting",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleRequestWaiting",
+    "title": "等待对方确认",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "empty",
+        "title": "请求已送出（示意）",
+        "body": "同一双方只保留一个待处理请求。不会连续提醒对方。"
+      },
+      {
+        "type": "action",
+        "label": "撤回本次请求",
+        "to": "circleFriends",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleRequestReceived",
+    "title": "新朋友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "pet",
+        "name": "布丁的铲屎官",
+        "meta": "希望和你成为宠友",
+        "kind": "catOffer",
+        "to": "circleFriendProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "text",
+        "text": "也想交流晒太阳的小日常。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "接受后的范围",
+        "body": "默认看成为朋友后的圈动态；不自动开放私密日记或历史内容。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "暂不接受",
+        "to": "circleFriends",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "接受并成为宠友",
+      "to": "circleFriendProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleFriendProfile",
+    "title": "宠友主页",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "text",
+        "text": "布丁的铲屎官",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "已互相确认的宠友",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "action",
+        "label": "发消息",
+        "to": "privateChat",
+        "kind": "secondary"
+      },
+      {
+        "type": "row",
+        "label": "可见日常",
+        "value": "只展示你有权读取的内容",
+        "to": "circleDetail"
+      },
+      {
+        "type": "row",
+        "label": "关系设置",
+        "value": "移除与拉黑分别说明",
+        "to": "circleFriendSettings"
+      }
+    ],
+    "footer": {
+      "label": "回到宠友圈",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleCompose",
+    "title": "写日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "field",
+        "label": "想说的话",
+        "value": "小满今天又把阳光位占满了。",
+        "kind": "field"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "row",
+        "label": "添加或更换照片",
+        "value": "仅图文，不支持视频",
+        "to": "circlePhotoChoose"
+      },
+      {
+        "type": "row",
+        "label": "关联宠物",
+        "value": "小满",
+        "to": "petsList"
+      },
+      {
+        "type": "row",
+        "label": "谁可以看",
+        "value": "朋友可见",
+        "to": "circleAudience"
+      },
+      {
+        "type": "row",
+        "label": "位置",
+        "value": "不显示",
+        "to": "circleLocation"
+      },
+      {
+        "type": "note",
+        "title": "本条日常与档案分开授权",
+        "body": "分享本条不会公开整份宠物档案；默认不显示精确位置。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "表情与贴纸",
+        "to": "exprCircle",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "存草稿或退出",
+        "to": "circleDraftFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "预览这条日常",
+      "to": "circlePreview",
+      "kind": "primary"
+    },
+    "back": "circleDraftFailure"
+  },
+  {
+    "id": "circlePhotoChoose",
+    "title": "选择照片",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "note",
+        "title": "照片选择示意",
+        "body": "不读取真实相册。此照片为学习素材；公开前检查人脸、位置与住址。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "拒绝或取消，继续写文字",
+        "to": "circleCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "使用这张照片",
+      "to": "circleCompose",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleAudience",
+    "title": "谁可以看",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "先选好范围，再分享日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "朋友可见",
+        "value": "当前选择 · 互相确认的宠友",
+        "to": "circleCompose"
+      },
+      {
+        "type": "row",
+        "label": "仅自己",
+        "value": "不进入圈子和公开社区",
+        "to": "circleAudiencePrivate"
+      },
+      {
+        "type": "row",
+        "label": "部分朋友可见",
+        "value": "选择本次受众",
+        "to": "circleSelectFriends"
+      },
+      {
+        "type": "row",
+        "label": "不给谁看",
+        "value": "在朋友中排除指定对象",
+        "to": "circleExcludeFriends"
+      },
+      {
+        "type": "row",
+        "label": "公开到社区",
+        "value": "另行确认，不是叠加开关",
+        "to": "circlePublicConfirm"
+      },
+      {
+        "type": "note",
+        "title": "本条日常与档案分开授权",
+        "body": "分享本条不会公开整份宠物档案；默认不显示精确位置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留朋友可见",
+      "to": "circleCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleAudiencePrivate",
+    "title": "仅自己可见",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "只有你能看这条日常",
+        "body": "不出现在他人信息流、搜索或通知预览。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择范围",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存范围并预览",
+      "to": "diaryPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleSelectFriends",
+    "title": "选择本次宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "布丁的铲屎官",
+        "value": "已选 · 互相确认的宠友",
+        "to": "circlePartialPreview"
+      },
+      {
+        "type": "row",
+        "label": "团子今天不拆家",
+        "value": "未选 · 点按选择后确认",
+        "to": "circlePartialPreview"
+      },
+      {
+        "type": "note",
+        "title": "范围示意",
+        "body": "只对当前选定的人分享；排除模式须返回上一页选择，不能同时叠加。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "确认所选受众",
+      "to": "circlePartialPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePrivatePetWarning",
+    "title": "仅分享这条内容",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 150
+      },
+      {
+        "type": "text",
+        "text": "小满的档案仍保持私密",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "本次只分享选中的文字和照片，不开放旧日记、照护材料或家庭地址。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "保持私密，返回修改",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认本条分享并预览",
+      "to": "circlePreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePublicConfirm",
+    "title": "公开到社区",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "公开范围会改变",
+        "body": "所有能访问公开社区的人可能看到本条图文；不是继续标记为朋友私密。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "note",
+        "title": "本条日常与档案分开授权",
+        "body": "分享本条不会公开整份宠物档案；默认不显示精确位置。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消公开",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认公开并预览",
+      "to": "circlePublicPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePublicPreview",
+    "title": "公开日常预览",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "circleCard",
+        "author": "小满的朋友",
+        "meta": "发布前预览 · 社区公开",
+        "body": "小满今天又把阳光位占满了。",
+        "pet": "只分享本条，档案仍私密",
+        "kind": "cat",
+        "to": "circlePrivatePetWarning",
+        "commentTo": "ownDiaryComments",
+        "likeTo": "circleCompose",
+        "moreTo": "circleAudience",
+        "photoTo": "diaryPhotoViewer"
+      },
+      {
+        "type": "note",
+        "title": "公开确认",
+        "body": "本预览中的身份、正文和照片将公开；尚未发布。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回编辑",
+        "to": "circleCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布到公开社区",
+      "to": "postPublished",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleLocation",
+    "title": "日常位置",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "不显示位置",
+        "value": "推荐默认",
+        "to": "circleCompose"
+      },
+      {
+        "type": "row",
+        "label": "武汉",
+        "value": "仅显示城市，不含住址",
+        "to": "circleCompose"
+      },
+      {
+        "type": "note",
+        "title": "无需为了日常开定位",
+        "body": "可手动选城市；不自动带出照片EXIF或精确位置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保持不显示",
+      "to": "circleCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circlePreview",
+    "title": "日常预览",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "circleCard",
+        "author": "小满的朋友",
+        "meta": "预览 · 朋友可见",
+        "body": "小满今天又把阳光位占满了。",
+        "pet": "小满 · 仅本条分享",
+        "kind": "cat",
+        "to": "circlePrivatePetWarning",
+        "commentTo": "ownDiaryComments",
+        "likeTo": "circleCompose",
+        "moreTo": "circleAudience",
+        "photoTo": "diaryPhotoViewer"
+      },
+      {
+        "type": "action",
+        "label": "返回编辑",
+        "to": "circleCompose",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看失败恢复示例",
+        "to": "circleDraftFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布给宠友",
+      "to": "circlePublished",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePublished",
+    "title": "已发布给宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "这条日常已发布（示意）",
+        "body": "可见范围：朋友。小满的档案仍保持原范围。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "circleCard",
+        "author": "小满的朋友",
+        "meta": "刚刚 · 朋友可见",
+        "body": "小满今天又把阳光位占满了。",
+        "pet": "小满 · 图文日常",
+        "kind": "cat",
+        "to": "circleOwnPostSettings",
+        "commentTo": "ownDiaryComments",
+        "likeTo": "circleLiked",
+        "moreTo": "circleOwnPostSettings",
+        "photoTo": "diaryPhotoViewer"
+      },
+      {
+        "type": "action",
+        "label": "管理这条内容",
+        "to": "circleOwnPostSettings",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到宠友圈",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleDetail",
+    "title": "这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "circleCard",
+        "author": "布丁的铲屎官",
+        "meta": "今天 12:20 · 朋友可见",
+        "body": "布丁把今天最好的阳光位占好了。你家的小家伙也会找光斑吗？",
+        "pet": "布丁 · 图文日常",
+        "kind": "catOffer",
+        "to": "circleDetail",
+        "commentTo": "circleComments",
+        "likeTo": "circleLiked",
+        "moreTo": "circlePostActions",
+        "photoTo": "circlePhotoViewer"
+      },
+      {
+        "type": "text",
+        "text": "只显示你有权查看的互动",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "action",
+        "label": "查看评论与回复",
+        "to": "circleComments",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "更多表态",
+        "to": "circleReactionPicker",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "友好聊聊…",
+      "context": "CircleComment",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleLiked",
+    "title": "这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "circleCard",
+        "author": "布丁的铲屎官",
+        "meta": "今天 12:20 · 朋友可见",
+        "body": "布丁把今天最好的阳光位占好了。你家的小家伙也会找光斑吗？",
+        "pet": "布丁 · 图文日常",
+        "kind": "catOffer",
+        "to": "circleDetail",
+        "commentTo": "circleComments",
+        "likeTo": "circleLiked",
+        "moreTo": "circlePostActions",
+        "photoTo": "circlePhotoViewer"
+      },
+      {
+        "type": "note",
+        "title": "已喜欢 · 你",
+        "body": "再次点按可取消；更换表态不增加人数。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消喜欢",
+        "to": "circleDetail",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "更换表态",
+        "to": "circleReactionPicker",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看评论",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "友好聊聊…",
+      "context": "CircleComment",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleComments",
+    "title": "评论与回复",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "comment",
+        "name": "团子今天不拆家",
+        "body": "这个姿势也太可爱了！",
+        "meta": "今天12:32 · 回复",
+        "kind": "cat",
+        "to": "circleCommentReply"
+      },
+      {
+        "type": "comment",
+        "name": "布丁的铲屎官",
+        "body": "它每天都会找这个位置。",
+        "meta": "作者 · 回复",
+        "kind": "catOffer",
+        "to": "circleReplyAuthor"
+      },
+      {
+        "type": "note",
+        "title": "按当前权限显示",
+        "body": "作者可见有效评论；其他人只看有权读取的互动，不泄露隐藏引用。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "友好聊聊…",
+      "context": "CircleComment",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleCommentReply",
+    "title": "回复团子",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复：团子今天不拆家",
+        "role": "Strong",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "这个姿势也太可爱了！",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "回复范围",
+        "body": "继承原评论可见范围；无法访问父评论时不提交。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复团子…",
+      "context": "CircleReply",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleCommentSent",
+    "title": "评论已发布",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "已发送这条评论（示意）",
+        "body": "不会替你扩大原帖或宠物资料的权限。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "text",
+        "text": "抱抱，今天也被小家伙治愈了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "查看原帖",
+        "to": "circleDetail",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回评论",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circlePhotoViewer",
+    "title": "照片",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 450
+      },
+      {
+        "type": "text",
+        "text": "布丁 · 第1张／共1张 · 学习素材",
+        "role": "Label",
+        "color": "muted"
+      }
+    ],
+    "footer": {
+      "label": "返回原日常",
+      "to": "circleDetail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleExpression",
+    "title": "全站表情",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "同一面板，共享表达方式",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "评论与回复",
+        "value": "选择后仍需发送",
+        "to": "exprCircleComment"
+      },
+      {
+        "type": "row",
+        "label": "写日常",
+        "value": "插入草稿，不自动发出",
+        "to": "exprCircle"
+      },
+      {
+        "type": "row",
+        "label": "私信与群聊",
+        "value": "保留会话上下文",
+        "to": "exprPrivate"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleOwnPostSettings",
+    "title": "管理这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "修改谁可以看",
+        "value": "朋友可见 → 仅自己需确认",
+        "to": "circleTightenConfirm"
+      },
+      {
+        "type": "row",
+        "label": "编辑日常",
+        "value": "保留当前范围",
+        "to": "circleCompose"
+      },
+      {
+        "type": "row",
+        "label": "删除这条日常",
+        "value": "确认后不再对外读取",
+        "to": "circleDeleteConfirm"
+      },
+      {
+        "type": "note",
+        "title": "权限收紧后",
+        "body": "详情、相册和通知摘要需重新校验；已截屏内容无法召回。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回日常",
+      "to": "circlePublished",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleTightenConfirm",
+    "title": "收紧这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "改为仅自己？",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "朋友将无法继续读取这条图文及其互动；不会删除他人原始举报记录。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消，保留朋友可见",
+        "to": "circlePublished",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认改为仅自己",
+      "to": "diaryPrivateResult",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleDeleteConfirm",
+    "title": "删除日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "删除后无法在圈子继续查看",
+        "body": "原图与详情需要停止对外访问；必要举报证据独立受控保留。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消删除",
+        "to": "circlePublished",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认删除",
+      "to": "diaryDeleted",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleUnavailable",
+    "title": "内容暂不可见",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "empty",
+        "title": "暂时无法查看这条日常",
+        "body": "可能已删除或范围改变；不泄露是否被排除或拉黑。"
+      }
+    ],
+    "footer": {
+      "label": "返回圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleFriendSettings",
+    "title": "宠友关系",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "移除宠友",
+        "value": "不等同于拉黑；公开内容仍可见",
+        "to": "circleFriendRemove"
+      },
+      {
+        "type": "row",
+        "label": "拉黑与举报",
+        "value": "分别说明影响",
+        "to": "blockConfirm"
+      },
+      {
+        "type": "note",
+        "title": "私聊接收独立控制",
+        "body": "移除好友不自动代替消息请求设置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回宠友主页",
+      "to": "circleFriendProfile",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleFriendRemove",
+    "title": "移除这位宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "移除后不再读取朋友受众内容",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "不通知对方具体原因；其公开社区内容仍按公开规则处理。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消",
+        "to": "circleFriendSettings",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认移除",
+      "to": "circleFriends",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleReport",
+    "title": "报告这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "field",
+        "label": "问题类型",
+        "value": "骚扰／欺骗／不当内容",
+        "kind": "field"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "只提交必要的具体事实",
+        "kind": "field"
+      },
+      {
+        "type": "note",
+        "title": "受理不等于认定违规",
+        "body": "不按举报数量自动处罚。举报对象为这条日常，不上传全聊天历史。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "确认提交报告",
+      "to": "reportPostSent",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleDraftFailure",
+    "title": "保留日常草稿",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "离开或暂时无法发布",
+        "body": "文字、已选照片与范围保留为草稿；这条内容尚未发布。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "继续编辑",
+        "to": "circleCompose",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "重试发布预览",
+        "to": "circlePreview",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "放弃草稿并返回",
+        "to": "circleFeed",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存草稿并退出",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleReactionPicker",
+    "title": "选择表态",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "expressions",
+        "to": "circleLiked"
+      },
+      {
+        "type": "note",
+        "title": "一个用户一个当前表态",
+        "body": "可更换／取消，不重复计数。长按不是唯一入口。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleDetail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circlePostActions",
+    "title": "日常操作",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "action",
+        "label": "报告这条日常",
+        "to": "circleReport",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "不再看此作者的内容",
+        "to": "contentHidden",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "查看宠友关系",
+        "to": "circleFriendSettings",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回原日常",
+      "to": "circleDetail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleReplyAuthor",
+    "title": "回复布丁的铲屎官",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复：布丁的铲屎官",
+        "role": "Strong",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "它每天都会找这个位置。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复作者…",
+      "context": "CircleAuthorReply",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleExcludeFriends",
+    "title": "不给谁看",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "团子今天不拆家",
+        "value": "本次排除，其他朋友可见",
+        "to": "circleExcludedPreview"
+      },
+      {
+        "type": "note",
+        "title": "不是拉黑或移除",
+        "body": "仅改变这条日常的受众；不会通知被排除者具体原因。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "确认本次排除名单",
+      "to": "circleExcludedPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePartialPreview",
+    "title": "检查本条分享范围",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 180
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "这次谁可以看",
+        "body": "部分朋友：布丁的铲屎官",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "仅分享本条",
+        "body": "私密档案仍私密；不开放旧日记和家庭地址。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改范围",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布给上述受众",
+      "to": "circlePartialDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleExcludedPreview",
+    "title": "检查本条分享范围",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 180
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "这次谁可以看",
+        "body": "朋友可见，排除：团子今天不拆家",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "仅分享本条",
+        "body": "私密档案仍私密；不开放旧日记和家庭地址。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改范围",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布给上述受众",
+      "to": "circleExcludedDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePartialDone",
+    "title": "已发布日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "发布完成（示意）",
+        "body": "仅布丁的铲屎官可见",
+        "tone": "successSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "管理可见范围",
+        "value": "收紧后各入口重新鉴权",
+        "to": "circleOwnPostSettings"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleExcludedDone",
+    "title": "已发布日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "发布完成（示意）",
+        "body": "朋友可见；团子今天不拆家不可见",
+        "tone": "successSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "管理可见范围",
+        "value": "收紧后各入口重新鉴权",
+        "to": "circleOwnPostSettings"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petsList",
+    "title": "我的宠物",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "每只毛孩子，都有自己的日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "猫咪 · 在家 · 档案仅自己",
+        "kind": "cat",
+        "to": "petProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "pet",
+        "name": "豆豆",
+        "meta": "狗狗 · 在家 · 朋友可见",
+        "kind": "dog",
+        "to": "petDog",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "pet",
+        "name": "奶糖",
+        "meta": "兔兔 · 在家 · 仅自己",
+        "kind": "rabbit",
+        "to": "petOther",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "action",
+        "label": "添加新的宠物",
+        "to": "petCreate",
+        "kind": "secondary"
+      },
+      {
+        "type": "row",
+        "label": "查看无宠物空态",
+        "value": "不会强迫先建档才能浏览",
+        "to": "petsEmpty"
+      }
+    ],
+    "footer": {
+      "label": "回到我的",
+      "to": "mine",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petsEmpty",
+    "title": "我的宠物",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "empty",
+        "title": "先记下第一位家人",
+        "body": "没有数量上的人为上限；资料不知道可以留空。猫咪优先，也欢迎其他宠物。"
+      }
+    ],
+    "footer": {
+      "label": "添加宠物",
+      "to": "petCreate",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petCreate",
+    "title": "添加宠物",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "先选物种，再填写适用资料",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "猫咪",
+        "value": "猫咪的习惯与照护",
+        "to": "petCreateCat"
+      },
+      {
+        "type": "row",
+        "label": "狗狗",
+        "value": "活动与照护信息",
+        "to": "petCreateDog"
+      },
+      {
+        "type": "row",
+        "label": "其他宠物",
+        "value": "不要套用猫狗字段",
+        "to": "petCreateOther"
+      },
+      {
+        "type": "note",
+        "title": "建档不等于认证",
+        "body": "照片、昵称和录入资料不证明权属、健康或品种。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "暂不添加",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petCreateCat",
+    "title": "填写宠物资料",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "小满"
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "猫咪"
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "已知才填写；可保留未知"
+      },
+      {
+        "type": "field",
+        "label": "室内活动习惯",
+        "value": "仅填写已知情况"
+      },
+      {
+        "type": "note",
+        "title": "默认仅自己可见",
+        "body": "创建后可单独设置资料范围；不会自动进入领养或出售。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消并返回宠物列表",
+        "to": "petsList",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建并查看对应档案",
+      "to": "petCreated",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petCreateDog",
+    "title": "填写宠物资料",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "dog",
+        "height": 160
+      },
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "豆豆"
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "狗狗"
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "已知才填写；可保留未知"
+      },
+      {
+        "type": "field",
+        "label": "遛狗与活动安排",
+        "value": "仅填写已知情况"
+      },
+      {
+        "type": "note",
+        "title": "默认仅自己可见",
+        "body": "创建后可单独设置资料范围；不会自动进入领养或出售。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消并返回宠物列表",
+        "to": "petsList",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建并查看对应档案",
+      "to": "petDog",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petCreateOther",
+    "title": "填写宠物资料",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "rabbit",
+        "height": 160
+      },
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "奶糖"
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "其他宠物 · 兔兔"
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "已知才填写；可保留未知"
+      },
+      {
+        "type": "field",
+        "label": "物种与栖养环境",
+        "value": "仅填写已知情况"
+      },
+      {
+        "type": "note",
+        "title": "默认仅自己可见",
+        "body": "创建后可单独设置资料范围；不会自动进入领养或出售。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消并返回宠物列表",
+        "to": "petsList",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建并查看对应档案",
+      "to": "petOther",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petCreated",
+    "title": "宠物档案已创建",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "已建立小满的独立档案（示意）",
+        "body": "资料与日记默认私密；可继续添加其他宠物。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "猫咪 · 在家",
+        "kind": "cat",
+        "to": "petProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "action",
+        "label": "继续添加宠物",
+        "to": "petCreate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看小满主页",
+      "to": "petProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petEdit",
+    "title": "编辑小满资料",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "小满"
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "未知可留空"
+      },
+      {
+        "type": "field",
+        "label": "识别特征",
+        "value": "黑白毛色，鼻尖有黑斑"
+      },
+      {
+        "type": "row",
+        "label": "更换资料照片",
+        "value": "仅使用自己有权使用的照片",
+        "to": "circlePhotoChoose"
+      },
+      {
+        "type": "note",
+        "title": "事实与记录分开",
+        "body": "修改不证明核验通过；已有求助事件资料需另行确认同步。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保存并回主页",
+      "to": "petProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petDog",
+    "title": "豆豆的主页",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "dog",
+        "height": 200
+      },
+      {
+        "type": "text",
+        "text": "豆豆",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "狗狗 · 在家",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "row",
+        "label": "独立图文日记",
+        "value": "只读取这只宠物的内容",
+        "to": "petDogDiary"
+      },
+      {
+        "type": "row",
+        "label": "资料可见性",
+        "value": "默认仅自己，单条另设范围",
+        "to": "petDogVisibility"
+      },
+      {
+        "type": "row",
+        "label": "切换或添加宠物",
+        "value": "不限制人为数量",
+        "to": "petsList"
+      }
+    ],
+    "footer": {
+      "label": "回到宠物列表",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petOther",
+    "title": "奶糖的主页",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "rabbit",
+        "height": 200
+      },
+      {
+        "type": "text",
+        "text": "奶糖",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "兔兔 · 在家",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "row",
+        "label": "独立图文日记",
+        "value": "只读取这只宠物的内容",
+        "to": "petOtherDiary"
+      },
+      {
+        "type": "row",
+        "label": "资料可见性",
+        "value": "默认仅自己，单条另设范围",
+        "to": "petOtherVisibility"
+      },
+      {
+        "type": "row",
+        "label": "切换或添加宠物",
+        "value": "不限制人为数量",
+        "to": "petsList"
+      }
+    ],
+    "footer": {
+      "label": "回到宠物列表",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petDogDiary",
+    "title": "豆豆的日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "dog",
+        "height": 260
+      },
+      {
+        "type": "text",
+        "text": "今天的小日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "独立归档与独立权限",
+        "body": "豆豆的日记不混入小满的记录；本条仅自己可见。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回对应宠物",
+      "to": "petDog",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petOtherDiary",
+    "title": "奶糖的日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "rabbit",
+        "height": 260
+      },
+      {
+        "type": "text",
+        "text": "今天的小日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "独立归档与独立权限",
+        "body": "奶糖的日记不混入小满的记录；本条仅自己可见。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回对应宠物",
+      "to": "petOther",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petVisibility",
+    "title": "宠物档案可见性",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "row",
+        "label": "仅自己",
+        "value": "当前选择；私密日记不受公开设置影响",
+        "to": "petVisibilitySaved"
+      },
+      {
+        "type": "row",
+        "label": "朋友可见",
+        "value": "只开放选定的资料字段",
+        "to": "petVisibilityReview"
+      },
+      {
+        "type": "row",
+        "label": "公开基本档案",
+        "value": "不公开照护原件、住址与私密日记",
+        "to": "petVisibilityReview"
+      },
+      {
+        "type": "note",
+        "title": "日记单独授权",
+        "body": "档案公开不等于所有日记公开；分享单条不等于公开档案。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留仅自己",
+      "to": "petVisibilitySaved",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petVisibilityReview",
+    "title": "检查资料共享",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "只共享本次选择的基本资料",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "拟共享字段",
+        "body": "昵称、物种、选中的照片；精确地址、照护原件和旧私密日记不包含。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消共享",
+        "to": "petVisibility",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认本次共享范围",
+      "to": "petVisibilitySaved",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petVisibilitySaved",
+    "title": "可见范围已保存",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "设置已保存（示意）",
+        "body": "按照上一步确认的字段和受众执行；日记仍逐条独立授权。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回小满主页",
+      "to": "petProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petDiary",
+    "title": "小满的图文日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满 · 成长点滴",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 200
+      },
+      {
+        "type": "row",
+        "label": "今天也把阳光位占满了",
+        "value": "今天12:20 · 仅自己可见",
+        "to": "diaryEntry"
+      },
+      {
+        "type": "row",
+        "label": "查看分享过的日常",
+        "value": "与圈子读取同一内容权限",
+        "to": "diaryEntryShared"
+      },
+      {
+        "type": "action",
+        "label": "写一条新日记",
+        "to": "diaryCompose",
+        "kind": "secondary"
+      },
+      {
+        "type": "row",
+        "label": "查看删除后状态",
+        "value": "仅作为异常/结果演示",
+        "to": "diaryDeleted"
+      }
+    ],
+    "footer": {
+      "label": "回到小满主页",
+      "to": "petProfile",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "diaryEntry",
+    "title": "小满的这条日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 280
+      },
+      {
+        "type": "text",
+        "text": "今天也把阳光位占满了",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "仅自己可见 · 不进入他人的圈子或搜索",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "action",
+        "label": "修改本条范围",
+        "to": "diaryAudience",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "删除这条日记",
+        "to": "diaryDeleteConfirm",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回日记列表",
+      "to": "petDiary",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "diaryCompose",
+    "title": "写小满的日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "field",
+        "label": "今天想记什么",
+        "value": "小满今天又把阳光位占满了。"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "row",
+        "label": "关联宠物",
+        "value": "小满 · 不切到其他宠物",
+        "to": "petsList"
+      },
+      {
+        "type": "row",
+        "label": "谁可以看",
+        "value": "仅自己",
+        "to": "diaryAudience"
+      },
+      {
+        "type": "action",
+        "label": "选择表情或贴纸",
+        "to": "exprDiary",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "保留草稿退出",
+        "to": "diaryDraftExit",
+        "kind": "quiet"
+      },
+      {
+        "type": "note",
+        "title": "图文首版",
+        "body": "不上传或播放视频；不自动带出照片精确位置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "预览这条日记",
+      "to": "diaryPreview",
+      "kind": "primary"
+    },
+    "back": "diaryDraftExit"
+  },
+  {
+    "id": "diaryAudience",
+    "title": "日记可见性",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "row",
+        "label": "仅自己",
+        "value": "推荐默认，作为私密日记",
+        "to": "diaryPreview"
+      },
+      {
+        "type": "row",
+        "label": "朋友可见",
+        "value": "先确认仅分享本条",
+        "to": "diaryShareWarning"
+      },
+      {
+        "type": "row",
+        "label": "公开到社区",
+        "value": "须另行公开确认",
+        "to": "circlePublicConfirm"
+      },
+      {
+        "type": "note",
+        "title": "权限逐条判断",
+        "body": "小满档案的隐私设置不会被本条覆盖。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保持仅自己",
+      "to": "diaryPreview",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "diaryShareWarning",
+    "title": "分享本条日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "小满档案仍私密",
+        "body": "确认后仅把选定图文分享给互相确认的宠友，不公开整份档案。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "继续保留私密",
+        "to": "diaryPreview",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认本条朋友可见",
+      "to": "diarySharedPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryPreview",
+    "title": "私密日记预览",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "仅自己可见",
+        "body": "不向圈子、公开社区或其他人发送通知。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回编辑",
+        "to": "diaryCompose",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "模拟保存失败",
+        "to": "diaryDraftFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存为私密日记",
+      "to": "diaryPublished",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diarySharedPreview",
+    "title": "朋友日记预览",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "朋友可见",
+        "body": "只分享本条图文，档案仍私密。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改范围",
+        "to": "diaryAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认分享本条",
+      "to": "diaryEntryShared",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryPublished",
+    "title": "日记已保存",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "已存入小满的日记（示意）",
+        "body": "仅自己可见，未对外分享。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      }
+    ],
+    "footer": {
+      "label": "查看这条日记",
+      "to": "diaryEntry",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryEntryShared",
+    "title": "分享过的日常",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 230
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "朋友可见 · 仅本条分享",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "action",
+        "label": "收紧为仅自己",
+        "to": "circleTightenConfirm",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "查看圈内互动",
+        "to": "ownDiaryComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回小满日记",
+      "to": "petDiary",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "diaryDraftExit",
+    "title": "离开编辑",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "这条还没有保存或发布",
+        "body": "你可以保留草稿，或返回继续编辑。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "继续编辑",
+        "to": "diaryCompose",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "放弃本次草稿",
+        "to": "petDiary",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保留草稿并退出",
+      "to": "petDiary",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryDraftFailure",
+    "title": "保存失败，内容还在",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "不要重复创建记录",
+        "body": "文字与已选照片保留，网络恢复后使用同一次草稿重试。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "回到编辑",
+        "to": "diaryCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重试并查看预览",
+      "to": "diaryPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryPrivateResult",
+    "title": "这条已改为仅自己",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "后续读取受限（示意）",
+        "body": "圈子、搜索、详情、原图与通知摘要需要重新校验。已截图或显示过的锁屏通知无法保证召回。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回私密日记",
+      "to": "diaryEntry",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryDeleteConfirm",
+    "title": "删除这条日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "确认删除小满的这条日记？",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "对应圈子入口也应停止对外读取；不删除这只宠物的其他日记。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消，保留日记",
+        "to": "diaryEntry",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认删除本条",
+      "to": "diaryDeleted",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryDeleted",
+    "title": "这条日记已删除",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "empty",
+        "title": "删除完成（示意）",
+        "body": "宠物档案与其他日记保留。必要举报记录按独立权限处理。"
+      }
+    ],
+    "footer": {
+      "label": "返回小满主页",
+      "to": "petProfile",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petStatus",
+    "title": "小满的当前状态",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "row",
+        "label": "在家",
+        "value": "主人确认恢复照护，不是GPS位置",
+        "to": "petProfile"
+      },
+      {
+        "type": "row",
+        "label": "暂时找不到它",
+        "value": "确认后再决定是否公开求助",
+        "to": "petMarkMissing"
+      },
+      {
+        "type": "note",
+        "title": "状态分开",
+        "body": "走失不改变权属、领养性质或医疗结论。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保持原状态",
+      "to": "petProfile",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petMarkMissing",
+    "title": "标记小满走失",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "note",
+        "title": "先确认个人状态",
+        "body": "不公开私密档案、不发圈、不建群、不自动提醒别人。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "仅修改状态，暂不公开",
+        "to": "petMissingPrivate",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消，保持在家",
+        "to": "petProfile",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "标记走失并继续求助",
+      "to": "lostFromPetDraft",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petMissingPrivate",
+    "title": "私人走失状态",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "小满：走失（示意）",
+        "body": "尚未发布公开求助；资料和旧日记权限不变。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "action",
+        "label": "继续完善求助",
+        "to": "lostFromPetDraft",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "刚才标记有误",
+        "to": "petMarkMistake",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到我的宠物",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petMarkMistake",
+    "title": "撤销误标",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "尚未公开求助",
+        "body": "恢复在家，不发布虚假的找回消息。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "仍在寻找，不撤销",
+        "to": "petMissingPrivate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认误标并恢复",
+      "to": "petProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetDraft",
+    "title": "发布小满走失求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "petMissingPrivate"
+      },
+      {
+        "type": "field",
+        "label": "最后见到时间",
+        "value": "今天17:30；估计时段须说明"
+      },
+      {
+        "type": "field",
+        "label": "公开区域",
+        "value": "武汉 · 洪山区"
+      },
+      {
+        "type": "field",
+        "label": "识别特征",
+        "value": "黑白毛色，鼻尖有黑斑"
+      },
+      {
+        "type": "row",
+        "label": "补充近期照片",
+        "value": "照片不保证归属或健康",
+        "to": "lostPhotoEdit"
+      },
+      {
+        "type": "note",
+        "title": "不猜事实",
+        "body": "不把当前GPS和照片EXIF当作最后见到地点。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "保留草稿退出",
+        "to": "lostDraftExit",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查对外公开内容",
+      "to": "lostFromPetDisclosure",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostPhotoEdit",
+    "title": "补充小满照片",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 260
+      },
+      {
+        "type": "field",
+        "label": "照片说明",
+        "value": "本人近期照片；时间只填写已知情况"
+      },
+      {
+        "type": "note",
+        "title": "图文首版",
+        "body": "使用有权使用的照片；不支持视频。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消补图",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "使用照片并返回",
+      "to": "lostFromPetDraft",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetDisclosure",
+    "title": "确认公开范围",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "只发布本次求助快照",
+        "body": "不开放私密档案、旧日记、详细住址和手机号。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "允许进入列表与地图",
+        "value": "未同意；点按查看公开确认",
+        "to": "lostPublicConsent"
+      },
+      {
+        "type": "note",
+        "title": "分享另行选择",
+        "body": "发布通过后才可主动选择圈子或具体会话；不自动群发。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "附近提醒",
+        "body": "只给主动订阅且满足范围/物种/频率条件的人，不保证所有人收到。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "请先确认公开范围",
+      "to": null,
+      "kind": "disabled"
+    }
+  },
+  {
+    "id": "lostPublicConsent",
+    "title": "同意展示本次求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "拟公开内容",
+        "body": "小满选定照片、特征、最后见到时间及武汉洪山粗略区域。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "不会公开",
+        "body": "私密线索、精确住址、手机号和完整宠物档案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "不同意，返回草稿",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "同意并检查预览",
+      "to": "lostFromPetPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetPreview",
+    "title": "求助发布预览",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetDraft"
+      },
+      {
+        "type": "field",
+        "label": "最后见到",
+        "value": "今天17:30 · 非实时位置"
+      },
+      {
+        "type": "note",
+        "title": "已确认的公开范围",
+        "body": "列表和地图可展示本次快照，不自动发圈或建群。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看失败恢复",
+        "to": "lostSubmitFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认提交本次求助",
+      "to": "lostFromPetPending",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetPending",
+    "title": "求助审核中",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "已收到本次提交（示意）",
+        "body": "审核未通过前不公开分发；待审核不等于已推送。",
+        "tone": "subtle"
+      },
+      {
+        "type": "caseCard",
+        "title": "小满 · 待审核",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetDraft"
+      },
+      {
+        "type": "action",
+        "label": "补充资料",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "撤回公开申请",
+        "to": "lostDraftExit",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看通过后的示例",
+      "to": "lostFromPetManage",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostSubmitFailure",
+    "title": "提交暂未完成",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "草稿和资料仍在",
+        "body": "先核对本次操作结果，避免重复建案和提醒。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "返回编辑",
+        "to": "lostFromPetDraft",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重试并检查预览",
+      "to": "lostFromPetPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostDraftExit",
+    "title": "保留求助草稿",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "公开求助尚未发布",
+        "body": "私人走失状态保留；放弃草稿不等于已经找回。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "继续编辑",
+        "to": "lostFromPetDraft",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "放弃草稿，保留走失状态",
+        "to": "petMissingPrivate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存草稿并退出",
+      "to": "petMissingPrivate",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostFromPetActive",
+    "title": "小满的公开求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostAreaMap"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "text",
+        "text": "最后见到：今天17:30 · 洪山区",
+        "role": "Strong"
+      },
+      {
+        "type": "note",
+        "title": "不代表实时位置",
+        "body": "疑似目击请私密提交；普通评论不算线索。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "粗略区域地图",
+        "value": "浏览无需GPS",
+        "to": "lostAreaMap"
+      },
+      {
+        "type": "row",
+        "label": "主动分享求助",
+        "value": "先选受众和会话",
+        "to": "lostShareAudience"
+      },
+      {
+        "type": "row",
+        "label": "关注本次进展",
+        "value": "可随时取消",
+        "to": "lostFollowed"
+      }
+    ],
+    "footer": {
+      "label": "我可能见过它",
+      "to": "lostPrivateLead",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFromPetManage",
+    "title": "维护小满的求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "row",
+        "label": "1条待查看线索",
+        "value": "仅主人和授权人员可见",
+        "to": "lostLeadInbox"
+      },
+      {
+        "type": "row",
+        "label": "更新资料与照片",
+        "value": "保留原事件时间及更正记录",
+        "to": "lostFromPetDraft"
+      },
+      {
+        "type": "row",
+        "label": "主动分享求助卡",
+        "value": "不群发、不建群",
+        "to": "lostShareAudience"
+      },
+      {
+        "type": "row",
+        "label": "暂停公开展示",
+        "value": "不等于找回",
+        "to": "lostPauseConfirm"
+      },
+      {
+        "type": "row",
+        "label": "其他原因结束",
+        "value": "宠物可继续保持走失",
+        "to": "lostOtherEnd"
+      }
+    ],
+    "footer": {
+      "label": "我已找到小满",
+      "to": "lostFoundConfirm",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostPrivateLead",
+    "title": "我可能见过小满",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "field",
+        "label": "目击时间",
+        "value": "今天18:10"
+      },
+      {
+        "type": "field",
+        "label": "地点",
+        "value": "手动填写公共位置；精确信息私密共享"
+      },
+      {
+        "type": "field",
+        "label": "描述",
+        "value": "看到相似黑白猫，尚未确认是小满"
+      },
+      {
+        "type": "row",
+        "label": "可选现场照片",
+        "value": "避开人脸、车牌、住宅",
+        "to": "lostLeadPhoto"
+      },
+      {
+        "type": "note",
+        "title": "仅本案授权人员可查看",
+        "body": "站内联系优先，不需付费换线索。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "检查线索与共享范围",
+      "to": "lostLeadReview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadPhoto",
+    "title": "线索照片说明",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 260
+      },
+      {
+        "type": "note",
+        "title": "示例材料",
+        "body": "不表示识别成功；仅向本案授权人员提供有权使用的材料。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "不附照片继续",
+        "to": "lostPrivateLead",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "使用照片并返回",
+      "to": "lostPrivateLead",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadReview",
+    "title": "检查私密线索",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "提交给：小满 M01",
+        "role": "Strong"
+      },
+      {
+        "type": "note",
+        "title": "本次共享",
+        "body": "18:10目击描述、已选照片及手动地点；仅主人和授权人员可见。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "收到不等于匹配",
+        "body": "不移动公共标记或修改宠物状态。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "lostPrivateLead",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看发送失败",
+        "to": "lostLeadFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认私密提交",
+      "to": "lostLeadSent",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadFailure",
+    "title": "线索尚未发送",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "输入未清空",
+        "body": "未知结果先核对本次提交；不另发副本。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "回到表单",
+        "to": "lostPrivateLead",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重试检查摘要",
+      "to": "lostLeadReview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadSent",
+    "title": "线索已收到",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "已收到（示意）",
+        "body": "等待主人核实，不代表已确认是小满。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回本次求助",
+      "to": "lostFromPetActive",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadInbox",
+    "title": "小满的线索",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "仅本案授权人员可见",
+        "body": "不公开目击者原图、位置和联系信息。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "一位宠友 · 18:10",
+        "value": "待核实，看到相似黑白猫",
+        "to": "lostLeadDetail"
+      },
+      {
+        "type": "row",
+        "label": "无新线索空态",
+        "value": "不生成假目击或热度",
+        "to": "lostLeadEmpty"
+      }
+    ],
+    "footer": {
+      "label": "返回本次维护",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadEmpty",
+    "title": "还没有新线索",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "empty",
+        "title": "暂无新的目击线索",
+        "body": "可补照片、检查区域或主动分享，不能保证有人响应。"
+      }
+    ],
+    "footer": {
+      "label": "回到维护页",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadDetail",
+    "title": "核实这条线索",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满 M01 · 私密线索 L01",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "text",
+        "text": "宠友于18:10看到相似黑白猫，尚未确认是小满。",
+        "role": "Body"
+      },
+      {
+        "type": "note",
+        "title": "待核实",
+        "body": "不公开精确位置，不改变原始描述。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "标记有帮助",
+        "to": "lostLeadHelpful",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "标记不匹配",
+        "to": "lostLeadNotMatch",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "报告索费或骚扰",
+        "to": "reportMessage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "站内联系目击者",
+      "to": "lostLeadChat",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostLeadHelpful",
+    "title": "线索处理已记录",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "有帮助（示意）",
+        "body": "仍不等于找回；不改写对方原话，不自动公开其位置。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回本次维护",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadNotMatch",
+    "title": "线索处理已记录",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "不匹配（示意）",
+        "body": "不是对目击者作违规认定，后续仍可继续核实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到线索列表",
+      "to": "lostLeadInbox",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostShareAudience",
+    "title": "分享小满的求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "row",
+        "label": "分享给宠友圈",
+        "value": "先确认受众",
+        "to": "lostShareConfirm"
+      },
+      {
+        "type": "row",
+        "label": "分享至已加入群",
+        "value": "只发给选中的会话",
+        "to": "lostGroupShareConfirm"
+      },
+      {
+        "type": "note",
+        "title": "当前为已发布案例示例",
+        "body": "未发布或未通过审核的草稿不能分享为有效案例卡。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "暂不分享",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostShareConfirm",
+    "title": "确认分享至宠友圈",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "note",
+        "title": "受众：互相确认的朋友",
+        "body": "只包含已公开快照，不包含私密线索和完整档案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消分享",
+        "to": "lostShareAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认分享本次求助卡",
+      "to": "lostShared",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostGroupShareConfirm",
+    "title": "确认分享至群聊",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "note",
+        "title": "会话：武汉猫友日常",
+        "body": "仅当前已加入群；不会群发或自动把成员加入提醒订阅。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消分享",
+        "to": "lostShareAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "发送到这个群（示意）",
+      "to": "lostGroupShared",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostShared",
+    "title": "求助卡已分享",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "已分享到宠友圈（示意）",
+        "body": "朋友不会因此自动订阅所有警报。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "继续维护求助",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostGroupShared",
+    "title": "群内求助卡",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "武汉猫友日常 · 示例",
+        "body": "仅演示选中会话的发送结果。",
+        "tone": "subtle"
+      },
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "返回本次求助",
+      "to": "lostFromPetManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostFollowed",
+    "title": "已关注本次进展",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "仅小满的本次M01",
+        "body": "可随时取消；普通评论、重复照片不会逐条提醒。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消本次关注",
+        "to": "lostFromPetActive",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回求助详情",
+      "to": "lostFromPetActive",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostFoundConfirm",
+    "title": "确认小满已找回",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "text",
+        "text": "是小满，而且已经接回了吗？",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "我已确认是小满并接回",
+        "value": "未勾选；点按确认",
+        "to": "lostFoundReady"
+      },
+      {
+        "type": "note",
+        "title": "确认后的影响",
+        "body": "恢复在家，停止本次提醒，活跃列表/地图退出寻找；分享卡更新。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "还没有找到，返回寻找",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "请先确认已接回",
+      "to": null,
+      "kind": "disabled"
+    }
+  },
+  {
+    "id": "lostFoundReady",
+    "title": "结束小满的求助",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "已确认：是小满并已接回",
+        "body": "正式结束前仍可取消。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "note",
+        "title": "只结束本次求助",
+        "body": "不关闭其他宠物提醒；私密线索始终受限。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消，继续寻找",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看同步失败示例",
+        "to": "lostCloseFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认找回并结束求助",
+      "to": "lostClosing",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostClosing",
+    "title": "结束处理中",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "正在关闭本次求助（示意）",
+        "body": "优先停止新增与排队警报，再同步各入口。",
+        "tone": "subtle"
+      },
+      {
+        "type": "text",
+        "text": "未全部同步前，不显示全部完成。",
+        "role": "Body"
+      },
+      {
+        "type": "action",
+        "label": "查看失败与重试",
+        "to": "lostCloseFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看完成后的状态",
+      "to": "lostFoundDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostCloseFailure",
+    "title": "结束尚未全部完成",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "本次警报保持停止",
+        "body": "部分卡片同步中；安全重试同一操作，不重新广播。",
+        "tone": "warningSoft"
+      }
+    ],
+    "footer": {
+      "label": "重试结束处理",
+      "to": "lostClosing",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostFoundDone",
+    "title": "小满已找回",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 已找回",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01结案，公开联系入口关闭。",
+        "kind": "cat",
+        "to": "petHomeFound"
+      },
+      {
+        "type": "note",
+        "title": "收尾完成（示意）",
+        "body": "活跃列表/地图退出寻找；站内原卡显示已找回；线索仍私密。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "action",
+        "label": "查看更新的分享卡",
+        "to": "lostResolvedShare",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "可选：写团圆日记",
+        "to": "diaryCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回小满主页",
+      "to": "petHomeFound",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petHomeFound",
+    "title": "小满回家了",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "小满 · 在家",
+        "role": "Title"
+      },
+      {
+        "type": "row",
+        "label": "本次求助历史",
+        "value": "M01 · 已找回",
+        "to": "lostFoundDone"
+      },
+      {
+        "type": "row",
+        "label": "图文日记",
+        "value": "是否分享另行选择",
+        "to": "petDiary"
+      },
+      {
+        "type": "row",
+        "label": "如果再次走失",
+        "value": "新建事件，不复活旧地点",
+        "to": "petMissingAgain"
+      }
+    ],
+    "footer": {
+      "label": "回到宠物列表",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostResolvedShare",
+    "title": "已更新的分享卡",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 已找回",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "原事件M01的新状态，不再显示寻找中。",
+        "kind": "cat",
+        "to": "lostFoundDone"
+      },
+      {
+        "type": "note",
+        "title": "传播边界",
+        "body": "外部截图和已显示的锁屏通知无法召回，不自动向全城报喜。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回找回结果",
+      "to": "lostFoundDone",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostPauseConfirm",
+    "title": "暂停公开寻找",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "不代表小满已找回",
+        "body": "停止公开推荐及新提醒，私人走失状态保留，之后可恢复。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消暂停",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认暂停公开",
+      "to": "lostPaused",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostPaused",
+    "title": "公开展示已暂停",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 暂停公开",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "不再对新接收者分发，私人走失状态保留。",
+        "kind": "cat",
+        "to": "petMissingPrivate"
+      },
+      {
+        "type": "action",
+        "label": "恢复前重新检查公开内容",
+        "to": "lostFromPetPreview",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "其他原因结束",
+        "to": "lostOtherEnd",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到我的宠物",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostOtherEnd",
+    "title": "其他原因结束",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "field",
+        "label": "原因",
+        "value": "不再通过平台公开寻找"
+      },
+      {
+        "type": "note",
+        "title": "不要标成找回",
+        "body": "只关闭本次求助，宠物可继续保持走失。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查结束影响",
+      "to": "lostOtherConfirm",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostOtherConfirm",
+    "title": "确认其他原因结束",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "本次不是找回记录",
+        "body": "停止本案公开联系、提醒和推荐；小满私人状态仍走失。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消，继续寻找",
+        "to": "lostFromPetManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认结束本次公开求助",
+      "to": "lostOtherDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostOtherDone",
+    "title": "本次求助已结束",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 已结束，非找回",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "私人走失状态保留，没有虚假找回通知。",
+        "kind": "cat",
+        "to": "petMissingPrivate"
+      }
+    ],
+    "footer": {
+      "label": "查看私人走失状态",
+      "to": "petMissingPrivate",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petMissingAgain",
+    "title": "再次标记走失",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "新事件M02",
+        "body": "历史M01保持已找回；重新填写本次时间、区域和照片，不重推旧案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消，仍在家",
+        "to": "petHomeFound",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建新事件草稿",
+      "to": "lostAgainDraft",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostAgainDraft",
+    "title": "新的走失事件草稿",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "field",
+        "label": "本次最后见到时间",
+        "value": "重新填写，不沿用M01"
+      },
+      {
+        "type": "field",
+        "label": "本次区域",
+        "value": "重新选择，不沿用M01"
+      },
+      {
+        "type": "note",
+        "title": "新事件M02尚未公开",
+        "body": "保存草稿不复活M01，也不自动通知别人。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消新事件，返回在家",
+        "to": "petHomeFound",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保留新草稿并返回",
+      "to": "petMissingPrivate",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "lostAreaMap",
+    "title": "小满的区域地图",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "map",
+        "title": "武汉洪山示例区域",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetActive"
+      },
+      {
+        "type": "note",
+        "title": "粗略区域，不是精确针点",
+        "body": "底图为设计参考，不追踪宠物实时位置；案例M01为学习示例。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看不可定位空态",
+        "to": "lostMap",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回本次求助",
+      "to": "lostFromPetActive",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "lostLeadChat",
+    "title": "联系这位目击者",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "caseCard",
+        "title": "小满 · 寻找中",
+        "meta": "武汉 · 洪山区 · 学习示例",
+        "body": "本次M01；粗略区域非实时位置。",
+        "kind": "cat",
+        "to": "lostFromPetManage"
+      },
+      {
+        "type": "note",
+        "title": "私密线索L01 · 不是领养会话",
+        "body": "保持站内联系，不先付费换线索。",
+        "tone": "subtle"
+      },
+      {
+        "type": "bubble",
+        "text": "谢谢线索，能描述一下看到它时的环境吗？",
+        "mine": true
+      },
+      {
+        "type": "bubble",
+        "text": "公共步道附近，但我还不能确定是小满。",
+        "mine": false
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复这位目击者…",
+      "context": "Lead"
+    }
+  },
+  {
+    "id": "nearbyAlertPreferences",
+    "title": "附近走失提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前关闭",
+        "body": "浏览互助地图不要求开启提醒，也不必授予GPS。",
+        "tone": "subtle"
+      },
+      {
+        "type": "text",
+        "text": "只提醒你愿意关注的范围",
+        "role": "Section"
+      },
+      {
+        "type": "text",
+        "text": "可选5–100公里、物种和频率；不会默认后台持续定位。",
+        "role": "Body"
+      },
+      {
+        "type": "row",
+        "label": "先设置提醒范围",
+        "value": "完成确认后才开启",
+        "to": "nearbyAlertSetup"
+      }
+    ],
+    "footer": {
+      "label": "返回设置",
+      "to": "settings",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyAlertSetup",
+    "title": "设置附近提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "row",
+        "label": "提醒中心",
+        "value": "武汉 · 洪山区 · 手动选择",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "范围",
+        "value": "25公里，支持5–100公里",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "物种",
+        "value": "猫咪、狗狗及其他宠物",
+        "to": "nearbySpecies"
+      },
+      {
+        "type": "row",
+        "label": "通知方式",
+        "value": "应用内为主，系统通知单独授权",
+        "to": "nearbyNotification"
+      },
+      {
+        "type": "note",
+        "title": "开启前说明",
+        "body": "按所选中心计算，不承诺实时距离；不发送全部历史案例或每条普通评论。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "放弃设置",
+        "to": "nearbyAlertPreferences",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查并开启25公里提醒",
+      "to": "nearbyReview25",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyCenter",
+    "title": "选择提醒中心",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "row",
+        "label": "手动：武汉洪山区",
+        "value": "不需要GPS",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "手动：上海徐汇区",
+        "value": "不需要GPS",
+        "to": "nearbyReviewShanghai"
+      },
+      {
+        "type": "row",
+        "label": "使用本次主动授权位置",
+        "value": "解释用途后申请，不开后台追踪",
+        "to": "nearbyLocationExplain"
+      },
+      {
+        "type": "note",
+        "title": "位置不是持续跟随",
+        "body": "可主动刷新，或保留手动中心；不会为了发日记索要定位。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留武汉手动中心",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyLocationExplain",
+    "title": "使用位置前",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "只更新本次提醒中心",
+        "body": "不用于公开住宅地址，不默认后台持续跟踪。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "拒绝并手动选择",
+        "to": "nearbyPermissionDenied",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看本次授权后的示例",
+      "to": "nearbyAlertSetup",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyPermissionDenied",
+    "title": "定位未授权",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "仍可使用手动中心",
+        "body": "基本浏览、草稿、互助地图及手动订阅不受影响；不反复弹权限。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "手动选择区域",
+      "to": "nearbyCenter",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyRadius",
+    "title": "提醒距离",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "text",
+        "text": "范围5–100公里",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "5公里",
+        "value": "点按检查该范围",
+        "to": "nearbyReview5"
+      },
+      {
+        "type": "row",
+        "label": "10公里",
+        "value": "点按检查该范围",
+        "to": "nearbyReview10"
+      },
+      {
+        "type": "row",
+        "label": "25公里",
+        "value": "推荐示例值",
+        "to": "nearbyReview25"
+      },
+      {
+        "type": "row",
+        "label": "50公里",
+        "value": "点按检查该范围",
+        "to": "nearbyReview50"
+      },
+      {
+        "type": "row",
+        "label": "100公里",
+        "value": "点按检查该范围",
+        "to": "nearbyReview100"
+      },
+      {
+        "type": "row",
+        "label": "自定义范围",
+        "value": "例32公里，仍在5–100内",
+        "to": "nearbyRadiusCustom"
+      },
+      {
+        "type": "note",
+        "title": "半径的含义",
+        "body": "相对你选的中心与事件区域，不是人与宠物的实时距离。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回设置",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyRadiusCustom",
+    "title": "自定义范围",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "field",
+        "label": "距离（公里）",
+        "value": "32"
+      },
+      {
+        "type": "note",
+        "title": "允许范围5–100",
+        "body": "越界时不给静默修正；说明原因并保留输入。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "查看越界错误",
+        "to": "nearbyRadiusError",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "检查32公里设置",
+      "to": "nearbyReview32",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyRadiusError",
+    "title": "距离需要调整",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "field",
+        "label": "距离（公里）",
+        "value": "101",
+        "kind": "error",
+        "hint": "请输入5至100之间的距离；当前输入保留。"
+      },
+      {
+        "type": "action",
+        "label": "取消自定义",
+        "to": "nearbyRadius",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回修改",
+      "to": "nearbyRadiusCustom",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyReview5",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：5公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启5公里",
+      "to": "nearbyEnabled5",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled5",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "5公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview10",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：10公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启10公里",
+      "to": "nearbyEnabled10",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled10",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "10公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview25",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：25公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启25公里",
+      "to": "nearbyEnabled25",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled25",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "25公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview32",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：32公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启32公里",
+      "to": "nearbyEnabled32",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled32",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "32公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview50",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：50公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启50公里",
+      "to": "nearbyEnabled50",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled50",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "50公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReview100",
+    "title": "检查提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：100公里",
+        "body": "中心：手动武汉洪山区；物种：猫、狗及其他；接收：应用内摘要。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "你可以随时关闭",
+        "body": "仅寻找中且公开有效的案例参与匹配；重复线索和普通评论不逐条提醒。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启100公里",
+      "to": "nearbyEnabled100",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabled100",
+    "title": "附近提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "100公里 · 武汉洪山区（示意）",
+        "body": "仅按你确认的设置接收。系统通知仍受独立权限与频率控制。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "row",
+        "label": "调整距离",
+        "value": "不重发全部历史案例",
+        "to": "nearbyRadius"
+      },
+      {
+        "type": "row",
+        "label": "更换中心",
+        "value": "手动或主动授权",
+        "to": "nearbyCenter"
+      },
+      {
+        "type": "row",
+        "label": "关闭提醒",
+        "value": "与关闭某一次求助不同",
+        "to": "nearbyOffConfirm"
+      },
+      {
+        "type": "row",
+        "label": "查看收到提醒的示例",
+        "value": "进入对应事件，不暴露私密线索",
+        "to": "lostFromPetActive"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyReviewShanghai",
+    "title": "上海提醒设置",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "手动中心：上海徐汇区",
+        "body": "范围25公里；不会因为选择上海而读取GPS或虚构当地案例。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回选择中心",
+        "to": "nearbyCenter",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认开启上海25公里",
+      "to": "nearbyEnabledShanghai",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabledShanghai",
+    "title": "上海附近提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "上海徐汇区 · 25公里（示意）",
+        "body": "无匹配时保持真实空态，不填入虚构走失信息。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "action",
+        "label": "关闭提醒",
+        "to": "nearbyOffConfirm",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbySpecies",
+    "title": "接收哪些宠物",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "row",
+        "label": "猫咪优先",
+        "value": "只查看猫咪的配置示例",
+        "to": "nearbySpeciesCat"
+      },
+      {
+        "type": "row",
+        "label": "所有支持的宠物",
+        "value": "猫、狗和其他宠物",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "note",
+        "title": "物种过滤与案例规则分开",
+        "body": "不把未知物种硬归为猫咪；其他物种可按真实资料标示。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保持所有物种",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbySpeciesCat",
+    "title": "仅猫咪的提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "范围：25公里 · 武汉洪山区",
+        "body": "物种：仅猫咪；不更改别人案例的物种资料。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消变更",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存猫咪配置示例",
+      "to": "nearbyEnabledCat",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "nearbyEnabledCat",
+    "title": "猫咪提醒已开启",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "仅猫咪 · 25公里（示意）",
+        "body": "中心：手动武汉洪山区。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择物种",
+        "to": "nearbySpecies",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "关闭提醒",
+        "to": "nearbyOffConfirm",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到互助列表",
+      "to": "lostList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyNotification",
+    "title": "提醒方式与频率",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "row",
+        "label": "应用内摘要",
+        "value": "推荐默认，保持节制",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "系统通知",
+        "value": "说明权限与拒绝后的路径",
+        "to": "nearbyNotificationExplain"
+      },
+      {
+        "type": "note",
+        "title": "频率和去重",
+        "body": "同一事件合并更新，冷却期间不反复提醒；普通评论不触发广播。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留应用内摘要",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyNotificationExplain",
+    "title": "系统通知说明",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "系统权限单独控制",
+        "body": "这里不模拟真实系统授权弹窗。即使拒绝，也可在应用内查看互助消息。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "暂不开系统通知",
+        "to": "nearbyAlertSetup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "了解并返回设置",
+      "to": "nearbyAlertSetup",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "nearbyOffConfirm",
+    "title": "关闭附近提醒",
+    "phase": "alerts",
+    "items": [
+      {
+        "type": "note",
+        "title": "关闭接收新提醒",
+        "body": "不删除手动中心，不影响浏览，也不替主人结束任何求助事件。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消关闭",
+        "to": "nearbyEnabled25",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认关闭",
+      "to": "nearbyAlertPreferences",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionConditions",
+    "title": "领养条件",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满 · 当前发布版本",
+        "role": "Section"
+      },
+      {
+        "type": "note",
+        "title": "先阅读，再决定是否申请",
+        "body": "室内照护、家庭成员知情、接受必要的后续沟通。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "费用与边界",
+        "body": "发布者声明¥0，不附带强制购买；可拒绝额外要求并退出。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "只阅读，返回详情",
+        "to": "detail",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "理解条件，开始申请",
+      "to": "apply",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdates",
+    "title": "小满的持续介绍",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 180
+      },
+      {
+        "type": "text",
+        "text": "每一次更新，都对应这只小满",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "今天 · 适应新环境的记录",
+        "value": "照护人更新 · 照片为学习素材",
+        "to": "adoptionUpdateDetail"
+      },
+      {
+        "type": "row",
+        "label": "昨天 · 已知习惯与照护",
+        "value": "保留更新时间和未知事项",
+        "to": "adoptionUpdateDetail"
+      },
+      {
+        "type": "row",
+        "label": "评论与交流",
+        "value": "对本宠物的持续讨论",
+        "to": "adoptionComments"
+      },
+      {
+        "type": "note",
+        "title": "更新不等于认证",
+        "body": "说明来源/时间/发布角色；更正有记录，不用爱心数证明真实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回领养详情",
+      "to": "detail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionUpdateDetail",
+    "title": "小满的这次更新",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "发布者：小满的照护人",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 230
+      },
+      {
+        "type": "text",
+        "text": "今天适应得更好了，愿意主动靠近熟悉的人。",
+        "role": "Body"
+      },
+      {
+        "type": "note",
+        "title": "资料说明",
+        "body": "示例照片，拍摄时间由照护人声明；未知健康项仍保持未知，不写成平台核验。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "更正记录",
+        "value": "保留前后版本说明",
+        "to": "adoptionUpdateHistory"
+      },
+      {
+        "type": "action",
+        "label": "报告照片或描述问题",
+        "to": "reportPost",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "讨论这次更新",
+      "to": "adoptionComments",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdateHistory",
+    "title": "资料更正记录",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前版本",
+        "body": "今天补充适应行为描述和照片来源；不覆盖原始事件时间。",
+        "tone": "subtle"
+      },
+      {
+        "type": "text",
+        "text": "历史版本仍由必要权限保存；对外只展示需要理解的更正摘要。",
+        "role": "Body"
+      }
+    ],
+    "footer": {
+      "label": "返回这次介绍",
+      "to": "adoptionUpdateDetail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionComments",
+    "title": "小满的领养交流",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "正在讨论：待领养的小满",
+        "role": "Strong"
+      },
+      {
+        "type": "comment",
+        "name": "一位宠友",
+        "body": "小满平时喜欢躲在安静的角落吗？",
+        "meta": "今天 · 回复",
+        "kind": "cat",
+        "to": "adoptionReply"
+      },
+      {
+        "type": "comment",
+        "name": "小满的照护人",
+        "body": "刚来时会躲藏，现在会主动靠近熟悉的人。",
+        "meta": "照护人 · 查看介绍",
+        "kind": "cat",
+        "to": "adoptionUpdateDetail"
+      },
+      {
+        "type": "note",
+        "title": "评论不能替代医疗资料",
+        "body": "想了解具体情况可站内联系，不公开证件和家庭地址。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "就小满的情况友好交流…",
+      "context": "Adoption"
+    }
+  },
+  {
+    "id": "adoptionReply",
+    "title": "回复这位宠友",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复：一位宠友",
+        "role": "Strong"
+      },
+      {
+        "type": "text",
+        "text": "小满平时喜欢躲在安静的角落吗？",
+        "role": "Body"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "adoptionComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复这位宠友…",
+      "context": "Adoption"
+    }
+  },
+  {
+    "id": "adoptionCommentSent",
+    "title": "领养交流已发送",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "评论已发送（示意）",
+        "body": "仍属于待领养小满的讨论，不混入其他宠物或圈帖。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "回到小满的交流",
+      "to": "adoptionComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionManage",
+    "title": "维护这只领养宠物",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满 · 发布者维护视角",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "补充介绍与照片",
+        "value": "按角色记录更新时间",
+        "to": "adoptionUpdateCompose"
+      },
+      {
+        "type": "row",
+        "label": "持续评论与答疑",
+        "value": "不能无记录改写他人发言",
+        "to": "adoptionComments"
+      },
+      {
+        "type": "row",
+        "label": "照护协作",
+        "value": "仅邀请授权人员",
+        "to": "adoptionCaretakers"
+      },
+      {
+        "type": "row",
+        "label": "真实性与材料",
+        "value": "事项、来源和核对范围分开",
+        "to": "verify"
+      },
+      {
+        "type": "note",
+        "title": "找不到宠物时",
+        "body": "暂停新预约/交接的设计建议；不自动改变所有权或冻结整个账号。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回我的发布",
+      "to": "myPublishes",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionUpdateCompose",
+    "title": "补充小满介绍",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "field",
+        "label": "本次更新",
+        "value": "今天适应得更好，愿意靠近熟悉的人。"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 170
+      },
+      {
+        "type": "field",
+        "label": "照片来源与拍摄时间",
+        "value": "本人有权使用；按已知时间说明"
+      },
+      {
+        "type": "note",
+        "title": "角色：授权照护人",
+        "body": "可补图和事实；不能冒充平台认证、改所有权或代主人结案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消，保留草稿",
+        "to": "adoptionManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "预览本次介绍",
+      "to": "adoptionUpdatePreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdatePreview",
+    "title": "检查新增介绍",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 190
+      },
+      {
+        "type": "text",
+        "text": "小满 · 本次适应行为介绍",
+        "role": "Section"
+      },
+      {
+        "type": "note",
+        "title": "对外可见内容",
+        "body": "文字、选定照片、来源/时间声明及发布角色；不含住址和证件。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "adoptionUpdateCompose",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看提交失败",
+        "to": "adoptionUpdateFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "提交本次更新",
+      "to": "adoptionUpdatePending",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdateFailure",
+    "title": "更新暂未提交",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "草稿与照片仍保留",
+        "body": "按同一次操作核对结果，不重复制造更新。",
+        "tone": "warningSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回预览重试",
+      "to": "adoptionUpdatePreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdatePending",
+    "title": "更新审核中",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "已收到更新（示意）",
+        "body": "未通过展示条件前，不把它推送成已核实事实。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回维护",
+        "to": "adoptionManage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看通过后状态的示例",
+      "to": "adoptionUpdateDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionUpdateDone",
+    "title": "介绍已补充",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "更新完成（示意）",
+        "body": "时间线增加本次介绍；旧版本按必要权限保留。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      }
+    ],
+    "footer": {
+      "label": "查看持续介绍",
+      "to": "adoptionUpdates",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionCaretakers",
+    "title": "照护协作",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "row",
+        "label": "发布者：小满的照护人",
+        "value": "管理本宠物发布与授权",
+        "to": "adoptionManage"
+      },
+      {
+        "type": "row",
+        "label": "新增协作照护人",
+        "value": "仅补图、事实与答疑",
+        "to": "adoptionCaretakerInvite"
+      },
+      {
+        "type": "note",
+        "title": "权限最小化",
+        "body": "不默认共享私密原件，不自动允许更改所有权或确认找回。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回维护",
+      "to": "adoptionManage",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "adoptionCaretakerInvite",
+    "title": "邀请照护协作者",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "field",
+        "label": "站内账号",
+        "value": "用户主动指定的宠友"
+      },
+      {
+        "type": "note",
+        "title": "授予范围",
+        "body": "仅本只宠物的介绍、照片和答疑；不扩展到其他宠物或完整私密档案。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消邀请",
+        "to": "adoptionCaretakers",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认邀请（示意）",
+      "to": "adoptionCaretakerPending",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "adoptionCaretakerPending",
+    "title": "等待协作者确认",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "邀请已记录（示意）",
+        "body": "未接受前没有协作权限；本稿不向真实账号发送邀请。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "撤回邀请",
+        "to": "adoptionCaretakers",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回协作管理",
+      "to": "adoptionCaretakers",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircle",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的圈日常",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprCircleReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerCircle"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerCircle",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的圈日常",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprCircleReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprCircle",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "circleCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的圈日常",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。本条朋友可见，档案仍私密。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprCircle",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "circleCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布给宠友",
+      "to": "exprCircleDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprCircleDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "写小满的圈日常；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprDiary",
+    "title": "表情与贴纸",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的私密日记",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprDiaryReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerDiary"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "diaryCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerDiary",
+    "title": "静态贴纸",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的私密日记",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprDiaryReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprDiary",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "diaryCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprDiaryReady",
+    "title": "发送前检查",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "写小满的私密日记",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。本条默认仅自己。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprDiary",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "diaryCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认保存这条日记",
+      "to": "exprDiaryDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprDiaryDone",
+    "title": "日记已保存",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "写小满的私密日记；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      }
+    ],
+    "footer": {
+      "label": "返回小满日记",
+      "to": "petDiary",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleComment",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论布丁的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprCircleCommentReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerCircleComment"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerCircleComment",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论布丁的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprCircleCommentReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprCircleComment",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleCommentReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论布丁的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprCircleComment",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprCircleCommentDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprCircleCommentDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "评论布丁的日常；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复团子",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprCircleReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerCircleReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleCommentReply",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerCircleReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复团子",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprCircleReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprCircleReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "circleCommentReply",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复团子",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprCircleReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "circleCommentReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprCircleReplyDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprCircleReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "回复团子；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleAuthorReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprCircleAuthorReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerCircleAuthorReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleReplyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerCircleAuthorReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprCircleAuthorReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprCircleAuthorReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "circleReplyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprCircleAuthorReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprCircleAuthorReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "circleReplyAuthor",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprCircleAuthorReplyDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprCircleAuthorReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "回复布丁的铲屎官；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprDiaryComment",
+    "title": "表情与贴纸",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论小满的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprDiaryCommentReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerDiaryComment"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "ownDiaryComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerDiaryComment",
+    "title": "静态贴纸",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论小满的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprDiaryCommentReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprDiaryComment",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "ownDiaryComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprDiaryCommentReady",
+    "title": "发送前检查",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "评论小满的日常",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprDiaryComment",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "ownDiaryComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprDiaryCommentDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprDiaryCommentDone",
+    "title": "表达已完成",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "评论小满的日常；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "ownDiaryComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprAdoption",
+    "title": "表情与贴纸",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "待领养小满的交流",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprAdoptionReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerAdoption"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "adoptionComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerAdoption",
+    "title": "静态贴纸",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "待领养小满的交流",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprAdoptionReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprAdoption",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "adoptionComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprAdoptionReady",
+    "title": "发送前检查",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "text",
+        "text": "待领养小满的交流",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprAdoption",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "adoptionComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprAdoptionDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprAdoptionDone",
+    "title": "表达已完成",
+    "phase": "adoption",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "待领养小满的交流；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "adoptionComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprPrivate",
+    "title": "表情与贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprPrivateReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerPrivate"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "privateChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerPrivate",
+    "title": "静态贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprPrivateReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprPrivate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "privateChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprPrivateReady",
+    "title": "发送前检查",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprPrivate",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "privateChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprPrivateDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprPrivateDone",
+    "title": "表达已完成",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "私信：布丁的铲屎官；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "privateChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprGroup",
+    "title": "表情与贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：武汉猫友日常",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprGroupReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerGroup"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "groupChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerGroup",
+    "title": "静态贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：武汉猫友日常",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprGroupReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprGroup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "groupChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprGroupReady",
+    "title": "发送前检查",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：武汉猫友日常",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprGroup",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "groupChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprGroupDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprGroupDone",
+    "title": "表达已完成",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "群聊：武汉猫友日常；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "groupChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprLead",
+    "title": "表情与贴纸",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满目击线索 L01",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprLeadReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerLead"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "lostLeadChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerLead",
+    "title": "静态贴纸",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满目击线索 L01",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprLeadReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprLead",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "lostLeadChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprLeadReady",
+    "title": "发送前检查",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满目击线索 L01",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprLead",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "lostLeadChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprLeadDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprLeadDone",
+    "title": "表达已完成",
+    "phase": "lost",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "小满目击线索 L01；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "lostLeadChat",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprMilkReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprMilkReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerMilkReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "replyMilk",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerMilkReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprMilkReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprMilkReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "replyMilk",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprMilkReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprMilkReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "replyMilk",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprMilkReplyDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprMilkReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "回复奶糖饲养员；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "replyMilk",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprAuthorReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁作者评论",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprAuthorReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerAuthorReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "replyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "stickerAuthorReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁作者评论",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprAuthorReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprAuthorReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "replyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "exprAuthorReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复布丁作者评论",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprAuthorReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "replyAuthor",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprAuthorReplyDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprAuthorReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "回复布丁作者评论；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "replyAuthor",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "replyMilk",
+    "title": "回复奶糖饲养员",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "原评论：奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "text",
+        "text": "我家也会追着太阳换位置，太有同感了。",
+        "role": "Body"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复奶糖饲养员…",
+      "context": "MilkReply"
+    }
+  },
+  {
+    "id": "replyAuthor",
+    "title": "回复作者布丁",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "原评论：布丁的铲屎官",
+        "role": "Strong"
+      },
+      {
+        "type": "text",
+        "text": "谢谢喜欢，今天又被它治愈了。",
+        "role": "Body"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复布丁作者…",
+      "context": "AuthorReply"
+    }
+  },
+  {
+    "id": "ownDiaryComments",
+    "title": "小满的日常交流",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Strong"
+      },
+      {
+        "type": "note",
+        "title": "本条朋友可见",
+        "body": "不混入布丁的原帖；只显示有权查看的互动。",
+        "tone": "subtle"
+      },
+      {
+        "type": "comment",
+        "name": "布丁的铲屎官",
+        "body": "小满也找到自己的阳光位了！",
+        "meta": "今天 · 查看原日常",
+        "kind": "catOffer",
+        "to": "diaryEntryShared"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "就小满这条日常交流…",
+      "context": "DiaryComment"
+    }
+  },
+  {
+    "id": "diaryPhotoViewer",
+    "title": "小满的照片",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 450
+      },
+      {
+        "type": "text",
+        "text": "小满 · 本条第1张 · 学习素材",
+        "role": "Label"
+      }
+    ],
+    "footer": {
+      "label": "返回这条日记",
+      "to": "diaryEntryShared",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petDogVisibility",
+    "title": "豆豆的资料权限",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前仅自己",
+        "body": "仅这只宠物的资料范围，不更改小满或其他宠物。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "独立日记",
+        "body": "具体日记分享时逐条确认受众；不自动批量公开。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留私密并返回",
+      "to": "petDog",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petOtherVisibility",
+    "title": "奶糖的资料权限",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "当前仅自己",
+        "body": "仅这只宠物的资料范围，不更改小满或其他宠物。",
+        "tone": "subtle"
+      },
+      {
+        "type": "note",
+        "title": "独立日记",
+        "body": "具体日记分享时逐条确认受众；不自动批量公开。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留私密并返回",
+      "to": "petOther",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "moduleHub",
+    "title": "M&D 手机设计总入口",
+    "phase": "hub",
+    "items": [
+      {
+        "type": "text",
+        "text": "meow & doggie",
+        "role": "Label"
+      },
+      {
+        "type": "text",
+        "text": "按模块看，也能串起来体验",
+        "role": "Section"
+      },
+      {
+        "type": "row",
+        "label": "01 社区与宠友圈",
+        "value": "发现、朋友日常、评论与范围",
+        "to": "circleFeed"
+      },
+      {
+        "type": "row",
+        "label": "02 我的宠物与日记",
+        "value": "多宠、独立资料与隐私",
+        "to": "petsList"
+      },
+      {
+        "type": "row",
+        "label": "03 领养与照护更新",
+        "value": "持续介绍、讨论、申请与协作",
+        "to": "detail"
+      },
+      {
+        "type": "row",
+        "label": "04 走失互助",
+        "value": "求助、私密线索、找回与提醒",
+        "to": "lostFromPetManage"
+      },
+      {
+        "type": "row",
+        "label": "05 私信与群聊",
+        "value": "消息请求、交流与群管理",
+        "to": "messages"
+      },
+      {
+        "type": "row",
+        "label": "06 账号、隐私与异常",
+        "value": "登录、权限、举报和恢复",
+        "to": "settings"
+      },
+      {
+        "type": "note",
+        "title": "仅非商业学习原型",
+        "body": "输入与服务为固定状态；视频延期。不代表发布/定位/推送已经接通。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "从社区开始完整体验",
+      "to": "home",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "exprPublicComment",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "公开日常：布丁的晒太阳帖子",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprPublicCommentReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerPublicComment"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "comments",
+      "kind": "secondary"
+    },
+    "back": "comments"
+  },
+  {
+    "id": "stickerPublicComment",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "公开日常：布丁的晒太阳帖子",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprPublicCommentReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprPublicComment",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "comments",
+      "kind": "secondary"
+    },
+    "back": "comments"
+  },
+  {
+    "id": "exprPublicCommentReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "公开日常：布丁的晒太阳帖子",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprPublicComment",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprPublicCommentDone",
+      "kind": "primary"
+    },
+    "back": "comments"
+  },
+  {
+    "id": "exprPublicCommentDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "公开日常：布丁的晒太阳帖子；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "comments",
+      "kind": "secondary"
+    },
+    "back": "comments"
+  },
+  {
+    "id": "exprPublicReply",
+    "title": "表情与贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "公开帖子内回复：团子今天不拆家",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprPublicReplyReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerPublicReply"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "commentReplies",
+      "kind": "secondary"
+    },
+    "back": "commentReplies"
+  },
+  {
+    "id": "stickerPublicReply",
+    "title": "静态贴纸",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "公开帖子内回复：团子今天不拆家",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprPublicReplyReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprPublicReply",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "commentReplies",
+      "kind": "secondary"
+    },
+    "back": "commentReplies"
+  },
+  {
+    "id": "exprPublicReplyReady",
+    "title": "发送前检查",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "公开帖子内回复：团子今天不拆家",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprPublicReply",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "commentReplies",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprPublicReplyDone",
+      "kind": "primary"
+    },
+    "back": "commentReplies"
+  },
+  {
+    "id": "exprPublicReplyDone",
+    "title": "表达已完成",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "公开帖子内回复：团子今天不拆家；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "commentReplies",
+      "kind": "secondary"
+    },
+    "back": "commentReplies"
+  },
+  {
+    "id": "exprAcceptedPrivate",
+    "title": "表情与贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprAcceptedPrivateReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerAcceptedPrivate"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "requestAccepted",
+      "kind": "secondary"
+    },
+    "back": "requestAccepted"
+  },
+  {
+    "id": "stickerAcceptedPrivate",
+    "title": "静态贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprAcceptedPrivateReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprAcceptedPrivate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "requestAccepted",
+      "kind": "secondary"
+    },
+    "back": "requestAccepted"
+  },
+  {
+    "id": "exprAcceptedPrivateReady",
+    "title": "发送前检查",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "私信：奶糖饲养员",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprAcceptedPrivate",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "requestAccepted",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprAcceptedPrivateDone",
+      "kind": "primary"
+    },
+    "back": "requestAccepted"
+  },
+  {
+    "id": "exprAcceptedPrivateDone",
+    "title": "表达已完成",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "私信：奶糖饲养员；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "requestAccepted",
+      "kind": "secondary"
+    },
+    "back": "requestAccepted"
+  },
+  {
+    "id": "exprOwnerGroup",
+    "title": "表情与贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：小满和朋友们",
+        "role": "Strong"
+      },
+      {
+        "type": "expressions",
+        "to": "exprOwnerGroupReady"
+      },
+      {
+        "type": "note",
+        "title": "选择后不会自动发送",
+        "body": "表情可更换或取消；发送前仍在当前内容/会话上下文。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "图文贴纸示例",
+        "value": "静态素材，不含视频或动图",
+        "to": "stickerOwnerGroup"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "groupOwnerChat",
+      "kind": "secondary"
+    },
+    "back": "groupOwnerChat"
+  },
+  {
+    "id": "stickerOwnerGroup",
+    "title": "静态贴纸",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：小满和朋友们",
+        "role": "Strong"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "note",
+        "title": "抱抱 · 图文贴纸示例",
+        "body": "使用本文件有来源的学习照片，不假装已交付商用品牌贴纸包。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "选择抱抱贴纸",
+        "to": "exprOwnerGroupReady",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "改选普通表情",
+        "to": "exprOwnerGroup",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "取消选择",
+      "to": "groupOwnerChat",
+      "kind": "secondary"
+    },
+    "back": "groupOwnerChat"
+  },
+  {
+    "id": "exprOwnerGroupReady",
+    "title": "发送前检查",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊：小满和朋友们",
+        "role": "Strong"
+      },
+      {
+        "type": "selectedExpression"
+      },
+      {
+        "type": "note",
+        "title": "尚未发送",
+        "body": "继续确认只发送到上方所示对象。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择表情",
+        "to": "exprOwnerGroup",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消本次表达",
+        "to": "groupOwnerChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发送",
+      "to": "exprOwnerGroupDone",
+      "kind": "primary"
+    },
+    "back": "groupOwnerChat"
+  },
+  {
+    "id": "exprOwnerGroupDone",
+    "title": "表达已完成",
+    "phase": "messages",
+    "items": [
+      {
+        "type": "note",
+        "title": "完成（固定状态示意）",
+        "body": "群聊：小满和朋友们；不会关联其他宠物、帖子或会话。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "selectedExpression"
+      }
+    ],
+    "footer": {
+      "label": "返回当前交流",
+      "to": "groupOwnerChat",
+      "kind": "secondary"
+    },
+    "back": "groupOwnerChat"
+  }
+]

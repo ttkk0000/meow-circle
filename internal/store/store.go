@@ -2,16 +2,21 @@
 // (memory, PostgreSQL, Redis cache decorator, …) must implement.
 //
 // Design notes:
-//   - Signatures intentionally avoid returning error for the MVP. Backends that
+//   - Legacy signatures intentionally avoid returning error for the MVP. Backends that
 //     can fail (e.g. Postgres) log the error and return a zero value / false.
-//   - The interface is intentionally fat: splitting it up can be done later
-//     when a single module needs a narrower slice.
+//   - New mobile workflows use the context-aware transactional repository and
+//     typed commands instead of extending these legacy bool-returning methods.
 package store
 
-import "kitty-circle/internal/domain"
+import (
+	"kitty-circle/internal/domain"
+	"kitty-circle/internal/mobile"
+)
 
 // Store is the abstraction over the persistence layer used by the API.
 type Store interface {
+	// New phone workflows use context-aware, error-preserving transactions.
+	MobileRepository() mobile.Repository
 	// Users
 	CreateUser(user domain.User) (domain.User, bool)
 	FindUserByUsername(username string) (domain.User, bool)
@@ -20,6 +25,8 @@ type Store interface {
 	UpdateUserProfile(id int64, nickname, avatarURL, bio string) (domain.User, bool)
 	CountUsers() int
 	GetUsers(ids []int64) map[int64]domain.User
+	GetUserStats(id int64) domain.UserStats
+	GetUserPets(id int64) []domain.Pet
 
 	// Posts
 	CreatePost(input domain.Post) domain.Post
@@ -97,4 +104,15 @@ type Store interface {
 	TogglePostLike(userID, postID int64) (liked bool, count int64, ok bool)
 	BatchPostLikeCounts(postIDs []int64) map[int64]int64
 	BatchUserLikedPosts(userID int64, postIDs []int64) map[int64]bool
+
+	// Adoption
+	CreateAdoptionPet(pet domain.AdoptionPet) domain.AdoptionPet
+	GetAdoptionPet(id int64) (domain.AdoptionPet, bool)
+	ListAdoptionPets() []domain.AdoptionPet
+	ListAdoptionPetsByRescuer(rescuerID int64) []domain.AdoptionPet
+	CreateAdoptionApplication(app domain.AdoptionApplication) domain.AdoptionApplication
+	GetAdoptionApplication(id int64) (domain.AdoptionApplication, bool)
+	ListAdoptionApplicationsByApplicant(applicantID int64) []domain.AdoptionApplication
+	ListAdoptionApplicationsByRescuer(rescuerID int64) []domain.AdoptionApplication
+	UpdateAdoptionApplicationStatus(id int64, status domain.ApplicationStatus) bool
 }

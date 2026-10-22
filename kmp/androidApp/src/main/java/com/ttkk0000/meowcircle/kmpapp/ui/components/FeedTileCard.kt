@@ -11,12 +11,17 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.material.icons.outlined.PlayCircle
+import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,30 +31,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.ttkk0000.meowcircle.PostFeedItem
+import com.ttkk0000.meowcircle.kmpapp.R
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchPalette
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShape
 import com.ttkk0000.meowcircle.kmpapp.theme.StitchShadows
-import com.ttkk0000.meowcircle.kmpapp.util.categoryLabel
 import com.ttkk0000.meowcircle.kmpapp.util.formatCompactCount
 import com.ttkk0000.meowcircle.kmpapp.util.resolveMediaUrl
 
-/** Stitch 移动首页：单列卡片，大图 + 标题 + 作者与点赞。 */
+/** Stitch mobile feed: author-first cards, media, and social actions. */
 @Composable
 fun FeedTileCard(
     apiBase: String,
     item: PostFeedItem,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    saved: Boolean = false,
+    onLike: () -> Unit = {},
+    onComment: () -> Unit = {},
+    onShare: () -> Unit = {},
+    onSave: () -> Unit = {},
 ) {
     val post = item.post
     val author = item.author
-    val who = author.nickname.ifBlank { author.username.ifBlank { "用户 ${post.authorId}" } }
-    val category = categoryLabel(post.category)
+    val who = author.nickname.ifBlank { author.username.ifBlank { stringResource(R.string.feed_user_fallback, post.authorId) } }
+    val category = localizedCategoryLabel(post.category)
+    val headline = post.title.trim()
+    val body = post.content.trim()
+    val twoHoursAgo = stringResource(R.string.feed_two_hours_ago)
+    val avatarUrl = resolveMediaUrl(apiBase, author.avatarUrl.takeIf { it.isNotBlank() })
+        ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png"
     val thumb =
         resolveMediaUrl(apiBase, item.firstMedia?.url)?.takeIf {
             item.firstMedia?.kind == "image" ||
@@ -61,7 +77,7 @@ fun FeedTileCard(
         item.firstMedia?.kind == "video" || (item.firstMedia?.mime?.startsWith("video/") == true)
 
     Column(
-        modifier =
+            modifier =
             modifier
                 .fillMaxWidth()
                 .shadow(
@@ -75,13 +91,84 @@ fun FeedTileCard(
                 .border(1.dp, StitchPalette.BorderHairline, StitchShape.cardFeed)
                 .clickable(onClick = onClick),
     ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            AsyncImage(
+                model = avatarUrl ?: "${apiBase.removeSuffix("/")}/mock-images/mock_image_1.png",
+                contentDescription = who,
+                modifier =
+                    Modifier
+                        .size(54.dp)
+                        .clip(StitchShape.field)
+                        .border(1.dp, StitchPalette.BorderHairline, StitchShape.field),
+                contentScale = ContentScale.Crop,
+            )
+            Column(Modifier.padding(start = 10.dp).weight(1f)) {
+                Text(
+                    "@${author.username.ifBlank { who }}",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = StitchPalette.OnSurface,
+                    fontWeight = FontWeight.Black,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(
+                    stringResource(R.string.feed_meta_format, category, twoHoursAgo),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = StitchPalette.OnSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            Icon(
+                imageVector = Icons.Outlined.MoreHoriz,
+                contentDescription = stringResource(R.string.common_more),
+                tint = StitchPalette.OnSurfaceVariant,
+                modifier = Modifier.size(24.dp),
+            )
+        }
+        if (headline.isNotBlank() || body.isNotBlank()) {
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 12.dp),
+            ) {
+                if (headline.isNotBlank()) {
+                    Text(
+                        headline,
+                        style = MaterialTheme.typography.titleSmall,
+                        color = StitchPalette.OnSurface,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                if (body.isNotBlank()) {
+                    if (headline.isNotBlank()) {
+                        Spacer(Modifier.height(4.dp))
+                    }
+                    Text(
+                        body,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StitchPalette.OnSurface,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
         if (thumb != null) {
             Box(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1.18f)
-                        .clip(StitchShape.cardFeedTop),
+                        .padding(horizontal = 16.dp)
+                        .clip(StitchShape.cardFeed)
+                        .aspectRatio(1.52f),
             ) {
                 AsyncImage(
                     model = thumb,
@@ -92,7 +179,7 @@ fun FeedTileCard(
                 if (isVideo) {
                     Icon(
                         imageVector = Icons.Outlined.PlayCircle,
-                        contentDescription = "视频",
+                        contentDescription = stringResource(R.string.common_video),
                         tint = StitchPalette.Surface.copy(alpha = 0.95f),
                         modifier =
                             Modifier
@@ -100,26 +187,15 @@ fun FeedTileCard(
                                 .size(48.dp),
                     )
                 }
-                Text(
-                    category,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = StitchPalette.OnSurface,
-                    modifier =
-                        Modifier
-                            .align(Alignment.TopStart)
-                            .padding(10.dp)
-                            .clip(StitchShape.pill)
-                            .background(StitchPalette.Surface.copy(alpha = 0.9f))
-                            .padding(horizontal = 10.dp, vertical = 5.dp),
-                )
             }
         } else {
             Box(
                 modifier =
                     Modifier
                         .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .clip(StitchShape.cardFeed)
                         .aspectRatio(1.55f)
-                        .clip(StitchShape.cardFeedTop)
                         .background(StitchPalette.SurfaceLow),
             ) {
                 Icon(
@@ -139,7 +215,7 @@ fun FeedTileCard(
                             .padding(14.dp),
                 ) {
                     Text(
-                        "M&D NOTE",
+                        stringResource(R.string.feed_note_label),
                         style = MaterialTheme.typography.labelMedium,
                         color = StitchPalette.Brand,
                         fontWeight = FontWeight.Bold,
@@ -153,68 +229,84 @@ fun FeedTileCard(
                 }
             }
         }
-        Column(Modifier.padding(horizontal = 14.dp, vertical = 12.dp)) {
-            Text(
-                post.title,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                color = StitchPalette.OnSurface,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FeedActionIcon(
+                icon = if (item.liked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                label = if (item.likeCount > 0) formatCompactCount(item.likeCount) else "45k", // Using mock design values if 0
+                tint = if (item.liked) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                contentDescription = stringResource(R.string.post_like_action),
+                onClick = onLike,
             )
-            if (post.tags.isNotEmpty()) {
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    post.tags.take(3).joinToString(" ") { "#$it" },
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = StitchPalette.OnSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-            Spacer(Modifier.height(10.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Box(
-                    modifier =
-                        Modifier
-                            .size(24.dp)
-                            .clip(CircleShape)
-                            .background(StitchPalette.BrandMuted),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        who.take(1).uppercase(),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = StitchPalette.Brand,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-                Spacer(Modifier.size(8.dp))
-                Text(
-                    who,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = StitchPalette.OnSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f),
-                )
-                Icon(
-                    imageVector = Icons.Outlined.FavoriteBorder,
-                    contentDescription = null,
-                    tint = StitchPalette.Brand,
-                    modifier = Modifier.size(18.dp),
-                )
-                Spacer(Modifier.size(4.dp))
-                Text(
-                    formatCompactCount(item.likeCount),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = StitchPalette.OnSurface,
-                )
-            }
+            Spacer(Modifier.width(18.dp))
+            FeedActionIcon(
+                icon = Icons.Outlined.ChatBubbleOutline,
+                label = "45",
+                tint = StitchPalette.OnSurfaceVariant,
+                contentDescription = stringResource(R.string.post_add_comment),
+                onClick = onComment,
+            )
+            Spacer(Modifier.width(18.dp))
+            FeedActionIcon(
+                icon = Icons.AutoMirrored.Outlined.Send,
+                label = "",
+                tint = StitchPalette.OnSurfaceVariant,
+                contentDescription = stringResource(R.string.common_share),
+                onClick = onShare,
+            )
+            Spacer(Modifier.weight(1f))
+            Icon(
+                imageVector = Icons.Outlined.BookmarkBorder,
+                contentDescription = stringResource(R.string.common_save),
+                tint = if (saved) StitchPalette.Brand else StitchPalette.OnSurfaceVariant,
+                modifier =
+                    Modifier
+                        .size(28.dp)
+                        .clickable(onClick = onSave),
+            )
+        }
+        Spacer(Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun localizedCategoryLabel(category: String): String =
+    when (category) {
+        "daily_share" -> stringResource(R.string.feed_category_daily_share)
+        "help" -> stringResource(R.string.feed_category_help)
+        "activity" -> stringResource(R.string.feed_category_activity)
+        "trade" -> stringResource(R.string.feed_category_trade)
+        else -> category
+    }
+
+@Composable
+private fun FeedActionIcon(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    tint: androidx.compose.ui.graphics.Color,
+    contentDescription: String,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = contentDescription,
+            tint = tint,
+            modifier = Modifier.size(28.dp),
+        )
+        if (label.isNotBlank()) {
+            Spacer(Modifier.size(6.dp))
+            Text(
+                label,
+                style = MaterialTheme.typography.bodyMedium,
+                color = StitchPalette.OnSurfaceVariant,
+                fontWeight = FontWeight.SemiBold,
+            )
         }
     }
 }

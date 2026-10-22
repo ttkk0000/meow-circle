@@ -128,6 +128,17 @@ package-rn-ios-eas: ## Build RN/Expo iOS with EAS
 .PHONY: package-rn
 package-rn: package-rn-web package-rn-android ## Export RN/Expo web + local Android release
 
+# ----- KMP Android ------------------------------------------------------------
+
+.PHONY: kmp-android-build
+kmp-android-build: ## Build KMP Android debug APK
+	cd kmp && ./gradlew :androidApp:assembleDebug
+
+.PHONY: kmp-android-run
+kmp-android-run: ## Install and run KMP Android app on connected emulator/device
+	adb install -r kmp/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+	adb shell am start -n com.ttkk0000.meowcircle.kmpapp/.MainActivity
+
 # ----- Meta -------------------------------------------------------------------
 
 .PHONY: clean

@@ -1,0 +1,197 @@
+{
+  "createdNodeIds": [
+    "36:2",
+    "36:3",
+    "36:4",
+    "36:5",
+    "36:6",
+    "36:7",
+    "36:8",
+    "36:9",
+    "36:10",
+    "36:11",
+    "36:12",
+    "36:13",
+    "36:14",
+    "36:15",
+    "36:16",
+    "36:17",
+    "36:18",
+    "36:19",
+    "36:20",
+    "36:21",
+    "36:22",
+    "36:23",
+    "36:24",
+    "36:25",
+    "36:26",
+    "36:27",
+    "36:28"
+  ],
+  "mutatedNodeIds": [],
+  "pages": {
+    "overview": "36:2",
+    "phone": "36:3",
+    "pad": "36:18",
+    "desktop": "36:21",
+    "web": "36:24"
+  },
+  "roots": {
+    "phone/home": "36:4",
+    "phone/adopt": "36:5",
+    "phone/detail": "36:6",
+    "phone/verify": "36:7",
+    "phone/publish": "36:8",
+    "phone/report": "36:9",
+    "phone/progress": "36:10",
+    "phone/login": "36:11",
+    "phone/otp": "36:12",
+    "phone/lostList": "36:13",
+    "phone/lostMap": "36:14",
+    "phone/find": "36:15",
+    "phone/mine": "36:16",
+    "phone/messages": "36:17",
+    "pad/adopt": "36:19",
+    "pad/community": "36:20",
+    "desktop/messages": "36:22",
+    "desktop/publish": "36:23",
+    "web/home": "36:25",
+    "web/detail": "36:26",
+    "web/mobile": "36:27"
+  },
+  "overviewId": "36:28",
+  "inventory": {
+    "phone": [
+      [
+        "home",
+        "社区 · 武汉"
+      ],
+      [
+        "adopt",
+        "领养"
+      ],
+      [
+        "detail",
+        "领养详情"
+      ],
+      [
+        "verify",
+        "真实性说明"
+      ],
+      [
+        "publish",
+        "发布领养"
+      ],
+      [
+        "report",
+        "报告问题"
+      ],
+      [
+        "progress",
+        "处理进度"
+      ],
+      [
+        "login",
+        "登录"
+      ],
+      [
+        "otp",
+        "验证码"
+      ],
+      [
+        "lostList",
+        "走失互助"
+      ],
+      [
+        "lostMap",
+        "地图空态"
+      ],
+      [
+        "find",
+        "找宠 · 出售与转让"
+      ],
+      [
+        "mine",
+        "我的"
+      ],
+      [
+        "messages",
+        "消息"
+      ]
+    ],
+    "pad": [
+      [
+        "adopt",
+        "竖屏 · 列表与详情"
+      ],
+      [
+        "community",
+        "横屏 · 社区与阅读"
+      ]
+    ],
+    "desktop": [
+      [
+        "messages",
+        "会话与宠物上下文"
+      ],
+      [
+        "publish",
+        "发布工作区"
+      ]
+    ],
+    "web": [
+      [
+        "home",
+        "游客首页"
+      ],
+      [
+        "detail",
+        "分享详情"
+      ],
+      [
+        "mobile",
+        "移动网页详情"
+      ]
+    ]
+  },
+  "scope": "21 screens / 4 platform contexts",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "components": {
+    "pet": "36:30",
+    "info": "36:36",
+    "guide": "36:40",
+    "nav": "36:44",
+    "navActive": "36:46"
+  },
+  "specimenId": "36:48",
+  "status": "delivered / ordinary Figma Design / noncommercial study",
+  "completedAt": "2026-10-16",
+  "comparisonId": "44:241",
+  "componentCount": 15,
+  "uniqueScreenCount": 21,
+  "navigation": {
+    "pageId": "36:3",
+    "actionCount": 49,
+    "ledger": "night-navigation.json",
+    "runtimeVerified": false
+  },
+  "validation": "night-validation.json",
+  "phaseLedgers": [
+    "night-components.json",
+    "night-phone.json",
+    "night-pad.json",
+    "night-desktop.json",
+    "night-web.json",
+    "night-overview.json",
+    "night-navigation.json",
+    "night-comparison.json",
+    "night-responsive-fixes.json"
+  ],
+  "notes": [
+    "00–04 retained; 05–09 added in same file.",
+    "Existing 59 variables, 7 text styles and 10 mains retained; 5 local mains added.",
+    "Native Specs disabled; ordinary Design was user-approved.",
+    "Source code and production Stitch contract not migrated.",
+    "Earlier phase geometry records creation-time state; night-validation.json is final readback."
+  ]
+}

@@ -1,0 +1,1843 @@
+{
+  "date": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "taskId": "AI-20261021-FIGMA-CHECK",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "source": "Current remote Figma read via connector; no remote design mutation. Compared against repo-local 2026-10-20 ledgers. No version history or author attribution API used.",
+  "pages": [
+    {
+      "id": "395:2",
+      "name": "00 项目总览"
+    },
+    {
+      "id": "56:25",
+      "name": "01 手机总览"
+    },
+    {
+      "id": "403:2",
+      "name": "02 Web 总览"
+    },
+    {
+      "id": "403:3",
+      "name": "03 平板总览"
+    },
+    {
+      "id": "403:4",
+      "name": "04 桌面总览"
+    },
+    {
+      "id": "403:5",
+      "name": "05A 原稿 · 社区、发布与宠物空间"
+    },
+    {
+      "id": "420:2",
+      "name": "05B 原稿 · 领养、照护与核实"
+    },
+    {
+      "id": "420:3",
+      "name": "05C 原稿 · 走失互助与好物"
+    },
+    {
+      "id": "420:4",
+      "name": "05D 原稿 · 消息、群聊与预约"
+    },
+    {
+      "id": "420:5",
+      "name": "05E 原稿 · 账号、设置与异常"
+    },
+    {
+      "id": "420:6",
+      "name": "05F 原稿 · 宠友圈与附近提醒"
+    },
+    {
+      "id": "420:7",
+      "name": "05G 原稿 · 表情发布与评论"
+    },
+    {
+      "id": "434:3209",
+      "name": "05H 原稿 · 表情聊天"
+    },
+    {
+      "id": "434:3211",
+      "name": "05I 原稿 · 表情回复与编辑"
+    },
+    {
+      "id": "14:2",
+      "name": "06 规范与组件"
+    },
+    {
+      "id": "30:2",
+      "name": "07 可点击原型（示意）"
+    },
+    {
+      "id": "0:1",
+      "name": "08 历史归档"
+    }
+  ],
+  "overviewPages": [
+    {
+      "page": {
+        "id": "395:2",
+        "name": "00 项目总览"
+      },
+      "total": 3,
+      "roots": [
+        {
+          "id": "395:3",
+          "name": "M&D / 功能与跨端总览 / 原稿链接",
+          "type": "FRAME",
+          "visible": true,
+          "x": 120,
+          "y": 120,
+          "width": 1536,
+          "height": 3474,
+          "childCount": 11
+        },
+        {
+          "id": "14:74",
+          "name": "M&D Study / overview",
+          "type": "FRAME",
+          "visible": true,
+          "x": 1900,
+          "y": 120,
+          "width": 1440,
+          "height": 2390,
+          "childCount": 18
+        },
+        {
+          "id": "301:27",
+          "name": "M&D / 全平台完整流程索引 · 默认浅色 · 2026-10-20",
+          "type": "FRAME",
+          "visible": true,
+          "x": 3600,
+          "y": 120,
+          "width": 1496,
+          "height": 3269.0361328125,
+          "childCount": 31
+        }
+      ]
+    },
+    {
+      "page": {
+        "id": "56:25",
+        "name": "01 手机总览"
+      },
+      "total": 1,
+      "roots": [
+        {
+          "id": "425:1839840",
+          "name": "M&D / 手机总览 / 原稿索引",
+          "type": "FRAME",
+          "visible": true,
+          "x": 120,
+          "y": 120,
+          "width": 1536,
+          "height": 20988,
+          "childCount": 23
+        }
+      ]
+    },
+    {
+      "page": {
+        "id": "403:2",
+        "name": "02 Web 总览"
+      },
+      "total": 1,
+      "roots": [
+        {
+          "id": "425:1839880",
+          "name": "M&D / Web总览 / 原稿索引",
+          "type": "FRAME",
+          "visible": true,
+          "x": 120,
+          "y": 120,
+          "width": 1536,
+          "height": 20802,
+          "childCount": 22
+        }
+      ]
+    },
+    {
+      "page": {
+        "id": "403:3",
+        "name": "03 平板总览"
+      },
+      "total": 1,
+      "roots": [
+        {
+          "id": "425:1839920",
+          "name": "M&D / 平板总览 / 原稿索引",
+          "type": "FRAME",
+          "visible": true,
+          "x": 120,
+          "y": 120,
+          "width": 1536,
+          "height": 20802,
+          "childCount": 22
+        }
+      ]
+    },
+    {
+      "page": {
+        "id": "403:4",
+        "name": "04 桌面总览"
+      },
+      "total": 1,
+      "roots": [
+        {
+          "id": "425:1839960",
+          "name": "M&D / 桌面总览 / 原稿索引",
+          "type": "FRAME",
+          "visible": true,
+          "x": 120,
+          "y": 120,
+          "width": 1536,
+          "height": 20802,
+          "childCount": 22
+        }
+      ]
+    }
+  ],
+  "originalGroups": [
+    {
+      "page": {
+        "id": "403:5",
+        "name": "05A 原稿 · 社区、发布与宠物空间"
+      },
+      "total": 4,
+      "roots": [
+        {
+          "id": "408:1095",
+          "name": "功能 16 · 社区",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 12400,
+          "h": 33421,
+          "childCount": 27
+        },
+        {
+          "id": "408:1388",
+          "name": "功能 17 · 发布与素材",
+          "type": "SECTION",
+          "x": 120,
+          "y": 34021,
+          "w": 6160,
+          "h": 23897,
+          "childCount": 15
+        },
+        {
+          "id": "416:1840001",
+          "name": "功能 20 · 宠物空间",
+          "type": "SECTION",
+          "x": 120,
+          "y": 58398,
+          "w": 18640,
+          "h": 33721,
+          "childCount": 45
+        },
+        {
+          "id": "424:2",
+          "name": "手机补充评审与原编排注释",
+          "type": "SECTION",
+          "x": 30000,
+          "y": 120,
+          "w": 17500,
+          "h": 27200,
+          "childCount": 8
+        }
+      ],
+      "samples": [
+        {
+          "id": "408:1096",
+          "name": "Header / 社区",
+          "type": "FRAME",
+          "x": 80,
+          "y": 80,
+          "w": 1536,
+          "h": 710,
+          "childCount": 4,
+          "ancestors": [
+            {
+              "id": "408:1096",
+              "name": "Header / 社区",
+              "type": "FRAME"
+            },
+            {
+              "id": "408:1095",
+              "name": "功能 16 · 社区",
+              "type": "SECTION"
+            },
+            {
+              "id": "403:5",
+              "name": "05A 原稿 · 社区、发布与宠物空间",
+              "type": "PAGE"
+            }
+          ],
+          "children": [
+            {
+              "id": "408:1332",
+              "name": "Title / 社区 · 跨端功能对照",
+              "type": "TEXT",
+              "x": 48,
+              "y": 48,
+              "w": 1440,
+              "h": 40,
+              "childCount": 0
+            },
+            {
+              "id": "408:1333",
+              "name": "Label / 26 个状态 · 原画板按同一状态逐行对齐",
+              "type": "TEXT",
+              "x": 48,
+              "y": 104,
+              "w": 1440,
+              "h": 22,
+              "childCount": 0
+            },
+            {
+              "id": "408:1334",
+              "name": "Body / 点击状态查看手机、Web、桌面与平板的同一场景；设备总览链接到这里的原稿。",
+              "type": "TEXT",
+              "x": 48,
+              "y": 142,
+              "w": 1440,
+              "h": 26,
+              "childCount": 0
+            },
+            {
+              "id": "408:1335",
+              "name": "状态索引",
+              "type": "FRAME",
+              "x": 48,
+              "y": 184,
+              "w": 1440,
+              "h": 478,
+              "childCount": 26
+            }
+          ]
+        },
+        {
+          "id": "408:1097",
+          "name": "状态 001 · 推荐首页 [home]",
+          "type": "SECTION",
+          "x": 80,
+          "y": 1000,
+          "w": 6000,
+          "h": 1434,
+          "childCount": 6,
+          "ancestors": [
+            {
+              "id": "408:1097",
+              "name": "状态 001 · 推荐首页 [home]",
+              "type": "SECTION"
+            },
+            {
+              "id": "408:1095",
+              "name": "功能 16 · 社区",
+              "type": "SECTION"
+            },
+            {
+              "id": "403:5",
+              "name": "05A 原稿 · 社区、发布与宠物空间",
+              "type": "PAGE"
+            }
+          ],
+          "children": [
+            {
+              "id": "408:1098",
+              "name": "Header / home",
+              "type": "FRAME",
+              "x": 80,
+              "y": 24,
+              "w": 5698,
+              "h": 68,
+              "childCount": 2
+            },
+            {
+              "id": "311:23",
+              "name": "Web / M&D [home]",
+              "type": "FRAME",
+              "x": 570,
+              "y": 160,
+              "w": 1440,
+              "h": 1000,
+              "childCount": 2
+            },
+            {
+              "id": "311:24",
+              "name": "Desktop / M&D [home]",
+              "type": "FRAME",
+              "x": 2110,
+              "y": 160,
+              "w": 1440,
+              "h": 1000,
+              "childCount": 3
+            },
+            {
+              "id": "311:25",
+              "name": "平板竖屏 / M&D [home]",
+              "type": "FRAME",
+              "x": 3650,
+              "y": 160,
+              "w": 834,
+              "h": 1194,
+              "childCount": 2
+            },
+            {
+              "id": "311:26",
+              "name": "平板横屏 / M&D [home]",
+              "type": "FRAME",
+              "x": 4584,
+              "y": 160,
+              "w": 1194,
+              "h": 834,
+              "childCount": 2
+            },
+            {
+              "id": "56:27",
+              "name": "手机 / 01-A01 推荐首页 [home]",
+              "type": "FRAME",
+              "x": 80,
+              "y": 160,
+              "w": 390,
+              "h": 844,
+              "childCount": 4
+            }
+          ]
+        },
+        {
+          "id": "56:27",
+          "name": "手机 / 01-A01 推荐首页 [home]",
+          "type": "FRAME",
+          "x": 80,
+          "y": 160,
+          "w": 390,
+          "h": 844,
+          "childCount": 4,
+          "ancestors": [
+            {
+              "id": "56:27",
+              "name": "手机 / 01-A01 推荐首页 [home]",
+              "type": "FRAME"
+            },
+            {
+              "id": "408:1097",
+              "name": "状态 001 · 推荐首页 [home]",
+              "type": "SECTION"
+            },
+            {
+              "id": "408:1095",
+              "name": "功能 16 · 社区",
+              "type": "SECTION"
+            },
+            {
+              "id": "403:5",
+              "name": "05A 原稿 · 社区、发布与宠物空间",
+              "type": "PAGE"
+            }
+          ],
+          "children": [
+            {
+              "id": "108:1387",
+              "name": "Status / learning disclosure",
+              "type": "FRAME",
+              "x": 0,
+              "y": 0,
+              "w": 390,
+              "h": 28,
+              "childCount": 2
+            },
+            {
+              "id": "108:1390",
+              "name": "Toolbar",
+              "type": "FRAME",
+              "x": 0,
+              "y": 28,
+              "w": 390,
+              "h": 56,
+              "childCount": 3
+            },
+            {
+              "id": "108:1400",
+              "name": "Scrollable viewport",
+              "type": "FRAME",
+              "x": 0,
+              "y": 84,
+              "w": 390,
+              "h": 676,
+              "childCount": 1
+            },
+            {
+              "id": "108:1492",
+              "name": "Persistent navigation",
+              "type": "FRAME",
+              "x": 0,
+              "y": 760,
+              "w": 390,
+              "h": 84,
+              "childCount": 2
+            }
+          ]
+        },
+        {
+          "id": "311:23",
+          "name": "Web / M&D [home]",
+          "type": "FRAME",
+          "x": 570,
+          "y": 160,
+          "w": 1440,
+          "h": 1000,
+          "childCount": 2,
+          "ancestors": [
+            {
+              "id": "311:23",
+              "name": "Web / M&D [home]",
+              "type": "FRAME"
+            },
+            {
+              "id": "408:1097",
+              "name": "状态 001 · 推荐首页 [home]",
+              "type": "SECTION"
+            },
+            {
+              "id": "408:1095",
+              "name": "功能 16 · 社区",
+              "type": "SECTION"
+            },
+            {
+              "id": "403:5",
+              "name": "05A 原稿 · 社区、发布与宠物空间",
+              "type": "PAGE"
+            }
+          ],
+          "children": [
+            {
+              "id": "312:379084",
+              "name": "Platform header",
+              "type": "FRAME",
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 72,
+              "childCount": 8
+            },
+            {
+              "id": "312:379123",
+              "name": "Responsive workspace",
+              "type": "FRAME",
+              "x": 0,
+              "y": 72,
+              "w": 1440,
+              "h": 928,
+              "childCount": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": {
+        "id": "420:2",
+        "name": "05B 原稿 · 领养、照护与核实"
+      },
+      "total": 2,
+      "roots": [
+        {
+          "id": "412:88619",
+          "name": "功能 18 · 领养与照护",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 18640,
+          "h": 32760,
+          "childCount": 60
+        },
+        {
+          "id": "415:128463",
+          "name": "功能 19 · 核实与处理",
+          "type": "SECTION",
+          "x": 120,
+          "y": 33360,
+          "w": 12400,
+          "h": 32260,
+          "childCount": 30
+        }
+      ],
+      "samples": []
+    },
+    {
+      "page": {
+        "id": "420:3",
+        "name": "05C 原稿 · 走失互助与好物"
+      },
+      "total": 2,
+      "roots": [
+        {
+          "id": "416:1840492",
+          "name": "功能 21 · 走失与拾获",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 24880,
+          "h": 34221,
+          "childCount": 72
+        },
+        {
+          "id": "416:1842542",
+          "name": "功能 26 · 好物与到访",
+          "type": "SECTION",
+          "x": 120,
+          "y": 34821,
+          "w": 6160,
+          "h": 16027,
+          "childCount": 10
+        }
+      ],
+      "samples": []
+    },
+    {
+      "page": {
+        "id": "420:4",
+        "name": "05D 原稿 · 消息、群聊与预约"
+      },
+      "total": 4,
+      "roots": [
+        {
+          "id": "416:1841280",
+          "name": "功能 22 · 消息",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 6160,
+          "h": 33321,
+          "childCount": 21
+        },
+        {
+          "id": "416:1841507",
+          "name": "功能 23 · 预约安排",
+          "type": "SECTION",
+          "x": 120,
+          "y": 33921,
+          "w": 6160,
+          "h": 33321,
+          "childCount": 21
+        },
+        {
+          "id": "416:1842648",
+          "name": "功能 28 · 群聊与管理",
+          "type": "SECTION",
+          "x": 120,
+          "y": 67722,
+          "w": 12400,
+          "h": 32360,
+          "childCount": 36
+        },
+        {
+          "id": "424:3",
+          "name": "功能 49 · 全局未读与消息中心",
+          "type": "SECTION",
+          "x": 30000,
+          "y": 120,
+          "w": 1600,
+          "h": 3386,
+          "childCount": 1
+        }
+      ],
+      "samples": [
+        {
+          "id": "352:3",
+          "name": "M&D / 全局未读设计评审 / 2026-10-20",
+          "type": "FRAME",
+          "x": 80,
+          "y": 160,
+          "w": 1320,
+          "h": 3106,
+          "childCount": 7,
+          "ancestors": [
+            {
+              "id": "352:3",
+              "name": "M&D / 全局未读设计评审 / 2026-10-20",
+              "type": "FRAME"
+            },
+            {
+              "id": "424:3",
+              "name": "功能 49 · 全局未读与消息中心",
+              "type": "SECTION"
+            },
+            {
+              "id": "420:4",
+              "name": "05D 原稿 · 消息、群聊与预约",
+              "type": "PAGE"
+            }
+          ],
+          "children": [
+            {
+              "id": "353:33",
+              "name": "Title / 全局未读，让每一条回应都有去处",
+              "type": "TEXT",
+              "x": 32,
+              "y": 32,
+              "w": 1256,
+              "h": 40,
+              "childCount": 0
+            },
+            {
+              "id": "353:34",
+              "name": "Caption / M&D · 默认浅色 · 2026-10-20 ",
+              "type": "TEXT",
+              "x": 32,
+              "y": 96,
+              "w": 1256,
+              "h": 20,
+              "childCount": 0
+            },
+            {
+              "id": "353:35",
+              "name": "统一规则",
+              "type": "FRAME",
+              "x": 32,
+              "y": 140,
+              "w": 1256,
+              "h": 70,
+              "childCount": 2
+            },
+            {
+              "id": "356:7",
+              "name": "01 / 三类消息中心",
+              "type": "FRAME",
+              "x": 32,
+              "y": 234,
+              "w": 1256,
+              "h": 844,
+              "childCount": 3
+            },
+            {
+              "id": "364:233",
+              "name": "02 / 定位与阅读",
+              "type": "FRAME",
+              "x": 32,
+              "y": 1102,
+              "w": 1256,
+              "h": 844,
+              "childCount": 3
+            },
+            {
+              "id": "368:334",
+              "name": "03 / 边界与同步",
+              "type": "FRAME",
+              "x": 32,
+              "y": 1970,
+              "w": 1256,
+              "h": 844,
+              "childCount": 3
+            },
+            {
+              "id": "370:397",
+              "name": "04 / 跨端全局入口",
+              "type": "FRAME",
+              "x": 32,
+              "y": 2838,
+              "w": 1256,
+              "h": 236,
+              "childCount": 4
+            }
+          ]
+        },
+        {
+          "id": "356:8",
+          "name": "UNREAD-01 / 聊天与全局99+",
+          "type": "FRAME",
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 844,
+          "childCount": 4,
+          "ancestors": [
+            {
+              "id": "356:8",
+              "name": "UNREAD-01 / 聊天与全局99+",
+              "type": "FRAME"
+            },
+            {
+              "id": "356:7",
+              "name": "01 / 三类消息中心",
+              "type": "FRAME"
+            },
+            {
+              "id": "352:3",
+              "name": "M&D / 全局未读设计评审 / 2026-10-20",
+              "type": "FRAME"
+            },
+            {
+              "id": "424:3",
+              "name": "功能 49 · 全局未读与消息中心",
+              "type": "SECTION"
+            },
+            {
+              "id": "420:4",
+              "name": "05D 原稿 · 消息、群聊与预约",
+              "type": "PAGE"
+            }
+          ],
+          "children": [
+            {
+              "id": "356:9",
+              "name": "Status / learning disclosure",
+              "type": "FRAME",
+              "x": 0,
+              "y": 0,
+              "w": 390,
+              "h": 28,
+              "childCount": 2
+            },
+            {
+              "id": "356:12",
+              "name": "Toolbar",
+              "type": "FRAME",
+              "x": 0,
+              "y": 28,
+              "w": 390,
+              "h": 56,
+              "childCount": 3
+            },
+            {
+              "id": "356:17",
+              "name": "Scrollable viewport",
+              "type": "FRAME",
+              "x": 0,
+              "y": 84,
+              "w": 390,
+              "h": 676,
+              "childCount": 7
+            },
+            {
+              "id": "356:18",
+              "name": "Persistent navigation",
+              "type": "FRAME",
+              "x": 0,
+              "y": 760,
+              "w": 390,
+              "h": 84,
+              "childCount": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": {
+        "id": "420:5",
+        "name": "05E 原稿 · 账号、设置与异常"
+      },
+      "total": 3,
+      "roots": [
+        {
+          "id": "416:1841735",
+          "name": "功能 24 · 账号与登录",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 18640,
+          "h": 32660,
+          "childCount": 57
+        },
+        {
+          "id": "416:1842359",
+          "name": "功能 25 · 设置与通知",
+          "type": "SECTION",
+          "x": 120,
+          "y": 33260,
+          "w": 6160,
+          "h": 27005,
+          "childCount": 17
+        },
+        {
+          "id": "404:2",
+          "name": "功能 27 · 内容与恢复",
+          "type": "SECTION",
+          "x": 120,
+          "y": 60745,
+          "w": 6160,
+          "h": 8157,
+          "childCount": 5
+        }
+      ],
+      "samples": []
+    },
+    {
+      "page": {
+        "id": "420:6",
+        "name": "05F 原稿 · 宠友圈与附近提醒"
+      },
+      "total": 2,
+      "roots": [
+        {
+          "id": "416:1843040",
+          "name": "功能 29 · 宠友圈",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 18640,
+          "h": 33821,
+          "childCount": 48
+        },
+        {
+          "id": "416:1843564",
+          "name": "功能 30 · 附近提醒",
+          "type": "SECTION",
+          "x": 120,
+          "y": 34421,
+          "w": 12400,
+          "h": 33521,
+          "childCount": 29
+        }
+      ],
+      "samples": []
+    },
+    {
+      "page": {
+        "id": "420:7",
+        "name": "05G 原稿 · 表情发布与评论"
+      },
+      "total": 2,
+      "roots": [
+        {
+          "id": "407:1095",
+          "name": "功能 31 · 表情与输入",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 19000,
+          "h": 29050,
+          "childCount": 7
+        },
+        {
+          "id": "438:3209",
+          "name": "共享弹层依赖 · 跨功能状态",
+          "type": "SECTION",
+          "x": 22000,
+          "y": 120,
+          "w": 12600,
+          "h": 4254,
+          "childCount": 5
+        }
+      ],
+      "samples": []
+    },
+    {
+      "page": {
+        "id": "434:3209",
+        "name": "05H 原稿 · 表情聊天"
+      },
+      "total": 1,
+      "roots": [
+        {
+          "id": "434:3210",
+          "name": "05H  / 表情聊天",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 19000,
+          "h": 29050,
+          "childCount": 6
+        }
+      ],
+      "samples": []
+    },
+    {
+      "page": {
+        "id": "434:3211",
+        "name": "05I 原稿 · 表情回复与编辑"
+      },
+      "total": 1,
+      "roots": [
+        {
+          "id": "434:3212",
+          "name": "05I  / 表情回复与编辑",
+          "type": "SECTION",
+          "x": 120,
+          "y": 120,
+          "w": 19000,
+          "h": 39735,
+          "childCount": 5
+        }
+      ],
+      "samples": []
+    }
+  ],
+  "inspectedIndexBoards": [
+    {
+      "id": "395:3",
+      "name": "M&D / 功能与跨端总览 / 原稿链接",
+      "textCount": 171,
+      "rows": [
+        {
+          "id": "396:2",
+          "name": "01 / 标题与使用方式",
+          "width": 1440,
+          "height": 188
+        },
+        {
+          "id": "439:5247",
+          "name": "五个主入口",
+          "width": 1440,
+          "height": 52
+        },
+        {
+          "id": "439:5283",
+          "name": "跨端比较使用说明",
+          "width": 1440,
+          "height": 150
+        },
+        {
+          "id": "396:11",
+          "name": "02 / 总览与规范入口",
+          "width": 1440,
+          "height": 176
+        },
+        {
+          "id": "396:45",
+          "name": "03 / 功能目录说明",
+          "width": 1440,
+          "height": 64
+        },
+        {
+          "id": "396:48",
+          "name": "04 / 功能 × 设备目录",
+          "width": 1440,
+          "height": 1934
+        },
+        {
+          "id": "396:786",
+          "name": "05 / 入口说明",
+          "width": 1440,
+          "height": 154
+        },
+        {
+          "id": "396:791",
+          "name": "Caption / M&D · 功能与跨端总览  /  2026.10.20",
+          "width": 1440,
+          "height": 20
+        },
+        {
+          "id": "439:5287",
+          "name": "规范、原型与历史",
+          "width": 1440,
+          "height": 116
+        },
+        {
+          "id": "439:5293",
+          "name": "原稿分组",
+          "width": 1440,
+          "height": 184
+        },
+        {
+          "id": "439:5305",
+          "name": "Caption / 维护约定：修改原稿；新增状态时补充索引；同一功能使用一致的状态 key，组件优先复用。",
+          "width": 1440,
+          "height": 20
+        }
+      ],
+      "sampleLinks": [
+        {
+          "id": "I439:5248;296:7",
+          "text": "项目总览",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "395:2"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I439:5255;296:7",
+          "text": "手机",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "56:25"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I439:5262;296:7",
+          "text": "Web",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:2"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I439:5269;296:7",
+          "text": "平板",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:3"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I439:5276;296:7",
+          "text": "桌面",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:4"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I396:15;296:7",
+          "text": "进入手机总览 ↗",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "142:3077"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I396:28;296:7",
+          "text": "查看视觉与交接 ↗",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "61:12"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I396:38;296:7",
+          "text": "进入跨端索引 ↗",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "301:27"
+          },
+          "reactions": []
+        },
+        {
+          "id": "396:64",
+          "text": "01  社区",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1096"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I396:67;296:7",
+          "text": "打开原稿 ↗",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "56:27"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I396:75;296:7",
+          "text": "打开原稿 ↗",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "311:23"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I396:83;296:7",
+          "text": "打开原稿 ↗",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "311:24"
+          },
+          "reactions": []
+        }
+      ]
+    },
+    {
+      "id": "425:1839840",
+      "name": "M&D / 手机总览 / 原稿索引",
+      "textCount": 1203,
+      "rows": [
+        {
+          "id": "425:1839841",
+          "name": "Title / M&D · 手机总览",
+          "width": 1440,
+          "height": 40
+        },
+        {
+          "id": "425:1839842",
+          "name": "Body / 按功能查找本端原稿，也可直接打开同状态的跨端对照。",
+          "width": 1440,
+          "height": 26
+        },
+        {
+          "id": "425:1839843",
+          "name": "五个主入口",
+          "width": 1440,
+          "height": 52
+        },
+        {
+          "id": "425:1839879",
+          "name": "Label / 17 项功能 · 直接引用原稿 · 状态名称与功能对照保持一致",
+          "width": 1440,
+          "height": 22
+        },
+        {
+          "id": "426:3209",
+          "name": "功能 / 16 社区",
+          "width": 1440,
+          "height": 864
+        },
+        {
+          "id": "426:3318",
+          "name": "功能 / 17 发布与素材",
+          "width": 1440,
+          "height": 520
+        },
+        {
+          "id": "426:3379",
+          "name": "功能 / 18 领养与照护",
+          "width": 1440,
+          "height": 1810
+        },
+        {
+          "id": "426:3620",
+          "name": "功能 / 19 核实与处理",
+          "width": 1440,
+          "height": 950
+        },
+        {
+          "id": "426:3741",
+          "name": "功能 / 20 宠物空间",
+          "width": 1440,
+          "height": 1380
+        },
+        {
+          "id": "426:3922",
+          "name": "功能 / 21 走失与拾获",
+          "width": 1440,
+          "height": 2154
+        },
+        {
+          "id": "426:4211",
+          "name": "功能 / 22 消息",
+          "width": 1440,
+          "height": 692
+        },
+        {
+          "id": "426:4296",
+          "name": "功能 / 23 预约安排",
+          "width": 1440,
+          "height": 692
+        },
+        {
+          "id": "426:4381",
+          "name": "功能 / 24 账号与登录",
+          "width": 1440,
+          "height": 1724
+        },
+        {
+          "id": "426:4610",
+          "name": "功能 / 25 设置与通知",
+          "width": 1440,
+          "height": 606
+        },
+        {
+          "id": "426:4679",
+          "name": "功能 / 26 好物与到访",
+          "width": 1440,
+          "height": 348
+        },
+        {
+          "id": "426:4720",
+          "name": "功能 / 27 内容与恢复",
+          "width": 1440,
+          "height": 262
+        },
+        {
+          "id": "426:4741",
+          "name": "功能 / 28 群聊与管理",
+          "width": 1440,
+          "height": 1122
+        },
+        {
+          "id": "426:4886",
+          "name": "功能 / 29 宠友圈",
+          "width": 1440,
+          "height": 1466
+        },
+        {
+          "id": "426:5079",
+          "name": "功能 / 30 附近提醒",
+          "width": 1440,
+          "height": 950
+        },
+        {
+          "id": "426:5196",
+          "name": "功能 / 31 表情与输入",
+          "width": 1440,
+          "height": 4160
+        },
+        {
+          "id": "426:5598",
+          "name": "功能 / 49 全局未读 · 消息中心",
+          "width": 1440,
+          "height": 174
+        },
+        {
+          "id": "426:5604",
+          "name": "手机评审与原导览",
+          "width": 1440,
+          "height": 154
+        },
+        {
+          "id": "426:5608",
+          "name": "Caption / 所有入口均链接现有画板。比较时请使用同一状态；未收录项保持明确标注。",
+          "width": 1440,
+          "height": 20
+        }
+      ],
+      "sampleLinks": [
+        {
+          "id": "I425:1839844;296:7",
+          "text": "项目总览",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "395:2"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I425:1839851;296:7",
+          "text": "手机",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "56:25"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I425:1839858;296:7",
+          "text": "Web",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:2"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I425:1839865;296:7",
+          "text": "平板",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:3"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I425:1839872;296:7",
+          "text": "桌面",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:4"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:3212",
+          "text": "功能跨端对照 →",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1096"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:3215",
+          "text": "推荐首页 [home]",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "56:27"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:3217",
+          "text": "同状态跨端对照",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1097"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:3219",
+          "text": "推荐 · 冷启动空态 [homeEmpty]",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "56:28"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:3221",
+          "text": "同状态跨端对照",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1106"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:3223",
+          "text": "选择城市 [city]",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "56:29"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:3225",
+          "text": "同状态跨端对照",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1115"
+          },
+          "reactions": []
+        }
+      ]
+    },
+    {
+      "id": "425:1839880",
+      "name": "M&D / Web总览 / 原稿索引",
+      "textCount": 1216,
+      "rows": [
+        {
+          "id": "425:1839881",
+          "name": "Title / M&D · Web总览",
+          "width": 1440,
+          "height": 40
+        },
+        {
+          "id": "425:1839882",
+          "name": "Body / 按功能查找本端原稿，也可直接打开同状态的跨端对照。",
+          "width": 1440,
+          "height": 26
+        },
+        {
+          "id": "425:1839883",
+          "name": "五个主入口",
+          "width": 1440,
+          "height": 52
+        },
+        {
+          "id": "425:1839919",
+          "name": "Label / 17 项功能 · 直接引用原稿 · 状态名称与功能对照保持一致",
+          "width": 1440,
+          "height": 22
+        },
+        {
+          "id": "426:5609",
+          "name": "功能 / 16 社区",
+          "width": 1440,
+          "height": 864
+        },
+        {
+          "id": "426:5719",
+          "name": "功能 / 17 发布与素材",
+          "width": 1440,
+          "height": 520
+        },
+        {
+          "id": "426:5781",
+          "name": "功能 / 18 领养与照护",
+          "width": 1440,
+          "height": 1810
+        },
+        {
+          "id": "426:6023",
+          "name": "功能 / 19 核实与处理",
+          "width": 1440,
+          "height": 950
+        },
+        {
+          "id": "426:6145",
+          "name": "功能 / 20 宠物空间",
+          "width": 1440,
+          "height": 1380
+        },
+        {
+          "id": "426:6327",
+          "name": "功能 / 21 走失与拾获",
+          "width": 1440,
+          "height": 2154
+        },
+        {
+          "id": "426:6617",
+          "name": "功能 / 22 消息",
+          "width": 1440,
+          "height": 692
+        },
+        {
+          "id": "426:6703",
+          "name": "功能 / 23 预约安排",
+          "width": 1440,
+          "height": 692
+        },
+        {
+          "id": "426:6789",
+          "name": "功能 / 24 账号与登录",
+          "width": 1440,
+          "height": 1724
+        },
+        {
+          "id": "426:7019",
+          "name": "功能 / 25 设置与通知",
+          "width": 1440,
+          "height": 606
+        },
+        {
+          "id": "426:7089",
+          "name": "功能 / 26 好物与到访",
+          "width": 1440,
+          "height": 348
+        },
+        {
+          "id": "426:7131",
+          "name": "功能 / 27 内容与恢复",
+          "width": 1440,
+          "height": 262
+        },
+        {
+          "id": "426:7153",
+          "name": "功能 / 28 群聊与管理",
+          "width": 1440,
+          "height": 1122
+        },
+        {
+          "id": "426:7299",
+          "name": "功能 / 29 宠友圈",
+          "width": 1440,
+          "height": 1466
+        },
+        {
+          "id": "426:7493",
+          "name": "功能 / 30 附近提醒",
+          "width": 1440,
+          "height": 950
+        },
+        {
+          "id": "426:7611",
+          "name": "功能 / 31 表情与输入",
+          "width": 1440,
+          "height": 4160
+        },
+        {
+          "id": "426:8014",
+          "name": "功能 / 49 全局未读 · 消息中心",
+          "width": 1440,
+          "height": 174
+        },
+        {
+          "id": "426:8020",
+          "name": "Caption / 所有入口均链接现有画板。比较时请使用同一状态；未收录项保持明确标注。",
+          "width": 1440,
+          "height": 20
+        }
+      ],
+      "sampleLinks": [
+        {
+          "id": "I425:1839884;296:7",
+          "text": "项目总览",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "395:2"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I425:1839891;296:7",
+          "text": "手机",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "56:25"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I425:1839898;296:7",
+          "text": "Web",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:2"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I425:1839905;296:7",
+          "text": "平板",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:3"
+          },
+          "reactions": []
+        },
+        {
+          "id": "I425:1839912;296:7",
+          "text": "桌面",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "403:4"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:5612",
+          "text": "功能跨端对照 →",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1096"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:5615",
+          "text": "推荐首页 [home]",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "311:23"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:5617",
+          "text": "同状态跨端对照",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1097"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:5619",
+          "text": "推荐 · 冷启动空态 [homeEmpty]",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "311:31"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:5621",
+          "text": "同状态跨端对照",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1106"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:5623",
+          "text": "选择城市 [city]",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "311:41"
+          },
+          "reactions": []
+        },
+        {
+          "id": "426:5625",
+          "text": "同状态跨端对照",
+          "hyperlink": {
+            "type": "NODE",
+            "value": "408:1115"
+          },
+          "reactions": []
+        }
+      ]
+    }
+  ],
+  "targetExistence": [
+    {
+      "id": "395:3",
+      "exists": true,
+      "name": "M&D / 功能与跨端总览 / 原稿链接",
+      "type": "FRAME",
+      "page": {
+        "id": "395:2",
+        "name": "00 项目总览"
+      }
+    },
+    {
+      "id": "425:1839840",
+      "exists": true,
+      "name": "M&D / 手机总览 / 原稿索引",
+      "type": "FRAME",
+      "page": {
+        "id": "56:25",
+        "name": "01 手机总览"
+      }
+    },
+    {
+      "id": "425:1839880",
+      "exists": true,
+      "name": "M&D / Web总览 / 原稿索引",
+      "type": "FRAME",
+      "page": {
+        "id": "403:2",
+        "name": "02 Web 总览"
+      }
+    },
+    {
+      "id": "425:1839920",
+      "exists": true,
+      "name": "M&D / 平板总览 / 原稿索引",
+      "type": "FRAME",
+      "page": {
+        "id": "403:3",
+        "name": "03 平板总览"
+      }
+    },
+    {
+      "id": "425:1839960",
+      "exists": true,
+      "name": "M&D / 桌面总览 / 原稿索引",
+      "type": "FRAME",
+      "page": {
+        "id": "403:4",
+        "name": "04 桌面总览"
+      }
+    },
+    {
+      "id": "142:3077",
+      "exists": true,
+      "name": "00-A01 手机设计总入口",
+      "type": "FRAME",
+      "page": {
+        "id": "403:5",
+        "name": "05A 原稿 · 社区、发布与宠物空间"
+      }
+    },
+    {
+      "id": "61:12",
+      "exists": true,
+      "name": "Mobile V2 / 视觉与交接",
+      "type": "FRAME",
+      "page": {
+        "id": "14:2",
+        "name": "06 规范与组件"
+      }
+    },
+    {
+      "id": "301:27",
+      "exists": true,
+      "name": "M&D / 全平台完整流程索引 · 默认浅色 · 2026-10-20",
+      "type": "FRAME",
+      "page": {
+        "id": "395:2",
+        "name": "00 项目总览"
+      }
+    },
+    {
+      "id": "238:371769",
+      "exists": true,
+      "name": "Mobile completion / 手机端设计评审 [completionHub]",
+      "type": "FRAME",
+      "page": {
+        "id": "403:5",
+        "name": "05A 原稿 · 社区、发布与宠物空间"
+      }
+    },
+    {
+      "id": "343:2",
+      "exists": true,
+      "name": "M&D / 表情场景索引",
+      "type": "FRAME",
+      "page": {
+        "id": "420:7",
+        "name": "05G 原稿 · 表情发布与评论"
+      }
+    },
+    {
+      "id": "352:3",
+      "exists": true,
+      "name": "M&D / 全局未读设计评审 / 2026-10-20",
+      "type": "FRAME",
+      "page": {
+        "id": "420:4",
+        "name": "05D 原稿 · 消息、群聊与预约"
+      }
+    },
+    {
+      "id": "311:2",
+      "exists": false
+    },
+    {
+      "id": "321:2",
+      "exists": false
+    },
+    {
+      "id": "352:2",
+      "exists": false
+    }
+  ],
+  "visualObservations": [
+    {
+      "nodeId": "395:3",
+      "kind": "project overview",
+      "width": 906,
+      "height": 2048,
+      "format": "png",
+      "original_width": 1536,
+      "original_height": 3474,
+      "observation": "Five platform navigation entries, function-by-device table, unavailable unread platform entries and original-group references are visible."
+    },
+    {
+      "nodeId": "408:1097",
+      "kind": "same home state across five layouts",
+      "width": 2400,
+      "height": 598,
+      "format": "png",
+      "original_width": 6000,
+      "original_height": 1434,
+      "observation": "Phone, Web, Desktop, tablet portrait and tablet landscape original frames are side by side in one state section."
+    },
+    {
+      "nodeId": "426:3209",
+      "kind": "phone community index",
+      "width": 1440,
+      "height": 864,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 864,
+      "observation": "Community state keys and direct original / cross-platform comparison links form a readable three-column index."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "status": "confirmed",
+      "detail": "17 current pages: five overview pages, nine grouped-original pages, specifications/components, illustrative prototype and history."
+    },
+    {
+      "id": "F2",
+      "status": "confirmed",
+      "detail": "Inspected legacy home and unread node IDs survive with new page/section ancestors; old page IDs 311:2, 321:2 and 352:2 do not resolve."
+    },
+    {
+      "id": "F3",
+      "status": "suggestion",
+      "detail": "The secondary project card labelled Enter phone overview still links to legacy 142:3077. It exists, but differs from current phone index 425:1839840. Main phone navigation targets the current page."
+    },
+    {
+      "id": "F4",
+      "status": "confirmed boundary",
+      "detail": "Global unread is listed as its own feature; unsupported platform entries remain marked. Historical 2308-root ledger is not a full validation of newly added unread states."
+    }
+  ],
+  "limitations": [
+    "Not a Figma version-to-version diff; cannot establish exact edit time, author, or every content change.",
+    "Only selected target links and original frame IDs checked, not all 2308 prior roots or all current hyperlinks.",
+    "Three remote screenshots inspected; not app prototype/device/runtime acceptance.",
+    "Phone-index screenshot first attempt failed at connector transport; one retry succeeded.",
+    "No build, test, service, device run, application source edit, commit or push."
+  ]
+}

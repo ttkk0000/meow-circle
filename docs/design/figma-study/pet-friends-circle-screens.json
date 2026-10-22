@@ -1,0 +1,250 @@
+{
+  "date": "2026-10-16",
+  "scope": "pet friends circle, photo-only",
+  "status": "design-proposal-not-native-prototype",
+  "screenCount": 22,
+  "screens": [
+    {
+      "id": "circleFeed",
+      "title": "宠友圈",
+      "includes": "cover, friend shortcuts, chronological posts, persistent nav",
+      "type": "main",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleEmpty",
+      "title": "还没有宠友动态",
+      "includes": "honest empty, private diary, public discovery",
+      "type": "empty",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleFriends",
+      "title": "我的宠友",
+      "includes": "accepted friends, requests, private list",
+      "type": "relationship",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleRequest",
+      "title": "添加宠友",
+      "includes": "public identity, optional reason, send",
+      "type": "relationship",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleRequestWaiting",
+      "title": "等待对方确认",
+      "includes": "pending, withdraw, no access granted",
+      "type": "relationship",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleRequestReceived",
+      "title": "新的宠友请求",
+      "includes": "accept or decline, no extra private materials",
+      "type": "relationship",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleFriendProfile",
+      "title": "宠友主页",
+      "includes": "accepted status, visible journals, pet preview",
+      "type": "relationship",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleCompose",
+      "title": "写日常",
+      "includes": "text, still photos, pets, audience, location off",
+      "type": "main",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleAudience",
+      "title": "谁可以看",
+      "includes": "exclusive audience options, public extra confirmation",
+      "type": "main",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleSelectFriends",
+      "title": "选择宠友范围",
+      "includes": "specific recipients or excluded friends, summary",
+      "type": "privacy",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circlePrivatePetWarning",
+      "title": "仅分享这条内容",
+      "includes": "private profile does not become public; explicit confirmation",
+      "type": "privacy",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circlePreview",
+      "title": "发布前预览",
+      "includes": "exact visible text/images/pet identity/audience",
+      "type": "main",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circlePublished",
+      "title": "我的新日常",
+      "includes": "preset successful result; not live submission",
+      "type": "state",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleDetail",
+      "title": "这条日常",
+      "includes": "photo viewer, visible engagement, comments",
+      "type": "main",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circlePhotoViewer",
+      "title": "查看照片",
+      "includes": "same post, identity consistent, photo order, back",
+      "type": "media",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleComments",
+      "title": "评论与回复",
+      "includes": "common-friend visibility, target reply, own delete",
+      "type": "main",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleExpression",
+      "title": "表情与表态",
+      "includes": "named choices, one reaction, pending sticker not auto-send",
+      "type": "interaction",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleOwnPostSettings",
+      "title": "我的动态设置",
+      "includes": "audience update, only-me, delete confirmation",
+      "type": "privacy",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleUnavailable",
+      "title": "这条内容暂不可见",
+      "includes": "no sensitive thumbnail, no reason leakage, back",
+      "type": "state",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleFriendSettings",
+      "title": "与TA的圈设置",
+      "includes": "mute feed, remove versus block, explain effects",
+      "type": "privacy",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleReport",
+      "title": "举报这条动态或评论",
+      "includes": "specific object, context, received not verified",
+      "type": "safety",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "id": "circleDraftFailure",
+      "title": "草稿与发送失败",
+      "includes": "retain text/images/audience, retry/remove/cancel",
+      "type": "state",
+      "status": "planned-not-created-in-figma",
+      "size": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ]
+}

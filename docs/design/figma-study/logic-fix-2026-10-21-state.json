@@ -1,0 +1,4352 @@
+{
+  "date": "2026-10-21",
+  "task": "AI-20261021-LOGIC-FIX",
+  "status": "design_repairs_complete_static_reviewed",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "sections": {
+    "account": {
+      "id": "506:6788",
+      "page": "471:524",
+      "name": "2026-10-21 · 六处逻辑修订 · account",
+      "x": 120,
+      "y": 50260
+    },
+    "adoption": {
+      "id": "506:60774",
+      "page": "420:2",
+      "name": "2026-10-21 · 六处逻辑修订 · adoption",
+      "x": 120,
+      "y": 86510
+    },
+    "appointments": {
+      "id": "506:205508",
+      "page": "420:4",
+      "name": "2026-10-21 · 六处逻辑修订 · appointments",
+      "x": 120,
+      "y": 114642
+    }
+  },
+  "roots": {
+    "phone/phoneCode": "460:17348",
+    "web/phoneCode": "460:17349",
+    "desktop/phoneCode": "460:17350",
+    "tabletP/phoneCode": "460:17351",
+    "tabletL/phoneCode": "460:17352",
+    "phone/authResume": "460:17353",
+    "web/authResume": "460:17354",
+    "desktop/authResume": "460:17355",
+    "tabletP/authResume": "460:17356",
+    "tabletL/authResume": "460:17357",
+    "phone/adultAssurance": "460:17413",
+    "web/adultAssurance": "460:17414",
+    "desktop/adultAssurance": "460:17415",
+    "tabletP/adultAssurance": "460:17416",
+    "tabletL/adultAssurance": "460:17417",
+    "phone/dataDelete": "460:17443",
+    "web/dataDelete": "460:17444",
+    "desktop/dataDelete": "460:17445",
+    "tabletP/dataDelete": "460:17446",
+    "tabletL/dataDelete": "460:17447",
+    "phone/dataProgress": "460:17448",
+    "web/dataProgress": "460:17449",
+    "desktop/dataProgress": "460:17450",
+    "tabletP/dataProgress": "460:17451",
+    "tabletL/dataProgress": "460:17452",
+    "phone/guestReceipt": "460:68697",
+    "web/guestReceipt": "460:68698",
+    "desktop/guestReceipt": "460:68699",
+    "tabletP/guestReceipt": "460:68700",
+    "tabletL/guestReceipt": "460:68701",
+    "phone/guestProgress": "460:68702",
+    "web/guestProgress": "460:68703",
+    "desktop/guestProgress": "460:68704",
+    "tabletP/guestProgress": "460:68705",
+    "tabletL/guestProgress": "460:68706",
+    "phone/returnRequest": "460:68727",
+    "web/returnRequest": "460:68728",
+    "desktop/returnRequest": "460:68729",
+    "tabletP/returnRequest": "460:68730",
+    "tabletL/returnRequest": "460:68731",
+    "phone/returnProposal": "460:68732",
+    "web/returnProposal": "460:68733",
+    "desktop/returnProposal": "460:68734",
+    "tabletP/returnProposal": "460:68735",
+    "tabletL/returnProposal": "460:68736",
+    "phone/returnConfirmed": "460:68737",
+    "web/returnConfirmed": "460:68738",
+    "desktop/returnConfirmed": "460:68739",
+    "tabletP/returnConfirmed": "460:68740",
+    "tabletL/returnConfirmed": "460:68741",
+    "phone/returnPending": "460:68742",
+    "web/returnPending": "460:68743",
+    "desktop/returnPending": "460:68744",
+    "tabletP/returnPending": "460:68745",
+    "tabletL/returnPending": "460:68746",
+    "phone/safetyHold": "460:211421",
+    "web/safetyHold": "460:211422",
+    "desktop/safetyHold": "460:211423",
+    "tabletP/safetyHold": "460:211424",
+    "tabletL/safetyHold": "460:211425",
+    "phone/smsInvalid": "506:6789",
+    "web/smsInvalid": "506:6790",
+    "desktop/smsInvalid": "506:6791",
+    "tabletP/smsInvalid": "506:6792",
+    "tabletL/smsInvalid": "506:6793",
+    "phone/smsExpired": "506:6794",
+    "web/smsExpired": "506:6795",
+    "desktop/smsExpired": "506:6796",
+    "tabletP/smsExpired": "506:6797",
+    "tabletL/smsExpired": "506:6798",
+    "phone/smsDelivery": "506:6799",
+    "web/smsDelivery": "506:6800",
+    "desktop/smsDelivery": "506:6801",
+    "tabletP/smsDelivery": "506:6802",
+    "tabletL/smsDelivery": "506:6803",
+    "phone/smsRateLimited": "506:6804",
+    "web/smsRateLimited": "506:6805",
+    "desktop/smsRateLimited": "506:6806",
+    "tabletP/smsRateLimited": "506:6807",
+    "tabletL/smsRateLimited": "506:6808",
+    "phone/smsChecking": "506:6809",
+    "web/smsChecking": "506:6810",
+    "desktop/smsChecking": "506:6811",
+    "tabletP/smsChecking": "506:6812",
+    "tabletL/smsChecking": "506:6813",
+    "phone/smsUncertain": "506:6814",
+    "web/smsUncertain": "506:6815",
+    "desktop/smsUncertain": "506:6816",
+    "tabletP/smsUncertain": "506:6817",
+    "tabletL/smsUncertain": "506:6818",
+    "phone/adultNotice": "506:6819",
+    "web/adultNotice": "506:6820",
+    "desktop/adultNotice": "506:6821",
+    "tabletP/adultNotice": "506:6822",
+    "tabletL/adultNotice": "506:6823",
+    "phone/adultProvider": "506:6824",
+    "web/adultProvider": "506:6825",
+    "desktop/adultProvider": "506:6826",
+    "tabletP/adultProvider": "506:6827",
+    "tabletL/adultProvider": "506:6828",
+    "phone/adultPending": "506:6829",
+    "web/adultPending": "506:6830",
+    "desktop/adultPending": "506:6831",
+    "tabletP/adultPending": "506:6832",
+    "tabletL/adultPending": "506:6833",
+    "phone/adultCancelled": "506:6834",
+    "web/adultCancelled": "506:6835",
+    "desktop/adultCancelled": "506:6836",
+    "tabletP/adultCancelled": "506:6837",
+    "tabletL/adultCancelled": "506:6838",
+    "phone/adultFailed": "506:6839",
+    "web/adultFailed": "506:6840",
+    "desktop/adultFailed": "506:6841",
+    "tabletP/adultFailed": "506:6842",
+    "tabletL/adultFailed": "506:6843",
+    "phone/adultUnsupported": "506:6844",
+    "web/adultUnsupported": "506:6845",
+    "desktop/adultUnsupported": "506:6846",
+    "tabletP/adultUnsupported": "506:6847",
+    "tabletL/adultUnsupported": "506:6848",
+    "phone/adultNotEligible": "506:6849",
+    "web/adultNotEligible": "506:6850",
+    "desktop/adultNotEligible": "506:6851",
+    "tabletP/adultNotEligible": "506:6852",
+    "tabletL/adultNotEligible": "506:6853",
+    "phone/adultExpired": "506:6854",
+    "web/adultExpired": "506:6855",
+    "desktop/adultExpired": "506:6856",
+    "tabletP/adultExpired": "506:6857",
+    "tabletL/adultExpired": "506:6858",
+    "phone/adultPassed": "506:6859",
+    "web/adultPassed": "506:6860",
+    "desktop/adultPassed": "506:6861",
+    "tabletP/adultPassed": "506:6862",
+    "tabletL/adultPassed": "506:6863",
+    "phone/adultTaskReview": "506:6864",
+    "web/adultTaskReview": "506:6865",
+    "desktop/adultTaskReview": "506:6866",
+    "tabletP/adultTaskReview": "506:6867",
+    "tabletL/adultTaskReview": "506:6868",
+    "phone/reportSupplement": "506:6869",
+    "web/reportSupplement": "506:6870",
+    "desktop/reportSupplement": "506:6871",
+    "tabletP/reportSupplement": "506:6872",
+    "tabletL/reportSupplement": "506:6873",
+    "phone/reportSupplementPending": "506:6874",
+    "web/reportSupplementPending": "506:6875",
+    "desktop/reportSupplementPending": "506:6876",
+    "tabletP/reportSupplementPending": "506:6877",
+    "tabletL/reportSupplementPending": "506:6878",
+    "phone/reportSupplementFailed": "506:6879",
+    "web/reportSupplementFailed": "506:6880",
+    "desktop/reportSupplementFailed": "506:6881",
+    "tabletP/reportSupplementFailed": "506:6882",
+    "tabletL/reportSupplementFailed": "506:6883",
+    "phone/reportSupplemented": "506:6884",
+    "web/reportSupplemented": "506:6885",
+    "desktop/reportSupplemented": "506:6886",
+    "tabletP/reportSupplemented": "506:6887",
+    "tabletL/reportSupplemented": "506:6888",
+    "phone/reportAccess": "506:6889",
+    "web/reportAccess": "506:6890",
+    "desktop/reportAccess": "506:6891",
+    "tabletP/reportAccess": "506:6892",
+    "tabletL/reportAccess": "506:6893",
+    "phone/reportAccessPending": "506:6894",
+    "web/reportAccessPending": "506:6895",
+    "desktop/reportAccessPending": "506:6896",
+    "tabletP/reportAccessPending": "506:6897",
+    "tabletL/reportAccessPending": "506:6898",
+    "phone/reportAccessHelp": "506:6899",
+    "web/reportAccessHelp": "506:6900",
+    "desktop/reportAccessHelp": "506:6901",
+    "tabletP/reportAccessHelp": "506:6902",
+    "tabletL/reportAccessHelp": "506:6903",
+    "phone/dataPartScope": "506:6904",
+    "web/dataPartScope": "506:6905",
+    "desktop/dataPartScope": "506:6906",
+    "tabletP/dataPartScope": "506:6907",
+    "tabletL/dataPartScope": "506:6908",
+    "phone/dataAccountImpact": "506:6909",
+    "web/dataAccountImpact": "506:6910",
+    "desktop/dataAccountImpact": "506:6911",
+    "tabletP/dataAccountImpact": "506:6912",
+    "tabletL/dataAccountImpact": "506:6913",
+    "phone/dataAccountTasks": "506:6914",
+    "web/dataAccountTasks": "506:6915",
+    "desktop/dataAccountTasks": "506:6916",
+    "tabletP/dataAccountTasks": "506:6917",
+    "tabletL/dataAccountTasks": "506:6918",
+    "phone/dataPartVerify": "506:6919",
+    "web/dataPartVerify": "506:6920",
+    "desktop/dataPartVerify": "506:6921",
+    "tabletP/dataPartVerify": "506:6922",
+    "tabletL/dataPartVerify": "506:6923",
+    "phone/dataPartVerifyError": "506:6924",
+    "web/dataPartVerifyError": "506:6925",
+    "desktop/dataPartVerifyError": "506:6926",
+    "tabletP/dataPartVerifyError": "506:6927",
+    "tabletL/dataPartVerifyError": "506:6928",
+    "phone/dataPartFinal": "506:6929",
+    "web/dataPartFinal": "506:6930",
+    "desktop/dataPartFinal": "506:6931",
+    "tabletP/dataPartFinal": "506:6932",
+    "tabletL/dataPartFinal": "506:6933",
+    "phone/dataPartPending": "506:6934",
+    "web/dataPartPending": "506:6935",
+    "desktop/dataPartPending": "506:6936",
+    "tabletP/dataPartPending": "506:6937",
+    "tabletL/dataPartPending": "506:6938",
+    "phone/dataPartFailed": "506:6939",
+    "web/dataPartFailed": "506:6940",
+    "desktop/dataPartFailed": "506:6941",
+    "tabletP/dataPartFailed": "506:6942",
+    "tabletL/dataPartFailed": "506:6943",
+    "phone/dataAccountVerify": "506:6944",
+    "web/dataAccountVerify": "506:6945",
+    "desktop/dataAccountVerify": "506:6946",
+    "tabletP/dataAccountVerify": "506:6947",
+    "tabletL/dataAccountVerify": "506:6948",
+    "phone/dataAccountVerifyError": "506:6949",
+    "web/dataAccountVerifyError": "506:6950",
+    "desktop/dataAccountVerifyError": "506:6951",
+    "tabletP/dataAccountVerifyError": "506:6952",
+    "tabletL/dataAccountVerifyError": "506:6953",
+    "phone/dataAccountFinal": "506:6954",
+    "web/dataAccountFinal": "506:6955",
+    "desktop/dataAccountFinal": "506:6956",
+    "tabletP/dataAccountFinal": "506:6957",
+    "tabletL/dataAccountFinal": "506:6958",
+    "phone/dataAccountPending": "506:6959",
+    "web/dataAccountPending": "506:6960",
+    "desktop/dataAccountPending": "506:6961",
+    "tabletP/dataAccountPending": "506:6962",
+    "tabletL/dataAccountPending": "506:6963",
+    "phone/dataAccountFailed": "506:6964",
+    "web/dataAccountFailed": "506:6965",
+    "desktop/dataAccountFailed": "506:6966",
+    "tabletP/dataAccountFailed": "506:6967",
+    "tabletL/dataAccountFailed": "506:6968",
+    "phone/dataAccountProgress": "506:6969",
+    "web/dataAccountProgress": "506:6970",
+    "desktop/dataAccountProgress": "506:6971",
+    "tabletP/dataAccountProgress": "506:6972",
+    "tabletL/dataAccountProgress": "506:6973",
+    "phone/dataPartAppeal": "506:6974",
+    "web/dataPartAppeal": "506:6975",
+    "desktop/dataPartAppeal": "506:6976",
+    "tabletP/dataPartAppeal": "506:6977",
+    "tabletL/dataPartAppeal": "506:6978",
+    "phone/dataPartAppealPending": "506:6979",
+    "web/dataPartAppealPending": "506:6980",
+    "desktop/dataPartAppealPending": "506:6981",
+    "tabletP/dataPartAppealPending": "506:6982",
+    "tabletL/dataPartAppealPending": "506:6983",
+    "phone/dataAccountAppeal": "506:6984",
+    "web/dataAccountAppeal": "506:6985",
+    "desktop/dataAccountAppeal": "506:6986",
+    "tabletP/dataAccountAppeal": "506:6987",
+    "tabletL/dataAccountAppeal": "506:6988",
+    "phone/dataAccountAppealPending": "506:6989",
+    "web/dataAccountAppealPending": "506:6990",
+    "desktop/dataAccountAppealPending": "506:6991",
+    "tabletP/dataAccountAppealPending": "506:6992",
+    "tabletL/dataAccountAppealPending": "506:6993",
+    "phone/smsSendPending": "506:6994",
+    "web/smsSendPending": "506:6995",
+    "desktop/smsSendPending": "506:6996",
+    "tabletP/smsSendPending": "506:6997",
+    "tabletL/smsSendPending": "506:6998",
+    "phone/smsSendUncertain": "506:6999",
+    "web/smsSendUncertain": "506:7000",
+    "desktop/smsSendUncertain": "506:7001",
+    "tabletP/smsSendUncertain": "506:7002",
+    "tabletL/smsSendUncertain": "506:7003",
+    "phone/dataPartCodePending": "506:7004",
+    "web/dataPartCodePending": "506:7005",
+    "desktop/dataPartCodePending": "506:7006",
+    "tabletP/dataPartCodePending": "506:7007",
+    "tabletL/dataPartCodePending": "506:7008",
+    "phone/dataPartVerifyPending": "506:7009",
+    "web/dataPartVerifyPending": "506:7010",
+    "desktop/dataPartVerifyPending": "506:7011",
+    "tabletP/dataPartVerifyPending": "506:7012",
+    "tabletL/dataPartVerifyPending": "506:7013",
+    "phone/dataAccountCodePending": "506:7014",
+    "web/dataAccountCodePending": "506:7015",
+    "desktop/dataAccountCodePending": "506:7016",
+    "tabletP/dataAccountCodePending": "506:7017",
+    "tabletL/dataAccountCodePending": "506:7018",
+    "phone/dataAccountVerifyPending": "506:7019",
+    "web/dataAccountVerifyPending": "506:7020",
+    "desktop/dataAccountVerifyPending": "506:7021",
+    "tabletP/dataAccountVerifyPending": "506:7022",
+    "tabletL/dataAccountVerifyPending": "506:7023",
+    "phone/returnEdit": "506:60775",
+    "web/returnEdit": "506:60776",
+    "desktop/returnEdit": "506:60777",
+    "tabletP/returnEdit": "506:60778",
+    "tabletL/returnEdit": "506:60779",
+    "phone/returnProposalPending": "506:60780",
+    "web/returnProposalPending": "506:60781",
+    "desktop/returnProposalPending": "506:60782",
+    "tabletP/returnProposalPending": "506:60783",
+    "tabletL/returnProposalPending": "506:60784",
+    "phone/returnSendFailed": "506:60785",
+    "web/returnSendFailed": "506:60786",
+    "desktop/returnSendFailed": "506:60787",
+    "tabletP/returnSendFailed": "506:60788",
+    "tabletL/returnSendFailed": "506:60789",
+    "phone/returnWaiting": "506:60790",
+    "web/returnWaiting": "506:60791",
+    "desktop/returnWaiting": "506:60792",
+    "tabletP/returnWaiting": "506:60793",
+    "tabletL/returnWaiting": "506:60794",
+    "phone/returnReview": "506:60795",
+    "web/returnReview": "506:60796",
+    "desktop/returnReview": "506:60797",
+    "tabletP/returnReview": "506:60798",
+    "tabletL/returnReview": "506:60799",
+    "phone/returnReject": "506:60800",
+    "web/returnReject": "506:60801",
+    "desktop/returnReject": "506:60802",
+    "tabletP/returnReject": "506:60803",
+    "tabletL/returnReject": "506:60804",
+    "phone/returnDeclined": "506:60805",
+    "web/returnDeclined": "506:60806",
+    "desktop/returnDeclined": "506:60807",
+    "tabletP/returnDeclined": "506:60808",
+    "tabletL/returnDeclined": "506:60809",
+    "phone/returnEditR2": "506:60810",
+    "web/returnEditR2": "506:60811",
+    "desktop/returnEditR2": "506:60812",
+    "tabletP/returnEditR2": "506:60813",
+    "tabletL/returnEditR2": "506:60814",
+    "phone/returnPreviewR2": "506:60815",
+    "web/returnPreviewR2": "506:60816",
+    "desktop/returnPreviewR2": "506:60817",
+    "tabletP/returnPreviewR2": "506:60818",
+    "tabletL/returnPreviewR2": "506:60819",
+    "phone/returnWaitingR2": "506:60820",
+    "web/returnWaitingR2": "506:60821",
+    "desktop/returnWaitingR2": "506:60822",
+    "tabletP/returnWaitingR2": "506:60823",
+    "tabletL/returnWaitingR2": "506:60824",
+    "phone/returnReviewR2": "506:60825",
+    "web/returnReviewR2": "506:60826",
+    "desktop/returnReviewR2": "506:60827",
+    "tabletP/returnReviewR2": "506:60828",
+    "tabletL/returnReviewR2": "506:60829",
+    "phone/returnConfirmedR2": "506:60830",
+    "web/returnConfirmedR2": "506:60831",
+    "desktop/returnConfirmedR2": "506:60832",
+    "tabletP/returnConfirmedR2": "506:60833",
+    "tabletL/returnConfirmedR2": "506:60834",
+    "phone/returnConflict": "506:60835",
+    "web/returnConflict": "506:60836",
+    "desktop/returnConflict": "506:60837",
+    "tabletP/returnConflict": "506:60838",
+    "tabletL/returnConflict": "506:60839",
+    "phone/returnLatest": "506:60840",
+    "web/returnLatest": "506:60841",
+    "desktop/returnLatest": "506:60842",
+    "tabletP/returnLatest": "506:60843",
+    "tabletL/returnLatest": "506:60844",
+    "phone/returnExpired": "506:60845",
+    "web/returnExpired": "506:60846",
+    "desktop/returnExpired": "506:60847",
+    "tabletP/returnExpired": "506:60848",
+    "tabletL/returnExpired": "506:60849",
+    "phone/returnWithdraw": "506:60850",
+    "web/returnWithdraw": "506:60851",
+    "desktop/returnWithdraw": "506:60852",
+    "tabletP/returnWithdraw": "506:60853",
+    "tabletL/returnWithdraw": "506:60854",
+    "phone/returnWithdrawR2": "506:60855",
+    "web/returnWithdrawR2": "506:60856",
+    "desktop/returnWithdrawR2": "506:60857",
+    "tabletP/returnWithdrawR2": "506:60858",
+    "tabletL/returnWithdrawR2": "506:60859",
+    "phone/returnWithdrawn": "506:60860",
+    "web/returnWithdrawn": "506:60861",
+    "desktop/returnWithdrawn": "506:60862",
+    "tabletP/returnWithdrawn": "506:60863",
+    "tabletL/returnWithdrawn": "506:60864",
+    "phone/holdCancel": "506:205509",
+    "web/holdCancel": "506:205510",
+    "desktop/holdCancel": "506:205511",
+    "tabletP/holdCancel": "506:205512",
+    "tabletL/holdCancel": "506:205513",
+    "phone/holdCancelPending": "506:205514",
+    "web/holdCancelPending": "506:205515",
+    "desktop/holdCancelPending": "506:205516",
+    "tabletP/holdCancelPending": "506:205517",
+    "tabletL/holdCancelPending": "506:205518",
+    "phone/holdCancelFailed": "506:205519",
+    "web/holdCancelFailed": "506:205520",
+    "desktop/holdCancelFailed": "506:205521",
+    "tabletP/holdCancelFailed": "506:205522",
+    "tabletL/holdCancelFailed": "506:205523",
+    "phone/holdCancelled": "506:205524",
+    "web/holdCancelled": "506:205525",
+    "desktop/holdCancelled": "506:205526",
+    "tabletP/holdCancelled": "506:205527",
+    "tabletL/holdCancelled": "506:205528",
+    "phone/holdReproposal": "506:205529",
+    "web/holdReproposal": "506:205530",
+    "desktop/holdReproposal": "506:205531",
+    "tabletP/holdReproposal": "506:205532",
+    "tabletL/holdReproposal": "506:205533",
+    "phone/holdProposalWaiting": "506:205534",
+    "web/holdProposalWaiting": "506:205535",
+    "desktop/holdProposalWaiting": "506:205536",
+    "tabletP/holdProposalWaiting": "506:205537",
+    "tabletL/holdProposalWaiting": "506:205538",
+    "phone/holdReleased": "506:205539",
+    "web/holdReleased": "506:205540",
+    "desktop/holdReleased": "506:205541",
+    "tabletP/holdReleased": "506:205542",
+    "tabletL/holdReleased": "506:205543"
+  },
+  "targets": {
+    "phone/legacy:home": {
+      "id": "56:27",
+      "page": "403:5"
+    },
+    "web/legacy:home": {
+      "id": "311:23",
+      "page": "403:5"
+    },
+    "desktop/legacy:home": {
+      "id": "311:24",
+      "page": "403:5"
+    },
+    "tabletP/legacy:home": {
+      "id": "311:25",
+      "page": "403:5"
+    },
+    "tabletL/legacy:home": {
+      "id": "311:26",
+      "page": "403:5"
+    },
+    "phone/legacy:composePost": {
+      "id": "56:33",
+      "page": "403:5"
+    },
+    "web/legacy:composePost": {
+      "id": "311:378832",
+      "page": "403:5"
+    },
+    "desktop/legacy:composePost": {
+      "id": "311:378833",
+      "page": "403:5"
+    },
+    "tabletP/legacy:composePost": {
+      "id": "311:378834",
+      "page": "403:5"
+    },
+    "tabletL/legacy:composePost": {
+      "id": "311:378835",
+      "page": "403:5"
+    },
+    "phone/legacy:mine": {
+      "id": "56:73",
+      "page": "403:5"
+    },
+    "web/legacy:mine": {
+      "id": "311:379260",
+      "page": "403:5"
+    },
+    "desktop/legacy:mine": {
+      "id": "311:379261",
+      "page": "403:5"
+    },
+    "tabletP/legacy:mine": {
+      "id": "311:379262",
+      "page": "403:5"
+    },
+    "tabletL/legacy:mine": {
+      "id": "311:379263",
+      "page": "403:5"
+    },
+    "phone/legacy:myPublishes": {
+      "id": "56:53",
+      "page": "403:5"
+    },
+    "web/legacy:myPublishes": {
+      "id": "311:378844",
+      "page": "403:5"
+    },
+    "desktop/legacy:myPublishes": {
+      "id": "311:378845",
+      "page": "403:5"
+    },
+    "tabletP/legacy:myPublishes": {
+      "id": "311:378846",
+      "page": "403:5"
+    },
+    "tabletL/legacy:myPublishes": {
+      "id": "311:378847",
+      "page": "403:5"
+    },
+    "phone/legacy:adopt": {
+      "id": "56:35",
+      "page": "420:2"
+    },
+    "web/legacy:adopt": {
+      "id": "311:378888",
+      "page": "420:2"
+    },
+    "desktop/legacy:adopt": {
+      "id": "311:378889",
+      "page": "420:2"
+    },
+    "tabletP/legacy:adopt": {
+      "id": "311:378890",
+      "page": "420:2"
+    },
+    "tabletL/legacy:adopt": {
+      "id": "311:378891",
+      "page": "420:2"
+    },
+    "phone/legacy:application": {
+      "id": "56:42",
+      "page": "420:2"
+    },
+    "web/legacy:application": {
+      "id": "311:378908",
+      "page": "420:2"
+    },
+    "desktop/legacy:application": {
+      "id": "311:378909",
+      "page": "420:2"
+    },
+    "tabletP/legacy:application": {
+      "id": "311:378910",
+      "page": "420:2"
+    },
+    "tabletL/legacy:application": {
+      "id": "311:378911",
+      "page": "420:2"
+    },
+    "phone/legacy:followup": {
+      "id": "56:44",
+      "page": "420:2"
+    },
+    "web/legacy:followup": {
+      "id": "311:378916",
+      "page": "420:2"
+    },
+    "desktop/legacy:followup": {
+      "id": "311:378917",
+      "page": "420:2"
+    },
+    "tabletP/legacy:followup": {
+      "id": "311:378918",
+      "page": "420:2"
+    },
+    "tabletL/legacy:followup": {
+      "id": "311:378919",
+      "page": "420:2"
+    },
+    "phone/legacy:handover": {
+      "id": "56:43",
+      "page": "420:2"
+    },
+    "web/legacy:handover": {
+      "id": "311:378912",
+      "page": "420:2"
+    },
+    "desktop/legacy:handover": {
+      "id": "311:378913",
+      "page": "420:2"
+    },
+    "tabletP/legacy:handover": {
+      "id": "311:378914",
+      "page": "420:2"
+    },
+    "tabletL/legacy:handover": {
+      "id": "311:378915",
+      "page": "420:2"
+    },
+    "phone/legacy:messages": {
+      "id": "56:61",
+      "page": "420:4"
+    },
+    "web/legacy:messages": {
+      "id": "311:379700",
+      "page": "420:4"
+    },
+    "desktop/legacy:messages": {
+      "id": "311:379701",
+      "page": "420:4"
+    },
+    "tabletP/legacy:messages": {
+      "id": "311:379702",
+      "page": "420:4"
+    },
+    "tabletL/legacy:messages": {
+      "id": "311:379703",
+      "page": "420:4"
+    },
+    "phone/legacy:appointment": {
+      "id": "56:63",
+      "page": "420:4"
+    },
+    "web/legacy:appointment": {
+      "id": "311:379780",
+      "page": "420:4"
+    },
+    "desktop/legacy:appointment": {
+      "id": "311:379781",
+      "page": "420:4"
+    },
+    "tabletP/legacy:appointment": {
+      "id": "311:379782",
+      "page": "420:4"
+    },
+    "tabletL/legacy:appointment": {
+      "id": "311:379783",
+      "page": "420:4"
+    },
+    "phone/legacy:change": {
+      "id": "56:64",
+      "page": "420:4"
+    },
+    "web/legacy:change": {
+      "id": "311:379784",
+      "page": "420:4"
+    },
+    "desktop/legacy:change": {
+      "id": "311:379785",
+      "page": "420:4"
+    },
+    "tabletP/legacy:change": {
+      "id": "311:379786",
+      "page": "420:4"
+    },
+    "tabletL/legacy:change": {
+      "id": "311:379787",
+      "page": "420:4"
+    },
+    "phone/legacy:authProvider_wechat": {
+      "id": "238:371731",
+      "page": "420:5"
+    },
+    "web/legacy:authProvider_wechat": {
+      "id": "311:379928",
+      "page": "420:5"
+    },
+    "desktop/legacy:authProvider_wechat": {
+      "id": "311:379929",
+      "page": "420:5"
+    },
+    "tabletP/legacy:authProvider_wechat": {
+      "id": "311:379930",
+      "page": "420:5"
+    },
+    "tabletL/legacy:authProvider_wechat": {
+      "id": "311:379931",
+      "page": "420:5"
+    },
+    "phone/legacy:authProvider_qq": {
+      "id": "238:371732",
+      "page": "420:5"
+    },
+    "web/legacy:authProvider_qq": {
+      "id": "311:379932",
+      "page": "420:5"
+    },
+    "desktop/legacy:authProvider_qq": {
+      "id": "311:379933",
+      "page": "420:5"
+    },
+    "tabletP/legacy:authProvider_qq": {
+      "id": "311:379934",
+      "page": "420:5"
+    },
+    "tabletL/legacy:authProvider_qq": {
+      "id": "311:379935",
+      "page": "420:5"
+    },
+    "phone/legacy:authProvider_apple": {
+      "id": "238:371733",
+      "page": "420:5"
+    },
+    "web/legacy:authProvider_apple": {
+      "id": "311:379936",
+      "page": "420:5"
+    },
+    "desktop/legacy:authProvider_apple": {
+      "id": "311:379937",
+      "page": "420:5"
+    },
+    "tabletP/legacy:authProvider_apple": {
+      "id": "311:379938",
+      "page": "420:5"
+    },
+    "tabletL/legacy:authProvider_apple": {
+      "id": "311:379939",
+      "page": "420:5"
+    },
+    "phone/legacy:settings": {
+      "id": "56:75",
+      "page": "420:5"
+    },
+    "web/legacy:settings": {
+      "id": "311:380092",
+      "page": "420:5"
+    },
+    "desktop/legacy:settings": {
+      "id": "311:380093",
+      "page": "420:5"
+    },
+    "tabletP/legacy:settings": {
+      "id": "311:380094",
+      "page": "420:5"
+    },
+    "tabletL/legacy:settings": {
+      "id": "311:380095",
+      "page": "420:5"
+    },
+    "phone/legacy:lostPublish": {
+      "id": "56:59",
+      "page": "420:3"
+    },
+    "web/legacy:lostPublish": {
+      "id": "311:379436",
+      "page": "420:3"
+    },
+    "desktop/legacy:lostPublish": {
+      "id": "311:379437",
+      "page": "420:3"
+    },
+    "tabletP/legacy:lostPublish": {
+      "id": "311:379438",
+      "page": "420:3"
+    },
+    "tabletL/legacy:lostPublish": {
+      "id": "311:379439",
+      "page": "420:3"
+    },
+    "phone/legacy:lostDetail": {
+      "id": "56:56",
+      "page": "420:3"
+    },
+    "web/legacy:lostDetail": {
+      "id": "311:379424",
+      "page": "420:3"
+    },
+    "desktop/legacy:lostDetail": {
+      "id": "311:379425",
+      "page": "420:3"
+    },
+    "tabletP/legacy:lostDetail": {
+      "id": "311:379426",
+      "page": "420:3"
+    },
+    "tabletL/legacy:lostDetail": {
+      "id": "311:379427",
+      "page": "420:3"
+    },
+    "phone/login": {
+      "id": "56:70",
+      "page": "420:5"
+    },
+    "web/login": {
+      "id": "311:379860",
+      "page": "420:5"
+    },
+    "desktop/login": {
+      "id": "311:379861",
+      "page": "420:5"
+    },
+    "tabletP/login": {
+      "id": "311:379862",
+      "page": "420:5"
+    },
+    "tabletL/login": {
+      "id": "311:379863",
+      "page": "420:5"
+    },
+    "phone/authIOS": {
+      "id": "238:371719",
+      "page": "420:5"
+    },
+    "web/authIOS": {
+      "id": "311:379880",
+      "page": "420:5"
+    },
+    "desktop/authIOS": {
+      "id": "311:379881",
+      "page": "420:5"
+    },
+    "tabletP/authIOS": {
+      "id": "311:379882",
+      "page": "420:5"
+    },
+    "tabletL/authIOS": {
+      "id": "311:379883",
+      "page": "420:5"
+    },
+    "phone/emailStart": {
+      "id": "460:17318",
+      "page": "471:524"
+    },
+    "web/emailStart": {
+      "id": "460:17319",
+      "page": "471:524"
+    },
+    "desktop/emailStart": {
+      "id": "460:17320",
+      "page": "471:524"
+    },
+    "tabletP/emailStart": {
+      "id": "460:17321",
+      "page": "471:524"
+    },
+    "tabletL/emailStart": {
+      "id": "460:17322",
+      "page": "471:524"
+    },
+    "phone/emailCode": {
+      "id": "460:17323",
+      "page": "471:524"
+    },
+    "web/emailCode": {
+      "id": "460:17324",
+      "page": "471:524"
+    },
+    "desktop/emailCode": {
+      "id": "460:17325",
+      "page": "471:524"
+    },
+    "tabletP/emailCode": {
+      "id": "460:17326",
+      "page": "471:524"
+    },
+    "tabletL/emailCode": {
+      "id": "460:17327",
+      "page": "471:524"
+    },
+    "phone/emailError": {
+      "id": "460:17328",
+      "page": "471:524"
+    },
+    "web/emailError": {
+      "id": "460:17329",
+      "page": "471:524"
+    },
+    "desktop/emailError": {
+      "id": "460:17330",
+      "page": "471:524"
+    },
+    "tabletP/emailError": {
+      "id": "460:17331",
+      "page": "471:524"
+    },
+    "tabletL/emailError": {
+      "id": "460:17332",
+      "page": "471:524"
+    },
+    "phone/accountChoice": {
+      "id": "460:17333",
+      "page": "471:524"
+    },
+    "web/accountChoice": {
+      "id": "460:17334",
+      "page": "471:524"
+    },
+    "desktop/accountChoice": {
+      "id": "460:17335",
+      "page": "471:524"
+    },
+    "tabletP/accountChoice": {
+      "id": "460:17336",
+      "page": "471:524"
+    },
+    "tabletL/accountChoice": {
+      "id": "460:17337",
+      "page": "471:524"
+    },
+    "phone/accountConflict": {
+      "id": "460:17338",
+      "page": "471:524"
+    },
+    "web/accountConflict": {
+      "id": "460:17339",
+      "page": "471:524"
+    },
+    "desktop/accountConflict": {
+      "id": "460:17340",
+      "page": "471:524"
+    },
+    "tabletP/accountConflict": {
+      "id": "460:17341",
+      "page": "471:524"
+    },
+    "tabletL/accountConflict": {
+      "id": "460:17342",
+      "page": "471:524"
+    },
+    "phone/phoneGate": {
+      "id": "460:17343",
+      "page": "471:524"
+    },
+    "web/phoneGate": {
+      "id": "460:17344",
+      "page": "471:524"
+    },
+    "desktop/phoneGate": {
+      "id": "460:17345",
+      "page": "471:524"
+    },
+    "tabletP/phoneGate": {
+      "id": "460:17346",
+      "page": "471:524"
+    },
+    "tabletL/phoneGate": {
+      "id": "460:17347",
+      "page": "471:524"
+    },
+    "phone/phoneCode": {
+      "id": "460:17348",
+      "page": "471:524"
+    },
+    "web/phoneCode": {
+      "id": "460:17349",
+      "page": "471:524"
+    },
+    "desktop/phoneCode": {
+      "id": "460:17350",
+      "page": "471:524"
+    },
+    "tabletP/phoneCode": {
+      "id": "460:17351",
+      "page": "471:524"
+    },
+    "tabletL/phoneCode": {
+      "id": "460:17352",
+      "page": "471:524"
+    },
+    "phone/authResume": {
+      "id": "460:17353",
+      "page": "471:524"
+    },
+    "web/authResume": {
+      "id": "460:17354",
+      "page": "471:524"
+    },
+    "desktop/authResume": {
+      "id": "460:17355",
+      "page": "471:524"
+    },
+    "tabletP/authResume": {
+      "id": "460:17356",
+      "page": "471:524"
+    },
+    "tabletL/authResume": {
+      "id": "460:17357",
+      "page": "471:524"
+    },
+    "phone/accountIdentifiers": {
+      "id": "460:17358",
+      "page": "471:524"
+    },
+    "web/accountIdentifiers": {
+      "id": "460:17359",
+      "page": "471:524"
+    },
+    "desktop/accountIdentifiers": {
+      "id": "460:17360",
+      "page": "471:524"
+    },
+    "tabletP/accountIdentifiers": {
+      "id": "460:17361",
+      "page": "471:524"
+    },
+    "tabletL/accountIdentifiers": {
+      "id": "460:17362",
+      "page": "471:524"
+    },
+    "phone/emailBinding": {
+      "id": "460:17363",
+      "page": "471:524"
+    },
+    "web/emailBinding": {
+      "id": "460:17364",
+      "page": "471:524"
+    },
+    "desktop/emailBinding": {
+      "id": "460:17365",
+      "page": "471:524"
+    },
+    "tabletP/emailBinding": {
+      "id": "460:17366",
+      "page": "471:524"
+    },
+    "tabletL/emailBinding": {
+      "id": "460:17367",
+      "page": "471:524"
+    },
+    "phone/phoneChange": {
+      "id": "460:17368",
+      "page": "471:524"
+    },
+    "web/phoneChange": {
+      "id": "460:17369",
+      "page": "471:524"
+    },
+    "desktop/phoneChange": {
+      "id": "460:17370",
+      "page": "471:524"
+    },
+    "tabletP/phoneChange": {
+      "id": "460:17371",
+      "page": "471:524"
+    },
+    "tabletL/phoneChange": {
+      "id": "460:17372",
+      "page": "471:524"
+    },
+    "phone/accountRecovery": {
+      "id": "460:17373",
+      "page": "471:524"
+    },
+    "web/accountRecovery": {
+      "id": "460:17374",
+      "page": "471:524"
+    },
+    "desktop/accountRecovery": {
+      "id": "460:17375",
+      "page": "471:524"
+    },
+    "tabletP/accountRecovery": {
+      "id": "460:17376",
+      "page": "471:524"
+    },
+    "tabletL/accountRecovery": {
+      "id": "460:17377",
+      "page": "471:524"
+    },
+    "phone/ageRange": {
+      "id": "460:17378",
+      "page": "471:524"
+    },
+    "web/ageRange": {
+      "id": "460:17379",
+      "page": "471:524"
+    },
+    "desktop/ageRange": {
+      "id": "460:17380",
+      "page": "471:524"
+    },
+    "tabletP/ageRange": {
+      "id": "460:17381",
+      "page": "471:524"
+    },
+    "tabletL/ageRange": {
+      "id": "460:17382",
+      "page": "471:524"
+    },
+    "phone/guardianInvite": {
+      "id": "460:17383",
+      "page": "471:524"
+    },
+    "web/guardianInvite": {
+      "id": "460:17384",
+      "page": "471:524"
+    },
+    "desktop/guardianInvite": {
+      "id": "460:17385",
+      "page": "471:524"
+    },
+    "tabletP/guardianInvite": {
+      "id": "460:17386",
+      "page": "471:524"
+    },
+    "tabletL/guardianInvite": {
+      "id": "460:17387",
+      "page": "471:524"
+    },
+    "phone/guardianReview": {
+      "id": "460:17388",
+      "page": "471:524"
+    },
+    "web/guardianReview": {
+      "id": "460:17389",
+      "page": "471:524"
+    },
+    "desktop/guardianReview": {
+      "id": "460:17390",
+      "page": "471:524"
+    },
+    "tabletP/guardianReview": {
+      "id": "460:17391",
+      "page": "471:524"
+    },
+    "tabletL/guardianReview": {
+      "id": "460:17392",
+      "page": "471:524"
+    },
+    "phone/guardianWaiting": {
+      "id": "460:17393",
+      "page": "471:524"
+    },
+    "web/guardianWaiting": {
+      "id": "460:17394",
+      "page": "471:524"
+    },
+    "desktop/guardianWaiting": {
+      "id": "460:17395",
+      "page": "471:524"
+    },
+    "tabletP/guardianWaiting": {
+      "id": "460:17396",
+      "page": "471:524"
+    },
+    "tabletL/guardianWaiting": {
+      "id": "460:17397",
+      "page": "471:524"
+    },
+    "phone/guardianActive": {
+      "id": "460:17398",
+      "page": "471:524"
+    },
+    "web/guardianActive": {
+      "id": "460:17399",
+      "page": "471:524"
+    },
+    "desktop/guardianActive": {
+      "id": "460:17400",
+      "page": "471:524"
+    },
+    "tabletP/guardianActive": {
+      "id": "460:17401",
+      "page": "471:524"
+    },
+    "tabletL/guardianActive": {
+      "id": "460:17402",
+      "page": "471:524"
+    },
+    "phone/guardianRevoked": {
+      "id": "460:17403",
+      "page": "471:524"
+    },
+    "web/guardianRevoked": {
+      "id": "460:17404",
+      "page": "471:524"
+    },
+    "desktop/guardianRevoked": {
+      "id": "460:17405",
+      "page": "471:524"
+    },
+    "tabletP/guardianRevoked": {
+      "id": "460:17406",
+      "page": "471:524"
+    },
+    "tabletL/guardianRevoked": {
+      "id": "460:17407",
+      "page": "471:524"
+    },
+    "phone/teenPrivacy": {
+      "id": "460:17408",
+      "page": "471:524"
+    },
+    "web/teenPrivacy": {
+      "id": "460:17409",
+      "page": "471:524"
+    },
+    "desktop/teenPrivacy": {
+      "id": "460:17410",
+      "page": "471:524"
+    },
+    "tabletP/teenPrivacy": {
+      "id": "460:17411",
+      "page": "471:524"
+    },
+    "tabletL/teenPrivacy": {
+      "id": "460:17412",
+      "page": "471:524"
+    },
+    "phone/adultAssurance": {
+      "id": "460:17413",
+      "page": "471:524"
+    },
+    "web/adultAssurance": {
+      "id": "460:17414",
+      "page": "471:524"
+    },
+    "desktop/adultAssurance": {
+      "id": "460:17415",
+      "page": "471:524"
+    },
+    "tabletP/adultAssurance": {
+      "id": "460:17416",
+      "page": "471:524"
+    },
+    "tabletL/adultAssurance": {
+      "id": "460:17417",
+      "page": "471:524"
+    },
+    "phone/adultRequired": {
+      "id": "460:17418",
+      "page": "471:524"
+    },
+    "web/adultRequired": {
+      "id": "460:17419",
+      "page": "471:524"
+    },
+    "desktop/adultRequired": {
+      "id": "460:17420",
+      "page": "471:524"
+    },
+    "tabletP/adultRequired": {
+      "id": "460:17421",
+      "page": "471:524"
+    },
+    "tabletL/adultRequired": {
+      "id": "460:17422",
+      "page": "471:524"
+    },
+    "phone/ageAppeal": {
+      "id": "460:17423",
+      "page": "471:524"
+    },
+    "web/ageAppeal": {
+      "id": "460:17424",
+      "page": "471:524"
+    },
+    "desktop/ageAppeal": {
+      "id": "460:17425",
+      "page": "471:524"
+    },
+    "tabletP/ageAppeal": {
+      "id": "460:17426",
+      "page": "471:524"
+    },
+    "tabletL/ageAppeal": {
+      "id": "460:17427",
+      "page": "471:524"
+    },
+    "phone/privacy": {
+      "id": "56:76",
+      "page": "420:5"
+    },
+    "web/privacy": {
+      "id": "311:380096",
+      "page": "420:5"
+    },
+    "desktop/privacy": {
+      "id": "311:380097",
+      "page": "420:5"
+    },
+    "tabletP/privacy": {
+      "id": "311:380098",
+      "page": "420:5"
+    },
+    "tabletL/privacy": {
+      "id": "311:380099",
+      "page": "420:5"
+    },
+    "phone/dataInventory": {
+      "id": "460:17428",
+      "page": "471:524"
+    },
+    "web/dataInventory": {
+      "id": "460:17429",
+      "page": "471:524"
+    },
+    "desktop/dataInventory": {
+      "id": "460:17430",
+      "page": "471:524"
+    },
+    "tabletP/dataInventory": {
+      "id": "460:17431",
+      "page": "471:524"
+    },
+    "tabletL/dataInventory": {
+      "id": "460:17432",
+      "page": "471:524"
+    },
+    "phone/dataRights": {
+      "id": "460:17433",
+      "page": "471:524"
+    },
+    "web/dataRights": {
+      "id": "460:17434",
+      "page": "471:524"
+    },
+    "desktop/dataRights": {
+      "id": "460:17435",
+      "page": "471:524"
+    },
+    "tabletP/dataRights": {
+      "id": "460:17436",
+      "page": "471:524"
+    },
+    "tabletL/dataRights": {
+      "id": "460:17437",
+      "page": "471:524"
+    },
+    "phone/dataRequest": {
+      "id": "460:17438",
+      "page": "471:524"
+    },
+    "web/dataRequest": {
+      "id": "460:17439",
+      "page": "471:524"
+    },
+    "desktop/dataRequest": {
+      "id": "460:17440",
+      "page": "471:524"
+    },
+    "tabletP/dataRequest": {
+      "id": "460:17441",
+      "page": "471:524"
+    },
+    "tabletL/dataRequest": {
+      "id": "460:17442",
+      "page": "471:524"
+    },
+    "phone/dataDelete": {
+      "id": "460:17443",
+      "page": "471:524"
+    },
+    "web/dataDelete": {
+      "id": "460:17444",
+      "page": "471:524"
+    },
+    "desktop/dataDelete": {
+      "id": "460:17445",
+      "page": "471:524"
+    },
+    "tabletP/dataDelete": {
+      "id": "460:17446",
+      "page": "471:524"
+    },
+    "tabletL/dataDelete": {
+      "id": "460:17447",
+      "page": "471:524"
+    },
+    "phone/dataProgress": {
+      "id": "460:17448",
+      "page": "471:524"
+    },
+    "web/dataProgress": {
+      "id": "460:17449",
+      "page": "471:524"
+    },
+    "desktop/dataProgress": {
+      "id": "460:17450",
+      "page": "471:524"
+    },
+    "tabletP/dataProgress": {
+      "id": "460:17451",
+      "page": "471:524"
+    },
+    "tabletL/dataProgress": {
+      "id": "460:17452",
+      "page": "471:524"
+    },
+    "phone/sdkList": {
+      "id": "460:17453",
+      "page": "471:524"
+    },
+    "web/sdkList": {
+      "id": "460:17454",
+      "page": "471:524"
+    },
+    "desktop/sdkList": {
+      "id": "460:17455",
+      "page": "471:524"
+    },
+    "tabletP/sdkList": {
+      "id": "460:17456",
+      "page": "471:524"
+    },
+    "tabletL/sdkList": {
+      "id": "460:17457",
+      "page": "471:524"
+    },
+    "phone/serviceTerms": {
+      "id": "460:17458",
+      "page": "471:524"
+    },
+    "web/serviceTerms": {
+      "id": "460:17459",
+      "page": "471:524"
+    },
+    "desktop/serviceTerms": {
+      "id": "460:17460",
+      "page": "471:524"
+    },
+    "tabletP/serviceTerms": {
+      "id": "460:17461",
+      "page": "471:524"
+    },
+    "tabletL/serviceTerms": {
+      "id": "460:17462",
+      "page": "471:524"
+    },
+    "phone/rules": {
+      "id": "460:17463",
+      "page": "471:524"
+    },
+    "web/rules": {
+      "id": "460:17464",
+      "page": "471:524"
+    },
+    "desktop/rules": {
+      "id": "460:17465",
+      "page": "471:524"
+    },
+    "tabletP/rules": {
+      "id": "460:17466",
+      "page": "471:524"
+    },
+    "tabletL/rules": {
+      "id": "460:17467",
+      "page": "471:524"
+    },
+    "phone/ruleDetail": {
+      "id": "460:17468",
+      "page": "471:524"
+    },
+    "web/ruleDetail": {
+      "id": "460:17469",
+      "page": "471:524"
+    },
+    "desktop/ruleDetail": {
+      "id": "460:17470",
+      "page": "471:524"
+    },
+    "tabletP/ruleDetail": {
+      "id": "460:17471",
+      "page": "471:524"
+    },
+    "tabletL/ruleDetail": {
+      "id": "460:17472",
+      "page": "471:524"
+    },
+    "phone/ruleHistory": {
+      "id": "460:17473",
+      "page": "471:524"
+    },
+    "web/ruleHistory": {
+      "id": "460:17474",
+      "page": "471:524"
+    },
+    "desktop/ruleHistory": {
+      "id": "460:17475",
+      "page": "471:524"
+    },
+    "tabletP/ruleHistory": {
+      "id": "460:17476",
+      "page": "471:524"
+    },
+    "tabletL/ruleHistory": {
+      "id": "460:17477",
+      "page": "471:524"
+    },
+    "phone/ruleChange": {
+      "id": "460:17478",
+      "page": "471:524"
+    },
+    "web/ruleChange": {
+      "id": "460:17479",
+      "page": "471:524"
+    },
+    "desktop/ruleChange": {
+      "id": "460:17480",
+      "page": "471:524"
+    },
+    "tabletP/ruleChange": {
+      "id": "460:17481",
+      "page": "471:524"
+    },
+    "tabletL/ruleChange": {
+      "id": "460:17482",
+      "page": "471:524"
+    },
+    "phone/ruleAppeal": {
+      "id": "460:17483",
+      "page": "471:524"
+    },
+    "web/ruleAppeal": {
+      "id": "460:17484",
+      "page": "471:524"
+    },
+    "desktop/ruleAppeal": {
+      "id": "460:17485",
+      "page": "471:524"
+    },
+    "tabletP/ruleAppeal": {
+      "id": "460:17486",
+      "page": "471:524"
+    },
+    "tabletL/ruleAppeal": {
+      "id": "460:17487",
+      "page": "471:524"
+    },
+    "phone/guestReport": {
+      "id": "460:68682",
+      "page": "420:2"
+    },
+    "web/guestReport": {
+      "id": "460:68683",
+      "page": "420:2"
+    },
+    "desktop/guestReport": {
+      "id": "460:68684",
+      "page": "420:2"
+    },
+    "tabletP/guestReport": {
+      "id": "460:68685",
+      "page": "420:2"
+    },
+    "tabletL/guestReport": {
+      "id": "460:68686",
+      "page": "420:2"
+    },
+    "phone/guestPending": {
+      "id": "460:68687",
+      "page": "420:2"
+    },
+    "web/guestPending": {
+      "id": "460:68688",
+      "page": "420:2"
+    },
+    "desktop/guestPending": {
+      "id": "460:68689",
+      "page": "420:2"
+    },
+    "tabletP/guestPending": {
+      "id": "460:68690",
+      "page": "420:2"
+    },
+    "tabletL/guestPending": {
+      "id": "460:68691",
+      "page": "420:2"
+    },
+    "phone/guestError": {
+      "id": "460:68692",
+      "page": "420:2"
+    },
+    "web/guestError": {
+      "id": "460:68693",
+      "page": "420:2"
+    },
+    "desktop/guestError": {
+      "id": "460:68694",
+      "page": "420:2"
+    },
+    "tabletP/guestError": {
+      "id": "460:68695",
+      "page": "420:2"
+    },
+    "tabletL/guestError": {
+      "id": "460:68696",
+      "page": "420:2"
+    },
+    "phone/guestReceipt": {
+      "id": "460:68697",
+      "page": "420:2"
+    },
+    "web/guestReceipt": {
+      "id": "460:68698",
+      "page": "420:2"
+    },
+    "desktop/guestReceipt": {
+      "id": "460:68699",
+      "page": "420:2"
+    },
+    "tabletP/guestReceipt": {
+      "id": "460:68700",
+      "page": "420:2"
+    },
+    "tabletL/guestReceipt": {
+      "id": "460:68701",
+      "page": "420:2"
+    },
+    "phone/guestProgress": {
+      "id": "460:68702",
+      "page": "420:2"
+    },
+    "web/guestProgress": {
+      "id": "460:68703",
+      "page": "420:2"
+    },
+    "desktop/guestProgress": {
+      "id": "460:68704",
+      "page": "420:2"
+    },
+    "tabletP/guestProgress": {
+      "id": "460:68705",
+      "page": "420:2"
+    },
+    "tabletL/guestProgress": {
+      "id": "460:68706",
+      "page": "420:2"
+    },
+    "phone/candidates": {
+      "id": "460:68707",
+      "page": "420:2"
+    },
+    "web/candidates": {
+      "id": "460:68708",
+      "page": "420:2"
+    },
+    "desktop/candidates": {
+      "id": "460:68709",
+      "page": "420:2"
+    },
+    "tabletP/candidates": {
+      "id": "460:68710",
+      "page": "420:2"
+    },
+    "tabletL/candidates": {
+      "id": "460:68711",
+      "page": "420:2"
+    },
+    "phone/trialReserved": {
+      "id": "460:68712",
+      "page": "420:2"
+    },
+    "web/trialReserved": {
+      "id": "460:68713",
+      "page": "420:2"
+    },
+    "desktop/trialReserved": {
+      "id": "460:68714",
+      "page": "420:2"
+    },
+    "tabletP/trialReserved": {
+      "id": "460:68715",
+      "page": "420:2"
+    },
+    "tabletL/trialReserved": {
+      "id": "460:68716",
+      "page": "420:2"
+    },
+    "phone/waitlist": {
+      "id": "460:68717",
+      "page": "420:2"
+    },
+    "web/waitlist": {
+      "id": "460:68718",
+      "page": "420:2"
+    },
+    "desktop/waitlist": {
+      "id": "460:68719",
+      "page": "420:2"
+    },
+    "tabletP/waitlist": {
+      "id": "460:68720",
+      "page": "420:2"
+    },
+    "tabletL/waitlist": {
+      "id": "460:68721",
+      "page": "420:2"
+    },
+    "phone/placementConflict": {
+      "id": "460:68722",
+      "page": "420:2"
+    },
+    "web/placementConflict": {
+      "id": "460:68723",
+      "page": "420:2"
+    },
+    "desktop/placementConflict": {
+      "id": "460:68724",
+      "page": "420:2"
+    },
+    "tabletP/placementConflict": {
+      "id": "460:68725",
+      "page": "420:2"
+    },
+    "tabletL/placementConflict": {
+      "id": "460:68726",
+      "page": "420:2"
+    },
+    "phone/returnRequest": {
+      "id": "460:68727",
+      "page": "420:2"
+    },
+    "web/returnRequest": {
+      "id": "460:68728",
+      "page": "420:2"
+    },
+    "desktop/returnRequest": {
+      "id": "460:68729",
+      "page": "420:2"
+    },
+    "tabletP/returnRequest": {
+      "id": "460:68730",
+      "page": "420:2"
+    },
+    "tabletL/returnRequest": {
+      "id": "460:68731",
+      "page": "420:2"
+    },
+    "phone/returnProposal": {
+      "id": "460:68732",
+      "page": "420:2"
+    },
+    "web/returnProposal": {
+      "id": "460:68733",
+      "page": "420:2"
+    },
+    "desktop/returnProposal": {
+      "id": "460:68734",
+      "page": "420:2"
+    },
+    "tabletP/returnProposal": {
+      "id": "460:68735",
+      "page": "420:2"
+    },
+    "tabletL/returnProposal": {
+      "id": "460:68736",
+      "page": "420:2"
+    },
+    "phone/returnConfirmed": {
+      "id": "460:68737",
+      "page": "420:2"
+    },
+    "web/returnConfirmed": {
+      "id": "460:68738",
+      "page": "420:2"
+    },
+    "desktop/returnConfirmed": {
+      "id": "460:68739",
+      "page": "420:2"
+    },
+    "tabletP/returnConfirmed": {
+      "id": "460:68740",
+      "page": "420:2"
+    },
+    "tabletL/returnConfirmed": {
+      "id": "460:68741",
+      "page": "420:2"
+    },
+    "phone/returnPending": {
+      "id": "460:68742",
+      "page": "420:2"
+    },
+    "web/returnPending": {
+      "id": "460:68743",
+      "page": "420:2"
+    },
+    "desktop/returnPending": {
+      "id": "460:68744",
+      "page": "420:2"
+    },
+    "tabletP/returnPending": {
+      "id": "460:68745",
+      "page": "420:2"
+    },
+    "tabletL/returnPending": {
+      "id": "460:68746",
+      "page": "420:2"
+    },
+    "phone/returned": {
+      "id": "460:68747",
+      "page": "420:2"
+    },
+    "web/returned": {
+      "id": "460:68748",
+      "page": "420:2"
+    },
+    "desktop/returned": {
+      "id": "460:68749",
+      "page": "420:2"
+    },
+    "tabletP/returned": {
+      "id": "460:68750",
+      "page": "420:2"
+    },
+    "tabletL/returned": {
+      "id": "460:68751",
+      "page": "420:2"
+    },
+    "phone/returnDispute": {
+      "id": "460:68752",
+      "page": "420:2"
+    },
+    "web/returnDispute": {
+      "id": "460:68753",
+      "page": "420:2"
+    },
+    "desktop/returnDispute": {
+      "id": "460:68754",
+      "page": "420:2"
+    },
+    "tabletP/returnDispute": {
+      "id": "460:68755",
+      "page": "420:2"
+    },
+    "tabletL/returnDispute": {
+      "id": "460:68756",
+      "page": "420:2"
+    },
+    "phone/safetyHold": {
+      "id": "460:211421",
+      "page": "420:4"
+    },
+    "web/safetyHold": {
+      "id": "460:211422",
+      "page": "420:4"
+    },
+    "desktop/safetyHold": {
+      "id": "460:211423",
+      "page": "420:4"
+    },
+    "tabletP/safetyHold": {
+      "id": "460:211424",
+      "page": "420:4"
+    },
+    "tabletL/safetyHold": {
+      "id": "460:211425",
+      "page": "420:4"
+    },
+    "phone/appointmentReview": {
+      "id": "460:211426",
+      "page": "420:4"
+    },
+    "web/appointmentReview": {
+      "id": "460:211427",
+      "page": "420:4"
+    },
+    "desktop/appointmentReview": {
+      "id": "460:211428",
+      "page": "420:4"
+    },
+    "tabletP/appointmentReview": {
+      "id": "460:211429",
+      "page": "420:4"
+    },
+    "tabletL/appointmentReview": {
+      "id": "460:211430",
+      "page": "420:4"
+    },
+    "phone/lostApproximate": {
+      "id": "460:242507",
+      "page": "420:3"
+    },
+    "web/lostApproximate": {
+      "id": "460:242508",
+      "page": "420:3"
+    },
+    "desktop/lostApproximate": {
+      "id": "460:242509",
+      "page": "420:3"
+    },
+    "tabletP/lostApproximate": {
+      "id": "460:242510",
+      "page": "420:3"
+    },
+    "tabletL/lostApproximate": {
+      "id": "460:242511",
+      "page": "420:3"
+    },
+    "phone/lostUnknown": {
+      "id": "460:242512",
+      "page": "420:3"
+    },
+    "web/lostUnknown": {
+      "id": "460:242513",
+      "page": "420:3"
+    },
+    "desktop/lostUnknown": {
+      "id": "460:242514",
+      "page": "420:3"
+    },
+    "tabletP/lostUnknown": {
+      "id": "460:242515",
+      "page": "420:3"
+    },
+    "tabletL/lostUnknown": {
+      "id": "460:242516",
+      "page": "420:3"
+    },
+    "phone/legacy:publishType": {
+      "id": "56:47",
+      "page": "403:5"
+    },
+    "web/legacy:publishType": {
+      "id": "311:378840",
+      "page": "403:5"
+    },
+    "desktop/legacy:publishType": {
+      "id": "311:378841",
+      "page": "403:5"
+    },
+    "tabletP/legacy:publishType": {
+      "id": "311:378842",
+      "page": "403:5"
+    },
+    "tabletL/legacy:publishType": {
+      "id": "311:378843",
+      "page": "403:5"
+    },
+    "phone/unreadChat": {
+      "id": "356:8",
+      "page": "420:4"
+    },
+    "web/unreadChat": {
+      "id": "482:148673",
+      "page": "420:4"
+    },
+    "desktop/unreadChat": {
+      "id": "482:148674",
+      "page": "420:4"
+    },
+    "tabletP/unreadChat": {
+      "id": "482:148675",
+      "page": "420:4"
+    },
+    "tabletL/unreadChat": {
+      "id": "482:148676",
+      "page": "420:4"
+    },
+    "phone/unreadInteractions": {
+      "id": "356:140",
+      "page": "420:4"
+    },
+    "web/unreadInteractions": {
+      "id": "482:148677",
+      "page": "420:4"
+    },
+    "desktop/unreadInteractions": {
+      "id": "482:148678",
+      "page": "420:4"
+    },
+    "tabletP/unreadInteractions": {
+      "id": "482:148679",
+      "page": "420:4"
+    },
+    "tabletL/unreadInteractions": {
+      "id": "482:148680",
+      "page": "420:4"
+    },
+    "phone/unreadNotifications": {
+      "id": "356:246",
+      "page": "420:4"
+    },
+    "web/unreadNotifications": {
+      "id": "482:148681",
+      "page": "420:4"
+    },
+    "desktop/unreadNotifications": {
+      "id": "482:148682",
+      "page": "420:4"
+    },
+    "tabletP/unreadNotifications": {
+      "id": "482:148683",
+      "page": "420:4"
+    },
+    "tabletL/unreadNotifications": {
+      "id": "482:148684",
+      "page": "420:4"
+    },
+    "phone/unreadReply": {
+      "id": "364:234",
+      "page": "420:4"
+    },
+    "web/unreadReply": {
+      "id": "482:148685",
+      "page": "420:4"
+    },
+    "desktop/unreadReply": {
+      "id": "482:148686",
+      "page": "420:4"
+    },
+    "tabletP/unreadReply": {
+      "id": "482:148687",
+      "page": "420:4"
+    },
+    "tabletL/unreadReply": {
+      "id": "482:148688",
+      "page": "420:4"
+    },
+    "phone/unreadMention": {
+      "id": "364:279",
+      "page": "420:4"
+    },
+    "web/unreadMention": {
+      "id": "482:148689",
+      "page": "420:4"
+    },
+    "desktop/unreadMention": {
+      "id": "482:148690",
+      "page": "420:4"
+    },
+    "tabletP/unreadMention": {
+      "id": "482:148691",
+      "page": "420:4"
+    },
+    "tabletL/unreadMention": {
+      "id": "482:148692",
+      "page": "420:4"
+    },
+    "phone/unreadConfirmAll": {
+      "id": "364:324",
+      "page": "420:4"
+    },
+    "web/unreadConfirmAll": {
+      "id": "482:148693",
+      "page": "420:4"
+    },
+    "desktop/unreadConfirmAll": {
+      "id": "482:148694",
+      "page": "420:4"
+    },
+    "tabletP/unreadConfirmAll": {
+      "id": "482:148695",
+      "page": "420:4"
+    },
+    "tabletL/unreadConfirmAll": {
+      "id": "482:148696",
+      "page": "420:4"
+    },
+    "phone/unreadEmpty": {
+      "id": "368:335",
+      "page": "420:4"
+    },
+    "web/unreadEmpty": {
+      "id": "482:148697",
+      "page": "420:4"
+    },
+    "desktop/unreadEmpty": {
+      "id": "482:148698",
+      "page": "420:4"
+    },
+    "tabletP/unreadEmpty": {
+      "id": "482:148699",
+      "page": "420:4"
+    },
+    "tabletL/unreadEmpty": {
+      "id": "482:148700",
+      "page": "420:4"
+    },
+    "phone/unreadOffline": {
+      "id": "368:371",
+      "page": "420:4"
+    },
+    "web/unreadOffline": {
+      "id": "482:148701",
+      "page": "420:4"
+    },
+    "desktop/unreadOffline": {
+      "id": "482:148702",
+      "page": "420:4"
+    },
+    "tabletP/unreadOffline": {
+      "id": "482:148703",
+      "page": "420:4"
+    },
+    "tabletL/unreadOffline": {
+      "id": "482:148704",
+      "page": "420:4"
+    },
+    "phone/legacy:messageRequests": {
+      "id": "106:1412",
+      "page": "420:4"
+    },
+    "web/legacy:messageRequests": {
+      "id": "311:379728",
+      "page": "420:4"
+    },
+    "desktop/legacy:messageRequests": {
+      "id": "311:379729",
+      "page": "420:4"
+    },
+    "tabletP/legacy:messageRequests": {
+      "id": "311:379730",
+      "page": "420:4"
+    },
+    "tabletL/legacy:messageRequests": {
+      "id": "311:379731",
+      "page": "420:4"
+    },
+    "phone/legacy:privateChat": {
+      "id": "106:1409",
+      "page": "420:4"
+    },
+    "web/legacy:privateChat": {
+      "id": "311:379716",
+      "page": "420:4"
+    },
+    "desktop/legacy:privateChat": {
+      "id": "311:379717",
+      "page": "420:4"
+    },
+    "tabletP/legacy:privateChat": {
+      "id": "311:379718",
+      "page": "420:4"
+    },
+    "tabletL/legacy:privateChat": {
+      "id": "311:379719",
+      "page": "420:4"
+    },
+    "phone/linkExisting": {
+      "id": "486:5521",
+      "page": "471:524"
+    },
+    "web/linkExisting": {
+      "id": "486:5522",
+      "page": "471:524"
+    },
+    "desktop/linkExisting": {
+      "id": "486:5523",
+      "page": "471:524"
+    },
+    "tabletP/linkExisting": {
+      "id": "486:5524",
+      "page": "471:524"
+    },
+    "tabletL/linkExisting": {
+      "id": "486:5525",
+      "page": "471:524"
+    },
+    "phone/linkConfirm": {
+      "id": "486:5526",
+      "page": "471:524"
+    },
+    "web/linkConfirm": {
+      "id": "486:5527",
+      "page": "471:524"
+    },
+    "desktop/linkConfirm": {
+      "id": "486:5528",
+      "page": "471:524"
+    },
+    "tabletP/linkConfirm": {
+      "id": "486:5529",
+      "page": "471:524"
+    },
+    "tabletL/linkConfirm": {
+      "id": "486:5530",
+      "page": "471:524"
+    },
+    "phone/legacy:lostList": {
+      "id": "56:54",
+      "page": "420:3"
+    },
+    "web/legacy:lostList": {
+      "id": "311:379416",
+      "page": "420:3"
+    },
+    "desktop/legacy:lostList": {
+      "id": "311:379417",
+      "page": "420:3"
+    },
+    "tabletP/legacy:lostList": {
+      "id": "311:379418",
+      "page": "420:3"
+    },
+    "tabletL/legacy:lostList": {
+      "id": "311:379419",
+      "page": "420:3"
+    },
+    "phone/smsInvalid": {
+      "id": "506:6789",
+      "page": "471:524"
+    },
+    "web/smsInvalid": {
+      "id": "506:6790",
+      "page": "471:524"
+    },
+    "desktop/smsInvalid": {
+      "id": "506:6791",
+      "page": "471:524"
+    },
+    "tabletP/smsInvalid": {
+      "id": "506:6792",
+      "page": "471:524"
+    },
+    "tabletL/smsInvalid": {
+      "id": "506:6793",
+      "page": "471:524"
+    },
+    "phone/smsExpired": {
+      "id": "506:6794",
+      "page": "471:524"
+    },
+    "web/smsExpired": {
+      "id": "506:6795",
+      "page": "471:524"
+    },
+    "desktop/smsExpired": {
+      "id": "506:6796",
+      "page": "471:524"
+    },
+    "tabletP/smsExpired": {
+      "id": "506:6797",
+      "page": "471:524"
+    },
+    "tabletL/smsExpired": {
+      "id": "506:6798",
+      "page": "471:524"
+    },
+    "phone/smsDelivery": {
+      "id": "506:6799",
+      "page": "471:524"
+    },
+    "web/smsDelivery": {
+      "id": "506:6800",
+      "page": "471:524"
+    },
+    "desktop/smsDelivery": {
+      "id": "506:6801",
+      "page": "471:524"
+    },
+    "tabletP/smsDelivery": {
+      "id": "506:6802",
+      "page": "471:524"
+    },
+    "tabletL/smsDelivery": {
+      "id": "506:6803",
+      "page": "471:524"
+    },
+    "phone/smsRateLimited": {
+      "id": "506:6804",
+      "page": "471:524"
+    },
+    "web/smsRateLimited": {
+      "id": "506:6805",
+      "page": "471:524"
+    },
+    "desktop/smsRateLimited": {
+      "id": "506:6806",
+      "page": "471:524"
+    },
+    "tabletP/smsRateLimited": {
+      "id": "506:6807",
+      "page": "471:524"
+    },
+    "tabletL/smsRateLimited": {
+      "id": "506:6808",
+      "page": "471:524"
+    },
+    "phone/smsChecking": {
+      "id": "506:6809",
+      "page": "471:524"
+    },
+    "web/smsChecking": {
+      "id": "506:6810",
+      "page": "471:524"
+    },
+    "desktop/smsChecking": {
+      "id": "506:6811",
+      "page": "471:524"
+    },
+    "tabletP/smsChecking": {
+      "id": "506:6812",
+      "page": "471:524"
+    },
+    "tabletL/smsChecking": {
+      "id": "506:6813",
+      "page": "471:524"
+    },
+    "phone/smsUncertain": {
+      "id": "506:6814",
+      "page": "471:524"
+    },
+    "web/smsUncertain": {
+      "id": "506:6815",
+      "page": "471:524"
+    },
+    "desktop/smsUncertain": {
+      "id": "506:6816",
+      "page": "471:524"
+    },
+    "tabletP/smsUncertain": {
+      "id": "506:6817",
+      "page": "471:524"
+    },
+    "tabletL/smsUncertain": {
+      "id": "506:6818",
+      "page": "471:524"
+    },
+    "phone/adultNotice": {
+      "id": "506:6819",
+      "page": "471:524"
+    },
+    "web/adultNotice": {
+      "id": "506:6820",
+      "page": "471:524"
+    },
+    "desktop/adultNotice": {
+      "id": "506:6821",
+      "page": "471:524"
+    },
+    "tabletP/adultNotice": {
+      "id": "506:6822",
+      "page": "471:524"
+    },
+    "tabletL/adultNotice": {
+      "id": "506:6823",
+      "page": "471:524"
+    },
+    "phone/adultProvider": {
+      "id": "506:6824",
+      "page": "471:524"
+    },
+    "web/adultProvider": {
+      "id": "506:6825",
+      "page": "471:524"
+    },
+    "desktop/adultProvider": {
+      "id": "506:6826",
+      "page": "471:524"
+    },
+    "tabletP/adultProvider": {
+      "id": "506:6827",
+      "page": "471:524"
+    },
+    "tabletL/adultProvider": {
+      "id": "506:6828",
+      "page": "471:524"
+    },
+    "phone/adultPending": {
+      "id": "506:6829",
+      "page": "471:524"
+    },
+    "web/adultPending": {
+      "id": "506:6830",
+      "page": "471:524"
+    },
+    "desktop/adultPending": {
+      "id": "506:6831",
+      "page": "471:524"
+    },
+    "tabletP/adultPending": {
+      "id": "506:6832",
+      "page": "471:524"
+    },
+    "tabletL/adultPending": {
+      "id": "506:6833",
+      "page": "471:524"
+    },
+    "phone/adultCancelled": {
+      "id": "506:6834",
+      "page": "471:524"
+    },
+    "web/adultCancelled": {
+      "id": "506:6835",
+      "page": "471:524"
+    },
+    "desktop/adultCancelled": {
+      "id": "506:6836",
+      "page": "471:524"
+    },
+    "tabletP/adultCancelled": {
+      "id": "506:6837",
+      "page": "471:524"
+    },
+    "tabletL/adultCancelled": {
+      "id": "506:6838",
+      "page": "471:524"
+    },
+    "phone/adultFailed": {
+      "id": "506:6839",
+      "page": "471:524"
+    },
+    "web/adultFailed": {
+      "id": "506:6840",
+      "page": "471:524"
+    },
+    "desktop/adultFailed": {
+      "id": "506:6841",
+      "page": "471:524"
+    },
+    "tabletP/adultFailed": {
+      "id": "506:6842",
+      "page": "471:524"
+    },
+    "tabletL/adultFailed": {
+      "id": "506:6843",
+      "page": "471:524"
+    },
+    "phone/adultUnsupported": {
+      "id": "506:6844",
+      "page": "471:524"
+    },
+    "web/adultUnsupported": {
+      "id": "506:6845",
+      "page": "471:524"
+    },
+    "desktop/adultUnsupported": {
+      "id": "506:6846",
+      "page": "471:524"
+    },
+    "tabletP/adultUnsupported": {
+      "id": "506:6847",
+      "page": "471:524"
+    },
+    "tabletL/adultUnsupported": {
+      "id": "506:6848",
+      "page": "471:524"
+    },
+    "phone/adultNotEligible": {
+      "id": "506:6849",
+      "page": "471:524"
+    },
+    "web/adultNotEligible": {
+      "id": "506:6850",
+      "page": "471:524"
+    },
+    "desktop/adultNotEligible": {
+      "id": "506:6851",
+      "page": "471:524"
+    },
+    "tabletP/adultNotEligible": {
+      "id": "506:6852",
+      "page": "471:524"
+    },
+    "tabletL/adultNotEligible": {
+      "id": "506:6853",
+      "page": "471:524"
+    },
+    "phone/adultExpired": {
+      "id": "506:6854",
+      "page": "471:524"
+    },
+    "web/adultExpired": {
+      "id": "506:6855",
+      "page": "471:524"
+    },
+    "desktop/adultExpired": {
+      "id": "506:6856",
+      "page": "471:524"
+    },
+    "tabletP/adultExpired": {
+      "id": "506:6857",
+      "page": "471:524"
+    },
+    "tabletL/adultExpired": {
+      "id": "506:6858",
+      "page": "471:524"
+    },
+    "phone/adultPassed": {
+      "id": "506:6859",
+      "page": "471:524"
+    },
+    "web/adultPassed": {
+      "id": "506:6860",
+      "page": "471:524"
+    },
+    "desktop/adultPassed": {
+      "id": "506:6861",
+      "page": "471:524"
+    },
+    "tabletP/adultPassed": {
+      "id": "506:6862",
+      "page": "471:524"
+    },
+    "tabletL/adultPassed": {
+      "id": "506:6863",
+      "page": "471:524"
+    },
+    "phone/adultTaskReview": {
+      "id": "506:6864",
+      "page": "471:524"
+    },
+    "web/adultTaskReview": {
+      "id": "506:6865",
+      "page": "471:524"
+    },
+    "desktop/adultTaskReview": {
+      "id": "506:6866",
+      "page": "471:524"
+    },
+    "tabletP/adultTaskReview": {
+      "id": "506:6867",
+      "page": "471:524"
+    },
+    "tabletL/adultTaskReview": {
+      "id": "506:6868",
+      "page": "471:524"
+    },
+    "phone/holdCancel": {
+      "id": "506:205509",
+      "page": "420:4"
+    },
+    "web/holdCancel": {
+      "id": "506:205510",
+      "page": "420:4"
+    },
+    "desktop/holdCancel": {
+      "id": "506:205511",
+      "page": "420:4"
+    },
+    "tabletP/holdCancel": {
+      "id": "506:205512",
+      "page": "420:4"
+    },
+    "tabletL/holdCancel": {
+      "id": "506:205513",
+      "page": "420:4"
+    },
+    "phone/holdCancelPending": {
+      "id": "506:205514",
+      "page": "420:4"
+    },
+    "web/holdCancelPending": {
+      "id": "506:205515",
+      "page": "420:4"
+    },
+    "desktop/holdCancelPending": {
+      "id": "506:205516",
+      "page": "420:4"
+    },
+    "tabletP/holdCancelPending": {
+      "id": "506:205517",
+      "page": "420:4"
+    },
+    "tabletL/holdCancelPending": {
+      "id": "506:205518",
+      "page": "420:4"
+    },
+    "phone/holdCancelFailed": {
+      "id": "506:205519",
+      "page": "420:4"
+    },
+    "web/holdCancelFailed": {
+      "id": "506:205520",
+      "page": "420:4"
+    },
+    "desktop/holdCancelFailed": {
+      "id": "506:205521",
+      "page": "420:4"
+    },
+    "tabletP/holdCancelFailed": {
+      "id": "506:205522",
+      "page": "420:4"
+    },
+    "tabletL/holdCancelFailed": {
+      "id": "506:205523",
+      "page": "420:4"
+    },
+    "phone/holdCancelled": {
+      "id": "506:205524",
+      "page": "420:4"
+    },
+    "web/holdCancelled": {
+      "id": "506:205525",
+      "page": "420:4"
+    },
+    "desktop/holdCancelled": {
+      "id": "506:205526",
+      "page": "420:4"
+    },
+    "tabletP/holdCancelled": {
+      "id": "506:205527",
+      "page": "420:4"
+    },
+    "tabletL/holdCancelled": {
+      "id": "506:205528",
+      "page": "420:4"
+    },
+    "phone/holdReproposal": {
+      "id": "506:205529",
+      "page": "420:4"
+    },
+    "web/holdReproposal": {
+      "id": "506:205530",
+      "page": "420:4"
+    },
+    "desktop/holdReproposal": {
+      "id": "506:205531",
+      "page": "420:4"
+    },
+    "tabletP/holdReproposal": {
+      "id": "506:205532",
+      "page": "420:4"
+    },
+    "tabletL/holdReproposal": {
+      "id": "506:205533",
+      "page": "420:4"
+    },
+    "phone/holdProposalWaiting": {
+      "id": "506:205534",
+      "page": "420:4"
+    },
+    "web/holdProposalWaiting": {
+      "id": "506:205535",
+      "page": "420:4"
+    },
+    "desktop/holdProposalWaiting": {
+      "id": "506:205536",
+      "page": "420:4"
+    },
+    "tabletP/holdProposalWaiting": {
+      "id": "506:205537",
+      "page": "420:4"
+    },
+    "tabletL/holdProposalWaiting": {
+      "id": "506:205538",
+      "page": "420:4"
+    },
+    "phone/holdReleased": {
+      "id": "506:205539",
+      "page": "420:4"
+    },
+    "web/holdReleased": {
+      "id": "506:205540",
+      "page": "420:4"
+    },
+    "desktop/holdReleased": {
+      "id": "506:205541",
+      "page": "420:4"
+    },
+    "tabletP/holdReleased": {
+      "id": "506:205542",
+      "page": "420:4"
+    },
+    "tabletL/holdReleased": {
+      "id": "506:205543",
+      "page": "420:4"
+    },
+    "phone/returnEdit": {
+      "id": "506:60775",
+      "page": "420:2"
+    },
+    "web/returnEdit": {
+      "id": "506:60776",
+      "page": "420:2"
+    },
+    "desktop/returnEdit": {
+      "id": "506:60777",
+      "page": "420:2"
+    },
+    "tabletP/returnEdit": {
+      "id": "506:60778",
+      "page": "420:2"
+    },
+    "tabletL/returnEdit": {
+      "id": "506:60779",
+      "page": "420:2"
+    },
+    "phone/returnProposalPending": {
+      "id": "506:60780",
+      "page": "420:2"
+    },
+    "web/returnProposalPending": {
+      "id": "506:60781",
+      "page": "420:2"
+    },
+    "desktop/returnProposalPending": {
+      "id": "506:60782",
+      "page": "420:2"
+    },
+    "tabletP/returnProposalPending": {
+      "id": "506:60783",
+      "page": "420:2"
+    },
+    "tabletL/returnProposalPending": {
+      "id": "506:60784",
+      "page": "420:2"
+    },
+    "phone/returnSendFailed": {
+      "id": "506:60785",
+      "page": "420:2"
+    },
+    "web/returnSendFailed": {
+      "id": "506:60786",
+      "page": "420:2"
+    },
+    "desktop/returnSendFailed": {
+      "id": "506:60787",
+      "page": "420:2"
+    },
+    "tabletP/returnSendFailed": {
+      "id": "506:60788",
+      "page": "420:2"
+    },
+    "tabletL/returnSendFailed": {
+      "id": "506:60789",
+      "page": "420:2"
+    },
+    "phone/returnWaiting": {
+      "id": "506:60790",
+      "page": "420:2"
+    },
+    "web/returnWaiting": {
+      "id": "506:60791",
+      "page": "420:2"
+    },
+    "desktop/returnWaiting": {
+      "id": "506:60792",
+      "page": "420:2"
+    },
+    "tabletP/returnWaiting": {
+      "id": "506:60793",
+      "page": "420:2"
+    },
+    "tabletL/returnWaiting": {
+      "id": "506:60794",
+      "page": "420:2"
+    },
+    "phone/returnReview": {
+      "id": "506:60795",
+      "page": "420:2"
+    },
+    "web/returnReview": {
+      "id": "506:60796",
+      "page": "420:2"
+    },
+    "desktop/returnReview": {
+      "id": "506:60797",
+      "page": "420:2"
+    },
+    "tabletP/returnReview": {
+      "id": "506:60798",
+      "page": "420:2"
+    },
+    "tabletL/returnReview": {
+      "id": "506:60799",
+      "page": "420:2"
+    },
+    "phone/returnReject": {
+      "id": "506:60800",
+      "page": "420:2"
+    },
+    "web/returnReject": {
+      "id": "506:60801",
+      "page": "420:2"
+    },
+    "desktop/returnReject": {
+      "id": "506:60802",
+      "page": "420:2"
+    },
+    "tabletP/returnReject": {
+      "id": "506:60803",
+      "page": "420:2"
+    },
+    "tabletL/returnReject": {
+      "id": "506:60804",
+      "page": "420:2"
+    },
+    "phone/returnDeclined": {
+      "id": "506:60805",
+      "page": "420:2"
+    },
+    "web/returnDeclined": {
+      "id": "506:60806",
+      "page": "420:2"
+    },
+    "desktop/returnDeclined": {
+      "id": "506:60807",
+      "page": "420:2"
+    },
+    "tabletP/returnDeclined": {
+      "id": "506:60808",
+      "page": "420:2"
+    },
+    "tabletL/returnDeclined": {
+      "id": "506:60809",
+      "page": "420:2"
+    },
+    "phone/returnEditR2": {
+      "id": "506:60810",
+      "page": "420:2"
+    },
+    "web/returnEditR2": {
+      "id": "506:60811",
+      "page": "420:2"
+    },
+    "desktop/returnEditR2": {
+      "id": "506:60812",
+      "page": "420:2"
+    },
+    "tabletP/returnEditR2": {
+      "id": "506:60813",
+      "page": "420:2"
+    },
+    "tabletL/returnEditR2": {
+      "id": "506:60814",
+      "page": "420:2"
+    },
+    "phone/returnPreviewR2": {
+      "id": "506:60815",
+      "page": "420:2"
+    },
+    "web/returnPreviewR2": {
+      "id": "506:60816",
+      "page": "420:2"
+    },
+    "desktop/returnPreviewR2": {
+      "id": "506:60817",
+      "page": "420:2"
+    },
+    "tabletP/returnPreviewR2": {
+      "id": "506:60818",
+      "page": "420:2"
+    },
+    "tabletL/returnPreviewR2": {
+      "id": "506:60819",
+      "page": "420:2"
+    },
+    "phone/returnWaitingR2": {
+      "id": "506:60820",
+      "page": "420:2"
+    },
+    "web/returnWaitingR2": {
+      "id": "506:60821",
+      "page": "420:2"
+    },
+    "desktop/returnWaitingR2": {
+      "id": "506:60822",
+      "page": "420:2"
+    },
+    "tabletP/returnWaitingR2": {
+      "id": "506:60823",
+      "page": "420:2"
+    },
+    "tabletL/returnWaitingR2": {
+      "id": "506:60824",
+      "page": "420:2"
+    },
+    "phone/returnReviewR2": {
+      "id": "506:60825",
+      "page": "420:2"
+    },
+    "web/returnReviewR2": {
+      "id": "506:60826",
+      "page": "420:2"
+    },
+    "desktop/returnReviewR2": {
+      "id": "506:60827",
+      "page": "420:2"
+    },
+    "tabletP/returnReviewR2": {
+      "id": "506:60828",
+      "page": "420:2"
+    },
+    "tabletL/returnReviewR2": {
+      "id": "506:60829",
+      "page": "420:2"
+    },
+    "phone/returnConfirmedR2": {
+      "id": "506:60830",
+      "page": "420:2"
+    },
+    "web/returnConfirmedR2": {
+      "id": "506:60831",
+      "page": "420:2"
+    },
+    "desktop/returnConfirmedR2": {
+      "id": "506:60832",
+      "page": "420:2"
+    },
+    "tabletP/returnConfirmedR2": {
+      "id": "506:60833",
+      "page": "420:2"
+    },
+    "tabletL/returnConfirmedR2": {
+      "id": "506:60834",
+      "page": "420:2"
+    },
+    "phone/returnConflict": {
+      "id": "506:60835",
+      "page": "420:2"
+    },
+    "web/returnConflict": {
+      "id": "506:60836",
+      "page": "420:2"
+    },
+    "desktop/returnConflict": {
+      "id": "506:60837",
+      "page": "420:2"
+    },
+    "tabletP/returnConflict": {
+      "id": "506:60838",
+      "page": "420:2"
+    },
+    "tabletL/returnConflict": {
+      "id": "506:60839",
+      "page": "420:2"
+    },
+    "phone/returnLatest": {
+      "id": "506:60840",
+      "page": "420:2"
+    },
+    "web/returnLatest": {
+      "id": "506:60841",
+      "page": "420:2"
+    },
+    "desktop/returnLatest": {
+      "id": "506:60842",
+      "page": "420:2"
+    },
+    "tabletP/returnLatest": {
+      "id": "506:60843",
+      "page": "420:2"
+    },
+    "tabletL/returnLatest": {
+      "id": "506:60844",
+      "page": "420:2"
+    },
+    "phone/returnExpired": {
+      "id": "506:60845",
+      "page": "420:2"
+    },
+    "web/returnExpired": {
+      "id": "506:60846",
+      "page": "420:2"
+    },
+    "desktop/returnExpired": {
+      "id": "506:60847",
+      "page": "420:2"
+    },
+    "tabletP/returnExpired": {
+      "id": "506:60848",
+      "page": "420:2"
+    },
+    "tabletL/returnExpired": {
+      "id": "506:60849",
+      "page": "420:2"
+    },
+    "phone/returnWithdraw": {
+      "id": "506:60850",
+      "page": "420:2"
+    },
+    "web/returnWithdraw": {
+      "id": "506:60851",
+      "page": "420:2"
+    },
+    "desktop/returnWithdraw": {
+      "id": "506:60852",
+      "page": "420:2"
+    },
+    "tabletP/returnWithdraw": {
+      "id": "506:60853",
+      "page": "420:2"
+    },
+    "tabletL/returnWithdraw": {
+      "id": "506:60854",
+      "page": "420:2"
+    },
+    "phone/returnWithdrawR2": {
+      "id": "506:60855",
+      "page": "420:2"
+    },
+    "web/returnWithdrawR2": {
+      "id": "506:60856",
+      "page": "420:2"
+    },
+    "desktop/returnWithdrawR2": {
+      "id": "506:60857",
+      "page": "420:2"
+    },
+    "tabletP/returnWithdrawR2": {
+      "id": "506:60858",
+      "page": "420:2"
+    },
+    "tabletL/returnWithdrawR2": {
+      "id": "506:60859",
+      "page": "420:2"
+    },
+    "phone/returnWithdrawn": {
+      "id": "506:60860",
+      "page": "420:2"
+    },
+    "web/returnWithdrawn": {
+      "id": "506:60861",
+      "page": "420:2"
+    },
+    "desktop/returnWithdrawn": {
+      "id": "506:60862",
+      "page": "420:2"
+    },
+    "tabletP/returnWithdrawn": {
+      "id": "506:60863",
+      "page": "420:2"
+    },
+    "tabletL/returnWithdrawn": {
+      "id": "506:60864",
+      "page": "420:2"
+    },
+    "phone/reportSupplement": {
+      "id": "506:6869",
+      "page": "471:524"
+    },
+    "web/reportSupplement": {
+      "id": "506:6870",
+      "page": "471:524"
+    },
+    "desktop/reportSupplement": {
+      "id": "506:6871",
+      "page": "471:524"
+    },
+    "tabletP/reportSupplement": {
+      "id": "506:6872",
+      "page": "471:524"
+    },
+    "tabletL/reportSupplement": {
+      "id": "506:6873",
+      "page": "471:524"
+    },
+    "phone/reportSupplementPending": {
+      "id": "506:6874",
+      "page": "471:524"
+    },
+    "web/reportSupplementPending": {
+      "id": "506:6875",
+      "page": "471:524"
+    },
+    "desktop/reportSupplementPending": {
+      "id": "506:6876",
+      "page": "471:524"
+    },
+    "tabletP/reportSupplementPending": {
+      "id": "506:6877",
+      "page": "471:524"
+    },
+    "tabletL/reportSupplementPending": {
+      "id": "506:6878",
+      "page": "471:524"
+    },
+    "phone/reportSupplementFailed": {
+      "id": "506:6879",
+      "page": "471:524"
+    },
+    "web/reportSupplementFailed": {
+      "id": "506:6880",
+      "page": "471:524"
+    },
+    "desktop/reportSupplementFailed": {
+      "id": "506:6881",
+      "page": "471:524"
+    },
+    "tabletP/reportSupplementFailed": {
+      "id": "506:6882",
+      "page": "471:524"
+    },
+    "tabletL/reportSupplementFailed": {
+      "id": "506:6883",
+      "page": "471:524"
+    },
+    "phone/reportSupplemented": {
+      "id": "506:6884",
+      "page": "471:524"
+    },
+    "web/reportSupplemented": {
+      "id": "506:6885",
+      "page": "471:524"
+    },
+    "desktop/reportSupplemented": {
+      "id": "506:6886",
+      "page": "471:524"
+    },
+    "tabletP/reportSupplemented": {
+      "id": "506:6887",
+      "page": "471:524"
+    },
+    "tabletL/reportSupplemented": {
+      "id": "506:6888",
+      "page": "471:524"
+    },
+    "phone/reportAccess": {
+      "id": "506:6889",
+      "page": "471:524"
+    },
+    "web/reportAccess": {
+      "id": "506:6890",
+      "page": "471:524"
+    },
+    "desktop/reportAccess": {
+      "id": "506:6891",
+      "page": "471:524"
+    },
+    "tabletP/reportAccess": {
+      "id": "506:6892",
+      "page": "471:524"
+    },
+    "tabletL/reportAccess": {
+      "id": "506:6893",
+      "page": "471:524"
+    },
+    "phone/reportAccessPending": {
+      "id": "506:6894",
+      "page": "471:524"
+    },
+    "web/reportAccessPending": {
+      "id": "506:6895",
+      "page": "471:524"
+    },
+    "desktop/reportAccessPending": {
+      "id": "506:6896",
+      "page": "471:524"
+    },
+    "tabletP/reportAccessPending": {
+      "id": "506:6897",
+      "page": "471:524"
+    },
+    "tabletL/reportAccessPending": {
+      "id": "506:6898",
+      "page": "471:524"
+    },
+    "phone/reportAccessHelp": {
+      "id": "506:6899",
+      "page": "471:524"
+    },
+    "web/reportAccessHelp": {
+      "id": "506:6900",
+      "page": "471:524"
+    },
+    "desktop/reportAccessHelp": {
+      "id": "506:6901",
+      "page": "471:524"
+    },
+    "tabletP/reportAccessHelp": {
+      "id": "506:6902",
+      "page": "471:524"
+    },
+    "tabletL/reportAccessHelp": {
+      "id": "506:6903",
+      "page": "471:524"
+    },
+    "phone/dataPartScope": {
+      "id": "506:6904",
+      "page": "471:524"
+    },
+    "web/dataPartScope": {
+      "id": "506:6905",
+      "page": "471:524"
+    },
+    "desktop/dataPartScope": {
+      "id": "506:6906",
+      "page": "471:524"
+    },
+    "tabletP/dataPartScope": {
+      "id": "506:6907",
+      "page": "471:524"
+    },
+    "tabletL/dataPartScope": {
+      "id": "506:6908",
+      "page": "471:524"
+    },
+    "phone/dataAccountImpact": {
+      "id": "506:6909",
+      "page": "471:524"
+    },
+    "web/dataAccountImpact": {
+      "id": "506:6910",
+      "page": "471:524"
+    },
+    "desktop/dataAccountImpact": {
+      "id": "506:6911",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountImpact": {
+      "id": "506:6912",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountImpact": {
+      "id": "506:6913",
+      "page": "471:524"
+    },
+    "phone/dataAccountTasks": {
+      "id": "506:6914",
+      "page": "471:524"
+    },
+    "web/dataAccountTasks": {
+      "id": "506:6915",
+      "page": "471:524"
+    },
+    "desktop/dataAccountTasks": {
+      "id": "506:6916",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountTasks": {
+      "id": "506:6917",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountTasks": {
+      "id": "506:6918",
+      "page": "471:524"
+    },
+    "phone/dataPartVerify": {
+      "id": "506:6919",
+      "page": "471:524"
+    },
+    "web/dataPartVerify": {
+      "id": "506:6920",
+      "page": "471:524"
+    },
+    "desktop/dataPartVerify": {
+      "id": "506:6921",
+      "page": "471:524"
+    },
+    "tabletP/dataPartVerify": {
+      "id": "506:6922",
+      "page": "471:524"
+    },
+    "tabletL/dataPartVerify": {
+      "id": "506:6923",
+      "page": "471:524"
+    },
+    "phone/dataPartVerifyError": {
+      "id": "506:6924",
+      "page": "471:524"
+    },
+    "web/dataPartVerifyError": {
+      "id": "506:6925",
+      "page": "471:524"
+    },
+    "desktop/dataPartVerifyError": {
+      "id": "506:6926",
+      "page": "471:524"
+    },
+    "tabletP/dataPartVerifyError": {
+      "id": "506:6927",
+      "page": "471:524"
+    },
+    "tabletL/dataPartVerifyError": {
+      "id": "506:6928",
+      "page": "471:524"
+    },
+    "phone/dataPartFinal": {
+      "id": "506:6929",
+      "page": "471:524"
+    },
+    "web/dataPartFinal": {
+      "id": "506:6930",
+      "page": "471:524"
+    },
+    "desktop/dataPartFinal": {
+      "id": "506:6931",
+      "page": "471:524"
+    },
+    "tabletP/dataPartFinal": {
+      "id": "506:6932",
+      "page": "471:524"
+    },
+    "tabletL/dataPartFinal": {
+      "id": "506:6933",
+      "page": "471:524"
+    },
+    "phone/dataPartPending": {
+      "id": "506:6934",
+      "page": "471:524"
+    },
+    "web/dataPartPending": {
+      "id": "506:6935",
+      "page": "471:524"
+    },
+    "desktop/dataPartPending": {
+      "id": "506:6936",
+      "page": "471:524"
+    },
+    "tabletP/dataPartPending": {
+      "id": "506:6937",
+      "page": "471:524"
+    },
+    "tabletL/dataPartPending": {
+      "id": "506:6938",
+      "page": "471:524"
+    },
+    "phone/dataPartFailed": {
+      "id": "506:6939",
+      "page": "471:524"
+    },
+    "web/dataPartFailed": {
+      "id": "506:6940",
+      "page": "471:524"
+    },
+    "desktop/dataPartFailed": {
+      "id": "506:6941",
+      "page": "471:524"
+    },
+    "tabletP/dataPartFailed": {
+      "id": "506:6942",
+      "page": "471:524"
+    },
+    "tabletL/dataPartFailed": {
+      "id": "506:6943",
+      "page": "471:524"
+    },
+    "phone/dataAccountVerify": {
+      "id": "506:6944",
+      "page": "471:524"
+    },
+    "web/dataAccountVerify": {
+      "id": "506:6945",
+      "page": "471:524"
+    },
+    "desktop/dataAccountVerify": {
+      "id": "506:6946",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountVerify": {
+      "id": "506:6947",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountVerify": {
+      "id": "506:6948",
+      "page": "471:524"
+    },
+    "phone/dataAccountVerifyError": {
+      "id": "506:6949",
+      "page": "471:524"
+    },
+    "web/dataAccountVerifyError": {
+      "id": "506:6950",
+      "page": "471:524"
+    },
+    "desktop/dataAccountVerifyError": {
+      "id": "506:6951",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountVerifyError": {
+      "id": "506:6952",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountVerifyError": {
+      "id": "506:6953",
+      "page": "471:524"
+    },
+    "phone/dataAccountFinal": {
+      "id": "506:6954",
+      "page": "471:524"
+    },
+    "web/dataAccountFinal": {
+      "id": "506:6955",
+      "page": "471:524"
+    },
+    "desktop/dataAccountFinal": {
+      "id": "506:6956",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountFinal": {
+      "id": "506:6957",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountFinal": {
+      "id": "506:6958",
+      "page": "471:524"
+    },
+    "phone/dataAccountPending": {
+      "id": "506:6959",
+      "page": "471:524"
+    },
+    "web/dataAccountPending": {
+      "id": "506:6960",
+      "page": "471:524"
+    },
+    "desktop/dataAccountPending": {
+      "id": "506:6961",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountPending": {
+      "id": "506:6962",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountPending": {
+      "id": "506:6963",
+      "page": "471:524"
+    },
+    "phone/dataAccountFailed": {
+      "id": "506:6964",
+      "page": "471:524"
+    },
+    "web/dataAccountFailed": {
+      "id": "506:6965",
+      "page": "471:524"
+    },
+    "desktop/dataAccountFailed": {
+      "id": "506:6966",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountFailed": {
+      "id": "506:6967",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountFailed": {
+      "id": "506:6968",
+      "page": "471:524"
+    },
+    "phone/dataAccountProgress": {
+      "id": "506:6969",
+      "page": "471:524"
+    },
+    "web/dataAccountProgress": {
+      "id": "506:6970",
+      "page": "471:524"
+    },
+    "desktop/dataAccountProgress": {
+      "id": "506:6971",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountProgress": {
+      "id": "506:6972",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountProgress": {
+      "id": "506:6973",
+      "page": "471:524"
+    },
+    "phone/dataPartAppeal": {
+      "id": "506:6974",
+      "page": "471:524"
+    },
+    "web/dataPartAppeal": {
+      "id": "506:6975",
+      "page": "471:524"
+    },
+    "desktop/dataPartAppeal": {
+      "id": "506:6976",
+      "page": "471:524"
+    },
+    "tabletP/dataPartAppeal": {
+      "id": "506:6977",
+      "page": "471:524"
+    },
+    "tabletL/dataPartAppeal": {
+      "id": "506:6978",
+      "page": "471:524"
+    },
+    "phone/dataPartAppealPending": {
+      "id": "506:6979",
+      "page": "471:524"
+    },
+    "web/dataPartAppealPending": {
+      "id": "506:6980",
+      "page": "471:524"
+    },
+    "desktop/dataPartAppealPending": {
+      "id": "506:6981",
+      "page": "471:524"
+    },
+    "tabletP/dataPartAppealPending": {
+      "id": "506:6982",
+      "page": "471:524"
+    },
+    "tabletL/dataPartAppealPending": {
+      "id": "506:6983",
+      "page": "471:524"
+    },
+    "phone/dataAccountAppeal": {
+      "id": "506:6984",
+      "page": "471:524"
+    },
+    "web/dataAccountAppeal": {
+      "id": "506:6985",
+      "page": "471:524"
+    },
+    "desktop/dataAccountAppeal": {
+      "id": "506:6986",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountAppeal": {
+      "id": "506:6987",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountAppeal": {
+      "id": "506:6988",
+      "page": "471:524"
+    },
+    "phone/dataAccountAppealPending": {
+      "id": "506:6989",
+      "page": "471:524"
+    },
+    "web/dataAccountAppealPending": {
+      "id": "506:6990",
+      "page": "471:524"
+    },
+    "desktop/dataAccountAppealPending": {
+      "id": "506:6991",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountAppealPending": {
+      "id": "506:6992",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountAppealPending": {
+      "id": "506:6993",
+      "page": "471:524"
+    },
+    "phone/smsSendPending": {
+      "id": "506:6994",
+      "page": "471:524"
+    },
+    "web/smsSendPending": {
+      "id": "506:6995",
+      "page": "471:524"
+    },
+    "desktop/smsSendPending": {
+      "id": "506:6996",
+      "page": "471:524"
+    },
+    "tabletP/smsSendPending": {
+      "id": "506:6997",
+      "page": "471:524"
+    },
+    "tabletL/smsSendPending": {
+      "id": "506:6998",
+      "page": "471:524"
+    },
+    "phone/smsSendUncertain": {
+      "id": "506:6999",
+      "page": "471:524"
+    },
+    "web/smsSendUncertain": {
+      "id": "506:7000",
+      "page": "471:524"
+    },
+    "desktop/smsSendUncertain": {
+      "id": "506:7001",
+      "page": "471:524"
+    },
+    "tabletP/smsSendUncertain": {
+      "id": "506:7002",
+      "page": "471:524"
+    },
+    "tabletL/smsSendUncertain": {
+      "id": "506:7003",
+      "page": "471:524"
+    },
+    "phone/dataPartCodePending": {
+      "id": "506:7004",
+      "page": "471:524"
+    },
+    "web/dataPartCodePending": {
+      "id": "506:7005",
+      "page": "471:524"
+    },
+    "desktop/dataPartCodePending": {
+      "id": "506:7006",
+      "page": "471:524"
+    },
+    "tabletP/dataPartCodePending": {
+      "id": "506:7007",
+      "page": "471:524"
+    },
+    "tabletL/dataPartCodePending": {
+      "id": "506:7008",
+      "page": "471:524"
+    },
+    "phone/dataPartVerifyPending": {
+      "id": "506:7009",
+      "page": "471:524"
+    },
+    "web/dataPartVerifyPending": {
+      "id": "506:7010",
+      "page": "471:524"
+    },
+    "desktop/dataPartVerifyPending": {
+      "id": "506:7011",
+      "page": "471:524"
+    },
+    "tabletP/dataPartVerifyPending": {
+      "id": "506:7012",
+      "page": "471:524"
+    },
+    "tabletL/dataPartVerifyPending": {
+      "id": "506:7013",
+      "page": "471:524"
+    },
+    "phone/dataAccountCodePending": {
+      "id": "506:7014",
+      "page": "471:524"
+    },
+    "web/dataAccountCodePending": {
+      "id": "506:7015",
+      "page": "471:524"
+    },
+    "desktop/dataAccountCodePending": {
+      "id": "506:7016",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountCodePending": {
+      "id": "506:7017",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountCodePending": {
+      "id": "506:7018",
+      "page": "471:524"
+    },
+    "phone/dataAccountVerifyPending": {
+      "id": "506:7019",
+      "page": "471:524"
+    },
+    "web/dataAccountVerifyPending": {
+      "id": "506:7020",
+      "page": "471:524"
+    },
+    "desktop/dataAccountVerifyPending": {
+      "id": "506:7021",
+      "page": "471:524"
+    },
+    "tabletP/dataAccountVerifyPending": {
+      "id": "506:7022",
+      "page": "471:524"
+    },
+    "tabletL/dataAccountVerifyPending": {
+      "id": "506:7023",
+      "page": "471:524"
+    }
+  },
+  "counts": {
+    "scenarios": 84,
+    "newScenarios": 72,
+    "revisedScenarios": 12,
+    "layouts": 420,
+    "effectiveCoreScenarios": 130,
+    "effectiveCoreLayouts": 650
+  },
+  "textTemplates": {
+    "Caption": "506:7025",
+    "Section": "506:7026",
+    "MobileBrand": "506:7027",
+    "Title": "506:7028",
+    "Label": "506:7029",
+    "Strong": "506:7030",
+    "Body": "506:7031"
+  },
+  "effectiveCoreRoots": {
+    "phone/login": "56:70",
+    "web/login": "311:379860",
+    "desktop/login": "311:379861",
+    "tabletP/login": "311:379862",
+    "tabletL/login": "311:379863",
+    "phone/authIOS": "238:371719",
+    "web/authIOS": "311:379880",
+    "desktop/authIOS": "311:379881",
+    "tabletP/authIOS": "311:379882",
+    "tabletL/authIOS": "311:379883",
+    "phone/emailStart": "460:17318",
+    "web/emailStart": "460:17319",
+    "desktop/emailStart": "460:17320",
+    "tabletP/emailStart": "460:17321",
+    "tabletL/emailStart": "460:17322",
+    "phone/emailCode": "460:17323",
+    "web/emailCode": "460:17324",
+    "desktop/emailCode": "460:17325",
+    "tabletP/emailCode": "460:17326",
+    "tabletL/emailCode": "460:17327",
+    "phone/emailError": "460:17328",
+    "web/emailError": "460:17329",
+    "desktop/emailError": "460:17330",
+    "tabletP/emailError": "460:17331",
+    "tabletL/emailError": "460:17332",
+    "phone/accountChoice": "460:17333",
+    "web/accountChoice": "460:17334",
+    "desktop/accountChoice": "460:17335",
+    "tabletP/accountChoice": "460:17336",
+    "tabletL/accountChoice": "460:17337",
+    "phone/accountConflict": "460:17338",
+    "web/accountConflict": "460:17339",
+    "desktop/accountConflict": "460:17340",
+    "tabletP/accountConflict": "460:17341",
+    "tabletL/accountConflict": "460:17342",
+    "phone/phoneGate": "460:17343",
+    "web/phoneGate": "460:17344",
+    "desktop/phoneGate": "460:17345",
+    "tabletP/phoneGate": "460:17346",
+    "tabletL/phoneGate": "460:17347",
+    "phone/phoneCode": "460:17348",
+    "web/phoneCode": "460:17349",
+    "desktop/phoneCode": "460:17350",
+    "tabletP/phoneCode": "460:17351",
+    "tabletL/phoneCode": "460:17352",
+    "phone/authResume": "460:17353",
+    "web/authResume": "460:17354",
+    "desktop/authResume": "460:17355",
+    "tabletP/authResume": "460:17356",
+    "tabletL/authResume": "460:17357",
+    "phone/accountIdentifiers": "460:17358",
+    "web/accountIdentifiers": "460:17359",
+    "desktop/accountIdentifiers": "460:17360",
+    "tabletP/accountIdentifiers": "460:17361",
+    "tabletL/accountIdentifiers": "460:17362",
+    "phone/emailBinding": "460:17363",
+    "web/emailBinding": "460:17364",
+    "desktop/emailBinding": "460:17365",
+    "tabletP/emailBinding": "460:17366",
+    "tabletL/emailBinding": "460:17367",
+    "phone/phoneChange": "460:17368",
+    "web/phoneChange": "460:17369",
+    "desktop/phoneChange": "460:17370",
+    "tabletP/phoneChange": "460:17371",
+    "tabletL/phoneChange": "460:17372",
+    "phone/accountRecovery": "460:17373",
+    "web/accountRecovery": "460:17374",
+    "desktop/accountRecovery": "460:17375",
+    "tabletP/accountRecovery": "460:17376",
+    "tabletL/accountRecovery": "460:17377",
+    "phone/ageRange": "460:17378",
+    "web/ageRange": "460:17379",
+    "desktop/ageRange": "460:17380",
+    "tabletP/ageRange": "460:17381",
+    "tabletL/ageRange": "460:17382",
+    "phone/guardianInvite": "460:17383",
+    "web/guardianInvite": "460:17384",
+    "desktop/guardianInvite": "460:17385",
+    "tabletP/guardianInvite": "460:17386",
+    "tabletL/guardianInvite": "460:17387",
+    "phone/guardianReview": "460:17388",
+    "web/guardianReview": "460:17389",
+    "desktop/guardianReview": "460:17390",
+    "tabletP/guardianReview": "460:17391",
+    "tabletL/guardianReview": "460:17392",
+    "phone/guardianWaiting": "460:17393",
+    "web/guardianWaiting": "460:17394",
+    "desktop/guardianWaiting": "460:17395",
+    "tabletP/guardianWaiting": "460:17396",
+    "tabletL/guardianWaiting": "460:17397",
+    "phone/guardianActive": "460:17398",
+    "web/guardianActive": "460:17399",
+    "desktop/guardianActive": "460:17400",
+    "tabletP/guardianActive": "460:17401",
+    "tabletL/guardianActive": "460:17402",
+    "phone/guardianRevoked": "460:17403",
+    "web/guardianRevoked": "460:17404",
+    "desktop/guardianRevoked": "460:17405",
+    "tabletP/guardianRevoked": "460:17406",
+    "tabletL/guardianRevoked": "460:17407",
+    "phone/teenPrivacy": "460:17408",
+    "web/teenPrivacy": "460:17409",
+    "desktop/teenPrivacy": "460:17410",
+    "tabletP/teenPrivacy": "460:17411",
+    "tabletL/teenPrivacy": "460:17412",
+    "phone/adultAssurance": "460:17413",
+    "web/adultAssurance": "460:17414",
+    "desktop/adultAssurance": "460:17415",
+    "tabletP/adultAssurance": "460:17416",
+    "tabletL/adultAssurance": "460:17417",
+    "phone/adultRequired": "460:17418",
+    "web/adultRequired": "460:17419",
+    "desktop/adultRequired": "460:17420",
+    "tabletP/adultRequired": "460:17421",
+    "tabletL/adultRequired": "460:17422",
+    "phone/ageAppeal": "460:17423",
+    "web/ageAppeal": "460:17424",
+    "desktop/ageAppeal": "460:17425",
+    "tabletP/ageAppeal": "460:17426",
+    "tabletL/ageAppeal": "460:17427",
+    "phone/privacy": "56:76",
+    "web/privacy": "311:380096",
+    "desktop/privacy": "311:380097",
+    "tabletP/privacy": "311:380098",
+    "tabletL/privacy": "311:380099",
+    "phone/dataInventory": "460:17428",
+    "web/dataInventory": "460:17429",
+    "desktop/dataInventory": "460:17430",
+    "tabletP/dataInventory": "460:17431",
+    "tabletL/dataInventory": "460:17432",
+    "phone/dataRights": "460:17433",
+    "web/dataRights": "460:17434",
+    "desktop/dataRights": "460:17435",
+    "tabletP/dataRights": "460:17436",
+    "tabletL/dataRights": "460:17437",
+    "phone/dataRequest": "460:17438",
+    "web/dataRequest": "460:17439",
+    "desktop/dataRequest": "460:17440",
+    "tabletP/dataRequest": "460:17441",
+    "tabletL/dataRequest": "460:17442",
+    "phone/dataDelete": "460:17443",
+    "web/dataDelete": "460:17444",
+    "desktop/dataDelete": "460:17445",
+    "tabletP/dataDelete": "460:17446",
+    "tabletL/dataDelete": "460:17447",
+    "phone/dataProgress": "460:17448",
+    "web/dataProgress": "460:17449",
+    "desktop/dataProgress": "460:17450",
+    "tabletP/dataProgress": "460:17451",
+    "tabletL/dataProgress": "460:17452",
+    "phone/sdkList": "460:17453",
+    "web/sdkList": "460:17454",
+    "desktop/sdkList": "460:17455",
+    "tabletP/sdkList": "460:17456",
+    "tabletL/sdkList": "460:17457",
+    "phone/serviceTerms": "460:17458",
+    "web/serviceTerms": "460:17459",
+    "desktop/serviceTerms": "460:17460",
+    "tabletP/serviceTerms": "460:17461",
+    "tabletL/serviceTerms": "460:17462",
+    "phone/rules": "460:17463",
+    "web/rules": "460:17464",
+    "desktop/rules": "460:17465",
+    "tabletP/rules": "460:17466",
+    "tabletL/rules": "460:17467",
+    "phone/ruleDetail": "460:17468",
+    "web/ruleDetail": "460:17469",
+    "desktop/ruleDetail": "460:17470",
+    "tabletP/ruleDetail": "460:17471",
+    "tabletL/ruleDetail": "460:17472",
+    "phone/ruleHistory": "460:17473",
+    "web/ruleHistory": "460:17474",
+    "desktop/ruleHistory": "460:17475",
+    "tabletP/ruleHistory": "460:17476",
+    "tabletL/ruleHistory": "460:17477",
+    "phone/ruleChange": "460:17478",
+    "web/ruleChange": "460:17479",
+    "desktop/ruleChange": "460:17480",
+    "tabletP/ruleChange": "460:17481",
+    "tabletL/ruleChange": "460:17482",
+    "phone/ruleAppeal": "460:17483",
+    "web/ruleAppeal": "460:17484",
+    "desktop/ruleAppeal": "460:17485",
+    "tabletP/ruleAppeal": "460:17486",
+    "tabletL/ruleAppeal": "460:17487",
+    "phone/guestReport": "460:68682",
+    "web/guestReport": "460:68683",
+    "desktop/guestReport": "460:68684",
+    "tabletP/guestReport": "460:68685",
+    "tabletL/guestReport": "460:68686",
+    "phone/guestPending": "460:68687",
+    "web/guestPending": "460:68688",
+    "desktop/guestPending": "460:68689",
+    "tabletP/guestPending": "460:68690",
+    "tabletL/guestPending": "460:68691",
+    "phone/guestError": "460:68692",
+    "web/guestError": "460:68693",
+    "desktop/guestError": "460:68694",
+    "tabletP/guestError": "460:68695",
+    "tabletL/guestError": "460:68696",
+    "phone/guestReceipt": "460:68697",
+    "web/guestReceipt": "460:68698",
+    "desktop/guestReceipt": "460:68699",
+    "tabletP/guestReceipt": "460:68700",
+    "tabletL/guestReceipt": "460:68701",
+    "phone/guestProgress": "460:68702",
+    "web/guestProgress": "460:68703",
+    "desktop/guestProgress": "460:68704",
+    "tabletP/guestProgress": "460:68705",
+    "tabletL/guestProgress": "460:68706",
+    "phone/candidates": "460:68707",
+    "web/candidates": "460:68708",
+    "desktop/candidates": "460:68709",
+    "tabletP/candidates": "460:68710",
+    "tabletL/candidates": "460:68711",
+    "phone/trialReserved": "460:68712",
+    "web/trialReserved": "460:68713",
+    "desktop/trialReserved": "460:68714",
+    "tabletP/trialReserved": "460:68715",
+    "tabletL/trialReserved": "460:68716",
+    "phone/waitlist": "460:68717",
+    "web/waitlist": "460:68718",
+    "desktop/waitlist": "460:68719",
+    "tabletP/waitlist": "460:68720",
+    "tabletL/waitlist": "460:68721",
+    "phone/placementConflict": "460:68722",
+    "web/placementConflict": "460:68723",
+    "desktop/placementConflict": "460:68724",
+    "tabletP/placementConflict": "460:68725",
+    "tabletL/placementConflict": "460:68726",
+    "phone/returnRequest": "460:68727",
+    "web/returnRequest": "460:68728",
+    "desktop/returnRequest": "460:68729",
+    "tabletP/returnRequest": "460:68730",
+    "tabletL/returnRequest": "460:68731",
+    "phone/returnProposal": "460:68732",
+    "web/returnProposal": "460:68733",
+    "desktop/returnProposal": "460:68734",
+    "tabletP/returnProposal": "460:68735",
+    "tabletL/returnProposal": "460:68736",
+    "phone/returnConfirmed": "460:68737",
+    "web/returnConfirmed": "460:68738",
+    "desktop/returnConfirmed": "460:68739",
+    "tabletP/returnConfirmed": "460:68740",
+    "tabletL/returnConfirmed": "460:68741",
+    "phone/returnPending": "460:68742",
+    "web/returnPending": "460:68743",
+    "desktop/returnPending": "460:68744",
+    "tabletP/returnPending": "460:68745",
+    "tabletL/returnPending": "460:68746",
+    "phone/returned": "460:68747",
+    "web/returned": "460:68748",
+    "desktop/returned": "460:68749",
+    "tabletP/returned": "460:68750",
+    "tabletL/returned": "460:68751",
+    "phone/returnDispute": "460:68752",
+    "web/returnDispute": "460:68753",
+    "desktop/returnDispute": "460:68754",
+    "tabletP/returnDispute": "460:68755",
+    "tabletL/returnDispute": "460:68756",
+    "phone/safetyHold": "460:211421",
+    "web/safetyHold": "460:211422",
+    "desktop/safetyHold": "460:211423",
+    "tabletP/safetyHold": "460:211424",
+    "tabletL/safetyHold": "460:211425",
+    "phone/appointmentReview": "460:211426",
+    "web/appointmentReview": "460:211427",
+    "desktop/appointmentReview": "460:211428",
+    "tabletP/appointmentReview": "460:211429",
+    "tabletL/appointmentReview": "460:211430",
+    "phone/lostApproximate": "460:242507",
+    "web/lostApproximate": "460:242508",
+    "desktop/lostApproximate": "460:242509",
+    "tabletP/lostApproximate": "460:242510",
+    "tabletL/lostApproximate": "460:242511",
+    "phone/lostUnknown": "460:242512",
+    "web/lostUnknown": "460:242513",
+    "desktop/lostUnknown": "460:242514",
+    "tabletP/lostUnknown": "460:242515",
+    "tabletL/lostUnknown": "460:242516",
+    "phone/linkExisting": "486:5521",
+    "web/linkExisting": "486:5522",
+    "desktop/linkExisting": "486:5523",
+    "tabletP/linkExisting": "486:5524",
+    "tabletL/linkExisting": "486:5525",
+    "phone/linkConfirm": "486:5526",
+    "web/linkConfirm": "486:5527",
+    "desktop/linkConfirm": "486:5528",
+    "tabletP/linkConfirm": "486:5529",
+    "tabletL/linkConfirm": "486:5530",
+    "phone/smsInvalid": "506:6789",
+    "web/smsInvalid": "506:6790",
+    "desktop/smsInvalid": "506:6791",
+    "tabletP/smsInvalid": "506:6792",
+    "tabletL/smsInvalid": "506:6793",
+    "phone/smsExpired": "506:6794",
+    "web/smsExpired": "506:6795",
+    "desktop/smsExpired": "506:6796",
+    "tabletP/smsExpired": "506:6797",
+    "tabletL/smsExpired": "506:6798",
+    "phone/smsDelivery": "506:6799",
+    "web/smsDelivery": "506:6800",
+    "desktop/smsDelivery": "506:6801",
+    "tabletP/smsDelivery": "506:6802",
+    "tabletL/smsDelivery": "506:6803",
+    "phone/smsRateLimited": "506:6804",
+    "web/smsRateLimited": "506:6805",
+    "desktop/smsRateLimited": "506:6806",
+    "tabletP/smsRateLimited": "506:6807",
+    "tabletL/smsRateLimited": "506:6808",
+    "phone/smsChecking": "506:6809",
+    "web/smsChecking": "506:6810",
+    "desktop/smsChecking": "506:6811",
+    "tabletP/smsChecking": "506:6812",
+    "tabletL/smsChecking": "506:6813",
+    "phone/smsUncertain": "506:6814",
+    "web/smsUncertain": "506:6815",
+    "desktop/smsUncertain": "506:6816",
+    "tabletP/smsUncertain": "506:6817",
+    "tabletL/smsUncertain": "506:6818",
+    "phone/adultNotice": "506:6819",
+    "web/adultNotice": "506:6820",
+    "desktop/adultNotice": "506:6821",
+    "tabletP/adultNotice": "506:6822",
+    "tabletL/adultNotice": "506:6823",
+    "phone/adultProvider": "506:6824",
+    "web/adultProvider": "506:6825",
+    "desktop/adultProvider": "506:6826",
+    "tabletP/adultProvider": "506:6827",
+    "tabletL/adultProvider": "506:6828",
+    "phone/adultPending": "506:6829",
+    "web/adultPending": "506:6830",
+    "desktop/adultPending": "506:6831",
+    "tabletP/adultPending": "506:6832",
+    "tabletL/adultPending": "506:6833",
+    "phone/adultCancelled": "506:6834",
+    "web/adultCancelled": "506:6835",
+    "desktop/adultCancelled": "506:6836",
+    "tabletP/adultCancelled": "506:6837",
+    "tabletL/adultCancelled": "506:6838",
+    "phone/adultFailed": "506:6839",
+    "web/adultFailed": "506:6840",
+    "desktop/adultFailed": "506:6841",
+    "tabletP/adultFailed": "506:6842",
+    "tabletL/adultFailed": "506:6843",
+    "phone/adultUnsupported": "506:6844",
+    "web/adultUnsupported": "506:6845",
+    "desktop/adultUnsupported": "506:6846",
+    "tabletP/adultUnsupported": "506:6847",
+    "tabletL/adultUnsupported": "506:6848",
+    "phone/adultNotEligible": "506:6849",
+    "web/adultNotEligible": "506:6850",
+    "desktop/adultNotEligible": "506:6851",
+    "tabletP/adultNotEligible": "506:6852",
+    "tabletL/adultNotEligible": "506:6853",
+    "phone/adultExpired": "506:6854",
+    "web/adultExpired": "506:6855",
+    "desktop/adultExpired": "506:6856",
+    "tabletP/adultExpired": "506:6857",
+    "tabletL/adultExpired": "506:6858",
+    "phone/adultPassed": "506:6859",
+    "web/adultPassed": "506:6860",
+    "desktop/adultPassed": "506:6861",
+    "tabletP/adultPassed": "506:6862",
+    "tabletL/adultPassed": "506:6863",
+    "phone/adultTaskReview": "506:6864",
+    "web/adultTaskReview": "506:6865",
+    "desktop/adultTaskReview": "506:6866",
+    "tabletP/adultTaskReview": "506:6867",
+    "tabletL/adultTaskReview": "506:6868",
+    "phone/reportSupplement": "506:6869",
+    "web/reportSupplement": "506:6870",
+    "desktop/reportSupplement": "506:6871",
+    "tabletP/reportSupplement": "506:6872",
+    "tabletL/reportSupplement": "506:6873",
+    "phone/reportSupplementPending": "506:6874",
+    "web/reportSupplementPending": "506:6875",
+    "desktop/reportSupplementPending": "506:6876",
+    "tabletP/reportSupplementPending": "506:6877",
+    "tabletL/reportSupplementPending": "506:6878",
+    "phone/reportSupplementFailed": "506:6879",
+    "web/reportSupplementFailed": "506:6880",
+    "desktop/reportSupplementFailed": "506:6881",
+    "tabletP/reportSupplementFailed": "506:6882",
+    "tabletL/reportSupplementFailed": "506:6883",
+    "phone/reportSupplemented": "506:6884",
+    "web/reportSupplemented": "506:6885",
+    "desktop/reportSupplemented": "506:6886",
+    "tabletP/reportSupplemented": "506:6887",
+    "tabletL/reportSupplemented": "506:6888",
+    "phone/reportAccess": "506:6889",
+    "web/reportAccess": "506:6890",
+    "desktop/reportAccess": "506:6891",
+    "tabletP/reportAccess": "506:6892",
+    "tabletL/reportAccess": "506:6893",
+    "phone/reportAccessPending": "506:6894",
+    "web/reportAccessPending": "506:6895",
+    "desktop/reportAccessPending": "506:6896",
+    "tabletP/reportAccessPending": "506:6897",
+    "tabletL/reportAccessPending": "506:6898",
+    "phone/reportAccessHelp": "506:6899",
+    "web/reportAccessHelp": "506:6900",
+    "desktop/reportAccessHelp": "506:6901",
+    "tabletP/reportAccessHelp": "506:6902",
+    "tabletL/reportAccessHelp": "506:6903",
+    "phone/dataPartScope": "506:6904",
+    "web/dataPartScope": "506:6905",
+    "desktop/dataPartScope": "506:6906",
+    "tabletP/dataPartScope": "506:6907",
+    "tabletL/dataPartScope": "506:6908",
+    "phone/dataAccountImpact": "506:6909",
+    "web/dataAccountImpact": "506:6910",
+    "desktop/dataAccountImpact": "506:6911",
+    "tabletP/dataAccountImpact": "506:6912",
+    "tabletL/dataAccountImpact": "506:6913",
+    "phone/dataAccountTasks": "506:6914",
+    "web/dataAccountTasks": "506:6915",
+    "desktop/dataAccountTasks": "506:6916",
+    "tabletP/dataAccountTasks": "506:6917",
+    "tabletL/dataAccountTasks": "506:6918",
+    "phone/dataPartVerify": "506:6919",
+    "web/dataPartVerify": "506:6920",
+    "desktop/dataPartVerify": "506:6921",
+    "tabletP/dataPartVerify": "506:6922",
+    "tabletL/dataPartVerify": "506:6923",
+    "phone/dataPartVerifyError": "506:6924",
+    "web/dataPartVerifyError": "506:6925",
+    "desktop/dataPartVerifyError": "506:6926",
+    "tabletP/dataPartVerifyError": "506:6927",
+    "tabletL/dataPartVerifyError": "506:6928",
+    "phone/dataPartFinal": "506:6929",
+    "web/dataPartFinal": "506:6930",
+    "desktop/dataPartFinal": "506:6931",
+    "tabletP/dataPartFinal": "506:6932",
+    "tabletL/dataPartFinal": "506:6933",
+    "phone/dataPartPending": "506:6934",
+    "web/dataPartPending": "506:6935",
+    "desktop/dataPartPending": "506:6936",
+    "tabletP/dataPartPending": "506:6937",
+    "tabletL/dataPartPending": "506:6938",
+    "phone/dataPartFailed": "506:6939",
+    "web/dataPartFailed": "506:6940",
+    "desktop/dataPartFailed": "506:6941",
+    "tabletP/dataPartFailed": "506:6942",
+    "tabletL/dataPartFailed": "506:6943",
+    "phone/dataAccountVerify": "506:6944",
+    "web/dataAccountVerify": "506:6945",
+    "desktop/dataAccountVerify": "506:6946",
+    "tabletP/dataAccountVerify": "506:6947",
+    "tabletL/dataAccountVerify": "506:6948",
+    "phone/dataAccountVerifyError": "506:6949",
+    "web/dataAccountVerifyError": "506:6950",
+    "desktop/dataAccountVerifyError": "506:6951",
+    "tabletP/dataAccountVerifyError": "506:6952",
+    "tabletL/dataAccountVerifyError": "506:6953",
+    "phone/dataAccountFinal": "506:6954",
+    "web/dataAccountFinal": "506:6955",
+    "desktop/dataAccountFinal": "506:6956",
+    "tabletP/dataAccountFinal": "506:6957",
+    "tabletL/dataAccountFinal": "506:6958",
+    "phone/dataAccountPending": "506:6959",
+    "web/dataAccountPending": "506:6960",
+    "desktop/dataAccountPending": "506:6961",
+    "tabletP/dataAccountPending": "506:6962",
+    "tabletL/dataAccountPending": "506:6963",
+    "phone/dataAccountFailed": "506:6964",
+    "web/dataAccountFailed": "506:6965",
+    "desktop/dataAccountFailed": "506:6966",
+    "tabletP/dataAccountFailed": "506:6967",
+    "tabletL/dataAccountFailed": "506:6968",
+    "phone/dataAccountProgress": "506:6969",
+    "web/dataAccountProgress": "506:6970",
+    "desktop/dataAccountProgress": "506:6971",
+    "tabletP/dataAccountProgress": "506:6972",
+    "tabletL/dataAccountProgress": "506:6973",
+    "phone/dataPartAppeal": "506:6974",
+    "web/dataPartAppeal": "506:6975",
+    "desktop/dataPartAppeal": "506:6976",
+    "tabletP/dataPartAppeal": "506:6977",
+    "tabletL/dataPartAppeal": "506:6978",
+    "phone/dataPartAppealPending": "506:6979",
+    "web/dataPartAppealPending": "506:6980",
+    "desktop/dataPartAppealPending": "506:6981",
+    "tabletP/dataPartAppealPending": "506:6982",
+    "tabletL/dataPartAppealPending": "506:6983",
+    "phone/dataAccountAppeal": "506:6984",
+    "web/dataAccountAppeal": "506:6985",
+    "desktop/dataAccountAppeal": "506:6986",
+    "tabletP/dataAccountAppeal": "506:6987",
+    "tabletL/dataAccountAppeal": "506:6988",
+    "phone/dataAccountAppealPending": "506:6989",
+    "web/dataAccountAppealPending": "506:6990",
+    "desktop/dataAccountAppealPending": "506:6991",
+    "tabletP/dataAccountAppealPending": "506:6992",
+    "tabletL/dataAccountAppealPending": "506:6993",
+    "phone/smsSendPending": "506:6994",
+    "web/smsSendPending": "506:6995",
+    "desktop/smsSendPending": "506:6996",
+    "tabletP/smsSendPending": "506:6997",
+    "tabletL/smsSendPending": "506:6998",
+    "phone/smsSendUncertain": "506:6999",
+    "web/smsSendUncertain": "506:7000",
+    "desktop/smsSendUncertain": "506:7001",
+    "tabletP/smsSendUncertain": "506:7002",
+    "tabletL/smsSendUncertain": "506:7003",
+    "phone/dataPartCodePending": "506:7004",
+    "web/dataPartCodePending": "506:7005",
+    "desktop/dataPartCodePending": "506:7006",
+    "tabletP/dataPartCodePending": "506:7007",
+    "tabletL/dataPartCodePending": "506:7008",
+    "phone/dataPartVerifyPending": "506:7009",
+    "web/dataPartVerifyPending": "506:7010",
+    "desktop/dataPartVerifyPending": "506:7011",
+    "tabletP/dataPartVerifyPending": "506:7012",
+    "tabletL/dataPartVerifyPending": "506:7013",
+    "phone/dataAccountCodePending": "506:7014",
+    "web/dataAccountCodePending": "506:7015",
+    "desktop/dataAccountCodePending": "506:7016",
+    "tabletP/dataAccountCodePending": "506:7017",
+    "tabletL/dataAccountCodePending": "506:7018",
+    "phone/dataAccountVerifyPending": "506:7019",
+    "web/dataAccountVerifyPending": "506:7020",
+    "desktop/dataAccountVerifyPending": "506:7021",
+    "tabletP/dataAccountVerifyPending": "506:7022",
+    "tabletL/dataAccountVerifyPending": "506:7023",
+    "phone/returnEdit": "506:60775",
+    "web/returnEdit": "506:60776",
+    "desktop/returnEdit": "506:60777",
+    "tabletP/returnEdit": "506:60778",
+    "tabletL/returnEdit": "506:60779",
+    "phone/returnProposalPending": "506:60780",
+    "web/returnProposalPending": "506:60781",
+    "desktop/returnProposalPending": "506:60782",
+    "tabletP/returnProposalPending": "506:60783",
+    "tabletL/returnProposalPending": "506:60784",
+    "phone/returnSendFailed": "506:60785",
+    "web/returnSendFailed": "506:60786",
+    "desktop/returnSendFailed": "506:60787",
+    "tabletP/returnSendFailed": "506:60788",
+    "tabletL/returnSendFailed": "506:60789",
+    "phone/returnWaiting": "506:60790",
+    "web/returnWaiting": "506:60791",
+    "desktop/returnWaiting": "506:60792",
+    "tabletP/returnWaiting": "506:60793",
+    "tabletL/returnWaiting": "506:60794",
+    "phone/returnReview": "506:60795",
+    "web/returnReview": "506:60796",
+    "desktop/returnReview": "506:60797",
+    "tabletP/returnReview": "506:60798",
+    "tabletL/returnReview": "506:60799",
+    "phone/returnReject": "506:60800",
+    "web/returnReject": "506:60801",
+    "desktop/returnReject": "506:60802",
+    "tabletP/returnReject": "506:60803",
+    "tabletL/returnReject": "506:60804",
+    "phone/returnDeclined": "506:60805",
+    "web/returnDeclined": "506:60806",
+    "desktop/returnDeclined": "506:60807",
+    "tabletP/returnDeclined": "506:60808",
+    "tabletL/returnDeclined": "506:60809",
+    "phone/returnEditR2": "506:60810",
+    "web/returnEditR2": "506:60811",
+    "desktop/returnEditR2": "506:60812",
+    "tabletP/returnEditR2": "506:60813",
+    "tabletL/returnEditR2": "506:60814",
+    "phone/returnPreviewR2": "506:60815",
+    "web/returnPreviewR2": "506:60816",
+    "desktop/returnPreviewR2": "506:60817",
+    "tabletP/returnPreviewR2": "506:60818",
+    "tabletL/returnPreviewR2": "506:60819",
+    "phone/returnWaitingR2": "506:60820",
+    "web/returnWaitingR2": "506:60821",
+    "desktop/returnWaitingR2": "506:60822",
+    "tabletP/returnWaitingR2": "506:60823",
+    "tabletL/returnWaitingR2": "506:60824",
+    "phone/returnReviewR2": "506:60825",
+    "web/returnReviewR2": "506:60826",
+    "desktop/returnReviewR2": "506:60827",
+    "tabletP/returnReviewR2": "506:60828",
+    "tabletL/returnReviewR2": "506:60829",
+    "phone/returnConfirmedR2": "506:60830",
+    "web/returnConfirmedR2": "506:60831",
+    "desktop/returnConfirmedR2": "506:60832",
+    "tabletP/returnConfirmedR2": "506:60833",
+    "tabletL/returnConfirmedR2": "506:60834",
+    "phone/returnConflict": "506:60835",
+    "web/returnConflict": "506:60836",
+    "desktop/returnConflict": "506:60837",
+    "tabletP/returnConflict": "506:60838",
+    "tabletL/returnConflict": "506:60839",
+    "phone/returnLatest": "506:60840",
+    "web/returnLatest": "506:60841",
+    "desktop/returnLatest": "506:60842",
+    "tabletP/returnLatest": "506:60843",
+    "tabletL/returnLatest": "506:60844",
+    "phone/returnExpired": "506:60845",
+    "web/returnExpired": "506:60846",
+    "desktop/returnExpired": "506:60847",
+    "tabletP/returnExpired": "506:60848",
+    "tabletL/returnExpired": "506:60849",
+    "phone/returnWithdraw": "506:60850",
+    "web/returnWithdraw": "506:60851",
+    "desktop/returnWithdraw": "506:60852",
+    "tabletP/returnWithdraw": "506:60853",
+    "tabletL/returnWithdraw": "506:60854",
+    "phone/returnWithdrawR2": "506:60855",
+    "web/returnWithdrawR2": "506:60856",
+    "desktop/returnWithdrawR2": "506:60857",
+    "tabletP/returnWithdrawR2": "506:60858",
+    "tabletL/returnWithdrawR2": "506:60859",
+    "phone/returnWithdrawn": "506:60860",
+    "web/returnWithdrawn": "506:60861",
+    "desktop/returnWithdrawn": "506:60862",
+    "tabletP/returnWithdrawn": "506:60863",
+    "tabletL/returnWithdrawn": "506:60864",
+    "phone/holdCancel": "506:205509",
+    "web/holdCancel": "506:205510",
+    "desktop/holdCancel": "506:205511",
+    "tabletP/holdCancel": "506:205512",
+    "tabletL/holdCancel": "506:205513",
+    "phone/holdCancelPending": "506:205514",
+    "web/holdCancelPending": "506:205515",
+    "desktop/holdCancelPending": "506:205516",
+    "tabletP/holdCancelPending": "506:205517",
+    "tabletL/holdCancelPending": "506:205518",
+    "phone/holdCancelFailed": "506:205519",
+    "web/holdCancelFailed": "506:205520",
+    "desktop/holdCancelFailed": "506:205521",
+    "tabletP/holdCancelFailed": "506:205522",
+    "tabletL/holdCancelFailed": "506:205523",
+    "phone/holdCancelled": "506:205524",
+    "web/holdCancelled": "506:205525",
+    "desktop/holdCancelled": "506:205526",
+    "tabletP/holdCancelled": "506:205527",
+    "tabletL/holdCancelled": "506:205528",
+    "phone/holdReproposal": "506:205529",
+    "web/holdReproposal": "506:205530",
+    "desktop/holdReproposal": "506:205531",
+    "tabletP/holdReproposal": "506:205532",
+    "tabletL/holdReproposal": "506:205533",
+    "phone/holdProposalWaiting": "506:205534",
+    "web/holdProposalWaiting": "506:205535",
+    "desktop/holdProposalWaiting": "506:205536",
+    "tabletP/holdProposalWaiting": "506:205537",
+    "tabletL/holdProposalWaiting": "506:205538",
+    "phone/holdReleased": "506:205539",
+    "web/holdReleased": "506:205540",
+    "desktop/holdReleased": "506:205541",
+    "tabletP/holdReleased": "506:205542",
+    "tabletL/holdReleased": "506:205543"
+  },
+  "hub": {
+    "id": "513:1860930",
+    "page": "471:524",
+    "w": 1440,
+    "h": 1542
+  },
+  "validation": {
+    "uniqueRoots": 420,
+    "layoutsExpected": 420,
+    "staticChecks": 1035,
+    "consentChecks": 60,
+    "versionActorNegativeChecks": 70,
+    "fontFamilies": [
+      "Noto Sans SC",
+      "Manrope"
+    ],
+    "texts": 8607,
+    "instances": 5478,
+    "screenshots": 20,
+    "issues": []
+  },
+  "supersedes": {
+    "source": "design-closure-2026-10-21-content.json",
+    "scenarioKeys": [
+      "phoneCode",
+      "adultAssurance",
+      "safetyHold",
+      "returnRequest",
+      "returnProposal",
+      "returnConfirmed",
+      "returnPending",
+      "guestReceipt",
+      "dataDelete",
+      "dataProgress",
+      "guestProgress",
+      "authResume"
+    ]
+  },
+  "runtimeVerified": false,
+  "businessCodeChanged": false,
+  "releaseReady": false,
+  "executionMarkerReleased": true,
+  "releaseGates": [
+    "actual_operator_and_public_contact",
+    "business_model_and_qualifications",
+    "backend_B04_and_age_guardian_contract",
+    "real_processing_providers_and_lifecycle",
+    "actual_moderation_staffing"
+  ],
+  "fixtureCollectionId": "VariableCollectionId:509:1144"
+}

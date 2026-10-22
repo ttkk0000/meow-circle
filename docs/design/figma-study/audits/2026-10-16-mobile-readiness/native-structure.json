@@ -1,0 +1,780 @@
+{
+  "readOnly": true,
+  "scopePage": "56:25",
+  "screenCount": 134,
+  "nodes": 6107,
+  "textCount": 1824,
+  "photoNodes": 72,
+  "nodeActions": 589,
+  "backActions": 125,
+  "changeActions": 24,
+  "missingFonts": [],
+  "placeholders": [],
+  "blackRoots": [
+    [
+      "56:27",
+      "home"
+    ],
+    [
+      "56:28",
+      "homeEmpty"
+    ],
+    [
+      "56:32",
+      "post"
+    ],
+    [
+      "56:33",
+      "composePost"
+    ],
+    [
+      "56:34",
+      "postPreview"
+    ],
+    [
+      "56:61",
+      "messages"
+    ]
+  ],
+  "badRootColors": [
+    "56:27",
+    "56:28",
+    "56:32",
+    "56:33",
+    "56:34",
+    "56:61"
+  ],
+  "broken": [],
+  "buttonShapes": {
+    "48/24": 166
+  },
+  "buttonBad": [],
+  "scrollIssues": [],
+  "fontSizes": {
+    "12": 623,
+    "14": 502,
+    "16": 496,
+    "20": 194,
+    "24": 1,
+    "28": 8
+  },
+  "smallTargetCount": 0,
+  "smallTargetExamples": [],
+  "termRootMatches": {
+    "宠友圈": [],
+    "图文日记": [],
+    "谁可以看": [],
+    "表情": [],
+    "公里": [],
+    "附近提醒": [],
+    "接收走失": [],
+    "标记走失": [],
+    "创建宠物": [],
+    "添加宠物": [
+      "56:59"
+    ],
+    "评论": [
+      "56:32",
+      "56:73",
+      "106:1389",
+      "106:1390",
+      "106:1391",
+      "106:1392",
+      "106:1393",
+      "106:1394",
+      "106:1395",
+      "106:1396",
+      "106:1398",
+      "106:1400",
+      "106:1407",
+      "106:1417",
+      "106:1428"
+    ]
+  },
+  "reachableFromHome": 130,
+  "unreachable": [
+    [
+      "56:81",
+      "offline"
+    ],
+    [
+      "106:1411",
+      "privateFailed"
+    ],
+    [
+      "106:1417",
+      "privateUnavailable"
+    ],
+    [
+      "106:1454",
+      "groupMuted"
+    ]
+  ],
+  "rootIndex": [
+    [
+      "56:27",
+      "home"
+    ],
+    [
+      "56:28",
+      "homeEmpty"
+    ],
+    [
+      "56:29",
+      "city"
+    ],
+    [
+      "56:30",
+      "search"
+    ],
+    [
+      "56:31",
+      "results"
+    ],
+    [
+      "56:32",
+      "post"
+    ],
+    [
+      "56:33",
+      "composePost"
+    ],
+    [
+      "56:34",
+      "postPreview"
+    ],
+    [
+      "56:35",
+      "adopt"
+    ],
+    [
+      "56:36",
+      "filter"
+    ],
+    [
+      "56:37",
+      "detail"
+    ],
+    [
+      "56:38",
+      "verify"
+    ],
+    [
+      "56:39",
+      "apply"
+    ],
+    [
+      "56:40",
+      "applyReview"
+    ],
+    [
+      "56:41",
+      "applySent"
+    ],
+    [
+      "56:42",
+      "application"
+    ],
+    [
+      "56:43",
+      "handover"
+    ],
+    [
+      "56:44",
+      "followup"
+    ],
+    [
+      "56:45",
+      "withdrawn"
+    ],
+    [
+      "56:46",
+      "applicationDecision"
+    ],
+    [
+      "56:47",
+      "publishType"
+    ],
+    [
+      "56:48",
+      "petBasics"
+    ],
+    [
+      "56:49",
+      "petDisclosure"
+    ],
+    [
+      "56:50",
+      "petEvidence"
+    ],
+    [
+      "56:51",
+      "petPreview"
+    ],
+    [
+      "56:52",
+      "petPending"
+    ],
+    [
+      "56:53",
+      "myPublishes"
+    ],
+    [
+      "56:54",
+      "lostList"
+    ],
+    [
+      "56:55",
+      "lostMap"
+    ],
+    [
+      "56:56",
+      "lostDetail"
+    ],
+    [
+      "56:57",
+      "sighting"
+    ],
+    [
+      "56:58",
+      "sightingReview"
+    ],
+    [
+      "56:59",
+      "lostPublish"
+    ],
+    [
+      "56:60",
+      "lostManage"
+    ],
+    [
+      "56:61",
+      "messages"
+    ],
+    [
+      "56:62",
+      "chat"
+    ],
+    [
+      "56:63",
+      "appointment"
+    ],
+    [
+      "56:64",
+      "change"
+    ],
+    [
+      "56:65",
+      "report"
+    ],
+    [
+      "56:66",
+      "reportReceipt"
+    ],
+    [
+      "56:67",
+      "reportProgress"
+    ],
+    [
+      "56:68",
+      "appeal"
+    ],
+    [
+      "56:69",
+      "publisherResponse"
+    ],
+    [
+      "56:70",
+      "login"
+    ],
+    [
+      "56:71",
+      "otp"
+    ],
+    [
+      "56:72",
+      "otpError"
+    ],
+    [
+      "56:73",
+      "mine"
+    ],
+    [
+      "56:74",
+      "petProfile"
+    ],
+    [
+      "56:75",
+      "settings"
+    ],
+    [
+      "56:76",
+      "privacy"
+    ],
+    [
+      "56:77",
+      "find"
+    ],
+    [
+      "56:78",
+      "saleDetail"
+    ],
+    [
+      "56:79",
+      "salePublish"
+    ],
+    [
+      "56:80",
+      "salePreview"
+    ],
+    [
+      "56:81",
+      "offline"
+    ],
+    [
+      "56:82",
+      "noResults"
+    ],
+    [
+      "56:83",
+      "contentUnavailable"
+    ],
+    [
+      "56:84",
+      "permission"
+    ],
+    [
+      "63:1361",
+      "sightingSent"
+    ],
+    [
+      "106:1387",
+      "following"
+    ],
+    [
+      "106:1388",
+      "localFeed"
+    ],
+    [
+      "106:1389",
+      "postLiked"
+    ],
+    [
+      "106:1390",
+      "postMine"
+    ],
+    [
+      "106:1391",
+      "dogPost"
+    ],
+    [
+      "106:1392",
+      "otherPost"
+    ],
+    [
+      "106:1393",
+      "comments"
+    ],
+    [
+      "106:1394",
+      "commentsWriting"
+    ],
+    [
+      "106:1395",
+      "commentPosted"
+    ],
+    [
+      "106:1396",
+      "commentReplies"
+    ],
+    [
+      "106:1397",
+      "postActions"
+    ],
+    [
+      "106:1398",
+      "commentActions"
+    ],
+    [
+      "106:1399",
+      "ownPostActions"
+    ],
+    [
+      "106:1400",
+      "deletePost"
+    ],
+    [
+      "106:1401",
+      "contentHidden"
+    ],
+    [
+      "106:1402",
+      "authorProfile"
+    ],
+    [
+      "106:1403",
+      "dogProfile"
+    ],
+    [
+      "106:1404",
+      "otherProfile"
+    ],
+    [
+      "106:1405",
+      "authorFollowing"
+    ],
+    [
+      "106:1406",
+      "profileActions"
+    ],
+    [
+      "106:1407",
+      "interactionInbox"
+    ],
+    [
+      "106:1408",
+      "systemInbox"
+    ],
+    [
+      "106:1409",
+      "privateChat"
+    ],
+    [
+      "106:1410",
+      "privateSent"
+    ],
+    [
+      "106:1411",
+      "privateFailed"
+    ],
+    [
+      "106:1412",
+      "messageRequests"
+    ],
+    [
+      "106:1413",
+      "requestDetail"
+    ],
+    [
+      "106:1414",
+      "requestAccepted"
+    ],
+    [
+      "106:1415",
+      "requestSent"
+    ],
+    [
+      "106:1416",
+      "requestWaiting"
+    ],
+    [
+      "106:1417",
+      "privateUnavailable"
+    ],
+    [
+      "106:1418",
+      "privateSettings"
+    ],
+    [
+      "106:1419",
+      "privateActions"
+    ],
+    [
+      "106:1420",
+      "messageActions"
+    ],
+    [
+      "106:1421",
+      "blockConfirm"
+    ],
+    [
+      "106:1422",
+      "blockedResult"
+    ],
+    [
+      "106:1423",
+      "postPublished"
+    ],
+    [
+      "106:1424",
+      "mediaPermission"
+    ],
+    [
+      "106:1425",
+      "careGuide"
+    ],
+    [
+      "106:1426",
+      "reportPost"
+    ],
+    [
+      "106:1427",
+      "reportPostSent"
+    ],
+    [
+      "106:1428",
+      "reportComment"
+    ],
+    [
+      "106:1429",
+      "reportCommentSent"
+    ],
+    [
+      "106:1430",
+      "reportUser"
+    ],
+    [
+      "106:1431",
+      "reportUserSent"
+    ],
+    [
+      "106:1432",
+      "reportMessage"
+    ],
+    [
+      "106:1433",
+      "reportMessageSent"
+    ],
+    [
+      "106:1434",
+      "moderationProgress"
+    ],
+    [
+      "106:1435",
+      "groups"
+    ],
+    [
+      "106:1436",
+      "groupDiscover"
+    ],
+    [
+      "106:1437",
+      "groupIntro"
+    ],
+    [
+      "106:1438",
+      "groupJoinPending"
+    ],
+    [
+      "106:1439",
+      "groupChat"
+    ],
+    [
+      "106:1440",
+      "groupSent"
+    ],
+    [
+      "106:1441",
+      "groupInfo"
+    ],
+    [
+      "106:1442",
+      "groupNotice"
+    ],
+    [
+      "106:1443",
+      "groupMembers"
+    ],
+    [
+      "106:1444",
+      "groupMessageActions"
+    ],
+    [
+      "106:1445",
+      "groupCreate"
+    ],
+    [
+      "106:1446",
+      "groupCreateReview"
+    ],
+    [
+      "106:1447",
+      "groupOwnerChat"
+    ],
+    [
+      "106:1448",
+      "groupAdmin"
+    ],
+    [
+      "106:1449",
+      "groupNoticeEdit"
+    ],
+    [
+      "106:1450",
+      "groupJoinReview"
+    ],
+    [
+      "106:1451",
+      "groupAdminReviewed"
+    ],
+    [
+      "106:1452",
+      "groupMemberManage"
+    ],
+    [
+      "106:1453",
+      "groupMemberConfirm"
+    ],
+    [
+      "106:1454",
+      "groupMuted"
+    ],
+    [
+      "106:1455",
+      "groupLeave"
+    ],
+    [
+      "106:1456",
+      "groupUnavailable"
+    ],
+    [
+      "106:1457",
+      "groupDissolve"
+    ],
+    [
+      "106:1458",
+      "reportGroup"
+    ],
+    [
+      "106:1459",
+      "reportGroupSent"
+    ],
+    [
+      "106:1460",
+      "reportGroupMessage"
+    ],
+    [
+      "106:1461",
+      "reportGroupMessageSent"
+    ]
+  ],
+  "selectedRoutes": [
+    {
+      "id": "56:27",
+      "to": [
+        "56:29",
+        "56:47",
+        "106:1387",
+        "106:1388",
+        "56:33",
+        "56:32",
+        "106:1393",
+        "106:1391",
+        "106:1390",
+        "106:1392",
+        "56:35",
+        "56:61",
+        "56:73"
+      ]
+    },
+    {
+      "id": "56:74",
+      "to": [
+        "56:65",
+        "56:48",
+        "56:73"
+      ]
+    },
+    {
+      "id": "56:60",
+      "to": [
+        "56:65",
+        "56:56",
+        "56:83",
+        "56:59",
+        "56:62",
+        "56:54"
+      ]
+    },
+    {
+      "id": "56:75",
+      "to": [
+        "56:65",
+        "56:70",
+        "56:76",
+        "56:73"
+      ]
+    },
+    {
+      "id": "56:76",
+      "to": [
+        "56:65",
+        "56:84",
+        "56:75"
+      ]
+    },
+    {
+      "id": "56:70",
+      "to": [
+        "56:65",
+        "56:76",
+        "56:27",
+        "56:71"
+      ]
+    },
+    {
+      "id": "106:1393",
+      "to": [
+        "106:1397",
+        "106:1396",
+        "106:1398",
+        "106:1394",
+        "106:1424"
+      ]
+    },
+    {
+      "id": "106:1409",
+      "to": [
+        "106:1419",
+        "106:1420",
+        "106:1410",
+        "106:1424"
+      ]
+    },
+    {
+      "id": "106:1439",
+      "to": [
+        "106:1441",
+        "106:1444",
+        "106:1440",
+        "106:1424"
+      ]
+    }
+  ],
+  "flowStartingPoints": [
+    {
+      "nodeId": "56:27",
+      "name": "M&D · 手机完整体验"
+    },
+    {
+      "nodeId": "106:1435",
+      "name": "群聊 · 加入与交流"
+    },
+    {
+      "nodeId": "106:1447",
+      "name": "群主 · 建群与管理"
+    },
+    {
+      "nodeId": "106:1454",
+      "name": "群聊 · 禁言状态"
+    },
+    {
+      "nodeId": "56:28",
+      "name": "社区 · 冷启动空状态"
+    },
+    {
+      "nodeId": "106:1411",
+      "name": "私信 · 发送失败"
+    },
+    {
+      "nodeId": "56:81",
+      "name": "通用 · 离线状态"
+    },
+    {
+      "nodeId": "106:1417",
+      "name": "私信 · 接收受限"
+    }
+  ],
+  "createdNodeIds": [],
+  "mutatedNodeIds": []
+}

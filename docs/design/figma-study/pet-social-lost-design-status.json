@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-16",
+  "scope": "pet-friends-circle-and-own-pet-missing-linkage",
+  "phase": "reviewable-raster-and-rules-awaiting-native-sync",
+  "designAuthority": "isolated approved Friendly education study; no production Stitch change",
+  "artifacts": {
+    "circle": {
+      "image": "pet-friends-circle-concept-v2.png",
+      "brief": "PET_FRIENDS_CIRCLE_BRIEF.md",
+      "diagram": "pet-friends-circle-flows.svg",
+      "scenarios": "pet-friends-circle-screens.json",
+      "rasterScreens": 4,
+      "plannedNativeScenes": 22
+    },
+    "missing": {
+      "image": "pet-lost-linkage-concept-v2.png",
+      "brief": "PET_LOST_LINKAGE_BRIEF.md",
+      "diagram": "pet-lost-linkage-flows.svg",
+      "scenarios": "pet-lost-linkage-screens.json",
+      "rasterScreens": 4,
+      "plannedNativeScenes": 18
+    }
+  },
+  "generation": {
+    "method": "built-in image_gen",
+    "cli": false,
+    "projectImagesCopied": true
+  },
+  "figma": {
+    "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+    "nativeSync": "not-completed-transport-failed",
+    "createdNodeIds": [],
+    "priorNativeScreenCount": 134,
+    "priorPrototypeIncludesNewFlows": false
+  },
+  "mediaScope": "text-and-still-images-only; no video",
+  "validation": {
+    "type": "static-artifact-checks-only",
+    "utf8NoBomTextFiles": 13,
+    "parsedJsonFiles": 3,
+    "parsedSvgFiles": 2,
+    "existingLocalMarkdownLinks": 96,
+    "pngDimensions": "both 1536x1024",
+    "rasterVisualReview": "both generated final boards inspected; circle heading removed, dog identity and public audience chevron corrected, lost lead privacy wording corrected",
+    "trackedHandoffDiffWhitespace": "passed; Git line-ending normalization warnings only",
+    "nativeScreenOrDeviceAcceptance": "not performed for new flows"
+  },
+  "pendingDecisions": [
+    "nearby-alert-location-center-mode",
+    "private-profile-public-single-entry-confirmation",
+    "caretaker-permission-scope",
+    "friend-history-and-comment-visibility-defaults"
+  ],
+  "remaining": [
+    "native-component discovery after connection recovery",
+    "editable screens and all planned states",
+    "same-pet route and permission linking",
+    "physical-phone and accessibility acceptance"
+  ],
+  "notPerformed": [
+    "application-code changes",
+    "build/compile/application tests",
+    "real posting or message sending",
+    "GPS or push",
+    "crawling",
+    "sharing-permission changes"
+  ]
+}

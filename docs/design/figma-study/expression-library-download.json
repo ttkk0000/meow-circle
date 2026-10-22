@@ -1,0 +1,642 @@
+[
+  {
+    "key": "wink",
+    "ok": true,
+    "bytes": 2491
+  },
+  {
+    "key": "laugh",
+    "ok": true,
+    "bytes": 3179
+  },
+  {
+    "key": "heart-eyes",
+    "ok": true,
+    "bytes": 3434
+  },
+  {
+    "key": "smile",
+    "ok": true,
+    "bytes": 3153
+  },
+  {
+    "key": "grin",
+    "ok": true,
+    "bytes": 2867
+  },
+  {
+    "key": "joy",
+    "ok": true,
+    "bytes": 7425
+  },
+  {
+    "key": "rofl",
+    "ok": true,
+    "bytes": 4670
+  },
+  {
+    "key": "blush",
+    "ok": true,
+    "bytes": 4864
+  },
+  {
+    "key": "kiss",
+    "ok": true,
+    "bytes": 3644
+  },
+  {
+    "key": "thinking",
+    "ok": true,
+    "bytes": 5570
+  },
+  {
+    "key": "shush",
+    "ok": true,
+    "bytes": 6727
+  },
+  {
+    "key": "peeking",
+    "ok": true,
+    "bytes": 7525
+  },
+  {
+    "key": "hand-mouth",
+    "ok": true,
+    "bytes": 10861
+  },
+  {
+    "key": "hug",
+    "ok": true,
+    "bytes": 16066
+  },
+  {
+    "key": "heart-face",
+    "ok": true,
+    "bytes": 6250
+  },
+  {
+    "key": "salute",
+    "ok": true,
+    "bytes": 5407
+  },
+  {
+    "key": "pleading",
+    "ok": true,
+    "bytes": 2807
+  },
+  {
+    "key": "tears-held",
+    "ok": true,
+    "bytes": 4654
+  },
+  {
+    "key": "sweat-smile",
+    "ok": true,
+    "bytes": 3945
+  },
+  {
+    "key": "relieved",
+    "ok": true,
+    "bytes": 2546
+  },
+  {
+    "key": "star-eyes",
+    "ok": true,
+    "bytes": 4109
+  },
+  {
+    "key": "cool",
+    "ok": true,
+    "bytes": 2416
+  },
+  {
+    "key": "party",
+    "ok": true,
+    "bytes": 9672
+  },
+  {
+    "key": "neutral",
+    "ok": true,
+    "bytes": 2035
+  },
+  {
+    "key": "upside",
+    "ok": true,
+    "bytes": 2182
+  },
+  {
+    "key": "unamused",
+    "ok": true,
+    "bytes": 2969
+  },
+  {
+    "key": "expressionless",
+    "ok": true,
+    "bytes": 1592
+  },
+  {
+    "key": "smirk",
+    "ok": true,
+    "bytes": 3070
+  },
+  {
+    "key": "no-mouth",
+    "ok": true,
+    "bytes": 1860
+  },
+  {
+    "key": "eye-roll",
+    "ok": true,
+    "bytes": 3263
+  },
+  {
+    "key": "melting",
+    "ok": true,
+    "bytes": 5817
+  },
+  {
+    "key": "raised-brow",
+    "ok": true,
+    "bytes": 2653
+  },
+  {
+    "key": "surprise",
+    "ok": true,
+    "bytes": 2040
+  },
+  {
+    "key": "grimace",
+    "ok": true,
+    "bytes": 2836
+  },
+  {
+    "key": "cry",
+    "ok": true,
+    "bytes": 3548
+  },
+  {
+    "key": "scream",
+    "ok": true,
+    "bytes": 9438
+  },
+  {
+    "key": "mind-blown",
+    "ok": true,
+    "bytes": 10333
+  },
+  {
+    "key": "flushed",
+    "ok": true,
+    "bytes": 5004
+  },
+  {
+    "key": "sob",
+    "ok": true,
+    "bytes": 4444
+  },
+  {
+    "key": "worried",
+    "ok": true,
+    "bytes": 2512
+  },
+  {
+    "key": "weary",
+    "ok": true,
+    "bytes": 3155
+  },
+  {
+    "key": "triumph",
+    "ok": true,
+    "bytes": 4762
+  },
+  {
+    "key": "rage",
+    "ok": true,
+    "bytes": 2874
+  },
+  {
+    "key": "pensive",
+    "ok": true,
+    "bytes": 2199
+  },
+  {
+    "key": "angry",
+    "ok": true,
+    "bytes": 2704
+  },
+  {
+    "key": "yawn",
+    "ok": true,
+    "bytes": 4647
+  },
+  {
+    "key": "sleep",
+    "ok": true,
+    "bytes": 3423
+  },
+  {
+    "key": "clap",
+    "ok": true,
+    "bytes": 5794
+  },
+  {
+    "key": "sick",
+    "ok": true,
+    "bytes": 5666
+  },
+  {
+    "key": "thumb",
+    "ok": true,
+    "bytes": 5434
+  },
+  {
+    "key": "thumb-down",
+    "ok": true,
+    "bytes": 5416
+  },
+  {
+    "key": "hands-up",
+    "ok": true,
+    "bytes": 9051
+  },
+  {
+    "key": "thanks",
+    "ok": true,
+    "bytes": 6091
+  },
+  {
+    "key": "heart-hands",
+    "ok": true,
+    "bytes": 6916
+  },
+  {
+    "key": "wave",
+    "ok": true,
+    "bytes": 5633
+  },
+  {
+    "key": "ok",
+    "ok": true,
+    "bytes": 4985
+  },
+  {
+    "key": "victory",
+    "ok": true,
+    "bytes": 5052
+  },
+  {
+    "key": "muscle",
+    "ok": true,
+    "bytes": 5071
+  },
+  {
+    "key": "fist",
+    "ok": true,
+    "bytes": 4353
+  },
+  {
+    "key": "raised-fist",
+    "ok": true,
+    "bytes": 4608
+  },
+  {
+    "key": "open-hands",
+    "ok": true,
+    "bytes": 9815
+  },
+  {
+    "key": "handshake",
+    "ok": true,
+    "bytes": 10335
+  },
+  {
+    "key": "love-you",
+    "ok": true,
+    "bytes": 4951
+  },
+  {
+    "key": "cross-fingers",
+    "ok": true,
+    "bytes": 4813
+  },
+  {
+    "key": "pinch",
+    "ok": true,
+    "bytes": 6629
+  },
+  {
+    "key": "pinched",
+    "ok": true,
+    "bytes": 5648
+  },
+  {
+    "key": "point-up",
+    "ok": true,
+    "bytes": 4177
+  },
+  {
+    "key": "point-left",
+    "ok": true,
+    "bytes": 4198
+  },
+  {
+    "key": "point-right",
+    "ok": true,
+    "bytes": 4188
+  },
+  {
+    "key": "point-down",
+    "ok": true,
+    "bytes": 4213
+  },
+  {
+    "key": "high-five",
+    "ok": true,
+    "bytes": 4808
+  },
+  {
+    "key": "cat-smile",
+    "ok": true,
+    "bytes": 4139
+  },
+  {
+    "key": "cat-smug",
+    "ok": true,
+    "bytes": 3843
+  },
+  {
+    "key": "cat-joy",
+    "ok": true,
+    "bytes": 58874
+  },
+  {
+    "key": "rock",
+    "ok": true,
+    "bytes": 4878
+  },
+  {
+    "key": "cat-kiss",
+    "ok": true,
+    "bytes": 4754
+  },
+  {
+    "key": "cat-grin",
+    "ok": true,
+    "bytes": 55135
+  },
+  {
+    "key": "cat-scream",
+    "ok": true,
+    "bytes": 6132
+  },
+  {
+    "key": "cat-love",
+    "ok": true,
+    "bytes": 54709
+  },
+  {
+    "key": "cat-pout",
+    "ok": true,
+    "bytes": 4507
+  },
+  {
+    "key": "cat",
+    "ok": true,
+    "bytes": 3625
+  },
+  {
+    "key": "cat-body",
+    "ok": true,
+    "bytes": 5269
+  },
+  {
+    "key": "dog-body",
+    "ok": true,
+    "bytes": 4707
+  },
+  {
+    "key": "paw",
+    "ok": true,
+    "bytes": 1434
+  },
+  {
+    "key": "dog",
+    "ok": true,
+    "bytes": 56726
+  },
+  {
+    "key": "cat-cry",
+    "ok": true,
+    "bytes": 4636
+  },
+  {
+    "key": "bone",
+    "ok": true,
+    "bytes": 3036
+  },
+  {
+    "key": "fish",
+    "ok": true,
+    "bytes": 3487
+  },
+  {
+    "key": "orange-heart",
+    "ok": true,
+    "bytes": 1584
+  },
+  {
+    "key": "heart",
+    "ok": true,
+    "bytes": 1598
+  },
+  {
+    "key": "pink-heart",
+    "ok": true,
+    "bytes": 1508
+  },
+  {
+    "key": "blue-heart",
+    "ok": true,
+    "bytes": 1632
+  },
+  {
+    "key": "yellow-heart",
+    "ok": true,
+    "bytes": 1584
+  },
+  {
+    "key": "green-heart",
+    "ok": true,
+    "bytes": 1584
+  },
+  {
+    "key": "purple-heart",
+    "ok": true,
+    "bytes": 1584
+  },
+  {
+    "key": "two-hearts",
+    "ok": true,
+    "bytes": 2884
+  },
+  {
+    "key": "beating-heart",
+    "ok": true,
+    "bytes": 3973
+  },
+  {
+    "key": "sparkle-heart",
+    "ok": true,
+    "bytes": 3383
+  },
+  {
+    "key": "growing-heart",
+    "ok": true,
+    "bytes": 4668
+  },
+  {
+    "key": "cupid",
+    "ok": true,
+    "bytes": 4035
+  },
+  {
+    "key": "gift-heart",
+    "ok": true,
+    "bytes": 4797
+  },
+  {
+    "key": "broken-heart",
+    "ok": true,
+    "bytes": 2255
+  },
+  {
+    "key": "love-letter",
+    "ok": true,
+    "bytes": 1858
+  },
+  {
+    "key": "moon",
+    "ok": true,
+    "bytes": 1127
+  },
+  {
+    "key": "kiss-mark",
+    "ok": true,
+    "bytes": 1379
+  },
+  {
+    "key": "star",
+    "ok": true,
+    "bytes": 1257
+  },
+  {
+    "key": "sun",
+    "ok": true,
+    "bytes": 2548
+  },
+  {
+    "key": "sparkles",
+    "ok": true,
+    "bytes": 2637
+  },
+  {
+    "key": "flower",
+    "ok": true,
+    "bytes": 3734
+  },
+  {
+    "key": "rose",
+    "ok": true,
+    "bytes": 3566
+  },
+  {
+    "key": "leaf",
+    "ok": true,
+    "bytes": 3069
+  },
+  {
+    "key": "clover",
+    "ok": true,
+    "bytes": 4545
+  },
+  {
+    "key": "coffee",
+    "ok": true,
+    "bytes": 3662
+  },
+  {
+    "key": "cake",
+    "ok": true,
+    "bytes": 8435
+  },
+  {
+    "key": "watermelon",
+    "ok": true,
+    "bytes": 3030
+  },
+  {
+    "key": "milk",
+    "ok": true,
+    "bytes": 3049
+  },
+  {
+    "key": "rice",
+    "ok": true,
+    "bytes": 2933
+  },
+  {
+    "key": "cookie",
+    "ok": true,
+    "bytes": 7700
+  },
+  {
+    "key": "popper",
+    "ok": true,
+    "bytes": 5734
+  },
+  {
+    "key": "balloon",
+    "ok": true,
+    "bytes": 1364
+  },
+  {
+    "key": "gift",
+    "ok": true,
+    "bytes": 4005
+  },
+  {
+    "key": "hundred",
+    "ok": true,
+    "bytes": 2419
+  },
+  {
+    "key": "light-bulb",
+    "ok": true,
+    "bytes": 4621
+  },
+  {
+    "key": "fire",
+    "ok": true,
+    "bytes": 2502
+  },
+  {
+    "key": "camera",
+    "ok": true,
+    "bytes": 4331
+  },
+  {
+    "key": "music",
+    "ok": true,
+    "bytes": 786
+  },
+  {
+    "key": "speech",
+    "ok": true,
+    "bytes": 874
+  },
+  {
+    "key": "sleepy-dots",
+    "ok": true,
+    "bytes": 1683
+  }
+]

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -14,8 +15,12 @@ import (
 	"time"
 
 	"kitty-circle/internal/domain"
+	"kitty-circle/internal/identity"
+	"kitty-circle/internal/mobile"
 	"kitty-circle/internal/platform/audit"
 	"kitty-circle/internal/platform/auth"
+	"kitty-circle/internal/platform/mobileapi"
+	"kitty-circle/internal/platform/mobileauth"
 	"kitty-circle/internal/platform/payment"
 	"kitty-circle/internal/platform/phoneotp"
 	"kitty-circle/internal/store"
@@ -39,84 +44,553 @@ const (
 const maxRequestBody = 1 << 20 // 1 MiB
 
 type Router struct {
-	store       store.Store
-	storeKind   string
-	mux         *http.ServeMux
-	adminKey    string
-	tokens      *auth.TokenService
-	payments    *payment.Router
-	filter      *audit.Filter
-	loginLimit  *auth.LoginLimiter
-	phoneOTP    *phoneotp.Store
-	allowOrigin string
+	identity          *identity.Service
+	mobileAPI         *mobileapi.Handler
+	legacyDevelopment bool
+	store             store.Store
+	storeKind         string
+	mux               *http.ServeMux
+	adminKey          string
+	tokens            *auth.TokenService
+	payments          *payment.Router
+	filter            *audit.Filter
+	loginLimit        *auth.LoginLimiter
+	phoneOTP          *phoneotp.Store
+	allowOrigin       string
 }
 
 func NewRouter() http.Handler {
-	secret := getEnv("JWT_SECRET", "change-me-in-production")
-	st, kind := buildStore()
-	ensureDefaultUser(st)
-	r := &Router{
-		store:       st,
-		storeKind:   kind,
-		mux:         http.NewServeMux(),
-		adminKey:    getEnv("ADMIN_KEY", "admin123"),
-		tokens:      auth.NewTokenService(secret, 72*time.Hour),
-		payments:    buildPaymentRouter(),
-		filter:      audit.NewFilter(audit.DefaultKeywords()),
-		loginLimit:  auth.NewLoginLimiter(5, 10*time.Minute, 10*time.Minute),
-		phoneOTP:    phoneotp.NewStore(10 * time.Minute),
-		allowOrigin: getEnv("CORS_ALLOW_ORIGIN", "*"),
+	r, err := NewRouterWithError()
+	if err != nil {
+		panic(err)
 	}
-	r.routes()
 	return r
 }
 
-func ensureDefaultUser(st store.Store) {
-	if _, exists := st.FindUserByUsername(defaultSeedUsername); exists {
-		return
+func NewRouterWithError() (*Router, error) {
+	development := os.Getenv("APP_ENV") == "development"
+	secret := os.Getenv("JWT_SECRET")
+	if development && secret == "" {
+		secret = "development-only-not-for-production"
 	}
+	if len(secret) < 32 || secret == "change-me-in-production" {
+		return nil, fmt.Errorf("JWT_SECRET must contain at least 32 bytes")
+	}
+	adminKey := os.Getenv("ADMIN_KEY")
+	if !development && len(adminKey) < 32 {
+		return nil, fmt.Errorf("ADMIN_KEY must contain at least 32 bytes")
+	}
+	st, kind, err := buildStore()
+	if err != nil {
+		return nil, err
+	}
+	if development && os.Getenv("MND_SEED_DEMO") == "1" {
+		ensureDefaultUser(st)
+	}
+	identityService := mobileauth.FromEnvironment(st.MobileRepository(), secret)
+	r := &Router{
+		identity:          identityService,
+		legacyDevelopment: development && os.Getenv("MND_ENABLE_LEGACY_AUTH") == "1",
+		store:             st,
+		storeKind:         kind,
+		mux:               http.NewServeMux(),
+		adminKey:          adminKey,
+		tokens:            auth.NewTokenService(secret, 72*time.Hour),
+		payments:          buildPaymentRouter(),
+		filter:            audit.NewFilter(audit.DefaultKeywords()),
+		loginLimit:        auth.NewLoginLimiter(5, 10*time.Minute, 10*time.Minute),
+		phoneOTP:          phoneotp.NewStore(10 * time.Minute),
+		allowOrigin:       getEnv("CORS_ALLOW_ORIGIN", "*"),
+	}
+	r.mobileAPI = mobileapi.New(mobile.New(st.MobileRepository()), identityService, filepath.Join(getWorkingDir(), "data", "mobile-media"), adminKey)
+	r.mobileAPI.Service.Propagator = os.Getenv("MND_CONTENT_PROPAGATOR")
+	if endpoint, token := os.Getenv("PUSH_GATEWAY_URL"), os.Getenv("PUSH_GATEWAY_TOKEN"); strings.HasPrefix(endpoint, "https://") && token != "" {
+		r.mobileAPI.Service.Push = mobileauth.GatewayPush{Endpoint: endpoint, Token: token}
+	}
+	r.mobileAPI.Operators, err = mobileapi.OperatorsFromEnvironment()
+	if err != nil {
+		return nil, err
+	}
+	r.routes()
+	return r, nil
+}
+
+func ensureDefaultUser(st store.Store) {
+	// 1. Seed Users
+	usersToSeed := []struct {
+		username string
+		nickname string
+		bio      string
+		avatar   string
+	}{
+		{"demo", "Demo User", "Documenting the daily life of two cats.", ""},
+		{"peachlatte", "桃子和拿铁", "两只猫 of the daily life of two cats.", ""},
+		{"puff_bakery", "泡芙小店", "提供猫罐头和零食", ""},
+		{"sunday_walk", "周日散步社", "组织小型宠物活动", ""},
+		{"clean_corner", "干净角落", "二手猫用品整理中", ""},
+	}
+
+	createdUsers := make(map[string]domain.User)
 	hash, salt, err := auth.HashPassword(defaultSeedPassword)
 	if err != nil {
 		log.Printf("seed: failed to hash default user password: %v", err)
 		return
 	}
-	if _, ok := st.CreateUser(domain.User{
-		Username:     defaultSeedUsername,
-		Nickname:     defaultSeedNickname,
-		PasswordHash: hash,
-		PasswordSalt: salt,
-	}); ok {
-		log.Printf("seed: default user ready (username=%s)", defaultSeedUsername)
+
+	for _, u := range usersToSeed {
+		existing, exists := st.FindUserByUsername(u.username)
+		if exists {
+			createdUsers[u.username] = existing
+			continue
+		}
+		created, ok := st.CreateUser(domain.User{
+			Username:     u.username,
+			Nickname:     u.nickname,
+			Bio:          u.bio,
+			AvatarURL:    u.avatar,
+			PasswordHash: hash,
+			PasswordSalt: salt,
+		})
+		if ok {
+			createdUsers[u.username] = created
+			log.Printf("seed: user ready (username=%s)", u.username)
+		}
+	}
+
+	// 2. If it's a fresh database/memory store (e.g. no posts exist), seed posts, comments, listings, and follows
+	if len(st.ListPosts()) == 0 {
+		// Seed Posts
+		postsToSeed := []struct {
+			username string
+			title    string
+			content  string
+			category domain.PostCategory
+			tags     []string
+		}{
+			{"peachlatte", "猫猫第一次学会开门，家里从此没有秘密", "给门把手加了保护套，顺便记录一下这个聪明小脑袋。它先观察了我们两天，然后第三天就开始自己尝试。", domain.CategoryDailyShare, []string{"日常", "聪明猫"}},
+			{"puff_bakery", "猫猫新手村：接猫回家第一周需要准备什么？", "接猫回家前，猫砂盆、航空箱、幼猫粮和水碗必不可少。最重要的是给主子一个安静的角落适应新环境。", domain.CategoryHelp, []string{"新手", "养猫技巧"}},
+			{"sunday_walk", "周末猫猫摄影散步局，doggie 也可以来当气氛组", "小区花园集合，拍照为主，不强社交。胆小猫可以只坐航空箱里观察。", domain.CategoryActivity, []string{"活动", "摄影"}},
+			{"clean_corner", "出一个 9 成新的开放式猫砂盆，适合小户型", "已彻底清洁消毒，同城可自提，附送未拆封猫砂铲。", domain.CategoryTrade, []string{"二手", "猫砂盆"}},
+		}
+
+		createdPosts := make([]domain.Post, 0)
+		postMediaMap := map[string]string{
+			"猫猫第一次学会开门，家里从此没有秘密":        "mock_image_4.png",
+			"猫猫新手村：接猫回家第一周需要准备什么？":      "mock_image_5.png",
+			"周末猫猫摄影散步局，doggie 也可以来当气氛组": "mock_image_6.png",
+			"出一个 9 成新的开放式猫砂盆，适合小户型":     "mock_image_3.png",
+		}
+
+		for _, p := range postsToSeed {
+			user, ok := createdUsers[p.username]
+			if !ok {
+				continue
+			}
+			var mediaIDs []int64
+			if img, exists := postMediaMap[p.title]; exists {
+				med := st.CreateMedia(domain.Media{
+					OwnerID:   user.ID,
+					Kind:      domain.MediaKindImage,
+					MIME:      "image/png",
+					Filename:  img,
+					URL:       "/mock-images/" + img,
+					Status:    domain.MediaStatusApproved,
+					CreatedAt: time.Now().UTC(),
+				})
+				mediaIDs = []int64{med.ID}
+			}
+
+			createdPost := st.CreatePost(domain.Post{
+				AuthorID:  user.ID,
+				Title:     p.title,
+				Content:   p.content,
+				Category:  p.category,
+				Tags:      p.tags,
+				MediaIDs:  mediaIDs,
+				CreatedAt: time.Now().UTC(),
+			})
+			createdPosts = append(createdPosts, createdPost)
+			log.Printf("seed: created post: %s", p.title)
+		}
+
+		// Seed Comments
+		if len(createdPosts) >= 1 {
+			if u, ok := createdUsers["demo"]; ok {
+				st.AddComment(domain.Comment{
+					PostID:    createdPosts[0].ID,
+					AuthorID:  u.ID,
+					Content:   "好聪明的猫猫，我家猫只会开柜门翻零食。",
+					CreatedAt: time.Now().UTC(),
+				})
+			}
+			if u, ok := createdUsers["sunday_walk"]; ok {
+				st.AddComment(domain.Comment{
+					PostID:    createdPosts[0].ID,
+					AuthorID:  u.ID,
+					Content:   "可以给它准备些益智玩具，消耗精力。",
+					CreatedAt: time.Now().UTC(),
+				})
+			}
+		}
+		if len(createdPosts) >= 2 {
+			if u, ok := createdUsers["peachlatte"]; ok {
+				st.AddComment(domain.Comment{
+					PostID:    createdPosts[1].ID,
+					AuthorID:  u.ID,
+					Content:   "支持，当时接我家猫的时候也是手忙脚乱，有这个指南方便多了。",
+					CreatedAt: time.Now().UTC(),
+				})
+			}
+		}
+
+		// Seed Listings
+		listingsToSeed := []struct {
+			username    string
+			title       string
+			description string
+			priceCents  int64
+			listType    domain.ListingType
+			category    string
+		}{
+			{"puff_bakery", "手工皮革狗项圈", "Verified Seller · 可发货，也支持同城自提。", 12800, domain.ListingTypeProduct, "toys"},
+			{"sunday_walk", "陶瓷高脚食碗套装", "给猫猫和 doggie 都友好的稳定食碗。", 6800, domain.ListingTypeProduct, "food"},
+			{"clean_corner", "高级人体工学狗胸背", "轻量透气，适合日常散步和训练。", 4500, domain.ListingTypeProduct, "apparel"},
+		}
+
+		createdListings := make(map[string]domain.Listing)
+		for _, l := range listingsToSeed {
+			user, ok := createdUsers[l.username]
+			if !ok {
+				continue
+			}
+			list := st.CreateListing(domain.Listing{
+				SellerID:    user.ID,
+				Title:       l.title,
+				Description: l.description,
+				PriceCents:  l.priceCents,
+				Currency:    "CNY",
+				Type:        l.listType,
+				Category:    l.category,
+				CreatedAt:   time.Now().UTC(),
+			})
+			createdListings[l.title] = list
+			log.Printf("seed: created listing: %s", l.title)
+		}
+
+		// Seed Follows
+		demoUser, demoOk := createdUsers["demo"]
+		peachlatteUser, peachOk := createdUsers["peachlatte"]
+		puffUser, puffOk := createdUsers["puff_bakery"]
+		sundayUser, sundayOk := createdUsers["sunday_walk"]
+
+		if demoOk && peachOk {
+			st.Follow(demoUser.ID, peachlatteUser.ID)
+			st.Follow(peachlatteUser.ID, demoUser.ID)
+		}
+		if demoOk && puffOk {
+			st.Follow(demoUser.ID, puffUser.ID)
+			st.Follow(puffUser.ID, demoUser.ID)
+		}
+		if demoOk && sundayOk {
+			st.Follow(demoUser.ID, sundayUser.ID)
+		}
+
+		// Seed Orders for demo user (so that the Android app's real orders page isn't empty)
+		if demoOk {
+			// Order 1: Leather collar order (shipped)
+			if puffUserOk, puffOk := createdUsers["puff_bakery"]; puffOk {
+				listing, listingOk := createdListings["手工皮革狗项圈"]
+				if listingOk {
+					paidTime := time.Now().Add(-24 * time.Hour).UTC()
+					st.CreateOrder(domain.Order{
+						BuyerID:      demoUser.ID,
+						SellerID:     puffUserOk.ID,
+						ListingID:    listing.ID,
+						ListingTitle: listing.Title,
+						AmountCents:  listing.PriceCents,
+						Currency:     "CNY",
+						Status:       domain.OrderStatusShipped,
+						CreatedAt:    time.Now().Add(-48 * time.Hour).UTC(),
+						UpdatedAt:    time.Now().Add(-24 * time.Hour).UTC(),
+						PaidAt:       &paidTime,
+						ShippedAt:    &paidTime,
+					})
+				}
+			}
+			// Order 2: Ceramic bowl set (paid)
+			if sundayUserOk, sundayOk := createdUsers["sunday_walk"]; sundayOk {
+				listing, listingOk := createdListings["陶瓷高脚食碗套装"]
+				if listingOk {
+					paidTime := time.Now().Add(-4 * 24 * time.Hour).UTC()
+					st.CreateOrder(domain.Order{
+						BuyerID:      demoUser.ID,
+						SellerID:     sundayUserOk.ID,
+						ListingID:    listing.ID,
+						ListingTitle: listing.Title,
+						AmountCents:  listing.PriceCents,
+						Currency:     "CNY",
+						Status:       domain.OrderStatusPaid,
+						CreatedAt:    time.Now().Add(-5 * 24 * time.Hour).UTC(),
+						UpdatedAt:    time.Now().Add(-4 * 24 * time.Hour).UTC(),
+						PaidAt:       &paidTime,
+					})
+				}
+			}
+			// Order 3: Ergonomic dog harness (paid)
+			if cleanUserOk, cleanOk := createdUsers["clean_corner"]; cleanOk {
+				listing, listingOk := createdListings["高级人体工学狗胸背"]
+				if listingOk {
+					paidTime := time.Now().Add(-2 * 24 * time.Hour).UTC()
+					st.CreateOrder(domain.Order{
+						BuyerID:      demoUser.ID,
+						SellerID:     cleanUserOk.ID,
+						ListingID:    listing.ID,
+						ListingTitle: listing.Title,
+						AmountCents:  listing.PriceCents,
+						Currency:     "CNY",
+						Status:       domain.OrderStatusPaid,
+						CreatedAt:    time.Now().Add(-3 * 24 * time.Hour).UTC(),
+						UpdatedAt:    time.Now().Add(-2 * 24 * time.Hour).UTC(),
+						PaidAt:       &paidTime,
+					})
+				}
+			}
+
+			if puffOk {
+				st.CreateMessage(domain.Message{
+					SenderID:    demoUser.ID,
+					RecipientID: puffUser.ID,
+					Content:     "你好！我刚付了订单 #4829，已经开始期待新的喂食角落了。",
+					Read:        true,
+				})
+				st.CreateMessage(domain.Message{
+					SenderID:    puffUser.ID,
+					RecipientID: demoUser.ID,
+					Content:     "谢谢下单，我们已经收到付款。",
+					Read:        false,
+				})
+				st.CreateMessage(domain.Message{
+					SenderID:    puffUser.ID,
+					RecipientID: demoUser.ID,
+					Content:     "我会安全打包，明天上午发出。",
+					Read:        false,
+				})
+			}
+		}
+	}
+
+	ensureDefaultListings(st, createdUsers)
+	ensureDefaultAdoption(st, createdUsers)
+}
+
+func ensureDefaultListings(st store.Store, users map[string]domain.User) {
+	if len(st.ListListings()) > 0 {
+		return
+	}
+
+	type listingSeed struct {
+		username    string
+		title       string
+		description string
+		priceCents  int64
+		listType    domain.ListingType
+		category    string
+	}
+
+	seeds := []listingSeed{
+		{
+			username:    "puff_bakery",
+			title:       "未拆封猫罐头 6 罐组合",
+			description: "猫猫优先，适合换粮过渡；同城可自提。",
+			priceCents:  6800,
+			listType:    domain.ListingTypeProduct,
+			category:    "product",
+		},
+		{
+			username:    "sunday_walk",
+			title:       "周末上门喂猫与铲砂",
+			description: "有基础照护记录，可同时帮 doggie 换水。",
+			priceCents:  12000,
+			listType:    domain.ListingTypeService,
+			category:    "service",
+		},
+		{
+			username:    "clean_corner",
+			title:       "清洗后的航空箱可自提",
+			description: "适合短途看诊或搬家周转，同城自提，已消毒。",
+			priceCents:  0,
+			listType:    domain.ListingType("free"),
+			category:    "free",
+		},
+		{
+			username:    "sunday_walk",
+			title:       "同城交换轻量牵引绳",
+			description: "希望交换猫抓板或未拆封猫砂，线下当面确认。",
+			priceCents:  0,
+			listType:    domain.ListingType("trade"),
+			category:    "trade",
+		},
+	}
+
+	for _, seed := range seeds {
+		user, ok := users[seed.username]
+		if !ok {
+			continue
+		}
+		st.CreateListing(domain.Listing{
+			SellerID:    user.ID,
+			Type:        seed.listType,
+			Category:    seed.category,
+			Title:       seed.title,
+			Description: seed.description,
+			PriceCents:  seed.priceCents,
+			Currency:    "CNY",
+			CreatedAt:   time.Now().UTC(),
+		})
+		log.Printf("seed: created default listing: %s", seed.title)
+	}
+}
+
+func ensureDefaultAdoption(st store.Store, users map[string]domain.User) {
+	if len(st.ListAdoptionPets()) > 0 {
+		return
+	}
+
+	type adoptionSeed struct {
+		username    string
+		name        string
+		species     string
+		breed       string
+		age         string
+		city        string
+		health      string
+		description string
+		status      string
+		image       string
+	}
+
+	seeds := []adoptionSeed{
+		{
+			username:    "sunday_walk",
+			name:        "Orange",
+			species:     "cat",
+			breed:       "orange tabby",
+			age:         "3 months",
+			city:        "Shanghai",
+			health:      "Dewormed, vaccinated, pending neuter",
+			description: "A gentle kitten rescued near a garden path. Best for a patient indoor family.",
+			status:      "available",
+			image:       "mock_image_4.png",
+		},
+		{
+			username:    "peachlatte",
+			name:        "Doubao",
+			species:     "doggie",
+			breed:       "small mixed breed",
+			age:         "1 year",
+			city:        "Hangzhou",
+			health:      "Vaccinated, neutered",
+			description: "Friendly with cats and calm around people. Needs regular walks and a stable routine.",
+			status:      "available",
+			image:       "mock_image_6.png",
+		},
+		{
+			username:    "puff_bakery",
+			name:        "Snowball",
+			species:     "cat",
+			breed:       "British shorthair mix",
+			age:         "2 years",
+			city:        "Beijing",
+			health:      "Checked, mild rhinitis under observation",
+			description: "Quiet adult cat, clean habits, prefers a low-noise home with window perches.",
+			status:      "available",
+			image:       "mock_image_5.png",
+		},
+	}
+
+	var firstPet *domain.AdoptionPet
+	for _, seed := range seeds {
+		rescuer, ok := users[seed.username]
+		if !ok {
+			continue
+		}
+		media := st.CreateMedia(domain.Media{
+			OwnerID:   rescuer.ID,
+			Kind:      domain.MediaKindImage,
+			MIME:      "image/png",
+			Filename:  seed.image,
+			URL:       "/mock-images/" + seed.image,
+			Status:    domain.MediaStatusApproved,
+			CreatedAt: time.Now().UTC(),
+		})
+		pet := st.CreateAdoptionPet(domain.AdoptionPet{
+			RescuerID:   rescuer.ID,
+			Name:        seed.name,
+			Species:     seed.species,
+			Breed:       seed.breed,
+			Age:         seed.age,
+			City:        seed.city,
+			Health:      seed.health,
+			Description: seed.description,
+			MediaIDs:    []int64{media.ID},
+			Status:      seed.status,
+			CreatedAt:   time.Now().UTC(),
+		})
+		log.Printf("seed: created adoption pet: %s", pet.Name)
+		if firstPet == nil {
+			copy := pet
+			firstPet = &copy
+		}
+	}
+
+	demoUser, demoOK := users["demo"]
+	if demoOK && firstPet != nil && firstPet.RescuerID != demoUser.ID {
+		if len(st.ListAdoptionApplicationsByApplicant(demoUser.ID)) == 0 {
+			st.CreateAdoptionApplication(domain.AdoptionApplication{
+				PetID:       firstPet.ID,
+				ApplicantID: demoUser.ID,
+				RescuerID:   firstPet.RescuerID,
+				Status:      domain.ApplicationStatusReviewing,
+				Message:     "I can provide an indoor home, daily updates, and a patient adjustment period.",
+				ContactInfo: "demo@example.com",
+			})
+		}
 	}
 }
 
 // buildStore wires a persistence backend based on environment variables:
 //   - DATABASE_URL set        → PostgreSQL (pgx pool)
 //   - REDIS_URL set in addition → Postgres wrapped by a Redis read-through cache
-//   - Neither set             → In-memory store (default, no external deps)
+//   - Neither set + explicit development → In-memory store
 //
 // The returned kind is one of "memory" / "postgres" / "postgres+redis"
 // and is surfaced via /healthz for operators.
-func buildStore() (store.Store, string) {
+func buildStore() (store.Store, string, error) {
 	dsn := strings.TrimSpace(os.Getenv("DATABASE_URL"))
 	redisURL := strings.TrimSpace(os.Getenv("REDIS_URL"))
 
 	if dsn == "" {
+		if os.Getenv("APP_ENV") != "development" {
+			return nil, "", fmt.Errorf("DATABASE_URL is required outside development")
+		}
 		log.Printf("store: using in-memory backend (set DATABASE_URL to enable PostgreSQL)")
-		return store.NewMemoryStore(), "memory"
+		return store.NewMemoryStore(), "memory", nil
 	}
 
 	pgCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	pg, err := postgres.New(pgCtx, dsn)
 	if err != nil {
-		log.Printf("store: postgres unavailable (%v), falling back to in-memory", err)
-		return store.NewMemoryStore(), "memory"
+		return nil, "", fmt.Errorf("configured PostgreSQL unavailable")
+	}
+	if err = pg.CheckMobileSchema(pgCtx); err != nil {
+		pg.Close()
+		return nil, "", err
 	}
 	log.Printf("store: connected to PostgreSQL")
 
 	if redisURL == "" {
-		return pg, "postgres"
+		return pg, "postgres", nil
 	}
 
 	rCtx, rCancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -124,35 +598,19 @@ func buildStore() (store.Store, string) {
 	cached, err := cache.New(rCtx, redisURL, pg)
 	if err != nil {
 		log.Printf("store: redis unavailable (%v), serving direct Postgres", err)
-		return pg, "postgres"
+		return pg, "postgres", nil
 	}
 	log.Printf("store: Redis read-through cache enabled")
-	return cached, "postgres+redis"
+	return cached, "postgres+redis", nil
 }
 
-// buildPaymentRouter wires the Mock provider by default, and opportunistically
-// registers Alipay / WeChat / Stripe when their credentials are supplied via
-// environment variables. This lets operators flip on real channels without
-// code changes.
+// buildPaymentRouter registers only an explicitly enabled development mock.
+// Existing real-channel structs are placeholders and must not receive funds.
 func buildPaymentRouter() *payment.Router {
-	providers := []payment.Provider{payment.MockProvider{}}
-	if appID := os.Getenv("ALIPAY_APP_ID"); appID != "" {
-		providers = append(providers, payment.AlipayProvider{
-			AppID:      appID,
-			PrivateKey: os.Getenv("ALIPAY_PRIVATE_KEY"),
-			Gateway:    getEnv("ALIPAY_GATEWAY", "https://openapi.alipay.com/gateway.do"),
-		})
+	if os.Getenv("APP_ENV") == "development" && os.Getenv("MND_ENABLE_MOCK_PAYMENT") == "1" {
+		return payment.NewRouter(payment.MockProvider{})
 	}
-	if mch := os.Getenv("WECHAT_MCH_ID"); mch != "" {
-		providers = append(providers, payment.WechatPayProvider{
-			MerchantID: mch,
-			APIKey:     os.Getenv("WECHAT_API_KEY"),
-		})
-	}
-	if sk := os.Getenv("STRIPE_SECRET_KEY"); sk != "" {
-		providers = append(providers, payment.StripeProvider{SecretKey: sk})
-	}
-	return payment.NewRouter(providers...)
+	return payment.NewRouter()
 }
 
 func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
@@ -162,9 +620,13 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 		return
 	}
+	if strings.HasPrefix(req.URL.Path, "/api/v1/") && !r.legacyDevelopment && req.Method != http.MethodGet && req.Method != http.MethodHead {
+		writeError(w, http.StatusGone, "legacy mutation disabled; use the mobile /api/v2 contracts")
+		return
+	}
 	// Cap JSON body size for every endpoint except media upload which
 	// runs its own multipart size check.
-	if !strings.HasPrefix(req.URL.Path, "/api/v1/media") && req.Body != nil {
+	if !(req.URL.Path == "/api/v1/media" || req.URL.Path == "/api/v2/media") && req.Body != nil {
 		req.Body = http.MaxBytesReader(w, req.Body, maxRequestBody)
 	}
 	lw := &loggingResponseWriter{ResponseWriter: w, status: http.StatusOK}
@@ -199,6 +661,7 @@ func (l *loggingResponseWriter) Write(b []byte) (int, error) {
 }
 
 func (r *Router) routes() {
+	r.mux.Handle("/api/v2/", r.mobileAPI)
 	webDir := filepath.Join(getWorkingDir(), "web")
 	uploadsDir := filepath.Join(getWorkingDir(), "data", "uploads")
 	r.mux.Handle("/", http.FileServer(http.Dir(webDir)))
@@ -229,9 +692,13 @@ func (r *Router) routes() {
 			"time":   time.Now().UTC().Format(time.RFC3339),
 		})
 	})
-	r.mux.HandleFunc("/readyz", func(w http.ResponseWriter, _ *http.Request) {
-		// Liveness + lightweight readiness: does the store respond?
-		r.store.CountUsers()
+	r.mux.HandleFunc("/readyz", func(w http.ResponseWriter, req *http.Request) {
+		ctx, cancel := context.WithTimeout(req.Context(), 3*time.Second)
+		defer cancel()
+		if err := r.store.MobileRepository().View(ctx, func(tx mobile.Tx) error { _, err := tx.List(mobile.Accounts, mobile.Filter{Limit: 1}); return err }); err != nil {
+			writeError(w, http.StatusServiceUnavailable, "storage unavailable")
+			return
+		}
 		writeOK(w, map[string]any{"status": "ready", "store": r.storeKind})
 	})
 
@@ -240,7 +707,14 @@ func (r *Router) routes() {
 	r.mux.HandleFunc("/api/v1/auth/login", r.handleLogin)
 	r.mux.HandleFunc("/api/v1/auth/me", r.requireAuth(r.handleMe))
 	r.mux.HandleFunc("/api/v1/me", r.requireAuth(r.handleUpdateMe))
-	r.mux.HandleFunc("/api/v1/users/", r.handleUserPublic)
+	r.mux.HandleFunc("/api/v1/users/", func(w http.ResponseWriter, req *http.Request) {
+		path := req.URL.Path
+		if strings.HasSuffix(path, "/pets") {
+			r.handleUserPets(w, req)
+		} else {
+			r.handleUserPublic(w, req)
+		}
+	})
 
 	r.mux.HandleFunc("/api/v1/search", r.handleSearch)
 
@@ -271,6 +745,11 @@ func (r *Router) routes() {
 	r.mux.HandleFunc("/api/v1/me/follow/", r.requireAuth(r.handleMeFollow))
 	r.mux.HandleFunc("/api/v1/me/listings", r.requireAuth(r.handleMyListings))
 	r.mux.HandleFunc("/api/v1/me/orders", r.requireAuth(r.handleMyOrders))
+	r.mux.HandleFunc("/api/v1/me/adoption/applications", r.requireAuth(r.handleMyAdoptionApplications))
+
+	r.mux.HandleFunc("/api/v1/adoption/pets", r.handleAdoptionPets)
+	r.mux.HandleFunc("/api/v1/adoption/pets/", r.handleAdoptionPetChild)
+	r.mux.HandleFunc("/api/v1/adoption/applications", r.requireAuth(r.handleAdoptionApplications))
 
 	r.mux.HandleFunc("/api/v1/admin/summary", r.handleAdminSummary)
 	r.mux.HandleFunc("/api/v1/admin/posts", r.handleAdminPosts)
@@ -754,6 +1233,22 @@ func (r *Router) handleListings(w http.ResponseWriter, req *http.Request) {
 	case http.MethodGet:
 		page, size := parsePagination(req)
 		all := r.store.ListListings()
+		query := req.URL.Query()
+		typeFilter := strings.ToLower(strings.TrimSpace(query.Get("type")))
+		categoryFilter := strings.ToLower(strings.TrimSpace(query.Get("category")))
+		if typeFilter != "" && typeFilter != "all" || categoryFilter != "" && categoryFilter != "all" {
+			filtered := make([]domain.Listing, 0, len(all))
+			for _, listing := range all {
+				if typeFilter != "" && typeFilter != "all" && strings.ToLower(string(listing.Type)) != typeFilter {
+					continue
+				}
+				if categoryFilter != "" && categoryFilter != "all" && strings.ToLower(listing.Category) != categoryFilter {
+					continue
+				}
+				filtered = append(filtered, listing)
+			}
+			all = filtered
+		}
 		items, total := paginateListings(all, page, size)
 		writeOK(w, map[string]any{
 			"items":     items,
@@ -769,6 +1264,7 @@ func (r *Router) handleListings(w http.ResponseWriter, req *http.Request) {
 		}
 		var payload struct {
 			Type        domain.ListingType `json:"type"`
+			Category    string             `json:"category"`
 			Title       string             `json:"title"`
 			Description string             `json:"description"`
 			PriceCents  int64              `json:"price_cents"`
@@ -798,6 +1294,7 @@ func (r *Router) handleListings(w http.ResponseWriter, req *http.Request) {
 		listing := r.store.CreateListing(domain.Listing{
 			SellerID:    claims.UserID,
 			Type:        payload.Type,
+			Category:    strings.TrimSpace(payload.Category),
 			Title:       strings.TrimSpace(payload.Title),
 			Description: strings.TrimSpace(payload.Description),
 			PriceCents:  payload.PriceCents,
@@ -1062,14 +1559,16 @@ func (r *Router) requireAuth(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 		token := strings.TrimSpace(strings.TrimPrefix(header, "Bearer "))
-		claims, err := r.tokens.Parse(token)
+		user, err := r.identity.Authenticate(req.Context(), token)
+		claims := auth.Claims{UserID: user.ID, Username: user.Username}
+		if err != nil && r.legacyDevelopment {
+			claims, err = r.tokens.Parse(token)
+			if err == nil {
+				user, err = r.identity.LegacyUser(req.Context(), claims.UserID, time.Unix(claims.IssuedAt, 0))
+			}
+		}
 		if err != nil {
 			writeError(w, http.StatusUnauthorized, "invalid or expired token")
-			return
-		}
-		user, ok := r.store.GetUser(claims.UserID)
-		if !ok {
-			writeError(w, http.StatusUnauthorized, "user no longer exists")
 			return
 		}
 
@@ -1097,17 +1596,26 @@ func (r *Router) parseAuth(req *http.Request) (auth.Claims, bool) {
 		return auth.Claims{}, false
 	}
 	token := strings.TrimSpace(strings.TrimPrefix(header, "Bearer "))
-	claims, err := r.tokens.Parse(token)
-	if err != nil {
-		return auth.Claims{}, false
+	u, err := r.identity.Authenticate(req.Context(), token)
+	if err == nil {
+		return auth.Claims{UserID: u.ID, Username: u.Username}, true
 	}
-	return claims, true
+	if r.legacyDevelopment {
+		claims, e := r.tokens.Parse(token)
+		if e == nil {
+			_, e = r.identity.LegacyUser(req.Context(), claims.UserID, time.Unix(claims.IssuedAt, 0))
+			if e == nil {
+				return claims, true
+			}
+		}
+	}
+	return auth.Claims{}, false
 }
 
 // ===== Helpers =====
 
 func (r *Router) checkAdmin(w http.ResponseWriter, req *http.Request) bool {
-	if req.Header.Get("X-Admin-Key") == r.adminKey {
+	if r.adminKey != "" && req.Header.Get("X-Admin-Key") == r.adminKey {
 		return true
 	}
 	writeError(w, http.StatusUnauthorized, "unauthorized")
@@ -1220,7 +1728,7 @@ type envelope struct {
 }
 
 func writeJSON(w http.ResponseWriter, status int, value any) {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(value)
 }
@@ -1244,7 +1752,8 @@ func (r *Router) setCORSHeaders(w http.ResponseWriter) {
 	}
 	w.Header().Set("Access-Control-Allow-Origin", origin)
 	w.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Admin-Key")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Admin-Key,Idempotency-Key,X-Safety-Token,X-Request-Access")
+	w.Header().Set("Access-Control-Expose-Headers", "X-Request-ID,Retry-After")
 	if origin != "*" {
 		w.Header().Set("Vary", "Origin")
 	}

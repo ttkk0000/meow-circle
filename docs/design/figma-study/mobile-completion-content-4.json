@@ -1,0 +1,714 @@
+[
+  {
+    "id": "followup",
+    "title": "记录照护更新",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "领养后第 3 天",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "field",
+        "label": "饮食与精神",
+        "value": "食欲正常，开始主动玩逗猫棒。"
+      },
+      {
+        "type": "upload",
+        "label": "添加近况照片",
+        "hint": "仅本次授权照护成员可见",
+        "to": "mediaChoose",
+        "sets": {
+          "mediaReturn": 5
+        }
+      },
+      {
+        "type": "note",
+        "title": "私密更新",
+        "body": "此处不会自动发布到社区或宠友圈。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "需要帮助",
+        "value": "照护、健康或接回协商",
+        "to": "adoptionSupport"
+      }
+    ],
+    "footer": {
+      "label": "发送私密更新",
+      "to": "followupSaved"
+    },
+    "module": 3
+  },
+  {
+    "id": "followupSaved",
+    "title": "照护更新已发送",
+    "items": [
+      {
+        "type": "note",
+        "title": "仅授权成员可见",
+        "body": "送养人和已接受邀请的照护者可以查看本条更新。",
+        "tone": "subtle"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "进度",
+            "第 3 / 30 天"
+          ],
+          [
+            "公开社区",
+            "未发布"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "想公开分享",
+        "value": "另行检查内容与受众",
+        "to": "circleCompose"
+      }
+    ],
+    "footer": {
+      "label": "返回照护进度",
+      "to": "trialActive"
+    },
+    "module": 3
+  },
+  {
+    "id": "adoptionSupport",
+    "title": "照护与接回协助",
+    "items": [
+      {
+        "type": "field",
+        "label": "需要哪类支持",
+        "value": "健康与适应 / 退养协商"
+      },
+      {
+        "type": "field",
+        "label": "情况说明",
+        "value": "已联系双方，希望协商安全的后续照护。"
+      },
+      {
+        "type": "note",
+        "title": "保持私密沟通",
+        "body": "先说明宠物当前状态；紧急健康情况请及时联系当地动物医疗机构。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "发送协助请求",
+      "to": "adoptionSupportPending"
+    },
+    "module": 3
+  },
+  {
+    "id": "adoptionSupportPending",
+    "title": "协助请求已发送",
+    "items": [
+      {
+        "type": "text",
+        "text": "协助请求已发送",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "双方会在原申请内继续沟通。现有照护责任与记录保持，接回需双方确认。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到原申请",
+      "to": "application"
+    },
+    "module": 3
+  },
+  {
+    "id": "groupAdmin",
+    "title": "管理宠友群",
+    "items": [
+      {
+        "type": "row",
+        "label": "成员管理",
+        "value": "16 位成员",
+        "to": "groupMemberManage"
+      },
+      {
+        "type": "row",
+        "label": "转让群主",
+        "value": "由接收人确认后生效",
+        "to": "groupTransferChoose"
+      },
+      {
+        "type": "row",
+        "label": "解散群聊",
+        "value": "所有成员将无法继续发言",
+        "to": "groupDissolveConfirm"
+      }
+    ],
+    "footer": {
+      "label": "返回群聊",
+      "to": "groupChat"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupTransferChoose",
+    "title": "选择新群主",
+    "items": [
+      {
+        "type": "note",
+        "title": "转让由接收人确认",
+        "body": "发起后你仍是群主，接收前可撤回。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "奶糖的朋友",
+        "value": "活跃成员",
+        "to": "groupTransferConfirm"
+      },
+      {
+        "type": "row",
+        "label": "豆豆的朋友",
+        "value": "活跃成员",
+        "to": "groupTransferConfirm"
+      }
+    ],
+    "footer": null,
+    "module": 5
+  },
+  {
+    "id": "groupTransferConfirm",
+    "title": "确认转让群主",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "接收人",
+            "奶糖的朋友"
+          ],
+          [
+            "交接权限",
+            "成员管理、群资料与解散权限"
+          ],
+          [
+            "你的角色",
+            "接收成功后变为普通成员"
+          ]
+        ]
+      },
+      {
+        "type": "consent",
+        "key": "transferAgree",
+        "text": "我理解群主转让后的权限变化。"
+      },
+      {
+        "type": "action",
+        "label": "重新选择",
+        "to": "groupTransferChoose",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "发送转让邀请",
+      "to": "groupTransferPending",
+      "require": "transferAgree"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupTransferPending",
+    "title": "等待接收群主",
+    "items": [
+      {
+        "type": "note",
+        "title": "邀请已发送",
+        "body": "奶糖的朋友接受前，你继续保有群主权限。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "撤回转让",
+        "value": "结束这次邀请",
+        "to": "groupTransferRevoked"
+      }
+    ],
+    "footer": {
+      "label": "返回群管理",
+      "to": "groupAdmin"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupTransferReceived",
+    "title": "接收群主邀请",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "群聊",
+            "武汉猫咪散步团"
+          ],
+          [
+            "邀请人",
+            "布丁的铲屎官"
+          ],
+          [
+            "接收后",
+            "你将成为群主"
+          ]
+        ]
+      },
+      {
+        "type": "action",
+        "label": "暂不接受",
+        "to": "groupTransferDeclined",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "接受并成为群主",
+      "to": "groupTransferDone"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupTransferDone",
+    "title": "群主已转让",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "新群主",
+            "奶糖的朋友"
+          ],
+          [
+            "原群主",
+            "普通成员"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "权限已更新",
+        "body": "原群主可以继续聊天，但不能再管理或解散群聊。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回群聊",
+      "to": "groupChat"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupTransferDeclined",
+    "title": "转让未被接受",
+    "items": [
+      {
+        "type": "text",
+        "text": "转让未被接受",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "群主未发生变化，可以重新选择成员。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回群管理",
+      "to": "groupAdmin"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupTransferRevoked",
+    "title": "转让邀请已撤回",
+    "items": [
+      {
+        "type": "text",
+        "text": "转让邀请已撤回",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "旧邀请立即失效，群主未发生变化。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回群管理",
+      "to": "groupAdmin"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupTransferExpired",
+    "title": "转让邀请已失效",
+    "items": [
+      {
+        "type": "text",
+        "text": "转让邀请已失效",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "邀请超过可接收时间或接收人已离群，请重新选择成员。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回群管理",
+      "to": "groupAdmin"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupDissolveConfirm",
+    "title": "确认解散群聊",
+    "items": [
+      {
+        "type": "note",
+        "title": "群聊将停止服务",
+        "body": "所有成员将无法继续发言或邀请成员。历史内容按现有保留规则处理。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "保留群聊",
+        "to": "groupAdmin",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认解散群聊",
+      "to": "groupDissolved",
+      "kind": "secondary"
+    },
+    "module": 5
+  },
+  {
+    "id": "groupDissolved",
+    "title": "群聊已解散",
+    "items": [
+      {
+        "type": "text",
+        "text": "群聊已解散",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "成员会看到群聊已结束的状态，不能继续发送新消息。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回消息",
+      "to": "messages"
+    },
+    "module": 5
+  },
+  {
+    "id": "adoptionCaretakers",
+    "title": "照护成员",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "照护更新仅授权成员可见",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "row",
+        "label": "奶糖的朋友",
+        "value": "已接受 · 可查看和记录更新",
+        "to": "caretakerRevoke"
+      },
+      {
+        "type": "row",
+        "label": "邀请照护者",
+        "value": "仅限本次领养照护范围",
+        "to": "caretakerInvite"
+      }
+    ],
+    "footer": {
+      "label": "返回照护记录",
+      "to": "followupSaved"
+    },
+    "module": 3
+  },
+  {
+    "id": "caretakerInvite",
+    "title": "邀请照护者",
+    "items": [
+      {
+        "type": "field",
+        "label": "邀请对象",
+        "value": "奶糖的朋友"
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "允许",
+            "查看与记录小满的照护更新"
+          ],
+          [
+            "不允许",
+            "代为确认领养交接、管理账号"
+          ],
+          [
+            "生效",
+            "对方接受后"
+          ]
+        ]
+      }
+    ],
+    "footer": {
+      "label": "发送邀请",
+      "to": "caretakerPending"
+    },
+    "module": 3
+  },
+  {
+    "id": "caretakerPending",
+    "title": "等待照护者接受",
+    "items": [
+      {
+        "type": "note",
+        "title": "邀请已发送",
+        "body": "接受前，对方看不到私密照护更新。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "撤回邀请",
+        "to": "caretakerRevoked",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回照护成员",
+      "to": "adoptionCaretakers"
+    },
+    "module": 3
+  },
+  {
+    "id": "caretakerReceived",
+    "title": "收到照护邀请",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "布丁的铲屎官邀请你协助照护",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "可查看",
+            "本次授权照护更新"
+          ],
+          [
+            "可操作",
+            "记录近况与补充说明"
+          ],
+          [
+            "不可操作",
+            "代替双方确认交接"
+          ]
+        ]
+      },
+      {
+        "type": "action",
+        "label": "暂不接受",
+        "to": "caretakerDeclined",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "接受照护邀请",
+      "to": "caretakerActive"
+    },
+    "module": 3
+  },
+  {
+    "id": "caretakerActive",
+    "title": "已加入照护",
+    "items": [
+      {
+        "type": "text",
+        "text": "已加入照护",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "你可以查看与记录小满的照护近况，授权范围仅限本次照护。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "查看照护更新",
+      "to": "followupSaved"
+    },
+    "module": 3
+  },
+  {
+    "id": "caretakerDeclined",
+    "title": "已婉拒邀请",
+    "items": [
+      {
+        "type": "text",
+        "text": "已婉拒邀请",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "没有开放照护资料，可由邀请人重新发起。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回我的",
+      "to": "mine"
+    },
+    "module": 3
+  },
+  {
+    "id": "caretakerRevoke",
+    "title": "撤销照护授权",
+    "items": [
+      {
+        "type": "note",
+        "title": "确认撤销？",
+        "body": "奶糖的朋友将不能继续查看新的照护更新；已留下的记录仍按原记录处理。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "保留授权",
+        "to": "adoptionCaretakers",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "撤销授权",
+      "to": "caretakerRevoked",
+      "kind": "secondary"
+    },
+    "module": 3
+  },
+  {
+    "id": "caretakerRevoked",
+    "title": "授权已结束",
+    "items": [
+      {
+        "type": "text",
+        "text": "授权已结束",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "旧邀请与查看入口已失效，对方不能继续新增或读取照护资料。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回成员",
+      "to": "adoptionCaretakers"
+    },
+    "module": 3
+  },
+  {
+    "id": "caretakerExpired",
+    "title": "邀请已失效",
+    "items": [
+      {
+        "type": "text",
+        "text": "邀请已失效",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "请向邀请人获取新的邀请，当前页面没有开放照护资料。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回我的",
+      "to": "mine"
+    },
+    "module": 3
+  },
+  {
+    "id": "settings",
+    "title": "设置",
+    "items": [
+      {
+        "type": "row",
+        "label": "账号与登录",
+        "value": "关联、换绑、恢复与退出",
+        "to": "authAccounts"
+      },
+      {
+        "type": "row",
+        "label": "通知偏好",
+        "value": "私信、群聊、申请与附近提醒",
+        "to": "notificationSettings"
+      },
+      {
+        "type": "row",
+        "label": "隐私与可见范围",
+        "value": "个人资料和圈子内容",
+        "to": "privacy"
+      },
+      {
+        "type": "row",
+        "label": "账号数据与注销",
+        "value": "查看影响，再验证身份",
+        "to": "authDeleteImpact"
+      },
+      {
+        "type": "row",
+        "label": "表情与贴纸",
+        "value": "常用、收藏与输入方式",
+        "to": "expressionReview"
+      }
+    ],
+    "footer": {
+      "label": "返回我的",
+      "to": "mine"
+    },
+    "module": 6
+  }
+]

@@ -1,0 +1,879 @@
+{
+  "date": "2026-10-20",
+  "status": "static_figma_checks_passed",
+  "localChecks": {"files":10,"utf8WithoutBom":true,"jsonParsed":4,"recipesParsedWithoutExecuting":4,"localLinksChecked":10,"screenCounts":{"web":18,"desktop":17,"tablet":21},"uniqueRootIds":56,"gitDiffWhitespacePassed":true},
+  "platforms": {
+    "web": {
+      "platform": "web",
+      "roots": [
+        {
+          "key": "web/home",
+          "id": "296:39",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 144,
+          "texts": 42,
+          "instances": 39,
+          "images": 7,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/adopt",
+          "id": "296:40",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 77,
+          "texts": 36,
+          "instances": 20,
+          "images": 6,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/detail",
+          "id": "296:41",
+          "w": 1440,
+          "h": 1100,
+          "nodes": 81,
+          "texts": 35,
+          "instances": 17,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/apply",
+          "id": "296:42",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 58,
+          "texts": 28,
+          "instances": 14,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/login",
+          "id": "296:43",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 57,
+          "texts": 27,
+          "instances": 15,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/otp",
+          "id": "296:44",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 43,
+          "texts": 22,
+          "instances": 10,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/lost",
+          "id": "296:45",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 59,
+          "texts": 29,
+          "instances": 15,
+          "images": 2,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/lostDetail",
+          "id": "296:46",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 57,
+          "texts": 29,
+          "instances": 11,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/messages",
+          "id": "296:47",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 106,
+          "texts": 40,
+          "instances": 15,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/compose",
+          "id": "296:48",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 68,
+          "texts": 32,
+          "instances": 16,
+          "images": 3,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/appointment",
+          "id": "296:49",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 69,
+          "texts": 36,
+          "instances": 11,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/mine",
+          "id": "296:50",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 74,
+          "texts": 29,
+          "instances": 21,
+          "images": 2,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/settings",
+          "id": "296:51",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 70,
+          "texts": 31,
+          "instances": 15,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/unavailable",
+          "id": "296:52",
+          "w": 1440,
+          "h": 900,
+          "nodes": 31,
+          "texts": 15,
+          "instances": 9,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/mobileDetail",
+          "id": "296:53",
+          "w": 390,
+          "h": 844,
+          "nodes": 35,
+          "texts": 13,
+          "instances": 7,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/group",
+          "id": "296:54",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 100,
+          "texts": 37,
+          "instances": 14,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/applyReview",
+          "id": "296:55",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 39,
+          "texts": 21,
+          "instances": 9,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "web/clueReview",
+          "id": "296:56",
+          "w": 1440,
+          "h": 1024,
+          "nodes": 39,
+          "texts": 21,
+          "instances": 9,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        }
+      ],
+      "typeCounts": {
+        "FRAME": 346,
+        "TEXT": 523,
+        "INSTANCE": 267,
+        "VECTOR": 57,
+        "GROUP": 14
+      },
+      "imageCount": 27,
+      "actionCount": 178,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "badFonts": [],
+      "horizontalOverflow": [],
+      "verticalOverflow": [],
+      "badTargets": []
+    },
+    "desktop": {
+      "platform": "desktop",
+      "roots": [
+        {
+          "key": "desktop/home",
+          "id": "296:57",
+          "w": 1440,
+          "h": 960,
+          "nodes": 182,
+          "texts": 49,
+          "instances": 48,
+          "images": 7,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/adopt",
+          "id": "296:58",
+          "w": 1440,
+          "h": 960,
+          "nodes": 118,
+          "texts": 44,
+          "instances": 26,
+          "images": 3,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/detail",
+          "id": "296:59",
+          "w": 1440,
+          "h": 1040,
+          "nodes": 119,
+          "texts": 42,
+          "instances": 26,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/apply",
+          "id": "296:60",
+          "w": 1440,
+          "h": 960,
+          "nodes": 96,
+          "texts": 35,
+          "instances": 23,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/login",
+          "id": "296:61",
+          "w": 1440,
+          "h": 960,
+          "nodes": 95,
+          "texts": 34,
+          "instances": 24,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/lost",
+          "id": "296:62",
+          "w": 1440,
+          "h": 960,
+          "nodes": 97,
+          "texts": 36,
+          "instances": 24,
+          "images": 2,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/lostDetail",
+          "id": "296:63",
+          "w": 1440,
+          "h": 960,
+          "nodes": 95,
+          "texts": 36,
+          "instances": 20,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/messages",
+          "id": "296:64",
+          "w": 1440,
+          "h": 960,
+          "nodes": 144,
+          "texts": 47,
+          "instances": 24,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/group",
+          "id": "296:65",
+          "w": 1440,
+          "h": 960,
+          "nodes": 138,
+          "texts": 44,
+          "instances": 23,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/compose",
+          "id": "296:66",
+          "w": 1440,
+          "h": 960,
+          "nodes": 106,
+          "texts": 39,
+          "instances": 25,
+          "images": 3,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/appointment",
+          "id": "296:67",
+          "w": 1440,
+          "h": 960,
+          "nodes": 107,
+          "texts": 43,
+          "instances": 20,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/mine",
+          "id": "296:68",
+          "w": 1440,
+          "h": 960,
+          "nodes": 112,
+          "texts": 36,
+          "instances": 30,
+          "images": 2,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/settings",
+          "id": "296:69",
+          "w": 1440,
+          "h": 960,
+          "nodes": 108,
+          "texts": 38,
+          "instances": 24,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/offline",
+          "id": "296:70",
+          "w": 1440,
+          "h": 960,
+          "nodes": 69,
+          "texts": 22,
+          "instances": 18,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/otp",
+          "id": "296:71",
+          "w": 1440,
+          "h": 960,
+          "nodes": 81,
+          "texts": 29,
+          "instances": 19,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/applyReview",
+          "id": "296:72",
+          "w": 1440,
+          "h": 960,
+          "nodes": 77,
+          "texts": 28,
+          "instances": 18,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "desktop/clueReview",
+          "id": "296:73",
+          "w": 1440,
+          "h": 960,
+          "nodes": 77,
+          "texts": 28,
+          "instances": 18,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        }
+      ],
+      "typeCounts": {
+        "FRAME": 523,
+        "TEXT": 630,
+        "INSTANCE": 410,
+        "VECTOR": 244,
+        "GROUP": 14
+      },
+      "imageCount": 23,
+      "actionCount": 205,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "badFonts": [],
+      "horizontalOverflow": [],
+      "verticalOverflow": [],
+      "badTargets": []
+    },
+    "tablet": {
+      "platform": "tablet",
+      "roots": [
+        {
+          "key": "tablet/homeP",
+          "id": "296:74",
+          "w": 834,
+          "h": 1194,
+          "nodes": 167,
+          "texts": 38,
+          "instances": 46,
+          "images": 7,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/homeL",
+          "id": "296:75",
+          "w": 1194,
+          "h": 834,
+          "nodes": 166,
+          "texts": 38,
+          "instances": 46,
+          "images": 7,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/adoptP",
+          "id": "296:76",
+          "w": 834,
+          "h": 1194,
+          "nodes": 100,
+          "texts": 32,
+          "instances": 27,
+          "images": 6,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/adoptL",
+          "id": "296:77",
+          "w": 1194,
+          "h": 834,
+          "nodes": 102,
+          "texts": 33,
+          "instances": 24,
+          "images": 3,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/detailP",
+          "id": "296:78",
+          "w": 834,
+          "h": 1194,
+          "nodes": 81,
+          "texts": 23,
+          "instances": 20,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/messagesP",
+          "id": "296:79",
+          "w": 834,
+          "h": 1194,
+          "nodes": 110,
+          "texts": 29,
+          "instances": 19,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/messagesL",
+          "id": "296:80",
+          "w": 1194,
+          "h": 834,
+          "nodes": 128,
+          "texts": 36,
+          "instances": 22,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/composeP",
+          "id": "296:81",
+          "w": 834,
+          "h": 1194,
+          "nodes": 75,
+          "texts": 20,
+          "instances": 22,
+          "images": 2,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/composeL",
+          "id": "296:82",
+          "w": 1194,
+          "h": 834,
+          "nodes": 155,
+          "texts": 30,
+          "instances": 26,
+          "images": 3,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/appointmentL",
+          "id": "296:83",
+          "w": 1194,
+          "h": 834,
+          "nodes": 91,
+          "texts": 32,
+          "instances": 18,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/lostL",
+          "id": "296:84",
+          "w": 1194,
+          "h": 834,
+          "nodes": 81,
+          "texts": 25,
+          "instances": 22,
+          "images": 2,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/mineP",
+          "id": "296:85",
+          "w": 834,
+          "h": 1194,
+          "nodes": 96,
+          "texts": 25,
+          "instances": 28,
+          "images": 2,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/loginP",
+          "id": "296:86",
+          "w": 834,
+          "h": 1194,
+          "nodes": 70,
+          "texts": 18,
+          "instances": 22,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/narrowDetail",
+          "id": "296:87",
+          "w": 744,
+          "h": 1133,
+          "nodes": 35,
+          "texts": 13,
+          "instances": 7,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/applyP",
+          "id": "296:88",
+          "w": 834,
+          "h": 1194,
+          "nodes": 69,
+          "texts": 19,
+          "instances": 20,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/settingsP",
+          "id": "296:89",
+          "w": 834,
+          "h": 1194,
+          "nodes": 92,
+          "texts": 27,
+          "instances": 22,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/lostDetailL",
+          "id": "296:90",
+          "w": 1194,
+          "h": 834,
+          "nodes": 79,
+          "texts": 25,
+          "instances": 18,
+          "images": 1,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/groupL",
+          "id": "296:91",
+          "w": 1194,
+          "h": 834,
+          "nodes": 122,
+          "texts": 33,
+          "instances": 21,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/otpP",
+          "id": "296:92",
+          "w": 834,
+          "h": 1194,
+          "nodes": 56,
+          "texts": 13,
+          "instances": 17,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/applyReview",
+          "id": "296:93",
+          "w": 834,
+          "h": 1194,
+          "nodes": 61,
+          "texts": 17,
+          "instances": 16,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        },
+        {
+          "key": "tablet/clueReview",
+          "id": "296:94",
+          "w": 834,
+          "h": 1194,
+          "nodes": 61,
+          "texts": 17,
+          "instances": 16,
+          "images": 0,
+          "mode": {
+            "VariableCollectionId:14:6": "56:0"
+          },
+          "placeholder": false
+        }
+      ],
+      "typeCounts": {
+        "FRAME": 598,
+        "TEXT": 543,
+        "INSTANCE": 479,
+        "VECTOR": 336,
+        "GROUP": 41
+      },
+      "imageCount": 36,
+      "actionCount": 234,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "badFonts": [],
+      "horizontalOverflow": [],
+      "verticalOverflow": [],
+      "badTargets": []
+    }
+  },
+  "verificationBoundary": {
+    "clientBuild": false,
+    "clientTests": false,
+    "realDevices": false,
+    "screenReaders": false,
+    "dynamicInput": false,
+    "systemKeyboard": false,
+    "crossDeviceSync": false
+  },
+  "visualReviewNodeIds": [
+    "301:27",
+    "296:39",
+    "296:47",
+    "296:64",
+    "296:74",
+    "296:77",
+    "296:82",
+    "296:87",
+    "296:48"
+  ],
+  "sourcePhonePagePreserved": "56:25",
+  "darkPagesPreserved": true
+}

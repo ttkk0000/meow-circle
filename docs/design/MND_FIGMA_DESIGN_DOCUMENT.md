@@ -1,83 +1,54 @@
-# M&D Figma Design Document Index
+# M&D 设计交接索引
 
-Last updated: 2026-06-06
+更新：2026-10-22｜品牌：M&D / meow & doggie
 
-M&D = `meow & doggie`.
+新移动端已获批准使用Figma手机V2默认浅色，Noto Sans SC／Manrope、既有语义色及组件；Android／iOS与各自平板按[移动实施记录](../client/MOBILE_IMPLEMENTATION_2026_10_20.md)和[自适应合同](figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md)实施。旧Stitch镜像及未迁移旧端保留各自规则，不能用历史“待批准”重新阻塞已授权工作，也不能混用两套Token。
 
-Use this as the current entry point for design handoff. Current design work must
-start from the Stitch V2 mirror and the M&D guides below.
+本轮用户已授权完善产品内容与Figma。[安全、年龄与生命周期合同](MND_SAFETY_AND_LIFECYCLE_SPEC.md)新增监护、成年人业务、单宠试养／候补、安全接回、预约风险暂停、资料权利与游客报告。[本轮修订交接](figma-study/DESIGN_CLOSURE_2026_10_21.md)与[精确节点账本](figma-study/design-closure-2026-10-21-state.json)区分设计、检查和实施缺口。
 
-## Primary Docs
+## 当前从哪里进入
 
-- `docs/README.md`: Documentation hub, role-based reading order, current status, and verification notes.
+- 最新[法律设计补充评审入口662:398665](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=662-398665)与[交接／最终验证状态](figma-study/LEGAL_DESIGN_HANDOFF_2026_10_22.md)：45组五布局225稿、四个独立回调与角色样例板；[法律设计合同](MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md)区分事项协助、正式注销、通知／声明与合同版本。真实经营与接口仍另行验收。
+- 最新[平板横竖屏预览优化](figma-study/PAD_PREVIEW_2026_10_22.md)：88个Flow收敛为两个，704组同状态横竖屏稿可点右上角预览按钮互切；按钮仅作Figma演示，客户端不实现。直接使用文档中的Pad竖屏／横屏预览链接，设备转动后仍需手动切换。
+- 最新[画布排版整理](figma-study/FIGMA_CANVAS_LAYOUT_2026_10_22.md)：9页核对、7页紧凑排布，手机画布高度减少88.2%；节点、原稿尺寸及交互引用保留。当前位置以下方9页目录为准，旧17／18页记录保留为历史证据。
+- 最新[六处操作逻辑修订入口513:1860930](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=513-1860930)与[交接及静态条件结果](figma-study/LOGIC_FIX_HANDOFF_2026_10_21.md)：覆盖短信、成年核对、安全取消、接回双边版本、原工单追加和删除最终确认。本轮84组五布局，其中12组覆盖上轮同ID原稿；来源优先级见本轮账本。
+- [项目总览395:3](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=395-3)。
+- 设备索引：[手机425:1839840](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=425-1839840)、[Web425:1839880](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=425-1839880)、[平板425:1839920](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=425-1839920)、[Desktop425:1839960](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=425-1839960)。
+- [安全、账号与规则评审入口513:1860930](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=513-1860930)当前位于05功能索引；各设备原稿已按设备归档，原根ID保留，旧增补页471:524不再是当前入口。
+- [产品与安全修订评审入口493:1861258](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=493-1861258)：本轮账号／监护、领养接回、规则数据和跨端未读集中入口；58组五布局及32张未读跨端稿的检查结果见修订交接。
+- 先前[全量状态索引301:27](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=301-27)、[手机复核238:371769](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=238-371769)仍作为历史阶段入口，不等于当前设备目录。
 
-- `docs/design/MND_UI_ALIGNMENT_GUIDE.md`: Current implementation-facing UI contract: tokens, platform mapping, copy rules, QA checklist, and known local blockers.
+## 当前页面位置
 
-- `docs/design/MND_STITCH_AI_RULES.md`: Rules for AI agents so they follow the Stitch project instead of inventing a separate UI direction.
+2026-10-22远端回读为9页；原稿按设备归档，功能页保留跨端原稿链接。画板链接与页面ID分别核对；不能因旧页面消失推断旧画板丢失。
 
-- `.stitch/DESIGN.md`: Current Stitch V2 global design contract mirrored locally.
+| 页面 | 当前ID | 用途 |
+|---|---|---|
+| 00 项目总览 | 395:2 | 项目及设备入口 |
+| 01 手机 · 原稿与交互 | 56:25 | 手机功能索引、原稿及交互，含新增法律设计分组 |
+| 02 Web · 原稿与交互 | 403:2 | Web索引、原稿及交互，含新增法律设计分组 |
+| 03 平板 · 原稿与交互 | 403:3 | 平板索引、横竖屏原稿及交互，含新增法律设计分组 |
+| 04 桌面 · 原稿与交互 | 403:4 | 桌面索引、原稿及交互，含新增法律设计分组 |
+| 05 功能索引 · 跨端原稿链接 | 403:5 | 功能／说明分组、跨端链接、各轮修订及法律补充评审入口 |
+| 06 规范与组件 | 14:2 | 语义变量、字体、原生组件 |
+| 07 可点击原型／08 历史归档 | 30:2／0:1 | 阶段演示／历史资料 |
 
-- `.stitch/remote-assets` and `web/assets/stitch-remote`: Full-size Stitch screenshots plus HTML/SVG/Markdown sources.
+## 内容与实施合同
 
-- `docs/design/MND_DESIGN_MEMORY.md`: Short current-state memory for future agents.
+1. 产品：[PRD](../bmad/prd.md)、[UX](../bmad/ux-design.md)、[真实性与披露](MND_TRUST_AND_DISCLOSURE_SPEC.md)。
+2. 现行增补：[认证](MND_MOBILE_AUTH_PLAN.md)、[安全生命周期](MND_SAFETY_AND_LIFECYCLE_SPEC.md)、[冷启动与寻宠](MND_COLD_START_LOST_PETS_AND_AUTH_SPEC.md)、[全局未读](MND_GLOBAL_UNREAD_SPEC.md)。
+3. 跨端：[全量交接](figma-study/CROSS_PLATFORM_FULL_REVIEW_2026_10_20.md)、[逐项映射](figma-study/CROSS_PLATFORM_FULL_MAPPING.md)、[自适应合同](figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md)、[本轮修订账本](figma-study/design-closure-2026-10-21-state.json)。
+4. 实施：[客户端入口](../client/README.md)、[功能矩阵](../client/FEATURE_DELIVERY_MATRIX.md)、[服务端缺口](../server/CLIENT_READINESS_2026_10_20.md)。
 
-## Current Status
+历史569状态／2308根与原56张代表稿是有日期的基线；后加未读及本轮安全修订分别记账，不能把入口卡数量当作完整状态覆盖。旧账本pages／pageByKey记录的是生成时位置，恢复时依据稳定rootID的当前PAGE祖先，按当前页面拆批；不要直接重跑依赖旧页面的配方。
 
-| Surface | Status | Source |
-| --- | --- | --- |
-| WebUI | Implemented as M&D prototype | `web/cute.html`, `web/cute-ui.css`, `web/cute-ui.js` |
-| Production Web | M&D-aligned through bridge and page updates | `web/stitch-theme-bridge.css`, `web/shared.js`, page scripts |
-| Remote mobile refs | Mirrored from Stitch | `web/mnd-web-client-board.html`, `web/stitch-remote-gallery.html` |
-| Desktop board | Local wide-screen mapping | `web/pawpop-desktop.html` |
-| Expo mobile | Source-aligned to M&D | `mobile/src/theme.ts`, `mobile/app`, `mobile/src/stitch` |
-| KMP Android | Source-aligned to M&D | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp` |
-| KMP Desktop | Source-aligned to M&D | `kmp/desktopApp` |
+## 保留的参考与验证边界
 
-Use the desktop design board, KMP Desktop app, and browser/admin/workbench pages as desktop sources.
+- 当前远端目录与画布依据：[10月22日排版整理](figma-study/FIGMA_CANVAS_LAYOUT_2026_10_22.md)。[10月21日只读核对](figma-study/REMOTE_FIGMA_CHECK_2026_10_21.md)描述当时17页快照，后续18页位置亦为历史。
+- [原手机评审](figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)、[原56张代表稿](figma-study/CROSS_PLATFORM_LIGHT_REVIEW_2026_10_20.md)、旧V1／黑夜阶段仅作带日期的历史参考。
+- 旧工程参照：[Stitch合同](../../.stitch/DESIGN.md)、[UI对齐指南](MND_UI_ALIGNMENT_GUIDE.md)、[本地图库](../../web/stitch-remote-gallery.html)、[桌面板](../../web/pawpop-desktop.html)；不将它们伪称已迁移。
+- 设计稿、可点击固定状态、结构检查、真实API、平台构建和设备验收分别记录。B04、年龄／监护服务、人工运营、正式政策和真实供应商尚不因本轮画板更新而完成。
 
-## Visual Sources
+## 本地旧端实现参考
 
-- `web/pawpop.html`: current UI index.
-- `web/mnd-web-client-board.html`: local Stitch sync board for mobile, themes, components, and implementation contract.
-- `web/stitch-remote-gallery.html`: full-size remote screenshot gallery with local source references.
-- `web/pawpop-desktop.html`: local desktop mapping board aligned to remote mobile/component rules.
-- `web/cute.html`: browser WebUI prototype and implementation target.
-- Production Web pages now aligned enough to use as secondary Figma sources:
-  `web/index.html`, `web/discover.html`, `web/compose.html`, `web/market.html`,
-  `web/post.html`, `web/messages.html`, `web/profile.html`, `web/login.html`,
-  `web/register.html`, `web/dashboard.html`, and `web/admin.html`.
-- Expo mobile implementation sources:
-  `mobile/src/theme.ts`, `mobile/src/components.tsx`, `mobile/src/stitch/*`, and
-  `mobile/app/(auth)`, `mobile/app/(tabs)`.
-- KMP Android implementation sources:
-  `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/theme/*` and
-  `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/ui/*`.
-- KMP Desktop implementation sources:
-  `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/*`.
-
-## Figma Pages To Build
-
-- `00 Cover`
-- `01 Product Map`
-- `02 M&D Tokens`
-- `03 Components`
-- `04 Mobile App`
-- `05 Desktop App`
-- `06 WebUI`
-- `07 Profile Customization`
-- `08 Trust & Commerce`
-- `09 Admin Console`
-- `10 Prototypes`
-- `11 Future Concepts`
-
-## Immediate Figma Work Order
-
-1. Build `02 M&D Tokens` from `MND_UI_ALIGNMENT_GUIDE.md`.
-2. Build `03 Components` with button, chip, input, nav, feed tile, listing card,
-   chat bubble, profile background picker, status badge, and admin row variants.
-3. Recreate `04 Mobile App` from the remote mobile screenshots in `web/mnd-web-client-board.html`, `web/stitch-remote-gallery.html`, and Expo source.
-4. Recreate `05 Desktop App` from `web/pawpop-desktop.html` and `kmp/desktopApp`.
-5. Recreate `06 WebUI` from `web/cute.html`.
-6. Add admin/trust flows from `web/dashboard.html` and `web/admin.html`.
-7. Add clickable prototypes for browse, publish, market-to-chat/order,
-   profile-background switch, and report-to-admin-review.
+本次合并保留 `web/cute.html`、`web/pawpop-desktop.html`、Expo 和 `kmp/desktopApp` 的业务接线；它们仍是旧端参考，不能抵扣新版 v2 的实施与验收。客户端对齐范围见 [本地清单](../CLIENT_PARITY_CHECKLIST.md)。

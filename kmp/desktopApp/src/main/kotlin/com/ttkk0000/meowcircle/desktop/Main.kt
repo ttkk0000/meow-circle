@@ -24,19 +24,53 @@ import com.ttkk0000.meowcircle.ActionCounts
 import com.ttkk0000.meowcircle.MeowCircleSdk
 import com.ttkk0000.meowcircle.User
 import com.ttkk0000.meowcircle.desktop.screens.*
+import java.awt.RenderingHints
+import java.awt.image.BufferedImage
+import androidx.compose.ui.graphics.toComposeImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 
 fun main() = application {
+    var themeMode by remember { mutableStateOf(MndDesktopThemeMode.Honey) }
+    val colors = colorsFor(themeMode)
+    val brandColor = colors.brand
+    val icon = remember(themeMode) {
+        val size = 64
+        val image = BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB)
+        val g = image.createGraphics()
+        try {
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+            g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
+
+            // Draw circle with active brand color
+            g.color = java.awt.Color(brandColor.red, brandColor.green, brandColor.blue, brandColor.alpha)
+            g.fillOval(0, 0, size, size)
+
+            // Draw text "M&D"
+            g.color = java.awt.Color.WHITE
+            g.font = java.awt.Font("SansSerif", java.awt.Font.BOLD, 20)
+            val metrics = g.fontMetrics
+            val text = "M&D"
+            val x = (size - metrics.stringWidth(text)) / 2
+            val y = ((size - metrics.height) / 2) + metrics.ascent
+            g.drawString(text, x, y)
+        } finally {
+            g.dispose()
+        }
+        BitmapPainter(image.toComposeImageBitmap())
+    }
+
     Window(
         onCloseRequest = ::exitApplication,
-        title = "M&D Desktop Client",
+        title = "M&D Desktop",
+        icon = icon,
     ) {
-        DesktopApp()
+        DesktopApp(onThemeChanged = { themeMode = it })
     }
 }
 
 @Composable
 @Preview
-fun DesktopApp() {
+fun DesktopApp(onThemeChanged: (MndDesktopThemeMode) -> Unit = {}) {
     val sdk = remember {
         MeowCircleSdk(defaultBaseUrl = "http://127.0.0.1:8080").apply {
             if (sessionStore().getApiUrl("").contains("localhost")) {
@@ -45,6 +79,7 @@ fun DesktopApp() {
         }
     }
     var themeMode by remember { mutableStateOf(themeModeFromSession(sdk.getTheme())) }
+    LaunchedEffect(themeMode) { onThemeChanged(themeMode) }
     val apiClient = remember { MndApiClient(sdk) }
     var currentUser by remember { mutableStateOf<User?>(sdk.cachedUser()) }
 

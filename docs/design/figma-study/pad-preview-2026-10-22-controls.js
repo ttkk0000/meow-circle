@@ -1,0 +1,12 @@
+// Historical recipe only. Inject current ids/targets after audit; do not auto-replay. Reuse existing controls by name.
+const p=await figma.getNodeByIdAsync('403:3');await figma.setCurrentPageAsync(p);const btn=await figma.getNodeByIdAsync('56:180');const roots=await Promise.all(ids.map(id=>figma.getNodeByIdAsync(id)));const fonts=new Map();
+for(const n of [...btn.findAllWithCriteria({types:['TEXT']}),...roots.flatMap(r=>r.children.find(c=>c.name==='Platform header').children.filter(c=>c.type==='TEXT'))])for(const seg of n.getStyledTextSegments(['fontName'])){const f={family:seg.fontName.family,style:seg.fontName.style};fonts.set(JSON.stringify(f),f);}await Promise.all([...fonts.values()].map(f=>figma.loadFontAsync(f)));
+function body(r){return JSON.stringify([r.width,r.height,r.children.filter(c=>c.name!=='Platform header').map(c=>[c.id,c.x,c.y,c.width,c.height]),r.reactions]);}
+const beforeBody=roots.map(body),created=[],mutated=[],records=[],oldLegacy=[],work=[];
+for(const r of roots){const h=r.children.find(c=>c.name==='Platform header');let c=h.children.find(n=>n.name==='Prototype only / Orientation switch');let flex;
+if(!c){flex=h.children.filter(n=>n.type==='TEXT').sort((a,b)=>b.width-a.width)[0];if(r.name.startsWith('tablet'))oldLegacy.push({root:r.id,flexIndex:h.children.indexOf(flex),w:flex.width,h:flex.height,auto:flex.textAutoResize,sizing:flex.layoutSizingHorizontal,grow:flex.layoutGrow,pT:h.paddingTop,pB:h.paddingBottom});
+const w=flex.width,th=flex.height;c=btn.createInstance();c.name='Prototype only / Orientation switch';h.appendChild(c);c.setProperties({'Label#56:0':(r.name.startsWith('平板竖屏')||r.name.startsWith('tabletP'))?'预览 · 横屏':'预览 · 竖屏'});c.resize(144,48);c.layoutSizingHorizontal='FIXED';c.layoutSizingVertical='FIXED';h.paddingTop=12;h.paddingBottom=12;flex.resize(Math.max(200,w-168),th);flex.textAutoResize='HEIGHT';flex.layoutSizingHorizontal='FILL';created.push(c.id);mutated.push(h.id,flex.id);
+await c.setReactionsAsync([{trigger:{type:'ON_CLICK'},actions:[{type:'NODE',destinationId:targets[r.id],navigation:'NAVIGATE',transition:null,resetScrollPosition:false,resetInteractiveComponents:false,resetVideoPosition:false}]}]);}
+records.push([r.id,h.id,flex?flex.id:'existing',c.id,targets[r.id]].join(','));}
+await Promise.all(work);
+return {recordFormat:'root,header,flex,createdButton,target',mutatedNodeIdsCSV:records.join(';'),createdCount:created.length,oldLegacy,count:roots.length,bodyPreserved:roots.every((r,i)=>body(r)===beforeBody[i])};

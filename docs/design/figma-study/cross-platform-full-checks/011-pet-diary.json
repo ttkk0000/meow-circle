@@ -1,0 +1,1196 @@
+{
+  "module": "pet-diary",
+  "start": 128,
+  "polish": {
+    "pageId": "295:2",
+    "createdNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "createdNodeIdsByPrefix": {
+      "331": {
+        "start": 152308,
+        "deltaBase36": "2.w.q.p.q.1.1.8.q.1.1.s.l.2.y.q.r.q.1.1.a.q.1.1.u.l.2.y.q.r.q.1.1.a.q.1.1.u.l.2.x.q.q.q.1.1.9.q.1.1.t.l.2.w.q.p.q.1.1.8.q.1.1.s.l.2.x.q.q.q.1.1.9.q.1.1.t.l.2.11.q.u.q.1.1.d.q.1.1.x.l.2.10.q.t.q.1.1.c.q.1.1.w.l.2.23k.q.23d.q.1.1.22w.q.1.1.23g.l.2.w.q.p.q.1.1.8.q.1.1.s.l.2.w.q.p.q.1.1.8.q.1.1.s.l.2.w.q.p.q.1.1.8.q.1.1.s.q.1.1.13.1.1"
+      }
+    },
+    "mutatedNodeIdsByPrefix": {
+      "314": {
+        "start": 101651,
+        "deltaBase36": "1.11.2.1.p.2.1.3.2.4.7.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.7.1.1.1.2.1b.1.3.2.4.7.1.1.1.2.1a.1.p.2.1.3.2.4.9.1.11.2.1.p.2.1.3.2.4.a.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.a.1.1.1.2.1b.1.3.2.4.a.1.1.1.2.1a.1.p.2.1.3.2.4.c.1.11.2.1.p.2.1.3.2.4.9.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.9.1.1.1.2.1b.1.3.2.4.9.1.1.1.2.1a.1.p.2.1.3.2.4.b.1.11.2.1.p.2.1.3.2.4.7.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.7.1.1.1.2.1b.1.3.2.4.7.1.1.1.2.1a.1.p.2.1.3.2.4.9.1.11.2.1.p.2.1.3.2.4.5.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.5.1.1.1.2.1b.1.3.2.4.5.1.1.1.2.1a.1.p.2.1.3.2.4.7.1.11.2.1.p.2.1.3.2.4.6.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.6.1.1.1.2.1b.1.3.2.4.6.1.1.1.2.1a.1.p.2.1.3.2.4.8.1.11.2.1.p.2.1.3.2.4.b.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.b.1.1.1.2.1b.1.3.2.4.b.1.1.1.2.1a.1.p.2.1.3.2.4.d.1.11.2.1.p.2.1.3.2.4.z.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.z.1.1.1.2.1b.1.3.2.4.z.1.1.1.2.1a.1.p.2.1.3.2.4.11.1.11.2.1.p.2.1.3.22v.1.22p.1a.1.1.1.1.1.2.1a.1.p.2.1.3.22v.1.22p.1a.1.1.1.2.1b.1.3.22v.1.22p.1a.1.1.1.2.1a.1.p.2.1.3.22v.1.22p.1c.1.11.2.1.p.2.1.3.2.4.5.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.5.1.1.1.2.1b.1.3.2.4.5.1.1.1.2.1a.1.p.2.1.3.2.4.7.1.11.2.1.p.2.1.3.2.4.8.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.8.1.1.1.2.1b.1.3.2.4.8.1.1.1.2.1a.1.p.2.1.3.2.4.a.1.11.2.1.p.2.1.3.2.4.8.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.8.1.1.1.2.1b.1.3.2.4.8.1.1.1.2.1a.1.p.2.1.3.2.4"
+      },
+      "325": {
+        "start": 75751,
+        "deltaBase36": "1.1.3.1.4.2.4.1d.1a.1.1.1.2.1b.1.4.2.4"
+      }
+    },
+    "removedNodeIds": [
+      "325:75834"
+    ],
+    "counts": {
+      "styles": 271,
+      "spacing": 963,
+      "footers": 0,
+      "backTargets": 48,
+      "publishEntries": 50
+    }
+  },
+  "restored": {
+    "codec": "prefix-start-base36-delta-v1",
+    "restoredNodeIdsByPrefix": {
+      "311": {
+        "start": 379400,
+        "deltaBase36": "1.1.1"
+      },
+      "314": {
+        "start": 101723,
+        "deltaBase36": "3.2n.3.1u.3.2l.3.2c.3.9.1.2g.3.9.1.1n.3.9.1.2e.3.9.1.25.3.8.1.2g.3.8.1.1n.3.8.1.2e.3.8.1.25.3.8.2f.3.8.1m.3.8.2d.3.8.24.3.2l.3.1s.3.2j.3.2a.3.7.2f.3.7.1m.3.7.2d.3.7.24.3.2r.3.1y.3.2p.3.2g.3.o.7.2k.3.o.7.1r.3.o.7.2i.3.o.7.29.22w.4.2.23g.2.1.2n.22w.4.2.23g.2.1.1u.22w.4.2.23g.2.1.2l.22w.4.2.23g.2.1.2c.3.2l.3.1s.3.2j.3.2a.3.2o.3.1v.3.2m.3.2d.3.2o.3.1v.3.2m.3"
+      },
+      "325": {
+        "start": 75757,
+        "deltaBase36": "4.3.a.1.r.7.2y.4.3.a.1.p.7"
+      },
+      "331": {
+        "start": 152342,
+        "deltaBase36": "1f.10.1k.1l.1h.12.1m.1l.1h.12.1m.1k.1g.11.1l.1j.1f.10.1k.1k.1g.11.1l.1o.1k.15.1p.1n.1j.14.1o.247.243.23o.248.1j.1f.10.1k.1j.1f.10.1k.1j.1f.10.1k"
+      }
+    },
+    "createdNodeIdsByPrefix": {},
+    "unmapped": [],
+    "counts": {
+      "actions": 164,
+      "toolbarControls": 0,
+      "backGuards": 50
+    }
+  },
+  "route": {
+    "pageId": "295:2",
+    "mutatedNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "mutatedNodeIdsByPrefix": {
+      "314": {
+        "start": 101653,
+        "deltaBase36": "9.8.b.c.6.6.6.x.9.8.b.8.b.6.6.6.v.9.8.b.8.x.9.8.b.8.b.6.6.6.t.9.8.b.c.6.6.6.10.9.8.b.8.b.6.6.6.y.9.8.b.8.10.9.8.b.8.b.6.6.6.w.9.8.b.c.6.6.6.z.9.8.b.8.b.6.6.6.x.9.8.b.8.z.9.8.b.8.b.6.6.6.v.9.8.b.c.6.6.6.x.9.8.b.8.b.6.6.6.v.9.8.b.8.x.9.8.b.8.b.6.6.6.t.9.8.b.c.6.6.6.v.9.8.b.8.b.6.6.6.t.9.8.b.8.v.9.8.b.8.b.6.6.6.r.9.8.b.c.6.6.6.w.9.8.b.8.b.6.6.6.u.9.8.b.8.w.9.8.b.8.b.6.6.6.s.9.8.b.c.6.6.6.11.9.8.b.8.b.6.6.6.z.9.8.b.8.11.9.8.b.8.b.6.6.6.x.9.8.b.c.6.6.6.1p.9.8.b.8.b.6.6.6.1n.9.8.b.8.1p.9.8.b.8.b.6.6.6.1l.9.8.b.c.6.6.6.47f.9.8.b.8.b.6.6.6.47d.9.8.b.8.47f.9.8.b.8.b.6.6.6.47b.9.8.b.c.6.6.6.v.9.8.b.8.b.6.6.6.t.9.8.b.8.v.9.8.b.8.b.6.6.6.r.9.8.b.c.6.6.6.y.9.8.b.8.b.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6.u.9.8.b.c.6.6.6.y.9.8.b.8.b.6.6.6.w.9.8.b.8.y.9.8.b.8.b.6.6.6"
+      },
+      "325": {
+        "start": 75817,
+        "deltaBase36": "9.j.8.f.9.8.b.8"
+      },
+      "331": {
+        "start": 152308,
+        "deltaBase36": "2.1m.1f.10.1f.2.1o.1h.12.1h.2.1o.1h.12.1h.2.1n.1g.11.1g.2.1m.1f.10.1f.2.1n.1g.11.1g.2.1r.1k.15.1k.2.1q.1j.14.1j.2.24a.243.23o.243.2.1m.1f.10.1f.2.1m.1f.10.1f.2.1m.1f.10.1k.15"
+      }
+    },
+    "counts": {
+      "nodes": 0,
+      "reactions": 0,
+      "local": 0,
+      "crossModule": 0,
+      "back": 0,
+      "selfSkipped": 0
+    },
+    "unmapped": []
+  },
+  "validation": {
+    "pageId": "295:2",
+    "rootCount": 50,
+    "issueCount": 0,
+    "results": [
+      {
+        "id": "311:379368",
+        "key": "diaryPublished",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 63,
+        "texts": 19,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379369",
+        "key": "diaryPublished",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 21,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379370",
+        "key": "diaryPublished",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 48,
+        "texts": 13,
+        "instances": 13,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379371",
+        "key": "diaryPublished",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 67,
+        "texts": 19,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379372",
+        "key": "diaryEntryShared",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 66,
+        "texts": 21,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379373",
+        "key": "diaryEntryShared",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 70,
+        "texts": 23,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379374",
+        "key": "diaryEntryShared",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 51,
+        "texts": 15,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379375",
+        "key": "diaryEntryShared",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 70,
+        "texts": 21,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379376",
+        "key": "diaryDraftExit",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 65,
+        "texts": 20,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379377",
+        "key": "diaryDraftExit",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 69,
+        "texts": 22,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379378",
+        "key": "diaryDraftExit",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 50,
+        "texts": 14,
+        "instances": 15,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379379",
+        "key": "diaryDraftExit",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 69,
+        "texts": 20,
+        "instances": 23,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 8,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379380",
+        "key": "diaryDraftFailure",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 63,
+        "texts": 19,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379381",
+        "key": "diaryDraftFailure",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 21,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379382",
+        "key": "diaryDraftFailure",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 48,
+        "texts": 13,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379383",
+        "key": "diaryDraftFailure",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 67,
+        "texts": 19,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379384",
+        "key": "diaryPrivateResult",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 61,
+        "texts": 18,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379385",
+        "key": "diaryPrivateResult",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 65,
+        "texts": 20,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379386",
+        "key": "diaryPrivateResult",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 46,
+        "texts": 12,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379387",
+        "key": "diaryPrivateResult",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 65,
+        "texts": 18,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379388",
+        "key": "diaryDeleteConfirm",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 62,
+        "texts": 19,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379389",
+        "key": "diaryDeleteConfirm",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 66,
+        "texts": 21,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379390",
+        "key": "diaryDeleteConfirm",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 47,
+        "texts": 13,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379391",
+        "key": "diaryDeleteConfirm",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 66,
+        "texts": 19,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379392",
+        "key": "diaryDeleted",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 63,
+        "texts": 18,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379393",
+        "key": "diaryDeleted",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 20,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379394",
+        "key": "diaryDeleted",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 48,
+        "texts": 12,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379395",
+        "key": "diaryDeleted",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 67,
+        "texts": 18,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379396",
+        "key": "petStatus",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 75,
+        "texts": 23,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379397",
+        "key": "petStatus",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 79,
+        "texts": 25,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379398",
+        "key": "petStatus",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 60,
+        "texts": 17,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379399",
+        "key": "petStatus",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 79,
+        "texts": 23,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379400",
+        "key": "ownDiaryComments",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 369,
+        "texts": 26,
+        "instances": 179,
+        "photos": 26,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 11,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379401",
+        "key": "ownDiaryComments",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 373,
+        "texts": 28,
+        "instances": 179,
+        "photos": 26,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 11,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379402",
+        "key": "ownDiaryComments",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 354,
+        "texts": 20,
+        "instances": 171,
+        "photos": 26,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 11,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379403",
+        "key": "ownDiaryComments",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 373,
+        "texts": 26,
+        "instances": 179,
+        "photos": 26,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 11,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379404",
+        "key": "diaryPhotoViewer",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 61,
+        "texts": 18,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379405",
+        "key": "diaryPhotoViewer",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 65,
+        "texts": 20,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379406",
+        "key": "diaryPhotoViewer",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 46,
+        "texts": 12,
+        "instances": 13,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379407",
+        "key": "diaryPhotoViewer",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 65,
+        "texts": 18,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379408",
+        "key": "petDogVisibility",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 64,
+        "texts": 20,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379409",
+        "key": "petDogVisibility",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 22,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379410",
+        "key": "petDogVisibility",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379411",
+        "key": "petDogVisibility",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 68,
+        "texts": 20,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379412",
+        "key": "petOtherVisibility",
+        "platform": "web",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 64,
+        "texts": 20,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379413",
+        "key": "petOtherVisibility",
+        "platform": "desktop",
+        "pageId": "311:6",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 22,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379414",
+        "key": "petOtherVisibility",
+        "platform": "tabletP",
+        "pageId": "311:6",
+        "w": 834,
+        "h": 1194,
+        "nodes": 49,
+        "texts": 14,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379415",
+        "key": "petOtherVisibility",
+        "platform": "tabletL",
+        "pageId": "311:6",
+        "w": 1194,
+        "h": 834,
+        "nodes": 68,
+        "texts": 20,
+        "instances": 21,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 5,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "325:61500",
+        "key": "diaryCompose",
+        "platform": "webN",
+        "pageId": "311:6",
+        "w": 390,
+        "h": 844,
+        "nodes": 64,
+        "texts": 19,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 6,
+        "conditional": 1,
+        "issues": []
+      },
+      {
+        "id": "325:61501",
+        "key": "diaryCompose",
+        "platform": "tabletN",
+        "pageId": "311:6",
+        "w": 744,
+        "h": 1133,
+        "nodes": 69,
+        "texts": 21,
+        "instances": 17,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 7,
+        "conditional": 1,
+        "issues": []
+      }
+    ]
+  }
+}

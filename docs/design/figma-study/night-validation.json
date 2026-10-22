@@ -1,0 +1,1638 @@
+{
+  "checkedAt": "2026-10-16",
+  "pages": [
+    {
+      "id": "0:1",
+      "name": "00 设计总览"
+    },
+    {
+      "id": "14:2",
+      "name": "01 视觉与组件"
+    },
+    {
+      "id": "14:3",
+      "name": "02 核心体验"
+    },
+    {
+      "id": "14:4",
+      "name": "03 信任与异常"
+    },
+    {
+      "id": "30:2",
+      "name": "04 可点击原型（示意）"
+    },
+    {
+      "id": "36:2",
+      "name": "05 黑夜版 · 跨端总览"
+    },
+    {
+      "id": "36:3",
+      "name": "06 黑夜版 · 手机"
+    },
+    {
+      "id": "36:18",
+      "name": "07 黑夜版 · Pad"
+    },
+    {
+      "id": "36:21",
+      "name": "08 黑夜版 · 桌面客户端"
+    },
+    {
+      "id": "36:24",
+      "name": "09 黑夜版 · Web"
+    }
+  ],
+  "screenCount": 21,
+  "roots": [
+    {
+      "key": "phone/home",
+      "id": "36:4",
+      "name": "Night / phone/home",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 9,
+        "TEXT": 24,
+        "INSTANCE": 12
+      },
+      "texts": 24,
+      "instances": 12,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "37:50",
+          "name": "Photo / cat / 学习素材",
+          "type": "FRAME",
+          "width": 350,
+          "height": 154
+        }
+      ]
+    },
+    {
+      "key": "phone/adopt",
+      "id": "36:5",
+      "name": "Night / phone/adopt",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 11,
+        "TEXT": 22,
+        "INSTANCE": 12
+      },
+      "texts": 22,
+      "instances": 12,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "I37:94;36:31",
+          "name": "Photo / pet",
+          "type": "FRAME",
+          "width": 350,
+          "height": 180
+        },
+        {
+          "id": "I37:102;36:31",
+          "name": "Photo / pet",
+          "type": "FRAME",
+          "width": 350,
+          "height": 180
+        }
+      ]
+    },
+    {
+      "key": "phone/detail",
+      "id": "36:6",
+      "name": "Night / phone/detail",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 8,
+        "TEXT": 17,
+        "INSTANCE": 6
+      },
+      "texts": 17,
+      "instances": 6,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "37:120",
+          "name": "Photo / cat / 学习素材",
+          "type": "FRAME",
+          "width": 350,
+          "height": 180
+        }
+      ]
+    },
+    {
+      "key": "phone/verify",
+      "id": "36:7",
+      "name": "Night / phone/verify",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 7,
+        "TEXT": 23,
+        "INSTANCE": 7
+      },
+      "texts": 23,
+      "instances": 7,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/publish",
+      "id": "36:8",
+      "name": "Night / phone/publish",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 8,
+        "TEXT": 22,
+        "INSTANCE": 10
+      },
+      "texts": 22,
+      "instances": 10,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/report",
+      "id": "36:9",
+      "name": "Night / phone/report",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 7,
+        "TEXT": 18,
+        "INSTANCE": 6
+      },
+      "texts": 18,
+      "instances": 6,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/progress",
+      "id": "36:10",
+      "name": "Night / phone/progress",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 6,
+        "TEXT": 19,
+        "INSTANCE": 7
+      },
+      "texts": 19,
+      "instances": 7,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/login",
+      "id": "36:11",
+      "name": "Night / phone/login",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 7,
+        "TEXT": 17,
+        "INSTANCE": 6
+      },
+      "texts": 17,
+      "instances": 6,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/otp",
+      "id": "36:12",
+      "name": "Night / phone/otp",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 7,
+        "TEXT": 16,
+        "INSTANCE": 6
+      },
+      "texts": 16,
+      "instances": 6,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/lostList",
+      "id": "36:13",
+      "name": "Night / phone/lostList",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 8,
+        "TEXT": 19,
+        "INSTANCE": 8
+      },
+      "texts": 19,
+      "instances": 8,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/lostMap",
+      "id": "36:14",
+      "name": "Night / phone/lostMap",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 8,
+        "TEXT": 19,
+        "INSTANCE": 8
+      },
+      "texts": 19,
+      "instances": 8,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/find",
+      "id": "36:15",
+      "name": "Night / phone/find",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 10,
+        "TEXT": 21,
+        "INSTANCE": 10
+      },
+      "texts": 21,
+      "instances": 10,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "I37:429;36:31",
+          "name": "Photo / pet",
+          "type": "FRAME",
+          "width": 350,
+          "height": 180
+        }
+      ]
+    },
+    {
+      "key": "phone/mine",
+      "id": "36:16",
+      "name": "Night / phone/mine",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 6,
+        "TEXT": 20,
+        "INSTANCE": 10
+      },
+      "texts": 20,
+      "instances": 10,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "phone/messages",
+      "id": "36:17",
+      "name": "Night / phone/messages",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:3",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 7,
+        "TEXT": 21,
+        "INSTANCE": 9
+      },
+      "texts": 21,
+      "instances": 9,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "pad/adopt",
+      "id": "36:19",
+      "name": "Night / pad/adopt",
+      "width": 1024,
+      "height": 1366,
+      "parentId": "36:18",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 14,
+        "TEXT": 34,
+        "INSTANCE": 15
+      },
+      "texts": 34,
+      "instances": 15,
+      "fontFamilies": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "I39:194;36:31",
+          "name": "Photo / pet",
+          "type": "FRAME",
+          "width": 300,
+          "height": 180
+        },
+        {
+          "id": "I39:200;36:31",
+          "name": "Photo / pet",
+          "type": "FRAME",
+          "width": 300,
+          "height": 180
+        },
+        {
+          "id": "39:207",
+          "name": "Photo / cat / 学习素材",
+          "type": "FRAME",
+          "width": 484,
+          "height": 180
+        }
+      ]
+    },
+    {
+      "key": "pad/community",
+      "id": "36:20",
+      "name": "Night / pad/community",
+      "width": 1366,
+      "height": 1024,
+      "parentId": "36:18",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 9,
+        "TEXT": 25,
+        "INSTANCE": 10
+      },
+      "texts": 25,
+      "instances": 10,
+      "fontFamilies": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "39:249",
+          "name": "Photo / cat / 学习素材",
+          "type": "FRAME",
+          "width": 742,
+          "height": 260
+        }
+      ]
+    },
+    {
+      "key": "desktop/messages",
+      "id": "36:22",
+      "name": "Night / desktop/messages",
+      "width": 1440,
+      "height": 960,
+      "parentId": "36:21",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 11,
+        "TEXT": 32,
+        "INSTANCE": 13
+      },
+      "texts": 32,
+      "instances": 13,
+      "fontFamilies": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "41:365",
+          "name": "Photo / cat / 学习素材",
+          "type": "FRAME",
+          "width": 296,
+          "height": 180
+        }
+      ]
+    },
+    {
+      "key": "desktop/publish",
+      "id": "36:23",
+      "name": "Night / desktop/publish",
+      "width": 1440,
+      "height": 960,
+      "parentId": "36:21",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 10,
+        "TEXT": 36,
+        "INSTANCE": 18
+      },
+      "texts": 36,
+      "instances": 18,
+      "fontFamilies": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "missingFonts": [],
+      "imageNodes": []
+    },
+    {
+      "key": "web/home",
+      "id": "36:25",
+      "name": "Night / web/home",
+      "width": 1440,
+      "height": 1024,
+      "parentId": "36:24",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 11,
+        "TEXT": 21,
+        "INSTANCE": 9
+      },
+      "texts": 21,
+      "instances": 9,
+      "fontFamilies": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "41:463",
+          "name": "Photo / cat / 学习素材",
+          "type": "FRAME",
+          "width": 572,
+          "height": 344
+        }
+      ]
+    },
+    {
+      "key": "web/detail",
+      "id": "36:26",
+      "name": "Night / web/detail",
+      "width": 1280,
+      "height": 960,
+      "parentId": "36:24",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 8,
+        "TEXT": 22,
+        "INSTANCE": 7
+      },
+      "texts": 22,
+      "instances": 7,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "41:486",
+          "name": "Photo / cat / 学习素材",
+          "type": "FRAME",
+          "width": 520,
+          "height": 340
+        }
+      ]
+    },
+    {
+      "key": "web/mobile",
+      "id": "36:27",
+      "name": "Night / web/mobile",
+      "width": 390,
+      "height": 844,
+      "parentId": "36:24",
+      "explicitVariableModes": {
+        "VariableCollectionId:14:6": "14:2"
+      },
+      "counts": {
+        "FRAME": 8,
+        "TEXT": 15,
+        "INSTANCE": 4
+      },
+      "texts": 15,
+      "instances": 4,
+      "fontFamilies": [
+        "Noto Sans SC"
+      ],
+      "missingFonts": [],
+      "imageNodes": [
+        {
+          "id": "41:526",
+          "name": "Photo / cat / 学习素材",
+          "type": "FRAME",
+          "width": 350,
+          "height": 176
+        }
+      ]
+    }
+  ],
+  "componentCount": 15,
+  "components": [
+    {
+      "id": "17:39",
+      "name": "M&D Study / Primary action",
+      "propertyDefinitions": {
+        "Label#17:0": {
+          "type": "TEXT",
+          "defaultValue": "确认预约"
+        }
+      }
+    },
+    {
+      "id": "17:43",
+      "name": "M&D Study / Secondary action",
+      "propertyDefinitions": {
+        "Label#17:1": {
+          "type": "TEXT",
+          "defaultValue": "查看详细披露"
+        }
+      }
+    },
+    {
+      "id": "17:47",
+      "name": "M&D Study / Filter / unselected",
+      "propertyDefinitions": {
+        "Label#17:2": {
+          "type": "TEXT",
+          "defaultValue": "猫咪"
+        }
+      }
+    },
+    {
+      "id": "17:51",
+      "name": "M&D Study / Filter / selected",
+      "propertyDefinitions": {
+        "Label#17:3": {
+          "type": "TEXT",
+          "defaultValue": "猫咪"
+        }
+      }
+    },
+    {
+      "id": "17:55",
+      "name": "M&D Study / Input / default",
+      "propertyDefinitions": {
+        "Label#17:4": {
+          "type": "TEXT",
+          "defaultValue": "请输入或选择"
+        }
+      }
+    },
+    {
+      "id": "17:59",
+      "name": "M&D Study / Input / error",
+      "propertyDefinitions": {
+        "Label#17:5": {
+          "type": "TEXT",
+          "defaultValue": "请补充具体场所"
+        }
+      }
+    },
+    {
+      "id": "17:63",
+      "name": "M&D Study / Status / pending",
+      "propertyDefinitions": {
+        "Label#17:6": {
+          "type": "TEXT",
+          "defaultValue": "等待确认"
+        }
+      }
+    },
+    {
+      "id": "17:67",
+      "name": "M&D Study / Status / reviewed",
+      "propertyDefinitions": {
+        "Label#17:7": {
+          "type": "TEXT",
+          "defaultValue": "近期视频已审阅"
+        }
+      }
+    },
+    {
+      "id": "17:71",
+      "name": "M&D Study / Status / disputed",
+      "propertyDefinitions": {
+        "Label#17:8": {
+          "type": "TEXT",
+          "defaultValue": "该项复核中"
+        }
+      }
+    },
+    {
+      "id": "17:75",
+      "name": "M&D Study / Action / disabled",
+      "propertyDefinitions": {
+        "Label#17:9": {
+          "type": "TEXT",
+          "defaultValue": "等待对方确认"
+        }
+      }
+    },
+    {
+      "id": "36:30",
+      "name": "M&D Study / Night / Pet card",
+      "propertyDefinitions": {
+        "Title#36:0": {
+          "type": "TEXT",
+          "defaultValue": "小满，想慢慢认识你。"
+        },
+        "Meta#36:1": {
+          "type": "TEXT",
+          "defaultValue": "猫咪 · 8 个月 · 武汉"
+        },
+        "Note#36:2": {
+          "type": "TEXT",
+          "defaultValue": "救助领养 · 资料范围可展开"
+        }
+      }
+    },
+    {
+      "id": "36:36",
+      "name": "M&D Study / Night / Disclosure row",
+      "propertyDefinitions": {
+        "Title#36:3": {
+          "type": "TEXT",
+          "defaultValue": "核验事项"
+        },
+        "Value#36:4": {
+          "type": "TEXT",
+          "defaultValue": "目前可确认的范围"
+        },
+        "Detail#36:5": {
+          "type": "TEXT",
+          "defaultValue": "方法、时间和不代表什么"
+        }
+      }
+    },
+    {
+      "id": "36:40",
+      "name": "M&D Study / Night / Editorial guide",
+      "propertyDefinitions": {
+        "Title#36:6": {
+          "type": "TEXT",
+          "defaultValue": "把陪伴的小事，慢慢做好。"
+        },
+        "Body#36:7": {
+          "type": "TEXT",
+          "defaultValue": "一篇真实可读的内容，也比虚构的附近动态有用。"
+        }
+      }
+    },
+    {
+      "id": "36:44",
+      "name": "M&D Study / Night / Navigation / idle",
+      "propertyDefinitions": {
+        "Label#36:8": {
+          "type": "TEXT",
+          "defaultValue": "社区"
+        }
+      }
+    },
+    {
+      "id": "36:46",
+      "name": "M&D Study / Night / Navigation / selected",
+      "propertyDefinitions": {
+        "Label#36:9": {
+          "type": "TEXT",
+          "defaultValue": "社区"
+        }
+      }
+    }
+  ],
+  "variableCount": 59,
+  "styleCount": 7,
+  "colorVariables": [
+    {
+      "id": "VariableID:14:36",
+      "name": "color/background",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:8"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:23"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:37",
+      "name": "color/surface",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:9"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:24"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:38",
+      "name": "color/subtle",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:10"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:39",
+      "name": "color/ink",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:11"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:26"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:40",
+      "name": "color/muted",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:12"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:27"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:41",
+      "name": "color/brand",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:13"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:28"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:42",
+      "name": "color/onBrand",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:9"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:29"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:43",
+      "name": "color/brandSoft",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:14"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:29"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:44",
+      "name": "color/success",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:15"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:30"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:45",
+      "name": "color/successSoft",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:16"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:31"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:46",
+      "name": "color/warning",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:17"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:32"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:47",
+      "name": "color/warningSoft",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:18"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:48",
+      "name": "color/danger",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:19"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:33"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:49",
+      "name": "color/dangerSoft",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:20"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:34"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:50",
+      "name": "color/border",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:21"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:35"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:51",
+      "name": "color/controlBorder",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:22"
+        },
+        "14:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:27"
+        }
+      }
+    }
+  ],
+  "collections": [
+    {
+      "id": "VariableCollectionId:14:5",
+      "name": "M&D Study / Primitives",
+      "modes": [
+        {
+          "name": "Value",
+          "modeId": "14:0"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:14:6",
+      "name": "M&D Study / Color",
+      "modes": [
+        {
+          "name": "Light",
+          "modeId": "14:1"
+        },
+        {
+          "name": "Dark",
+          "modeId": "14:2"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:14:7",
+      "name": "M&D Study / Geometry",
+      "modes": [
+        {
+          "name": "Value",
+          "modeId": "14:3"
+        }
+      ]
+    }
+  ],
+  "navigation": {
+    "actionCount": 49,
+    "invalidDestinations": [],
+    "allDestinationsSamePageTopLevel": true,
+    "flowStartingPoints": [
+      {
+        "nodeId": "36:4",
+        "name": "黑夜 · 社区与领养"
+      },
+      {
+        "nodeId": "36:6",
+        "name": "黑夜 · 核验与举报"
+      },
+      {
+        "nodeId": "36:13",
+        "name": "黑夜 · 走失互助空态"
+      },
+      {
+        "nodeId": "36:11",
+        "name": "黑夜 · 登录与异常示意"
+      }
+    ],
+    "businessSubmissionSimulated": false
+  },
+  "comparison": {
+    "id": "44:241",
+    "width": 1440,
+    "height": 1698.800048828125,
+    "rows": [
+      {
+        "id": "44:244",
+        "x": 48,
+        "y": 178,
+        "width": 1344,
+        "height": 886,
+        "layoutSizingVertical": "HUG"
+      },
+      {
+        "id": "44:357",
+        "x": 48,
+        "y": 1096,
+        "width": 1344,
+        "height": 502.79998779296875,
+        "layoutSizingVertical": "HUG"
+      }
+    ],
+    "reactionCount": 0
+  },
+  "imageCount": 13,
+  "allImagesDiscretePhotos": true,
+  "colors": {
+    "background": {
+      "r": 0.08627451211214066,
+      "g": 0.10588235408067703,
+      "b": 0.0941176488995552,
+      "a": 1
+    },
+    "surface": {
+      "r": 0.13333334028720856,
+      "g": 0.16470588743686676,
+      "b": 0.14509804546833038,
+      "a": 1
+    },
+    "subtle": {
+      "r": 0.1882352977991104,
+      "g": 0.23137255012989044,
+      "b": 0.20000000298023224,
+      "a": 1
+    },
+    "ink": {
+      "r": 0.9529411792755127,
+      "g": 0.9647058844566345,
+      "b": 0.9490196108818054,
+      "a": 1
+    },
+    "muted": {
+      "r": 0.7372549176216125,
+      "g": 0.772549033164978,
+      "b": 0.7411764860153198,
+      "a": 1
+    },
+    "brand": {
+      "r": 0.8980392217636108,
+      "g": 0.6392157077789307,
+      "b": 0.5529412031173706,
+      "a": 1
+    },
+    "onBrand": {
+      "r": 0.1882352977991104,
+      "g": 0.0941176488995552,
+      "b": 0.05882352963089943,
+      "a": 1
+    },
+    "brandSoft": {
+      "r": 0.1882352977991104,
+      "g": 0.0941176488995552,
+      "b": 0.05882352963089943,
+      "a": 1
+    },
+    "success": {
+      "r": 0.658823549747467,
+      "g": 0.8235294222831726,
+      "b": 0.7215686440467834,
+      "a": 1
+    },
+    "successSoft": {
+      "r": 0.15294118225574493,
+      "g": 0.239215686917305,
+      "b": 0.1882352977991104,
+      "a": 1
+    },
+    "warning": {
+      "r": 0.9529411792755127,
+      "g": 0.7960784435272217,
+      "b": 0.5215686559677124,
+      "a": 1
+    },
+    "warningSoft": {
+      "r": 0.1882352977991104,
+      "g": 0.23137255012989044,
+      "b": 0.20000000298023224,
+      "a": 1
+    },
+    "danger": {
+      "r": 0.9529411792755127,
+      "g": 0.6549019813537598,
+      "b": 0.6549019813537598,
+      "a": 1
+    },
+    "dangerSoft": {
+      "r": 0.29019609093666077,
+      "g": 0.16078431904315948,
+      "b": 0.16862745583057404,
+      "a": 1
+    },
+    "border": {
+      "r": 0.2862745225429535,
+      "g": 0.3294117748737335,
+      "b": 0.2980392277240753,
+      "a": 1
+    },
+    "controlBorder": {
+      "r": 0.7372549176216125,
+      "g": 0.772549033164978,
+      "b": 0.7411764860153198,
+      "a": 1
+    }
+  },
+  "contrast": [
+    {
+      "foreground": "ink",
+      "background": "background",
+      "ratio": 16.01,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "muted",
+      "background": "background",
+      "ratio": 9.85,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "muted",
+      "background": "subtle",
+      "ratio": 6.59,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "onBrand",
+      "background": "brand",
+      "ratio": 7.88,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "brand",
+      "background": "brandSoft",
+      "ratio": 7.88,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "success",
+      "background": "successSoft",
+      "ratio": 7,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "warning",
+      "background": "warningSoft",
+      "ratio": 7.61,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "danger",
+      "background": "dangerSoft",
+      "ratio": 6.63,
+      "target": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "controlBorder",
+      "background": "surface",
+      "ratio": 8.32,
+      "target": 3,
+      "pass": true
+    }
+  ],
+  "bindingSamples": [
+    {
+      "id": "36:4",
+      "type": "FRAME",
+      "name": "Night / phone/home",
+      "boundVariables": {
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:64"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:64"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:64"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:64"
+        },
+        "fills": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:14:36"
+          }
+        ]
+      },
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED"
+    },
+    {
+      "id": "36:30",
+      "type": "COMPONENT",
+      "name": "M&D Study / Night / Pet card",
+      "boundVariables": {
+        "itemSpacing": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "fills": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:14:37"
+          }
+        ]
+      },
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "HUG"
+    },
+    {
+      "id": "36:31",
+      "type": "FRAME",
+      "name": "Photo / pet",
+      "boundVariables": {
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        }
+      },
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "FIXED"
+    },
+    {
+      "id": "36:32",
+      "type": "FRAME",
+      "name": "Pet content",
+      "boundVariables": {
+        "itemSpacing": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingLeft": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:55"
+        },
+        "paddingTop": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:55"
+        },
+        "paddingRight": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:55"
+        },
+        "paddingBottom": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:55"
+        }
+      },
+      "layoutSizingHorizontal": "FILL",
+      "layoutSizingVertical": "HUG"
+    },
+    {
+      "id": "36:36",
+      "type": "COMPONENT",
+      "name": "M&D Study / Night / Disclosure row",
+      "boundVariables": {
+        "itemSpacing": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingLeft": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:55"
+        },
+        "paddingTop": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:55"
+        },
+        "paddingRight": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:55"
+        },
+        "paddingBottom": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:55"
+        },
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "fills": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:14:37"
+          }
+        ]
+      },
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "HUG"
+    },
+    {
+      "id": "36:40",
+      "type": "COMPONENT",
+      "name": "M&D Study / Night / Editorial guide",
+      "boundVariables": {
+        "itemSpacing": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingLeft": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:56"
+        },
+        "paddingTop": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:56"
+        },
+        "paddingRight": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:56"
+        },
+        "paddingBottom": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:56"
+        },
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:63"
+        },
+        "fills": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:14:38"
+          }
+        ]
+      },
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "HUG"
+    },
+    {
+      "id": "36:44",
+      "type": "COMPONENT",
+      "name": "M&D Study / Night / Navigation / idle",
+      "boundVariables": {
+        "itemSpacing": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingLeft": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingTop": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingRight": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingBottom": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        }
+      },
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED"
+    },
+    {
+      "id": "36:46",
+      "type": "COMPONENT",
+      "name": "M&D Study / Night / Navigation / selected",
+      "boundVariables": {
+        "itemSpacing": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingLeft": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingTop": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingRight": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "paddingBottom": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:53"
+        },
+        "topLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "topRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "bottomLeftRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "bottomRightRadius": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:62"
+        },
+        "fills": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:14:43"
+          }
+        ]
+      },
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED"
+    }
+  ],
+  "status": "Static design verification complete; not runtime acceptance",
+  "oldPagesPreserved": true,
+  "nativeSpecsUsed": false,
+  "visualReview": {
+    "exports": [
+      "night-phone-preview.png",
+      "night-pad-preview.png",
+      "night-desktop-preview.png",
+      "night-web-preview.png",
+      "night-overview-preview.png",
+      "night-components-preview.png",
+      "night-comparison-preview.png"
+    ],
+    "scope": "All 21 unique screens plus component specimen, overview and comparison reviewed; navigation width/instance fill and comparison row Hug corrected.",
+    "deviceKeyboardScreenReaderVerified": false
+  },
+  "limitations": [
+    "Only selected navigation/back actions are connected.",
+    "No SMS, real maps, publishing/reporting submissions, payment or authentication connected.",
+    "No complete responsive, zoom, keyboard, screen-reader or real-device acceptance performed.",
+    "Comparison board is a native editable snapshot, not automatically synced; 4 copies do not add unique screens."
+  ],
+  "localHandoffChecks": {
+    "textFiles": 38,
+    "jsonParsed": 25,
+    "localMarkdownLinks": 96,
+    "encoding": "UTF-8 without BOM",
+    "issues": [],
+    "trackedDocWhitespaceCheck": "passed",
+    "compileBuildTests": "Not run; global no-self-build rule"
+  }
+}

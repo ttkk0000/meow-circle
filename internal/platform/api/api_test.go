@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -39,7 +40,11 @@ func setupTestServer(t *testing.T) http.Handler {
 	t.Cleanup(func() { _ = os.Chdir(dir) })
 
 	// Deterministic JWT secret + admin key.
-	t.Setenv("JWT_SECRET", "test-secret")
+	t.Setenv("APP_ENV", "development")
+	t.Setenv("MND_ENABLE_LEGACY_AUTH", "1")
+	t.Setenv("MND_ENABLE_MOCK_PAYMENT", "1")
+	t.Setenv("MND_SEED_DEMO", "1")
+	t.Setenv("JWT_SECRET", "test-secret-at-least-thirty-two-bytes")
 	t.Setenv("ADMIN_KEY", "test-admin-key")
 	t.Setenv("DATABASE_URL", "") // force in-memory
 	t.Setenv("REDIS_URL", "")
@@ -391,4 +396,172 @@ func TestMaxBodySizeEnforced(t *testing.T) {
 	if rec.Code != http.StatusBadRequest {
 		t.Fatalf("oversized body status = %d, want 400", rec.Code)
 	}
+}
+
+func TestAdoptionPetsSeedFilterAndDetail(t *testing.T) {
+	h := setupTestServer(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/adoption/pets?species=cat&status=available", nil)
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("adoption pets status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	env := decodeEnvelope(t, rec.Body.Bytes())
+	var data struct {
+		Pets []struct {
+			ID      int64  `json:"id"`
+			Species string `json:"species"`
+			Status  string `json:"status"`
+		} `json:"pets"`
+	}
+	if err := json.Unmarshal(env.Data, &data); err != nil {
+		t.Fatalf("decode adoption pets: %v", err)
+	}
+	if len(data.Pets) == 0 {
+		t.Fatal("expected seeded adoption pets")
+	}
+	for _, pet := range data.Pets {
+		if !strings.Contains(strings.ToLower(pet.Species), "cat") {
+			t.Fatalf("species filter returned %q", pet.Species)
+		}
+		if pet.Status != "available" {
+			t.Fatalf("status filter returned %q", pet.Status)
+		}
+	}
+
+	req = httptest.NewRequest(http.MethodGet, "/api/v1/adoption/pets/"+strconvFormat(data.Pets[0].ID), nil)
+	rec = httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("adoption detail status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	env = decodeEnvelope(t, rec.Body.Bytes())
+	var detail struct {
+		Pet struct {
+			ID int64 `json:"id"`
+		} `json:"pet"`
+		Rescuer struct {
+			ID int64 `json:"id"`
+		} `json:"rescuer"`
+	}
+	if err := json.Unmarshal(env.Data, &detail); err != nil {
+		t.Fatalf("decode adoption detail: %v", err)
+	}
+	if detail.Pet.ID != data.Pets[0].ID || detail.Rescuer.ID == 0 {
+		t.Fatalf("unexpected adoption detail: %+v", detail)
+	}
+
+	mediaReq := httptest.NewRequest(http.MethodGet, "/api/v1/media/1/content", nil)
+	mediaRec := httptest.NewRecorder()
+	h.ServeHTTP(mediaRec, mediaReq)
+	if mediaRec.Code != http.StatusFound {
+		t.Fatalf("media content status=%d body=%s", mediaRec.Code, mediaRec.Body.String())
+	}
+	if !strings.HasPrefix(mediaRec.Header().Get("Location"), "/mock-images/") {
+		t.Fatalf("media content redirect=%q", mediaRec.Header().Get("Location"))
+	}
+}
+
+func TestApplyForAdoptionFlow(t *testing.T) {
+	h := setupTestServer(t)
+	petID := firstAdoptionPetID(t, h)
+	token := registerAndToken(t, h, "adopter1")
+
+	body := `{"pet_id":` + strconvFormat(petID) + `,"message":"I can provide a stable indoor home.","contact_info":"adopter@example.com"}`
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/adoption/applications", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+token)
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("apply adoption status=%d body=%s", rec.Code, rec.Body.String())
+	}
+
+	req = httptest.NewRequest(http.MethodGet, "/api/v1/me/adoption/applications", nil)
+	req.Header.Set("Authorization", "Bearer "+token)
+	rec = httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("my adoption apps status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	env := decodeEnvelope(t, rec.Body.Bytes())
+	var data struct {
+		Applications []struct {
+			PetID  int64  `json:"pet_id"`
+			Status string `json:"status"`
+		} `json:"applications"`
+	}
+	if err := json.Unmarshal(env.Data, &data); err != nil {
+		t.Fatalf("decode my adoption apps: %v", err)
+	}
+	if len(data.Applications) != 1 || data.Applications[0].PetID != petID || data.Applications[0].Status != "submitted" {
+		t.Fatalf("unexpected adoption apps: %+v", data.Applications)
+	}
+}
+
+func TestApplyForAdoptionRequiresContactInfo(t *testing.T) {
+	h := setupTestServer(t)
+	petID := firstAdoptionPetID(t, h)
+	token := registerAndToken(t, h, "adopter2")
+
+	body := `{"pet_id":` + strconvFormat(petID) + `,"message":"I can provide a stable indoor home."}`
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/adoption/applications", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+token)
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("missing contact status=%d want 400 body=%s", rec.Code, rec.Body.String())
+	}
+}
+
+func firstAdoptionPetID(t *testing.T, h http.Handler) int64 {
+	t.Helper()
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/adoption/pets", nil)
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("list adoption pets: status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	env := decodeEnvelope(t, rec.Body.Bytes())
+	var data struct {
+		Pets []struct {
+			ID int64 `json:"id"`
+		} `json:"pets"`
+	}
+	if err := json.Unmarshal(env.Data, &data); err != nil {
+		t.Fatalf("decode adoption pets: %v", err)
+	}
+	if len(data.Pets) == 0 {
+		t.Fatal("expected at least one adoption pet")
+	}
+	return data.Pets[0].ID
+}
+
+func registerAndToken(t *testing.T, h http.Handler, username string) string {
+	t.Helper()
+	body := `{"username":"` + username + `","password":"hunter22","nickname":"` + username + `"}`
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/auth/register", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("register %s status=%d body=%s", username, rec.Code, rec.Body.String())
+	}
+	env := decodeEnvelope(t, rec.Body.Bytes())
+	var data struct {
+		Token string `json:"token"`
+	}
+	if err := json.Unmarshal(env.Data, &data); err != nil {
+		t.Fatalf("decode token: %v", err)
+	}
+	if data.Token == "" {
+		t.Fatal("empty auth token")
+	}
+	return data.Token
+}
+
+func strconvFormat(v int64) string {
+	return strconv.FormatInt(v, 10)
 }

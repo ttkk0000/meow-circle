@@ -1,0 +1,844 @@
+[
+  {
+    "id": "notificationSettings",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "toggle",
+        "label": "私信消息",
+        "on": true,
+        "to": "notificationMuted"
+      },
+      {
+        "type": "toggle",
+        "label": "宠友群消息",
+        "on": true,
+        "to": "notificationNoGroup"
+      },
+      {
+        "type": "toggle",
+        "label": "申请与照护进度",
+        "on": true,
+        "to": "notificationNoProgress"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围和授权",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "即时通知",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "前往查看",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationMuted",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "toggle",
+        "label": "私信消息",
+        "on": false,
+        "to": "notificationSettings"
+      },
+      {
+        "type": "toggle",
+        "label": "宠友群消息",
+        "on": true,
+        "to": "notificationGroupMuted"
+      },
+      {
+        "type": "toggle",
+        "label": "申请与照护进度",
+        "on": true,
+        "to": "notificationProgressMuted"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围和授权",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "即时通知",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "前往查看",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationGroupMuted",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "toggle",
+        "label": "私信消息",
+        "on": false,
+        "to": "notificationNoGroup"
+      },
+      {
+        "type": "toggle",
+        "label": "宠友群消息",
+        "on": false,
+        "to": "notificationMuted"
+      },
+      {
+        "type": "toggle",
+        "label": "申请与照护进度",
+        "on": true,
+        "to": "notificationAllMuted"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围和授权",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "即时通知",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "前往查看",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationProgressMuted",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "toggle",
+        "label": "私信消息",
+        "on": false,
+        "to": "notificationNoProgress"
+      },
+      {
+        "type": "toggle",
+        "label": "宠友群消息",
+        "on": true,
+        "to": "notificationAllMuted"
+      },
+      {
+        "type": "toggle",
+        "label": "申请与照护进度",
+        "on": false,
+        "to": "notificationMuted"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围和授权",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "即时通知",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "前往查看",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationAllMuted",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "toggle",
+        "label": "私信消息",
+        "on": false,
+        "to": "notificationPrivateOnly"
+      },
+      {
+        "type": "toggle",
+        "label": "宠友群消息",
+        "on": false,
+        "to": "notificationProgressMuted"
+      },
+      {
+        "type": "toggle",
+        "label": "申请与照护进度",
+        "on": false,
+        "to": "notificationGroupMuted"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围和授权",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "即时通知",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "前往查看",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationFrequency",
+    "title": "提醒频率",
+    "items": [
+      {
+        "type": "row",
+        "label": "即时通知",
+        "value": "按各类别开关接收",
+        "to": "notificationFrequencySaved"
+      },
+      {
+        "type": "row",
+        "label": "每日汇总",
+        "value": "每天 19:00 汇总非紧急动态",
+        "to": "notificationSummarySaved"
+      },
+      {
+        "type": "note",
+        "title": "重要进度",
+        "body": "安全、账号与需及时确认的状态会在应用内保留。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": null,
+    "module": 6
+  },
+  {
+    "id": "notificationFrequencySaved",
+    "title": "已使用即时通知",
+    "items": [
+      {
+        "type": "text",
+        "text": "已使用即时通知",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "新的非紧急动态将按已开启的类别推送。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回通知设置",
+      "to": "notificationSettings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationSummarySaved",
+    "title": "已改为每日汇总",
+    "items": [
+      {
+        "type": "text",
+        "text": "已改为每日汇总",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "非紧急动态每天 19:00 汇总；你随时可以在应用内查看。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回通知设置",
+      "to": "notificationSettingsSummary"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationSettingsSummary",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "每日汇总 · 19:00",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围与频率",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "已开启",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationPermission",
+    "title": "系统通知未开启",
+    "items": [
+      {
+        "type": "note",
+        "title": "可以继续使用 M&D",
+        "body": "你仍能在消息页查看进度。需要接收推送时，可前往系统设置开启。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "稍后再说",
+        "to": "notificationSettings",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "了解开启方式",
+      "to": "notificationPermissionHelp"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationPermissionHelp",
+    "title": "开启系统通知",
+    "items": [
+      {
+        "type": "text",
+        "text": "开启系统通知",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "在手机设置中找到 M&D，进入通知设置并允许通知。返回后，M&D 会重新读取权限状态。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回应用",
+      "to": "notificationSettings"
+    },
+    "module": 6
+  },
+  {
+    "id": "verificationExpired",
+    "title": "资料需要更新",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "健康材料更新提醒",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "疫苗记录",
+            "材料时间已超出本次有效范围"
+          ],
+          [
+            "当前展示",
+            "待更新"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "更新后重新核对",
+        "body": "旧记录保留为历史，不继续展示为当前已核实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "补充最新材料",
+      "to": "verificationSubmit"
+    },
+    "module": 3
+  },
+  {
+    "id": "verificationSubmit",
+    "title": "补充核实材料",
+    "items": [
+      {
+        "type": "upload",
+        "label": "添加最新记录",
+        "hint": "可遮挡与本次核实无关的信息",
+        "to": "mediaChoose",
+        "sets": {
+          "mediaReturn": 4
+        }
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "补充本月的疫苗接种记录。"
+      }
+    ],
+    "footer": {
+      "label": "提交核实",
+      "to": "verificationPending"
+    },
+    "module": 3
+  },
+  {
+    "id": "verificationPending",
+    "title": "材料待核实",
+    "items": [
+      {
+        "type": "text",
+        "text": "材料待核实",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "当前标记为待核实。处理完成后会更新结果与适用时间。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "查看处理进度",
+      "to": "verificationResult"
+    },
+    "module": 3
+  },
+  {
+    "id": "verificationResult",
+    "title": "材料核实结果",
+    "items": [
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "当前资料状态",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "疫苗材料",
+            "已核实本次材料"
+          ],
+          [
+            "范围",
+            "仅核对所提交记录"
+          ],
+          [
+            "时间",
+            "2026 年 10 月 19 日"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "状态有明确范围",
+        "body": "核实材料不替代健康诊断，也不代表其他资料已核实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回档案",
+      "to": "petProfile"
+    },
+    "module": 3
+  },
+  {
+    "id": "moderationResult",
+    "title": "举报处理结果",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "本次结果",
+            "支持举报 · 已限制相关内容"
+          ],
+          [
+            "理由摘要",
+            "内容含未经允许的个人联系方式"
+          ],
+          [
+            "隐私",
+            "不展示举报人身份与内部记录"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "对处理有异议",
+        "value": "提交一次申诉与补充材料",
+        "to": "appeal"
+      }
+    ],
+    "footer": {
+      "label": "返回进度",
+      "to": "reportProgress"
+    },
+    "module": 6
+  },
+  {
+    "id": "moderationUnsupported",
+    "title": "举报处理结果",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "本次结果",
+            "现有材料不足以支持举报"
+          ],
+          [
+            "内容状态",
+            "维持当前状态"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "可以补充材料",
+        "body": "新证据将按同一记录继续核对。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "补充与申诉",
+        "value": "说明具体问题",
+        "to": "appeal"
+      }
+    ],
+    "footer": {
+      "label": "返回进度",
+      "to": "reportProgress"
+    },
+    "module": 6
+  },
+  {
+    "id": "appealResolved",
+    "title": "申诉已处理",
+    "items": [
+      {
+        "type": "text",
+        "text": "申诉已处理",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "当前状态",
+        "body": "补充材料已核对，本次限制已调整；结果仅说明对你相关内容的影响。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "查看记录",
+      "to": "reportProgress"
+    },
+    "module": 6
+  },
+  {
+    "id": "mediaChoose",
+    "title": "选择照片",
+    "items": [
+      {
+        "type": "text",
+        "text": "已选择 3 / 9 张",
+        "role": "Strong",
+        "color": "ink"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 172
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 172
+      },
+      {
+        "type": "row",
+        "label": "调整顺序",
+        "value": "拖动后第一张作为封面",
+        "to": "mediaReorder"
+      },
+      {
+        "type": "row",
+        "label": "移除一张",
+        "value": "保留其余选择",
+        "to": "mediaRemoved"
+      }
+    ],
+    "footer": {
+      "label": "使用所选照片",
+      "to": "mediaUploading"
+    },
+    "module": 1
+  },
+  {
+    "id": "mediaUploading",
+    "title": "正在添加照片",
+    "items": [
+      {
+        "type": "timeline",
+        "entries": [
+          [
+            "照片 1 · 已完成",
+            "已加入本次草稿"
+          ],
+          [
+            "照片 2 · 上传中 60%",
+            "离开前可保留草稿"
+          ],
+          [
+            "照片 3 · 等待中",
+            "尚未开始"
+          ]
+        ]
+      },
+      {
+        "type": "action",
+        "label": "保留草稿并离开",
+        "to": "mediaDraftSaved",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "查看进度",
+      "to": "mediaPartialFailure"
+    },
+    "module": 1
+  },
+  {
+    "id": "mediaPartialFailure",
+    "title": "有 1 张照片未完成",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 180
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "已完成",
+            "2 张"
+          ],
+          [
+            "未完成",
+            "1 张 · 网络连接中断"
+          ]
+        ]
+      },
+      {
+        "type": "action",
+        "label": "移除未完成的照片",
+        "to": "mediaRemoved",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "保留草稿",
+        "to": "mediaDraftSaved",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "重试失败照片",
+      "to": "mediaReady"
+    },
+    "module": 1
+  },
+  {
+    "id": "mediaReorder",
+    "title": "调整照片顺序",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "text",
+        "text": "第 1 张 · 封面",
+        "role": "Strong",
+        "color": "ink"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "text",
+        "text": "第 2 张",
+        "role": "Caption",
+        "color": "muted"
+      }
+    ],
+    "footer": {
+      "label": "保存顺序",
+      "to": "mediaReady"
+    },
+    "module": 1
+  },
+  {
+    "id": "mediaRemoved",
+    "title": "已移除 1 张照片",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 200
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "已选择",
+            "2 张"
+          ],
+          [
+            "其余照片",
+            "上传与顺序已保留"
+          ]
+        ]
+      }
+    ],
+    "footer": {
+      "label": "返回发布草稿",
+      "to": "$mediaReturn"
+    },
+    "module": 1
+  },
+  {
+    "id": "mediaReady",
+    "title": "照片已准备好",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 200
+      },
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "已完成",
+            "3 张"
+          ],
+          [
+            "封面",
+            "当前第 1 张"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "尚未发布",
+        "body": "检查文字与可见范围后再发布。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回发布草稿",
+      "to": "$mediaReturn"
+    },
+    "module": 1
+  },
+  {
+    "id": "mediaDraftSaved",
+    "title": "草稿已保留",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "文字与受众",
+            "已保留"
+          ],
+          [
+            "照片",
+            "已完成的照片与失败项均保留"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "继续编辑",
+        "value": "从刚才的位置恢复",
+        "to": "mediaPartialFailure"
+      }
+    ],
+    "footer": {
+      "label": "返回宠友圈",
+      "to": "$mediaReturn"
+    },
+    "module": 1
+  }
+]

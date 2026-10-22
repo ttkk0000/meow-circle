@@ -1,0 +1,18 @@
+{
+  "z": 12,
+  "x": 3349,
+  "y": 1683,
+  "url": "https://tile.openstreetmap.org/12/3349/1683.png",
+  "source": "OpenStreetMap",
+  "attribution": "© OpenStreetMap contributors",
+  "policy": "https://operations.osmfoundation.org/policies/tiles/",
+  "imageHash": "f58065ed3f011ac0f50d2c8fc0563473d8f13756",
+  "bytes": 35402,
+  "createdNodeIds": [],
+  "mutatedNodeIds": [],
+  "purpose": "current noncommercial design reference; not live location",
+  "date": "2026-10-16",
+  "coordinates": "public Wuhan Hongshan-area example; no personal location",
+  "localFile": "assets/wuhan-area-osm-12-3349-1683.png",
+  "limitations": "Single current-preview tile, not a production map provider selection; no live positioning, geocoding or precise lost-pet claim."
+}

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"kitty-circle/internal/domain"
+	"kitty-circle/internal/mobile"
 	"kitty-circle/internal/platform/phoneotp"
 )
 
@@ -14,7 +15,9 @@ import (
 var _ Store = (*MemoryStore)(nil)
 
 type MemoryStore struct {
-	mu sync.RWMutex
+	mobileRecords map[mobile.Kind]map[int64]mobile.Record
+	mobileSeq     int64
+	mu            sync.RWMutex
 
 	userSeq         int64
 	postSeq         int64
@@ -26,6 +29,8 @@ type MemoryStore struct {
 	notificationSeq int64
 	messageSeq      int64
 	auditSeq        int64
+	adoptionPetSeq  int64
+	adoptionAppSeq  int64
 
 	users         map[int64]domain.User
 	usersByName   map[string]int64
@@ -39,6 +44,8 @@ type MemoryStore struct {
 	notifications map[int64]domain.Notification
 	messages      map[int64]domain.Message
 	auditLogs     map[int64]domain.AuditLog
+	adoptionPets  map[int64]domain.AdoptionPet
+	adoptionApps  map[int64]domain.AdoptionApplication
 
 	postLikes map[int64]map[int64]struct{} // postID -> liker user IDs
 	follows   map[int64]map[int64]struct{} // follower -> following user IDs
@@ -58,6 +65,8 @@ func NewMemoryStore() *MemoryStore {
 		notifications: make(map[int64]domain.Notification),
 		messages:      make(map[int64]domain.Message),
 		auditLogs:     make(map[int64]domain.AuditLog),
+		adoptionPets:  make(map[int64]domain.AdoptionPet),
+		adoptionApps:  make(map[int64]domain.AdoptionApplication),
 		postLikes:     make(map[int64]map[int64]struct{}),
 		follows:       make(map[int64]map[int64]struct{}),
 	}
@@ -148,6 +157,45 @@ func (s *MemoryStore) GetUsers(ids []int64) map[int64]domain.User {
 		}
 	}
 	return out
+}
+
+func (s *MemoryStore) GetUserStats(id int64) domain.UserStats {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	// Mock implementation
+	return domain.UserStats{
+		Moments:   12,
+		Likes:     1024,
+		Badges:    5,
+		Followers: 256,
+		Following: 128,
+	}
+}
+
+func (s *MemoryStore) GetUserPets(id int64) []domain.Pet {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	// Mock implementation
+	return []domain.Pet{
+		{
+			ID:        1,
+			OwnerID:   id,
+			Name:      "Latte",
+			Breed:     "Domestic Shorthair",
+			Age:       "3 yrs",
+			Tags:      []string{"Cozy", "Curious", "Sunny"},
+			AvatarURL: "/mock-images/mock_image_2.png",
+		},
+		{
+			ID:        2,
+			OwnerID:   id,
+			Name:      "Peach",
+			Breed:     "Persian",
+			Age:       "1.5 yrs",
+			Tags:      []string{"Sleepy", "Fluffy"},
+			AvatarURL: "/mock-images/mock_image_3.png",
+		},
+	}
 }
 
 func (s *MemoryStore) CreatePost(input domain.Post) domain.Post {
@@ -277,6 +325,9 @@ func (s *MemoryStore) CreateListing(input domain.Listing) domain.Listing {
 	input.CreatedAt = time.Now().UTC()
 	if input.Currency == "" {
 		input.Currency = "CNY"
+	}
+	if input.Category == "" {
+		input.Category = "product"
 	}
 	s.listings[input.ID] = input
 	return input
@@ -505,9 +556,15 @@ func (s *MemoryStore) CreateOrder(order domain.Order) domain.Order {
 	s.orderSeq++
 	now := time.Now().UTC()
 	order.ID = s.orderSeq
-	order.Status = domain.OrderStatusPendingPayment
-	order.CreatedAt = now
-	order.UpdatedAt = now
+	if order.Status == "" {
+		order.Status = domain.OrderStatusPendingPayment
+	}
+	if order.CreatedAt.IsZero() {
+		order.CreatedAt = now
+	}
+	if order.UpdatedAt.IsZero() {
+		order.UpdatedAt = now
+	}
 	s.orders[order.ID] = order
 	return order
 }
@@ -926,4 +983,113 @@ func (s *MemoryStore) BatchUserLikedPosts(userID int64, postIDs []int64) map[int
 		}
 	}
 	return out
+}
+
+// ===== Adoption =====
+
+func (s *MemoryStore) CreateAdoptionPet(pet domain.AdoptionPet) domain.AdoptionPet {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.adoptionPetSeq++
+	pet.ID = s.adoptionPetSeq
+	pet.CreatedAt = time.Now().UTC()
+	pet.UpdatedAt = pet.CreatedAt
+	s.adoptionPets[pet.ID] = pet
+	return pet
+}
+
+func (s *MemoryStore) GetAdoptionPet(id int64) (domain.AdoptionPet, bool) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	pet, ok := s.adoptionPets[id]
+	return pet, ok
+}
+
+func (s *MemoryStore) ListAdoptionPets() []domain.AdoptionPet {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	var list []domain.AdoptionPet
+	for _, p := range s.adoptionPets {
+		list = append(list, p)
+	}
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].CreatedAt.After(list[j].CreatedAt)
+	})
+	return list
+}
+
+func (s *MemoryStore) ListAdoptionPetsByRescuer(rescuerID int64) []domain.AdoptionPet {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	var list []domain.AdoptionPet
+	for _, p := range s.adoptionPets {
+		if p.RescuerID == rescuerID {
+			list = append(list, p)
+		}
+	}
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].CreatedAt.After(list[j].CreatedAt)
+	})
+	return list
+}
+
+func (s *MemoryStore) CreateAdoptionApplication(app domain.AdoptionApplication) domain.AdoptionApplication {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.adoptionAppSeq++
+	app.ID = s.adoptionAppSeq
+	app.CreatedAt = time.Now().UTC()
+	app.UpdatedAt = app.CreatedAt
+	s.adoptionApps[app.ID] = app
+	return app
+}
+
+func (s *MemoryStore) GetAdoptionApplication(id int64) (domain.AdoptionApplication, bool) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	app, ok := s.adoptionApps[id]
+	return app, ok
+}
+
+func (s *MemoryStore) ListAdoptionApplicationsByApplicant(applicantID int64) []domain.AdoptionApplication {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	var list []domain.AdoptionApplication
+	for _, a := range s.adoptionApps {
+		if a.ApplicantID == applicantID {
+			list = append(list, a)
+		}
+	}
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].CreatedAt.After(list[j].CreatedAt)
+	})
+	return list
+}
+
+func (s *MemoryStore) ListAdoptionApplicationsByRescuer(rescuerID int64) []domain.AdoptionApplication {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	var list []domain.AdoptionApplication
+	for _, a := range s.adoptionApps {
+		if a.RescuerID == rescuerID {
+			list = append(list, a)
+		}
+	}
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].CreatedAt.After(list[j].CreatedAt)
+	})
+	return list
+}
+
+func (s *MemoryStore) UpdateAdoptionApplicationStatus(id int64, status domain.ApplicationStatus) bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	app, ok := s.adoptionApps[id]
+	if !ok {
+		return false
+	}
+	app.Status = status
+	app.UpdatedAt = time.Now().UTC()
+	s.adoptionApps[id] = app
+	return true
 }

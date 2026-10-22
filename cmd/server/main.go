@@ -22,10 +22,14 @@ func main() {
 	maxOpenConns := getEnvInt("MAX_OPEN_CONNS", 500)
 	var openConns atomic.Int64
 	trackedConns := sync.Map{}
+	handler, err := api.NewRouterWithError()
+	if err != nil {
+		log.Fatalf("server configuration: %v", err)
+	}
 
 	server := &http.Server{
 		Addr:              ":" + port,
-		Handler:           api.NewRouter(),
+		Handler:           handler,
 		ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout:       30 * time.Second, // uploads may take a bit
 		WriteTimeout:      30 * time.Second,

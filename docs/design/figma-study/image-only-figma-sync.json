@@ -1,0 +1,119 @@
+{
+  "createdNodeIds": [],
+  "mutatedNodeIds": [
+    "108:4442",
+    "58:477",
+    "58:487",
+    "60:684",
+    "108:4562",
+    "108:4573",
+    "108:4437",
+    "60:679"
+  ],
+  "updates": [
+    {
+      "id": "108:4442",
+      "text": "添加或更换照片",
+      "w": 326,
+      "h": 22,
+      "auto": "HEIGHT",
+      "missingFont": false
+    },
+    {
+      "id": "58:477",
+      "text": "联系方式核对不等于宠物归属确认；照片也不能保证健康。",
+      "w": 326,
+      "h": 20,
+      "auto": "HEIGHT",
+      "missingFont": false
+    },
+    {
+      "id": "58:487",
+      "text": "近期实拍照片已上传、未查看；不证明归属或健康，无核验日期。",
+      "w": 266,
+      "h": 52,
+      "auto": "HEIGHT",
+      "missingFont": false
+    },
+    {
+      "id": "60:684",
+      "text": "近期接触实拍照片",
+      "w": 326,
+      "h": 22,
+      "auto": "HEIGHT",
+      "missingFont": false
+    },
+    {
+      "id": "108:4562",
+      "text": "照片选择说明",
+      "w": 262,
+      "h": 30,
+      "auto": "HEIGHT",
+      "missingFont": false
+    },
+    {
+      "id": "108:4573",
+      "text": "优先使用系统照片选择器，只分享你选中的照片。取消后仍可编辑文字与保存草稿。首版暂不支持视频。",
+      "w": 310,
+      "h": 66,
+      "auto": "HEIGHT",
+      "missingFont": false
+    }
+  ],
+  "roots": [
+    {
+      "id": "56:33",
+      "w": 390,
+      "h": 844,
+      "viewport": {
+        "w": 390,
+        "h": 672,
+        "overflow": "VERTICAL"
+      }
+    },
+    {
+      "id": "56:38",
+      "w": 390,
+      "h": 844,
+      "viewport": {
+        "w": 390,
+        "h": 672,
+        "overflow": "VERTICAL"
+      }
+    },
+    {
+      "id": "56:50",
+      "w": 390,
+      "h": 844,
+      "viewport": {
+        "w": 390,
+        "h": 672,
+        "overflow": "VERTICAL"
+      }
+    },
+    {
+      "id": "106:1424",
+      "w": 390,
+      "h": 844,
+      "viewport": {
+        "w": 390,
+        "h": 672,
+        "overflow": "VERTICAL"
+      }
+    }
+  ],
+  "remainingVideoTexts": [
+    {
+      "id": "108:4573",
+      "text": "优先使用系统照片选择器，只分享你选中的照片。取消后仍可编辑文字与保存草稿。首版暂不支持视频。"
+    }
+  ],
+  "date": "2026-10-16",
+  "reviewPageCheck": {
+    "pageId": "56:26",
+    "matches": [],
+    "reviewId": "109:3347"
+  },
+  "oldPagesUntouched": "00–09",
+  "applicationCodeChanged": false
+}

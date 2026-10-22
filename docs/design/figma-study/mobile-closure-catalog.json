@@ -1,0 +1,2557 @@
+[
+  {
+    "key": "home",
+    "id": "56:27",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "推荐首页"
+  },
+  {
+    "key": "homeEmpty",
+    "id": "56:28",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "推荐 · 冷启动空态"
+  },
+  {
+    "key": "city",
+    "id": "56:29",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "选择城市"
+  },
+  {
+    "key": "search",
+    "id": "56:30",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "搜索"
+  },
+  {
+    "key": "results",
+    "id": "56:31",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "搜索结果"
+  },
+  {
+    "key": "post",
+    "id": "56:32",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "布丁 · 公开日常"
+  },
+  {
+    "key": "composePost",
+    "id": "56:33",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "晒晒我的宠物"
+  },
+  {
+    "key": "postPreview",
+    "id": "56:34",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "发布前预览"
+  },
+  {
+    "key": "adopt",
+    "id": "56:35",
+    "module": 3,
+    "group": "A 领养发现、详情与条件",
+    "title": "领养"
+  },
+  {
+    "key": "filter",
+    "id": "56:36",
+    "module": 3,
+    "group": "A 领养发现、详情与条件",
+    "title": "筛选领养"
+  },
+  {
+    "key": "detail",
+    "id": "56:37",
+    "module": 3,
+    "group": "A 领养发现、详情与条件",
+    "title": "领养详情"
+  },
+  {
+    "key": "verify",
+    "id": "56:38",
+    "module": 3,
+    "group": "A 领养发现、详情与条件",
+    "title": "真实性说明"
+  },
+  {
+    "key": "apply",
+    "id": "56:39",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "申请领养"
+  },
+  {
+    "key": "applyReview",
+    "id": "56:40",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "检查申请"
+  },
+  {
+    "key": "applySent",
+    "id": "56:41",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "申请已发送"
+  },
+  {
+    "key": "application",
+    "id": "56:42",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "申请进度"
+  },
+  {
+    "key": "handover",
+    "id": "56:43",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "交接确认"
+  },
+  {
+    "key": "followup",
+    "id": "56:44",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "后续关怀"
+  },
+  {
+    "key": "withdrawn",
+    "id": "56:45",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "申请已撤回"
+  },
+  {
+    "key": "applicationDecision",
+    "id": "56:46",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "回应领养申请"
+  },
+  {
+    "key": "publishType",
+    "id": "56:47",
+    "module": 3,
+    "group": "C 发布披露与真实性",
+    "title": "选择发布类型"
+  },
+  {
+    "key": "petBasics",
+    "id": "56:48",
+    "module": 3,
+    "group": "C 发布披露与真实性",
+    "title": "宠物基本信息"
+  },
+  {
+    "key": "petDisclosure",
+    "id": "56:49",
+    "module": 3,
+    "group": "C 发布披露与真实性",
+    "title": "关系与领养条件"
+  },
+  {
+    "key": "petEvidence",
+    "id": "56:50",
+    "module": 3,
+    "group": "C 发布披露与真实性",
+    "title": "支持材料"
+  },
+  {
+    "key": "petPreview",
+    "id": "56:51",
+    "module": 3,
+    "group": "C 发布披露与真实性",
+    "title": "检查公开信息"
+  },
+  {
+    "key": "petPending",
+    "id": "56:52",
+    "module": 3,
+    "group": "C 发布披露与真实性",
+    "title": "发布状态"
+  },
+  {
+    "key": "myPublishes",
+    "id": "56:53",
+    "module": 3,
+    "group": "C 发布披露与真实性",
+    "title": "我的发布"
+  },
+  {
+    "key": "lostList",
+    "id": "56:54",
+    "module": 4,
+    "group": "A 浏览、公开求助与地图",
+    "title": "走失互助"
+  },
+  {
+    "key": "lostMap",
+    "id": "56:55",
+    "module": 4,
+    "group": "A 浏览、公开求助与地图",
+    "title": "互助地图"
+  },
+  {
+    "key": "lostDetail",
+    "id": "56:56",
+    "module": 4,
+    "group": "A 浏览、公开求助与地图",
+    "title": "求助详情 · 小满"
+  },
+  {
+    "key": "sighting",
+    "id": "56:57",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "提供私密线索"
+  },
+  {
+    "key": "sightingReview",
+    "id": "56:58",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "线索共享确认"
+  },
+  {
+    "key": "lostPublish",
+    "id": "56:59",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "发布求助 · 小满示例"
+  },
+  {
+    "key": "lostManage",
+    "id": "56:60",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "我的求助 · 小满"
+  },
+  {
+    "key": "messages",
+    "id": "56:61",
+    "module": 5,
+    "group": "A 消息会话与一对一聊天",
+    "title": "消息"
+  },
+  {
+    "key": "chat",
+    "id": "56:62",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "小满的照护者"
+  },
+  {
+    "key": "appointment",
+    "id": "56:63",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "确认见面安排"
+  },
+  {
+    "key": "change",
+    "id": "56:64",
+    "module": 3,
+    "group": "B 申请、沟通、交接与关怀",
+    "title": "安排变更"
+  },
+  {
+    "key": "report",
+    "id": "56:65",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "报告问题"
+  },
+  {
+    "key": "reportReceipt",
+    "id": "56:66",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "已收到报告"
+  },
+  {
+    "key": "reportProgress",
+    "id": "56:67",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "处理进度"
+  },
+  {
+    "key": "appeal",
+    "id": "56:68",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "申诉与复核"
+  },
+  {
+    "key": "publisherResponse",
+    "id": "56:69",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "回应被报告事项"
+  },
+  {
+    "key": "login",
+    "id": "56:70",
+    "module": 6,
+    "group": "A 登录与隐私设置",
+    "title": "登录后继续"
+  },
+  {
+    "key": "otp",
+    "id": "56:71",
+    "module": 6,
+    "group": "A 登录与隐私设置",
+    "title": "输入验证码"
+  },
+  {
+    "key": "otpError",
+    "id": "56:72",
+    "module": 6,
+    "group": "A 登录与隐私设置",
+    "title": "验证码未通过"
+  },
+  {
+    "key": "mine",
+    "id": "56:73",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "我的"
+  },
+  {
+    "key": "petProfile",
+    "id": "56:74",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "小满的主页"
+  },
+  {
+    "key": "settings",
+    "id": "56:75",
+    "module": 6,
+    "group": "A 登录与隐私设置",
+    "title": "设置"
+  },
+  {
+    "key": "privacy",
+    "id": "56:76",
+    "module": 6,
+    "group": "A 登录与隐私设置",
+    "title": "隐私与数据"
+  },
+  {
+    "key": "find",
+    "id": "56:77",
+    "module": 3,
+    "group": "E 次要分支 · 出售与转让",
+    "title": "出售与转让"
+  },
+  {
+    "key": "saleDetail",
+    "id": "56:78",
+    "module": 3,
+    "group": "E 次要分支 · 出售与转让",
+    "title": "出售详情"
+  },
+  {
+    "key": "salePublish",
+    "id": "56:79",
+    "module": 3,
+    "group": "E 次要分支 · 出售与转让",
+    "title": "发布出售 / 转让"
+  },
+  {
+    "key": "salePreview",
+    "id": "56:80",
+    "module": 3,
+    "group": "E 次要分支 · 出售与转让",
+    "title": "检查出售信息"
+  },
+  {
+    "key": "offline",
+    "id": "56:81",
+    "module": 6,
+    "group": "C 共用异常与系统权限",
+    "title": "连接暂时中断"
+  },
+  {
+    "key": "noResults",
+    "id": "56:82",
+    "module": 6,
+    "group": "C 共用异常与系统权限",
+    "title": "没有匹配结果"
+  },
+  {
+    "key": "contentUnavailable",
+    "id": "56:83",
+    "module": 6,
+    "group": "C 共用异常与系统权限",
+    "title": "内容状态已变化"
+  },
+  {
+    "key": "permission",
+    "id": "56:84",
+    "module": 6,
+    "group": "C 共用异常与系统权限",
+    "title": "不提供定位也可以"
+  },
+  {
+    "key": "sightingSent",
+    "id": "63:1361",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "线索已收到"
+  },
+  {
+    "key": "following",
+    "id": "106:1387",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "关注"
+  },
+  {
+    "key": "localFeed",
+    "id": "106:1388",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "武汉同城"
+  },
+  {
+    "key": "postLiked",
+    "id": "106:1389",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "布丁 · 已点赞"
+  },
+  {
+    "key": "postMine",
+    "id": "106:1390",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "小满 · 我的公开日常"
+  },
+  {
+    "key": "dogPost",
+    "id": "106:1391",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "豆豆 · 狗狗日常"
+  },
+  {
+    "key": "otherPost",
+    "id": "106:1392",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "奶糖 · 其他宠物日常"
+  },
+  {
+    "key": "comments",
+    "id": "106:1393",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "全部评论"
+  },
+  {
+    "key": "commentsWriting",
+    "id": "106:1394",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "写评论"
+  },
+  {
+    "key": "commentPosted",
+    "id": "106:1395",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "全部评论"
+  },
+  {
+    "key": "commentReplies",
+    "id": "106:1396",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "评论与回复"
+  },
+  {
+    "key": "postActions",
+    "id": "106:1397",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "内容操作"
+  },
+  {
+    "key": "commentActions",
+    "id": "106:1398",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "评论操作"
+  },
+  {
+    "key": "ownPostActions",
+    "id": "106:1399",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "我的内容操作"
+  },
+  {
+    "key": "deletePost",
+    "id": "106:1400",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "删除这篇日常？"
+  },
+  {
+    "key": "contentHidden",
+    "id": "106:1401",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "内容状态已变化"
+  },
+  {
+    "key": "authorProfile",
+    "id": "106:1402",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "布丁作者 · 未关注"
+  },
+  {
+    "key": "dogProfile",
+    "id": "106:1403",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "豆豆作者主页"
+  },
+  {
+    "key": "otherProfile",
+    "id": "106:1404",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "奶糖作者主页"
+  },
+  {
+    "key": "authorFollowing",
+    "id": "106:1405",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "布丁作者 · 已关注"
+  },
+  {
+    "key": "profileActions",
+    "id": "106:1406",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "账号与隐私"
+  },
+  {
+    "key": "interactionInbox",
+    "id": "106:1407",
+    "module": 5,
+    "group": "A 消息会话与一对一聊天",
+    "title": "互动通知"
+  },
+  {
+    "key": "systemInbox",
+    "id": "106:1408",
+    "module": 5,
+    "group": "A 消息会话与一对一聊天",
+    "title": "系统通知"
+  },
+  {
+    "key": "privateChat",
+    "id": "106:1409",
+    "module": 5,
+    "group": "A 消息会话与一对一聊天",
+    "title": "布丁的铲屎官"
+  },
+  {
+    "key": "privateSent",
+    "id": "106:1410",
+    "module": 5,
+    "group": "A 消息会话与一对一聊天",
+    "title": "布丁私信 · 已发送"
+  },
+  {
+    "key": "privateFailed",
+    "id": "106:1411",
+    "module": 5,
+    "group": "A 消息会话与一对一聊天",
+    "title": "布丁私信 · 发送失败"
+  },
+  {
+    "key": "messageRequests",
+    "id": "106:1412",
+    "module": 5,
+    "group": "B 消息请求与私信边界",
+    "title": "消息请求"
+  },
+  {
+    "key": "requestDetail",
+    "id": "106:1413",
+    "module": 5,
+    "group": "B 消息请求与私信边界",
+    "title": "新的私信请求"
+  },
+  {
+    "key": "requestAccepted",
+    "id": "106:1414",
+    "module": 5,
+    "group": "B 消息请求与私信边界",
+    "title": "奶糖饲养员"
+  },
+  {
+    "key": "requestSent",
+    "id": "106:1415",
+    "module": 5,
+    "group": "B 消息请求与私信边界",
+    "title": "布丁的铲屎官"
+  },
+  {
+    "key": "requestWaiting",
+    "id": "106:1416",
+    "module": 5,
+    "group": "B 消息请求与私信边界",
+    "title": "等待对方接受"
+  },
+  {
+    "key": "privateUnavailable",
+    "id": "106:1417",
+    "module": 5,
+    "group": "B 消息请求与私信边界",
+    "title": "暂时无法发私信"
+  },
+  {
+    "key": "privateSettings",
+    "id": "106:1418",
+    "module": 5,
+    "group": "B 消息请求与私信边界",
+    "title": "聊天隐私"
+  },
+  {
+    "key": "privateActions",
+    "id": "106:1419",
+    "module": 5,
+    "group": "A 消息会话与一对一聊天",
+    "title": "会话操作"
+  },
+  {
+    "key": "messageActions",
+    "id": "106:1420",
+    "module": 5,
+    "group": "A 消息会话与一对一聊天",
+    "title": "消息操作"
+  },
+  {
+    "key": "blockConfirm",
+    "id": "106:1421",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "拉黑这位用户？"
+  },
+  {
+    "key": "blockedResult",
+    "id": "106:1422",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "已限制联系"
+  },
+  {
+    "key": "postPublished",
+    "id": "106:1423",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "日常已发布"
+  },
+  {
+    "key": "mediaPermission",
+    "id": "106:1424",
+    "module": 6,
+    "group": "C 共用异常与系统权限",
+    "title": "照片选择说明"
+  },
+  {
+    "key": "careGuide",
+    "id": "106:1425",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "养宠指南"
+  },
+  {
+    "key": "reportPost",
+    "id": "106:1426",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报内容"
+  },
+  {
+    "key": "reportPostSent",
+    "id": "106:1427",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报已收到"
+  },
+  {
+    "key": "reportComment",
+    "id": "106:1428",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报评论"
+  },
+  {
+    "key": "reportCommentSent",
+    "id": "106:1429",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报已收到"
+  },
+  {
+    "key": "reportUser",
+    "id": "106:1430",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报账号"
+  },
+  {
+    "key": "reportUserSent",
+    "id": "106:1431",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报已收到"
+  },
+  {
+    "key": "reportMessage",
+    "id": "106:1432",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报消息"
+  },
+  {
+    "key": "reportMessageSent",
+    "id": "106:1433",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报已收到"
+  },
+  {
+    "key": "moderationProgress",
+    "id": "106:1434",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报处理进度"
+  },
+  {
+    "key": "groups",
+    "id": "106:1435",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "宠友群聊"
+  },
+  {
+    "key": "groupDiscover",
+    "id": "106:1436",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "发现宠友群"
+  },
+  {
+    "key": "groupIntro",
+    "id": "106:1437",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "武汉猫友日常"
+  },
+  {
+    "key": "groupJoinPending",
+    "id": "106:1438",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "入群申请已收到"
+  },
+  {
+    "key": "groupChat",
+    "id": "106:1439",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "武汉猫友日常"
+  },
+  {
+    "key": "groupSent",
+    "id": "106:1440",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "武汉猫友群 · 已发送"
+  },
+  {
+    "key": "groupInfo",
+    "id": "106:1441",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "群资料"
+  },
+  {
+    "key": "groupNotice",
+    "id": "106:1442",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "群公告"
+  },
+  {
+    "key": "groupMembers",
+    "id": "106:1443",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "群成员"
+  },
+  {
+    "key": "groupMessageActions",
+    "id": "106:1444",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "群消息操作"
+  },
+  {
+    "key": "groupCreate",
+    "id": "106:1445",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "创建宠友群"
+  },
+  {
+    "key": "groupCreateReview",
+    "id": "106:1446",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "检查群资料"
+  },
+  {
+    "key": "groupOwnerChat",
+    "id": "106:1447",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "小满和朋友们"
+  },
+  {
+    "key": "groupAdmin",
+    "id": "106:1448",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "群主与管理员"
+  },
+  {
+    "key": "groupNoticeEdit",
+    "id": "106:1449",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "编辑群公告"
+  },
+  {
+    "key": "groupJoinReview",
+    "id": "106:1450",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "审核入群申请"
+  },
+  {
+    "key": "groupAdminReviewed",
+    "id": "106:1451",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "入群审核结果"
+  },
+  {
+    "key": "groupMemberManage",
+    "id": "106:1452",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "成员管理"
+  },
+  {
+    "key": "groupMemberConfirm",
+    "id": "106:1453",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "确认成员操作"
+  },
+  {
+    "key": "groupMuted",
+    "id": "106:1454",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "本群暂不可发言"
+  },
+  {
+    "key": "groupLeave",
+    "id": "106:1455",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "退出这个群？"
+  },
+  {
+    "key": "groupUnavailable",
+    "id": "106:1456",
+    "module": 5,
+    "group": "C 发现群、加入与交流",
+    "title": "群聊暂不可用"
+  },
+  {
+    "key": "groupDissolve",
+    "id": "106:1457",
+    "module": 5,
+    "group": "D 建群与群主治理",
+    "title": "群主转让与解散"
+  },
+  {
+    "key": "reportGroup",
+    "id": "106:1458",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报群聊"
+  },
+  {
+    "key": "reportGroupSent",
+    "id": "106:1459",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "群聊举报已收到"
+  },
+  {
+    "key": "reportGroupMessage",
+    "id": "106:1460",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "举报群消息"
+  },
+  {
+    "key": "reportGroupMessageSent",
+    "id": "106:1461",
+    "module": 6,
+    "group": "B 举报、申诉与联系限制",
+    "title": "群消息举报已收到"
+  },
+  {
+    "key": "circleFeed",
+    "id": "142:2863",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "宠友圈"
+  },
+  {
+    "key": "circleEmpty",
+    "id": "142:2864",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "宠友圈"
+  },
+  {
+    "key": "circleFriends",
+    "id": "142:2865",
+    "module": 1,
+    "group": "B 双向宠友与朋友日常",
+    "title": "我的宠友"
+  },
+  {
+    "key": "circleRequest",
+    "id": "142:2866",
+    "module": 1,
+    "group": "B 双向宠友与朋友日常",
+    "title": "添加宠友"
+  },
+  {
+    "key": "circleRequestWaiting",
+    "id": "142:2867",
+    "module": 1,
+    "group": "B 双向宠友与朋友日常",
+    "title": "等待对方确认"
+  },
+  {
+    "key": "circleRequestReceived",
+    "id": "142:2868",
+    "module": 1,
+    "group": "B 双向宠友与朋友日常",
+    "title": "新朋友"
+  },
+  {
+    "key": "circleFriendProfile",
+    "id": "142:2869",
+    "module": 1,
+    "group": "B 双向宠友与朋友日常",
+    "title": "宠友主页"
+  },
+  {
+    "key": "circleCompose",
+    "id": "142:2870",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "写日常"
+  },
+  {
+    "key": "circlePhotoChoose",
+    "id": "142:2871",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "选择照片"
+  },
+  {
+    "key": "circleAudience",
+    "id": "142:2872",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "谁可以看"
+  },
+  {
+    "key": "circleAudiencePrivate",
+    "id": "142:2873",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "仅自己可见"
+  },
+  {
+    "key": "circleSelectFriends",
+    "id": "142:2874",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "选择本次宠友"
+  },
+  {
+    "key": "circlePrivatePetWarning",
+    "id": "142:2875",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "仅分享这条内容"
+  },
+  {
+    "key": "circlePublicConfirm",
+    "id": "142:2876",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "公开到社区"
+  },
+  {
+    "key": "circlePublicPreview",
+    "id": "142:2877",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "公开日常预览"
+  },
+  {
+    "key": "circleLocation",
+    "id": "142:2878",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "日常位置"
+  },
+  {
+    "key": "circlePreview",
+    "id": "142:2879",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "日常预览"
+  },
+  {
+    "key": "circlePublished",
+    "id": "142:2880",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "已发布给宠友"
+  },
+  {
+    "key": "circleDetail",
+    "id": "142:2881",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "这条日常"
+  },
+  {
+    "key": "circleLiked",
+    "id": "142:2882",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "这条日常"
+  },
+  {
+    "key": "circleComments",
+    "id": "142:2883",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "评论与回复"
+  },
+  {
+    "key": "circleCommentReply",
+    "id": "142:2884",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "回复团子"
+  },
+  {
+    "key": "circleCommentSent",
+    "id": "142:2885",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "评论已发布"
+  },
+  {
+    "key": "circlePhotoViewer",
+    "id": "142:2886",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "照片"
+  },
+  {
+    "key": "circleExpression",
+    "id": "142:2887",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "全站表情"
+  },
+  {
+    "key": "circleOwnPostSettings",
+    "id": "142:2888",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "管理这条日常"
+  },
+  {
+    "key": "circleTightenConfirm",
+    "id": "142:2889",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "收紧这条日常"
+  },
+  {
+    "key": "circleDeleteConfirm",
+    "id": "142:2890",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "删除日常"
+  },
+  {
+    "key": "circleUnavailable",
+    "id": "142:2891",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "内容暂不可见"
+  },
+  {
+    "key": "circleFriendSettings",
+    "id": "142:2892",
+    "module": 1,
+    "group": "B 双向宠友与朋友日常",
+    "title": "宠友关系"
+  },
+  {
+    "key": "circleFriendRemove",
+    "id": "142:2893",
+    "module": 1,
+    "group": "B 双向宠友与朋友日常",
+    "title": "移除这位宠友"
+  },
+  {
+    "key": "circleReport",
+    "id": "142:2894",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "报告这条日常"
+  },
+  {
+    "key": "circleDraftFailure",
+    "id": "142:2895",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "保留日常草稿"
+  },
+  {
+    "key": "circleReactionPicker",
+    "id": "142:2896",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "选择表态"
+  },
+  {
+    "key": "circlePostActions",
+    "id": "142:2897",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "日常操作"
+  },
+  {
+    "key": "circleReplyAuthor",
+    "id": "142:2898",
+    "module": 1,
+    "group": "D 宠友圈互动、管理与安全",
+    "title": "回复布丁的铲屎官"
+  },
+  {
+    "key": "circleExcludeFriends",
+    "id": "142:2899",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "不给谁看"
+  },
+  {
+    "key": "circlePartialPreview",
+    "id": "142:2900",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "检查本条分享范围"
+  },
+  {
+    "key": "circleExcludedPreview",
+    "id": "142:2901",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "检查本条分享范围"
+  },
+  {
+    "key": "circlePartialDone",
+    "id": "142:2902",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "已发布日常"
+  },
+  {
+    "key": "circleExcludedDone",
+    "id": "142:2903",
+    "module": 1,
+    "group": "C 宠友圈发布与逐条范围",
+    "title": "已发布日常"
+  },
+  {
+    "key": "petsList",
+    "id": "142:2904",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "我的宠物"
+  },
+  {
+    "key": "petsEmpty",
+    "id": "142:2905",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "我的宠物"
+  },
+  {
+    "key": "petCreate",
+    "id": "142:2906",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "添加宠物"
+  },
+  {
+    "key": "petCreateCat",
+    "id": "142:2907",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "填写宠物资料"
+  },
+  {
+    "key": "petCreateDog",
+    "id": "142:2908",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "填写宠物资料"
+  },
+  {
+    "key": "petCreateOther",
+    "id": "142:2909",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "填写宠物资料"
+  },
+  {
+    "key": "petCreated",
+    "id": "142:2910",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "宠物档案已创建"
+  },
+  {
+    "key": "petEdit",
+    "id": "142:2911",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "编辑小满资料"
+  },
+  {
+    "key": "petDog",
+    "id": "142:2912",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "豆豆的主页"
+  },
+  {
+    "key": "petOther",
+    "id": "142:2913",
+    "module": 2,
+    "group": "A 我的、多宠档案与建档",
+    "title": "奶糖的主页"
+  },
+  {
+    "key": "petDogDiary",
+    "id": "142:2914",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "豆豆的日记"
+  },
+  {
+    "key": "petOtherDiary",
+    "id": "142:2915",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "奶糖的日记"
+  },
+  {
+    "key": "petVisibility",
+    "id": "142:2916",
+    "module": 2,
+    "group": "C 独立资料可见性",
+    "title": "宠物档案可见性"
+  },
+  {
+    "key": "petVisibilityReview",
+    "id": "142:2917",
+    "module": 2,
+    "group": "C 独立资料可见性",
+    "title": "检查资料共享"
+  },
+  {
+    "key": "petVisibilitySaved",
+    "id": "142:2918",
+    "module": 2,
+    "group": "C 独立资料可见性",
+    "title": "可见范围已保存"
+  },
+  {
+    "key": "petDiary",
+    "id": "142:2919",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "小满的图文日记"
+  },
+  {
+    "key": "diaryEntry",
+    "id": "142:2920",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "小满的这条日记"
+  },
+  {
+    "key": "diaryCompose",
+    "id": "142:2921",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "写小满的日记"
+  },
+  {
+    "key": "diaryAudience",
+    "id": "142:2922",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "日记可见性"
+  },
+  {
+    "key": "diaryShareWarning",
+    "id": "142:2923",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "分享本条日记"
+  },
+  {
+    "key": "diaryPreview",
+    "id": "142:2924",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "私密日记预览"
+  },
+  {
+    "key": "diarySharedPreview",
+    "id": "142:2925",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "朋友日记预览"
+  },
+  {
+    "key": "diaryPublished",
+    "id": "142:2926",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "日记已保存"
+  },
+  {
+    "key": "diaryEntryShared",
+    "id": "142:2927",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "分享过的日常"
+  },
+  {
+    "key": "diaryDraftExit",
+    "id": "142:2928",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "离开编辑"
+  },
+  {
+    "key": "diaryDraftFailure",
+    "id": "142:2929",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "保存失败，内容还在"
+  },
+  {
+    "key": "diaryPrivateResult",
+    "id": "142:2930",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "这条已改为仅自己"
+  },
+  {
+    "key": "diaryDeleteConfirm",
+    "id": "142:2931",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "删除这条日记"
+  },
+  {
+    "key": "diaryDeleted",
+    "id": "142:2932",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "这条日记已删除"
+  },
+  {
+    "key": "petStatus",
+    "id": "142:2933",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "小满的当前状态"
+  },
+  {
+    "key": "petMarkMissing",
+    "id": "142:2934",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "标记小满走失"
+  },
+  {
+    "key": "petMissingPrivate",
+    "id": "142:2935",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "私人走失状态"
+  },
+  {
+    "key": "petMarkMistake",
+    "id": "142:2936",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "撤销误标"
+  },
+  {
+    "key": "lostFromPetDraft",
+    "id": "142:2937",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "发布小满走失求助"
+  },
+  {
+    "key": "lostPhotoEdit",
+    "id": "142:2938",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "补充小满照片"
+  },
+  {
+    "key": "lostFromPetDisclosure",
+    "id": "142:2939",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "确认公开范围"
+  },
+  {
+    "key": "lostPublicConsent",
+    "id": "142:2940",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "同意展示本次求助"
+  },
+  {
+    "key": "lostFromPetPreview",
+    "id": "142:2941",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "求助发布预览"
+  },
+  {
+    "key": "lostFromPetPending",
+    "id": "142:2942",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "求助审核中"
+  },
+  {
+    "key": "lostSubmitFailure",
+    "id": "142:2943",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "提交暂未完成"
+  },
+  {
+    "key": "lostDraftExit",
+    "id": "142:2944",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "保留求助草稿"
+  },
+  {
+    "key": "lostFromPetActive",
+    "id": "142:2945",
+    "module": 4,
+    "group": "A 浏览、公开求助与地图",
+    "title": "小满的公开求助"
+  },
+  {
+    "key": "lostFromPetManage",
+    "id": "142:2946",
+    "module": 4,
+    "group": "B 宠物状态、求助发布与维护",
+    "title": "维护小满的求助"
+  },
+  {
+    "key": "lostPrivateLead",
+    "id": "142:2947",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "我可能见过小满"
+  },
+  {
+    "key": "lostLeadPhoto",
+    "id": "142:2948",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "线索照片说明"
+  },
+  {
+    "key": "lostLeadReview",
+    "id": "142:2949",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "检查私密线索"
+  },
+  {
+    "key": "lostLeadFailure",
+    "id": "142:2950",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "线索尚未发送"
+  },
+  {
+    "key": "lostLeadSent",
+    "id": "142:2951",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "线索已收到"
+  },
+  {
+    "key": "lostLeadInbox",
+    "id": "142:2952",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "小满的线索"
+  },
+  {
+    "key": "lostLeadEmpty",
+    "id": "142:2953",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "还没有新线索"
+  },
+  {
+    "key": "lostLeadDetail",
+    "id": "142:2954",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "核实这条线索"
+  },
+  {
+    "key": "lostLeadHelpful",
+    "id": "142:2955",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "线索处理已记录"
+  },
+  {
+    "key": "lostLeadNotMatch",
+    "id": "142:2956",
+    "module": 4,
+    "group": "C 私密线索与核实",
+    "title": "线索处理已记录"
+  },
+  {
+    "key": "lostShareAudience",
+    "id": "142:2957",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "分享小满的求助"
+  },
+  {
+    "key": "lostShareConfirm",
+    "id": "142:2958",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "确认分享至宠友圈"
+  },
+  {
+    "key": "lostGroupShareConfirm",
+    "id": "142:2959",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "确认分享至群聊"
+  },
+  {
+    "key": "lostShared",
+    "id": "142:2960",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "求助卡已分享"
+  },
+  {
+    "key": "lostGroupShared",
+    "id": "142:2961",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "群内求助卡"
+  },
+  {
+    "key": "lostFollowed",
+    "id": "142:2962",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "已关注本次进展"
+  },
+  {
+    "key": "lostFoundConfirm",
+    "id": "142:2963",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "确认小满已找回"
+  },
+  {
+    "key": "lostFoundReady",
+    "id": "142:2964",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "结束小满的求助"
+  },
+  {
+    "key": "lostClosing",
+    "id": "142:2965",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "结束处理中"
+  },
+  {
+    "key": "lostCloseFailure",
+    "id": "142:2966",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "结束尚未全部完成"
+  },
+  {
+    "key": "lostFoundDone",
+    "id": "142:2967",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "小满已找回"
+  },
+  {
+    "key": "petHomeFound",
+    "id": "142:2968",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "小满回家了"
+  },
+  {
+    "key": "lostResolvedShare",
+    "id": "142:2969",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "已更新的分享卡"
+  },
+  {
+    "key": "lostPauseConfirm",
+    "id": "142:2970",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "暂停公开寻找"
+  },
+  {
+    "key": "lostPaused",
+    "id": "142:2971",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "公开展示已暂停"
+  },
+  {
+    "key": "lostOtherEnd",
+    "id": "142:2972",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "其他原因结束"
+  },
+  {
+    "key": "lostOtherConfirm",
+    "id": "142:2973",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "确认其他原因结束"
+  },
+  {
+    "key": "lostOtherDone",
+    "id": "142:2974",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "本次求助已结束"
+  },
+  {
+    "key": "petMissingAgain",
+    "id": "142:2975",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "再次标记走失"
+  },
+  {
+    "key": "lostAgainDraft",
+    "id": "142:2976",
+    "module": 4,
+    "group": "D 分享、关注与求助收尾",
+    "title": "新的走失事件草稿"
+  },
+  {
+    "key": "lostAreaMap",
+    "id": "142:2977",
+    "module": 4,
+    "group": "A 浏览、公开求助与地图",
+    "title": "小满的区域地图"
+  },
+  {
+    "key": "lostLeadChat",
+    "id": "142:2978",
+    "module": 4,
+    "group": "F 线索会话与共享表达",
+    "title": "联系这位目击者"
+  },
+  {
+    "key": "nearbyAlertPreferences",
+    "id": "142:2979",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "附近走失提醒"
+  },
+  {
+    "key": "nearbyAlertSetup",
+    "id": "142:2980",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "设置附近提醒"
+  },
+  {
+    "key": "nearbyCenter",
+    "id": "142:2981",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "选择提醒中心"
+  },
+  {
+    "key": "nearbyLocationExplain",
+    "id": "142:2982",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "使用位置前"
+  },
+  {
+    "key": "nearbyPermissionDenied",
+    "id": "142:2983",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "定位未授权"
+  },
+  {
+    "key": "nearbyRadius",
+    "id": "142:2984",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "提醒距离"
+  },
+  {
+    "key": "nearbyRadiusCustom",
+    "id": "142:2985",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "自定义范围"
+  },
+  {
+    "key": "nearbyRadiusError",
+    "id": "142:2986",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "距离需要调整"
+  },
+  {
+    "key": "nearbyReview5",
+    "id": "142:2987",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "检查提醒设置 · 5公里"
+  },
+  {
+    "key": "nearbyEnabled5",
+    "id": "142:2988",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "附近提醒已开启 · 5公里"
+  },
+  {
+    "key": "nearbyReview10",
+    "id": "142:2989",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "检查提醒设置 · 10公里"
+  },
+  {
+    "key": "nearbyEnabled10",
+    "id": "142:2990",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "附近提醒已开启 · 10公里"
+  },
+  {
+    "key": "nearbyReview25",
+    "id": "142:2991",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "检查提醒设置 · 25公里"
+  },
+  {
+    "key": "nearbyEnabled25",
+    "id": "142:2992",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "附近提醒已开启 · 25公里"
+  },
+  {
+    "key": "nearbyReview32",
+    "id": "142:2993",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "检查提醒设置 · 32公里"
+  },
+  {
+    "key": "nearbyEnabled32",
+    "id": "142:2994",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "附近提醒已开启 · 32公里"
+  },
+  {
+    "key": "nearbyReview50",
+    "id": "142:2995",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "检查提醒设置 · 50公里"
+  },
+  {
+    "key": "nearbyEnabled50",
+    "id": "142:2996",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "附近提醒已开启 · 50公里"
+  },
+  {
+    "key": "nearbyReview100",
+    "id": "142:2997",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "检查提醒设置 · 100公里"
+  },
+  {
+    "key": "nearbyEnabled100",
+    "id": "142:2998",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "附近提醒已开启 · 100公里"
+  },
+  {
+    "key": "nearbyReviewShanghai",
+    "id": "142:2999",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "上海提醒设置"
+  },
+  {
+    "key": "nearbyEnabledShanghai",
+    "id": "142:3000",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "上海附近提醒"
+  },
+  {
+    "key": "nearbySpecies",
+    "id": "142:3001",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "接收哪些宠物"
+  },
+  {
+    "key": "nearbySpeciesCat",
+    "id": "142:3002",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "仅猫咪的提醒"
+  },
+  {
+    "key": "nearbyEnabledCat",
+    "id": "142:3003",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "猫咪提醒已开启"
+  },
+  {
+    "key": "nearbyNotification",
+    "id": "142:3004",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "提醒方式与频率"
+  },
+  {
+    "key": "nearbyNotificationExplain",
+    "id": "142:3005",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "系统通知说明"
+  },
+  {
+    "key": "nearbyOffConfirm",
+    "id": "142:3006",
+    "module": 4,
+    "group": "E 附近提醒 · 5–100公里",
+    "title": "关闭附近提醒"
+  },
+  {
+    "key": "adoptionConditions",
+    "id": "142:3007",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "领养条件"
+  },
+  {
+    "key": "adoptionUpdates",
+    "id": "142:3008",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "小满的持续介绍"
+  },
+  {
+    "key": "adoptionUpdateDetail",
+    "id": "142:3009",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "小满的这次更新"
+  },
+  {
+    "key": "adoptionUpdateHistory",
+    "id": "142:3010",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "资料更正记录"
+  },
+  {
+    "key": "adoptionComments",
+    "id": "142:3011",
+    "module": 3,
+    "group": "F 领养交流",
+    "title": "小满的领养交流"
+  },
+  {
+    "key": "adoptionReply",
+    "id": "142:3012",
+    "module": 3,
+    "group": "F 领养交流",
+    "title": "回复这位宠友"
+  },
+  {
+    "key": "adoptionCommentSent",
+    "id": "142:3013",
+    "module": 3,
+    "group": "F 领养交流",
+    "title": "领养交流已发送"
+  },
+  {
+    "key": "adoptionManage",
+    "id": "142:3014",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "维护这只领养宠物"
+  },
+  {
+    "key": "adoptionUpdateCompose",
+    "id": "142:3015",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "补充小满介绍"
+  },
+  {
+    "key": "adoptionUpdatePreview",
+    "id": "142:3016",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "检查新增介绍"
+  },
+  {
+    "key": "adoptionUpdateFailure",
+    "id": "142:3017",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "更新暂未提交"
+  },
+  {
+    "key": "adoptionUpdatePending",
+    "id": "142:3018",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "更新审核中"
+  },
+  {
+    "key": "adoptionUpdateDone",
+    "id": "142:3019",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "介绍已补充"
+  },
+  {
+    "key": "adoptionCaretakers",
+    "id": "142:3020",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "照护协作"
+  },
+  {
+    "key": "adoptionCaretakerInvite",
+    "id": "142:3021",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "邀请照护协作者"
+  },
+  {
+    "key": "adoptionCaretakerPending",
+    "id": "142:3022",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "等待协作者确认"
+  },
+  {
+    "key": "exprCircle",
+    "id": "142:3023",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表情与贴纸 · 写小满的圈日常"
+  },
+  {
+    "key": "stickerCircle",
+    "id": "142:3024",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "静态贴纸 · 写小满的圈日常"
+  },
+  {
+    "key": "exprCircleReady",
+    "id": "142:3025",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "发送前检查 · 写小满的圈日常"
+  },
+  {
+    "key": "exprCircleDone",
+    "id": "142:3026",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表达已完成 · 写小满的圈日常"
+  },
+  {
+    "key": "exprDiary",
+    "id": "142:3027",
+    "module": 2,
+    "group": "D 日记共享表达",
+    "title": "表情与贴纸 · 写小满的私密日记"
+  },
+  {
+    "key": "stickerDiary",
+    "id": "142:3028",
+    "module": 2,
+    "group": "D 日记共享表达",
+    "title": "静态贴纸 · 写小满的私密日记"
+  },
+  {
+    "key": "exprDiaryReady",
+    "id": "142:3029",
+    "module": 2,
+    "group": "D 日记共享表达",
+    "title": "发送前检查 · 写小满的私密日记"
+  },
+  {
+    "key": "exprDiaryDone",
+    "id": "142:3030",
+    "module": 2,
+    "group": "D 日记共享表达",
+    "title": "日记已保存 · 写小满的私密日记"
+  },
+  {
+    "key": "exprCircleComment",
+    "id": "142:3031",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表情与贴纸 · 评论布丁的日常"
+  },
+  {
+    "key": "stickerCircleComment",
+    "id": "142:3032",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "静态贴纸 · 评论布丁的日常"
+  },
+  {
+    "key": "exprCircleCommentReady",
+    "id": "142:3033",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "发送前检查 · 评论布丁的日常"
+  },
+  {
+    "key": "exprCircleCommentDone",
+    "id": "142:3034",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表达已完成 · 评论布丁的日常"
+  },
+  {
+    "key": "exprCircleReply",
+    "id": "142:3035",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表情与贴纸 · 回复团子"
+  },
+  {
+    "key": "stickerCircleReply",
+    "id": "142:3036",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "静态贴纸 · 回复团子"
+  },
+  {
+    "key": "exprCircleReplyReady",
+    "id": "142:3037",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "发送前检查 · 回复团子"
+  },
+  {
+    "key": "exprCircleReplyDone",
+    "id": "142:3038",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表达已完成 · 回复团子"
+  },
+  {
+    "key": "exprCircleAuthorReply",
+    "id": "142:3039",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表情与贴纸 · 回复布丁的铲屎官"
+  },
+  {
+    "key": "stickerCircleAuthorReply",
+    "id": "142:3040",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "静态贴纸 · 回复布丁的铲屎官"
+  },
+  {
+    "key": "exprCircleAuthorReplyReady",
+    "id": "142:3041",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "发送前检查 · 回复布丁的铲屎官"
+  },
+  {
+    "key": "exprCircleAuthorReplyDone",
+    "id": "142:3042",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表达已完成 · 回复布丁的铲屎官"
+  },
+  {
+    "key": "exprDiaryComment",
+    "id": "142:3043",
+    "module": 2,
+    "group": "D 日记共享表达",
+    "title": "表情与贴纸 · 评论小满的日常"
+  },
+  {
+    "key": "stickerDiaryComment",
+    "id": "142:3044",
+    "module": 2,
+    "group": "D 日记共享表达",
+    "title": "静态贴纸 · 评论小满的日常"
+  },
+  {
+    "key": "exprDiaryCommentReady",
+    "id": "142:3045",
+    "module": 2,
+    "group": "D 日记共享表达",
+    "title": "发送前检查 · 评论小满的日常"
+  },
+  {
+    "key": "exprDiaryCommentDone",
+    "id": "142:3046",
+    "module": 2,
+    "group": "D 日记共享表达",
+    "title": "表达已完成 · 评论小满的日常"
+  },
+  {
+    "key": "exprAdoption",
+    "id": "142:3047",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "表情与贴纸 · 待领养小满的交流"
+  },
+  {
+    "key": "stickerAdoption",
+    "id": "142:3048",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "静态贴纸 · 待领养小满的交流"
+  },
+  {
+    "key": "exprAdoptionReady",
+    "id": "142:3049",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "发送前检查 · 待领养小满的交流"
+  },
+  {
+    "key": "exprAdoptionDone",
+    "id": "142:3050",
+    "module": 3,
+    "group": "D 持续介绍与照护协作",
+    "title": "表达已完成 · 待领养小满的交流"
+  },
+  {
+    "key": "exprPrivate",
+    "id": "142:3051",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "表情与贴纸 · 私信：布丁的铲屎官"
+  },
+  {
+    "key": "stickerPrivate",
+    "id": "142:3052",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "静态贴纸 · 私信：布丁的铲屎官"
+  },
+  {
+    "key": "exprPrivateReady",
+    "id": "142:3053",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "发送前检查 · 私信：布丁的铲屎官"
+  },
+  {
+    "key": "exprPrivateDone",
+    "id": "142:3054",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "表达已完成 · 私信：布丁的铲屎官"
+  },
+  {
+    "key": "exprGroup",
+    "id": "142:3055",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "表情与贴纸 · 群聊：武汉猫友日常"
+  },
+  {
+    "key": "stickerGroup",
+    "id": "142:3056",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "静态贴纸 · 群聊：武汉猫友日常"
+  },
+  {
+    "key": "exprGroupReady",
+    "id": "142:3057",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "发送前检查 · 群聊：武汉猫友日常"
+  },
+  {
+    "key": "exprGroupDone",
+    "id": "142:3058",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "表达已完成 · 群聊：武汉猫友日常"
+  },
+  {
+    "key": "exprLead",
+    "id": "142:3059",
+    "module": 4,
+    "group": "F 线索会话与共享表达",
+    "title": "表情与贴纸 · 小满目击线索 L01"
+  },
+  {
+    "key": "stickerLead",
+    "id": "142:3060",
+    "module": 4,
+    "group": "F 线索会话与共享表达",
+    "title": "静态贴纸 · 小满目击线索 L01"
+  },
+  {
+    "key": "exprLeadReady",
+    "id": "142:3061",
+    "module": 4,
+    "group": "F 线索会话与共享表达",
+    "title": "发送前检查 · 小满目击线索 L01"
+  },
+  {
+    "key": "exprLeadDone",
+    "id": "142:3062",
+    "module": 4,
+    "group": "F 线索会话与共享表达",
+    "title": "表达已完成 · 小满目击线索 L01"
+  },
+  {
+    "key": "exprMilkReply",
+    "id": "142:3063",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表情与贴纸 · 回复奶糖饲养员"
+  },
+  {
+    "key": "stickerMilkReply",
+    "id": "142:3064",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "静态贴纸 · 回复奶糖饲养员"
+  },
+  {
+    "key": "exprMilkReplyReady",
+    "id": "142:3065",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "发送前检查 · 回复奶糖饲养员"
+  },
+  {
+    "key": "exprMilkReplyDone",
+    "id": "142:3066",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表达已完成 · 回复奶糖饲养员"
+  },
+  {
+    "key": "exprAuthorReply",
+    "id": "142:3067",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表情与贴纸 · 回复布丁作者评论"
+  },
+  {
+    "key": "stickerAuthorReply",
+    "id": "142:3068",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "静态贴纸 · 回复布丁作者评论"
+  },
+  {
+    "key": "exprAuthorReplyReady",
+    "id": "142:3069",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "发送前检查 · 回复布丁作者评论"
+  },
+  {
+    "key": "exprAuthorReplyDone",
+    "id": "142:3070",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表达已完成 · 回复布丁作者评论"
+  },
+  {
+    "key": "replyMilk",
+    "id": "142:3071",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "回复奶糖饲养员"
+  },
+  {
+    "key": "replyAuthor",
+    "id": "142:3072",
+    "module": 1,
+    "group": "A 推荐、关注与公开晒宠",
+    "title": "回复作者布丁"
+  },
+  {
+    "key": "ownDiaryComments",
+    "id": "142:3073",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "小满的日常交流"
+  },
+  {
+    "key": "diaryPhotoViewer",
+    "id": "142:3074",
+    "module": 2,
+    "group": "B 独立图文日记与范围",
+    "title": "小满的照片"
+  },
+  {
+    "key": "petDogVisibility",
+    "id": "142:3075",
+    "module": 2,
+    "group": "C 独立资料可见性",
+    "title": "豆豆的资料权限"
+  },
+  {
+    "key": "petOtherVisibility",
+    "id": "142:3076",
+    "module": 2,
+    "group": "C 独立资料可见性",
+    "title": "奶糖的资料权限"
+  },
+  {
+    "key": "moduleHub",
+    "id": "142:3077",
+    "module": 0,
+    "group": "A 总入口",
+    "title": "M&D 手机设计总入口"
+  },
+  {
+    "key": "exprPublicComment",
+    "id": "151:2",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表情与贴纸 · 公开日常：布丁的晒太阳帖子"
+  },
+  {
+    "key": "stickerPublicComment",
+    "id": "151:3",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "静态贴纸 · 公开日常：布丁的晒太阳帖子"
+  },
+  {
+    "key": "exprPublicCommentReady",
+    "id": "151:4",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "发送前检查 · 公开日常：布丁的晒太阳帖子"
+  },
+  {
+    "key": "exprPublicCommentDone",
+    "id": "151:5",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表达已完成 · 公开日常：布丁的晒太阳帖子"
+  },
+  {
+    "key": "exprPublicReply",
+    "id": "151:6",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表情与贴纸 · 公开帖子内回复：团子今天不拆家"
+  },
+  {
+    "key": "stickerPublicReply",
+    "id": "151:7",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "静态贴纸 · 公开帖子内回复：团子今天不拆家"
+  },
+  {
+    "key": "exprPublicReplyReady",
+    "id": "151:8",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "发送前检查 · 公开帖子内回复：团子今天不拆家"
+  },
+  {
+    "key": "exprPublicReplyDone",
+    "id": "151:9",
+    "module": 1,
+    "group": "E 当前帖子与回复的共享表达",
+    "title": "表达已完成 · 公开帖子内回复：团子今天不拆家"
+  },
+  {
+    "key": "exprAcceptedPrivate",
+    "id": "151:10",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "表情与贴纸 · 私信：奶糖饲养员"
+  },
+  {
+    "key": "stickerAcceptedPrivate",
+    "id": "151:11",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "静态贴纸 · 私信：奶糖饲养员"
+  },
+  {
+    "key": "exprAcceptedPrivateReady",
+    "id": "151:12",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "发送前检查 · 私信：奶糖饲养员"
+  },
+  {
+    "key": "exprAcceptedPrivateDone",
+    "id": "151:13",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "表达已完成 · 私信：奶糖饲养员"
+  },
+  {
+    "key": "exprOwnerGroup",
+    "id": "151:14",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "表情与贴纸 · 群聊：小满和朋友们"
+  },
+  {
+    "key": "stickerOwnerGroup",
+    "id": "151:15",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "静态贴纸 · 群聊：小满和朋友们"
+  },
+  {
+    "key": "exprOwnerGroupReady",
+    "id": "151:16",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "发送前检查 · 群聊：小满和朋友们"
+  },
+  {
+    "key": "exprOwnerGroupDone",
+    "id": "151:17",
+    "module": 5,
+    "group": "E 不同会话的共享表达",
+    "title": "表达已完成 · 群聊：小满和朋友们"
+  }
+]

@@ -2,6 +2,11 @@ package com.ttkk0000.meowcircle
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonTransformingSerializer
 
 @Serializable
 data class ApiEnvelope(
@@ -17,7 +22,28 @@ data class User(
     val nickname: String,
     @SerialName("avatar_url") val avatarUrl: String = "",
     val bio: String = "",
-    @SerialName("created_at") val createdAt: String,
+    @SerialName("created_at") val createdAt: String = "",
+    val stats: UserStats? = null
+)
+
+@Serializable
+data class UserStats(
+    val moments: Long = 0,
+    val likes: Long = 0,
+    val badges: Long = 0,
+    val followers: Long = 0,
+    val following: Long = 0
+)
+
+@Serializable
+data class Pet(
+    val id: Long,
+    @SerialName("owner_id") val ownerId: Long,
+    val name: String,
+    val breed: String,
+    val age: String,
+    val tags: List<String> = emptyList(),
+    @SerialName("avatar_url") val avatarUrl: String = ""
 )
 
 @Serializable
@@ -46,6 +72,11 @@ data class Media(
     @SerialName("created_at") val createdAt: String,
 )
 
+object MediaListAsEmptySerializer : JsonTransformingSerializer<List<Media>>(ListSerializer(Media.serializer())) {
+    override fun transformDeserialize(element: JsonElement): JsonElement =
+        if (element is JsonNull) JsonArray(emptyList()) else element
+}
+
 @Serializable
 data class PostFeedItem(
     val post: Post,
@@ -69,6 +100,7 @@ data class Listing(
     val id: Long,
     @SerialName("seller_id") val sellerId: Long,
     val type: String,
+    val category: String = "",
     val title: String,
     val description: String,
     @SerialName("price_cents") val priceCents: Long,
@@ -78,17 +110,18 @@ data class Listing(
 )
 
 @Serializable
+data class ListingDetailData(
+    val listing: Listing,
+    @Serializable(with = MediaListAsEmptySerializer::class)
+    val media: List<Media> = emptyList(),
+)
+
+@Serializable
 data class ListingsPage(
     val items: List<Listing>? = null,
     val total: Long = 0,
     val page: Int = 1,
     @SerialName("page_size") val pageSize: Int = 20,
-)
-
-@Serializable
-data class ListingDetailData(
-    val listing: Listing,
-    val media: List<Media> = emptyList(),
 )
 
 @Serializable
@@ -120,8 +153,20 @@ data class Comment(
 )
 
 @Serializable
+data class CreateCommentBody(
+    val content: String,
+)
+
+@Serializable
+data class LikeActionResult(
+    val liked: Boolean,
+    @SerialName("like_count") val likeCount: Long,
+)
+
+@Serializable
 data class PostDetailData(
     val post: Post,
+    @Serializable(with = MediaListAsEmptySerializer::class)
     val media: List<Media> = emptyList(),
     val comments: List<Comment> = emptyList(),
     @SerialName("like_count") val likeCount: Long = 0,
@@ -149,6 +194,17 @@ data class CreatePostBody(
 )
 
 @Serializable
+data class CreateListingBody(
+    val type: String = "product",
+    val category: String = "product",
+    val title: String,
+    val description: String = "",
+    @SerialName("price_cents") val priceCents: Long,
+    val currency: String = "CNY",
+    @SerialName("media_ids") val mediaIds: List<Long> = emptyList(),
+)
+
+@Serializable
 data class Conversation(
     val peer: User,
     @SerialName("last_message") val lastMessage: String,
@@ -163,6 +219,28 @@ data class ConversationsPayload(
 )
 
 @Serializable
+data class Message(
+    val id: Long,
+    @SerialName("sender_id") val senderId: Long,
+    @SerialName("recipient_id") val recipientId: Long,
+    val content: String,
+    val read: Boolean = false,
+    @SerialName("created_at") val createdAt: String,
+)
+
+@Serializable
+data class ConversationDetailData(
+    val peer: User,
+    val messages: List<Message> = emptyList(),
+)
+
+@Serializable
+data class SendMessageBody(
+    @SerialName("recipient_id") val recipientId: Long,
+    val content: String,
+)
+
+@Serializable
 data class FollowActionResult(
     val following: Boolean,
     @SerialName("user_id") val userId: Long,
@@ -173,12 +251,6 @@ data class UpdateMeBody(
     val nickname: String = "",
     @SerialName("avatar_url") val avatarUrl: String = "",
     val bio: String = "",
-)
-
-@Serializable
-data class UserStats(
-    val followers: Long,
-    val following: Long,
 )
 
 @Serializable
@@ -202,8 +274,32 @@ data class Order(
 )
 
 @Serializable
-data class OrdersPage(
+data class OrdersPayload(
     val items: List<Order>? = null,
+    val role: String? = null,
+)
+
+@Serializable
+data class NotificationItem(
+    val id: Long,
+    @SerialName("user_id") val userId: Long,
+    val kind: String,
+    val title: String,
+    val body: String = "",
+    @SerialName("ref_id") val refId: Long = 0,
+    @SerialName("actor_id") val actorId: Long = 0,
+    @SerialName("actor_username") val actorUsername: String = "",
+    @SerialName("actor_nickname") val actorNickname: String = "",
+    @SerialName("actor_avatar_url") val actorAvatarUrl: String = "",
+    @SerialName("image_url") val imageUrl: String = "",
+    val read: Boolean = false,
+    @SerialName("created_at") val createdAt: String,
+)
+
+@Serializable
+data class NotificationsPayload(
+    val items: List<NotificationItem>? = null,
+    @SerialName("unread_count") val unreadCount: Int = 0,
 )
 
 @Serializable
@@ -218,22 +314,84 @@ data class PayOrderBody(
 )
 
 @Serializable
-data class CreateListingBody(
-    val type: String,
-    val title: String,
-    val description: String,
-    @SerialName("price_cents") val priceCents: Long,
-    val currency: String = "CNY",
-    @SerialName("media_ids") val mediaIds: List<Long> = emptyList(),
+data class ReportBody(
+    @SerialName("target_kind") val targetKind: String,
+    @SerialName("target_id") val targetId: Long,
+    val reason: String,
 )
 
 @Serializable
-data class Message(
+data class Report(
     val id: Long,
-    @SerialName("sender_id") val senderId: Long,
-    @SerialName("recipient_id") val recipientId: Long,
-    val content: String,
+    @SerialName("reporter_id") val reporterId: Long,
+    @SerialName("target_kind") val targetKind: String,
+    @SerialName("target_id") val targetId: Long,
+    val reason: String,
+    val status: String,
+    @SerialName("handled_by") val handledBy: String = "",
+    val resolution: String = "",
     @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String,
+)
+
+// ===== Adoption =====
+
+@Serializable
+data class AdoptionPet(
+    val id: Long,
+    @SerialName("rescuer_id") val rescuerId: Long,
+    val name: String,
+    val species: String,
+    val breed: String,
+    val age: String,
+    val city: String,
+    val health: String,
+    val description: String,
+    @SerialName("media_ids") val mediaIds: List<Long>? = null,
+    val status: String,
+    @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String,
+)
+
+@Serializable
+data class AdoptionPetDetailData(
+    val pet: AdoptionPet,
+    val rescuer: User? = null,
+)
+
+@Serializable
+data class AdoptionApplication(
+    val id: Long,
+    @SerialName("pet_id") val petId: Long,
+    @SerialName("applicant_id") val applicantId: Long,
+    @SerialName("rescuer_id") val rescuerId: Long,
+    val status: String,
+    val message: String,
+    @SerialName("contact_info") val contactInfo: String? = null,
+    @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String,
+)
+
+@Serializable
+data class ApplyAdoptionBody(
+    @SerialName("pet_id") val petId: Long,
+    val message: String,
+    @SerialName("contact_info") val contactInfo: String? = null,
+)
+
+@Serializable
+data class AdoptionPetsPayload(
+    val pets: List<AdoptionPet>? = null,
+)
+
+@Serializable
+data class AdoptionApplicationsPayload(
+    val applications: List<AdoptionApplication>? = null,
+)
+
+@Serializable
+data class OrdersPage(
+    val items: List<Order>? = null,
 )
 
 @Serializable

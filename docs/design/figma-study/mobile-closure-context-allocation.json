@@ -1,0 +1,38 @@
+{
+  "createdNodeIds": [
+    "151:2",
+    "151:3",
+    "151:4",
+    "151:5",
+    "151:6",
+    "151:7",
+    "151:8",
+    "151:9",
+    "151:10",
+    "151:11",
+    "151:12",
+    "151:13",
+    "151:14",
+    "151:15",
+    "151:16",
+    "151:17"
+  ],
+  "roots": {
+    "exprPublicComment": "151:2",
+    "stickerPublicComment": "151:3",
+    "exprPublicCommentReady": "151:4",
+    "exprPublicCommentDone": "151:5",
+    "exprPublicReply": "151:6",
+    "stickerPublicReply": "151:7",
+    "exprPublicReplyReady": "151:8",
+    "exprPublicReplyDone": "151:9",
+    "exprAcceptedPrivate": "151:10",
+    "stickerAcceptedPrivate": "151:11",
+    "exprAcceptedPrivateReady": "151:12",
+    "exprAcceptedPrivateDone": "151:13",
+    "exprOwnerGroup": "151:14",
+    "stickerOwnerGroup": "151:15",
+    "exprOwnerGroupReady": "151:16",
+    "exprOwnerGroupDone": "151:17"
+  }
+}

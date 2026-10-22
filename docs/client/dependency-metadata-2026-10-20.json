@@ -1,0 +1,209 @@
+{
+  "checked_on": "2026-10-20",
+  "scope": "Public version metadata only; no artifact download or dependency resolution/build",
+  "artifacts": {
+    "kotlin": {
+      "latest_stable": "2.4.21",
+      "recent_stable": [
+        "2.3.20",
+        "2.3.21",
+        "2.4.0",
+        "2.4.10",
+        "2.4.20",
+        "2.4.21"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin/maven-metadata.xml",
+      "selected": "2.4.21"
+    },
+    "agp": {
+      "latest_stable": "9.4.1",
+      "recent_stable": [
+        "9.3.0",
+        "9.3.1",
+        "9.3.2",
+        "9.3.3",
+        "9.4.0",
+        "9.4.1"
+      ],
+      "source": "https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/maven-metadata.xml",
+      "selected": "9.3.3"
+    },
+    "ktor": {
+      "latest_stable": "3.6.0",
+      "recent_stable": [
+        "3.4.2",
+        "3.4.3",
+        "3.5.0",
+        "3.5.1",
+        "3.5.2",
+        "3.6.0"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/io/ktor/ktor-client-core/maven-metadata.xml",
+      "selected": "3.6.0"
+    },
+    "serialization": {
+      "latest_stable": "1.12.0",
+      "recent_stable": [
+        "1.8.0",
+        "1.8.1",
+        "1.9.0",
+        "1.10.0",
+        "1.11.0",
+        "1.12.0"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-serialization-json/maven-metadata.xml",
+      "selected": "1.12.0"
+    },
+    "coroutines": {
+      "latest_stable": "1.11.0",
+      "recent_stable": [
+        "1.8.1",
+        "1.9.0",
+        "1.10.0",
+        "1.10.1",
+        "1.10.2",
+        "1.11.0"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/maven-metadata.xml",
+      "selected": "1.11.0"
+    },
+    "settings": {
+      "latest_stable": "1.3.0",
+      "recent_stable": [
+        "0.9",
+        "1.0.0",
+        "1.1.0",
+        "1.1.1",
+        "1.2.0",
+        "1.3.0"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/com/russhwolf/multiplatform-settings-no-arg/maven-metadata.xml",
+      "selected": "1.3.0"
+    },
+    "compose-bom": {
+      "latest_stable": "2026.09.00",
+      "recent_stable": [
+        "2026.05.00",
+        "2026.05.01",
+        "2026.06.00",
+        "2026.06.01",
+        "2026.08.00",
+        "2026.09.00"
+      ],
+      "source": "https://dl.google.com/dl/android/maven2/androidx/compose/compose-bom/maven-metadata.xml",
+      "selected": "2026.09.00"
+    },
+    "activity-compose": {
+      "latest_stable": "1.13.0",
+      "recent_stable": [
+        "1.12.0",
+        "1.12.1",
+        "1.12.2",
+        "1.12.3",
+        "1.12.4",
+        "1.13.0"
+      ],
+      "source": "https://dl.google.com/dl/android/maven2/androidx/activity/activity-compose/maven-metadata.xml",
+      "selected": "1.13.0"
+    },
+    "lifecycle": {
+      "latest_stable": "2.11.0",
+      "recent_stable": [
+        "2.9.1",
+        "2.9.2",
+        "2.9.3",
+        "2.9.4",
+        "2.10.0",
+        "2.11.0"
+      ],
+      "source": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-compose/maven-metadata.xml",
+      "selected": "2.11.0"
+    },
+    "compose-multiplatform": {
+      "latest_stable": "1.12.2",
+      "recent_stable": [
+        "1.10.3",
+        "1.11.0",
+        "1.11.1",
+        "1.12.0",
+        "1.12.1",
+        "1.12.2"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/org/jetbrains/compose/compose-gradle-plugin/maven-metadata.xml",
+      "selected": "1.12.2"
+    },
+    "cmp-material3": {
+      "latest_stable": "1.9.0",
+      "recent_stable": [
+        "1.7.1",
+        "1.7.3",
+        "1.8.0",
+        "1.8.1",
+        "1.8.2",
+        "1.9.0"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/org/jetbrains/compose/material3/material3/maven-metadata.xml",
+      "selected": "1.9.0"
+    },
+    "cmp-icons": {
+      "latest_stable": "1.7.3",
+      "recent_stable": [
+        "1.6.2",
+        "1.6.10",
+        "1.6.11",
+        "1.7.0",
+        "1.7.1",
+        "1.7.3"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/org/jetbrains/compose/material/material-icons-extended/maven-metadata.xml",
+      "selected": "1.7.3"
+    },
+    "android-icons": {
+      "latest_stable": "1.7.8",
+      "recent_stable": [
+        "1.7.3",
+        "1.7.4",
+        "1.7.5",
+        "1.7.6",
+        "1.7.7",
+        "1.7.8"
+      ],
+      "source": "https://dl.google.com/dl/android/maven2/androidx/compose/material/material-icons-extended/maven-metadata.xml",
+      "selected": "1.7.8"
+    },
+    "coil": {
+      "latest_stable": "3.6.3",
+      "recent_stable": [
+        "3.4.0",
+        "3.5.0",
+        "3.6.0",
+        "3.6.1",
+        "3.6.2",
+        "3.6.3"
+      ],
+      "source": "https://repo.maven.apache.org/maven2/io/coil-kt/coil3/coil-compose/maven-metadata.xml",
+      "selected": "3.6.3"
+    },
+    "gradle": {
+      "latest_stable": "9.8.2",
+      "recent_stable": [
+        "9.8.2",
+        "8.14.6",
+        "9.8.1",
+        "9.8.0",
+        "9.7.1",
+        "9.7.0",
+        "9.6.1",
+        "9.6.0"
+      ],
+      "source": "https://services.gradle.org/versions/all",
+      "selected": "9.7.1"
+    },
+    "exif": {
+      "latest_stable": "1.4.2",
+      "source": "https://dl.google.com/dl/android/maven2/androidx/exifinterface/exifinterface/maven-metadata.xml",
+      "selected": "1.4.2"
+    }
+  },
+  "compatibility_note": "AGP 9.3.3 and Gradle 9.7.1 are patch updates in the documented 9.3 / 9.7 branches; the KGP table explicitly lists 9.3.1 / 9.7.0. Full exact-patch compatibility remains unverified."
+}

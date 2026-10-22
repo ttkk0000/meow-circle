@@ -1,0 +1,28 @@
+{
+  "createdNodeIds": [],
+  "mutatedNodeIds": [
+    "161:824",
+    "161:825"
+  ],
+  "mutatedVariableIds": [
+    "VariableID:160:889",
+    "VariableID:160:890",
+    "VariableID:160:891",
+    "VariableID:160:892",
+    "VariableID:160:893",
+    "VariableID:160:894",
+    "VariableID:160:895",
+    "VariableID:160:896",
+    "VariableID:160:897"
+  ],
+  "main": {
+    "w": 173,
+    "h": 48,
+    "sizing": "FIXED"
+  },
+  "background": {
+    "w": 173,
+    "h": 48
+  },
+  "opacityUnit": "percentage 0–100"
+}

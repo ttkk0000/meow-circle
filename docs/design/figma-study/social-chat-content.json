@@ -1,0 +1,3215 @@
+[
+  {
+    "id": "home",
+    "title": "M&D",
+    "items": [
+      {
+        "type": "switch",
+        "active": "推荐",
+        "entries": [
+          [
+            "推荐",
+            "home"
+          ],
+          [
+            "关注",
+            "following"
+          ],
+          [
+            "同城",
+            "localFeed"
+          ]
+        ]
+      },
+      {
+        "type": "quickPublish"
+      },
+      {
+        "type": "text",
+        "text": "晒晒日常，也聊聊养宠的小事",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "socialFeed",
+        "posts": [
+          {
+            "title": "太阳晒到肚皮啦",
+            "owner": "布丁的铲屎官",
+            "pet": "布丁 · 猫咪",
+            "kind": "catOffer",
+            "likes": "12",
+            "comments": "3",
+            "to": "post",
+            "profile": "authorProfile"
+          },
+          {
+            "title": "小满午后的打盹时间",
+            "owner": "小满的朋友",
+            "pet": "小满 · 猫咪",
+            "kind": "cat",
+            "likes": "6",
+            "comments": "1",
+            "to": "postMine",
+            "profile": "mine"
+          },
+          {
+            "title": "豆豆的散步打卡",
+            "owner": "豆豆的朋友",
+            "pet": "豆豆 · 狗狗",
+            "kind": "dog",
+            "likes": "8",
+            "comments": "2",
+            "to": "dogPost",
+            "profile": "dogProfile"
+          },
+          {
+            "title": "糯米今天也在认真吃草",
+            "owner": "糯米日记",
+            "pet": "糯米 · 兔兔",
+            "kind": "rabbit",
+            "likes": "5",
+            "comments": "1",
+            "to": "otherPost",
+            "profile": "otherProfile"
+          }
+        ]
+      }
+    ],
+    "footer": null,
+    "replace": true,
+    "tab": "home",
+    "brand": true,
+    "phase": "social"
+  },
+  {
+    "id": "homeEmpty",
+    "title": "社区",
+    "items": [
+      {
+        "type": "switch",
+        "active": "推荐",
+        "entries": [
+          [
+            "推荐",
+            "home"
+          ],
+          [
+            "关注",
+            "following"
+          ],
+          [
+            "同城",
+            "localFeed"
+          ]
+        ]
+      },
+      {
+        "type": "empty",
+        "title": "第一份日常，等你来分享",
+        "body": "这里还没有真实内容。可以先看看养宠指南，或记录你和宠物的一天。"
+      },
+      {
+        "type": "action",
+        "label": "看看养宠指南",
+        "to": "careGuide",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "晒晒我的宠物",
+      "to": "composePost",
+      "kind": "primary"
+    },
+    "replace": true,
+    "tab": "home",
+    "phase": "social"
+  },
+  {
+    "id": "following",
+    "title": "关注",
+    "items": [
+      {
+        "type": "switch",
+        "active": "关注",
+        "entries": [
+          [
+            "推荐",
+            "home"
+          ],
+          [
+            "关注",
+            "following"
+          ],
+          [
+            "同城",
+            "localFeed"
+          ]
+        ]
+      },
+      {
+        "type": "empty",
+        "title": "还没有关注的朋友",
+        "body": "遇到喜欢的日常，可以先关注作者。关注后，TA 的新内容会出现在这里。"
+      },
+      {
+        "type": "action",
+        "label": "去发现宠友",
+        "to": "home",
+        "kind": "secondary"
+      }
+    ],
+    "footer": null,
+    "tab": "home",
+    "phase": "social"
+  },
+  {
+    "id": "localFeed",
+    "title": "武汉同城",
+    "items": [
+      {
+        "type": "search",
+        "label": "武汉 · 公开区域，不显示家庭地址",
+        "to": "city"
+      },
+      {
+        "type": "switch",
+        "active": "同城",
+        "entries": [
+          [
+            "推荐",
+            "home"
+          ],
+          [
+            "关注",
+            "following"
+          ],
+          [
+            "同城",
+            "localFeed"
+          ]
+        ]
+      },
+      {
+        "type": "quickPublish"
+      },
+      {
+        "type": "row",
+        "label": "和同城宠友聊聊",
+        "value": "先读群规，再申请加入",
+        "to": "groups"
+      },
+      {
+        "type": "text",
+        "text": "晒晒日常，也聊聊养宠的小事",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "socialFeed",
+        "posts": [
+          {
+            "title": "太阳晒到肚皮啦",
+            "owner": "布丁的铲屎官",
+            "pet": "布丁 · 猫咪",
+            "kind": "catOffer",
+            "likes": "12",
+            "comments": "3",
+            "to": "post",
+            "profile": "authorProfile"
+          },
+          {
+            "title": "小满午后的打盹时间",
+            "owner": "小满的朋友",
+            "pet": "小满 · 猫咪",
+            "kind": "cat",
+            "likes": "6",
+            "comments": "1",
+            "to": "postMine",
+            "profile": "mine"
+          },
+          {
+            "title": "豆豆的散步打卡",
+            "owner": "豆豆的朋友",
+            "pet": "豆豆 · 狗狗",
+            "kind": "dog",
+            "likes": "8",
+            "comments": "2",
+            "to": "dogPost",
+            "profile": "dogProfile"
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "title": "同城不等于附近实时位置",
+        "body": "这里只按你选择的城市筛选，不展示精确住址、距离或实时位置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": null,
+    "tab": "home",
+    "phase": "social"
+  },
+  {
+    "id": "post",
+    "title": "晒宠日常",
+    "items": [
+      {
+        "type": "author",
+        "name": "布丁的铲屎官",
+        "pet": "布丁 · 猫咪",
+        "kind": "catOffer",
+        "to": "authorProfile"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 276
+      },
+      {
+        "type": "text",
+        "text": "太阳晒到肚皮啦",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "忙完回头看，布丁已经把最好的阳光位占好了。你家的小家伙也会找光斑吗？",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "晒宠日常 · 学习内容示例",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "socialActions",
+        "likes": "12",
+        "comments": "3",
+        "liked": false,
+        "likeTo": "postLiked",
+        "commentTo": "comments"
+      },
+      {
+        "type": "text",
+        "text": "评论",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "comment",
+        "name": "团子今天不拆家",
+        "body": "这个姿势也太可爱了！",
+        "meta": "2 赞 · 查看回复",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "action",
+        "label": "查看全部评论",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "说点什么，和宠友聊聊",
+      "sendTo": "commentsWriting",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "replace": true,
+    "more": "postActions",
+    "phase": "social"
+  },
+  {
+    "id": "postLiked",
+    "title": "晒宠日常",
+    "items": [
+      {
+        "type": "author",
+        "name": "布丁的铲屎官",
+        "pet": "布丁 · 猫咪",
+        "kind": "catOffer",
+        "to": "authorProfile"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 276
+      },
+      {
+        "type": "text",
+        "text": "太阳晒到肚皮啦",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "忙完回头看，布丁已经把最好的阳光位占好了。你家的小家伙也会找光斑吗？",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "晒宠日常 · 学习内容示例",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "socialActions",
+        "likes": "13",
+        "comments": "3",
+        "liked": true,
+        "likeTo": "post",
+        "commentTo": "comments"
+      },
+      {
+        "type": "text",
+        "text": "评论",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "comment",
+        "name": "团子今天不拆家",
+        "body": "这个姿势也太可爱了！",
+        "meta": "2 赞 · 查看回复",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "action",
+        "label": "查看全部评论",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "说点什么，和宠友聊聊",
+      "sendTo": "commentsWriting",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "postActions",
+    "phase": "social"
+  },
+  {
+    "id": "postMine",
+    "title": "我的晒宠",
+    "items": [
+      {
+        "type": "author",
+        "name": "小满的朋友",
+        "pet": "小满 · 猫咪",
+        "kind": "cat",
+        "to": "mine"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 276
+      },
+      {
+        "type": "text",
+        "text": "小满午后的打盹时间",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "小满一睡着，键盘就不属于我了。你家也有这样的小监督员吗？",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "晒宠日常 · 学习内容示例",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "text",
+        "text": "评论",
+        "role": "Section",
+        "color": "ink"
+      }
+    ],
+    "footer": {
+      "label": "查看我的内容操作",
+      "to": "ownPostActions",
+      "kind": "primary"
+    },
+    "more": "ownPostActions",
+    "phase": "social"
+  },
+  {
+    "id": "dogPost",
+    "title": "晒宠日常",
+    "items": [
+      {
+        "type": "author",
+        "name": "豆豆的朋友",
+        "pet": "豆豆 · 狗狗",
+        "kind": "dog",
+        "to": "dogProfile"
+      },
+      {
+        "type": "photo",
+        "kind": "dog",
+        "height": 276
+      },
+      {
+        "type": "text",
+        "text": "豆豆的散步打卡",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "今天不赶路，让豆豆认真闻闻路边的草。散步回来，心情也慢慢松下来了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "晒宠日常 · 学习内容示例",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "text",
+        "text": "评论",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "更多宠物也有自己的日常",
+        "body": "狗狗与其他宠物共用点赞、评论和举报规则；此处展示物种内容分支，完整交互以猫咪日常为演示主线。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到社区",
+      "to": "home",
+      "kind": "primary"
+    },
+    "more": null,
+    "phase": "social"
+  },
+  {
+    "id": "otherPost",
+    "title": "晒宠日常",
+    "items": [
+      {
+        "type": "author",
+        "name": "糯米日记",
+        "pet": "糯米 · 兔兔",
+        "kind": "rabbit",
+        "to": "otherProfile"
+      },
+      {
+        "type": "photo",
+        "kind": "rabbit",
+        "height": 276
+      },
+      {
+        "type": "text",
+        "text": "糯米今天也在认真吃草",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "咔嚓咔嚓，糯米的小日子很认真。记录一下平平常常、又很可爱的一天。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "晒宠日常 · 学习内容示例",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "text",
+        "text": "评论",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "更多宠物也有自己的日常",
+        "body": "狗狗与其他宠物共用点赞、评论和举报规则；此处展示物种内容分支，完整交互以猫咪日常为演示主线。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到社区",
+      "to": "home",
+      "kind": "primary"
+    },
+    "more": null,
+    "phase": "social"
+  },
+  {
+    "id": "comments",
+    "title": "全部评论",
+    "items": [
+      {
+        "type": "text",
+        "text": "友好交流，围绕内容说说你的想法",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "comment",
+        "name": "团子今天不拆家",
+        "body": "这个姿势也太可爱了！",
+        "meta": "2 赞 · 2 条回复",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "comment",
+        "name": "奶糖饲养员",
+        "body": "我家也会追着太阳换位置，太有同感了。",
+        "meta": "1 赞 · 回复",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "comment",
+        "name": "布丁的铲屎官",
+        "body": "谢谢喜欢，今天又被它治愈了。",
+        "meta": "作者 · 回复",
+        "to": "commentReplies",
+        "kind": "catOffer"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "写一条友好的评论",
+      "sendTo": "commentsWriting",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "postActions",
+    "phase": "social"
+  },
+  {
+    "id": "commentsWriting",
+    "title": "写评论",
+    "items": [
+      {
+        "type": "note",
+        "title": "正在回复这篇日常",
+        "body": "评论会公开显示，请不要填写电话、家庭地址或其他人的隐私。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "评论内容",
+        "value": "小满也喜欢这样晒太阳，看到就想笑。",
+        "kind": "input"
+      },
+      {
+        "type": "action",
+        "label": "取消，保留草稿",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "发布评论示意",
+      "to": "commentPosted",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "commentPosted",
+    "title": "全部评论",
+    "items": [
+      {
+        "type": "comment",
+        "name": "小满的朋友",
+        "body": "小满也喜欢这样晒太阳，看到就想笑。",
+        "meta": "我 · 刚刚 · 回复",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "text",
+        "text": "友好交流，围绕内容说说你的想法",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "comment",
+        "name": "团子今天不拆家",
+        "body": "这个姿势也太可爱了！",
+        "meta": "2 赞 · 2 条回复",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "comment",
+        "name": "奶糖饲养员",
+        "body": "我家也会追着太阳换位置，太有同感了。",
+        "meta": "1 赞 · 回复",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "comment",
+        "name": "布丁的铲屎官",
+        "body": "谢谢喜欢，今天又被它治愈了。",
+        "meta": "作者 · 回复",
+        "to": "commentReplies",
+        "kind": "catOffer"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "继续交流",
+      "sendTo": "commentsWriting",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "commentReplies",
+    "title": "评论与回复",
+    "items": [
+      {
+        "type": "comment",
+        "name": "团子今天不拆家",
+        "body": "这个姿势也太可爱了！",
+        "meta": "2 赞 · 原评论",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "comment",
+        "name": "布丁的铲屎官",
+        "body": "每天都在认真找太阳。",
+        "meta": "作者 · 回复",
+        "to": "commentsWriting",
+        "kind": "catOffer"
+      },
+      {
+        "type": "comment",
+        "name": "小满的朋友",
+        "body": "我家也是，晴天都不想挪窝。",
+        "meta": "回复 · 刚刚",
+        "to": "commentsWriting",
+        "kind": "cat"
+      },
+      {
+        "type": "action",
+        "label": "查看评论操作",
+        "to": "commentActions",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复这条评论",
+      "sendTo": "commentsWriting",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "postActions",
+    "title": "内容操作",
+    "items": [
+      {
+        "type": "author",
+        "name": "布丁的铲屎官",
+        "pet": "布丁 · 猫咪",
+        "kind": "catOffer",
+        "to": "authorProfile"
+      },
+      {
+        "type": "text",
+        "text": "太阳晒到肚皮啦",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "查看作者主页",
+        "to": "authorProfile",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "不想看这类内容",
+        "to": "contentHidden",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "举报这篇内容",
+        "to": "reportPost",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消",
+        "to": "post",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "social"
+  },
+  {
+    "id": "commentActions",
+    "title": "评论操作",
+    "items": [
+      {
+        "type": "comment",
+        "name": "团子今天不拆家",
+        "body": "这个姿势也太可爱了！",
+        "meta": "当前评论",
+        "to": "commentReplies",
+        "kind": "cat"
+      },
+      {
+        "type": "action",
+        "label": "回复这条评论",
+        "to": "commentsWriting",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "举报这条评论",
+        "to": "reportComment",
+        "kind": "secondary"
+      },
+      {
+        "type": "note",
+        "title": "自己的评论",
+        "body": "自己的评论提供删除；他人的评论不提供删除按钮。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回评论区",
+        "to": "comments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "social"
+  },
+  {
+    "id": "ownPostActions",
+    "title": "我的内容操作",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满午后的打盹时间",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "编辑我的日常",
+        "to": "composePost",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "删除前确认",
+        "to": "deletePost",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "返回日常",
+        "to": "postMine",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "social"
+  },
+  {
+    "id": "deletePost",
+    "title": "删除这篇日常？",
+    "items": [
+      {
+        "type": "note",
+        "title": "确认后将不再公开展示",
+        "body": "评论和点赞不会转移到其他内容。已有举报的处理记录按规则保留。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "暂不删除",
+        "to": "postMine",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认删除示意",
+      "to": "contentHidden",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "contentHidden",
+    "title": "内容状态已变化",
+    "items": [
+      {
+        "type": "empty",
+        "title": "这篇日常暂不可见",
+        "body": "可能已删除、设为私密或因规则暂不可见；旧通知不应继续展示私密内容。"
+      }
+    ],
+    "footer": {
+      "label": "回到社区",
+      "to": "home",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "authorProfile",
+    "title": "宠友主页",
+    "items": [
+      {
+        "type": "author",
+        "name": "布丁的铲屎官",
+        "pet": "布丁 · 猫咪",
+        "kind": "catOffer",
+        "to": null
+      },
+      {
+        "type": "text",
+        "text": "记录普通又可爱的每一天。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "日常 6 · 关注 12 · 被关注 8（学习数据）",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "action",
+        "label": "关注这位宠友",
+        "to": "authorFollowing",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "给 TA 发私信",
+        "to": "requestSent",
+        "kind": "secondary"
+      },
+      {
+        "type": "text",
+        "text": "TA 的日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "socialFeed",
+        "posts": [
+          {
+            "title": "太阳晒到肚皮啦",
+            "owner": "布丁的铲屎官",
+            "pet": "布丁 · 猫咪",
+            "kind": "catOffer",
+            "likes": "12",
+            "comments": "3",
+            "to": "post",
+            "profile": "authorProfile"
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "label": "举报这个账号",
+        "to": "reportUser",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "more": "profileActions",
+    "phase": "social"
+  },
+  {
+    "id": "dogProfile",
+    "title": "宠友主页",
+    "items": [
+      {
+        "type": "author",
+        "name": "豆豆的朋友",
+        "pet": "豆豆 · 狗狗",
+        "kind": "dog",
+        "to": null
+      },
+      {
+        "type": "text",
+        "text": "记录普通又可爱的每一天。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "日常 6 · 关注 12 · 被关注 8（学习数据）",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "text",
+        "text": "TA 的日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "socialFeed",
+        "posts": [
+          {
+            "title": "豆豆的散步打卡",
+            "owner": "豆豆的朋友",
+            "pet": "豆豆 · 狗狗",
+            "kind": "dog",
+            "likes": "8",
+            "comments": "2",
+            "to": "dogPost",
+            "profile": "dogProfile"
+          }
+        ]
+      }
+    ],
+    "footer": null,
+    "more": null,
+    "phase": "social"
+  },
+  {
+    "id": "otherProfile",
+    "title": "宠友主页",
+    "items": [
+      {
+        "type": "author",
+        "name": "糯米日记",
+        "pet": "糯米 · 兔兔",
+        "kind": "rabbit",
+        "to": null
+      },
+      {
+        "type": "text",
+        "text": "记录普通又可爱的每一天。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "日常 6 · 关注 12 · 被关注 8（学习数据）",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "text",
+        "text": "TA 的日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "socialFeed",
+        "posts": [
+          {
+            "title": "糯米今天也在认真吃草",
+            "owner": "糯米日记",
+            "pet": "糯米 · 兔兔",
+            "kind": "rabbit",
+            "likes": "5",
+            "comments": "1",
+            "to": "otherPost",
+            "profile": "otherProfile"
+          }
+        ]
+      }
+    ],
+    "footer": null,
+    "more": null,
+    "phase": "social"
+  },
+  {
+    "id": "authorFollowing",
+    "title": "宠友主页",
+    "items": [
+      {
+        "type": "author",
+        "name": "布丁的铲屎官",
+        "pet": "布丁 · 猫咪",
+        "kind": "catOffer",
+        "to": "authorProfile"
+      },
+      {
+        "type": "text",
+        "text": "已关注 · 新日常会出现在关注页",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "action",
+        "label": "取消关注",
+        "to": "authorProfile",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "发私信",
+        "to": "requestSent",
+        "kind": "secondary"
+      },
+      {
+        "type": "text",
+        "text": "TA 的日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "socialFeed",
+        "posts": [
+          {
+            "title": "太阳晒到肚皮啦",
+            "owner": "布丁的铲屎官",
+            "pet": "布丁 · 猫咪",
+            "kind": "catOffer",
+            "likes": "12",
+            "comments": "3",
+            "to": "post",
+            "profile": "authorProfile"
+          }
+        ]
+      }
+    ],
+    "footer": null,
+    "more": "profileActions",
+    "phase": "social"
+  },
+  {
+    "id": "profileActions",
+    "title": "账号与隐私",
+    "items": [
+      {
+        "type": "author",
+        "name": "布丁的铲屎官",
+        "pet": "布丁 · 猫咪",
+        "kind": "catOffer",
+        "to": "authorProfile"
+      },
+      {
+        "type": "action",
+        "label": "私信这位宠友",
+        "to": "requestSent",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "拉黑前确认",
+        "to": "blockConfirm",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "举报这个账号",
+        "to": "reportUser",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "返回主页",
+        "to": "authorProfile",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "social"
+  },
+  {
+    "id": "messages",
+    "title": "消息",
+    "items": [
+      {
+        "type": "switch",
+        "active": "私信",
+        "entries": [
+          [
+            "私信",
+            "messages"
+          ],
+          [
+            "互动",
+            "interactionInbox"
+          ],
+          [
+            "通知",
+            "systemInbox"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "陌生人消息请求",
+        "value": "1 条待你决定；接受前不开放图片",
+        "to": "messageRequests"
+      },
+      {
+        "type": "row",
+        "label": "宠友群聊",
+        "value": "同城日常与养宠交流",
+        "to": "groups"
+      },
+      {
+        "type": "conversation",
+        "name": "布丁的铲屎官",
+        "preview": "原来你家也喜欢晒太阳呀。",
+        "meta": "养宠交流 · 学习示例",
+        "kind": "catOffer",
+        "to": "privateChat",
+        "unread": "2"
+      },
+      {
+        "type": "conversation",
+        "name": "小满的照护者",
+        "preview": "想确认一下照护安排。",
+        "meta": "领养咨询 · 小满 · 申请 A1",
+        "kind": "cat",
+        "to": "chat",
+        "unread": "1"
+      },
+      {
+        "type": "action",
+        "label": "聊天隐私设置",
+        "to": "privateSettings",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "replace": true,
+    "tab": "messages",
+    "more": "privateSettings",
+    "phase": "social"
+  },
+  {
+    "id": "interactionInbox",
+    "title": "互动通知",
+    "items": [
+      {
+        "type": "switch",
+        "active": "互动",
+        "entries": [
+          [
+            "私信",
+            "messages"
+          ],
+          [
+            "互动",
+            "interactionInbox"
+          ],
+          [
+            "通知",
+            "systemInbox"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "团子点赞了你的日常",
+        "value": "小满午后的打盹时间",
+        "to": "postMine"
+      },
+      {
+        "type": "row",
+        "label": "布丁的铲屎官回复了你",
+        "value": "每天都在认真找太阳。",
+        "to": "commentReplies"
+      },
+      {
+        "type": "row",
+        "label": "奶糖饲养员关注了你",
+        "value": "进入主页查看公开信息",
+        "to": "mine"
+      },
+      {
+        "type": "note",
+        "title": "不制造热闹",
+        "body": "仅真实发生的互动才生成通知；空内容不补假点赞或假评论。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": null,
+    "tab": "messages",
+    "phase": "social"
+  },
+  {
+    "id": "systemInbox",
+    "title": "系统通知",
+    "items": [
+      {
+        "type": "switch",
+        "active": "通知",
+        "entries": [
+          [
+            "私信",
+            "messages"
+          ],
+          [
+            "互动",
+            "interactionInbox"
+          ],
+          [
+            "通知",
+            "systemInbox"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "领养申请进度",
+        "value": "查看收到、沟通与交接状态",
+        "to": "application"
+      },
+      {
+        "type": "row",
+        "label": "举报处理进度",
+        "value": "已收到不等于已核实",
+        "to": "moderationProgress"
+      },
+      {
+        "type": "row",
+        "label": "发布与材料通知",
+        "value": "材料收到，不代表人工查实",
+        "to": "petPending"
+      }
+    ],
+    "footer": null,
+    "tab": "messages",
+    "phase": "social"
+  },
+  {
+    "id": "privateChat",
+    "title": "布丁的铲屎官",
+    "items": [
+      {
+        "type": "text",
+        "text": "养宠交流 · 不关联领养或交易",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "bubble",
+        "text": "刚看到布丁的日常，它和小满一样爱晒太阳呀。",
+        "mine": true
+      },
+      {
+        "type": "bubble",
+        "text": "是呀！原来你也在武汉，有空可以交流下猫咪玩具。",
+        "mine": false,
+        "to": "messageActions"
+      },
+      {
+        "type": "bubble",
+        "text": "可以呀，最近买的逗猫棒很受欢迎。",
+        "mine": true
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "发消息…",
+      "sendTo": "privateSent",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "privateActions",
+    "phase": "social"
+  },
+  {
+    "id": "privateSent",
+    "title": "布丁的铲屎官",
+    "items": [
+      {
+        "type": "text",
+        "text": "养宠交流 · 学习会话",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "bubble",
+        "text": "刚看到布丁的日常，它和小满一样爱晒太阳呀。",
+        "mine": true
+      },
+      {
+        "type": "bubble",
+        "text": "是呀！原来你也在武汉，有空可以交流下猫咪玩具。",
+        "mine": false,
+        "to": "messageActions"
+      },
+      {
+        "type": "bubble",
+        "text": "可以呀，最近买的逗猫棒很受欢迎。",
+        "mine": true,
+        "status": "已发出（状态示例）"
+      },
+      {
+        "type": "bubble",
+        "text": "好呀，下次把布丁的玩具也分享给你。",
+        "mine": true,
+        "status": "新消息已发出 · 状态示例"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "继续聊聊…",
+      "sendTo": "privateSent",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "privateActions",
+    "phase": "social"
+  },
+  {
+    "id": "privateFailed",
+    "title": "布丁的铲屎官",
+    "items": [
+      {
+        "type": "bubble",
+        "text": "刚看到布丁的日常，它和小满一样爱晒太阳呀。",
+        "mine": true
+      },
+      {
+        "type": "bubble",
+        "text": "是呀！原来你也在武汉，有空可以交流下猫咪玩具。",
+        "mine": false,
+        "to": "messageActions"
+      },
+      {
+        "type": "bubble",
+        "text": "可以呀，最近买的逗猫棒很受欢迎。",
+        "mine": true,
+        "status": "发送失败 · 草稿仍保留"
+      },
+      {
+        "type": "action",
+        "label": "重试这条消息",
+        "to": "privateSent",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "编辑后再发",
+        "to": "privateChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "未发送的草稿",
+      "sendTo": "privateSent",
+      "ready": true,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "privateActions",
+    "phase": "social"
+  },
+  {
+    "id": "messageRequests",
+    "title": "消息请求",
+    "items": [
+      {
+        "type": "note",
+        "title": "你决定是否开始交流",
+        "body": "接受前只允许首条文字请求，不接收图片或定位；忽略不会通知对方。",
+        "tone": "subtle"
+      },
+      {
+        "type": "conversation",
+        "name": "奶糖饲养员",
+        "preview": "你好，想请教一下猫咪换粮的经验。",
+        "meta": "来自你的公开日常",
+        "kind": "cat",
+        "to": "requestDetail",
+        "unread": "1"
+      }
+    ],
+    "footer": null,
+    "more": "privateSettings",
+    "phase": "social"
+  },
+  {
+    "id": "requestDetail",
+    "title": "新的私信请求",
+    "items": [
+      {
+        "type": "author",
+        "name": "奶糖饲养员",
+        "pet": "猫咪日常",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "bubble",
+        "text": "你好，想请教一下猫咪换粮的经验。",
+        "mine": false
+      },
+      {
+        "type": "action",
+        "label": "暂不接受，回到请求",
+        "to": "messageRequests",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "举报这条请求",
+        "to": "reportMessage",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "接受并开始聊天",
+      "to": "requestAccepted",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "requestAccepted",
+    "title": "奶糖饲养员",
+    "items": [
+      {
+        "type": "bubble",
+        "text": "你好，想请教一下猫咪换粮的经验。",
+        "mine": false
+      },
+      {
+        "type": "text",
+        "text": "你已接受这次消息请求",
+        "role": "Caption",
+        "color": "muted"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "先打个招呼…",
+      "sendTo": "requestAccepted",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "privateSettings",
+    "phase": "social"
+  },
+  {
+    "id": "requestSent",
+    "title": "布丁的铲屎官",
+    "items": [
+      {
+        "type": "note",
+        "title": "先发一句自我介绍",
+        "body": "对方接受前只可发送一次文字请求，不支持图片、地址或连续催促。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "打个招呼",
+        "value": "你好，看到你分享的布丁，也想交流养猫日常。",
+        "kind": "input"
+      }
+    ],
+    "footer": {
+      "label": "发送请求示意",
+      "to": "requestWaiting",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "requestWaiting",
+    "title": "等待对方接受",
+    "items": [
+      {
+        "type": "empty",
+        "title": "招呼已发出，给对方一点时间",
+        "body": "对方接受后才能继续聊天；不会因为反复点击而重复发送。"
+      },
+      {
+        "type": "action",
+        "label": "回到作者主页",
+        "to": "authorProfile",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到消息",
+      "to": "messages",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "privateUnavailable",
+    "title": "暂时无法发私信",
+    "items": [
+      {
+        "type": "empty",
+        "title": "先在评论区友好交流",
+        "body": "对方的私信设置暂不允许新请求；不展示对方是否将你拉黑。"
+      }
+    ],
+    "footer": {
+      "label": "回到日常",
+      "to": "post",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "privateSettings",
+    "title": "聊天隐私",
+    "items": [
+      {
+        "type": "field",
+        "label": "谁可以发起私信",
+        "value": "允许首条文字请求；可改为仅互相关注",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "图片消息",
+        "value": "仅已接受的会话可收发",
+        "kind": "select"
+      },
+      {
+        "type": "row",
+        "label": "已拉黑账号",
+        "value": "拉黑不等于举报或违规结论",
+        "to": "blockedResult"
+      },
+      {
+        "type": "field",
+        "label": "消息通知预览",
+        "value": "默认不在锁屏展示正文",
+        "kind": "select"
+      },
+      {
+        "type": "note",
+        "title": "控制你的联系范围",
+        "body": "关闭请求不删除已有会话；拉黑后停止新的私信和群邀请。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保存设置示意",
+      "to": "messages",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "privateActions",
+    "title": "会话操作",
+    "items": [
+      {
+        "type": "author",
+        "name": "布丁的铲屎官",
+        "pet": "布丁 · 猫咪",
+        "kind": "catOffer",
+        "to": "authorProfile"
+      },
+      {
+        "type": "row",
+        "label": "查看对应宠友",
+        "value": "公开主页",
+        "to": "authorProfile"
+      },
+      {
+        "type": "action",
+        "label": "查看单条消息操作",
+        "to": "messageActions",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "拉黑前确认",
+        "to": "blockConfirm",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "举报账号",
+        "to": "reportUser",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "聊天隐私设置",
+        "to": "privateSettings",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "social"
+  },
+  {
+    "id": "messageActions",
+    "title": "消息操作",
+    "items": [
+      {
+        "type": "bubble",
+        "text": "是呀！原来你也在武汉，有空可以交流下猫咪玩具。",
+        "mine": false
+      },
+      {
+        "type": "action",
+        "label": "引用回复",
+        "to": "privateChat",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "举报这条消息",
+        "to": "reportMessage",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "返回会话",
+        "to": "privateChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "social"
+  },
+  {
+    "id": "blockConfirm",
+    "title": "拉黑这位用户？",
+    "items": [
+      {
+        "type": "author",
+        "name": "布丁的铲屎官",
+        "pet": "布丁 · 猫咪",
+        "kind": "catOffer",
+        "to": "authorProfile"
+      },
+      {
+        "type": "note",
+        "title": "拉黑与举报是两回事",
+        "body": "拉黑会限制对方联系你，不会自动认定其违规。已有会话记录可按隐私设置保留。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "暂不拉黑",
+        "to": "privateChat",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认拉黑示意",
+      "to": "blockedResult",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "blockedResult",
+    "title": "已限制联系",
+    "items": [
+      {
+        "type": "empty",
+        "title": "你可以安心退出这段交流",
+        "body": "对方不能继续发起私信或群邀请；你仍可对已有内容进行举报。"
+      },
+      {
+        "type": "action",
+        "label": "查看举报入口",
+        "to": "reportUser",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "解除拉黑示意",
+        "to": "privateChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到消息",
+      "to": "messages",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "composePost",
+    "title": "晒晒我的宠物",
+    "items": [
+      {
+        "type": "text",
+        "text": "把普通的一天，也留一份可爱。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 168
+      },
+      {
+        "type": "upload",
+        "label": "添加或更换照片",
+        "hint": "可移除；展示公开前检查定位、脸部和家庭信息。",
+        "to": "mediaPermission"
+      },
+      {
+        "type": "field",
+        "label": "写一句标题",
+        "value": "小满午后的打盹时间",
+        "kind": "input"
+      },
+      {
+        "type": "field",
+        "label": "今天想说什么",
+        "value": "小满又把键盘当枕头了，大家家里也有小监督员吗？",
+        "kind": "input"
+      },
+      {
+        "type": "field",
+        "label": "内容类型",
+        "value": "晒宠日常 / 经验交流 / 提问",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "关联宠物",
+        "value": "小满 · 猫咪",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "谁能看到",
+        "value": "公开；不默认附带精确位置",
+        "kind": "select"
+      }
+    ],
+    "footer": {
+      "label": "预览这篇日常",
+      "to": "postPreview",
+      "kind": "primary"
+    },
+    "replace": true,
+    "phase": "social"
+  },
+  {
+    "id": "postPreview",
+    "title": "发布前预览",
+    "items": [
+      {
+        "type": "author",
+        "name": "小满的朋友",
+        "pet": "小满 · 猫咪",
+        "kind": "cat",
+        "to": "mine"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "小满午后的打盹时间",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "小满又把键盘当枕头了，大家家里也有小监督员吗？",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "公开 · 不含精确位置",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "action",
+        "label": "返回修改，保留草稿",
+        "to": "composePost",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "发布结果示意",
+      "to": "postPublished",
+      "kind": "primary"
+    },
+    "replace": true,
+    "phase": "social"
+  },
+  {
+    "id": "postPublished",
+    "title": "日常已发布",
+    "items": [
+      {
+        "type": "empty",
+        "title": "让宠友一起看见这份可爱",
+        "body": "这是发布状态示例；实际产品需显示失败重试、可见范围与内容处理状态。"
+      },
+      {
+        "type": "action",
+        "label": "查看我的这篇日常",
+        "to": "postMine",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "回到社区",
+      "to": "home",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "mediaPermission",
+    "title": "照片选择说明",
+    "items": [
+      {
+        "type": "empty",
+        "title": "不用开放全部相册",
+        "body": "优先使用系统照片选择器，只分享你选中的照片。取消后仍可编辑文字与保存草稿。首版暂不支持视频。"
+      },
+      {
+        "type": "action",
+        "label": "返回继续编辑",
+        "to": "composePost",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回上一步",
+      "to": "BACK",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "careGuide",
+    "title": "养宠指南",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "迎接第一只猫，先准备好这 5 件事",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "先准备安静的休息区、饮水与猫砂盆，再给新伙伴一点适应时间。涉及持续异常或健康问题，请寻求有资质的专业帮助。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "回到社区交流",
+        "to": "home",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "看看大家的日常",
+      "to": "home",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "reportPost",
+    "title": "举报内容",
+    "items": [
+      {
+        "type": "note",
+        "title": "举报对象：这篇晒宠内容",
+        "body": "对象由进入位置带入，提交过程中不能切换成其他人或其他内容。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "举报原因",
+        "value": "骚扰 / 广告 / 欺骗 / 隐私 / 伤害动物 / 其他",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "描述你看到的具体行为，不确定的部分请说明。",
+        "kind": "input"
+      },
+      {
+        "type": "upload",
+        "label": "补充材料（可选）",
+        "hint": "保留相关上下文；不要额外上传身份证、住址或无关聊天。"
+      },
+      {
+        "type": "note",
+        "title": "紧急风险另行求助",
+        "body": "本入口不承诺实时响应，已收到也不等于已经查实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "提交举报示意",
+      "to": "reportPostSent",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "reportPostSent",
+    "title": "举报已收到",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已收到，不等于已判定违规",
+        "body": "你可查看记录、补充材料和后续结论；不会因举报数量自动处罚对方。"
+      },
+      {
+        "type": "action",
+        "label": "查看处理进度",
+        "to": "moderationProgress",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回原处",
+      "to": "post",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "reportComment",
+    "title": "举报评论",
+    "items": [
+      {
+        "type": "note",
+        "title": "举报对象：这条评论",
+        "body": "对象由进入位置带入，提交过程中不能切换成其他人或其他内容。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "举报原因",
+        "value": "骚扰 / 广告 / 欺骗 / 隐私 / 伤害动物 / 其他",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "描述你看到的具体行为，不确定的部分请说明。",
+        "kind": "input"
+      },
+      {
+        "type": "upload",
+        "label": "补充材料（可选）",
+        "hint": "保留相关上下文；不要额外上传身份证、住址或无关聊天。"
+      },
+      {
+        "type": "note",
+        "title": "紧急风险另行求助",
+        "body": "本入口不承诺实时响应，已收到也不等于已经查实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "提交举报示意",
+      "to": "reportCommentSent",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "reportCommentSent",
+    "title": "举报已收到",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已收到，不等于已判定违规",
+        "body": "你可查看记录、补充材料和后续结论；不会因举报数量自动处罚对方。"
+      },
+      {
+        "type": "action",
+        "label": "查看处理进度",
+        "to": "moderationProgress",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回原处",
+      "to": "comments",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "reportUser",
+    "title": "举报账号",
+    "items": [
+      {
+        "type": "note",
+        "title": "举报对象：这位用户",
+        "body": "对象由进入位置带入，提交过程中不能切换成其他人或其他内容。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "举报原因",
+        "value": "骚扰 / 广告 / 欺骗 / 隐私 / 伤害动物 / 其他",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "描述你看到的具体行为，不确定的部分请说明。",
+        "kind": "input"
+      },
+      {
+        "type": "upload",
+        "label": "补充材料（可选）",
+        "hint": "保留相关上下文；不要额外上传身份证、住址或无关聊天。"
+      },
+      {
+        "type": "note",
+        "title": "紧急风险另行求助",
+        "body": "本入口不承诺实时响应，已收到也不等于已经查实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "提交举报示意",
+      "to": "reportUserSent",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "reportUserSent",
+    "title": "举报已收到",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已收到，不等于已判定违规",
+        "body": "你可查看记录、补充材料和后续结论；不会因举报数量自动处罚对方。"
+      },
+      {
+        "type": "action",
+        "label": "查看处理进度",
+        "to": "moderationProgress",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回原处",
+      "to": "authorProfile",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "reportMessage",
+    "title": "举报消息",
+    "items": [
+      {
+        "type": "note",
+        "title": "举报对象：这条消息",
+        "body": "对象由进入位置带入，提交过程中不能切换成其他人或其他内容。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "举报原因",
+        "value": "骚扰 / 广告 / 欺骗 / 隐私 / 伤害动物 / 其他",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "描述你看到的具体行为，不确定的部分请说明。",
+        "kind": "input"
+      },
+      {
+        "type": "upload",
+        "label": "补充材料（可选）",
+        "hint": "保留相关上下文；不要额外上传身份证、住址或无关聊天。"
+      },
+      {
+        "type": "note",
+        "title": "紧急风险另行求助",
+        "body": "本入口不承诺实时响应，已收到也不等于已经查实。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "提交举报示意",
+      "to": "reportMessageSent",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "reportMessageSent",
+    "title": "举报已收到",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已收到，不等于已判定违规",
+        "body": "你可查看记录、补充材料和后续结论；不会因举报数量自动处罚对方。"
+      },
+      {
+        "type": "action",
+        "label": "查看处理进度",
+        "to": "moderationProgress",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回原处",
+      "to": "privateChat",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "moderationProgress",
+    "title": "举报处理进度",
+    "items": [
+      {
+        "type": "timeline",
+        "entries": [
+          [
+            "已收到",
+            "保存对象、原因及提交时间。"
+          ],
+          [
+            "待人工查看",
+            "必要时再补充材料，不展示被举报人的私密信息。"
+          ],
+          [
+            "处理与解释",
+            "区分成立、不成立或证据不足；保留复核入口。"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "title": "按处理单保留上下文",
+        "body": "正式产品按原举报编号补充材料与申请复核；不会重新举报另一篇内容。这里展示进度结构，不提交真实数据。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到消息",
+      "to": "messages",
+      "kind": "primary"
+    },
+    "phase": "social"
+  },
+  {
+    "id": "groups",
+    "title": "宠友群聊",
+    "items": [
+      {
+        "type": "text",
+        "text": "聊日常，找同好",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "发现武汉的宠友群",
+        "to": "groupDiscover",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "创建一个小群",
+        "to": "groupCreate",
+        "kind": "secondary"
+      },
+      {
+        "type": "conversation",
+        "name": "武汉猫友日常",
+        "preview": "布丁的铲屎官：今天的阳光真不错。",
+        "meta": "已加入 · 8 位成员 · 学习示例",
+        "kind": "catOffer",
+        "to": "groupChat",
+        "unread": "3"
+      },
+      {
+        "type": "conversation",
+        "name": "小满和朋友们",
+        "preview": "你创建的群聊",
+        "meta": "我创建 · 1 位成员 · 学习示例",
+        "kind": "cat",
+        "to": "groupOwnerChat",
+        "unread": "0"
+      }
+    ],
+    "footer": null,
+    "tab": "messages",
+    "phase": "groups"
+  },
+  {
+    "id": "groupDiscover",
+    "title": "发现宠友群",
+    "items": [
+      {
+        "type": "field",
+        "label": "城市",
+        "value": "武汉；可手动切换上海",
+        "kind": "select"
+      },
+      {
+        "type": "note",
+        "title": "先看群介绍，再决定加入",
+        "body": "群资料不展示成员家庭地址、精确距离或实时位置。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "武汉猫友日常",
+        "value": "猫咪日常 · 8 位成员 · 需审核",
+        "to": "groupIntro"
+      },
+      {
+        "type": "action",
+        "label": "回到我的群聊",
+        "to": "groups",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "groups"
+  },
+  {
+    "id": "groupIntro",
+    "title": "武汉猫友日常",
+    "items": [
+      {
+        "type": "author",
+        "name": "武汉猫友日常",
+        "pet": "8 位成员 · 群主：布丁的铲屎官",
+        "kind": "catOffer",
+        "to": null
+      },
+      {
+        "type": "text",
+        "text": "晒猫、聊日常，遇到问题一起交换经验。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "群规先说清楚",
+        "body": "不刷广告，不索取隐私，不以群聊替代专业医疗或领养核验。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "入群说明",
+        "value": "打个招呼，简单介绍你的养宠情况即可。",
+        "kind": "input"
+      },
+      {
+        "type": "text",
+        "text": "审核通过前不可查看历史消息或成员列表",
+        "role": "Caption",
+        "color": "muted"
+      }
+    ],
+    "footer": {
+      "label": "申请加入示意",
+      "to": "groupJoinPending",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupJoinPending",
+    "title": "入群申请已收到",
+    "items": [
+      {
+        "type": "empty",
+        "title": "等群主或管理员看看",
+        "body": "这是待审核状态，不代表已加入。批准前不能读取群消息或成员信息。"
+      },
+      {
+        "type": "action",
+        "label": "撤回申请",
+        "to": "groupIntro",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到群聊入口",
+      "to": "groups",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupChat",
+    "title": "武汉猫友日常",
+    "items": [
+      {
+        "type": "text",
+        "text": "武汉猫友日常 · 8 位成员",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "note",
+        "title": "群公告",
+        "body": "友好晒宠，少一点广告，多一点可爱。不要发送家庭地址和他人隐私。",
+        "tone": "subtle"
+      },
+      {
+        "type": "bubble",
+        "text": "布丁的铲屎官：今天的阳光真不错，布丁又睡成了一摊。",
+        "mine": false
+      },
+      {
+        "type": "bubble",
+        "text": "小满也是！猫咪真的很会找舒服的地方。",
+        "mine": true
+      },
+      {
+        "type": "bubble",
+        "text": "团子今天不拆家：@小满的朋友 有空分享下你家的猫抓板呀。",
+        "mine": false,
+        "to": "groupMessageActions"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "发到群里…",
+      "sendTo": "groupSent",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "groupInfo",
+    "phase": "groups"
+  },
+  {
+    "id": "groupSent",
+    "title": "武汉猫友日常",
+    "items": [
+      {
+        "type": "text",
+        "text": "武汉猫友日常 · 8 位成员",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "note",
+        "title": "群公告",
+        "body": "友好晒宠，少一点广告，多一点可爱。不要发送家庭地址和他人隐私。",
+        "tone": "subtle"
+      },
+      {
+        "type": "bubble",
+        "text": "布丁的铲屎官：今天的阳光真不错，布丁又睡成了一摊。",
+        "mine": false
+      },
+      {
+        "type": "bubble",
+        "text": "小满也是！猫咪真的很会找舒服的地方。",
+        "mine": true
+      },
+      {
+        "type": "bubble",
+        "text": "团子今天不拆家：@小满的朋友 有空分享下你家的猫抓板呀。",
+        "mine": false,
+        "to": "groupMessageActions"
+      },
+      {
+        "type": "bubble",
+        "text": "好呀，晚点把使用感受发上来。",
+        "mine": true,
+        "status": "已发出（示例）"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "继续聊聊…",
+      "sendTo": "groupSent",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "groupInfo",
+    "phase": "groups"
+  },
+  {
+    "id": "groupInfo",
+    "title": "群资料",
+    "items": [
+      {
+        "type": "author",
+        "name": "武汉猫友日常",
+        "pet": "我：普通成员 · 8 位成员",
+        "kind": "catOffer",
+        "to": null
+      },
+      {
+        "type": "row",
+        "label": "群公告",
+        "value": "友好晒宠，不刷广告",
+        "to": "groupNotice"
+      },
+      {
+        "type": "row",
+        "label": "群成员",
+        "value": "仅已加入成员可查看公开昵称",
+        "to": "groupMembers"
+      },
+      {
+        "type": "field",
+        "label": "消息通知",
+        "value": "接收提醒；可开启免打扰",
+        "kind": "select"
+      },
+      {
+        "type": "action",
+        "label": "举报这个群",
+        "to": "reportGroup",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "退出前确认",
+        "to": "groupLeave",
+        "kind": "quiet"
+      },
+      {
+        "type": "note",
+        "title": "普通成员权限",
+        "body": "不显示审核、移除成员、禁言或解散等管理入口。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到群聊",
+      "to": "groupChat",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupNotice",
+    "title": "群公告",
+    "items": [
+      {
+        "type": "text",
+        "text": "友好晒宠，少一点广告，多一点可爱。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "不刷屏、不索取隐私；不以聊天替代专业医疗建议、领养材料核验或费用披露。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "群主：布丁的铲屎官 · 示例公告",
+        "role": "Caption",
+        "color": "muted"
+      }
+    ],
+    "footer": {
+      "label": "回到群资料",
+      "to": "groupInfo",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupMembers",
+    "title": "群成员",
+    "items": [
+      {
+        "type": "note",
+        "title": "只展示必要公开资料",
+        "body": "公开昵称与群角色；不展示电话号码、住址或平台身份材料。",
+        "tone": "subtle"
+      },
+      {
+        "type": "row",
+        "label": "布丁的铲屎官",
+        "value": "群主 · 查看公开主页",
+        "to": "authorProfile"
+      },
+      {
+        "type": "row",
+        "label": "小满的朋友",
+        "value": "我 · 普通成员",
+        "to": "mine"
+      },
+      {
+        "type": "row",
+        "label": "团子今天不拆家",
+        "value": "普通成员 · 其他成员按同一规则展示",
+        "to": null
+      },
+      {
+        "type": "note",
+        "title": "角色边界",
+        "body": "普通成员不能查看入群申请、移除成员或设置禁言。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回群资料",
+      "to": "groupInfo",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupMessageActions",
+    "title": "群消息操作",
+    "items": [
+      {
+        "type": "bubble",
+        "text": "团子今天不拆家：@小满的朋友 有空分享下你家的猫抓板呀。",
+        "mine": false
+      },
+      {
+        "type": "action",
+        "label": "引用回复",
+        "to": "groupChat",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "举报这条群消息",
+        "to": "reportGroupMessage",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "回到群聊",
+        "to": "groupChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "groups"
+  },
+  {
+    "id": "groupCreate",
+    "title": "创建宠友群",
+    "items": [
+      {
+        "type": "upload",
+        "label": "选择群头像",
+        "hint": "可以使用宠物照片；不默认读取全部相册。"
+      },
+      {
+        "type": "field",
+        "label": "群名称",
+        "value": "小满和朋友们",
+        "kind": "input"
+      },
+      {
+        "type": "field",
+        "label": "群介绍",
+        "value": "晒宠与日常交流，不发广告。",
+        "kind": "input"
+      },
+      {
+        "type": "field",
+        "label": "谁可以发现",
+        "value": "仅受邀可见；可改为公开可发现",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "加入方式",
+        "value": "默认需群主或管理员同意",
+        "kind": "select"
+      },
+      {
+        "type": "note",
+        "title": "从小群开始",
+        "body": "不要自动拉入联系人；群聊创建不代表平台为成员真实性背书。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "检查群资料",
+      "to": "groupCreateReview",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupCreateReview",
+    "title": "检查群资料",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "群名称",
+            "小满和朋友们"
+          ],
+          [
+            "可见范围",
+            "仅受邀可见"
+          ],
+          [
+            "加入方式",
+            "需要群主或管理员同意"
+          ],
+          [
+            "初始成员",
+            "仅你自己；邀请须由对方接受"
+          ]
+        ]
+      },
+      {
+        "type": "action",
+        "label": "返回修改",
+        "to": "groupCreate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建结果示意",
+      "to": "groupOwnerChat",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupOwnerChat",
+    "title": "小满和朋友们",
+    "items": [
+      {
+        "type": "text",
+        "text": "1 位成员 · 我是群主",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "empty",
+        "title": "群建好了，先写一份友好的约定",
+        "body": "邀请必须由对方确认，不自动导入通讯录或拉入陌生人。"
+      },
+      {
+        "type": "action",
+        "label": "完善公告与群管理",
+        "to": "groupAdmin",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "给未来的群友打个招呼…",
+      "sendTo": "groupOwnerChat",
+      "ready": false,
+      "mediaTo": "mediaPermission"
+    },
+    "more": "groupAdmin",
+    "phase": "groups"
+  },
+  {
+    "id": "groupAdmin",
+    "title": "群主与管理员",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "群聊",
+            "小满和朋友们"
+          ],
+          [
+            "我的角色",
+            "群主"
+          ],
+          [
+            "成员",
+            "1 位（状态示例）"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "编辑群公告",
+        "value": "规则更新需通知群成员",
+        "to": "groupNoticeEdit"
+      },
+      {
+        "type": "row",
+        "label": "入群申请",
+        "value": "1 条演示申请待处理",
+        "to": "groupJoinReview"
+      },
+      {
+        "type": "row",
+        "label": "成员与权限",
+        "value": "移除与禁言均需二次确认",
+        "to": "groupMemberManage"
+      },
+      {
+        "type": "row",
+        "label": "群主转让 / 解散",
+        "value": "仅群主可用；操作前明确影响",
+        "to": "groupDissolve"
+      },
+      {
+        "type": "note",
+        "title": "管理员不能做什么",
+        "body": "不能访问手机号、真实住址或平台私密核验材料，也不能替平台认定举报成立。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "回到我的群",
+      "to": "groupOwnerChat",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupNoticeEdit",
+    "title": "编辑群公告",
+    "items": [
+      {
+        "type": "field",
+        "label": "公告内容",
+        "value": "欢迎晒宠、交换经验。请勿刷屏、索要住址或传播未经核实的医疗说法。",
+        "kind": "input"
+      },
+      {
+        "type": "note",
+        "title": "更新范围",
+        "body": "发布后群成员可见；正式产品需记录版本并通知成员。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保存公告示意",
+      "to": "groupAdmin",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupJoinReview",
+    "title": "审核入群申请",
+    "items": [
+      {
+        "type": "author",
+        "name": "奶糖饲养员",
+        "pet": "申请加入：小满和朋友们",
+        "kind": "cat",
+        "to": null
+      },
+      {
+        "type": "text",
+        "text": "你好，想加入群里交流养猫日常。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "按群规决定，不索取身份材料",
+        "body": "仅查看申请人愿意公开的资料；同意加入不等于核验身份或宠物真实性。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "暂不通过示意",
+        "to": "groupAdminReviewed",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "同意加入示意",
+      "to": "groupAdminReviewed",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupAdminReviewed",
+    "title": "入群审核结果",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已完成本次处理",
+        "body": "正式产品应同步队列、成员人数与申请人的状态通知；这张为审核结果样例。"
+      },
+      {
+        "type": "row",
+        "label": "继续管理群",
+        "value": "查看公告与成员权限",
+        "to": "groupAdmin"
+      },
+      {
+        "type": "action",
+        "label": "回到我的群聊",
+        "to": "groupOwnerChat",
+        "kind": "quiet"
+      }
+    ],
+    "footer": null,
+    "phase": "groups"
+  },
+  {
+    "id": "groupMemberManage",
+    "title": "成员管理",
+    "items": [
+      {
+        "type": "text",
+        "text": "仅群主或有权限的管理员可操作",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "row",
+        "label": "奶糖饲养员",
+        "value": "普通成员 · 管理操作示例",
+        "to": "groupMemberConfirm"
+      },
+      {
+        "type": "note",
+        "title": "权限规则",
+        "body": "管理员不能处理群主、转让群主或解散群；不得因举报数量自动禁言。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回群管理",
+      "to": "groupAdmin",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupMemberConfirm",
+    "title": "确认成员操作",
+    "items": [
+      {
+        "type": "text",
+        "text": "当前对象：奶糖饲养员",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "field",
+        "label": "操作",
+        "value": "禁言 / 解除禁言 / 移出群聊",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "原因与时长",
+        "value": "需填写原因；禁言时长要明确",
+        "kind": "select"
+      },
+      {
+        "type": "note",
+        "title": "影响要说清楚",
+        "body": "禁言仅限制在本群发言；移出后停止接收新群消息。记录操作并通知当事人。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消",
+        "to": "groupMemberManage",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认处理示意",
+      "to": "groupAdminReviewed",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupMuted",
+    "title": "本群暂不可发言",
+    "items": [
+      {
+        "type": "text",
+        "text": "武汉猫友日常 · 8 位成员",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "note",
+        "title": "群公告",
+        "body": "友好晒宠，少一点广告，多一点可爱。不要发送家庭地址和他人隐私。",
+        "tone": "subtle"
+      },
+      {
+        "type": "bubble",
+        "text": "布丁的铲屎官：今天的阳光真不错，布丁又睡成了一摊。",
+        "mine": false
+      },
+      {
+        "type": "note",
+        "title": "你在本群被限制发言",
+        "body": "重复发布推广内容 · 群主「布丁的铲屎官」执行。禁言至 2026-10-17 18:00（北京时间）；仍可查看已可见的消息。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "对处理有异议？",
+        "to": "reportGroup",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "禁言中，暂不可发送",
+      "ready": false,
+      "muted": true
+    },
+    "more": "groupInfo",
+    "phase": "groups"
+  },
+  {
+    "id": "groupLeave",
+    "title": "退出这个群？",
+    "items": [
+      {
+        "type": "text",
+        "text": "武汉猫友日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "退出后的变化",
+        "body": "不再接收新消息与群通知；再次加入按当前群规审核。退出不代替删除账号或全部数据。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "暂不退出",
+        "to": "groupInfo",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "确认退出示意",
+      "to": "groupUnavailable",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupUnavailable",
+    "title": "群聊暂不可用",
+    "items": [
+      {
+        "type": "empty",
+        "title": "你目前无法进入这个群",
+        "body": "可能已退出、被移出或群已解散。不能继续接收新消息、查看新增成员或发送邀请。"
+      },
+      {
+        "type": "action",
+        "label": "查看举报与复核入口",
+        "to": "reportGroup",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "回到群聊列表",
+      "to": "groups",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "groupDissolve",
+    "title": "群主转让与解散",
+    "items": [
+      {
+        "type": "note",
+        "title": "只有群主可以操作",
+        "body": "退出前可先转让群主；解散会影响全体成员，必须二次确认。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "field",
+        "label": "操作类型",
+        "value": "转让群主 / 解散群聊",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "目标与确认",
+        "value": "转让需对方接受；解散需明确确认",
+        "kind": "select"
+      },
+      {
+        "type": "action",
+        "label": "取消，返回群管理",
+        "to": "groupAdmin",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "查看结束状态示意",
+      "to": "groupUnavailable",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "reportGroup",
+    "title": "举报群聊",
+    "items": [
+      {
+        "type": "note",
+        "title": "举报对象：当前群聊",
+        "body": "由群资料页带入，不以群成员身份限制举报。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "举报原因",
+        "value": "广告诈骗 / 骚扰 / 隐私 / 伤害动物 / 其他",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "说明具体行为，保留必要消息上下文。",
+        "kind": "input"
+      },
+      {
+        "type": "note",
+        "title": "平台审核与群管理分开",
+        "body": "举报收到不等于违规成立，群主不能代替平台审核。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "提交举报示意",
+      "to": "reportGroupSent",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "reportGroupSent",
+    "title": "群聊举报已收到",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已收到，将按流程查看",
+        "body": "你可以继续查看处理记录，也可以先退出或关闭通知。"
+      },
+      {
+        "type": "action",
+        "label": "查看处理进度",
+        "to": "moderationProgress",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "回到群聊入口",
+      "to": "groups",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "reportGroupMessage",
+    "title": "举报群消息",
+    "items": [
+      {
+        "type": "note",
+        "title": "举报对象：选中的单条群消息",
+        "body": "只提交与本次问题有关的消息及必要上下文，不默认上传全部群历史。",
+        "tone": "subtle"
+      },
+      {
+        "type": "field",
+        "label": "举报原因",
+        "value": "骚扰 / 广告 / 欺骗 / 隐私 / 其他",
+        "kind": "select"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "描述你看到的具体问题。",
+        "kind": "input"
+      }
+    ],
+    "footer": {
+      "label": "提交举报示意",
+      "to": "reportGroupMessageSent",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  },
+  {
+    "id": "reportGroupMessageSent",
+    "title": "群消息举报已收到",
+    "items": [
+      {
+        "type": "empty",
+        "title": "已收到，不自动处罚成员",
+        "body": "可查看处理进度；群内管理员操作与平台举报结论分开。"
+      },
+      {
+        "type": "action",
+        "label": "查看处理进度",
+        "to": "moderationProgress",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "回到群聊",
+      "to": "groupChat",
+      "kind": "primary"
+    },
+    "phase": "groups"
+  }
+]

@@ -1,0 +1,1099 @@
+{
+  "version": 1,
+  "emoji_format": "unicode",
+  "emoji_asset_family": "Noto Emoji",
+  "emoji": [
+    {
+      "id": "emoji:smile",
+      "label": "开心",
+      "category": "常用",
+      "text": "😀",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f600.svg"
+    },
+    {
+      "id": "emoji:grin",
+      "label": "咧嘴笑",
+      "category": "常用",
+      "text": "😁",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f601.svg"
+    },
+    {
+      "id": "emoji:laugh",
+      "label": "大笑",
+      "category": "常用",
+      "text": "😄",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f604.svg"
+    },
+    {
+      "id": "emoji:joy",
+      "label": "笑哭",
+      "category": "常用",
+      "text": "😂",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f602.svg"
+    },
+    {
+      "id": "emoji:rofl",
+      "label": "笑倒",
+      "category": "常用",
+      "text": "🤣",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f923.svg"
+    },
+    {
+      "id": "emoji:blush",
+      "label": "害羞",
+      "category": "常用",
+      "text": "😊",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f60a.svg"
+    },
+    {
+      "id": "emoji:wink",
+      "label": "眨眼",
+      "category": "常用",
+      "text": "😉",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f609.svg"
+    },
+    {
+      "id": "emoji:heart-eyes",
+      "label": "喜欢你",
+      "category": "常用",
+      "text": "😍",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f60d.svg"
+    },
+    {
+      "id": "emoji:heart-face",
+      "label": "幸福",
+      "category": "常用",
+      "text": "🥰",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f970.svg"
+    },
+    {
+      "id": "emoji:kiss",
+      "label": "飞吻",
+      "category": "常用",
+      "text": "😘",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f618.svg"
+    },
+    {
+      "id": "emoji:hug",
+      "label": "抱抱",
+      "category": "常用",
+      "text": "🤗",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f917.svg"
+    },
+    {
+      "id": "emoji:thinking",
+      "label": "思考",
+      "category": "常用",
+      "text": "🤔",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f914.svg"
+    },
+    {
+      "id": "emoji:shush",
+      "label": "嘘",
+      "category": "常用",
+      "text": "🤫",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f92b.svg"
+    },
+    {
+      "id": "emoji:hand-mouth",
+      "label": "捂嘴笑",
+      "category": "常用",
+      "text": "🤭",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f92d.svg"
+    },
+    {
+      "id": "emoji:peeking",
+      "label": "偷偷看",
+      "category": "常用",
+      "text": "🫣",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1fae3.svg"
+    },
+    {
+      "id": "emoji:salute",
+      "label": "收到",
+      "category": "常用",
+      "text": "🫡",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1fae1.svg"
+    },
+    {
+      "id": "emoji:pleading",
+      "label": "拜托",
+      "category": "常用",
+      "text": "🥺",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f97a.svg"
+    },
+    {
+      "id": "emoji:tears-held",
+      "label": "感动",
+      "category": "常用",
+      "text": "🥹",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f979.svg"
+    },
+    {
+      "id": "emoji:relieved",
+      "label": "安心",
+      "category": "常用",
+      "text": "😌",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f60c.svg"
+    },
+    {
+      "id": "emoji:sweat-smile",
+      "label": "尴尬笑",
+      "category": "常用",
+      "text": "😅",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f605.svg"
+    },
+    {
+      "id": "emoji:cool",
+      "label": "酷",
+      "category": "常用",
+      "text": "😎",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f60e.svg"
+    },
+    {
+      "id": "emoji:star-eyes",
+      "label": "崇拜",
+      "category": "常用",
+      "text": "🤩",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f929.svg"
+    },
+    {
+      "id": "emoji:party",
+      "label": "庆祝",
+      "category": "常用",
+      "text": "🥳",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f973.svg"
+    },
+    {
+      "id": "emoji:melting",
+      "label": "融化",
+      "category": "常用",
+      "text": "🫠",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1fae0.svg"
+    },
+    {
+      "id": "emoji:upside",
+      "label": "倒过来笑",
+      "category": "情绪",
+      "text": "🙃",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f643.svg"
+    },
+    {
+      "id": "emoji:neutral",
+      "label": "平静",
+      "category": "情绪",
+      "text": "😐",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f610.svg"
+    },
+    {
+      "id": "emoji:expressionless",
+      "label": "无语",
+      "category": "情绪",
+      "text": "😑",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f611.svg"
+    },
+    {
+      "id": "emoji:no-mouth",
+      "label": "不说话",
+      "category": "情绪",
+      "text": "😶",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f636.svg"
+    },
+    {
+      "id": "emoji:smirk",
+      "label": "得意",
+      "category": "情绪",
+      "text": "😏",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f60f.svg"
+    },
+    {
+      "id": "emoji:unamused",
+      "label": "不开心",
+      "category": "情绪",
+      "text": "😒",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f612.svg"
+    },
+    {
+      "id": "emoji:eye-roll",
+      "label": "白眼",
+      "category": "情绪",
+      "text": "🙄",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f644.svg"
+    },
+    {
+      "id": "emoji:raised-brow",
+      "label": "疑惑",
+      "category": "情绪",
+      "text": "🤨",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f928.svg"
+    },
+    {
+      "id": "emoji:grimace",
+      "label": "为难",
+      "category": "情绪",
+      "text": "😬",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f62c.svg"
+    },
+    {
+      "id": "emoji:surprise",
+      "label": "惊讶",
+      "category": "情绪",
+      "text": "😮",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f62e.svg"
+    },
+    {
+      "id": "emoji:flushed",
+      "label": "脸红",
+      "category": "情绪",
+      "text": "😳",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f633.svg"
+    },
+    {
+      "id": "emoji:mind-blown",
+      "label": "震惊",
+      "category": "情绪",
+      "text": "🤯",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f92f.svg"
+    },
+    {
+      "id": "emoji:scream",
+      "label": "吓到",
+      "category": "情绪",
+      "text": "😱",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f631.svg"
+    },
+    {
+      "id": "emoji:cry",
+      "label": "难过",
+      "category": "情绪",
+      "text": "😢",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f622.svg"
+    },
+    {
+      "id": "emoji:sob",
+      "label": "大哭",
+      "category": "情绪",
+      "text": "😭",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f62d.svg"
+    },
+    {
+      "id": "emoji:worried",
+      "label": "担心",
+      "category": "情绪",
+      "text": "😟",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f61f.svg"
+    },
+    {
+      "id": "emoji:pensive",
+      "label": "低落",
+      "category": "情绪",
+      "text": "😔",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f614.svg"
+    },
+    {
+      "id": "emoji:angry",
+      "label": "生气",
+      "category": "情绪",
+      "text": "😠",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f620.svg"
+    },
+    {
+      "id": "emoji:rage",
+      "label": "气鼓鼓",
+      "category": "情绪",
+      "text": "😡",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f621.svg"
+    },
+    {
+      "id": "emoji:triumph",
+      "label": "哼",
+      "category": "情绪",
+      "text": "😤",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f624.svg"
+    },
+    {
+      "id": "emoji:weary",
+      "label": "累了",
+      "category": "情绪",
+      "text": "😩",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f629.svg"
+    },
+    {
+      "id": "emoji:yawn",
+      "label": "打哈欠",
+      "category": "情绪",
+      "text": "🥱",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f971.svg"
+    },
+    {
+      "id": "emoji:sleep",
+      "label": "睡觉",
+      "category": "情绪",
+      "text": "😴",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f634.svg"
+    },
+    {
+      "id": "emoji:sick",
+      "label": "不舒服",
+      "category": "情绪",
+      "text": "🤒",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f912.svg"
+    },
+    {
+      "id": "emoji:thumb",
+      "label": "赞同",
+      "category": "手势",
+      "text": "👍",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f44d.svg"
+    },
+    {
+      "id": "emoji:thumb-down",
+      "label": "不赞同",
+      "category": "手势",
+      "text": "👎",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f44e.svg"
+    },
+    {
+      "id": "emoji:clap",
+      "label": "鼓掌",
+      "category": "手势",
+      "text": "👏",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f44f.svg"
+    },
+    {
+      "id": "emoji:hands-up",
+      "label": "欢呼",
+      "category": "手势",
+      "text": "🙌",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f64c.svg"
+    },
+    {
+      "id": "emoji:thanks",
+      "label": "谢谢",
+      "category": "手势",
+      "text": "🙏",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f64f.svg"
+    },
+    {
+      "id": "emoji:heart-hands",
+      "label": "比心",
+      "category": "手势",
+      "text": "🫶",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1faf6.svg"
+    },
+    {
+      "id": "emoji:wave",
+      "label": "你好",
+      "category": "手势",
+      "text": "👋",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f44b.svg"
+    },
+    {
+      "id": "emoji:ok",
+      "label": "好",
+      "category": "手势",
+      "text": "👌",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f44c.svg"
+    },
+    {
+      "id": "emoji:victory",
+      "label": "耶",
+      "category": "手势",
+      "text": "✌",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u270c.svg"
+    },
+    {
+      "id": "emoji:muscle",
+      "label": "加油",
+      "category": "手势",
+      "text": "💪",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f4aa.svg"
+    },
+    {
+      "id": "emoji:fist",
+      "label": "碰拳",
+      "category": "手势",
+      "text": "👊",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f44a.svg"
+    },
+    {
+      "id": "emoji:raised-fist",
+      "label": "握拳",
+      "category": "手势",
+      "text": "✊",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u270a.svg"
+    },
+    {
+      "id": "emoji:handshake",
+      "label": "握手",
+      "category": "手势",
+      "text": "🤝",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f91d.svg"
+    },
+    {
+      "id": "emoji:open-hands",
+      "label": "接住",
+      "category": "手势",
+      "text": "👐",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f450.svg"
+    },
+    {
+      "id": "emoji:love-you",
+      "label": "爱你",
+      "category": "手势",
+      "text": "🤟",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f91f.svg"
+    },
+    {
+      "id": "emoji:cross-fingers",
+      "label": "好运",
+      "category": "手势",
+      "text": "🤞",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f91e.svg"
+    },
+    {
+      "id": "emoji:pinch",
+      "label": "一点点",
+      "category": "手势",
+      "text": "🤏",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f90f.svg"
+    },
+    {
+      "id": "emoji:pinched",
+      "label": "捏捏",
+      "category": "手势",
+      "text": "🤌",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f90c.svg"
+    },
+    {
+      "id": "emoji:point-up",
+      "label": "看上面",
+      "category": "手势",
+      "text": "👆",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f446.svg"
+    },
+    {
+      "id": "emoji:point-down",
+      "label": "看下面",
+      "category": "手势",
+      "text": "👇",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f447.svg"
+    },
+    {
+      "id": "emoji:point-left",
+      "label": "看左边",
+      "category": "手势",
+      "text": "👈",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f448.svg"
+    },
+    {
+      "id": "emoji:point-right",
+      "label": "看右边",
+      "category": "手势",
+      "text": "👉",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f449.svg"
+    },
+    {
+      "id": "emoji:high-five",
+      "label": "击掌",
+      "category": "手势",
+      "text": "✋",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u270b.svg"
+    },
+    {
+      "id": "emoji:rock",
+      "label": "摇滚",
+      "category": "手势",
+      "text": "🤘",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f918.svg"
+    },
+    {
+      "id": "emoji:cat-smile",
+      "label": "猫猫开心",
+      "category": "猫狗",
+      "text": "😺",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f63a.svg"
+    },
+    {
+      "id": "emoji:cat-grin",
+      "label": "猫猫笑",
+      "category": "猫狗",
+      "text": "😸",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f638.svg"
+    },
+    {
+      "id": "emoji:cat-joy",
+      "label": "猫猫笑哭",
+      "category": "猫狗",
+      "text": "😹",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f639.svg"
+    },
+    {
+      "id": "emoji:cat-love",
+      "label": "猫猫喜欢",
+      "category": "猫狗",
+      "text": "😻",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f63b.svg"
+    },
+    {
+      "id": "emoji:cat-smug",
+      "label": "猫猫得意",
+      "category": "猫狗",
+      "text": "😼",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f63c.svg"
+    },
+    {
+      "id": "emoji:cat-kiss",
+      "label": "猫猫亲亲",
+      "category": "猫狗",
+      "text": "😽",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f63d.svg"
+    },
+    {
+      "id": "emoji:cat-scream",
+      "label": "猫猫震惊",
+      "category": "猫狗",
+      "text": "🙀",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f640.svg"
+    },
+    {
+      "id": "emoji:cat-cry",
+      "label": "猫猫委屈",
+      "category": "猫狗",
+      "text": "😿",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f63f.svg"
+    },
+    {
+      "id": "emoji:cat-pout",
+      "label": "猫猫生气",
+      "category": "猫狗",
+      "text": "😾",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f63e.svg"
+    },
+    {
+      "id": "emoji:cat",
+      "label": "猫咪",
+      "category": "猫狗",
+      "text": "🐱",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f431.svg"
+    },
+    {
+      "id": "emoji:cat-body",
+      "label": "小猫",
+      "category": "猫狗",
+      "text": "🐈",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f408.svg"
+    },
+    {
+      "id": "emoji:dog",
+      "label": "狗狗",
+      "category": "猫狗",
+      "text": "🐶",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f436.svg"
+    },
+    {
+      "id": "emoji:dog-body",
+      "label": "小狗",
+      "category": "猫狗",
+      "text": "🐕",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f415.svg"
+    },
+    {
+      "id": "emoji:paw",
+      "label": "爪爪",
+      "category": "猫狗",
+      "text": "🐾",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f43e.svg"
+    },
+    {
+      "id": "emoji:bone",
+      "label": "骨头",
+      "category": "猫狗",
+      "text": "🦴",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f9b4.svg"
+    },
+    {
+      "id": "emoji:fish",
+      "label": "小鱼",
+      "category": "猫狗",
+      "text": "🐟",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f41f.svg"
+    },
+    {
+      "id": "emoji:heart",
+      "label": "喜欢",
+      "category": "心意",
+      "text": "❤",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u2764.svg"
+    },
+    {
+      "id": "emoji:pink-heart",
+      "label": "粉色心",
+      "category": "心意",
+      "text": "🩷",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1fa77.svg"
+    },
+    {
+      "id": "emoji:orange-heart",
+      "label": "暖心",
+      "category": "心意",
+      "text": "🧡",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f9e1.svg"
+    },
+    {
+      "id": "emoji:yellow-heart",
+      "label": "快乐心",
+      "category": "心意",
+      "text": "💛",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f49b.svg"
+    },
+    {
+      "id": "emoji:green-heart",
+      "label": "清新心",
+      "category": "心意",
+      "text": "💚",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f49a.svg"
+    },
+    {
+      "id": "emoji:blue-heart",
+      "label": "蓝色心",
+      "category": "心意",
+      "text": "💙",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f499.svg"
+    },
+    {
+      "id": "emoji:purple-heart",
+      "label": "紫色心",
+      "category": "心意",
+      "text": "💜",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f49c.svg"
+    },
+    {
+      "id": "emoji:two-hearts",
+      "label": "两颗心",
+      "category": "心意",
+      "text": "💕",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f495.svg"
+    },
+    {
+      "id": "emoji:sparkle-heart",
+      "label": "闪亮心",
+      "category": "心意",
+      "text": "💖",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f496.svg"
+    },
+    {
+      "id": "emoji:growing-heart",
+      "label": "心动",
+      "category": "心意",
+      "text": "💗",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f497.svg"
+    },
+    {
+      "id": "emoji:beating-heart",
+      "label": "心跳",
+      "category": "心意",
+      "text": "💓",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f493.svg"
+    },
+    {
+      "id": "emoji:cupid",
+      "label": "一见钟情",
+      "category": "心意",
+      "text": "💘",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f498.svg"
+    },
+    {
+      "id": "emoji:gift-heart",
+      "label": "送你一颗心",
+      "category": "心意",
+      "text": "💝",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f49d.svg"
+    },
+    {
+      "id": "emoji:broken-heart",
+      "label": "心碎",
+      "category": "心意",
+      "text": "💔",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f494.svg"
+    },
+    {
+      "id": "emoji:love-letter",
+      "label": "情书",
+      "category": "心意",
+      "text": "💌",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f48c.svg"
+    },
+    {
+      "id": "emoji:kiss-mark",
+      "label": "亲亲",
+      "category": "心意",
+      "text": "💋",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f48b.svg"
+    },
+    {
+      "id": "emoji:sun",
+      "label": "太阳",
+      "category": "日常",
+      "text": "☀",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u2600.svg"
+    },
+    {
+      "id": "emoji:moon",
+      "label": "月亮",
+      "category": "日常",
+      "text": "🌙",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f319.svg"
+    },
+    {
+      "id": "emoji:star",
+      "label": "星星",
+      "category": "日常",
+      "text": "⭐",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u2b50.svg"
+    },
+    {
+      "id": "emoji:sparkles",
+      "label": "闪闪",
+      "category": "日常",
+      "text": "✨",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u2728.svg"
+    },
+    {
+      "id": "emoji:flower",
+      "label": "樱花",
+      "category": "日常",
+      "text": "🌸",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f338.svg"
+    },
+    {
+      "id": "emoji:rose",
+      "label": "玫瑰",
+      "category": "日常",
+      "text": "🌹",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f339.svg"
+    },
+    {
+      "id": "emoji:clover",
+      "label": "幸运",
+      "category": "日常",
+      "text": "🍀",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f340.svg"
+    },
+    {
+      "id": "emoji:leaf",
+      "label": "微风",
+      "category": "日常",
+      "text": "🍃",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f343.svg"
+    },
+    {
+      "id": "emoji:coffee",
+      "label": "喝茶",
+      "category": "日常",
+      "text": "☕",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u2615.svg"
+    },
+    {
+      "id": "emoji:cake",
+      "label": "生日快乐",
+      "category": "日常",
+      "text": "🎂",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f382.svg"
+    },
+    {
+      "id": "emoji:watermelon",
+      "label": "吃瓜",
+      "category": "日常",
+      "text": "🍉",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f349.svg"
+    },
+    {
+      "id": "emoji:cookie",
+      "label": "饼干",
+      "category": "日常",
+      "text": "🍪",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f36a.svg"
+    },
+    {
+      "id": "emoji:milk",
+      "label": "牛奶",
+      "category": "日常",
+      "text": "🥛",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f95b.svg"
+    },
+    {
+      "id": "emoji:rice",
+      "label": "干饭",
+      "category": "日常",
+      "text": "🍚",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f35a.svg"
+    },
+    {
+      "id": "emoji:gift",
+      "label": "礼物",
+      "category": "日常",
+      "text": "🎁",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f381.svg"
+    },
+    {
+      "id": "emoji:popper",
+      "label": "撒花",
+      "category": "日常",
+      "text": "🎉",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f389.svg"
+    },
+    {
+      "id": "emoji:balloon",
+      "label": "气球",
+      "category": "日常",
+      "text": "🎈",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f388.svg"
+    },
+    {
+      "id": "emoji:fire",
+      "label": "火热",
+      "category": "日常",
+      "text": "🔥",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f525.svg"
+    },
+    {
+      "id": "emoji:hundred",
+      "label": "满分",
+      "category": "日常",
+      "text": "💯",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f4af.svg"
+    },
+    {
+      "id": "emoji:light-bulb",
+      "label": "有主意",
+      "category": "日常",
+      "text": "💡",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f4a1.svg"
+    },
+    {
+      "id": "emoji:camera",
+      "label": "拍照",
+      "category": "日常",
+      "text": "📷",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f4f7.svg"
+    },
+    {
+      "id": "emoji:music",
+      "label": "音乐",
+      "category": "日常",
+      "text": "🎵",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f3b5.svg"
+    },
+    {
+      "id": "emoji:sleepy-dots",
+      "label": "晚安",
+      "category": "日常",
+      "text": "💤",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f4a4.svg"
+    },
+    {
+      "id": "emoji:speech",
+      "label": "聊聊",
+      "category": "日常",
+      "text": "💬",
+      "asset_url": "/api/v2/expression-assets/v1/emoji_u1f4ac.svg"
+    }
+  ],
+  "stickers": [
+    {
+      "id": "sticker-01",
+      "label": "你好",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 0,
+      "row": 0
+    },
+    {
+      "id": "sticker-02",
+      "label": "收到",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 1,
+      "row": 0
+    },
+    {
+      "id": "sticker-03",
+      "label": "比心",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 2,
+      "row": 0
+    },
+    {
+      "id": "sticker-04",
+      "label": "抱抱",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 3,
+      "row": 0
+    },
+    {
+      "id": "sticker-05",
+      "label": "笑哭",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 4,
+      "row": 0
+    },
+    {
+      "id": "sticker-06",
+      "label": "捂脸",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 5,
+      "row": 0
+    },
+    {
+      "id": "sticker-07",
+      "label": "拜托",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 0,
+      "row": 1
+    },
+    {
+      "id": "sticker-08",
+      "label": "震惊",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 1,
+      "row": 1
+    },
+    {
+      "id": "sticker-09",
+      "label": "加油",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 2,
+      "row": 1
+    },
+    {
+      "id": "sticker-10",
+      "label": "赞一个",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 3,
+      "row": 1
+    },
+    {
+      "id": "sticker-11",
+      "label": "吃瓜",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 4,
+      "row": 1
+    },
+    {
+      "id": "sticker-12",
+      "label": "尴尬",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 5,
+      "row": 1
+    },
+    {
+      "id": "sticker-13",
+      "label": "晚安",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 0,
+      "row": 2
+    },
+    {
+      "id": "sticker-14",
+      "label": "早安",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 1,
+      "row": 2
+    },
+    {
+      "id": "sticker-15",
+      "label": "喝茶",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 2,
+      "row": 2
+    },
+    {
+      "id": "sticker-16",
+      "label": "谢谢",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 3,
+      "row": 2
+    },
+    {
+      "id": "sticker-17",
+      "label": "抱歉",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 4,
+      "row": 2
+    },
+    {
+      "id": "sticker-18",
+      "label": "得意",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 5,
+      "row": 2
+    },
+    {
+      "id": "sticker-19",
+      "label": "大哭",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 0,
+      "row": 3
+    },
+    {
+      "id": "sticker-20",
+      "label": "生气",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 1,
+      "row": 3
+    },
+    {
+      "id": "sticker-21",
+      "label": "开心",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 2,
+      "row": 3
+    },
+    {
+      "id": "sticker-22",
+      "label": "累趴",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 3,
+      "row": 3
+    },
+    {
+      "id": "sticker-23",
+      "label": "偷偷看",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 4,
+      "row": 3
+    },
+    {
+      "id": "sticker-24",
+      "label": "庆祝",
+      "pack": "mnd-cat",
+      "asset_url": "/api/v2/expression-assets/v1/mnd-cat-stickers-atlas-v1.png",
+      "column": 5,
+      "row": 3
+    }
+  ],
+  "atlas_columns": 6,
+  "atlas_rows": 4
+}

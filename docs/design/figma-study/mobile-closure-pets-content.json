@@ -1,0 +1,1267 @@
+[
+  {
+    "id": "circlePostActions",
+    "title": "日常操作",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "action",
+        "label": "报告这条日常",
+        "to": "circleReport",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "不再看此作者的内容",
+        "to": "contentHidden",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "查看宠友关系",
+        "to": "circleFriendSettings",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回原日常",
+      "to": "circleDetail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleReplyAuthor",
+    "title": "回复布丁的铲屎官",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复：布丁的铲屎官",
+        "role": "Strong",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "它每天都会找这个位置。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复作者…",
+      "context": "CircleAuthorReply",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleExcludeFriends",
+    "title": "不给谁看",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "团子今天不拆家",
+        "value": "本次排除，其他朋友可见",
+        "to": "circleExcludedPreview"
+      },
+      {
+        "type": "note",
+        "title": "不是拉黑或移除",
+        "body": "仅改变这条日常的受众；不会通知被排除者具体原因。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "确认本次排除名单",
+      "to": "circleExcludedPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePartialPreview",
+    "title": "检查本条分享范围",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 180
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "这次谁可以看",
+        "body": "部分朋友：布丁的铲屎官",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "仅分享本条",
+        "body": "私密档案仍私密；不开放旧日记和家庭地址。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改范围",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布给上述受众",
+      "to": "circlePartialDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleExcludedPreview",
+    "title": "检查本条分享范围",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 180
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "这次谁可以看",
+        "body": "朋友可见，排除：团子今天不拆家",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "note",
+        "title": "仅分享本条",
+        "body": "私密档案仍私密；不开放旧日记和家庭地址。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改范围",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布给上述受众",
+      "to": "circleExcludedDone",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePartialDone",
+    "title": "已发布日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "发布完成（示意）",
+        "body": "仅布丁的铲屎官可见",
+        "tone": "successSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "管理可见范围",
+        "value": "收紧后各入口重新鉴权",
+        "to": "circleOwnPostSettings"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleExcludedDone",
+    "title": "已发布日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "发布完成（示意）",
+        "body": "朋友可见；团子今天不拆家不可见",
+        "tone": "successSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "管理可见范围",
+        "value": "收紧后各入口重新鉴权",
+        "to": "circleOwnPostSettings"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petsList",
+    "title": "我的宠物",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "每只毛孩子，都有自己的日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "猫咪 · 在家 · 档案仅自己",
+        "kind": "cat",
+        "to": "petProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "pet",
+        "name": "豆豆",
+        "meta": "狗狗 · 在家 · 朋友可见",
+        "kind": "dog",
+        "to": "petDog",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "pet",
+        "name": "奶糖",
+        "meta": "兔兔 · 在家 · 仅自己",
+        "kind": "rabbit",
+        "to": "petOther",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "action",
+        "label": "添加新的宠物",
+        "to": "petCreate",
+        "kind": "secondary"
+      },
+      {
+        "type": "row",
+        "label": "查看无宠物空态",
+        "value": "不会强迫先建档才能浏览",
+        "to": "petsEmpty"
+      }
+    ],
+    "footer": {
+      "label": "回到我的",
+      "to": "mine",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petsEmpty",
+    "title": "我的宠物",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "empty",
+        "title": "先记下第一位家人",
+        "body": "没有数量上的人为上限；资料不知道可以留空。猫咪优先，也欢迎其他宠物。"
+      }
+    ],
+    "footer": {
+      "label": "添加宠物",
+      "to": "petCreate",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petCreate",
+    "title": "添加宠物",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "先选物种，再填写适用资料",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "猫咪",
+        "value": "猫咪的习惯与照护",
+        "to": "petCreateCat"
+      },
+      {
+        "type": "row",
+        "label": "狗狗",
+        "value": "活动与照护信息",
+        "to": "petCreateDog"
+      },
+      {
+        "type": "row",
+        "label": "其他宠物",
+        "value": "不要套用猫狗字段",
+        "to": "petCreateOther"
+      },
+      {
+        "type": "note",
+        "title": "建档不等于认证",
+        "body": "照片、昵称和录入资料不证明权属、健康或品种。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "暂不添加",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petCreateCat",
+    "title": "填写宠物资料",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "小满"
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "猫咪"
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "已知才填写；可保留未知"
+      },
+      {
+        "type": "field",
+        "label": "室内活动习惯",
+        "value": "仅填写已知情况"
+      },
+      {
+        "type": "note",
+        "title": "默认仅自己可见",
+        "body": "创建后可单独设置资料范围；不会自动进入领养或出售。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消并返回宠物列表",
+        "to": "petsList",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建并查看对应档案",
+      "to": "petCreated",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petCreateDog",
+    "title": "填写宠物资料",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "dog",
+        "height": 160
+      },
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "豆豆"
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "狗狗"
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "已知才填写；可保留未知"
+      },
+      {
+        "type": "field",
+        "label": "遛狗与活动安排",
+        "value": "仅填写已知情况"
+      },
+      {
+        "type": "note",
+        "title": "默认仅自己可见",
+        "body": "创建后可单独设置资料范围；不会自动进入领养或出售。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消并返回宠物列表",
+        "to": "petsList",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建并查看对应档案",
+      "to": "petDog",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petCreateOther",
+    "title": "填写宠物资料",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "rabbit",
+        "height": 160
+      },
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "奶糖"
+      },
+      {
+        "type": "field",
+        "label": "物种",
+        "value": "其他宠物 · 兔兔"
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "已知才填写；可保留未知"
+      },
+      {
+        "type": "field",
+        "label": "物种与栖养环境",
+        "value": "仅填写已知情况"
+      },
+      {
+        "type": "note",
+        "title": "默认仅自己可见",
+        "body": "创建后可单独设置资料范围；不会自动进入领养或出售。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消并返回宠物列表",
+        "to": "petsList",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "创建并查看对应档案",
+      "to": "petOther",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petCreated",
+    "title": "宠物档案已创建",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "已建立小满的独立档案（示意）",
+        "body": "资料与日记默认私密；可继续添加其他宠物。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "pet",
+        "name": "小满",
+        "meta": "猫咪 · 在家",
+        "kind": "cat",
+        "to": "petProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "action",
+        "label": "继续添加宠物",
+        "to": "petCreate",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "查看小满主页",
+      "to": "petProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petEdit",
+    "title": "编辑小满资料",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "field",
+        "label": "昵称",
+        "value": "小满"
+      },
+      {
+        "type": "field",
+        "label": "年龄",
+        "value": "未知可留空"
+      },
+      {
+        "type": "field",
+        "label": "识别特征",
+        "value": "黑白毛色，鼻尖有黑斑"
+      },
+      {
+        "type": "row",
+        "label": "更换资料照片",
+        "value": "仅使用自己有权使用的照片",
+        "to": "circlePhotoChoose"
+      },
+      {
+        "type": "note",
+        "title": "事实与记录分开",
+        "body": "修改不证明核验通过；已有求助事件资料需另行确认同步。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保存并回主页",
+      "to": "petProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petDog",
+    "title": "豆豆的主页",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "dog",
+        "height": 200
+      },
+      {
+        "type": "text",
+        "text": "豆豆",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "狗狗 · 在家",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "row",
+        "label": "独立图文日记",
+        "value": "只读取这只宠物的内容",
+        "to": "petDogDiary"
+      },
+      {
+        "type": "row",
+        "label": "资料可见性",
+        "value": "默认仅自己，单条另设范围",
+        "to": "petVisibility"
+      },
+      {
+        "type": "row",
+        "label": "切换或添加宠物",
+        "value": "不限制人为数量",
+        "to": "petsList"
+      }
+    ],
+    "footer": {
+      "label": "回到宠物列表",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petOther",
+    "title": "奶糖的主页",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "rabbit",
+        "height": 200
+      },
+      {
+        "type": "text",
+        "text": "奶糖",
+        "role": "Title",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "兔兔 · 在家",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "row",
+        "label": "独立图文日记",
+        "value": "只读取这只宠物的内容",
+        "to": "petOtherDiary"
+      },
+      {
+        "type": "row",
+        "label": "资料可见性",
+        "value": "默认仅自己，单条另设范围",
+        "to": "petVisibility"
+      },
+      {
+        "type": "row",
+        "label": "切换或添加宠物",
+        "value": "不限制人为数量",
+        "to": "petsList"
+      }
+    ],
+    "footer": {
+      "label": "回到宠物列表",
+      "to": "petsList",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petDogDiary",
+    "title": "豆豆的日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "dog",
+        "height": 260
+      },
+      {
+        "type": "text",
+        "text": "今天的小日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "独立归档与独立权限",
+        "body": "豆豆的日记不混入小满的记录；本条仅自己可见。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回对应宠物",
+      "to": "petDog",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petOtherDiary",
+    "title": "奶糖的日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "rabbit",
+        "height": 260
+      },
+      {
+        "type": "text",
+        "text": "今天的小日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "独立归档与独立权限",
+        "body": "奶糖的日记不混入小满的记录；本条仅自己可见。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回对应宠物",
+      "to": "petOther",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petVisibility",
+    "title": "宠物档案可见性",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "row",
+        "label": "仅自己",
+        "value": "当前选择；私密日记不受公开设置影响",
+        "to": "petVisibilitySaved"
+      },
+      {
+        "type": "row",
+        "label": "朋友可见",
+        "value": "只开放选定的资料字段",
+        "to": "petVisibilityReview"
+      },
+      {
+        "type": "row",
+        "label": "公开基本档案",
+        "value": "不公开照护原件、住址与私密日记",
+        "to": "petVisibilityReview"
+      },
+      {
+        "type": "note",
+        "title": "日记单独授权",
+        "body": "档案公开不等于所有日记公开；分享单条不等于公开档案。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留仅自己",
+      "to": "petVisibilitySaved",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "petVisibilityReview",
+    "title": "检查资料共享",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "只共享本次选择的基本资料",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "拟共享字段",
+        "body": "昵称、物种、选中的照片；精确地址、照护原件和旧私密日记不包含。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消共享",
+        "to": "petVisibility",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认本次共享范围",
+      "to": "petVisibilitySaved",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petVisibilitySaved",
+    "title": "可见范围已保存",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "设置已保存（示意）",
+        "body": "按照上一步确认的字段和受众执行；日记仍逐条独立授权。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回小满主页",
+      "to": "petProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "petDiary",
+    "title": "小满的图文日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "小满 · 成长点滴",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 200
+      },
+      {
+        "type": "row",
+        "label": "今天也把阳光位占满了",
+        "value": "今天12:20 · 仅自己可见",
+        "to": "diaryEntry"
+      },
+      {
+        "type": "row",
+        "label": "查看分享过的日常",
+        "value": "与圈子读取同一内容权限",
+        "to": "diaryEntryShared"
+      },
+      {
+        "type": "action",
+        "label": "写一条新日记",
+        "to": "diaryCompose",
+        "kind": "secondary"
+      },
+      {
+        "type": "row",
+        "label": "查看删除后状态",
+        "value": "仅作为异常/结果演示",
+        "to": "diaryDeleted"
+      }
+    ],
+    "footer": {
+      "label": "回到小满主页",
+      "to": "petProfile",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "diaryEntry",
+    "title": "小满的这条日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 280
+      },
+      {
+        "type": "text",
+        "text": "今天也把阳光位占满了",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "仅自己可见 · 不进入他人的圈子或搜索",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "action",
+        "label": "修改本条范围",
+        "to": "diaryAudience",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "删除这条日记",
+        "to": "diaryDeleteConfirm",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回日记列表",
+      "to": "petDiary",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "diaryCompose",
+    "title": "写小满的日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "field",
+        "label": "今天想记什么",
+        "value": "小满今天又把阳光位占满了。"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "row",
+        "label": "关联宠物",
+        "value": "小满 · 不切到其他宠物",
+        "to": "petsList"
+      },
+      {
+        "type": "row",
+        "label": "谁可以看",
+        "value": "仅自己",
+        "to": "diaryAudience"
+      },
+      {
+        "type": "action",
+        "label": "选择表情或贴纸",
+        "to": "exprDiary",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "保留草稿退出",
+        "to": "diaryDraftExit",
+        "kind": "quiet"
+      },
+      {
+        "type": "note",
+        "title": "图文首版",
+        "body": "不上传或播放视频；不自动带出照片精确位置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "预览这条日记",
+      "to": "diaryPreview",
+      "kind": "primary"
+    },
+    "back": "diaryDraftExit"
+  },
+  {
+    "id": "diaryAudience",
+    "title": "日记可见性",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "row",
+        "label": "仅自己",
+        "value": "推荐默认，作为私密日记",
+        "to": "diaryPreview"
+      },
+      {
+        "type": "row",
+        "label": "朋友可见",
+        "value": "先确认仅分享本条",
+        "to": "diaryShareWarning"
+      },
+      {
+        "type": "row",
+        "label": "公开到社区",
+        "value": "须另行公开确认",
+        "to": "circlePublicConfirm"
+      },
+      {
+        "type": "note",
+        "title": "权限逐条判断",
+        "body": "小满档案的隐私设置不会被本条覆盖。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保持仅自己",
+      "to": "diaryPreview",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "diaryShareWarning",
+    "title": "分享本条日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "小满档案仍私密",
+        "body": "确认后仅把选定图文分享给互相确认的宠友，不公开整份档案。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "继续保留私密",
+        "to": "diaryPreview",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认本条朋友可见",
+      "to": "diarySharedPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryPreview",
+    "title": "私密日记预览",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "仅自己可见",
+        "body": "不向圈子、公开社区或其他人发送通知。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回编辑",
+        "to": "diaryCompose",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "模拟保存失败",
+        "to": "diaryDraftFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存为私密日记",
+      "to": "diaryPublished",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diarySharedPreview",
+    "title": "朋友日记预览",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "朋友可见",
+        "body": "只分享本条图文，档案仍私密。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回修改范围",
+        "to": "diaryAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认分享本条",
+      "to": "diaryEntryShared",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryPublished",
+    "title": "日记已保存",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "已存入小满的日记（示意）",
+        "body": "仅自己可见，未对外分享。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 240
+      }
+    ],
+    "footer": {
+      "label": "查看这条日记",
+      "to": "diaryEntry",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryEntryShared",
+    "title": "分享过的日常",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 230
+      },
+      {
+        "type": "text",
+        "text": "小满今天又把阳光位占满了。",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "朋友可见 · 仅本条分享",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "action",
+        "label": "收紧为仅自己",
+        "to": "circleTightenConfirm",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "查看圈内互动",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回小满日记",
+      "to": "petDiary",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "diaryDraftExit",
+    "title": "离开编辑",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "这条还没有保存或发布",
+        "body": "你可以保留草稿，或返回继续编辑。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "继续编辑",
+        "to": "diaryCompose",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "放弃本次草稿",
+        "to": "petDiary",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保留草稿并退出",
+      "to": "petDiary",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryDraftFailure",
+    "title": "保存失败，内容还在",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "不要重复创建记录",
+        "body": "文字与已选照片保留，网络恢复后使用同一次草稿重试。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "回到编辑",
+        "to": "diaryCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "重试并查看预览",
+      "to": "diaryPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryPrivateResult",
+    "title": "这条已改为仅自己",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "note",
+        "title": "后续读取受限（示意）",
+        "body": "圈子、搜索、详情、原图与通知摘要需要重新校验。已截图或显示过的锁屏通知无法保证召回。",
+        "tone": "successSoft"
+      }
+    ],
+    "footer": {
+      "label": "返回私密日记",
+      "to": "diaryEntry",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryDeleteConfirm",
+    "title": "删除这条日记",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "text",
+        "text": "确认删除小满的这条日记？",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "对应圈子入口也应停止对外读取；不删除这只宠物的其他日记。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消，保留日记",
+        "to": "diaryEntry",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认删除本条",
+      "to": "diaryDeleted",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "diaryDeleted",
+    "title": "这条日记已删除",
+    "phase": "pets",
+    "items": [
+      {
+        "type": "empty",
+        "title": "删除完成（示意）",
+        "body": "宠物档案与其他日记保留。必要举报记录按独立权限处理。"
+      }
+    ],
+    "footer": {
+      "label": "返回小满主页",
+      "to": "petProfile",
+      "kind": "secondary"
+    }
+  }
+]

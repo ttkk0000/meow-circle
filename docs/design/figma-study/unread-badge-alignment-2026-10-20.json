@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-20",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "scope": "Unread badge alignment only; no client implementation",
+  "master": {
+    "createdNodeIds": [],
+    "mutatedNodeIds": [
+      "105:375",
+      "105:376"
+    ],
+    "badge": {
+      "width": 36,
+      "height": 32,
+      "primary": "CENTER",
+      "counter": "CENTER"
+    },
+    "label": {
+      "x": 4,
+      "y": 6,
+      "width": 28,
+      "height": 20,
+      "align": "CENTER",
+      "valign": "CENTER"
+    },
+    "centerDelta": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "instances": {
+    "createdNodeIds": [],
+    "mutatedNodeIds": [],
+    "instanceCount": 5,
+    "affected": [
+      {
+        "id": "108:3693",
+        "badge": "I108:3693;105:375",
+        "label": "I108:3693;105:376",
+        "text": "2",
+        "dx": 0,
+        "dy": 0,
+        "align": "CENTER",
+        "valign": "CENTER"
+      },
+      {
+        "id": "108:3701",
+        "badge": "I108:3701;105:375",
+        "label": "I108:3701;105:376",
+        "text": "1",
+        "dx": 0,
+        "dy": 0,
+        "align": "CENTER",
+        "valign": "CENTER"
+      },
+      {
+        "id": "108:4116",
+        "badge": "I108:4116;105:375",
+        "label": "I108:4116;105:376",
+        "text": "1",
+        "dx": 0,
+        "dy": 0,
+        "align": "CENTER",
+        "valign": "CENTER"
+      },
+      {
+        "id": "110:2410",
+        "badge": "I110:2410;105:375",
+        "label": "I110:2410;105:376",
+        "text": "3",
+        "dx": 0,
+        "dy": 0,
+        "align": "CENTER",
+        "valign": "CENTER"
+      },
+      {
+        "id": "110:2418",
+        "badge": "I110:2418;105:375",
+        "label": "I110:2418;105:376",
+        "text": "0",
+        "dx": 0,
+        "dy": 0,
+        "align": "CENTER",
+        "valign": "CENTER"
+      }
+    ]
+  },
+  "screenshot": "messages-unread-centered-2026-10-20.png",
+  "verification": "Native alignment and screenshot inspection; no build or device tests"
+}

@@ -1,0 +1,187 @@
+{
+  "date": "2026-10-21",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "scope": "Final visual samples; no real identity, request or application execution",
+  "images": [
+    {
+      "key": "hub",
+      "file": "01-hub.png",
+      "width": 1345,
+      "height": 1440,
+      "originalWidth": 1440,
+      "originalHeight": 1542,
+      "reviewed": true
+    },
+    {
+      "key": "smsInvalid",
+      "file": "02-smsInvalid.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "adultNotice",
+      "file": "03-adultNotice.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "adultUnsupported",
+      "file": "04-adultUnsupported.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "adultPassed",
+      "file": "05-adultPassed.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "holdCancel",
+      "file": "06-holdCancel.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "holdReproposal",
+      "file": "07-holdReproposal.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "returnEdit",
+      "file": "08-returnEdit.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "returnReview",
+      "file": "09-returnReview.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "returnReviewR2",
+      "file": "10-returnReviewR2.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "reportSupplement",
+      "file": "11-reportSupplement.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "reportSupplementPending",
+      "file": "12-reportSupplementPending.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "reportSupplemented",
+      "file": "13-reportSupplemented.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "dataDelete",
+      "file": "14-dataDelete.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "dataPartFinal",
+      "file": "15-dataPartFinal.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "dataAccountFinal",
+      "file": "16-dataAccountFinal.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "dataAccountProgress",
+      "file": "17-dataAccountProgress.png",
+      "width": 390,
+      "height": 844,
+      "originalWidth": 390,
+      "originalHeight": 844,
+      "reviewed": true
+    },
+    {
+      "key": "webReturnR2",
+      "file": "18-webReturnR2.png",
+      "width": 1440,
+      "height": 1000,
+      "originalWidth": 1440,
+      "originalHeight": 1000,
+      "reviewed": true
+    },
+    {
+      "key": "tabletCancel",
+      "file": "19-tabletCancel.png",
+      "width": 1194,
+      "height": 834,
+      "originalWidth": 1194,
+      "originalHeight": 834,
+      "reviewed": true
+    },
+    {
+      "key": "desktopDelete",
+      "file": "20-desktopDelete.png",
+      "width": 1440,
+      "height": 1000,
+      "originalWidth": 1440,
+      "originalHeight": 1000,
+      "reviewed": true
+    }
+  ]
+}

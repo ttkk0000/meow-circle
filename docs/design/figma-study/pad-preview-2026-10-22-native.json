@@ -1,0 +1,175 @@
+{
+  "samples": [
+    {
+      "root": "311:25",
+      "header": "312:379545",
+      "count": 6,
+      "types": {
+        "FRAME": 1,
+        "TEXT": 4,
+        "INSTANCE": 1
+      },
+      "imageNodes": [],
+      "component": "56:180",
+      "button": "611:737557",
+      "buttonActions": [
+        {
+          "action": {
+            "type": "NODE",
+            "destinationId": "311:26",
+            "navigation": "NAVIGATE",
+            "transition": null,
+            "resetVideoPosition": false,
+            "resetScrollPosition": false,
+            "resetInteractiveComponents": false
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "311:26",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": false,
+              "resetInteractiveComponents": false
+            }
+          ],
+          "trigger": {
+            "type": "ON_CLICK"
+          }
+        }
+      ]
+    },
+    {
+      "root": "311:26",
+      "header": "312:379753",
+      "count": 6,
+      "types": {
+        "FRAME": 1,
+        "TEXT": 4,
+        "INSTANCE": 1
+      },
+      "imageNodes": [],
+      "component": "56:180",
+      "button": "611:737560",
+      "buttonActions": [
+        {
+          "action": {
+            "type": "NODE",
+            "destinationId": "311:25",
+            "navigation": "NAVIGATE",
+            "transition": null,
+            "resetVideoPosition": false,
+            "resetScrollPosition": false,
+            "resetInteractiveComponents": false
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "311:25",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": false,
+              "resetInteractiveComponents": false
+            }
+          ],
+          "trigger": {
+            "type": "ON_CLICK"
+          }
+        }
+      ]
+    },
+    {
+      "root": "506:6792",
+      "header": "510:1863191",
+      "count": 6,
+      "types": {
+        "FRAME": 1,
+        "TEXT": 4,
+        "INSTANCE": 1
+      },
+      "imageNodes": [],
+      "component": "56:180",
+      "button": "611:737563",
+      "buttonActions": [
+        {
+          "action": {
+            "type": "NODE",
+            "destinationId": "506:6793",
+            "navigation": "NAVIGATE",
+            "transition": null,
+            "resetVideoPosition": false,
+            "resetScrollPosition": false,
+            "resetInteractiveComponents": false
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "506:6793",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": false,
+              "resetInteractiveComponents": false
+            }
+          ],
+          "trigger": {
+            "type": "ON_CLICK"
+          }
+        }
+      ]
+    },
+    {
+      "root": "311:379703",
+      "header": "488:150472",
+      "count": 6,
+      "types": {
+        "FRAME": 1,
+        "TEXT": 4,
+        "INSTANCE": 1
+      },
+      "imageNodes": [],
+      "component": "56:180",
+      "button": "621:740330",
+      "buttonActions": [
+        {
+          "action": {
+            "type": "NODE",
+            "destinationId": "311:379702",
+            "navigation": "NAVIGATE",
+            "transition": null,
+            "resetVideoPosition": false,
+            "resetScrollPosition": false,
+            "resetInteractiveComponents": false
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "311:379702",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": false,
+              "resetInteractiveComponents": false
+            }
+          ],
+          "trigger": {
+            "type": "ON_CLICK"
+          }
+        }
+      ]
+    }
+  ],
+  "flows": [
+    {
+      "nodeId": "311:25",
+      "name": "Pad 竖屏 · 完整流程"
+    },
+    {
+      "nodeId": "311:26",
+      "name": "Pad 横屏 · 完整流程"
+    }
+  ],
+  "indexHeight": 20910
+}

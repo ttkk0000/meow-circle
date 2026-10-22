@@ -1,0 +1,55 @@
+{
+  "createdNodeIds": [],
+  "mutatedNodeIds": [],
+  "screenCount": 134,
+  "nodes": 5973,
+  "photoNodes": 72,
+  "links": 589,
+  "broken": [],
+  "placeholders": [],
+  "missingFonts": [],
+  "overflows": [],
+  "badSizes": [],
+  "buttonShapes": {
+    "48/24": 166
+  },
+  "reachableFromHome": 130,
+  "unreachableFromHome": [
+    "offline",
+    "privateFailed",
+    "privateUnavailable",
+    "groupMuted"
+  ],
+  "flowStartingPoints": [
+    {
+      "nodeId": "56:27",
+      "name": "M&D · 手机完整体验"
+    },
+    {
+      "nodeId": "106:1435",
+      "name": "群聊 · 加入与交流"
+    },
+    {
+      "nodeId": "106:1447",
+      "name": "群主 · 建群与管理"
+    },
+    {
+      "nodeId": "106:1454",
+      "name": "群聊 · 禁言状态"
+    },
+    {
+      "nodeId": "56:28",
+      "name": "社区 · 冷启动空状态"
+    },
+    {
+      "nodeId": "106:1411",
+      "name": "私信 · 发送失败"
+    }
+  ],
+  "limitations": [
+    "固定状态演示，不同步全局数据",
+    "未在实体手机逐条点击",
+    "未运行键盘、文字放大、读屏或完整WCAG验收",
+    "未改客户端与Stitch"
+  ]
+}

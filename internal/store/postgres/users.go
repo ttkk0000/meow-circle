@@ -136,3 +136,38 @@ func (s *Store) GetUsers(ids []int64) map[int64]domain.User {
 	}
 	return out
 }
+
+func (s *Store) GetUserStats(id int64) domain.UserStats {
+	// Mock implementation
+	return domain.UserStats{
+		Moments:   12,
+		Likes:     1024,
+		Badges:    5,
+		Followers: 256,
+		Following: 128,
+	}
+}
+
+func (s *Store) GetUserPets(id int64) []domain.Pet {
+	// Mock implementation
+	return []domain.Pet{
+		{
+			ID:        1,
+			OwnerID:   id,
+			Name:      "Latte",
+			Breed:     "Domestic Shorthair",
+			Age:       "3 yrs",
+			Tags:      []string{"Cozy", "Curious", "Sunny"},
+			AvatarURL: "/mock-images/mock_image_2.png",
+		},
+		{
+			ID:        2,
+			OwnerID:   id,
+			Name:      "Peach",
+			Breed:     "Persian",
+			Age:       "1.5 yrs",
+			Tags:      []string{"Sleepy", "Fluffy"},
+			AvatarURL: "/mock-images/mock_image_3.png",
+		},
+	}
+}

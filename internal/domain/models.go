@@ -12,6 +12,25 @@ type User struct {
 	PasswordHash string    `json:"-"`
 	PasswordSalt string    `json:"-"`
 	CreatedAt    time.Time `json:"created_at"`
+	Stats        *UserStats `json:"stats,omitempty"`
+}
+
+type UserStats struct {
+	Moments   int64 `json:"moments"`
+	Likes     int64 `json:"likes"`
+	Badges    int64 `json:"badges"`
+	Followers int64 `json:"followers"`
+	Following int64 `json:"following"`
+}
+
+type Pet struct {
+	ID        int64    `json:"id"`
+	OwnerID   int64    `json:"owner_id"`
+	Name      string   `json:"name"`
+	Breed     string   `json:"breed"`
+	Age       string   `json:"age"`
+	Tags      []string `json:"tags"`
+	AvatarURL string   `json:"avatar_url,omitempty"`
 }
 
 type PostCategory string
@@ -55,6 +74,7 @@ type Listing struct {
 	ID          int64       `json:"id"`
 	SellerID    int64       `json:"seller_id"`
 	Type        ListingType `json:"type"`
+	Category    string      `json:"category"`
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
 	PriceCents  int64       `json:"price_cents"`
@@ -225,4 +245,46 @@ type AuditLog struct {
 	Note       string    `json:"note,omitempty"`
 	IP         string    `json:"ip,omitempty"`
 	CreatedAt  time.Time `json:"created_at"`
+}
+
+// ===== Adoption =====
+
+type AdoptionPet struct {
+	ID          int64     `json:"id"`
+	RescuerID   int64     `json:"rescuer_id"` // User ID of the rescuer/shelter
+	Name        string    `json:"name"`
+	Species     string    `json:"species"`
+	Breed       string    `json:"breed"`
+	Age         string    `json:"age"`
+	City        string    `json:"city"`
+	Health      string    `json:"health"` // e.g., "Vaccinated, Spayed"
+	Description string    `json:"description"`
+	MediaIDs    []int64   `json:"media_ids,omitempty"`
+	Status      string    `json:"status"` // e.g., "available", "adopted"
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+type ApplicationStatus string
+
+const (
+	ApplicationStatusDraft     ApplicationStatus = "draft"
+	ApplicationStatusSubmitted ApplicationStatus = "submitted"
+	ApplicationStatusReviewing ApplicationStatus = "reviewing"
+	ApplicationStatusNeedsInfo ApplicationStatus = "needs_info"
+	ApplicationStatusApproved  ApplicationStatus = "approved"
+	ApplicationStatusRejected  ApplicationStatus = "rejected"
+	ApplicationStatusWithdrawn ApplicationStatus = "withdrawn"
+)
+
+type AdoptionApplication struct {
+	ID          int64             `json:"id"`
+	PetID       int64             `json:"pet_id"`
+	ApplicantID int64             `json:"applicant_id"`
+	RescuerID   int64             `json:"rescuer_id"` // Denormalized for easy querying
+	Status      ApplicationStatus `json:"status"`
+	Message     string            `json:"message"`
+	ContactInfo string            `json:"contact_info,omitempty"`
+	CreatedAt   time.Time         `json:"created_at"`
+	UpdatedAt   time.Time         `json:"updated_at"`
 }

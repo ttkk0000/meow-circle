@@ -1,0 +1,1224 @@
+[
+  {
+    "id": "circleFeed",
+    "title": "宠友圈",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "switch",
+        "entries": [
+          [
+            "推荐",
+            "home"
+          ],
+          [
+            "关注",
+            "following"
+          ],
+          [
+            "宠友圈",
+            "circleFeed"
+          ],
+          [
+            "同城",
+            "localFeed"
+          ]
+        ],
+        "active": "宠友圈"
+      },
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 80
+      },
+      {
+        "type": "text",
+        "text": "朋友之间，分享毛孩子的小日子",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "inlineActions",
+        "entries": [
+          [
+            "宠友",
+            "circleFriends"
+          ],
+          [
+            "新朋友",
+            "circleRequestReceived"
+          ],
+          [
+            "写日常",
+            "circleCompose"
+          ]
+        ]
+      },
+      {
+        "type": "circleCard",
+        "author": "布丁的铲屎官",
+        "meta": "今天 12:20 · 朋友可见",
+        "body": "布丁把今天最好的阳光位占好了。你家的小家伙也会找光斑吗？",
+        "pet": "布丁 · 图文日常",
+        "kind": "catOffer",
+        "to": "circleDetail",
+        "commentTo": "circleComments",
+        "likeTo": "circleLiked",
+        "moreTo": "circleOwnPostSettings"
+      },
+      {
+        "type": "circleCard",
+        "author": "豆豆的朋友",
+        "meta": "今天 12:20 · 朋友可见",
+        "body": "今天带豆豆去公园散步，认识了新的小伙伴。",
+        "pet": "豆豆 · 狗狗日常",
+        "kind": "dog",
+        "to": "dogPost",
+        "commentTo": "dogPost",
+        "likeTo": "circleLiked",
+        "moreTo": "profileActions"
+      }
+    ],
+    "tab": "home",
+    "brand": true
+  },
+  {
+    "id": "circleEmpty",
+    "title": "宠友圈",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "empty",
+        "title": "还没有朋友的新日常",
+        "body": "不生成假好友或假互动。可以先记录自己的宠物生活。"
+      },
+      {
+        "type": "action",
+        "label": "写自己的日记",
+        "to": "diaryCompose",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "去社区认识宠友",
+        "to": "home",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看新朋友",
+        "to": "circleRequestReceived",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到宠友圈",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleFriends",
+    "title": "我的宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "互相确认，才成为宠友",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "pet",
+        "name": "布丁的铲屎官",
+        "meta": "已互相确认 · 布丁",
+        "kind": "catOffer",
+        "to": "circleFriendProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "pet",
+        "name": "团子今天不拆家",
+        "meta": "已互相确认 · 团子",
+        "kind": "cat",
+        "to": "circleFriendProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "row",
+        "label": "收到的请求",
+        "value": "待你确认",
+        "to": "circleRequestReceived"
+      },
+      {
+        "type": "row",
+        "label": "添加宠友",
+        "value": "从站内主页或邀请入口发起",
+        "to": "circleRequest"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleRequest",
+    "title": "添加宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "pet",
+        "name": "布丁的铲屎官",
+        "meta": "公开资料 · 非认证保证",
+        "kind": "catOffer",
+        "to": "circleFriendProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "field",
+        "label": "申请理由",
+        "value": "也想交流晒太阳的小日常",
+        "kind": "field"
+      },
+      {
+        "type": "note",
+        "title": "不会读取通讯录",
+        "body": "关注和好友是两种关系；未接受前不开放圈动态。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "发送好友请求",
+      "to": "circleRequestWaiting",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleRequestWaiting",
+    "title": "等待对方确认",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "empty",
+        "title": "请求已送出（示意）",
+        "body": "同一双方只保留一个待处理请求。不会连续提醒对方。"
+      },
+      {
+        "type": "action",
+        "label": "撤回本次请求",
+        "to": "circleFriends",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleRequestReceived",
+    "title": "新朋友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "pet",
+        "name": "布丁的铲屎官",
+        "meta": "希望和你成为宠友",
+        "kind": "catOffer",
+        "to": "circleFriendProfile",
+        "note": "学习资料 · 非真实档案"
+      },
+      {
+        "type": "text",
+        "text": "也想交流晒太阳的小日常。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "接受后的范围",
+        "body": "默认看成为朋友后的圈动态；不自动开放私密日记或历史内容。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "暂不接受",
+        "to": "circleFriends",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "接受并成为宠友",
+      "to": "circleFriendProfile",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleFriendProfile",
+    "title": "宠友主页",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 160
+      },
+      {
+        "type": "text",
+        "text": "布丁的铲屎官",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "已互相确认的宠友",
+        "role": "Label",
+        "color": "brand"
+      },
+      {
+        "type": "action",
+        "label": "发消息",
+        "to": "privateChat",
+        "kind": "secondary"
+      },
+      {
+        "type": "row",
+        "label": "可见日常",
+        "value": "只展示你有权读取的内容",
+        "to": "circleDetail"
+      },
+      {
+        "type": "row",
+        "label": "关系设置",
+        "value": "移除与拉黑分别说明",
+        "to": "circleFriendSettings"
+      }
+    ],
+    "footer": {
+      "label": "回到宠友圈",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleCompose",
+    "title": "写日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "field",
+        "label": "想说的话",
+        "value": "小满今天又把阳光位占满了。",
+        "kind": "field"
+      },
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 160
+      },
+      {
+        "type": "row",
+        "label": "添加或更换照片",
+        "value": "仅图文，不支持视频",
+        "to": "circlePhotoChoose"
+      },
+      {
+        "type": "row",
+        "label": "关联宠物",
+        "value": "小满",
+        "to": "petsList"
+      },
+      {
+        "type": "row",
+        "label": "谁可以看",
+        "value": "朋友可见",
+        "to": "circleAudience"
+      },
+      {
+        "type": "row",
+        "label": "位置",
+        "value": "不显示",
+        "to": "circleLocation"
+      },
+      {
+        "type": "note",
+        "title": "本条日常与档案分开授权",
+        "body": "分享本条不会公开整份宠物档案；默认不显示精确位置。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "表情与贴纸",
+        "to": "exprCircle",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "存草稿或退出",
+        "to": "circleDraftFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "预览这条日常",
+      "to": "circlePreview",
+      "kind": "primary"
+    },
+    "back": "circleDraftFailure"
+  },
+  {
+    "id": "circlePhotoChoose",
+    "title": "选择照片",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 220
+      },
+      {
+        "type": "note",
+        "title": "照片选择示意",
+        "body": "不读取真实相册。此照片为学习素材；公开前检查人脸、位置与住址。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "拒绝或取消，继续写文字",
+        "to": "circleCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "使用这张照片",
+      "to": "circleCompose",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleAudience",
+    "title": "谁可以看",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "先选好范围，再分享日常",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "朋友可见",
+        "value": "当前选择 · 互相确认的宠友",
+        "to": "circleCompose"
+      },
+      {
+        "type": "row",
+        "label": "仅自己",
+        "value": "不进入圈子和公开社区",
+        "to": "circleAudiencePrivate"
+      },
+      {
+        "type": "row",
+        "label": "部分朋友可见",
+        "value": "选择本次受众",
+        "to": "circleSelectFriends"
+      },
+      {
+        "type": "row",
+        "label": "不给谁看",
+        "value": "在朋友中排除指定对象",
+        "to": "circleSelectFriends"
+      },
+      {
+        "type": "row",
+        "label": "公开到社区",
+        "value": "另行确认，不是叠加开关",
+        "to": "circlePublicConfirm"
+      },
+      {
+        "type": "note",
+        "title": "本条日常与档案分开授权",
+        "body": "分享本条不会公开整份宠物档案；默认不显示精确位置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保留朋友可见",
+      "to": "circleCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleAudiencePrivate",
+    "title": "仅自己可见",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "只有你能看这条日常",
+        "body": "不出现在他人信息流、搜索或通知预览。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "重新选择范围",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存范围并预览",
+      "to": "diaryPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleSelectFriends",
+    "title": "选择本次宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "布丁的铲屎官",
+        "value": "已选 · 互相确认的宠友",
+        "to": "circlePrivatePetWarning"
+      },
+      {
+        "type": "row",
+        "label": "团子今天不拆家",
+        "value": "未选 · 点按选择后确认",
+        "to": "circlePrivatePetWarning"
+      },
+      {
+        "type": "note",
+        "title": "范围示意",
+        "body": "只对当前选定的人分享；排除模式须返回上一页选择，不能同时叠加。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "确认所选受众",
+      "to": "circlePrivatePetWarning",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePrivatePetWarning",
+    "title": "仅分享这条内容",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "cat",
+        "height": 150
+      },
+      {
+        "type": "text",
+        "text": "小满的档案仍保持私密",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "本次只分享选中的文字和照片，不开放旧日记、照护材料或家庭地址。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "保持私密，返回修改",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认本条分享并预览",
+      "to": "circlePreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePublicConfirm",
+    "title": "公开到社区",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "公开范围会改变",
+        "body": "所有能访问公开社区的人可能看到本条图文；不是继续标记为朋友私密。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "note",
+        "title": "本条日常与档案分开授权",
+        "body": "分享本条不会公开整份宠物档案；默认不显示精确位置。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消公开",
+        "to": "circleAudience",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认公开并预览",
+      "to": "circlePublicPreview",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePublicPreview",
+    "title": "公开日常预览",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "circleCard",
+        "author": "小满的朋友",
+        "meta": "发布前预览 · 社区公开",
+        "body": "小满今天又把阳光位占满了。",
+        "pet": "只分享本条，档案仍私密",
+        "kind": "cat",
+        "to": "circlePrivatePetWarning",
+        "commentTo": "circleCompose",
+        "likeTo": "circleCompose",
+        "moreTo": "circleAudience"
+      },
+      {
+        "type": "note",
+        "title": "公开确认",
+        "body": "本预览中的身份、正文和照片将公开；尚未发布。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "返回编辑",
+        "to": "circleCompose",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布到公开社区",
+      "to": "postPublished",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleLocation",
+    "title": "日常位置",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "不显示位置",
+        "value": "推荐默认",
+        "to": "circleCompose"
+      },
+      {
+        "type": "row",
+        "label": "武汉",
+        "value": "仅显示城市，不含住址",
+        "to": "circleCompose"
+      },
+      {
+        "type": "note",
+        "title": "无需为了日常开定位",
+        "body": "可手动选城市；不自动带出照片EXIF或精确位置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "保持不显示",
+      "to": "circleCompose",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circlePreview",
+    "title": "日常预览",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "circleCard",
+        "author": "小满的朋友",
+        "meta": "预览 · 朋友可见",
+        "body": "小满今天又把阳光位占满了。",
+        "pet": "小满 · 仅本条分享",
+        "kind": "cat",
+        "to": "circlePrivatePetWarning",
+        "commentTo": "circleCompose",
+        "likeTo": "circleCompose",
+        "moreTo": "circleAudience"
+      },
+      {
+        "type": "action",
+        "label": "返回编辑",
+        "to": "circleCompose",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看失败恢复示例",
+        "to": "circleDraftFailure",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认发布给宠友",
+      "to": "circlePublished",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circlePublished",
+    "title": "已发布给宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "这条日常已发布（示意）",
+        "body": "可见范围：朋友。小满的档案仍保持原范围。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "circleCard",
+        "author": "小满的朋友",
+        "meta": "刚刚 · 朋友可见",
+        "body": "小满今天又把阳光位占满了。",
+        "pet": "小满 · 图文日常",
+        "kind": "cat",
+        "to": "circleOwnPostSettings",
+        "commentTo": "circleComments",
+        "likeTo": "circleLiked",
+        "moreTo": "circleOwnPostSettings"
+      },
+      {
+        "type": "action",
+        "label": "管理这条内容",
+        "to": "circleOwnPostSettings",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "回到宠友圈",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleDetail",
+    "title": "这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "circleCard",
+        "author": "布丁的铲屎官",
+        "meta": "今天 12:20 · 朋友可见",
+        "body": "布丁把今天最好的阳光位占好了。你家的小家伙也会找光斑吗？",
+        "pet": "布丁 · 图文日常",
+        "kind": "catOffer",
+        "to": "circleDetail",
+        "commentTo": "circleComments",
+        "likeTo": "circleLiked",
+        "moreTo": "circleOwnPostSettings"
+      },
+      {
+        "type": "text",
+        "text": "只显示你有权查看的互动",
+        "role": "Caption",
+        "color": "muted"
+      },
+      {
+        "type": "action",
+        "label": "查看评论与回复",
+        "to": "circleComments",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "更多表态",
+        "to": "circleReactionPicker",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "友好聊聊…",
+      "context": "CircleComment",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleLiked",
+    "title": "这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "circleCard",
+        "author": "布丁的铲屎官",
+        "meta": "今天 12:20 · 朋友可见",
+        "body": "布丁把今天最好的阳光位占好了。你家的小家伙也会找光斑吗？",
+        "pet": "布丁 · 图文日常",
+        "kind": "catOffer",
+        "to": "circleDetail",
+        "commentTo": "circleComments",
+        "likeTo": "circleLiked",
+        "moreTo": "circleOwnPostSettings"
+      },
+      {
+        "type": "note",
+        "title": "已喜欢 · 你",
+        "body": "再次点按可取消；更换表态不增加人数。",
+        "tone": "brandSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消喜欢",
+        "to": "circleDetail",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "更换表态",
+        "to": "circleReactionPicker",
+        "kind": "quiet"
+      },
+      {
+        "type": "action",
+        "label": "查看评论",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "友好聊聊…",
+      "context": "CircleComment",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleComments",
+    "title": "评论与回复",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "comment",
+        "name": "团子今天不拆家",
+        "body": "这个姿势也太可爱了！",
+        "meta": "今天12:32 · 回复",
+        "kind": "cat",
+        "to": "circleCommentReply"
+      },
+      {
+        "type": "comment",
+        "name": "布丁的铲屎官",
+        "body": "它每天都会找这个位置。",
+        "meta": "作者 · 回复",
+        "kind": "catOffer",
+        "to": "circleCommentReply"
+      },
+      {
+        "type": "note",
+        "title": "按当前权限显示",
+        "body": "作者可见有效评论；其他人只看有权读取的互动，不泄露隐藏引用。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "友好聊聊…",
+      "context": "CircleComment",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleCommentReply",
+    "title": "回复团子",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "回复：团子今天不拆家",
+        "role": "Strong",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "这个姿势也太可爱了！",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "note",
+        "title": "回复范围",
+        "body": "继承原评论可见范围；无法访问父评论时不提交。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "取消回复",
+        "to": "circleComments",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "type": "composer",
+      "hint": "回复团子…",
+      "context": "CircleReply",
+      "ready": false,
+      "sendTo": null
+    }
+  },
+  {
+    "id": "circleCommentSent",
+    "title": "评论已发布",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "已发送这条评论（示意）",
+        "body": "不会替你扩大原帖或宠物资料的权限。",
+        "tone": "successSoft"
+      },
+      {
+        "type": "text",
+        "text": "抱抱，今天也被小家伙治愈了。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "查看原帖",
+        "to": "circleDetail",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "返回评论",
+      "to": "circleComments",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circlePhotoViewer",
+    "title": "照片",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "photo",
+        "kind": "catOffer",
+        "height": 450
+      },
+      {
+        "type": "text",
+        "text": "布丁 · 第1张／共1张 · 学习素材",
+        "role": "Label",
+        "color": "muted"
+      }
+    ],
+    "footer": {
+      "label": "返回原日常",
+      "to": "circleDetail",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleExpression",
+    "title": "全站表情",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "同一面板，共享表达方式",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "row",
+        "label": "评论与回复",
+        "value": "选择后仍需发送",
+        "to": "exprCircleComment"
+      },
+      {
+        "type": "row",
+        "label": "写日常",
+        "value": "插入草稿，不自动发出",
+        "to": "exprCircle"
+      },
+      {
+        "type": "row",
+        "label": "私信与群聊",
+        "value": "保留会话上下文",
+        "to": "exprPrivate"
+      }
+    ],
+    "footer": {
+      "label": "回到圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleOwnPostSettings",
+    "title": "管理这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "修改谁可以看",
+        "value": "朋友可见 → 仅自己需确认",
+        "to": "circleTightenConfirm"
+      },
+      {
+        "type": "row",
+        "label": "编辑日常",
+        "value": "保留当前范围",
+        "to": "circleCompose"
+      },
+      {
+        "type": "row",
+        "label": "删除这条日常",
+        "value": "确认后不再对外读取",
+        "to": "circleDeleteConfirm"
+      },
+      {
+        "type": "note",
+        "title": "权限收紧后",
+        "body": "详情、相册和通知摘要需重新校验；已截屏内容无法召回。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回日常",
+      "to": "circlePublished",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleTightenConfirm",
+    "title": "收紧这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "改为仅自己？",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "朋友将无法继续读取这条图文及其互动；不会删除他人原始举报记录。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消，保留朋友可见",
+        "to": "circlePublished",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认改为仅自己",
+      "to": "diaryPrivateResult",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleDeleteConfirm",
+    "title": "删除日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "删除后无法在圈子继续查看",
+        "body": "原图与详情需要停止对外访问；必要举报证据独立受控保留。",
+        "tone": "warningSoft"
+      },
+      {
+        "type": "action",
+        "label": "取消删除",
+        "to": "circlePublished",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认删除",
+      "to": "diaryDeleted",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleUnavailable",
+    "title": "内容暂不可见",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "empty",
+        "title": "暂时无法查看这条日常",
+        "body": "可能已删除或范围改变；不泄露是否被排除或拉黑。"
+      }
+    ],
+    "footer": {
+      "label": "返回圈子",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleFriendSettings",
+    "title": "宠友关系",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "row",
+        "label": "移除宠友",
+        "value": "不等同于拉黑；公开内容仍可见",
+        "to": "circleFriendRemove"
+      },
+      {
+        "type": "row",
+        "label": "拉黑与举报",
+        "value": "分别说明影响",
+        "to": "blockConfirm"
+      },
+      {
+        "type": "note",
+        "title": "私聊接收独立控制",
+        "body": "移除好友不自动代替消息请求设置。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "返回宠友主页",
+      "to": "circleFriendProfile",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleFriendRemove",
+    "title": "移除这位宠友",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "text",
+        "text": "移除后不再读取朋友受众内容",
+        "role": "Section",
+        "color": "ink"
+      },
+      {
+        "type": "text",
+        "text": "不通知对方具体原因；其公开社区内容仍按公开规则处理。",
+        "role": "Body",
+        "color": "ink"
+      },
+      {
+        "type": "action",
+        "label": "取消",
+        "to": "circleFriendSettings",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "确认移除",
+      "to": "circleFriends",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleReport",
+    "title": "报告这条日常",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "field",
+        "label": "问题类型",
+        "value": "骚扰／欺骗／不当内容",
+        "kind": "field"
+      },
+      {
+        "type": "field",
+        "label": "补充说明",
+        "value": "只提交必要的具体事实",
+        "kind": "field"
+      },
+      {
+        "type": "note",
+        "title": "受理不等于认定违规",
+        "body": "不按举报数量自动处罚。举报对象为这条日常，不上传全聊天历史。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "确认提交报告",
+      "to": "reportPostSent",
+      "kind": "primary"
+    }
+  },
+  {
+    "id": "circleDraftFailure",
+    "title": "保留日常草稿",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "note",
+        "title": "离开或暂时无法发布",
+        "body": "文字、已选照片与范围保留为草稿；这条内容尚未发布。",
+        "tone": "subtle"
+      },
+      {
+        "type": "action",
+        "label": "继续编辑",
+        "to": "circleCompose",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "重试发布预览",
+        "to": "circlePreview",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "放弃草稿并返回",
+        "to": "circleFeed",
+        "kind": "quiet"
+      }
+    ],
+    "footer": {
+      "label": "保存草稿并退出",
+      "to": "circleFeed",
+      "kind": "secondary"
+    }
+  },
+  {
+    "id": "circleReactionPicker",
+    "title": "选择表态",
+    "phase": "circle",
+    "items": [
+      {
+        "type": "expressions",
+        "to": "circleLiked"
+      },
+      {
+        "type": "note",
+        "title": "一个用户一个当前表态",
+        "body": "可更换／取消，不重复计数。长按不是唯一入口。",
+        "tone": "subtle"
+      }
+    ],
+    "footer": {
+      "label": "取消并返回",
+      "to": "circleDetail",
+      "kind": "secondary"
+    }
+  }
+]

@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-21",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "source": "Captured during this review; fixed Figma states, no runtime prototype interaction.",
+  "images": [
+    {
+      "step": 1,
+      "key": "phoneCode",
+      "file": "01-phoneCode.png",
+      "nodeId": "460:17348",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 2,
+      "key": "emailError",
+      "file": "02-emailError.png",
+      "nodeId": "460:17328",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 3,
+      "key": "adultAssurance",
+      "file": "03-adultAssurance.png",
+      "nodeId": "460:17413",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 4,
+      "key": "accountIdentifiers",
+      "file": "04-accountIdentifiers.png",
+      "nodeId": "460:17358",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 5,
+      "key": "safetyHold",
+      "file": "05-safetyHold.png",
+      "nodeId": "460:211421",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 6,
+      "key": "returnProposal",
+      "file": "06-returnProposal.png",
+      "nodeId": "460:68732",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 7,
+      "key": "guestReceipt",
+      "file": "07-guestReceipt.png",
+      "nodeId": "460:68697",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 8,
+      "key": "guestReport",
+      "nodeId": "460:68682",
+      "file": "08-guestReport.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 9,
+      "key": "dataDelete",
+      "file": "09-dataDelete.png",
+      "nodeId": "460:17443",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "step": 10,
+      "key": "dataProgress",
+      "file": "10-dataProgress.png",
+      "nodeId": "460:17448",
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

@@ -1,0 +1,497 @@
+{
+  "module": "messages",
+  "start": 64,
+  "polish": {
+    "pageId": "295:2",
+    "createdNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "createdNodeIdsByPrefix": {
+      "331": {
+        "start": 261508,
+        "deltaBase36": "2.x.q.q.q.1.1.9.q.1.1.t.l.2.13.q.w.q.1.1.f.q.1.1.z.l.2.23d.q.236.q.1.1.22p.q.1.1.239.l.2.23d.q.236.q.1.1.22p.q.1.1.239.q.1.1.23d.1.1"
+      }
+    },
+    "mutatedNodeIdsByPrefix": {
+      "317": {
+        "start": 151528,
+        "deltaBase36": "1.11.2.1.p.2.1.3.2.4.h.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.h.1.1.1.2.1b.1.3.2.4.h.1.1.1.2.1a.1.p.2.1.3.2.4.j.1.11.2.1.p.2.1.3.2.4.f.1.1.1.1.1.2.1a.1.p.2.1.3.2.4.f.1.1.1.2.1b.1.3.2.4.f.1.1.1.2.1a.1.p.2.1.3.2.4.h.1.11.2.1.p.2.1.3.22v.1.22p.6.1.1.1.1.1.2.1a.1.p.2.1.3.22v.1.22p.6.1.1.1.2.1b.1.3.22v.1.22p.6.1.1.1.2.1a.1.p.2.1.3.22v.1.22p.8.1.11.2.1.p.2.1.3.22v.1.22p.6.1.1.1.1.1.2.1a.1.p.2.1.3.22v.1.22p.6.1.1.1.2.1b.1.3.22v.1.22p.6.1.1.1.2.1a.1.p.2.1.3.22v.1.22p"
+      },
+      "325": {
+        "start": 76193,
+        "deltaBase36": "1.1.3.1.4.22v.1.22p.a.3.3.2.1a.1.1.1.2.1b.1.4.22v.1.22p.a.3.3"
+      }
+    },
+    "removedNodeIds": [
+      "325:81624"
+    ],
+    "counts": {
+      "styles": 95,
+      "spacing": 405,
+      "footers": 0,
+      "backTargets": 16,
+      "publishEntries": 18
+    }
+  },
+  "restored": {
+    "codec": "prefix-start-base36-delta-v1",
+    "restoredNodeIdsByPrefix": {
+      "311": {
+        "start": 379772,
+        "deltaBase36": "1.1.1.1.1.1.1"
+      },
+      "317": {
+        "start": 151600,
+        "deltaBase36": "3.9.6.2i.3.9.6.1p.3.9.6.2g.3.9.6.27.3.9.1.2l.3.9.1.1s.3.9.1.2j.3.9.1.2a.22w.4.2.22n.2f.22w.4.2.22n.1m.22w.4.2.22n.2d.22w.4.2.22n.24.22w.4.2.22n.2f.22w.4.2.22n.1m.22w.4.2.22n.2d.22w.4.2.22n"
+      },
+      "325": {
+        "start": 61504,
+        "deltaBase36": "1.bc6.4.22w.4.2.22w.2w.4.22w.4.2.22w"
+      },
+      "331": {
+        "start": 261543,
+        "deltaBase36": "1g.11.1l.1q.1m.17.1r.240.23w.23h.241.240.23w.23h.241.8fl.f"
+      }
+    },
+    "createdNodeIdsByPrefix": {
+      "331": {
+        "start": 294688,
+        "deltaBase36": "1.e.1"
+      }
+    },
+    "unmapped": [],
+    "counts": {
+      "actions": 94,
+      "toolbarControls": 2,
+      "backGuards": 18
+    }
+  },
+  "route": {
+    "pageId": "295:2",
+    "mutatedNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "mutatedNodeIdsByPrefix": {
+      "317": {
+        "start": 151530,
+        "deltaBase36": "9.8.b.c.6.6.6.17.9.8.b.8.b.6.6.6.15.9.8.b.8.17.9.8.b.8.b.6.6.6.13.9.8.b.c.6.6.6.15.9.8.b.8.b.6.6.6.13.9.8.b.8.15.9.8.b.8.b.6.6.6.11.9.8.b.c.6.6.6.46b.9.8.b.8.b.6.6.6.469.9.8.b.8.46b.9.8.b.8.b.6.6.6.467.9.8.b.c.6.6.6.46b.9.8.b.8.b.6.6.6.469.9.8.b.8.46b.9.8.b.8.b.6.6.6"
+      },
+      "325": {
+        "start": 81607,
+        "deltaBase36": "9.j.8.f.9.8.b.8"
+      },
+      "331": {
+        "start": 261508,
+        "deltaBase36": "2.1n.1g.11.1g.2.1t.1m.17.1m.2.243.23w.23h.23w.2.243.23w.23h.241.23f"
+      }
+    },
+    "counts": {
+      "nodes": 0,
+      "reactions": 0,
+      "local": 0,
+      "crossModule": 0,
+      "back": 0,
+      "selfSkipped": 0
+    },
+    "unmapped": []
+  },
+  "validation": {
+    "pageId": "295:2",
+    "rootCount": 18,
+    "issueCount": 0,
+    "results": [
+      {
+        "id": "311:379764",
+        "key": "blockConfirm",
+        "platform": "web",
+        "pageId": "311:8",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379765",
+        "key": "blockConfirm",
+        "platform": "desktop",
+        "pageId": "311:8",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 72,
+        "texts": 23,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379766",
+        "key": "blockConfirm",
+        "platform": "tabletP",
+        "pageId": "311:8",
+        "w": 834,
+        "h": 1194,
+        "nodes": 53,
+        "texts": 15,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379767",
+        "key": "blockConfirm",
+        "platform": "tabletL",
+        "pageId": "311:8",
+        "w": 1194,
+        "h": 834,
+        "nodes": 72,
+        "texts": 21,
+        "instances": 23,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379768",
+        "key": "blockedResult",
+        "platform": "web",
+        "pageId": "311:8",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 20,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379769",
+        "key": "blockedResult",
+        "platform": "desktop",
+        "pageId": "311:8",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 71,
+        "texts": 22,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379770",
+        "key": "blockedResult",
+        "platform": "tabletP",
+        "pageId": "311:8",
+        "w": 834,
+        "h": 1194,
+        "nodes": 52,
+        "texts": 14,
+        "instances": 16,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379771",
+        "key": "blockedResult",
+        "platform": "tabletL",
+        "pageId": "311:8",
+        "w": 1194,
+        "h": 834,
+        "nodes": 71,
+        "texts": 20,
+        "instances": 24,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 7,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379772",
+        "key": "replyMilk",
+        "platform": "web",
+        "pageId": "311:8",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 352,
+        "texts": 21,
+        "instances": 176,
+        "photos": 24,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379773",
+        "key": "replyMilk",
+        "platform": "desktop",
+        "pageId": "311:8",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 356,
+        "texts": 23,
+        "instances": 176,
+        "photos": 24,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379774",
+        "key": "replyMilk",
+        "platform": "tabletP",
+        "pageId": "311:8",
+        "w": 834,
+        "h": 1194,
+        "nodes": 337,
+        "texts": 15,
+        "instances": 168,
+        "photos": 24,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379775",
+        "key": "replyMilk",
+        "platform": "tabletL",
+        "pageId": "311:8",
+        "w": 1194,
+        "h": 834,
+        "nodes": 356,
+        "texts": 21,
+        "instances": 176,
+        "photos": 24,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379776",
+        "key": "replyAuthor",
+        "platform": "web",
+        "pageId": "311:8",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 352,
+        "texts": 21,
+        "instances": 176,
+        "photos": 24,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379777",
+        "key": "replyAuthor",
+        "platform": "desktop",
+        "pageId": "311:8",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 356,
+        "texts": 23,
+        "instances": 176,
+        "photos": 24,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379778",
+        "key": "replyAuthor",
+        "platform": "tabletP",
+        "pageId": "311:8",
+        "w": 834,
+        "h": 1194,
+        "nodes": 337,
+        "texts": 15,
+        "instances": 168,
+        "photos": 24,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "311:379779",
+        "key": "replyAuthor",
+        "platform": "tabletL",
+        "pageId": "311:8",
+        "w": 1194,
+        "h": 834,
+        "nodes": 356,
+        "texts": 21,
+        "instances": 176,
+        "photos": 24,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 74,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "325:61504",
+        "key": "privateChat",
+        "platform": "webN",
+        "pageId": "311:8",
+        "w": 390,
+        "h": 844,
+        "nodes": 342,
+        "texts": 14,
+        "instances": 166,
+        "photos": 24,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 72,
+        "conditional": 194,
+        "issues": []
+      },
+      {
+        "id": "325:61505",
+        "key": "privateChat",
+        "platform": "tabletN",
+        "pageId": "311:8",
+        "w": 744,
+        "h": 1133,
+        "nodes": 347,
+        "texts": 16,
+        "instances": 168,
+        "photos": 24,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 73,
+        "conditional": 194,
+        "issues": []
+      }
+    ]
+  }
+}

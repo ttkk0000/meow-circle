@@ -1,0 +1,1161 @@
+{
+  "date": "2026-10-19",
+  "source": "Google Fonts Noto Emoji official asset distribution",
+  "license": "Google Noto artwork; retain attribution and CC BY 4.0 notice from Google Fonts documentation",
+  "scope": "Figma mobile learning design; no application migration",
+  "count": 128,
+  "assets": [
+    {
+      "key": "smile",
+      "codepoint": "1f600",
+      "label": "开心",
+      "category": "常用",
+      "glyph": "😀",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f600/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f600.svg"
+    },
+    {
+      "key": "grin",
+      "codepoint": "1f601",
+      "label": "咧嘴笑",
+      "category": "常用",
+      "glyph": "😁",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f601/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f601.svg"
+    },
+    {
+      "key": "laugh",
+      "codepoint": "1f604",
+      "label": "大笑",
+      "category": "常用",
+      "glyph": "😄",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f604/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f604.svg"
+    },
+    {
+      "key": "joy",
+      "codepoint": "1f602",
+      "label": "笑哭",
+      "category": "常用",
+      "glyph": "😂",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f602/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f602.svg"
+    },
+    {
+      "key": "rofl",
+      "codepoint": "1f923",
+      "label": "笑倒",
+      "category": "常用",
+      "glyph": "🤣",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f923/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f923.svg"
+    },
+    {
+      "key": "blush",
+      "codepoint": "1f60a",
+      "label": "害羞",
+      "category": "常用",
+      "glyph": "😊",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f60a/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f60a.svg"
+    },
+    {
+      "key": "wink",
+      "codepoint": "1f609",
+      "label": "眨眼",
+      "category": "常用",
+      "glyph": "😉",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f609/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f609.svg"
+    },
+    {
+      "key": "heart-eyes",
+      "codepoint": "1f60d",
+      "label": "喜欢你",
+      "category": "常用",
+      "glyph": "😍",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f60d.svg"
+    },
+    {
+      "key": "heart-face",
+      "codepoint": "1f970",
+      "label": "幸福",
+      "category": "常用",
+      "glyph": "🥰",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f970/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f970.svg"
+    },
+    {
+      "key": "kiss",
+      "codepoint": "1f618",
+      "label": "飞吻",
+      "category": "常用",
+      "glyph": "😘",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f618/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f618.svg"
+    },
+    {
+      "key": "hug",
+      "codepoint": "1f917",
+      "label": "抱抱",
+      "category": "常用",
+      "glyph": "🤗",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f917/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f917.svg"
+    },
+    {
+      "key": "thinking",
+      "codepoint": "1f914",
+      "label": "思考",
+      "category": "常用",
+      "glyph": "🤔",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f914/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f914.svg"
+    },
+    {
+      "key": "shush",
+      "codepoint": "1f92b",
+      "label": "嘘",
+      "category": "常用",
+      "glyph": "🤫",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f92b/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f92b.svg"
+    },
+    {
+      "key": "hand-mouth",
+      "codepoint": "1f92d",
+      "label": "捂嘴笑",
+      "category": "常用",
+      "glyph": "🤭",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f92d/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f92d.svg"
+    },
+    {
+      "key": "peeking",
+      "codepoint": "1fae3",
+      "label": "偷偷看",
+      "category": "常用",
+      "glyph": "🫣",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1fae3/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1fae3.svg"
+    },
+    {
+      "key": "salute",
+      "codepoint": "1fae1",
+      "label": "收到",
+      "category": "常用",
+      "glyph": "🫡",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1fae1/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1fae1.svg"
+    },
+    {
+      "key": "pleading",
+      "codepoint": "1f97a",
+      "label": "拜托",
+      "category": "常用",
+      "glyph": "🥺",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f97a/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f97a.svg"
+    },
+    {
+      "key": "tears-held",
+      "codepoint": "1f979",
+      "label": "感动",
+      "category": "常用",
+      "glyph": "🥹",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f979/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f979.svg"
+    },
+    {
+      "key": "relieved",
+      "codepoint": "1f60c",
+      "label": "安心",
+      "category": "常用",
+      "glyph": "😌",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f60c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f60c.svg"
+    },
+    {
+      "key": "sweat-smile",
+      "codepoint": "1f605",
+      "label": "尴尬笑",
+      "category": "常用",
+      "glyph": "😅",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f605/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f605.svg"
+    },
+    {
+      "key": "cool",
+      "codepoint": "1f60e",
+      "label": "酷",
+      "category": "常用",
+      "glyph": "😎",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f60e.svg"
+    },
+    {
+      "key": "star-eyes",
+      "codepoint": "1f929",
+      "label": "崇拜",
+      "category": "常用",
+      "glyph": "🤩",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f929/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f929.svg"
+    },
+    {
+      "key": "party",
+      "codepoint": "1f973",
+      "label": "庆祝",
+      "category": "常用",
+      "glyph": "🥳",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f973.svg"
+    },
+    {
+      "key": "melting",
+      "codepoint": "1fae0",
+      "label": "融化",
+      "category": "常用",
+      "glyph": "🫠",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1fae0/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1fae0.svg"
+    },
+    {
+      "key": "upside",
+      "codepoint": "1f643",
+      "label": "倒过来笑",
+      "category": "情绪",
+      "glyph": "🙃",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f643/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f643.svg"
+    },
+    {
+      "key": "neutral",
+      "codepoint": "1f610",
+      "label": "平静",
+      "category": "情绪",
+      "glyph": "😐",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f610/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f610.svg"
+    },
+    {
+      "key": "expressionless",
+      "codepoint": "1f611",
+      "label": "无语",
+      "category": "情绪",
+      "glyph": "😑",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f611/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f611.svg"
+    },
+    {
+      "key": "no-mouth",
+      "codepoint": "1f636",
+      "label": "不说话",
+      "category": "情绪",
+      "glyph": "😶",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f636/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f636.svg"
+    },
+    {
+      "key": "smirk",
+      "codepoint": "1f60f",
+      "label": "得意",
+      "category": "情绪",
+      "glyph": "😏",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f60f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f60f.svg"
+    },
+    {
+      "key": "unamused",
+      "codepoint": "1f612",
+      "label": "不开心",
+      "category": "情绪",
+      "glyph": "😒",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f612/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f612.svg"
+    },
+    {
+      "key": "eye-roll",
+      "codepoint": "1f644",
+      "label": "白眼",
+      "category": "情绪",
+      "glyph": "🙄",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f644/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f644.svg"
+    },
+    {
+      "key": "raised-brow",
+      "codepoint": "1f928",
+      "label": "疑惑",
+      "category": "情绪",
+      "glyph": "🤨",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f928/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f928.svg"
+    },
+    {
+      "key": "grimace",
+      "codepoint": "1f62c",
+      "label": "为难",
+      "category": "情绪",
+      "glyph": "😬",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f62c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f62c.svg"
+    },
+    {
+      "key": "surprise",
+      "codepoint": "1f62e",
+      "label": "惊讶",
+      "category": "情绪",
+      "glyph": "😮",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f62e/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f62e.svg"
+    },
+    {
+      "key": "flushed",
+      "codepoint": "1f633",
+      "label": "脸红",
+      "category": "情绪",
+      "glyph": "😳",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f633/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f633.svg"
+    },
+    {
+      "key": "mind-blown",
+      "codepoint": "1f92f",
+      "label": "震惊",
+      "category": "情绪",
+      "glyph": "🤯",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f92f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f92f.svg"
+    },
+    {
+      "key": "scream",
+      "codepoint": "1f631",
+      "label": "吓到",
+      "category": "情绪",
+      "glyph": "😱",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f631/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f631.svg"
+    },
+    {
+      "key": "cry",
+      "codepoint": "1f622",
+      "label": "难过",
+      "category": "情绪",
+      "glyph": "😢",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f622/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f622.svg"
+    },
+    {
+      "key": "sob",
+      "codepoint": "1f62d",
+      "label": "大哭",
+      "category": "情绪",
+      "glyph": "😭",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f62d/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f62d.svg"
+    },
+    {
+      "key": "worried",
+      "codepoint": "1f61f",
+      "label": "担心",
+      "category": "情绪",
+      "glyph": "😟",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f61f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f61f.svg"
+    },
+    {
+      "key": "pensive",
+      "codepoint": "1f614",
+      "label": "低落",
+      "category": "情绪",
+      "glyph": "😔",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f614/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f614.svg"
+    },
+    {
+      "key": "angry",
+      "codepoint": "1f620",
+      "label": "生气",
+      "category": "情绪",
+      "glyph": "😠",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f620/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f620.svg"
+    },
+    {
+      "key": "rage",
+      "codepoint": "1f621",
+      "label": "气鼓鼓",
+      "category": "情绪",
+      "glyph": "😡",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f621/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f621.svg"
+    },
+    {
+      "key": "triumph",
+      "codepoint": "1f624",
+      "label": "哼",
+      "category": "情绪",
+      "glyph": "😤",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f624/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f624.svg"
+    },
+    {
+      "key": "weary",
+      "codepoint": "1f629",
+      "label": "累了",
+      "category": "情绪",
+      "glyph": "😩",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f629/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f629.svg"
+    },
+    {
+      "key": "yawn",
+      "codepoint": "1f971",
+      "label": "打哈欠",
+      "category": "情绪",
+      "glyph": "🥱",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f971/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f971.svg"
+    },
+    {
+      "key": "sleep",
+      "codepoint": "1f634",
+      "label": "睡觉",
+      "category": "情绪",
+      "glyph": "😴",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f634/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f634.svg"
+    },
+    {
+      "key": "sick",
+      "codepoint": "1f912",
+      "label": "不舒服",
+      "category": "情绪",
+      "glyph": "🤒",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f912/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f912.svg"
+    },
+    {
+      "key": "thumb",
+      "codepoint": "1f44d",
+      "label": "赞同",
+      "category": "手势",
+      "glyph": "👍",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f44d.svg"
+    },
+    {
+      "key": "thumb-down",
+      "codepoint": "1f44e",
+      "label": "不赞同",
+      "category": "手势",
+      "glyph": "👎",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44e/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f44e.svg"
+    },
+    {
+      "key": "clap",
+      "codepoint": "1f44f",
+      "label": "鼓掌",
+      "category": "手势",
+      "glyph": "👏",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f44f.svg"
+    },
+    {
+      "key": "hands-up",
+      "codepoint": "1f64c",
+      "label": "欢呼",
+      "category": "手势",
+      "glyph": "🙌",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f64c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f64c.svg"
+    },
+    {
+      "key": "thanks",
+      "codepoint": "1f64f",
+      "label": "谢谢",
+      "category": "手势",
+      "glyph": "🙏",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f64f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f64f.svg"
+    },
+    {
+      "key": "heart-hands",
+      "codepoint": "1faf6",
+      "label": "比心",
+      "category": "手势",
+      "glyph": "🫶",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1faf6/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1faf6.svg"
+    },
+    {
+      "key": "wave",
+      "codepoint": "1f44b",
+      "label": "你好",
+      "category": "手势",
+      "glyph": "👋",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44b/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f44b.svg"
+    },
+    {
+      "key": "ok",
+      "codepoint": "1f44c",
+      "label": "好",
+      "category": "手势",
+      "glyph": "👌",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f44c.svg"
+    },
+    {
+      "key": "victory",
+      "codepoint": "270c",
+      "label": "耶",
+      "category": "手势",
+      "glyph": "✌",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/270c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u270c.svg"
+    },
+    {
+      "key": "muscle",
+      "codepoint": "1f4aa",
+      "label": "加油",
+      "category": "手势",
+      "glyph": "💪",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4aa/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f4aa.svg"
+    },
+    {
+      "key": "fist",
+      "codepoint": "1f44a",
+      "label": "碰拳",
+      "category": "手势",
+      "glyph": "👊",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44a/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f44a.svg"
+    },
+    {
+      "key": "raised-fist",
+      "codepoint": "270a",
+      "label": "握拳",
+      "category": "手势",
+      "glyph": "✊",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/270a/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u270a.svg"
+    },
+    {
+      "key": "handshake",
+      "codepoint": "1f91d",
+      "label": "握手",
+      "category": "手势",
+      "glyph": "🤝",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f91d/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f91d.svg"
+    },
+    {
+      "key": "open-hands",
+      "codepoint": "1f450",
+      "label": "接住",
+      "category": "手势",
+      "glyph": "👐",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f450/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f450.svg"
+    },
+    {
+      "key": "love-you",
+      "codepoint": "1f91f",
+      "label": "爱你",
+      "category": "手势",
+      "glyph": "🤟",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f91f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f91f.svg"
+    },
+    {
+      "key": "cross-fingers",
+      "codepoint": "1f91e",
+      "label": "好运",
+      "category": "手势",
+      "glyph": "🤞",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f91e/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f91e.svg"
+    },
+    {
+      "key": "pinch",
+      "codepoint": "1f90f",
+      "label": "一点点",
+      "category": "手势",
+      "glyph": "🤏",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f90f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f90f.svg"
+    },
+    {
+      "key": "pinched",
+      "codepoint": "1f90c",
+      "label": "捏捏",
+      "category": "手势",
+      "glyph": "🤌",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f90c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f90c.svg"
+    },
+    {
+      "key": "point-up",
+      "codepoint": "1f446",
+      "label": "看上面",
+      "category": "手势",
+      "glyph": "👆",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f446/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f446.svg"
+    },
+    {
+      "key": "point-down",
+      "codepoint": "1f447",
+      "label": "看下面",
+      "category": "手势",
+      "glyph": "👇",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f447/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f447.svg"
+    },
+    {
+      "key": "point-left",
+      "codepoint": "1f448",
+      "label": "看左边",
+      "category": "手势",
+      "glyph": "👈",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f448/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f448.svg"
+    },
+    {
+      "key": "point-right",
+      "codepoint": "1f449",
+      "label": "看右边",
+      "category": "手势",
+      "glyph": "👉",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f449/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f449.svg"
+    },
+    {
+      "key": "high-five",
+      "codepoint": "270b",
+      "label": "击掌",
+      "category": "手势",
+      "glyph": "✋",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/270b/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u270b.svg"
+    },
+    {
+      "key": "rock",
+      "codepoint": "1f918",
+      "label": "摇滚",
+      "category": "手势",
+      "glyph": "🤘",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f918/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f918.svg"
+    },
+    {
+      "key": "cat-smile",
+      "codepoint": "1f63a",
+      "label": "猫猫开心",
+      "category": "猫狗",
+      "glyph": "😺",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f63a/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f63a.svg"
+    },
+    {
+      "key": "cat-grin",
+      "codepoint": "1f638",
+      "label": "猫猫笑",
+      "category": "猫狗",
+      "glyph": "😸",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f638/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f638.svg"
+    },
+    {
+      "key": "cat-joy",
+      "codepoint": "1f639",
+      "label": "猫猫笑哭",
+      "category": "猫狗",
+      "glyph": "😹",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f639/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f639.svg"
+    },
+    {
+      "key": "cat-love",
+      "codepoint": "1f63b",
+      "label": "猫猫喜欢",
+      "category": "猫狗",
+      "glyph": "😻",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f63b/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f63b.svg"
+    },
+    {
+      "key": "cat-smug",
+      "codepoint": "1f63c",
+      "label": "猫猫得意",
+      "category": "猫狗",
+      "glyph": "😼",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f63c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f63c.svg"
+    },
+    {
+      "key": "cat-kiss",
+      "codepoint": "1f63d",
+      "label": "猫猫亲亲",
+      "category": "猫狗",
+      "glyph": "😽",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f63d/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f63d.svg"
+    },
+    {
+      "key": "cat-scream",
+      "codepoint": "1f640",
+      "label": "猫猫震惊",
+      "category": "猫狗",
+      "glyph": "🙀",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f640/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f640.svg"
+    },
+    {
+      "key": "cat-cry",
+      "codepoint": "1f63f",
+      "label": "猫猫委屈",
+      "category": "猫狗",
+      "glyph": "😿",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f63f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f63f.svg"
+    },
+    {
+      "key": "cat-pout",
+      "codepoint": "1f63e",
+      "label": "猫猫生气",
+      "category": "猫狗",
+      "glyph": "😾",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f63e/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f63e.svg"
+    },
+    {
+      "key": "cat",
+      "codepoint": "1f431",
+      "label": "猫咪",
+      "category": "猫狗",
+      "glyph": "🐱",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f431/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f431.svg"
+    },
+    {
+      "key": "cat-body",
+      "codepoint": "1f408",
+      "label": "小猫",
+      "category": "猫狗",
+      "glyph": "🐈",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f408/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f408.svg"
+    },
+    {
+      "key": "dog",
+      "codepoint": "1f436",
+      "label": "狗狗",
+      "category": "猫狗",
+      "glyph": "🐶",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f436/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f436.svg"
+    },
+    {
+      "key": "dog-body",
+      "codepoint": "1f415",
+      "label": "小狗",
+      "category": "猫狗",
+      "glyph": "🐕",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f415/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f415.svg"
+    },
+    {
+      "key": "paw",
+      "codepoint": "1f43e",
+      "label": "爪爪",
+      "category": "猫狗",
+      "glyph": "🐾",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f43e/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f43e.svg"
+    },
+    {
+      "key": "bone",
+      "codepoint": "1f9b4",
+      "label": "骨头",
+      "category": "猫狗",
+      "glyph": "🦴",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f9b4/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f9b4.svg"
+    },
+    {
+      "key": "fish",
+      "codepoint": "1f41f",
+      "label": "小鱼",
+      "category": "猫狗",
+      "glyph": "🐟",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f41f/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f41f.svg"
+    },
+    {
+      "key": "heart",
+      "codepoint": "2764",
+      "label": "喜欢",
+      "category": "心意",
+      "glyph": "❤",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/2764/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u2764.svg"
+    },
+    {
+      "key": "pink-heart",
+      "codepoint": "1fa77",
+      "label": "粉色心",
+      "category": "心意",
+      "glyph": "🩷",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1fa77/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1fa77.svg"
+    },
+    {
+      "key": "orange-heart",
+      "codepoint": "1f9e1",
+      "label": "暖心",
+      "category": "心意",
+      "glyph": "🧡",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f9e1/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f9e1.svg"
+    },
+    {
+      "key": "yellow-heart",
+      "codepoint": "1f49b",
+      "label": "快乐心",
+      "category": "心意",
+      "glyph": "💛",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f49b/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f49b.svg"
+    },
+    {
+      "key": "green-heart",
+      "codepoint": "1f49a",
+      "label": "清新心",
+      "category": "心意",
+      "glyph": "💚",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f49a/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f49a.svg"
+    },
+    {
+      "key": "blue-heart",
+      "codepoint": "1f499",
+      "label": "蓝色心",
+      "category": "心意",
+      "glyph": "💙",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f499/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f499.svg"
+    },
+    {
+      "key": "purple-heart",
+      "codepoint": "1f49c",
+      "label": "紫色心",
+      "category": "心意",
+      "glyph": "💜",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f49c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f49c.svg"
+    },
+    {
+      "key": "two-hearts",
+      "codepoint": "1f495",
+      "label": "两颗心",
+      "category": "心意",
+      "glyph": "💕",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f495/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f495.svg"
+    },
+    {
+      "key": "sparkle-heart",
+      "codepoint": "1f496",
+      "label": "闪亮心",
+      "category": "心意",
+      "glyph": "💖",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f496.svg"
+    },
+    {
+      "key": "growing-heart",
+      "codepoint": "1f497",
+      "label": "心动",
+      "category": "心意",
+      "glyph": "💗",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f497/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f497.svg"
+    },
+    {
+      "key": "beating-heart",
+      "codepoint": "1f493",
+      "label": "心跳",
+      "category": "心意",
+      "glyph": "💓",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f493/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f493.svg"
+    },
+    {
+      "key": "cupid",
+      "codepoint": "1f498",
+      "label": "一见钟情",
+      "category": "心意",
+      "glyph": "💘",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f498/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f498.svg"
+    },
+    {
+      "key": "gift-heart",
+      "codepoint": "1f49d",
+      "label": "送你一颗心",
+      "category": "心意",
+      "glyph": "💝",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f49d/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f49d.svg"
+    },
+    {
+      "key": "broken-heart",
+      "codepoint": "1f494",
+      "label": "心碎",
+      "category": "心意",
+      "glyph": "💔",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f494/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f494.svg"
+    },
+    {
+      "key": "love-letter",
+      "codepoint": "1f48c",
+      "label": "情书",
+      "category": "心意",
+      "glyph": "💌",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f48c/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f48c.svg"
+    },
+    {
+      "key": "kiss-mark",
+      "codepoint": "1f48b",
+      "label": "亲亲",
+      "category": "心意",
+      "glyph": "💋",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f48b/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f48b.svg"
+    },
+    {
+      "key": "sun",
+      "codepoint": "2600",
+      "label": "太阳",
+      "category": "日常",
+      "glyph": "☀",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/2600/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u2600.svg"
+    },
+    {
+      "key": "moon",
+      "codepoint": "1f319",
+      "label": "月亮",
+      "category": "日常",
+      "glyph": "🌙",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f319/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f319.svg"
+    },
+    {
+      "key": "star",
+      "codepoint": "2b50",
+      "label": "星星",
+      "category": "日常",
+      "glyph": "⭐",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u2b50.svg"
+    },
+    {
+      "key": "sparkles",
+      "codepoint": "2728",
+      "label": "闪闪",
+      "category": "日常",
+      "glyph": "✨",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/2728/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u2728.svg"
+    },
+    {
+      "key": "flower",
+      "codepoint": "1f338",
+      "label": "樱花",
+      "category": "日常",
+      "glyph": "🌸",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f338/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f338.svg"
+    },
+    {
+      "key": "rose",
+      "codepoint": "1f339",
+      "label": "玫瑰",
+      "category": "日常",
+      "glyph": "🌹",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f339/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f339.svg"
+    },
+    {
+      "key": "clover",
+      "codepoint": "1f340",
+      "label": "幸运",
+      "category": "日常",
+      "glyph": "🍀",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f340/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f340.svg"
+    },
+    {
+      "key": "leaf",
+      "codepoint": "1f343",
+      "label": "微风",
+      "category": "日常",
+      "glyph": "🍃",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f343/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f343.svg"
+    },
+    {
+      "key": "coffee",
+      "codepoint": "2615",
+      "label": "喝茶",
+      "category": "日常",
+      "glyph": "☕",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/2615/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u2615.svg"
+    },
+    {
+      "key": "cake",
+      "codepoint": "1f382",
+      "label": "生日快乐",
+      "category": "日常",
+      "glyph": "🎂",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f382/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f382.svg"
+    },
+    {
+      "key": "watermelon",
+      "codepoint": "1f349",
+      "label": "吃瓜",
+      "category": "日常",
+      "glyph": "🍉",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f349/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f349.svg"
+    },
+    {
+      "key": "cookie",
+      "codepoint": "1f36a",
+      "label": "饼干",
+      "category": "日常",
+      "glyph": "🍪",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f36a/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f36a.svg"
+    },
+    {
+      "key": "milk",
+      "codepoint": "1f95b",
+      "label": "牛奶",
+      "category": "日常",
+      "glyph": "🥛",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f95b/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f95b.svg"
+    },
+    {
+      "key": "rice",
+      "codepoint": "1f35a",
+      "label": "干饭",
+      "category": "日常",
+      "glyph": "🍚",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f35a/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f35a.svg"
+    },
+    {
+      "key": "gift",
+      "codepoint": "1f381",
+      "label": "礼物",
+      "category": "日常",
+      "glyph": "🎁",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f381/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f381.svg"
+    },
+    {
+      "key": "popper",
+      "codepoint": "1f389",
+      "label": "撒花",
+      "category": "日常",
+      "glyph": "🎉",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f389.svg"
+    },
+    {
+      "key": "balloon",
+      "codepoint": "1f388",
+      "label": "气球",
+      "category": "日常",
+      "glyph": "🎈",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f388/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f388.svg"
+    },
+    {
+      "key": "fire",
+      "codepoint": "1f525",
+      "label": "火热",
+      "category": "日常",
+      "glyph": "🔥",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f525.svg"
+    },
+    {
+      "key": "hundred",
+      "codepoint": "1f4af",
+      "label": "满分",
+      "category": "日常",
+      "glyph": "💯",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4af/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f4af.svg"
+    },
+    {
+      "key": "light-bulb",
+      "codepoint": "1f4a1",
+      "label": "有主意",
+      "category": "日常",
+      "glyph": "💡",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4a1/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f4a1.svg"
+    },
+    {
+      "key": "camera",
+      "codepoint": "1f4f7",
+      "label": "拍照",
+      "category": "日常",
+      "glyph": "📷",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4f7/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f4f7.svg"
+    },
+    {
+      "key": "music",
+      "codepoint": "1f3b5",
+      "label": "音乐",
+      "category": "日常",
+      "glyph": "🎵",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f3b5/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f3b5.svg"
+    },
+    {
+      "key": "sleepy-dots",
+      "codepoint": "1f4a4",
+      "label": "晚安",
+      "category": "日常",
+      "glyph": "💤",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4a4/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f4a4.svg"
+    },
+    {
+      "key": "speech",
+      "codepoint": "1f4ac",
+      "label": "聊聊",
+      "category": "日常",
+      "glyph": "💬",
+      "source": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4ac/emoji.svg",
+      "file": "assets/noto-emoji/emoji_u1f4ac.svg"
+    }
+  ]
+}

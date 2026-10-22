@@ -1,0 +1,120 @@
+{
+  "module": "settings-notifications",
+  "start": 64,
+  "polish": {
+    "pageId": "295:2",
+    "createdNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "createdNodeIdsByPrefix": {
+      "331": {
+        "start": 320698,
+        "deltaBase36": "1.1.13.1.1"
+      }
+    },
+    "mutatedNodeIdsByPrefix": {
+      "325": {
+        "start": 87534,
+        "deltaBase36": "1.1.3.1.4.2.4.1.1.2.2.2.2.2.18.1a.1.1.1.2.1b.1.4.2.4.1.1.2.2.2.2.2"
+      }
+    },
+    "removedNodeIds": [
+      "325:87624"
+    ],
+    "counts": {
+      "styles": 7,
+      "spacing": 111,
+      "footers": 0,
+      "backTargets": 0,
+      "publishEntries": 2
+    }
+  },
+  "restored": {
+    "codec": "prefix-start-base36-delta-v1",
+    "restoredNodeIdsByPrefix": {
+      "325": {
+        "start": 87540,
+        "deltaBase36": "4.3.5.4.4.p.7.7.2y.4.3.5.4.4.p.7.7"
+      }
+    },
+    "createdNodeIdsByPrefix": {},
+    "unmapped": [],
+    "counts": {
+      "actions": 16,
+      "toolbarControls": 0,
+      "backGuards": 2
+    }
+  },
+  "route": {
+    "pageId": "295:2",
+    "mutatedNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "mutatedNodeIdsByPrefix": {
+      "325": {
+        "start": 87607,
+        "deltaBase36": "9.j.8.f.9.8.b.8"
+      },
+      "331": {
+        "start": 320698,
+        "deltaBase36": "15"
+      }
+    },
+    "counts": {
+      "nodes": 0,
+      "reactions": 0,
+      "local": 0,
+      "crossModule": 0,
+      "back": 0,
+      "selfSkipped": 0
+    },
+    "unmapped": []
+  },
+  "validation": {
+    "pageId": "295:2",
+    "rootCount": 2,
+    "issueCount": 0,
+    "results": [
+      {
+        "id": "325:61510",
+        "key": "notificationSettings",
+        "platform": "webN",
+        "pageId": "311:11",
+        "w": 390,
+        "h": 844,
+        "nodes": 69,
+        "texts": 17,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "325:61511",
+        "key": "notificationSettings",
+        "platform": "tabletN",
+        "pageId": "311:11",
+        "w": 744,
+        "h": 1133,
+        "nodes": 74,
+        "texts": 19,
+        "instances": 16,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      }
+    ]
+  }
+}

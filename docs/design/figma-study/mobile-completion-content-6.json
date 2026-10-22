@@ -1,0 +1,194 @@
+[
+  {
+    "id": "appointmentConfirmedV2",
+    "title": "预约已确认",
+    "items": [
+      {
+        "type": "facts",
+        "entries": [
+          [
+            "生效版本",
+            "V1",
+            "appointmentVersion"
+          ],
+          [
+            "双方",
+            "均已确认"
+          ],
+          [
+            "时间",
+            "10 月 22 日 16:00"
+          ],
+          [
+            "地点",
+            "解放公园南门"
+          ]
+        ]
+      },
+      {
+        "type": "row",
+        "label": "查看历史版本",
+        "value": "保留原记录",
+        "to": "appointmentHistory"
+      },
+      {
+        "type": "action",
+        "label": "提出变更",
+        "to": "change",
+        "kind": "secondary"
+      },
+      {
+        "type": "action",
+        "label": "取消预约",
+        "to": "appointmentCancelConfirm",
+        "kind": "secondary"
+      }
+    ],
+    "footer": {
+      "label": "返回会话",
+      "to": "chat"
+    },
+    "module": 5
+  },
+  {
+    "id": "notificationPrivateOnly",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "toggle",
+        "label": "私信消息",
+        "on": true,
+        "to": "notificationAllMuted"
+      },
+      {
+        "type": "toggle",
+        "label": "宠友群消息",
+        "on": false,
+        "to": "notificationNoProgress"
+      },
+      {
+        "type": "toggle",
+        "label": "申请与照护进度",
+        "on": false,
+        "to": "notificationNoGroup"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围和授权",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "即时通知",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "前往查看",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationNoGroup",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "toggle",
+        "label": "私信消息",
+        "on": true,
+        "to": "notificationGroupMuted"
+      },
+      {
+        "type": "toggle",
+        "label": "宠友群消息",
+        "on": false,
+        "to": "notificationSettings"
+      },
+      {
+        "type": "toggle",
+        "label": "申请与照护进度",
+        "on": true,
+        "to": "notificationPrivateOnly"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围和授权",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "即时通知",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "前往查看",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  },
+  {
+    "id": "notificationNoProgress",
+    "title": "通知偏好",
+    "items": [
+      {
+        "type": "toggle",
+        "label": "私信消息",
+        "on": true,
+        "to": "notificationProgressMuted"
+      },
+      {
+        "type": "toggle",
+        "label": "宠友群消息",
+        "on": true,
+        "to": "notificationPrivateOnly"
+      },
+      {
+        "type": "toggle",
+        "label": "申请与照护进度",
+        "on": false,
+        "to": "notificationSettings"
+      },
+      {
+        "type": "row",
+        "label": "附近走失提醒",
+        "value": "独立管理范围和授权",
+        "to": "nearbyAlertSetup"
+      },
+      {
+        "type": "row",
+        "label": "提醒频率",
+        "value": "即时通知",
+        "to": "notificationFrequency"
+      },
+      {
+        "type": "row",
+        "label": "系统通知权限",
+        "value": "前往查看",
+        "to": "notificationPermission"
+      }
+    ],
+    "footer": {
+      "label": "完成",
+      "to": "settings"
+    },
+    "module": 6
+  }
+]

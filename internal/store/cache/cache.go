@@ -124,6 +124,8 @@ func (s *Store) GetUsers(ids []int64) map[int64]domain.User { return s.inner.Get
 func (s *Store) UpdateUserProfile(id int64, n, a, b string) (domain.User, bool) {
 	return s.inner.UpdateUserProfile(id, n, a, b)
 }
+func (s *Store) GetUserStats(id int64) domain.UserStats { return s.inner.GetUserStats(id) }
+func (s *Store) GetUserPets(id int64) []domain.Pet      { return s.inner.GetUserPets(id) }
 
 // ===== Posts =====
 
@@ -351,6 +353,36 @@ func (s *Store) BatchPostLikeCounts(ids []int64) map[int64]int64 {
 }
 func (s *Store) BatchUserLikedPosts(u int64, ids []int64) map[int64]bool {
 	return s.inner.BatchUserLikedPosts(u, ids)
+}
+
+// ===== Adoption (passthrough) =====
+
+func (s *Store) CreateAdoptionPet(pet domain.AdoptionPet) domain.AdoptionPet {
+	return s.inner.CreateAdoptionPet(pet)
+}
+func (s *Store) GetAdoptionPet(id int64) (domain.AdoptionPet, bool) {
+	return s.inner.GetAdoptionPet(id)
+}
+func (s *Store) ListAdoptionPets() []domain.AdoptionPet {
+	return s.inner.ListAdoptionPets()
+}
+func (s *Store) ListAdoptionPetsByRescuer(rescuerID int64) []domain.AdoptionPet {
+	return s.inner.ListAdoptionPetsByRescuer(rescuerID)
+}
+func (s *Store) CreateAdoptionApplication(app domain.AdoptionApplication) domain.AdoptionApplication {
+	return s.inner.CreateAdoptionApplication(app)
+}
+func (s *Store) GetAdoptionApplication(id int64) (domain.AdoptionApplication, bool) {
+	return s.inner.GetAdoptionApplication(id)
+}
+func (s *Store) ListAdoptionApplicationsByApplicant(applicantID int64) []domain.AdoptionApplication {
+	return s.inner.ListAdoptionApplicationsByApplicant(applicantID)
+}
+func (s *Store) ListAdoptionApplicationsByRescuer(rescuerID int64) []domain.AdoptionApplication {
+	return s.inner.ListAdoptionApplicationsByRescuer(rescuerID)
+}
+func (s *Store) UpdateAdoptionApplicationStatus(id int64, status domain.ApplicationStatus) bool {
+	return s.inner.UpdateAdoptionApplicationStatus(id, status)
 }
 
 // Stats returns a snapshot string for diagnostics.

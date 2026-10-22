@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-19",
+  "type": "static design/document inspection only",
+  "screens": 213,
+  "uniqueRootIds": 579,
+  "missingScreens": [],
+  "missingTargets": [],
+  "bom": [],
+  "inlineMermaid": [],
+  "brokenLinks": [],
+  "build": "not run",
+  "tests": "not run",
+  "device": "not run",
+  "clientCode": "not modified"
+}

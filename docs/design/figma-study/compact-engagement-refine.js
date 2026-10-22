@@ -1,0 +1,22 @@
+// Requires the official createComponentWithVariants helper.
+const p=await figma.getNodeByIdAsync("56:26");await figma.setCurrentPageAsync(p);
+const createdNodeIds=[],mutatedNodeIds=[];const vars=Object.fromEntries((await figma.variables.getLocalVariablesAsync()).map(v=>[v.name,v]));
+function paint(k){return figma.variables.setBoundVariableForPaint({type:"SOLID",color:{r:0,g:0,b:0}},"color",vars[k]);}
+await Promise.all([{family:"Noto Sans SC",style:"Regular"},{family:"Noto Sans SC",style:"Medium"},{family:"Noto Sans SC",style:"Bold"}].map(f=>figma.loadFontAsync(f)));
+let family=p.findOne(n=>n.type==="COMPONENT_SET"&&n.name==="M&D / Compact reaction");
+if(!family){const built=await createComponentWithVariants({name:"M&D / Compact reaction",description:"卡片互动数量控件，图标24px框、数字14px、间距8px、48px触控高。Count为文本属性，状态仅改变爱心填充，不挤动计数。",variantAxes:{State:["Off","On"]},baseProps:{width:76,height:48,layoutMode:"HORIZONTAL",itemSpacing:8,fills:[]},page:p});family=built.componentSet;family.x=14800;family.y=2100;createdNodeIds.push(family.id);
+const countProp=family.addComponentProperty("Count","TEXT","12");
+for(let i=0;i<2;i++){const n=built.variants[i];n.primaryAxisAlignItems="MIN";n.setBoundVariable("itemSpacing",vars["space/8"]);n.layoutSizingHorizontal="FIXED";n.layoutSizingVertical="FIXED";createdNodeIds.push(n.id);
+const icon=(await figma.getNodeByIdAsync("56:156")).createInstance();n.appendChild(icon);icon.name="Like graphic";icon.resize(24,24);for(const vec of icon.findAllWithCriteria({types:["VECTOR"]})){vec.strokes=[paint(i?"color/brand":"color/muted")];vec.fills=i?[paint("color/brand")]:[];vec.strokeWeight=1.8;}createdNodeIds.push(icon.id,...icon.findAll(()=>true).map(x=>x.id));
+const count=figma.createText();n.appendChild(count);count.name="Count";count.fontName={family:"Noto Sans SC",style:"Medium"};count.characters="12";await count.setTextStyleIdAsync("S:b3c9f305d72ee074857292ed4345f9311f8b5500,");count.resize(36,22);count.textAutoResize="HEIGHT";count.fills=[paint(i?"color/brand":"color/muted")];count.componentPropertyReferences={characters:countProp};createdNodeIds.push(count.id);
+n.reactions=[{trigger:{type:"ON_CLICK"},actions:[{type:"NODE",destinationId:built.variants[1-i].id,navigation:"CHANGE_TO",transition:null}]}];}}
+const off=family.children.find(n=>n.name==="State=Off"),on=family.children.find(n=>n.name==="State=On");
+const card=await figma.getNodeByIdAsync("105:334");for(const text of card.findAllWithCriteria({types:["TEXT"]}))for(const seg of text.getStyledTextSegments(["fontName"]))await figma.loadFontAsync(seg.fontName);
+const title=await figma.getNodeByIdAsync("105:337");title.textAutoResize="NONE";title.resize(157,48);title.textTruncation="ENDING";title.maxLines=2;mutatedNodeIds.push(title.id);
+const row=await figma.getNodeByIdAsync("105:339");for(const k of ["paddingLeft","paddingRight"])row.setBoundVariable(k,vars["space/8"]);row.paddingTop=0;row.paddingBottom=0;row.setBoundVariable("itemSpacing",vars["space/8"]);row.counterAxisAlignItems="CENTER";row.resize(173,48);row.layoutSizingVertical="FIXED";
+const like=await figma.getNodeByIdAsync("105:340");like.swapComponent(off);like.name="Compact like";like.resize(76,48);
+const comments=await figma.getNodeByIdAsync("105:345");comments.resize(73,48);comments.primaryAxisAlignItems="MIN";comments.paddingLeft=0;comments.paddingRight=0;comments.setBoundVariable("itemSpacing",vars["space/8"]);
+const commentIcon=comments.findOne(n=>n.type==="INSTANCE");commentIcon.resize(24,24);const count=comments.findOne(n=>n.type==="TEXT");count.resize(36,22);count.textAutoResize="HEIGHT";await count.setTextStyleIdAsync("S:b3c9f305d72ee074857292ed4345f9311f8b5500,");mutatedNodeIds.push(row.id,like.id,comments.id,commentIcon.id,count.id);
+for(const id of ["56:156","56:125"]){const main=await figma.getNodeByIdAsync(id);const svg=main.children[0];svg.resize(24,24);svg.constraints={horizontal:"SCALE",vertical:"SCALE"};for(const n of main.findAllWithCriteria({types:["VECTOR"]})){n.resize(20,18);n.x=2;n.y=3;n.strokeWeight=1.8;mutatedNodeIds.push(n.id);}mutatedNodeIds.push(main.id,svg.id);}
+card.description="双列日记卡片：图片190；标题固定两行，作者独立；48px互动行内统一24px图标框、8px数字间距。长标题不推低互动行。";mutatedNodeIds.push(card.id);
+return{createdNodeIds,mutatedNodeIds,compactOff:off.id,compactOn:on.id,card:{id:card.id,width:card.width,height:card.height},row:{width:row.width,height:row.height,likeWidth:like.width,commentWidth:comments.width}};

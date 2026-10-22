@@ -1,0 +1,1490 @@
+{
+  "module": "appointments",
+  "start": 0,
+  "polish": {
+    "pageId": "295:2",
+    "createdNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "createdNodeIdsByPrefix": {
+      "331": {
+        "start": 294893,
+        "deltaBase36": "2.u.q.n.q.1.1.b.q.1.1.q.l.2.t.q.m.q.1.1.a.q.1.1.p.l.2.s.q.l.q.1.1.9.q.1.1.o.l.2.t.q.m.q.1.1.a.q.1.1.p.l.2.v.q.o.q.1.1.c.q.1.1.r.l.2.s.q.l.q.1.1.9.q.1.1.o.l.2.s.q.l.q.1.1.9.q.1.1.o.l.2.r.q.k.q.1.1.8.q.1.1.n.l.2.s.q.l.q.1.1.9.q.1.1.o.l.2.r.q.k.q.1.1.8.q.1.1.n.l.2.t.q.m.q.1.1.a.q.1.1.p.l.2.r.q.k.q.1.1.8.q.1.1.n.l.2.r.q.k.q.1.1.8.q.1.1.n.l.2.v.q.o.q.1.1.c.q.1.1.r.l.2.u.q.n.q.1.1.b.q.1.1.q.l.2.t.q.m.q.1.1.a.q.1.1.p"
+      }
+    },
+    "mutatedNodeIdsByPrefix": {
+      "317": {
+        "start": 196024,
+        "deltaBase36": "1.11.2.1.j.2.1.3.2.4.1.2.1.3.3.3.3.3.1.j.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.1.3.3.3.3.3.1.j.1.1.1.2.1b.1.3.2.4.1.2.1.3.3.3.3.3.1.j.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.1.3.3.3.3.3.1.l.1.11.2.1.j.2.1.3.2.4.1.1.1.3.6.1.r.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.6.1.r.1.1.1.2.1b.1.3.2.4.1.1.1.3.6.1.r.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.6.1.t.1.11.2.1.j.2.1.3.2.4.1.1.1.3.3.3.5.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.3.5.1.1.1.2.1b.1.3.2.4.1.1.1.3.3.3.5.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.3.7.1.11.2.1.j.2.1.3.2.4.1.1.1.3.3.3.3.1.6.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.3.3.1.6.1.1.1.2.1b.1.3.2.4.1.1.1.3.3.3.3.1.6.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.3.3.1.8.1.11.2.1.j.2.1.3.2.4.1.1.1.3.3.3.l.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.3.l.1.1.1.2.1b.1.3.2.4.1.1.1.3.3.3.l.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.3.n.1.11.2.1.j.2.1.3.2.4.1.1.1.3.3.5.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.5.1.1.1.2.1b.1.3.2.4.1.1.1.3.3.5.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.7.1.11.2.1.j.2.1.3.2.4.1.1.1.3.3.5.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.5.1.1.1.2.1b.1.3.2.4.1.1.1.3.3.5.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.7.1.11.2.1.j.2.1.3.2.4.1.2.3.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.3.1.1.1.2.1b.1.3.2.4.1.2.3.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.5.1.11.2.1.j.2.1.3.2.4.1.2.c.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.c.1.1.1.2.1b.1.3.2.4.1.2.c.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.e.1.11.2.1.j.2.1.3.2.4.1.2.3.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.3.1.1.1.2.1b.1.3.2.4.1.2.3.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.5.1.11.2.1.j.2.1.3.2.4.1.1.h.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.h.1.1.1.2.1b.1.3.2.4.1.1.h.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.j.1.11.2.1.j.2.1.3.2.4.1.1.3.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.3.1.1.1.2.1b.1.3.2.4.1.1.3.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.5.1.11.2.1.j.2.1.3.2.4.1.1.1.3.3.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.1.1.1.2.1b.1.3.2.4.1.1.1.3.3.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.5.1.11.2.1.j.2.1.3.2.4.1.1.1.3.3.3.l.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.3.l.1.1.1.2.1b.1.3.2.4.1.1.1.3.3.3.l.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.3.3.n.1.11.2.1.j.2.1.3.2.4.1.2.1.3.3.3.3.3.1.j.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.1.3.3.3.3.3.1.j.1.1.1.2.1b.1.3.2.4.1.2.1.3.3.3.3.3.1.j.1.1.1.2.1a.1.j.2.1.3.2.4.1.2.1.3.3.3.3.3.1.l.1.11.2.1.j.2.1.3.2.4.1.1.1.3.h.1.1.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3.h.1.1.1.2.1b.1.3.2.4.1.1.1.3.h.1.1.1.2.1a.1.j.2.1.3.2.4.1.1.1.3"
+      }
+    },
+    "removedNodeIds": [],
+    "counts": {
+      "styles": 352,
+      "spacing": 2392,
+      "footers": 0,
+      "backTargets": 64,
+      "publishEntries": 64
+    }
+  },
+  "restored": {
+    "codec": "prefix-start-base36-delta-v1",
+    "restoredNodeIdsByPrefix": {
+      "311": {
+        "start": 379780,
+        "deltaBase36": "1.1.1.1.1.1.1.5.1.1.1.15.1.1.1"
+      },
+      "317": {
+        "start": 196090,
+        "deltaBase36": "3.n.4.2m.3.n.4.1z.3.n.4.2k.3.n.4.2b.3.g.2y.3.g.2b.3.g.2w.3.g.2n.3.i.29.3.i.1m.3.i.27.3.i.1y.3.j.2d.3.j.1q.3.j.2b.3.j.22.3.j.1.9.2e.3.j.1.9.1r.3.j.1.9.2c.3.j.1.9.23.3.f.29.3.f.1m.3.f.27.3.f.1y.3.f.29.3.f.1m.3.f.27.3.f.1y.3.2g.3.1t.3.2e.3.25.3.9.2g.3.9.1t.3.9.2e.3.9.25.3.2g.3.1t.3.2e.3.25.3.f.2e.3.f.1r.3.f.2c.3.f.23.3.2f.3.1s.3.2d.3.24.3.2j.3.1w.3.2h.3.28.3.j.1.9.2e.3.j.1.9.1r.3.j.1.9.2c.3.j.1.9.23.3.n.4.2m.3.n.4.1z.3.n.4.2k.3.n.4.2b.3.j.2e.3.j.1r.3.j.2c.3.j"
+      },
+      "331": {
+        "start": 294925,
+        "deltaBase36": "1d.13.1i.1g.1c.12.1h.1f.1b.11.1g.1g.1c.12.1h.1i.1e.14.1j.1f.1b.11.1g.1f.1b.11.1g.1e.1a.10.1f.1f.1b.11.1g.1e.1a.10.1f.1g.1c.12.1h.1e.1a.10.1f.1e.1a.10.1f.1i.1e.14.1j.1h.1d.13.1i.1g.1c.12.1h"
+      }
+    },
+    "createdNodeIdsByPrefix": {},
+    "unmapped": [],
+    "counts": {
+      "actions": 216,
+      "toolbarControls": 0,
+      "backGuards": 64
+    }
+  },
+  "route": {
+    "pageId": "295:2",
+    "mutatedNodeIdsCodec": "prefix-start-base36-delta-v1",
+    "mutatedNodeIdsByPrefix": {
+      "317": {
+        "start": 196026,
+        "deltaBase36": "9.8.b.i.6.1t.9.8.b.8.h.6.1r.9.8.b.8.1t.9.8.b.8.h.6.1p.9.8.b.c.6.6.1u.9.8.b.8.b.6.6.1s.9.8.b.8.1u.9.8.b.8.b.6.6.1q.9.8.b.c.6.6.17.9.8.b.8.b.6.6.15.9.8.b.8.17.9.8.b.8.b.6.6.13.9.8.b.c.6.6.1c.9.8.b.8.b.6.6.1a.9.8.b.8.1c.9.8.b.8.b.6.6.18.9.8.b.c.6.6.1n.9.8.b.8.b.6.6.1l.9.8.b.8.1n.9.8.b.8.b.6.6.1j.9.8.b.c.6.6.14.9.8.b.8.b.6.6.12.9.8.b.8.14.9.8.b.8.b.6.6.10.9.8.b.c.6.6.14.9.8.b.8.b.6.6.12.9.8.b.8.14.9.8.b.8.b.6.6.10.9.8.b.c.6.6.w.9.8.b.8.b.6.6.u.9.8.b.8.w.9.8.b.8.b.6.6.s.9.8.b.c.6.6.15.9.8.b.8.b.6.6.13.9.8.b.8.15.9.8.b.8.b.6.6.11.9.8.b.c.6.6.w.9.8.b.8.b.6.6.u.9.8.b.8.w.9.8.b.8.b.6.6.s.9.8.b.c.6.6.19.9.8.b.8.b.6.6.17.9.8.b.8.19.9.8.b.8.b.6.6.15.9.8.b.c.6.6.v.9.8.b.8.b.6.6.t.9.8.b.8.v.9.8.b.8.b.6.6.r.9.8.b.c.c.z.9.8.b.8.b.c.x.9.8.b.8.z.9.8.b.8.b.c.v.9.8.b.c.6.1t.9.8.b.8.b.6.1r.9.8.b.8.1n.9.8.b.8.b.6.1p.9.8.b.c.6.6.1t.9.8.b.8.b.6.6.1r.9.8.b.8.1t.9.8.b.8.b.6.6.1p.9.8.b.c.6.6.1d.9.8.b.8.b.6.6.1b.9.8.b.8.1d.9.8.b.8.b.6.6"
+      },
+      "331": {
+        "start": 294893,
+        "deltaBase36": "2.1k.1d.13.1d.2.1j.1c.12.1c.2.1i.1b.11.1b.2.1j.1c.12.1c.2.1l.1e.14.1e.2.1i.1b.11.1b.2.1i.1b.11.1b.2.1h.1a.10.1a.2.1i.1b.11.1b.2.1h.1a.10.1a.2.1j.1c.12.1c.2.1h.1a.10.1a.2.1h.1a.10.1a.2.1l.1e.14.1e.2.1k.1d.13.1d.2.1j.1c.12"
+      }
+    },
+    "counts": {
+      "nodes": 0,
+      "reactions": 0,
+      "local": 0,
+      "crossModule": 0,
+      "back": 0,
+      "selfSkipped": 0
+    },
+    "unmapped": []
+  },
+  "validation": {
+    "pageId": "295:2",
+    "rootCount": 64,
+    "issueCount": 0,
+    "results": [
+      {
+        "id": "311:379780",
+        "key": "appointment",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 84,
+        "texts": 30,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 16,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379781",
+        "key": "appointment",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 88,
+        "texts": 32,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 16,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379782",
+        "key": "appointment",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 73,
+        "texts": 25,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 16,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 7,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379783",
+        "key": "appointment",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 88,
+        "texts": 30,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 16,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379784",
+        "key": "change",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 79,
+        "texts": 26,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379785",
+        "key": "change",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 83,
+        "texts": 28,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379786",
+        "key": "change",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 68,
+        "texts": 21,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 6,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379787",
+        "key": "change",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 83,
+        "texts": 26,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 12,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379788",
+        "key": "appointmentWaiting",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 69,
+        "texts": 24,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379789",
+        "key": "appointmentWaiting",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 73,
+        "texts": 26,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379790",
+        "key": "appointmentWaiting",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 58,
+        "texts": 19,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379791",
+        "key": "appointmentWaiting",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 73,
+        "texts": 24,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379792",
+        "key": "appointmentOther",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 73,
+        "texts": 24,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379793",
+        "key": "appointmentOther",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 77,
+        "texts": 26,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379794",
+        "key": "appointmentOther",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 62,
+        "texts": 19,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 6,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379795",
+        "key": "appointmentOther",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 77,
+        "texts": 24,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 10,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379796",
+        "key": "appointmentConfirmed",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 77,
+        "texts": 27,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379797",
+        "key": "appointmentConfirmed",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 81,
+        "texts": 29,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379798",
+        "key": "appointmentConfirmed",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 66,
+        "texts": 22,
+        "instances": 16,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379799",
+        "key": "appointmentConfirmed",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 81,
+        "texts": 27,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 6,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379800",
+        "key": "appointmentChangeWaiting",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 66,
+        "texts": 22,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379801",
+        "key": "appointmentChangeWaiting",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 70,
+        "texts": 24,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379802",
+        "key": "appointmentChangeWaiting",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 55,
+        "texts": 17,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379803",
+        "key": "appointmentChangeWaiting",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 70,
+        "texts": 22,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379804",
+        "key": "appointmentChangeReview",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 66,
+        "texts": 22,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379805",
+        "key": "appointmentChangeReview",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 70,
+        "texts": 24,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379806",
+        "key": "appointmentChangeReview",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 55,
+        "texts": 17,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379807",
+        "key": "appointmentChangeReview",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 70,
+        "texts": 22,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 8,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379808",
+        "key": "appointmentChangeDeclined",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 58,
+        "texts": 18,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379809",
+        "key": "appointmentChangeDeclined",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 62,
+        "texts": 20,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379810",
+        "key": "appointmentChangeDeclined",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 47,
+        "texts": 13,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379811",
+        "key": "appointmentChangeDeclined",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 62,
+        "texts": 18,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379812",
+        "key": "appointmentCancelConfirm",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 63,
+        "texts": 20,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379813",
+        "key": "appointmentCancelConfirm",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 22,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379814",
+        "key": "appointmentCancelConfirm",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 52,
+        "texts": 15,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379815",
+        "key": "appointmentCancelConfirm",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 67,
+        "texts": 20,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 6,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379816",
+        "key": "appointmentCancelled",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 58,
+        "texts": 18,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379817",
+        "key": "appointmentCancelled",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 62,
+        "texts": 20,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379818",
+        "key": "appointmentCancelled",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 47,
+        "texts": 13,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379819",
+        "key": "appointmentCancelled",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 62,
+        "texts": 18,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 4,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379820",
+        "key": "appointmentExpired",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 63,
+        "texts": 19,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379821",
+        "key": "appointmentExpired",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 21,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379822",
+        "key": "appointmentExpired",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 52,
+        "texts": 14,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379823",
+        "key": "appointmentExpired",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 67,
+        "texts": 19,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379824",
+        "key": "appointmentConflict",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 57,
+        "texts": 17,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379825",
+        "key": "appointmentConflict",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 61,
+        "texts": 19,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379826",
+        "key": "appointmentConflict",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 46,
+        "texts": 12,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379827",
+        "key": "appointmentConflict",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 61,
+        "texts": 17,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 3,
+        "missingText": 0,
+        "localLinks": 4,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379828",
+        "key": "appointmentHistory",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 61,
+        "texts": 19,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379829",
+        "key": "appointmentHistory",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 65,
+        "texts": 21,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379830",
+        "key": "appointmentHistory",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 50,
+        "texts": 14,
+        "instances": 13,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 1,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379831",
+        "key": "appointmentHistory",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 65,
+        "texts": 19,
+        "instances": 19,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 5,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379832",
+        "key": "appointmentConfirmedV2",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 77,
+        "texts": 27,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379833",
+        "key": "appointmentConfirmedV2",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 81,
+        "texts": 29,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379834",
+        "key": "appointmentConfirmedV2",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 66,
+        "texts": 22,
+        "instances": 16,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 3,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379835",
+        "key": "appointmentConfirmedV2",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 81,
+        "texts": 27,
+        "instances": 22,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 13,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 7,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379836",
+        "key": "appointmentNarrow",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 84,
+        "texts": 30,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 16,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 7,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379837",
+        "key": "appointmentNarrow",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 88,
+        "texts": 32,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 16,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 7,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379838",
+        "key": "appointmentNarrow",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 73,
+        "texts": 25,
+        "instances": 15,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 16,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 7,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379839",
+        "key": "appointmentNarrow",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 88,
+        "texts": 30,
+        "instances": 21,
+        "photos": 1,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 16,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 7,
+        "conditional": 2,
+        "issues": []
+      },
+      {
+        "id": "311:379840",
+        "key": "appointmentHistoryV2",
+        "platform": "web",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 67,
+        "texts": 21,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379841",
+        "key": "appointmentHistoryV2",
+        "platform": "desktop",
+        "pageId": "311:9",
+        "w": 1440,
+        "h": 1000,
+        "nodes": 71,
+        "texts": 23,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Noto Sans SC",
+          "Manrope"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379842",
+        "key": "appointmentHistoryV2",
+        "platform": "tabletP",
+        "pageId": "311:9",
+        "w": 834,
+        "h": 1194,
+        "nodes": 56,
+        "texts": 16,
+        "instances": 14,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 2,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      },
+      {
+        "id": "311:379843",
+        "key": "appointmentHistoryV2",
+        "platform": "tabletL",
+        "pageId": "311:9",
+        "w": 1194,
+        "h": 834,
+        "nodes": 71,
+        "texts": 21,
+        "instances": 20,
+        "photos": 0,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "sourceTextCount": 7,
+        "missingText": 0,
+        "localLinks": 5,
+        "urlLinks": 6,
+        "conditional": 0,
+        "issues": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "cat": {
+    "success": true,
+    "imageHash": "d32a01799ceb219ad7006a3af2dbc366628290ac",
+    "sizeBytes": 74368,
+    "contentType": "image/jpeg",
+    "placedOnNodeId": "16:2"
+  },
+  "dog": {
+    "success": true,
+    "imageHash": "199130c8db2b9260eaafceac7bc3010f8eb91098",
+    "sizeBytes": 127570,
+    "contentType": "image/jpeg",
+    "placedOnNodeId": "16:3"
+  },
+  "rabbit": {
+    "success": true,
+    "imageHash": "d5fe57daf3628c3b34fcdf260f17d38514b0dcbc",
+    "sizeBytes": 173333,
+    "contentType": "image/jpeg",
+    "placedOnNodeId": "16:4"
+  }
+}

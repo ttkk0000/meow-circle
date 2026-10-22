@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>M&D｜双城冷启动、地图、登录与领养核验</title>
+  <style>
+    :root{color-scheme:light;--paper:#f6f4ef;--surface:#fff;--ink:#202823;--muted:#626c64;--brand:#a9442b;--line:#89958c;--soft:#eeeae2;--green:#235c43;--green-soft:#e8f1e9;--warning:#86540e;--warning-soft:#fff1d6}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 "Noto Sans SC","Microsoft YaHei",sans-serif}main{max-width:1440px;margin:auto;padding:48px 32px 72px}header{max-width:1000px}.eyebrow{color:var(--brand);font-weight:700;letter-spacing:.08em;font-size:14px}h1{font-size:clamp(28px,3.2vw,44px);line-height:1.35;letter-spacing:-.02em}h2{font-size:23px;line-height:1.5}h3{font-size:18px;margin:0 0 8px}p{margin:8px 0 20px}.muted{color:var(--muted)}a{color:var(--brand);text-underline-offset:4px}a:focus-visible{outline:3px solid var(--brand);outline-offset:4px}.cities{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}.city{background:var(--ink);color:white;padding:8px 20px;border-radius:999px}.note{background:var(--warning-soft);color:var(--warning);padding:20px 24px;border-radius:14px}nav{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0}nav a{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 18px;min-height:48px}.flows{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:start}.flow{scroll-margin-top:20px}.caption{font-size:14px;color:var(--muted);min-height:52px}.steps{padding:0;margin:24px 0;list-style:none;counter-reset:step}.steps>li{counter-increment:step;position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 20px 20px 58px;margin-bottom:32px;overflow-wrap:anywhere}.steps>li:before{content:counter(step,decimal-leading-zero);position:absolute;left:18px;top:20px;color:var(--brand);font-weight:700;font-size:14px}.steps>li:not(:last-child):after{content:"↓";position:absolute;left:50%;bottom:-31px;color:var(--muted);font-size:22px}.steps p{margin:0;font-size:14px;color:var(--muted)}.branch{margin-top:12px;border-left:3px solid var(--brand);padding:8px 12px;background:var(--soft);font-size:14px}.ok{background:var(--green-soft);color:var(--green);border-left-color:var(--green)}.boundary{background:var(--surface);padding:28px;border-radius:20px;margin-top:36px}.boundary ul{padding-left:22px}.boundary li{margin:10px 0}.legend{font-size:14px;color:var(--muted)}footer{margin-top:36px;border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:14px}
+    @media(max-width:1000px){.flows{grid-template-columns:1fr}.caption{min-height:0}.flow{max-width:760px}.flows{gap:28px}}
+    @media(max-width:480px){main{padding:28px 16px 48px}nav{display:grid;grid-template-columns:1fr}.steps>li{padding-right:16px}.boundary{padding:20px}}
+    @media print{main{padding:12mm}.flows{display:block}.flow{break-before:page}.flow:first-child{break-before:auto}.steps>li{break-inside:avoid}nav{display:none}a{color:inherit}.caption{min-height:0}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">M&D / MEOW & DOGGIE · PRODUCT LOGIC</p>
+    <h1>先有真实帮助，<br>再让内容慢慢生长。</h1>
+    <p class="muted">双城冷启动、走失地图、渐进登录与可信领养。四条流程是设计建议，不是已经接入的数据或可操作地图。</p>
+    <div class="cities" aria-label="已确认首发城市"><span class="city">武汉</span><span class="city">上海</span></div>
+    <p>猫咪优先，狗狗与其他允许物种同层可达。两城来源、筛选、审核与维护分开；不以外地信息冒充“附近”。</p>
+    <div class="note">地图标的是走失、拾获或目击事件地点，不是宠物实时位置。来源可用、审核通过、仍在寻找和信息新鲜度是四个独立判断。</div>
+  </header>
+  <nav aria-label="跳到流程"><a href="#ingestion">01 内容从哪里来</a><a href="#map">02 地图如何使用</a><a href="#auth">03 何时需要登录</a><a href="#trust">04 领养核验与举报</a></nav>
+  <div class="flows" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))">
+    <section class="flow" id="ingestion" aria-labelledby="ingestion-title">
+      <h2 id="ingestion-title">01 来源 → 有效内容</h2>
+      <p class="caption">编辑内容打底，伙伴授权供给，获准采集辅助。先质量，再数量。</p>
+      <ol class="steps">
+        <li><h3>建立武汉／上海来源清单</h3><p>原作者投稿、组织协作、获准 API／页面；记录使用范围与撤回渠道。</p><div class="branch">依据不明确：不采集、不上线，不通过大量搬运制造活跃。</div></li>
+        <li><h3>最小提取与重复候选</h3><p>保留原发布时间、城市与来源；照片单独核对许可；隐私不进入公开字段。</p><div class="branch">相似图片／地点只能提示重复，不能自动判断同一宠物。</div></li>
+        <li><h3>审核时间、区域与公开精度</h3><p>不补猜时间和坐标。仅区级就标区级；原作者关系与事件状态分别核对。</p><div class="branch">地址重名、归属争议、来源撤回：补充或隐藏，不能假装已核实。</div></li>
+        <li><h3>进入对应城市列表／地图</h3><p>来源标签、最后确认、事件时间始终可见。抓取检查不能刷新事件时间。</p><div class="branch ok">真实空态：可扩大区域、看指南或发布求助，不混入演示案例。</div></li>
+        <li><h3>持续维护与退出</h3><p>仍在寻找、可能匹配、已找回、已结束、待更新分开。过期不自动变找回。</p><div class="branch">撤回／删除：同步自有列表、地图、搜索和缓存，保留受控处理记录。</div></li>
+      </ol>
+    </section>
+    <section class="flow" id="map" aria-labelledby="map-title">
+      <h2 id="map-title">02 列表 → 地图 → 线索</h2>
+      <p class="caption">看事件位置不必先交出自己的位置。地点、时间与来源一起阅读。</p>
+      <ol class="steps">
+        <li><h3>手动选择城市与筛选</h3><p>武汉／上海、区域、物种、事件类型、时间；记住选择，不静默跨城。</p><div class="branch">无 GPS 权限：仍可选城、筛选、读案例。</div></li>
+        <li><h3>点卡片中的位置摘要</h3><p>定位到同一事件的公开范围；保留原列表位置、筛选与所选案例。</p><div class="branch">只有行政区／存疑地点：显示范围或文字，不造精确针点。</div></li>
+        <li><h3>查看事件卡与对应时刻</h3><p>区分走失点、拾获点、目击点；不连接未经确认的线索生成移动轨迹。</p><div class="branch">地图加载失败：回文字列表；网络失败不解释为“没有走失宠物”。</div></li>
+        <li><h3>选择查看原文或补充线索</h3><p>原文链接公开可读；私密目击需登录。第三方地图仅收到公开地点与中性标签。</p><div class="branch">“定位我”单独询问前台权限，不后台追踪。</div></li>
+        <li><h3>审核候选，维护主案例</h3><p>目击是独立私密记录，不自动覆盖主位置；认领要另核对归属，交接重视安全。</p><div class="branch ok">结束后退活跃地图和提醒；找回故事另行授权，不永久公开家庭位置。</div></li>
+      </ol>
+    </section>
+    <section class="flow" id="auth" aria-labelledby="auth-title">
+      <h2 id="auth-title">03 浏览 → 动作 → 登录恢复</h2>
+      <p class="caption">先看到价值，再要求身份。账号认证不等于宠物归属认证。</p>
+      <ol class="steps">
+        <li><h3>游客先看内容与公开地图</h3><p>不先索取手机号、定位、相册或推送权限，提供“先逛逛”。</p><div class="branch ok">隐私投诉／撤回请求保留无需注册的安全入口。</div></li>
+        <li><h3>发布／私信／私密线索触发认证</h3><p>保存站内目标与必要草稿。身份、定位、通知授权分别处理。</p><div class="branch">取消登录：回原内容；不丢阅读位置、不把草稿公开。</div></li>
+        <li><h3>登录方式与同一账号</h3><p>账号名／邮箱／手机号＋密码、邮箱验证码或已绑定微信／QQ／Apple。新身份明确创建或验证后关联，不恢复短信自动建号。</p><div class="branch">普通登录免强制短信；失败不覆盖原标识与资料，协议默认不勾选。</div></li><li><h3>年龄与交流资格</h3><p>年满14岁可交流，未满14需监护核对授权；商业发布与线下签约由成年人办理。对外交流再检查当前手机号有效验证及业务权限。</p><div class="branch">监护、年龄、手机资格分别判断；取消／失效保留浏览和私有草稿。</div></li>
+        <li><h3>恢复原页面，用户再次确认</h3><p>恢复具体宠物／案例与表单，不自动提交、发送、付款或订阅。</p><div class="branch">返回目标只允许合法站内位置，防止跳往外部钓鱼页面。</div></li>
+        <li><h3>在需要时逐项授权</h3><p>发图用照片选择器；定位我才申请定位；订阅区域提醒才申请通知。</p><div class="branch ok">退出清理私密缓存；换号、注销和绑定等高风险操作再验证。</div></li>
+      </ol>
+    </section>
+    <section class="flow" id="trust" aria-labelledby="trust-title">
+      <h2 id="trust-title">04 领养核验 → 举报复核</h2>
+      <p class="caption">核对具体事项，不发笼统“真实领养”勋章；投诉不是人气投票。</p>
+      <ol class="steps">
+        <li><h3>说明谁在送养、谁在照护</h3><p>身份联系、宠物关系、健康已知／未知、全部必付费用、条件与责任分别填写。</p><div class="branch">待补材料先保存；紧急求助独立标记，不冒充已核验领养。</div></li>
+        <li><h3>分项核对与有限结论</h3><p>视频／人工见证支持近期接触；授权与医疗材料分别核对。展示方法、日期和适用范围。</p><div class="branch">近期视频不证明所有权或健康；无医疗记录可如实标未知，不造健康认证。</div></li>
+        <li><h3>公示范围，持续维护</h3><p>真实性说明可展开；状态过期、关系变化和费用变化重确认。正常案例继续维护；发现问题才进入举报。</p><div class="branch ok">健康未知、个人／商家身份、一次无法判断，均不直接等于欺骗。</div></li>
+        <li><h3>关联快照，接收并分流</h3><p>用户指出哪项不符，证据可后补。无预约码也能举报；隐私等高风险先做必要保护。</p><div class="branch">收到回执不等于人工核实；举报人数不自动封号，截图不自动证明事实。</div></li>
+        <li><h3>比较依据，回应与申诉</h3><p>独立核对版本和双方说明；结论为某项不符、未获支持或无法判断。处置与风险相称，保留改判理由。</p><div class="branch ok">恢复须达到对应门槛；用抽检、响应时长、申诉改判与重复问题检验机制，不追求低举报量。</div></li>
+      </ol>
+    </section>
+  </div>
+  <section class="boundary" aria-labelledby="boundaries-title">
+    <h2 id="boundaries-title">落地前必须保留的边界</h2>
+    <ul>
+      <li>本人发布、授权转载、外部线索和学习示例不能混淆；学习示例不进生产地图。</li>
+      <li>有联系方式不证明归属；上传材料不等于确认来源；审核通过不等于健康或找回保证。</li>
+      <li>首阶段可先做列表与地图外跳，再增加内置多点地图；两城分别满足来源与维护条件。</li>
+      <li>公开隐私范围必须由接口落实；不能只遮 UI，却让 URL、推送或分享暴露精确位置。</li>
+      <li>当前没有实际采集、地图／短信接入或 Figma 新屏；不代表代码已经实现。</li>
+    </ul>
+    <p><a href="../MND_COLD_START_LOST_PETS_AND_AUTH_SPEC.md">冷启动／地图／登录规则</a> · <a href="../MND_TRUST_AND_DISCLOSURE_SPEC.md">领养核验与举报规范</a> · <a href="index.html">回原有七张产品流程图</a></p>
+  </section>
+  <footer>2026-10-16 · M&D / meow &amp; doggie · 用户已确认武汉、上海；采集来源与运营能力仍待落实。本文为无外部请求、无脚本的静态流程文档。</footer>
+</main>
+</body>
+</html>

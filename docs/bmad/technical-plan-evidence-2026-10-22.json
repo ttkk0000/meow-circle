@@ -1,0 +1,180 @@
+{
+  "timestamp": "2026-10-22T14:11:28.0147+08:00",
+  "task": "AI-20261022-TECH-PLAN",
+  "branch": "main",
+  "head": "ebfc469c9707bf0ea4a6b383840546077ae65782",
+  "scope": "当前未提交工作树的文档／源码静态核对和技术规划；哈希标识输入，不表示HEAD已包含成果或已运行",
+  "codegraph": "155 indexed files; context surfaced legacy v1/Expo, current disk used for missing v2/shared/client; no rebuild",
+  "openapi": {
+    "paths": 141,
+    "operations": 167,
+    "schemas": 50,
+    "changed": false
+  },
+  "coverage": {
+    "fr": 34,
+    "nfr": 8,
+    "nfrFull": 5,
+    "nfrPartial": 3,
+    "designStates": 45,
+    "layoutRoots": 225,
+    "definedTaskIds": 53,
+    "phases": [
+      "S0",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6",
+      "S7"
+    ],
+    "mappingIssues": 0
+  },
+  "sourceFindings": [
+    {
+      "id": "B04",
+      "evidence": "mobile.active only checks account; shared requireInteractionContract returns false",
+      "paths": [
+        "internal/mobile/service.go",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt"
+      ]
+    },
+    {
+      "id": "PurposeGrant",
+      "evidence": "Reauth/grant bind account, expiry and consumed state, not purpose/object/version/hash",
+      "paths": [
+        "internal/identity/service.go"
+      ]
+    },
+    {
+      "id": "ErasureOutbox",
+      "evidence": "account.erasure_requested topic/user_id payload does not satisfy Event schema filter in PendingEvents",
+      "paths": [
+        "internal/identity/service.go",
+        "internal/mobile/outbox.go"
+      ]
+    },
+    {
+      "id": "GuestNotice",
+      "evidence": "SubmitReview needs active actor; notification/counterstatement chain not supplied by current report/appeal enum",
+      "paths": [
+        "internal/mobile/trust.go"
+      ]
+    },
+    {
+      "id": "Media",
+      "evidence": "JPEG/PNG decoded then re-encoded; source/AI metadata requires explicit processing design",
+      "paths": [
+        "internal/platform/mobileapi/media.go"
+      ]
+    },
+    {
+      "id": "EntryRetry",
+      "evidence": "EntryInput lacks client request idempotency field",
+      "paths": [
+        "internal/mobile/social.go"
+      ]
+    },
+    {
+      "id": "IosUi",
+      "evidence": "MndMobileUI and :iosUi:embedAndSignAppleFrameworkForXcode already wired in source",
+      "paths": [
+        "kmp/iosApp/project.yml",
+        "kmp/iosUi/build.gradle.kts"
+      ]
+    }
+  ],
+  "officialReferences": [
+    "https://www.postgresql.org/docs/current/transaction-iso.html",
+    "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2",
+    "https://kotlinlang.org/docs/multiplatform/compose-swiftui-integration.html",
+    "https://www.w3.org/TR/WCAG22/"
+  ],
+  "inputHashes": [
+    {
+      "path": "internal/mobile/service.go",
+      "sha256": "e25663ad9e43503017fc253c080ca105e606b4531f1d2a700804130d2ba5315a"
+    },
+    {
+      "path": "internal/identity/service.go",
+      "sha256": "4c416efbc920845305abcec17acbfe48487a345d459ff43ab8b17d771e14a586"
+    },
+    {
+      "path": "internal/mobile/outbox.go",
+      "sha256": "70afd4a45c08dd10494553c1c9d7e117a23303df8a9f544eb0950b708e808723"
+    },
+    {
+      "path": "internal/mobile/trust.go",
+      "sha256": "f75477e305631c2453460142fd9d3d963368d879d07f490bab88b7cf4d73f59e"
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "sha256": "8244b586af32feabd9dc3bde5b7a34488c994dd8ea048243687e7b47055a958a"
+    },
+    {
+      "path": "internal/mobile/appointments.go",
+      "sha256": "d3720046b64ce784ad59c95a8464a17c3bdc54215dffd2ff60399926a91e920f"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256": "815ef9b28dbe9799fc807b86b2f458169ac86c93a09572652f88bd9bd8c16c02"
+    },
+    {
+      "path": "internal/platform/mobileapi/media.go",
+      "sha256": "37fd451d9f90eb3b778dc18cdf866382d4c03fc7b1e0eb805873f4a37bc974bb"
+    },
+    {
+      "path": "internal/store/postgres/mobile.go",
+      "sha256": "e4bfc27676bbe9d78c10ab84ed09087ad34e0caadd40ee9d5a215e43d02078f8"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "14012467c1b2d7dc9b2c0be67741676bd256b8242427d6d66a8d2151ffd17896"
+    },
+    {
+      "path": "kmp/iosApp/project.yml",
+      "sha256": "ab001bff90af41b36557a5957dc0d0a75662dd35ee93250093661f2770fe2798"
+    },
+    {
+      "path": "kmp/iosUi/build.gradle.kts",
+      "sha256": "6ea3ed4a5e8d15db4b03b7621a03e00608572fca02961e9774ad6e3ac70fd8f8"
+    },
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256": "4d1bf50cd9648cdac636f7196abd47c51556e670ac463f43611fb66f908e9fe9"
+    },
+    {
+      "path": "docs/design/figma-study/legal-design-2026-10-22-state.json",
+      "sha256": "b187f254cbbdb404ed27a36128d5f90e31d0f70e70ed68f32222a53e8eed47fc"
+    },
+    {
+      "path": "docs/design/figma-study/legal-design-2026-10-22-validation.json",
+      "sha256": "215f757e6d2347147b99e7573f5cf744f4c8e5580e0c06b42b040adea1b6cbc4"
+    }
+  ],
+  "execution": {
+    "businessCodeChanged": false,
+    "figmaChanged": false,
+    "dependencyChanged": false,
+    "buildRun": false,
+    "applicationTestsRun": false,
+    "databaseMigrationRun": false,
+    "servicesOrDevicesStarted": false,
+    "messagesSent": false,
+    "gitCommitPushOrDeploy": false
+  },
+  "documentChecks": {
+    "relatedFiles": 15,
+    "json": 2,
+    "localMarkdownLinks": 284,
+    "utf8WithoutBom": true,
+    "replacementCharacters": 0,
+    "trailingWhitespace": 0,
+    "brokenLocalLinks": 0,
+    "mappingIssues": 0,
+    "inputFingerprintsUnchanged": 15,
+    "gitDiffWhitespace": "passed",
+    "applicationTestsExecuted": false
+  }
+}

@@ -1,0 +1,2660 @@
+{
+  "date": "2026-10-21",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "scope": "Design contract and editable Figma states only; no application/backend execution",
+  "ageDecision": "User confirmed 14+ exchange; under-14 guardian consent; adult commercial publishing and offline contracting",
+  "screens": [
+    {
+      "id": "login",
+      "title": "登录 / 注册",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "M&D",
+          "role": "MobileBrand"
+        },
+        {
+          "type": "text",
+          "text": "和毛孩子，一起长大",
+          "role": "Title"
+        },
+        {
+          "type": "field",
+          "label": "账号名 / 邮箱 / 手机号",
+          "value": "请输入登录标识",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "密码",
+          "value": "请输入密码",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "邮箱验证码登录 / 注册",
+          "value": "不强制手机短信",
+          "to": "emailStart"
+        },
+        {
+          "type": "check",
+          "label": "我已阅读并同意服务协议与隐私政策",
+          "key": "loginAgreement"
+        },
+        {
+          "type": "links",
+          "entries": [
+            [
+              "服务协议",
+              "serviceTerms"
+            ],
+            [
+              "隐私政策",
+              "privacy"
+            ],
+            [
+              "未成年人保护",
+              "teenPrivacy"
+            ]
+          ]
+        },
+        {
+          "type": "providers"
+        },
+        {
+          "type": "row",
+          "label": "找回账号或密码",
+          "value": "只恢复原账号",
+          "to": "accountRecovery"
+        },
+        {
+          "type": "note",
+          "title": "登录与交流分开",
+          "body": "日常登录不强制短信。发布、评论和发送消息前，再核对当前手机号及年龄权限。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "登录并继续",
+        "to": "ageRange",
+        "requires": "loginAgreement"
+      },
+      "back": "login",
+      "existingKey": "login"
+    },
+    {
+      "id": "authIOS",
+      "title": "登录 / 注册 · iPhone",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "M&D",
+          "role": "MobileBrand"
+        },
+        {
+          "type": "text",
+          "text": "和毛孩子，一起长大",
+          "role": "Title"
+        },
+        {
+          "type": "field",
+          "label": "账号名 / 邮箱 / 手机号",
+          "value": "请输入登录标识",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "密码",
+          "value": "请输入密码",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "邮箱验证码登录 / 注册",
+          "value": "与原账号关联",
+          "to": "emailStart"
+        },
+        {
+          "type": "check",
+          "label": "我已阅读并同意服务协议与隐私政策",
+          "key": "iosAgreement"
+        },
+        {
+          "type": "links",
+          "entries": [
+            [
+              "服务协议",
+              "serviceTerms"
+            ],
+            [
+              "隐私政策",
+              "privacy"
+            ]
+          ]
+        },
+        {
+          "type": "providers",
+          "ios": true
+        },
+        {
+          "type": "note",
+          "title": "登录与交流分开",
+          "body": "日常登录不强制短信。发布、评论和发送消息前，再核对当前手机号及年龄权限。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "登录并继续",
+        "to": "ageRange",
+        "requires": "iosAgreement"
+      },
+      "back": "login",
+      "existingKey": "authIOS"
+    },
+    {
+      "id": "emailStart",
+      "title": "邮箱登录 / 注册",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "使用你已验证的邮箱",
+          "role": "Title"
+        },
+        {
+          "type": "field",
+          "label": "邮箱",
+          "value": "name@example.com",
+          "error": false
+        },
+        {
+          "type": "check",
+          "label": "我已阅读并同意服务协议与隐私政策",
+          "key": "emailAgreement"
+        },
+        {
+          "type": "links",
+          "entries": [
+            [
+              "服务协议",
+              "serviceTerms"
+            ],
+            [
+              "隐私政策",
+              "privacy"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "已有账号不会重复创建",
+          "body": "邮箱验证后关联原账号；新邮箱会先询问创建或关联，不按同名昵称合并。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "邮件未到 / 地址填写错误",
+          "value": "查看恢复状态",
+          "to": "emailError"
+        }
+      ],
+      "footer": {
+        "label": "发送邮箱验证码",
+        "to": "emailCode",
+        "requires": "emailAgreement"
+      },
+      "back": "login"
+    },
+    {
+      "id": "emailCode",
+      "title": "验证邮箱",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "查看邮箱中的验证码",
+          "role": "Title"
+        },
+        {
+          "type": "text",
+          "text": "发送至 n***@example.com；学习示意，不会发送真实邮件。",
+          "role": "Caption"
+        },
+        {
+          "type": "field",
+          "label": "邮箱验证码",
+          "value": "请输入收到的验证码",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "修改邮箱",
+          "value": "保留原任务",
+          "to": "emailStart"
+        },
+        {
+          "type": "row",
+          "label": "验证码错误 / 过期 / 发送频繁",
+          "value": "重试不会新建账号",
+          "to": "emailError"
+        },
+        {
+          "type": "note",
+          "title": "保护原账号",
+          "body": "验证码仅用于本次登录或注册，不授权更换绑定或自动发布。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "验证并继续",
+        "to": "accountChoice"
+      },
+      "back": "emailStart"
+    },
+    {
+      "id": "emailError",
+      "title": "验证码暂不可用",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "未完成验证",
+          "body": "验证码错误、已过期、发送频繁或网络异常时保持原账号与绑定。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "field",
+          "label": "邮箱",
+          "value": "n***@example.com",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "验证码",
+          "value": "重新输入或等待重发",
+          "error": true
+        },
+        {
+          "type": "row",
+          "label": "邮件一直未到",
+          "value": "检查地址或换登录方式",
+          "to": "login"
+        },
+        {
+          "type": "note",
+          "title": "保留当前任务",
+          "body": "不会自动建号、合并账号或发送草稿。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "重新填写验证码",
+        "to": "emailCode"
+      },
+      "back": "emailCode"
+    },
+    {
+      "id": "accountChoice",
+      "title": "继续使用原账号",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "已验证邮箱 · 示例状态",
+          "body": "如果该邮箱已关联账号，将进入原账号。新身份需要你明确选择。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "已有 M&D 账号，去关联",
+          "value": "先验证原账号再确认",
+          "to": "linkExisting"
+        },
+        {
+          "type": "row",
+          "label": "继续创建新账号",
+          "value": "确认协议与年龄范围后建立",
+          "to": "ageRange"
+        },
+        {
+          "type": "note",
+          "title": "不会自动合并",
+          "body": "相同昵称、头像或第三方返回邮箱不作为合并依据。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回登录方式",
+        "to": "login",
+        "kind": "secondary"
+      },
+      "back": "emailCode"
+    },
+    {
+      "id": "accountConflict",
+      "title": "标识已被使用",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "保留原绑定",
+          "body": "邮箱或手机号属于其他账号时，不覆盖资料、不迁移聊天，也不透露对方信息。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "登录或找回原账号",
+          "value": "先完成原账号验证",
+          "to": "accountRecovery"
+        },
+        {
+          "type": "row",
+          "label": "换一个邮箱",
+          "value": "原任务仍保留",
+          "to": "emailStart"
+        },
+        {
+          "type": "text",
+          "text": "持有新号码本身，不能接管这个号码过去关联的账号。",
+          "role": "Caption"
+        }
+      ],
+      "footer": {
+        "label": "返回账号方式",
+        "to": "login",
+        "kind": "secondary"
+      },
+      "back": "accountIdentifiers"
+    },
+    {
+      "id": "phoneGate",
+      "title": "交流前验证手机号",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "验证一次，继续交流",
+          "role": "Title"
+        },
+        {
+          "type": "note",
+          "title": "你已经登录",
+          "body": "发布、评论、私信及申请前需当前绑定手机号验证；不要求每次登录或每条消息收短信。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "当前手机号",
+          "value": "选择区号并填写号码",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "号码已被其他账号使用",
+          "value": "查看安全恢复",
+          "to": "accountConflict"
+        },
+        {
+          "type": "row",
+          "label": "为什么需要验证",
+          "value": "登录、年龄与交流资格分别检查",
+          "to": "serviceTerms"
+        }
+      ],
+      "footer": {
+        "label": "发送本次验证短信",
+        "to": "phoneCode"
+      },
+      "back": "authResume"
+    },
+    {
+      "id": "phoneCode",
+      "title": "验证当前手机号",
+      "group": "account",
+      "items": [
+        {
+          "type": "field",
+          "label": "当前手机号",
+          "value": "138 **** 0000 · 示例",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "短信验证码",
+          "value": "请输入验证码",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "用途：当前号码交流验证",
+          "body": "错误、过期或频控不会改变原账号；更换号码后旧号资格不自动沿用。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "错误或短信未到",
+          "value": "保留输入并更换方式",
+          "to": "emailError"
+        }
+      ],
+      "footer": {
+        "label": "验证并返回原任务",
+        "to": "authResume"
+      },
+      "back": "phoneGate"
+    },
+    {
+      "id": "authResume",
+      "title": "已恢复原任务",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "验证已完成 · 示例状态",
+          "body": "已回到你之前的编辑任务；草稿不会自动发送。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原任务",
+              "社区发帖 · 草稿已保留"
+            ],
+            [
+              "下一步",
+              "检查对象和内容后再次确认"
+            ],
+            [
+              "权限变化",
+              "资源失效或年龄受限时重新提示"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "继续编辑草稿",
+          "value": "由你再次点击发布",
+          "to": "legacy:composePost"
+        },
+        {
+          "type": "row",
+          "label": "查看年龄与保护设置",
+          "value": "成年人业务另行核对",
+          "to": "teenPrivacy"
+        }
+      ],
+      "footer": {
+        "label": "返回原编辑任务",
+        "to": "legacy:composePost",
+        "kind": "secondary"
+      },
+      "back": "legacy:home"
+    },
+    {
+      "id": "accountIdentifiers",
+      "title": "账号与登录方式",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "账号名",
+              "mnd_sample · 唯一登录标识"
+            ],
+            [
+              "昵称",
+              "小满的朋友 · 可重复"
+            ],
+            [
+              "邮箱",
+              "n***@example.com · 已验证"
+            ],
+            [
+              "手机号",
+              "138 **** 0000 · 当前号已验证"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "绑定或更换邮箱",
+          "value": "验证原账号及新邮箱",
+          "to": "emailBinding"
+        },
+        {
+          "type": "row",
+          "label": "更换手机号",
+          "value": "失败保留原绑定",
+          "to": "phoneChange"
+        },
+        {
+          "type": "row",
+          "label": "账号恢复",
+          "value": "原号码不可用",
+          "to": "accountRecovery"
+        },
+        {
+          "type": "note",
+          "title": "同一账号",
+          "body": "所有登录方式使用同一账号，宠物、聊天和草稿不会因换号丢失。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回设置",
+        "to": "legacy:settings",
+        "kind": "secondary"
+      },
+      "back": "legacy:settings"
+    },
+    {
+      "id": "emailBinding",
+      "title": "绑定 / 更换邮箱",
+      "group": "account",
+      "items": [
+        {
+          "type": "field",
+          "label": "当前账号验证",
+          "value": "先完成本次安全验证",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "新邮箱",
+          "value": "请输入待绑定邮箱",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "新邮箱验证码",
+          "value": "验证成功后才能成为登录标识",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "单次安全操作",
+          "body": "不能仅凭当前登录态换绑；标识冲突保留原绑定，不能解绑最后一个可用登录方式。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "邮箱被占用",
+          "value": "不覆盖其他账号",
+          "to": "accountConflict"
+        }
+      ],
+      "footer": {
+        "label": "确认绑定",
+        "to": "accountIdentifiers"
+      },
+      "back": "accountIdentifiers"
+    },
+    {
+      "id": "phoneChange",
+      "title": "更换手机号",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原账号",
+              "M&D 原账号，不创建新账号"
+            ],
+            [
+              "原号码",
+              "138 **** 0000 · 示例"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "当前账号安全验证",
+          "value": "原号可用时验证原号",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "新手机号",
+          "value": "验证新号所有权与可用性",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "原号码已无法使用",
+          "value": "独立恢复，不跳过核对",
+          "to": "accountRecovery"
+        },
+        {
+          "type": "note",
+          "title": "成功后重新核对资格",
+          "body": "撤销旧号关联，更新当前号验证；失败保持原绑定与资料。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "确认更新",
+        "to": "accountIdentifiers"
+      },
+      "back": "accountIdentifiers"
+    },
+    {
+      "id": "accountRecovery",
+      "title": "找回账号",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "恢复你原来的账号",
+          "role": "Title"
+        },
+        {
+          "type": "field",
+          "label": "可用的已验证标识",
+          "value": "邮箱 / 已绑定登录方式",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "需要恢复的内容",
+          "value": "账号访问 / 密码 / 原号码不可用",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "不索取公开原件",
+          "body": "按风险核对必要证据；当前登录态或新号码不能直接授权接管。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "资料不足 / 存在争议",
+          "value": "进入人工帮助",
+          "to": "ageAppeal"
+        }
+      ],
+      "footer": {
+        "label": "继续验证原账号",
+        "to": "emailStart"
+      },
+      "back": "login"
+    },
+    {
+      "id": "ageRange",
+      "title": "年龄与使用范围",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "为你提供适合的保护",
+          "role": "Title"
+        },
+        {
+          "type": "text",
+          "text": "只保留必要年龄区间；普通浏览不需要上传身份证。",
+          "role": "Label"
+        },
+        {
+          "type": "row",
+          "label": "未满14岁",
+          "value": "请监护人完成授权",
+          "to": "guardianInvite"
+        },
+        {
+          "type": "row",
+          "label": "14–17岁",
+          "value": "可交流，默认保护陌生人联系",
+          "to": "teenPrivacy"
+        },
+        {
+          "type": "row",
+          "label": "年满18岁",
+          "value": "商业与线下业务还需有效成年资格",
+          "to": "adultAssurance"
+        },
+        {
+          "type": "note",
+          "title": "登录成功不等于所有权限",
+          "body": "年龄、监护、手机号和业务角色分别检查。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "先继续浏览",
+        "to": "legacy:home",
+        "kind": "secondary"
+      },
+      "back": "authResume"
+    },
+    {
+      "id": "guardianInvite",
+      "title": "请监护人授权",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "未满14岁",
+          "body": "可以继续浏览适龄公开内容；授权完成前不能新增交流，私有草稿保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看儿童与监护专门规则",
+          "value": "说明收集事项、用途和撤回方式",
+          "to": "teenPrivacy"
+        },
+        {
+          "type": "row",
+          "label": "邀请监护人",
+          "value": "短时单次，不含儿童隐私",
+          "to": "guardianReview"
+        },
+        {
+          "type": "row",
+          "label": "已经发出邀请",
+          "value": "查看等待与失败状态",
+          "to": "guardianWaiting"
+        },
+        {
+          "type": "note",
+          "title": "监护关系需要核对",
+          "body": "一个成年手机号不能单独证明监护关系。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "保留草稿，继续浏览",
+        "to": "legacy:home",
+        "kind": "secondary"
+      },
+      "back": "ageRange"
+    },
+    {
+      "id": "guardianReview",
+      "title": "监护人授权确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "监护人独立办理",
+          "body": "先核对本人成年资格及监护关系，不在儿童账号里把年龄改成成人。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "授权范围",
+              "必要资料处理与受保护的日常交流"
+            ],
+            [
+              "不包含",
+              "商业发布、线下签约、营销与公开定位"
+            ],
+            [
+              "撤回方式",
+              "监护管理 / 数据权利"
+            ]
+          ]
+        },
+        {
+          "type": "check",
+          "label": "我已阅读专门规则并同意上述必要授权",
+          "key": "guardianConsent"
+        },
+        {
+          "type": "row",
+          "label": "查看专门规则",
+          "value": "拒绝不会影响公开浏览",
+          "to": "teenPrivacy"
+        }
+      ],
+      "footer": {
+        "label": "确认授权",
+        "to": "guardianActive",
+        "requires": "guardianConsent"
+      },
+      "back": "guardianInvite"
+    },
+    {
+      "id": "guardianWaiting",
+      "title": "等待监护授权",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "邀请已发起 · 示例",
+          "body": "等待监护人独立核对并确认；当前账号仍受限。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "邀请过期 / 被拒绝",
+          "value": "重新发起或退出",
+          "to": "guardianInvite"
+        },
+        {
+          "type": "row",
+          "label": "查看授权生效状态",
+          "value": "独立示例状态",
+          "to": "guardianActive"
+        },
+        {
+          "type": "row",
+          "label": "取消本次邀请",
+          "value": "不会删除草稿",
+          "to": "legacy:home"
+        }
+      ],
+      "footer": {
+        "label": "继续浏览",
+        "to": "legacy:home",
+        "kind": "secondary"
+      },
+      "back": "guardianInvite"
+    },
+    {
+      "id": "guardianActive",
+      "title": "监护授权与管理",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "授权状态",
+              "有效 · 设计示例"
+            ],
+            [
+              "交流资格",
+              "仍需当前手机号验证"
+            ],
+            [
+              "陌生人联系",
+              "默认关闭"
+            ],
+            [
+              "定位",
+              "不公开精确位置"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看 / 调整保护设置",
+          "value": "不能读取他人私密材料",
+          "to": "teenPrivacy"
+        },
+        {
+          "type": "row",
+          "label": "撤回授权",
+          "value": "停止新增受限处理",
+          "to": "guardianRevoked"
+        },
+        {
+          "type": "row",
+          "label": "数据权利与投诉",
+          "value": "按风险核对请求",
+          "to": "dataRights"
+        }
+      ],
+      "footer": {
+        "label": "验证当前手机号",
+        "to": "phoneGate"
+      },
+      "back": "teenPrivacy"
+    },
+    {
+      "id": "guardianRevoked",
+      "title": "授权已撤回 / 失效",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "新增交流已暂停",
+          "body": "保留合法必要记录和私有草稿；不会自动公开、迁移或删除账号。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "重新发起监护授权",
+          "value": "需要新的有效确认",
+          "to": "guardianInvite"
+        },
+        {
+          "type": "row",
+          "label": "对授权关系有异议",
+          "value": "申请人工复核",
+          "to": "ageAppeal"
+        },
+        {
+          "type": "row",
+          "label": "更正或删除相关资料",
+          "value": "查看处理范围",
+          "to": "dataRights"
+        }
+      ],
+      "footer": {
+        "label": "继续公开浏览",
+        "to": "legacy:home",
+        "kind": "secondary"
+      },
+      "back": "guardianActive"
+    },
+    {
+      "id": "teenPrivacy",
+      "title": "未成年人保护",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "陌生人私信",
+              "默认不接收"
+            ],
+            [
+              "群邀请",
+              "需明确同意，可拒绝"
+            ],
+            [
+              "屏蔽 / 举报",
+              "会话与内容均可使用"
+            ],
+            [
+              "精确位置",
+              "不公开"
+            ],
+            [
+              "营销",
+              "不做未成年人自动化商业定向"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "未满14岁的监护授权",
+          "value": "查看范围与撤回",
+          "to": "guardianInvite"
+        },
+        {
+          "type": "row",
+          "label": "商业或线下业务",
+          "value": "由成年人自己的账号办理",
+          "to": "adultRequired"
+        },
+        {
+          "type": "row",
+          "label": "年龄 / 监护有误",
+          "value": "申请复核",
+          "to": "ageAppeal"
+        },
+        {
+          "type": "row",
+          "label": "个人资料权利",
+          "value": "访问、更正、删除、投诉",
+          "to": "dataRights"
+        }
+      ],
+      "footer": {
+        "label": "继续前检查交流资格",
+        "to": "phoneGate"
+      },
+      "back": "legacy:settings"
+    },
+    {
+      "id": "adultAssurance",
+      "title": "成年业务资格",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "年满18岁",
+          "body": "商业发布、预约与线下签约需有效成年资格，并继续检查角色和资料。",
+          "tone": "subtle"
+        },
+        {
+          "type": "text",
+          "text": "年龄核对完成后，才能办理需要成年人身份的事项。",
+          "role": "Label"
+        },
+        {
+          "type": "row",
+          "label": "开始年龄核对",
+          "value": "仅返回必要结果",
+          "to": "accountIdentifiers"
+        },
+        {
+          "type": "row",
+          "label": "暂不核对",
+          "value": "继续日常浏览与交流流程",
+          "to": "phoneGate"
+        },
+        {
+          "type": "row",
+          "label": "核对有误或无法完成",
+          "value": "申请人工复核",
+          "to": "ageAppeal"
+        }
+      ],
+      "footer": {
+        "label": "返回原任务",
+        "to": "legacy:home",
+        "kind": "secondary"
+      },
+      "back": "ageRange"
+    },
+    {
+      "id": "adultRequired",
+      "title": "请由成年人办理",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "当前动作需要成年人",
+          "body": "可以继续浏览、收藏和保留草稿；商业发布和线下签约由成年人使用自己的账号办理。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看办理范围",
+          "value": "监护人不能代点本账号确认",
+          "to": "serviceTerms"
+        },
+        {
+          "type": "row",
+          "label": "保留必要摘要",
+          "value": "不复制私信与家庭原件",
+          "to": "legacy:home"
+        },
+        {
+          "type": "row",
+          "label": "年龄判定有误",
+          "value": "申请复核",
+          "to": "ageAppeal"
+        }
+      ],
+      "footer": {
+        "label": "返回并保留草稿",
+        "to": "legacy:home",
+        "kind": "secondary"
+      },
+      "back": "legacy:home"
+    },
+    {
+      "id": "ageAppeal",
+      "title": "账号 / 年龄人工帮助",
+      "group": "account",
+      "items": [
+        {
+          "type": "field",
+          "label": "需要帮助的事项",
+          "value": "年龄 / 监护关系 / 账号恢复",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "问题说明",
+          "value": "说明具体问题，原件按需后补",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "保护个人资料",
+          "body": "不公开上传证件、儿童信息或家庭住址；按请求风险核对必要材料。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "紧急隐私泄露",
+          "value": "无需注册即可报告",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "提交请求",
+        "to": "guestReceipt"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "privacy",
+      "title": "隐私与数据",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "你的资料，由用途决定范围",
+          "role": "Title"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "公开内容",
+              "发布正文、照片及你选择公开的粗区域"
+            ],
+            [
+              "私密内容",
+              "申请摘要、精确线索、原件按必要权限访问"
+            ],
+            [
+              "可选权限",
+              "相册、相机、前台定位、通知分别选择"
+            ],
+            [
+              "删除",
+              "区分公开隐藏、清理与法定例外"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "个人信息处理清单",
+          "value": "用途、处理方与保存期限",
+          "to": "dataInventory"
+        },
+        {
+          "type": "row",
+          "label": "访问 / 更正 / 撤回 / 删除",
+          "value": "查看真实请求流程",
+          "to": "dataRights"
+        },
+        {
+          "type": "row",
+          "label": "未成年人专门规则",
+          "value": "监护授权与保护设置",
+          "to": "teenPrivacy"
+        },
+        {
+          "type": "row",
+          "label": "SDK与第三方",
+          "value": "按实际接入逐项公开",
+          "to": "sdkList"
+        },
+        {
+          "type": "row",
+          "label": "隐私投诉",
+          "value": "无需注册",
+          "to": "guestReport"
+        },
+        {
+          "type": "note",
+          "title": "学习稿中的政策结构",
+          "body": "正式版本须由实际运营主体、公开联系渠道和真实数据流共同确定；本稿不收集真实资料。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回设置",
+        "to": "legacy:settings",
+        "kind": "secondary"
+      },
+      "back": "login",
+      "existingKey": "privacy"
+    },
+    {
+      "id": "dataInventory",
+      "title": "资料用途与保存",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "年龄 / 实名",
+              "必要结果与有效状态；默认不存证件原件"
+            ],
+            [
+              "申请 / 线索",
+              "最小摘要；结束后30天清理非必要原件与坐标"
+            ],
+            [
+              "私人地址",
+              "结束后30天清理非必要精确字段"
+            ],
+            [
+              "法定记录",
+              "按适用义务与起算点受控保留"
+            ],
+            [
+              "备份",
+              "最长90天滚动过期；恢复时重应用删除标记"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "不是统一留存期限",
+          "body": "争议保全只覆盖必要字段；清理失败有重试，不把全部家庭资料当交易记录。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "提出资料请求",
+          "value": "部分保留会说明原因",
+          "to": "dataRights"
+        }
+      ],
+      "footer": {
+        "label": "返回隐私与数据",
+        "to": "privacy",
+        "kind": "secondary"
+      },
+      "back": "privacy"
+    },
+    {
+      "id": "dataRights",
+      "title": "个人资料权利",
+      "group": "account",
+      "items": [
+        {
+          "type": "row",
+          "label": "访问与复制",
+          "value": "仅导出本人有权获得的资料",
+          "to": "dataRequest"
+        },
+        {
+          "type": "row",
+          "label": "更正资料",
+          "value": "安全标识走独立验证",
+          "to": "dataRequest"
+        },
+        {
+          "type": "row",
+          "label": "撤回可选授权",
+          "value": "不影响公开浏览",
+          "to": "dataRequest"
+        },
+        {
+          "type": "row",
+          "label": "删除资料 / 注销",
+          "value": "先说明范围和保留例外",
+          "to": "dataDelete"
+        },
+        {
+          "type": "row",
+          "label": "投诉或对结果申诉",
+          "value": "保留原记录",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "查看请求进度",
+        "to": "dataProgress",
+        "kind": "secondary"
+      },
+      "back": "privacy"
+    },
+    {
+      "id": "dataRequest",
+      "title": "提交资料请求",
+      "group": "account",
+      "items": [
+        {
+          "type": "field",
+          "label": "请求类型",
+          "value": "访问 / 更正 / 撤回授权",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "涉及资料与说明",
+          "value": "写明范围，不必重复上传全部原件",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "按风险验证",
+          "body": "可以使用已验证渠道；不会要求把泄露的身份证再次公开。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "确认请求范围",
+          "value": "保留受理与补充入口",
+          "to": "dataProgress"
+        }
+      ],
+      "footer": {
+        "label": "提交请求",
+        "to": "dataProgress"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "dataDelete",
+      "title": "删除 / 注销前确认",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "公开展示",
+              "移除相关公开内容与链接预览"
+            ],
+            [
+              "非必要资料",
+              "按清单清理主存、缩略图和导出件"
+            ],
+            [
+              "法定 / 争议记录",
+              "仅受控保留必要范围并说明原因"
+            ],
+            [
+              "备份",
+              "隔离至轮换过期，不重新用于普通服务"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "删除并非一键销毁所有记录",
+          "body": "可先选择删除指定资料；注销需要本次安全核对，不能冒称即时物理清空。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "我只删除部分资料",
+          "value": "保留账号",
+          "to": "dataRequest"
+        }
+      ],
+      "footer": {
+        "label": "继续核对删除范围",
+        "to": "dataProgress"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "dataProgress",
+      "title": "资料请求进度",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "请求已收到 · 示例",
+          "body": "编号 DR-DEMO-001；收到不等于清理已完成。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前阶段",
+              "核对请求与范围"
+            ],
+            [
+              "公开隐藏",
+              "单独展示完成情况"
+            ],
+            [
+              "资料清理",
+              "处理中 / 失败可重试"
+            ],
+            [
+              "例外保留",
+              "展示必要依据与结束条件"
+            ],
+            [
+              "备份",
+              "隔离并等待轮换"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "补充说明 / 对结果申诉",
+          "value": "不会公开材料",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "返回资料权利",
+        "to": "dataRights",
+        "kind": "secondary"
+      },
+      "back": "dataRights"
+    },
+    {
+      "id": "sdkList",
+      "title": "第三方与公开联系",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "按实际接入逐项公开",
+          "body": "列明名称、用途、处理类别、触发动作、数据地点和政策链接；没有接入的供应商不伪装已启用。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "登录",
+              "用户选择后才调用相应提供方"
+            ],
+            [
+              "地图",
+              "只发必要公开区域；前台定位另行授权"
+            ],
+            [
+              "照片 / 通知",
+              "使用时分别选择"
+            ],
+            [
+              "公开联系",
+              "正式运营主体与渠道核定后公布"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "隐私安全报告",
+          "value": "无需先注册",
+          "to": "guestReport"
+        },
+        {
+          "type": "row",
+          "label": "查看政策与规则版本",
+          "value": "生效信息可追溯",
+          "to": "rules"
+        }
+      ],
+      "footer": {
+        "label": "返回隐私与数据",
+        "to": "privacy",
+        "kind": "secondary"
+      },
+      "back": "privacy"
+    },
+    {
+      "id": "serviceTerms",
+      "title": "服务范围与重要约定",
+      "group": "account",
+      "items": [
+        {
+          "type": "text",
+          "text": "先看清，再决定",
+          "role": "Title"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "主要服务",
+              "宠物交流、领养与信息预约"
+            ],
+            [
+              "费用与性质",
+              "领养、出售与商业关联明确区分"
+            ],
+            [
+              "平台能力",
+              "未接支付，不提供支付担保"
+            ],
+            [
+              "年龄",
+              "年满14交流；未满14监护授权；成人办理商业和线下签约"
+            ],
+            [
+              "法定责任",
+              "站外交易提示不排除依法应承担的责任"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "完整规则与历史版本",
+          "value": "支持检索、下载和意见反馈",
+          "to": "rules"
+        },
+        {
+          "type": "row",
+          "label": "隐私与数据",
+          "value": "必要处理与可选授权分开",
+          "to": "privacy"
+        }
+      ],
+      "footer": {
+        "label": "返回登录",
+        "to": "login",
+        "kind": "secondary"
+      },
+      "back": "login"
+    },
+    {
+      "id": "rules",
+      "title": "平台规则中心",
+      "group": "account",
+      "items": [
+        {
+          "type": "field",
+          "label": "检索规则",
+          "value": "搜索费用、领养、隐私或申诉",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "服务协议",
+          "value": "草案预览；正式版本待发布",
+          "to": "serviceTerms"
+        },
+        {
+          "type": "row",
+          "label": "领养、出售与动物准入",
+          "value": "身份、费用、来源与检疫",
+          "to": "ruleDetail"
+        },
+        {
+          "type": "row",
+          "label": "隐私与未成年人",
+          "value": "必要用途及专门保护",
+          "to": "privacy"
+        },
+        {
+          "type": "row",
+          "label": "历史版本与下载",
+          "value": "保留适用期间完整内容",
+          "to": "ruleHistory"
+        },
+        {
+          "type": "row",
+          "label": "规则变更与意见",
+          "value": "公示期间可反馈",
+          "to": "ruleChange"
+        },
+        {
+          "type": "row",
+          "label": "处理依据与人工申诉",
+          "value": "保留原结论",
+          "to": "ruleAppeal"
+        }
+      ],
+      "footer": {
+        "label": "返回原页面",
+        "to": "legacy:home",
+        "kind": "secondary"
+      },
+      "back": "legacy:settings"
+    },
+    {
+      "id": "ruleDetail",
+      "title": "领养与出售规则",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "当前版本 · 设计示例",
+          "body": "正式版本、生效日期和经营信息待实际运营确认；未生效草稿不替代用户已有约定。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "角色",
+              "普通账号与经营者 / 代理核验分开"
+            ],
+            [
+              "费用",
+              "逐项必付 / 可选、对象和退款条件"
+            ],
+            [
+              "物种",
+              "仅开放已建立准入与禁限售规则的范围"
+            ],
+            [
+              "检疫",
+              "适用证明在出售 / 交接前核对"
+            ],
+            [
+              "争议",
+              "有理由、证据与人工申诉"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "下载完整版本 · 示例",
+          "value": "原生文本，非整屏截图",
+          "to": "ruleHistory"
+        }
+      ],
+      "footer": {
+        "label": "返回规则中心",
+        "to": "rules",
+        "kind": "secondary"
+      },
+      "back": "rules"
+    },
+    {
+      "id": "ruleHistory",
+      "title": "规则历史与下载",
+      "group": "account",
+      "items": [
+        {
+          "type": "row",
+          "label": "当前示例版本",
+          "value": "学习示例 V1 · 尚未正式生效",
+          "to": "ruleDetail"
+        },
+        {
+          "type": "row",
+          "label": "上一版本",
+          "value": "只读，可检索和下载",
+          "to": "ruleDetail"
+        },
+        {
+          "type": "note",
+          "title": "版本保存",
+          "body": "适用平台规则办法时保留规定期间历史版本，不用新规则倒改既有记录。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看正在公示的变更",
+          "value": "比较差异与退出影响",
+          "to": "ruleChange"
+        }
+      ],
+      "footer": {
+        "label": "返回规则中心",
+        "to": "rules",
+        "kind": "secondary"
+      },
+      "back": "rules"
+    },
+    {
+      "id": "ruleChange",
+      "title": "规则变更与意见",
+      "group": "account",
+      "items": [
+        {
+          "type": "note",
+          "title": "草案征求意见 · 示例",
+          "body": "明示变更内容、影响、生效计划与过渡期；未到生效时间不提前执行。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "普通修改",
+              "适用规则时至少提前7日公示"
+            ],
+            [
+              "特定重大修改",
+              "适用规则时至少提前15日公示"
+            ],
+            [
+              "不接受",
+              "给退出及相关权益处理入口"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "你的意见",
+          "value": "针对具体条款说明",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "查看原版和草案",
+          "value": "完整可读与下载",
+          "to": "ruleHistory"
+        }
+      ],
+      "footer": {
+        "label": "提交意见",
+        "to": "guestReceipt"
+      },
+      "back": "rules"
+    },
+    {
+      "id": "ruleAppeal",
+      "title": "处理依据与人工申诉",
+      "group": "account",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原处理",
+              "具体事项 / 影响范围 / 时间"
+            ],
+            [
+              "依据",
+              "适用规则版本及条款"
+            ],
+            [
+              "事实摘要",
+              "保护举报者和他人私密材料"
+            ],
+            [
+              "救济",
+              "可补充、解释和申请人工复核"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "申诉理由",
+          "value": "说明不认可的具体事项",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "保留原记录",
+          "body": "不覆盖原结论与证据，不因申诉自动扩大处罚。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "提交申诉",
+        "to": "guestProgress"
+      },
+      "back": "rules"
+    },
+    {
+      "id": "guestReport",
+      "title": "安全 / 隐私报告",
+      "group": "reports",
+      "items": [
+        {
+          "type": "text",
+          "text": "无需注册，也可以报告",
+          "role": "Title"
+        },
+        {
+          "type": "field",
+          "label": "内容链接或编号",
+          "value": "可从当前页面自动带入",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "问题类型",
+          "value": "隐私泄露 / 冒用 / 违法信息 / 其他",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "具体问题",
+          "value": "说明哪一处需要处理",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "回联方式（可选）",
+          "value": "不提供也可凭回执查询",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "先说明问题，证据可后补",
+          "body": "请脱敏；不要为请求删除再次公开上传证件、门牌或儿童资料。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "提交中 / 结果待确认",
+          "value": "查看超时恢复",
+          "to": "guestPending"
+        },
+        {
+          "type": "row",
+          "label": "网络失败示例",
+          "value": "输入会保留",
+          "to": "guestError"
+        }
+      ],
+      "footer": {
+        "label": "提交报告",
+        "to": "guestReceipt"
+      },
+      "back": "privacy"
+    },
+    {
+      "id": "guestPending",
+      "title": "报告结果待确认",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "还不能确认是否收到",
+          "body": "网络中断或超时不代表提交失败；先查询同一次请求结果，避免重复发送。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "查询本次提交结果",
+          "value": "查询这一次提交，避免重复报告",
+          "to": "guestReceipt"
+        },
+        {
+          "type": "row",
+          "label": "仍未收到 / 修改内容",
+          "value": "保留输入再操作",
+          "to": "guestReport"
+        },
+        {
+          "type": "text",
+          "text": "不会把等待状态写成工作人员已核实。",
+          "role": "Caption"
+        }
+      ],
+      "footer": {
+        "label": "继续查询本次结果",
+        "to": "guestReceipt",
+        "kind": "secondary"
+      },
+      "back": "guestReport"
+    },
+    {
+      "id": "guestError",
+      "title": "报告暂未发送",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "输入已保留",
+          "body": "明确失败时可修正后重试；恢复网络不会自动发送。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "field",
+          "label": "问题说明",
+          "value": "保留你刚才填写的内容",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "不确定是否送达",
+          "value": "先查询本次结果",
+          "to": "guestPending"
+        }
+      ],
+      "footer": {
+        "label": "返回并继续填写",
+        "to": "guestReport",
+        "kind": "secondary"
+      },
+      "back": "guestReport"
+    },
+    {
+      "id": "guestReceipt",
+      "title": "报告已收到 · 示例",
+      "group": "reports",
+      "items": [
+        {
+          "type": "note",
+          "title": "回执 RP-DEMO-001",
+          "body": "只是收到请求，不代表人工核实或已作出事实结论。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "查询方式",
+              "保存私密回执，勿公开分享"
+            ],
+            [
+              "后续",
+              "分流、必要保护、核实与补充"
+            ],
+            [
+              "服务时间",
+              "以实际公开值守信息为准"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看处理进度",
+          "value": "只看本人有权获取的内容",
+          "to": "guestProgress"
+        },
+        {
+          "type": "row",
+          "label": "补充说明",
+          "value": "不重复创建报告",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "查看进度",
+        "to": "guestProgress",
+        "kind": "secondary"
+      },
+      "back": "guestReport"
+    },
+    {
+      "id": "guestProgress",
+      "title": "报告处理进度",
+      "group": "reports",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "已收到",
+              "回执已生成"
+            ],
+            [
+              "分流 / 临时保护",
+              "按具体风险先隐藏必要字段"
+            ],
+            [
+              "人工核实",
+              "不是举报人数投票"
+            ],
+            [
+              "结论",
+              "支持 / 未获支持 / 无法判断"
+            ],
+            [
+              "申诉",
+              "保留依据与原记录"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "紧急情况独立升级",
+          "body": "依法需要立即采取的措施不因普通服务时段而延后；不承诺尚无能力的全天人工值守。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "对结论申请人工复核",
+          "value": "查看依据后提交",
+          "to": "ruleAppeal"
+        }
+      ],
+      "footer": {
+        "label": "返回报告入口",
+        "to": "guestReport",
+        "kind": "secondary"
+      },
+      "back": "guestReport"
+    },
+    {
+      "id": "candidates",
+      "title": "领养候选与试养",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "text",
+          "text": "小满 · 多位候选",
+          "role": "Title"
+        },
+        {
+          "type": "note",
+          "title": "候选通过不是交接完成",
+          "body": "可以比较多份申请；同一只宠物只能有一段独占试养或交接。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "候选 A · 通过匹配",
+          "value": "双方确认条款后才预留",
+          "to": "trialReserved"
+        },
+        {
+          "type": "row",
+          "label": "候选 B · 通过匹配",
+          "value": "可以成为候补",
+          "to": "waitlist"
+        },
+        {
+          "type": "row",
+          "label": "并发确认发生冲突",
+          "value": "不会同时确认两家",
+          "to": "placementConflict"
+        }
+      ],
+      "footer": {
+        "label": "查看试养安排",
+        "to": "trialReserved"
+      },
+      "back": "legacy:application"
+    },
+    {
+      "id": "trialReserved",
+      "title": "试养安排已预留",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物",
+              "小满 · 同一宠物档案"
+            ],
+            [
+              "当前安排",
+              "双方确认同一版本 · 示例"
+            ],
+            [
+              "其他申请",
+              "转为候补，已发送中性通知"
+            ],
+            [
+              "费用 / 责任",
+              "按确认条款分别记录"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "申请安全接回",
+          "value": "不自动重新开放领养",
+          "to": "returnRequest"
+        },
+        {
+          "type": "row",
+          "label": "继续交接",
+          "value": "双方实际确认后才完成",
+          "to": "legacy:handover"
+        },
+        {
+          "type": "row",
+          "label": "查看候补",
+          "value": "不公开入选家庭资料",
+          "to": "waitlist"
+        }
+      ],
+      "footer": {
+        "label": "查看照护进度",
+        "to": "legacy:followup",
+        "kind": "secondary"
+      },
+      "back": "candidates"
+    },
+    {
+      "id": "waitlist",
+      "title": "当前为候补",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "小满正在一段试养安排中",
+          "body": "你的申请保留为候补；不是已被拒绝，也不会自动替你接受新的条件。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "退出候补",
+          "value": "保留历史与投诉入口",
+          "to": "legacy:application"
+        },
+        {
+          "type": "row",
+          "label": "重新匹配时确认条件",
+          "value": "需你再次明确同意",
+          "to": "candidates"
+        },
+        {
+          "type": "text",
+          "text": "不会披露另一家庭的姓名、住址或申请材料。",
+          "role": "Caption"
+        }
+      ],
+      "footer": {
+        "label": "返回我的申请",
+        "to": "legacy:application",
+        "kind": "secondary"
+      },
+      "back": "candidates"
+    },
+    {
+      "id": "placementConflict",
+      "title": "试养状态已变化",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "未能确认本次安排",
+          "body": "另一段安排已先完成确认，当前宠物已预留。你的输入仍保留。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "查看最新状态",
+          "value": "不要按旧按钮继续交接",
+          "to": "waitlist"
+        },
+        {
+          "type": "row",
+          "label": "保留候补 / 退出",
+          "value": "由你选择",
+          "to": "legacy:application"
+        }
+      ],
+      "footer": {
+        "label": "查看最新申请",
+        "to": "waitlist",
+        "kind": "secondary"
+      },
+      "back": "waitlist"
+    },
+    {
+      "id": "returnRequest",
+      "title": "申请安全接回",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "先保证继续照护",
+          "body": "发送请求不会把宠物标成已接回，也不会立即重新公开匹配。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "接回原因与照护需要",
+          "value": "说明当前情况，敏感内容私密",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "可联系安排",
+          "value": "不在公开页面写精确地址",
+          "error": false
+        },
+        {
+          "type": "row",
+          "label": "紧急健康 / 无人可接回",
+          "value": "联系实际诊疗资源并申请人工协助",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "发送接回提议",
+        "to": "returnProposal"
+      },
+      "back": "trialReserved"
+    },
+    {
+      "id": "returnProposal",
+      "title": "协商接回安排",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "版本",
+              "接回提案 R1 · 待双方确认"
+            ],
+            [
+              "时间",
+              "双方约定的日期与时区"
+            ],
+            [
+              "地点",
+              "只向必要参与者显示"
+            ],
+            [
+              "接回方",
+              "核对身份与接回授权"
+            ],
+            [
+              "照护事项",
+              "药物、物品和必要说明另列"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "方案不合适 / 提出修改",
+          "value": "拒绝方案不等于拒绝所有接回",
+          "to": "returnRequest"
+        },
+        {
+          "type": "row",
+          "label": "对方失联或拒绝协商",
+          "value": "转人工协助，不自动完成",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "查看双方确认状态",
+        "to": "returnConfirmed"
+      },
+      "back": "returnRequest"
+    },
+    {
+      "id": "returnConfirmed",
+      "title": "接回安排已确认",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "双方已确认 R1 · 示例",
+          "body": "按已确认的接回安排准备，尚未发生实际接回。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "我已实际完成交接",
+          "value": "一方确认后等待对方",
+          "to": "returnPending"
+        },
+        {
+          "type": "row",
+          "label": "安排出现安全变化",
+          "value": "先暂停行动并协助处理",
+          "to": "returnDispute"
+        },
+        {
+          "type": "row",
+          "label": "需要修改接回安排",
+          "value": "新提案不覆盖历史",
+          "to": "returnProposal"
+        }
+      ],
+      "footer": {
+        "label": "我已实际完成接回",
+        "to": "returnPending"
+      },
+      "back": "returnProposal"
+    },
+    {
+      "id": "returnPending",
+      "title": "等待另一方确认接回",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "一方已确认实际接回",
+          "body": "在另一方确认或人工有据核对前，不显示接回完成。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看双方确认后状态",
+          "value": "独立示例状态",
+          "to": "returned"
+        },
+        {
+          "type": "row",
+          "label": "未实际接回 / 有争议",
+          "value": "保留原记录",
+          "to": "returnDispute"
+        }
+      ],
+      "footer": {
+        "label": "查看接回记录",
+        "to": "returnConfirmed",
+        "kind": "secondary"
+      },
+      "back": "returnConfirmed"
+    },
+    {
+      "id": "returned",
+      "title": "安全接回已完成",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "双方实际确认 · 示例",
+          "body": "已记录接回方和必要照护归属，关闭这一段独占安排。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原领养历史",
+              "保留，不静默改回从未发生"
+            ],
+            [
+              "重新匹配",
+              "新发布版本重新核对"
+            ],
+            [
+              "前一家庭",
+              "不公开其资料或投诉原件"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "重新准备领养资料",
+          "value": "不是自动发布",
+          "to": "legacy:myPublishes"
+        },
+        {
+          "type": "row",
+          "label": "查看原申请与记录",
+          "value": "可继续投诉或申请帮助",
+          "to": "legacy:application"
+        }
+      ],
+      "footer": {
+        "label": "返回领养管理",
+        "to": "candidates",
+        "kind": "secondary"
+      },
+      "back": "candidates"
+    },
+    {
+      "id": "returnDispute",
+      "title": "接回需要人工协助",
+      "group": "adoption",
+      "items": [
+        {
+          "type": "note",
+          "title": "保持当前照护与联系",
+          "body": "失联、无人可接回、归属或安全争议不会因超时自动结案。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "field",
+          "label": "具体困难",
+          "value": "说明谁无法联系、现状与安全需求",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "能力边界",
+          "body": "平台不承诺上门、寄养或急诊服务；紧急健康问题联系实际动物诊疗机构。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "提交必要说明",
+          "value": "原件按需私密补充",
+          "to": "guestProgress"
+        }
+      ],
+      "footer": {
+        "label": "提交协助请求",
+        "to": "guestProgress"
+      },
+      "back": "returnRequest"
+    },
+    {
+      "id": "safetyHold",
+      "title": "预约已进入安全暂停",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "note",
+          "title": "先不要按原安排出发",
+          "body": "原地点不可用、主体 / 宠物不符、健康重大纠正或隐藏费用等需先核对。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原有效版本",
+              "保留为历史与处理依据"
+            ],
+            [
+              "当前动作",
+              "暂停出发确认，不自动转场"
+            ],
+            [
+              "解除条件",
+              "核对后双方确认新的有效版本"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "重新协商",
+          "value": "新版本逐项确认",
+          "to": "appointmentReview"
+        },
+        {
+          "type": "row",
+          "label": "取消 / 报告问题",
+          "value": "不自动记作失约",
+          "to": "guestReport"
+        }
+      ],
+      "footer": {
+        "label": "查看需要核对的安排",
+        "to": "appointmentReview"
+      },
+      "back": "legacy:appointment"
+    },
+    {
+      "id": "appointmentReview",
+      "title": "普通改约与风险处理",
+      "group": "appointments",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "普通协商",
+              "原有效安排继续，新提案单列"
+            ],
+            [
+              "拒绝 / 撤回 / 到期",
+              "只结束普通提案"
+            ],
+            [
+              "安全关键事件",
+              "进入安全暂停，先不出发"
+            ],
+            [
+              "恢复旧内容",
+              "恢复已生效的历史内容才新建V3；仅撤回待确认提案不新增版本"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "存在安全问题",
+          "value": "停止按原安排行动",
+          "to": "safetyHold"
+        },
+        {
+          "type": "row",
+          "label": "普通时间变更",
+          "value": "查看现有版本对照",
+          "to": "legacy:change"
+        }
+      ],
+      "footer": {
+        "label": "返回预约记录",
+        "to": "legacy:appointment",
+        "kind": "secondary"
+      },
+      "back": "login"
+    },
+    {
+      "id": "lostApproximate",
+      "title": "求助时间与位置",
+      "group": "lost",
+      "items": [
+        {
+          "type": "field",
+          "label": "事件时间",
+          "value": "约略时间 / 时间范围 / 不确定",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "时间精度",
+          "value": "约略 · 不强迫填写精确分钟",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "公开位置",
+          "value": "武汉 · 洪山区",
+          "error": false
+        },
+        {
+          "type": "field",
+          "label": "位置精度",
+          "value": "城市 / 区域 / 精确点（私密）",
+          "error": false
+        },
+        {
+          "type": "note",
+          "title": "没有 GPS 也可以",
+          "body": "区域信息只显示区域，不造精确图钉；原始私密点与公开位置分开。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "不确定时间或地点",
+          "value": "如实提交未知状态",
+          "to": "lostUnknown"
+        }
+      ],
+      "footer": {
+        "label": "查看求助预览",
+        "to": "lostUnknown"
+      },
+      "back": "legacy:lostPublish"
+    },
+    {
+      "id": "lostUnknown",
+      "title": "时间 / 地点待补充",
+      "group": "lost",
+      "items": [
+        {
+          "type": "note",
+          "title": "可以先如实说明",
+          "body": "时间未知或仅知道城市时，可以如实说明，不必填写不准确的时间或地点。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "时间",
+              "尚不确定，待补充"
+            ],
+            [
+              "公开地点",
+              "仅城市 / 区域"
+            ],
+            [
+              "地图",
+              "无精确点，优先文字列表"
+            ],
+            [
+              "物种",
+              "按首发允许范围选择，不默许禁限售"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "补充更准确的信息",
+          "value": "保存变更与来源",
+          "to": "lostApproximate"
+        }
+      ],
+      "footer": {
+        "label": "返回编辑并保留内容",
+        "to": "lostApproximate",
+        "kind": "secondary"
+      },
+      "back": "login"
+    },
+    {
+      "id": "linkExisting",
+      "title": "验证已有账号再关联",
+      "group": "account",
+      "back": "accountChoice",
+      "items": [
+        {
+          "type": "note",
+          "title": "新身份已验证，尚未关联",
+          "body": "先登录你原来的M&D账号；不会因相同昵称或邮箱直接合并资料。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "原账号登录标识",
+          "value": "已验证邮箱 / 账号名 / 手机号"
+        },
+        {
+          "type": "field",
+          "label": "原账号密码或验证方式",
+          "value": "完成原账号本次安全验证"
+        },
+        {
+          "type": "row",
+          "label": "原账号无法验证",
+          "value": "先恢复原账号访问",
+          "to": "accountRecovery"
+        },
+        {
+          "type": "note",
+          "title": "取消不改变原账号",
+          "body": "未确认关联前，新身份不接管宠物、聊天或权限。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "验证原账号并继续",
+        "to": "linkConfirm"
+      }
+    },
+    {
+      "id": "linkConfirm",
+      "title": "确认关联到原账号",
+      "group": "account",
+      "back": "linkExisting",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原账号",
+              "mnd_sample · 已通过本次原账号验证（示例）"
+            ],
+            [
+              "待关联身份",
+              "n***@example.com · 已验证的新邮箱"
+            ],
+            [
+              "保留内容",
+              "沿用原账号的宠物、聊天、草稿与权限"
+            ]
+          ]
+        },
+        {
+          "type": "check",
+          "key": "linkConsent",
+          "label": "我确认将此登录身份关联到上面的原账号"
+        },
+        {
+          "type": "row",
+          "label": "账号不是我想要的",
+          "value": "取消，不覆盖原绑定",
+          "to": "linkExisting"
+        },
+        {
+          "type": "note",
+          "title": "一次确认，只关联这个身份",
+          "body": "仍需检查唯一性与标识冲突；失败保持原账号，不自动公开或提交草稿。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "确认关联",
+        "to": "accountIdentifiers",
+        "requires": "linkConsent"
+      }
+    }
+  ]
+}

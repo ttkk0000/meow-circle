@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-21",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "scope": "Native Figma final screenshots; representative visual inspection only.",
+  "images": [
+    {
+      "key": "hub",
+      "nodeId": "493:1861258",
+      "file": "hub.png",
+      "width": 1440,
+      "height": 926,
+      "reviewed": true
+    },
+    {
+      "key": "login",
+      "nodeId": "56:70",
+      "file": "login.png",
+      "width": 390,
+      "height": 844,
+      "reviewed": true
+    },
+    {
+      "key": "adoption",
+      "nodeId": "56:37",
+      "file": "adoption.png",
+      "width": 390,
+      "height": 844,
+      "reviewed": true
+    },
+    {
+      "key": "guardian",
+      "nodeId": "460:17388",
+      "file": "guardian.png",
+      "width": 390,
+      "height": 844,
+      "reviewed": true
+    },
+    {
+      "key": "sale",
+      "nodeId": "56:78",
+      "file": "sale.png",
+      "width": 390,
+      "height": 844,
+      "reviewed": true
+    },
+    {
+      "key": "return",
+      "nodeId": "460:68727",
+      "file": "return.png",
+      "width": 390,
+      "height": 844,
+      "reviewed": true
+    },
+    {
+      "key": "webLogin",
+      "nodeId": "311:379860",
+      "file": "webLogin.png",
+      "width": 1440,
+      "height": 1000,
+      "reviewed": true
+    },
+    {
+      "key": "unreadConfirm",
+      "nodeId": "482:148696",
+      "file": "unreadConfirm.png",
+      "width": 1194,
+      "height": 834,
+      "reviewed": true
+    },
+    {
+      "key": "privacy",
+      "nodeId": "56:76",
+      "file": "privacy.png",
+      "width": 390,
+      "height": 844,
+      "reviewed": true
+    },
+    {
+      "key": "settings",
+      "nodeId": "56:75",
+      "file": "settings.png",
+      "width": 390,
+      "height": 844,
+      "reviewed": true
+    },
+    {
+      "key": "tabletUnread",
+      "nodeId": "482:148675",
+      "file": "tabletUnread.png",
+      "width": 834,
+      "height": 1194,
+      "reviewed": true
+    },
+    {
+      "key": "rules",
+      "nodeId": "460:17465",
+      "file": "rules.png",
+      "width": 1440,
+      "height": 1000,
+      "reviewed": true
+    }
+  ]
+}

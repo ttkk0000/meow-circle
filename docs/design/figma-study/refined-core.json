@@ -1,0 +1,123 @@
+{
+  "createdNodeIds": [
+    "28:20",
+    "28:21",
+    "28:22",
+    "28:23",
+    "28:24",
+    "I28:24;17:40",
+    "28:26",
+    "28:27",
+    "I28:27;17:40"
+  ],
+  "mutatedNodeIds": [
+    "20:8",
+    "20:28",
+    "20:48",
+    "20:69",
+    "20:78",
+    "20:87",
+    "20:74",
+    "20:83"
+  ],
+  "removedNodeIds": [
+    "20:191",
+    "20:219"
+  ],
+  "prototypeLinks": [],
+  "updatedLinks": {
+    "community/nav/社区": "20:16",
+    "community/nav/领养": "20:18",
+    "community/nav/找宠": "20:20",
+    "community/nav/消息": "20:22",
+    "community/nav/我的": "20:24",
+    "adoption/nav/社区": "20:36",
+    "adoption/nav/领养": "20:38",
+    "adoption/nav/找宠": "20:40",
+    "adoption/nav/消息": "20:42",
+    "adoption/nav/我的": "20:44",
+    "find/nav/社区": "20:56",
+    "find/nav/领养": "20:58",
+    "find/nav/找宠": "20:60",
+    "find/nav/消息": "20:62",
+    "find/nav/我的": "20:64",
+    "mine/nav/社区": "20:95",
+    "mine/nav/领养": "20:97",
+    "mine/nav/找宠": "20:99",
+    "mine/nav/消息": "20:101",
+    "mine/nav/我的": "20:103",
+    "community/publish": "20:122",
+    "adoption/detail": "20:151",
+    "find/detail": "20:170",
+    "adoptionDetail/apply": "28:24",
+    "petDetail/appointment": "28:27",
+    "mine/appointment": "20:228",
+    "mine/publish": "20:239",
+    "apply/chat": "21:79",
+    "appointment/chat": "21:110",
+    "change/accept": "21:128",
+    "change/reject": "21:130",
+    "chat/change": "21:144"
+  },
+  "validation": {
+    "descendants": 250,
+    "types": {
+      "TEXT": 134,
+      "FRAME": 98,
+      "INSTANCE": 18
+    },
+    "imageNodes": [
+      {
+        "id": "20:116",
+        "name": "Photo / cat / 示例素材",
+        "type": "FRAME",
+        "width": 350,
+        "height": 210
+      },
+      {
+        "id": "20:137",
+        "name": "Photo / cat / 示例素材",
+        "type": "FRAME",
+        "width": 169,
+        "height": 170
+      },
+      {
+        "id": "20:143",
+        "name": "Photo / dog / 示例素材",
+        "type": "FRAME",
+        "width": 169,
+        "height": 170
+      },
+      {
+        "id": "20:164",
+        "name": "Photo / catOffer / 示例素材",
+        "type": "FRAME",
+        "width": 350,
+        "height": 200
+      },
+      {
+        "id": "20:175",
+        "name": "Photo / cat / 示例素材",
+        "type": "FRAME",
+        "width": 350,
+        "height": 210
+      },
+      {
+        "id": "20:195",
+        "name": "Photo / catOffer / 示例素材",
+        "type": "FRAME",
+        "width": 350,
+        "height": 164
+      }
+    ],
+    "fontFamilies": [
+      "Noto Sans SC"
+    ],
+    "fontPass": true,
+    "uiRasterPresent": false,
+    "bounds": {
+      "width": 1440,
+      "height": 2180
+    }
+  }
+}

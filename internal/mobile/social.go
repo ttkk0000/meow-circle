@@ -1,0 +1,1110 @@
+package mobile
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"time"
+)
+
+type PetInput struct {
+	CommandMeta
+	Version  int64   `json:"version"`
+	Pet      Pet     `json:"pet"`
+	MediaIDs []int64 `json:"media_ids"`
+}
+
+func (s *Service) SavePet(ctx context.Context, actor, id int64, in PetInput) (out Record, err error) {
+	if id == 0 && in.Version != 0 {
+		return out, ErrConflict
+	}
+	if err = textValid(in.Pet.Name, 40, true); err != nil {
+		return
+	}
+	if in.Pet.Species != "cat" && in.Pet.Species != "dog" {
+		return out, Invalid("species must be cat or dog")
+	}
+	if err = audienceValid(in.Pet.Audience); err != nil {
+		return
+	}
+	if len(in.Pet.Bio) > 8000 || len(in.Pet.Health) > 8000 || len(in.Pet.Breed) > 120 {
+		return out, Invalid("pet details too long")
+	}
+	err = s.command(ctx, actor, "pet.save", id, in, Pets, &out, func(tx Tx) error {
+		if e := s.active(tx, actor); e != nil {
+			return e
+		}
+		if in.Pet.Audience.Mode != "private" || in.Pet.AdoptionAvailable {
+			if e := s.interaction(tx, actor); e != nil {
+				return e
+			}
+		}
+		if in.Pet.AdoptionAvailable {
+			if e := s.factualAttachments(tx, actor, in.MediaIDs); e != nil {
+				return e
+			}
+			if e := s.adult(tx, actor); e != nil {
+				return e
+			}
+			if e := s.disposition(tx, actor, id); e != nil {
+				return e
+			}
+		}
+		if e := s.attachments(tx, actor, in.MediaIDs); e != nil {
+			return e
+		}
+		if in.Pet.Audience.Mode == "public" {
+			if e := s.publicAttachments(tx, actor, in.MediaIDs); e != nil {
+				return e
+			}
+		}
+		r := Record{OwnerID: actor, State: "active"}
+		if id > 0 {
+			var e error
+			r, e = writable(tx, Pets, id, actor, in.Version)
+			if e != nil {
+				return e
+			}
+		}
+		r.MediaIDs = in.MediaIDs
+		r.Public = in.Pet.Audience.Mode == "public"
+		if e := save(tx, Pets, &r, in.Pet, actor, "pet.saved"); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}
+
+type FriendInput struct {
+	CommandMeta
+	Version int64  `json:"version"`
+	UserID  int64  `json:"user_id"`
+	Reason  string `json:"reason"`
+}
+
+func (s *Service) Friend(ctx context.Context, actor int64, action string, in FriendInput) (out Record, err error) {
+	if in.UserID <= 0 || in.UserID == actor {
+		return out, Invalid("invalid friend")
+	}
+	if err = textValid(in.Reason, 200, false); err != nil {
+		return
+	}
+	err = s.command(ctx, actor, "friend."+action, 0, in, Friendships, &out, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		if e := s.active(tx, in.UserID); e != nil {
+			return ErrNotFound
+		}
+		r, e := tx.ByKey(Friendships, pair(actor, in.UserID))
+		fresh := errors.Is(e, ErrNotFound)
+		if e != nil && !fresh {
+			return e
+		}
+		f := Friend{RequesterID: actor, RecipientID: in.UserID, Reason: in.Reason}
+		if fresh {
+			r = Record{OwnerID: actor, Participants: []int64{in.UserID}, Key: pair(actor, in.UserID)}
+		} else {
+			if e = expected(r, in.Version); e != nil {
+				return e
+			}
+			f, e = Decode[Friend](r)
+			if e != nil {
+				return e
+			}
+		}
+		switch action {
+		case "request":
+			if !fresh && r.State != "declined" && r.State != "withdrawn" && r.State != "removed" {
+				return ErrConflict
+			}
+			f = Friend{RequesterID: actor, RecipientID: in.UserID, Reason: in.Reason}
+			r.OwnerID = actor
+			r.Participants = []int64{in.UserID}
+			r.State = "pending"
+		case "accept", "decline":
+			if r.State != "pending" || actor != f.RecipientID {
+				return ErrForbidden
+			}
+			r.State = "declined"
+			if action == "accept" {
+				r.State = "accepted"
+				now := s.Now()
+				f.AcceptedAt = &now
+			}
+		case "withdraw":
+			if r.State != "pending" || actor != f.RequesterID {
+				return ErrForbidden
+			}
+			r.State = "withdrawn"
+		case "remove":
+			if r.State != "accepted" {
+				return ErrConflict
+			}
+			r.State = "removed"
+		case "block":
+			if r.State == "blocked" && f.BlockedBy != actor {
+				return ErrForbidden
+			}
+			r.State = "blocked"
+			f.BlockedBy = actor
+		case "unblock":
+			if r.State != "blocked" || f.BlockedBy != actor {
+				return ErrForbidden
+			}
+			r.State = "removed"
+			f.BlockedBy = 0
+		default:
+			return Invalid("invalid friend action")
+		}
+		if e = save(tx, Friendships, &r, f, actor, "friend."+action); e != nil {
+			return e
+		}
+		if action == "request" || action == "accept" {
+			if e = s.notify(tx, in.UserID, actor, "interactions", Friendships, r.ID, "好友关系有更新"); e != nil {
+				return e
+			}
+		}
+		out = r
+		return nil
+	})
+	return
+}
+
+type EntryInput struct {
+	CommandMeta
+	Declaration PublicationDeclaration `json:"declaration"`
+	Version     int64                  `json:"version"`
+	Entry       Entry                  `json:"entry"`
+	MediaIDs    []int64                `json:"media_ids"`
+}
+
+func (s *Service) SaveEntry(ctx context.Context, actor, id int64, in EntryInput) (out Record, err error) {
+	if e := textValid(in.Entry.Title, 80, false); e != nil {
+		return out, e
+	}
+	if len(in.Entry.Tags) > 10 {
+		return out, Invalid("too many tags")
+	}
+	for _, tag := range in.Entry.Tags {
+		if e := textValid(tag, 30, true); e != nil {
+			return out, e
+		}
+	}
+	if in.Entry.Category != "" && !HasString([]string{"daily_share", "help", "activity", "trade"}, in.Entry.Category) {
+		return out, Invalid("invalid category")
+	}
+	if id == 0 && in.Version != 0 {
+		return out, ErrConflict
+	}
+	if err = textValid(in.Entry.Text, 5000, len(in.MediaIDs) == 0); err != nil {
+		return
+	}
+	if err = audienceValid(in.Entry.Audience); err != nil {
+		return
+	}
+	switch in.Entry.Space {
+	case "community":
+		if in.Entry.Audience.Mode != "public" {
+			return out, Invalid("community entries are public")
+		}
+	case "circle":
+		if in.Entry.Audience.Mode == "public" {
+			return out, Invalid("circle requires a private audience")
+		}
+	case "diary":
+		if in.Entry.PetID <= 0 {
+			return out, Invalid("diary requires a pet")
+		}
+	default:
+		return out, Invalid("invalid space")
+	}
+	err = s.command(ctx, actor, "entry.save", id, in, Entries, &out, func(tx Tx) error {
+		if e := s.active(tx, actor); e != nil {
+			return e
+		}
+		if in.Entry.Audience.Mode != "private" {
+			if e := s.interaction(tx, actor); e != nil {
+				return e
+			}
+		}
+		if e := s.attachments(tx, actor, in.MediaIDs); e != nil {
+			return e
+		}
+		if in.Entry.PetID > 0 {
+			p, e := tx.Get(Pets, in.Entry.PetID)
+			if e != nil {
+				return e
+			}
+			if e = owner(p, actor); e != nil {
+				return e
+			}
+		}
+		if in.Entry.Audience.Mode == "public" {
+			if e := s.publicAttachments(tx, actor, in.MediaIDs); e != nil {
+				return e
+			}
+		}
+		if in.Entry.Audience.Mode != "private" {
+			in.Entry.ContentOrigin = ""
+			preview, e := s.publicationManifest(tx, actor, in)
+			if e != nil {
+				return e
+			}
+			if !in.Declaration.Confirmed || preview.ManifestHash != in.Declaration.ManifestHash {
+				return Denied("publication_declaration_required")
+			}
+			in.Entry.ContentOrigin = in.Declaration.Origin
+			if in.Declaration.Origin == "ai_generated" || in.Declaration.Origin == "ai_modified" {
+				for _, mediaID := range in.MediaIDs {
+					m, e := tx.Get(Media, mediaID)
+					if e != nil {
+						return e
+					}
+					file, e := Decode[MediaFile](m)
+					if e != nil {
+						return e
+					}
+					file.SourceLabel, e = PropagationLabel(file.SourceLabel, s.Propagator, file.SHA256, "1")
+					if e != nil {
+						return e
+					}
+					file.KnownAI = true
+					if e = SetBody(&m, file); e != nil {
+						return e
+					}
+					if e = tx.Save(Media, &m); e != nil {
+						return e
+					}
+				}
+			}
+		}
+		r := Record{OwnerID: actor, State: "published"}
+		if id > 0 {
+			var e error
+			r, e = writable(tx, Entries, id, actor, in.Version)
+			if e != nil {
+				return e
+			}
+			if r.State == "deleted" {
+				return ErrConflict
+			}
+		}
+		r.RefID = in.Entry.PetID
+		r.State = "published"
+		r.MediaIDs = in.MediaIDs
+		r.Public = in.Entry.Audience.Mode == "public"
+		if e := save(tx, Entries, &r, in.Entry, actor, "entry.saved"); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}
+
+type CommentInput struct {
+	Content        RichContent `json:"content"`
+	ReplyTo        int64       `json:"reply_to"`
+	IdempotencyKey string      `json:"idempotency_key"`
+}
+
+func (s *Service) Comment(ctx context.Context, actor, entry int64, in CommentInput) (out Record, err error) {
+	if err = contentValid(in.Content); err != nil {
+		return
+	}
+	if len(in.IdempotencyKey) < 8 || len(in.IdempotencyKey) > 100 {
+		return out, Invalid("idempotency key required")
+	}
+	err = s.command(ctx, actor, "entry.comment", entry, in, Comments, &out, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		p, e := tx.Get(Entries, entry)
+		if e != nil {
+			return e
+		}
+		ok, e := s.canRead(tx, Entries, p, actor)
+		if e != nil {
+			return e
+		}
+		if !ok || p.State != "published" {
+			return ErrForbidden
+		}
+		key := fmt.Sprintf("%d:%d:%s", actor, entry, in.IdempotencyKey)
+		old, e := tx.ByKey(Comments, key)
+		if e == nil {
+			body, e := Decode[Comment](old)
+			if e != nil {
+				return e
+			}
+			if body.RichContent != in.Content || body.ReplyTo != in.ReplyTo {
+				return Denied("idempotency_conflict")
+			}
+			out = old
+			return nil
+		}
+		if !errors.Is(e, ErrNotFound) {
+			return e
+		}
+		if in.ReplyTo > 0 {
+			reply, e := tx.Get(Comments, in.ReplyTo)
+			if e != nil {
+				return e
+			}
+			if reply.RefID != entry {
+				return Invalid("reply belongs to another entry")
+			}
+		}
+		r := Record{OwnerID: actor, RefID: entry, Key: key, State: "published"}
+		if e = save(tx, Comments, &r, Comment{in.Content, in.ReplyTo}, actor, "entry.commented"); e != nil {
+			return e
+		}
+		out = r
+		return s.notify(tx, p.OwnerID, actor, "interactions", Entries, entry, "动态有新评论")
+	})
+	return
+}
+func (s *Service) React(ctx context.Context, actor, entry int64, liked bool) (out Record, err error) {
+	err = s.Repo.Update(ctx, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		p, e := tx.Get(Entries, entry)
+		if e != nil {
+			return e
+		}
+		ok, e := s.canRead(tx, Entries, p, actor)
+		if e != nil {
+			return e
+		}
+		if !ok || p.State != "published" {
+			return ErrForbidden
+		}
+		r, e := tx.ByKey(Reactions, fmt.Sprintf("%d:%d", entry, actor))
+		if errors.Is(e, ErrNotFound) {
+			r = Record{OwnerID: actor, RefID: entry, Key: fmt.Sprintf("%d:%d", entry, actor)}
+		} else if e != nil {
+			return e
+		}
+		state := "removed"
+		if liked {
+			state = "active"
+		}
+		if r.ID > 0 && r.State == state {
+			out = r
+			return nil
+		}
+		r.State = state
+		if e = save(tx, Reactions, &r, struct {
+			Liked bool `json:"liked"`
+		}{liked}, actor, "entry.reacted"); e != nil {
+			return e
+		}
+		out = r
+		if liked {
+			return s.notify(tx, p.OwnerID, actor, "interactions", Entries, entry, "动态收到点赞")
+		}
+		return nil
+	})
+	return
+}
+func (s *Service) Remove(ctx context.Context, actor int64, k Kind, id, version int64) error {
+	if k != Pets && k != Offers && k != Entries && k != Comments && k != Drafts {
+		return ErrForbidden
+	}
+	return s.Repo.Update(ctx, func(tx Tx) error {
+		if e := s.active(tx, actor); e != nil {
+			return e
+		}
+		r, e := writable(tx, k, id, actor, version)
+		if e != nil {
+			return e
+		}
+		r.State = "deleted"
+		r.Public = false
+		r.MediaIDs = nil
+		return save(tx, k, &r, struct{}{}, actor, string(k)+".deleted")
+	})
+}
+func contentValid(c RichContent) error {
+	if e := textValid(c.Text, 2000, c.StickerID == ""); e != nil {
+		return e
+	}
+	if c.StickerID != "" && !validExpression(c.StickerID) {
+		return Invalid("unknown sticker")
+	}
+	return nil
+}
+
+// The stable sticker IDs are shared with the mobile asset catalogue. Emoji are
+// plain Unicode text; no image URLs or client-supplied HTML are accepted.
+func validExpression(id string) bool {
+	for n := 1; n <= 24; n++ {
+		if id == fmt.Sprintf("sticker-%02d", n) {
+			return true
+		}
+	}
+	return false
+}
+
+type GroupInput struct {
+	CommandMeta
+	Name string `json:"name"`
+}
+
+func (s *Service) CreateGroup(ctx context.Context, actor int64, in GroupInput) (out Record, err error) {
+	if err = textValid(in.Name, 60, true); err != nil {
+		return
+	}
+	err = s.command(ctx, actor, "group.create", 0, in, Groups, &out, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		r := Record{OwnerID: actor, Participants: []int64{actor}, State: "active"}
+		if e := save(tx, Groups, &r, Group{Name: in.Name, Members: []int64{actor}, Muted: []int64{}}, actor, "group.created"); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}
+
+type GroupAction struct {
+	CommandMeta
+	Version int64  `json:"version"`
+	UserID  int64  `json:"user_id"`
+	Notice  string `json:"notice"`
+}
+
+func (s *Service) Group(ctx context.Context, actor, id int64, action string, in GroupAction) (out Record, err error) {
+	err = s.command(ctx, actor, "group."+action, id, in, Groups, &out, func(tx Tx) error {
+		if e := s.active(tx, actor); e != nil {
+			return e
+		}
+		if action != "leave" && action != "dissolve" {
+			if e := s.interaction(tx, actor); e != nil {
+				return e
+			}
+		}
+		r, e := tx.Get(Groups, id)
+		if e != nil {
+			return e
+		}
+		if e = expected(r, in.Version); e != nil {
+			return e
+		}
+		g, e := Decode[Group](r)
+		if e != nil {
+			return e
+		}
+		if r.State != "active" || !Has(g.Members, actor) {
+			return ErrForbidden
+		}
+		isOwner := actor == r.OwnerID
+		switch action {
+		case "notice":
+			if !isOwner {
+				return ErrForbidden
+			}
+			if e = textValid(in.Notice, 2000, false); e != nil {
+				return e
+			}
+			g.Notice = in.Notice
+		case "transfer":
+			if !isOwner || in.UserID == actor || !Has(g.Members, in.UserID) {
+				return ErrForbidden
+			}
+			if g.PendingTransferTo > 0 && g.TransferExpiresAt != nil && g.TransferExpiresAt.After(s.Now()) {
+				return ErrConflict
+			}
+			g.PendingTransferTo = in.UserID
+			until := s.Now().Add(48 * time.Hour)
+			g.TransferExpiresAt = &until
+		case "accept_transfer", "decline_transfer":
+			if actor != g.PendingTransferTo || g.TransferExpiresAt == nil || !g.TransferExpiresAt.After(s.Now()) {
+				return ErrConflict
+			}
+			if action == "accept_transfer" {
+				r.OwnerID = actor
+			}
+			g.PendingTransferTo = 0
+			g.TransferExpiresAt = nil
+		case "revoke_transfer":
+			if !isOwner {
+				return ErrForbidden
+			}
+			g.PendingTransferTo = 0
+			g.TransferExpiresAt = nil
+		case "dissolve":
+			if !isOwner {
+				return ErrForbidden
+			}
+			r.State = "dissolved"
+			g.PendingTransferTo = 0
+			g.TransferExpiresAt = nil
+		case "leave", "remove_member":
+			target := actor
+			if action == "remove_member" {
+				if !isOwner {
+					return ErrForbidden
+				}
+				target = in.UserID
+			}
+			if target == r.OwnerID {
+				return Invalid("transfer ownership before leaving")
+			}
+			g.Members = without(g.Members, target)
+			g.Muted = without(g.Muted, target)
+			if g.PendingTransferTo == target {
+				g.PendingTransferTo = 0
+				g.TransferExpiresAt = nil
+			}
+		case "mute":
+			if Has(g.Muted, actor) {
+				g.Muted = without(g.Muted, actor)
+			} else {
+				g.Muted = append(g.Muted, actor)
+			}
+		default:
+			return Invalid("invalid group action")
+		}
+		r.Participants = g.Members
+		if e = save(tx, Groups, &r, g, actor, "group."+action); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}
+func without(ids []int64, id int64) []int64 {
+	out := make([]int64, 0, len(ids))
+	for _, v := range ids {
+		if v != id {
+			out = append(out, v)
+		}
+	}
+	return out
+}
+
+type InviteInput struct {
+	CommandMeta
+	Scope    string `json:"scope"`
+	TargetID int64  `json:"target_id"`
+	UserID   int64  `json:"user_id"`
+}
+
+func (s *Service) Invite(ctx context.Context, actor int64, in InviteInput) (out Record, err error) {
+	err = s.command(ctx, actor, "invitation.create", 0, in, Invitations, &out, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		if in.UserID == actor {
+			return Invalid("cannot invite yourself")
+		}
+		if e := s.active(tx, in.UserID); e != nil {
+			return e
+		}
+		b, e := blocked(tx, actor, in.UserID)
+		if e != nil {
+			return e
+		}
+		if b {
+			return ErrForbidden
+		}
+		var k Kind
+		switch in.Scope {
+		case "group_member":
+			k = Groups
+		case "adoption_editor":
+			k = Pets
+		case "caretaker":
+			k = Adoptions
+		default:
+			return Invalid("invalid invitation scope")
+		}
+		target, e := tx.Get(k, in.TargetID)
+		if e != nil {
+			return e
+		}
+		if k == Adoptions {
+			a, e := Decode[Adoption](target)
+			if e != nil {
+				return e
+			}
+			if actor != a.ApplicantID {
+				return ErrForbidden
+			}
+			if a.CompletedAt == nil || s.Now().After(a.CompletedAt.Add(30*24*time.Hour)) {
+				return ErrConflict
+			}
+		} else if e = owner(target, actor); e != nil {
+			return e
+		}
+		if k == Groups && target.State != "active" {
+			return ErrConflict
+		}
+		if k == Pets {
+			p, e := Decode[Pet](target)
+			if e != nil {
+				return e
+			}
+			if !p.AdoptionAvailable {
+				return ErrConflict
+			}
+		}
+		if k == Adoptions && target.State != "completed" {
+			return ErrConflict
+		}
+		key := fmt.Sprintf("%s:%d:%d", in.Scope, in.TargetID, in.UserID)
+		r, e := tx.ByKey(Invitations, key)
+		accepted := e == nil && r.State == "accepted"
+		if accepted && k == Groups {
+			g, err := Decode[Group](target)
+			if err != nil {
+				return err
+			}
+			accepted = Has(g.Members, in.UserID)
+		}
+		if e == nil && (accepted || r.OwnerID == actor && r.State == "pending" && s.Now().Before(mustInviteExpiry(r))) {
+			return ErrConflict
+		}
+		if e != nil && !errors.Is(e, ErrNotFound) {
+			return e
+		}
+		if r.ID == 0 {
+			r = Record{OwnerID: actor, Participants: []int64{in.UserID}, RefID: in.TargetID, Key: key}
+		}
+		r.OwnerID = actor
+		r.Participants = []int64{in.UserID}
+		r.State = "pending"
+		i := Invitation{in.Scope, in.TargetID, in.UserID, s.Now().Add(72 * time.Hour)}
+		if e = save(tx, Invitations, &r, i, actor, "invitation.created"); e != nil {
+			return e
+		}
+		out = r
+		return s.notify(tx, in.UserID, actor, "applications", Invitations, r.ID, "收到新邀请")
+	})
+	return
+}
+func mustInviteExpiry(r Record) time.Time { i, _ := Decode[Invitation](r); return i.ExpiresAt }
+func (s *Service) Invitation(ctx context.Context, actor, id, version int64, action string) (out Record, err error) {
+	err = s.Repo.Update(ctx, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		r, e := tx.Get(Invitations, id)
+		if e != nil {
+			return e
+		}
+		if e = expected(r, version); e != nil {
+			return e
+		}
+		i, e := Decode[Invitation](r)
+		if e != nil {
+			return e
+		}
+		switch action {
+		case "accept", "decline":
+			if actor != i.RecipientID || r.State != "pending" || !i.ExpiresAt.After(s.Now()) {
+				return ErrConflict
+			}
+			r.State = "declined"
+			if action == "accept" {
+				r.State = "accepted"
+				if i.Scope == "group_member" {
+					gRecord, e := tx.Get(Groups, i.TargetID)
+					if e != nil {
+						return e
+					}
+					g, e := Decode[Group](gRecord)
+					if e != nil {
+						return e
+					}
+					if gRecord.State != "active" || gRecord.OwnerID != r.OwnerID || len(g.Members) >= 200 {
+						return ErrConflict
+					}
+					g.Members = Unique(append(g.Members, actor))
+					gRecord.Participants = g.Members
+					if e = save(tx, Groups, &gRecord, g, actor, "group.member_joined"); e != nil {
+						return e
+					}
+				}
+			}
+		case "revoke":
+			if e = owner(r, actor); e != nil {
+				return e
+			}
+			if r.State != "pending" && r.State != "accepted" {
+				return ErrConflict
+			}
+			r.State = "revoked"
+			if i.Scope == "group_member" {
+				gRecord, e := tx.Get(Groups, i.TargetID)
+				if e != nil {
+					return e
+				}
+				g, e := Decode[Group](gRecord)
+				if e != nil {
+					return e
+				}
+				if gRecord.OwnerID != actor {
+					return ErrForbidden
+				}
+				if i.RecipientID == gRecord.OwnerID {
+					return ErrConflict
+				}
+				g.Members = without(g.Members, i.RecipientID)
+				gRecord.Participants = g.Members
+				if e = save(tx, Groups, &gRecord, g, actor, "group.member_removed"); e != nil {
+					return e
+				}
+			}
+		default:
+			return Invalid("invalid invitation action")
+		}
+		if e = save(tx, Invitations, &r, i, actor, "invitation."+action); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}
+
+type ConversationInput struct {
+	CommandMeta
+	UserID int64 `json:"user_id"`
+}
+
+func (s *Service) Conversation(ctx context.Context, actor int64, in ConversationInput) (out Record, err error) {
+	err = s.command(ctx, actor, "conversation.create", 0, in, Conversations, &out, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		if in.UserID == actor {
+			return Invalid("invalid recipient")
+		}
+		if e := s.active(tx, in.UserID); e != nil {
+			return e
+		}
+		b, e := blocked(tx, actor, in.UserID)
+		if e != nil {
+			return e
+		}
+		if b {
+			return ErrForbidden
+		}
+		r, e := tx.ByKey(Conversations, pair(actor, in.UserID))
+		if e == nil {
+			if r.State != "accepted" {
+				isFriend, err := friends(tx, actor, in.UserID)
+				if err != nil {
+					return err
+				}
+				if isFriend {
+					r.State = "accepted"
+					if e = save(tx, Conversations, &r, mustBody(r), actor, "conversation.friend_accepted"); e != nil {
+						return e
+					}
+				}
+			}
+			out = r
+			return nil
+		}
+		if !errors.Is(e, ErrNotFound) {
+			return e
+		}
+		state := "pending"
+		f, e := friends(tx, actor, in.UserID)
+		if e != nil {
+			return e
+		}
+		if f {
+			state = "accepted"
+		}
+		r = Record{OwnerID: actor, Participants: []int64{in.UserID}, Key: pair(actor, in.UserID), State: state}
+		if e = save(tx, Conversations, &r, Conversation{actor, in.UserID}, actor, "conversation.created"); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}
+func (s *Service) ConversationAction(ctx context.Context, actor, id, version int64, action string) (out Record, err error) {
+	err = s.Repo.Update(ctx, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		r, e := tx.Get(Conversations, id)
+		if e != nil {
+			return e
+		}
+		if e = expected(r, version); e != nil {
+			return e
+		}
+		c, e := Decode[Conversation](r)
+		if e != nil {
+			return e
+		}
+		if c.RecipientID != actor || r.State != "pending" {
+			return ErrForbidden
+		}
+		if action != "accept" && action != "decline" {
+			return Invalid("invalid request action")
+		}
+		r.State = "declined"
+		if action == "accept" {
+			r.State = "accepted"
+		}
+		if e = save(tx, Conversations, &r, c, actor, "conversation."+action); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}
+
+type MessageInput struct {
+	Content        RichContent `json:"content"`
+	MediaIDs       []int64     `json:"media_ids"`
+	IdempotencyKey string      `json:"idempotency_key"`
+}
+
+func (s *Service) Message(ctx context.Context, actor, parentID int64, group bool, in MessageInput) (out Record, err error) {
+	if len(in.MediaIDs) == 0 {
+		if err = contentValid(in.Content); err != nil {
+			return
+		}
+	} else if err = textValid(in.Content.Text, 2000, false); err != nil {
+		return
+	}
+	if in.Content.StickerID != "" && !validExpression(in.Content.StickerID) {
+		return out, Invalid("unknown sticker")
+	}
+	if len(in.IdempotencyKey) < 8 || len(in.IdempotencyKey) > 100 {
+		return out, Invalid("idempotency key required")
+	}
+	err = s.command(ctx, actor, "message.send", parentID, in, func() Kind {
+		if group {
+			return GroupMessages
+		}
+		return Messages
+	}(), &out, func(tx Tx) error {
+		if e := s.interaction(tx, actor); e != nil {
+			return e
+		}
+		parent, k := Conversations, Messages
+		if group {
+			parent, k = Groups, GroupMessages
+		}
+		p, e := tx.Get(parent, parentID)
+		if e != nil {
+			return e
+		}
+		ok, e := s.canRead(tx, parent, p, actor)
+		if e != nil {
+			return e
+		}
+		if !ok {
+			return ErrForbidden
+		}
+		key := fmt.Sprintf("%d:%d:%s", actor, parentID, in.IdempotencyKey)
+		old, e := tx.ByKey(k, key)
+		if e == nil {
+			body, e := Decode[Message](old)
+			if e != nil {
+				return e
+			}
+			if body.RichContent != in.Content || !sameIDs(old.MediaIDs, in.MediaIDs) {
+				return Denied("idempotency_conflict")
+			}
+			out = old
+			return nil
+		}
+		if !errors.Is(e, ErrNotFound) {
+			return e
+		}
+		if !group {
+			c, e := Decode[Conversation](p)
+			if e != nil {
+				return e
+			}
+			if p.State == "pending" {
+				if actor != c.RequesterID || len(in.MediaIDs) > 0 || in.Content.StickerID != "" {
+					return ErrForbidden
+				}
+				messages, e := tx.List(Messages, Filter{RefID: parentID, Limit: 1})
+				if e != nil {
+					return e
+				}
+				if len(messages) > 0 {
+					return Invalid("wait for the recipient to accept")
+				}
+			} else if p.State != "accepted" {
+				return ErrForbidden
+			}
+		}
+		if e = s.attachments(tx, actor, in.MediaIDs); e != nil {
+			return e
+		}
+		r := Record{OwnerID: actor, RefID: parentID, Key: key, MediaIDs: in.MediaIDs, State: "sent"}
+		if e = save(tx, k, &r, Message{in.Content}, actor, "message.sent"); e != nil {
+			return e
+		}
+		out = r
+		recipients := p.Participants
+		category := "direct_messages"
+		if group {
+			category = "groups"
+		}
+		recipients = Unique(append(append([]int64{}, recipients...), p.OwnerID))
+		for _, recipient := range recipients {
+			if group {
+				g, e := Decode[Group](p)
+				if e != nil {
+					return e
+				}
+				if Has(g.Muted, recipient) {
+					continue
+				}
+			}
+			if e = s.notify(tx, recipient, actor, category, parent, parentID, "收到新消息"); e != nil {
+				return e
+			}
+		}
+		return nil
+	})
+	return
+}
+
+type SettingsInput struct {
+	Version     int64            `json:"version"`
+	Preference  *Preference      `json:"preference,omitempty"`
+	Expressions *ExpressionState `json:"expressions,omitempty"`
+	Draft       *Draft           `json:"draft,omitempty"`
+	MediaIDs    []int64          `json:"media_ids"`
+	Key         string           `json:"key"`
+}
+
+func (s *Service) Settings(ctx context.Context, actor int64, k Kind, in SettingsInput) (out Record, err error) {
+	var body any
+	key := fmt.Sprint(actor)
+	switch k {
+	case Preferences:
+		if in.Preference == nil {
+			return out, Invalid("preference required")
+		}
+		if !HasString([]string{"instant", "digest", "off"}, in.Preference.Frequency) {
+			return out, Invalid("invalid frequency")
+		}
+		body = in.Preference
+	case Expressions:
+		if in.Expressions == nil {
+			return out, Invalid("expressions required")
+		}
+		if len(in.Expressions.Favorites) > 200 || len(in.Expressions.Recent) > 50 {
+			return out, Invalid("too many expressions")
+		}
+		for _, id := range append(append([]string{}, in.Expressions.Favorites...), in.Expressions.Recent...) {
+			if !validFavorite(id) {
+				return out, Invalid("invalid expression")
+			}
+		}
+		body = in.Expressions
+	case Drafts:
+		if in.Draft == nil || len(in.Key) < 1 || len(in.Key) > 80 {
+			return out, Invalid("draft and key required")
+		}
+		if e := textValid(in.Draft.Text, 10000, false); e != nil {
+			return out, e
+		}
+		if e := audienceValid(in.Draft.Audience); e != nil {
+			return out, e
+		}
+		if in.Draft.Cursor < 0 {
+			return out, Invalid("invalid cursor")
+		}
+		key += ":" + in.Key
+		body = in.Draft
+	default:
+		return out, ErrForbidden
+	}
+	err = s.Repo.Update(ctx, func(tx Tx) error {
+		if e := s.active(tx, actor); e != nil {
+			return e
+		}
+		if e := s.attachments(tx, actor, in.MediaIDs); e != nil {
+			return e
+		}
+		r, e := tx.ByKey(k, key)
+		if errors.Is(e, ErrNotFound) {
+			if in.Version != 0 {
+				return ErrConflict
+			}
+			r = Record{OwnerID: actor, Key: key}
+		} else if e != nil {
+			return e
+		} else if e = expected(r, in.Version); e != nil {
+			return e
+		}
+		r.State = "active"
+		if k == Drafts {
+			r.MediaIDs = in.MediaIDs
+		}
+		if e = save(tx, k, &r, body, actor, string(k)+".saved"); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}
+func HasString(values []string, v string) bool {
+	for _, s := range values {
+		if s == v {
+			return true
+		}
+	}
+	return false
+}
+func sameIDs(a, b []int64) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
+}
+func (s *Service) ReadNotification(ctx context.Context, actor, id, version int64) (out Record, err error) {
+	err = s.Repo.Update(ctx, func(tx Tx) error {
+		if e := s.active(tx, actor); e != nil {
+			return e
+		}
+		r, e := writable(tx, Notifications, id, actor, version)
+		if e != nil {
+			return e
+		}
+		n, e := Decode[Notification](r)
+		if e != nil {
+			return e
+		}
+		n.Read = true
+		r.State = "read"
+		if e = save(tx, Notifications, &r, n, actor, "notification.read"); e != nil {
+			return e
+		}
+		out = r
+		return nil
+	})
+	return
+}

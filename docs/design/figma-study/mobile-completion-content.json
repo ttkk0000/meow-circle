@@ -1,0 +1,7597 @@
+{
+  "date": "2026-10-19",
+  "scope": "native Figma design only",
+  "screens": [
+    {
+      "id": "login",
+      "title": "登录 / 注册",
+      "items": [
+        {
+          "type": "brand",
+          "name": "M&D",
+          "subtitle": "meow & doggie"
+        },
+        {
+          "type": "text",
+          "text": "和毛孩子，一起长大",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "登录后，继续收藏、记录和交流。",
+          "role": "Label",
+          "color": "muted"
+        },
+        {
+          "type": "field",
+          "label": "中国大陆手机号",
+          "value": "请输入手机号",
+          "variable": "authPhone",
+          "tap": "phoneFill",
+          "keyboard": "tel"
+        },
+        {
+          "type": "consent",
+          "key": "authAgree",
+          "text": "我已阅读并同意服务协议与隐私政策"
+        },
+        {
+          "type": "action",
+          "label": "获取验证码",
+          "to": "$phoneSubmit",
+          "kind": "primary",
+          "require": "authAgree"
+        },
+        {
+          "type": "providers",
+          "ios": false
+        },
+        {
+          "type": "action",
+          "label": "密码登录",
+          "to": "authPassword",
+          "kind": "quiet"
+        },
+        {
+          "type": "action",
+          "label": "先逛逛",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": null,
+      "module": 6,
+      "back": "$authCancel",
+      "phase": "auth",
+      "platform": 0
+    },
+    {
+      "id": "authIOS",
+      "title": "登录 / 注册",
+      "items": [
+        {
+          "type": "brand",
+          "name": "M&D",
+          "subtitle": "meow & doggie"
+        },
+        {
+          "type": "text",
+          "text": "和毛孩子，一起长大",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "登录后，继续收藏、记录和交流。",
+          "role": "Label",
+          "color": "muted"
+        },
+        {
+          "type": "field",
+          "label": "中国大陆手机号",
+          "value": "请输入手机号",
+          "variable": "authPhone",
+          "tap": "phoneFill",
+          "keyboard": "tel"
+        },
+        {
+          "type": "consent",
+          "key": "authAgree",
+          "text": "我已阅读并同意服务协议与隐私政策"
+        },
+        {
+          "type": "action",
+          "label": "获取验证码",
+          "to": "$phoneSubmit",
+          "kind": "primary",
+          "require": "authAgree"
+        },
+        {
+          "type": "providers",
+          "ios": true
+        },
+        {
+          "type": "action",
+          "label": "密码登录",
+          "to": "authPassword",
+          "kind": "quiet"
+        },
+        {
+          "type": "action",
+          "label": "先逛逛",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": null,
+      "module": 6,
+      "back": "$authCancel",
+      "phase": "auth",
+      "platform": 1
+    },
+    {
+      "id": "authKnown",
+      "title": "欢迎回来",
+      "items": [
+        {
+          "type": "profile",
+          "name": "布丁的铲屎官",
+          "subtitle": "上次使用微信登录"
+        },
+        {
+          "type": "note",
+          "title": "继续使用同一账号",
+          "body": "宠物、日记、收藏和聊天都会保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "consent",
+          "key": "authAgree",
+          "text": "我已阅读并同意服务协议与隐私政策"
+        },
+        {
+          "type": "providers",
+          "ios": true
+        },
+        {
+          "type": "action",
+          "label": "换用手机号",
+          "to": "login",
+          "kind": "quiet"
+        }
+      ],
+      "footer": null,
+      "module": 6,
+      "phase": "auth",
+      "onEnter": {
+        "authExisting": 1
+      }
+    },
+    {
+      "id": "authPhoneError",
+      "title": "请检查手机号",
+      "items": [
+        {
+          "type": "text",
+          "text": "手机号还没有填完整",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "field",
+          "label": "中国大陆手机号",
+          "value": "138 00",
+          "error": true,
+          "hint": "请填写可接收短信的完整手机号。",
+          "variable": "authPhone",
+          "tap": "phoneFill"
+        },
+        {
+          "type": "consent",
+          "key": "authAgree",
+          "text": "我已阅读并同意服务协议与隐私政策"
+        },
+        {
+          "type": "action",
+          "label": "重新获取验证码",
+          "to": "$phoneSubmit",
+          "kind": "primary",
+          "require": "authAgree"
+        },
+        {
+          "type": "action",
+          "label": "换个登录方式",
+          "to": "$authLanding",
+          "kind": "quiet"
+        }
+      ],
+      "footer": null,
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "otp",
+      "title": "输入验证码",
+      "items": [
+        {
+          "type": "text",
+          "text": "验证码已发送",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "接收号码：138 **** 0000",
+          "role": "Label",
+          "color": "muted"
+        },
+        {
+          "type": "otp",
+          "variable": "authCode",
+          "tap": "codeFill"
+        },
+        {
+          "type": "text",
+          "text": "请填写短信中的6位验证码。",
+          "role": "Caption",
+          "color": "muted"
+        },
+        {
+          "type": "row",
+          "label": "更换手机号",
+          "value": "保留刚才的操作",
+          "to": "$authLanding"
+        },
+        {
+          "type": "row",
+          "label": "重新发送",
+          "value": "倒计时结束后可重发",
+          "to": "authCodeResent"
+        }
+      ],
+      "footer": {
+        "label": "验证并继续",
+        "to": "$otpSubmit"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authCodeResent",
+      "title": "验证码已重发",
+      "items": [
+        {
+          "type": "text",
+          "text": "请留意新的短信",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "138 **** 0000",
+          "role": "Strong",
+          "color": "ink"
+        },
+        {
+          "type": "otp",
+          "variable": "authCode",
+          "tap": "codeFill"
+        },
+        {
+          "type": "note",
+          "title": "使用最新验证码",
+          "body": "旧验证码不再使用；不要向他人提供验证码。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "更换登录方式",
+          "to": "$authLanding",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "验证并继续",
+        "to": "$otpSubmit"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "otp"
+    },
+    {
+      "id": "otpError",
+      "title": "验证码不正确",
+      "items": [
+        {
+          "type": "text",
+          "text": "验证码不正确",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "请检查刚才输入的6位数字，号码和返回位置已保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "重新输入",
+        "to": "otp"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authCodeExpired",
+      "title": "验证码已过期",
+      "items": [
+        {
+          "type": "text",
+          "text": "验证码已过期",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "重新获取后填写最新验证码，无需重新开始刚才的操作。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "重新获取",
+        "to": "authCodeResent"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authSmsDelayed",
+      "title": "暂时没有收到短信",
+      "items": [
+        {
+          "type": "text",
+          "text": "暂时没有收到短信",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "检查号码和短信收件箱，也可以换用微信、QQ或Apple登录。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "返回填写",
+        "to": "otp"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authRateLimited",
+      "title": "操作有些频繁",
+      "items": [
+        {
+          "type": "text",
+          "text": "操作有些频繁",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "请稍后再试。你也可以选择其他登录方式，刚才的内容会保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "换个方式",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authNetworkError",
+      "title": "连接暂时中断",
+      "items": [
+        {
+          "type": "text",
+          "text": "连接暂时中断",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "尚未完成登录，请检查网络后继续。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "重新尝试",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authProviderUnavailable",
+      "title": "暂时无法使用这种方式",
+      "items": [
+        {
+          "type": "text",
+          "text": "暂时无法使用这种方式",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "检查对应应用是否可用，也可以改用手机号或其他方式。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "选择其他方式",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authProviderCancelled",
+      "title": "已取消授权",
+      "items": [
+        {
+          "type": "text",
+          "text": "已取消授权",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "你还没有登录，刚才正在看的页面和可保留的草稿仍在。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "返回登录",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authCallbackExpired",
+      "title": "授权已失效",
+      "items": [
+        {
+          "type": "text",
+          "text": "授权已失效",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "请重新发起授权，这次不会重复创建账号。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "重新登录",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authSessionExpired",
+      "title": "登录状态已过期",
+      "items": [
+        {
+          "type": "text",
+          "text": "登录状态已过期",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "可以继续",
+          "body": "重新登录后返回当前任务，草稿不会自动提交。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回刚才的页面",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "重新登录",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth",
+      "back": "$authLanding"
+    },
+    {
+      "id": "authProvider_wechat",
+      "title": "通过微信登录",
+      "items": [
+        {
+          "type": "providerHero",
+          "provider": "wechat"
+        },
+        {
+          "type": "text",
+          "text": "正在等待微信授权",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "请在授权页面确认允许的信息。完成后会回到M&D。",
+          "role": "Body",
+          "color": "ink"
+        },
+        {
+          "type": "action",
+          "label": "取消本次登录",
+          "to": "authProviderCancelled",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "返回 M&D",
+        "to": "$authCallback"
+      },
+      "module": 6,
+      "phase": "auth",
+      "provider": "微信",
+      "back": "authProviderCancelled"
+    },
+    {
+      "id": "authProvider_qq",
+      "title": "通过QQ登录",
+      "items": [
+        {
+          "type": "providerHero",
+          "provider": "qq"
+        },
+        {
+          "type": "text",
+          "text": "正在等待QQ授权",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "请在授权页面确认允许的信息。完成后会回到M&D。",
+          "role": "Body",
+          "color": "ink"
+        },
+        {
+          "type": "action",
+          "label": "取消本次登录",
+          "to": "authProviderCancelled",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "返回 M&D",
+        "to": "$authCallback"
+      },
+      "module": 6,
+      "phase": "auth",
+      "provider": "QQ",
+      "back": "authProviderCancelled"
+    },
+    {
+      "id": "authProvider_apple",
+      "title": "通过Apple登录",
+      "items": [
+        {
+          "type": "providerHero",
+          "provider": "apple"
+        },
+        {
+          "type": "text",
+          "text": "正在等待Apple授权",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "请在授权页面确认允许的信息。完成后会回到M&D。",
+          "role": "Body",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "邮箱由你决定",
+          "body": "可在系统授权页选择隐藏邮箱。昵称和头像可以稍后完善。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "取消本次登录",
+          "to": "authProviderCancelled",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "返回 M&D",
+        "to": "$authCallback"
+      },
+      "module": 6,
+      "phase": "auth",
+      "provider": "Apple",
+      "back": "authProviderCancelled"
+    },
+    {
+      "id": "authFirst",
+      "title": "欢迎使用 M&D",
+      "items": [
+        {
+          "type": "brand",
+          "name": "M&D",
+          "subtitle": "meow & doggie"
+        },
+        {
+          "type": "text",
+          "text": "和毛孩子，记录每一天",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "登录方式",
+              "",
+              "authProvider"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "首次使用",
+          "body": "继续将创建一个M&D账号。昵称、头像和宠物资料都可以稍后补充。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "我有账号，去关联",
+          "to": "authLinkExisting",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "继续并创建账号",
+        "to": "authSuccess",
+        "sets": {
+          "authLoggedIn": 1,
+          "authExisting": 1
+        }
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authSuccess",
+      "title": "登录成功",
+      "items": [
+        {
+          "type": "profile",
+          "name": "我的 M&D 账号",
+          "subtitle": "已登录"
+        },
+        {
+          "type": "text",
+          "text": "继续刚才的事情",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "内容已保留",
+          "body": "你可以检查草稿后再发送或发布，不会自动完成上一步。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回并继续",
+        "to": "$authReturn"
+      },
+      "module": 6,
+      "phase": "auth",
+      "onEnter": {
+        "authLoggedIn": 1
+      }
+    },
+    {
+      "id": "authProfileOptional",
+      "title": "设置你的资料",
+      "items": [
+        {
+          "type": "profile",
+          "name": "新宠友",
+          "subtitle": "头像与昵称可随时修改"
+        },
+        {
+          "type": "field",
+          "label": "昵称",
+          "value": "新宠友"
+        },
+        {
+          "type": "row",
+          "label": "选择头像",
+          "value": "只读取你主动选择的照片",
+          "to": "mediaChoose",
+          "sets": {
+            "mediaReturn": 6
+          }
+        },
+        {
+          "type": "action",
+          "label": "稍后再说",
+          "to": "authSuccess",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "保存并继续",
+        "to": "authSuccess"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authLinkExisting",
+      "title": "关联已有账号",
+      "items": [
+        {
+          "type": "text",
+          "text": "把资料留在原来的账号",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "验证你已有的M&D账号",
+          "body": "关联后继续使用原有宠物、日记和聊天，不按昵称或头像自动合并。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "原账号手机号",
+          "value": "138 **** 0000"
+        },
+        {
+          "type": "field",
+          "label": "验证码",
+          "value": "••••••"
+        },
+        {
+          "type": "action",
+          "label": "使用原账号密码验证",
+          "to": "authPassword",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "验证原账号",
+        "to": "authLinkConfirm"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authLinkConfirm",
+      "title": "确认账号关联",
+      "items": [
+        {
+          "type": "profile",
+          "name": "布丁的铲屎官",
+          "subtitle": "138 **** 0000"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "将关联的方式",
+              "",
+              "authProvider"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "只关联登录方式",
+          "body": "不会覆盖原有宠物、日记、群和历史消息。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "取消关联",
+          "to": "$authLanding",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "确认关联",
+        "to": "$bindAndContinue"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authConflict",
+      "title": "这个登录方式已有关联",
+      "items": [
+        {
+          "type": "text",
+          "text": "先确认你要使用的账号",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "不会覆盖任何资料",
+          "body": "这个方式已关联另一个M&D账号。请使用原方式登录，或通过账号恢复获得帮助。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "action",
+          "label": "返回当前账号",
+          "to": "authAccounts",
+          "kind": "secondary"
+        },
+        {
+          "type": "action",
+          "label": "账号恢复帮助",
+          "to": "authRecovery",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "用其他方式登录",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authPassword",
+      "title": "密码登录",
+      "items": [
+        {
+          "type": "consent",
+          "key": "authAgree",
+          "text": "我已阅读并同意服务协议与隐私政策"
+        },
+        {
+          "type": "field",
+          "label": "手机号或用户名",
+          "value": "请输入已有账号"
+        },
+        {
+          "type": "field",
+          "label": "密码",
+          "value": "••••••••"
+        },
+        {
+          "type": "row",
+          "label": "忘记密码",
+          "value": "验证后设置新密码",
+          "to": "authPasswordRecovery"
+        },
+        {
+          "type": "action",
+          "label": "改用验证码",
+          "to": "$authLanding",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "登录",
+        "to": "authSuccess",
+        "sets": {
+          "authLoggedIn": 1
+        },
+        "require": "authAgree"
+      },
+      "module": 6,
+      "phase": "auth",
+      "onEnter": {
+        "authProvider": "手机号"
+      }
+    },
+    {
+      "id": "authPasswordRecovery",
+      "title": "找回密码",
+      "items": [
+        {
+          "type": "field",
+          "label": "账号手机号",
+          "value": "138 **** 0000"
+        },
+        {
+          "type": "field",
+          "label": "短信验证码",
+          "value": "••••••"
+        },
+        {
+          "type": "note",
+          "title": "保护原账号",
+          "body": "验证通过后仅重设密码，不新建账号。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "原手机号不可用",
+          "to": "authRecovery",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "验证并重设",
+        "to": "authPasswordReset"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authPasswordReset",
+      "title": "设置新密码",
+      "items": [
+        {
+          "type": "field",
+          "label": "新密码",
+          "value": "输入新密码"
+        },
+        {
+          "type": "field",
+          "label": "再次确认",
+          "value": "再次输入新密码"
+        },
+        {
+          "type": "note",
+          "title": "下次登录",
+          "body": "可以继续使用已关联的快捷登录或新密码。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "保存新密码",
+        "to": "authPasswordDone"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authPasswordDone",
+      "title": "密码已更新",
+      "items": [
+        {
+          "type": "text",
+          "text": "原来的资料都在",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "重新登录",
+          "body": "使用新密码或已关联的方式，回到刚才的页面。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回登录",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authRestricted",
+      "title": "账号暂时受限",
+      "items": [
+        {
+          "type": "text",
+          "text": "部分操作暂时不可用",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "影响范围",
+              "发布与发起新私信"
+            ],
+            [
+              "状态",
+              "等待复核"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "你可以查看与补充说明",
+          "body": "限制不等于事实结论。已有记录按权限保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看处理与申诉",
+          "value": "提交必要说明",
+          "to": "appeal"
+        }
+      ],
+      "footer": {
+        "label": "继续浏览",
+        "to": "home"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authPhoneSupplement",
+      "title": "验证手机号",
+      "items": [
+        {
+          "type": "text",
+          "text": "继续这次操作前验证",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "用于本次功能",
+          "body": "验证不会公开你的手机号，也不会改变内容受众或开启通知。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "手机号",
+          "value": "138 **** 0000"
+        },
+        {
+          "type": "field",
+          "label": "验证码",
+          "value": "••••••"
+        },
+        {
+          "type": "action",
+          "label": "暂不验证",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "验证并回到任务",
+        "to": "$authReturn"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authAccounts",
+      "title": "账号与登录方式",
+      "items": [
+        {
+          "type": "profile",
+          "name": "布丁的铲屎官",
+          "subtitle": "同一个M&D账号"
+        },
+        {
+          "type": "row",
+          "label": "手机号",
+          "value": "138 **** 0000",
+          "to": "authChangePhone"
+        },
+        {
+          "type": "row",
+          "label": "微信",
+          "value": "未关联",
+          "to": "$bindWechat",
+          "variable": "wechatStatus"
+        },
+        {
+          "type": "row",
+          "label": "QQ",
+          "value": "未关联",
+          "to": "$bindQQ",
+          "variable": "qqStatus"
+        },
+        {
+          "type": "row",
+          "label": "Apple",
+          "value": "未关联",
+          "to": "$bindApple",
+          "variable": "appleStatus"
+        },
+        {
+          "type": "row",
+          "label": "密码与恢复",
+          "value": "更新密码或恢复登录",
+          "to": "authPasswordRecovery"
+        },
+        {
+          "type": "row",
+          "label": "退出当前账号",
+          "value": "保留公共浏览",
+          "to": "authLogoutConfirm"
+        }
+      ],
+      "footer": {
+        "label": "返回设置",
+        "to": "settings"
+      },
+      "module": 6,
+      "phase": "account",
+      "back": "settings"
+    },
+    {
+      "id": "authBindConfirm",
+      "title": "关联登录方式",
+      "items": [
+        {
+          "type": "profile",
+          "name": "布丁的铲屎官",
+          "subtitle": "当前账号"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "将关联的方式",
+              "",
+              "authProvider"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "确认是你本人的账号",
+          "body": "下次可用此方式登录同一个M&D账号。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "暂不关联",
+          "to": "authAccounts",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "确认关联",
+        "to": "$bindAccount"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authUnbindConfirm",
+      "title": "解除登录关联",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "登录方式",
+              "",
+              "authProvider"
+            ],
+            [
+              "其他可用方式",
+              "138 **** 0000（已验证）"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "解除后会怎样",
+          "body": "此方式将不能登录当前账号，资料和其他已关联方式保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "保留关联",
+          "to": "authAccounts",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认解除",
+        "to": "$unbindAccount",
+        "kind": "secondary"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authLastMethod",
+      "title": "先保留一种登录方式",
+      "items": [
+        {
+          "type": "text",
+          "text": "避免无法再登录",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "这是最后一种可用方式",
+          "body": "先关联并验证手机号或另一种方式，再解除当前关联。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "action",
+          "label": "返回账号设置",
+          "to": "authAccounts",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "添加其他方式",
+        "to": "authChangePhone"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authChangePhone",
+      "title": "更换手机号",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前号码",
+              "138 **** 0000"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "当前号码验证码",
+          "value": "••••••"
+        },
+        {
+          "type": "note",
+          "title": "只更新登录号码",
+          "body": "宠物、日记和聊天仍属于这个M&D账号。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "旧号码已不能使用",
+          "to": "authRecovery",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "验证并填写新号码",
+        "to": "authNewPhone"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authNewPhone",
+      "title": "验证新手机号",
+      "items": [
+        {
+          "type": "field",
+          "label": "新的手机号",
+          "value": "139 **** 0000"
+        },
+        {
+          "type": "field",
+          "label": "验证码",
+          "value": "••••••"
+        },
+        {
+          "type": "note",
+          "title": "确认号码可用",
+          "body": "验证新号码后，旧号码不再用于当前账号登录。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "确认更换",
+        "to": "authPhoneChanged"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authPhoneChanged",
+      "title": "手机号已更新",
+      "items": [
+        {
+          "type": "text",
+          "text": "已更新为139 **** 0000",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "账号没有变",
+          "body": "你仍可使用已关联的微信、QQ或Apple登录。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回账号设置",
+        "to": "authAccounts"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authRecovery",
+      "title": "恢复账号访问",
+      "items": [
+        {
+          "type": "field",
+          "label": "原账号",
+          "value": "手机号或M&D账号"
+        },
+        {
+          "type": "field",
+          "label": "可联系你的方式",
+          "value": "仅用于本次恢复"
+        },
+        {
+          "type": "field",
+          "label": "情况说明",
+          "value": "简要说明原号码或登录方式为什么不可用"
+        },
+        {
+          "type": "note",
+          "title": "保护你的资料",
+          "body": "不会因相同昵称、头像或邮箱直接合并账号。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "提交恢复申请",
+        "to": "authRecoveryPending"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authRecoveryPending",
+      "title": "恢复申请已收到",
+      "items": [
+        {
+          "type": "text",
+          "text": "请保留回执",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "回执",
+              "MND-R-001"
+            ],
+            [
+              "状态",
+              "待核对"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "下一步",
+          "body": "按你提供的方式联系或在此补充必要信息，原资料不会被新账号覆盖。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "补充恢复信息",
+          "value": "只用于本次申请",
+          "to": "authRecovery"
+        }
+      ],
+      "footer": {
+        "label": "继续公开浏览",
+        "to": "home"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authLogoutConfirm",
+      "title": "退出当前账号",
+      "items": [
+        {
+          "type": "note",
+          "title": "退出后",
+          "body": "可继续浏览公开内容。当前账号的私密内容将从本机隐藏，草稿按账号保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "继续使用",
+          "to": "settings",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认退出",
+        "to": "authLoggedOut",
+        "sets": {
+          "authLoggedIn": 0
+        }
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authLoggedOut",
+      "title": "已退出登录",
+      "items": [
+        {
+          "type": "text",
+          "text": "随时回来，继续记录",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "action",
+          "label": "重新登录",
+          "to": "$authLanding",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "先逛逛",
+        "to": "home"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authDeleteImpact",
+      "title": "注销账号前",
+      "items": [
+        {
+          "type": "text",
+          "text": "请确认你了解这些影响",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "宠物与日记",
+              "公开范围及保留方式将在处理结果中说明"
+            ],
+            [
+              "未完成事项",
+              "申请、求助和协作关系需受控处理"
+            ],
+            [
+              "必要历史",
+              "争议与审计所需记录按规则受限保留"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看未完成事项",
+          "value": "先了解影响，不会自动结案",
+          "to": "authActiveTasks"
+        },
+        {
+          "type": "consent",
+          "key": "deleteAgree",
+          "text": "我已了解注销影响，并确认提交申请"
+        }
+      ],
+      "footer": {
+        "label": "继续验证身份",
+        "to": "authDeleteVerify",
+        "require": "deleteAgree"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authActiveTasks",
+      "title": "账号中的未完成事项",
+      "items": [
+        {
+          "type": "row",
+          "label": "小满的走失求助",
+          "value": "查看维护或授权安排",
+          "to": "lostFromPetManage"
+        },
+        {
+          "type": "row",
+          "label": "领养沟通与约见",
+          "value": "查看当前申请",
+          "to": "application"
+        },
+        {
+          "type": "note",
+          "title": "不会自动确认任何结果",
+          "body": "提交注销不会把求助标成找回，也不会代替双方确认交接。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回注销说明",
+        "to": "authDeleteImpact"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authDeleteVerify",
+      "title": "确认本人操作",
+      "items": [
+        {
+          "type": "field",
+          "label": "已验证手机号",
+          "value": "138 **** 0000"
+        },
+        {
+          "type": "field",
+          "label": "验证码",
+          "value": "••••••"
+        },
+        {
+          "type": "action",
+          "label": "换用已关联方式验证",
+          "to": "authAccounts",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "提交注销申请",
+        "to": "authDeleteProcessing"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authDeleteProcessing",
+      "title": "注销申请处理中",
+      "items": [
+        {
+          "type": "text",
+          "text": "申请已受理",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "回执",
+              "MND-D-001"
+            ],
+            [
+              "当前状态",
+              "处理中"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "可在此查看结果",
+          "body": "不会把尚未处理完成显示为已全部删除。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看处理进度",
+          "value": "保留必要回执",
+          "to": "authDeleteStatus"
+        }
+      ],
+      "footer": {
+        "label": "返回公开浏览",
+        "to": "home"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authDeleteStatus",
+      "title": "注销处理结果",
+      "items": [
+        {
+          "type": "text",
+          "text": "账号注销已完成",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "回执",
+              "MND-D-001"
+            ],
+            [
+              "登录方式",
+              "已解除账号关联"
+            ],
+            [
+              "保留说明",
+              "必要记录仍受限，不对外公开"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "今后使用",
+          "body": "再次使用须重新创建或登录其他账号。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "浏览公开内容",
+        "to": "home"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authDeleteFailure",
+      "title": "注销暂未完成",
+      "items": [
+        {
+          "type": "text",
+          "text": "你的申请没有丢失",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "请重试或查看进度",
+          "body": "当前仍在受控处理中，不重复创建申请。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "row",
+          "label": "查看原回执",
+          "value": "MND-D-001",
+          "to": "authDeleteProcessing"
+        }
+      ],
+      "footer": {
+        "label": "安全重试",
+        "to": "authDeleteProcessing"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authRevoked",
+      "title": "登录授权已失效",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "受影响方式",
+              "",
+              "authProvider"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "可重新授权",
+          "body": "也可使用当前账号其他已验证方式，已有资料不会因此删除。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "选择其他方式",
+          "to": "$authLanding",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "重新授权",
+        "to": "$providerRetry"
+      },
+      "module": 6,
+      "phase": "account"
+    },
+    {
+      "id": "authReturnUnavailable",
+      "title": "原内容暂不可访问",
+      "items": [
+        {
+          "type": "text",
+          "text": "你已成功登录",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "内容可能已更新",
+          "body": "原内容已失效或访问范围变化。可保留的草稿仍在，不会自动提交。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看自己的草稿",
+          "value": "继续编辑前确认范围",
+          "to": "circleCompose"
+        }
+      ],
+      "footer": {
+        "label": "回到社区",
+        "to": "home"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authTerms",
+      "title": "服务协议与隐私",
+      "items": [
+        {
+          "type": "row",
+          "label": "服务协议",
+          "value": "账号、内容和社区规则",
+          "to": "authTermsDetails"
+        },
+        {
+          "type": "row",
+          "label": "隐私与数据说明",
+          "value": "用途、授权和资料控制",
+          "to": "authPrivacyDetails"
+        },
+        {
+          "type": "row",
+          "label": "第三方登录说明",
+          "value": "微信、QQ与Apple授权范围",
+          "to": "authSDKInfo"
+        }
+      ],
+      "footer": {
+        "label": "返回登录",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authTermsDetails",
+      "title": "M&D 服务协议",
+      "items": [
+        {
+          "type": "text",
+          "text": "使用前先了解",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "账号",
+              "本人使用并保护可用的登录方式"
+            ],
+            [
+              "内容与互动",
+              "遵守发布范围，尊重他人资料与权利"
+            ],
+            [
+              "退出与申诉",
+              "账号、内容和处理结果有对应入口"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "隐私与选择",
+          "body": "你可以在设置中管理登录方式、通知和账号数据。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回协议入口",
+        "to": "authTerms"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authSDKInfo",
+      "title": "第三方登录说明",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "微信 / QQ",
+              "仅处理本次授权返回的账号标识和你允许的资料"
+            ],
+            [
+              "Apple",
+              "支持隐藏邮箱，昵称和头像可稍后补充"
+            ],
+            [
+              "不会顺带做的事",
+              "不读取通讯录，不默认公开手机号或位置"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "管理已关联方式",
+          "value": "登录后可在账号设置中调整",
+          "to": "authAccounts"
+        }
+      ],
+      "footer": {
+        "label": "返回登录",
+        "to": "$authLanding"
+      },
+      "module": 6,
+      "phase": "auth"
+    },
+    {
+      "id": "authIntentReview",
+      "title": "登录后回到哪里",
+      "items": [
+        {
+          "type": "row",
+          "label": "继续领养申请",
+          "value": "小满 · 检查共享范围",
+          "to": "login",
+          "sets": {
+            "authReturn": 1,
+            "authLoggedIn": 0
+          }
+        },
+        {
+          "type": "row",
+          "label": "继续圈子草稿",
+          "value": "保留宠物、文字和受众",
+          "to": "login",
+          "sets": {
+            "authReturn": 2,
+            "authLoggedIn": 0
+          }
+        },
+        {
+          "type": "row",
+          "label": "继续私信",
+          "value": "回原会话，不自动发送",
+          "to": "authIOS",
+          "sets": {
+            "authReturn": 4,
+            "authPlatform": 1,
+            "authLoggedIn": 0
+          }
+        },
+        {
+          "type": "row",
+          "label": "继续走失求助",
+          "value": "状态和公开同意分别确认",
+          "to": "login",
+          "sets": {
+            "authReturn": 6,
+            "authLoggedIn": 0
+          }
+        },
+        {
+          "type": "row",
+          "label": "继续附近提醒",
+          "value": "登录不会自动开启订阅",
+          "to": "login",
+          "sets": {
+            "authReturn": 7,
+            "authLoggedIn": 0
+          }
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "completionHub"
+      },
+      "module": 6,
+      "phase": "review"
+    },
+    {
+      "id": "friendUnconfirmed",
+      "title": "宠友资料",
+      "items": [
+        {
+          "type": "pet",
+          "name": "奶糖",
+          "meta": "英短 · 武汉",
+          "kind": "catOffer",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "还不是宠友",
+          "body": "互相确认后，才会共享彼此圈子中的宠物日常。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "公开资料",
+              "昵称、头像与公开宠物名片"
+            ],
+            [
+              "圈子内容",
+              "未共享"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "发送宠友申请",
+        "to": "friendPending"
+      },
+      "module": 1
+    },
+    {
+      "id": "friendPending",
+      "title": "等待宠友确认",
+      "items": [
+        {
+          "type": "pet",
+          "name": "奶糖",
+          "meta": "申请已发送",
+          "kind": "catOffer",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "等待对方确认",
+          "body": "圈子内容仍未开放；对方确认后会通知你。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "撤回申请",
+          "to": "friendWithdrawConfirm",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "返回宠友圈",
+        "to": "circleFeed"
+      },
+      "module": 1
+    },
+    {
+      "id": "friendWithdrawConfirm",
+      "title": "撤回申请",
+      "items": [
+        {
+          "type": "note",
+          "title": "确认撤回？",
+          "body": "撤回后，对方不能通过这条申请建立宠友关系。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "保留申请",
+          "to": "friendPending",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "撤回申请",
+        "to": "friendUnconfirmed",
+        "kind": "secondary"
+      },
+      "module": 1
+    },
+    {
+      "id": "friendRequestDecision",
+      "title": "新的宠友申请",
+      "items": [
+        {
+          "type": "pet",
+          "name": "奶糖的朋友",
+          "meta": "想和你分享奶糖的日常",
+          "kind": "catOffer",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "确认后共享什么",
+          "body": "仅开放设为宠友可见的内容；私密日记仍只有你可见。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "暂不接受",
+          "to": "friendRejected",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "接受并成为宠友",
+        "to": "circleFriendProfile"
+      },
+      "module": 1
+    },
+    {
+      "id": "friendRejected",
+      "title": "申请已处理",
+      "items": [
+        {
+          "type": "text",
+          "text": "申请已处理",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "没有建立宠友关系，圈子内容未共享。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回宠友圈",
+        "to": "circleFeed"
+      },
+      "module": 1
+    },
+    {
+      "id": "audienceChanged",
+      "title": "可见范围已更新",
+      "items": [
+        {
+          "type": "note",
+          "title": "当前内容已设为私密",
+          "body": "原来的圈子分享入口已失效；已写的评论草稿仍保留在本机。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回圈子",
+          "to": "circleFeed",
+          "kind": "secondary"
+        }
+      ],
+      "footer": null,
+      "module": 1
+    },
+    {
+      "id": "helpType",
+      "title": "发布互助",
+      "items": [
+        {
+          "type": "note",
+          "title": "选择求助类型",
+          "body": "走失与拾获使用不同表单，便于附近的人准确提供帮助。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "我的宠物走失",
+          "value": "从宠物档案带入资料",
+          "to": "lostFromPetDraft"
+        },
+        {
+          "type": "row",
+          "label": "我拾获了宠物",
+          "value": "寻找宠物的家人",
+          "to": "foundForm"
+        }
+      ],
+      "footer": null,
+      "module": 4
+    },
+    {
+      "id": "foundForm",
+      "title": "发布拾获信息",
+      "items": [
+        {
+          "type": "upload",
+          "label": "添加拾获宠物照片",
+          "hint": "优先上传清晰的正面与花色照片",
+          "to": "mediaChoose",
+          "sets": {
+            "mediaReturn": 2
+          }
+        },
+        {
+          "type": "field",
+          "label": "宠物类型",
+          "value": "猫 · 黑白相间"
+        },
+        {
+          "type": "field",
+          "label": "拾获时间",
+          "value": "今天 16:30"
+        },
+        {
+          "type": "field",
+          "label": "公开区域",
+          "value": "武汉 · 解放公园附近"
+        },
+        {
+          "type": "field",
+          "label": "补充说明",
+          "value": "暂时安置在安全处，可核实特征后联系。"
+        },
+        {
+          "type": "note",
+          "title": "保留核实线索",
+          "body": "特殊体征、芯片号与准确安置点不公开，留给认领时核验。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "预览拾获信息",
+        "to": "foundPreview"
+      },
+      "module": 4
+    },
+    {
+      "id": "foundPreview",
+      "title": "确认公开范围",
+      "items": [
+        {
+          "type": "photo",
+          "kind": "cat",
+          "height": 200
+        },
+        {
+          "type": "text",
+          "text": "黑白猫正在等家人",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "拾获区域",
+              "解放公园附近 · 约 1 km"
+            ],
+            [
+              "联系入口",
+              "通过 M&D 私信"
+            ],
+            [
+              "不公开",
+              "准确地址、手机号和核实材料"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "发布拾获信息",
+        "to": "foundActive"
+      },
+      "module": 4,
+      "back": "foundForm"
+    },
+    {
+      "id": "foundActive",
+      "title": "拾获互助详情",
+      "items": [
+        {
+          "type": "photo",
+          "kind": "cat",
+          "height": 220
+        },
+        {
+          "type": "text",
+          "text": "黑白猫正在等家人",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "状态",
+              "等待家人认领"
+            ],
+            [
+              "区域",
+              "解放公园附近"
+            ],
+            [
+              "安置",
+              "暂时安全"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "认领前先核实",
+          "body": "认领材料只发给发布人；不要公开身份证、住址或完整芯片信息。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "我是发布人",
+          "value": "查看认领申请",
+          "to": "foundManage"
+        }
+      ],
+      "footer": {
+        "label": "这是我的宠物，申请认领",
+        "to": "claimForm"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimForm",
+      "title": "申请认领",
+      "items": [
+        {
+          "type": "pet",
+          "name": "待认领的黑白猫",
+          "meta": "解放公园附近拾获",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "field",
+          "label": "宠物名字",
+          "value": "小满"
+        },
+        {
+          "type": "field",
+          "label": "能核实的特征",
+          "value": "左后脚黑色小斑，戴过深蓝色项圈。"
+        },
+        {
+          "type": "upload",
+          "label": "补充历史照片或记录",
+          "hint": "仅发布人可见，可遮挡无关个人信息",
+          "to": "mediaChoose",
+          "sets": {
+            "mediaReturn": 3
+          }
+        },
+        {
+          "type": "consent",
+          "key": "claimAgree",
+          "text": "我确认资料真实，并同意仅向发布人共享本次核实材料。"
+        }
+      ],
+      "footer": {
+        "label": "提交认领材料",
+        "to": "claimPending",
+        "require": "claimAgree"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimPending",
+      "title": "认领材料已提交",
+      "items": [
+        {
+          "type": "pet",
+          "name": "待认领的黑白猫",
+          "meta": "仅双方可见",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "等待发布人核实",
+          "body": "在确认身份前，信息不会标为已找回。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "补充核实材料",
+          "value": "通过原认领入口补充",
+          "to": "claimForm"
+        },
+        {
+          "type": "row",
+          "label": "出现争议",
+          "value": "申请协助核实",
+          "to": "claimDispute"
+        }
+      ],
+      "footer": {
+        "label": "返回拾获信息",
+        "to": "foundActive"
+      },
+      "module": 4
+    },
+    {
+      "id": "foundManage",
+      "title": "管理拾获信息",
+      "items": [
+        {
+          "type": "note",
+          "title": "收到 1 条认领申请",
+          "body": "小满的家人提交了历史照片与特征说明。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "核实申请",
+          "value": "仅你与申请人可见",
+          "to": "claimReview"
+        },
+        {
+          "type": "row",
+          "label": "暂无匹配",
+          "value": "继续保留拾获信息",
+          "to": "foundActive"
+        },
+        {
+          "type": "row",
+          "label": "结束公开求助",
+          "value": "撤下公开区域与联系入口",
+          "to": "foundWithdraw"
+        }
+      ],
+      "footer": null,
+      "module": 4
+    },
+    {
+      "id": "claimReview",
+      "title": "核实认领申请",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "申请人",
+              "小满的家人"
+            ],
+            [
+              "历史照片",
+              "2 张 · 已遮挡无关信息"
+            ],
+            [
+              "特征说明",
+              "左后脚黑斑、深蓝色项圈"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "请逐项核对",
+          "body": "照片相似不等于归属确认；必要时结合病历、芯片或线下核实。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "材料尚不匹配",
+          "to": "claimRejected",
+          "kind": "secondary"
+        },
+        {
+          "type": "action",
+          "label": "需要协助",
+          "to": "claimDispute",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "核实匹配，安排交接",
+        "to": "claimMatched"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimMatched",
+      "title": "已核实，等待交接",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "与认领资料匹配",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "见面地点",
+              "双方约定的公共场所"
+            ],
+            [
+              "交接状态",
+              "双方尚未确认"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "交接后再关闭求助",
+          "body": "请确认宠物状态与实际接回情况。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "我已完成交接",
+        "to": "claimHandoverWaiting"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimHandoverWaiting",
+      "title": "等待另一方确认",
+      "items": [
+        {
+          "type": "note",
+          "title": "你的交接确认已记录",
+          "body": "另一方确认前，不会显示为已找回。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "发现问题",
+          "value": "保留材料并申请协助",
+          "to": "claimDispute"
+        }
+      ],
+      "footer": {
+        "label": "返回拾获详情",
+        "to": "foundMatchedPublic"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimHandoverOther",
+      "title": "确认已接回小满",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "发布人已确认交接",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "请按实际情况确认",
+          "body": "确认后将结束公开求助，并撤下公开位置。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "还没有接回",
+          "to": "claimDispute",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "已安全接回",
+        "to": "claimClosed"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimClosed",
+      "title": "小满已安全回家",
+      "items": [
+        {
+          "type": "text",
+          "text": "小满已安全回家",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "双方已确认交接。公开求助已结束，核实材料仍按原共享范围处理。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回互助",
+        "to": "lostList"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimRejected",
+      "title": "材料暂未匹配",
+      "items": [
+        {
+          "type": "text",
+          "text": "材料暂未匹配",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "可补充能核实的历史记录；拾获信息仍在公开寻找家人。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "补充材料",
+        "to": "claimForm"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimDispute",
+      "title": "申请核实协助",
+      "items": [
+        {
+          "type": "field",
+          "label": "情况说明",
+          "value": "双方对特征存在疑问，暂不交接。"
+        },
+        {
+          "type": "upload",
+          "label": "保留相关材料",
+          "hint": "仅用于本次核实",
+          "to": "mediaChoose",
+          "sets": {
+            "mediaReturn": 1
+          }
+        },
+        {
+          "type": "note",
+          "title": "先保障宠物安全",
+          "body": "核实未完成前，保留安置状态和原记录。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "提交协助申请",
+        "to": "claimDisputePending"
+      },
+      "module": 4
+    },
+    {
+      "id": "claimDisputePending",
+      "title": "协助申请已记录",
+      "items": [
+        {
+          "type": "text",
+          "text": "协助申请已记录",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "等待处理期间，交接确认保持未完成。你可在进度页补充材料。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查看原记录",
+        "to": "foundManage"
+      },
+      "module": 4
+    },
+    {
+      "id": "foundWithdraw",
+      "title": "结束本次拾获求助",
+      "items": [
+        {
+          "type": "field",
+          "label": "结束原因",
+          "value": "信息重复"
+        },
+        {
+          "type": "note",
+          "title": "公开信息将撤下",
+          "body": "尚未完成的认领申请会收到状态更新，历史记录仍可查询。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "继续寻找家人",
+          "to": "foundManage",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认结束",
+        "to": "lostList",
+        "kind": "secondary"
+      },
+      "module": 4
+    },
+    {
+      "id": "appointment",
+      "title": "确认见面预约",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "领养申请 A1 · 仅双方可见",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "版本",
+              "V1"
+            ],
+            [
+              "时间",
+              "10 月 22 日 14:00"
+            ],
+            [
+              "地点",
+              "解放公园南门"
+            ],
+            [
+              "到场人员",
+              "申请人 1 位 · 送养人 1 位"
+            ],
+            [
+              "费用",
+              "无预约费用"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "appointmentAgree",
+          "text": "我确认时间、地点和到场安排。"
+        },
+        {
+          "type": "action",
+          "label": "调整安排",
+          "to": "change",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认预约",
+        "to": "appointmentWaiting",
+        "require": "appointmentAgree"
+      },
+      "module": 5,
+      "back": "chat",
+      "onEnter": {
+        "appointmentVersion": "V1"
+      }
+    },
+    {
+      "id": "appointmentWaiting",
+      "title": "等待另一方确认",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前版本",
+              "V1",
+              "appointmentVersion"
+            ],
+            [
+              "你",
+              "已确认"
+            ],
+            [
+              "对方",
+              "待确认"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "暂未生效",
+          "body": "双方确认同一版本后，预约才会生效。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "取消本次预约",
+          "to": "appointmentCancelConfirm",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "返回会话",
+        "to": "chat"
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentOther",
+      "title": "确认对方的预约",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "版本",
+              "V1"
+            ],
+            [
+              "时间",
+              "10 月 22 日 14:00"
+            ],
+            [
+              "地点",
+              "解放公园南门"
+            ],
+            [
+              "对方",
+              "已确认"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "appointmentAgree",
+          "text": "我同意这份安排，确认后双方预约生效。"
+        }
+      ],
+      "footer": {
+        "label": "同意并确认",
+        "to": "appointmentConfirmed",
+        "require": "appointmentAgree",
+        "sets": {
+          "appointmentVersion": "V1"
+        }
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentConfirmed",
+      "title": "预约已确认",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "生效版本",
+              "V1"
+            ],
+            [
+              "双方",
+              "均已确认"
+            ],
+            [
+              "时间",
+              "10 月 22 日 14:00"
+            ],
+            [
+              "地点",
+              "解放公园南门"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看历史版本",
+          "value": "保留原记录",
+          "to": "appointmentHistory"
+        },
+        {
+          "type": "action",
+          "label": "提出变更",
+          "to": "change",
+          "kind": "secondary"
+        },
+        {
+          "type": "action",
+          "label": "取消预约",
+          "to": "appointmentCancelConfirm",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "返回会话",
+        "to": "chat"
+      },
+      "module": 5
+    },
+    {
+      "id": "change",
+      "title": "提出预约变更",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原版本",
+              "V1 · 已确认"
+            ],
+            [
+              "新版本",
+              "V2 · 待双方确认"
+            ]
+          ]
+        },
+        {
+          "type": "field",
+          "label": "新时间",
+          "value": "10 月 22 日 16:00"
+        },
+        {
+          "type": "field",
+          "label": "地点",
+          "value": "解放公园南门"
+        },
+        {
+          "type": "field",
+          "label": "变更原因",
+          "value": "下午两点临时有事，想往后延迟两小时。"
+        },
+        {
+          "type": "consent",
+          "key": "changeAgree",
+          "text": "我确认提交变更；对方同意前，以原生效安排为准。"
+        }
+      ],
+      "footer": {
+        "label": "发送变更申请",
+        "to": "appointmentChangeWaiting",
+        "require": "changeAgree"
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentChangeWaiting",
+      "title": "等待变更确认",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "生效安排",
+              "V1 · 14:00"
+            ],
+            [
+              "待确认安排",
+              "V2 · 16:00"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "原安排仍有效",
+          "body": "变更未获同意前，不会覆盖原时间。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "撤回本次变更",
+          "to": "appointmentConfirmed",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "返回会话",
+        "to": "chat"
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentChangeReview",
+      "title": "对方提出变更",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "原安排",
+              "V1 · 14:00"
+            ],
+            [
+              "新安排",
+              "V2 · 16:00"
+            ],
+            [
+              "地点",
+              "解放公园南门"
+            ]
+          ]
+        },
+        {
+          "type": "action",
+          "label": "不同意，保留原安排",
+          "to": "appointmentChangeDeclined",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "同意变更",
+        "to": "appointmentConfirmedV2",
+        "sets": {
+          "appointmentVersion": "V2"
+        }
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentChangeDeclined",
+      "title": "变更未通过",
+      "items": [
+        {
+          "type": "text",
+          "text": "变更未通过",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "V2 未生效，原 V1 安排保持有效。双方可重新沟通后提出新版本。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查看当前安排",
+        "to": "appointmentConfirmed"
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentCancelConfirm",
+      "title": "取消预约",
+      "items": [
+        {
+          "type": "field",
+          "label": "取消原因",
+          "value": "行程冲突"
+        },
+        {
+          "type": "note",
+          "title": "双方都会收到更新",
+          "body": "取消仅针对本次预约，原申请和会话仍保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "保留预约",
+          "to": "appointmentConfirmed",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认取消",
+        "to": "appointmentCancelled",
+        "kind": "secondary"
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentCancelled",
+      "title": "预约已取消",
+      "items": [
+        {
+          "type": "text",
+          "text": "预约已取消",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "本次安排不再有效；如需见面，请重新提出预约并由双方确认。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "重新约时间",
+        "to": "appointment"
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentExpired",
+      "title": "预约确认已过期",
+      "items": [
+        {
+          "type": "note",
+          "title": "未获双方确认",
+          "body": "当前时间已过，不能继续确认旧安排。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看历史",
+          "value": "原版本仍可查询",
+          "to": "appointmentHistory"
+        }
+      ],
+      "footer": {
+        "label": "重新提出预约",
+        "to": "appointment"
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentConflict",
+      "title": "安排已被更新",
+      "items": [
+        {
+          "type": "note",
+          "title": "你打开的是旧版本",
+          "body": "对方刚更新了安排。请查看最新版本后再确认，避免覆盖新记录。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查看最新变更",
+        "to": "appointmentChangeReview"
+      },
+      "module": 5
+    },
+    {
+      "id": "appointmentHistory",
+      "title": "预约版本记录",
+      "items": [
+        {
+          "type": "timeline",
+          "entries": [
+            [
+              "V2 · 待确认",
+              "16:00 · 对方提出的变更"
+            ],
+            [
+              "V1 · 生效中",
+              "14:00 · 双方已确认"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "查看当前安排",
+        "to": "appointmentConfirmed"
+      },
+      "module": 5
+    },
+    {
+      "id": "adoptionDecision",
+      "title": "处理领养申请",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "申请人：奶糖的朋友",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "按申请材料处理",
+          "body": "处理结果仅对本次申请双方可见。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "请对方补充材料",
+          "to": "adoptionSupplement",
+          "kind": "secondary"
+        },
+        {
+          "type": "action",
+          "label": "暂不通过",
+          "to": "adoptionReject",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "同意继续沟通",
+        "to": "chat"
+      },
+      "module": 3
+    },
+    {
+      "id": "adoptionSupplement",
+      "title": "请申请人补充",
+      "items": [
+        {
+          "type": "field",
+          "label": "需要补充的内容",
+          "value": "请补充同住家人的养宠意愿。"
+        },
+        {
+          "type": "note",
+          "title": "仅申请双方可见",
+          "body": "避免要求无关证件或完整家庭地址。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "发送补充请求",
+        "to": "adoptionSupplementReceived"
+      },
+      "module": 3
+    },
+    {
+      "id": "adoptionSupplementReceived",
+      "title": "补充领养申请",
+      "items": [
+        {
+          "type": "note",
+          "title": "送养人希望了解",
+          "body": "请补充同住家人的养宠意愿。",
+          "tone": "subtle"
+        },
+        {
+          "type": "field",
+          "label": "补充说明",
+          "value": "家人已了解并支持共同照顾小满。"
+        }
+      ],
+      "footer": {
+        "label": "补充并重新提交",
+        "to": "applySent"
+      },
+      "module": 3
+    },
+    {
+      "id": "adoptionReject",
+      "title": "暂不通过本次申请",
+      "items": [
+        {
+          "type": "field",
+          "label": "原因",
+          "value": "当前照护安排与小满的需求暂不匹配。"
+        },
+        {
+          "type": "note",
+          "title": "只关闭本次申请",
+          "body": "不会公开申请人的材料，也不会替对方撤回其他申请。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "返回处理",
+          "to": "adoptionDecision",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认发送结果",
+        "to": "adoptionRejected",
+        "kind": "secondary"
+      },
+      "module": 3
+    },
+    {
+      "id": "adoptionRejected",
+      "title": "本次申请未通过",
+      "items": [
+        {
+          "type": "text",
+          "text": "本次申请未通过",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "送养人反馈：当前照护安排与小满的需求暂不匹配。材料仍按本次申请范围处理。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "继续浏览领养",
+        "to": "adopt"
+      },
+      "module": 3
+    },
+    {
+      "id": "trialAgreement",
+      "title": "确认试养安排",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "试养前双方确认",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "时间",
+              "10 月 22 日至 10 月 29 日"
+            ],
+            [
+              "照护",
+              "按原有喂养与用药说明"
+            ],
+            [
+              "费用",
+              "无额外收费"
+            ],
+            [
+              "退出方式",
+              "先私信沟通，协商安全接回"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "trialAgree",
+          "text": "我理解试养期间的照护责任与退出方式。"
+        }
+      ],
+      "footer": {
+        "label": "确认试养安排",
+        "to": "trialWaiting",
+        "require": "trialAgree"
+      },
+      "module": 3
+    },
+    {
+      "id": "trialActive",
+      "title": "试养进行中",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "第 3 天 · 仅双方可见",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "row",
+          "label": "记录照护近况",
+          "value": "与送养人共享",
+          "to": "followup"
+        },
+        {
+          "type": "row",
+          "label": "遇到照护问题",
+          "value": "先沟通支持",
+          "to": "adoptionSupport"
+        },
+        {
+          "type": "row",
+          "label": "需要结束试养",
+          "value": "协商安全接回",
+          "to": "trialExit"
+        }
+      ],
+      "footer": {
+        "label": "准备正式交接",
+        "to": "handover"
+      },
+      "module": 3
+    },
+    {
+      "id": "trialExit",
+      "title": "协商结束试养",
+      "items": [
+        {
+          "type": "field",
+          "label": "目前情况",
+          "value": "家中原住民持续紧张，需要进一步评估。"
+        },
+        {
+          "type": "field",
+          "label": "建议接回时间",
+          "value": "10 月 25 日下午"
+        },
+        {
+          "type": "note",
+          "title": "先确认安全安排",
+          "body": "双方确认接回方式前，继续保障宠物照护，不直接标记交接完成。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "发送接回协商",
+        "to": "adoptionSupportPending"
+      },
+      "module": 3
+    },
+    {
+      "id": "handover",
+      "title": "确认领养交接",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "仅本次申请双方可见",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "资料",
+              "喂养与健康记录已共享"
+            ],
+            [
+              "用品",
+              "猫粮、猫砂与常用物品"
+            ],
+            [
+              "后续",
+              "30 天私密照护更新"
+            ],
+            [
+              "状态",
+              "双方均待确认"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "handoverAgree",
+          "text": "我已核对实际交接情况，并确认宠物与资料已妥善交接。"
+        }
+      ],
+      "footer": {
+        "label": "确认我方已交接",
+        "to": "handoverWaiting",
+        "require": "handoverAgree"
+      },
+      "module": 3
+    },
+    {
+      "id": "handoverWaiting",
+      "title": "等待另一方确认",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "你已确认交接",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "等待对方确认",
+          "body": "双方都确认后，才会进入已完成状态。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "交接有问题",
+          "value": "保留记录并沟通",
+          "to": "adoptionSupport"
+        }
+      ],
+      "footer": {
+        "label": "返回申请进度",
+        "to": "application"
+      },
+      "module": 3
+    },
+    {
+      "id": "handoverOther",
+      "title": "确认收到小满",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "送养人已确认",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "consent",
+          "key": "handoverAgree",
+          "text": "我已安全接到小满，并收到约定资料与用品。"
+        },
+        {
+          "type": "action",
+          "label": "尚未完成交接",
+          "to": "adoptionSupport",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认交接完成",
+        "to": "handoverComplete",
+        "require": "handoverAgree"
+      },
+      "module": 3
+    },
+    {
+      "id": "handoverComplete",
+      "title": "交接已完成",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "双方已确认",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "接下来继续关心小满",
+          "body": "30 天照护更新仅向本次送养人及获授权的照护者共享。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "记录第一条照护更新",
+        "to": "followup"
+      },
+      "module": 3
+    },
+    {
+      "id": "followup",
+      "title": "记录照护更新",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "领养后第 3 天",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "field",
+          "label": "饮食与精神",
+          "value": "食欲正常，开始主动玩逗猫棒。"
+        },
+        {
+          "type": "upload",
+          "label": "添加近况照片",
+          "hint": "仅本次授权照护成员可见",
+          "to": "mediaChoose",
+          "sets": {
+            "mediaReturn": 5
+          }
+        },
+        {
+          "type": "note",
+          "title": "私密更新",
+          "body": "此处不会自动发布到社区或宠友圈。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "需要帮助",
+          "value": "照护、健康或接回协商",
+          "to": "adoptionSupport"
+        }
+      ],
+      "footer": {
+        "label": "发送私密更新",
+        "to": "followupSaved"
+      },
+      "module": 3
+    },
+    {
+      "id": "followupSaved",
+      "title": "照护更新已发送",
+      "items": [
+        {
+          "type": "note",
+          "title": "仅授权成员可见",
+          "body": "送养人和已接受邀请的照护者可以查看本条更新。",
+          "tone": "subtle"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "进度",
+              "第 3 / 30 天"
+            ],
+            [
+              "公开社区",
+              "未发布"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "想公开分享",
+          "value": "另行检查内容与受众",
+          "to": "circleCompose"
+        },
+        {
+          "type": "row",
+          "label": "照护成员",
+          "value": "查看授权范围和邀请状态",
+          "to": "careTeam"
+        }
+      ],
+      "footer": {
+        "label": "返回照护进度",
+        "to": "trialActive"
+      },
+      "module": 3
+    },
+    {
+      "id": "adoptionSupport",
+      "title": "照护与接回协助",
+      "items": [
+        {
+          "type": "field",
+          "label": "需要哪类支持",
+          "value": "健康与适应 / 退养协商"
+        },
+        {
+          "type": "field",
+          "label": "情况说明",
+          "value": "已联系双方，希望协商安全的后续照护。"
+        },
+        {
+          "type": "note",
+          "title": "保持私密沟通",
+          "body": "先说明宠物当前状态；紧急健康情况请及时联系当地动物医疗机构。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "发送协助请求",
+        "to": "adoptionSupportPending"
+      },
+      "module": 3
+    },
+    {
+      "id": "adoptionSupportPending",
+      "title": "协助请求已发送",
+      "items": [
+        {
+          "type": "text",
+          "text": "协助请求已发送",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "双方会在原申请内继续沟通。现有照护责任与记录保持，接回需双方确认。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "回到原申请",
+        "to": "application"
+      },
+      "module": 3
+    },
+    {
+      "id": "groupAdmin",
+      "title": "管理宠友群",
+      "items": [
+        {
+          "type": "row",
+          "label": "成员管理",
+          "value": "8 位成员",
+          "to": "groupMemberManage"
+        },
+        {
+          "type": "row",
+          "label": "转让群主",
+          "value": "由接收人确认后生效",
+          "to": "groupTransferChoose"
+        },
+        {
+          "type": "row",
+          "label": "解散群聊",
+          "value": "所有成员将无法继续发言",
+          "to": "groupDissolveConfirm"
+        }
+      ],
+      "footer": {
+        "label": "返回群聊",
+        "to": "groupChat"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupTransferChoose",
+      "title": "选择新群主",
+      "items": [
+        {
+          "type": "note",
+          "title": "转让由接收人确认",
+          "body": "发起后你仍是群主，接收前可撤回。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "奶糖的朋友",
+          "value": "活跃成员",
+          "to": "groupTransferConfirm"
+        }
+      ],
+      "footer": null,
+      "module": 5
+    },
+    {
+      "id": "groupTransferConfirm",
+      "title": "确认转让群主",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "接收人",
+              "奶糖的朋友"
+            ],
+            [
+              "交接权限",
+              "成员管理、群资料与解散权限"
+            ],
+            [
+              "你的角色",
+              "接收成功后变为普通成员"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "transferAgree",
+          "text": "我理解群主转让后的权限变化。"
+        },
+        {
+          "type": "action",
+          "label": "重新选择",
+          "to": "groupTransferChoose",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "发送转让邀请",
+        "to": "groupTransferPending",
+        "require": "transferAgree"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupTransferPending",
+      "title": "等待接收群主",
+      "items": [
+        {
+          "type": "note",
+          "title": "邀请已发送",
+          "body": "奶糖的朋友接受前，你继续保有群主权限。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "撤回转让",
+          "value": "结束这次邀请",
+          "to": "groupTransferRevoked"
+        }
+      ],
+      "footer": {
+        "label": "返回群管理",
+        "to": "groupAdmin"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupTransferReceived",
+      "title": "接收群主邀请",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "群聊",
+              "小满和朋友们"
+            ],
+            [
+              "邀请人",
+              "布丁的铲屎官"
+            ],
+            [
+              "接收后",
+              "你将成为群主"
+            ]
+          ]
+        },
+        {
+          "type": "action",
+          "label": "暂不接受",
+          "to": "groupTransferDeclined",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "接受并成为群主",
+        "to": "groupTransferReceiverDone"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupTransferDone",
+      "title": "群主已转让",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "新群主",
+              "奶糖的朋友"
+            ],
+            [
+              "原群主",
+              "普通成员"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "权限已更新",
+          "body": "原群主可以继续聊天，但不能再管理或解散群聊。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回群聊",
+        "to": "groupMemberInfo"
+      },
+      "module": 5,
+      "onEnter": {
+        "roleName": "普通成员"
+      }
+    },
+    {
+      "id": "groupTransferDeclined",
+      "title": "转让未被接受",
+      "items": [
+        {
+          "type": "text",
+          "text": "转让未被接受",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "群主未发生变化，可以重新选择成员。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回消息",
+        "to": "messages"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupTransferRevoked",
+      "title": "转让邀请已撤回",
+      "items": [
+        {
+          "type": "text",
+          "text": "转让邀请已撤回",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "旧邀请立即失效，群主未发生变化。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回群管理",
+        "to": "groupAdmin"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupTransferExpired",
+      "title": "转让邀请已失效",
+      "items": [
+        {
+          "type": "text",
+          "text": "转让邀请已失效",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "邀请超过可接收时间或接收人已离群，请重新选择成员。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回群管理",
+        "to": "groupAdmin"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupDissolveConfirm",
+      "title": "确认解散群聊",
+      "items": [
+        {
+          "type": "note",
+          "title": "群聊将停止服务",
+          "body": "所有成员将无法继续发言或邀请成员。历史内容按现有保留规则处理。",
+          "tone": "warningSoft"
+        },
+        {
+          "type": "action",
+          "label": "保留群聊",
+          "to": "groupAdmin",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认解散群聊",
+        "to": "groupDissolved",
+        "kind": "secondary"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupDissolved",
+      "title": "群聊已解散",
+      "items": [
+        {
+          "type": "text",
+          "text": "群聊已解散",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "成员会看到群聊已结束的状态，不能继续发送新消息。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回消息",
+        "to": "messages"
+      },
+      "module": 5,
+      "onEnter": {
+        "roleName": "群聊已解散"
+      }
+    },
+    {
+      "title": "领养介绍协作者",
+      "module": 3,
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "协作仅限本只宠物的介绍与答疑"
+        },
+        {
+          "type": "row",
+          "label": "奶糖的朋友",
+          "value": "已接受 · 介绍、照片与答疑",
+          "to": "publisherCollabRevoke"
+        },
+        {
+          "type": "row",
+          "label": "邀请协作者",
+          "value": "接受后开放本次范围",
+          "to": "adoptionCaretakerInvite"
+        }
+      ],
+      "footer": {
+        "label": "返回领养介绍",
+        "to": "detail"
+      },
+      "id": "adoptionCaretakers"
+    },
+    {
+      "id": "caretakerInvite",
+      "title": "邀请照护者",
+      "items": [
+        {
+          "type": "field",
+          "label": "邀请对象",
+          "value": "奶糖的朋友"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "允许",
+              "查看与记录小满的照护更新"
+            ],
+            [
+              "不允许",
+              "代为确认领养交接、管理账号"
+            ],
+            [
+              "生效",
+              "对方接受后"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "发送邀请",
+        "to": "caretakerPending"
+      },
+      "module": 3
+    },
+    {
+      "id": "caretakerPending",
+      "title": "等待照护者接受",
+      "items": [
+        {
+          "type": "note",
+          "title": "邀请已发送",
+          "body": "接受前，对方看不到私密照护更新。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "撤回邀请",
+          "to": "caretakerRevoked",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "返回照护成员",
+        "to": "careTeam"
+      },
+      "module": 3
+    },
+    {
+      "id": "caretakerReceived",
+      "title": "收到照护邀请",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "布丁的铲屎官邀请你协助照护",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "可查看",
+              "本次授权照护更新"
+            ],
+            [
+              "可操作",
+              "记录近况与补充说明"
+            ],
+            [
+              "不可操作",
+              "代替双方确认交接"
+            ]
+          ]
+        },
+        {
+          "type": "action",
+          "label": "暂不接受",
+          "to": "caretakerDeclined",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "接受照护邀请",
+        "to": "caretakerActive"
+      },
+      "module": 3
+    },
+    {
+      "id": "caretakerActive",
+      "title": "已加入照护",
+      "items": [
+        {
+          "type": "text",
+          "text": "已加入照护",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "你可以查看与记录小满的照护近况，授权范围仅限本次照护。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查看照护更新",
+        "to": "followupSaved"
+      },
+      "module": 3
+    },
+    {
+      "id": "caretakerDeclined",
+      "title": "已婉拒邀请",
+      "items": [
+        {
+          "type": "text",
+          "text": "已婉拒邀请",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "没有开放照护资料，可由邀请人重新发起。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回我的",
+        "to": "mine"
+      },
+      "module": 3
+    },
+    {
+      "id": "caretakerRevoke",
+      "title": "撤销照护授权",
+      "items": [
+        {
+          "type": "note",
+          "title": "确认撤销？",
+          "body": "奶糖的朋友将不能继续查看新的照护更新；已留下的记录仍按原记录处理。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "保留授权",
+          "to": "careTeam",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "撤销授权",
+        "to": "caretakerRevoked",
+        "kind": "secondary"
+      },
+      "module": 3
+    },
+    {
+      "id": "caretakerRevoked",
+      "title": "授权已结束",
+      "items": [
+        {
+          "type": "text",
+          "text": "授权已结束",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "旧邀请与查看入口已失效，对方不能继续新增或读取照护资料。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回成员",
+        "to": "careTeamEmpty"
+      },
+      "module": 3
+    },
+    {
+      "id": "caretakerExpired",
+      "title": "邀请已失效",
+      "items": [
+        {
+          "type": "text",
+          "text": "邀请已失效",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "请向邀请人获取新的邀请，当前页面没有开放照护资料。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回我的",
+        "to": "mine"
+      },
+      "module": 3
+    },
+    {
+      "id": "settings",
+      "title": "设置",
+      "items": [
+        {
+          "type": "row",
+          "label": "账号与登录",
+          "value": "关联、换绑、恢复与退出",
+          "to": "authAccounts"
+        },
+        {
+          "type": "row",
+          "label": "通知偏好",
+          "value": "私信、群聊、申请与附近提醒",
+          "to": "notificationSettings"
+        },
+        {
+          "type": "row",
+          "label": "隐私与可见范围",
+          "value": "个人资料和圈子内容",
+          "to": "privacy"
+        },
+        {
+          "type": "row",
+          "label": "账号数据与注销",
+          "value": "查看影响，再验证身份",
+          "to": "authDeleteImpact"
+        },
+        {
+          "type": "row",
+          "label": "表情与贴纸",
+          "value": "常用、收藏与输入方式",
+          "to": "expressionReview"
+        }
+      ],
+      "footer": {
+        "label": "返回我的",
+        "to": "mine"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationSettings",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "toggle",
+          "label": "私信消息",
+          "on": true,
+          "to": "notificationMuted"
+        },
+        {
+          "type": "toggle",
+          "label": "宠友群消息",
+          "on": true,
+          "to": "notificationNoGroup"
+        },
+        {
+          "type": "toggle",
+          "label": "申请与照护进度",
+          "on": true,
+          "to": "notificationNoProgress"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围和授权",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "即时通知",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "前往查看",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationMuted",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "toggle",
+          "label": "私信消息",
+          "on": false,
+          "to": "notificationSettings"
+        },
+        {
+          "type": "toggle",
+          "label": "宠友群消息",
+          "on": true,
+          "to": "notificationGroupMuted"
+        },
+        {
+          "type": "toggle",
+          "label": "申请与照护进度",
+          "on": true,
+          "to": "notificationProgressMuted"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围和授权",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "即时通知",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "前往查看",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationGroupMuted",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "toggle",
+          "label": "私信消息",
+          "on": false,
+          "to": "notificationNoGroup"
+        },
+        {
+          "type": "toggle",
+          "label": "宠友群消息",
+          "on": false,
+          "to": "notificationMuted"
+        },
+        {
+          "type": "toggle",
+          "label": "申请与照护进度",
+          "on": true,
+          "to": "notificationAllMuted"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围和授权",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "即时通知",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "前往查看",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationProgressMuted",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "toggle",
+          "label": "私信消息",
+          "on": false,
+          "to": "notificationNoProgress"
+        },
+        {
+          "type": "toggle",
+          "label": "宠友群消息",
+          "on": true,
+          "to": "notificationAllMuted"
+        },
+        {
+          "type": "toggle",
+          "label": "申请与照护进度",
+          "on": false,
+          "to": "notificationMuted"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围和授权",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "即时通知",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "前往查看",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationAllMuted",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "toggle",
+          "label": "私信消息",
+          "on": false,
+          "to": "notificationPrivateOnly"
+        },
+        {
+          "type": "toggle",
+          "label": "宠友群消息",
+          "on": false,
+          "to": "notificationProgressMuted"
+        },
+        {
+          "type": "toggle",
+          "label": "申请与照护进度",
+          "on": false,
+          "to": "notificationGroupMuted"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围和授权",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "即时通知",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "前往查看",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationFrequency",
+      "title": "提醒频率",
+      "items": [
+        {
+          "type": "row",
+          "label": "即时通知",
+          "value": "按各类别开关接收",
+          "to": "notificationFrequencySaved"
+        },
+        {
+          "type": "row",
+          "label": "每日汇总",
+          "value": "每天 19:00 汇总非紧急动态",
+          "to": "notificationSummarySaved"
+        },
+        {
+          "type": "note",
+          "title": "重要进度",
+          "body": "安全、账号与需及时确认的状态会在应用内保留。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": null,
+      "module": 6
+    },
+    {
+      "id": "notificationFrequencySaved",
+      "title": "已使用即时通知",
+      "items": [
+        {
+          "type": "text",
+          "text": "已使用即时通知",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "新的非紧急动态将按已开启的类别推送。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回通知设置",
+        "to": "notificationSettings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationSummarySaved",
+      "title": "已改为每日汇总",
+      "items": [
+        {
+          "type": "text",
+          "text": "已改为每日汇总",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "非紧急动态每天 19:00 汇总；你随时可以在应用内查看。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回通知设置",
+        "to": "notificationSettingsSummary"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationSettingsSummary",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "每日汇总 · 19:00",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围与频率",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "已开启",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationPermission",
+      "title": "系统通知未开启",
+      "items": [
+        {
+          "type": "note",
+          "title": "可以继续使用 M&D",
+          "body": "你仍能在消息页查看进度。需要接收推送时，可前往系统设置开启。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "稍后再说",
+          "to": "notificationSettings",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "了解开启方式",
+        "to": "notificationPermissionHelp"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationPermissionHelp",
+      "title": "开启系统通知",
+      "items": [
+        {
+          "type": "text",
+          "text": "开启系统通知",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "在手机设置中找到 M&D，进入通知设置并允许通知。返回后，M&D 会重新读取权限状态。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回应用",
+        "to": "notificationSettings"
+      },
+      "module": 6
+    },
+    {
+      "id": "verificationExpired",
+      "title": "资料需要更新",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "健康材料更新提醒",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "疫苗记录",
+              "材料时间已超出本次有效范围"
+            ],
+            [
+              "当前展示",
+              "待更新"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "更新后重新核对",
+          "body": "旧记录保留为历史，不继续展示为当前已核实。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "补充最新材料",
+        "to": "verificationSubmit"
+      },
+      "module": 3
+    },
+    {
+      "id": "verificationSubmit",
+      "title": "补充核实材料",
+      "items": [
+        {
+          "type": "upload",
+          "label": "添加最新记录",
+          "hint": "可遮挡与本次核实无关的信息",
+          "to": "mediaChoose",
+          "sets": {
+            "mediaReturn": 4
+          }
+        },
+        {
+          "type": "field",
+          "label": "补充说明",
+          "value": "补充本月的疫苗接种记录。"
+        }
+      ],
+      "footer": {
+        "label": "提交核实",
+        "to": "verificationPending"
+      },
+      "module": 3
+    },
+    {
+      "id": "verificationPending",
+      "title": "材料待核实",
+      "items": [
+        {
+          "type": "text",
+          "text": "材料待核实",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "当前标记为待核实。处理完成后会更新结果与适用时间。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查看处理进度",
+        "to": "verificationResult"
+      },
+      "module": 3
+    },
+    {
+      "id": "verificationResult",
+      "title": "材料核实结果",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "当前资料状态",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "疫苗材料",
+              "已核实本次材料"
+            ],
+            [
+              "范围",
+              "仅核对所提交记录"
+            ],
+            [
+              "时间",
+              "2026 年 10 月 19 日"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "状态有明确范围",
+          "body": "核实材料不替代健康诊断，也不代表其他资料已核实。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回档案",
+        "to": "petProfile"
+      },
+      "module": 3
+    },
+    {
+      "id": "moderationResult",
+      "title": "举报处理结果",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次结果",
+              "支持举报 · 已限制相关内容"
+            ],
+            [
+              "理由摘要",
+              "内容含未经允许的个人联系方式"
+            ],
+            [
+              "隐私",
+              "不展示举报人身份与内部记录"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "对处理有异议",
+          "value": "提交一次申诉与补充材料",
+          "to": "appeal"
+        }
+      ],
+      "footer": {
+        "label": "返回进度",
+        "to": "reportProgress"
+      },
+      "module": 6
+    },
+    {
+      "id": "moderationUnsupported",
+      "title": "举报处理结果",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次结果",
+              "现有材料不足以支持举报"
+            ],
+            [
+              "内容状态",
+              "维持当前状态"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "可以补充材料",
+          "body": "新证据将按同一记录继续核对。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "补充与申诉",
+          "value": "说明具体问题",
+          "to": "appeal"
+        }
+      ],
+      "footer": {
+        "label": "返回进度",
+        "to": "reportProgress"
+      },
+      "module": 6
+    },
+    {
+      "id": "appealResolved",
+      "title": "申诉已处理",
+      "items": [
+        {
+          "type": "text",
+          "text": "申诉已处理",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "当前状态",
+          "body": "补充材料已核对，本次限制已调整；结果仅说明对你相关内容的影响。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查看记录",
+        "to": "reportProgress"
+      },
+      "module": 6
+    },
+    {
+      "id": "mediaChoose",
+      "title": "选择照片",
+      "items": [
+        {
+          "type": "text",
+          "text": "已选择 3 / 9 张",
+          "role": "Strong",
+          "color": "ink"
+        },
+        {
+          "type": "photo",
+          "kind": "catOffer",
+          "height": 172
+        },
+        {
+          "type": "photo",
+          "kind": "cat",
+          "height": 172
+        },
+        {
+          "type": "row",
+          "label": "调整顺序",
+          "value": "拖动后第一张作为封面",
+          "to": "mediaReorder"
+        },
+        {
+          "type": "row",
+          "label": "移除一张",
+          "value": "保留其余选择",
+          "to": "mediaRemoved"
+        }
+      ],
+      "footer": {
+        "label": "使用所选照片",
+        "to": "mediaUploading"
+      },
+      "module": 1
+    },
+    {
+      "id": "mediaUploading",
+      "title": "正在添加照片",
+      "items": [
+        {
+          "type": "timeline",
+          "entries": [
+            [
+              "照片 1 · 已完成",
+              "已加入本次草稿"
+            ],
+            [
+              "照片 2 · 上传中 60%",
+              "离开前可保留草稿"
+            ],
+            [
+              "照片 3 · 等待中",
+              "尚未开始"
+            ]
+          ]
+        },
+        {
+          "type": "action",
+          "label": "保留草稿并离开",
+          "to": "mediaDraftSaved",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "查看进度",
+        "to": "mediaPartialFailure"
+      },
+      "module": 1
+    },
+    {
+      "id": "mediaPartialFailure",
+      "title": "有 1 张照片未完成",
+      "items": [
+        {
+          "type": "photo",
+          "kind": "catOffer",
+          "height": 180
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "已完成",
+              "2 张"
+            ],
+            [
+              "未完成",
+              "1 张 · 网络连接中断"
+            ]
+          ]
+        },
+        {
+          "type": "action",
+          "label": "移除未完成的照片",
+          "to": "mediaRemoved",
+          "kind": "secondary"
+        },
+        {
+          "type": "action",
+          "label": "保留草稿",
+          "to": "mediaDraftSaved",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "重试失败照片",
+        "to": "mediaReady"
+      },
+      "module": 1
+    },
+    {
+      "id": "mediaReorder",
+      "title": "调整照片顺序",
+      "items": [
+        {
+          "type": "photo",
+          "kind": "cat",
+          "height": 160
+        },
+        {
+          "type": "text",
+          "text": "第 1 张 · 封面",
+          "role": "Strong",
+          "color": "ink"
+        },
+        {
+          "type": "photo",
+          "kind": "catOffer",
+          "height": 160
+        },
+        {
+          "type": "text",
+          "text": "第 2 张",
+          "role": "Caption",
+          "color": "muted"
+        }
+      ],
+      "footer": {
+        "label": "保存顺序",
+        "to": "mediaReady"
+      },
+      "module": 1
+    },
+    {
+      "id": "mediaRemoved",
+      "title": "已移除 1 张照片",
+      "items": [
+        {
+          "type": "photo",
+          "kind": "catOffer",
+          "height": 200
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "已选择",
+              "2 张"
+            ],
+            [
+              "其余照片",
+              "上传与顺序已保留"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "返回发布草稿",
+        "to": "$mediaReturn"
+      },
+      "module": 1
+    },
+    {
+      "id": "mediaReady",
+      "title": "照片已准备好",
+      "items": [
+        {
+          "type": "photo",
+          "kind": "catOffer",
+          "height": 200
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "已完成",
+              "3 张"
+            ],
+            [
+              "封面",
+              "当前第 1 张"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "尚未发布",
+          "body": "检查文字与可见范围后再发布。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回发布草稿",
+        "to": "$mediaReturn"
+      },
+      "module": 1
+    },
+    {
+      "id": "mediaDraftSaved",
+      "title": "草稿已保留",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "文字与受众",
+              "已保留"
+            ],
+            [
+              "照片",
+              "已完成的照片与失败项均保留"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "继续编辑",
+          "value": "从刚才的位置恢复",
+          "to": "mediaPartialFailure"
+        }
+      ],
+      "footer": {
+        "label": "返回宠友圈",
+        "to": "$mediaReturn"
+      },
+      "module": 1
+    },
+    {
+      "id": "appointmentConfirmedV2",
+      "title": "预约已确认",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "生效版本",
+              "V2"
+            ],
+            [
+              "双方",
+              "均已确认"
+            ],
+            [
+              "时间",
+              "10 月 22 日 16:00"
+            ],
+            [
+              "地点",
+              "解放公园南门"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "查看历史版本",
+          "value": "保留原记录",
+          "to": "appointmentHistoryV2"
+        },
+        {
+          "type": "action",
+          "label": "提出变更",
+          "to": "change",
+          "kind": "secondary"
+        },
+        {
+          "type": "action",
+          "label": "取消预约",
+          "to": "appointmentCancelConfirm",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "返回会话",
+        "to": "chat"
+      },
+      "module": 5
+    },
+    {
+      "id": "notificationPrivateOnly",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "toggle",
+          "label": "私信消息",
+          "on": true,
+          "to": "notificationAllMuted"
+        },
+        {
+          "type": "toggle",
+          "label": "宠友群消息",
+          "on": false,
+          "to": "notificationNoProgress"
+        },
+        {
+          "type": "toggle",
+          "label": "申请与照护进度",
+          "on": false,
+          "to": "notificationNoGroup"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围和授权",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "即时通知",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "前往查看",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationNoGroup",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "toggle",
+          "label": "私信消息",
+          "on": true,
+          "to": "notificationGroupMuted"
+        },
+        {
+          "type": "toggle",
+          "label": "宠友群消息",
+          "on": false,
+          "to": "notificationSettings"
+        },
+        {
+          "type": "toggle",
+          "label": "申请与照护进度",
+          "on": true,
+          "to": "notificationPrivateOnly"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围和授权",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "即时通知",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "前往查看",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "notificationNoProgress",
+      "title": "通知偏好",
+      "items": [
+        {
+          "type": "toggle",
+          "label": "私信消息",
+          "on": true,
+          "to": "notificationProgressMuted"
+        },
+        {
+          "type": "toggle",
+          "label": "宠友群消息",
+          "on": true,
+          "to": "notificationPrivateOnly"
+        },
+        {
+          "type": "toggle",
+          "label": "申请与照护进度",
+          "on": false,
+          "to": "notificationSettings"
+        },
+        {
+          "type": "row",
+          "label": "附近走失提醒",
+          "value": "独立管理范围和授权",
+          "to": "nearbyAlertSetup"
+        },
+        {
+          "type": "row",
+          "label": "提醒频率",
+          "value": "即时通知",
+          "to": "notificationFrequency"
+        },
+        {
+          "type": "row",
+          "label": "系统通知权限",
+          "value": "前往查看",
+          "to": "notificationPermission"
+        }
+      ],
+      "footer": {
+        "label": "完成",
+        "to": "settings"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionReview",
+      "title": "表情与贴纸评审",
+      "items": [
+        {
+          "type": "note",
+          "title": "沿用熟悉的底部面板",
+          "body": "输入框旁切换键盘；表情点击插入，贴纸点击发送，长按预览。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "体验现有底部面板",
+          "value": "128 个表情 · 24 张猫咪贴纸",
+          "to": "privateChat"
+        },
+        {
+          "type": "row",
+          "label": "连续输入与光标",
+          "value": "文字中插入多个表情",
+          "to": "expressionTyping"
+        },
+        {
+          "type": "row",
+          "label": "删除与恢复草稿",
+          "value": "按一个完整表情删除",
+          "to": "expressionDeleted"
+        },
+        {
+          "type": "row",
+          "label": "多个常用和收藏",
+          "value": "最近使用与已收藏分开",
+          "to": "expressionRecent"
+        },
+        {
+          "type": "row",
+          "label": "320 宽窄屏",
+          "value": "保留触控区域，减少每行列数",
+          "to": "expressionNarrow"
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "completionHub"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionTyping",
+      "title": "表情连续输入",
+      "items": [
+        {
+          "type": "bubble",
+          "text": "今天的小满太可爱了！"
+        },
+        {
+          "type": "note",
+          "title": "正在回复奶糖的朋友",
+          "body": "文字和表情都留在草稿中，点击发送后才会发出。",
+          "tone": "subtle"
+        },
+        {
+          "type": "expressionDraft",
+          "text": "小满今天",
+          "keys": [
+            "smile",
+            "heart-hands",
+            "cat-smile"
+          ],
+          "cursor": 1,
+          "tail": "晒太阳",
+          "to": "expressionCursor"
+        },
+        {
+          "type": "emojiChoices",
+          "keys": [
+            "smile",
+            "joy",
+            "hug",
+            "thinking",
+            "thumb",
+            "heart"
+          ],
+          "to": "expressionCursor"
+        }
+      ],
+      "footer": {
+        "label": "发送",
+        "to": "expressionSent"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionCursor",
+      "title": "在光标位置插入",
+      "items": [
+        {
+          "type": "bubble",
+          "text": "今天的小满太可爱了！"
+        },
+        {
+          "type": "expressionDraft",
+          "text": "小满今天",
+          "keys": [
+            "smile",
+            "heart",
+            "heart-hands",
+            "cat-smile"
+          ],
+          "cursor": 2,
+          "tail": "晒太阳"
+        },
+        {
+          "type": "emojiChoices",
+          "keys": [
+            "smile",
+            "joy",
+            "hug",
+            "thinking",
+            "thumb",
+            "heart"
+          ],
+          "to": "expressionCursor"
+        },
+        {
+          "type": "action",
+          "label": "删除光标前的表情",
+          "to": "expressionDeleted",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "发送",
+        "to": "expressionSent"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionDeleted",
+      "title": "删除一个完整表情",
+      "items": [
+        {
+          "type": "expressionDraft",
+          "text": "小满今天",
+          "keys": [
+            "smile",
+            "heart-hands",
+            "cat-smile"
+          ],
+          "cursor": 1,
+          "tail": "晒太阳"
+        },
+        {
+          "type": "note",
+          "title": "草稿已保留",
+          "body": "其余文字和表情保持原顺序。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "收起面板",
+          "to": "expressionDraftClosed",
+          "kind": "secondary"
+        },
+        {
+          "type": "action",
+          "label": "继续选择表情",
+          "to": "expressionTyping",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "发送",
+        "to": "expressionSent"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionDraftClosed",
+      "title": "回到文字输入",
+      "items": [
+        {
+          "type": "bubble",
+          "text": "今天的小满太可爱了！"
+        },
+        {
+          "type": "expressionDraft",
+          "text": "小满今天",
+          "keys": [
+            "smile",
+            "heart-hands",
+            "cat-smile"
+          ],
+          "cursor": 1,
+          "tail": "晒太阳"
+        },
+        {
+          "type": "note",
+          "title": "继续写消息",
+          "body": "重新打开面板时，刚才的草稿仍在。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "打开表情面板",
+          "to": "expressionTyping",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "发送",
+        "to": "expressionSent"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionSent",
+      "title": "消息已发送",
+      "items": [
+        {
+          "type": "bubble",
+          "text": "今天的小满太可爱了！"
+        },
+        {
+          "type": "expressionDraft",
+          "text": "小满今天",
+          "keys": [
+            "smile",
+            "heart-hands",
+            "cat-smile"
+          ],
+          "tail": "晒太阳"
+        },
+        {
+          "type": "text",
+          "text": "已发送",
+          "role": "Caption",
+          "color": "muted"
+        },
+        {
+          "type": "field",
+          "label": "回复奶糖的朋友",
+          "value": "说点什么…"
+        },
+        {
+          "type": "row",
+          "label": "继续使用底部面板",
+          "value": "原会话与联系人保持",
+          "to": "privateChat"
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "expressionReview"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionRecent",
+      "title": "最近与收藏",
+      "items": [
+        {
+          "type": "text",
+          "text": "最近使用",
+          "role": "Strong",
+          "color": "ink"
+        },
+        {
+          "type": "emojiChoices",
+          "keys": [
+            "smile",
+            "joy",
+            "heart",
+            "hug",
+            "thumb",
+            "thinking",
+            "cat-smile",
+            "wave"
+          ],
+          "to": "expressionTyping"
+        },
+        {
+          "type": "text",
+          "text": "我的收藏",
+          "role": "Strong",
+          "color": "ink"
+        },
+        {
+          "type": "stickerChoices",
+          "keys": [
+            "sticker-01",
+            "sticker-03",
+            "sticker-08",
+            "sticker-16"
+          ],
+          "to": "expressionFavorite"
+        },
+        {
+          "type": "note",
+          "title": "长按可预览",
+          "body": "收藏用于再次发送；最近使用随发送记录更新。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回表情评审",
+        "to": "expressionReview"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionFavorite",
+      "title": "收藏的贴纸",
+      "items": [
+        {
+          "type": "stickerChoices",
+          "keys": [
+            "sticker-03"
+          ],
+          "large": true,
+          "to": "expressionRecent"
+        },
+        {
+          "type": "action",
+          "label": "移出收藏",
+          "to": "expressionFavoriteRemoved",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "发送贴纸",
+        "to": "expressionStickerSent"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionFavoriteRemoved",
+      "title": "已移出收藏",
+      "items": [
+        {
+          "type": "stickerChoices",
+          "keys": [
+            "sticker-01",
+            "sticker-08",
+            "sticker-16"
+          ],
+          "to": "expressionFavorite"
+        },
+        {
+          "type": "note",
+          "title": "最近使用仍保留",
+          "body": "移出收藏不会删除已发送的消息。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回表情评审",
+        "to": "expressionReview"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionStickerSent",
+      "title": "贴纸已发送",
+      "items": [
+        {
+          "type": "stickerChoices",
+          "keys": [
+            "sticker-03"
+          ],
+          "large": true,
+          "to": "expressionReview"
+        },
+        {
+          "type": "text",
+          "text": "已发送",
+          "role": "Caption",
+          "color": "muted"
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "expressionReview"
+      },
+      "module": 6
+    },
+    {
+      "id": "expressionNarrow",
+      "title": "表情面板",
+      "items": [
+        {
+          "type": "bubble",
+          "text": "今天的小满太可爱了！"
+        },
+        {
+          "type": "keyboardPanel",
+          "keys": [
+            "smile",
+            "joy",
+            "hug",
+            "thinking",
+            "thumb",
+            "heart",
+            "grin",
+            "cat-smile",
+            "wave",
+            "thanks",
+            "cat",
+            "paw",
+            "blush",
+            "wink",
+            "heart-eyes",
+            "kiss",
+            "surprise",
+            "cry",
+            "angry",
+            "cool",
+            "muscle",
+            "clap",
+            "ok",
+            "victory"
+          ]
+        }
+      ],
+      "footer": null,
+      "module": 6,
+      "width": 320,
+      "height": 694,
+      "dock": true
+    },
+    {
+      "id": "authPrivacyDetails",
+      "title": "M&D 隐私政策",
+      "items": [
+        {
+          "type": "text",
+          "text": "管理你的资料与选择",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "登录",
+              "用于验证身份和关联同一账号"
+            ],
+            [
+              "位置",
+              "附近互助单独说明用途并请求授权"
+            ],
+            [
+              "照片",
+              "由你选择后用于对应内容"
+            ],
+            [
+              "账号数据",
+              "可在设置申请查询或注销"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "第三方登录信息",
+          "value": "查看 SDK 与提供方范围",
+          "to": "authSDKInfo"
+        }
+      ],
+      "footer": {
+        "label": "返回协议入口",
+        "to": "authTerms"
+      },
+      "module": 6
+    },
+    {
+      "id": "serviceQuote",
+      "title": "确认看猫报价与安排",
+      "items": [
+        {
+          "type": "pet",
+          "name": "橘子",
+          "meta": "出售咨询 · 仅本次双方可见",
+          "kind": "catOffer"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "声明总额",
+              "¥2,400 · 猫款与全部必付项"
+            ],
+            [
+              "本次看猫",
+              "¥0 · 未声明订金"
+            ],
+            [
+              "接待方",
+              "发布商家的本店人员"
+            ],
+            [
+              "时间地点",
+              "10 月 22 日 16:00 · 已约定服务点"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "先核对再确认",
+          "body": "接待方、猫的身份、地点、收款主体与费用范围需一致。额外必付项不能在见面后悄悄增加。"
+        },
+        {
+          "type": "row",
+          "label": "有不清楚的项目",
+          "value": "先沟通，不代替确认",
+          "to": "serviceQuestion"
+        }
+      ],
+      "footer": {
+        "label": "确认本次看猫安排",
+        "to": "serviceConfirmed"
+      },
+      "module": 5
+    },
+    {
+      "id": "serviceConfirmed",
+      "title": "看猫安排已确认",
+      "items": [
+        {
+          "type": "pet",
+          "name": "橘子",
+          "meta": "出售咨询 · 报价 V1",
+          "kind": "catOffer"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "声明总额",
+              "¥2,400 · 全部必付项"
+            ],
+            [
+              "本次看猫",
+              "¥0"
+            ],
+            [
+              "时间",
+              "10 月 22 日 16:00"
+            ],
+            [
+              "接待方",
+              "商家本店人员"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "到访逐项核对",
+          "value": "一致、不符与暂不能判断",
+          "to": "serviceFeedback"
+        },
+        {
+          "type": "row",
+          "label": "未按约接待",
+          "value": "保留原安排与记录",
+          "to": "serviceNoShow"
+        }
+      ],
+      "footer": {
+        "label": "回到出售详情",
+        "to": "saleDetail"
+      },
+      "module": 5
+    },
+    {
+      "id": "serviceFeedback",
+      "title": "到访逐项核对",
+      "items": [
+        {
+          "type": "pet",
+          "name": "橘子",
+          "meta": "对照本次报价 V1",
+          "kind": "catOffer"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "猫的身份",
+              "待本人核对"
+            ],
+            [
+              "接待方与关系",
+              "待本人核对"
+            ],
+            [
+              "实际地点",
+              "待本人核对"
+            ],
+            [
+              "全部必付费用",
+              "待本人核对"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "与声明一致",
+          "value": "记录已核对的具体事项",
+          "to": "visitFeedbackConsistent"
+        },
+        {
+          "type": "row",
+          "label": "发现不符",
+          "value": "保留证据并说明项目",
+          "to": "serviceQuestion"
+        },
+        {
+          "type": "row",
+          "label": "暂不能判断",
+          "value": "保留未知项，继续核对",
+          "to": "visitFeedbackUncertain"
+        }
+      ],
+      "footer": {
+        "label": "返回本次安排",
+        "to": "serviceConfirmed"
+      },
+      "module": 5
+    },
+    {
+      "id": "serviceQuestion",
+      "title": "记录需要核对的项目",
+      "items": [
+        {
+          "type": "field",
+          "label": "具体项目",
+          "value": "费用范围"
+        },
+        {
+          "type": "field",
+          "label": "实际情况",
+          "value": "现场提出额外 ¥300，原报价未包含此项。"
+        },
+        {
+          "type": "note",
+          "title": "保留原声明",
+          "body": "原报价与本次说明一起保留；不把补充收费自动视为同意。"
+        }
+      ],
+      "footer": {
+        "label": "保存并请求说明",
+        "to": "serviceQuestionPending"
+      },
+      "module": 5
+    },
+    {
+      "id": "serviceQuestionPending",
+      "title": "不符事项已记录",
+      "items": [
+        {
+          "type": "note",
+          "title": "等待对方说明",
+          "body": "已保存费用范围的差异与原声明，不把未回复当作同意。"
+        },
+        {
+          "type": "row",
+          "label": "报告费用不符",
+          "value": "继续补充证据",
+          "to": "report"
+        }
+      ],
+      "footer": {
+        "label": "返回本次核对",
+        "to": "serviceFeedback"
+      },
+      "module": 5
+    },
+    {
+      "id": "serviceNoShow",
+      "title": "未按约接待",
+      "items": [
+        {
+          "type": "field",
+          "label": "实际情况",
+          "value": "到约定地点后未能联系上接待人。"
+        },
+        {
+          "type": "note",
+          "title": "保存事实，保留原约定",
+          "body": "不会自动标记已到访、成交或完成核对。"
+        }
+      ],
+      "footer": {
+        "label": "返回本次安排",
+        "to": "serviceConfirmed"
+      },
+      "module": 5
+    },
+    {
+      "id": "serviceDone",
+      "title": "本次核对已保存",
+      "items": [
+        {
+          "type": "note",
+          "title": "按事项保留记录",
+          "body": "已核对与仍未知的项目分开展示；保存反馈不会自动确认成交或替你付款。"
+        }
+      ],
+      "footer": {
+        "label": "返回出售详情",
+        "to": "saleDetail"
+      },
+      "module": 5
+    },
+    {
+      "id": "authNarrow",
+      "title": "登录 / 注册",
+      "items": [
+        {
+          "type": "brand",
+          "name": "M&D",
+          "subtitle": "meow & doggie"
+        },
+        {
+          "type": "text",
+          "text": "和毛孩子，一起长大",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "登录后，继续收藏、记录和交流。",
+          "role": "Label",
+          "color": "muted"
+        },
+        {
+          "type": "field",
+          "label": "中国大陆手机号",
+          "value": "请输入手机号",
+          "variable": "authPhone",
+          "tap": "phoneFill",
+          "keyboard": "tel"
+        },
+        {
+          "type": "consent",
+          "key": "authAgree",
+          "text": "我已阅读并同意服务协议与隐私政策"
+        },
+        {
+          "type": "action",
+          "label": "获取验证码",
+          "to": "$phoneSubmit",
+          "kind": "primary",
+          "require": "authAgree"
+        },
+        {
+          "type": "providers",
+          "ios": false
+        },
+        {
+          "type": "action",
+          "label": "密码登录",
+          "to": "authPassword",
+          "kind": "quiet"
+        },
+        {
+          "type": "action",
+          "label": "先逛逛",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": null,
+      "module": 6,
+      "back": "$authCancel",
+      "phase": "auth",
+      "platform": 0,
+      "width": 320,
+      "height": 694
+    },
+    {
+      "id": "authLargeText",
+      "title": "登录 / 注册",
+      "items": [
+        {
+          "type": "brand",
+          "name": "M&D",
+          "subtitle": "meow & doggie"
+        },
+        {
+          "type": "text",
+          "text": "和毛孩子，一起长大",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "text",
+          "text": "登录后，继续收藏、记录和交流。",
+          "role": "Label",
+          "color": "muted"
+        },
+        {
+          "type": "field",
+          "label": "中国大陆手机号",
+          "value": "请输入手机号",
+          "variable": "authPhone",
+          "tap": "phoneFill",
+          "keyboard": "tel"
+        },
+        {
+          "type": "consent",
+          "key": "authAgree",
+          "text": "我已阅读并同意服务协议与隐私政策"
+        },
+        {
+          "type": "action",
+          "label": "获取验证码",
+          "to": "$phoneSubmit",
+          "kind": "primary",
+          "require": "authAgree"
+        },
+        {
+          "type": "providers",
+          "ios": true
+        },
+        {
+          "type": "action",
+          "label": "密码登录",
+          "to": "authPassword",
+          "kind": "quiet"
+        },
+        {
+          "type": "action",
+          "label": "先逛逛",
+          "to": "$authCancel",
+          "kind": "quiet"
+        }
+      ],
+      "footer": null,
+      "module": 6,
+      "back": "$authCancel",
+      "phase": "auth",
+      "platform": 1,
+      "fontScale": 1.6
+    },
+    {
+      "id": "handoverLargeText",
+      "title": "确认领养交接",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "仅本次申请双方可见",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "资料",
+              "喂养与健康记录已共享"
+            ],
+            [
+              "用品",
+              "猫粮、猫砂与常用物品"
+            ],
+            [
+              "后续",
+              "30 天私密照护更新"
+            ],
+            [
+              "状态",
+              "双方均待确认"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "handoverAgree",
+          "text": "我已核对实际交接情况，并确认宠物与资料已妥善交接。"
+        }
+      ],
+      "footer": {
+        "label": "确认我方已交接",
+        "to": "handoverWaiting",
+        "require": "handoverAgree"
+      },
+      "module": 3,
+      "fontScale": 1.6
+    },
+    {
+      "id": "appointmentNarrow",
+      "title": "确认见面预约",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "领养申请 A1 · 仅双方可见",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "版本",
+              "V1",
+              "appointmentVersion"
+            ],
+            [
+              "时间",
+              "10 月 22 日 14:00"
+            ],
+            [
+              "地点",
+              "解放公园南门"
+            ],
+            [
+              "到场人员",
+              "申请人 1 位 · 送养人 1 位"
+            ],
+            [
+              "费用",
+              "无预约费用"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "appointmentAgree",
+          "text": "我确认时间、地点和到场安排。"
+        },
+        {
+          "type": "action",
+          "label": "调整安排",
+          "to": "change",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认预约",
+        "to": "appointmentWaiting",
+        "require": "appointmentAgree"
+      },
+      "module": 5,
+      "back": "chat",
+      "onEnter": {
+        "appointmentVersion": "V1"
+      },
+      "width": 320,
+      "height": 694
+    },
+    {
+      "id": "completionHub",
+      "title": "手机端设计评审",
+      "items": [
+        {
+          "type": "brand"
+        },
+        {
+          "type": "text",
+          "text": "先看设计，再进入开发",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "row",
+          "label": "01 登录与账号",
+          "value": "Android、iPhone、微信、QQ、Apple",
+          "to": "reviewAuth"
+        },
+        {
+          "type": "row",
+          "label": "02 表情与互动",
+          "value": "点赞评论、连续输入、贴纸收藏",
+          "to": "reviewInteraction"
+        },
+        {
+          "type": "row",
+          "label": "03 互助与领养",
+          "value": "拾获认领、预约、交接与照护",
+          "to": "reviewBusiness"
+        },
+        {
+          "type": "row",
+          "label": "04 权限与异常",
+          "value": "群主转让、邀请、通知和材料",
+          "to": "reviewStates"
+        },
+        {
+          "type": "row",
+          "label": "05 窄屏与大字",
+          "value": "320 宽、160% 字号与滚动",
+          "to": "reviewResponsive"
+        },
+        {
+          "type": "row",
+          "label": "查看原完整原型",
+          "value": "社区、宠物、日记、领养与消息",
+          "to": "moduleHub"
+        }
+      ],
+      "footer": {
+        "label": "先看 iPhone 登录",
+        "to": "authIOS",
+        "sets": {
+          "authPlatform": 1,
+          "authExisting": 0,
+          "authReturn": 1
+        }
+      },
+      "module": 0
+    },
+    {
+      "id": "reviewAuth",
+      "title": "登录与账号评审",
+      "items": [
+        {
+          "type": "row",
+          "label": "Android 登录 / 注册",
+          "value": "手机号、微信与 QQ",
+          "to": "login",
+          "sets": {
+            "authPlatform": 0,
+            "authExisting": 0,
+            "authReturn": 1
+          }
+        },
+        {
+          "type": "row",
+          "label": "iPhone 登录 / 注册",
+          "value": "增加通过 Apple 登录",
+          "to": "authIOS",
+          "sets": {
+            "authPlatform": 1,
+            "authExisting": 0,
+            "authReturn": 1
+          }
+        },
+        {
+          "type": "row",
+          "label": "已有账号快捷登录",
+          "value": "同一账号与原数据",
+          "to": "authKnown"
+        },
+        {
+          "type": "row",
+          "label": "首次创建或关联",
+          "value": "不默认创建重复账号",
+          "to": "authFirst"
+        },
+        {
+          "type": "row",
+          "label": "取消与授权失败",
+          "value": "保留原任务与登录选择",
+          "to": "authProviderCancelled"
+        },
+        {
+          "type": "row",
+          "label": "验证码与网络异常",
+          "value": "重发、过期、限流和重试",
+          "to": "reviewAuthErrors"
+        },
+        {
+          "type": "row",
+          "label": "账号管理",
+          "value": "换绑、退出、恢复与注销",
+          "to": "authAccounts"
+        },
+        {
+          "type": "row",
+          "label": "登录后返回",
+          "value": "申请、草稿、私信与提醒",
+          "to": "authIntentReview"
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "completionHub"
+      },
+      "module": 0
+    },
+    {
+      "id": "reviewAuthErrors",
+      "title": "登录异常评审",
+      "items": [
+        {
+          "type": "row",
+          "label": "验证码不正确",
+          "value": "重新输入并保留任务",
+          "to": "otpError"
+        },
+        {
+          "type": "row",
+          "label": "验证码过期",
+          "value": "获取新的验证码",
+          "to": "authCodeExpired"
+        },
+        {
+          "type": "row",
+          "label": "短信未收到",
+          "value": "更换方式或检查号码",
+          "to": "authSmsDelayed"
+        },
+        {
+          "type": "row",
+          "label": "操作频繁",
+          "value": "稍后重试",
+          "to": "authRateLimited"
+        },
+        {
+          "type": "row",
+          "label": "网络中断",
+          "value": "保留原任务",
+          "to": "authNetworkError"
+        },
+        {
+          "type": "row",
+          "label": "提供方不可用",
+          "value": "手机号作为替代入口",
+          "to": "authProviderUnavailable"
+        },
+        {
+          "type": "row",
+          "label": "授权失效",
+          "value": "重新授权",
+          "to": "authCallbackExpired"
+        },
+        {
+          "type": "row",
+          "label": "账号限制",
+          "value": "查看范围与恢复入口",
+          "to": "authRestricted"
+        },
+        {
+          "type": "row",
+          "label": "关联冲突",
+          "value": "不覆盖其他账号",
+          "to": "authConflict"
+        },
+        {
+          "type": "row",
+          "label": "原内容已不可用",
+          "value": "返回原任务附近的可用入口",
+          "to": "authReturnUnavailable"
+        }
+      ],
+      "footer": {
+        "label": "返回登录评审",
+        "to": "reviewAuth"
+      },
+      "module": 0
+    },
+    {
+      "id": "reviewInteraction",
+      "title": "表情与互动评审",
+      "items": [
+        {
+          "type": "row",
+          "label": "社区图标与排版",
+          "value": "统一点赞、评论的基线与点击区",
+          "to": "home"
+        },
+        {
+          "type": "row",
+          "label": "底部表情和贴纸",
+          "value": "沿用熟悉的输入区切换",
+          "to": "privateChat"
+        },
+        {
+          "type": "row",
+          "label": "连续输入、光标与删除",
+          "value": "完整表情、不丢草稿",
+          "to": "expressionReview"
+        },
+        {
+          "type": "row",
+          "label": "宠友确认前后的资料",
+          "value": "申请、撤回、接受与受众变化",
+          "to": "friendUnconfirmed"
+        },
+        {
+          "type": "row",
+          "label": "收到好友申请",
+          "value": "对方视角与接受结果",
+          "to": "friendRequestDecision"
+        },
+        {
+          "type": "row",
+          "label": "多图选择与上传",
+          "value": "进度、失败、顺序、草稿恢复",
+          "to": "mediaChoose"
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "completionHub"
+      },
+      "module": 0
+    },
+    {
+      "id": "reviewBusiness",
+      "title": "互助与领养评审",
+      "items": [
+        {
+          "type": "row",
+          "label": "发布走失 / 拾获",
+          "value": "先选类型，使用不同资料",
+          "to": "helpType"
+        },
+        {
+          "type": "row",
+          "label": "拾获后申请认领",
+          "value": "私密核实材料与交接",
+          "to": "foundActive"
+        },
+        {
+          "type": "row",
+          "label": "发布人核实认领",
+          "value": "匹配、补充、不匹配与争议",
+          "to": "foundManage"
+        },
+        {
+          "type": "row",
+          "label": "另一方确认接回",
+          "value": "双方确认后结束求助",
+          "to": "claimHandoverOther"
+        },
+        {
+          "type": "row",
+          "label": "预约与变更",
+          "value": "版本、取消、过期与冲突",
+          "to": "reviewAppointments"
+        },
+        {
+          "type": "row",
+          "label": "领养申请处理",
+          "value": "补充材料、通过和不通过",
+          "to": "adoptionDecision"
+        },
+        {
+          "type": "row",
+          "label": "试养与交接",
+          "value": "双方确认与安全退出",
+          "to": "trialAgreement"
+        },
+        {
+          "type": "row",
+          "label": "领养后照护",
+          "value": "30 天私密更新与授权成员",
+          "to": "followupSaved"
+        },
+        {
+          "type": "row",
+          "label": "看猫报价与到访核对",
+          "value": "费用、接待方、不符与未知项",
+          "to": "serviceQuote"
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "completionHub"
+      },
+      "module": 0
+    },
+    {
+      "id": "reviewAppointments",
+      "title": "预约状态评审",
+      "items": [
+        {
+          "type": "row",
+          "label": "我方发起预约",
+          "value": "勾选后确认，等待对方",
+          "to": "appointment"
+        },
+        {
+          "type": "row",
+          "label": "对方确认预约",
+          "value": "双方同意同一版本",
+          "to": "appointmentOther"
+        },
+        {
+          "type": "row",
+          "label": "提出变更",
+          "value": "V2 待确认，V1 仍生效",
+          "to": "change"
+        },
+        {
+          "type": "row",
+          "label": "收到变更申请",
+          "value": "同意更新或拒绝保留原版",
+          "to": "appointmentChangeReview"
+        },
+        {
+          "type": "row",
+          "label": "已接受变更",
+          "value": "V2 · 16:00",
+          "to": "appointmentConfirmedV2"
+        },
+        {
+          "type": "row",
+          "label": "过期与冲突",
+          "value": "不能确认旧安排",
+          "to": "appointmentExpired"
+        },
+        {
+          "type": "row",
+          "label": "同时更新冲突",
+          "value": "查看最新版本",
+          "to": "appointmentConflict"
+        },
+        {
+          "type": "row",
+          "label": "另一方确认交接",
+          "value": "收到宠物与资料后确认",
+          "to": "handoverOther"
+        },
+        {
+          "type": "row",
+          "label": "另一方确认试养",
+          "value": "双方确认后进入试养期",
+          "to": "trialOther"
+        },
+        {
+          "type": "row",
+          "label": "恢复旧时间需重新确认",
+          "value": "V3 提议与当前 V2 分开",
+          "to": "appointmentRestoreReview"
+        }
+      ],
+      "footer": {
+        "label": "返回业务评审",
+        "to": "reviewBusiness"
+      },
+      "module": 0
+    },
+    {
+      "id": "reviewStates",
+      "title": "权限与异常评审",
+      "items": [
+        {
+          "type": "row",
+          "label": "群主转让与解散",
+          "value": "拆成两个独立流程",
+          "to": "groupAdmin",
+          "sets": {
+            "roleName": "群主"
+          }
+        },
+        {
+          "type": "row",
+          "label": "接收群主邀请",
+          "value": "接受后更新双方角色",
+          "to": "groupTransferReceived"
+        },
+        {
+          "type": "row",
+          "label": "转让完成 · 原群主视角",
+          "value": "变为普通成员，不再管理群聊",
+          "to": "groupTransferDone"
+        },
+        {
+          "type": "row",
+          "label": "领养介绍协作者",
+          "value": "仅介绍、照片与答疑",
+          "to": "adoptionCaretakers"
+        },
+        {
+          "type": "row",
+          "label": "收到介绍协作邀请",
+          "value": "按范围接受或拒绝",
+          "to": "publisherCollabReceived"
+        },
+        {
+          "type": "row",
+          "label": "领养后照护邀请",
+          "value": "不授予交接与账号权限",
+          "to": "caretakerReceived"
+        },
+        {
+          "type": "row",
+          "label": "通知偏好",
+          "value": "每类独立开关与频率",
+          "to": "notificationSettings"
+        },
+        {
+          "type": "row",
+          "label": "材料过期与核实",
+          "value": "待更新、待核实和结果范围",
+          "to": "verificationExpired"
+        },
+        {
+          "type": "row",
+          "label": "举报与申诉结果",
+          "value": "支持、不支持与调整",
+          "to": "reviewModeration"
+        },
+        {
+          "type": "row",
+          "label": "到访不符与未接待",
+          "value": "逐项保留原声明和实际情况",
+          "to": "serviceQuestion"
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "completionHub"
+      },
+      "module": 0
+    },
+    {
+      "id": "reviewModeration",
+      "title": "处理结果评审",
+      "items": [
+        {
+          "type": "row",
+          "label": "支持举报",
+          "value": "处理影响和理由摘要",
+          "to": "moderationResult"
+        },
+        {
+          "type": "row",
+          "label": "材料不足",
+          "value": "补充和申诉入口",
+          "to": "moderationUnsupported"
+        },
+        {
+          "type": "row",
+          "label": "申诉后调整",
+          "value": "仅展示相关结果",
+          "to": "appealResolved"
+        },
+        {
+          "type": "row",
+          "label": "失效邀请",
+          "value": "旧权限不能继续使用",
+          "to": "caretakerExpired"
+        },
+        {
+          "type": "row",
+          "label": "群主转让失效",
+          "value": "权限未转移",
+          "to": "groupTransferExpired"
+        },
+        {
+          "type": "row",
+          "label": "认领争议",
+          "value": "保留安置状态与证据",
+          "to": "claimDispute"
+        },
+        {
+          "type": "row",
+          "label": "试养退出",
+          "value": "安全接回需协商",
+          "to": "trialExit"
+        },
+        {
+          "type": "row",
+          "label": "材料暂无法核实",
+          "value": "说明原因并补充",
+          "to": "verificationNeedsInfo"
+        }
+      ],
+      "footer": {
+        "label": "返回权限评审",
+        "to": "reviewStates"
+      },
+      "module": 0
+    },
+    {
+      "id": "reviewResponsive",
+      "title": "窄屏与大字评审",
+      "items": [
+        {
+          "type": "row",
+          "label": "320 宽 · 登录",
+          "value": "字段、登录方式与安全区",
+          "to": "authNarrow"
+        },
+        {
+          "type": "row",
+          "label": "320 宽 · 预约",
+          "value": "信息堆叠并允许滚动",
+          "to": "appointmentNarrow"
+        },
+        {
+          "type": "row",
+          "label": "320 宽 · 表情",
+          "value": "每行 6 个，48 高点击区",
+          "to": "expressionNarrow"
+        },
+        {
+          "type": "row",
+          "label": "160% · 登录",
+          "value": "正文和字段随字号放大",
+          "to": "authLargeText"
+        },
+        {
+          "type": "row",
+          "label": "160% · 交接",
+          "value": "检查项换行，主操作固定",
+          "to": "handoverLargeText"
+        }
+      ],
+      "footer": {
+        "label": "返回评审入口",
+        "to": "completionHub"
+      },
+      "module": 0
+    },
+    {
+      "id": "careTeam",
+      "title": "小满的照护成员",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "领养后的私密更新",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "row",
+          "label": "奶糖的朋友",
+          "value": "已接受 · 可查看与记录近况",
+          "to": "caretakerRevoke"
+        },
+        {
+          "type": "row",
+          "label": "邀请照护者",
+          "value": "对方接受后生效",
+          "to": "caretakerInvite"
+        }
+      ],
+      "footer": {
+        "label": "返回照护记录",
+        "to": "followupSaved"
+      },
+      "module": 3
+    },
+    {
+      "id": "publisherCollabReceived",
+      "title": "收到介绍协作邀请",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "协助维护领养介绍",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "可操作",
+              "维护本只宠物的介绍、照片与答疑"
+            ],
+            [
+              "不可操作",
+              "读取私密照护更新、代替双方交接"
+            ],
+            [
+              "生效",
+              "接受本次邀请后"
+            ]
+          ]
+        },
+        {
+          "type": "action",
+          "label": "暂不接受",
+          "to": "publisherCollabDeclined",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "接受协作邀请",
+        "to": "publisherCollabActive"
+      },
+      "module": 3
+    },
+    {
+      "id": "publisherCollabActive",
+      "title": "已加入介绍协作",
+      "items": [
+        {
+          "type": "note",
+          "title": "授权范围仅限小满",
+          "body": "可以维护领养介绍、照片与答疑，其他宠物和私密档案未开放。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "查看领养介绍",
+        "to": "detail"
+      },
+      "module": 3
+    },
+    {
+      "id": "publisherCollabDeclined",
+      "title": "已婉拒协作",
+      "items": [
+        {
+          "type": "note",
+          "title": "资料未开放",
+          "body": "邀请人可重新发起，你的其他关系不受影响。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回我的",
+        "to": "mine"
+      },
+      "module": 3
+    },
+    {
+      "id": "publisherCollabRevoke",
+      "title": "结束介绍协作",
+      "items": [
+        {
+          "type": "note",
+          "title": "确认撤销授权？",
+          "body": "对方不能再新增或修改本只宠物的介绍与答疑；已有记录会保留。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "保留协作",
+          "to": "adoptionCaretakers",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "撤销协作权限",
+        "to": "publisherCollabRevoked",
+        "kind": "secondary"
+      },
+      "module": 3
+    },
+    {
+      "id": "publisherCollabRevoked",
+      "title": "介绍协作已结束",
+      "items": [
+        {
+          "type": "note",
+          "title": "旧入口已失效",
+          "body": "对方不能继续读取或修改本次协作资料。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回协作者",
+        "to": "adoptionCaretakersEmpty"
+      },
+      "module": 3
+    },
+    {
+      "id": "foundBrowse",
+      "title": "拾获互助",
+      "items": [
+        {
+          "type": "note",
+          "title": "当前没有真实拾获数据",
+          "body": "这里可先了解怎样安全核实与帮助宠物回家。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "查看拾获案例",
+          "value": "区域、认领材料与双方交接",
+          "to": "foundActive"
+        }
+      ],
+      "footer": {
+        "label": "发布拾获信息",
+        "to": "foundForm"
+      },
+      "module": 4
+    },
+    {
+      "title": "邀请介绍协作者",
+      "module": 3,
+      "items": [
+        {
+          "type": "field",
+          "label": "邀请对象",
+          "value": "奶糖的朋友"
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "允许",
+              "介绍、照片与答疑"
+            ],
+            [
+              "范围",
+              "仅小满的本次领养介绍"
+            ],
+            [
+              "不开放",
+              "其他宠物、私密档案和交接确认"
+            ]
+          ]
+        }
+      ],
+      "footer": {
+        "label": "发送邀请",
+        "to": "adoptionCaretakerPending"
+      },
+      "id": "adoptionCaretakerInvite"
+    },
+    {
+      "title": "等待协作者接受",
+      "module": 3,
+      "items": [
+        {
+          "type": "note",
+          "title": "邀请已发送",
+          "body": "接受前，对方没有本次协作权限。"
+        },
+        {
+          "type": "action",
+          "label": "撤回邀请",
+          "to": "publisherCollabRevoked",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "返回协作者",
+        "to": "adoptionCaretakers"
+      },
+      "id": "adoptionCaretakerPending"
+    },
+    {
+      "id": "circleRequestReceived",
+      "title": "新的宠友申请",
+      "items": [
+        {
+          "type": "pet",
+          "name": "奶糖的朋友",
+          "meta": "想和你分享奶糖的日常",
+          "kind": "catOffer",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "确认后共享什么",
+          "body": "仅开放设为宠友可见的内容；私密日记仍只有你可见。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "暂不接受",
+          "to": "friendRejected",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "接受并成为宠友",
+        "to": "circleFriendProfile"
+      },
+      "module": 1
+    },
+    {
+      "id": "applicationDecision",
+      "title": "处理领养申请",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "申请人：奶糖的朋友",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "按申请材料处理",
+          "body": "处理结果仅对本次申请双方可见。",
+          "tone": "subtle"
+        },
+        {
+          "type": "action",
+          "label": "请对方补充材料",
+          "to": "adoptionSupplement",
+          "kind": "secondary"
+        },
+        {
+          "type": "action",
+          "label": "暂不通过",
+          "to": "adoptionReject",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "同意继续沟通",
+        "to": "chat"
+      },
+      "module": 3
+    },
+    {
+      "title": "申请进度",
+      "module": 3,
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "领养申请 A1 · 仅双方可见"
+        },
+        {
+          "type": "row",
+          "label": "预约见面",
+          "value": "双方确认时间、地点和版本",
+          "to": "appointment"
+        },
+        {
+          "type": "row",
+          "label": "试养安排",
+          "value": "照护责任与退出方式",
+          "to": "trialAgreement"
+        },
+        {
+          "type": "row",
+          "label": "领养交接",
+          "value": "双方确认后完成",
+          "to": "handover"
+        },
+        {
+          "type": "row",
+          "label": "照护更新",
+          "value": "交接后 30 天私密更新",
+          "to": "followup"
+        },
+        {
+          "type": "row",
+          "label": "遇到问题",
+          "value": "健康、适应与接回协商",
+          "to": "adoptionSupport"
+        },
+        {
+          "type": "action",
+          "label": "撤回本次申请",
+          "to": "withdrawn",
+          "kind": "quiet"
+        }
+      ],
+      "footer": {
+        "label": "继续站内沟通",
+        "to": "chat"
+      },
+      "id": "application"
+    },
+    {
+      "id": "adoptionCaretakersEmpty",
+      "title": "领养介绍协作者",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "介绍、照片与答疑",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "当前没有已授权协作者",
+          "body": "私密档案和领养交接权限没有开放。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "邀请协作者",
+          "value": "对方接受后生效",
+          "to": "adoptionCaretakerInvite"
+        }
+      ],
+      "footer": {
+        "label": "返回领养介绍",
+        "to": "detail"
+      },
+      "module": 3
+    },
+    {
+      "id": "careTeamEmpty",
+      "title": "小满的照护成员",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "领养后的私密更新",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "note",
+          "title": "当前没有额外照护成员",
+          "body": "更新仍仅向本次领养双方共享。",
+          "tone": "subtle"
+        },
+        {
+          "type": "row",
+          "label": "邀请照护者",
+          "value": "接受后开放指定范围",
+          "to": "caretakerInvite"
+        }
+      ],
+      "footer": {
+        "label": "返回照护更新",
+        "to": "followupSaved"
+      },
+      "module": 3
+    },
+    {
+      "id": "trialWaiting",
+      "title": "等待另一方确认试养",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "你",
+              "已确认照护责任与退出安排"
+            ],
+            [
+              "对方",
+              "待确认"
+            ],
+            [
+              "试养状态",
+              "尚未开始"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "双方确认后再开始",
+          "body": "本次安排没有自动代替另一方确认。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "回到申请",
+        "to": "application"
+      },
+      "module": 3
+    },
+    {
+      "id": "trialOther",
+      "title": "确认收到的试养安排",
+      "items": [
+        {
+          "type": "pet",
+          "name": "小满",
+          "meta": "对方已确认试养安排",
+          "kind": "cat",
+          "to": null
+        },
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "期限",
+              "10 月 22 日至 10 月 29 日"
+            ],
+            [
+              "照护",
+              "按共享记录安排"
+            ],
+            [
+              "退出",
+              "协商安全接回"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "trialAgree",
+          "text": "我已核对试养责任和退出方式，愿意按约定照护。"
+        }
+      ],
+      "footer": {
+        "label": "确认并开始试养",
+        "to": "trialActive",
+        "require": "trialAgree"
+      },
+      "module": 3
+    },
+    {
+      "id": "foundMatchedPublic",
+      "title": "拾获核实进度",
+      "items": [
+        {
+          "type": "photo",
+          "kind": "cat",
+          "height": 210
+        },
+        {
+          "type": "text",
+          "text": "已核实匹配，等待交接",
+          "role": "Title",
+          "color": "ink"
+        },
+        {
+          "type": "note",
+          "title": "宠物目前安全",
+          "body": "本次认领已进入双方交接确认；公开区域不会变成准确安置地址。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回互助",
+        "to": "lostList"
+      },
+      "module": 4
+    },
+    {
+      "id": "groupMemberInfo",
+      "title": "宠友群资料",
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "群聊",
+              "小满和朋友们"
+            ],
+            [
+              "群主",
+              "奶糖的朋友"
+            ],
+            [
+              "我的角色",
+              "普通成员"
+            ],
+            [
+              "成员",
+              "8 位"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "群主已完成交接",
+          "body": "你可以继续交流；成员管理与解散由新群主操作。",
+          "tone": "subtle"
+        }
+      ],
+      "footer": {
+        "label": "返回群聊",
+        "to": "groupOwnerChat"
+      },
+      "module": 5
+    },
+    {
+      "id": "groupTransferReceiverDone",
+      "title": "你已成为群主",
+      "module": 5,
+      "onEnter": {
+        "roleName": "群主"
+      },
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "群聊",
+              "小满和朋友们"
+            ],
+            [
+              "你的角色",
+              "新群主 · 奶糖的朋友"
+            ],
+            [
+              "原群主",
+              "普通成员"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "交接已经生效",
+          "body": "你可以继续维护群资料与成员，原群主仍可留在群内交流。"
+        }
+      ],
+      "footer": {
+        "label": "打开群管理",
+        "to": "groupAdmin"
+      }
+    },
+    {
+      "id": "appointmentHistoryV2",
+      "title": "预约版本记录",
+      "module": 5,
+      "items": [
+        {
+          "type": "timeline",
+          "entries": [
+            [
+              "V2 · 当前生效",
+              "16:00 · 双方已确认"
+            ],
+            [
+              "V1 · 已替代",
+              "14:00 · 保留历史"
+            ]
+          ]
+        },
+        {
+          "type": "row",
+          "label": "按原时间重新约定",
+          "value": "发起 V3，由双方重新确认",
+          "to": "appointmentRestore"
+        }
+      ],
+      "footer": {
+        "label": "查看当前安排",
+        "to": "appointmentConfirmedV2"
+      }
+    },
+    {
+      "id": "appointmentRestore",
+      "title": "按原时间重新约定",
+      "module": 5,
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前安排",
+              "V2 · 16:00"
+            ],
+            [
+              "新提议",
+              "V3 · 14:00"
+            ],
+            [
+              "地点",
+              "解放公园南门"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "这是一个新的版本",
+          "body": "V1 只作历史参考；V3 经双方同意后才会替代当前 V2。"
+        },
+        {
+          "type": "consent",
+          "key": "changeAgree",
+          "text": "我确认提出 V3，另一方接受前保持 V2 安排。"
+        }
+      ],
+      "footer": {
+        "label": "发起 V3",
+        "to": "appointmentRestoreWaiting",
+        "require": "changeAgree"
+      }
+    },
+    {
+      "id": "appointmentRestoreWaiting",
+      "title": "V3 等待另一方确认",
+      "module": 5,
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前生效",
+              "V2 · 16:00"
+            ],
+            [
+              "你的提议",
+              "V3 · 14:00"
+            ],
+            [
+              "另一方",
+              "尚未确认"
+            ]
+          ]
+        },
+        {
+          "type": "action",
+          "label": "撤回 V3 提议",
+          "to": "appointmentConfirmedV2",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "返回当前安排",
+        "to": "appointmentConfirmedV2"
+      }
+    },
+    {
+      "id": "appointmentRestoreReview",
+      "title": "确认新的 V3 安排",
+      "module": 5,
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "当前生效",
+              "V2 · 16:00"
+            ],
+            [
+              "新提议",
+              "V3 · 14:00"
+            ]
+          ]
+        },
+        {
+          "type": "consent",
+          "key": "changeAgree",
+          "text": "我确认采用 V3 的时间和地点。"
+        },
+        {
+          "type": "action",
+          "label": "不同意，保持 V2",
+          "to": "appointmentConfirmedV2",
+          "kind": "secondary"
+        }
+      ],
+      "footer": {
+        "label": "确认 V3",
+        "to": "appointmentConfirmedV3",
+        "require": "changeAgree"
+      }
+    },
+    {
+      "id": "appointmentConfirmedV3",
+      "title": "预约已更新至 V3",
+      "module": 5,
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "生效版本",
+              "V3 · 双方已确认"
+            ],
+            [
+              "时间",
+              "10 月 22 日 14:00"
+            ],
+            [
+              "地点",
+              "解放公园南门"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "原记录仍保留",
+          "body": "V1 与 V2 留作历史参考，不把旧版本重新标记为生效。"
+        }
+      ],
+      "footer": {
+        "label": "返回会话",
+        "to": "chat"
+      }
+    },
+    {
+      "id": "verificationNeedsInfo",
+      "title": "材料需要补充",
+      "module": 3,
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次结果",
+              "暂无法核实"
+            ],
+            [
+              "原因摘要",
+              "记录日期不清晰"
+            ],
+            [
+              "当前展示",
+              "待补充材料"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "没有展示为已核实",
+          "body": "补充清晰记录后，将按同一事项继续核对。"
+        }
+      ],
+      "footer": {
+        "label": "补充材料",
+        "to": "verificationSubmit"
+      }
+    },
+    {
+      "id": "visitFeedbackConsistent",
+      "title": "记录一致的项目",
+      "module": 5,
+      "items": [
+        {
+          "type": "facts",
+          "entries": [
+            [
+              "本次项目",
+              "猫的身份、接待方与关系"
+            ],
+            [
+              "本人核对",
+              "与本次已声明资料一致"
+            ],
+            [
+              "未核对",
+              "地点与费用不据此推断"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "title": "一致有具体范围",
+          "body": "记录只对应本次见到的材料与现场情况。"
+        }
+      ],
+      "footer": {
+        "label": "保存本项核对",
+        "to": "serviceDone"
+      }
+    },
+    {
+      "id": "visitFeedbackUncertain",
+      "title": "记录暂不能判断",
+      "module": 5,
+      "items": [
+        {
+          "type": "field",
+          "label": "仍需核对的事项",
+          "value": "尚未看到完整来源与健康记录。"
+        },
+        {
+          "type": "note",
+          "title": "保留未知",
+          "body": "没有材料的项目不会显示为已核实；可继续请求说明。"
+        }
+      ],
+      "footer": {
+        "label": "保存未知项",
+        "to": "serviceDone"
+      }
+    }
+  ]
+}

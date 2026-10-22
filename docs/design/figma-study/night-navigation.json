@@ -1,0 +1,306 @@
+{
+  "mutatedNodeIds": [
+    "37:32",
+    "37:34",
+    "37:36",
+    "37:38",
+    "37:74",
+    "37:78",
+    "37:80",
+    "37:82",
+    "37:409",
+    "37:411",
+    "37:415",
+    "37:417",
+    "37:449",
+    "37:451",
+    "37:453",
+    "37:455",
+    "37:484",
+    "37:486",
+    "37:488",
+    "37:492",
+    "37:53",
+    "37:62",
+    "37:100",
+    "37:131",
+    "37:136",
+    "37:118",
+    "37:172",
+    "37:148",
+    "37:211",
+    "37:240",
+    "37:253",
+    "37:298",
+    "37:300",
+    "37:325",
+    "37:357",
+    "37:391",
+    "37:375",
+    "37:466",
+    "37:472",
+    "37:505",
+    "37:112",
+    "37:142",
+    "37:178",
+    "37:217",
+    "37:247",
+    "37:278",
+    "37:307",
+    "37:335",
+    "37:369",
+    "36:3"
+  ],
+  "links": [
+    {
+      "key": "home/nav/领养",
+      "sourceId": "37:32",
+      "destinationId": "36:5"
+    },
+    {
+      "key": "home/nav/找宠",
+      "sourceId": "37:34",
+      "destinationId": "36:15"
+    },
+    {
+      "key": "home/nav/消息",
+      "sourceId": "37:36",
+      "destinationId": "36:17"
+    },
+    {
+      "key": "home/nav/我的",
+      "sourceId": "37:38",
+      "destinationId": "36:16"
+    },
+    {
+      "key": "adopt/nav/社区",
+      "sourceId": "37:74",
+      "destinationId": "36:4"
+    },
+    {
+      "key": "adopt/nav/找宠",
+      "sourceId": "37:78",
+      "destinationId": "36:15"
+    },
+    {
+      "key": "adopt/nav/消息",
+      "sourceId": "37:80",
+      "destinationId": "36:17"
+    },
+    {
+      "key": "adopt/nav/我的",
+      "sourceId": "37:82",
+      "destinationId": "36:16"
+    },
+    {
+      "key": "find/nav/社区",
+      "sourceId": "37:409",
+      "destinationId": "36:4"
+    },
+    {
+      "key": "find/nav/领养",
+      "sourceId": "37:411",
+      "destinationId": "36:5"
+    },
+    {
+      "key": "find/nav/消息",
+      "sourceId": "37:415",
+      "destinationId": "36:17"
+    },
+    {
+      "key": "find/nav/我的",
+      "sourceId": "37:417",
+      "destinationId": "36:16"
+    },
+    {
+      "key": "mine/nav/社区",
+      "sourceId": "37:449",
+      "destinationId": "36:4"
+    },
+    {
+      "key": "mine/nav/领养",
+      "sourceId": "37:451",
+      "destinationId": "36:5"
+    },
+    {
+      "key": "mine/nav/找宠",
+      "sourceId": "37:453",
+      "destinationId": "36:15"
+    },
+    {
+      "key": "mine/nav/消息",
+      "sourceId": "37:455",
+      "destinationId": "36:17"
+    },
+    {
+      "key": "messages/nav/社区",
+      "sourceId": "37:484",
+      "destinationId": "36:4"
+    },
+    {
+      "key": "messages/nav/领养",
+      "sourceId": "37:486",
+      "destinationId": "36:5"
+    },
+    {
+      "key": "messages/nav/找宠",
+      "sourceId": "37:488",
+      "destinationId": "36:15"
+    },
+    {
+      "key": "messages/nav/我的",
+      "sourceId": "37:492",
+      "destinationId": "36:16"
+    },
+    {
+      "key": "home/lost",
+      "sourceId": "37:53",
+      "destinationId": "36:13"
+    },
+    {
+      "key": "home/adopt",
+      "sourceId": "37:62",
+      "destinationId": "36:5"
+    },
+    {
+      "key": "adopt/detail",
+      "sourceId": "37:100",
+      "destinationId": "36:6"
+    },
+    {
+      "key": "detail/verify",
+      "sourceId": "37:131",
+      "destinationId": "36:7"
+    },
+    {
+      "key": "detail/report",
+      "sourceId": "37:136",
+      "destinationId": "36:9"
+    },
+    {
+      "key": "detail/primary",
+      "sourceId": "37:118",
+      "destinationId": "36:11"
+    },
+    {
+      "key": "verify/report",
+      "sourceId": "37:172",
+      "destinationId": "36:9"
+    },
+    {
+      "key": "verify/primary",
+      "sourceId": "37:148",
+      "destinationId": "36:6"
+    },
+    {
+      "key": "publish/verify",
+      "sourceId": "37:211",
+      "destinationId": "36:7"
+    },
+    {
+      "key": "report/progress",
+      "sourceId": "37:240",
+      "destinationId": "36:10"
+    },
+    {
+      "key": "progress/primary",
+      "sourceId": "37:253",
+      "destinationId": "36:17"
+    },
+    {
+      "key": "login/guest",
+      "sourceId": "37:298",
+      "destinationId": "36:4"
+    },
+    {
+      "key": "login/otp",
+      "sourceId": "37:300",
+      "destinationId": "36:12"
+    },
+    {
+      "key": "otp/edit",
+      "sourceId": "37:325",
+      "destinationId": "36:11"
+    },
+    {
+      "key": "lostList/map",
+      "sourceId": "37:357",
+      "destinationId": "36:14"
+    },
+    {
+      "key": "lostMap/list",
+      "sourceId": "37:391",
+      "destinationId": "36:13"
+    },
+    {
+      "key": "lostMap/primary",
+      "sourceId": "37:375",
+      "destinationId": "36:13"
+    },
+    {
+      "key": "mine/publish",
+      "sourceId": "37:466",
+      "destinationId": "36:8"
+    },
+    {
+      "key": "mine/progress",
+      "sourceId": "37:472",
+      "destinationId": "36:10"
+    },
+    {
+      "key": "messages/progress",
+      "sourceId": "37:505",
+      "destinationId": "36:10"
+    },
+    {
+      "key": "detail/back",
+      "sourceId": "37:112",
+      "type": "BACK"
+    },
+    {
+      "key": "verify/back",
+      "sourceId": "37:142",
+      "type": "BACK"
+    },
+    {
+      "key": "publish/back",
+      "sourceId": "37:178",
+      "type": "BACK"
+    },
+    {
+      "key": "report/back",
+      "sourceId": "37:217",
+      "type": "BACK"
+    },
+    {
+      "key": "progress/back",
+      "sourceId": "37:247",
+      "type": "BACK"
+    },
+    {
+      "key": "login/back",
+      "sourceId": "37:278",
+      "type": "BACK"
+    },
+    {
+      "key": "otp/back",
+      "sourceId": "37:307",
+      "type": "BACK"
+    },
+    {
+      "key": "lostList/back",
+      "sourceId": "37:335",
+      "type": "BACK"
+    },
+    {
+      "key": "lostMap/back",
+      "sourceId": "37:369",
+      "type": "BACK"
+    }
+  ],
+  "validation": {
+    "actionCount": 49,
+    "allDestinationsTopLevel": true,
+    "businessSubmissions": false
+  }
+}

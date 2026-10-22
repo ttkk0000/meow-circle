@@ -1,5 +1,4 @@
 package com.ttkk0000.meowcircle.kmpapp.theme
-
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -8,17 +7,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import com.ttkk0000.meowcircle.kmpapp.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 
+val OutfitFontFamily = FontFamily(
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_medium, FontWeight.Medium),
+    Font(R.font.inter_bold, FontWeight.SemiBold),
+    Font(R.font.inter_bold, FontWeight.Bold),
+    Font(R.font.inter_bold, FontWeight.ExtraBold),
+    Font(R.font.inter_bold, FontWeight.Black),
+)
+val InterFontFamily = FontFamily(
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_medium, FontWeight.Medium),
+    Font(R.font.inter_bold, FontWeight.SemiBold),
+    Font(R.font.inter_bold, FontWeight.Bold),
+    Font(R.font.inter_bold, FontWeight.ExtraBold),
+    Font(R.font.inter_bold, FontWeight.Black),
+)
 enum class MeowTheme {
     Honey,
     Mint,
     Night,
     Neutral,
 }
-
 val HoneyScheme =
     lightColorScheme(
         primary = Color(0xFF9A4600),
@@ -42,7 +59,6 @@ val HoneyScheme =
         error = Color(0xFFBA1A1A),
         onError = Color.White,
     )
-
 val MintScheme =
     lightColorScheme(
         primary = Color(0xFF12312B),
@@ -66,7 +82,6 @@ val MintScheme =
         error = Color(0xFFEF4444),
         onError = Color.White,
     )
-
 val NightScheme =
     darkColorScheme(
         primary = Color(0xFFF8FAFC),
@@ -90,7 +105,6 @@ val NightScheme =
         error = Color(0xFFF87171),
         onError = Color.White,
     )
-
 val NeutralScheme =
     lightColorScheme(
         primary = Color(0xFF4B5563),
@@ -114,7 +128,6 @@ val NeutralScheme =
         error = Color(0xFFDC2626),
         onError = Color.White,
     )
-
 /**
  * Typography = M&D cute design tokens（Plus Jakarta Sans 由系统无衬线近似），
  * 与移动端 M&D 设计记忆一致，避免旧稿的紧缩字距。
@@ -123,7 +136,7 @@ val StitchTypography =
     Typography(
         displayLarge =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 48.sp,
                 lineHeight = 56.sp,
@@ -131,7 +144,7 @@ val StitchTypography =
             ),
         displayMedium =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 40.sp,
                 lineHeight = 48.sp,
@@ -139,7 +152,7 @@ val StitchTypography =
             ),
         displaySmall =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 28.sp,
                 lineHeight = 36.sp,
@@ -147,7 +160,7 @@ val StitchTypography =
             ),
         headlineLarge =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 lineHeight = 40.sp,
@@ -155,7 +168,7 @@ val StitchTypography =
             ),
         headlineMedium =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
                 lineHeight = 32.sp,
@@ -163,7 +176,7 @@ val StitchTypography =
             ),
         headlineSmall =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 lineHeight = 26.sp,
@@ -171,7 +184,7 @@ val StitchTypography =
             ),
         titleLarge =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp,
                 lineHeight = 28.sp,
@@ -179,42 +192,42 @@ val StitchTypography =
             ),
         titleMedium =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
                 lineHeight = 24.sp,
             ),
         titleSmall =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = OutfitFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
                 lineHeight = 22.sp,
             ),
         bodyLarge =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Medium,
                 fontSize = 18.sp,
                 lineHeight = 28.sp,
             ),
         bodyMedium =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
             ),
         bodySmall =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
             ),
         labelLarge =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = InterFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
@@ -222,7 +235,7 @@ val StitchTypography =
             ),
         labelMedium =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = InterFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 12.sp,
                 lineHeight = 16.sp,
@@ -230,14 +243,13 @@ val StitchTypography =
             ),
         labelSmall =
             TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = InterFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 11.sp,
                 lineHeight = 14.sp,
                 letterSpacing = 0.sp,
             ),
     )
-
 @Composable
 fun MeowStitchTheme(
     theme: MeowTheme = MeowTheme.Honey,
@@ -254,6 +266,23 @@ fun MeowStitchTheme(
         MeowTheme.Mint -> MintStitchColors
         MeowTheme.Night -> NightStitchColors
         MeowTheme.Neutral -> NeutralStitchColors
+    }
+    val darkTheme = theme == MeowTheme.Night
+    val view = androidx.compose.ui.platform.LocalView.current
+    if (!view.isInEditMode) {
+        androidx.compose.runtime.SideEffect {
+            var context = view.context
+            while (context is android.content.ContextWrapper) {
+                if (context is android.app.Activity) {
+                    break
+                }
+                context = context.baseContext
+            }
+            if (context is android.app.Activity) {
+                val window = context.window
+                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            }
+        }
     }
     CompositionLocalProvider(LocalStitchColors provides stitchColors) {
         MaterialTheme(
