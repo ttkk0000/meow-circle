@@ -38,24 +38,34 @@ type DataHold struct {
 	Released    bool      `json:"released"`
 }
 type DataRequest struct {
-	Processors     map[string]ExternalErasureReceipt `json:"processors,omitempty"`
-	Type           string                            `json:"type"`
-	Fields         []string                          `json:"fields"`
-	Items          []DataItem                        `json:"items"`
-	Holds          []DataHold                        `json:"holds"`
-	QueryHash      string                            `json:"query_hash"`
-	QueryExpiresAt time.Time                         `json:"query_expires_at"`
-	Note           string                            `json:"note"`
-	ExternalState  string                            `json:"external_state"`
+	ProgressVersion int                               `json:"progress_version,omitempty"`
+	ErasedFields    []string                          `json:"erased_fields,omitempty"`
+	Processors      map[string]ExternalErasureReceipt `json:"processors,omitempty"`
+	Type            string                            `json:"type"`
+	Fields          []string                          `json:"fields"`
+	Items           []DataItem                        `json:"items"`
+	Holds           []DataHold                        `json:"holds"`
+	QueryHash       string                            `json:"query_hash"`
+	QueryExpiresAt  time.Time                         `json:"query_expires_at"`
+	Note            string                            `json:"note"`
+	ExternalState   string                            `json:"external_state"`
 }
 type DataRequestStatus struct {
-	ID            int64  `json:"id"`
-	Version       int64  `json:"version"`
-	Type          string `json:"type"`
-	State         string `json:"state"`
-	Pending       int    `json:"pending"`
-	Held          int    `json:"held"`
-	ExternalState string `json:"external_state"`
+	ProgressVersion  int        `json:"progress_version"`
+	Erased           int        `json:"erased"`
+	PhysicalPending  int        `json:"physical_pending"`
+	ProviderPending  int        `json:"provider_pending"`
+	RestrictedCopies int        `json:"restricted_copies"`
+	PendingFields    []string   `json:"pending_fields"`
+	NextReviewAt     *time.Time `json:"next_review_at,omitempty"`
+	ReviewRequired   bool       `json:"review_required"`
+	ID               int64      `json:"id"`
+	Version          int64      `json:"version"`
+	Type             string     `json:"type"`
+	State            string     `json:"state"`
+	Pending          int        `json:"pending"`
+	Held             int        `json:"held"`
+	ExternalState    string     `json:"external_state"`
 }
 
 func NewCapability() (string, error) {
@@ -135,9 +145,12 @@ func (s *Service) SubmitDataRequest(ctx context.Context, actor int64, in DataReq
 				return e
 			}
 		}
-		d := DataRequest{Type: in.Type, Fields: append([]string{}, in.Fields...), Items: []DataItem{}, Holds: []DataHold{}, QueryHash: Fingerprint(in.QueryToken), QueryExpiresAt: s.Now().Add(180 * 24 * time.Hour), Note: in.Note, ExternalState: "not_required"}
+		d := DataRequest{ProgressVersion: 1, Type: in.Type, Fields: append([]string{}, in.Fields...), Items: []DataItem{}, Holds: []DataHold{}, QueryHash: Fingerprint(in.QueryToken), QueryExpiresAt: s.Now().Add(180 * 24 * time.Hour), Note: in.Note, ExternalState: "not_required"}
 		selections := in.Selections
 		if in.Type == "close_account" {
+			if e = DisablePushDevices(tx, actor, "", true); e != nil {
+				return e
+			}
 			d.Fields = []string{"bio", "avatar", "nickname"}
 			d.ExternalState = "pending_inventory"
 			for _, kind := range []Kind{Entries, Pets, Cases, Offers, Drafts, Media, Subscriptions, Qualifications, Guardians, Identities, Preferences, Expressions, PushDevices, Sessions, AuthChallenges} {
@@ -270,17 +283,61 @@ func (s *Service) DataRequestStatus(ctx context.Context, id int64, token string)
 		if d.QueryHash != Fingerprint(token) || !d.QueryExpiresAt.After(s.Now()) {
 			return ErrForbidden
 		}
-		out = DataRequestStatus{ID: r.ID, Version: r.Version, Type: d.Type, State: r.State, ExternalState: d.ExternalState}
+		out = DataRequestStatus{ID: r.ID, Version: r.Version, Type: d.Type, State: r.State, ExternalState: d.ExternalState, PendingFields: []string{}, ProgressVersion: d.ProgressVersion}
+		for _, receipt := range d.Processors {
+			if receipt.State == "restricted_backup" {
+				out.RestrictedCopies++
+			}
+		}
+		heldTargets := map[string]bool{}
 		for _, item := range d.Items {
 			if item.State != "erased" {
 				out.Pending++
+			} else {
+				out.Erased++
+			}
+			if item.State == "physical_pending" {
+				out.PhysicalPending++
+			}
+			if item.State == "provider_pending" {
+				out.ProviderPending++
+			}
+			if item.State != "erased" {
+				held, due, e := selectedRetention(tx, item, s.Now())
+				if e != nil {
+					return e
+				}
+				if held {
+					heldTargets[fmt.Sprintf("%s:%d", item.Kind, item.ID)] = true
+					if due != nil {
+						out.NextReviewAt = earlierReview(out.NextReviewAt, *due)
+					}
+				}
+			}
+		}
+		for _, field := range d.Fields {
+			if !HasString(d.ErasedFields, field) {
+				out.PendingFields = append(out.PendingFields, field)
+				held, due, e := fieldRetention(tx, r.OwnerID, field)
+				if e != nil {
+					return e
+				}
+				if held {
+					heldTargets[fmt.Sprintf("%s:%d", Accounts, r.OwnerID)] = true
+					if due != nil {
+						out.NextReviewAt = earlierReview(out.NextReviewAt, *due)
+					}
+				}
 			}
 		}
 		for _, h := range d.Holds {
 			if !h.Released {
-				out.Held++
+				heldTargets[fmt.Sprintf("%s:%d", h.Kind, h.ID)] = true
+				out.NextReviewAt = earlierReview(out.NextReviewAt, h.ReviewAt)
 			}
 		}
+		out.Held = len(heldTargets)
+		out.ReviewRequired = out.NextReviewAt != nil && !out.NextReviewAt.After(s.Now())
 		return nil
 	})
 	return
@@ -307,18 +364,22 @@ func (s *Service) ProcessDataRequest(ctx context.Context, operator string, id, v
 		if r.State != "processing" && r.State != "partially_held" {
 			return ErrConflict
 		}
+		heldPending := false
+		d.ProgressVersion = 1
 		u, e := tx.User(r.OwnerID)
 		if e != nil {
 			return e
 		}
 		for _, f := range d.Fields {
-			held := false
-			for _, h := range d.Holds {
-				if !h.Released && h.Kind == Accounts && HasString(h.Fields, f) {
-					held = true
-				}
+			if HasString(d.ErasedFields, f) {
+				continue
+			}
+			held, _, e := fieldRetention(tx, r.OwnerID, f)
+			if e != nil {
+				return e
 			}
 			if held {
+				heldPending = true
 				continue
 			}
 			switch f {
@@ -329,6 +390,7 @@ func (s *Service) ProcessDataRequest(ctx context.Context, operator string, id, v
 			case "nickname":
 				u.Nickname = "已注销用户"
 			}
+			d.ErasedFields = append(d.ErasedFields, f)
 		}
 		if d.Type == "close_account" {
 			u.Username = fmt.Sprintf("closed_%d", r.OwnerID)
@@ -337,18 +399,23 @@ func (s *Service) ProcessDataRequest(ctx context.Context, operator string, id, v
 			return e
 		}
 		pending := false
+		for _, field := range d.Fields {
+			if !HasString(d.ErasedFields, field) {
+				pending = true
+			}
+		}
+		changedItems := 0
 		for i := range d.Items {
 			item := &d.Items[i]
 			if item.State == "erased" {
 				continue
 			}
-			held := false
-			for _, h := range d.Holds {
-				if !h.Released && h.Kind == item.Kind && h.ID == item.ID {
-					held = true
-				}
+			held, _, e := selectedRetention(tx, *item, s.Now())
+			if e != nil {
+				return e
 			}
 			if held {
+				heldPending = true
 				item.State = "held"
 				pending = true
 				continue
@@ -369,11 +436,16 @@ func (s *Service) ProcessDataRequest(ctx context.Context, operator string, id, v
 				continue
 			}
 			if item.Kind == Media {
-				if target.State == "deleting" {
+				if target.State == "deleting" || target.State == "erasure_pending" {
 					item.State = "physical_pending"
 					pending = true
 					continue
 				} // retain only the opaque filename until the physical cleanup receipt
+				if changedItems >= 100 {
+					item.State = "pending"
+					pending = true
+					continue
+				}
 				m, e := Decode[MediaFile](target)
 				if e != nil {
 					return e
@@ -386,6 +458,7 @@ func (s *Service) ProcessDataRequest(ctx context.Context, operator string, id, v
 				if e = tx.Save(Media, &target); e != nil {
 					return e
 				}
+				changedItems++
 				item.State = "physical_pending"
 				pending = true
 				continue
@@ -403,6 +476,11 @@ func (s *Service) ProcessDataRequest(ctx context.Context, operator string, id, v
 						pending = true
 						continue
 					}
+					if changedItems >= 100 {
+						item.State = "pending"
+						pending = true
+						continue
+					}
 					target.State = "revoked"
 					if e = tx.Save(Identities, &target); e != nil {
 						return e
@@ -417,23 +495,34 @@ func (s *Service) ProcessDataRequest(ctx context.Context, operator string, id, v
 					if e = tx.Save(Outbox, &job); e != nil {
 						return e
 					}
+					changedItems++
 					item.State = "provider_pending"
 					pending = true
 					continue
 				}
 			}
+			if changedItems >= 100 {
+				item.State = "pending"
+				pending = true
+				continue
+			}
 			if e = tx.Delete(item.Kind, target.ID, target.Version); e != nil {
 				return e
 			}
+			changedItems++
 			item.State = "erased"
 		}
 		for _, hold := range d.Holds {
 			if !hold.Released {
+				heldPending = true
 				pending = true
 			}
 		}
 		r.State = "completed"
 		if pending {
+			r.State = "processing"
+		}
+		if heldPending {
 			r.State = "partially_held"
 		}
 		if d.ExternalState != "not_required" && d.ExternalState != "completed" {
@@ -464,7 +553,7 @@ type DataHoldInput struct {
 }
 
 func (s *Service) SetDataHold(ctx context.Context, operator string, id int64, in DataHoldInput) error {
-	if operator == "" || in.Hold.Responsible == "" || textValid(in.Hold.Basis, 1000, true) != nil || !in.Hold.ReviewAt.After(s.Now()) || in.Hold.ReviewAt.After(s.Now().Add(90*24*time.Hour)) {
+	if operator == "" || textValid(in.Hold.Responsible, 120, true) != nil || textValid(in.Hold.Basis, 1000, true) != nil || !in.Hold.ReviewAt.After(s.Now()) || in.Hold.ReviewAt.After(s.Now().Add(90*24*time.Hour)) {
 		return Invalid("specific retention basis, responsible party and review date required")
 	}
 	return s.Repo.Update(ctx, func(tx Tx) error {
@@ -477,6 +566,12 @@ func (s *Service) SetDataHold(ctx context.Context, operator string, id int64, in
 		}
 		d, e := Decode[DataRequest](r)
 		if e != nil {
+			return e
+		}
+		if r.State != "processing" && r.State != "partially_held" {
+			return ErrConflict
+		}
+		if e = validateDataHold(d, r.OwnerID, in.Hold); e != nil {
 			return e
 		}
 		if in.Hold.Kind == Media && !in.Hold.Released {

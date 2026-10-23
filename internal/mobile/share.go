@@ -31,7 +31,14 @@ func (s *Service) PublicShare(ctx context.Context, kind Kind, id int64) (out Sha
 		if !ok {
 			return ErrNotFound
 		}
-		out = ShareCard{Kind: kind, ID: id, RelativeURL: fmt.Sprintf("/api/v2/share/%s/%d", kind, id)}
+		// A public-looking historical record is not a current share grant.
+		// Recheck the lifecycle here as well as the resource ACL.
+		shareable := kind == Entries && r.State == "published" || kind == Pets && r.State == "active" ||
+			kind == Cases && HasString([]string{"active", "matched"}, r.State) || kind == Offers && r.State == "published"
+		if !shareable {
+			return ErrNotFound
+		}
+		out = ShareCard{Kind: kind, ID: id, RelativeURL: fmt.Sprintf("/share/%s/%d", kind, id)}
 		switch kind {
 		case Entries:
 			v, e := Decode[Entry](r)
@@ -55,6 +62,9 @@ func (s *Service) PublicShare(ctx context.Context, kind Kind, id int64) (out Sha
 			v, e := Decode[Offer](r)
 			if e != nil {
 				return e
+			}
+			if !v.ValidUntil.After(s.Now()) {
+				return ErrNotFound
 			}
 			out.Title = "M&D · 宠物信息"
 			out.Summary = v.Nature + " · " + v.City + " · " + v.Area

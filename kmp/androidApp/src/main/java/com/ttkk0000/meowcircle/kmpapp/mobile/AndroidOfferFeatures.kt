@@ -15,8 +15,7 @@ import java.math.BigDecimal
                 Text("${record.data.custodian} · ${record.data.origin}"); Text("基础金额 ${money(record.data.priceCents)} · 含必付项 ${money(record.data.totalCents)}")
                 FeatureButton("查看完整披露") { f.open(FeatureRoute(FeaturePage.Offer,record.id)) }
             } }
-            if (s.offers.loaded && s.offers.items.isEmpty()) Text("暂无可见信息")
-            MoreFeature(s.offers.next,s.loading) { f.reload(true) }
+            PageFooter(s.offers, { f.reload() }, { f.reload(true) }, "暂无可见信息", enabled = !s.loading && !s.busy)
         }
         FeaturePage.Offer -> s.offer?.let { record ->
             val o = record.data
@@ -47,24 +46,23 @@ import java.math.BigDecimal
         FeaturePage.OfferEdit -> {
             if (route.id > 0 && s.offer == null) return
             val old = s.offer; val o = old?.data
-            FormField(f,s,"petId","宠物档案编号",o?.petId?.toString().orEmpty(),numeric = true)
-            FormField(f,s,"petVersion","已核对的宠物档案版本",o?.petVersion?.toString().orEmpty(),numeric = true)
+            PetChoiceField(f,s,"petId",o?.petId ?: 0,versionKey = "petVersion",fallbackVersion = o?.petVersion ?: 0)
             Text("宠物资料变化后须重新核对版本；发布人须具备有效处置资格。")
             ChoiceField(f,s,"nature","性质",listOf("adoption" to "领养（不得收取基础价或必付费用）","sale" to "出售","paid_transfer" to "有偿转让"),o?.nature ?: "sale")
             ChoiceField(f,s,"publisher","主体",listOf("person" to "个人","business" to "经营主体","rescue" to "救助组织"),o?.publisherType ?: "person")
             ChoiceField(f,s,"relationship","关系",listOf("direct" to "直接发布","employee" to "工作人员","agent" to "代理"),o?.relationship ?: "direct")
             FormField(f,s,"authority","处置与发布授权说明",o?.authoritySummary.orEmpty(),3)
-            FormField(f,s,"custodian","实际照护者",o?.custodian.orEmpty()); FormField(f,s,"custodianRelation","照护者与主体关系",o?.custodianRelationship.orEmpty())
+            FormPair({ FormField(f,s,"custodian","实际照护者",o?.custodian.orEmpty()) }, { FormField(f,s,"custodianRelation","照护者与主体关系",o?.custodianRelationship.orEmpty()) })
             FormField(f,s,"origin","宠物来源",o?.origin.orEmpty(),3); FormField(f,s,"city","城市",o?.city.orEmpty()); FormField(f,s,"area","公开区域",o?.area.orEmpty())
             FormField(f,s,"venue","地点类型",o?.venueType.orEmpty()); FormField(f,s,"privateAddress","私密准确地址（仅授权参与方）",o?.privateAddress.orEmpty())
-            FormField(f,s,"reception","接待方",o?.reception.orEmpty()); FormField(f,s,"receptionRelation","接待方与主体关系",o?.receptionRelationship.orEmpty())
-            FormField(f,s,"payee","收款方",o?.payee.orEmpty()); FormField(f,s,"responsible","实际责任方",o?.responsibleParty.orEmpty())
+            FormPair({ FormField(f,s,"reception","接待方",o?.reception.orEmpty()) }, { FormField(f,s,"receptionRelation","接待方与主体关系",o?.receptionRelationship.orEmpty()) })
+            FormPair({ FormField(f,s,"payee","收款方",o?.payee.orEmpty()) }, { FormField(f,s,"responsible","实际责任方",o?.responsibleParty.orEmpty()) })
             FormField(f,s,"health","已知健康情况与未知项",o?.knownHealth.orEmpty(),4); FormField(f,s,"aftercare","后续照护与异常处理",o?.aftercare.orEmpty(),3)
             FormField(f,s,"price","基础金额（元）",o?.priceCents?.let { BigDecimal.valueOf(it,2).toPlainString() } ?: "0",numeric = true)
             FeeFields(f,s,o?.fees.orEmpty())
             val previewPrice = cents(f.field("price",o?.priceCents?.let { BigDecimal.valueOf(it,2).toPlainString() } ?: "0")); val previewFees = formFees(f,o?.fees.orEmpty())
             if (previewPrice != null && previewFees != null) Text("基础金额＋必付项合计 ${money(previewPrice + previewFees.filter { it.required }.sumOf { it.amountCents })}")
-            FormField(f,s,"deposit","订金／退还条款（没有请说明）",o?.depositTerms.orEmpty(),3); FormField(f,s,"until","有效期至（带时区，最多90天）",o?.validUntil.orEmpty())
+            FormField(f,s,"deposit","订金／退还条款（没有请说明）",o?.depositTerms.orEmpty(),3); DateTimeField(f,s,"until","有效期至（最多90天）",o?.validUntil.orEmpty())
             FeaturePhotos(store,s,old?.mediaIds.orEmpty())
             FeaturePrimary("核对并保存披露",!s.busy && !s.loading) {
                 val petId = f.field("petId",o?.petId?.toString().orEmpty()).toLongOrNull(); val petVersion = f.field("petVersion",o?.petVersion?.toString().orEmpty()).toLongOrNull()

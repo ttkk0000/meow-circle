@@ -19,17 +19,18 @@ internal val LocalDialogRegion = staticCompositionLocalOf { DialogRegion() }
 @Composable internal fun MobileDialog(onDismissRequest: () -> Unit,content: @Composable () -> Unit) {
     val area = LocalDialogRegion.current
     Dialog(onDismissRequest,properties = DialogProperties(usePlatformDefaultWidth = false,decorFitsSystemWindows = false)) {
-        Box(Modifier.fillMaxSize().absolutePadding(area.left,area.top,area.right,area.bottom).safeDrawingPadding().imePadding().padding(16.dp),contentAlignment = Alignment.Center) { content() }
+        Box(Modifier.fillMaxSize().absolutePadding(area.left,area.top,area.right,area.bottom).safeDrawingPadding().imePadding().padding(MobileUi.pagePadding),contentAlignment = Alignment.Center) { content() }
     }
 }
 @Composable internal fun MobileAlertDialog(onDismissRequest: () -> Unit,title: @Composable () -> Unit,text: @Composable () -> Unit,
     confirmButton: @Composable () -> Unit,dismissButton: @Composable () -> Unit) {
     MobileDialog(onDismissRequest) {
-        Surface(shape = MaterialTheme.shapes.large,modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth()) {
-            Column(Modifier.verticalScroll(rememberScrollState()).padding(24.dp),verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Surface(shape = MaterialTheme.shapes.large,modifier = Modifier.widthIn(max = MobileUi.dialogWidth).fillMaxWidth()) {
+            Column(Modifier.verticalScroll(rememberScrollState()).padding(MobileUi.dialogPadding),verticalArrangement = Arrangement.spacedBy(MobileUi.sectionGap)) {
                 ProvideTextStyle(MaterialTheme.typography.titleLarge,title)
                 text()
-                Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.End) { dismissButton(); Spacer(Modifier.width(8.dp)); confirmButton() }
+                // 纵向排列使窄分屏和大字下的完整动作标签仍可换行。
+                Column(Modifier.fillMaxWidth(),horizontalAlignment = Alignment.End) { confirmButton(); dismissButton() }
             }
         }
     }

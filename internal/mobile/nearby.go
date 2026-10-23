@@ -16,6 +16,21 @@ func distanceKM(a, b, c, d float64) float64 {
 	return 6371 * 2 * math.Atan2(math.Sqrt(v), math.Sqrt(1-v))
 }
 
+func matchesSubscription(c Case, v Subscription) bool {
+	if v.City != c.City {
+		return false
+	}
+	if v.LocationPrecision == "city" {
+		return true
+	}
+	// An area-only case has no point. Do not interpret its 0/0 placeholder
+	// as an event location or guess that it falls inside a radius.
+	if c.LocationPrecision == "area" {
+		return false
+	}
+	return distanceKM(c.Latitude, c.Longitude, v.Latitude, v.Longitude) <= v.RadiusKM
+}
+
 type AlertBatch struct {
 	Next    int64 `json:"next_cursor"`
 	Created int   `json:"created"`
@@ -31,7 +46,14 @@ func (s *Service) NearbyAlerts(ctx context.Context, caseID, after int64) (out Al
 			return e
 		}
 		if r.State != "active" && r.State != "matched" {
-			return ErrConflict
+			return nil // A superseded publication has no remaining alerts to create.
+		}
+		allowed, e := s.publicProcessingAllowed(tx, r.OwnerID)
+		if e != nil {
+			return e
+		}
+		if !r.Public || !allowed {
+			return nil
 		}
 		c, e := Decode[Case](r)
 		if e != nil {
@@ -47,7 +69,14 @@ func (s *Service) NearbyAlerts(ctx context.Context, caseID, after int64) (out Al
 			if e != nil {
 				return e
 			}
-			if !v.Enabled || v.Frequency == "off" || subscription.OwnerID == r.OwnerID || distanceKM(c.Latitude, c.Longitude, v.Latitude, v.Longitude) > v.RadiusKM {
+			if !v.Enabled || v.Frequency == "off" || subscription.OwnerID == r.OwnerID || !matchesSubscription(c, v) {
+				continue
+			}
+			blocked, e := blocked(tx, r.OwnerID, subscription.OwnerID)
+			if e != nil {
+				return e
+			}
+			if blocked {
 				continue
 			}
 			if e = s.active(tx, subscription.OwnerID); errors.Is(e, ErrUnauthorized) || errors.Is(e, ErrNotFound) {
@@ -99,6 +128,9 @@ func (s *Service) NearbyAlerts(ctx context.Context, caseID, after int64) (out Al
 				return e
 			}
 			out.Created++
+		}
+		if len(subscriptions) < 100 {
+			out.Next = 0
 		}
 		return nil
 	})

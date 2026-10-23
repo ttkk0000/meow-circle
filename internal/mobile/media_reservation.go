@@ -25,7 +25,7 @@ func (s *Service) ReserveMedia(ctx context.Context, actor int64, token, key stri
 			recordKey = "safety:" + Fingerprint(token) + ":" + key
 			file.Scope = "private"
 		} else {
-			if e := s.active(tx, actor); e != nil {
+			if e := s.checkActor(ctx, tx, actor); e != nil {
 				return e
 			}
 		}
@@ -100,7 +100,7 @@ func (s *Service) CompleteReservedMedia(ctx context.Context, actor int64, token 
 				return ErrForbidden
 			}
 		} else {
-			if e = s.active(tx, actor); e != nil {
+			if e = s.checkActor(ctx, tx, actor); e != nil {
 				return e
 			}
 			if e = owner(r, actor); e != nil {

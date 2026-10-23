@@ -111,7 +111,8 @@ data class PreferenceBody(@SerialName("direct_messages") val directMessages: Boo
 data class ExpressionBody(val favorites: List<String> = emptyList(), val recent: List<String> = emptyList())
 @Serializable
 data class SubscriptionBody(val city: String, val latitude: Double, val longitude: Double,
-    @SerialName("radius_km") val radiusKm: Double, val frequency: String, val enabled: Boolean)
+    @SerialName("radius_km") val radiusKm: Double, val frequency: String, val enabled: Boolean,
+    @SerialName("location_precision") val locationPrecision: String = "approximate")
 @Serializable
 data class SubscriptionInput(val subscription: SubscriptionBody, val version: Long = 0)
 @Serializable

@@ -38,7 +38,7 @@ func (s *Service) ProcessRevocations(ctx context.Context, after int64) (next int
 	var rows []mobile.Record
 	err = s.Repo.View(ctx, func(tx mobile.Tx) error {
 		var e error
-		rows, e = tx.List(mobile.Outbox, mobile.Filter{After: after, State: "pending", Limit: 100})
+		rows, e = tx.List(mobile.Outbox, mobile.Filter{KeyPrefix: "revoke:", After: after, State: "pending", Limit: 100})
 		return e
 	})
 	if err != nil {
@@ -76,7 +76,7 @@ func (s *Service) ProcessRevocations(ctx context.Context, after int64) (next int
 				if e != nil {
 					return e
 				}
-				if lease.State == "acknowledged" || d.LeaseUntil.After(s.Now()) {
+				if lease.State == "acknowledged" || d.LeaseUntil.After(s.Now()) || d.NextRetry.After(s.Now()) {
 					return nil
 				}
 			}
@@ -153,6 +153,9 @@ func (s *Service) ProcessRevocations(ctx context.Context, after int64) (next int
 			return
 		}
 		processed++
+	}
+	if len(rows) < 100 {
+		next = 0
 	}
 	return
 }

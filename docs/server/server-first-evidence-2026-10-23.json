@@ -1,0 +1,316 @@
+{
+  "task": "AI-20261023-SERVER-FIRST",
+  "created_at": "2026-10-23T01:34:04+08:00",
+  "basis": "current working tree; includes retained earlier lifecycle source changes",
+  "branch": "main",
+  "head": "5de631b669d312ddd461d015ed137dad16c6ed02",
+  "uncommitted": true,
+  "scope": "server-first source, regression declarations, API contract, worker and deployment documentation; no new client code in this batch",
+  "verification_level": "source and read-only static checks only; not typechecked, built, tested, migrated or runtime verified",
+  "checks": [
+    {
+      "check": "gofmt format/syntax parser",
+      "result": "passed",
+      "files": 40,
+      "type_check": false
+    },
+    {
+      "check": "scripts/check_mobile_static.py",
+      "result": "passed",
+      "paths": 209,
+      "operations": 236,
+      "schemas": 100,
+      "tables": 42,
+      "assets": [
+        128,
+        24
+      ]
+    },
+    {
+      "check": "scripts/check_server_shared_contract_static.py",
+      "result": "passed",
+      "dto_pairs": 48
+    },
+    {
+      "check": "scripts/check_kmp_client_static.py",
+      "result": "passed",
+      "kotlin_swift_files": 45
+    },
+    {
+      "check": "scripts/check_android_feature_static.py",
+      "result": "passed",
+      "extended_pages": 30
+    },
+    {
+      "check": "read-only job/receipt/private DTO and changed struct literal source assertions",
+      "result": "passed",
+      "protected_job_paths": 5,
+      "optional_receipt_headers": 20,
+      "regression_declarations": 21
+    },
+    {
+      "check": "git diff --check (core.autocrlf=true; core.whitespace=cr-at-eol)",
+      "result": "passed",
+      "note": "CRLF recognized; earlier core.autocrlf=false invocation produced line-ending whitespace noise, not a compiler result"
+    }
+  ],
+  "regression_source_only": [
+    {
+      "path": "internal/mobile/server_first_test.go",
+      "tests": [
+        "TestLegacyMutationRejectsSessionRevokedAfterAuthentication",
+        "TestOptionalMutationReceiptSurvivesDeletedResult",
+        "TestRepeatedLegacyLeadHasOneRecordAndOneNotice",
+        "TestFeedbackRequiresExistingEffectiveTermsAndDeduplicates",
+        "TestDataProcessingBoundsMutationsAndExcludesProgressEvents",
+        "TestPushAcceptanceReplayDoesNotSendTwice",
+        "TestPushRechecksPermissionBetweenLookupAndSend",
+        "TestDisabledPushTokenReusePreservesPreviousOwnerInventory",
+        "TestNearbyDeliveryContinuationIsNotAcknowledgedEarly",
+        "TestReadReceiptReplayRechecksCurrentGroupMembership",
+        "TestNotificationReadDoesNotExposeProviderAcceptance"
+      ]
+    },
+    {
+      "path": "internal/identity/server_first_test.go",
+      "tests": [
+        "TestRefreshedSessionLogoutDisablesItsPushBinding",
+        "TestRevocationsAreNotStarvedByUnrelatedOutboxEvents"
+      ]
+    },
+    {
+      "path": "internal/platform/mobileapi/jobs_test.go",
+      "tests": [
+        "TestJobsEnforceNamedConsumerAndPrivacyRoles",
+        "TestPrivacyJobAcknowledgesAfterPhysicalFileAndProgressReceipt",
+        "TestSupersededNotificationJobTerminates"
+      ]
+    },
+    {
+      "path": "internal/platform/mobileworker/runner_test.go",
+      "tests": [
+        "TestWorkerRejectsUnsafeTargets",
+        "TestWorkerCheckpointRoundtripAndTargetIsolation",
+        "TestWorkerSendsNamedJobAndRestoresContinuation",
+        "TestWorkerRejectsRedirectAndDoesNotEchoUpstreamSecrets",
+        "TestWorkerRejectsMalformedSuccessfulResponses"
+      ]
+    }
+  ],
+  "not_executed": [
+    "Go/Kotlin/Swift type checking",
+    "compilation/build/package/install",
+    "application tests and test fixtures",
+    "SQL migrations",
+    "API or worker process",
+    "real provider requests",
+    "device or emulator",
+    "commit/push/deploy"
+  ],
+  "remaining": [
+    "real providers, operators, policy evidence, schedules and external erasure receipts",
+    "authorized runtime/type/migration regression verification",
+    "query scale and lease timing, checkpoint crash/Windows replacement checks",
+    "client optional-header persistence integration, full iOS and separate Web/Desktop work",
+    "manual assistance/retention/transfer responsibilities; no automatic human-work completion"
+  ],
+  "fingerprint_normalization": "UTF-8 without BOM; CRLF/CR normalized to LF; documentation of source content rather than raw byte fingerprints",
+  "sources": [
+    {
+      "path": "cmd/worker/main.go",
+      "sha256_utf8_lf": "167561d4c4588f7c0ecd2f3649e3abedb42497be96d3af705d18be2a297955a9"
+    },
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256_utf8_lf": "f9d693cfb571e1885ab30f6c4251ad441b856b90bf206ef4f4f5fc5b19f2e713"
+    },
+    {
+      "path": "docs/server/MOBILE_SERVER.md",
+      "sha256_utf8_lf": "0713dbd5ac21c0dbb1dcb19866ae618292656681d222b5278b4fab03faa7df9e"
+    },
+    {
+      "path": "docs/server/SERVER_FIRST_2026_10_23.md",
+      "sha256_utf8_lf": "ad4741db5ce9a7c84f02eeb96cbde3984563cce232187f9ec5f01c69bbf6d451"
+    },
+    {
+      "path": "docs/server/environment.example",
+      "sha256_utf8_lf": "3258298b908d7ad263d591e2f8dae71aa9c301f15088ec777f7ac2da7f3ace04"
+    },
+    {
+      "path": "internal/identity/email.go",
+      "sha256_utf8_lf": "a73e2df12d381d2d810acb1a18fb779783f72e10a7698ba2235fa194754b3064"
+    },
+    {
+      "path": "internal/identity/mutation.go",
+      "sha256_utf8_lf": "2606a7cead57d7a5c7192988c7df1e88d97bd2468acf419346e62c9a3dca21d7"
+    },
+    {
+      "path": "internal/identity/profile.go",
+      "sha256_utf8_lf": "bb4f5a4e5057c96261a52ee987a79a53467508a43fb2c738214c1b05b6eb5e25"
+    },
+    {
+      "path": "internal/identity/revocation.go",
+      "sha256_utf8_lf": "752d89dde0aac94e9d160bdfef3b5c7648c8508599aece59732cd2c39c15e7e1"
+    },
+    {
+      "path": "internal/identity/server_first_test.go",
+      "sha256_utf8_lf": "3b8449d4cab9a6b09522b0221386a56401f51951855b61fee423e802697c4579"
+    },
+    {
+      "path": "internal/identity/service.go",
+      "sha256_utf8_lf": "4edf9c3e41fdca4cbef84692fbfc53d53210f3e6aa3e0f964e36dee357979d56"
+    },
+    {
+      "path": "internal/mobile/appointments.go",
+      "sha256_utf8_lf": "24f94011a0ff504a5830fdcd9b5f4406576d0a1161836fc0ba7bed076cff6844"
+    },
+    {
+      "path": "internal/mobile/commands.go",
+      "sha256_utf8_lf": "e2e6361703a79d292d4cd2975eb2ef653a51bd6c54a7fe1f683cdab212b7247f"
+    },
+    {
+      "path": "internal/mobile/data_requests.go",
+      "sha256_utf8_lf": "18ada33c2aca9c8aafa8446805c425cb51ec73ad9580378abb07d96aa964fdc4"
+    },
+    {
+      "path": "internal/mobile/data_work.go",
+      "sha256_utf8_lf": "97397e44fd68fdf88f563a370fe6938bc497ac0d54ce710a26078b168da05f82"
+    },
+    {
+      "path": "internal/mobile/delivery.go",
+      "sha256_utf8_lf": "c77568aa5e3fe0a1d858e97413301f315bc10debc8135d0d449073b103761224"
+    },
+    {
+      "path": "internal/mobile/erasure.go",
+      "sha256_utf8_lf": "df6de8892851e88941bfcc48c41e12ec529db49229b3cf3dd0eb9749c9fa6ea1"
+    },
+    {
+      "path": "internal/mobile/evidence_retention.go",
+      "sha256_utf8_lf": "64218f9f5f231303209ed24255e0e82b8c72498ccc7a0ea4268c87e0b7493143"
+    },
+    {
+      "path": "internal/mobile/evidence_retention_test.go",
+      "sha256_utf8_lf": "9ba56190ca4bfc8055138ffb1f61a90be2adad07e65798d7ebc63c428e5e71f6"
+    },
+    {
+      "path": "internal/mobile/expiry.go",
+      "sha256_utf8_lf": "10656826f6c6d07c4d08f26a78a14d3d7782638755bf8bf189eef1614813f416"
+    },
+    {
+      "path": "internal/mobile/inbox.go",
+      "sha256_utf8_lf": "c6d143fcf5996cedf1e4fc2f2da1abfa47fb8eced4158aed925a2728d7784390"
+    },
+    {
+      "path": "internal/mobile/jobs.go",
+      "sha256_utf8_lf": "4da9cdf34c89399168bccd88b926f06f1e4b58edb6715b53dcf05937888ca3df"
+    },
+    {
+      "path": "internal/mobile/media_cleanup.go",
+      "sha256_utf8_lf": "c1f718d927dd0799a515f65f188d9852e4149b4f845744408712add2ef5fa41a"
+    },
+    {
+      "path": "internal/mobile/media_reservation.go",
+      "sha256_utf8_lf": "344859be22a4087a47a41bdce79827c811943ae0a900e6c27e1109d05234bfc6"
+    },
+    {
+      "path": "internal/mobile/models.go",
+      "sha256_utf8_lf": "f886cff2e9e40f9826eeeb815471a9ea90e67bd4099e9c5d34f7818ba8ac8523"
+    },
+    {
+      "path": "internal/mobile/mutation.go",
+      "sha256_utf8_lf": "07370b48b758876b66c58d2914a185569947cd2e3c81f500ea06d0f7873f901e"
+    },
+    {
+      "path": "internal/mobile/nearby.go",
+      "sha256_utf8_lf": "37396558129e64f9dbbed8b25fba9a8868fc302cfba82034381bd08a7bc624bf"
+    },
+    {
+      "path": "internal/mobile/push.go",
+      "sha256_utf8_lf": "bff0925a60e1945e84c7e5a924835dc935f4e5d43ed570ac124c34827d4e0301"
+    },
+    {
+      "path": "internal/mobile/push_policy.go",
+      "sha256_utf8_lf": "ac087fc886f3ae163bcbafe609e73e0988f31c53dcd9ffa82e40fb20552fb96c"
+    },
+    {
+      "path": "internal/mobile/repository.go",
+      "sha256_utf8_lf": "42959d2b15697a9a4dec89635fc874b2446689f7b1201682a57e8ebac6e63c97"
+    },
+    {
+      "path": "internal/mobile/rescue.go",
+      "sha256_utf8_lf": "f7ff48ee110c4b32132ec86801ad38f5df98e4385857760cf931c9b8842d5640"
+    },
+    {
+      "path": "internal/mobile/rights.go",
+      "sha256_utf8_lf": "9cc4a57ed27d2df76f6a6f40e5a99c852ed979a8d555cf69f580dec740743a79"
+    },
+    {
+      "path": "internal/mobile/server_first_test.go",
+      "sha256_utf8_lf": "3d93b09573f84148713d24ab641382a0bf63b43679810c52357ec935a281206e"
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "sha256_utf8_lf": "5e2c48899b07558d3dd1cc45b6aaa154ef5b046e8a3afd6d3805ae761aacbf92"
+    },
+    {
+      "path": "internal/mobile/trust.go",
+      "sha256_utf8_lf": "670421143f4a28fc8c208a360eafd62f837320562854e95809a29d5ce672c5f8"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256_utf8_lf": "b9a38036f72e1070be41bd75083cf58f4da02e04293d8ff5030d9f2f50a70f16"
+    },
+    {
+      "path": "internal/platform/mobileapi/jobs.go",
+      "sha256_utf8_lf": "1d2400e94606e226990c8e7e6916d14dfa5d60254720a93bd680b92981733461"
+    },
+    {
+      "path": "internal/platform/mobileapi/jobs_test.go",
+      "sha256_utf8_lf": "6aaa4aee01b9fbeee4cf24c5805baae10a1125be1d5cd79522b989445f4323b8"
+    },
+    {
+      "path": "internal/platform/mobileapi/ops_auth.go",
+      "sha256_utf8_lf": "c071ee886854bbd9eafab177ba3d2caf428a5102d004ea9c8b1d31858b5d57f8"
+    },
+    {
+      "path": "internal/platform/mobileapi/retention_test.go",
+      "sha256_utf8_lf": "5c5a05e93621d9f8363a76c1727bd142cb609020ea1d422358bcbae85eefd6ce"
+    },
+    {
+      "path": "internal/platform/mobileworker/runner.go",
+      "sha256_utf8_lf": "f1425ed220fd8c0ef89f983ab05cfe313b2037ec761ecb390f56198556615532"
+    },
+    {
+      "path": "internal/platform/mobileworker/runner_test.go",
+      "sha256_utf8_lf": "b1377d9f30f40c4c1301191b77d24061b3eb3e739747b3c3f58cd4757920aba9"
+    },
+    {
+      "path": "internal/store/mobile.go",
+      "sha256_utf8_lf": "a7af0f40a4c5ee7962b4933d42fee8d106cf20d83ac02bca39dc59579b4f8c45"
+    },
+    {
+      "path": "internal/store/postgres/mobile.go",
+      "sha256_utf8_lf": "116c4dd45da33cf00defeb509eea8d1d32137b42b89e725f1c9db264581a74c5"
+    },
+    {
+      "path": "scripts/check_android_feature_static.py",
+      "sha256_utf8_lf": "da1d47c80f50e74d86092095c5be9fa0acb621e0deee189b05cc229ea9017b4c"
+    },
+    {
+      "path": "scripts/check_kmp_client_static.py",
+      "sha256_utf8_lf": "e2b1094f9c77f3d16cf7687481791e474570f239e92e5833b5188e288c6cce93"
+    },
+    {
+      "path": "scripts/check_mobile_static.py",
+      "sha256_utf8_lf": "0a9b1fed78d58f8be906fa3c2179733c47f2e4b7250afc9de11d80bea9aab5af"
+    },
+    {
+      "path": "scripts/check_server_shared_contract_static.py",
+      "sha256_utf8_lf": "89ff5531495bdeebc1559719b4cb455a6855f483efdd0befcea0551d77d2bc1b"
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256_utf8_lf": "fc45e3a652b299aa3aebce321a9e487fbb125bce6d1bfc478aa6ea2c9459c1a3"
+    }
+  ]
+}

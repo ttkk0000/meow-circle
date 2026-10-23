@@ -12,7 +12,10 @@ type Receipt struct {
 }
 
 func (s *Service) ReadMessages(ctx context.Context, actor, id int64, group bool, through int64) (out Record, err error) {
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.mutate(ctx, actor, "messages.read", id, struct {
+		Group   bool  `json:"group"`
+		Through int64 `json:"through_message_id"`
+	}{group, through}, Receipts, &out, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
 		}
@@ -67,6 +70,7 @@ type Unread struct {
 	Pending           map[string]int  `json:"pending"`
 	Direct            map[int64]int   `json:"direct"`
 	Groups            map[int64]int   `json:"groups"`
+	MutedGroups       map[int64]int   `json:"muted_groups"`
 	DirectFirstUnread map[int64]int64 `json:"direct_first_unread"`
 	GroupFirstUnread  map[int64]int64 `json:"group_first_unread"`
 	Notifications     map[string]int  `json:"notifications"`
@@ -74,9 +78,9 @@ type Unread struct {
 }
 
 func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err error) {
-	out = Unread{Direct: map[int64]int{}, Groups: map[int64]int{}, DirectFirstUnread: map[int64]int64{}, GroupFirstUnread: map[int64]int64{}, Notifications: map[string]int{}}
+	out = Unread{Direct: map[int64]int{}, Groups: map[int64]int{}, MutedGroups: map[int64]int{}, Pending: map[string]int{}, DirectFirstUnread: map[int64]int64{}, GroupFirstUnread: map[int64]int64{}, Notifications: map[string]int{}}
 	err = s.Repo.View(ctx, func(tx Tx) error {
-		if e := s.active(tx, actor); e != nil {
+		if e := s.checkActor(ctx, tx, actor); e != nil {
 			return e
 		}
 		for _, k := range []Kind{Conversations, Groups} {
@@ -126,6 +130,13 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 				}
 				if k == Groups {
 					out.Groups[p.ID] = count
+					group, e := Decode[Group](p)
+					if e != nil {
+						return e
+					}
+					if Has(group.Muted, actor) {
+						out.MutedGroups[p.ID] = count
+					}
 					if first > 0 {
 						out.GroupFirstUnread[p.ID] = first
 					}
@@ -135,7 +146,8 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 						out.DirectFirstUnread[p.ID] = first
 					}
 					if p.State == "pending" && p.OwnerID != actor {
-						out.MessageRequests++
+						out.MessageRequests += count
+						out.Pending["message_requests"]++
 					}
 				}
 			}
@@ -151,7 +163,6 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 			}
 			out.Notifications[v.Category]++
 		}
-		out.Pending = map[string]int{}
 		for _, kind := range []Kind{Adoptions, Appointments, Invitations, Claims, Reviews, Guardians} {
 			rows, e := allRecords(tx, kind, Filter{ParticipantID: actor})
 			if e != nil {

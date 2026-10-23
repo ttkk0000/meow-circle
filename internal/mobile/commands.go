@@ -85,15 +85,10 @@ func (s *Service) command(ctx context.Context, actor int64, name string, object 
 	if e != nil {
 		return e
 	}
-	return s.Repo.Update(ctx, func(tx Tx) error {
-		if e := s.active(tx, actor); e != nil {
-			return e
-		}
-		if session := SessionKey(ctx); session != "" {
-			if e := CheckSession(tx, actor, session, s.Now()); e != nil {
-				return e
-			}
-		}
+	if header := CommandID(ctx); header != "" && header != key {
+		return Denied("idempotency_conflict")
+	}
+	return s.actorUpdate(ctx, actor, func(tx Tx) error {
 		r, e := tx.ByKey(Operations, fmt.Sprintf("%d:%s", actor, key))
 		if e == nil {
 			v, e := Decode[Operation](r)
@@ -106,6 +101,36 @@ func (s *Service) command(ctx context.Context, actor int64, name string, object 
 			current, e := tx.Get(v.ResultKind, v.ResultID)
 			if e != nil {
 				return e
+			}
+			if v.Command == "resource.remove."+string(v.ResultKind) && current.OwnerID == actor && current.State == "deleted" {
+				*out = current
+				out.Data, out.MediaIDs = []byte(`{}`), nil
+				return nil
+			}
+			if v.Command == "messages.read" && v.ResultKind == Receipts {
+				if current.OwnerID != actor {
+					return ErrForbidden
+				}
+				receipt, e := Decode[Receipt](current)
+				if e != nil {
+					return e
+				}
+				if receipt.TargetKind != Groups && receipt.TargetKind != Conversations {
+					return ErrForbidden
+				}
+				parent, e := tx.Get(receipt.TargetKind, current.RefID)
+				if e != nil {
+					return e
+				}
+				allowed, e := s.canRead(tx, receipt.TargetKind, parent, actor)
+				if e != nil {
+					return e
+				}
+				if !allowed {
+					return ErrForbidden
+				}
+				*out = current
+				return nil
 			}
 			ok, e := s.canRead(tx, v.ResultKind, current, actor)
 			if e != nil {
@@ -136,7 +161,7 @@ func (s *Service) Operation(ctx context.Context, actor int64, key string) (out O
 		return out, Invalid("invalid client_request_id")
 	}
 	err = s.Repo.View(ctx, func(tx Tx) error {
-		if e := s.active(tx, actor); e != nil {
+		if e := s.checkActor(ctx, tx, actor); e != nil {
 			return e
 		}
 		r, e := tx.ByKey(Operations, fmt.Sprintf("%d:%s", actor, key))
@@ -147,20 +172,12 @@ func (s *Service) Operation(ctx context.Context, actor int64, key string) (out O
 		if e != nil {
 			return e
 		}
-		current, e := tx.Get(out.ResultKind, out.ResultID)
-		if e != nil {
-			return e
-		}
-		ok, e := s.canRead(tx, out.ResultKind, current, actor)
-		if out.ResultKind == Accounts {
-			ok, e = current.OwnerID == actor, nil
-		}
-		if e != nil {
-			return e
-		}
-		if !ok {
+		if r.OwnerID != actor {
 			return ErrForbidden
 		}
+		// The receipt records this actor's committed command, without content.
+		// Result deletion or a later permission change cannot undo that fact.
+		// Reading/replaying the resource still requires its current ACL.
 		out.PayloadHash = ""
 		return nil
 	})

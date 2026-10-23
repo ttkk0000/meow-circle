@@ -66,13 +66,12 @@ func (s *Service) Contract(ctx context.Context, actor, id int64, action string, 
 		if e != nil {
 			return e
 		}
-		pet, e := tx.Get(Pets, a.PetID)
+		pet, p, e := adoptionPet(tx, a)
 		if e != nil {
 			return e
 		}
-		p, e := Decode[Pet](pet)
-		if e != nil {
-			return e
+		if pet.State != "active" || pet.OwnerID != a.PublisherID {
+			return ErrConflict
 		}
 		if e = s.disposition(tx, a.PublisherID, a.PetID); e != nil {
 			return e
@@ -144,6 +143,9 @@ func (s *Service) Contract(ctx context.Context, actor, id int64, action string, 
 				return ErrConflict
 			}
 			v := &a.Contracts[i]
+			if v.Terms.Species != p.Species || v.Terms.TrialUntil != nil && !v.Terms.TrialUntil.After(s.Now()) {
+				return ErrConflict
+			}
 			if Has(v.AcceptedBy, actor) {
 				return ErrConflict
 			}
@@ -243,6 +245,9 @@ type ReturnInput struct {
 
 func (s *Service) Return(ctx context.Context, actor, id int64, action string, in ReturnInput) (out Record, err error) {
 	err = s.command(ctx, actor, "return."+action, id, in, Adoptions, &out, func(tx Tx) error {
+		if e := s.active(tx, actor); e != nil {
+			return e
+		}
 		r, e := tx.Get(Adoptions, id)
 		if e != nil {
 			return e
@@ -260,7 +265,17 @@ func (s *Service) Return(ctx context.Context, actor, id int64, action string, in
 		if e != nil {
 			return e
 		}
+		petRecord, _, e := adoptionPet(tx, a)
+		if e != nil {
+			return e
+		}
+		if petRecord.OwnerID != a.PublisherID && petRecord.OwnerID != a.ApplicantID {
+			return ErrConflict
+		}
 		if action == "propose" {
+			if e = s.adult(tx, actor); e != nil {
+				return e
+			}
 			if !in.Terms.StartsAt.After(s.Now()) || in.Terms.StartsAt.After(s.Now().Add(30*24*time.Hour)) {
 				return Invalid("invalid safe return time")
 			}
@@ -274,7 +289,7 @@ func (s *Service) Return(ctx context.Context, actor, id int64, action string, in
 					a.ReturnPlans[i].State = "superseded"
 				}
 			}
-			a.ReturnPlans = append(a.ReturnPlans, ReturnPlan{int64(len(a.ReturnPlans) + 1), in.Terms, actor, []int64{}, []int64{}, "pending"})
+			a.ReturnPlans = append(a.ReturnPlans, ReturnPlan{int64(len(a.ReturnPlans) + 1), in.Terms, actor, []int64{actor}, []int64{}, "pending"})
 		} else {
 			i := -1
 			for j, v := range a.ReturnPlans {
@@ -288,20 +303,41 @@ func (s *Service) Return(ctx context.Context, actor, id int64, action string, in
 			v := &a.ReturnPlans[i]
 			switch action {
 			case "accept":
-				if v.State != "pending" {
+				if v.State != "pending" || !v.Terms.StartsAt.After(s.Now()) {
 					return ErrConflict
+				}
+				if Has(v.Confirmations, actor) {
+					return ErrConflict
+				}
+				if e = s.adult(tx, actor); e != nil {
+					return e
 				}
 				v.Confirmations = Unique(append(v.Confirmations, actor))
 				if len(v.Confirmations) == 2 {
+					for _, party := range []int64{a.PublisherID, a.ApplicantID} {
+						if e = s.adult(tx, party); e != nil {
+							return e
+						}
+					}
+					for j := range a.ReturnPlans {
+						if a.ReturnPlans[j].State == "effective" {
+							a.ReturnPlans[j].State = "replaced"
+						}
+					}
 					v.State = "effective"
 					a.EffectiveReturn = v.Number
 					r.State = "return_agreed"
 				}
 			case "decline":
-				if v.State != "pending" {
+				if v.State != "pending" || v.ProposedBy == actor || !v.Terms.StartsAt.After(s.Now()) {
 					return ErrConflict
 				}
 				v.State = "declined"
+			case "withdraw":
+				if v.State != "pending" || v.ProposedBy != actor {
+					return ErrForbidden
+				}
+				v.State = "withdrawn"
 			case "handover":
 				if v.State != "effective" || a.EffectiveReturn != v.Number {
 					return ErrConflict
@@ -311,17 +347,36 @@ func (s *Service) Return(ctx context.Context, actor, id int64, action string, in
 				}
 				v.Handover = Unique(append(v.Handover, actor))
 				if len(v.Handover) == 2 {
+					for _, party := range []int64{a.PublisherID, a.ApplicantID} {
+						if e = s.adult(tx, party); e != nil {
+							return e
+						}
+					}
 					v.State = "completed"
 					r.State = "returned"
+					for j := range a.ReturnPlans {
+						if a.ReturnPlans[j].State == "pending" {
+							a.ReturnPlans[j].State = "superseded"
+						}
+					}
 					pet, e := tx.Get(Pets, a.PetID)
 					if e != nil {
 						return e
 					}
 					if pet.OwnerID == a.ApplicantID {
 						pet.OwnerID = a.PublisherID
-						if e = tx.Save(Pets, &pet); e != nil {
-							return e
-						}
+					}
+					p, e := Decode[Pet](pet)
+					if e != nil {
+						return e
+					}
+					if pet.OwnerID != a.PublisherID {
+						return ErrConflict
+					}
+					p.AdoptionAvailable = false
+					p.PlacementState = ""
+					if e = save(tx, Pets, &pet, p, actor, "pet.safely_returned"); e != nil {
+						return e
 					}
 				}
 			default:
@@ -332,7 +387,11 @@ func (s *Service) Return(ctx context.Context, actor, id int64, action string, in
 			return e
 		}
 		out = r
-		return nil
+		other := a.PublisherID
+		if actor == other {
+			other = a.ApplicantID
+		}
+		return s.notify(tx, other, actor, "applications", Adoptions, r.ID, "安全接回进度已更新")
 	})
 	return
 }

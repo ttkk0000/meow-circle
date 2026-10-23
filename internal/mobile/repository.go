@@ -93,6 +93,7 @@ type Record struct {
 }
 
 type Filter struct {
+	KeyPrefix     string
 	OwnerID       int64
 	ParticipantID int64
 	RefID         int64

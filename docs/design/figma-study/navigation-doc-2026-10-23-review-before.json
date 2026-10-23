@@ -1,0 +1,2108 @@
+{
+  "boards": [
+    {
+      "id": "662:398665",
+      "buttons": [
+        {
+          "id": "662:398670",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=632-357494&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=632-357494&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "632:357494",
+          "label": {
+            "id": "I662:398670;56:185",
+            "text": "手机 · 规则与权益",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "662:398673",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-2&node-id=632-735011&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-2&node-id=632-735011&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "632:735011",
+          "label": {
+            "id": "I662:398673;56:185",
+            "text": "Web · 规则与权益",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "662:398677",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-4&node-id=632-1103754&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-4&node-id=632-1103754&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "632:1103754",
+          "label": {
+            "id": "I662:398677;56:185",
+            "text": "Desktop · 规则与权益",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "662:398680",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=632-1838692&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=632-1838692&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "632:1838692",
+          "label": {
+            "id": "I662:398680;56:185",
+            "text": "平板竖屏 · 规则与权益",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "662:398684",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=632-1838693&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=632-1838693&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "632:1838693",
+          "label": {
+            "id": "I662:398684;56:185",
+            "text": "平板横屏 · 规则与权益",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "662:398690",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=661-1108463&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=661-1108463&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "661:1108463",
+          "label": {
+            "id": "I662:398690;56:185",
+            "text": "手机 · 评审样例",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "662:398693",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-2&node-id=661-1870976&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-2&node-id=661-1870976&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "661:1870976",
+          "label": {
+            "id": "I662:398693;56:185",
+            "text": "Web · 评审样例",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "662:398697",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-4&node-id=661-1871153&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-4&node-id=661-1871153&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "661:1871153",
+          "label": {
+            "id": "I662:398697;56:185",
+            "text": "桌面 · 评审样例",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "662:398700",
+          "w": 672,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=661-1871330&scaling=scale-down&content-scaling=responsive",
+                "openInNewTab": true
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=661-1871330&scaling=scale-down&content-scaling=responsive",
+                  "openInNewTab": true
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "661:1871330",
+          "label": {
+            "id": "I662:398700;56:185",
+            "text": "平板横竖屏 · 评审样例",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 638,
+            "h": 24,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:158"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "513:1860930",
+      "buttons": [
+        {
+          "id": "513:1860934",
+          "w": 268.79998779296875,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-17348&starting-point-node-id=460-17348",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-17348&starting-point-node-id=460-17348",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:17348",
+          "label": {
+            "id": "I513:1860934;56:186",
+            "text": "手机 · 短信验证",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 236.79998779296875,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860937",
+          "w": 268.79998779296875,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-2&node-id=460-17349&starting-point-node-id=460-17349",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-2&node-id=460-17349&starting-point-node-id=460-17349",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:17349",
+          "label": {
+            "id": "I513:1860937;56:186",
+            "text": "Web · 短信验证",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 236.79998779296875,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860940",
+          "w": 268.79998779296875,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-4&node-id=460-17350&starting-point-node-id=460-17350",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-4&node-id=460-17350&starting-point-node-id=460-17350",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:17350",
+          "label": {
+            "id": "I513:1860940;56:186",
+            "text": "Desktop · 短信验证",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 236.79998779296875,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860943",
+          "w": 268.79998779296875,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=460-17351&starting-point-node-id=460-17351",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=460-17351&starting-point-node-id=460-17351",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:17351",
+          "label": {
+            "id": "I513:1860943;56:186",
+            "text": "平板竖屏 · 短信验证",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 236.79998779296875,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860946",
+          "w": 268.79998779296875,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=460-17352&starting-point-node-id=460-17352",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=403-3&node-id=460-17352&starting-point-node-id=460-17352",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:17352",
+          "label": {
+            "id": "I513:1860946;56:186",
+            "text": "平板横屏 · 短信验证",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 236.79998779296875,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860954",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-17348&starting-point-node-id=460-17348",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-17348&starting-point-node-id=460-17348",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:17348",
+          "label": {
+            "id": "I513:1860954;56:186",
+            "text": "填写本次短信验证码",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860957",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6789&starting-point-node-id=506-6789",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6789&starting-point-node-id=506-6789",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6789",
+          "label": {
+            "id": "I513:1860957;56:186",
+            "text": "验证码不正确",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860960",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6794&starting-point-node-id=506-6794",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6794&starting-point-node-id=506-6794",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6794",
+          "label": {
+            "id": "I513:1860960;56:186",
+            "text": "验证码已过期",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860963",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6799&starting-point-node-id=506-6799",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6799&starting-point-node-id=506-6799",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6799",
+          "label": {
+            "id": "I513:1860963;56:186",
+            "text": "短信未到与频控",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860966",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6814&starting-point-node-id=506-6814",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6814&starting-point-node-id=506-6814",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6814",
+          "label": {
+            "id": "I513:1860966;56:186",
+            "text": "核对结果待确认",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860972",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6819&starting-point-node-id=506-6819",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6819&starting-point-node-id=506-6819",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6819",
+          "label": {
+            "id": "I513:1860972;56:186",
+            "text": "核对前告知",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860975",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6829&starting-point-node-id=506-6829",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6829&starting-point-node-id=506-6829",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6829",
+          "label": {
+            "id": "I513:1860975;56:186",
+            "text": "等待核验服务结果",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860978",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6859&starting-point-node-id=506-6859",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6859&starting-point-node-id=506-6859",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6859",
+          "label": {
+            "id": "I513:1860978;56:186",
+            "text": "有效结果回原预约",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860981",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6839&starting-point-node-id=506-6839",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6839&starting-point-node-id=506-6839",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6839",
+          "label": {
+            "id": "I513:1860981;56:186",
+            "text": "核对失败",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860984",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6844&starting-point-node-id=506-6844",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6844&starting-point-node-id=506-6844",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6844",
+          "label": {
+            "id": "I513:1860984;56:186",
+            "text": "服务暂不可用",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860991",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-211421&starting-point-node-id=460-211421",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-211421&starting-point-node-id=460-211421",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:211421",
+          "label": {
+            "id": "I513:1860991;56:186",
+            "text": "当前安全暂停",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860994",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-205509&starting-point-node-id=506-205509",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-205509&starting-point-node-id=506-205509",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:205509",
+          "label": {
+            "id": "I513:1860994;56:186",
+            "text": "确认取消本次预约",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1860997",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-205514&starting-point-node-id=506-205514",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-205514&starting-point-node-id=506-205514",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:205514",
+          "label": {
+            "id": "I513:1860997;56:186",
+            "text": "取消结果不明",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861000",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-205524&starting-point-node-id=506-205524",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-205524&starting-point-node-id=506-205524",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:205524",
+          "label": {
+            "id": "I513:1861000;56:186",
+            "text": "取消已确认",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861003",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-205534&starting-point-node-id=506-205534",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-205534&starting-point-node-id=506-205534",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:205534",
+          "label": {
+            "id": "I513:1861003;56:186",
+            "text": "新安排继续保持暂停",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861009",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60775&starting-point-node-id=506-60775",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60775&starting-point-node-id=506-60775",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:60775",
+          "label": {
+            "id": "I513:1861009;56:186",
+            "text": "填写具体接回方案",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861012",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60790&starting-point-node-id=506-60790",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60790&starting-point-node-id=506-60790",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:60790",
+          "label": {
+            "id": "I513:1861012;56:186",
+            "text": "发起方A等待R1回应",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861015",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60795&starting-point-node-id=506-60795",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60795&starting-point-node-id=506-60795",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:60795",
+          "label": {
+            "id": "I513:1861015;56:186",
+            "text": "接收方B回应R1",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861018",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60825&starting-point-node-id=506-60825",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60825&starting-point-node-id=506-60825",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:60825",
+          "label": {
+            "id": "I513:1861018;56:186",
+            "text": "接收方A回应修改R2",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861021",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60835&starting-point-node-id=506-60835",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-60835&starting-point-node-id=506-60835",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:60835",
+          "label": {
+            "id": "I513:1861021;56:186",
+            "text": "旧版本／资格冲突",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861028",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-68697&starting-point-node-id=460-68697",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-68697&starting-point-node-id=460-68697",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:68697",
+          "label": {
+            "id": "I513:1861028;56:186",
+            "text": "查看原报告回执",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861031",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6869&starting-point-node-id=506-6869",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6869&starting-point-node-id=506-6869",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6869",
+          "label": {
+            "id": "I513:1861031;56:186",
+            "text": "填写原报告补充",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861034",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6874&starting-point-node-id=506-6874",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6874&starting-point-node-id=506-6874",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6874",
+          "label": {
+            "id": "I513:1861034;56:186",
+            "text": "补充结果待确认",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861037",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6884&starting-point-node-id=506-6884",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6884&starting-point-node-id=506-6884",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6884",
+          "label": {
+            "id": "I513:1861037;56:186",
+            "text": "原报告已收到补充",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861040",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6889&starting-point-node-id=506-6889",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6889&starting-point-node-id=506-6889",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6889",
+          "label": {
+            "id": "I513:1861040;56:186",
+            "text": "凭据失效与恢复",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861046",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-17443&starting-point-node-id=460-17443",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=460-17443&starting-point-node-id=460-17443",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "460:17443",
+          "label": {
+            "id": "I513:1861046;56:186",
+            "text": "选择本次动作",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861049",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6929&starting-point-node-id=506-6929",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6929&starting-point-node-id=506-6929",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6929",
+          "label": {
+            "id": "I513:1861049;56:186",
+            "text": "仅删除所选资料 · 最终确认",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861052",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6954&starting-point-node-id=506-6954",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6954&starting-point-node-id=506-6954",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6954",
+          "label": {
+            "id": "I513:1861052;56:186",
+            "text": "注销整个账号 · 最终确认",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861055",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6934&starting-point-node-id=506-6934",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6934&starting-point-node-id=506-6934",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6934",
+          "label": {
+            "id": "I513:1861055;56:186",
+            "text": "所选资料提交结果待确认",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "513:1861058",
+          "w": 640,
+          "h": 48,
+          "reactions": [
+            {
+              "action": {
+                "type": "URL",
+                "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6969&starting-point-node-id=506-6969",
+                "openInNewTab": false
+              },
+              "actions": [
+                {
+                  "type": "URL",
+                  "url": "https://www.figma.com/proto/3OFOC3vu18Kx9sRPjummOC/MND?page-id=56-25&node-id=506-6969&starting-point-node-id=506-6969",
+                  "openInNewTab": false
+                }
+              ],
+              "trigger": {
+                "type": "ON_CLICK"
+              }
+            }
+          ],
+          "target": "506:6969",
+          "label": {
+            "id": "I513:1861058;56:186",
+            "text": "账号注销已受理进度",
+            "font": {
+              "family": "Noto Sans SC",
+              "style": "Medium",
+              "variationSettings": {
+                "wght": 500
+              }
+            },
+            "w": 608,
+            "h": 22,
+            "link": null,
+            "boundVariables": {
+              "fills": [
+                {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:70:162"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "texts": [
+    {
+      "id": "513:1860932",
+      "text": "2026.10.21 · 操作对象、角色与结果分别核对",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500
+        }
+      },
+      "link": null
+    },
+    {
+      "id": "662:398688",
+      "text": "仅评审人员设置演示变量；先选回调样例进入等待页，再点击查询。产品中不提供这些控制按钮。",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500
+        }
+      },
+      "link": null
+    }
+  ]
+}

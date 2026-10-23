@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-23",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "overviewAudit": {
+    "completeTextLinks": 5436,
+    "badTargets": 0,
+    "source": "link-audit"
+  },
+  "projectTimeoutRecovery": "all intended fields saved; read before retry; no replay",
+  "reviews": {
+    "buttons": 44,
+    "writeTimeOriginalActionsUnchanged": true,
+    "editorSuffixLinks": 39,
+    "entryEditorLinks": 5,
+    "labelHeightIssues": 0,
+    "independentFinalRead": "transport failed; write-time checks retained"
+  },
+  "color": {
+    "variablesUnchanged": 18,
+    "collectionModesUnchanged": true,
+    "historicalSectionChildrenWithinBounds": true
+  },
+  "prototype": {
+    "roots": 12,
+    "rootSizesUnchanged": true,
+    "nativeBarActionsUnchanged": true,
+    "otherActionsUnchangedAtWrite": true,
+    "titleOverflows": 0,
+    "note": "final digest serializes id/reactions; historical digest format differs, so digest strings are not compared"
+  },
+  "screenshotsViewed": [
+    "513:1860930",
+    "14:75",
+    "30:3",
+    "30:458"
+  ],
+  "pending": [
+    "662:398665 final screenshot: repeated Figma transport failure",
+    "44 review buttons independent saved-state read: transport failure; original actions checked at write time"
+  ],
+  "runtime": "No prototype playback, application runtime, builds or tests."
+}

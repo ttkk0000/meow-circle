@@ -24,19 +24,19 @@ suspend fun MobileApi.claimAction(id: Long,action: String,input: VersionedAction
     val command = if (input.clientRequestId.isEmpty()) input.copy(clientRequestId = newRequestKey()) else input
     return durablePost("claims/$id/$action",command,command.clientRequestId)
 }
-suspend fun MobileApi.lead(id: Long,input: LeadInput): MobileRecord<LeadBody> = post("cases/$id/leads",input)
+suspend fun MobileApi.lead(id: Long,input: LeadInput): MobileRecord<LeadBody> = receiptWrite("cases/$id/leads",input)
 suspend fun MobileApi.care(id: Long,input: CareInput): MobileRecord<CareBody> = durablePost("adoptions/$id/care_updates",input,input.clientRequestId)
 suspend fun MobileApi.createGroup(input: GroupInput): MobileRecord<GroupBody> = durablePost("groups",input,input.clientRequestId)
 suspend fun MobileApi.groupAction(id: Long,action: String,input: GroupAction): MobileRecord<GroupBody> = durablePost("groups/$id/$action",input,input.clientRequestId)
 suspend fun MobileApi.invite(input: InviteInput): MobileRecord<InvitationBody> = durablePost("invitations",input,input.clientRequestId)
 suspend fun MobileApi.invitations(cursor: Long = 0): MobilePage<InvitationBody> = get("invitations",mapOf("cursor" to "$cursor"))
-suspend fun MobileApi.invitationAction(id: Long,action: String,input: VersionedAction): MobileRecord<InvitationBody> = post("invitations/$id/$action",input)
+suspend fun MobileApi.invitationAction(id: Long,action: String,input: VersionedAction): MobileRecord<InvitationBody> = receiptWrite("invitations/$id/$action",input,key = input.clientRequestId.ifBlank { newRequestKey() })
 suspend fun MobileApi.review(input: ReviewInput): MobileRecord<ReviewBody> {
     val command = if (input.clientRequestId.isEmpty()) input.copy(clientRequestId = newRequestKey()) else input
     return durablePost("reviews",command,command.clientRequestId)
 }
 suspend fun MobileApi.reviews(cursor: Long = 0): MobilePage<ReviewBody> = get("reviews",mapOf("cursor" to "$cursor"))
-suspend fun MobileApi.feedback(input: FeedbackInput): MobileRecord<FeedbackInput> = post("visit_feedback",input)
+suspend fun MobileApi.feedback(input: FeedbackInput): MobileRecord<FeedbackInput> = receiptWrite("visit_feedback",input)
 suspend fun MobileApi.guardians(): List<MobileRecord<GuardianBody>> = get("guardians")
 suspend fun MobileApi.guardianScope(id: Long): PurposeScope = post("guardians/$id/scope",buildJsonObject {})
 suspend fun MobileApi.guardianDecision(id: Long,input: GuardianDecision): MobileRecord<GuardianBody> = sensitivePost("guardians/$id/decision",input,input.clientRequestId)
@@ -51,8 +51,8 @@ suspend fun MobileApi.findSafetyTicket(key: String,token: String): RightsReceipt
 suspend fun MobileApi.requestSafetyContactOTP(token: String,email: String): OTPReceipt = post("safety/contact-otp",EmailOTPInput(email,"rights_contact"),false,mapOf("X-Safety-Token" to token))
 suspend fun MobileApi.verifySafetyContact(token: String,email: String,code: String): JsonElement = post("safety/contact-verify",EmailAuthInput(email,code),false,mapOf("X-Safety-Token" to token))
 suspend fun MobileApi.registerPushDevice(input: PushDeviceInput): PushDeviceReceipt = post("push-devices",input)
-suspend fun MobileApi.savePreferences(version: Long,preference: PreferenceBody): MobileRecord<PreferenceBody> = put("preferences",SettingsInput(version,preference = preference))
-suspend fun MobileApi.saveExpressions(version: Long,expressions: ExpressionBody): MobileRecord<ExpressionBody> = put("expressions",SettingsInput(version,expressions = expressions))
-suspend fun MobileApi.saveSubscription(input: SubscriptionInput): MobileRecord<SubscriptionBody> = put("subscriptions",input)
+suspend fun MobileApi.savePreferences(version: Long,preference: PreferenceBody): MobileRecord<PreferenceBody> = receiptWrite("preferences",SettingsInput(version,preference = preference),method = "PUT")
+suspend fun MobileApi.saveExpressions(version: Long,expressions: ExpressionBody): MobileRecord<ExpressionBody> = receiptWrite("expressions",SettingsInput(version,expressions = expressions),method = "PUT")
+suspend fun MobileApi.saveSubscription(input: SubscriptionInput): MobileRecord<SubscriptionBody> = receiptWrite("subscriptions",input,method = "PUT")
 suspend fun MobileApi.safetyTicketStatus(id: Long,token: String): RightsReceipt = get("safety/tickets/$id",authenticated = false,headers = mapOf("X-Safety-Token" to token))
 suspend fun MobileApi.rightsScope(input: RightsInput): PurposeScope = post("safety/scope",input)

@@ -313,7 +313,7 @@ func (s *Service) RegisterMedia(ctx context.Context, actor int64, key string, fi
 	if len(key) < 8 || len(key) > 100 {
 		return out, Invalid("idempotency key required")
 	}
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
 		}

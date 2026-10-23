@@ -662,6 +662,7 @@ func (l *loggingResponseWriter) Write(b []byte) (int, error) {
 
 func (r *Router) routes() {
 	r.mux.Handle("/api/v2/", r.mobileAPI)
+	r.mux.HandleFunc("/share/", r.mobileAPI.PublicSharePage)
 	webDir := filepath.Join(getWorkingDir(), "web")
 	uploadsDir := filepath.Join(getWorkingDir(), "data", "uploads")
 	r.mux.Handle("/", http.FileServer(http.Dir(webDir)))

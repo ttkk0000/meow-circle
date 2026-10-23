@@ -1,0 +1,104 @@
+{
+  "mutatedNodeIds": [
+    "322:645689",
+    "322:737030",
+    "322:919486",
+    "322:1011254",
+    "322:1103026",
+    "322:1194262",
+    "322:1285546"
+  ],
+  "rows": [
+    {
+      "id": "322:645689",
+      "parent": "322:642999",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "322:737030",
+      "parent": "322:734324",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "322:919486",
+      "parent": "322:916804",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "322:1011254",
+      "parent": "322:1008462",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "322:1103026",
+      "parent": "322:1100233",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "322:1194262",
+      "parent": "322:1191578",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "322:1285546",
+      "parent": "322:1282859",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    }
+  ]
+}

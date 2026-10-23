@@ -1,16 +1,16 @@
 # 手机端对应的 Go 服务接口与运行交接
 
-更新：2026-10-20。设计依据：[当前手机评审入口](../design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)。架构依据：[模块化单体决策](ARCHITECTURE.md)。机器契约：[OpenAPI 3.1](../api/mobile-v2.openapi.json)。客户端界面未修改。
+更新：2026-10-23。当前服务端续作见[服务端优先完善与作业交接](SERVER_FIRST_2026_10_23.md)、[证据保全／数据清理](LIFECYCLE_RETENTION_2026_10_23.md)。设计依据：[手机评审入口](../design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)；机器合同：[OpenAPI 3.1](../api/mobile-v2.openapi.json)。本轮只改服务端，全部运行结果待验收。
 
-2026-10-20 账号新决定（待实施）：[认证规划第0节](../design/MND_MOBILE_AUTH_PLAN.md)规定账号名、邮箱、手机号唯一且共用同一user_id，普通登录不强制短信，首次交流前验证当前手机号、换号保留原账号。下表仍为当前源码能力；邮箱验证／登录／恢复、三标识唯一约束与迁移、当前手机号验证记录及统一交流关卡尚未实现，需按客户端任务B04同步接口。现有phone自动建号接口不能被视为该新规则已落地。
+当前账号规则：[认证规划](../design/MND_MOBILE_AUTH_PLAN.md)。显式邮箱注册／OTP／密码登录与恢复、标识唯一约束、当前手机号证明、服务端交流／成年／监护关卡已有源码；手机号登录仅允许已有账号，不自动建号。008迁移、真实渠道／策略和运行尚未验收，微信绑定不能代替手机号交流资格。
 
 ## 当前源码覆盖
 
-2026-10-20 UI新增[全局未读合同](../design/MND_GLOBAL_UNREAD_SPEC.md)与[设计交接](../design/figma-study/GLOBAL_UNREAD_HANDOFF_2026_10_20.md)：真实数去重、99+、消息请求未读与待接受分离、静音建议、全部已读含静音的快照及跨设备收敛。现有`inbox-summary`不等于已满足新合同，尤其不能将direct与message_requests无条件重复相加；本任务未改接口或服务端实现。
+当前未读合同见[全局未读](../design/MND_GLOBAL_UNREAD_SPEC.md)。服务端区分direct／group／message_requests、站内通知分类和业务待处理，返回首条未读消息编号；GET不推进已读。静态实现不抵扣跨设备与平台运行验收。
 
 | 手机端流程 | 服务端实现 |
 |---|---|
-| 登录注册与账号管理 | 手机验证码合并登录/创建；密码备用/找回；微信、QQ、Apple；取消、失败、首次创建/关联选择、绑定冲突、内部任务恢复；换号、单次二次验证、解绑保护、退出/全部退出、注销处理 |
+| 登录注册与账号管理 | 显式邮箱注册／登录／恢复；已有账号手机号登录；微信、QQ、Apple核验及明确关联；用途绑定二次验证、换绑／解绑、会话轮换和设备推送解绑；资格与登录分开 |
 | 我的与多个宠物 | 资料、公开头像、Honey/Mint/Night/Neutral、Picnic/Desk/Arcade/Garden；多宠物独立档案与可见范围 |
 | 社区与圈子 | 图文、评论、点赞、好友请求/接受/拒绝/撤回/删除/拉黑；圈子及日记的 private/public/friends/selected/excluded；解除好友后即时收回圈子访问 |
 | 私信与群聊 | 陌生人先请求，接受前一条文字且不开放图片；群邀请、成员移除/退出、静音、群主接收/拒绝/撤回/过期、单独解散；显式已读与真实未读数 |
@@ -45,9 +45,9 @@ GET 不修改已读；通过 `conversations/{id}/read`、`groups/{id}/read` 的 
 |---|---|
 | `GET auth/capabilities` | 返回实际配置的 SMS/登录渠道，iOS 客户端显示 Apple |
 | `POST auth/otp` | phone + purpose（login/recover/bind_phone/reauth）；后两种必须登录 |
-| `POST auth/phone` | phone/code/device/accept_terms；首次创建必须同意条款 |
+| `POST auth/phone` | phone/code/device/accept_terms；仅登录已有账号，未知手机号不建号 |
 | `POST auth/oauth-start` → `oauth-finish` → `oauth-resolve` | 随机 state/nonce；SDK 回调后服务端核验；未关联时显式创建或先登录已有账号、二次验证后关联；不自动按昵称/邮箱合并 |
-| `POST auth/reauth`、`auth/account/{phone,password,unlink,delete}` | 5 分钟单次凭证，不能只凭已有登录态修改登录方式；仅第三方登录的用户可以通过已绑定第三方再次授权获得二次验证凭证 |
+| `POST auth/reauth`、`auth/account/{phone,password,unlink,email}` | 短期单次用途凭证绑定会话、动作、对象、版本及范围；注销使用独立data-requests流程 |
 | `POST friendships/{request,accept,decline,withdraw,remove,block,unblock}` | 请求体含 user_id/version；关注关系不会自动成为好友 |
 | `POST cases/{id}/claims`、`leads`，`claims/{id}/{action}` | 私密认领与线索；match 仅配对，不完成所有权确认；双方 confirm_handover 后结束 |
 | `POST adoptions`、`adoptions/{id}/{action}` | pet_id/message；试养、交接、支持/退养分别流转，协作者无决策权限 |
@@ -63,7 +63,7 @@ GET 不修改已读；通过 `conversations/{id}/read`、`groups/{id}/read` 的 
 
 `POST media` 为单文件 multipart：file、scope（默认 private，可明确 public），请求头 `Idempotency-Key`。限制原/处理后各 10 MiB、20MP、JPEG/PNG；最多 9 张由关联命令校验。拒绝视频、任意文件和私有证据误挂公开内容。新媒体放 `data/mobile-media`，不会暴露为静态 `/uploads` 目录。
 
-`GET media/{id}/content` 每次按所属内容的当前权限检查；好友范围的圈子/日记在解除好友后收回访问，协作材料和群图片分别检查当前授权及成员资格。已经接受的私信会话独立于圈子权限，拉黑后禁止访问。响应 private/no-store，返回值不包含磁盘文件名。公开头像必须主动选择 public 上传。审核员使用独立 X-Admin-Key 只能读取有关审核且未到期的材料。
+`GET media/{id}/content` 每次按当前权限检查；解除好友、退群及拉黑即时收回相应读取。响应private/no-store，不返回磁盘文件名。公开头像需明确public上传。私密证据读取使用命名运营凭据`X-Operator-Token`及`evidence_reader`角色，材料到期不因保全自动延长读权限；v2不接受共享AdminKey。
 
 `GET expression-catalog` 返回完整目录，`expression-assets/v1/*` 提供已有素材；保留 Noto 的 NOTICE。表情是普通 Unicode；贴纸是 `sticker-01` 到 `sticker-24`，客户端从 6×4 图集按目录取格。收藏/最近使用记录目录 ID，选择表情不会触发发送；发送仍需显式消息/评论命令。服务端不负责客户端面板的分页和点击交互。
 
@@ -79,21 +79,25 @@ GET 不修改已读；通过 `conversations/{id}/read`、`groups/{id}/read` 的 
 |---|---|
 | DATABASE_URL / REDIS_URL | 主数据和可选旧版公共读缓存；新隐私流程直接查询事务库 |
 | JWT_SECRET | 会话相关验证码 HMAC 密钥及开发旧 JWT；不得使用默认值 |
-| ADMIN_KEY | 受控后台/运维入口，生产需由网关网络策略进一步限制；当前为单操作员凭据，尚非多角色后台系统 |
+| ADMIN_KEY | 旧后台兼容配置；不授权v2 ops或私密证据读取 |
 | SMS_GATEWAY_URL / SMS_GATEWAY_TOKEN | 自有 HTTPS 短信网关；POST phone/code/purpose，需返回 accepted=true 和非空 message_id；没有配置则 503，不输出验证码 |
 | WECHAT_LOGIN_APP_ID / WECHAT_LOGIN_APP_SECRET | 微信移动应用服务器核验 |
 | QQ_LOGIN_APP_ID / QQ_LOGIN_APP_SECRET | QQ 服务器获取身份并核对应用 ID；支持 SDK access_token 或 server-side code |
 | APPLE_LOGIN_CLIENT_ID / APPLE_LOGIN_CLIENT_SECRET | Apple 应用标识和运营方签发、维护有效期的客户端密钥 JWT |
 | APPLE_TOKEN_ENCRYPTION_KEY | 独立、稳定的 32 字节密钥的标准 Base64；用于 Apple 撤销令牌加密，不可随普通会话密钥轮换丢弃 |
-| CORS_ALLOW_ORIGIN | Web 客户端来源；允许 Idempotency-Key；运维接口不依靠 CORS 作为权限 |
+| CORS_ALLOW_ORIGIN | Web来源及Idempotency-Key跨域配置；CORS不是ops权限控制 |
+| EMAIL_GATEWAY_URL / EMAIL_GATEWAY_TOKEN | 真实邮件OTP网关；未配置时关闭相关渠道 |
+| MND_OPERATORS_JSON | 命名运营身份、roles与consumers；v2使用X-Operator-Token |
+| PUSH_GATEWAY_URL / PUSH_GATEWAY_TOKEN | HTTPS查询／发送网关，稳定键去重；accepted不等于delivered |
+| MND_WORKER_* | 独立作业进程的目标、命名凭据、作业、间隔和游标文件；见本批交接 |
 
-迁移先备份，再按序应用 001–007。新 Docker 数据卷会执行挂载脚本；已有数据卷不会因为修改 compose 自动补迁移。可选历史导入见 `migrations/backfill/legacy_to_mobile.sql`，不是自动启动步骤。旧图片、关注、订单和支付结果不自动变成新权限/好友/交接证明。生产切换客户端前先确认历史数据处理与 v1 写接口关闭的影响。
+迁移计划需备份后按序检查001–008，008包含标识冲突检测及新策略／命令表；本轮未执行迁移。已有数据卷不会因修改compose自动补迁移。历史导入`migrations/backfill/legacy_to_mobile.sql`不是启动步骤；旧图片、关注、订单或支付不转换为新权限、好友或交接证明。
 
 `healthz` 是存活检查；`readyz` 有超时并真正读取事务存储，错误返回 503。新媒体目录需要持久卷、备份与磁盘配额；多副本必须共享媒体存储或替换为对象存储适配器。内存仓库不适合多副本。
 
-`GET ops/outbox?cursor=...` 获取待处理事件，成功处理后 `POST ops/outbox/{id}/ack`；未处理不要 ACK。本地调度器可用 `case.saved` 调用 `POST ops/nearby-alerts`，按订阅游标每批 100 处理，重试不重复提醒；关闭信息不会再生成新提醒。`POST ops/provider-revocations` 轮询 Apple 撤销作业，失败保留待处理，分页扫描后从 0 开始下一轮，以重试失败项。保护所有 ops 凭据与网络入口。
+`GET ops/outbox`仅供受限事件检查，v2全局ACK已禁止。按消费者使用租约、CAS、重试与独立ACK，或调用`POST ops/jobs/{push,nearby_alerts,privacy_cleanup,provider_revocations,maintenance}`实际执行一批。附近提醒保存分批游标；供应商撤销使用专用命名空间；隐私清理仅在数据库／物理项和外部回执满足完成条件后ACK。独立`cmd/worker`默认单批，连续模式需明确部署，服务不会隐式启动任务。
 
-尚未提供真实供应商账号或设备推送凭据，本轮没有实际发送 SMS、登录第三方或推送。站内通知与调度入口已写好，APNs/FCM/厂商推送适配器、自动调度部署、注销保留期限和历史数据物理清理策略仍需接入与验收；`queued` 表示待处理，绝不是已送达。恢复/退养/举报中需要人工核验的事项进入受控记录，不自动变更账号归属或判定欺骗。
+真实短信／邮件／OAuth／推送／撤销渠道及调度部署仍需运营配置和运行验收。推送网关适配、独立作业与逐项清理已有源码；本轮未向供应商发送请求。queued是待处理，accepted仅供应商接受；受限备份／保全和人工协助仍需实际履责，不自动判定账号归属、所有权或欺骗。
 
 ## 验证边界
 

@@ -4,6 +4,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.json.JsonObject
 
 /** 功能路由只包含资源标识；临时凭证不进入路由、表单快照或普通偏好。 */
 enum class FeaturePage(val title: String) {
@@ -17,6 +18,8 @@ enum class FeaturePage(val title: String) {
     Safety("安全与隐私求助"), DataRequests("资料与账号请求"), Security("账号安全"),
     Recovery("待核对操作"), Expressions("表情与贴纸")
 }
+enum class CaseMaterial { Claims, Leads }
+
 data class FeatureRoute(val page: FeaturePage, val id: Long = 0, val kind: String = "", val peer: Long = 0)
 data class FeatureForm(val values: Map<String, String> = emptyMap(), val baseVersion: Long? = null)
 data class FeatureConfirmation(val title: String, val summary: String)
@@ -36,6 +39,11 @@ data class FeatureState(
     val review: MobileRecord<ReviewBody>? = null, val verifications: List<VerificationSummary> = emptyList(),
     val preference: MobileRecord<PreferenceBody>? = null, val subscription: MobileRecord<SubscriptionBody>? = null,
     val expressions: MobileRecord<ExpressionBody>? = null, val catalog: ExpressionCatalog = ExpressionCatalog(),
+    val petChoices: PageState<PetBody> = PageState(), val petChoiceLoading: Boolean = false, val petChoiceError: String? = null,
+    val dataChoices: PageState<JsonObject> = PageState(), val dataChoiceKind: String = "", val dataChoiceAssistance: Boolean = false,
+    val dataChoiceLoading: Boolean = false, val dataChoiceError: String? = null,
+    val peopleChoices: PageState<FriendBody> = PageState(), val people: Map<Long, PublicMember> = emptyMap(),
+    val peopleUnavailable: Set<Long> = emptySet(), val peopleErrors: Set<Long> = emptySet(),
     val methods: IdentityMethods? = null, val eligibility: Eligibility? = null, val guardians: List<MobileRecord<GuardianBody>> = emptyList(),
     val restricted: List<RestrictedReference> = emptyList(), val lookupRequestId: String? = null, val dataStatus: DataRequestStatus? = null, val rightsStatus: RightsReceipt? = null,
     val pending: List<CommandRecovery> = emptyList(), val otpWait: Int = 0,
@@ -43,7 +51,9 @@ data class FeatureState(
     val unconfirmedResult: Boolean = false,
     val draftRestoring: Boolean = false, val draftReady: Boolean = true, val draftError: String? = null,
     val draftRoutes: List<FeatureRoute> = emptyList(),
-)
+) {
+    val dataProgress: DataRequestProgress? get() = dataStatus?.progress()
+}
 
 /** 与 MobileStore 同生命周期的功能状态；所有 Android 面板共用此实例。 */
 class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, private val localDrafts: LocalWorkspaceDrafts? = null) {
@@ -56,6 +66,10 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     private var loading: Job? = null
     private var commandJob: Job? = null
     private var countdown: Job? = null
+    private var petChoiceJob: Job? = null
+    private var dataChoiceJob: Job? = null
+    private var peopleChoiceJob: Job? = null
+    private var dataChoiceSequence = 0L
     private var revision = 0L
     private var epoch = 0L
     private var owner = api.user.value?.id
@@ -93,7 +107,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             if (owner != user?.id) {
                 val resume = mutable.value.route
                 owner = user?.id; epoch++; revision++
-                loading?.cancel(); commandJob?.cancel(); countdown?.cancel()
+                loading?.cancel(); commandJob?.cancel(); countdown?.cancel(); petChoiceJob?.cancel(); dataChoiceJob?.cancel(); peopleChoiceJob?.cancel()
                 pendingAction = null; safetyReferences.clear(); pendingSafetyReference = null; history.clear()
                 photoJobs.values.forEach { it.cancel() }; photoJobs.clear(); photoBytes.clear()
                 photoScopes.clear(); draftSave?.cancel(); draftRestore?.cancel()
@@ -232,8 +246,9 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             } finally { if (epoch == originalEpoch) { mutable.update { it.copy(busy = false, pending = api.recoverableCommands()) }; scheduleDraftSave() } }
         }
     }
-    fun reload(more: Boolean = false) {
+    fun reload(more: Boolean = false, material: CaseMaterial? = null) {
         val route = mutable.value.route ?: return
+        if (more && mutable.value.loading || material != null && route.page != FeaturePage.CaseWork) return
         val currentRevision = ++revision
         val currentEpoch = epoch
         loading?.cancel()
@@ -243,31 +258,31 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             try {
                 when (route.page) {
                     FeaturePage.EntryEdit -> { val p = api.entry(route.id); if(current()) { mutable.update { it.copy(entry = p) }; capture(p.version) } }
-                    FeaturePage.Friends -> { val p = api.friends(if (more) mutable.value.friends.next else 0); if (current()) mutable.update { it.copy(friends = page(it.friends, p, more)) } }
+                    FeaturePage.Friends -> { loadFeaturePage(more, ::current, { it.friends }, { s, p -> s.copy(friends = p) }) { api.friends(it) } }
                     FeaturePage.Member -> { val p = api.member(route.id); if (current()) mutable.update { it.copy(member = p) } }
                     FeaturePage.ProfileEdit -> { val p = api.profile(); if (current()) { mutable.update { it.copy(profile = p) }; capture(p.version) } }
                     FeaturePage.PetEdit, FeaturePage.Collaborators -> if (route.id > 0 && route.kind != "care") {
                         val p = api.pet(route.id); if (current()) { mutable.update { it.copy(pet = p) }; capture(p.version) }
                     }
-                    FeaturePage.Invitations -> { val p = api.invitations(if (more) mutable.value.invitations.next else 0); if (current()) mutable.update { it.copy(invitations = page(it.invitations, p, more)) } }
+                    FeaturePage.Invitations -> { loadFeaturePage(more, ::current, { it.invitations }, { s, p -> s.copy(invitations = p) }) { api.invitations(it) } }
                     FeaturePage.Group -> { val p = api.group(route.id); if (current()) { mutable.update { it.copy(group = p) }; capture(p.version) } }
-                    FeaturePage.Appointments -> { val p = api.appointments(if (more) mutable.value.appointments.next else 0); if (current()) mutable.update { it.copy(appointments = page(it.appointments, p, more)) } }
+                    FeaturePage.Appointments -> { loadFeaturePage(more, ::current, { it.appointments }, { s, p -> s.copy(appointments = p) }) { api.appointments(it) } }
                     FeaturePage.Appointment, FeaturePage.AppointmentEdit -> if (route.id > 0) {
                         val p = api.appointment(route.id); if (current()) { mutable.update { it.copy(appointment = p) }; capture(p.version) }
                     }
                     FeaturePage.CaseEdit -> if (route.id > 0) { val p = api.case(route.id); if (current()) { mutable.update { it.copy(case = p) }; capture(p.version) } }
                     FeaturePage.CaseWork -> {
-                        val record = api.case(route.id)
-                        if (current()) { mutable.update { it.copy(case = record) }; capture(record.version) }
-                        if (owner == null) return@launch
-                        // 公开案例与私密材料各自取数，私密失败不伪装为公开材料。
-                        if (!more || mutable.value.claims.next != 0L) {
-                            val claims = api.claims(route.id, if (more) mutable.value.claims.next else 0)
-                            if (current()) mutable.update { it.copy(claims = page(it.claims, claims, more)) }
+                        if (material == null || mutable.value.case == null) {
+                            val record = api.case(route.id)
+                            if (current()) { mutable.update { it.copy(case = record) }; capture(record.version) }
                         }
-                        if (!more || mutable.value.leads.next != 0L) {
-                            val leads = api.leads(route.id, if (more) mutable.value.leads.next else 0)
-                            if (current()) mutable.update { it.copy(leads = page(it.leads, leads, more)) }
+                        if (owner == null) return@launch
+                        // 两类私密材料独立取数、保存游标及重试，不因另一类失败而重复翻页。
+                        if (material == null || material == CaseMaterial.Claims) {
+                            loadFeaturePage(more, ::current, { it.claims }, { s, p -> s.copy(claims = p) }) { api.claims(route.id, it) }
+                        }
+                        if (material == null || material == CaseMaterial.Leads) {
+                            loadFeaturePage(more, ::current, { it.leads }, { s, p -> s.copy(leads = p) }) { api.leads(route.id, it) }
                         }
                     }
                     FeaturePage.Claim -> {
@@ -280,11 +295,10 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                             val p = api.adoption(route.id); if (current()) { mutable.update { it.copy(adoption = p) }; capture(p.version) }
                         }
                         if (route.page == FeaturePage.AdoptionWork) {
-                            val updates = api.careUpdates(route.id, if (more) mutable.value.care.next else 0)
-                            if (current()) mutable.update { it.copy(care = page(it.care, updates, more)) }
+                            loadFeaturePage(more, ::current, { it.care }, { s, p -> s.copy(care = p) }) { api.careUpdates(route.id, it) }
                         }
                     }
-                    FeaturePage.Offers -> { val p = api.offers(if (more) mutable.value.offers.next else 0); if (current()) mutable.update { it.copy(offers = page(it.offers, p, more)) } }
+                    FeaturePage.Offers -> { loadFeaturePage(more, ::current, { it.offers }, { s, p -> s.copy(offers = p) }) { api.offers(it) } }
                     FeaturePage.Offer, FeaturePage.OfferEdit -> if (route.id > 0) {
                         val p = api.offer(route.id); if (current()) { mutable.update { it.copy(offer = p) }; capture(p.version) }
                         val checks = api.offerVerifications(route.id); if (current()) mutable.update { it.copy(verifications = checks) }
@@ -295,7 +309,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                         val catalog = api.expressions(); val p = api.expressionState().items.firstOrNull()
                         if (current()) { mutable.update { it.copy(catalog = catalog, expressions = p) }; capture(p?.version ?: 0) }
                     }
-                    FeaturePage.Reviews -> { val p = api.reviews(if (more) mutable.value.reviews.next else 0); if (current()) mutable.update { it.copy(reviews = page(it.reviews, p, more)) } }
+                    FeaturePage.Reviews -> { loadFeaturePage(more, ::current, { it.reviews }, { s, p -> s.copy(reviews = p) }) { api.reviews(it) } }
                     FeaturePage.Review -> if (route.id > 0) { val p = api.reviewRecord(route.id); if (current()) { mutable.update { it.copy(review = p) }; capture(p.version) } }
                     FeaturePage.Security -> {
                         val methods = api.identityMethods(); val profile = api.profile(); val eligibility = api.eligibility()
@@ -317,16 +331,258 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     verifications = if (denied(e)) emptyList() else it.verifications,
                     claim = if (denied(e)) null else it.claim, group = if (denied(e)) null else it.group,
                     adoption = if (denied(e)) null else it.adoption,
-                    claims = if (denied(e)) PageState() else it.claims, leads = if (denied(e)) PageState() else it.leads,
-                    care = if (denied(e)) PageState() else it.care) }
+                    friends = if (denied(e)) it.friends.failed(e.mobileMessage(), clear = true) else it.friends,
+                    invitations = if (denied(e)) it.invitations.failed(e.mobileMessage(), clear = true) else it.invitations,
+                    appointments = if (denied(e)) it.appointments.failed(e.mobileMessage(), clear = true) else it.appointments,
+                    offers = if (denied(e)) it.offers.failed(e.mobileMessage(), clear = true) else it.offers,
+                    reviews = if (denied(e)) it.reviews.failed(e.mobileMessage(), clear = true) else it.reviews,
+                    claims = if (denied(e)) it.claims.failed(e.mobileMessage(), clear = true) else it.claims,
+                    leads = if (denied(e)) it.leads.failed(e.mobileMessage(), clear = true) else it.leads,
+                    care = if (denied(e)) it.care.failed(e.mobileMessage(), clear = true) else it.care) }
             } finally { if (current()) mutable.update { it.copy(loading = false) } }
         }
     }
-    private fun denied(e: Exception) = e is MobileApiException && e.status in listOf(401, 403, 404)
-    private fun <T> page(old: PageState<T>, result: MobilePage<T>, more: Boolean): PageState<T> {
-        check(result.nextCursor == 0L || result.nextCursor > if (more) old.next else 0L) { "分页游标未前进" }
-        return PageState(((if (more) old.items else emptyList()) + result.items).distinctBy { it.id }, result.nextCursor, loaded = true)
+    private suspend fun <T> loadFeaturePage(more: Boolean, current: () -> Boolean,
+        get: (FeatureState) -> PageState<T>, put: (FeatureState, PageState<T>) -> FeatureState,
+        fetch: suspend (Long) -> MobilePage<T>) {
+        if (!current()) return
+        val old = get(mutable.value)
+        if (more && !old.canLoadMore) return
+        mutable.update { put(it, old.starting(more)) }
+        try {
+            val result = fetch(if (more) old.next else 0)
+            currentCoroutineContext().ensureActive()
+            if (current()) mutable.update { put(it, old.completed(result, more)) }
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            if (current()) mutable.update { put(it, get(it).failed(e.mobileMessage(), denied(e))) }
+            if (denied(e)) throw e
+        }
     }
+    private fun denied(e: Exception) = e is MobileApiException && e.status in listOf(401, 403, 404)
+    /** 只从当前账号可访问的关系取得候选；不提供全站账号枚举。 */
+    fun loadPeopleChoices(more: Boolean = false) {
+        val account = owner ?: return
+        if (api.user.value?.id != account) return
+        val old = mutable.value.peopleChoices
+        if (old.loading || more && !old.canLoadMore) return
+        val originalEpoch = epoch
+        mutable.update { it.copy(peopleChoices = old.starting(more)) }
+        peopleChoiceJob = scope.launch {
+            try {
+                val result = api.friends(if (more) old.next else 0)
+                val next = old.completed(result, more)
+                val peers = result.items.filter { it.state == "accepted" }.map { row ->
+                    if (row.data.requesterId == account) row.data.recipientId else row.data.requesterId
+                }.distinct().filter { it > 0 && it != account }
+                val profiles = mutableMapOf<Long, PublicMember>()
+                val unavailable = mutableSetOf<Long>(); val errors = mutableSetOf<Long>()
+                for (batch in peers.chunked(4)) coroutineScope {
+                    batch.map { peer -> async {
+                        try { peer to Result.success(api.member(peer)) }
+                        catch (e: CancellationException) { throw e }
+                        catch (e: Exception) { peer to Result.failure<PublicMember>(e) }
+                    } }.awaitAll().forEach { (peer, profile) ->
+                        profile.onSuccess { profiles[peer] = it }.onFailure {
+                            if (it is MobileApiException && it.status == 401) throw it
+                            if (it is MobileApiException && it.status in listOf(403, 404)) unavailable.add(peer) else errors.add(peer)
+                        }
+                    }
+                }
+                if (epoch == originalEpoch && api.user.value?.id == account) mutable.update { current -> current.copy(peopleChoices = next,
+                    people = (if (more) current.people else emptyMap()) - unavailable - errors + profiles,
+                    peopleUnavailable = (if (more) current.peopleUnavailable else emptySet()) + unavailable,
+                    peopleErrors = (if (more) current.peopleErrors else emptySet()) + errors) }
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) {
+                if (epoch == originalEpoch) mutable.update { it.copy(peopleChoices = it.peopleChoices.failed(e.mobileMessage(), denied(e)),
+                    people = if (denied(e)) emptyMap() else it.people,
+                    peopleUnavailable = if (denied(e)) emptySet() else it.peopleUnavailable,
+                    peopleErrors = if (denied(e)) emptySet() else it.peopleErrors) }
+            }
+        }
+    }
+    /** 预约对象来自已访问的业务事项，不要求双方先成为好友。服务端仍作最终准入检查。 */
+    suspend fun requireAppointmentContext(contextKind: String, contextId: Long, peer: Long) {
+        val account = owner ?: throw MobileApiException(401, "请登录后核对预约事项")
+        val originalEpoch = epoch
+        try {
+            val expected = when (contextKind) {
+                "adoption" -> api.adoption(contextId).data.let { a -> when (account) {
+                    a.applicantId -> a.publisherId
+                    a.publisherId -> a.applicantId
+                    else -> throw MobileApiException(422, "你已不是此领养事项的参与人")
+                } }
+                "case" -> api.case(contextId).ownerId
+                "visit" -> api.pet(contextId).ownerId
+                "offer" -> api.offer(contextId).ownerId
+                else -> throw MobileApiException(422, "请从有效业务事项发起预约")
+            }
+            if (epoch != originalEpoch || api.user.value?.id != account) throw CancellationException("Account changed")
+            if (contextId <= 0 || peer <= 0 || peer == account || expected != peer)
+                throw MobileApiException(422, "预约参与人已变化，请返回原事项重新核对")
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            if (e is MobileApiException && e.status in listOf(401, 422)) throw e
+            throw MobileApiException(422, "暂时无法核对预约事项，请重试；原表单已保留")
+        }
+    }
+    /** 选择摘要仍保留；提交前重新核对当前关系，失效不会自动删除或放宽受众。 */
+    suspend fun requireCurrentPeople(ids: List<Long>): List<PublicMember> {
+        val account = owner ?: throw MobileApiException(401, "请登录后核对所选人员")
+        if (api.user.value?.id != account) throw CancellationException("Account changed")
+        val originalEpoch = epoch
+        val wanted = ids.toSet()
+        if (wanted.isEmpty() || wanted.size != ids.size || wanted.size > 200 || wanted.any { it <= 0 || it == account })
+            throw MobileApiException(422, "请从可访问好友中选择人员")
+        val accepted = mutableSetOf<Long>()
+        try {
+            var cursor = 0L
+            val seen = mutableSetOf<Long>()
+            do {
+                if (!seen.add(cursor)) throw MobileApiException(422, "好友分页暂不可核对，请重新读取")
+                val page = api.friends(cursor)
+                currentCoroutineContext().ensureActive()
+                if (epoch != originalEpoch || api.user.value?.id != account) throw CancellationException("Account changed")
+                page.items.filter { it.state == "accepted" }.forEach { row ->
+                    val peer = if (row.data.requesterId == account) row.data.recipientId else row.data.requesterId
+                    if (peer in wanted) accepted.add(peer)
+                }
+                cursor = page.nextCursor
+            } while (cursor != 0L && !accepted.containsAll(wanted))
+            val missing = wanted - accepted
+            if (missing.isNotEmpty()) {
+                mutable.update { it.copy(people = it.people - missing, peopleUnavailable = it.peopleUnavailable + missing) }
+                throw MobileApiException(422, "部分所选人员已不再是可访问好友，请调整选择；原可见范围保持不变")
+            }
+            val profiles = mutableListOf<PublicMember>()
+            for (batch in ids.chunked(4)) coroutineScope {
+                batch.map { peer -> async { peer to runCatching {
+                    try { api.member(peer) } catch (e: CancellationException) { throw e }
+                } } }.awaitAll().forEach { (peer, result) ->
+                    currentCoroutineContext().ensureActive()
+                    if (epoch != originalEpoch || api.user.value?.id != account) throw CancellationException("Account changed")
+                    result.getOrElse { error ->
+                        if (error is MobileApiException && error.status in listOf(403, 404)) {
+                            mutable.update { it.copy(people = it.people - peer, peopleUnavailable = it.peopleUnavailable + peer) }
+                            throw MobileApiException(422, "所选人员的资料已不可访问，请调整选择")
+                        }
+                        throw error
+                    }.let(profiles::add)
+                }
+            }
+            mutable.update { it.copy(people = it.people + profiles.associateBy { p -> p.id }, peopleUnavailable = it.peopleUnavailable - wanted) }
+            return profiles
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            // 此时尚未发出写请求；读取失败不能被操作恢复机制误记为提交结果未知。
+            if (epoch == originalEpoch && denied(e)) mutable.update { it.copy(
+                peopleChoices = it.peopleChoices.failed(e.mobileMessage(), clear = true), people = emptyMap(),
+                peopleUnavailable = it.peopleUnavailable + wanted, peopleErrors = emptySet()) }
+            if (e is MobileApiException && e.status in listOf(401, 422)) throw e
+            throw MobileApiException(422, "暂时无法核对所选人员，请重试；原选择与可见范围已保留")
+        }
+    }
+    suspend fun requireCurrentAudience(audience: Audience) {
+        if (audience.mode in listOf("selected", "excluded")) {
+            if (audience.mode == "selected" && audience.userIds.isEmpty()) throw MobileApiException(422, "请至少选择一位好友")
+            if (audience.userIds.isNotEmpty()) requireCurrentPeople(audience.userIds)
+        }
+    }
+    suspend fun requireOpenedMember(id: Long): PublicMember {
+        val route = mutable.value.route
+        val originalEpoch = epoch
+        if (route?.page != FeaturePage.Member || route.id != id || mutable.value.member?.id != id)
+            throw MobileApiException(422, "请先明确打开对方资料")
+        try {
+            val member = api.member(id)
+            if (epoch != originalEpoch || mutable.value.route != route) throw CancellationException("Context changed")
+            mutable.update { it.copy(member = member) }
+            return member
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            if (epoch == originalEpoch && denied(e)) mutable.update { it.copy(member = null, people = it.people - id) }
+            throw MobileApiException(if (e is MobileApiException && e.status == 401) 401 else 422,
+                "暂时不能访问对方资料，请重新核对后再发送申请")
+        }
+    }
+    suspend fun prepareFriendRequest(id: Long, reason: String): FriendInput {
+        requireOpenedMember(id)
+        val account = owner ?: throw MobileApiException(401, "请先登录")
+        val originalEpoch = epoch
+        var cursor = 0L
+        val seen = mutableSetOf<Long>()
+        try {
+            do {
+                if (!seen.add(cursor)) throw MobileApiException(422, "好友关系暂不可核对，请重试")
+                val page = api.friends(cursor)
+                if (epoch != originalEpoch || api.user.value?.id != account) throw CancellationException("Account changed")
+                val relationship = page.items.firstOrNull { row ->
+                    row.data.requesterId == id && row.data.recipientId == account || row.data.recipientId == id && row.data.requesterId == account
+                }
+                if (relationship != null) {
+                    if (relationship.state !in listOf("removed", "declined", "withdrawn"))
+                        throw MobileApiException(422, "已有好友关系或待处理申请，请在好友列表查看当前状态")
+                    return FriendInput(id, newRequestKey(), relationship.version, reason)
+                }
+                cursor = page.nextCursor
+            } while (cursor != 0L)
+            return FriendInput(id, newRequestKey(), reason = reason)
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) {
+            if (e is MobileApiException && e.status in listOf(401, 422)) throw e
+            throw MobileApiException(422, "暂时无法核对好友关系，请重试；本次申请尚未发送")
+        }
+    }
+    fun loadPetChoices(more: Boolean = false) {
+        val account = owner ?: return
+        if (mutable.value.petChoiceLoading || more && !mutable.value.petChoices.canLoadMore) return
+        val originalEpoch = epoch
+        val old = mutable.value.petChoices
+        mutable.update { it.copy(petChoiceLoading = true, petChoiceError = null, petChoices = old.starting(more)) }
+        petChoiceJob = scope.launch {
+            try {
+                val result = api.pets(if (more) old.next else 0, owner = account)
+                if (epoch == originalEpoch) mutable.update { it.copy(petChoices = old.completed(result, more)) }
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) {
+                if (epoch == originalEpoch) mutable.update { it.copy(petChoiceError = e.mobileMessage(),
+                    petChoices = it.petChoices.failed(e.mobileMessage(), denied(e))) }
+            } finally { if (epoch == originalEpoch) mutable.update { it.copy(petChoiceLoading = false) } }
+        }
+    }
+    fun loadDataChoices(kind: String, assistance: Boolean, more: Boolean = false) {
+        val account = owner ?: return
+        require(kind in listOf("entries", "pets", "media", "cases", "offers", "drafts", "subscriptions") ||
+            assistance && kind in listOf("adoptions", "appointments", "reviews"))
+        val same = mutable.value.dataChoiceKind == kind && mutable.value.dataChoiceAssistance == assistance
+        if (same && (mutable.value.dataChoiceLoading || more && !mutable.value.dataChoices.canLoadMore)) return
+        dataChoiceJob?.cancel()
+        val request = ++dataChoiceSequence
+        val originalEpoch = epoch
+        val route = mutable.value.route
+        val append = same && more
+        val old = if (same) mutable.value.dataChoices else PageState<JsonObject>()
+        mutable.update { it.copy(dataChoiceLoading = true, dataChoiceError = null, dataChoiceKind = kind,
+            dataChoiceAssistance = assistance, dataChoices = old.starting(append)) }
+        dataChoiceJob = scope.launch {
+            fun current() = epoch == originalEpoch && request == dataChoiceSequence && mutable.value.route == route
+            try {
+                val result = api.get<MobilePage<JsonObject>>(kind, buildMap {
+                    put("cursor", if (append) old.next.toString() else "0")
+                    if (!assistance) put("owner_id", account.toString())
+                })
+                if (current()) mutable.update { it.copy(dataChoices = old.completed(result, append)) }
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) {
+                if (current()) mutable.update { it.copy(dataChoiceError = e.mobileMessage(),
+                    dataChoices = it.dataChoices.failed(e.mobileMessage(), denied(e))) }
+            } finally {
+                if (epoch == originalEpoch && request == dataChoiceSequence) mutable.update { it.copy(dataChoiceLoading = false) }
+            }
+        }
+    }
+    private fun <T> page(old: PageState<T>, result: MobilePage<T>, more: Boolean): PageState<T> = old.completed(result, more)
     fun sendOTP(email: String = "", phone: String = "", purpose: String) {
         if (mutable.value.otpWait > 0) return
         runCommand {

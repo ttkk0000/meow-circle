@@ -1,0 +1,187 @@
+{
+  "texts": [
+    {
+      "id": "396:6",
+      "text": "先进入手机总览，或在下方按功能选择设备。所有入口都定位到现有原画板。",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400
+        }
+      },
+      "w": 1440,
+      "h": 26,
+      "link": null
+    },
+    {
+      "id": "396:36",
+      "text": "跨端完整索引",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700
+        }
+      },
+      "w": 416,
+      "h": 30,
+      "link": null
+    },
+    {
+      "id": "396:37",
+      "text": "Web、桌面与平板的完整目录",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500
+        }
+      },
+      "w": 416,
+      "h": 22,
+      "link": null
+    },
+    {
+      "id": "I396:38;296:7",
+      "text": "进入跨端索引 ↗",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500
+        }
+      },
+      "w": 160,
+      "h": 22,
+      "link": {
+        "type": "NODE",
+        "value": "301:27"
+      }
+    },
+    {
+      "id": "I396:15;296:7",
+      "text": "进入手机总览 ↗",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500
+        }
+      },
+      "w": 160,
+      "h": 22,
+      "link": {
+        "type": "NODE",
+        "value": "142:3077"
+      }
+    },
+    {
+      "id": "425:1839842",
+      "text": "原稿按功能分区，完整交互在本页运行；功能目录保留跨端原稿链接。",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400
+        }
+      },
+      "w": 1440,
+      "h": 26,
+      "link": null
+    },
+    {
+      "id": "425:1839882",
+      "text": "原稿按功能分区，完整交互在本页运行；功能目录保留跨端原稿链接。",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400
+        }
+      },
+      "w": 1440,
+      "h": 26,
+      "link": null
+    },
+    {
+      "id": "425:1839922",
+      "text": "横竖屏为独立原型。右上角“预览 · 横屏／竖屏”切到同一状态；转动平板后请手动点击切换。",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400
+        }
+      },
+      "w": 1440,
+      "h": 26,
+      "link": null
+    },
+    {
+      "id": "425:1839962",
+      "text": "原稿按功能分区，完整交互在本页运行；功能目录保留跨端原稿链接。",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400
+        }
+      },
+      "w": 1440,
+      "h": 26,
+      "link": null
+    },
+    {
+      "id": "30:459",
+      "text": "M&D · 可点击演示 / 2026.10.16",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700
+        }
+      },
+      "w": 1736,
+      "h": 40,
+      "link": null
+    },
+    {
+      "id": "30:462",
+      "text": "此页为 02／03 评审稿的独立快照；后续修改评审稿时需明确同步，不自动双向更新。",
+      "font": {
+        "family": "Noto Sans SC",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400
+        }
+      },
+      "w": 1736,
+      "h": 20,
+      "link": null
+    }
+  ],
+  "button": {
+    "id": "396:38",
+    "name": "原稿入口 / 进入跨端索引 ↗",
+    "reactions": [
+      {
+        "action": {
+          "type": "URL",
+          "url": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/M-D?node-id=301-27",
+          "openInNewTab": false
+        },
+        "actions": [
+          {
+            "type": "URL",
+            "url": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/M-D?node-id=301-27",
+            "openInNewTab": false
+          }
+        ],
+        "trigger": {
+          "type": "ON_CLICK"
+        }
+      }
+    ]
+  }
+}

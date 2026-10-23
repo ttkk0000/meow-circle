@@ -162,6 +162,9 @@ func (s *Service) issue(tx mobile.Tx, u domain.User, device string) (out LoginRe
 	}
 	if a.SessionEpoch <= 0 {
 		a.SessionEpoch = 1
+		if e = mobile.DisablePushDevices(tx, u.ID, "", true); e != nil {
+			return out, e
+		}
 		if e = set(tx, mobile.Accounts, &account, a); e != nil {
 			return out, e
 		}
@@ -261,12 +264,15 @@ func (s *Service) Refresh(ctx context.Context, access, refresh, device string) (
 			return e
 		}
 		out, e = s.issue(tx, u, device)
-		return e
+		if e != nil {
+			return e
+		}
+		return mobile.RotatePushSession(tx, u.ID, digest(access), digest(out.Token))
 	})
 	return
 }
 func (s *Service) Logout(ctx context.Context, actor int64, token string, all bool) error {
-	return s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	return s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		if e := active(tx, actor); e != nil {
 			return e
 		}
@@ -277,6 +283,9 @@ func (s *Service) Logout(ctx context.Context, actor int64, token string, all boo
 			}
 			a.RevokeBefore = s.Now()
 			a.SessionEpoch++
+			if e := mobile.DisablePushDevices(tx, r.OwnerID, "", true); e != nil {
+				return e
+			}
 			return set(tx, mobile.Accounts, &r, a)
 		}
 		r, e := tx.ByKey(mobile.Sessions, digest(token))
@@ -285,6 +294,9 @@ func (s *Service) Logout(ctx context.Context, actor int64, token string, all boo
 		}
 		if r.OwnerID != actor {
 			return mobile.ErrForbidden
+		}
+		if e = mobile.DisablePushDevices(tx, actor, digest(token), false); e != nil {
+			return e
 		}
 		r.State = "revoked"
 		return tx.Save(mobile.Sessions, &r)
@@ -321,7 +333,7 @@ func (s *Service) IssueOTP(ctx context.Context, actor int64, client string, in O
 	}
 	code := fmt.Sprintf("%06d", number.Int64())
 	var challenge mobile.Record
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		if actor > 0 {
 			if e := active(tx, actor); e != nil {
 				return e
@@ -405,7 +417,7 @@ func (s *Service) IssueOTP(ctx context.Context, actor int64, client string, in O
 		return
 	}
 	delivery := s.SMS.Send(ctx, phone, code, in.Purpose)
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		r, e := tx.Get(mobile.OTPChallenges, challenge.ID)
 		if e != nil {
 			return e
@@ -609,6 +621,9 @@ func (s *Service) Recover(ctx context.Context, phone, code, password string) err
 		}
 		a.RevokeBefore = s.Now()
 		a.SessionEpoch++
+		if e := mobile.DisablePushDevices(tx, r.OwnerID, "", true); e != nil {
+			return e
+		}
 		valid = true
 		return set(tx, mobile.Accounts, &r, a)
 	})
@@ -632,7 +647,7 @@ func (s *Service) Reauth(ctx context.Context, actor int64, in ReauthInput) (gran
 		return "", e
 	}
 	valid := false
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		if e := active(tx, actor); e != nil {
 			return e
 		}
@@ -694,7 +709,7 @@ func (s *Service) Start(ctx context.Context, actor int64, in OAuthStart) (out OA
 		return out, e
 	}
 	out = OAuthChallenge{state, nonce, s.Now().Add(5 * time.Minute)}
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		if actor > 0 {
 			if e := active(tx, actor); e != nil {
 				return e
@@ -723,7 +738,7 @@ func subjectKey(v Subject) string { return v.Provider + ":" + v.AppID + ":" + v.
 func (s *Service) Finish(ctx context.Context, actor int64, in OAuthFinish) (out OAuthResult, err error) {
 	var challenge mobile.Record
 	var c Challenge
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		r, e := tx.ByKey(mobile.AuthChallenges, digest(in.State))
 		if e != nil {
 			return mobile.ErrUnauthorized
@@ -759,7 +774,7 @@ func (s *Service) Finish(ctx context.Context, actor int64, in OAuthFinish) (out 
 	if subject.Provider != c.Provider || subject.ID == "" || subject.AppID == "" {
 		return out, mobile.ErrUnauthorized
 	}
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		r, e := tx.Get(mobile.AuthChallenges, challenge.ID)
 		if e != nil {
 			return e
@@ -836,7 +851,7 @@ type ResolveInput struct {
 }
 
 func (s *Service) Resolve(ctx context.Context, actor int64, in ResolveInput) (out LoginResult, err error) {
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		r, e := tx.ByKey(mobile.AuthChallenges, digest(in.Token))
 		if e != nil {
 			return mobile.ErrUnauthorized
@@ -993,7 +1008,7 @@ func (s *Service) Account(ctx context.Context, actor int64, action string, in Ac
 		}
 	}
 	invalidOTP := false
-	e = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	e = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		if e := active(tx, actor); e != nil {
 			return e
 		}
@@ -1138,6 +1153,9 @@ func (s *Service) Account(ctx context.Context, actor int64, action string, in Ac
 		}
 		a.RevokeBefore = s.Now()
 		a.SessionEpoch++
+		if e := mobile.DisablePushDevices(tx, r.OwnerID, "", true); e != nil {
+			return e
+		}
 		if e = set(tx, mobile.Accounts, &r, a); e != nil {
 			return e
 		}

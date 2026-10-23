@@ -8,10 +8,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ttkk0000.meowcircle.client.*
 import com.ttkk0000.meowcircle.kmpapp.R
 
@@ -20,7 +22,9 @@ internal fun originLabel(v: String) = originChoices.firstOrNull { it.first == v 
 
 @Composable internal fun PublicationDialog(store: MobileStore,s: MobileState) {
     val input = s.publicationConfirmation ?: return
-    var origin by remember(input) { mutableStateOf(input.declaration.origin) }; var confirmed by remember(input) { mutableStateOf(false) }
+    val scope = "transient:publication:${input.clientRequestId}"
+    var origin by rememberSessionUiState("origin", scope, input) { input.declaration.origin }
+    var confirmed by rememberSessionUiState("confirmed", scope, input) { false }
     MobileAlertDialog(onDismissRequest = store::dismissPublication,title = { Text("核对内容与来源") },text = {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(input.entry.title.ifBlank { "当前发布内容" }); Text(input.entry.text)
@@ -34,7 +38,7 @@ internal fun originLabel(v: String) = originChoices.firstOrNull { it.first == v 
 }
 
 @Composable internal fun ComposeAudience(store: MobileStore,s: MobileState) {
-    var people by remember(s.composeEntry.audience) { mutableStateOf(s.composeEntry.audience.userIds.joinToString(",")) }
+    val feature by store.features.state.collectAsStateWithLifecycle()
     var pet by remember(s.composeEntry.petId) { mutableStateOf(s.composeEntry.petId.takeIf { it > 0 }?.toString().orEmpty()) }
     Text("发布空间与可见范围",style = MaterialTheme.typography.titleMedium)
     Row { listOf("community" to "社区","circle" to "宠友圈","diary" to "日记").forEach { (id,label) ->
@@ -43,11 +47,13 @@ internal fun originLabel(v: String) = originChoices.firstOrNull { it.first == v 
     Row { listOf("daily_share" to "日常","help" to "互助","activity" to "活动","trade" to "有偿信息讨论").forEach { (id,label) -> TextButton({ store.editComposeOptions(s.composeEntry.space,s.composeEntry.audience,s.composeEntry.petId,id) },enabled = !s.busy) { Text(if(s.composeEntry.category == id) "● $label" else label) } } }
     if(s.composeEntry.space != "community") {
         listOf("private" to "仅自己","friends" to "好友可见","selected" to "指定好友","excluded" to "排除指定好友").forEach { (mode,label) ->
-            CheckLine(label,s.composeEntry.audience.mode == mode,{ checked -> if(checked) store.editComposeOptions(s.composeEntry.space,Audience(mode,if(mode in listOf("selected","excluded")) ids(people).orEmpty() else emptyList()),s.composeEntry.petId) },!s.busy)
+            CheckLine(label,s.composeEntry.audience.mode == mode,{ checked -> if(checked) store.editComposeOptions(s.composeEntry.space,Audience(mode,if(mode in listOf("selected","excluded")) s.composeEntry.audience.userIds else emptyList()),s.composeEntry.petId) },!s.busy)
         }
         if(s.composeEntry.audience.mode in listOf("selected","excluded")) {
-            OutlinedTextField(people,{ people = it; store.editComposeAudienceList(it) },Modifier.fillMaxWidth(),label = { Text("好友编号，逗号分隔") },isError = ids(people) == null,enabled = !s.busy)
-            Text("更改受众不会自动放宽为公开；选中名单由服务端校验好友关系。")
+            Text(if (s.composeEntry.audience.mode == "selected") "仅以下好友可见。" else "所有好友中排除以下人员；今后新增的好友也可能可见。")
+            PeopleChoiceField(store.features,feature,"选择发布受众",s.composeEntry.audience.userIds,
+                { chosen -> store.editComposeAudienceList(chosen.joinToString(",")) },multiple = true,enabled = !s.busy)
+            Text("提交前会重新核对好友关系；读取失败或人员失权时保留名单，不会自动放宽为公开。")
         }
     }
     if(s.composeEntry.space == "diary") OutlinedTextField(pet,{ pet = it; store.editComposeOptions("diary",s.composeEntry.audience,it.toLongOrNull() ?: 0) },Modifier.fillMaxWidth(),label = { Text("所属宠物编号") },enabled = !s.busy)
@@ -56,7 +62,7 @@ internal fun originLabel(v: String) = originChoices.firstOrNull { it.first == v 
 }
 
 @Composable internal fun ExpressionPanel(store: MobileStore,s: MobileState,editor: TextFieldValue,onEdit: (TextFieldValue) -> Unit,stickersAllowed: Boolean) {
-    var category by remember { mutableStateOf("emoji") }
+    var category by rememberSessionUiState("expression.category") { "emoji" }
     Row { listOf("emoji" to "表情","favorite" to "收藏","recent" to "最近","sticker" to "贴纸").forEach { (key,label) -> TextButton({ category = key }) { Text(if(category == key) "● $label" else label) } } }
     val saved = s.expressionState?.data ?: ExpressionBody()
     val emoji = when(category) { "favorite" -> s.emoji.filter { it.id in saved.favorites }; "recent" -> saved.recent.mapNotNull { id -> s.emoji.firstOrNull { it.id == id } }; "sticker" -> emptyList(); else -> s.emoji }
@@ -96,11 +102,11 @@ private object StickerBitmaps {
         return android.graphics.Bitmap.createBitmap(source,(index % 6) * (source.width / 6),(index / 6) * (source.height / 4),source.width / 6,source.height / 4).asImageBitmap().also { pieces[index] = it }
     }
 }
-@Composable internal fun StickerPhoto(id: String,description: String,modifier: Modifier = Modifier.size(128.dp)) {
+@Composable internal fun StickerPhoto(id: String,description: String,modifier: Modifier = Modifier.size(MobileUi.stickerSize)) {
     val resources = LocalContext.current.resources
     val index = id.removePrefix("sticker-").toIntOrNull()?.minus(1)
     val bitmap = remember(index,resources) { index?.let { StickerBitmaps.get(resources,it) } }
-    if(bitmap == null) Text("贴纸暂不可用") else Image(bitmap,description,modifier)
+    if(bitmap == null) Text("贴纸暂不可用") else Image(bitmap,description,modifier, contentScale = ContentScale.Fit)
 }
 internal fun openNotification(store: MobileStore,body: NotificationBody) {
     if(body.targetId <= 0) { store.pickerFailed("通知对象已失效，请重新读取通知"); return }

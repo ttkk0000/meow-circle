@@ -1,0 +1,2115 @@
+{
+  "date": "2026-10-23",
+  "timezone": "UTC+08:00",
+  "status": "expression_aspect_complete_user_paused_further_work",
+  "scope": "Figma expression aspect ratio only; no app code, general loading states, navigation or token changes",
+  "pages": [
+    {
+      "page": "403:2",
+      "rows": [
+        {
+          "id": "319:806382",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:899178",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:991924",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1084700",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1177257",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1269845",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1362589",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1455382",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1547997",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1640635",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1733286",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1825850",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1918525",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2011534",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2104436",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2507422",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2547129",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2569183",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:64945",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:156397",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:247630",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:338922",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:430402",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:521873",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:613152",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:704451",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:795766",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:886994",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:978429",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1070198",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1161764",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1253030",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "page": "403:4",
+      "rows": [
+        {
+          "id": "319:817850",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:910618",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1003398",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1096102",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1188656",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1281284",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1374064",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1466794",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1559412",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1652064",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1744686",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1837250",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1930036",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2023046",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2115838",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2518830",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2552662",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2574688",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:75863",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:167243",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:258473",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:349805",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:441321",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:532728",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:624010",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:715323",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:806609",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:897837",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:989383",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1081153",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1172609",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1263881",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "page": "403:3",
+      "rows": [
+        {
+          "id": "319:829283",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:922023",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1014837",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1107469",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1200020",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1292688",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1385504",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1478171",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1570792",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1663458",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1756051",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1848615",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1941512",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2034523",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2127205",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2530203",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2558160",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2580158",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:86746",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:178054",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:269281",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:360653",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:452205",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:543548",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:634833",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:726160",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:817417",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:908645",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1000302",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1092073",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1183419",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1274697",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:840749",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:933461",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1026309",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1118869",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1211417",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1304125",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1396977",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1489581",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1582205",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1674885",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1767449",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1860013",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:1953021",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2046033",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2138605",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2541609",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2563691",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "319:2585661",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:97662",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:188898",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:280122",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:371534",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:463122",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:554401",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:645689",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:737030",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:828258",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:919486",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1011254",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1103026",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1194262",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        },
+        {
+          "id": "322:1285546",
+          "w": 144,
+          "h": 144,
+          "ratio": {
+            "x": 144,
+            "y": 144
+          },
+          "hSizing": "FIXED",
+          "vSizing": "FIXED",
+          "children": 153,
+          "firstChild": [
+            72,
+            72
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "containers": 128,
+    "badGeometry": 0,
+    "lockedSquare": 128,
+    "childrenPerContainer": 153
+  },
+  "recovery": {
+    "initialReadRemaining": 62,
+    "portraitWriteTimedOut": 31,
+    "portraitAppliedConfirmedByRead": 31,
+    "landscapeConfirmedBatches": [
+      8,
+      8,
+      8,
+      7
+    ],
+    "note": "No blind replay after timeout. The final tablet read completed as the user requested pause; no subsequent Figma requests."
+  },
+  "validation": {
+    "webDesktop": "64 containers: all child geometry and opacity bindings read on resume; prior writes compared bindings/actions",
+    "portrait": "31 resumed containers: geometry and ratio lock re-read; 3 child geometry/opacity-binding samples per container",
+    "landscape": "31 resumed containers: all 153 child ratios checked in each write response; 3 before/after binding samples per container",
+    "final": "128 stable IDs: persisted 144x144, square ratio lock, FIXED sizing, child count and first-child ratio"
+  },
+  "screenshotsViewed": [
+    "312:301",
+    "312:298",
+    "312:300",
+    "312:299",
+    "322:905963",
+    "322:916804"
+  ],
+  "excludedScreenshots": [
+    {
+      "node": "319:826541",
+      "reason": "1px empty crop; not counted as visual proof"
+    },
+    {
+      "node": "319:838007",
+      "reason": "1px empty crop; not counted as visual proof"
+    }
+  ],
+  "remaining": "User screenshot's 4 navigation/documentation findings recorded only, not verified or changed. Wait for user to continue.",
+  "build": "未运行编译，遵循全局不自行编译规则"
+}

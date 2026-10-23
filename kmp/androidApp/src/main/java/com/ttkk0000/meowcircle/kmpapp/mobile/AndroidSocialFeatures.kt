@@ -14,7 +14,7 @@ import com.ttkk0000.meowcircle.client.*
             ChoiceField(f,s,"space","发布空间",listOf("community" to "公开社区","circle" to "宠友圈","diary" to "宠物日记"),old.space)
             val space = f.field("space",old.space)
             if(space != "community") AudienceFields(f,s,if(old.audience.mode == "public" && space == "circle") Audience("friends") else old.audience,publicAllowed = space != "circle")
-            if(space == "diary") FormField(f,s,"petId","所属宠物编号",old.petId.takeIf { it > 0 }?.toString().orEmpty(),numeric = true)
+            if(space == "diary") PetChoiceField(f,s,"petId",old.petId)
             ChoiceField(f,s,"origin","当前内容来源",originChoices,old.contentOrigin.ifBlank { "unknown" })
             FeaturePhotos(store,s,record.mediaIds)
             FeaturePrimary("核对并保存动态",!s.busy && !s.loading) {
@@ -23,25 +23,21 @@ import com.ttkk0000.meowcircle.client.*
                 if(audience == null || space == "diary" && petId <= 0 || audience.mode == "public" && space == "circle") f.notify("请核对发布空间、受众及宠物归属") else {
                     val input = EntryInput(old.copy(title = f.field("title",old.title),text = f.field("text",old.text),space = space,audience = audience,petId = petId,contentOrigin = ""),f.version(record.version),f.mediaIds(record.mediaIds),newRequestKey(),PublicationDeclaration(origin = f.field("origin",old.contentOrigin.ifBlank { "unknown" })))
                     if(!f.photosReady()) f.notify("请先完成照片上传") else f.runCommand {
+                        f.requireCurrentAudience(audience)
                         val declaration = if(audience.mode == "private") PublicationDeclaration() else f.api.previewPublication(input).let { PublicationDeclaration(it.manifestHash,it.origin,true) }
-                        f.reviewPrepared("保存当前动态","${input.entry.title}\n${input.entry.text}\n${audienceLabel(audience.mode)} · ${originLabel(declaration.origin)}\n确认当前内容、来源与照片。") { f.api.editEntry(record.id,input.copy(declaration = declaration)); store.reloadDetail(); store.refreshHome(); f.discardAndReload() }
+                        f.reviewPrepared("保存当前动态","${input.entry.title}\n${input.entry.text}\n${audienceLabel(audience.mode)} · ${originLabel(declaration.origin)}\n确认当前内容、来源与照片。") { f.requireCurrentAudience(audience); f.api.editEntry(record.id,input.copy(declaration = declaration)); store.reloadDetail(); store.refreshHome(); f.discardAndReload() }
                     }
                 }
             }
         }
         FeaturePage.Friends -> {
-            FormField(f,s,"user","对方用户编号",numeric = true)
-            FormField(f,s,"reason","好友申请说明")
-            FeaturePrimary("发送好友申请", !s.busy && actor != null) {
-                val user = f.field("user").toLongOrNull()
-                if (user == null || user <= 0 || user == actor) f.notify("请填写其他用户的有效编号") else {
-                    val input = FriendInput(user,newRequestKey(),reason = f.field("reason"))
-                    f.confirm("发送好友申请","发给用户 #$user\n${input.reason}") { f.api.friend("request",input); f.reload() }
-                }
-            }
+            LaunchedEffect(actor) { if (actor != null && !s.peopleChoices.loaded) f.loadPeopleChoices() }
+            Text("在动态、会话或群聊中打开宠友资料后，可向明确的对方发送好友申请。申请须由对方接受。")
             s.friends.items.forEach { row ->
                 val peer = if (row.data.requesterId == actor) row.data.recipientId else row.data.requesterId
-                FeatureSection("宠友 #$peer · ${stateLabel(row.state)}") {
+                val person = s.people[peer]
+                val name = person?.nickname?.ifBlank { person.username }?.ifBlank { "宠友" } ?: "宠友资料待核对"
+                FeatureSection("$name · ${stateLabel(row.state)}") {
                     Text(row.data.reason)
                     FeatureButton("查看资料") { f.open(FeatureRoute(FeaturePage.Member,peer)) }
                     val actions = buildList {
@@ -52,19 +48,23 @@ import com.ttkk0000.meowcircle.client.*
                     }
                     actions.forEach { (action,label) -> FeatureButton(label,!s.busy) {
                         val input = FriendInput(peer,newRequestKey(),row.version)
-                        f.confirm(label,"用户 #$peer · 当前版本 ${row.version}\n关系变化后将重新校验私密内容访问。") { f.api.friend(action,input); store.refreshHome(); f.reload() }
+                        f.confirm(label,"$name\n关系变化后将重新校验私密内容访问。") { f.api.friend(action,input); store.refreshHome(); f.reload(); f.loadPeopleChoices() }
                     } }
                 }
             }
-            MoreFeature(s.friends.next,s.loading) { f.reload(true) }
-            if (s.friends.loaded && s.friends.items.isEmpty()) Text("还没有好友关系。申请须由对方接受。")
+            PageFooter(s.friends, { f.reload() }, { f.reload(true) }, "还没有好友关系，申请须由对方接受。", enabled = !s.loading && !s.busy)
         }
         FeaturePage.Member -> s.member?.let { member ->
-            FeatureSection(member.nickname.ifBlank { member.username }) { Text(member.bio); Text("用户 #${member.id}") }
+            FeatureSection(member.nickname.ifBlank { member.username }) { Text(member.bio) }
+            if (actor != null && member.id != actor) FormField(f,s,"reason","好友申请说明")
             FeatureButton("申请成为好友", actor != null && member.id != actor && !s.busy) {
-                val relationship = s.friends.items.firstOrNull { it.data.requesterId == member.id || it.data.recipientId == member.id }
-                val input = FriendInput(member.id,newRequestKey(),relationship?.version ?: 0)
-                f.confirm("申请成为好友",member.nickname) { f.api.friend("request",input); f.notify("好友申请已发送，等待对方接受") }
+                f.runCommand {
+                    val input = f.prepareFriendRequest(member.id,f.field("reason"))
+                    f.reviewPrepared("申请成为好友","${member.nickname.ifBlank { member.username }}\n${input.reason}") {
+                        f.requireOpenedMember(member.id)
+                        f.api.friend("request",input); f.notify("好友申请已发送，等待对方接受")
+                    }
+                }
             }
             FeatureButton("发起私信",actor != null && member.id != actor && !s.busy) { f.runCommand { val chat = f.api.startConversation(member.id); f.finishRoute(); store.open(MobileDestination.Chat(chat.id)) } }
             FeatureButton("举报该资料") { f.open(FeatureRoute(FeaturePage.Review)); f.edit("reason","用户 #${member.id}（${member.nickname}）的资料：\n") }
@@ -89,7 +89,7 @@ import com.ttkk0000.meowcircle.client.*
             FormField(f,s,"name","宠物名字",pet.name)
             ChoiceField(f,s,"species","物种",listOf("cat" to "猫咪","dog" to "狗狗"),pet.species)
             FormField(f,s,"breed","品种（未知可留空）",pet.breed)
-            FormField(f,s,"birthday","生日（选填，YYYY-MM-DD）",pet.birthday)
+            DateTimeField(f,s,"birthday","生日（选填）",pet.birthday,dateOnly = true,optional = true)
             ChoiceField(f,s,"sex","性别",listOf("" to "未知","male" to "公","female" to "母"),pet.sex)
             FormField(f,s,"bio","宠物介绍",pet.bio,4)
             FormField(f,s,"health","私密健康记录",pet.health,3)
@@ -102,9 +102,13 @@ import com.ttkk0000.meowcircle.client.*
                 if (f.field("name",pet.name).isBlank() || audience == null || birthday.isNotBlank() && runCatching { java.time.LocalDate.parse(birthday) }.isFailure) f.notify("请填写名字、有效生日与可见范围") else {
                     val input = PetInput(pet.copy(name = f.field("name",pet.name).trim(),species = f.field("species",pet.species),breed = f.field("breed",pet.breed),birthday = birthday,
                         sex = f.field("sex",pet.sex),bio = f.field("bio",pet.bio),health = f.field("health",pet.health),audience = audience,adoptionAvailable = f.field("adoption",pet.adoptionAvailable.toString()).toBoolean()),f.version(record?.version ?: 0),f.mediaIds(record?.mediaIds.orEmpty()),newRequestKey())
-                    f.confirm("保存宠物档案","${input.pet.name}\n${audienceLabel(audience.mode)}\n${if (input.pet.adoptionAvailable) "开放领养介绍" else "普通档案"}") {
-                        val result = if (record == null) f.api.savePet(input) else f.api.editPet(record.id,input)
-                        store.refreshHome(); f.completeTo(FeatureRoute(FeaturePage.PetEdit,result.id))
+                    f.runCommand {
+                        f.requireCurrentAudience(audience)
+                        f.reviewPrepared("保存宠物档案","${input.pet.name}\n${audienceLabel(audience.mode)}\n${if (input.pet.adoptionAvailable) "开放领养介绍" else "普通档案"}") {
+                            f.requireCurrentAudience(audience)
+                            val result = if (record == null) f.api.savePet(input) else f.api.editPet(record.id,input)
+                            store.refreshHome(); f.completeTo(FeatureRoute(FeaturePage.PetEdit,result.id))
+                        }
                     }
                 }
             }
@@ -114,12 +118,18 @@ import com.ttkk0000.meowcircle.client.*
         }
         FeaturePage.Collaborators -> {
             Text(if (route.kind == "care") "照护协作者仅访问授权近况，不获得公开档案编辑和领养决定权限。" else "介绍协作者仅维护介绍与照片；领养决定仍由发布人处理。")
-            FormField(f,s,"invitee","邀请的用户编号",numeric = true)
+            PeopleChoiceField(f,s,"选择协作者",listOfNotNull(f.field("invitee").toLongOrNull()),
+                { f.edit("invitee",it.firstOrNull()?.toString().orEmpty()) })
             FeaturePrimary("发出协作邀请",!s.busy && actor != null) {
                 val user = f.field("invitee").toLongOrNull()
-                if (user == null || user <= 0 || user == actor) f.notify("请填写其他用户编号") else {
+                if (user == null || user <= 0 || user == actor) f.notify("请选择当前可访问的好友") else {
                     val input = InviteInput(if (route.kind == "care") "caretaker" else "adoption_editor",route.id,user,newRequestKey())
-                    f.confirm("发出协作邀请","邀请用户 #$user，仅授予当前事项中的协作范围。") { f.api.invite(input); f.notify("邀请已发出，可在邀请列表中撤销") }
+                    f.runCommand {
+                        val person = f.requireCurrentPeople(listOf(user)).single()
+                        f.reviewPrepared("发出协作邀请","${person.nickname.ifBlank { person.username }}\n${if (route.kind == "care") "仅查看授权的私密照护近况" else "仅维护本宠物的领养介绍与照片，不获得领养决定权限"}；须由对方接受。") {
+                            f.requireCurrentPeople(listOf(user)); f.api.invite(input); f.notify("邀请已发出，可在邀请列表中撤销")
+                        }
+                    }
                 }
             }
             FeatureButton("查看／撤销邀请") { f.open(FeatureRoute(FeaturePage.Invitations)) }
@@ -141,8 +151,7 @@ import com.ttkk0000.meowcircle.client.*
                 if (row.state == "accepted" && row.data.scope == "caretaker") FeatureButton("查看授权照护近况") { f.open(FeatureRoute(FeaturePage.AdoptionWork,row.data.targetId,"care")) }
                 if (row.state == "accepted" && row.data.scope == "group_member") FeatureButton("进入群聊") { f.finishRoute(); store.open(MobileDestination.Chat(row.data.targetId,true)) }
             } }
-            MoreFeature(s.invitations.next,s.loading) { f.reload(true) }
-            if (s.invitations.loaded && s.invitations.items.isEmpty()) Text("暂无邀请")
+            PageFooter(s.invitations, { f.reload() }, { f.reload(true) }, "暂无邀请", enabled = !s.loading && !s.busy)
         }
         FeaturePage.GroupCreate -> {
             FormField(f,s,"name","群聊名称")
@@ -163,8 +172,20 @@ import com.ttkk0000.meowcircle.client.*
             if (owner) {
                 FormField(f,s,"notice","群公告",body.notice,4)
                 FeatureButton("保存公告",!s.busy) { action("notice","更新群公告",notice = f.field("notice",body.notice)) }
-                FormField(f,s,"invitee","邀请用户编号",numeric = true)
-                FeatureButton("邀请成员",!s.busy) { val user = f.field("invitee").toLongOrNull(); if (user == null || user <= 0) f.notify("请输入有效编号") else { val input = InviteInput("group_member",group.id,user,newRequestKey()); f.confirm("邀请成员","用户 #$user") { f.api.invite(input); f.reload() } } }
+                PeopleChoiceField(f,s,"选择邀请入群的好友",listOfNotNull(f.field("invitee").toLongOrNull()),
+                    { f.edit("invitee",it.firstOrNull()?.toString().orEmpty()) },excluded = body.members.toSet())
+                FeatureButton("邀请成员",!s.busy) {
+                    val user = f.field("invitee").toLongOrNull()
+                    if (user == null || user <= 0 || user in body.members) f.notify("请选择尚未入群的好友") else {
+                        val input = InviteInput("group_member",group.id,user,newRequestKey())
+                        f.runCommand {
+                            val person = f.requireCurrentPeople(listOf(user)).single()
+                            f.reviewPrepared("邀请成员","邀请 ${person.nickname.ifBlank { person.username }} 加入 ${body.name}；对方接受后才能访问群聊。") {
+                                f.requireCurrentPeople(listOf(user)); f.api.invite(input); f.reload()
+                            }
+                        }
+                    }
+                }
                 body.members.filter { it != actor }.forEach { user -> FeatureSection("成员 #$user") {
                     FeatureButton("查看资料") { f.open(FeatureRoute(FeaturePage.Member,user)) }
                     FeatureButton("移出群聊",!s.busy) { action("remove_member","移出成员",user) }
@@ -185,7 +206,14 @@ import com.ttkk0000.meowcircle.client.*
 }
 @Composable internal fun AudienceFields(f: MobileFeatureStore, s: FeatureState, audience: Audience, publicAllowed: Boolean = true) {
     ChoiceField(f,s,"audience","可见范围",buildList { if (publicAllowed) add("public" to "公开"); add("private" to "仅自己"); add("friends" to "好友"); add("selected" to "指定好友"); add("excluded" to "排除指定好友") },audience.mode)
-    if (f.field("audience",audience.mode) in listOf("selected","excluded")) FormField(f,s,"audienceIds","好友编号，以逗号分隔",audience.userIds.joinToString(","))
+    val mode = f.field("audience",audience.mode)
+    if (mode in listOf("selected","excluded")) {
+        val selected = ids(f.field("audienceIds",audience.userIds.joinToString(","))) ?: audience.userIds
+        Text(if (mode == "selected") "仅以下好友可见；未选中的好友无法查看。" else "所有好友中排除以下人员；今后新增的好友也可能可见。")
+        PeopleChoiceField(f,s,if (mode == "selected") "指定可见好友" else "排除可见好友",selected,
+            { f.edit("audienceIds",it.joinToString(",")) },multiple = true)
+        Text("关系失效或读取失败会要求调整或重试，不能自动改成公开。")
+    }
 }
 internal fun formAudience(f: MobileFeatureStore, original: Audience): Audience? {
     val mode = f.field("audience",original.mode); val selected = ids(f.field("audienceIds",original.userIds.joinToString(","))) ?: return null
@@ -193,4 +221,3 @@ internal fun formAudience(f: MobileFeatureStore, original: Audience): Audience? 
 }
 internal fun audienceLabel(mode: String) = mapOf("public" to "公开","private" to "仅自己","friends" to "好友可见","selected" to "指定好友可见","excluded" to "排除指定好友")[mode] ?: "未知范围"
 internal fun invitationScope(scope: String) = mapOf("adoption_editor" to "领养介绍协作","caretaker" to "私密照护协作","group_member" to "群聊邀请")[scope] ?: scope
-@Composable internal fun MoreFeature(cursor: Long, loading: Boolean, more: () -> Unit) { if (cursor != 0L) FeatureButton("继续加载",!loading,more) }

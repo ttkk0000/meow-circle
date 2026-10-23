@@ -1,5 +1,9 @@
 # M&D 文档入口
 
+2026-10-23最新客户端续作：[安卓手机／平板页面与恢复接线](client/ANDROID_PAGES_2026_10_23.md)，按用户要求苹果页面后置；五主入口／30扩展页及布局源码已有，运行与真实渠道尚未验收。
+
+2026-10-23服务端优先续作：[实现与作业交接](server/SERVER_FIRST_2026_10_23.md)、[现行API](server/MOBILE_SERVER.md)。会话／回执、推送解绑、实际作业与独立worker已有源码，静态209路径／236操作；真实配置、编译／运行验收仍未完成。
+
 2026-10-22技术规划：[架构与数据／API合同](bmad/architecture.md) · [准入核对](bmad/gate-check.md) · [实施顺序S0–S7](client/IMPLEMENTATION_PLAN.md) · [任务及B05–B12](client/TASKS.md)。已将最新45组225布局追溯到技术任务；当前仍有服务端与实际运营／环境阻塞，规划完成不代表代码或上线验收完成。
 
 2026-10-20设计新补充：[全局未读／99+规范](design/MND_GLOBAL_UNREAD_SPEC.md) · [Figma与接入交接](design/figma-study/GLOBAL_UNREAD_HANDOFF_2026_10_20.md)。8张手机状态、边界板及四端入口已设计；完整跨端新状态和真实未读实现待接入。

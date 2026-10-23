@@ -118,6 +118,13 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		r.Body = http.MaxBytesReader(w, r.Body, 1<<20)
 	}
 	actor := int64(0)
+	if key := r.Header.Get("Idempotency-Key"); key != "" {
+		if _, _, e := mobile.CommandIdentity(mobile.CommandMeta{ClientRequestID: key}); e != nil {
+			failure(w, e)
+			return
+		}
+		r = r.WithContext(mobile.WithCommandID(r.Context(), key))
+	}
 	token := ""
 	header := r.Header.Get("Authorization")
 	refreshRequest := len(path) == 2 && path[0] == "auth" && path[1] == "refresh"
@@ -187,6 +194,14 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if len(path) == 1 && path[0] == "inbox-summary" && r.Method == http.MethodGet {
 		result, e = h.Service.Unread(r.Context(), actor)
+	} else if len(path) == 3 && path[0] == "inbox" && path[1] == "read-all" && path[2] == "snapshot" && r.Method == http.MethodPost {
+		result, e = invoke(r, func(in mobile.InboxSnapshotInput) (mobile.InboxReadSnapshot, error) {
+			return h.Service.PrepareInboxReadAll(r.Context(), actor, in)
+		})
+	} else if len(path) == 2 && path[0] == "inbox" && path[1] == "read-all" && r.Method == http.MethodPost {
+		result, e = invoke(r, func(in mobile.InboxReadAllInput) (mobile.InboxReadAllResult, error) {
+			return h.Service.ConfirmInboxReadAll(r.Context(), actor, in)
+		})
 	} else if len(path) == 1 && path[0] == "profile" && r.Method == http.MethodGet {
 		result, e = h.Identity.Profile(r.Context(), actor)
 	} else if len(path) == 1 && path[0] == "profile" && r.Method == http.MethodPatch {
@@ -281,6 +296,10 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 	}
 	if r.Method == http.MethodDelete && len(path) == 2 {
 		in, e := payload[mobile.StateInput](r)
+		if e != nil {
+			return nil, e
+		}
+		ctx, e = mobile.CommandContext(ctx, in.ClientRequestID)
 		if e != nil {
 			return nil, e
 		}
@@ -428,26 +447,34 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 			})
 		}
 		return invoke(r, func(in mobile.StateInput) (mobile.Record, error) {
-			return h.Service.ConversationAction(ctx, actor, id, in.Version, action)
+			commandCtx, e := mobile.CommandContext(ctx, in.ClientRequestID)
+			if e != nil {
+				return mobile.Record{}, e
+			}
+			return h.Service.ConversationAction(commandCtx, actor, id, in.Version, action)
 		})
 	case mobile.Invitations:
 		return invoke(r, func(in mobile.StateInput) (mobile.Record, error) {
-			return h.Service.Invitation(ctx, actor, id, in.Version, action)
+			commandCtx, e := mobile.CommandContext(ctx, in.ClientRequestID)
+			if e != nil {
+				return mobile.Record{}, e
+			}
+			return h.Service.Invitation(commandCtx, actor, id, in.Version, action)
 		})
 	case mobile.Notifications:
 		if action == "read" {
 			return invoke(r, func(in mobile.StateInput) (mobile.Record, error) {
-				return h.Service.ReadNotification(ctx, actor, id, in.Version)
+				commandCtx, e := mobile.CommandContext(ctx, in.ClientRequestID)
+				if e != nil {
+					return mobile.Record{}, e
+				}
+				return h.Service.ReadNotification(commandCtx, actor, id, in.Version)
 			})
 		}
 	case mobile.Reviews:
 		if action == "supplement" {
-			return invoke(r, func(in struct {
-				Version  int64   `json:"version"`
-				Note     string  `json:"note"`
-				MediaIDs []int64 `json:"media_ids"`
-			}) (mobile.Record, error) {
-				return h.Service.SupplementReview(ctx, actor, id, mobile.StateInput{Version: in.Version, Note: in.Note}, in.MediaIDs)
+			return invoke(r, func(in mobile.StateInput) (mobile.Record, error) {
+				return h.Service.SupplementReview(ctx, actor, id, in, in.MediaIDs)
 			})
 		}
 	}
@@ -570,6 +597,39 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 		return nil, mobile.ErrForbidden
 	}
 	r = r.WithContext(mobile.WithOperator(r.Context(), op.ID))
+	if len(path) == 2 && path[0] == "jobs" && r.Method == http.MethodPost {
+		return invoke(r, func(in mobile.JobInput) (mobile.JobResult, error) { return h.runJob(r, op, path[1], in) })
+	}
+	if len(path) == 2 && path[0] == "data-requests" && r.Method == http.MethodGet {
+		id, e := parseID(path[1])
+		if e != nil {
+			return nil, e
+		}
+		return h.Service.DataRequestWork(r.Context(), op.ID, id)
+	}
+	if len(path) == 2 && path[0] == "rights-cases" && r.Method == http.MethodGet {
+		id, e := parseID(path[1])
+		if e != nil {
+			return nil, e
+		}
+		return h.Service.RightsDetails(r.Context(), op.ID, id)
+	}
+	if len(path) == 1 && path[0] == "retention-expiry" && r.Method == http.MethodPost {
+		return invoke(r, func(in mobile.RetentionExpiryInput) (mobile.RetentionExpiryResult, error) {
+			return h.Service.ExpireRightsEvidence(r.Context(), op.ID, in)
+		})
+	}
+	if len(path) == 1 && path[0] == "rights-cases" && r.Method == http.MethodGet {
+		after := int64(0)
+		if cursor := r.URL.Query().Get("cursor"); cursor != "" {
+			var e error
+			after, e = strconv.ParseInt(cursor, 10, 64)
+			if e != nil || after < 0 {
+				return nil, mobile.Invalid("invalid rights queue cursor")
+			}
+		}
+		return h.Service.RightsQueue(r.Context(), op.ID, after)
+	}
 	if len(path) == 1 && path[0] == "upload-expiry" && r.Method == http.MethodPost {
 		return invoke(r, func(in mobile.UploadCleanupInput) (mobile.UploadCleanupResult, error) {
 			return h.cleanupUploads(r, op.ID, in)
@@ -709,6 +769,9 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 		return nil, mobile.Denied("use_per_consumer_delivery")
 	}
 	if len(path) == 1 && path[0] == "nearby-alerts" && r.Method == http.MethodPost {
+		if !op.permitsConsumer("nearby_alerts") {
+			return nil, mobile.ErrForbidden
+		}
 		return invoke(r, func(in struct {
 			CaseID int64 `json:"case_id"`
 			Cursor int64 `json:"cursor"`

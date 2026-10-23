@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-23",
+  "status": "paused_by_user",
+  "scope": "Figma expression stretching only",
+  "runner": "functions cell 193 terminated at user request; no new Figma request after pause",
+  "acknowledged": {
+    "tabletPilot": [
+      "322:817417",
+      "322:828258"
+    ],
+    "web": 32,
+    "desktop": 32
+  },
+  "unconfirmed": {
+    "tabletRemainder": 62,
+    "reason": "Batch dispatched before pause; final response not captured. Read current nodes before retry."
+  },
+  "screenshotsViewed": [
+    {
+      "node": "312:301",
+      "platform": "tablet landscape",
+      "result": "square emoji"
+    },
+    {
+      "node": "312:298",
+      "platform": "web",
+      "result": "square emoji"
+    }
+  ],
+  "resume": "Read current 128 mapped containers. Only fix remaining geometry, then inspect portrait/desktop screenshots. Do not blindly replay old write. Generic loading states deferred.",
+  "build": "未运行编译，遵循全局不自行编译规则"
+}

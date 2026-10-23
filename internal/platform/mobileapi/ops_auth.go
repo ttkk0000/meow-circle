@@ -71,6 +71,11 @@ func operatorRole(path []string) string {
 		return ""
 	}
 	switch path[0] {
+	case "jobs":
+		if len(path) == 2 && path[1] == "maintenance" {
+			return "privacy"
+		}
+		return "worker"
 	case "revenue":
 		return "finance"
 	case "push":
@@ -81,7 +86,7 @@ func operatorRole(path []string) string {
 		return "authority_verifier"
 	case "deliveries", "outbox", "provider-revocations", "nearby-alerts":
 		return "worker"
-	case "data-requests", "legacy-erasure", "media-erasure", "privacy-expiry", "challenge-expiry", "token-expiry", "upload-expiry":
+	case "data-requests", "legacy-erasure", "media-erasure", "privacy-expiry", "challenge-expiry", "token-expiry", "upload-expiry", "retention-expiry":
 		return "privacy"
 	default:
 		return "moderator"

@@ -30,6 +30,7 @@ android {
         minSdk = 26
         targetSdk = 37
         manifestPlaceholders["allowCleartextTraffic"] = "false"
+        manifestPlaceholders["appLinkHost"] = java.net.URI(meowApiBaseUrl).host ?: "localhost"
         versionCode = 1
         versionName = "0.1.0"
         buildConfigField("String", "API_BASE_URL", "\"$meowApiBaseUrl\"")

@@ -4,7 +4,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -39,6 +38,6 @@ private val DefaultTypography = Typography().let { t -> Typography(
 @Composable
 fun MobileTheme(content: @Composable () -> Unit) {
     MaterialTheme(colorScheme = DefaultColors, typography = DefaultTypography,
-        shapes = Shapes(small = RoundedCornerShape(16.dp), medium = RoundedCornerShape(16.dp), large = RoundedCornerShape(24.dp)),
+        shapes = Shapes(small = RoundedCornerShape(MobileUi.cardRadius), medium = RoundedCornerShape(MobileUi.cardRadius), large = RoundedCornerShape(MobileUi.dialogRadius)),
         content = content)
 }

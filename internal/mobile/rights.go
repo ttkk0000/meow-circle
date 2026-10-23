@@ -73,40 +73,45 @@ type RightsMessage struct {
 	ActorRole string    `json:"actor_role"`
 }
 type RightsCase struct {
-	TransferReceipt string          `json:"transfer_receipt,omitempty"`
-	EvidenceUntil   time.Time       `json:"evidence_until"`
-	Type            string          `json:"type"`
-	TargetKind      Kind            `json:"target_kind"`
-	TargetID        int64           `json:"target_id"`
-	RelatedCaseID   int64           `json:"related_case_id"`
-	SessionHash     string          `json:"session_hash"`
-	Contact         string          `json:"contact"`
-	LegalName       string          `json:"legal_name"`
-	RightType       string          `json:"right_type"`
-	Statement       string          `json:"statement"`
-	Messages        []RightsMessage `json:"messages"`
-	ReviewDue       time.Time       `json:"review_due"`
-	TransferState   string          `json:"transfer_state"`
-	Operator        string          `json:"operator,omitempty"`
+	EvidenceErasedAt *time.Time      `json:"evidence_erased_at,omitempty"`
+	TransferReceipt  string          `json:"transfer_receipt,omitempty"`
+	EvidenceUntil    time.Time       `json:"evidence_until"`
+	Type             string          `json:"type"`
+	TargetKind       Kind            `json:"target_kind"`
+	TargetID         int64           `json:"target_id"`
+	RelatedCaseID    int64           `json:"related_case_id"`
+	SessionHash      string          `json:"session_hash"`
+	Contact          string          `json:"contact"`
+	LegalName        string          `json:"legal_name"`
+	RightType        string          `json:"right_type"`
+	Statement        string          `json:"statement"`
+	Messages         []RightsMessage `json:"messages"`
+	ReviewDue        time.Time       `json:"review_due"`
+	TransferState    string          `json:"transfer_state"`
+	Operator         string          `json:"operator,omitempty"`
 }
 type RightsReceipt struct {
-	ID        int64     `json:"id"`
-	Version   int64     `json:"version"`
-	State     string    `json:"state"`
-	Type      string    `json:"type"`
-	ReviewDue time.Time `json:"review_due"`
+	EvidenceState string    `json:"evidence_state"`
+	ID            int64     `json:"id"`
+	Version       int64     `json:"version"`
+	State         string    `json:"state"`
+	Type          string    `json:"type"`
+	ReviewDue     time.Time `json:"review_due"`
 }
 
 func RightsScope(actor int64, in RightsInput) (PurposeScope, error) {
 	return ScopeFor("rights_notice.submit", string(RightsCases), in.RelatedCaseID, in.Version, "submitter", struct {
-		Actor     int64  `json:"actor"`
-		Type      string `json:"type"`
-		Kind      Kind   `json:"kind"`
-		ID        int64  `json:"id"`
-		Reason    string `json:"reason"`
-		Statement string `json:"statement"`
-		Evidence  string `json:"evidence"`
-	}{actor, in.Type, in.TargetKind, in.TargetID, in.Reason, in.Statement, in.EvidenceDescription})
+		Actor     int64   `json:"actor"`
+		Type      string  `json:"type"`
+		Kind      Kind    `json:"kind"`
+		ID        int64   `json:"id"`
+		Reason    string  `json:"reason"`
+		Statement string  `json:"statement"`
+		Evidence  string  `json:"evidence"`
+		LegalName string  `json:"legal_name"`
+		RightType string  `json:"right_type"`
+		MediaIDs  []int64 `json:"media_ids"`
+	}{actor, in.Type, in.TargetKind, in.TargetID, in.Reason, in.Statement, in.EvidenceDescription, in.LegalName, in.RightType, in.MediaIDs})
 }
 func (s *Service) SubmitRightsCase(ctx context.Context, actor int64, token string, in RightsInput) (out RightsReceipt, err error) {
 	if !HasString([]string{"safety", "privacy", "rights_notice", "counterstatement", "supplement", "data_assistance"}, in.Type) || textValid(in.Reason, 3000, true) != nil || textValid(in.EvidenceDescription, 4000, false) != nil || len(in.MediaIDs) > 9 {
@@ -126,7 +131,7 @@ func (s *Service) SubmitRightsCase(ctx context.Context, actor int64, token strin
 		}
 		sessionHash := Fingerprint(token)
 		if actor > 0 {
-			if e = s.active(tx, actor); e != nil {
+			if e = s.checkActor(ctx, tx, actor); e != nil {
 				return e
 			}
 		}
@@ -142,7 +147,7 @@ func (s *Service) SubmitRightsCase(ctx context.Context, actor int64, token strin
 			if v.RequestHash != hash {
 				return Denied("idempotency_conflict")
 			}
-			out = RightsReceipt{r.ID, r.Version, r.State, v.Case.Type, v.Case.ReviewDue}
+			out = rightsReceipt(r, v.Case, s.Now())
 			return nil
 		}
 		if e != ErrNotFound {
@@ -212,7 +217,7 @@ func (s *Service) SubmitRightsCase(ctx context.Context, actor int64, token strin
 		}{hash, v}, actor, "rights_case.submitted"); e != nil {
 			return e
 		}
-		out = RightsReceipt{r.ID, r.Version, r.State, v.Type, v.ReviewDue}
+		out = rightsReceipt(r, v, s.Now())
 		return nil
 	})
 	return
@@ -235,7 +240,7 @@ func (s *Service) RightsStatus(ctx context.Context, token string, id int64) (out
 		if v.Case.SessionHash != Fingerprint(token) {
 			return ErrForbidden
 		}
-		out = RightsReceipt{r.ID, r.Version, r.State, v.Case.Type, v.Case.ReviewDue}
+		out = rightsReceipt(r, v.Case, s.Now())
 		return nil
 	})
 	return
@@ -293,7 +298,22 @@ func (s *Service) DecideRightsCase(ctx context.Context, operator string, id int6
 		if e != nil {
 			return e
 		}
+		if v.Case.EvidenceErasedAt != nil {
+			return Denied("evidence_already_erased")
+		}
 		if in.EvidenceUntil != nil {
+			if in.EvidenceUntil.Before(v.Case.EvidenceUntil) {
+				return Denied("evidence_retention_cannot_be_shortened_or_restored")
+			}
+			for _, mediaID := range r.MediaIDs {
+				media, e := tx.Get(Media, mediaID)
+				if e != nil {
+					return e
+				}
+				if media.State != "ready" {
+					return Denied("media_retention_target_unavailable")
+				}
+			}
 			v.Case.EvidenceUntil = *in.EvidenceUntil
 			v.Case.Messages = append(v.Case.Messages, RightsMessage{"retention", in.RetentionBasis, in.Responsible, s.Now(), "operator"})
 		}
@@ -306,7 +326,7 @@ func (s *Service) DecideRightsCase(ctx context.Context, operator string, id int6
 		if e = save(tx, RightsCases, &r, v, r.OwnerID, "rights_case.decided"); e != nil {
 			return e
 		}
-		out = RightsReceipt{r.ID, r.Version, r.State, v.Case.Type, v.Case.ReviewDue}
+		out = rightsReceipt(r, v.Case, s.Now())
 		return audit(tx, operator, "rights_case.decided", RightsCases, id)
 	})
 	return

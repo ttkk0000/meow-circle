@@ -21,15 +21,18 @@ import com.ttkk0000.meowcircle.kmpapp.R
 @Composable internal fun AndroidAuthDialog(store: MobileStore,s: MobileState) {
     val f = store.features; val work by f.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    var mode by remember { mutableStateOf("password") }
-    var identifier by remember { mutableStateOf("") }; var password by remember { mutableStateOf("") }
-    var code by remember { mutableStateOf("") }; var username by remember { mutableStateOf("") }; var agreed by remember { mutableStateOf(false) }
+    var mode by rememberSessionUiState("mode", "transient:auth") { "password" }
+    var identifier by rememberSessionUiState("identifier", "transient:auth") { "" }
+    var password by rememberSessionUiState("password", "transient:auth") { "" }
+    var code by rememberSessionUiState("code", "transient:auth") { "" }
+    var username by rememberSessionUiState("username", "transient:auth") { "" }
+    var agreed by rememberSessionUiState("agreed", "transient:auth", generation = termsGeneration(context)) { false }
     val terms = context.getString(R.string.mnd_terms_url); val privacy = context.getString(R.string.mnd_privacy_url)
     val policyReady = listOf(terms,privacy).all { url -> runCatching { Uri.parse(url).let { it.scheme == "https" && !it.host.isNullOrBlank() } }.getOrDefault(false) }
     val busy = s.busy || work.busy
     MobileDialog(onDismissRequest = { if(!busy) store.cancelLogin() }) {
-        Surface(shape = MaterialTheme.shapes.large,modifier = Modifier.padding(16.dp).widthIn(max = 520.dp).fillMaxWidth()) {
-            Column(Modifier.heightIn(max = 680.dp).verticalScroll(rememberScrollState()).padding(24.dp),verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        Surface(shape = MaterialTheme.shapes.large,modifier = Modifier.padding(MobileUi.pagePadding).widthIn(max = MobileUi.authWidth).fillMaxWidth()) {
+            Column(Modifier.heightIn(max = 680.dp).verticalScroll(rememberScrollState()).padding(MobileUi.dialogPadding),verticalArrangement = Arrangement.spacedBy(MobileUi.formGap)) {
                 Text(if(mode == "register") "加入 M&D" else if(mode == "recover") "找回账号密码" else "欢迎回到 M&D",style = MaterialTheme.typography.headlineSmall)
                 Text("meow & doggie · 游客也能浏览公开内容",color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
@@ -77,3 +80,6 @@ import com.ttkk0000.meowcircle.kmpapp.R
         }
     }
 }
+
+private fun termsGeneration(context: android.content.Context) =
+    context.getString(R.string.mnd_terms_url) to context.getString(R.string.mnd_privacy_url)

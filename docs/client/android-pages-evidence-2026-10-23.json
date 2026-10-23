@@ -1,0 +1,469 @@
+{
+  "task": "AI-20261023-ANDROID-PAGES",
+  "created_at": "2026-10-23T01:59:24+08:00",
+  "branch": "main",
+  "head": "5de631b669d312ddd461d015ed137dad16c6ed02",
+  "uncommitted": true,
+  "latest_user_priority": "Android phone and tablet pages first; Apple UI deferred",
+  "scope": "Android page/source and necessary common API glue; one review-supplement HTTP adaptation; preserves prior server/shared working tree changes",
+  "completion_level": "source and read-only static checks only; no Kotlin type checking or language parsing, application tests or runtime verification",
+  "main_tabs": [
+    "Community",
+    "Adoption",
+    "Publish",
+    "Messages",
+    "Profile"
+  ],
+  "page_coverage": [
+    {
+      "page": "EntryEdit",
+      "title": "编辑动态",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Friends",
+      "title": "好友与宠友圈",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Member",
+      "title": "宠友资料",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "ProfileEdit",
+      "title": "编辑资料",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "PetEdit",
+      "title": "宠物档案",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Collaborators",
+      "title": "协作与邀请",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Invitations",
+      "title": "收到与发出的邀请",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "GroupCreate",
+      "title": "创建群聊",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Group",
+      "title": "群聊管理",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Appointments",
+      "title": "预约",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Appointment",
+      "title": "预约详情",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "AppointmentEdit",
+      "title": "预约安排",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "CaseEdit",
+      "title": "走失与拾获发布",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "CaseWork",
+      "title": "线索与认领",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Claim",
+      "title": "私密认领材料",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "AdoptionWork",
+      "title": "领养照护与协议",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "ContractEdit",
+      "title": "协议提案",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "ReturnEdit",
+      "title": "安全接回安排",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Offers",
+      "title": "有偿信息",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidOfferFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Offer",
+      "title": "披露详情",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidOfferFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "OfferEdit",
+      "title": "编辑披露",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidOfferFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Settings",
+      "title": "通知设置",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Nearby",
+      "title": "附近提醒",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Reviews",
+      "title": "核实与举报",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Review",
+      "title": "核实事项",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Safety",
+      "title": "安全与隐私求助",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "DataRequests",
+      "title": "资料与账号请求",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Security",
+      "title": "账号安全",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Recovery",
+      "title": "待核对操作",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    },
+    {
+      "page": "Expressions",
+      "title": "表情与贴纸",
+      "handler": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "source": "present",
+      "phone_runtime": "unverified",
+      "tablet_runtime": "unverified"
+    }
+  ],
+  "tablet_source": [
+    "available window width/height and fontScale policy",
+    "IME and short-height collapse",
+    "width-dependent form pairs",
+    "single shared state owner",
+    "existing hinge-safe region and scroll retention",
+    "vertical dialog actions"
+  ],
+  "ios_ui_files_changed": [],
+  "checks": [
+    {
+      "check": "scripts/check_android_feature_static.py",
+      "result": "passed",
+      "feature_pages": 30,
+      "main_tabs": 5,
+      "assets": 24
+    },
+    {
+      "check": "scripts/check_kmp_client_static.py",
+      "result": "passed",
+      "kotlin_swift_files": 48,
+      "limits": "lexical delimiters/configuration only; not Kotlin parsing or type checking"
+    },
+    {
+      "check": "scripts/check_server_shared_contract_static.py",
+      "result": "passed",
+      "dto_pairs": 49
+    },
+    {
+      "check": "scripts/check_mobile_static.py",
+      "result": "passed",
+      "tables": 42,
+      "paths": 209,
+      "operations": 236,
+      "schemas": 100,
+      "assets": [
+        128,
+        24
+      ]
+    },
+    {
+      "check": "gofmt format/parser",
+      "result": "passed",
+      "files": [
+        "internal/platform/mobileapi/handler.go",
+        "internal/platform/mobileapi/review_supplement_test.go"
+      ],
+      "type_check": false
+    },
+    {
+      "check": "read-only page mapping, regression declarations and review DTO reference",
+      "result": "passed",
+      "regression_declarations": 7
+    },
+    {
+      "check": "git diff --check with CRLF recognized",
+      "result": "passed"
+    }
+  ],
+  "regression_source_only": [
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/ReceiptMutationTest.kt",
+      "declarations": [
+        "putRetryRestoresOriginalMethodHeaderAndBody",
+        "missingReceiptAfterSuccessfulWriteRemainsUnknown",
+        "deletionUsesActualReceiptWhenResponseHasNoRecordBody",
+        "existingVaultCommandsDefaultToPostWithoutNewHeader",
+        "closeCaseAddsTheRequiredRequestKey",
+        "patchEditingRetainsItsMethodAfterUnknownResponse"
+      ]
+    },
+    {
+      "path": "internal/platform/mobileapi/review_supplement_test.go",
+      "declarations": [
+        "TestReviewSupplementPreservesRequestIdentityAcrossReplay"
+      ]
+    }
+  ],
+  "not_executed": [
+    "Kotlin/Go type checking",
+    "Gradle/compilation/build/package/install",
+    "application tests/lint and fixtures",
+    "server or worker",
+    "migration or real providers",
+    "Android phone/tablet/emulator",
+    "iOS/iPad or Xcode",
+    "commit/push/deployment"
+  ],
+  "remaining": [
+    "formal terms/privacy URLs and real identity/guardian/city-policy providers",
+    "official Android OAuth SDK, push device channel, maps/geocoding",
+    "authorized type/build/API/failure recovery and phone/tablet/hinge/keyboard/accessibility acceptance",
+    "unsupported follow/post-favorites/global-read backend contracts remain unavailable",
+    "Apple UI deferred by user"
+  ],
+  "fingerprint_normalization": "UTF-8 without BOM with CRLF/CR normalized to LF; earlier evidence files remain historical snapshots",
+  "sources": [
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256_utf8_lf": "5cb3a8eb76f064e59630d41c4e33dd457e13044f05271192f8793210e50faee3"
+    },
+    {
+      "path": "docs/client/ANDROID_PAGES_2026_10_23.md",
+      "sha256_utf8_lf": "7cf3a054993e375bff55fda4e8649961eb5e332141a97975801b8645350a2a1e"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256_utf8_lf": "a453a4f3f02b54fb06058586a8ff2a370e69f07e3deee3840a87a43d751a0c36"
+    },
+    {
+      "path": "internal/platform/mobileapi/review_supplement_test.go",
+      "sha256_utf8_lf": "2cf314983da6d2e013aaf855d07c100c05a3eeb2d71a51dd171ef811d11c7c43"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "sha256_utf8_lf": "bf2272b46c792fedc6e6fb1dd6f3a394d3007aab02909d23175a9d533d0805ac"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAdaptiveWindow.kt",
+      "sha256_utf8_lf": "c7732c6ef69754229beb01540ccad6aa40197cf767b892cd477e097aaf852f5e"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "sha256_utf8_lf": "68de3c530046c9f5302700e938026caa0bf49e2d7da97d2c8d4bea5dc21ad434"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDateFields.kt",
+      "sha256_utf8_lf": "c135fb3121a85ebc298a5b46ab80e18699c3899f3a191bd11ddc3119d11aecd8"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDialog.kt",
+      "sha256_utf8_lf": "4f42837abe88eeddf3942bf2612dd4889528213f644b68426878e438d85e4bf8"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidFeatureContent.kt",
+      "sha256_utf8_lf": "7db3cba422f35c4b349a14a3cb0bbfb69d66abc8ebf7ca4f58e025bc324ceab4"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt",
+      "sha256_utf8_lf": "ef1ff8916deea2c69a84858561f39c1fef71a46ea5417e3bb187a7636b20c1f5"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidOfferFeatures.kt",
+      "sha256_utf8_lf": "dd49e529a56b6eed3a864de07958055f9a647aea278de733118a39850b61a3e8"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPetFields.kt",
+      "sha256_utf8_lf": "ede0058affbc21a2f4b533d5ceb14b42b35a471fe9e2e187c1c928ced172550e"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "sha256_utf8_lf": "127b11fb2ef41ee867175c834397786e973a7394bee8d1bb6b72964fe7adb2b7"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileTheme.kt",
+      "sha256_utf8_lf": "53b1e3ead901d095316fbedfd9ab535cbc39fb2cb9fbcc8cfab7abc88339b199"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt",
+      "sha256_utf8_lf": "aed822c7bd4719febf8d0b3e4403a2854dc00ef88aa692ef3faacc36779521e4"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "sha256_utf8_lf": "04cbb2c180bb88fd605ce96ac7b58064177b01ae2f5c5194ebb551218ce7d64c"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256_utf8_lf": "de5ea42090822ff240f5c74dfa20f7db64a104a2b540b29b226a6ef245dffe65"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256_utf8_lf": "7adfa05ada82a6686ec2b30d2dfbd758c2eb873e49ca6ed02ba4806fd32113de"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_utf8_lf": "eb570f82d758cd01dc2b854129d4ea9b6b7e76b647e121b73790e207a9f5a866"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/PolicyModels.kt",
+      "sha256_utf8_lf": "e3fbf3abebfe0683559d303997a2f9b2e58a12bd3c255e107a32dd2f97ecbdc4"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/WorkspaceApi.kt",
+      "sha256_utf8_lf": "4feb367dedacd3b9be4374a810e2e1fc0eac8694f933871b99b4ed56fa6abc75"
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/ReceiptMutationTest.kt",
+      "sha256_utf8_lf": "f6e92002c3a70780853f2151e7c877b7895b7d583ea23c6dbe27846d6d40221d"
+    },
+    {
+      "path": "scripts/check_android_feature_static.py",
+      "sha256_utf8_lf": "0da73c42f5c88efbc4d119368e0c4c6a0ed3f57773d33262e983115f9cbbf1e7"
+    },
+    {
+      "path": "scripts/check_kmp_client_static.py",
+      "sha256_utf8_lf": "e2b1094f9c77f3d16cf7687481791e474570f239e92e5833b5188e288c6cce93"
+    },
+    {
+      "path": "scripts/check_mobile_static.py",
+      "sha256_utf8_lf": "0a9b1fed78d58f8be906fa3c2179733c47f2e4b7250afc9de11d80bea9aab5af"
+    },
+    {
+      "path": "scripts/check_server_shared_contract_static.py",
+      "sha256_utf8_lf": "01a01f94075ffd5dfd1322a6196a823db6d6f7972b6b63b5abab6799599b906a"
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256_utf8_lf": "7b3bbe34f59c3647339eb041e0b0c52f96ce01288313b0aa8c1704f40825ba90"
+    }
+  ]
+}
