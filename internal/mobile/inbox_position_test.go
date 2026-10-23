@@ -57,3 +57,37 @@ func TestFirstUnreadPositionIgnoresOwnMessagesAndAdvancesWithReceipt(t *testing.
 		t.Fatalf("position leaked to outsider: %+v %v", outsider, err)
 	}
 }
+
+func TestGlobalUnreadExcludesMutedGroupsAndNeverIncludesPendingTasks(t *testing.T) {
+	s, _ := fixture(t)
+	ctx := context.Background()
+	group, err := s.CreateGroup(ctx, 1, mobile.GroupInput{CommandMeta: meta(), Name: "免打扰回归"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	invite, err := s.Invite(ctx, 1, mobile.InviteInput{CommandMeta: meta(), Scope: "group_member", TargetID: group.ID, UserID: 2})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = s.Invitation(ctx, 2, invite.ID, invite.Version, "accept"); err != nil {
+		t.Fatal(err)
+	}
+	group, err = s.Get(ctx, 2, mobile.Groups, group.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = s.Message(ctx, 1, group.ID, true, mobile.MessageInput{Content: mobile.RichContent{Text: "真实未读"}, IdempotencyKey: "muted-group-message"}); err != nil {
+		t.Fatal(err)
+	}
+	before, err := s.Unread(ctx, 2)
+	if err != nil || before.Groups[group.ID] != 1 {
+		t.Fatal(before, err)
+	}
+	if _, err = s.Group(ctx, 2, group.ID, "mute", mobile.GroupAction{CommandMeta: meta(), Version: group.Version}); err != nil {
+		t.Fatal(err)
+	}
+	after, err := s.Unread(ctx, 2)
+	if err != nil || after.Groups[group.ID] != 1 || after.GlobalTotal != before.GlobalTotal-1 {
+		t.Fatal("mute changed local unread or retained global badge", before, after, err)
+	}
+}

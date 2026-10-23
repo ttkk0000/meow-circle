@@ -1,0 +1,2390 @@
+{
+  "User": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "username": {
+        "type": "string"
+      },
+      "nickname": {
+        "type": "string"
+      },
+      "avatar_url": {
+        "type": "string"
+      },
+      "bio": {
+        "type": "string"
+      },
+      "created_at": {
+        "type": "string"
+      }
+    }
+  },
+  "Envelope": {
+    "type": "object",
+    "properties": {
+      "ok": {
+        "type": "boolean"
+      },
+      "data": {},
+      "error": {
+        "type": "string"
+      },
+      "error_code": {
+        "type": "string"
+      },
+      "request_id": {
+        "type": "string"
+      }
+    }
+  },
+  "Record": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "owner_id": {
+        "type": "integer"
+      },
+      "version": {
+        "type": "integer"
+      },
+      "reference_id": {
+        "type": "integer"
+      },
+      "state": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      }
+    }
+  },
+  "CommandMeta": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      }
+    }
+  },
+  "PetInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "pet": {
+        "$ref": "#/components/schemas/Pet"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "EntryInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "declaration": {
+        "$ref": "#/components/schemas/PublicationDeclaration"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "entry": {
+        "$ref": "#/components/schemas/Entry"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "CaseInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "case": {
+        "$ref": "#/components/schemas/Case"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "OfferInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "offer": {
+        "$ref": "#/components/schemas/Offer"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "StateInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "note": {
+        "type": "string"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "GroupInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "discoverable": {
+        "type": "boolean"
+      },
+      "city": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      }
+    }
+  },
+  "ConversationInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "user_id": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "InviteInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "scope": {
+        "type": "string"
+      },
+      "target_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "user_id": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "AdoptionInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "pet_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "message": {
+        "type": "string"
+      }
+    }
+  },
+  "AppointmentInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "context_kind": {
+        "type": "string"
+      },
+      "context_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "peer_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "terms": {
+        "$ref": "#/components/schemas/AppointmentTerms"
+      }
+    }
+  },
+  "ReviewInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "check": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "target_kind": {
+        "type": "string"
+      },
+      "target_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "reason": {
+        "type": "string"
+      },
+      "appeal_of": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "Feedback": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "appointment_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "appointment_version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "items": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "note": {
+        "type": "string"
+      }
+    }
+  },
+  "SubscriptionInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "subscription": {
+        "$ref": "#/components/schemas/Subscription"
+      }
+    }
+  },
+  "SettingsInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "preference": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/Preference"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "expressions": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/ExpressionState"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "draft": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/Draft"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "key": {
+        "type": "string"
+      }
+    }
+  },
+  "FriendInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "user_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "reason": {
+        "type": "string"
+      }
+    }
+  },
+  "AdoptionAction": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "note": {
+        "type": "string"
+      },
+      "trial_until": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "AppointmentAction": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "terms": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/AppointmentTerms"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "restore_version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "note": {
+        "type": "string"
+      }
+    }
+  },
+  "GroupAction": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "user_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "notice": {
+        "type": "string"
+      },
+      "discoverable": {
+        "type": "boolean"
+      },
+      "city": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      }
+    }
+  },
+  "IntroductionInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "bio": {
+        "type": "string"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "CommentInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "content": {
+        "$ref": "#/components/schemas/RichContent"
+      },
+      "reply_to": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "idempotency_key": {
+        "type": "string"
+      }
+    }
+  },
+  "ClaimInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "pet_name": {
+        "type": "string"
+      },
+      "evidence": {
+        "type": "string"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "CareInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      },
+      "needs_help": {
+        "type": "boolean"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "MessageInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "content": {
+        "$ref": "#/components/schemas/RichContent"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "idempotency_key": {
+        "type": "string"
+      }
+    }
+  },
+  "OTPInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "phone": {
+        "type": "string"
+      },
+      "purpose": {
+        "type": "string"
+      }
+    }
+  },
+  "PhoneLogin": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "phone": {
+        "type": "string"
+      },
+      "code": {
+        "type": "string"
+      },
+      "device": {
+        "type": "string"
+      },
+      "accept_terms": {
+        "type": "boolean"
+      }
+    }
+  },
+  "PasswordInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "email": {
+        "type": "string"
+      },
+      "username": {
+        "type": "string"
+      },
+      "phone": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "device": {
+        "type": "string"
+      }
+    }
+  },
+  "ReauthInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "password": {
+        "type": "string"
+      },
+      "code": {
+        "type": "string"
+      },
+      "scope": {
+        "$ref": "#/components/schemas/PurposeScope"
+      }
+    }
+  },
+  "OAuthStart": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "provider": {
+        "type": "string"
+      },
+      "resume": {
+        "type": "string"
+      },
+      "scope": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/PurposeScope"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "OAuthFinish": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "state": {
+        "type": "string"
+      },
+      "credential": {
+        "$ref": "#/components/schemas/Credential"
+      },
+      "cancelled": {
+        "type": "boolean"
+      }
+    }
+  },
+  "ResolveInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "token": {
+        "type": "string"
+      },
+      "create": {
+        "type": "boolean"
+      },
+      "accept_terms": {
+        "type": "boolean"
+      },
+      "reauth_token": {
+        "type": "string"
+      },
+      "device": {
+        "type": "string"
+      }
+    }
+  },
+  "AccountInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "email": {
+        "type": "string"
+      },
+      "reauth_token": {
+        "type": "string"
+      },
+      "phone": {
+        "type": "string"
+      },
+      "code": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "identity_id": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "ProfileInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "nickname": {
+        "type": "string"
+      },
+      "bio": {
+        "type": "string"
+      },
+      "avatar_media_id": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "theme": {
+        "type": "string"
+      },
+      "background": {
+        "type": "string"
+      }
+    }
+  },
+  "Unread": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "pending": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer"
+        }
+      },
+      "direct": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer"
+        }
+      },
+      "groups": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer"
+        }
+      },
+      "direct_first_unread": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "group_first_unread": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "notifications": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer"
+        }
+      },
+      "message_requests": {
+        "type": "integer"
+      },
+      "global_total": {
+        "type": "integer",
+        "description": "全局未读事件数；排除免打扰群聊及重复私信／群提醒，不含待处理业务事项。"
+      }
+    }
+  },
+  "ReviewDecision": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "valid_until": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "internal_note": {
+        "type": "string"
+      }
+    }
+  },
+  "Eligibility": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "interaction": {
+        "type": "boolean"
+      },
+      "adult": {
+        "type": "boolean"
+      },
+      "phone_verified": {
+        "type": "boolean"
+      },
+      "age_band": {
+        "type": "string"
+      },
+      "reasons": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "contract_version": {
+        "type": "integer"
+      }
+    }
+  },
+  "Operation": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "command": {
+        "type": "string"
+      },
+      "object_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "payload_hash": {
+        "type": "string"
+      },
+      "result_kind": {
+        "type": "string"
+      },
+      "result_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "result_version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      }
+    }
+  },
+  "PublicationPreview": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "manifest_hash": {
+        "type": "string"
+      },
+      "origin": {
+        "type": "string"
+      },
+      "requires_confirmation": {
+        "type": "boolean"
+      }
+    }
+  },
+  "EmailOTPInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "email": {
+        "type": "string"
+      },
+      "purpose": {
+        "type": "string"
+      }
+    }
+  },
+  "EmailInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "email": {
+        "type": "string"
+      },
+      "code": {
+        "type": "string"
+      },
+      "username": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "device": {
+        "type": "string"
+      },
+      "accept_terms": {
+        "type": "boolean"
+      }
+    }
+  },
+  "PurposeScope": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "purpose": {
+        "type": "string"
+      },
+      "resource_type": {
+        "type": "string"
+      },
+      "resource_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "resource_version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "scope_hash": {
+        "type": "string"
+      },
+      "role": {
+        "type": "string"
+      }
+    }
+  },
+  "PushDeviceInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "platform": {
+        "type": "string"
+      },
+      "token": {
+        "type": "string"
+      },
+      "permission": {
+        "type": "string"
+      },
+      "enabled": {
+        "type": "boolean"
+      }
+    }
+  },
+  "PushDeviceReceipt": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      }
+    }
+  },
+  "GuardianDecision": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "consent": {
+        "type": "boolean"
+      },
+      "reauth_token": {
+        "type": "string"
+      }
+    }
+  },
+  "DataRequestInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "fields": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "selections": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DataSelection"
+        }
+      },
+      "note": {
+        "type": "string"
+      },
+      "reauth_token": {
+        "type": "string"
+      },
+      "query_token": {
+        "type": "string"
+      }
+    }
+  },
+  "DataRequestStatus": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "type": {
+        "type": "string"
+      },
+      "state": {
+        "type": "string"
+      },
+      "pending": {
+        "type": "integer"
+      },
+      "held": {
+        "type": "integer"
+      },
+      "external_state": {
+        "type": "string"
+      }
+    }
+  },
+  "SafetyAccess": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "token": {
+        "type": "string"
+      },
+      "expires_at": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "RightsInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "confirmed": {
+        "type": "boolean"
+      },
+      "client_request_id": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "target_kind": {
+        "type": "string"
+      },
+      "target_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "related_case_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "reason": {
+        "type": "string"
+      },
+      "right_type": {
+        "type": "string"
+      },
+      "legal_name": {
+        "type": "string"
+      },
+      "statement": {
+        "type": "string"
+      },
+      "evidence_description": {
+        "type": "string"
+      },
+      "reauth_token": {
+        "type": "string"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "RightsReceipt": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "review_due": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "ContractInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "terms": {
+        "$ref": "#/components/schemas/ContractTerms"
+      },
+      "revision": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "reauth_token": {
+        "type": "string"
+      }
+    }
+  },
+  "ReturnInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "revision": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "terms": {
+        "$ref": "#/components/schemas/ReturnTerms"
+      }
+    }
+  },
+  "AgeEvidenceInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "actor_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "age_band": {
+        "type": "string"
+      },
+      "valid_until": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "evidence_ref": {
+        "type": "string"
+      }
+    }
+  },
+  "GuardianEvidenceInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "policy_version": {
+        "type": "string"
+      },
+      "guardian_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "child_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "evidence_ref": {
+        "type": "string"
+      },
+      "valid_until": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "AuthorityInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "actor_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "pet_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "scope": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string"
+      },
+      "species": {
+        "type": "string"
+      },
+      "rule_version": {
+        "type": "string"
+      },
+      "actions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "evidence_ref": {
+        "type": "string"
+      },
+      "valid_until": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "DeliveryClaim": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "consumer": {
+        "type": "string"
+      },
+      "limit": {
+        "type": "integer"
+      }
+    }
+  },
+  "RevenueInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "original_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "kind": {
+        "type": "string"
+      },
+      "party_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "appointment_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "appointment_version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "amount_cents": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "currency": {
+        "type": "string"
+      },
+      "occurred_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "source_ref": {
+        "type": "string"
+      },
+      "responsible": {
+        "type": "string"
+      }
+    }
+  },
+  "DeliveryResult": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "consumer": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "success": {
+        "type": "boolean"
+      },
+      "result_ref": {
+        "type": "string"
+      },
+      "retry_after_seconds": {
+        "type": "integer"
+      }
+    }
+  },
+  "DataHoldInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "hold": {
+        "$ref": "#/components/schemas/DataHold"
+      }
+    }
+  },
+  "ExternalErasureInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "inventory": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "receipt": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/ExternalErasureReceipt"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "UploadCleanupInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "cursor": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "after": {
+        "type": "string"
+      }
+    }
+  },
+  "UploadCleanupResult": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "next_cursor": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "expired": {
+        "type": "integer"
+      },
+      "next_file": {
+        "type": "string"
+      },
+      "removed": {
+        "type": "integer"
+      }
+    }
+  },
+  "RightsDecision": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "transfer_receipt": {
+        "type": "string"
+      },
+      "evidence_until": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "retention_basis": {
+        "type": "string"
+      },
+      "responsible": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "review_due": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "transfer_state": {
+        "type": "string"
+      }
+    }
+  },
+  "OAuthResult": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "login": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/LoginResult"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution_token": {
+        "type": "string"
+      },
+      "resume": {
+        "type": "string"
+      },
+      "needs_account_choice": {
+        "type": "boolean"
+      },
+      "reauth_token": {
+        "type": "string"
+      }
+    }
+  },
+  "OTPResult": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "expires_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "retry_after_seconds": {
+        "type": "integer"
+      }
+    }
+  },
+  "ShareCard": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "title": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "image_url": {
+        "type": "string"
+      },
+      "content_origin": {
+        "type": "string"
+      },
+      "relative_url": {
+        "type": "string"
+      }
+    }
+  },
+  "AppointmentTerms": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "city": {
+        "type": "string"
+      },
+      "species": {
+        "type": "string"
+      },
+      "snapshot": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/DisclosureSnapshot"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "starts_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "place": {
+        "type": "string"
+      },
+      "reception": {
+        "type": "string"
+      },
+      "pet_name": {
+        "type": "string"
+      },
+      "amount_cents": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "visit_fee_cents": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "required_fees": {
+        "type": "string"
+      },
+      "payee": {
+        "type": "string"
+      }
+    }
+  },
+  "Case": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "type": {
+        "type": "string"
+      },
+      "pet_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "title": {
+        "type": "string"
+      },
+      "species": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string"
+      },
+      "area": {
+        "type": "string"
+      },
+      "latitude": {
+        "type": "number"
+      },
+      "longitude": {
+        "type": "number"
+      },
+      "occurred_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "private_location": {
+        "type": "string"
+      },
+      "closure_reason": {
+        "type": "string"
+      },
+      "matched_claim_id": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "ContractTerms": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "city": {
+        "type": "string"
+      },
+      "species": {
+        "type": "string"
+      },
+      "nature": {
+        "type": "string"
+      },
+      "responsibilities": {
+        "type": "string"
+      },
+      "health_disclosure": {
+        "type": "string"
+      },
+      "return_terms": {
+        "type": "string"
+      },
+      "amount_cents": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "fees": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Fee"
+        }
+      },
+      "payee": {
+        "type": "string"
+      },
+      "trial_until": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "offer_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "offer_version": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "Credential": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "code": {
+        "type": "string"
+      },
+      "identity_token": {
+        "type": "string"
+      },
+      "access_token": {
+        "type": "string"
+      }
+    }
+  },
+  "DataHold": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "fields": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "basis": {
+        "type": "string"
+      },
+      "responsible": {
+        "type": "string"
+      },
+      "review_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "released": {
+        "type": "boolean"
+      }
+    }
+  },
+  "DataSelection": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "Draft": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "context_kind": {
+        "type": "string"
+      },
+      "context_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "pet_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "text": {
+        "type": "string"
+      },
+      "audience": {
+        "$ref": "#/components/schemas/Audience"
+      },
+      "cursor": {
+        "type": "integer"
+      }
+    }
+  },
+  "Entry": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "content_origin": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "category": {
+        "type": "string"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "pet_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "space": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      },
+      "audience": {
+        "$ref": "#/components/schemas/Audience"
+      },
+      "city": {
+        "type": "string"
+      }
+    }
+  },
+  "ExpressionState": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "favorites": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "recent": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "ExternalErasureReceipt": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "system": {
+        "type": "string"
+      },
+      "state": {
+        "type": "string"
+      },
+      "result_ref": {
+        "type": "string"
+      },
+      "basis": {
+        "type": "string"
+      },
+      "responsible": {
+        "type": "string"
+      }
+    }
+  },
+  "LoginResult": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "user": {
+        "$ref": "#/components/schemas/User"
+      },
+      "token": {
+        "type": "string"
+      },
+      "refresh_token": {
+        "type": "string"
+      },
+      "expires_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "created": {
+        "type": "boolean"
+      }
+    }
+  },
+  "Offer": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "pet_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "pet_version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "nature": {
+        "type": "string"
+      },
+      "publisher_type": {
+        "type": "string"
+      },
+      "relationship": {
+        "type": "string"
+      },
+      "authority_summary": {
+        "type": "string"
+      },
+      "custodian": {
+        "type": "string"
+      },
+      "custodian_relationship": {
+        "type": "string"
+      },
+      "origin": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string"
+      },
+      "area": {
+        "type": "string"
+      },
+      "venue_type": {
+        "type": "string"
+      },
+      "reception": {
+        "type": "string"
+      },
+      "reception_relationship": {
+        "type": "string"
+      },
+      "payee": {
+        "type": "string"
+      },
+      "responsible_party": {
+        "type": "string"
+      },
+      "known_health": {
+        "type": "string"
+      },
+      "aftercare": {
+        "type": "string"
+      },
+      "price_cents": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "currency": {
+        "type": "string"
+      },
+      "fees": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Fee"
+        }
+      },
+      "total_cents": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "deposit_terms": {
+        "type": "string"
+      },
+      "private_address": {
+        "type": "string"
+      },
+      "valid_until": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "Pet": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "species": {
+        "type": "string"
+      },
+      "breed": {
+        "type": "string"
+      },
+      "birthday": {
+        "type": "string"
+      },
+      "sex": {
+        "type": "string"
+      },
+      "bio": {
+        "type": "string"
+      },
+      "health": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "boolean"
+      },
+      "audience": {
+        "$ref": "#/components/schemas/Audience"
+      },
+      "adoption_available": {
+        "type": "boolean"
+      },
+      "city": {
+        "type": "string",
+        "maxLength": 120
+      }
+    }
+  },
+  "Preference": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "direct_messages": {
+        "type": "boolean"
+      },
+      "groups": {
+        "type": "boolean"
+      },
+      "applications": {
+        "type": "boolean"
+      },
+      "interactions": {
+        "type": "boolean"
+      },
+      "frequency": {
+        "type": "string"
+      },
+      "push_permission": {
+        "type": "boolean"
+      },
+      "content": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/ContentSubscriptions"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "PublicationDeclaration": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "manifest_hash": {
+        "type": "string"
+      },
+      "origin": {
+        "type": "string"
+      },
+      "confirmed": {
+        "type": "boolean"
+      }
+    }
+  },
+  "ReturnTerms": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "starts_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "place": {
+        "type": "string"
+      },
+      "reception": {
+        "type": "string"
+      },
+      "care_until": {
+        "type": "string"
+      },
+      "costs": {
+        "type": "string"
+      },
+      "safety": {
+        "type": "string"
+      }
+    }
+  },
+  "RichContent": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "text": {
+        "type": "string"
+      },
+      "sticker_id": {
+        "type": "string"
+      }
+    }
+  },
+  "Subscription": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "city": {
+        "type": "string"
+      },
+      "latitude": {
+        "type": "number"
+      },
+      "longitude": {
+        "type": "number"
+      },
+      "radius_km": {
+        "type": "number"
+      },
+      "frequency": {
+        "type": "string"
+      },
+      "enabled": {
+        "type": "boolean"
+      },
+      "species": {
+        "type": "string"
+      }
+    }
+  },
+  "Audience": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "mode": {
+        "type": "string"
+      },
+      "user_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "DisclosureSnapshot": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "offer_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "offer_version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "disclosure": {
+        "$ref": "#/components/schemas/Offer"
+      }
+    }
+  },
+  "Fee": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "amount_cents": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "required": {
+        "type": "boolean"
+      },
+      "paid_by": {
+        "type": "string"
+      },
+      "when": {
+        "type": "string"
+      }
+    }
+  },
+  "ContentSubscriptions": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "followed_users": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "watched_cases": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "ContentSubscriptionInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "followed_users": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "watched_cases": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "GroupJoinInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "note": {
+        "type": "string"
+      }
+    }
+  },
+  "GroupDirectoryBody": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "member_count": {
+        "type": "integer"
+      },
+      "member": {
+        "type": "boolean"
+      }
+    }
+  },
+  "LeadInput": {
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "additionalProperties": false
+  },
+  "ReviewSupplement": {
+    "type": "object",
+    "properties": {
+      "version": {
+        "type": "integer"
+      },
+      "note": {
+        "type": "string"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "additionalProperties": false
+  }
+}

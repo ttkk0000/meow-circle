@@ -43,8 +43,8 @@ internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
         if (s.error != null) FeatureButton("重新读取", !s.busy) { f.reload() }
         if (s.pending.isNotEmpty() && route.page != FeaturePage.Recovery) FeatureButton("核对原操作结果", !s.busy) { f.open(FeatureRoute(FeaturePage.Recovery)) }
         when (route.page) {
-            FeaturePage.EntryEdit, FeaturePage.Friends, FeaturePage.Member, FeaturePage.ProfileEdit, FeaturePage.PetEdit,
-            FeaturePage.Collaborators, FeaturePage.Invitations, FeaturePage.GroupCreate, FeaturePage.Group -> SocialFeature(store, s, route)
+            FeaturePage.EntryEdit, FeaturePage.Friends, FeaturePage.Member, FeaturePage.ProfileEdit, FeaturePage.PetEdit, FeaturePage.PetDiary,
+            FeaturePage.Collaborators, FeaturePage.Invitations, FeaturePage.GroupCreate, FeaturePage.Group, FeaturePage.GroupDirectory, FeaturePage.GroupPreview, FeaturePage.Content -> SocialFeature(store, s, route)
             FeaturePage.Appointments, FeaturePage.Appointment, FeaturePage.AppointmentEdit, FeaturePage.CaseEdit,
             FeaturePage.CaseWork, FeaturePage.Claim, FeaturePage.AdoptionWork, FeaturePage.ContractEdit, FeaturePage.ReturnEdit -> CareFeature(store, s, route)
             FeaturePage.Offers, FeaturePage.Offer, FeaturePage.OfferEdit -> OfferFeature(store, s, route)
@@ -111,19 +111,13 @@ private fun purposeLabel(value: String) = when {
 }
 internal fun dataTypeLabel(v: String) = mapOf("erase_fields" to "删除指定资料／内容", "close_account" to "注销账号", "matters_assistance" to "未结事项协助")[v] ?: v
 internal fun rightsTypeLabel(v: String) = mapOf("safety" to "安全求助", "privacy" to "隐私报告", "data_assistance" to "资料事项协助", "rights_notice" to "正式权利通知", "counterstatement" to "对原通知提交声明", "supplement" to "补充原事项")[v] ?: v
-@Composable internal fun FeatureColumn(content: @Composable ColumnScope.() -> Unit) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp), content = content)
-}
-@Composable internal fun FeatureSection(title: String, content: @Composable ColumnScope.() -> Unit) {
-    Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) { Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold); content() }
-    }
-}
+@Composable internal fun FeatureColumn(content: @Composable ColumnScope.() -> Unit) { TaskColumn(14,content) }
+@Composable internal fun FeatureSection(title: String,content: @Composable ColumnScope.() -> Unit) { TaskSection(title,content) }
 @Composable internal fun FeatureButton(label: String, enabled: Boolean = true, onClick: () -> Unit) {
     OutlinedButton(onClick, Modifier.fillMaxWidth().heightIn(min = 48.dp), enabled = enabled) { Text(label) }
 }
 @Composable internal fun FeaturePrimary(label: String, enabled: Boolean = true, onClick: () -> Unit) {
-    Button(onClick, Modifier.fillMaxWidth().heightIn(min = 48.dp), enabled = enabled) { Text(label) }
+    TaskPrimary(label,enabled,onClick)
 }
 @Composable internal fun FormField(f: MobileFeatureStore, s: FeatureState, key: String, label: String, fallback: String = "", lines: Int = 1, numeric: Boolean = false) {
     OutlinedTextField(f.field(key, fallback), { f.edit(key, it) }, Modifier.fillMaxWidth(), label = { Text(label) }, minLines = lines,

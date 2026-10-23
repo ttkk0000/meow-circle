@@ -1,0 +1,680 @@
+import { useState } from "react";
+import { api, explain, type RecordData, type User } from "../core/api";
+import { useSession } from "../core/session";
+import { useQuery, reload } from "../core/query";
+import { navigate, resourceRoute } from "../core/router";
+import { integer, key, money } from "../core/wire";
+import { titleOf, usePages } from "../core/pages";
+import { Facts, labelFor } from "../components/SchemaForm";
+import {
+  Button,
+  Card,
+  Empty,
+  Notice,
+  PrivateImage,
+  QueryState,
+  RowLink,
+  TaskPage,
+} from "../components/ui";
+import { actionNames, stateLabel, workflowURL } from "./workflows";
+import { Author, PageEnd, RecordCard, titles } from "./Records";
+import { Composer, RichText } from "./chat";
+import { ContentSubscription } from "../components/ContentSubscription";
+import { MediaGallery } from "../components/MediaGallery";
+import { CoarseMap } from "./MapPage";
+
+type ObjectValue = Record<string, unknown>;
+const objects = (value: unknown) =>
+  Array.isArray(value) ? (value as ObjectValue[]) : [];
+const has = (value: unknown, id: bigint) =>
+  Array.isArray(value) && value.some((v) => integer(v) === id);
+interface Action {
+  label: string;
+  flow: string;
+  extra?: Record<string, string>;
+}
+function actionOptions(
+  kind: string,
+  r: RecordData,
+  owner: bigint,
+  parent?: RecordData,
+): Action[] {
+  if (!owner) return [];
+  const d = r.data;
+  const own = r.owner_id === owner;
+  const state = r.state;
+  const list: Action[] = [];
+  const add = (flow: string, action: string, label = actionNames[action]) =>
+    list.push({ flow, label, extra: { action, owner: String(owner) } });
+  if (kind === "adoptions") {
+    const publisher = integer(d.publisher_id) === owner;
+    const applicant = integer(d.applicant_id) === owner;
+    if (!publisher && !applicant) return [];
+    if (publisher && ["submitted", "supplemented"].includes(state))
+      ["approve", "reject", "request_supplement"].forEach((a) =>
+        add("adoption-action", a),
+      );
+    if (applicant && state === "needs_info")
+      add("adoption-action", "supplement");
+    if (
+      applicant &&
+      [
+        "submitted",
+        "needs_info",
+        "supplemented",
+        "approved",
+        "trial_proposed",
+      ].includes(state)
+    )
+      add("adoption-action", "withdraw");
+    if (["approved", "trial_proposed"].includes(state))
+      add("adoption-action", "propose_trial");
+    if (state === "trial_proposed") {
+      if (!has(d.trial_confirmations, owner))
+        add("adoption-action", "confirm_trial");
+      add("adoption-action", "decline_trial");
+    }
+    if (
+      ["approved", "trial_active", "handover_pending"].includes(state) &&
+      !has(d.handover_confirmations, owner)
+    )
+      add("adoption-action", "confirm_handover");
+    if (
+      [
+        "trial_active",
+        "handover_pending",
+        "completed",
+        "return_requested",
+      ].includes(state)
+    ) {
+      add("adoption-action", "support");
+      add("adoption-action", "request_return");
+      list.push(
+        { flow: "return", label: "提出安全接回方案" },
+        { flow: "care", label: "记录私密照护近况" },
+      );
+    }
+    if (!["withdrawn", "rejected", "returned"].includes(state))
+      list.push({ flow: "contract", label: "提出协议新版本" });
+  }
+  if (
+    (kind === "appointments" && own) ||
+    (kind === "appointments" && integer(d.peer_id) === owner)
+  ) {
+    if (!["cancelled", "expired"].includes(state)) {
+      add("appointment-action", "cancel");
+      if (state !== "safety_hold") {
+        add("appointment-action", "safety_hold");
+        list.push({
+          flow: "appointment-change",
+          label: "调整安排，提出新版本",
+        });
+        const pending = objects(d.versions).find(
+          (v) =>
+            integer(v.number) === integer(d.pending_version) &&
+            v.status === "pending",
+        );
+        if (pending) {
+          if (!has(pending.confirmations, owner))
+            add("appointment-action", "confirm");
+          add(
+            "appointment-action",
+            integer(pending.proposed_by) === owner
+              ? "withdraw_change"
+              : "decline",
+          );
+        }
+      }
+    }
+    list.push({ flow: "feedback", label: "逐项填写到访反馈" });
+  }
+  if (kind === "claims") {
+    const publisher = parent?.owner_id === owner;
+    if (publisher && state === "submitted")
+      ["match", "reject", "request_supplement"].forEach((a) =>
+        add("claim-action", a),
+      );
+    if (own && state === "needs_info") add("claim-action", "supplement");
+    if (own && ["rejected", "withdrawn"].includes(state))
+      add("claim-action", "resubmit");
+    if (own && ["submitted", "needs_info"].includes(state))
+      add("claim-action", "withdraw");
+    if ((own || publisher) && ["matched", "handover_pending"].includes(state)) {
+      add("claim-action", "dispute");
+      if (!(publisher ? d.publisher_confirmed : d.claimant_confirmed))
+        add("claim-action", "confirm_handover");
+    }
+  }
+  if (kind === "groups" && state === "active" && has(d.members, owner)) {
+    add("group-action", "mute");
+    if (own) {
+      ["notice", "directory", "transfer", "remove_member", "dissolve"].forEach(
+        (a) => add("group-action", a),
+      );
+      if (integer(d.pending_transfer_to))
+        add("group-action", "revoke_transfer");
+    } else add("group-action", "leave");
+    if (
+      integer(d.pending_transfer_to) === owner &&
+      Date.parse(String(d.transfer_expires_at)) > Date.now()
+    )
+      ["accept_transfer", "decline_transfer"].forEach((a) =>
+        add("group-action", a),
+      );
+    if (own)
+      list.push({
+        flow: "invite",
+        label: "邀请好友入群",
+        extra: { scope: "group_member" },
+      });
+  }
+  if (kind === "friendships") {
+    if (state === "pending") {
+      if (integer(d.recipient_id) === owner)
+        ["accept", "decline"].forEach((a) => add("friend-action", a));
+      else if (integer(d.requester_id) === owner)
+        add("friend-action", "withdraw");
+    }
+    if (state === "accepted") add("friend-action", "remove");
+    if (state !== "blocked") add("friend-action", "block");
+    else if (integer(d.blocked_by) === owner) add("friend-action", "unblock");
+  }
+  if (kind === "invitations" && state === "pending") {
+    if (integer(d.recipient_id) === owner)
+      ["accept", "decline"].forEach((a) => add("state-action", a));
+    else if (own) add("state-action", "revoke");
+  }
+  if (kind === "cases" && own && ["active", "matched"].includes(state))
+    add("state-action", "close");
+  return list;
+}
+export function ResourcePage({ kind, id }: { kind: string; id: bigint }) {
+  const path = `${kind}/${id}`;
+  const result = useQuery<RecordData>(path);
+  return (
+    <QueryState
+      loading={result.loading}
+      error={result.error}
+      onRetry={() => void reload(path)}
+    >
+      {result.data ? (
+        <ResourceBody key={kind + id} kind={kind} row={result.data} />
+      ) : null}
+    </QueryState>
+  );
+}
+function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
+  const session = useSession();
+  const owner = session.user?.id ?? 0n;
+  const d = r.data;
+  const own = r.owner_id === owner;
+  const [notice, setNotice] = useState("");
+  const [error, setError] = useState("");
+  const [reply, setReply] = useState(0n);
+  const parent = useQuery<RecordData>(
+    kind === "claims" ? `cases/${r.reference_id}` : null,
+  );
+  const actions = actionOptions(kind, r, owner, parent.data);
+  const checks = useQuery<
+    Array<{
+      id: bigint;
+      check: string;
+      state: string;
+      summary: string;
+      target_version: bigint;
+      valid_until?: string;
+    }>
+  >(["pets", "offers"].includes(kind) ? `${kind}/${r.id}/verifications` : null);
+  const canShare = ["entries", "pets", "cases", "offers"].includes(kind);
+  async function share() {
+    setError("");
+    try {
+      await api.request(`share/${kind}/${r.id}`);
+      const url = location.origin + `/share/${kind}/${r.id}`;
+      if (navigator.share) await navigator.share({ title: titleOf(r), url });
+      else {
+        await navigator.clipboard.writeText(url);
+        setNotice("公开链接已复制；撤回或权限变化后将重新校验可见性");
+      }
+    } catch (e) {
+      setError(explain(e));
+    }
+  }
+  const editor = (
+    {
+      entries: "entry",
+      pets: "pet",
+      cases: "case",
+      offers: "offer",
+    } as Record<string, string>
+  )[kind];
+  return (
+    <TaskPage
+      title={
+        kind === "entries"
+          ? String(d.title || "晒宠日常")
+          : (titles[kind] ?? "事项详情")
+      }
+      subtitle={`#${r.id} · 版本 ${r.version} · ${stateLabel(r.state)}`}
+      actions={
+        kind === "entries" ? (
+          <Composer
+            kind="entries"
+            id={r.id}
+            reply={reply}
+            onSent={() => {
+              setReply(0n);
+              void reload(`entry_comments?reference_id=${r.id}&cursor=0`);
+            }}
+          />
+        ) : undefined
+      }
+    >
+      {error ? <Notice title={error} error /> : null}
+      {notice ? <Notice title={notice} /> : null}
+      <div className="actions-row">
+        <Author id={r.owner_id} />
+        {canShare ? (
+          <Button kind="quiet" onClick={() => void share()}>
+            分享公开链接
+          </Button>
+        ) : null}
+      </div>
+      <MediaGallery ids={r.media_ids ?? []} description={titleOf(r)} />
+      {kind === "entries" ? (
+        <>
+          <p className="prose">{String(d.text ?? "")}</p>
+          {["ai_generated", "ai_modified"].includes(
+            String(d.content_origin),
+          ) ? (
+            <Notice title="含 AI 生成／修改内容" />
+          ) : null}
+          <Comments entry={r.id} reply={reply} onReply={setReply} />
+        </>
+      ) : (
+        <Card title="当前资料">
+          <Facts value={d} />
+        </Card>
+      )}
+      {checks.data ? (
+        <Card title="逐项核实与有效范围">
+          <p className="muted caption">
+            仅适用于当前版本指定项目；核实状态与到访反馈分别展示。
+          </p>
+          {checks.data.length ? (
+            checks.data.map((check) => (
+              <div key={String(check.id)} className="stack">
+                <strong>
+                  {labelFor(check.check)} · {stateLabel(check.state)}
+                </strong>
+                <p>{check.summary}</p>
+                <small>
+                  版本 {String(check.target_version)} · 有效至{" "}
+                  {check.valid_until || "未提供有效期"}
+                </small>
+              </div>
+            ))
+          ) : (
+            <p>暂无此版本的核实结论</p>
+          )}
+        </Card>
+      ) : null}
+      {kind === "appointments" ? <Versions kind={kind} row={r} /> : null}
+      {kind === "adoptions" ? (
+        <>
+          <Versions kind={kind} row={r} />
+          <RowLink title="私密照护近况" to={`/care-updates?ref=${r.id}`} />
+        </>
+      ) : null}
+      {kind === "group-directory" ? (
+        <Card title="加入当前群聊">
+          {d.member ? (
+            <RowLink title="进入已加入的群聊" to={`/groups/${r.id}`} />
+          ) : (
+            <RowLink
+              title="核对并申请加入"
+              to={workflowURL("group-join", kind, r.id)}
+            />
+          )}
+        </Card>
+      ) : null}
+      {kind === "pets" ? (
+        <>
+          <RowLink title="查看当前照护方" to={`/users/${r.owner_id}`} />
+          {!own && d.adoption_available ? (
+            <RowLink
+              title="了解后填写领养申请"
+              to={workflowURL("application", "pets", r.id)}
+            />
+          ) : null}
+          {own ? (
+            <>
+              <RowLink
+                title="邀请介绍协作"
+                to={workflowURL("invite", "pets", r.id, {
+                  scope: "adoption_editor",
+                })}
+              />
+              <RowLink
+                title="邀请私密照护协作"
+                to={workflowURL("invite", "pets", r.id, { scope: "caretaker" })}
+              />
+            </>
+          ) : (
+            <RowLink
+              title="授权介绍协作"
+              to={workflowURL("introduction", "pets", r.id)}
+            />
+          )}
+        </>
+      ) : null}
+      {kind === "cases" ? (
+        <>
+          <ContentSubscription id={r.id} kind="case" />
+          <CoarseMap
+            latitude={Number(d.latitude)}
+            longitude={Number(d.longitude)}
+          />
+          <RowLink
+            title="提供私密目击线索"
+            to={workflowURL("lead", kind, r.id)}
+          />
+          {!own && d.type === "found" ? (
+            <RowLink
+              title="提交私密认领材料"
+              to={workflowURL("claim", kind, r.id)}
+            />
+          ) : null}
+          {own ? (
+            <>
+              <RowLink title="私密认领申请" to={`/claims?ref=${r.id}`} />
+              <RowLink title="私密目击线索" to={`/leads?ref=${r.id}`} />
+            </>
+          ) : null}
+        </>
+      ) : null}
+      {["pets", "cases", "offers", "adoptions"].includes(kind) ? (
+        <RowLink
+          title="安排一次到访"
+          to={workflowURL("appointment", kind, r.id, {
+            peer: String(own ? 0n : r.owner_id),
+            context: (
+              {
+                pets: "visit",
+                cases: "case",
+                offers: "offer",
+                adoptions: "adoption",
+              } as Record<string, string>
+            )[kind],
+          })}
+        />
+      ) : null}
+      {kind === "offers" ? (
+        <Notice title={`完整披露合计 ${money(d.total_cents)}`}>
+          预约快照由服务端按当前披露版本生成，新增费用或修改条款需要双方重新确认。
+        </Notice>
+      ) : null}
+      {actions.length ? (
+        <Card title="当前角色可处理的事项">
+          {actions.map((action, index) => (
+            <RowLink
+              key={index}
+              title={action.label}
+              detail={`核对版本 ${r.version} 后再主动确认`}
+              to={workflowURL(action.flow, kind, r.id, action.extra)}
+            />
+          ))}
+        </Card>
+      ) : null}
+      {kind === "guardians" ? (
+        <RowLink
+          title="核对指定儿童、范围和有效期"
+          to={workflowURL("guardian", kind, r.id)}
+        />
+      ) : null}
+      {kind === "reviews" ? (
+        <>
+          <RowLink
+            title="在原事项补充"
+            to={workflowURL("review-supplement", kind, r.id)}
+          />
+          <RowLink
+            title="对原结论提出申诉"
+            to={workflowURL(
+              "review",
+              String(d.target_kind ?? ""),
+              integer(d.target_id),
+              { type: "appeal", appeal: String(r.id) },
+            )}
+          />
+        </>
+      ) : null}
+      {editor && own ? (
+        <Card title="管理此记录">
+          <RowLink title="编辑当前版本" to={workflowURL(editor, kind, r.id)} />
+          {kind !== "cases" ? (
+            <RowLink
+              title="删除此记录"
+              to={workflowURL("delete", kind, r.id)}
+            />
+          ) : null}
+        </Card>
+      ) : null}
+      {canShare ? (
+        <Card title="安全与核实">
+          <RowLink
+            title="核实、举报或协助"
+            to={workflowURL("review", kind, r.id)}
+          />
+          <RowLink
+            title="安全／隐私报告，游客也可提交"
+            to={workflowURL("safety", kind, r.id)}
+          />
+        </Card>
+      ) : null}
+    </TaskPage>
+  );
+}
+function Versions({ kind, row: r }: { kind: string; row: RecordData }) {
+  const owner = useSession().user?.id ?? 0n;
+  const groups =
+    kind === "appointments"
+      ? ([["预约版本", objects(r.data.versions)]] as const)
+      : ([
+          ["协议版本", objects(r.data.contracts)],
+          ["安全接回方案", objects(r.data.return_plans)],
+        ] as const);
+  return (
+    <>
+      {groups.map(([title, versions]) => (
+        <Card title={title} key={title}>
+          {!versions.length ? (
+            <p className="muted">暂无已提交版本</p>
+          ) : (
+            versions.map((v) => {
+              const revision = integer(v.number);
+              const status = String(v.status ?? v.state ?? "");
+              const proposed = integer(v.proposed_by);
+              return (
+                <section
+                  className="stack version-section"
+                  key={String(revision)}
+                >
+                  <strong>
+                    V{String(revision)} · {stateLabel(status)}
+                  </strong>
+                  <Facts value={v.terms} />
+                  <p className="caption muted">
+                    已确认用户：
+                    {(Array.isArray(v.accepted_by)
+                      ? v.accepted_by
+                      : Array.isArray(v.confirmations)
+                        ? v.confirmations
+                        : []
+                    )
+                      .map(String)
+                      .join("、") || "暂无"}
+                  </p>
+                  {kind === "appointments" &&
+                  owner &&
+                  ["confirmed", "pending"].includes(r.state) ? (
+                    <RowLink
+                      title="以此历史内容提出新版本"
+                      to={workflowURL("appointment-action", kind, r.id, {
+                        action: "restore",
+                        revision: String(revision),
+                      })}
+                    />
+                  ) : null}
+                  {kind === "adoptions" &&
+                  owner &&
+                  title === "协议版本" &&
+                  status === "pending" &&
+                  !has(v.accepted_by, owner) ? (
+                    <>
+                      <RowLink
+                        title="核对条款并验证本次签约用途"
+                        to={workflowURL("contract-accept", kind, r.id, {
+                          revision: String(revision),
+                        })}
+                      />
+                      <RowLink
+                        title="拒绝此提案"
+                        to={workflowURL("contract-decline", kind, r.id, {
+                          revision: String(revision),
+                        })}
+                      />
+                    </>
+                  ) : null}
+                  {kind === "adoptions" &&
+                  owner &&
+                  title === "安全接回方案" &&
+                  ["pending", "accepted"].includes(status) ? (
+                    <>
+                      {status === "pending" && owner !== proposed ? (
+                        <RowLink
+                          title="核对并同意此接回方案"
+                          to={workflowURL("return-action", kind, r.id, {
+                            action: "accept",
+                            revision: String(revision),
+                          })}
+                        />
+                      ) : null}
+                      {status === "pending" ? (
+                        <RowLink
+                          title="拒绝此接回方案"
+                          to={workflowURL("return-action", kind, r.id, {
+                            action: "decline",
+                            revision: String(revision),
+                          })}
+                        />
+                      ) : !has(v.handover, owner) ? (
+                        <RowLink
+                          title="确认本人已完成接回交接"
+                          to={workflowURL("return-action", kind, r.id, {
+                            action: "handover",
+                            revision: String(revision),
+                          })}
+                        />
+                      ) : null}
+                    </>
+                  ) : null}
+                </section>
+              );
+            })
+          )}
+        </Card>
+      ))}
+    </>
+  );
+}
+function Comments({
+  entry,
+  reply,
+  onReply,
+}: {
+  entry: bigint;
+  reply: bigint;
+  onReply: (id: bigint) => void;
+}) {
+  const page = usePages("entry_comments", { reference_id: entry });
+  return (
+    <Card title="评论">
+      <QueryState
+        loading={page.loading}
+        error={page.error}
+        onRetry={page.refresh}
+      >
+        {page.rows.map((row) => (
+          <section key={String(row.id)}>
+            <Author id={row.owner_id} />
+            {integer(row.data.reply_to) > 0n ? (
+              <p className="caption muted">
+                回复评论 #{String(row.data.reply_to)}
+              </p>
+            ) : null}
+            <RichText content={row.data} />
+            <Button kind="quiet" onClick={() => onReply(row.id)}>
+              回复此评论
+            </Button>
+          </section>
+        ))}
+        <PageEnd page={page} />
+      </QueryState>
+      {reply ? (
+        <Notice title={`回复评论 #${reply}`}>
+          <Button kind="quiet" onClick={() => onReply(0n)}>
+            取消回复
+          </Button>
+        </Notice>
+      ) : null}
+    </Card>
+  );
+}
+export function Member({ id }: { id: bigint }) {
+  const result = useQuery<User>(`users/${id}`);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  async function converse() {
+    setBusy(true);
+    try {
+      const result = await api.request<RecordData>("conversations", {
+        method: "POST",
+        body: { user_id: id, client_request_id: key() },
+      });
+      navigate(`/conversations/${result.id}`);
+    } catch (e) {
+      setError(explain(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <TaskPage title={result.data?.nickname || "宠友主页"}>
+      <QueryState loading={result.loading} error={result.error}>
+        {result.data ? (
+          <>
+            <Card>
+              <h2>{result.data.nickname}</h2>
+              <p>{result.data.bio || "这位宠友还没有填写介绍"}</p>
+              <ContentSubscription id={id} kind="user" />
+              <RowLink
+                title="举报这份用户资料"
+                to={workflowURL("review", "users", id, { type: "report" })}
+              />
+              <RowLink title="查看对方公开动态" to={`/entries?owner=${id}`} />
+              <RowLink
+                title="发送好友申请"
+                to={workflowURL("friend", "users", id)}
+              />
+              <Button onClick={() => void converse()} disabled={busy}>
+                发起私信请求
+              </Button>
+            </Card>
+            {error ? <Notice title={error} error /> : null}
+          </>
+        ) : null}
+      </QueryState>
+    </TaskPage>
+  );
+}

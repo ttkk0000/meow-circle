@@ -27,9 +27,8 @@ import com.ttkk0000.meowcircle.kmpapp.R
     val terms = context.getString(R.string.mnd_terms_url); val privacy = context.getString(R.string.mnd_privacy_url)
     val policyReady = listOf(terms,privacy).all { url -> runCatching { Uri.parse(url).let { it.scheme == "https" && !it.host.isNullOrBlank() } }.getOrDefault(false) }
     val busy = s.busy || work.busy
-    MobileDialog(onDismissRequest = { if(!busy) store.cancelLogin() }) {
-        Surface(shape = MaterialTheme.shapes.large,modifier = Modifier.padding(16.dp).widthIn(max = 520.dp).fillMaxWidth()) {
-            Column(Modifier.heightIn(max = 680.dp).verticalScroll(rememberScrollState()).padding(24.dp),verticalArrangement = Arrangement.spacedBy(14.dp)) {
+    MobileTaskDialog(onDismissRequest = { if(!busy) store.cancelLogin() }) {
+                Text("M&D",fontFamily = BrandFont,style = MaterialTheme.typography.headlineSmall)
                 Text(if(mode == "register") "加入 M&D" else if(mode == "recover") "找回账号密码" else "欢迎回到 M&D",style = MaterialTheme.typography.headlineSmall)
                 Text("meow & doggie · 游客也能浏览公开内容",color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
@@ -73,7 +72,5 @@ import com.ttkk0000.meowcircle.kmpapp.R
                 }
                 if(s.capabilities.providers.any { it in listOf("wechat","qq") }) Text("微信／QQ 尚未配置本机官方 SDK 回跳，当前无法发起。")
                 TextButton({ store.cancelLogin() },enabled = !busy) { Text("继续以游客身份浏览") }
-            }
-        }
     }
 }

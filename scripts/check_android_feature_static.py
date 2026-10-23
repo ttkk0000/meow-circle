@@ -48,7 +48,7 @@ activity = manifest.find('application/activity')
 assert ns + 'screenOrientation' not in activity.attrib
 assert any(e.attrib.get(ns + 'scheme') == 'mnd' for e in activity.findall('intent-filter/data'))
 policy = (android / 'AndroidMobileApp.kt').read_text()
-for boundary in ('680.dp', '920.dp', '480.dp', '1360.dp', 'WindowInsets.ime', 'SaveableStateProvider', 'AndroidFeatureMaster'):
+for boundary in ('680.dp', '980.dp', '480.dp', '1100.dp', 'WindowInsets.ime', 'SaveableStateProvider', 'AndroidFeatureMaster'):
     assert boundary in policy, boundary
 assert 'WindowInfoTracker' in (android / 'AndroidAdaptiveWindow.kt').read_text()
 assert 'FoldingFeature.OcclusionType.FULL' in (android / 'AndroidAdaptiveWindow.kt').read_text()

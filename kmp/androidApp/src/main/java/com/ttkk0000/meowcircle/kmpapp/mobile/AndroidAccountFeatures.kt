@@ -20,6 +20,20 @@ import com.ttkk0000.meowcircle.client.*
 @Composable internal fun AccountFeature(store: MobileStore,s: FeatureState,route: FeatureRoute) {
     val f = store.features; val actor = store.state.value.user?.id
     when (route.page) {
+        FeaturePage.Rules -> {
+            val context = LocalContext.current
+            TaskNotice("规则与权益","具体主体、公开渠道与生效政策以实际配置为准；核实结果仅说明相应事项。")
+            listOf("服务协议" to com.ttkk0000.meowcircle.kmpapp.R.string.mnd_terms_url,"隐私政策" to com.ttkk0000.meowcircle.kmpapp.R.string.mnd_privacy_url).forEach { (label,id) ->
+                val url = context.getString(id)
+                if(url.startsWith("https://")) NavigationRow(label) { context.startActivity(Intent(Intent.ACTION_VIEW,android.net.Uri.parse(url))) }
+                else Text("$label：正式地址尚未配置")
+            }
+            NavigationRow("未成年人保护与监护范围","登录与交流资格分别核对") { f.open(FeatureRoute(FeaturePage.Security)) }
+            NavigationRow("资料删除与未完事项","指定范围、注销和事项协助分别处理") { f.open(FeatureRoute(FeaturePage.DataRequests)) }
+            NavigationRow("侵权与隐私求助","免注册受理、正式通知、原事项追加") { f.open(FeatureRoute(FeaturePage.Safety)) }
+            NavigationRow("领养与商业合同","按实际关系与版本确认，不提供付款担保") { f.open(FeatureRoute(FeaturePage.Appointments)) }
+            TaskPrimary("返回我的") { f.closeRoute(); store.select(MobileTab.Profile) }
+        }
         FeaturePage.Settings -> {
             val old = s.preference?.data ?: PreferenceBody()
             listOf("direct" to ("私信提醒" to old.directMessages),"groups" to ("群聊提醒" to old.groups),"applications" to ("申请与预约" to old.applications),"interactions" to ("社区互动" to old.interactions)).forEach { (key,pair) -> CheckLine(pair.first,f.field(key,pair.second.toString()).toBoolean(),{ f.edit(key,it.toString()) },!s.busy && !s.loading) }
@@ -34,17 +48,20 @@ import com.ttkk0000.meowcircle.client.*
             Text("系统推送尚未接入实际设备通道；系统权限开启不代表推送已送达。站内未读以服务端为准。")
             FeatureButton("附近提醒") { f.open(FeatureRoute(FeaturePage.Nearby)) }
         }
+        FeaturePage.Map -> MapFeature(store,s,route)
         FeaturePage.Nearby -> {
             val old = s.subscription?.data
             Text("仅保存你主动选择的区域；不持续后台定位。可手动填写城市与大致中心。")
             FormField(f,s,"city","城市",old?.city.orEmpty()); FormField(f,s,"latitude","中心纬度",old?.latitude?.toString().orEmpty(),numeric = true); FormField(f,s,"longitude","中心经度",old?.longitude?.toString().orEmpty(),numeric = true)
+            CoarseLocationButton("${actor}-$route",{ lat,lon -> f.edit("latitude",lat.toString());f.edit("longitude",lon.toString()) },f::notify)
             FormField(f,s,"radius","半径（5–100 km）",old?.radiusKm?.toString() ?: "10",numeric = true)
+            ChoiceField(f,s,"species","物种",listOf("" to "全部","cat" to "猫咪","dog" to "狗狗"),old?.species ?: "")
             ChoiceField(f,s,"frequency","频率",listOf("instant" to "即时","daily" to "每日汇总","off" to "关闭提醒"),old?.frequency ?: "daily")
             CheckLine("启用该区域提醒",f.field("enabled",(old?.enabled ?: false).toString()).toBoolean(),{ f.edit("enabled",it.toString()) },!s.busy)
             FeaturePrimary("保存附近提醒",!s.busy && !s.loading && s.error == null) {
                 val lat = f.field("latitude",old?.latitude?.toString().orEmpty()).toDoubleOrNull(); val lon = f.field("longitude",old?.longitude?.toString().orEmpty()).toDoubleOrNull(); val radius = f.field("radius",old?.radiusKm?.toString() ?: "10").toDoubleOrNull(); val city = f.field("city",old?.city.orEmpty())
                 if (lat == null || lon == null || radius == null || !lat.isFinite() || !lon.isFinite() || !radius.isFinite() || lat !in -90.0..90.0 || lon !in -180.0..180.0 || radius !in 5.0..100.0 || city.isBlank()) f.notify("请填写有效城市、中心坐标及 5–100 km 范围") else {
-                    val input = SubscriptionInput(SubscriptionBody(city,lat,lon,radius,f.field("frequency",old?.frequency ?: "daily"),f.field("enabled",(old?.enabled ?: false).toString()).toBoolean()),f.version(s.subscription?.version ?: 0))
+                    val input = SubscriptionInput(SubscriptionBody(city,lat,lon,radius,f.field("frequency",old?.frequency ?: "daily"),f.field("enabled",(old?.enabled ?: false).toString()).toBoolean(),f.field("species",old?.species ?: "")),f.version(s.subscription?.version ?: 0))
                     f.confirm("保存附近提醒","$city · $radius km\n${if(input.subscription.enabled) "启用" else "停用"}，按所选频率提醒。") { f.api.saveSubscription(input); f.discardAndReload() }
                 }
             }

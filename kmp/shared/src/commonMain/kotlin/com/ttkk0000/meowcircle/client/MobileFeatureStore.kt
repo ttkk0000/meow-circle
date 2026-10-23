@@ -7,15 +7,15 @@ import kotlinx.coroutines.sync.withLock
 
 /** 功能路由只包含资源标识；临时凭证不进入路由、表单快照或普通偏好。 */
 enum class FeaturePage(val title: String) {
-    EntryEdit("编辑动态"), Friends("好友与宠友圈"), Member("宠友资料"), ProfileEdit("编辑资料"), PetEdit("宠物档案"),
-    Collaborators("协作与邀请"), Invitations("收到与发出的邀请"), GroupCreate("创建群聊"), Group("群聊管理"),
+    EntryEdit("编辑动态"), Friends("好友与宠友圈"), Member("宠友资料"), ProfileEdit("编辑资料"), PetEdit("宠物档案"), PetDiary("独立图文日记"),
+    Collaborators("协作与邀请"), Invitations("收到与发出的邀请"), GroupCreate("创建群聊"), Group("群聊管理"), GroupDirectory("发现宠友群"), GroupPreview("群简介与加入申请"), Content("关注与求助订阅"),
     Appointments("预约"), Appointment("预约详情"), AppointmentEdit("预约安排"),
     CaseEdit("走失与拾获发布"), CaseWork("线索与认领"), Claim("私密认领材料"),
     AdoptionWork("领养照护与协议"), ContractEdit("协议提案"), ReturnEdit("安全接回安排"),
     Offers("有偿信息"), Offer("披露详情"), OfferEdit("编辑披露"),
-    Settings("通知设置"), Nearby("附近提醒"), Reviews("核实与举报"), Review("核实事项"),
+    Settings("通知设置"), Nearby("附近提醒"), Map("互助地图"), Reviews("核实与举报"), Review("核实事项"),
     Safety("安全与隐私求助"), DataRequests("资料与账号请求"), Security("账号安全"),
-    Recovery("待核对操作"), Expressions("表情与贴纸")
+    Recovery("待核对操作"), Expressions("表情与贴纸"), Rules("规则与权益")
 }
 data class FeatureRoute(val page: FeaturePage, val id: Long = 0, val kind: String = "", val peer: Long = 0)
 data class FeatureForm(val values: Map<String, String> = emptyMap(), val baseVersion: Long? = null)
@@ -25,6 +25,7 @@ data class FeatureState(
     val route: FeatureRoute? = null, val forms: Map<FeatureRoute, FeatureForm> = emptyMap(),
     val loading: Boolean = false, val busy: Boolean = false, val error: String? = null, val notice: String? = null,
     val conflict: Boolean = false, val confirmation: FeatureConfirmation? = null,
+    val mapCases: PageState<CaseBody> = PageState(), val diary: PageState<EntryBody> = PageState(), val directory: PageState<GroupDirectoryBody> = PageState(), val groupPreview: MobileRecord<GroupDirectoryBody>? = null, val contentSubscriptions: MobileRecord<ContentSubscriptions>? = null,
     val friends: PageState<FriendBody> = PageState(), val invitations: PageState<InvitationBody> = PageState(),
     val appointments: PageState<AppointmentBody> = PageState(), val offers: PageState<OfferBody> = PageState(),
     val claims: PageState<ClaimBody> = PageState(), val leads: PageState<LeadBody> = PageState(),
@@ -105,6 +106,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             }
         } }
     }
+    fun loadContentSubscriptions() { if(owner == null) return; val currentEpoch = epoch; scope.launch { try { val p = api.contentSubscriptions(); if(epoch == currentEpoch) mutable.update { it.copy(contentSubscriptions = p) } } catch(e: CancellationException) { throw e } catch(e: Exception) { if(epoch == currentEpoch) notify(e.message ?: "暂无法读取关注状态") } } }
     fun field(key: String, fallback: String = ""): String = mutable.value.route?.let { mutable.value.forms[it]?.values?.get(key) } ?: fallback
     fun edit(key: String, value: String) {
         if (!canEditDraft() || mutable.value.busy || mutable.value.confirmation != null || mutable.value.route in uncertainRoutes || value.length > 10000) return
@@ -124,7 +126,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         mutable.value.route?.takeIf { it != route }?.let(history::add)
         revision++; loading?.cancel(); dismissConfirmation()
         mutable.update { it.copy(route = route, loading = false, error = null, notice = null, conflict = false,
-            entry = null, member = null, pet = null, group = null, appointment = null, case = null, claim = null, adoption = null,
+            groupPreview = null, mapCases = PageState(), diary = PageState(), entry = null, member = null, pet = null, group = null, appointment = null, case = null, claim = null, adoption = null,
             offer = null, review = null, verifications = emptyList(), claims = PageState(), leads = PageState(), care = PageState(),
             unconfirmedResult = route in uncertainRoutes) }
         reload()
@@ -135,7 +137,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         if (mutable.value.busy) return true
         if (mutable.value.confirmation != null) { dismissConfirmation(); return true }
         val previous = history.removeLastOrNull()
-        revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, notice = null, unconfirmedResult = previous in uncertainRoutes) }
+        revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, notice = null,groupPreview = null,mapCases = PageState(),diary = PageState(),entry = null,member = null,pet = null,group = null,appointment = null,case = null,claim = null,adoption = null,offer = null,review = null,unconfirmedResult = previous in uncertainRoutes) }
         if (previous != null) reload()
         return true
     }
@@ -193,11 +195,11 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         }
     }
     fun confirm(title: String, summary: String, action: suspend () -> Unit) {
-        if (mutable.value.busy || mutable.value.confirmation != null) return
+        if (mutable.value.busy || mutable.value.loading || mutable.value.confirmation != null) return
         reviewPrepared(title, summary, action)
     }
     fun reviewPrepared(title: String, summary: String, action: suspend () -> Unit) {
-        if (!canEditDraft()) return
+        if (mutable.value.loading || !canEditDraft()) return
         if (mutable.value.route in uncertainRoutes) { notify("原操作结果尚不明确，请核对记录；此页不会再次提交相同操作"); return }
         if (api.recoverableCommands().any { it.phase in listOf("sent", "result_unknown") }) {
             mutable.update { it.copy(notice = "请先核对原操作结果，再提交新操作", pending = api.recoverableCommands()) }; return
@@ -208,6 +210,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     }
     fun dismissConfirmation() { if (!mutable.value.busy) { pendingAction = null; mutable.update { it.copy(confirmation = null) } } }
     fun submitConfirmation() {
+        if (mutable.value.loading) return
         if (mutable.value.route in uncertainRoutes) return
         val action = pendingAction ?: return
         runCommand { action(); pendingAction = null; mutable.update { it.copy(confirmation = null) } }
@@ -243,8 +246,12 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             try {
                 when (route.page) {
                     FeaturePage.EntryEdit -> { val p = api.entry(route.id); if(current()) { mutable.update { it.copy(entry = p) }; capture(p.version) } }
+                    FeaturePage.PetDiary -> { val p: MobilePage<EntryBody> = api.get("entries",mapOf("reference_id" to route.id.toString(),"space" to "diary","cursor" to if(more) mutable.value.diary.next.toString() else "0"),authenticated = owner != null);if(current()) mutable.update { it.copy(diary = page(it.diary,p,more)) } }
                     FeaturePage.Friends -> { val p = api.friends(if (more) mutable.value.friends.next else 0); if (current()) mutable.update { it.copy(friends = page(it.friends, p, more)) } }
-                    FeaturePage.Member -> { val p = api.member(route.id); if (current()) mutable.update { it.copy(member = p) } }
+                    FeaturePage.Member -> { val p = api.member(route.id); if (current()) mutable.update { it.copy(member = p) }; if(owner != null) { val content = api.contentSubscriptions(); if(current()) mutable.update { it.copy(contentSubscriptions = content) } } }
+                    FeaturePage.Content -> { val p = api.contentSubscriptions(); if(current()) mutable.update { it.copy(contentSubscriptions = p) } }
+                    FeaturePage.GroupDirectory -> { val p = api.groupDirectory(if(more) mutable.value.directory.next else 0,field("q"),field("city"));if(current()) mutable.update { it.copy(directory = page(it.directory,p,more)) } }
+                    FeaturePage.GroupPreview -> { val p = api.groupPreview(route.id); if(current()) mutable.update { it.copy(groupPreview = p) } }
                     FeaturePage.ProfileEdit -> { val p = api.profile(); if (current()) { mutable.update { it.copy(profile = p) }; capture(p.version) } }
                     FeaturePage.PetEdit, FeaturePage.Collaborators -> if (route.id > 0 && route.kind != "care") {
                         val p = api.pet(route.id); if (current()) { mutable.update { it.copy(pet = p) }; capture(p.version) }
@@ -290,6 +297,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                         val checks = api.offerVerifications(route.id); if (current()) mutable.update { it.copy(verifications = checks) }
                     }
                     FeaturePage.Settings -> { val p = api.preferences().items.firstOrNull(); if (current()) { mutable.update { it.copy(preference = p) }; capture(p?.version ?: 0) } }
+                    FeaturePage.Map -> { val p: MobilePage<CaseBody> = if(route.id > 0) MobilePage(items = listOf(api.case(route.id))) else api.get("cases",buildMap { put("cursor",if(more) mutable.value.mapCases.next.toString() else "0");put("city",field("city"));if(field("latitude").isNotBlank() && field("longitude").isNotBlank()) { put("latitude",field("latitude"));put("longitude",field("longitude"));put("radius_km","10") } },authenticated = owner != null);if(current()) mutable.update { it.copy(mapCases = page(it.mapCases,p,more)) } }
                     FeaturePage.Nearby -> { val p = api.subscriptions().items.firstOrNull(); if (current()) { mutable.update { it.copy(subscription = p) }; capture(p?.version ?: 0) } }
                     FeaturePage.Expressions -> {
                         val catalog = api.expressions(); val p = api.expressionState().items.firstOrNull()
@@ -304,7 +312,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     }
                     FeaturePage.Recovery -> if (current()) mutable.update { it.copy(pending = api.recoverableCommands(), restricted = restricted()) }
                     FeaturePage.DataRequests, FeaturePage.Safety -> if (current()) mutable.update { it.copy(restricted = restricted()) }
-                    FeaturePage.GroupCreate -> Unit
+                    FeaturePage.GroupCreate, FeaturePage.Rules -> Unit
                 }
             } catch (e: CancellationException) { throw e }
             catch (e: Exception) {

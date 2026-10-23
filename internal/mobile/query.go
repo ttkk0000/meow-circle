@@ -5,6 +5,7 @@ import "strings"
 type Query struct {
 	Space, State, Keyword, City, Species string
 	OwnerID                              int64
+	Following, Watched, Adoption         bool
 	Latitude, Longitude, RadiusKM        float64
 }
 
@@ -23,12 +24,17 @@ func matches(k Kind, r Record, q Query) (bool, error) {
 			return false, nil
 		}
 		text = v.Title + " " + v.Text
+		city = v.City
 	case Pets:
 		v, e := Decode[Pet](r)
 		if e != nil {
 			return false, e
 		}
+		if q.Adoption && !v.AdoptionAvailable {
+			return false, nil
+		}
 		text = v.Name + " " + v.Breed + " " + v.Bio
+		city = v.City
 		species = v.Species
 	case Cases:
 		v, e := Decode[Case](r)

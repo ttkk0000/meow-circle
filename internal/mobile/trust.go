@@ -59,24 +59,33 @@ func (s *Service) SubmitReview(ctx context.Context, actor int64, in ReviewInput)
 				return ErrForbidden
 			}
 		} else if in.TargetID > 0 {
-			if !queryKind(in.TargetKind) || in.TargetKind == Reviews {
-				return Invalid("invalid review target")
+			if in.TargetKind == Kind("users") {
+				if in.Type != "report" {
+					return Invalid("user targets only support the typed report path")
+				}
+				if _, e := tx.User(in.TargetID); e != nil {
+					return e
+				}
+			} else {
+				if !queryKind(in.TargetKind) || in.TargetKind == Reviews {
+					return Invalid("invalid review target")
+				}
+				p, e := tx.Get(in.TargetKind, in.TargetID)
+				if e != nil {
+					return e
+				}
+				ok, e := s.canRead(tx, in.TargetKind, p, actor)
+				if e != nil {
+					return e
+				}
+				if !ok {
+					return ErrForbidden
+				}
+				if in.Type == "verification" && p.OwnerID != actor {
+					return ErrForbidden
+				}
+				targetVersion = p.Version
 			}
-			p, e := tx.Get(in.TargetKind, in.TargetID)
-			if e != nil {
-				return e
-			}
-			ok, e := s.canRead(tx, in.TargetKind, p, actor)
-			if e != nil {
-				return e
-			}
-			if !ok {
-				return ErrForbidden
-			}
-			if in.Type == "verification" && p.OwnerID != actor {
-				return ErrForbidden
-			}
-			targetVersion = p.Version
 		}
 		until := s.Now().Add(30 * 24 * time.Hour)
 		r := Record{OwnerID: actor, RefID: in.TargetID, State: "submitted", MediaIDs: in.MediaIDs}

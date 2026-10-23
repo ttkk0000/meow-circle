@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -31,9 +32,9 @@ private val ContentFont = variableFamily(R.font.noto_sans_sc)
 private val DefaultTypography = Typography().let { t -> Typography(
     displayLarge = t.displayLarge.copy(fontFamily = BrandFont),displayMedium = t.displayMedium.copy(fontFamily = BrandFont),displaySmall = t.displaySmall.copy(fontFamily = BrandFont),
     headlineLarge = t.headlineLarge.copy(fontFamily = ContentFont),headlineMedium = t.headlineMedium.copy(fontFamily = ContentFont),headlineSmall = t.headlineSmall.copy(fontFamily = ContentFont),
-    titleLarge = t.titleLarge.copy(fontFamily = ContentFont),titleMedium = t.titleMedium.copy(fontFamily = ContentFont),titleSmall = t.titleSmall.copy(fontFamily = ContentFont),
-    bodyLarge = t.bodyLarge.copy(fontFamily = ContentFont),bodyMedium = t.bodyMedium.copy(fontFamily = ContentFont),bodySmall = t.bodySmall.copy(fontFamily = ContentFont),
-    labelLarge = t.labelLarge.copy(fontFamily = ContentFont),labelMedium = t.labelMedium.copy(fontFamily = ContentFont),labelSmall = t.labelSmall.copy(fontFamily = ContentFont),
+    titleLarge = t.titleLarge.copy(fontFamily = ContentFont,fontSize = 20.sp,lineHeight = 30.sp,fontWeight = FontWeight.Bold),titleMedium = t.titleMedium.copy(fontFamily = ContentFont,fontSize = 16.sp,lineHeight = 24.sp,fontWeight = FontWeight.Bold),titleSmall = t.titleSmall.copy(fontFamily = ContentFont),
+    bodyLarge = t.bodyLarge.copy(fontFamily = ContentFont,fontSize = 16.sp,lineHeight = 26.sp),bodyMedium = t.bodyMedium.copy(fontFamily = ContentFont),bodySmall = t.bodySmall.copy(fontFamily = ContentFont,fontSize = 12.sp,lineHeight = 20.sp),
+    labelLarge = t.labelLarge.copy(fontFamily = ContentFont,fontSize = 16.sp,lineHeight = 24.sp),labelMedium = t.labelMedium.copy(fontFamily = ContentFont,fontSize = 14.sp,lineHeight = 22.sp),labelSmall = t.labelSmall.copy(fontFamily = ContentFont),
 ) }
 
 @Composable

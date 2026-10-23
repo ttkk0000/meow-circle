@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-internal fun MobilePhoto(store: MobileStore, id: Long?, account: Long?, description: String, modifier: Modifier = Modifier) {
+internal fun MobilePhoto(store: MobileStore, id: Long?, account: Long?, description: String, modifier: Modifier = Modifier,contentScale: ContentScale = ContentScale.Crop) {
     val bitmap by produceState<ImageBitmap?>(null, id, account) {
         value = null
         if (id != null) try {
@@ -35,7 +35,7 @@ internal fun MobilePhoto(store: MobileStore, id: Long?, account: Long?, descript
         } catch (e: CancellationException) { throw e } catch (_: Exception) { value = null }
     }
     Box(modifier.background(MaterialTheme.colorScheme.surfaceVariant), contentAlignment = Alignment.Center) {
-        if (bitmap != null) Image(bitmap!!, description, Modifier.matchParentSize(), contentScale = ContentScale.Crop)
+        if (bitmap != null) Image(bitmap!!, description, Modifier.matchParentSize(), contentScale = contentScale)
         else Text(if (id == null) "暂无照片" else "照片暂不可用", color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

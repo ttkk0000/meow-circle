@@ -513,6 +513,20 @@ func (s *Service) ListFiltered(ctx context.Context, actor int64, k Kind, after, 
 			return ErrUnauthorized
 		}
 		f := Filter{After: after, RefID: ref, Limit: 500}
+		var content ContentSubscriptions
+		if q.Following || q.Watched {
+			if actor <= 0 {
+				return ErrUnauthorized
+			}
+			if q.Following && k != Entries || q.Watched && k != Cases {
+				return Invalid("invalid subscription filter")
+			}
+			_, p, e := contentPreferences(tx, actor)
+			if e != nil {
+				return e
+			}
+			content = contentBody(p)
+		}
 		if !publicKind(k) && k != Comments && k != Reactions && k != CareUpdates && k != Messages && k != GroupMessages && k != VisitFeedback {
 			f.ParticipantID = actor
 		}
@@ -522,6 +536,9 @@ func (s *Service) ListFiltered(ctx context.Context, actor int64, k Kind, after, 
 		}
 		for _, r := range records {
 			out.Next = r.ID
+			if q.Following && !Has(content.FollowedUsers, r.OwnerID) || q.Watched && !Has(content.WatchedCases, r.ID) {
+				continue
+			}
 			ok, e := s.canRead(tx, k, r, actor)
 			if e != nil {
 				return e

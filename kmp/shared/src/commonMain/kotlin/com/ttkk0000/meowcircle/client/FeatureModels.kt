@@ -93,25 +93,25 @@ data class CareBody(val text: String, @SerialName("needs_help") val needsHelp: B
 data class CareInput(val text: String, @SerialName("needs_help") val needsHelp: Boolean,
     @SerialName("client_request_id") val clientRequestId: String, @SerialName("media_ids") val mediaIds: List<Long> = emptyList())
 @Serializable
-data class GroupInput(val name: String, @SerialName("client_request_id") val clientRequestId: String)
+data class GroupInput(val name: String, @SerialName("client_request_id") val clientRequestId: String, val discoverable: Boolean = false, val city: String = "", val summary: String = "")
 @Serializable
 data class GroupAction(val version: Long, @SerialName("client_request_id") val clientRequestId: String,
-    val notice: String = "", @SerialName("user_id") val userId: Long = 0)
+    val notice: String = "", @SerialName("user_id") val userId: Long = 0, val discoverable: Boolean = false, val city: String = "", val summary: String = "")
 @Serializable
 data class InvitationBody(val scope: String, @SerialName("target_id") val targetId: Long,
-    @SerialName("recipient_id") val recipientId: Long, @SerialName("expires_at") val expiresAt: String)
+    @SerialName("recipient_id") val recipientId: Long, @SerialName("expires_at") val expiresAt: String, val note: String = "")
 @Serializable
 data class InviteInput(val scope: String, @SerialName("target_id") val targetId: Long,
     @SerialName("user_id") val userId: Long, @SerialName("client_request_id") val clientRequestId: String)
 @Serializable
 data class PreferenceBody(@SerialName("direct_messages") val directMessages: Boolean = true, val groups: Boolean = true,
     val applications: Boolean = true, val interactions: Boolean = true, val frequency: String = "instant",
-    @SerialName("push_permission") val pushPermission: Boolean = false)
+    @SerialName("push_permission") val pushPermission: Boolean = false, val content: ContentSubscriptions? = null)
 @Serializable
 data class ExpressionBody(val favorites: List<String> = emptyList(), val recent: List<String> = emptyList())
 @Serializable
 data class SubscriptionBody(val city: String, val latitude: Double, val longitude: Double,
-    @SerialName("radius_km") val radiusKm: Double, val frequency: String, val enabled: Boolean)
+    @SerialName("radius_km") val radiusKm: Double, val frequency: String, val enabled: Boolean, val species: String = "")
 @Serializable
 data class SubscriptionInput(val subscription: SubscriptionBody, val version: Long = 0)
 @Serializable
@@ -127,3 +127,12 @@ data class ReviewInput(val type: String, val reason: String, val check: String =
 @Serializable
 data class FeedbackInput(@SerialName("appointment_id") val appointmentId: Long, @SerialName("appointment_version") val version: Long,
     val items: Map<String,String>, val note: String = "")
+
+@Serializable
+data class ContentSubscriptions(@SerialName("followed_users") val followedUsers: List<Long> = emptyList(), @SerialName("watched_cases") val watchedCases: List<Long> = emptyList())
+@Serializable
+data class ContentSubscriptionInput(val version: Long, @SerialName("client_request_id") val clientRequestId: String, @SerialName("followed_users") val followedUsers: List<Long>, @SerialName("watched_cases") val watchedCases: List<Long>)
+@Serializable
+data class GroupDirectoryBody(val name: String, val city: String = "", val summary: String = "", @SerialName("member_count") val memberCount: Int = 0, val member: Boolean = false)
+@Serializable
+data class GroupJoinInput(@SerialName("client_request_id") val clientRequestId: String, val note: String = "")

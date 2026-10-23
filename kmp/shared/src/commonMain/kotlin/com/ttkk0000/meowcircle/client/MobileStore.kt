@@ -44,8 +44,9 @@ data class MobileState(
     val petChecks: List<VerificationSummary> = emptyList(), val pet: MobileRecord<PetBody>? = null, val entry: MobileRecord<EntryBody>? = null,
     val application: MobileRecord<AdoptionBody>? = null, val case: MobileRecord<CaseBody>? = null,
     val conversation: MobileRecord<ConversationBody>? = null, val group: MobileRecord<GroupBody>? = null, val profile: MobileProfile? = null,
-    val metrics: Map<Long, EntryMetrics> = emptyMap(), val inbox: InboxSummary? = null, val inboxError: String? = null,
-    val feedSpace: String = "community", val feedKeyword: String = "",
+    val members: Map<Long,PublicMember> = emptyMap(), val metrics: Map<Long, EntryMetrics> = emptyMap(), val inbox: InboxSummary? = null, val inboxError: String? = null,
+    val feedSpace: String = "community", val feedKeyword: String = "", val feedCity: String = "",
+    val petKeyword: String = "", val petCity: String = "", val petSpecies: String = "",
     val emoji: List<EmojiItem> = emptyList(), val stickers: List<StickerItem> = emptyList(), val detailLoading: Boolean = false, val detailError: String? = null,
     val expressionState: MobileRecord<ExpressionBody>? = null,
     val busy: Boolean = false, val notice: String? = null, val conflict: Boolean = false,
@@ -235,11 +236,18 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             _state.update { it.copy(expressionState = updated) }
         }
     }
-    fun filterFeed(space: String, keyword: String = _state.value.feedKeyword) {
-        require(space in listOf("community", "circle", "diary"))
+    fun filterFeed(space: String, keyword: String = _state.value.feedKeyword, city: String = _state.value.feedCity) {
+        require(space in listOf("community", "circle", "diary", "following", "local"))
         if (keyword.encodeToByteArray().size > 120) { pickerFailed("搜索词过长，请缩短后重试"); return }
         jobs.remove("entries")?.cancel()
-        _state.update { it.copy(feedSpace = space, feedKeyword = keyword, entries = PageState(), metrics = emptyMap()) }
+        _state.update { it.copy(feedSpace = space, feedKeyword = keyword, feedCity = city, entries = PageState(), metrics = emptyMap()) }
+        refreshHome()
+    }
+    fun editComposeCity(city: String) { if(!canEditCompose() || city.length > 120) return; _state.update { it.copy(composeEntry = it.composeEntry.copy(city = city),composeEdited = true,publicationConfirmation = null) }; scheduleLocalSave() }
+    fun filterPets(keyword: String, city: String, species: String) {
+        if(keyword.encodeToByteArray().size > 120 || city.encodeToByteArray().size > 120 || species !in listOf("","cat","dog")) { pickerFailed("请缩短搜索词并核对城市与物种");return }
+        jobs.remove("pets")?.cancel()
+        _state.update { it.copy(petKeyword = keyword,petCity = city,petSpecies = species,pets = PageState()) }
         refreshHome()
     }
     fun editComposeOptions(space: String, audience: Audience, petId: Long = 0, category: String = _state.value.composeEntry.category) {
@@ -518,11 +526,12 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
 
     fun refreshHome(more: Boolean = false) {
         when (_state.value.tab) {
-            MobileTab.Community -> loadPage("entries", more, { it.entries }, { s, p -> s.copy(entries = p) }, { api.feedPage(it,_state.value.feedSpace,_state.value.feedKeyword) }) {
-                val metrics = api.metrics(_state.value.entries.items.map { row -> row.id }).associateBy(EntryMetrics::entryId)
-                _state.update { it.copy(metrics = metrics) }
+            MobileTab.Community -> loadPage("entries", more, { it.entries }, { s, p -> s.copy(entries = p) }, { api.feedPage(it,_state.value.feedSpace,_state.value.feedKeyword,city = _state.value.feedCity) }) {
+                val epoch = accountEpoch
+                val metrics = _state.value.entries.items.map { row -> row.id }.chunked(50).flatMap { api.metrics(it) }.associateBy(EntryMetrics::entryId)
+                if(epoch == accountEpoch) _state.update { it.copy(metrics = metrics) }
             }
-            MobileTab.Adoption -> loadPage("pets", more, { it.pets }, { s, p -> s.copy(pets = p) }, { api.pets(it) }, filter = { it.data.adoptionAvailable })
+            MobileTab.Adoption -> loadPage("pets", more, { it.pets }, { s, p -> s.copy(pets = p) }, { api.adoptionPets(it,_state.value.petKeyword,_state.value.petCity,_state.value.petSpecies) }, filter = { it.data.adoptionAvailable })
             MobileTab.Publish -> if (_state.value.user != null && !_state.value.draftLoaded) restoreComposeDraft()
             MobileTab.Messages -> if (_state.value.user != null) {
                 loadPage("conversations", more, { it.conversations }, { s, p -> s.copy(conversations = p) }, { api.conversations(it) })
@@ -578,7 +587,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             MobileDestination.Home -> Unit
             MobileDestination.Help -> loadPage("cases", more, { it.cases }, { state, p -> state.copy(cases = p) }, { api.cases(it) })
             MobileDestination.Applications -> if (s.user == null) showLogin() else loadPage("applications", more, { it.applications }, { state, p -> state.copy(applications = p) }, { api.adoptions(it) })
-            MobileDestination.Notifications -> if (s.user == null) showLogin() else loadPage("notifications", more, { it.notifications }, { state, p -> state.copy(notifications = p) }, { api.notifications(it) })
+            MobileDestination.Notifications -> if (s.user == null) showLogin() else loadNotifications(more)
             else -> {
                 _state.update { it.copy(detailLoading = true, detailError = null, conflict = false, confirmation = null) }
                 task("detail") {
@@ -612,6 +621,10 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         }
     }
 
+    fun loadNotifications(more: Boolean = false) {
+        if (_state.value.user == null) return
+        loadPage("notifications",more,{ it.notifications },{ s,p -> s.copy(notifications = p) },{ api.notifications(it) })
+    }
     fun loadComments(more: Boolean = false) {
         val id = (_state.value.destination as? MobileDestination.Entry)?.id ?: return
         loadPage("comments", more, { it.comments }, { s, p -> s.copy(comments = p) }, { api.comments(id, it) })
@@ -687,15 +700,23 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         _state.update { it.copy(application = record, confirmation = null, actionNote = "", notice = "进度已更新") }
     }
 
+    fun ensureMember(id: Long) {
+        if(id <= 0 || id in _state.value.members || jobs["member-$id"]?.isActive == true) return
+        val epoch = accountEpoch
+        task("member-$id") { val member = api.member(id); if(epoch == accountEpoch) _state.update { it.copy(members = it.members + (id to member)) } }
+    }
     fun toggleLike() {
+        val id = _state.value.entry?.id ?: return
+        toggleReaction(id)
+    }
+    fun toggleReaction(id: Long) {
         val s = _state.value
         if (s.user == null) { showLogin(); return }
         if (!requireInteractionContract()) return
-        val record = s.entry ?: return
-        val metrics = s.metrics[record.id] ?: return
+        val metrics = s.metrics[id] ?: return
         command {
-            api.react(record.id, !metrics.viewerLiked)
-            val latest = api.metrics(listOf(record.id))
+            api.react(id, !metrics.viewerLiked)
+            val latest = api.metrics(listOf(id))
             _state.update { it.copy(metrics = it.metrics + latest.associateBy(EntryMetrics::entryId)) }
         }
     }

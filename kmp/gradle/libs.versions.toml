@@ -39,6 +39,7 @@ composeIcons = { module = "androidx.compose.material:material-icons-extended", v
 cmpMaterial3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "cmp-material3" }
 cmpIcons = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "cmp-icons" }
 coilCompose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coilSvg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
 coilNetwork = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 androidxExif = { module = "androidx.exifinterface:exifinterface", version.ref = "exif" }
 

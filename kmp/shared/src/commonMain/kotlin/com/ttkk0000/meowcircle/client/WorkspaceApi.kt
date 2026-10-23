@@ -10,9 +10,10 @@ data class ProfileEdit(val version: Long, val nickname: String, val bio: String,
 data class IntroductionEdit(val version: Long, val bio: String, @SerialName("media_ids") val mediaIds: List<Long>,
     @SerialName("client_request_id") val clientRequestId: String)
 @Serializable
-data class PublicMember(val id: Long, val username: String = "", val nickname: String = "", val bio: String = "")
+data class PublicMember(val id: Long, val username: String = "", val nickname: String = "", val bio: String = "", @SerialName("avatar_url") val avatarUrl: String = "")
 
 suspend fun MobileApi.member(id: Long): PublicMember = get("users/$id")
+suspend fun MobileApi.adoptionPets(cursor: Long,keyword: String,city: String,species: String): MobilePage<PetBody> = get("pets",mapOf("cursor" to "$cursor","q" to keyword,"city" to city,"species" to species,"adoption" to "true"))
 suspend fun MobileApi.editPet(id: Long, input: PetInput): MobileRecord<PetBody> = patch("pets/$id", input)
 suspend fun MobileApi.editEntry(id: Long, input: EntryInput): MobileRecord<EntryBody> = patch("entries/$id", input)
 suspend fun MobileApi.editCase(id: Long, input: CaseInput): MobileRecord<CaseBody> = patch("cases/$id", input)
@@ -33,8 +34,8 @@ suspend fun MobileApi.supplementReview(id: Long, input: VersionedAction): Mobile
 suspend fun MobileApi.preferences(): MobilePage<PreferenceBody> = get("preferences")
 suspend fun MobileApi.expressionState(): MobilePage<ExpressionBody> = get("expressions")
 suspend fun MobileApi.subscriptions(): MobilePage<SubscriptionBody> = get("subscriptions")
-suspend fun MobileApi.feedPage(cursor: Long = 0, space: String = "community", keyword: String = "", owner: Long = 0): MobilePage<EntryBody> =
-    get("entries", mapOf("cursor" to "$cursor", "space" to space, "q" to keyword, "owner_id" to "$owner"))
+suspend fun MobileApi.feedPage(cursor: Long = 0, space: String = "community", keyword: String = "", owner: Long = 0, city: String = ""): MobilePage<EntryBody> =
+    get("entries", mapOf("cursor" to "$cursor", "space" to if(space in listOf("following","local")) "community" else space, "q" to keyword, "owner_id" to "$owner", "city" to if(space == "local") city else "", "following" to (space == "following").toString()))
 suspend fun MobileApi.richComment(id: Long, content: MessageBody, key: String, replyTo: Long): MobileRecord<CommentBody> =
     durablePost("entries/$id/comments", CommentInput(content, key, replyTo), key)
 suspend fun MobileApi.richMessage(id: Long, group: Boolean, content: MessageBody, media: List<Long>, key: String): MobileRecord<MessageBody> =

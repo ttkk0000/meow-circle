@@ -21,8 +21,14 @@ func (s *Service) SavePet(ctx context.Context, actor, id int64, in PetInput) (ou
 	if err = textValid(in.Pet.Name, 40, true); err != nil {
 		return
 	}
-	if in.Pet.Species != "cat" && in.Pet.Species != "dog" {
-		return out, Invalid("species must be cat or dog")
+	if err = textValid(in.Pet.City, 120, false); err != nil {
+		return
+	}
+	if !HasString([]string{"cat", "dog", "rabbit", "other"}, in.Pet.Species) {
+		return out, Invalid("choose a supported profile species")
+	}
+	if in.Pet.Species != "cat" && in.Pet.Species != "dog" && in.Pet.AdoptionAvailable {
+		return out, Denied("species_not_admitted_for_adoption")
 	}
 	if err = audienceValid(in.Pet.Audience); err != nil {
 		return
@@ -200,6 +206,9 @@ func (s *Service) SaveEntry(ctx context.Context, actor, id int64, in EntryInput)
 		return out, ErrConflict
 	}
 	if err = textValid(in.Entry.Text, 5000, len(in.MediaIDs) == 0); err != nil {
+		return
+	}
+	if err = textValid(in.Entry.City, 120, false); err != nil {
 		return
 	}
 	if err = audienceValid(in.Entry.Audience); err != nil {
@@ -452,19 +461,28 @@ func validExpression(id string) bool {
 
 type GroupInput struct {
 	CommandMeta
-	Name string `json:"name"`
+	Name         string `json:"name"`
+	Discoverable bool   `json:"discoverable"`
+	City         string `json:"city"`
+	Summary      string `json:"summary"`
 }
 
 func (s *Service) CreateGroup(ctx context.Context, actor int64, in GroupInput) (out Record, err error) {
 	if err = textValid(in.Name, 60, true); err != nil {
 		return
 	}
+	if err = textValid(in.City, 120, in.Discoverable); err != nil {
+		return
+	}
+	if err = textValid(in.Summary, 1000, false); err != nil {
+		return
+	}
 	err = s.command(ctx, actor, "group.create", 0, in, Groups, &out, func(tx Tx) error {
 		if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
-		r := Record{OwnerID: actor, Participants: []int64{actor}, State: "active"}
-		if e := save(tx, Groups, &r, Group{Name: in.Name, Members: []int64{actor}, Muted: []int64{}}, actor, "group.created"); e != nil {
+		r := Record{OwnerID: actor, Participants: []int64{actor}, State: "active", Public: in.Discoverable}
+		if e := save(tx, Groups, &r, Group{Name: in.Name, Members: []int64{actor}, Muted: []int64{}, Discoverable: in.Discoverable, City: in.City, Summary: in.Summary}, actor, "group.created"); e != nil {
 			return e
 		}
 		out = r
@@ -475,9 +493,12 @@ func (s *Service) CreateGroup(ctx context.Context, actor int64, in GroupInput) (
 
 type GroupAction struct {
 	CommandMeta
-	Version int64  `json:"version"`
-	UserID  int64  `json:"user_id"`
-	Notice  string `json:"notice"`
+	Version      int64  `json:"version"`
+	UserID       int64  `json:"user_id"`
+	Notice       string `json:"notice"`
+	Discoverable bool   `json:"discoverable"`
+	City         string `json:"city"`
+	Summary      string `json:"summary"`
 }
 
 func (s *Service) Group(ctx context.Context, actor, id int64, action string, in GroupAction) (out Record, err error) {
@@ -506,6 +527,20 @@ func (s *Service) Group(ctx context.Context, actor, id int64, action string, in 
 		}
 		isOwner := actor == r.OwnerID
 		switch action {
+		case "directory":
+			if !isOwner {
+				return ErrForbidden
+			}
+			if e = textValid(in.City, 120, in.Discoverable); e != nil {
+				return e
+			}
+			if e = textValid(in.Summary, 1000, false); e != nil {
+				return e
+			}
+			g.Discoverable = in.Discoverable
+			g.City = in.City
+			g.Summary = in.Summary
+			r.Public = in.Discoverable
 		case "notice":
 			if !isOwner {
 				return ErrForbidden
@@ -530,6 +565,9 @@ func (s *Service) Group(ctx context.Context, actor, id int64, action string, in 
 			}
 			if action == "accept_transfer" {
 				r.OwnerID = actor
+				if e = s.transferGroupRequests(tx, id, actor); e != nil {
+					return e
+				}
 			}
 			g.PendingTransferTo = 0
 			g.TransferExpiresAt = nil
@@ -544,6 +582,7 @@ func (s *Service) Group(ctx context.Context, actor, id int64, action string, in 
 				return ErrForbidden
 			}
 			r.State = "dissolved"
+			r.Public = false
 			g.PendingTransferTo = 0
 			g.TransferExpiresAt = nil
 		case "leave", "remove_member":
@@ -716,6 +755,37 @@ func (s *Service) Invitation(ctx context.Context, actor, id, version int64, acti
 			r.State = "declined"
 			if action == "accept" {
 				r.State = "accepted"
+				if i.Scope == "group_request" {
+					gRecord, e := tx.Get(Groups, i.TargetID)
+					if e != nil {
+						return e
+					}
+					g, e := Decode[Group](gRecord)
+					if e != nil {
+						return e
+					}
+					if gRecord.OwnerID != actor || gRecord.State != "active" || !g.Discoverable || len(g.Members) >= 200 {
+						return ErrConflict
+					}
+					if e = s.interaction(tx, r.OwnerID); e != nil {
+						return e
+					}
+					b, e := blocked(tx, actor, r.OwnerID)
+					if e != nil {
+						return e
+					}
+					if b {
+						return ErrForbidden
+					}
+					g.Members = Unique(append(g.Members, r.OwnerID))
+					gRecord.Participants = g.Members
+					if e = save(tx, Groups, &gRecord, g, actor, "group.member_joined"); e != nil {
+						return e
+					}
+					if e = s.notify(tx, r.OwnerID, actor, "applications", Groups, gRecord.ID, "入群申请已被接受"); e != nil {
+						return e
+					}
+				}
 				if i.Scope == "group_member" {
 					gRecord, e := tx.Get(Groups, i.TargetID)
 					if e != nil {
@@ -741,6 +811,9 @@ func (s *Service) Invitation(ctx context.Context, actor, id, version int64, acti
 			}
 			if r.State != "pending" && r.State != "accepted" {
 				return ErrConflict
+			}
+			if i.Scope == "group_request" && r.State == "accepted" {
+				return Invalid("use the explicit group leave action")
 			}
 			r.State = "revoked"
 			if i.Scope == "group_member" {
@@ -1055,6 +1128,18 @@ func (s *Service) Settings(ctx context.Context, actor int64, k Kind, in Settings
 			return e
 		}
 		r.State = "active"
+		if k == Preferences {
+			preference := *in.Preference
+			preference.Content = nil
+			if r.Version > 0 {
+				previous, e := Decode[Preference](r)
+				if e != nil {
+					return e
+				}
+				preference.Content = previous.Content
+			}
+			body = preference
+		}
 		if k == Drafts {
 			r.MediaIDs = in.MediaIDs
 		}

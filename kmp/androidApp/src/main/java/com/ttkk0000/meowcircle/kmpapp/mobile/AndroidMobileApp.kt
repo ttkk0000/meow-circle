@@ -51,8 +51,8 @@ fun AndroidMobileApp(store: MobileStore) {
     MobileTheme {
         AndroidAdaptiveWindow {
             val keyboard = WindowInsets.ime.getBottom(androidx.compose.ui.platform.LocalDensity.current) > 0
-            val policy = AndroidWindowPolicy(rail = maxWidth >= 680.dp, master = maxWidth >= 920.dp && maxHeight >= 480.dp && !keyboard,
-                contextPane = maxWidth >= 1360.dp && maxHeight >= 600.dp && !keyboard)
+            val policy = AndroidWindowPolicy(rail = maxWidth >= 680.dp, master = maxWidth >= 980.dp && maxHeight >= 480.dp && !keyboard,
+                contextPane = maxWidth >= 1100.dp && maxHeight >= 600.dp && !keyboard)
             MobileShell(store, state, features, policy)
         }
     }
@@ -63,21 +63,24 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
     val f = store.features
     val saved = androidx.compose.runtime.saveable.rememberSaveableStateHolder()
     fun select(tab: MobileTab) { if (!features.busy && state.publicationConfirmation == null) { f.closeRoute(); store.select(tab) } }
-    val unread = state.inbox?.let { it.direct.values.sum() + it.groups.values.sum() + it.notifications.filterKeys { key -> key !in listOf("direct_messages","groups") }.values.sum() }
+    val unread = state.inbox?.globalTotal
+    val showMaster = policy.master && features.route == null && state.tab in listOf(MobileTab.Adoption,MobileTab.Messages) && state.destination != MobileDestination.Home
+    val showFeatureMaster = policy.master && features.route?.page in listOf(FeaturePage.Appointment,FeaturePage.Offer,FeaturePage.Claim,FeaturePage.Review)
+    val showComposePreview = policy.master && state.tab == MobileTab.Publish && features.route == null && state.destination == MobileDestination.Home
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        bottomBar = { if (!policy.rail) NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
+        bottomBar = { if (!policy.rail && features.route == null && state.destination == MobileDestination.Home && state.tab != MobileTab.Publish) NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
             MobileTab.entries.forEach { tab -> NavigationBarItem(selected = state.tab == tab,
-                onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if (unread > 99) "99+" else unread.toString()) } }) { Icon(tab.icon(), tab.label) } }, label = { Text(tab.label) }) }
+                onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if (unread > 99) "99+" else unread.toString()) } }) { DesignIcon(tab.designIcon(),tab.label) } }, label = { Text(tab.label) }) }
         } }, contentWindowInsets = WindowInsets.safeDrawing,
     ) { padding ->
         Row(Modifier.fillMaxSize().padding(padding).imePadding()) {
             if (policy.rail) NavigationRail(containerColor = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxHeight().verticalScroll(rememberScrollState())) {
                 Text("M&D", Modifier.padding(vertical = 20.dp), fontFamily = BrandFont, fontWeight = FontWeight.ExtraBold)
                 MobileTab.entries.forEach { tab -> NavigationRailItem(selected = state.tab == tab,
-                    onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if(unread > 99) "99+" else "$unread") } }) { Icon(tab.icon(), tab.label) } }, label = { Text(tab.label) }) }
+                    onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if(unread > 99) "99+" else "$unread") } }) { DesignIcon(tab.designIcon(),tab.label) } }, label = { Text(tab.label) }) }
             }
-            if (policy.contextPane) ContextPane(store, state, Modifier.width(240.dp).fillMaxHeight())
+            if (policy.contextPane && !showMaster && !showFeatureMaster && !showComposePreview) ContextPane(store, state, features, Modifier.width(224.dp).fillMaxHeight())
             Column(Modifier.weight(1f).fillMaxHeight()) {
                 Row(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (features.route != null || state.destination != MobileDestination.Home) IconButton(onClick = { if (!f.back()) store.back() }, enabled = !state.busy && !features.busy) { Icon(Icons.Outlined.ArrowBack, "返回") }
@@ -98,12 +101,11 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                 }
                 if(state.inboxError != null) Text("未读读取失败，保留上次结果",Modifier.padding(horizontal = 16.dp),style = MaterialTheme.typography.labelSmall)
                 Row(Modifier.fillMaxSize()) {
-                    val master = policy.master && features.route == null && state.tab in listOf(MobileTab.Adoption,MobileTab.Messages) && state.destination != MobileDestination.Home
-                    if (master) {
+                    if (showMaster) {
                         Box(Modifier.width(300.dp).fillMaxHeight()) { saved.SaveableStateProvider("${state.user?.id ?: 0}-home-${state.tab}") { HomeContent(store,state) } }
                         VerticalDivider()
                     }
-                    if(policy.master && features.route?.page in listOf(FeaturePage.Appointment,FeaturePage.Offer,FeaturePage.Claim,FeaturePage.Review)) {
+                    if(showFeatureMaster) {
                         Box(Modifier.width(280.dp).fillMaxHeight()) { saved.SaveableStateProvider("${state.user?.id ?: 0}-feature-master-${features.route?.page}") { AndroidFeatureMaster(store,features) } }
                         VerticalDivider()
                     }
@@ -116,7 +118,7 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                             }
                         }
                     }
-                    if(policy.master && state.tab == MobileTab.Publish && features.route == null && state.destination == MobileDestination.Home) {
+                    if(showComposePreview) {
                         VerticalDivider(); Column(Modifier.width(280.dp).fillMaxHeight().verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             Text("发布预览",style = MaterialTheme.typography.titleMedium); Text(state.composeTitle); Text(state.composeText); Text(audienceLabel(state.composeEntry.audience.mode))
                             state.photos.mapNotNull { it.mediaId }.forEach { MobilePhoto(store,it,state.user?.id,"发布预览",Modifier.fillMaxWidth().aspectRatio(1f)) }
@@ -138,26 +140,55 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
 }
 
 @Composable
-internal fun ContextPane(store: MobileStore, state: MobileState, modifier: Modifier) {
-    Column(modifier.padding(20.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text("和猫咪一起的日常", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-        Text("交流、领养与同城互助", color = MaterialTheme.colorScheme.onSurfaceVariant)
-        OutlinedButton(onClick = { store.open(MobileDestination.Help) }, modifier = Modifier.fillMaxWidth()) { Text("走失互助") }
-        OutlinedButton(onClick = { store.open(MobileDestination.Applications) }, modifier = Modifier.fillMaxWidth()) { Text("领养申请进度") }
-        OutlinedButton(onClick = { store.open(MobileDestination.Notifications) }, modifier = Modifier.fillMaxWidth()) { Text("通知") }
-        FeatureButton("预约与安排") { store.features.open(FeatureRoute(FeaturePage.Appointments)) }
-        FeatureButton("好友与宠友圈") { store.features.open(FeatureRoute(FeaturePage.Friends)) }
-        FeatureButton("有偿信息") { store.features.open(FeatureRoute(FeaturePage.Offers)) }
+internal fun ContextPane(store: MobileStore, state: MobileState, features: FeatureState, modifier: Modifier) {
+    val f = store.features
+    Column(modifier.background(MaterialTheme.colorScheme.surfaceVariant).padding(20.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(features.route?.page?.title ?: state.tab.label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        when(state.tab) {
+            MobileTab.Community -> {
+                NavigationRow("推荐日常") { f.closeRoute(); store.select(MobileTab.Community); store.filterFeed("community") }
+                NavigationRow("宠友圈") { f.closeRoute(); store.select(MobileTab.Community); store.filterFeed("circle") }
+                NavigationRow("宠物日记") { f.closeRoute(); store.select(MobileTab.Community); store.filterFeed("diary") }
+                NavigationRow("好友与邀请") { f.open(FeatureRoute(FeaturePage.Friends)) }
+            }
+            MobileTab.Adoption -> {
+                NavigationRow("领养介绍") { f.closeRoute(); store.select(MobileTab.Adoption) }
+                NavigationRow("领养申请进度") { f.closeRoute(); store.open(MobileDestination.Applications) }
+                NavigationRow("预约与安排") { f.open(FeatureRoute(FeaturePage.Appointments)) }
+                NavigationRow("有偿信息") { f.open(FeatureRoute(FeaturePage.Offers)) }
+            }
+            MobileTab.Publish -> {
+                NavigationRow("晒晒我的宠物") { f.closeRoute(); store.select(MobileTab.Publish) }
+                NavigationRow("新增宠物档案") { f.open(FeatureRoute(FeaturePage.PetEdit)) }
+                NavigationRow("走失／拾获求助") { f.open(FeatureRoute(FeaturePage.CaseEdit)) }
+                NavigationRow("本机草稿与原操作") { f.open(FeatureRoute(FeaturePage.Recovery)) }
+            }
+            MobileTab.Messages -> {
+                NavigationRow("聊天与未读") { f.closeRoute(); store.select(MobileTab.Messages) }
+                NavigationRow("互动与通知") { f.closeRoute(); store.open(MobileDestination.Notifications) }
+                NavigationRow("协作与群邀请") { f.open(FeatureRoute(FeaturePage.Invitations)) }
+                NavigationRow("创建群聊") { f.open(FeatureRoute(FeaturePage.GroupCreate)) }
+                NavigationRow("提醒设置") { f.open(FeatureRoute(FeaturePage.Settings)) }
+            }
+            MobileTab.Profile -> {
+                NavigationRow("我的资料") { f.closeRoute(); store.select(MobileTab.Profile) }
+                NavigationRow("账号安全") { f.open(FeatureRoute(FeaturePage.Security)) }
+                NavigationRow("资料与账号请求") { f.open(FeatureRoute(FeaturePage.DataRequests)) }
+                NavigationRow("关注与求助订阅") { store.features.open(FeatureRoute(FeaturePage.Content)) }
+        NavigationRow("规则与权益") { f.open(FeatureRoute(FeaturePage.Rules)) }
+            }
+        }
+        NavigationRow("走失互助") { f.closeRoute(); store.open(MobileDestination.Help) }
         val chatDestination = state.destination as? MobileDestination.Chat
         if(chatDestination != null) {
             HorizontalDivider()
             if(chatDestination.group) {
                 Text(state.group?.data?.name ?: "群聊上下文")
                 Text(state.group?.let { "${it.data.members.size} 位成员 · ${stateLabel(it.state)}" } ?: "等待读取当前成员资格")
-                FeatureButton("群公告与成员管理") { store.features.open(FeatureRoute(FeaturePage.Group,chatDestination.id)) }
+                NavigationRow("群公告与成员管理") { f.open(FeatureRoute(FeaturePage.Group,chatDestination.id)) }
             } else state.conversation?.let { chat ->
                 val peer = if(chat.data.requesterId == state.user?.id) chat.data.recipientId else chat.data.requesterId
-                FeatureButton("查看对方资料") { store.features.open(FeatureRoute(FeaturePage.Member,peer)) }
+                NavigationRow("查看对方资料") { f.open(FeatureRoute(FeaturePage.Member,peer)) }
                 Text(stateLabel(chat.state))
             }
         }
@@ -172,7 +203,7 @@ private fun HomeContent(store: MobileStore, s: MobileState) {
     when (s.tab) {
         MobileTab.Community -> Feed(store, s)
         MobileTab.Adoption -> Records(s.pets, "先了解，再决定", { store.refreshHome() }, { store.refreshHome(true) },
-            header = { Text("领养不是免费买宠。具体条件、健康未知和必要费用都应分别说明。", color = MaterialTheme.colorScheme.onSurfaceVariant) }) { row ->
+            header = { AdoptionFilters(store,s);Text("领养不是免费买宠。具体条件、健康未知和必要费用都应分别说明。", color = MaterialTheme.colorScheme.onSurfaceVariant) }) { row ->
             PetCard(store, s, row) { store.open(MobileDestination.Pet(row.id)) }
         }
         MobileTab.Publish -> PublishScreen(store, s)
@@ -181,16 +212,30 @@ private fun HomeContent(store: MobileStore, s: MobileState) {
     }
 }
 
+@Composable private fun AdoptionFilters(store: MobileStore,s: MobileState) {
+    var keyword by remember(s.petKeyword) { mutableStateOf(s.petKeyword) }
+    var city by remember(s.petCity) { mutableStateOf(s.petCity) }
+    var species by remember(s.petSpecies) { mutableStateOf(s.petSpecies) }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        OutlinedTextField(keyword,{ keyword = it },Modifier.fillMaxWidth(),label = { Text("搜索名字、品种或介绍") })
+        OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("城市，可手动选择") })
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { listOf("" to "全部","cat" to "猫咪","dog" to "狗狗").forEach { (value,label) -> FilterChip(species == value,{ species = value },label = { Text(label) }) } }
+        FeatureButton("按当前条件筛选",!s.pets.loading) { store.filterPets(keyword.trim(),city.trim(),species) }
+    }
+}
+
 @Composable
 private fun Feed(store: MobileStore, s: MobileState) {
-    LazyVerticalGrid(columns = GridCells.Adaptive(160.dp), modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp),
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+    LazyVerticalGrid(columns = GridCells.Fixed(if(maxWidth >= 364.dp) 2 else 1), modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item(span = { GridItemSpan(maxLineSpan) }) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(s.feedKeyword) }
                 OutlinedTextField(query,{ query = it },Modifier.fillMaxWidth(),label = { Text("搜索宠友日常与互助") },trailingIcon = { IconButton({ store.filterFeed(s.feedSpace,query) }) { Icon(Icons.Outlined.Search,"搜索") } },singleLine = true)
-                Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) { listOf("community" to "社区","circle" to "宠友圈","diary" to "日记").forEach { (id,label) -> FilterChip(s.feedSpace == id,{ store.filterFeed(id) },label = { Text(label) },modifier = Modifier.padding(end = 8.dp)) } }
-                FeatureButton("好友与宠友圈") { store.features.open(FeatureRoute(FeaturePage.Friends)) }
+                Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) { listOf("community" to "推荐","following" to "关注","circle" to "宠友圈","local" to "同城").forEach { (id,label) -> FilterChip(s.feedSpace == id,{ store.filterFeed(id) },label = { Text(label) },modifier = Modifier.padding(end = 8.dp)) } }
+                if(s.feedSpace == "local") { var city by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(s.feedCity) }; OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("手动选择城市，不含精确定位") },trailingIcon = { TextButton({ store.filterFeed("local",city = city) }) { Text("查看") } }) }
+                NavigationRow("晒晒今天的小可爱…","照片、日记与宠友分享") { store.select(MobileTab.Publish) }
             }
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
@@ -199,17 +244,10 @@ private fun Feed(store: MobileStore, s: MobileState) {
                 OutlinedButton(onClick = { store.open(MobileDestination.Help) }, modifier = Modifier.weight(1f)) { Text("走失互助") }
             }
         }
-        items(s.entries.items, key = { it.id }) { row ->
-            Column(Modifier.clickable { store.open(MobileDestination.Entry(row.id)) }) {
-                Card(shape = RoundedCornerShape(16.dp)) {
-                    MobilePhoto(store, row.mediaIds.firstOrNull(), s.user?.id, row.data.title.ifBlank { "社区照片" }, Modifier.fillMaxWidth().aspectRatio(0.9f))
-                }
-                Text(row.data.title.ifBlank { row.data.text }, Modifier.padding(top = 8.dp), maxLines = 2, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold)
-                s.metrics[row.id]?.let { Text("${it.likes} 赞 · ${it.comments} 评论", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-            }
-        }
+        items(s.entries.items, key = { it.id }) { row -> FeedTile(store,s,row) }
         item(span = { GridItemSpan(maxLineSpan) }) { FeatureButton("有偿信息、到访与费用披露") { store.features.open(FeatureRoute(FeaturePage.Offers)) } }
         item(span = { GridItemSpan(maxLineSpan) }) { PageFooter(s.entries, { store.refreshHome() }, { store.refreshHome(true) }) }
+    }
     }
 }
 
@@ -217,11 +255,12 @@ private fun Feed(store: MobileStore, s: MobileState) {
 private fun PetCard(store: MobileStore, s: MobileState, row: MobileRecord<PetBody>, open: () -> Unit) {
     Card(onClick = open, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), shape = RoundedCornerShape(16.dp)) {
         Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Card(shape = RoundedCornerShape(16.dp)) { MobilePhoto(store, row.mediaIds.firstOrNull(), s.user?.id, row.data.name, Modifier.size(100.dp, 116.dp)) }
+            Card(shape = RoundedCornerShape(16.dp)) { MobilePhoto(store, row.mediaIds.firstOrNull(), s.user?.id, row.data.name, Modifier.size(96.dp, 112.dp)) }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(row.data.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                Text(listOf(row.data.species, row.data.breed, row.data.sex).filter { it.isNotBlank() }.joinToString(" · "), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(listOf(speciesLabel(row.data.species), row.data.breed, when(row.data.sex) { "male" -> "公"; "female" -> "母"; else -> "" }).filter { it.isNotBlank() }.joinToString(" · "), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(row.data.bio, maxLines = 3, overflow = TextOverflow.Ellipsis)
+                if(row.data.city.isNotBlank()) Text(row.data.city,style = MaterialTheme.typography.bodySmall)
                 Text(if (row.data.adoptionAvailable) "正在寻找领养人" else "宠物档案", color = MaterialTheme.colorScheme.primary)
             }
         }
@@ -246,11 +285,14 @@ private fun DetailContent(store: MobileStore, s: MobileState) {
             Text(record.data.description)
             Text("公开位置为大致区域。认领与交接需要核对材料并由双方确认。", color = MaterialTheme.colorScheme.onSurfaceVariant)
             if (record.data.closureReason.isNotBlank()) Text("结束说明：${record.data.closureReason}")
+            ContentSubscriptionButton(store,record.id,true)
+            NavigationRow("查看公开大致区域") { store.features.open(FeatureRoute(FeaturePage.Map,record.id)) }
             FeatureButton("私密线索与认领") { store.features.open(FeatureRoute(FeaturePage.CaseWork,record.id)) }
             FeatureButton("报告安全或隐私问题") { store.features.open(FeatureRoute(FeaturePage.Safety,kind = "cases",peer = record.id)) }
         } }
         MobileDestination.Help -> Records(s.cases, "走失互助", { store.reloadDetail() }, { store.reloadDetail(true) },header = {
             FeatureButton("发布走失／拾获求助") { if(s.user == null) store.showLogin() else store.features.open(FeatureRoute(FeaturePage.CaseEdit)) }
+            FeatureButton("互助地图") { store.features.open(FeatureRoute(FeaturePage.Map)) }
             FeatureButton("附近提醒") { store.features.open(FeatureRoute(FeaturePage.Nearby)) }
         }) { row ->
             ActionCard(row.data.title, "${row.data.city} · ${row.data.area}\n${if (row.data.type == "lost") "走失" else "拾获"}") { store.open(MobileDestination.Case(row.id)) }
@@ -284,8 +326,9 @@ private fun PetDetail(store: MobileStore, s: MobileState) {
     ScrollContent {
         Photos(store, record.mediaIds, s.user?.id, record.data.name)
         SectionTitle(record.data.name)
-        Text(listOf(record.data.species, record.data.breed, record.data.sex).filter { it.isNotBlank() }.joinToString(" · "))
+        Text(listOf(speciesLabel(record.data.species), record.data.breed, record.data.sex).filter { it.isNotBlank() }.joinToString(" · "))
         Text(record.data.bio)
+        NavigationRow("独立图文日记","只读取这只宠物的内容") { store.features.open(FeatureRoute(FeaturePage.PetDiary,record.id)) }
         if (s.user?.id == record.ownerId && record.data.health.isNotBlank()) Text("私密健康记录：${record.data.health}")
         Text("先核对具体条件、材料来源与照护安排。尚未提供的健康信息不能视为已确认。", color = MaterialTheme.colorScheme.onSurfaceVariant)
         if(s.petChecks.isNotEmpty()) FeatureSection("按事项核实") { s.petChecks.forEach { Text("${checkLabel(it.check)} · ${stateLabel(it.state)}\n${it.summary}\n${it.validUntil?.let { until -> "有效至 ${displayTime(until)}" }.orEmpty()}") } }
@@ -309,11 +352,12 @@ private fun PetDetail(store: MobileStore, s: MobileState) {
 @Composable
 private fun EntryDetail(store: MobileStore, s: MobileState) {
     val entry = s.entry ?: return
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(Modifier.fillMaxSize()) {
+    LazyColumn(Modifier.weight(1f).fillMaxWidth(), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        item { NavigationRow(if(entry.ownerId == s.user?.id) s.user?.nickname.orEmpty() else "宠友 #${entry.ownerId}", "查看发布人资料") { store.features.open(FeatureRoute(FeaturePage.Member,entry.ownerId)) } }
         item { Photos(store, entry.mediaIds, s.user?.id, entry.data.title) }
-        item { SectionTitle(entry.data.title); Text(entry.data.text); Text("${audienceLabel(entry.data.audience.mode)} · ${originLabel(entry.data.contentOrigin)}",color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        item { SectionTitle(entry.data.title); Text(entry.data.text); if(entry.data.city.isNotBlank()) Text(entry.data.city,style = MaterialTheme.typography.labelSmall); Text("${audienceLabel(entry.data.audience.mode)} · ${originLabel(entry.data.contentOrigin)}",color = MaterialTheme.colorScheme.onSurfaceVariant) }
         item {
-            FeatureButton("查看发布人") { store.features.open(FeatureRoute(FeaturePage.Member,entry.ownerId)) }
             if(entry.ownerId == s.user?.id) {
                 FeatureButton("编辑动态") { store.features.open(FeatureRoute(FeaturePage.EntryEdit,entry.id)) }
                 FeatureButton("删除动态",!s.busy) { store.features.confirm("删除动态",entry.data.title.ifBlank { entry.data.text }) { store.api.removeResource("entries",entry.id,entry.version); store.back(); store.refreshHome() } }
@@ -322,7 +366,10 @@ private fun EntryDetail(store: MobileStore, s: MobileState) {
         }
         item {
             val metrics = s.metrics[entry.id]
-            OutlinedButton(onClick = store::toggleLike, enabled = metrics != null && !s.busy) { Text(if (metrics?.viewerLiked == true) "已赞 ${metrics.likes}" else "赞 ${metrics?.likes ?: "—"}") }
+            TaskSection("互动") { Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                TextButton(onClick = store::toggleLike,enabled = metrics != null && !s.busy,modifier = Modifier.weight(1f).heightIn(min = 48.dp)) { DesignIcon("heart",if(metrics?.viewerLiked == true) "取消喜欢" else "喜欢"); Spacer(Modifier.width(8.dp)); Text(metrics?.likes?.toString() ?: "—") }
+                Row(Modifier.weight(1f).heightIn(min = 48.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(8.dp)) { DesignIcon("message-circle","评论"); Text(metrics?.comments?.toString() ?: "—") }
+            } }
         }
         item { SectionTitle("评论"); if(s.comments.items.isNotEmpty()) Text("评论中的“回复此评论”会绑定原评论，不自动发送。",style = MaterialTheme.typography.labelSmall) }
         items(s.comments.items, key = { it.id }) { row ->
@@ -336,7 +383,8 @@ private fun EntryDetail(store: MobileStore, s: MobileState) {
             }
         }
         item { PageFooter(s.comments, { store.loadComments() }, { store.loadComments(true) }) }
-        item { ReplyEditor(store, s, "写下评论") }
+    }
+    ReplyEditor(store, s, "说点什么…")
     }
 }
 
@@ -357,29 +405,6 @@ private fun ApplicationDetail(store: MobileStore, s: MobileState) {
             OutlinedButton(onClick = { store.requestAdoptionAction(action, label) }, enabled = !s.busy && !s.conflict,
                 modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text(label) }
         }
-    }
-}
-
-@Composable
-private fun InboxScreen(store: MobileStore, s: MobileState) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        item { ActionCard("通知", "${s.inbox?.notifications?.values?.sum()?.toString() ?: "—"} 条未读") { store.open(MobileDestination.Notifications) } }
-        item {
-            Text("待接受的消息请求 ${s.inbox?.messageRequests?.toString() ?: "—"}", fontWeight = FontWeight.Bold)
-            Text("待处理事项 ${s.inbox?.pending?.values?.sum()?.toString() ?: "—"}，与未读分开计算")
-            FeatureButton("好友与邀请") { store.features.open(FeatureRoute(FeaturePage.Invitations)) }
-            FeatureButton("创建群聊") { store.features.open(FeatureRoute(FeaturePage.GroupCreate)) }
-            FeatureButton("预约与安排") { store.features.open(FeatureRoute(FeaturePage.Appointments)) }
-        }
-        items(s.conversations.items, key = { "direct-${it.id}" }) { row ->
-            ActionCard("与用户 #${if(row.data.requesterId == s.user?.id) row.data.recipientId else row.data.requesterId}", "${if (row.state == "pending") "消息请求" else "私信"} · ${s.inbox?.let { it.direct["${row.id}"] ?: 0 }?.toString() ?: "—"} 条未读") { store.open(MobileDestination.Chat(row.id)) }
-        }
-        item { PageFooter(s.conversations, { store.refreshHome() }, { store.refreshHome(true) }) }
-        item { SectionTitle("群聊") }
-        items(s.groups.items, key = { "group-${it.id}" }) { row ->
-            ActionCard(row.data.name, "${row.data.members.size} 位成员 · ${s.inbox?.let { it.groups["${row.id}"] ?: 0 }?.toString() ?: "—"} 条未读") { store.open(MobileDestination.Chat(row.id, true)) }
-        }
-        item { PageFooter(s.groups, { store.refreshHome() }, { store.refreshHome(true) }) }
     }
 }
 
@@ -481,6 +506,7 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
         OutlinedTextField(composer, { next -> store.editCompose(s.composeTitle,next.text); if(store.state.value.composeText == next.text) composer = next }, Modifier.fillMaxWidth(), label = { Text("今天想分享什么？") }, minLines = 6, enabled = !s.busy)
         TextButton({ emojiOpen = !emojiOpen }) { Text(if(emojiOpen) "收起表情" else "插入表情") }
         if(emojiOpen) ComposeEmojiPanel(store,s,composer) { next -> store.editCompose(s.composeTitle,next.text); if(store.state.value.composeText == next.text) composer = next }
+        OutlinedTextField(s.composeEntry.city,store::editComposeCity,Modifier.fillMaxWidth(),label = { Text("城市（选填，不含精确定位）") },enabled = !s.busy)
         ComposeAudience(store,s)
         PhotoPickerButton(store, 9 - s.photos.size, !s.busy)
         s.photos.forEachIndexed { index, photo ->
@@ -501,7 +527,7 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
         if (s.draftLoading) LinearProgressIndicator(Modifier.fillMaxWidth())
         OutlinedButton(onClick = store::saveComposeDraft, enabled = !s.busy && s.draftLoaded && !s.draftLoading && s.photos.all { it.mediaId != null }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text("保存草稿") }
         TextButton(onClick = { replaceDraft = true }, enabled = !s.busy && !s.draftLoading) { Text("用云端草稿替换当前输入") }
-        Button(onClick = store::publish, enabled = !s.busy && s.composeAudienceValid && (s.composeText.isNotBlank() || s.photos.isNotEmpty()) && s.photos.all { it.mediaId != null }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text("确认发布") }
+        TaskPrimary("预览这篇日常",!s.busy && s.composeAudienceValid && (s.composeText.isNotBlank() || s.photos.isNotEmpty()) && s.photos.all { it.mediaId != null },store::publish)
     }
     if(replaceDraft) MobileAlertDialog(onDismissRequest = { replaceDraft = false },title = { Text("用云端草稿替换当前输入？") },text = { Text("当前未同步文字、受众和照片会被云端版本替换。请先核对是否需要保留本机输入。") },confirmButton = { TextButton({ replaceDraft = false; store.restoreComposeDraft(replaceInput = true) },enabled = !s.busy) { Text("确认替换") } },dismissButton = { TextButton({ replaceDraft = false }) { Text("保留本机输入") } })
 }
@@ -510,20 +536,22 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
 private fun ProfileScreen(store: MobileStore, s: MobileState) {
     Records(s.myPets, s.user?.nickname.orEmpty(), { store.refreshHome() }, { store.refreshHome(true) }, header = {
         Text(s.user?.bio.orEmpty())
-        FeatureButton("编辑个人资料") { store.features.open(FeatureRoute(FeaturePage.ProfileEdit)) }
-        FeatureButton("好友与宠友圈") { store.features.open(FeatureRoute(FeaturePage.Friends)) }
-        FeatureButton("协作与群邀请") { store.features.open(FeatureRoute(FeaturePage.Invitations)) }
-        FeatureButton("预约与到访") { store.features.open(FeatureRoute(FeaturePage.Appointments)) }
-        FeatureButton("有偿信息与披露") { store.features.open(FeatureRoute(FeaturePage.Offers)) }
-        FeatureButton("核实、举报与申诉") { store.features.open(FeatureRoute(FeaturePage.Reviews)) }
-        FeatureButton("通知设置与附近提醒") { store.features.open(FeatureRoute(FeaturePage.Settings)) }
-        FeatureButton("账号安全与手机验证") { store.features.open(FeatureRoute(FeaturePage.Security)) }
-        FeatureButton("资料删除、注销与协助") { store.features.open(FeatureRoute(FeaturePage.DataRequests)) }
-        FeatureButton("待核对操作与受限进度") { store.features.open(FeatureRoute(FeaturePage.Recovery)) }
-        FeatureButton("新增宠物档案") { store.features.open(FeatureRoute(FeaturePage.PetEdit)) }
-        ActionCard("领养申请进度", "查看申请与双方确认") { store.open(MobileDestination.Applications) }
-        ActionCard("通知", "互动、申请与消息提醒") { store.open(MobileDestination.Notifications) }
-        ActionCard("走失互助", "查看走失与拾获信息") { store.open(MobileDestination.Help) }
+        NavigationRow("规则与权益") { store.features.open(FeatureRoute(FeaturePage.Rules)) }
+        NavigationRow("编辑个人资料") { store.features.open(FeatureRoute(FeaturePage.ProfileEdit)) }
+        NavigationRow("关注与求助订阅") { store.features.open(FeatureRoute(FeaturePage.Content)) }
+        NavigationRow("好友与宠友圈") { store.features.open(FeatureRoute(FeaturePage.Friends)) }
+        NavigationRow("协作与群邀请") { store.features.open(FeatureRoute(FeaturePage.Invitations)) }
+        NavigationRow("预约与到访") { store.features.open(FeatureRoute(FeaturePage.Appointments)) }
+        NavigationRow("有偿信息与披露") { store.features.open(FeatureRoute(FeaturePage.Offers)) }
+        NavigationRow("核实、举报与申诉") { store.features.open(FeatureRoute(FeaturePage.Reviews)) }
+        NavigationRow("通知设置与附近提醒") { store.features.open(FeatureRoute(FeaturePage.Settings)) }
+        NavigationRow("账号安全与手机验证") { store.features.open(FeatureRoute(FeaturePage.Security)) }
+        NavigationRow("资料删除、注销与协助") { store.features.open(FeatureRoute(FeaturePage.DataRequests)) }
+        NavigationRow("待核对操作与受限进度") { store.features.open(FeatureRoute(FeaturePage.Recovery)) }
+        NavigationRow("新增宠物档案") { store.features.open(FeatureRoute(FeaturePage.PetEdit)) }
+        NavigationRow("领养申请进度", "查看申请与双方确认") { store.open(MobileDestination.Applications) }
+        NavigationRow("通知", "互动、申请与消息提醒") { store.open(MobileDestination.Notifications) }
+        NavigationRow("走失互助", "查看走失与拾获信息") { store.open(MobileDestination.Help) }
         OutlinedButton(onClick = store::logout, enabled = !s.busy, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text("退出当前账号") }
         SectionTitle("我的宠物")
     }) { row -> PetCard(store, s, row) { store.open(MobileDestination.Pet(row.id)) } }
@@ -532,9 +560,7 @@ private fun ProfileScreen(store: MobileStore, s: MobileState) {
 @Composable private fun SignInPrompt(store: MobileStore) { Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) { Text("登录后继续此任务"); Button(onClick = store::showLogin) { Text("登录") } }
 } }
-@Composable private fun ScrollContent(content: @Composable ColumnScope.() -> Unit) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), content = content)
-}
+@Composable private fun ScrollContent(content: @Composable ColumnScope.() -> Unit) { TaskColumn(content = content) }
 @Composable private fun SectionTitle(text: String) { Text(text, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold) }
 @Composable private fun ActionCard(title: String, detail: String, action: () -> Unit) {
     Card(onClick = action, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), modifier = Modifier.fillMaxWidth()) {
@@ -542,20 +568,13 @@ private fun ProfileScreen(store: MobileStore, s: MobileState) {
     }
 }
 @Composable private fun Photos(store: MobileStore, media: List<Long>, account: Long?, description: String) {
-    media.forEach { id -> Card(shape = RoundedCornerShape(16.dp)) { MobilePhoto(store, id, account, description, Modifier.fillMaxWidth().aspectRatio(1.25f)) } }
+    AndroidMediaGallery(store,media,account,description)
 }
 @Composable private fun ErrorPanel(error: String, retry: () -> Unit) { Column(Modifier.fillMaxWidth().padding(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
     Text(error); OutlinedButton(onClick = retry) { Text("重新载入") }
 } }
-@Composable private fun <T> Records(page: PageState<T>, title: String, retry: () -> Unit, more: () -> Unit,
-    header: @Composable () -> Unit = {}, row: @Composable (MobileRecord<T>) -> Unit) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        item { SectionTitle(title) }; item { header() }
-        items(page.items, key = { it.id }) { row(it) }
-        item { PageFooter(page, retry, more) }
-    }
-}
-@Composable private fun <T> PageFooter(page: PageState<T>, retry: () -> Unit, more: () -> Unit) {
+@Composable private fun <T> Records(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,header: @Composable () -> Unit = {},row: @Composable (MobileRecord<T>) -> Unit) { RecordList(page,title,retry,more,header,row) }
+@Composable internal fun <T> PageFooter(page: PageState<T>, retry: () -> Unit, more: () -> Unit) {
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         if (page.loading) CircularProgressIndicator(Modifier.padding(16.dp))
         page.error?.let { Text(it); OutlinedButton(onClick = retry) { Text("重试") } }
@@ -563,9 +582,8 @@ private fun ProfileScreen(store: MobileStore, s: MobileState) {
         if (page.loaded && page.next != 0L && !page.loading) OutlinedButton(onClick = more, modifier = Modifier.heightIn(min = 48.dp)) { Text("继续加载") }
     }
 }
-private fun MobileTab.icon(): ImageVector = when (this) {
-    MobileTab.Community -> Icons.Outlined.Home; MobileTab.Adoption -> Icons.Outlined.FavoriteBorder
-    MobileTab.Publish -> Icons.Outlined.AddCircleOutline; MobileTab.Messages -> Icons.Outlined.ChatBubbleOutline; MobileTab.Profile -> Icons.Outlined.PersonOutline
+private fun MobileTab.designIcon(): String = when(this) {
+    MobileTab.Community -> "house"; MobileTab.Adoption -> "heart-handshake"; MobileTab.Publish -> "circle-plus"; MobileTab.Messages -> "message-circle"; MobileTab.Profile -> "user-round"
 }
 private fun title(s: MobileState): String = when (s.destination) {
     MobileDestination.Home -> s.tab.label; is MobileDestination.Pet -> "宠物详情"; is MobileDestination.Entry -> "社区动态"

@@ -25,6 +25,8 @@ for file in shared.glob("*.kt"):
         classes[match.group(1)] = {wire or name for wire, name in fields}
 
 mapping = {
+    "Entry":"EntryBody", "Pet":"PetBody", "Preference":"PreferenceBody", "Subscription":"SubscriptionBody",
+    "ContentSubscriptions":"ContentSubscriptions", "ContentSubscriptionInput":"ContentSubscriptionInput", "GroupDirectoryBody":"GroupDirectoryBody", "GroupJoinInput":"GroupJoinInput",
     "EntryInput":"EntryInput", "PetInput":"PetInput", "AdoptionInput":"AdoptionInput", "AdoptionAction":"AdoptionActionInput",
     "CommentInput":"CommentInput", "MessageInput":"SendMessageInput", "PasswordInput":"PasswordLoginInput",
     "AccountInput":"AccountInput", "ReauthInput":"ReauthInput", "PurposeScope":"PurposeScope",

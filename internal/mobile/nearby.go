@@ -50,6 +50,9 @@ func (s *Service) NearbyAlerts(ctx context.Context, caseID, after int64) (out Al
 			if !v.Enabled || v.Frequency == "off" || subscription.OwnerID == r.OwnerID || distanceKM(c.Latitude, c.Longitude, v.Latitude, v.Longitude) > v.RadiusKM {
 				continue
 			}
+			if v.Species != "" && v.Species != c.Species {
+				continue
+			}
 			if e = s.active(tx, subscription.OwnerID); errors.Is(e, ErrUnauthorized) || errors.Is(e, ErrNotFound) {
 				continue
 			} else if e != nil {

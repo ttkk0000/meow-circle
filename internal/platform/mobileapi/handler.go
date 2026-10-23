@@ -143,6 +143,35 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		result, e = h.operations(r, path[1:])
 	} else if path[0] == "eligibility" && len(path) == 1 && r.Method == http.MethodGet {
 		result, e = h.Service.Eligibility(r.Context(), actor)
+	} else if path[0] == "content-subscriptions" && len(path) == 1 && r.Method == http.MethodGet {
+		result, e = h.Service.ContentSubscriptions(r.Context(), actor)
+	} else if path[0] == "content-subscriptions" && len(path) == 1 && r.Method == http.MethodPost {
+		result, e = invoke(r, func(in mobile.ContentSubscriptionInput) (mobile.Record, error) {
+			return h.Service.SaveContentSubscriptions(r.Context(), actor, in)
+		})
+	} else if path[0] == "group-directory" && r.Method == http.MethodGet && len(path) <= 2 {
+		var id int64
+		if len(path) == 2 {
+			id, e = parseID(path[1])
+		}
+		if e == nil {
+			after, _ := strconv.ParseInt(r.URL.Query().Get("cursor"), 10, 64)
+			var page mobile.Page
+			page, e = h.Service.GroupDirectory(r.Context(), actor, after, id, r.URL.Query().Get("q"), r.URL.Query().Get("city"))
+			if id > 0 && e == nil {
+				result = page.Items[0]
+			} else {
+				result = page
+			}
+		}
+	} else if path[0] == "group-directory" && r.Method == http.MethodPost && len(path) == 3 && path[2] == "request" {
+		var id int64
+		id, e = parseID(path[1])
+		if e == nil {
+			result, e = invoke(r, func(in mobile.GroupJoinInput) (mobile.Record, error) {
+				return h.Service.RequestGroupJoin(r.Context(), actor, id, in)
+			})
+		}
 	} else if path[0] == "share" && len(path) == 3 && r.Method == http.MethodGet {
 		var id int64
 		id, e = parseID(path[2])
@@ -269,7 +298,7 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 			lon, _ := strconv.ParseFloat(values.Get("longitude"), 64)
 			radius, _ := strconv.ParseFloat(values.Get("radius_km"), 64)
 			owner, _ := strconv.ParseInt(values.Get("owner_id"), 10, 64)
-			return h.Service.ListFiltered(ctx, actor, k, after, ref, limit, mobile.Query{Space: values.Get("space"), State: values.Get("state"), Keyword: values.Get("q"), City: values.Get("city"), Species: values.Get("species"), OwnerID: owner, Latitude: lat, Longitude: lon, RadiusKM: radius})
+			return h.Service.ListFiltered(ctx, actor, k, after, ref, limit, mobile.Query{Space: values.Get("space"), State: values.Get("state"), Keyword: values.Get("q"), City: values.Get("city"), Species: values.Get("species"), OwnerID: owner, Latitude: lat, Longitude: lon, RadiusKM: radius, Following: values.Get("following") == "true", Watched: values.Get("watched") == "true", Adoption: values.Get("adoption") == "true"})
 		}
 		if len(path) == 2 {
 			return h.Service.Get(ctx, actor, k, id)
@@ -708,11 +737,14 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 	if len(path) == 3 && path[0] == "outbox" && path[2] == "ack" && r.Method == http.MethodPost {
 		return nil, mobile.Denied("use_per_consumer_delivery")
 	}
-	if len(path) == 1 && path[0] == "nearby-alerts" && r.Method == http.MethodPost {
+	if len(path) == 1 && (path[0] == "nearby-alerts" || path[0] == "case-watch-alerts") && r.Method == http.MethodPost {
 		return invoke(r, func(in struct {
 			CaseID int64 `json:"case_id"`
 			Cursor int64 `json:"cursor"`
 		}) (mobile.AlertBatch, error) {
+			if path[0] == "case-watch-alerts" {
+				return h.Service.CaseWatchAlerts(r.Context(), in.CaseID, in.Cursor)
+			}
 			return h.Service.NearbyAlerts(r.Context(), in.CaseID, in.Cursor)
 		})
 	}

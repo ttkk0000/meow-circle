@@ -64,6 +64,7 @@ func (s *Service) ReadMessages(ctx context.Context, actor, id int64, group bool,
 }
 
 type Unread struct {
+	GlobalTotal       int             `json:"global_total"`
 	Pending           map[string]int  `json:"pending"`
 	Direct            map[int64]int   `json:"direct"`
 	Groups            map[int64]int   `json:"groups"`
@@ -126,11 +127,19 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 				}
 				if k == Groups {
 					out.Groups[p.ID] = count
+					g, e := Decode[Group](p)
+					if e != nil {
+						return e
+					}
+					if !Has(g.Muted, actor) {
+						out.GlobalTotal += count
+					}
 					if first > 0 {
 						out.GroupFirstUnread[p.ID] = first
 					}
 				} else {
 					out.Direct[p.ID] = count
+					out.GlobalTotal += count
 					if first > 0 {
 						out.DirectFirstUnread[p.ID] = first
 					}
@@ -150,6 +159,9 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 				return e
 			}
 			out.Notifications[v.Category]++
+			if v.Category != "direct_messages" && v.Category != "groups" {
+				out.GlobalTotal++
+			}
 		}
 		out.Pending = map[string]int{}
 		for _, kind := range []Kind{Adoptions, Appointments, Invitations, Claims, Reviews, Guardians} {

@@ -4,6 +4,8 @@
 
 ## 当前目标与执行状态
 
+2026-10-24进行中：`AI-20261023-FIGMA-ANDROID-WEB`正在完成Android手机／平板与Web的全部Figma页面及公共组件。基线main／5de631b已核对在远端；本轮改动尚未提交。[实时恢复点](../client/FIGMA_ANDROID_WEB_2026_10_24.md)与[740状态索引](../client/figma-implementation-trace-2026-10-24.json)记录已写与待完成，不是全量验收。Android公共骨架／布局与Web真实v2工程已写，正在补关注、同城、群发现／申请和其他宠物等合同缺口。未编译／类型检查／测试／启动，执行标记尚未释放。
+
 2026-10-22 最新 Git 同步状态（AI-20261022-ANDROID-PUSH）：用户明确要求搞完后提交并推送。本机已生成 `1a640cda89d56ac2b04aef996291e7cd423e9b8e`（`feat: 完善 Android 手机平板业务页面与草稿恢复`），包含66文件、5162行新增／206行删除，承接本地合并和上传恢复。**推送未完成**：HTTPS缺GitHub凭据（could not read Username／Password），GitHub CLI不存在、SSH无私钥／agent身份或备用别名；未改远端地址、未强推。等待用户完成本机GitHub身份验证后，继续正常推送 `origin/main` 并核对远端SHA。无后台任务；未编译、测试或应用启动。以下“未提交”及证据JSON的uncommitted字段是生成时历史快照，当前提交以此处与Git日志为准。
 
 2026-10-22：AI-20261022-ANDROID-COMPLETE 本批 Android 手机／平板页面、共享接线与静态核对完成，执行标记释放，基线 main／f41de02，未提交／推送。[续作说明](../client/ANDROID_FEATURES_2026_10_22.md)及[本批证据](../client/android-features-evidence-2026-10-22.json)：五主入口与30扩展页面、敏感确认、业务表单／消息私有草稿及原上传编号恢复、账号／游客隔离、折叠／分屏／IME布局、字体与贴纸；必要的介绍协作媒体校验和首条未读合同已修正。43份客户端源码、48对DTO、42表／227操作／89schema静态核对和32份Kotlin语法解析通过，未做类型检查／编译／测试／应用或设备运行。正式协议URL、官方OAuth SDK、真实短信／邮箱／核验、系统推送、地图与完整平台验收仍待落实，F00–F14不得按全功能运行通过打勾；iOS完整UI、Web／Desktop不在本批。旧上传证据保持历史快照。

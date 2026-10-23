@@ -10,6 +10,7 @@ AI-20261020-UNREAD本轮设计与文档静态检查已结束，交接发送状�
 
 | 任务 | 状态 | 执行者 / 最近核对 | 本次可写范围 | 恢复点与下一步 |
 |---|---|---|---|---|
+| AI-20261023-FIGMA-ANDROID-WEB 设计对齐、组件化与Web实施 | 进行中：公共页面与Web源码已写，核对合同／静态语法与全量设计索引 | Codex / 2026-10-23 UTC+08:00；main / 5de631b，起点工作区干净 | Android mobile公共页面组件／布局、必要shared精确接线、web-client及对应HTTP适配／静态验证、自身交接；不改Figma、不构建／启动 | 用户明确要求核对手机和平板全部页面、抽取公共架构并完成Web；先回读当前设计、逐类型修正，再完成Web与合同，源码与运行验收分开 |
 | AI-20261022-ANDROID-PUSH Android 续作收尾提交与推送 | 本地提交完成，推送受阻：缺 GitHub 身份验证；无后台执行 | Codex / 2026-10-22T23:56:59+08:00；main / 1a640cd，66文件源码批 | 本会话 Android／共享／上传恢复及必要服务合同与交接；仅静态检查、Git提交／非强制推送 | 用户明确授权提交推送；代码提交 1a640cda89d56ac2b04aef996291e7cd423e9b8e 已生成。HTTPS缺凭据，CLI／SSH无可用身份；待用户完成本机GitHub身份验证后继续推送 origin/main。未编译／测试／启动 |
 | AI-20261022-ANDROID-COMPLETE Android 手机与平板功能续作 | 本批源码／静态检查完成；执行标记释放，完整运行验收未完成 | Codex / 2026-10-22 UTC+08:00；main / f41de02，保留上传恢复在途改动；本批未提交 | Android mobile／资源／自适应、必要 shared/client、Introduction媒体校验／首条未读合同修正与未执行回归源码、静态检查和自身记录 | [续作与余量](../client/ANDROID_FEATURES_2026_10_22.md)／[证据](../client/android-features-evidence-2026-10-22.json)：五主入口＋30扩展页，业务／消息草稿和照片原编号恢复，43文件／48对DTO静态及32份语法解析通过；正式渠道与手机／平板运行未验收 |
 | AI-20261022-UPLOAD-RECOVERY 上传落盘与恢复续作 | 本批源码／静态检查完成；执行标记释放 | Codex / 2026-10-22 UTC+08:00；main / f41de02 起点，本批未提交 | 共享恢复、Android／iOS 私有文件、上传预留／回收、合同、未执行回归源码与自身跟踪 | [续作](../server/UPLOAD_RECOVERY_2026_10_22.md)／[证据](../server/upload-recovery-evidence-2026-10-22.json)：29文件、42表、227操作／88schemas、47对DTO静态通过；未编译／测试／迁移／启动。运行及完整UI、其余作业／回执和真实配置仍待继续 |

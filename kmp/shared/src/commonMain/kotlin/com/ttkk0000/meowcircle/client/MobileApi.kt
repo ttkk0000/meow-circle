@@ -375,6 +375,8 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
             val result = decode<JsonElement>(checked(command.path, HttpMethod.Post, if (sensitive) body else command.body, emptyMap(), true))
             val obj = result.jsonObject
             val kind = when {
+                path == "content-subscriptions" -> "preferences"
+                path.startsWith("group-directory/") && path.endsWith("/request") -> "invitations"
                 path.endsWith("/comments") -> "entry_comments"
                 path.endsWith("/messages") -> if (path.startsWith("groups/")) "group_messages" else "messages"
                 else -> path.substringBefore('/')

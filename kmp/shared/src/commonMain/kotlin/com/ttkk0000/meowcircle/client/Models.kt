@@ -35,12 +35,12 @@ data class Audience(val mode: String = "public", @SerialName("user_ids") val use
 @Serializable
 data class PetBody(val name: String, val species: String, val breed: String = "", val birthday: String = "",
     val sex: String = "", val bio: String = "", val health: String = "", val missing: Boolean = false,
-    val audience: Audience = Audience(), @SerialName("adoption_available") val adoptionAvailable: Boolean = false)
+    val audience: Audience = Audience(), @SerialName("adoption_available") val adoptionAvailable: Boolean = false, val city: String = "")
 
 @Serializable
 data class EntryBody(val text: String, val space: String = "community", val title: String = "", val category: String = "daily_share",
     val tags: List<String> = emptyList(), @SerialName("pet_id") val petId: Long = 0, val audience: Audience = Audience(),
-    @SerialName("content_origin") val contentOrigin: String = "")
+    @SerialName("content_origin") val contentOrigin: String = "", val city: String = "")
 
 @Serializable
 data class CommentBody(val text: String = "", @SerialName("sticker_id") val stickerId: String = "",
@@ -65,7 +65,7 @@ data class ConversationBody(@SerialName("requester_id") val requesterId: Long, @
 
 @Serializable
 data class GroupBody(val name: String, val notice: String = "", val members: List<Long> = emptyList(), val muted: List<Long> = emptyList(),
-    @SerialName("pending_transfer_to") val pendingTransferTo: Long = 0, @SerialName("transfer_expires_at") val transferExpiresAt: String? = null)
+    @SerialName("pending_transfer_to") val pendingTransferTo: Long = 0, @SerialName("transfer_expires_at") val transferExpiresAt: String? = null, val discoverable: Boolean = false, val city: String = "", val summary: String = "")
 
 @Serializable
 data class MessageBody(val text: String = "", @SerialName("sticker_id") val stickerId: String = "")
@@ -83,6 +83,7 @@ data class NotificationBody(val category: String, val text: String, val read: Bo
 
 @Serializable
 data class InboxSummary(val direct: Map<String, Int> = emptyMap(), val groups: Map<String, Int> = emptyMap(),
+    @SerialName("global_total") val globalTotal: Int? = null,
     val notifications: Map<String, Int> = emptyMap(), @SerialName("message_requests") val messageRequests: Int = 0,
     val pending: Map<String,Int> = emptyMap(),
     @SerialName("direct_first_unread") val directFirstUnread: Map<String,Long> = emptyMap(),

@@ -73,6 +73,7 @@ dependencies {
     implementation("androidx.compose.foundation:foundation")
     implementation(libs.coilCompose)
     implementation(libs.coilNetwork)
+    implementation(libs.coilSvg)
     implementation(libs.androidxExif)
     implementation(libs.kotlinxCoroutinesAndroid)
     implementation(libs.androidxActivityCompose)

@@ -22,6 +22,17 @@ internal val LocalDialogRegion = staticCompositionLocalOf { DialogRegion() }
         Box(Modifier.fillMaxSize().absolutePadding(area.left,area.top,area.right,area.bottom).safeDrawingPadding().imePadding().padding(16.dp),contentAlignment = Alignment.Center) { content() }
     }
 }
+/** 登录等独立任务在手机占用当前安全区域，平板保持可读的居中正文宽度。 */
+@Composable internal fun MobileTaskDialog(onDismissRequest: () -> Unit,content: @Composable ColumnScope.() -> Unit) {
+    val area = LocalDialogRegion.current
+    Dialog(onDismissRequest,properties = DialogProperties(usePlatformDefaultWidth = false,decorFitsSystemWindows = false)) {
+        BoxWithConstraints(Modifier.fillMaxSize().absolutePadding(area.left,area.top,area.right,area.bottom).safeDrawingPadding().imePadding(),contentAlignment = Alignment.Center) {
+            val compact = maxWidth < 600.dp
+            Surface(color = MaterialTheme.colorScheme.background,shape = if(compact) androidx.compose.ui.graphics.RectangleShape else MaterialTheme.shapes.large,
+                modifier = if(compact) Modifier.fillMaxSize() else Modifier.padding(24.dp).widthIn(max = 520.dp).fillMaxWidth().fillMaxHeight(0.94f)) { TaskColumn(content = content) }
+        }
+    }
+}
 @Composable internal fun MobileAlertDialog(onDismissRequest: () -> Unit,title: @Composable () -> Unit,text: @Composable () -> Unit,
     confirmButton: @Composable () -> Unit,dismissButton: @Composable () -> Unit) {
     MobileDialog(onDismissRequest) {

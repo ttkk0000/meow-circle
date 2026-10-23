@@ -46,6 +46,7 @@ const maxRequestBody = 1 << 20 // 1 MiB
 type Router struct {
 	identity          *identity.Service
 	mobileAPI         *mobileapi.Handler
+	browserAPI        *mobileapi.BrowserHandler
 	legacyDevelopment bool
 	store             store.Store
 	storeKind         string
@@ -108,6 +109,10 @@ func NewRouterWithError() (*Router, error) {
 		r.mobileAPI.Service.Push = mobileauth.GatewayPush{Endpoint: endpoint, Token: token}
 	}
 	r.mobileAPI.Operators, err = mobileapi.OperatorsFromEnvironment()
+	if err != nil {
+		return nil, err
+	}
+	r.browserAPI, err = mobileapi.NewBrowser(r.mobileAPI, os.Getenv("MND_WEB_ORIGIN"), development)
 	if err != nil {
 		return nil, err
 	}
@@ -626,7 +631,8 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 	// Cap JSON body size for every endpoint except media upload which
 	// runs its own multipart size check.
-	if !(req.URL.Path == "/api/v1/media" || req.URL.Path == "/api/v2/media") && req.Body != nil {
+	isMediaUpload := req.Method == http.MethodPost && mobile.HasString([]string{"/api/v1/media", "/api/v2/media", "/api/v2/safety/media", "/api/web/v2/media", "/api/web/v2/safety/media"}, req.URL.Path)
+	if !isMediaUpload && req.Body != nil {
 		req.Body = http.MaxBytesReader(w, req.Body, maxRequestBody)
 	}
 	lw := &loggingResponseWriter{ResponseWriter: w, status: http.StatusOK}
@@ -662,6 +668,12 @@ func (l *loggingResponseWriter) Write(b []byte) (int, error) {
 
 func (r *Router) routes() {
 	r.mux.Handle("/api/v2/", r.mobileAPI)
+	r.mux.Handle("/api/web/v2/", r.browserAPI)
+	r.mux.Handle("/app/", mobileapi.SPAHandler(getEnv("MND_WEB_DIST", filepath.Join(getWorkingDir(), "web-client", "dist"))))
+	r.mux.HandleFunc("/app", func(w http.ResponseWriter, req *http.Request) {
+		http.Redirect(w, req, "/app/", http.StatusPermanentRedirect)
+	})
+	r.mux.HandleFunc("/share/", r.mobileAPI.ShareHandler)
 	webDir := filepath.Join(getWorkingDir(), "web")
 	uploadsDir := filepath.Join(getWorkingDir(), "data", "uploads")
 	r.mux.Handle("/", http.FileServer(http.Dir(webDir)))

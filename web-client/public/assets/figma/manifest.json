@@ -1,0 +1,96 @@
+{
+  "file_key": "3OFOC3vu18Kx9sRPjummOC",
+  "assets": [
+    {
+      "name": "house",
+      "source_node": "311:23",
+      "file": "web-client/public/assets/figma/house.svg",
+      "sha256": "9607a8ec39bdbaadbd2d4be586bef489aca63419920f37902739aab827948ae0"
+    },
+    {
+      "name": "heart-handshake",
+      "source_node": "311:23",
+      "file": "web-client/public/assets/figma/heart-handshake.svg",
+      "sha256": "5daaada72f4cafaaf06e52ba9c788108e7be8cb09d8facf9ab55b901a6a8c7a7"
+    },
+    {
+      "name": "circle-plus",
+      "source_node": "311:23",
+      "file": "web-client/public/assets/figma/circle-plus.svg",
+      "sha256": "95659e4606ae6026e7ad2d3d0df31c1be6d3fe8835bd30084479a52803b7b677"
+    },
+    {
+      "name": "message-circle",
+      "source_node": "220:300899",
+      "file": "web-client/public/assets/figma/message-circle.svg",
+      "sha256": "2f3ab5470b538ef72db480b6f59f23b1ca317f7137bf392bd60bf4e036e0a7ae"
+    },
+    {
+      "name": "user-round",
+      "source_node": "311:23",
+      "file": "web-client/public/assets/figma/user-round.svg",
+      "sha256": "03ba03b24c3c5e3b9d0a5850da2e9d439af29e9dc18b2a1475eafc8b1ee624e1"
+    },
+    {
+      "name": "camera",
+      "source_node": "311:23",
+      "file": "web-client/public/assets/figma/camera.svg",
+      "sha256": "aa721707da860c58649faf3e4fe5f9f68320ab7378c50f2e8fb6ef513fdd0145"
+    },
+    {
+      "name": "heart",
+      "source_node": "108:1870",
+      "file": "web-client/public/assets/figma/heart.svg",
+      "sha256": "0a9b7d644cbe1c5658271f075c1f3931fe41212f9d2fc3360b257caf074bb3ea"
+    },
+    {
+      "name": "chevron-left",
+      "source_node": "311:23",
+      "file": "web-client/public/assets/figma/chevron-left.svg",
+      "sha256": "375a2ee351db4a33d9099b1a1e788c539b54b51f10a268c5a255012d62c8fbef"
+    },
+    {
+      "name": "chevron-right",
+      "source_node": "56:33",
+      "file": "web-client/public/assets/figma/chevron-right.svg",
+      "sha256": "ebb30fd50a6075c12af6534a2b6b95419eef6d75148aec9e1407fe74675511dc"
+    },
+    {
+      "name": "search",
+      "source_node": "56:35",
+      "file": "web-client/public/assets/figma/search.svg",
+      "sha256": "d6c626323c38364c9f5da81ddd298e868ef86fa3e12942391f29a8a3d79bbc35"
+    },
+    {
+      "name": "bell",
+      "source_node": "56:61",
+      "file": "web-client/public/assets/figma/bell.svg",
+      "sha256": "b016d0fbe2d9a8ca4de460c242f2bdbe6d6c5dc9c7b23d5bbba56f5191fcc68c"
+    },
+    {
+      "name": "paw-print",
+      "source_node": "311:23",
+      "file": "web-client/public/assets/figma/paw-print.svg",
+      "sha256": "e93a76e25d46ea19b339631758cfcafb002dc46a9e3b7f7e99fece580b7211b5"
+    },
+    {
+      "name": "ellipsis",
+      "source_node": "108:1883",
+      "file": "web-client/public/assets/figma/ellipsis.svg",
+      "sha256": "ae3748326beb3f2624ac2f1962e69819eae4fc23c7171cd013fc41cb4d828bf0"
+    },
+    {
+      "name": "check",
+      "source_node": "56:63",
+      "file": "web-client/public/assets/figma/check.svg",
+      "sha256": "5743ba989a35b786557a2de0943383bb3413cd95893d23092282106d3b4fdfad"
+    },
+    {
+      "name": "smile",
+      "source_node": "220:300899",
+      "file": "web-client/public/assets/figma/smile.svg",
+      "sha256": "86e0043d2790ccff2d03ce2d5c3350796fe1cb5af18f3aae3bb37551073bac3e"
+    }
+  ],
+  "note": "静态图标原样导出。宠物／头像／动态照片由真实API数据提供，不把设计样例作为业务数据。"
+}

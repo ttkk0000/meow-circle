@@ -8,6 +8,7 @@ type Audience struct {
 }
 
 type Pet struct {
+	City              string   `json:"city,omitempty"`
 	Name              string   `json:"name"`
 	Species           string   `json:"species"`
 	Breed             string   `json:"breed,omitempty"`
@@ -29,6 +30,7 @@ type Friend struct {
 }
 
 type Entry struct {
+	City          string   `json:"city,omitempty"`           // 用户明确选择的城市，不包含精确定位
 	ContentOrigin string   `json:"content_origin,omitempty"` // set by the service after a manifest-bound declaration
 	Title         string   `json:"title,omitempty"`
 	Category      string   `json:"category,omitempty"`
@@ -74,6 +76,7 @@ type Claim struct {
 }
 
 type Subscription struct {
+	Species   string  `json:"species,omitempty"`
 	City      string  `json:"city"`
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
@@ -139,6 +142,9 @@ type CareUpdate struct {
 }
 
 type Group struct {
+	Discoverable      bool       `json:"discoverable"`
+	City              string     `json:"city,omitempty"`
+	Summary           string     `json:"summary,omitempty"`
 	Name              string     `json:"name"`
 	Notice            string     `json:"notice,omitempty"`
 	Members           []int64    `json:"members"`
@@ -159,6 +165,7 @@ type Lead struct {
 }
 
 type Invitation struct {
+	Note        string    `json:"note,omitempty"`
 	Scope       string    `json:"scope"` // group_member, adoption_editor, caretaker
 	TargetID    int64     `json:"target_id"`
 	RecipientID int64     `json:"recipient_id"`
@@ -166,12 +173,13 @@ type Invitation struct {
 }
 
 type Preference struct {
-	DirectMessages bool   `json:"direct_messages"`
-	Groups         bool   `json:"groups"`
-	Applications   bool   `json:"applications"`
-	Interactions   bool   `json:"interactions"`
-	Frequency      string `json:"frequency"`
-	PushPermission bool   `json:"push_permission"`
+	Content        *ContentSubscriptions `json:"content,omitempty"`
+	DirectMessages bool                  `json:"direct_messages"`
+	Groups         bool                  `json:"groups"`
+	Applications   bool                  `json:"applications"`
+	Interactions   bool                  `json:"interactions"`
+	Frequency      string                `json:"frequency"`
+	PushPermission bool                  `json:"push_permission"`
 }
 
 type ExpressionState struct {

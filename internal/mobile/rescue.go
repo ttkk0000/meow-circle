@@ -354,6 +354,9 @@ type SubscriptionInput struct {
 
 func (s *Service) Subscribe(ctx context.Context, actor int64, in SubscriptionInput) (out Record, err error) {
 	v := in.Subscription
+	if !HasString([]string{"", "cat", "dog"}, v.Species) {
+		return out, Invalid("invalid nearby species")
+	}
 	if !coordinates(v.Latitude, v.Longitude) || v.RadiusKM < 5 || v.RadiusKM > 100 || len(v.City) > 120 || !HasString([]string{"instant", "daily", "off"}, v.Frequency) {
 		return out, Invalid("invalid nearby subscription")
 	}
