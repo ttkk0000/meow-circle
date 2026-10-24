@@ -432,7 +432,9 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 		if action == "reaction" {
 			return invoke(r, func(in struct {
 				Liked bool `json:"liked"`
-			}) (mobile.Record, error) { return h.Service.ReactComment(ctx, actor, k, id, in.Liked) })
+			}) (mobile.Record, error) {
+				return h.Service.ReactComment(ctx, actor, k, id, in.Liked)
+			})
 		}
 	case mobile.Entries:
 		if action == "comments" {

@@ -280,6 +280,9 @@ func (s *Service) canRead(tx Tx, k Kind, r Record, actor int64) (bool, error) {
 		return false, nil
 	}
 	if k == Entries {
+		if r.State == "deleted" || r.State == "removed" {
+			return false, nil
+		}
 		p, e := Decode[Entry](r)
 		if e != nil {
 			return false, e
@@ -293,6 +296,9 @@ func (s *Service) canRead(tx Tx, k Kind, r Record, actor int64) (bool, error) {
 		return r.State != "removed", nil
 	}
 	if k == Offers {
+		if r.State == "deleted" || r.State == "removed" {
+			return false, nil
+		}
 		o, e := Decode[Offer](r)
 		if e != nil {
 			return false, e
@@ -314,6 +320,9 @@ func (s *Service) canRead(tx Tx, k Kind, r Record, actor int64) (bool, error) {
 			parentKind = Pets
 		}
 		parent, e := tx.Get(parentKind, r.RefID)
+		if errors.Is(e, ErrNotFound) {
+			return false, nil
+		}
 		if e != nil {
 			return false, e
 		}

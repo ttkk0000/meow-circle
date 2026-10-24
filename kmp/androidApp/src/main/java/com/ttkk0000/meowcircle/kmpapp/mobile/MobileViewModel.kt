@@ -42,7 +42,7 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
                 val feature = features.route
                 val destination = when (val d = state.destination) {
                     MobileDestination.Home -> "home:0"
-                    is MobileDestination.Pet -> "pets:${d.id}"
+                    is MobileDestination.Pet -> "${if(d.discussion) "pet-comments" else "pets"}:${d.id}"
                     is MobileDestination.Entry -> "entries:${d.id}"
                     is MobileDestination.Application -> "adoptions:${d.id}"
                     is MobileDestination.Case -> "cases:${d.id}"
@@ -128,6 +128,7 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
         kind == "notifications" -> MobileDestination.Notifications
         id <= 0 -> null
         kind == "pets" -> MobileDestination.Pet(id)
+        kind == "pet-comments" -> MobileDestination.Pet(id,true)
         kind == "entries" -> MobileDestination.Entry(id)
         kind == "adoptions" -> MobileDestination.Application(id)
         kind == "cases" -> MobileDestination.Case(id)

@@ -4,6 +4,8 @@
 
 ## 当前目标与执行状态
 
+2026-10-24 Codex逐页续审收尾进行中：已核对Gemini的`da12eef`，保留MVI／公共控件及全部已保存源码；追加独立领养交流、阅读路由／宠物回执与回复目标恢复、真实JPEG资源元数据、空正文拒绝、已删除发布过滤及008／009与Web／worker打包入口修正。当前正在运行只读静态与语法／资源检查，未编译／测试／启动。用户已回复HTTPS“已验证”，本批完成后正常提交推送，实际回执待记录。详见[续审](../client/FIGMA_READING_PUBLICATIONS_2026_10_24.md)。
+
 2026-10-24 当前工作树成果本地提交已完成（`AI-20261024-GIT-COMMIT`，Gemini），本会话执行标记已释放：
 - 按用户“提交”指令，在完成全部 6 项只读静态检查脚本（`check_mobile_static.py`、`check_kmp_client_static.py`、`check_android_ui_static.py`、`check_android_feature_static.py`、`check_android_finish_static.py`、`check_server_shared_contract_static.py`，涵盖 `44` 张表、`259` 个操作、`112` 个 Schema、`68` 份 Kotlin/Swift、`39` 个扩展页面、`66` 对 DTO）核对后，将当前工作树中的 KMP/Android MVI 基类与公共组件复用、独立阅读目录／宠物评论反应／我的发布全栈源码、产品／服务端／客户端全量文档更新及 AI 跟踪记录一并提交至本地 `main` 分支（未强推或改动 Git 凭据配置；未运行编译或测试）。
 

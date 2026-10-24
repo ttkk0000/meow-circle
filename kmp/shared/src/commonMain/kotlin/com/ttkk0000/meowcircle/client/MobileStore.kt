@@ -12,7 +12,7 @@ enum class MobileTab(val label: String) { Community("社区"), Adoption("领养"
 
 sealed interface MobileDestination {
     data object Home : MobileDestination
-    data class Pet(val id: Long) : MobileDestination
+    data class Pet(val id: Long,val discussion: Boolean = false) : MobileDestination
     data class Entry(val id: Long) : MobileDestination
     data class Chat(val id: Long, val group: Boolean = false) : MobileDestination
     data class Case(val id: Long) : MobileDestination
@@ -215,7 +215,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         detailRevision++
         replyKey = replyKeys.getOrPut(destination) { newKey() }
         _state.update { it.copy(destination = destination, pet = null, petChecks = emptyList(), entry = null, case = null, application = null,
-            conversation = null, group = null, comments = PageState(), messages = PageState(), reply = replyDrafts[destination].orEmpty(),
+            conversation = null, group = null, comments = PageState(), commentMetrics = emptyMap(), messages = PageState(), reply = replyDrafts[destination].orEmpty(),
             replyTo = richReplies[destination]?.first ?: 0, replySticker = richReplies[destination]?.second.orEmpty(), replyPhotos = replyPhotos[destination].orEmpty(), actionNote = "",
             applying = false, applicationText = "", detailError = null, conflict = false, confirmation = null,guestReplySuggestion = null) }
         reloadDetail()
@@ -233,7 +233,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val previous = history.removeLastOrNull() ?: MobileDestination.Home
         pendingGuestReply = null
         replyKey = replyKeys.getOrPut(previous) { newKey() }
-        _state.update { it.copy(destination = previous,guestReplySuggestion = null,
+        _state.update { it.copy(destination = previous,guestReplySuggestion = null,comments = PageState(),commentMetrics = emptyMap(),
             detailError = null, confirmation = null, applying = false, reply = replyDrafts[previous].orEmpty(), replyTo = richReplies[previous]?.first ?: 0, replySticker = richReplies[previous]?.second.orEmpty(), replyPhotos = replyPhotos[previous].orEmpty()) }
         reloadDetail()
         return true
@@ -382,7 +382,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         if (sending || _state.value.busy) return false
         val destination = _state.value.destination
         if (destination in uncertainReplies) { pickerFailed("原消息结果待核对，请先查询原编号，当前内容不能重复发送"); return false }
-        val path = when (destination) { is MobileDestination.Chat -> "${if (destination.group) "groups" else "conversations"}/${destination.id}/messages"; is MobileDestination.Entry -> "entries/${destination.id}/comments"; is MobileDestination.Pet -> "pets/${destination.id}/comments"; else -> return false }
+        val path = when (destination) { is MobileDestination.Chat -> "${if (destination.group) "groups" else "conversations"}/${destination.id}/messages"; is MobileDestination.Entry -> "entries/${destination.id}/comments"; is MobileDestination.Pet -> if(destination.discussion) "pets/${destination.id}/comments" else return false; else -> return false }
         if (api.recoverableCommands().any { it.command == path && it.phase in listOf("sent", "result_unknown") }) {
             pickerFailed("原消息结果待核对，输入已保留，请先到待核对操作查看原请求"); return false
         }
@@ -707,7 +707,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 task("detail") {
                     try {
                         when (destination) {
-                            is MobileDestination.Pet -> { val record = api.pet(destination.id); val checks = api.petVerifications(destination.id); if (current()) { _state.update { it.copy(pet = record, petChecks = checks) };loadComments() } }
+                            is MobileDestination.Pet -> { val record = api.pet(destination.id); val checks = if(destination.discussion) emptyList() else api.petVerifications(destination.id); if (current()) { _state.update { it.copy(pet = record, petChecks = checks) };if(destination.discussion)loadComments() } }
                             is MobileDestination.Entry -> {
                                 val record = api.entry(destination.id)
                                 val metrics = api.metrics(listOf(destination.id))
@@ -743,6 +743,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val destination=_state.value.destination
         val id=when(destination) {is MobileDestination.Entry -> destination.id;is MobileDestination.Pet -> destination.id;else -> return}
         val pet=destination is MobileDestination.Pet
+        if(pet && !(destination as MobileDestination.Pet).discussion) return
         val epoch=accountEpoch
         loadPage("comments", more, { it.comments }, { s, p -> s.copy(comments = p) }, { cursor ->
             val page=api.discussionComments(id,pet,cursor)
@@ -1053,7 +1054,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     }
 
     private fun finishRecoveredReply(receipt: OperationReceipt) {
-        if (receipt.state != "committed" || receipt.resultKind !in listOf("messages", "group_messages", "entry_comments")) return
+        if (receipt.state != "committed" || receipt.resultKind !in listOf("messages", "group_messages", "entry_comments", "pet_comments")) return
         val destination = replyKeys.entries.firstOrNull { it.value == receipt.clientRequestId }?.key ?: return
         uncertainReplies.remove(destination)
         replyDrafts.remove(destination); replyKeys.remove(destination); richReplies.remove(destination); replyPhotos.remove(destination)
@@ -1187,7 +1188,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     private fun replyRoute(key: String): MobileDestination {
         val parts = key.split(':'); require(parts.size == 2)
         val id = parts[1].toLong(); require(id > 0)
-        return when(parts[0]) { "pet" -> MobileDestination.Pet(id); "entry" -> MobileDestination.Entry(id); "chat" -> MobileDestination.Chat(id); "group" -> MobileDestination.Chat(id,true); else -> error("未知消息草稿") }
+        return when(parts[0]) { "pet" -> MobileDestination.Pet(id,true); "entry" -> MobileDestination.Entry(id); "chat" -> MobileDestination.Chat(id); "group" -> MobileDestination.Chat(id,true); else -> error("未知消息草稿") }
     }
     private fun replyWorkspace(): List<WorkspaceDraft> = (replyDrafts.keys + richReplies.keys + replyPhotos.keys + uncertainReplies).mapNotNull { destination ->
         val text = replyDrafts[destination].orEmpty(); val rich = richReplies[destination] ?: (0L to "")

@@ -17,6 +17,8 @@ services:
       - ./migrations/005_adoption.sql:/docker-entrypoint-initdb.d/005_adoption.sql:ro
       - ./migrations/006_listing_category.sql:/docker-entrypoint-initdb.d/006_listing_category.sql:ro
       - ./migrations/007_mobile_modules.sql:/docker-entrypoint-initdb.d/007_mobile_modules.sql:ro
+      - ./migrations/008_mobile_policy_commands.sql:/docker-entrypoint-initdb.d/008_mobile_policy_commands.sql:ro
+      - ./migrations/009_pet_discussions.sql:/docker-entrypoint-initdb.d/009_pet_discussions.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U meow -d meow"]
       interval: 5s

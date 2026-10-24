@@ -7,6 +7,7 @@ root = Path(__file__).resolve().parents[1]
 android = root / "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp"
 ui = android / "mobile"
 source = {p.name: p.read_text(encoding="utf-8") for p in ui.glob("*.kt")}
+assert not re.search(r"rememberSessionUiState[^\n]*\{\s*mutableStateOf\(", "\n".join(source.values())), "会话状态接收原值，不能多包一层MutableState"
 session = source["AndroidUiSessionState.kt"]
 for forbidden in ("import android.", "SavedStateHandle", "rememberSaveable", "TextFieldValue.Saver"):
     assert forbidden not in session, ("private UI state must stay in values-only memory", forbidden)

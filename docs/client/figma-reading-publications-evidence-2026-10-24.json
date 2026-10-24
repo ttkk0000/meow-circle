@@ -1,0 +1,185 @@
+{
+  "date": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261023-FIGMA-ANDROID-WEB",
+  "base_head_at_capture": "da12eef2d6ab5420b743b989f7a6c55847cd93ff",
+  "uncommitted_source_included": true,
+  "checks": [
+    {
+      "check": "check_mobile_static.py",
+      "exit_code": 0,
+      "output": "Static only: 44 feature tables, 259 operations, 112 schemas, 128/24 assets; no dangling references or BOM"
+    },
+    {
+      "check": "check_kmp_client_static.py",
+      "exit_code": 0,
+      "output": "Static source/configuration checks passed: 68 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution."
+    },
+    {
+      "check": "check_server_shared_contract_static.py",
+      "exit_code": 0,
+      "output": "Static cross-language check: 66 DTO pairs match; private commands and recovery guards present. No type checking or tests executed."
+    },
+    {
+      "check": "check_android_feature_static.py",
+      "exit_code": 0,
+      "output": "Android 源码静态核对：39 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。"
+    },
+    {
+      "check": "check_android_ui_static.py",
+      "exit_code": 0,
+      "output": "Static UI check passed: 10 shared primitives, metrics/theme wiring, ViewModel UI session and movable form/home composition. No compilation, runtime or device validation."
+    },
+    {
+      "check": "check_android_finish_static.py",
+      "exit_code": 0,
+      "output": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation."
+    },
+    {
+      "check": "check_web_client_static.py",
+      "exit_code": 0,
+      "output": "Web只读检查：35份TS/TSX、166个本地引用、114份schema、18枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。"
+    },
+    {
+      "check": "check_figma_reading_static.py",
+      "exit_code": 0,
+      "output": "阅读／发布只读核对：10类材料、4向指南原图／几何、公共正文和下载合同、评论原键恢复／图片限制、本人筛选与9份迁移入口一致；未执行类型检查、编译、测试、迁移或应用。"
+    },
+    {
+      "check": "sync_web_contract.py",
+      "exit_code": 0,
+      "output": "Web合同派生：114份schema、224个消费者操作；只读检查"
+    },
+    {
+      "check": "sync_figma_implementation_trace.py",
+      "exit_code": 0,
+      "output": "{'states': 740, 'contract_gaps': 0, 'runtime_verified': 0}"
+    },
+    {
+      "check": "Tree-sitter syntax reading",
+      "files": 88,
+      "errors": 0,
+      "limitation": "Kotlin旧grammar仅适配内存副本的open和catch/finally换行，不是类型检查"
+    },
+    {
+      "check": "gofmt -l syntax/format reading",
+      "files": 12,
+      "exit_code": 0,
+      "unformatted": []
+    },
+    {
+      "check": "git diff/cached --check",
+      "exit_code": 0
+    },
+    {
+      "check": "BOM/conflict/high-confidence-secret scan",
+      "files": 68,
+      "findings": 0
+    }
+  ],
+  "screenshots_inspected": [
+    "106:1425",
+    "311:199",
+    "311:201",
+    "311:202",
+    "460:17463",
+    "460:17468",
+    "460:17473",
+    "632:357528",
+    "460:17483",
+    "460:17458",
+    "460:17408",
+    "632:357529",
+    "56:75",
+    "56:76",
+    "106:1406",
+    "460:17428",
+    "460:17453",
+    "632:357526",
+    "632:357509",
+    "56:53",
+    "142:3011",
+    "145:8407",
+    "220:335999"
+  ],
+  "typecheck_executed": false,
+  "build_executed": false,
+  "unit_tests_executed": false,
+  "migration_executed": false,
+  "app_browser_emulator_executed": false,
+  "runtime_verified_states": 0,
+  "reason": "当前任务未授权编译／构建／类型检查／测试／应用启动；仓库另禁止Gradle及Go构建测试，不通过CI代跑。",
+  "source_sha256": {
+    ".dockerignore": "f516aaa026e987e37494a1e5bd6c48db84cf86c86853164890072511aa27c6df",
+    "Dockerfile": "965b94f6ad003cf3319efacdfb26ea1a190a4e3f77a99974c56a92e6c63c2884",
+    "Makefile": "bd09094a9653fd09f43f86b91942a802eaac47f672559acbd60525e8026a0ba4",
+    "docker-compose.yml": "5715536d68cff8aa0969889e4c5404b9a67a2be96fecc502d8e91edd2b969df5",
+    "docs/client/figma-implementation-trace-2026-10-24.json": "9a303b83ae8dad15119f3ab8917a778e1093402518cc8d33c2def6f9ac9411f8",
+    "internal/mobile/comment_reactions.go": "ce9e31ce6b3f0b031f389d9a268131472499ffd1fc46efec6652b24274ed44b1",
+    "internal/mobile/data_requests.go": "e503c88ee693457f51837d4c8f9f7817b4443035ff187d7ad56b5794c82c02dd",
+    "internal/mobile/erasure.go": "b60a680148f48640df098b9af204162a0ba5064a77501fd9d5b03fd879283a8d",
+    "internal/mobile/pet_discussions_test.go": "b9e8922620b60ad3acdf6474d152b8c7b735c5468a7510a39b90f979cf4af958",
+    "internal/mobile/reading.go": "4d4dc6ff58805ceafd4221727321c86eb7bfda571ac3edb433bfa5f80d686124",
+    "internal/mobile/repository.go": "7511ac1ac611d02870295ae753f8a51e6cb2bd4c606b7c88383cf339892c5c59",
+    "internal/mobile/service.go": "d204eda7b71a92781e897792109a39d21f8c755bd0ae7cb29cca45e5ddbcec33",
+    "internal/mobile/social.go": "fc27ed084f77bad143199a7b6b2df44f1000eaff0e64c47e2c4016845f032572",
+    "internal/platform/mobileapi/handler.go": "39dfe650216172ca93188ddaab4f99df38ba937589ab19db77cebd6b84805980",
+    "internal/platform/mobileapi/reading-drafts.json": "fd010bb2587a293ce723eb6d80282108e215729fa6702de093d8a453acb09645",
+    "internal/platform/mobileapi/reading.go": "562453b6c83a2babeb8790a79b371bc3340935c8b63d9bfc26607c929eb07ccd",
+    "internal/platform/mobileapi/reading_test.go": "54ac1af87ac8f595f289f053cd01c08fe3604a58c9304308971a91f303c32f26",
+    "internal/store/postgres/mobile.go": "6bc53ba74558472e0ad88e2cff63d6fe1ecbc0a24e47c7cdd43b1817508ab3cf",
+    "kmp/androidApp/src/main/assets/figma/comment-heart-liked.svg": "3df4f8e40f028bee56f8d3ddf13970bb262b514b9240e09de9ae8ad0aa97fef0",
+    "kmp/androidApp/src/main/assets/figma/comment-heart.svg": "b1dc367226482f25bec8260c8ec750ac4558e8ab381f41463ba9abea9efc0618",
+    "kmp/androidApp/src/main/assets/figma/comment-more.svg": "ae3748326beb3f2624ac2f1962e69819eae4fc23c7171cd013fc41cb4d828bf0",
+    "kmp/androidApp/src/main/assets/guides/first-cat.jpg": "32aa5797b316d4df2bc19730cf9d6d177560eb5016c648c716e7081c581fee17",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt": "76530cab86dbc500f85cc639100cd23b10007916c35b98224f7e35cf6c64a58a",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAuthDialog.kt": "22fa51cccd65d3323e123c525b221859ec1a8b5d8eb395d076ee9b90e692d9f3",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt": "c3af60ce33267a4f7bc23044b7b42ff7971faaa222075f00c929c50d144eb5a8",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidFeatureContent.kt": "75c10d3baae23c6ec06ba9b2f3d05400404ceb911803a148e37d2ec5ddfd52b8",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidInboxContent.kt": "055595908a5e25a91565c80e47e67549db0fabb6c29eded7bc24774a1d2f980f",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt": "e8bcb0f837ac7b2f44b28f4db4b3a7beaad6504cb07033a043171f9aab6db344",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMviBase.kt": "29e930d5888d89fabee98bc4cd0f15680789712efd8bb66f926817d853f754ff",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPageComponents.kt": "a4fa71e5cb866b1a4da2bde5a31ed58658013944dc217854ff4b3d94833680e3",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPublicationsContent.kt": "41a8072ca8dbce6ca3babc341009dcbbe9b82b7de5b9dee1c2873d45cfdbf1c8",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt": "a2f063728d2737c456d41e8645136991f3e1c5c0b8ea7377dfc3a8a4b33056a2",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileComponents.kt": "50b0c28af31bb086ad6d0b7697cca23727a7bdfd8d9c8a61cb017271b37af56b",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt": "a21e86014a52b5ad6523d503fca4c5f355ba3e57a64f191563aeffbfd626c1b7",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": "f2540550eda6a5ce942de610981f03ef05ddf79ab628c1b1c244b39a523a56d8",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "6d546acc3fb905ff4d514bc127f32fdce9c651c7c51451839d92d6645e350c84",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "857c08f44b6bea89d34640d258e0162b8be235d3fb18fbee85ec5891e86fbc40",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MviStore.kt": "c13d93486e7ebd8b45a8bc23e776bfdd64c6b1c317fdbaa5fad9284e1d53d0c6",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ReadingModels.kt": "073555977b078456be8ba7d103143d9a871e4090cc864c16df2000e1f3582cf5",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/SensitiveActionStore.kt": "f0c72e64d6a08d7f28a84792625bee402b53ed54c30074b3051581c329c1c0d3",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/WorkspaceApi.kt": "237cf8b4b3d5a829bdea4a56c988b69e6ce72fbec6212a3bf99e8976779d1a4e",
+    "migrations/009_pet_discussions.sql": "b8a770584a0858136cf35627685a646c15db79ec6d70bc5270cc2f55dfd28b57",
+    "scripts/check_android_ui_static.py": "8c1143d2525b77a15bf597845895b9d88dc6e4b1832425f54b31686954bd8138",
+    "scripts/check_figma_reading_static.py": "83cbae5d09027aff88f067a5f7d8859703087b787a40fa643b4b4346467ced1d",
+    "scripts/check_mobile_static.py": "36b52866f72ed15acd81dd9298987a83db517dd812ec1f3cdb0f5e2f543c8c0c",
+    "scripts/check_server_shared_contract_static.py": "fdbc32cdea87349bdc1a34c03b980eab5a035485317400d84e98b511c59aa741",
+    "scripts/export_mobile_contract.py": "61ca0008c977d27e0dea69ba5ebe39c84526d0572ae93e0aee01e2f569bb73d3",
+    "scripts/sync_figma_implementation_trace.py": "886b0550e7db558e510ef6863d86ee6b8de6d354d9aafbc3c34742f5df6ea55b",
+    "web-client/public/assets/figma/comment-heart-liked.svg": "3df4f8e40f028bee56f8d3ddf13970bb262b514b9240e09de9ae8ad0aa97fef0",
+    "web-client/public/assets/figma/comment-heart.svg": "b1dc367226482f25bec8260c8ec750ac4558e8ab381f41463ba9abea9efc0618",
+    "web-client/public/assets/figma/comment-more.svg": "ae3748326beb3f2624ac2f1962e69819eae4fc23c7171cd013fc41cb4d828bf0",
+    "web-client/public/assets/figma/manifest.json": "60d349b2520fa1c7911374f783603e1993dd9faffbf55093e9dfe1e088fb9271",
+    "web-client/public/assets/guides/first-cat.jpg": "32aa5797b316d4df2bc19730cf9d6d177560eb5016c648c716e7081c581fee17",
+    "web-client/public/assets/guides/manifest.json": "cff354054c82b6ccd9365a80f5bbba99b09a93aaf7b1bcdebd54fc79eb12452b",
+    "web-client/src/App.tsx": "b63bcfb482a061329bf7228b84205b58d087aeabfa3b3d178cbdd871a0aaf855",
+    "web-client/src/components/DataSelector.tsx": "cba060d638e19cf60259c4f02645b85e81f69a848c43ba44aeefbf448b9c716a",
+    "web-client/src/components/ui.tsx": "1a491021d8113ea50504a7023ab5eef0c330aa075f7245f6616ded7f088e89e3",
+    "web-client/src/core/api.ts": "367847d880c212807a96a17446bfd5d996be75a5ef00678c9362e8cadb88fa46",
+    "web-client/src/core/contract.ts": "c6feefada0ee72597db89780adbb716caf520f501d00cbd6e64db95a7eda2b7f",
+    "web-client/src/core/router.ts": "4e539eb4cf243fff0234c2d243bd630ead029c06b43674ddf8cba0aeb812bbad",
+    "web-client/src/core/routes.ts": "342a29440022bd334851c63c992d3b65b5a5a0131015ed8aa6734dd3ffe73c8b",
+    "web-client/src/core/schemas.json": "a745e84b95b912f31e63b67b84fbeaa32e14871bddd1f58a7efa542742f8b967",
+    "web-client/src/features/Account.tsx": "37e9f98243f35321c138e62b606ce5371c5aaa583c24e53d412ffb9f3e2ea189",
+    "web-client/src/features/AuthDialog.tsx": "3e91398205d9be5838d193918d3278865aa6aa40cb42b9567e16a781b8024cf1",
+    "web-client/src/features/Publications.tsx": "81d4143cd01caaed12de6d440f451dac7d2dab8c9e799d2ae3bc94d8f95ba616",
+    "web-client/src/features/ReadingPages.tsx": "eb160d40fe38db35adc42917b35580c4897e97a9c116e615ecb737030b17b313",
+    "web-client/src/features/Records.tsx": "dfe897705f23f754a1ada0027dca05891a94d32ffec77171d4ba2eef580da067",
+    "web-client/src/features/ResourcePage.tsx": "19e1b90f931021fe7e59a6b89dc74cab4cd8b86eca743b6fbe69ec386fed987b",
+    "web-client/src/features/chat.tsx": "869bb5e87181b8b11007fa48108cac5fd77142e5d2ed2fe29cfd0a994a00dd3f",
+    "web-client/src/features/workflows.ts": "233ade78b56f9c62c14f06950acd1f1350f022efbcf6a7d704f2f433fe3369d8",
+    "web-client/src/styles.css": "333a03fa726b6588c38441c3828b7a55ed9dadc0a712e16b117e906c7a07a889"
+  }
+}

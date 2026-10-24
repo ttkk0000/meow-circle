@@ -60,11 +60,16 @@ down: ## docker compose down
 	docker compose down
 
 .PHONY: migrate
-migrate: ## Apply migrations/*.sql (001–004) to $$DATABASE_URL
+migrate: ## Initialize a new database with ordered migrations 001–009; existing databases apply pending files only
 	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/001_init.sql
 	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/002_social.sql
 	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/003_user_phone.sql
 	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/004_notifications_actor_image.sql
+	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/005_adoption.sql
+	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/006_listing_category.sql
+	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/007_mobile_modules.sql
+	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/008_mobile_policy_commands.sql
+	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/009_pet_discussions.sql
 
 .PHONY: docker
 docker: ## Build the production container image

@@ -34,7 +34,7 @@ internal fun featureTitle(s: FeatureState): String {
     if(document.coverAsset=="first-cat") {
         BoxWithConstraints(Modifier.fillMaxWidth()) {
             val photoSize=if(maxWidth >= 600.dp) Modifier.height(360.dp) else Modifier.aspectRatio(358f/240f)
-            AsyncImage("file:///android_asset/guides/first-cat.png","内容配图，非用户档案",modifier=Modifier.fillMaxWidth().then(photoSize).clip(MaterialTheme.shapes.medium),contentScale=ContentScale.Crop)
+            AsyncImage("file:///android_asset/guides/first-cat.jpg","内容配图，非用户档案",modifier=Modifier.fillMaxWidth().then(photoSize).clip(MaterialTheme.shapes.medium),contentScale=ContentScale.Crop)
         }
     }
     if(document.type!="guide") TaskNotice(readingStatus(document.status),document.notice.ifBlank { "查看适用版本与时间后，再决定是否继续。阅读不会自动同意新规则。" })
@@ -57,15 +57,15 @@ internal fun featureTitle(s: FeatureState): String {
             else -> Unit
         }
         if(document.type=="privacy") {
-            NavigationRow("个人信息处理清单","用途、处理方与保存期限") {f.open(FeatureRoute(FeaturePage.Reading,kind="type:inventory"))}
+            NavigationRow("个人信息处理清单","用途、处理方与保存期限") {f.open(FeatureRoute(FeaturePage.Reading,kind="type-inventory"))}
             NavigationRow("访问／更正／撤回／删除","查看真实请求流程") {f.open(FeatureRoute(FeaturePage.DataRequests))}
-            NavigationRow("未成年人专门规则","监护授权与保护设置") {f.open(FeatureRoute(FeaturePage.Reading,kind="type:teen"))}
-            NavigationRow("第三方与数据去向","逐项查看用途与处理范围") {f.open(FeatureRoute(FeaturePage.Reading,kind="type:providers"))}
+            NavigationRow("未成年人专门规则","监护授权与保护设置") {f.open(FeatureRoute(FeaturePage.Reading,kind="type-teen"))}
+            NavigationRow("第三方与数据去向","逐项查看用途与处理范围") {f.open(FeatureRoute(FeaturePage.Reading,kind="type-providers"))}
         }
         if(document.type in dataReadingTypes) {
             NavigationRow("查看与撤回授权","必要用途及影响分项说明") {f.open(FeatureRoute(FeaturePage.Security))}
-            if(document.type!="sdk") NavigationRow("第三方与公开联系") {f.open(FeatureRoute(FeaturePage.Reading,kind="type:sdk"))}
-            if(document.type!="retention") NavigationRow("必要留存与复核") {f.open(FeatureRoute(FeaturePage.Reading,kind="type:retention"))}
+            if(document.type!="sdk") NavigationRow("第三方与公开联系") {f.open(FeatureRoute(FeaturePage.Reading,kind="type-sdk"))}
+            if(document.type!="retention") NavigationRow("必要留存与复核") {f.open(FeatureRoute(FeaturePage.Reading,kind="type-retention"))}
             NavigationRow("申请删除、解释或更正范围") {f.open(FeatureRoute(FeaturePage.DataRequests))}
             NavigationRow("隐私投诉","无需注册") {f.open(FeatureRoute(FeaturePage.Safety));f.edit("type","privacy")}
         }
@@ -74,7 +74,7 @@ internal fun featureTitle(s: FeatureState): String {
         when(document.type) {
             "service" -> FeaturePrimary("返回登录") {store.showLogin()}
             "privacy" -> FeaturePrimary("返回设置") {f.returnTo(FeatureRoute(FeaturePage.SettingsHome))}
-            in dataReadingTypes -> FeaturePrimary("返回隐私与数据") {f.returnTo(FeatureRoute(FeaturePage.Reading,kind="type:privacy"))}
+            in dataReadingTypes -> FeaturePrimary("返回隐私与数据") {f.returnTo(FeatureRoute(FeaturePage.Reading,kind="type-privacy"))}
             else -> FeaturePrimary("返回规则中心") {f.returnTo(FeatureRoute(FeaturePage.Rules))}
         }
     }
@@ -84,10 +84,10 @@ internal fun featureTitle(s: FeatureState): String {
     val f=store.features
     NavigationRow("账号与登录","关联、换绑、恢复与退出") {f.open(FeatureRoute(FeaturePage.Security))}
     NavigationRow("通知偏好","私信、群聊、申请与附近提醒") {f.open(FeatureRoute(FeaturePage.Settings))}
-    NavigationRow("隐私与可见范围","个人资料和圈子内容") {f.open(FeatureRoute(FeaturePage.Reading,kind="type:privacy"))}
+    NavigationRow("隐私与可见范围","个人资料和圈子内容") {f.open(FeatureRoute(FeaturePage.Reading,kind="type-privacy"))}
     NavigationRow("账号数据与注销","查看影响，再验证身份") {f.open(FeatureRoute(FeaturePage.DataRequests))}
     NavigationRow("表情与贴纸","常用、收藏与输入方式") {f.open(FeatureRoute(FeaturePage.Expressions))}
-    NavigationRow("未成年人保护","年龄、监护与权限") {f.open(FeatureRoute(FeaturePage.Reading,kind="type:teen"))}
+    NavigationRow("未成年人保护","年龄、监护与权限") {f.open(FeatureRoute(FeaturePage.Reading,kind="type-teen"))}
     NavigationRow("平台规则","规则、历史与申诉") {f.open(FeatureRoute(FeaturePage.Rules))}
     NavigationRow("隐私与安全报告","游客也可报告与查询") {f.open(FeatureRoute(FeaturePage.Safety))}
     FeaturePrimary("返回我的") {f.closeRoute();store.select(MobileTab.Profile)}

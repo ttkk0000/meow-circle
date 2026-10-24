@@ -102,6 +102,19 @@ func loadReadingCatalog() (out mobile.ReadingCatalog, err error) {
 			return out, mobile.ErrUnavailable
 		}
 		seen[d.Key] = true
+		if len(d.Facts)+len(d.Paragraphs) == 0 {
+			return out, mobile.ErrUnavailable
+		}
+		for _, fact := range d.Facts {
+			if strings.TrimSpace(fact.Label) == "" || strings.TrimSpace(fact.Text) == "" {
+				return out, mobile.ErrUnavailable
+			}
+		}
+		for _, paragraph := range d.Paragraphs {
+			if strings.TrimSpace(paragraph) == "" {
+				return out, mobile.ErrUnavailable
+			}
+		}
 		if d.Status == "reference" && d.Type != "guide" || d.Key == "care-first-cat" && d.Type != "guide" {
 			return out, mobile.ErrUnavailable
 		}

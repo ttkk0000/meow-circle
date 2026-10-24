@@ -1,12 +1,12 @@
 {
   "file_key": "3OFOC3vu18Kx9sRPjummOC",
   "asset": "first-cat",
-  "file": "web-client/public/assets/guides/first-cat.png",
-  "android_file": "kmp/androidApp/src/main/assets/guides/first-cat.png",
+  "file": "web-client/public/assets/guides/first-cat.jpg",
+  "android_file": "kmp/androidApp/src/main/assets/guides/first-cat.jpg",
   "sha256": "32aa5797b316d4df2bc19730cf9d6d177560eb5016c648c716e7081c581fee17",
   "intrinsic_dimensions": [
-    4718592,
-    4293004376
+    1000,
+    688
   ],
   "design_slots": {
     "phone": {
@@ -37,10 +37,11 @@
       "height": 360
     }
   },
-  "source": "Figma get_design_context supplied 7ddf6.png; downloaded unmodified with curl -L",
+  "source": "Figma get_design_context supplied 7ddf6.png; downloaded unmodified with curl -L; source URL extension was PNG but original bytes are JPEG, stored with actual format extension without re-encoding",
   "callsites": [
     "web-client/src/features/ReadingPages.tsx",
     "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt"
   ],
-  "geometry": "Phone 358:240, Web/tablet 360 high, Crop/object-fit cover, radius16. Effective rendering has not been executed."
+  "geometry": "Phone 358:240, Web/tablet 360 high, Crop/object-fit cover, radius16. Effective rendering has not been executed.",
+  "format": "JPEG"
 }

@@ -26,3 +26,5 @@ Vite输出目录为本项目`dist`，Go路由以`MND_WEB_DIST`覆盖默认`web-c
 `scripts/sync_web_contract.py`默认只检查合同一致，`scripts/check_web_client_static.py`只读核对引用／资源／锁文件／隐私守卫。`--write`仅用于明确同步派生文件，不能据此宣称类型或运行通过。
 
 草稿以origin、账号和任务隔离，保留原请求编号、原材料及版本；结果未知时先查原回执，不能重建编号。敏感验证码与用途授权仅驻内存。受限事项能力只允许查询／补充该事项，不是账号凭据；不要写进URL、日志或分享。
+
+独立阅读、设置、发布管理及宠物交流见[续审记录](../docs/client/FIGMA_READING_PUBLICATIONS_2026_10_24.md)。`MND_READING_CATALOG`指向同结构的UTF-8 JSON发布物；未配置时仅展示草案和指南，正式文本须包含真实主体与有效版本信息，不能覆盖既有历史文本。注册仍要求真实服务／隐私URL。容器源码已加入Web构建阶段及静态产物复制，可通过公开配置build args提供`VITE_MND_TERMS_URL`、`VITE_MND_PRIVACY_URL`、`VITE_MND_MAP_EMBED_TEMPLATE`；本批没有执行构建或部署。worker仅打包为独立二进制，不自动启动调度。

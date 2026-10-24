@@ -229,7 +229,8 @@ export function RichText({ content }: { content: Record<string, unknown> }) {
 export function Composer({
   kind,
   id,
-  reply = 0n,
+  reply,
+  onReplyChange,
   onSent,
   canSend = true,
   allowMedia = true,
@@ -237,6 +238,7 @@ export function Composer({
   kind: "entries" | "pets" | "conversations" | "groups";
   id: bigint;
   reply?: bigint;
+  onReplyChange?: (id: bigint) => void;
   onSent: () => void;
   canSend?: boolean;
   allowMedia?: boolean;
@@ -341,6 +343,20 @@ export function Composer({
     setDraft(latest.current);
     void persist().catch((e) => setError(explain(e)));
   }
+  useEffect(() => {
+    if (
+      reply !== undefined &&
+      latest.current &&
+      ["entries", "pets"].includes(kind) &&
+      integer(latest.current.values.reply_to) !== reply
+    ) {
+      update((d) => ({
+        ...d,
+        values: { ...d.values, reply_to: reply },
+        requestId: key(),
+      }));
+    }
+  }, [reply, draft?.key]);
   function insert(text: string) {
     if (composingRef.current || !latest.current) return;
     const element = textarea.current;
@@ -457,7 +473,7 @@ export function Composer({
       const body = ["entries", "pets"].includes(kind)
         ? {
             content: { text, sticker_id: sticker?.id ?? "" },
-            reply_to: reply,
+            reply_to: reply ?? integer(current.values.reply_to),
             idempotency_key: current.requestId,
           }
         : {
@@ -540,6 +556,25 @@ export function Composer({
         </Notice>
       ) : null}
       {error ? <Notice title={error} error /> : null}
+      {["entries", "pets"].includes(kind) &&
+      integer(draft?.values.reply_to) > 0n ? (
+        <Notice title={`回复评论 #${integer(draft?.values.reply_to)}`}>
+          <Button
+            kind="quiet"
+            disabled={disabled}
+            onClick={() => {
+              onReplyChange?.(0n);
+              update((d) => ({
+                ...d,
+                values: { ...d.values, reply_to: 0n },
+                requestId: key(),
+              }));
+            }}
+          >
+            取消回复
+          </Button>
+        </Notice>
+      ) : null}
       {!allowMedia && draft?.photos.length ? (
         <Notice title="这次请求只发送文字">
           已选照片保留在原草稿，等待对方接受后再由你确认发送。
@@ -625,7 +660,7 @@ export function Composer({
           disabled={disabled || !allowed || composing}
           onClick={() => void send()}
         >
-          发送
+          {["entries", "pets"].includes(kind) ? "发布" : "发送"}
         </Button>
       </div>
       {!["entries", "pets"].includes(kind) && draft ? (

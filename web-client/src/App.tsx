@@ -64,6 +64,7 @@ export const moduleLinks: Record<string, Array<[string, string]>> = {
     ["/offers", "有偿信息与披露"],
   ],
   publish: [
+    ["/publications", "我的发布"],
     ["/publish", "选择发布类型"],
     [workflowURL("entry"), "晒晒我的宠物"],
     ["/recovery", "本机草稿与原操作"],
@@ -449,7 +450,13 @@ function RouteContent({
       params.get("view") !== "manage"
     )
       return <Chat kind={kind} id={id} />;
-    return <ResourcePage kind={kind} id={id} />;
+    return (
+      <ResourcePage
+        kind={kind}
+        id={id}
+        discussionOnly={kind === "pets" && params.get("view") === "discussion"}
+      />
+    );
   }
   return (
     <TaskPage title="此入口暂不可用">

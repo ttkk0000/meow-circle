@@ -168,7 +168,7 @@ export function ReadingPage({
             {document.cover_asset === "first-cat" ? (
               <img
                 className="reading-cover"
-                src="/app/assets/guides/first-cat.png"
+                src="/app/assets/guides/first-cat.jpg"
                 alt="内容配图，非用户档案"
               />
             ) : null}

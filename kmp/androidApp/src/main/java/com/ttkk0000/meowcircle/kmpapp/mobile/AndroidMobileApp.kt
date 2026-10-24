@@ -189,6 +189,7 @@ internal fun ContextPane(store: MobileStore, state: MobileState, features: Featu
                 NavigationRow("有偿信息") { f.open(FeatureRoute(FeaturePage.Offers)) }
             }
             MobileTab.Publish -> {
+                NavigationRow("我的发布","维护介绍、评论与求助") {f.open(FeatureRoute(FeaturePage.Publications))}
                 NavigationRow("晒晒我的宠物") { f.closeRoute(); store.select(MobileTab.Publish) }
                 NavigationRow("新增宠物档案") { f.open(FeatureRoute(FeaturePage.PetEdit)) }
                 NavigationRow("走失／拾获求助") { f.open(FeatureRoute(FeaturePage.CaseEdit)) }
@@ -265,10 +266,10 @@ private fun Feed(store: MobileStore, s: MobileState) {
         item(span = { GridItemSpan(maxLineSpan) }) { PageRefresh(s.entries) }
         item(span = { GridItemSpan(maxLineSpan) }) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                var query by rememberSessionUiState("feed.query") { mutableStateOf(s.feedKeyword) }
+                var query by rememberSessionUiState("feed.query") { s.feedKeyword }
                 OutlinedTextField(query,{ query = it },Modifier.fillMaxWidth(),label = { Text("搜索宠友日常与互助") },trailingIcon = { IconButton({ store.filterFeed(s.feedSpace,query) }) { Icon(Icons.Outlined.Search,"搜索") } },singleLine = true)
                 ChoiceChipBar(listOf("community" to "推荐","following" to "关注","circle" to "宠友圈","local" to "同城"),s.feedSpace,{ store.filterFeed(it) },scrollable = true)
-                if(s.feedSpace == "local") { var city by rememberSessionUiState("feed.city") { mutableStateOf(s.feedCity) }; OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("手动选择城市，不含精确定位") },trailingIcon = { TextButton({ store.filterFeed("local",city = city) }) { Text("查看") } }) }
+                if(s.feedSpace == "local") { var city by rememberSessionUiState("feed.city") { s.feedCity }; OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("手动选择城市，不含精确定位") },trailingIcon = { TextButton({ store.filterFeed("local",city = city) }) { Text("查看") } }) }
                 NavigationRow("晒晒今天的小可爱…","照片、日记与宠友分享") { store.select(MobileTab.Publish) }
                 NavigationRow("养宠指南","迎接第一只猫，先做好准备") {store.features.open(FeatureRoute(FeaturePage.Reading,kind="care-first-cat"))}
             }
@@ -307,7 +308,7 @@ private fun DetailContent(store: MobileStore, s: MobileState) {
     if (s.detailLoading) { Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }; return }
     s.detailError?.let { ErrorPanel(it, { store.reloadDetail() }); return }
     when (val destination = s.destination) {
-        is MobileDestination.Pet -> PetDetail(store, s)
+        is MobileDestination.Pet -> if(destination.discussion) PetDiscussion(store,s) else PetDetail(store,s)
         is MobileDestination.Entry -> EntryDetail(store, s)
         is MobileDestination.Application -> ApplicationDetail(store, s)
         is MobileDestination.Chat -> ChatScreen(store, s, destination)
@@ -359,14 +360,12 @@ private fun DetailContent(store: MobileStore, s: MobileState) {
 @Composable
 private fun PetDetail(store: MobileStore, s: MobileState) {
     val record = s.pet ?: return
-    val discussion=record.data.adoptionAvailable || record.data.adoptionOpened
-    Column(Modifier.fillMaxSize()) {
-    LazyColumn(Modifier.weight(1f).fillMaxWidth(),contentPadding=PaddingValues(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-    item { Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
+    ScrollContent {
         Photos(store, record.mediaIds, s.user?.id, record.data.name)
         SectionTitle(record.data.name)
         Text(listOf(speciesLabel(record.data.species), record.data.breed, record.data.sex).filter { it.isNotBlank() }.joinToString(" · "))
         Text(record.data.bio)
+        if(record.data.adoptionAvailable || record.data.adoptionOpened) NavigationRow("领养交流","照护讨论与公开答疑") {store.open(MobileDestination.Pet(record.id,true))}
         NavigationRow("独立图文日记","只读取这只宠物的内容") { store.features.open(FeatureRoute(FeaturePage.PetDiary,record.id)) }
         if (s.user?.id == record.ownerId && record.data.health.isNotBlank()) Text("私密健康记录：${record.data.health}")
         Text("先核对具体条件、材料来源与照护安排。尚未提供的健康信息不能视为已确认。", color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -385,13 +384,24 @@ private fun PetDetail(store: MobileStore, s: MobileState) {
             } else Button(onClick = store::beginApplication, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("申请领养") }
             OutlinedButton(onClick = store::contactPetOwner, enabled = !s.busy, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("联系发布人") }
         }
-    } }
-    if(discussion) commentItems(store,s,"pet_comments")
-    }
-    if(discussion) ReplyEditor(store,s,"聊聊这只宠物的照护情况…")
     }
 }
 
+
+@Composable private fun PetDiscussion(store: MobileStore,s: MobileState) {
+    val record=s.pet ?: return
+    if(!record.data.adoptionAvailable && !record.data.adoptionOpened) {
+        ScrollContent {TaskNotice("目前未开放领养交流","仍可返回查看这只宠物的档案与日记。");NavigationRow("返回宠物档案") {store.back()}}
+        return
+    }
+    Column(Modifier.fillMaxSize()) {
+        LazyColumn(Modifier.weight(1f).fillMaxWidth(),contentPadding=PaddingValues(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            item {Text("正在讨论：${record.data.name}",style=MaterialTheme.typography.titleMedium)}
+            commentItems(store,s,"pet_comments",showTitle=false)
+        }
+        ReplyEditor(store,s,"说点什么…")
+    }
+}
 
 @Composable
 private fun EntryDetail(store: MobileStore, s: MobileState) {
@@ -421,9 +431,8 @@ private fun EntryDetail(store: MobileStore, s: MobileState) {
     }
 }
 
-private fun androidx.compose.foundation.lazy.LazyListScope.commentItems(store: MobileStore,s: MobileState,kind: String) {
-    item { SectionTitle(if(kind=="pet_comments") "领养交流" else "评论") }
-    if(kind=="pet_comments") item {TaskNotice("评论不能替代医疗资料","想了解具体情况可站内联系，不公开证件和家庭地址。")}
+private fun androidx.compose.foundation.lazy.LazyListScope.commentItems(store: MobileStore,s: MobileState,kind: String,showTitle: Boolean = true) {
+    if(showTitle) item { SectionTitle(if(kind=="pet_comments") "领养交流" else "评论") }
     items(s.comments.items,key={it.id}) {row ->
         MemberSection(store,row.ownerId,compact=true) {
             if(row.data.replyTo>0) Text("回复评论 #${row.data.replyTo}",style=MaterialTheme.typography.bodySmall)
@@ -448,6 +457,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.commentItems(store: M
             }
         }
     }
+    if(kind=="pet_comments") item {TaskNotice("评论不能替代医疗资料","想了解具体情况可站内联系，不公开证件和家庭地址。")}
     item {PageFooter(s.comments,{store.loadComments()},{store.loadComments(true)},"还没有评论")}
 }
 
@@ -549,7 +559,7 @@ private fun ReplyEditor(store: MobileStore, s: MobileState, label: String) {
             }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 TextButton(onClick = { emojiOpen = !emojiOpen }) { Text(if (emojiOpen) "收起表情" else "表情与贴纸") }
-                Button(onClick = store::sendReply, enabled = !s.busy && (s.reply.isNotBlank() || s.replySticker.isNotBlank() || s.replyPhotos.isNotEmpty()) && s.replyPhotos.all { it.mediaId != null }, modifier = Modifier.heightIn(min = MobileUi.actionHeight)) { Text("发送") }
+                Button(onClick = store::sendReply, enabled = !s.busy && (s.reply.isNotBlank() || s.replySticker.isNotBlank() || s.replyPhotos.isNotEmpty()) && s.replyPhotos.all { it.mediaId != null }, modifier = Modifier.heightIn(min = MobileUi.actionHeight)) { Text(if(chat == null) "发布" else "发送") }
             }
             if (emojiOpen) ExpressionPanel(store,s,editor,{ editor = it },richAllowed)
             if(s.pendingOperations.isNotEmpty()) FeatureButton("核对原消息结果") { store.features.open(FeatureRoute(FeaturePage.Recovery)) }
@@ -635,8 +645,8 @@ private fun ProfileScreen(store: MobileStore, s: MobileState) {
 private fun MobileTab.designIcon(): String = when(this) {
     MobileTab.Community -> "house"; MobileTab.Adoption -> "heart-handshake"; MobileTab.Publish -> "circle-plus"; MobileTab.Messages -> "message-circle"; MobileTab.Profile -> "user-round"
 }
-private fun title(s: MobileState): String = when (s.destination) {
-    MobileDestination.Home -> s.tab.label; is MobileDestination.Pet -> "宠物详情"; is MobileDestination.Entry -> "社区动态"
+private fun title(s: MobileState): String = when (val d = s.destination) {
+    MobileDestination.Home -> s.tab.label; is MobileDestination.Pet -> if(d.discussion) "${s.pet?.data?.name ?: "宠物"}的领养交流" else "宠物详情"; is MobileDestination.Entry -> "社区动态"
     is MobileDestination.Application, MobileDestination.Applications -> "领养申请"; is MobileDestination.Chat -> "消息"
     is MobileDestination.Case, MobileDestination.Help -> "走失互助"; MobileDestination.Notifications -> "通知"
 }

@@ -17,3 +17,5 @@ Caddyfile
 
 # Mobile app is a separate deliverable — not needed for the Go container.
 mobile/
+**/node_modules/
+web-client/dist/

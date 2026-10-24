@@ -206,7 +206,15 @@ function actionOptions(
     add("state-action", "close");
   return list;
 }
-export function ResourcePage({ kind, id }: { kind: string; id: bigint }) {
+export function ResourcePage({
+  kind,
+  id,
+  discussionOnly = false,
+}: {
+  kind: string;
+  id: bigint;
+  discussionOnly?: boolean;
+}) {
   const path = `${kind}/${id}`;
   const result = useQuery<RecordData>(path);
   return (
@@ -216,19 +224,32 @@ export function ResourcePage({ kind, id }: { kind: string; id: bigint }) {
       onRetry={() => void reload(path)}
     >
       {result.data ? (
-        <ResourceBody key={kind + id} kind={kind} row={result.data} />
+        <ResourceBody
+          key={kind + id + String(discussionOnly)}
+          kind={kind}
+          row={result.data}
+          discussionOnly={discussionOnly}
+        />
       ) : null}
     </QueryState>
   );
 }
-function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
+function ResourceBody({
+  kind,
+  row: r,
+  discussionOnly,
+}: {
+  kind: string;
+  row: RecordData;
+  discussionOnly: boolean;
+}) {
   const session = useSession();
   const owner = session.user?.id ?? 0n;
   const d = r.data;
   const own = r.owner_id === owner;
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
-  const [reply, setReply] = useState(0n);
+  const [reply, setReply] = useState<bigint>();
   const parent = useQuery<RecordData>(
     kind === "claims" ? `cases/${r.reference_id}` : null,
   );
@@ -266,6 +287,48 @@ function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
       offers: "offer",
     } as Record<string, string>
   )[kind];
+  const commentComposer = (
+    <Composer
+      kind={kind as "entries" | "pets"}
+      id={r.id}
+      reply={reply}
+      onReplyChange={setReply}
+      onSent={() => {
+        setReply(0n);
+        void reload(
+          `${kind === "pets" ? "pet_comments" : "entry_comments"}?reference_id=${r.id}&cursor=0`,
+        );
+      }}
+    />
+  );
+  if (kind === "pets" && discussionOnly) {
+    const available = !!(d.adoption_available || d.adoption_opened);
+    return (
+      <TaskPage
+        title={`${String(d.name || "宠物")}的领养交流`}
+        actions={available ? commentComposer : undefined}
+      >
+        {available ? (
+          <>
+            <h3>正在讨论：{String(d.name || "这只宠物")}</h3>
+            <Comments
+              kind="pet_comments"
+              showTitle={false}
+              entry={r.id}
+              reply={reply ?? 0n}
+              onReply={setReply}
+            />
+            <Notice title="评论不能替代医疗资料">
+              想了解具体情况可站内联系，不公开证件和家庭地址。
+            </Notice>
+          </>
+        ) : (
+          <Notice title="目前未开放领养交流" />
+        )}
+        <RowLink title="返回宠物介绍" to={`/pets/${r.id}`} />
+      </TaskPage>
+    );
+  }
   return (
     <TaskPage
       title={
@@ -274,22 +337,7 @@ function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
           : (titles[kind] ?? "事项详情")
       }
       subtitle={`#${r.id} · 版本 ${r.version} · ${stateLabel(r.state)}`}
-      actions={
-        ["entries", "pets"].includes(kind) &&
-        (kind !== "pets" || d.adoption_available || d.adoption_opened) ? (
-          <Composer
-            kind={kind as "entries" | "pets"}
-            id={r.id}
-            reply={reply}
-            onSent={() => {
-              setReply(0n);
-              void reload(
-                `${kind === "pets" ? "pet_comments" : "entry_comments"}?reference_id=${r.id}&cursor=0`,
-              );
-            }}
-          />
-        ) : undefined
-      }
+      actions={kind === "entries" ? commentComposer : undefined}
     >
       {error ? <Notice title={error} error /> : null}
       {notice ? <Notice title={notice} /> : null}
@@ -310,7 +358,7 @@ function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
           ) ? (
             <Notice title="含 AI 生成／修改内容" />
           ) : null}
-          <Comments entry={r.id} reply={reply} onReply={setReply} />
+          <Comments entry={r.id} reply={reply ?? 0n} onReply={setReply} />
         </>
       ) : (
         <Card title="当前资料">
@@ -360,17 +408,11 @@ function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
         </Card>
       ) : null}
       {kind === "pets" && (d.adoption_available || d.adoption_opened) ? (
-        <>
-          <Notice title="评论不能替代医疗资料">
-            想了解具体情况可站内联系，不公开证件和家庭地址。
-          </Notice>
-          <Comments
-            entry={r.id}
-            kind="pet_comments"
-            reply={reply}
-            onReply={setReply}
-          />
-        </>
+        <RowLink
+          title="领养交流"
+          detail="照护讨论与公开答疑"
+          to={`/pets/${r.id}?view=discussion`}
+        />
       ) : null}
       {kind === "pets" ? (
         <>
@@ -737,6 +779,7 @@ function CommentBatch({
   );
 }
 function Comments({
+  showTitle = true,
   kind = "entry_comments",
   entry,
   reply,
@@ -744,13 +787,16 @@ function Comments({
 }: {
   entry: bigint;
   kind?: "entry_comments" | "pet_comments";
+  showTitle?: boolean;
   reply: bigint;
   onReply: (id: bigint) => void;
 }) {
   const page = usePages(kind, { reference_id: entry });
   return (
     <section className="stack" aria-label="评论">
-      <h3>{kind === "pet_comments" ? "领养交流" : "评论"}</h3>
+      {showTitle ? (
+        <h3>{kind === "pet_comments" ? "领养交流" : "评论"}</h3>
+      ) : null}
       <QueryState
         loading={page.loading}
         error={page.error}

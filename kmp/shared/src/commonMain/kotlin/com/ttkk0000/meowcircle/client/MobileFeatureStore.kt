@@ -368,7 +368,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     FeaturePage.DataRequests, FeaturePage.Safety -> if (current()) mutable.update { it.copy(restricted = restricted()) }
                     FeaturePage.Rules -> {val catalog=api.readingCatalog();if(current())mutable.update {it.copy(readingCatalog = catalog)}}
                     FeaturePage.Reading -> {
-                        val document=if(route.kind.startsWith("type:")) api.readingCatalog().documentFor(route.kind.removePrefix("type:")) ?: throw MobileApiException(404,"not found") else api.readingDocument(route.kind)
+                        val document=if(route.kind.startsWith("type-")) api.readingCatalog().documentFor(route.kind.removePrefix("type-")) ?: throw MobileApiException(404,"not found") else api.readingDocument(route.kind)
                         if(current())mutable.update {it.copy(readingDocument = document)}
                     }
                     FeaturePage.GroupCreate, FeaturePage.SettingsHome -> Unit

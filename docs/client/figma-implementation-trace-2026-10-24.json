@@ -270,9 +270,9 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt",
       "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/adoptions",
+      "web_module_route": "/pets/{id}?view=discussion",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -296,12 +296,16 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt",
       "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/adoptions",
+      "web_module_route": "/pets/{id}?view=discussion",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "142:3011",
+        "145:8407",
+        "220:335999"
+      ],
       "runtime_verified": false
     },
     {
@@ -452,9 +456,9 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt",
       "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/adoptions",
+      "web_module_route": "/pets/{id}?view=discussion",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -3453,9 +3457,9 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidContentSubscriptions.kt",
-      "web_source": "web-client/src/features/ContentPage.tsx",
-      "web_module_route": "/content",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "web_module_route": "/users/{id}",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -3480,7 +3484,7 @@
         "tabletL": "cross-platform-full-state.json"
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
-      "web_source": "web-client/src/App.tsx",
+      "web_source": "web-client/src/features/ResourcePage.tsx",
       "web_module_route": "/users/{id}",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
@@ -13055,12 +13059,14 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
-      "web_module_route": "/publish",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPublicationsContent.kt",
+      "web_source": "web-client/src/features/Publications.tsx",
+      "web_module_route": "/publications",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "56:53"
+      ],
       "runtime_verified": false
     },
     {
@@ -15734,7 +15740,7 @@
         "tabletL": "cross-platform-full-state.json"
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
-      "web_source": "web-client/src/App.tsx",
+      "web_source": "web-client/src/features/ResourcePage.tsx",
       "web_module_route": "/users/{id}",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",

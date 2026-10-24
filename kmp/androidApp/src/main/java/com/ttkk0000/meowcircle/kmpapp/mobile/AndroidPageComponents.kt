@@ -144,6 +144,7 @@ internal val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable internal fun <T> ChoiceChipBar(
     options: List<Pair<T, String>>,
     selected: T,
@@ -153,7 +154,7 @@ internal val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     badge: (@Composable (T) -> Unit)? = null,
 ) {
     val modifier = if (scrollable) Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()) else Modifier.fillMaxWidth()
-    Row(modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    FlowRow(modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         options.forEach { (value, label) ->
             FilterChip(
                 selected = selected == value,
@@ -168,6 +169,7 @@ internal val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable internal fun <T> SegmentedTextBar(
     options: List<Pair<T, String>>,
     selected: T,
@@ -176,7 +178,7 @@ internal val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     enabled: Boolean = true,
 ) {
     val modifier = if (scrollable) Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()) else Modifier
-    Row(modifier) {
+    FlowRow(modifier) {
         options.forEach { (value, label) ->
             TextButton(onClick = { onSelect(value) }, enabled = enabled) {
                 Text(if (selected == value) "● $label" else label)

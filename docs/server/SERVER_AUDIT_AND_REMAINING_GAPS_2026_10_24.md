@@ -20,7 +20,7 @@
 | **领养与寄养独占闭环** | 宠物级唯一活跃放置（`validatePetPlacementAvailable`）+ 候选队列（`waitlisted`）+ 重开周期递增（`adoption_cycle`）+ 72h 紧急转交（`safety_hold`） | `internal/mobile/adoption_placement.go`、`internal/mobile/authority.go`、`internal/mobile/service.go` |
 | **同城预约与合规准入** | 城市与物种准入（猫/狗直接开放；异宠须 `exotic_approved_city: true` 且资质有效）+ 医疗免责拦截 + 100m 地理隐私模糊 | `internal/mobile/appointment_admission.go`、`internal/mobile/qualification.go` |
 | **跨单据证据保留与注销** | 纠纷/回访/申诉/安全保留自动冻结关联消息、状态历史、审计与媒体（`BlockedByHold`），解冻前禁止物理清除 | `internal/mobile/evidence_retention.go`、`internal/mobile/data_requests.go` |
-| **公开阅读与法规制度库** | 独立 `/api/v2/reading/*` 与 `/api/v2/publications/*` + SHA-256 附件下载 + 运营主体空值发布拦截 | `internal/platform/mobileapi/reading.go`、`internal/platform/mobileapi/reading-drafts.json` |
+| **公开阅读与法规制度库** | 独立 `/api/v2/reading/*`（发布管理复用现有资源列表的 `owner_id` 查询，不存在 `/api/v2/publications/*`） + SHA-256 附件下载 + 运营主体空值发布拦截 | `internal/platform/mobileapi/reading.go`、`internal/platform/mobileapi/reading-drafts.json` |
 | **宠物评论、反应与订阅** | 宠物档案评论（`mobile_pet_comments`）、评论表情反应（`mobile_comment_reactions`）、内容/救助订阅通知（`content_updates`） | `internal/mobile/comment_reactions.go`、`internal/mobile/content_subscriptions.go`、`migrations/009_pet_discussions.sql` |
 
 ---
@@ -30,6 +30,8 @@
 尽管业务领域模型与 API 契约已高度完备，但在**部署引导一致性、数据库索引、高并发事务边界、多实例水平扩展、静态合规数据注入、外部网关运行态联调**六个方面仍存在明确缺口，建议按 `P0 -> P1 -> P2` 顺序完善：
 
 ### 2.1 `[P0]` 数据库迁移脚本与容器/Makefile 启动配置不一致（会导致容器启动直接报错）
+
+2026-10-24 Codex续作：以下是审计时发现，后续已补Compose的008／009新库挂载、Makefile 001–009顺序及Dockerfile的Web构建阶段／worker与Web产物复制。这里只完成源码修订，未执行构建、迁移或容器启动，不能把原P0直接判定为运行通过；既有数据库仍须核对实际迁移记录，只应用未执行文件。
 
 * **现状与根因**：
   1. `internal/store/postgres/mobile.go:278-297` 中的 `CheckMobileSchema()` 在服务启动（`MND_AUTO_MIGRATE=false` 默认值）及 `/healthz` 检查时，强制校验以下表必须存在：
