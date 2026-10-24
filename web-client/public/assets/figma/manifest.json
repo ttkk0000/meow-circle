@@ -90,6 +90,24 @@
       "source_node": "220:300899",
       "file": "web-client/public/assets/figma/smile.svg",
       "sha256": "86e0043d2790ccff2d03ce2d5c3350796fe1cb5af18f3aae3bb37551073bac3e"
+    },
+    {
+      "name": "comment-heart",
+      "source_node": "145:8407",
+      "file": "web-client/public/assets/figma/comment-heart.svg",
+      "sha256": "b1dc367226482f25bec8260c8ec750ac4558e8ab381f41463ba9abea9efc0618"
+    },
+    {
+      "name": "comment-heart-liked",
+      "source_node": "145:8407",
+      "file": "web-client/public/assets/figma/comment-heart-liked.svg",
+      "sha256": "3df4f8e40f028bee56f8d3ddf13970bb262b514b9240e09de9ae8ad0aa97fef0"
+    },
+    {
+      "name": "comment-more",
+      "source_node": "145:8407",
+      "file": "web-client/public/assets/figma/comment-more.svg",
+      "sha256": "ae3748326beb3f2624ac2f1962e69819eae4fc23c7171cd013fc41cb4d828bf0"
     }
   ],
   "note": "静态图标原样导出。宠物／头像／动态照片由真实API数据提供，不把设计样例作为业务数据。"

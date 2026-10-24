@@ -139,6 +139,7 @@ export function Feed({
         <span>晒晒今天的小可爱…</span>
         <Icon name="chevron-right" />
       </button>
+      <RowLink title="养宠指南" detail="迎接第一只猫，先做好准备" to="/guide" />
       <form
         className="search-row"
         onSubmit={(e) => {

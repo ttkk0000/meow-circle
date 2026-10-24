@@ -41,10 +41,18 @@ internal fun originLabel(v: String) = originChoices.firstOrNull { it.first == v 
     val feature by store.features.state.collectAsStateWithLifecycle()
     var pet by remember(s.composeEntry.petId) { mutableStateOf(s.composeEntry.petId.takeIf { it > 0 }?.toString().orEmpty()) }
     Text("发布空间与可见范围",style = MaterialTheme.typography.titleMedium)
-    Row { listOf("community" to "社区","circle" to "宠友圈","diary" to "日记").forEach { (id,label) ->
-        FilterChip(s.composeEntry.space == id,{ store.editComposeOptions(id,if(id == "community") Audience() else if(id == "circle" && s.composeEntry.audience.mode == "public") Audience("friends") else s.composeEntry.audience,s.composeEntry.petId) },label = { Text(label) },modifier = Modifier.padding(end = 8.dp))
-    } }
-    Row { listOf("daily_share" to "日常","help" to "互助","activity" to "活动","trade" to "有偿信息讨论").forEach { (id,label) -> TextButton({ store.editComposeOptions(s.composeEntry.space,s.composeEntry.audience,s.composeEntry.petId,id) },enabled = !s.busy) { Text(if(s.composeEntry.category == id) "● $label" else label) } } }
+    ChoiceChipBar(
+        options = listOf("community" to "社区","circle" to "宠友圈","diary" to "日记"),
+        selected = s.composeEntry.space,
+        onSelect = { id -> store.editComposeOptions(id,if(id == "community") Audience() else if(id == "circle" && s.composeEntry.audience.mode == "public") Audience("friends") else s.composeEntry.audience,s.composeEntry.petId) },
+        enabled = !s.busy,
+    )
+    SegmentedTextBar(
+        options = listOf("daily_share" to "日常","help" to "互助","activity" to "活动","trade" to "有偿信息讨论"),
+        selected = s.composeEntry.category,
+        onSelect = { id -> store.editComposeOptions(s.composeEntry.space,s.composeEntry.audience,s.composeEntry.petId,id) },
+        enabled = !s.busy,
+    )
     if(s.composeEntry.space != "community") {
         listOf("private" to "仅自己","friends" to "好友可见","selected" to "指定好友","excluded" to "排除指定好友").forEach { (mode,label) ->
             CheckLine(label,s.composeEntry.audience.mode == mode,{ checked -> if(checked) store.editComposeOptions(s.composeEntry.space,Audience(mode,if(mode in listOf("selected","excluded")) s.composeEntry.audience.userIds else emptyList()),s.composeEntry.petId) },!s.busy)
@@ -63,7 +71,7 @@ internal fun originLabel(v: String) = originChoices.firstOrNull { it.first == v 
 
 @Composable internal fun ExpressionPanel(store: MobileStore,s: MobileState,editor: TextFieldValue,onEdit: (TextFieldValue) -> Unit,stickersAllowed: Boolean) {
     var category by rememberSessionUiState("expression.category") { "emoji" }
-    Row { listOf("emoji" to "表情","favorite" to "收藏","recent" to "最近","sticker" to "贴纸").forEach { (key,label) -> TextButton({ category = key }) { Text(if(category == key) "● $label" else label) } } }
+    SegmentedTextBar(listOf("emoji" to "表情","favorite" to "收藏","recent" to "最近","sticker" to "贴纸"),category,{ category = it })
     val saved = s.expressionState?.data ?: ExpressionBody()
     val emoji = when(category) { "favorite" -> s.emoji.filter { it.id in saved.favorites }; "recent" -> saved.recent.mapNotNull { id -> s.emoji.firstOrNull { it.id == id } }; "sticker" -> emptyList(); else -> s.emoji }
     val stickers = when(category) { "favorite" -> s.stickers.filter { it.id in saved.favorites }; "recent" -> saved.recent.mapNotNull { id -> s.stickers.firstOrNull { it.id == id } }; "sticker" -> s.stickers; else -> emptyList() }

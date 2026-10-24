@@ -21,20 +21,10 @@ import kotlinx.serialization.json.JsonPrimitive
 @Composable internal fun AccountFeature(store: MobileStore,s: FeatureState,route: FeatureRoute) {
     val f = store.features; val actor = store.state.value.user?.id
     when (route.page) {
-        FeaturePage.Rules -> {
-            val context = LocalContext.current
-            TaskNotice("规则与权益","具体主体、公开渠道与生效政策以实际配置为准；核实结果仅说明相应事项。")
-            listOf("服务协议" to com.ttkk0000.meowcircle.kmpapp.R.string.mnd_terms_url,"隐私政策" to com.ttkk0000.meowcircle.kmpapp.R.string.mnd_privacy_url).forEach { (label,id) ->
-                val url = context.getString(id)
-                if(url.startsWith("https://")) NavigationRow(label) { context.startActivity(Intent(Intent.ACTION_VIEW,android.net.Uri.parse(url))) }
-                else Text("$label：正式地址尚未配置")
-            }
-            NavigationRow("未成年人保护与监护范围","登录与交流资格分别核对") { f.open(FeatureRoute(FeaturePage.Security)) }
-            NavigationRow("资料删除与未完事项","指定范围、注销和事项协助分别处理") { f.open(FeatureRoute(FeaturePage.DataRequests)) }
-            NavigationRow("侵权与隐私求助","免注册受理、正式通知、原事项追加") { f.open(FeatureRoute(FeaturePage.Safety)) }
-            NavigationRow("领养与商业合同","按实际关系与版本确认，不提供付款担保") { f.open(FeatureRoute(FeaturePage.Appointments)) }
-            TaskPrimary("返回我的") { f.closeRoute(); store.select(MobileTab.Profile) }
-        }
+        FeaturePage.Publications -> PublicationsContent(store,s,route)
+        FeaturePage.Rules -> RulesContent(store,s,route)
+        FeaturePage.Reading -> ReadingContent(store,s)
+        FeaturePage.SettingsHome -> SettingsHomeContent(store)
         FeaturePage.Settings -> {
             val old = s.preference?.data ?: PreferenceBody()
             listOf("direct" to ("私信提醒" to old.directMessages),"groups" to ("群聊提醒" to old.groups),"applications" to ("申请与预约" to old.applications),"interactions" to ("社区互动" to old.interactions)).forEach { (key,pair) -> CheckLine(pair.first,f.field(key,pair.second.toString()).toBoolean(),{ f.edit(key,it.toString()) },!s.busy && !s.loading) }
@@ -147,8 +137,14 @@ import kotlinx.serialization.json.JsonPrimitive
     var code by rememberSessionUiState("security.code") { "" }; var newPassword by rememberSessionUiState("security.newPassword") { "" }
     FeatureSection("验证当前手机号") {
         OutlinedTextField(phone,{ phone = it },label = { Text("完整当前手机号") })
-        OutlinedTextField(code,{ code = it },label = { Text("验证码") })
-        FeatureButton(if(s.otpWait > 0) "${s.otpWait} 秒后可重发" else "发送当前手机号验证码",!s.busy && s.otpWait == 0 && methods.smsAvailable && phone.isNotBlank()) { f.sendOTP(phone = phone,purpose = "verify_phone") }
+        OtpVerificationFields(
+            code = code,
+            onCodeChange = { code = it },
+            otpWait = s.otpWait,
+            sendLabel = "发送当前手机号验证码",
+            enabled = !s.busy,
+            canSend = methods.smsAvailable && phone.isNotBlank(),
+        ) { f.sendOTP(phone = phone,purpose = "verify_phone") }
         FeatureButton("验证当前手机号",!s.busy && code.isNotBlank()) { val proof = code; code = ""; f.runCommand { f.api.verifyCurrentPhone(proof); store.refreshEligibility(); f.reload() } }
     }
     FeatureSection("安全变更") {
@@ -158,8 +154,15 @@ import kotlinx.serialization.json.JsonPrimitive
         if (change == "email") OutlinedTextField(email,{ email = it },label = { Text("新邮箱") })
         if (change == "password") OutlinedTextField(newPassword,{ newPassword = it },label = { Text("新密码（至少10字节）") },visualTransformation = PasswordVisualTransformation())
         if (change != "password") {
-            OutlinedTextField(code,{ code = it },label = { Text("新联系方式验证码") })
-            FeatureButton(if(s.otpWait > 0) "${s.otpWait} 秒后可重发" else "发送新联系方式验证码",!s.busy && s.otpWait == 0 && if(change == "phone") methods.smsAvailable && phone.isNotBlank() else store.state.value.capabilities.email && email.isNotBlank()) { f.sendOTP(email = if(change == "email") email else "",phone = if(change == "phone") phone else "",purpose = if(change == "email") "email_bind" else "bind_phone") }
+            OtpVerificationFields(
+                code = code,
+                onCodeChange = { code = it },
+                otpWait = s.otpWait,
+                sendLabel = "发送新联系方式验证码",
+                codeLabel = "新联系方式验证码",
+                enabled = !s.busy,
+                canSend = if (change == "phone") methods.smsAvailable && phone.isNotBlank() else store.state.value.capabilities.email && email.isNotBlank(),
+            ) { f.sendOTP(email = if(change == "email") email else "",phone = if(change == "phone") phone else "",purpose = if(change == "email") "email_bind" else "bind_phone") }
         }
         FeatureButton("核对安全变更",!s.busy && !s.loading) {
             if (change == "password" && newPassword.toByteArray().size !in 10..128 || change != "password" && code.isBlank()) f.notify("请检查新密码或验证码") else {
@@ -299,7 +302,7 @@ import kotlinx.serialization.json.JsonPrimitive
     if (selectedData(f).isNotEmpty()) Text("本次已选 ${selectedData(f).size} 条，可逐条移除：")
     selectedData(f).forEach { selection -> FeatureButton("移除：${resourceLabel(selection.kind)} #${selection.id}",!s.busy) { f.edit("selections",f.field("selections").split(',').filterNot { it == "${selection.kind}:${selection.id}" }.joinToString(",")) } }
 }
-private fun selectionKinds(assistance: Boolean) = listOf("entries" to "动态","pets" to "宠物档案","media" to "照片","cases" to "走失求助","offers" to "有偿信息","drafts" to "草稿","subscriptions" to "附近订阅") +
+private fun selectionKinds(assistance: Boolean) = listOf("entries" to "动态","entry_comments" to "动态评论","pet_comments" to "领养交流评论","pets" to "宠物档案","media" to "照片","cases" to "走失求助","offers" to "有偿信息","drafts" to "草稿","subscriptions" to "附近订阅") +
     if (assistance) listOf("adoptions" to "领养事项","appointments" to "预约","reviews" to "核实事项") else emptyList()
 private fun selectedData(f: MobileFeatureStore) = f.field("selections").split(',').mapNotNull { item -> val parts = item.split(':'); if(parts.size == 2) parts[1].toLongOrNull()?.let { DataSelection(parts[0],it) } else null }
 private fun reviewTypeLabel(v: String) = mapOf("verification" to "核实","report" to "举报","appeal" to "申诉","support" to "协助","recovery" to "恢复")[v] ?: v

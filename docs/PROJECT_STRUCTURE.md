@@ -1,10 +1,42 @@
 # Project Structure
 
-Last updated: 2026-06-06
+Last updated: 2026-10-24
 
-This document maps the real repository structure for M&D. It is meant for
-engineers and future agents who need to understand where a feature lives before
-editing it.
+This document maps the real repository structure for M&D (`meow & doggie`). It is meant for
+engineers and future agents who need to understand where both the current **v2 modular monolith / multi-platform clients** and the legacy v1 surfaces live before editing.
+
+## 0. Current v2 Directory Additions (2026-10-24 Baseline)
+
+```text
+meow-circle/
+├── cmd/
+│   ├── server/                  # Main HTTP server (/api/v2, /app/, public safety/share pages, legacy /api/v1)
+│   └── worker/                  # Standalone v2 background worker (push, nearby_alerts, content_updates, privacy_cleanup, provider_revocations, maintenance)
+├── internal/
+│   ├── identity/                # v2 3-identifier auth, OTP, OAuth, session rotation, eligibility & reauth grants
+│   ├── mobile/                  # v2 domain facade (44 aggregate kinds, adoption placement, appointment admission, evidence retention, comments/reactions, outbox)
+│   ├── platform/
+│   │   ├── mobileapi/           # v2 HTTP handlers, browser Cookie/CSRF adapter, reading/publications catalog, media privacy, worker job endpoints
+│   │   ├── mobileauth/          # SMS, Email OTP, WeChat, QQ, and Apple Sign-In/revocation gateway adapters
+│   │   └── mobileworker/        # Worker HTTP client and durable SHA-256 checkpoint state manager
+│   └── store/postgres/mobile.go # PostgreSQL SERIALIZABLE repository & schema verifier for 005..009
+├── migrations/
+│   ├── 001..004_*.sql           # Core users and legacy v1 tables
+│   ├── 005_mobile_auth_identities.sql
+│   ├── 006_identity_eligibility.sql
+│   ├── 007_mobile_modules.sql   # 32 core mobile_* aggregate tables
+│   ├── 008_mobile_policy_commands.sql # 10 policy/grant/contract/hold/operation/data-request tables
+│   └── 009_pet_discussions.sql  # 2 pet comment & comment reaction tables (total 44 mobile_* tables)
+├── kmp/
+│   ├── shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ # Shared v2 DTOs, Transport, MobileStore, ReadingModels
+│   ├── androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/ # v2 Android phone & tablet Compose UI (30+ routes & reading/publications)
+│   ├── iosUi/                   # Compose Multiplatform for iOS UI module
+│   ├── iosApp/ComposeApp/       # Thin iOS host embedding Compose Multiplatform
+│   └── desktopApp/              # Compose Desktop client
+└── web-client/                  # Standalone v2 React + TypeScript + Vite consumer web app (/app/, Cookie+CSRF auth, lossless IDs, 740-state parity)
+```
+
+> See [Server Completeness Audit (2026-10-24)](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md) and [Client README](client/README.md) for current verification boundaries.
 
 ## 1. High-Level Shape
 

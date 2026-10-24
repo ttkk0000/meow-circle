@@ -1,6 +1,12 @@
 # Android UI 基础框架与组件维护规范
 
-2026-10-24增补：`AndroidPageComponents.kt`的`TaskColumn`／`TaskPrimary`在既有`MndForm`／`MndPrimaryButton`上提供正文滚动、固定多主操作和任务导航禁用；`TaskSection`复用`MndSection`。`RecordList`复用既有`PageRefresh`／`PageFooter`，不另建分页状态机；`MemberSection`、`FeedTile`、`MessageRow`统一公开资料和真实照片。原ViewModel UI session、movable内容、领域选择与primitive继续使用，详见[本批记录](FIGMA_ANDROID_WEB_2026_10_24.md)。
+2026-10-24增补（`AI-20261024-ANDROID-MVI-COMPONENT-REUSE`）：
+1. **跨端 MVI 状态基类与 Android MVI 宿主基类复用**：
+   - KMP 共享层新增 [`MviStore.kt`](../../kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MviStore.kt)，定义跨端状态容器接口 `MviStateOwner<State, Intent, Effect>` 与抽象基类 `MviStore<State, Intent, Effect>`（统一托管 `scope`、`state: StateFlow<State>`、`effects: Flow<Effect>`、`reduce`、`setState`、`sendEffect` 与命名协程任务表 `jobs`）。`MobileStore`、`MobileFeatureStore`、`SensitiveActionStore` 全部继承自 `MviStore`，既支持 `accept(intent)` 标准 MVI 意图派发（`MobileStoreIntent` / `FeatureStoreIntent` / `SensitiveStoreIntent`），又 100% 保留原有领域方法签名。
+   - Android 层新增 [`AndroidMviBase.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMviBase.kt)，提供继承自 [`MviViewModel`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/architecture/mvi/MviViewModel.kt) 的 `MobileMviViewModel<State, Intent, Effect>` 抽象基类（内建 `bindStore` / `bindState` / `forwardEffects` 桥接原语）以及 Compose MVI 绑定容器 `MviStoreHost`、`MviViewModelHost`、`CollectMviEffects`。[`MobileViewModel.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt) 已迁移继承 `MobileMviViewModel<MobileHostState, MobileHostIntent, MobileHostEffect>`，统一聚合 `mobile`、`features`、`sensitive` 与 `pendingLink` 状态。
+2. **页面级高频公共组件抽取与复用**：
+   - `AndroidMviBase.kt` 新增 `MviStatusBanner`（统一顶栏／表单的加载进度条、可关闭横幅通知、主错误与草稿错误）与 `PendingLinkBanner`（待查看白名单深链提示条），已接入 `AndroidMobileApp.kt` 与 `AndroidFeatureContent.kt`。
+   - `AndroidPageComponents.kt` 在 `TaskColumn`／`TaskPrimary`／`TaskSection`／`RecordList`／`MemberSection`／`FeedTile`／`MessageRow` 基础上，新增 `ChoiceChipBar`（单选筛选 Chip 栏，支持横向滚动与角标插槽）、`SegmentedTextBar`（分段式文本切换栏）、`PhotoQueueList`（统一照片上传进度、单图重试、前后移动与移除队列卡片）、`OtpVerificationFields`（验证码输入框＋倒计时重发按钮组合），已在 `AndroidMobileApp.kt`、`AndroidFeatureContent.kt`、`AndroidAccountFeatures.kt`、`AndroidAuthDialog.kt`、`AndroidInboxContent.kt`、`AndroidComposeControls.kt` 全量复用。
 
 2026-10-23。适用新 Android 手机／平板入口；沿用 [Figma V2 默认浅色及适配标准](DESIGN_AND_ACCEPTANCE.md)。这是应用内组件库，已经接入现有页面；暂不另拆 Gradle 模块或发布依赖。iOS 使用自己的 Compose UI，Web／Desktop 的旧样式不在本次迁移范围。
 
@@ -11,10 +17,11 @@
 | 主题 | `MobileTheme.kt` | 唯一现行颜色、Typography、字体与 Shapes；页面读 MaterialTheme，不按模块硬编码主题 |
 | 尺寸 | `MobileUi.kt` | 页面／区块／表单／弹窗间距、正文限宽、触控高度、圆角、表情显示尺寸 |
 | 基础组件 | `MobileComponents.kt` | 不依赖 Store／API 的展示和输入；值、禁用／加载状态、回调由调用方传入 |
+| 页面与业务公共组件 | `AndroidPageComponents.kt`、`AndroidMviBase.kt` | `TaskColumn`/`TaskPrimary`、`ChoiceChipBar`、`SegmentedTextBar`、`PhotoQueueList`、`OtpVerificationFields`、`MviStatusBanner`、`PendingLinkBanner`、`RecordList`、`MemberSection`、`FeedTile`、`MessageRow` |
 | 窗口与页面框架 | `AndroidAdaptiveWindow.kt`、`androidWindowPolicy()`、`MobileShell` | 系统安全区、铰链、IME、单／双栏、导航、主从布局与按账号／任务隔离的状态容器 |
 | 通用状态与素材 | `AndroidLoadStates.kt`、`AndroidMedia.kt`、`AndroidComposeControls.kt` | 首次加载／刷新／分页／空／失败／末页、私有图片读取与单图重试、表情比例和输入 |
 | 领域适配组件 | `AndroidFeatureContent.kt`、`AndroidDateFields.kt`、`AndroidPeopleFields.kt`、`AndroidPetFields.kt`、`AndroidRegionFields.kt` | 绑定领域字段和权限；使用基础组件，不把准入或网络请求塞进视觉组件 |
-| 状态 owner | `MobileViewModel.kt`、`AndroidUiSessionState.kt`、shared 的 Store | 业务状态／草稿由 Store 负责；旋转内 UI 状态由 ViewModel 保留；组件不另建 Store |
+| MVI 基类与状态 owner | `MviStore.kt`（shared）、`MviViewModel.kt`、`AndroidMviBase.kt`、`MobileViewModel.kt`、`AndroidUiSessionState.kt` | `MviStore` 统一管理跨端 Store 状态流／副作用／协程作业；`MobileMviViewModel` 聚合多 Store 状态与旋转内 UI 会话；组件不另建 Store |
 
 上述 Android 源码均在 `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/`，Activity 为相邻 `MainActivity.kt`。目录内 [README](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/README.md)提供回链。
 

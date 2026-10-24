@@ -236,14 +236,14 @@ func (s *Service) notify(tx Tx, recipient, actor int64, category string, k Kind,
 }
 func publicKind(k Kind) bool {
 	switch k {
-	case Pets, Offers, Entries, Cases, Comments, Reactions:
+	case Pets, Offers, Entries, Cases, Comments, PetComments, Reactions:
 		return true
 	}
 	return false
 }
 func queryKind(k Kind) bool {
 	switch k {
-	case Pets, Offers, Entries, Comments, Reactions, Friendships, Cases, Claims, Leads, Subscriptions, Appointments, Adoptions, CareUpdates, Groups, GroupMessages, Conversations, Messages, Invitations, Notifications, Preferences, Expressions, Drafts, Media, Reviews, VisitFeedback:
+	case Pets, Offers, Entries, Comments, PetComments, Reactions, Friendships, Cases, Claims, Leads, Subscriptions, Appointments, Adoptions, CareUpdates, Groups, GroupMessages, Conversations, Messages, Invitations, Notifications, Preferences, Expressions, Drafts, Media, Reviews, VisitFeedback:
 		return true
 	}
 	return false
@@ -267,7 +267,7 @@ func (s *Service) canRead(tx Tx, k Kind, r Record, actor int64) (bool, error) {
 		if e != nil {
 			return false, e
 		}
-		if r.State == "deleted" {
+		if r.State != "active" {
 			return false, nil
 		}
 		ok, e := visible(tx, r, p.Audience, actor)
@@ -299,7 +299,27 @@ func (s *Service) canRead(tx Tx, k Kind, r Record, actor int64) (bool, error) {
 		}
 		return r.OwnerID == actor && actor > 0 || r.State == "published" && o.ValidUntil.After(s.Now()), nil
 	}
-	if k == Comments || k == Reactions {
+	if k == Comments || k == PetComments {
+		if r.State != "published" {
+			return false, nil
+		}
+		if actor > 0 && actor != r.OwnerID {
+			denied, e := blocked(tx, r.OwnerID, actor)
+			if e != nil || denied {
+				return false, e
+			}
+		}
+		parentKind := Entries
+		if k == PetComments {
+			parentKind = Pets
+		}
+		parent, e := tx.Get(parentKind, r.RefID)
+		if e != nil {
+			return false, e
+		}
+		return s.canRead(tx, parentKind, parent, actor)
+	}
+	if k == Reactions {
 		p, e := tx.Get(Entries, r.RefID)
 		if e != nil {
 			return false, e

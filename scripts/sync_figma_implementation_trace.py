@@ -58,7 +58,7 @@ entries = {
  'nearby': ('AndroidAccountFeatures.kt', 'features/WorkflowEditor.tsx', '/nearby'),
  'expressions': ('AndroidComposeControls.kt', 'features/chat.tsx', '/messages'),
  'safety-data': ('AndroidAccountFeatures.kt', 'features/Recovery.tsx', '/recovery'),
- 'rules': ('AndroidAccountFeatures.kt', 'features/Account.tsx', '/rules'),
+ 'rules': ('AndroidReadingContent.kt', 'features/ReadingPages.tsx', '/rules'),
  'operator-reference': (None, None, None),
 }
 
@@ -92,7 +92,7 @@ contract_gaps = {}
 # 2026-10-24：原14项已补真实源合同与入口；仅表示源码覆盖，运行与视觉状态仍为false。
 
 external_prefix = ('authProvider_', 'authCallback', 'adultProvider', 'adultPassed', 'adultPending', 'guardianProtection', 'nearbyPermission', 'notificationPermission')
-representatives = {'home':['56:27','311:23','311:25','311:26'], 'composePost':['56:33','311:378832'], 'post':['56:32'], 'adopt':['56:35'], 'messages':['56:61','311:379700'], 'mine':['56:73'], 'login':['56:70'], 'appointment':['56:63','311:379780'], 'lostList':['56:54'], 'groupChat':['106:1439'], 'legalCenter':['632:357494'], 'following':['106:1387'], 'groupDiscover':['106:1436'], 'petOther':['142:2913']}
+representatives = {'home': ['56:27', '311:23', '311:25', '311:26'], 'composePost': ['56:33', '311:378832'], 'post': ['56:32'], 'adopt': ['56:35'], 'messages': ['56:61', '311:379700'], 'mine': ['56:73'], 'login': ['56:70'], 'appointment': ['56:63', '311:379780'], 'lostList': ['56:54'], 'groupChat': ['106:1439'], 'legalCenter': ['632:357494'], 'following': ['106:1387'], 'groupDiscover': ['106:1436'], 'petOther': ['142:2913'], 'careGuide': ['106:1425', '311:199', '311:201', '311:202'], 'rules': ['460:17463'], 'ruleDetail': ['460:17468'], 'ruleHistory': ['460:17473'], 'ruleChange': ['632:357528'], 'ruleAppeal': ['460:17483'], 'serviceTerms': ['460:17458'], 'teenPrivacy': ['460:17408'], 'sellerNotice': ['632:357529'], 'settings': ['56:75'], 'privacy': ['56:76'], 'profileActions': ['106:1406'], 'dataInventory': ['460:17428'], 'sdkList': ['460:17453'], 'providerData': ['632:357526'], 'retention': ['632:357509']}
 rows = []
 for key in sorted(roots):
     group = family(key)
@@ -105,6 +105,19 @@ for key in sorted(roots):
         a,w,route='AndroidContentSubscriptions.kt','features/ContentPage.tsx','/content'
     elif key in ('groupDiscover','groupJoinPending','groupJoinReview'):
         a,w,route='AndroidSocialFeatures.kt','features/ResourcePage.tsx','/group-directory'
+    if key == 'careGuide':
+        a,w,route='AndroidReadingContent.kt','features/ReadingPages.tsx','/guide'
+    elif key in ('privacy','dataInventory','sdkList','providerData','retention','settings'):
+        a,w='AndroidReadingContent.kt','features/ReadingPages.tsx'
+        route={'privacy':'/privacy','dataInventory':'/reading?type=inventory','sdkList':'/reading?type=sdk','providerData':'/reading?type=providers','retention':'/reading?type=retention','settings':'/settings'}[key]
+    elif key in ('ruleDetail','serviceTerms','teenPrivacy','sellerNotice'):
+        route='/reading?type='+{'ruleDetail':'adoption','serviceTerms':'service','teenPrivacy':'teen','sellerNotice':'seller'}[key]
+    elif key in ('ruleHistory','ruleChange','ruleAppeal'):
+        route='/rules?view='+{'ruleHistory':'history','ruleChange':'changes','ruleAppeal':'appeal'}[key]
+    elif key in ('authorProfile','profileActions'):
+        a,w,route='AndroidSocialFeatures.kt','App.tsx','/users/{id}'
+    elif group == 'settings-notifications':
+        route='/notification-settings'
     status = 'source_family_mapped_not_visually_verified'
     note = '使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。'
     if group == 'operator-reference':

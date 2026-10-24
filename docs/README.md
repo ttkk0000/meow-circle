@@ -1,5 +1,9 @@
 # M&D 文档入口
 
+2026-10-24 服务端完整性审计与全栈文档收口：新增[服务端完整性审计与待完善清单（2026-10-24）](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（梳理 `44` 张 `mobile_*` 表、`230` Paths / `259` Operations / `112` Schemas、6 类 `cmd/worker` 作业基线，以及 `008`–`009` 迁移挂载、`GIN(media_ids)` 索引、`SERIALIZABLE` 事务内 `allRecords()` 查询收敛等 6 大待完善项），并同步更新服务端、客户端（[Android 与 Web 740 状态交接](client/FIGMA_ANDROID_WEB_2026_10_24.md)）、BMAD 架构及根级工程文档。
+
+2026-10-24 产品文档全量收口与 Figma 核查：[PRD 2.1](bmad/prd.md)（新增 `FR-035`–`FR-042` / `EPIC-008`）、[UX 规格 2.1](bmad/ux-design.md)（新增 `UX-13`–`UX-17`）、[双城分物种准入、四方标准协议与运营 SOP 草案](design/MND_CITY_SPECIES_AND_CONTRACT_TEMPLATES.md)（补齐 `LC08`/`LC09`/`LC01`/`LC02`/`LC10`）及 [Figma 产品与设计台账对齐核查](design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md)。
+
 2026-10-23最新客户端续作：[安卓手机／平板页面与恢复接线](client/ANDROID_PAGES_2026_10_23.md)，按用户要求苹果页面后置；五主入口／30扩展页及布局源码已有，运行与真实渠道尚未验收。
 
 2026-10-23服务端优先续作：[实现与作业交接](server/SERVER_FIRST_2026_10_23.md)、[现行API](server/MOBILE_SERVER.md)。会话／回执、推送解绑、实际作业与独立worker已有源码，静态209路径／236操作；真实配置、编译／运行验收仍未完成。
@@ -42,12 +46,13 @@ M&D = meow & doggie，猫优先、doggie 友好。
 | 要解决的问题 | 文档 | 适用范围 |
 |---|---|---|
 | 为什么这样定位、哪些是用户决定 | [市场策略](bmad/research-report.md) | 2.0；事实、建议和待验证假设 |
-| 做什么、范围与验收 | [PRD](bmad/prd.md) | 2.0；业务需求、优先级、状态和追踪 |
+| 做什么、范围与验收 | [PRD](bmad/prd.md) | 2.1；业务需求（FR-001–FR-042）、优先级、状态和追踪 |
 | 身份/来源/地点怎样披露 | [真实性规范](design/MND_TRUST_AND_DISCLOSURE_SPEC.md) | 字段、证据、预约版本、反馈和复核 |
-| 用户怎么完成任务 | [UX 规格](bmad/ux-design.md) | 2.0；页面、错误、退出、无障碍 |
+| 武汉/上海分物种准入与四方标准协议 | [双城准入与协议模板](design/MND_CITY_SPECIES_AND_CONTRACT_TEMPLATES.md) | 1.0；物种×行为准入、四方协议草案、运营 SLA 与未成年人审计清单 |
+| 用户怎么完成任务 | [UX 规格](bmad/ux-design.md) | 2.1；五主入口、UX-01–UX-17 页面、错误、退出、无障碍 |
 | 客户端怎样交接 | [交互摘要](design/MND_CLIENT_INTERACTION_SPEC.md) | 精简索引，不重复完整 PRD |
-| 视觉怎样保持一致 | [UI 对齐指南](design/MND_UI_ALIGNMENT_GUIDE.md) | Stitch V2 色彩、字体、形状与映射 |
-| 设计素材从哪里来 | [设计交接索引](design/MND_FIGMA_DESIGN_DOCUMENT.md) | 本地镜像、设计板、交接顺序 |
+| 视觉怎样保持一致 | [UI 对齐指南](design/MND_UI_ALIGNMENT_GUIDE.md) | Stitch V2 色彩、字体、形状与映射（未迁移旧端参考） |
+| 设计素材与 Figma 台账从哪里来 | [设计交接索引](design/MND_FIGMA_DESIGN_DOCUMENT.md) · [2026-10-24 Figma 对齐核查](design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md) | 本地镜像、Figma 740 状态台账、交接顺序 |
 | 当时发现过什么问题 | [2026-08 历史审计](design/MND_PRODUCT_DESIGN_SPEC_AND_AUDIT.md) | 历史代码/截图证据，不是当前产品范围 |
 | 已做与未做如何区分 | [设计记忆](design/MND_DESIGN_MEMORY.md) | 当前决策摘要和带日期历史记录 |
 

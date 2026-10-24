@@ -10,6 +10,7 @@ import {
   Button,
   Card,
   Empty,
+  Icon,
   Notice,
   PrivateImage,
   QueryState,
@@ -274,14 +275,17 @@ function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
       }
       subtitle={`#${r.id} · 版本 ${r.version} · ${stateLabel(r.state)}`}
       actions={
-        kind === "entries" ? (
+        ["entries", "pets"].includes(kind) &&
+        (kind !== "pets" || d.adoption_available || d.adoption_opened) ? (
           <Composer
-            kind="entries"
+            kind={kind as "entries" | "pets"}
             id={r.id}
             reply={reply}
             onSent={() => {
               setReply(0n);
-              void reload(`entry_comments?reference_id=${r.id}&cursor=0`);
+              void reload(
+                `${kind === "pets" ? "pet_comments" : "entry_comments"}?reference_id=${r.id}&cursor=0`,
+              );
             }}
           />
         ) : undefined
@@ -354,6 +358,19 @@ function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
             />
           )}
         </Card>
+      ) : null}
+      {kind === "pets" && (d.adoption_available || d.adoption_opened) ? (
+        <>
+          <Notice title="评论不能替代医疗资料">
+            想了解具体情况可站内联系，不公开证件和家庭地址。
+          </Notice>
+          <Comments
+            entry={r.id}
+            kind="pet_comments"
+            reply={reply}
+            onReply={setReply}
+          />
+        </>
       ) : null}
       {kind === "pets" ? (
         <>
@@ -620,26 +637,46 @@ function Versions({ kind, row: r }: { kind: string; row: RecordData }) {
     </>
   );
 }
-function Comments({
-  entry,
-  reply,
+function CommentBatch({
+  kind,
+  rows,
   onReply,
 }: {
-  entry: bigint;
-  reply: bigint;
+  kind: "entry_comments" | "pet_comments";
+  rows: RecordData[];
   onReply: (id: bigint) => void;
 }) {
-  const page = usePages("entry_comments", { reference_id: entry });
+  const owner = useSession().user?.id ?? 0n;
+  const path = `comment-metrics?kind=${kind}&ids=${rows.map((row) => row.id).join(",")}`;
+  const metrics = useQuery<
+    Array<{ comment_id: bigint; likes: bigint; viewer_liked: boolean }>
+  >(rows.length ? path : null);
+  const [busy, setBusy] = useState(false),
+    [error, setError] = useState("");
+  async function like(id: bigint, liked: boolean) {
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      await api.request(`${kind}/${id}/reaction`, {
+        method: "POST",
+        body: { liked },
+        headers: { "Idempotency-Key": key() },
+        owner,
+      });
+      await reload(path);
+    } catch (e) {
+      setError(explain(e));
+    } finally {
+      setBusy(false);
+    }
+  }
   return (
-    <Card title="评论">
-      <QueryState
-        loading={page.loading}
-        error={page.error}
-        onRetry={page.retry}
-        keepContent={!!page.rows.length && !page.denied}
-      >
-        {page.rows.map((row) => (
-          <section key={String(row.id)}>
+    <>
+      {rows.map((row) => {
+        const metric = metrics.data?.find((item) => item.comment_id === row.id);
+        return (
+          <section className="comment-row" key={String(row.id)}>
             <Author id={row.owner_id} />
             {integer(row.data.reply_to) > 0n ? (
               <p className="caption muted">
@@ -647,11 +684,90 @@ function Comments({
               </p>
             ) : null}
             <RichText content={row.data} />
-            <Button kind="quiet" onClick={() => onReply(row.id)}>
-              回复此评论
-            </Button>
+            <div className="comment-actions">
+              <Button kind="quiet" onClick={() => onReply(row.id)}>
+                回复
+              </Button>
+              <Button
+                kind="quiet"
+                pressed={metric?.viewer_liked}
+                disabled={busy || !owner || !metric}
+                onClick={() =>
+                  metric && void like(row.id, !metric.viewer_liked)
+                }
+              >
+                <Icon
+                  name={
+                    metric?.viewer_liked
+                      ? "comment-heart-liked"
+                      : "comment-heart"
+                  }
+                />
+                {metric?.viewer_liked ? "已赞" : "点赞"} ·{" "}
+                {metric?.likes.toString() ?? "—"}
+              </Button>
+              <details className="comment-menu">
+                <summary aria-label="评论操作">
+                  <Icon name="comment-more" />
+                </summary>
+                <div className="comment-menu-items">
+                  <RowLink
+                    title="举报此评论"
+                    to={workflowURL("review", kind, row.id, { type: "report" })}
+                  />
+                  {row.owner_id === owner ? (
+                    <RowLink
+                      title="删除此评论"
+                      to={workflowURL("delete", kind, row.id)}
+                    />
+                  ) : null}
+                </div>
+              </details>
+            </div>
           </section>
-        ))}
+        );
+      })}
+      {metrics.error ? (
+        <Notice title="点赞状态暂不可用">
+          <Button onClick={() => void reload(path)}>重新读取</Button>
+        </Notice>
+      ) : null}
+      {error ? <Notice title={error} error /> : null}
+    </>
+  );
+}
+function Comments({
+  kind = "entry_comments",
+  entry,
+  reply,
+  onReply,
+}: {
+  entry: bigint;
+  kind?: "entry_comments" | "pet_comments";
+  reply: bigint;
+  onReply: (id: bigint) => void;
+}) {
+  const page = usePages(kind, { reference_id: entry });
+  return (
+    <section className="stack" aria-label="评论">
+      <h3>{kind === "pet_comments" ? "领养交流" : "评论"}</h3>
+      <QueryState
+        loading={page.loading}
+        error={page.error}
+        onRetry={page.retry}
+        keepContent={!!page.rows.length && !page.denied}
+      >
+        {Array.from(
+          { length: Math.ceil(page.rows.length / 50) },
+          (_, index) => (
+            <CommentBatch
+              key={index}
+              kind={kind}
+              rows={page.rows.slice(index * 50, index * 50 + 50)}
+              onReply={onReply}
+            />
+          ),
+        )}
         <PageEnd page={page} />
       </QueryState>
       {reply ? (
@@ -661,7 +777,7 @@ function Comments({
           </Button>
         </Notice>
       ) : null}
-    </Card>
+    </section>
   );
 }
 export function Member({ id }: { id: bigint }) {

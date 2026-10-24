@@ -53,7 +53,7 @@ data class MobileState(
     val myPets: PageState<PetBody> = PageState(), val applications: PageState<AdoptionBody> = PageState(),
     val cases: PageState<CaseBody> = PageState(), val conversations: PageState<ConversationBody> = PageState(),
     val groups: PageState<GroupBody> = PageState(), val messages: PageState<MessageBody> = PageState(),
-    val comments: PageState<CommentBody> = PageState(), val notifications: PageState<NotificationBody> = PageState(),
+    val comments: PageState<CommentBody> = PageState(), val commentMetrics: Map<Long,CommentMetrics> = emptyMap(), val notifications: PageState<NotificationBody> = PageState(),
     val petChecks: List<VerificationSummary> = emptyList(), val pet: MobileRecord<PetBody>? = null, val entry: MobileRecord<EntryBody>? = null,
     val application: MobileRecord<AdoptionBody>? = null, val case: MobileRecord<CaseBody>? = null,
     val conversation: MobileRecord<ConversationBody>? = null, val group: MobileRecord<GroupBody>? = null, val profile: MobileProfile? = null,
@@ -77,12 +77,9 @@ data class MobileState(
 
 /** One portable state owner. Rotation, tab layout and iPad resizing never create a second business store. */
 class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, private val localDrafts: LocalComposeDrafts? = null,
-    private val localWorkspaces: LocalWorkspaceDrafts? = null, private val localReplies: LocalWorkspaceDrafts? = null) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val localWorkspaces: LocalWorkspaceDrafts? = null, private val localReplies: LocalWorkspaceDrafts? = null) :
+    MviStore<MobileState, MobileStoreIntent, MobileStoreEffect>(MobileState(replyDraftReady = localReplies == null)) {
     val features = MobileFeatureStore(api, scope, localWorkspaces)
-    private val _state = MutableStateFlow(MobileState(replyDraftReady = localReplies == null))
-    val state = _state.asStateFlow()
-    private val jobs = mutableMapOf<String, Job>()
     private var accountEpoch = 0L
     private var detailRevision = 0L
     private val history = mutableListOf<MobileDestination>()
@@ -107,6 +104,19 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     private var replyRevision = 0L
     private var replyReady = localReplies == null
     private var pendingGuestReply: Pair<MobileDestination,String>? = null
+
+    override fun accept(intent: MobileStoreIntent) {
+        when (intent) {
+            is MobileStoreIntent.SelectTab -> select(intent.tab)
+            is MobileStoreIntent.OpenDestination -> open(intent.destination)
+            MobileStoreIntent.Back -> back()
+            is MobileStoreIntent.RefreshHome -> refreshHome(intent.more)
+            is MobileStoreIntent.ReloadDetail -> reloadDetail(intent.more)
+            MobileStoreIntent.ShowLogin -> showLogin()
+            MobileStoreIntent.CancelLogin -> cancelLogin()
+            MobileStoreIntent.ClearNotice -> clearNotice()
+        }
+    }
 
     init {
         if (api.user.value == null) restoreReplyDrafts()
@@ -372,7 +382,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         if (sending || _state.value.busy) return false
         val destination = _state.value.destination
         if (destination in uncertainReplies) { pickerFailed("原消息结果待核对，请先查询原编号，当前内容不能重复发送"); return false }
-        val path = when (destination) { is MobileDestination.Chat -> "${if (destination.group) "groups" else "conversations"}/${destination.id}/messages"; is MobileDestination.Entry -> "entries/${destination.id}/comments"; else -> return false }
+        val path = when (destination) { is MobileDestination.Chat -> "${if (destination.group) "groups" else "conversations"}/${destination.id}/messages"; is MobileDestination.Entry -> "entries/${destination.id}/comments"; is MobileDestination.Pet -> "pets/${destination.id}/comments"; else -> return false }
         if (api.recoverableCommands().any { it.command == path && it.phase in listOf("sent", "result_unknown") }) {
             pickerFailed("原消息结果待核对，输入已保留，请先到待核对操作查看原请求"); return false
         }
@@ -570,7 +580,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             try {
                 val session = login()
                 if (_state.value.user?.id != session.user.id) accountChanged(session.user)
-                if (guestReply.isNotEmpty() && originalDestination == _state.value.destination && originalDestination is MobileDestination.Entry) {
+                if (guestReply.isNotEmpty() && originalDestination == _state.value.destination && (originalDestination is MobileDestination.Entry || originalDestination is MobileDestination.Pet)) {
                     if (replyReady) _state.update { it.copy(guestReplySuggestion = guestReply) }
                     else pendingGuestReply = originalDestination to guestReply
                 }
@@ -697,7 +707,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 task("detail") {
                     try {
                         when (destination) {
-                            is MobileDestination.Pet -> { val record = api.pet(destination.id); val checks = api.petVerifications(destination.id); if (current()) _state.update { it.copy(pet = record, petChecks = checks) } }
+                            is MobileDestination.Pet -> { val record = api.pet(destination.id); val checks = api.petVerifications(destination.id); if (current()) { _state.update { it.copy(pet = record, petChecks = checks) };loadComments() } }
                             is MobileDestination.Entry -> {
                                 val record = api.entry(destination.id)
                                 val metrics = api.metrics(listOf(destination.id))
@@ -730,8 +740,29 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         loadPage("notifications",more,{ it.notifications },{ s,p -> s.copy(notifications = p) },{ api.notifications(it) })
     }
     fun loadComments(more: Boolean = false) {
-        val id = (_state.value.destination as? MobileDestination.Entry)?.id ?: return
-        loadPage("comments", more, { it.comments }, { s, p -> s.copy(comments = p) }, { api.comments(id, it) })
+        val destination=_state.value.destination
+        val id=when(destination) {is MobileDestination.Entry -> destination.id;is MobileDestination.Pet -> destination.id;else -> return}
+        val pet=destination is MobileDestination.Pet
+        val epoch=accountEpoch
+        loadPage("comments", more, { it.comments }, { s, p -> s.copy(comments = p) }, { cursor ->
+            val page=api.discussionComments(id,pet,cursor)
+            try {
+                val metrics=api.commentMetrics(if(pet) "pet_comments" else "entry_comments",page.items.map {it.id})
+                if(epoch==accountEpoch && destination==_state.value.destination) _state.update {it.copy(commentMetrics = it.commentMetrics+metrics.associateBy(CommentMetrics::commentId))}
+            } catch(e: CancellationException) {throw e} catch(_: Exception) { /* 评论正文仍可阅读，计数未返回不虚构点赞状态。 */ }
+            page
+        })
+    }
+    fun toggleCommentLike(id: Long) {
+        val s=_state.value
+        if(s.busy || !requireInteractionContract()) return
+        val kind=when(s.destination) {is MobileDestination.Entry -> "entry_comments";is MobileDestination.Pet -> "pet_comments";else -> return}
+        val metric=s.commentMetrics[id] ?: return
+        command {
+            api.reactComment(kind,id,!metric.viewerLiked)
+            val metrics=api.commentMetrics(kind,listOf(id))
+            if(_state.value.destination==s.destination) _state.update {it.copy(commentMetrics = it.commentMetrics+metrics.associateBy(CommentMetrics::commentId))}
+        }
     }
     fun loadMessages(more: Boolean = false, fromBeginning: Boolean = false) {
         val chat = _state.value.destination as? MobileDestination.Chat ?: return
@@ -844,6 +875,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 sendAttempted = true
                 when (val destination = s.destination) {
                     is MobileDestination.Entry -> { api.richComment(destination.id, MessageBody(s.reply.trim(),s.replySticker), key,s.replyTo); loadComments() }
+                    is MobileDestination.Pet -> {api.richPetComment(destination.id,MessageBody(s.reply.trim(),s.replySticker),key,s.replyTo);loadComments()}
                     is MobileDestination.Chat -> { api.richMessage(destination.id, destination.group, MessageBody(s.reply.trim(),s.replySticker),s.replyPhotos.mapNotNull { it.mediaId },key); loadMessages() }
                     else -> return@command
                 }
@@ -1006,6 +1038,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 val content = MessageBody(replyDrafts[originalReply].orEmpty().trim(),rich.second)
                 when (originalReply) {
                     is MobileDestination.Entry -> api.richComment(originalReply.id,content,key,rich.first)
+                    is MobileDestination.Pet -> api.richPetComment(originalReply.id,content,key,rich.first)
                     is MobileDestination.Chat -> api.richMessage(originalReply.id,originalReply.group,content,replyPhotos[originalReply].orEmpty().mapNotNull { it.mediaId },key)
                     else -> error("原消息草稿不可读")
                 }
@@ -1147,19 +1180,20 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     }
     private fun replyPath(destination: MobileDestination): String = when(destination) {
         is MobileDestination.Entry -> "entries/${destination.id}/comments"
+        is MobileDestination.Pet -> "pets/${destination.id}/comments"
         is MobileDestination.Chat -> "${if(destination.group) "groups" else "conversations"}/${destination.id}/messages"
         else -> error("不是消息或评论入口")
     }
     private fun replyRoute(key: String): MobileDestination {
         val parts = key.split(':'); require(parts.size == 2)
         val id = parts[1].toLong(); require(id > 0)
-        return when(parts[0]) { "entry" -> MobileDestination.Entry(id); "chat" -> MobileDestination.Chat(id); "group" -> MobileDestination.Chat(id,true); else -> error("未知消息草稿") }
+        return when(parts[0]) { "pet" -> MobileDestination.Pet(id); "entry" -> MobileDestination.Entry(id); "chat" -> MobileDestination.Chat(id); "group" -> MobileDestination.Chat(id,true); else -> error("未知消息草稿") }
     }
     private fun replyWorkspace(): List<WorkspaceDraft> = (replyDrafts.keys + richReplies.keys + replyPhotos.keys + uncertainReplies).mapNotNull { destination ->
         val text = replyDrafts[destination].orEmpty(); val rich = richReplies[destination] ?: (0L to "")
         val photos = replyPhotos[destination].orEmpty()
         if (text.isEmpty() && rich.first == 0L && rich.second.isEmpty() && photos.isEmpty() && destination !in uncertainReplies) return@mapNotNull null
-        val key = when(destination) { is MobileDestination.Entry -> "entry:${destination.id}"; is MobileDestination.Chat -> "${if(destination.group) "group" else "chat"}:${destination.id}"; else -> return@mapNotNull null }
+        val key = when(destination) { is MobileDestination.Pet -> "pet:${destination.id}"; is MobileDestination.Entry -> "entry:${destination.id}"; is MobileDestination.Chat -> "${if(destination.group) "group" else "chat"}:${destination.id}"; else -> return@mapNotNull null }
         WorkspaceDraft(key,mapOf("text" to text,"replyTo" to rich.first.toString(),"sticker" to rich.second),
             photos = photos.map { WorkspacePhoto(it.key,it.name,it.mime,it.mediaId) },uncertain = destination in uncertainReplies,
             requests = listOf(replyKeys.getOrPut(destination) { newKey() }))
@@ -1231,7 +1265,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         }
     }
     suspend fun media(id: Long): ByteArray = api.media(id)
-    fun close() { features.close(); scope.cancel(); if (ownsApi) api.close() }
+    override fun close() { features.close(); super.close(); if (ownsApi) api.close() }
     private fun newKey(): String = Random.nextBytes(16).joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
 }
 

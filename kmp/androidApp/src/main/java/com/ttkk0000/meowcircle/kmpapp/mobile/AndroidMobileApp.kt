@@ -109,32 +109,23 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
             }
             if (policy.contextPane && !showMaster && !showFeatureMaster && !showComposePreview) ContextPane(store, state, features, Modifier.width(224.dp).fillMaxHeight(), enabled = !navigationLocked)
             Column(Modifier.weight(1f).fillMaxHeight()) {
-                pendingLink?.let { link ->
-                    Column(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.secondaryContainer).padding(horizontal = 16.dp,vertical = 8.dp)) {
-                        Text("有待查看的${link.label}，当前输入仍保留。",style = MaterialTheme.typography.bodyMedium)
-                        Row {
-                            TextButton(openPendingLink,enabled = !navigationLocked && !state.restoring) { Text("查看链接") }
-                            TextButton(dismissPendingLink) { Text("暂不查看") }
-                        }
-                    }
-                }
+                PendingLinkBanner(pendingLink, !navigationLocked && !state.restoring, openPendingLink, dismissPendingLink)
                 Row(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (features.route != null || state.destination != MobileDestination.Home) IconButton(onClick = { if (!f.back()) store.back() }, enabled = !state.busy && !features.busy) { Icon(Icons.Outlined.ArrowBack, "返回") }
                     Column(Modifier.weight(1f).padding(vertical = 12.dp)) {
-                        Text(features.route?.page?.title ?: if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                        Text(if(features.route!=null) featureTitle(features) else if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                         if (features.route == null && state.destination == MobileDestination.Home && state.tab == MobileTab.Community) Text("meow & doggie", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     if (state.user == null) TextButton(onClick = store::showLogin, enabled = !navigationLocked) { Text("登录") }
                     IconButton(onClick = { f.open(FeatureRoute(FeaturePage.Safety)) }, enabled = !navigationLocked) { Icon(Icons.Outlined.HelpOutline,"安全与隐私求助") }
                     IconButton(onClick = { if(features.route != null) f.reload() else if(state.destination == MobileDestination.Home) store.refreshHome() else store.reloadDetail(); store.refreshInbox() }, enabled = !navigationLocked) { Icon(Icons.Outlined.Refresh,"重新载入") }
                 }
-                if (state.restoring || state.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
-                state.notice?.let { notice ->
-                    Row(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primaryContainer).padding(start = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text(notice, Modifier.weight(1f), color = MaterialTheme.colorScheme.onPrimaryContainer)
-                        IconButton(onClick = store::clearNotice) { Icon(Icons.Outlined.Close,"关闭提示") }
-                    }
-                }
+                MviStatusBanner(
+                    loading = state.restoring || state.busy,
+                    notice = state.notice,
+                    bannerNotice = true,
+                    onDismissNotice = store::clearNotice,
+                )
                 if(state.inboxError != null) Text("未读读取失败，保留上次结果",Modifier.padding(horizontal = 16.dp),style = MaterialTheme.typography.labelSmall)
                 Row(Modifier.fillMaxSize()) {
                     if (showMaster) {
@@ -261,7 +252,7 @@ private fun HomeContent(store: MobileStore, s: MobileState) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         OutlinedTextField(keyword,{ keyword = it },Modifier.fillMaxWidth(),label = { Text("搜索名字、品种或介绍") })
         OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("城市，可手动选择") })
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { listOf("" to "全部","cat" to "猫咪","dog" to "狗狗").forEach { (value,label) -> FilterChip(species == value,{ species = value },label = { Text(label) }) } }
+        ChoiceChipBar(listOf("" to "全部","cat" to "猫咪","dog" to "狗狗"),species,{ species = it })
         FeatureButton("按当前条件筛选",!s.pets.loading) { store.filterPets(keyword.trim(),city.trim(),species) }
     }
 }
@@ -276,9 +267,10 @@ private fun Feed(store: MobileStore, s: MobileState) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 var query by rememberSessionUiState("feed.query") { mutableStateOf(s.feedKeyword) }
                 OutlinedTextField(query,{ query = it },Modifier.fillMaxWidth(),label = { Text("搜索宠友日常与互助") },trailingIcon = { IconButton({ store.filterFeed(s.feedSpace,query) }) { Icon(Icons.Outlined.Search,"搜索") } },singleLine = true)
-                Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) { listOf("community" to "推荐","following" to "关注","circle" to "宠友圈","local" to "同城").forEach { (id,label) -> FilterChip(s.feedSpace == id,{ store.filterFeed(id) },label = { Text(label) },modifier = Modifier.padding(end = 8.dp)) } }
+                ChoiceChipBar(listOf("community" to "推荐","following" to "关注","circle" to "宠友圈","local" to "同城"),s.feedSpace,{ store.filterFeed(it) },scrollable = true)
                 if(s.feedSpace == "local") { var city by rememberSessionUiState("feed.city") { mutableStateOf(s.feedCity) }; OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("手动选择城市，不含精确定位") },trailingIcon = { TextButton({ store.filterFeed("local",city = city) }) { Text("查看") } }) }
                 NavigationRow("晒晒今天的小可爱…","照片、日记与宠友分享") { store.select(MobileTab.Publish) }
+                NavigationRow("养宠指南","迎接第一只猫，先做好准备") {store.features.open(FeatureRoute(FeaturePage.Reading,kind="care-first-cat"))}
             }
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
@@ -295,7 +287,7 @@ private fun Feed(store: MobileStore, s: MobileState) {
 }
 
 @Composable
-private fun PetCard(store: MobileStore, s: MobileState, row: MobileRecord<PetBody>, open: () -> Unit) {
+internal fun PetCard(store: MobileStore, s: MobileState, row: MobileRecord<PetBody>, open: () -> Unit) {
     Card(onClick = open, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), shape = RoundedCornerShape(16.dp)) {
         Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Card(shape = RoundedCornerShape(16.dp)) { MobilePhoto(store, row.mediaIds.firstOrNull(), s.user?.id, row.data.name, Modifier.size(96.dp, 112.dp)) }
@@ -345,7 +337,7 @@ private fun DetailContent(store: MobileStore, s: MobileState) {
         }
         MobileDestination.Notifications -> if (s.user == null) SignInPrompt(store) else Records(s.notifications, "通知", { store.reloadDetail() }, { store.reloadDetail(true) }, emptyText = "暂无通知", header = {
             FeatureButton("全部消息与通知标为已读",!s.busy && !s.inboxReadAll.preparing && !s.inboxReadAll.submitting) { store.prepareInboxReadAll() }
-            FeatureButton("通知与附近提醒设置") { store.features.open(FeatureRoute(FeaturePage.Settings)) }
+            FeatureButton("设置") { store.features.open(FeatureRoute(FeaturePage.SettingsHome)) }
             Text("进入本页不会清空未读；待处理事项与已读分开。")
             if(s.notifications.items.any { !it.data.read }) FeatureButton("将当前载入通知标为已读",!s.busy) {
                 val snapshot = s.notifications.items.filter { !it.data.read }
@@ -367,7 +359,10 @@ private fun DetailContent(store: MobileStore, s: MobileState) {
 @Composable
 private fun PetDetail(store: MobileStore, s: MobileState) {
     val record = s.pet ?: return
-    ScrollContent {
+    val discussion=record.data.adoptionAvailable || record.data.adoptionOpened
+    Column(Modifier.fillMaxSize()) {
+    LazyColumn(Modifier.weight(1f).fillMaxWidth(),contentPadding=PaddingValues(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+    item { Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
         Photos(store, record.mediaIds, s.user?.id, record.data.name)
         SectionTitle(record.data.name)
         Text(listOf(speciesLabel(record.data.species), record.data.breed, record.data.sex).filter { it.isNotBlank() }.joinToString(" · "))
@@ -390,8 +385,13 @@ private fun PetDetail(store: MobileStore, s: MobileState) {
             } else Button(onClick = store::beginApplication, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("申请领养") }
             OutlinedButton(onClick = store::contactPetOwner, enabled = !s.busy, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("联系发布人") }
         }
+    } }
+    if(discussion) commentItems(store,s,"pet_comments")
+    }
+    if(discussion) ReplyEditor(store,s,"聊聊这只宠物的照护情况…")
     }
 }
+
 
 @Composable
 private fun EntryDetail(store: MobileStore, s: MobileState) {
@@ -415,21 +415,40 @@ private fun EntryDetail(store: MobileStore, s: MobileState) {
                 Row(Modifier.weight(1f).heightIn(min = 48.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(8.dp)) { DesignIcon("message-circle","评论"); Text(metrics?.comments?.toString() ?: "—") }
             } }
         }
-        item { SectionTitle("评论"); if(s.comments.items.isNotEmpty()) Text("评论中的“回复此评论”会绑定原评论，不自动发送。",style = MaterialTheme.typography.labelSmall) }
-        items(s.comments.items, key = { it.id }) { row ->
-            Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
-                Column(Modifier.fillMaxWidth().padding(MobileUi.pagePadding),verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
-                    if(row.data.replyTo > 0) Text("回复评论 #${row.data.replyTo}",style = MaterialTheme.typography.labelSmall)
-                    Text(row.data.text); if(row.data.stickerId.isNotBlank()) StickerPhoto(row.data.stickerId,row.data.stickerId)
-                    TextButton({ store.replyTo(row.id) }) { Text("回复此评论") }
-                    if(row.ownerId == s.user?.id) TextButton({ store.features.confirm("删除评论",row.data.text) { store.api.removeResource("entry_comments",row.id,row.version); store.loadComments(); store.reloadDetail() } }) { Text("删除") }
-                }
-            }
-        }
-        item { PageFooter(s.comments, { store.loadComments() }, { store.loadComments(true) }, "还没有评论") }
+        commentItems(store,s,"entry_comments")
     }
     ReplyEditor(store, s, "说点什么…")
     }
+}
+
+private fun androidx.compose.foundation.lazy.LazyListScope.commentItems(store: MobileStore,s: MobileState,kind: String) {
+    item { SectionTitle(if(kind=="pet_comments") "领养交流" else "评论") }
+    if(kind=="pet_comments") item {TaskNotice("评论不能替代医疗资料","想了解具体情况可站内联系，不公开证件和家庭地址。")}
+    items(s.comments.items,key={it.id}) {row ->
+        MemberSection(store,row.ownerId,compact=true) {
+            if(row.data.replyTo>0) Text("回复评论 #${row.data.replyTo}",style=MaterialTheme.typography.bodySmall)
+            Text(row.data.text)
+            if(row.data.stickerId.isNotBlank()) StickerPhoto(row.data.stickerId,row.data.stickerId)
+            var menu by rememberSessionUiState("comment.menu.${row.id}") {false}
+            val metric=s.commentMetrics[row.id]
+            Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
+                TextButton({store.replyTo(row.id)},modifier=Modifier.weight(1f)) {Text("回复")}
+                TextButton({store.toggleCommentLike(row.id)},enabled=metric!=null && !s.busy,
+                    colors=ButtonDefaults.textButtonColors(contentColor=if(metric?.viewerLiked==true) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)) {
+                    DesignIcon(if(metric?.viewerLiked==true) "comment-heart-liked" else "comment-heart",if(metric?.viewerLiked==true) "取消喜欢" else "喜欢")
+                    Text("${if(metric?.viewerLiked==true) "已赞" else "点赞"} ${metric?.likes ?: "—"}")
+                }
+                Box {
+                    IconButton({menu=true},enabled=!s.busy) {DesignIcon("comment-more","评论操作")}
+                    DropdownMenu(menu,{menu=false}) {
+                        DropdownMenuItem(text={Text("举报此评论")},onClick={menu=false;store.features.open(FeatureRoute(FeaturePage.Review,kind=kind,peer=row.id));store.features.edit("type","report")})
+                        if(row.ownerId==s.user?.id) DropdownMenuItem(text={Text("删除此评论")},onClick={menu=false;store.features.confirm("删除评论",row.data.text.ifBlank {"贴纸评论"}) {store.api.removeResource(kind,row.id,row.version);store.loadComments()}})
+                    }
+                }
+            }
+        }
+    }
+    item {PageFooter(s.comments,{store.loadComments()},{store.loadComments(true)},"还没有评论")}
 }
 
 @Composable
@@ -554,21 +573,16 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
         OutlinedTextField(s.composeEntry.city,store::editComposeCity,Modifier.fillMaxWidth(),label = { Text("城市（选填，不含精确定位）") },enabled = !s.busy)
         ComposeAudience(store,s)
         PhotoPickerButton(store, 9 - s.photos.size, !s.busy)
-        s.photos.forEachIndexed { index, photo ->
-            Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
-                Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
-                    Text("${index + 1}. ${photo.name}")
-                    photo.mediaId?.let { MobilePhoto(store, it, s.user?.id, photo.name, Modifier.size(112.dp)) }
-                    if (photo.uploading) LinearProgressIndicator(Modifier.fillMaxWidth())
-                    photo.error?.let { Text(it, color = MaterialTheme.colorScheme.error); TextButton(onClick = { store.retryPhoto(photo.key) }) { Text("重试此照片") } }
-                    Row {
-                        TextButton(onClick = { store.movePhoto(photo.key, -1) }, enabled = !s.busy && index > 0) { Text("前移") }
-                        TextButton(onClick = { store.movePhoto(photo.key, 1) }, enabled = !s.busy && index < s.photos.lastIndex) { Text("后移") }
-                        TextButton(onClick = { store.removePhoto(photo.key) }, enabled = !s.busy) { Text("移除") }
-                    }
-                }
-            }
-        }
+        PhotoQueueList(
+            store = store,
+            photos = s.photos,
+            ownerId = s.user?.id,
+            busy = s.busy,
+            compactPreview = true,
+            onRetry = store::retryPhoto,
+            onMove = store::movePhoto,
+            onRemove = store::removePhoto,
+        )
         if (s.draftLoading) LinearProgressIndicator(Modifier.fillMaxWidth())
         OutlinedButton(onClick = store::saveComposeDraft, enabled = !s.busy && s.draftLoaded && !s.draftLoading && s.photos.all { it.mediaId != null }, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("保存草稿") }
         TextButton(onClick = { replaceDraft = true }, enabled = !s.busy && !s.draftLoading) { Text("用云端草稿替换当前输入") }
@@ -582,6 +596,7 @@ private fun ProfileScreen(store: MobileStore, s: MobileState) {
     Records(s.myPets, s.user?.nickname.orEmpty(), { store.refreshHome() }, { store.refreshHome(true) }, emptyText = "还没有宠物档案，可从上方新增", header = {
         Text(s.user?.bio.orEmpty())
         NavigationRow("规则与权益") { store.features.open(FeatureRoute(FeaturePage.Rules)) }
+        NavigationRow("我的发布","维护介绍、图文与求助记录") {store.features.open(FeatureRoute(FeaturePage.Publications))}
         NavigationRow("编辑个人资料") { store.features.open(FeatureRoute(FeaturePage.ProfileEdit)) }
         NavigationRow("关注与求助订阅") { store.features.open(FeatureRoute(FeaturePage.Content)) }
         NavigationRow("好友与宠友圈") { store.features.open(FeatureRoute(FeaturePage.Friends)) }
@@ -589,7 +604,7 @@ private fun ProfileScreen(store: MobileStore, s: MobileState) {
         NavigationRow("预约与到访") { store.features.open(FeatureRoute(FeaturePage.Appointments)) }
         NavigationRow("有偿信息与披露") { store.features.open(FeatureRoute(FeaturePage.Offers)) }
         NavigationRow("核实、举报与申诉") { store.features.open(FeatureRoute(FeaturePage.Reviews)) }
-        NavigationRow("通知设置与附近提醒") { store.features.open(FeatureRoute(FeaturePage.Settings)) }
+        NavigationRow("设置与隐私") { store.features.open(FeatureRoute(FeaturePage.SettingsHome)) }
         NavigationRow("账号安全与手机验证") { store.features.open(FeatureRoute(FeaturePage.Security)) }
         NavigationRow("资料删除、注销与协助") { store.features.open(FeatureRoute(FeaturePage.DataRequests)) }
         NavigationRow("待核对操作与受限进度") { store.features.open(FeatureRoute(FeaturePage.Recovery)) }

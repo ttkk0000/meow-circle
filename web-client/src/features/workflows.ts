@@ -482,7 +482,15 @@ export const workflows: Record<string, Workflow> = {
     title: "删除指定记录",
     schema: "StateInput",
     path: (c) => {
-      if (!["entries", "pets", "offers", "entry_comments"].includes(c.kind))
+      if (
+        ![
+          "entries",
+          "pets",
+          "offers",
+          "entry_comments",
+          "pet_comments",
+        ].includes(c.kind)
+      )
         throw new Error("此记录不能删除");
       return `${c.kind}/${c.id}`;
     },

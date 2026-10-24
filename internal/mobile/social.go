@@ -352,30 +352,51 @@ type CommentInput struct {
 	IdempotencyKey string      `json:"idempotency_key"`
 }
 
-func (s *Service) Comment(ctx context.Context, actor, entry int64, in CommentInput) (out Record, err error) {
+func (s *Service) Comment(ctx context.Context, actor, entry int64, in CommentInput) (Record, error) {
+	return s.commentOn(ctx, actor, Entries, Comments, entry, in)
+}
+func (s *Service) PetComment(ctx context.Context, actor, pet int64, in CommentInput) (Record, error) {
+	return s.commentOn(ctx, actor, Pets, PetComments, pet, in)
+}
+
+// 动态和宠物交流共用资格、原键、父资源权限及回复归属校验，使用各自独立的评论表。
+func (s *Service) commentOn(ctx context.Context, actor int64, parentKind, commentKind Kind, entry int64, in CommentInput) (out Record, err error) {
 	if err = contentValid(in.Content); err != nil {
 		return
 	}
 	if len(in.IdempotencyKey) < 8 || len(in.IdempotencyKey) > 100 {
 		return out, Invalid("idempotency key required")
 	}
-	err = s.command(ctx, actor, "entry.comment", entry, in, Comments, &out, func(tx Tx) error {
+	command, message := "entry.comment", "动态有新评论"
+	if parentKind == Pets {
+		command, message = "pet.comment", "宠物领养交流有新评论"
+	}
+	err = s.command(ctx, actor, command, entry, in, commentKind, &out, func(tx Tx) error {
 		if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
-		p, e := tx.Get(Entries, entry)
+		p, e := tx.Get(parentKind, entry)
 		if e != nil {
 			return e
 		}
-		ok, e := s.canRead(tx, Entries, p, actor)
+		ok, e := s.canRead(tx, parentKind, p, actor)
 		if e != nil {
 			return e
 		}
-		if !ok || p.State != "published" {
+		if parentKind == Pets {
+			pet, e := Decode[Pet](p)
+			if e != nil {
+				return e
+			}
+			if !pet.AdoptionAvailable && !pet.AdoptionOpened || !HasString([]string{"cat", "dog"}, pet.Species) {
+				return ErrForbidden
+			}
+		}
+		if !ok || parentKind == Entries && p.State != "published" || parentKind == Pets && p.State != "active" {
 			return ErrForbidden
 		}
 		key := fmt.Sprintf("%d:%d:%s", actor, entry, in.IdempotencyKey)
-		old, e := tx.ByKey(Comments, key)
+		old, e := tx.ByKey(commentKind, key)
 		if e == nil {
 			body, e := Decode[Comment](old)
 			if e != nil {
@@ -391,20 +412,24 @@ func (s *Service) Comment(ctx context.Context, actor, entry int64, in CommentInp
 			return e
 		}
 		if in.ReplyTo > 0 {
-			reply, e := tx.Get(Comments, in.ReplyTo)
+			reply, e := tx.Get(commentKind, in.ReplyTo)
 			if e != nil {
 				return e
 			}
-			if reply.RefID != entry {
+			replyVisible, readError := s.canRead(tx, commentKind, reply, actor)
+			if readError != nil {
+				return readError
+			}
+			if reply.RefID != entry || !replyVisible {
 				return Invalid("reply belongs to another entry")
 			}
 		}
 		r := Record{OwnerID: actor, RefID: entry, Key: key, State: "published"}
-		if e = save(tx, Comments, &r, Comment{in.Content, in.ReplyTo}, actor, "entry.commented"); e != nil {
+		if e = save(tx, commentKind, &r, Comment{in.Content, in.ReplyTo}, actor, command+"ed"); e != nil {
 			return e
 		}
 		out = r
-		return s.notify(tx, p.OwnerID, actor, "interactions", Entries, entry, "动态有新评论")
+		return s.notify(tx, p.OwnerID, actor, "interactions", parentKind, entry, message)
 	})
 	return
 }
@@ -455,7 +480,7 @@ func (s *Service) React(ctx context.Context, actor, entry int64, liked bool) (ou
 	return
 }
 func (s *Service) Remove(ctx context.Context, actor int64, k Kind, id, version int64) error {
-	if k != Pets && k != Offers && k != Entries && k != Comments && k != Drafts {
+	if k != Pets && k != Offers && k != Entries && k != Comments && k != PetComments && k != Drafts {
 		return ErrForbidden
 	}
 	var out Record

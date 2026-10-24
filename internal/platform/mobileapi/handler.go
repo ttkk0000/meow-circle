@@ -128,7 +128,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	token := ""
 	header := r.Header.Get("Authorization")
 	refreshRequest := len(path) == 2 && path[0] == "auth" && path[1] == "refresh"
-	if header != "" && !refreshRequest {
+	publicReadingRequest := path[0] == "reading" && r.Method == http.MethodGet
+	if header != "" && !refreshRequest && !publicReadingRequest {
 		if !strings.HasPrefix(header, "Bearer ") {
 			failure(w, mobile.ErrUnauthorized)
 			return
@@ -144,7 +145,19 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	var result any
 	var e error
-	if path[0] == "auth" {
+	if path[0] == "reading" && r.Method == http.MethodGet {
+		switch {
+		case len(path) == 1:
+			result, e = loadReadingCatalog()
+		case len(path) == 2:
+			result, e = publicReading(path[1])
+		case len(path) == 3 && path[2] == "download":
+			h.downloadReading(w, r, path[1])
+			return
+		default:
+			e = mobile.ErrNotFound
+		}
+	} else if path[0] == "auth" {
 		result, e = h.authentication(r, actor, token, path[1:])
 	} else if path[0] == "ops" {
 		result, e = h.operations(r, path[1:])
@@ -244,7 +257,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		} else {
 			result, e = h.Service.PublicUser(r.Context(), actor, id)
 		}
-	} else if len(path) == 1 && path[0] == "entry-metrics" && r.Method == http.MethodGet {
+	} else if len(path) == 1 && (path[0] == "entry-metrics" || path[0] == "comment-metrics") && r.Method == http.MethodGet {
 		ids := []int64{}
 		for _, raw := range strings.Split(r.URL.Query().Get("ids"), ",") {
 			id, parse := strconv.ParseInt(raw, 10, 64)
@@ -255,7 +268,11 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			ids = append(ids, id)
 		}
 		if e == nil {
-			result, e = h.Service.Metrics(r.Context(), actor, ids)
+			if path[0] == "comment-metrics" {
+				result, e = h.Service.CommentMetrics(r.Context(), actor, mobile.Kind(r.URL.Query().Get("kind")), ids)
+			} else {
+				result, e = h.Service.Metrics(r.Context(), actor, ids)
+			}
 		}
 	} else if path[0] == "media" && len(path) == 1 && r.Method == http.MethodPost {
 		result, e = h.upload(w, r, actor)
@@ -403,10 +420,19 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 	action := path[2]
 	switch k {
 	case mobile.Pets:
+		if action == "comments" {
+			return invoke(r, func(in mobile.CommentInput) (mobile.Record, error) { return h.Service.PetComment(ctx, actor, id, in) })
+		}
 		if action == "introduction" {
 			return invoke(r, func(in mobile.IntroductionInput) (mobile.Record, error) {
 				return h.Service.Introduction(ctx, actor, id, in)
 			})
+		}
+	case mobile.Comments, mobile.PetComments:
+		if action == "reaction" {
+			return invoke(r, func(in struct {
+				Liked bool `json:"liked"`
+			}) (mobile.Record, error) { return h.Service.ReactComment(ctx, actor, k, id, in.Liked) })
 		}
 	case mobile.Entries:
 		if action == "comments" {

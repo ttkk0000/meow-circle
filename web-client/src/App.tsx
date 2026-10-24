@@ -1,3 +1,5 @@
+import { Publications } from "./features/Publications";
+import { ExpressionSettings } from "./features/chat";
 import { Component, useEffect, useState, type ReactNode } from "react";
 import {
   api,
@@ -25,7 +27,8 @@ import {
   TaskPage,
 } from "./components/ui";
 import { AuthDialog } from "./features/AuthDialog";
-import { Mine, Rules, Security, type Profile } from "./features/Account";
+import { Mine, Security, type Profile } from "./features/Account";
+import { Rules, ReadingPage, SettingsHome } from "./features/ReadingPages";
 import { Feed, PageEnd, Records, titles } from "./features/Records";
 import { ResourcePage, Member } from "./features/ResourcePage";
 import { Chat } from "./features/chat";
@@ -51,6 +54,7 @@ export const moduleLinks: Record<string, Array<[string, string]>> = {
     ["/?space=local", "同城"],
     ["/?space=circle", "宠友圈"],
     ["/?space=diary", "宠物日记"],
+    ["/guide", "养宠指南"],
     ["/friendships", "好友与邀请"],
   ],
   care: [
@@ -78,7 +82,7 @@ export const moduleLinks: Record<string, Array<[string, string]>> = {
     ["/invitations", "消息请求与邀请"],
     ["/groups", "我的群聊"],
     ["/group-directory", "发现宠友群"],
-    ["/settings", "提醒设置"],
+    ["/settings", "设置与隐私"],
   ],
   account: [
     ["/mine", "我的资料"],
@@ -105,7 +109,8 @@ function moduleFor(path: string, params: URLSearchParams) {
   if (/^\/(cases|claims|leads|nearby)/.test(path)) return "cases";
   if (/^\/(pets|adoptions|appointments|offers|care-updates)/.test(path))
     return "care";
-  if (path === "/" || path.startsWith("/entries")) return "community";
+  if (path === "/" || path === "/guide" || path.startsWith("/entries"))
+    return "community";
   return "account";
 }
 const moduleTitles: Record<string, string> = {
@@ -358,6 +363,10 @@ const anonymous = new Set([
   "/map",
   "/offers",
   "/rules",
+  "/reading",
+  "/guide",
+  "/privacy",
+  "/settings",
   "/publish",
   "/mine",
   "/recovery",
@@ -399,7 +408,22 @@ function RouteContent({
     );
   if (path === "/") return <Feed params={params} />;
   if (path === "/mine") return <Mine login={login} />;
-  if (path === "/rules") return <Rules />;
+  if (path === "/rules") return <Rules params={params} />;
+  if (path === "/reading" || path === "/guide" || path === "/privacy")
+    return (
+      <ReadingPage
+        login={login}
+        documentType={
+          path === "/privacy" ? "privacy" : (params.get("type") ?? "")
+        }
+        documentKey={
+          path === "/guide" ? "care-first-cat" : (params.get("doc") ?? "")
+        }
+      />
+    );
+  if (path === "/publications") return <Publications params={params} />;
+  if (path === "/settings") return <SettingsHome />;
+  if (path === "/expressions") return <ExpressionSettings />;
   if (path === "/map") return <MapPage />;
   if (path === "/content") return <ContentPage />;
   if (path === "/publish") return <Publish />;
@@ -408,7 +432,7 @@ function RouteContent({
   if (path === "/recovery") return <Recovery />;
   if (path === "/security") return <Security />;
   if (path === "/profile-edit") return <ProfileEditor />;
-  if (path === "/settings" || path === "/nearby")
+  if (path === "/notification-settings" || path === "/nearby")
     return <SettingsEditor nearby={path === "/nearby"} />;
   if (path === "/edit") return <EditorRoute params={params} />;
   if (pieces.length === 1 && lists.has(kind))

@@ -629,6 +629,23 @@
       }
     }
   },
+  "CommentMetrics": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "comment_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "likes": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "viewer_liked": {
+        "type": "boolean"
+      }
+    }
+  },
   "OTPInput": {
     "type": "object",
     "additionalProperties": false,
@@ -1014,6 +1031,84 @@
       "expires_at": {
         "type": "string",
         "format": "date-time"
+      }
+    }
+  },
+  "ReadingCatalog": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "operator_name": {
+        "type": "string"
+      },
+      "operator_address": {
+        "type": "string"
+      },
+      "operator_contact": {
+        "type": "string"
+      },
+      "documents": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ReadingDocument"
+        }
+      }
+    }
+  },
+  "ReadingDocument": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "key": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "heading": {
+        "type": "string"
+      },
+      "revision": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "effective_from": {
+        "type": "string"
+      },
+      "effective_until": {
+        "type": "string"
+      },
+      "notice": {
+        "type": "string"
+      },
+      "facts": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ReadingFact"
+        }
+      },
+      "paragraphs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "changes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "cover_asset": {
+        "type": "string"
+      },
+      "sha256": {
+        "type": "string"
       }
     }
   },
@@ -2549,6 +2644,18 @@
       },
       "confirmed": {
         "type": "boolean"
+      }
+    }
+  },
+  "ReadingFact": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "label": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
       }
     }
   },

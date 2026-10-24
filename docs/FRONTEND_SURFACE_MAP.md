@@ -1,9 +1,20 @@
 # Frontend Surface Map
 
-Last updated: 2026-06-06
+Last updated: 2026-10-24
 
-This document maps all user-visible frontend surfaces and how they relate to the
-current M&D UI direction.
+This document maps all user-visible frontend surfaces across the **2026-10-24 v2 multi-platform clients** (Figma V2 Default Light Contract, 740 cross-platform states) and the legacy Stitch V2 static/v1 surfaces.
+
+## 0. Current v2 Consumer & Public Surfaces (2026-10-24 Baseline)
+
+| Surface | Path / Entry | Tech Stack & Auth | Current Scope |
+| --- | --- | --- | --- |
+| **Android Phone & Tablet (v2)** | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/` (`AndroidMobileApp.kt`, `AndroidReadingContent.kt`, `AndroidPublicationsContent.kt`, etc.) | Jetpack Compose + `kmp/shared/.../client` (`MobileStore.kt`), Opaque Bearer pair | 5 primary tabs + 30 extended task routes + independent reading/publications pages + adaptive tablet master-detail/two-column forms (API 26–37). |
+| **Web Consumer App (v2)** | `web-client/` (`src/App.tsx`, `src/ReadingPages.tsx`, `src/Publications.tsx`) served at `/app/` by `browser_static.go` | React + TypeScript + Vite, Browser `HttpOnly Cookie + X-MND-CSRF`, lossless string IDs | Full v2 consumer web parity across 740 tracked states, including community, adoption, lost/found, appointments, offers, reading/publications, and account rights. |
+| **Guest Safety & Public Share Web (v2)** | `web/safety.html` (`web/safety.js`, `web/safety.css`) & `internal/platform/mobileapi/public_web.go` | Vanilla HTML/JS + Go SSR share metadata | Unauthenticated emergency pet safety / privacy / minor protection reporting (`/api/v2/safety-reports`) and HTTPS deep-link handoff cards. |
+| **iPhone & iPad (v2)** | `kmp/iosUi/` + `kmp/iosApp/ComposeApp/` | Compose Multiplatform for iOS + thin SwiftUI host (`MndMobileUI`) | First-batch v2 shared store wiring and adaptive shell in place; full 30-route expansion scheduled after Android & Web runtime sign-off. |
+| **Desktop App** | `kmp/desktopApp/` | Compose Desktop + `kmp/shared` | Desktop workspace shell; full v2 store migration scheduled after mobile/web sign-off. |
+
+> For detailed v2 UI components, Figma 740-state trace, and acceptance criteria, see [Client README](client/README.md), [2026-10-24 Figma Android & Web Handoff](client/FIGMA_ANDROID_WEB_2026_10_24.md), and [Figma Product Alignment Check](design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md). The sections below document the earlier Stitch V2 static and `/api/v1` surfaces.
 
 ## 1. Surface Families
 

@@ -95,9 +95,9 @@ def operation(path, method, summary, body=None, public=False, staff=False, respo
     return item
 
 
-readable = "pets offers entries entry_comments entry_reactions friendships cases claims leads subscriptions appointments adoptions care_updates groups group_messages conversations messages invitations notifications preferences expressions drafts media reviews visit_feedback".split()
+readable = "pets offers entries entry_comments pet_comments entry_reactions friendships cases claims leads subscriptions appointments adoptions care_updates groups group_messages conversations messages invitations notifications preferences expressions drafts media reviews visit_feedback".split()
 for kind in readable:
-    public = kind in ("pets", "offers", "entries", "cases", "entry_comments", "entry_reactions")
+    public = kind in ("pets", "offers", "entries", "cases", "entry_comments", "pet_comments", "entry_reactions")
     op = operation("/" + kind, "get", "List visible " + kind, public=public)
     op["parameters"] = [{"name": name, "in": "query", "schema": {"type": typ}}
                         for name, typ in (("cursor", "integer"), ("limit", "integer"), ("reference_id", "integer"), ("owner_id", "integer"), ("space", "string"), ("state", "string"), ("q", "string"), ("city", "string"), ("species", "string"), ("latitude", "number"), ("longitude", "number"), ("radius_km", "number"))]
@@ -105,7 +105,7 @@ for kind in readable:
 for kind, name in (("pets", "PetInput"), ("entries", "EntryInput"), ("cases", "CaseInput"), ("offers", "OfferInput")):
     operation("/" + kind, "post", "Create " + kind, name)
     operation("/" + kind + "/{id}", "patch", "Replace owned aggregate using current version", name)
-for kind in ("pets", "offers", "entries", "entry_comments", "drafts"):
+for kind in ("pets", "offers", "entries", "entry_comments", "pet_comments", "drafts"):
     operation("/" + kind + "/{id}", "delete", "Remove owned aggregate", "StateInput")
 for kind, name in (("groups", "GroupInput"), ("conversations", "ConversationInput"), ("invitations", "InviteInput"), ("adoptions", "AdoptionInput"), ("appointments", "AppointmentInput"), ("reviews", "ReviewInput"), ("visit_feedback", "Feedback")):
     operation("/" + kind, "post", "Create " + kind, name)
@@ -122,12 +122,18 @@ for kind, actions, name in (
     ("notifications", "read", "StateInput")):
     for action in actions.split():
         operation("/" + kind + "/{id}/" + action, "post", kind + " " + action, name)
-for path, name in (("pets/{id}/introduction", "IntroductionInput"), ("entries/{id}/comments", "CommentInput"), ("cases/{id}/claims", "ClaimInput"), ("cases/{id}/close", "StateInput"), ("adoptions/{id}/care_updates", "CareInput")):
+for path, name in (("pets/{id}/introduction", "IntroductionInput"), ("entries/{id}/comments", "CommentInput"), ("pets/{id}/comments", "CommentInput"), ("cases/{id}/claims", "ClaimInput"), ("cases/{id}/close", "StateInput"), ("adoptions/{id}/care_updates", "CareInput")):
     operation("/" + path, "post", path, name)
 for kind in ("groups", "conversations"):
     operation("/" + kind + "/{id}/messages", "post", "Send rich message; retry using the same idempotency key", "MessageInput")
     operation("/" + kind + "/{id}/read", "post", "Explicit read receipt", {"type": "object", "properties": {"through_message_id": {"type": "integer"}}, "required": ["through_message_id"], "additionalProperties": False})
 operation("/entries/{id}/reaction", "post", "Set desired reaction state", {"type": "object", "properties": {"liked": {"type": "boolean"}}, "required": ["liked"], "additionalProperties": False})
+for kind in ("entry_comments","pet_comments"):
+    operation("/"+kind+"/{id}/reaction","post","Set desired reaction on a visible comment",{"type":"object","properties":{"liked":{"type":"boolean"}},"required":["liked"],"additionalProperties":False})
+comment_metrics=operation("/comment-metrics","get","ACL-aware counts for up to 50 visible comments",public=True)
+comment_metrics["parameters"]=[{"name":"kind","in":"query","required":True,"schema":{"type":"string","enum":["entry_comments","pet_comments"]}},{"name":"ids","in":"query","required":True,"schema":{"type":"string"}}]
+comment_metrics["responses"]["200"]["content"]["application/json"]["schema"]={"allOf":[ref("Envelope"),{"type":"object","properties":{"data":{"type":"array","items":dto("CommentMetrics")}}}]}
+
 operation("/cases/{id}/leads", "post", "Submit a private lead", {"type": "object", "properties": {"text": {"type": "string"}, "media_ids": {"type": "array", "items": {"type": "integer"}}}, "additionalProperties": False})
 operation("/reviews/{id}/supplement", "post", "Supplement a needs_info review using the original client request ID", "StateInput")
 for kind in ("pets", "offers"):
@@ -182,6 +188,11 @@ typed("/group-directory/{id}/request", "post", "Apply to the current group owner
 paths["/api/v2/pets"]["get"].setdefault("parameters", []).append({"name":"adoption","in":"query","schema":{"type":"boolean"},"description":"Only open adoption introductions; original ACL still applies"})
 
 typed("/inbox/read-all/snapshot", "post", "Prepare an immutable 10-minute read-all snapshot without acknowledging tasks", "InboxSnapshotInput", "InboxReadSnapshot")
+typed("/reading", "get", "Public read-only documents; bundled drafts never imply published terms", result="ReadingCatalog", public=True)
+typed("/reading/{key}", "get", "Read one stable document key without changing consent", result="ReadingDocument", public=True)
+reading_download=typed("/reading/{key}/download", "get", "Download the same complete plain text and SHA256 as the document", public=True)
+for item in (paths["/api/v2/reading/{key}"]["get"],reading_download): item["parameters"][0]["schema"]={"type":"string","pattern":"^[a-z][a-z0-9-]{0,63}$"}
+reading_download["responses"]["200"]={"description":"Complete plain text", "content":{"text/plain":{"schema":{"type":"string"}}}}
 typed("/inbox/read-all", "post", "Acknowledge only the prepared snapshot; newer messages remain unread", "InboxReadAllInput", "InboxReadAllResult")
 
 typed("/eligibility", "get", "Server qualification; unknown evidence denies outward actions", result="Eligibility")
@@ -254,8 +265,9 @@ for path in ("privacy-expiry","challenge-expiry","token-expiry"):
 
 # Existing versioned/desired-state DTOs retain compatibility. This optional
 # header opts into a durable receipt; replay must use the original body/key.
-receipt_routes = [("/"+kind+"/{id}", "delete") for kind in ("pets","offers","entries","entry_comments","drafts")]
+receipt_routes = [("/"+kind+"/{id}", "delete") for kind in ("pets","offers","entries","entry_comments","pet_comments","drafts")]
 receipt_routes += [("/"+kind,"put") for kind in ("subscriptions","preferences","expressions","drafts")]
+receipt_routes += [("/entry_comments/{id}/reaction","post"),("/pet_comments/{id}/reaction","post")]
 receipt_routes += [("/entries/{id}/reaction","post"),("/cases/{id}/leads","post"),("/visit_feedback","post")]
 receipt_routes += [("/inbox/read-all/snapshot","post"),("/inbox/read-all","post")]
 receipt_routes += [("/"+kind+"/{id}/"+action,"post") for kind,actions in (

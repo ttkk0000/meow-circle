@@ -10,6 +10,8 @@ export interface DataSelection {
 }
 const kinds: Array<[string, string]> = [
   ["entries", "我的日常"],
+  ["entry_comments", "我的动态评论"],
+  ["pet_comments", "我的领养交流评论"],
   ["pets", "宠物档案"],
   ["cases", "寻宠求助"],
   ["offers", "有偿信息"],

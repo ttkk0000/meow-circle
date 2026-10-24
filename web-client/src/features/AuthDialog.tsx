@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api, explain } from "../core/api";
 import { Button, Check, Choices, Field, Modal, Notice } from "../components/ui";
+import { navigate } from "../core/router";
 import { integer } from "../core/wire";
 
 export interface Capabilities {
@@ -282,6 +283,16 @@ export function AuthDialog({ onClose }: { onClose: () => void }) {
         </Check>
       ) : null}
       <LegalLinks />
+      <Button
+        kind="quiet"
+        disabled={busy}
+        onClick={() => {
+          onClose();
+          navigate("/rules");
+        }}
+      >
+        阅读服务说明与规则草案
+      </Button>
       <Notice title="微信／QQ 登录暂不可用">
         Web 尚未接入真实供应商回调。可使用服务已启用的账号登录方式。
       </Notice>

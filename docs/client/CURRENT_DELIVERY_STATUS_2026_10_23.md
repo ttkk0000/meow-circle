@@ -1,6 +1,6 @@
 # M&D 当前功能交付账本
 
-2026-10-24续作覆盖：新增独立关注作者／求助进展、群目录／当前群主审核申请、公开昵称／头像接线、其他宠物档案、城市筛选、地图／大图、Android公共任务页面以及完整Web工程源码。已保留本页原批次的全部已读、领养周期、人员／区域选择和旋转状态；最新事实、静态数量与证据见[2026-10-24说明](FIGMA_ANDROID_WEB_2026_10_24.md)。下表“关注合同未完整”“真实公开头像合同待补”“Web未实施”为此前状态；本批源码不提升构建、联调、逐屏视觉、设备或真实运营验收层次。内容收藏未作为新业务擅自加入，Figma已有的贴纸收藏／最近继续按真实目录和偏好实现。
+2026-10-24续作覆盖：新增独立关注作者／求助进展（`content_subscriptions.go` + `content_updates` 作业）、群目录／当前群主审核申请与群主转让（`group_directory.go`）、公开昵称／头像接线、其他宠物档案及宠物评论与表情反应（`009_pet_discussions.sql` / `comment_reactions.go`）、独立公开阅读与法规制度库（`reading.go` + `ReadingModels.kt` + `AndroidReadingContent.kt` / `AndroidPublicationsContent.kt` + `web-client/src/ReadingPages.tsx` / `Publications.tsx`）、城市筛选、地图／大图、Android公共任务页面以及完整Web工程源码（支持 `HttpOnly Cookie + X-MND-CSRF` 会话）。当前 OpenAPI 为 `230` Paths / `259` Operations / `112` Schemas，PostgreSQL 迁移覆盖 `001`–`009`（44 张 `mobile_*` 表）。已保留本页原批次的全部已读、领养周期、人员／区域选择和旋转状态；最新事实、静态数量与证据见[2026-10-24客户端说明](FIGMA_ANDROID_WEB_2026_10_24.md)与[服务端完整性审计（2026-10-24）](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。下表“关注合同未完整”“真实公开头像合同待补”“Web未实施”为此前状态；本批源码不提升构建、联调、逐屏视觉、设备或真实运营验收层次。内容收藏未作为新业务擅自加入，Figma已有的贴纸收藏／最近继续按真实目录和偏好实现。
 
 2026-10-23，AI-20261023-ANDROID-FINISH；main / 5de631b加当前未提交工作树。依据[闭环复审](../bmad/PRODUCT_CLOSURE_AUDIT_2026_10_23.md)及[现行合同](../design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)。这里汇总当前事实，不修改历史证据。最新结果见[Android／服务端续作](ANDROID_REMAINING_2026_10_23.md)，前批领养记录保留原验证层次。
 

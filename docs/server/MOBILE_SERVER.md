@@ -1,8 +1,8 @@
 # 手机端对应的 Go 服务接口与运行交接
 
-更新：2026-10-23。当前服务端续作见[服务端优先完善与作业交接](SERVER_FIRST_2026_10_23.md)、[证据保全／数据清理](LIFECYCLE_RETENTION_2026_10_23.md)。设计依据：[手机评审入口](../design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)；机器合同：[OpenAPI 3.1](../api/mobile-v2.openapi.json)。本轮只改服务端，全部运行结果待验收。
+更新：2026-10-24。当前服务端续作见[服务端优先完善与作业交接](SERVER_FIRST_2026_10_23.md)、[证据保全／数据清理](LIFECYCLE_RETENTION_2026_10_23.md)、[领养送养闭环与安全保留](ADOPTION_CLOSURE_2026_10_23.md)、[服务端完整性审计与待完善清单（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。设计依据：[手机评审入口](../design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)；机器合同：[OpenAPI 3.1（230 Paths / 259 Operations / 112 Schemas）](../api/mobile-v2.openapi.json)。全部运行结果待验收。
 
-当前账号规则：[认证规划](../design/MND_MOBILE_AUTH_PLAN.md)。显式邮箱注册／OTP／密码登录与恢复、标识唯一约束、当前手机号证明、服务端交流／成年／监护关卡已有源码；手机号登录仅允许已有账号，不自动建号。008迁移、真实渠道／策略和运行尚未验收，微信绑定不能代替手机号交流资格。
+当前账号规则：[认证规划](../design/MND_MOBILE_AUTH_PLAN.md)。显式邮箱注册／OTP／密码登录与恢复、标识唯一约束、当前手机号证明、服务端交流／成年／监护关卡、浏览器 `HttpOnly Cookie + X-MND-CSRF` 会话适配已有源码；手机号登录仅允许已有账号，不自动建号。`008` 与 `009` 迁移、真实渠道／策略和运行尚未验收，微信绑定不能代替手机号交流资格。
 
 ## 当前源码覆盖
 
@@ -10,16 +10,17 @@
 
 | 手机端流程 | 服务端实现 |
 |---|---|
-| 登录注册与账号管理 | 显式邮箱注册／登录／恢复；已有账号手机号登录；微信、QQ、Apple核验及明确关联；用途绑定二次验证、换绑／解绑、会话轮换和设备推送解绑；资格与登录分开 |
-| 我的与多个宠物 | 资料、公开头像、Honey/Mint/Night/Neutral、Picnic/Desk/Arcade/Garden；多宠物独立档案与可见范围 |
-| 社区与圈子 | 图文、评论、点赞、好友请求/接受/拒绝/撤回/删除/拉黑；圈子及日记的 private/public/friends/selected/excluded；解除好友后即时收回圈子访问 |
-| 私信与群聊 | 陌生人先请求，接受前一条文字且不开放图片；群邀请、成员移除/退出、静音、群主接收/拒绝/撤回/过期、单独解散；显式已读与真实未读数 |
+| 登录注册与账号管理 | 显式邮箱注册／登录／恢复；已有账号手机号登录；微信、QQ、Apple核验及明确关联；用途绑定二次验证、换绑／解绑、会话轮换和设备推送解绑；Web端 `HttpOnly Cookie + X-MND-CSRF` 会话适配；资格与登录分开 |
+| 我的与多个宠物 | 资料、公开头像、Honey/Mint/Night/Neutral、Picnic/Desk/Arcade/Garden；多宠物独立档案、宠物评论（`mobile_pet_comments`）、评论表情反应（`mobile_comment_reactions`）与可见范围 |
+| 社区与圈子 | 图文、评论、点赞、评论表情反应、内容更新订阅（`content_subscriptions`）、好友请求/接受/拒绝/撤回/删除/拉黑；圈子及日记的 private/public/friends/selected/excluded；解除好友后即时收回圈子访问 |
+| 私信与群聊 | 陌生人先请求，接受前一条文字且不开放图片；群目录检索与入群申请（`group_directory`）、群邀请、成员移除/退出、静音、群主转让（`transfer_owner`）接收/拒绝/撤回/过期、单独解散；显式已读与真实未读数 |
 | 寻宠与认领 | lost/found 分开，公开坐标粗化，精确地址私有；私密线索与证据；匹配、争议、双方交接、公开结束；独立附近订阅、5–100km、即时/每日摘要 |
-| 领养 | 申请、补充、拒绝、撤回；双方确认试养/交接；完成后 30 天私密近况与求助/退养请求；介绍协作者与照护协作者权限分开 |
-| 预约与披露 | V1/V2、有效/待确认版本分开，恢复 V3；版本冲突、取消/过期、历史；发布关系/照护/来源/接待/地点/收款责任/必付费用；报价由服务端快照，分项到访反馈 |
-| 审核与申诉 | 私密材料、待审/补充/结果、到期、原结论关联申诉；审核后台独立凭据；只提供绑定对象版本的分项核验摘要，不能把上传材料当成所有权或健康保证 |
+| 领养与安全保留 | 申请、补充、拒绝、撤回；宠物级唯一活跃放置（`adoption_placement`）与候选队列（`waitlisted`）、重开周期递增（`adoption_cycle`）；双方确认试养/交接；完成后 30 天私密近况与求助/退养请求；72 小时紧急救助/寄养交接（`safety_hold`）；介绍协作者与照护协作者权限分开 |
+| 预约与披露 | V1/V2、有效/待确认版本分开，恢复 V3；版本冲突、取消/过期、历史；城市与物种准入（猫/狗直接开放，异宠须城市准入+资质有效）及医疗免责确认；发布关系/照护/来源/接待/地点/收款责任/必付费用；报价由服务端快照，分项到访反馈 |
+| 审核、证据保全与申诉 | 私密材料、待审/补充/结果、到期、原结论关联申诉；跨单据证据保留（`evidence_retention`）冻结关联消息/历史/媒体防止注销清除；审核后台独立凭据；只提供绑定对象版本的分项核验摘要 |
+| 公开阅读与法规制度库 | 独立 `/api/v2/reading/*` 与 `/api/v2/publications/*`；按分类、适用范围、阅读模式筛选；带 SHA-256 校验的 Markdown 附件下载；发布态强制校验运营主体三要素 |
 | 多图与草稿 | 每个文件独立上传/重试，内容和草稿按有序 ID 最多 9 张；版本控制；私有材料禁止直接挂到公开发布；JPEG/PNG 重新编码移除原 EXIF |
-| 表情与通知 | 128 个官方 Noto 表情、24 张现有猫咪贴纸，Unicode 文本/稳定贴纸 ID，收藏/最近使用；站内通知分类/频率/系统权限、独立附近订阅 |
+| 表情与通知 | 128 个官方 Noto 表情、24 张现有猫咪贴纸，Unicode 文本/稳定贴纸 ID，收藏/最近使用；站内通知分类/频率/系统权限、独立附近订阅与内容更新订阅 |
 
 上述为源码实现覆盖，不等于已通过编译、联调或生产验收。接入真实供应商、系统推送和历史清理的边界见下文。
 
@@ -85,17 +86,18 @@ GET 不修改已读；通过 `conversations/{id}/read`、`groups/{id}/read` 的 
 | QQ_LOGIN_APP_ID / QQ_LOGIN_APP_SECRET | QQ 服务器获取身份并核对应用 ID；支持 SDK access_token 或 server-side code |
 | APPLE_LOGIN_CLIENT_ID / APPLE_LOGIN_CLIENT_SECRET | Apple 应用标识和运营方签发、维护有效期的客户端密钥 JWT |
 | APPLE_TOKEN_ENCRYPTION_KEY | 独立、稳定的 32 字节密钥的标准 Base64；用于 Apple 撤销令牌加密，不可随普通会话密钥轮换丢弃 |
-| CORS_ALLOW_ORIGIN | Web来源及Idempotency-Key跨域配置；CORS不是ops权限控制 |
+| CORS_ALLOW_ORIGIN / MND_WEB_ORIGIN | Web来源、浏览器Cookie/CSRF会话源及Idempotency-Key跨域配置；CORS不是ops权限控制 |
+| MND_READING_CATALOG | 外部公开阅读与法规制度库 JSON 路径（未设置时使用内嵌 `reading-drafts.json`） |
 | EMAIL_GATEWAY_URL / EMAIL_GATEWAY_TOKEN | 真实邮件OTP网关；未配置时关闭相关渠道 |
 | MND_OPERATORS_JSON | 命名运营身份、roles与consumers；v2使用X-Operator-Token |
 | PUSH_GATEWAY_URL / PUSH_GATEWAY_TOKEN | HTTPS查询／发送网关，稳定键去重；accepted不等于delivered |
 | MND_WORKER_* | 独立作业进程的目标、命名凭据、作业、间隔和游标文件；见本批交接 |
 
-迁移计划需备份后按序检查001–008，008包含标识冲突检测及新策略／命令表；本轮未执行迁移。已有数据卷不会因修改compose自动补迁移。历史导入`migrations/backfill/legacy_to_mobile.sql`不是启动步骤；旧图片、关注、订单或支付不转换为新权限、好友或交接证明。
+迁移计划需备份后按序检查 `001`–`009`（共 44 张 `mobile_*` 聚合表，其中 `008` 包含标识冲突检测及策略／命令表，`009` 包含宠物评论与表情反应表）；本轮未执行迁移。注意 `docker-compose.yml` 与 `Makefile` 仍需同步补齐 `008`–`009`（详见[服务端完整性审计](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。历史导入 `migrations/backfill/legacy_to_mobile.sql` 不是启动步骤；旧图片、关注、订单或支付不转换为新权限、好友或交接证明。
 
 `healthz` 是存活检查；`readyz` 有超时并真正读取事务存储，错误返回 503。新媒体目录需要持久卷、备份与磁盘配额；多副本必须共享媒体存储或替换为对象存储适配器。内存仓库不适合多副本。
 
-`GET ops/outbox`仅供受限事件检查，v2全局ACK已禁止。按消费者使用租约、CAS、重试与独立ACK，或调用`POST ops/jobs/{push,nearby_alerts,privacy_cleanup,provider_revocations,maintenance}`实际执行一批。附近提醒保存分批游标；供应商撤销使用专用命名空间；隐私清理仅在数据库／物理项和外部回执满足完成条件后ACK。独立`cmd/worker`默认单批，连续模式需明确部署，服务不会隐式启动任务。
+`GET ops/outbox`仅供受限事件检查，v2全局ACK已禁止。按消费者使用租约、CAS、重试与独立ACK，或调用`POST ops/jobs/{push,nearby_alerts,content_updates,privacy_cleanup,provider_revocations,maintenance}`实际执行一批。附近提醒保存分批游标；内容更新推送订阅动态/救助进展；供应商撤销使用专用命名空间；隐私清理仅在数据库／物理项和外部回执满足完成条件后ACK。独立`cmd/worker`默认单批，连续模式需明确部署，服务不会隐式启动任务。
 
 真实短信／邮件／OAuth／推送／撤销渠道及调度部署仍需运营配置和运行验收。推送网关适配、独立作业与逐项清理已有源码；本轮未向供应商发送请求。queued是待处理，accepted仅供应商接受；受限备份／保全和人工协助仍需实际履责，不自动判定账号归属、所有权或欺骗。
 

@@ -23,7 +23,16 @@ export function navigate(path: string, replace = false) {
   )
     throw new Error("无效页面");
   history[replace ? "replaceState" : "pushState"](
-    { mnd: true },
+    {
+      mnd: true,
+      parents: replace
+        ? (history.state?.parents ?? [])
+        : [
+            ...(history.state?.parents ?? []),
+            location.pathname.slice(4).replace(/\/$/, "") + location.search ||
+              "/",
+          ].slice(-64),
+    },
     "",
     "/app" + (path === "/" ? "/" : path),
   );
@@ -43,13 +52,25 @@ export function useRoute() {
   );
 }
 export function back() {
-  if (history.state?.mnd) history.back();
+  if (history.state?.mnd && history.state.parents?.length) history.back();
   else navigate("/");
+}
+/** 只保存应用公开路由；回到已有目录，保留此前任务的筛选与滚动恢复点。 */
+export function returnTo(path: string) {
+  const parents: string[] =
+    history.state?.mnd && Array.isArray(history.state.parents)
+      ? history.state.parents
+      : [];
+  const index = parents.lastIndexOf(path);
+  if (index >= 0) history.go(index - parents.length);
+  else navigate(path, true);
 }
 export function resourceRoute(kind: string, id: unknown): string | null {
   return [
     "group-directory",
     "entries",
+    "entry_comments",
+    "pet_comments",
     "pets",
     "cases",
     "offers",

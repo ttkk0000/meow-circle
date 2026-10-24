@@ -8,15 +8,15 @@ import kotlinx.serialization.json.JsonObject
 
 /** 功能路由只包含资源标识；临时凭证不进入路由、表单快照或普通偏好。 */
 enum class FeaturePage(val title: String) {
-    EntryEdit("编辑动态"), Friends("好友与宠友圈"), Member("宠友资料"), ProfileEdit("编辑资料"), PetEdit("宠物档案"), PetDiary("独立图文日记"),
+    Publications("我的发布"), EntryEdit("编辑动态"), Friends("好友与宠友圈"), Member("宠友资料"), ProfileEdit("编辑资料"), PetEdit("宠物档案"), PetDiary("独立图文日记"),
     Collaborators("协作与邀请"), Invitations("收到与发出的邀请"), GroupCreate("创建群聊"), Group("群聊管理"), GroupDirectory("发现宠友群"), GroupPreview("群简介与加入申请"), Content("关注与求助订阅"),
     Appointments("预约"), Appointment("预约详情"), AppointmentEdit("预约安排"),
     CaseEdit("走失与拾获发布"), CaseWork("线索与认领"), Claim("私密认领材料"),
     AdoptionWork("领养照护与协议"), ContractEdit("协议提案"), ReturnEdit("安全接回安排"),
     Offers("有偿信息"), Offer("披露详情"), OfferEdit("编辑披露"),
-    Settings("通知设置"), Nearby("附近提醒"), Map("互助地图"), Reviews("核实与举报"), Review("核实事项"),
+    SettingsHome("设置"), Settings("通知设置"), Nearby("附近提醒"), Map("互助地图"), Reviews("核实与举报"), Review("核实事项"),
     Safety("安全与隐私求助"), DataRequests("资料与账号请求"), Security("账号安全"),
-    Recovery("待核对操作"), Expressions("表情与贴纸"), Rules("规则与权益")
+    Recovery("待核对操作"), Expressions("表情与贴纸"), Rules("规则与权益"), Reading("阅读说明")
 }
 enum class CaseMaterial { Claims, Leads }
 
@@ -25,6 +25,9 @@ data class FeatureForm(val values: Map<String, String> = emptyMap(), val baseVer
 data class FeatureConfirmation(val title: String, val summary: String)
 data class RestrictedReference(val type: String, val clientRequestId: String, val id: Long)
 data class FeatureState(
+    val publishedPets: PageState<PetBody> = PageState(), val publishedEntries: PageState<EntryBody> = PageState(),
+    val publishedCases: PageState<CaseBody> = PageState(), val publishedOffers: PageState<OfferBody> = PageState(),
+    val readingCatalog: ReadingCatalog? = null,val readingDocument: ReadingDocument? = null,
     val route: FeatureRoute? = null, val forms: Map<FeatureRoute, FeatureForm> = emptyMap(),
     val loading: Boolean = false, val busy: Boolean = false, val error: String? = null, val notice: String? = null,
     val conflict: Boolean = false, val confirmation: FeatureConfirmation? = null,
@@ -57,11 +60,8 @@ data class FeatureState(
 }
 
 /** 与 MobileStore 同生命周期的功能状态；所有 Android 面板共用此实例。 */
-class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, private val localDrafts: LocalWorkspaceDrafts? = null) {
-    private val job = SupervisorJob(parentScope.coroutineContext[Job])
-    private val scope = CoroutineScope(parentScope.coroutineContext + job)
-    private val mutable = MutableStateFlow(FeatureState(draftRestoring = localDrafts != null,draftReady = localDrafts == null))
-    val state = mutable.asStateFlow()
+class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, private val localDrafts: LocalWorkspaceDrafts? = null) :
+    MviStore<FeatureState, FeatureStoreIntent, FeatureStoreEffect>(FeatureState(draftRestoring = localDrafts != null,draftReady = localDrafts == null), parentScope) {
     val sensitive = SensitiveActionStore(api, scope)
     private val history = mutableListOf<FeatureRoute>()
     private var loading: Job? = null
@@ -88,6 +88,20 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     private var draftReady = localDrafts == null
     private var draftSave: Job? = null
     private var draftRestore: Job? = null
+
+    override fun accept(intent: FeatureStoreIntent) {
+        when (intent) {
+            is FeatureStoreIntent.OpenRoute -> open(intent.route)
+            FeatureStoreIntent.Back -> back()
+            FeatureStoreIntent.CloseRoute -> closeRoute()
+            is FeatureStoreIntent.Reload -> reload(intent.more)
+            is FeatureStoreIntent.EditField -> edit(intent.key, intent.value)
+            FeatureStoreIntent.DiscardAndReload -> discardAndReload()
+            FeatureStoreIntent.DismissConfirmation -> dismissConfirmation()
+            FeatureStoreIntent.SubmitConfirmation -> submitConfirmation()
+            is FeatureStoreIntent.Notify -> notify(intent.message)
+        }
+    }
 
     init {
         restoreDrafts()
@@ -120,6 +134,14 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             }
         } }
     }
+    fun selectPublications(kind: String) {
+        require(kind in listOf("pets","entries","cases","offers"))
+        val route=mutable.value.route ?: return
+        if(route.page!=FeaturePage.Publications || mutable.value.busy) return
+        revision++;loading?.cancel()
+        mutable.update {it.copy(route=route.copy(kind=kind),loading=false,error=null)}
+        reload()
+    }
     fun loadContentSubscriptions() { if(owner == null) return; val currentEpoch = epoch; scope.launch { try { val p = api.contentSubscriptions(); if(epoch == currentEpoch) mutable.update { it.copy(contentSubscriptions = p) } } catch(e: CancellationException) { throw e } catch(e: Exception) { if(epoch == currentEpoch) notify(e.message ?: "暂无法读取关注状态") } } }
     fun field(key: String, fallback: String = ""): String = mutable.value.route?.let { mutable.value.forms[it]?.values?.get(key) } ?: fallback
     fun edit(key: String, value: String) {
@@ -140,7 +162,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         mutable.value.route?.takeIf { it != route }?.let(history::add)
         revision++; loading?.cancel(); dismissConfirmation()
         mutable.update { it.copy(route = route, loading = false, error = null, notice = null, conflict = false,
-            groupPreview = null, mapCases = PageState(), diary = PageState(), entry = null, member = null, pet = null, group = null, appointment = null, case = null, claim = null, adoption = null,
+            readingDocument = null,groupPreview = null, mapCases = PageState(), diary = PageState(), entry = null, member = null, pet = null, group = null, appointment = null, case = null, claim = null, adoption = null,
             offer = null, review = null, verifications = emptyList(), claims = PageState(), leads = PageState(), care = PageState(),
             unconfirmedResult = route in uncertainRoutes) }
         reload()
@@ -151,9 +173,16 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         if (mutable.value.busy) return true
         if (mutable.value.confirmation != null) { dismissConfirmation(); return true }
         val previous = history.removeLastOrNull()
-        revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, notice = null,groupPreview = null,mapCases = PageState(),diary = PageState(),entry = null,member = null,pet = null,group = null,appointment = null,case = null,claim = null,adoption = null,offer = null,review = null,unconfirmedResult = previous in uncertainRoutes) }
+        revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, notice = null,readingDocument = null,groupPreview = null,mapCases = PageState(),diary = PageState(),entry = null,member = null,pet = null,group = null,appointment = null,case = null,claim = null,adoption = null,offer = null,review = null,unconfirmedResult = previous in uncertainRoutes) }
         if (previous != null) reload()
         return true
+    }
+    /** 阅读子页返回已有入口，避免再压入一份目录而形成循环。 */
+    fun returnTo(route: FeatureRoute) {
+        if(mutable.value.busy) return
+        val index=history.indexOfLast {it==route}
+        if(index>=0) {while(history.lastIndex>index) history.removeAt(history.lastIndex);back()}
+        else {closeRoute();open(route)}
     }
     fun closeRoute() { if (!mutable.value.busy) { history.clear(); revision++; loading?.cancel(); mutable.update { it.copy(route = null, loading = false) } } }
     /** 仅在写请求收到明确成功回执之后使用。 */
@@ -177,9 +206,10 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         mutable.value.route?.let { clearForm(it) }
         history.clear(); pendingAction = null
         mutable.update { it.copy(route = route, confirmation = null, conflict = false, notice = "已保存，请核对当前记录") }
+        sendEffect(FeatureStoreEffect.RouteCompleted(route))
         reload()
     }
-    fun notify(message: String) { mutable.update { it.copy(notice = message) } }
+    fun notify(message: String) { mutable.update { it.copy(notice = message) }; sendEffect(FeatureStoreEffect.Notice(message)) }
     fun prepareSensitive(intent: SensitiveIntent) {
         if (!canEditDraft() || mutable.value.route in uncertainRoutes) { notify("请先核对原事项结果，不能另建相同操作"); return }
         sensitive.prepare(intent)
@@ -260,6 +290,16 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             fun current() = revision == currentRevision && epoch == currentEpoch
             try {
                 when (route.page) {
+                    FeaturePage.Publications -> {
+                        val account=owner ?: return@launch
+                        val params=mapOf("owner_id" to "$account")
+                        when(route.kind.ifBlank {"pets"}) {
+                            "entries" -> loadFeaturePage(more,::current,{it.publishedEntries},{state,page->state.copy(publishedEntries=page)}) {api.get("entries",params+("cursor" to "$it"))}
+                            "cases" -> loadFeaturePage(more,::current,{it.publishedCases},{state,page->state.copy(publishedCases=page)}) {api.get("cases",params+("cursor" to "$it"))}
+                            "offers" -> loadFeaturePage(more,::current,{it.publishedOffers},{state,page->state.copy(publishedOffers=page)}) {api.get("offers",params+("cursor" to "$it"))}
+                            else -> loadFeaturePage(more,::current,{it.publishedPets},{state,page->state.copy(publishedPets=page)}) {api.get("pets",params+("cursor" to "$it"))}
+                        }
+                    }
                     FeaturePage.EntryEdit -> { val p = api.entry(route.id); if(current()) { mutable.update { it.copy(entry = p) }; capture(p.version) } }
                     FeaturePage.PetDiary -> { loadFeaturePage(more, ::current, { it.diary }, { s, p -> s.copy(diary = p) }) { cursor -> api.get("entries",mapOf("reference_id" to route.id.toString(),"space" to "diary","cursor" to cursor.toString()),authenticated = owner != null) } }
                     FeaturePage.Friends -> { loadFeaturePage(more, ::current, { it.friends }, { s, p -> s.copy(friends = p) }) { api.friends(it) } }
@@ -326,11 +366,18 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     }
                     FeaturePage.Recovery -> if (current()) mutable.update { it.copy(pending = api.recoverableCommands(), restricted = restricted()) }
                     FeaturePage.DataRequests, FeaturePage.Safety -> if (current()) mutable.update { it.copy(restricted = restricted()) }
-                    FeaturePage.GroupCreate, FeaturePage.Rules -> Unit
+                    FeaturePage.Rules -> {val catalog=api.readingCatalog();if(current())mutable.update {it.copy(readingCatalog = catalog)}}
+                    FeaturePage.Reading -> {
+                        val document=if(route.kind.startsWith("type:")) api.readingCatalog().documentFor(route.kind.removePrefix("type:")) ?: throw MobileApiException(404,"not found") else api.readingDocument(route.kind)
+                        if(current())mutable.update {it.copy(readingDocument = document)}
+                    }
+                    FeaturePage.GroupCreate, FeaturePage.SettingsHome -> Unit
                 }
             } catch (e: CancellationException) { throw e }
             catch (e: Exception) {
                 if (current()) mutable.update { it.copy(error = e.mobileMessage(),
+                    readingDocument = if (denied(e)) null else it.readingDocument,
+                    readingCatalog = if (denied(e)) null else it.readingCatalog,
                     groupPreview = if (denied(e)) null else it.groupPreview,
                     contentSubscriptions = if (denied(e)) null else it.contentSubscriptions,
                     diary = if (denied(e)) it.diary.failed(e.mobileMessage(), clear = true) else it.diary,
@@ -565,7 +612,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     }
     fun loadDataChoices(kind: String, assistance: Boolean, more: Boolean = false) {
         val account = owner ?: return
-        require(kind in listOf("entries", "pets", "media", "cases", "offers", "drafts", "subscriptions") ||
+        require(kind in listOf("entries", "entry_comments", "pet_comments", "pets", "media", "cases", "offers", "drafts", "subscriptions") ||
             assistance && kind in listOf("adoptions", "appointments", "reviews"))
         val same = mutable.value.dataChoiceKind == kind && mutable.value.dataChoiceAssistance == assistance
         if (same && (mutable.value.dataChoiceLoading || more && !mutable.value.dataChoices.canLoadMore)) return
@@ -788,5 +835,5 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             catch (e: Exception) { if (epoch == originalEpoch) mutable.update { it.copy(draftRestoring = false,draftError = "本机表单未恢复：${e.mobileMessage()}。原文件未被覆盖") } }
         }
     }
-    fun close() { sensitive.close(); job.cancel() }
+    override fun close() { sensitive.close(); super.close() }
 }

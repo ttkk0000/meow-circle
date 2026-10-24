@@ -1,5 +1,7 @@
 # M&D Go 服务架构决策
 
+> **2026-10-24 状态更新**：当前服务端维持模块化单体架构，已扩展至 `001`–`009` 迁移（共 44 张 `mobile_*` 表）、OpenAPI `230` Paths / `259` Operations / `112` Schemas、6 类 `cmd/worker` 作业（`push` / `nearby_alerts` / `content_updates` / `privacy_cleanup` / `provider_revocations` / `maintenance`）。下文原第 52 行提到的 `safety_hold`、宠物唯一放置、跨单据证据保留、浏览器 Cookie/CSRF 会话适配及独立阅读目录均已完成源码落地（详见[领养闭环交接](ADOPTION_CLOSURE_2026_10_23.md)与[服务端完整性审计（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。
+
 2026-10-22实现批次：[服务端/共享层源码记录](SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)。保留本架构，扩展既有事务仓储Kind与typed DTO，未引入微服务或升级依赖。008迁移、用途/资格、请求回执及清理/运营端口已写；HTTP ops采用命名角色，旧X-Admin-Key不能访问v2 ops。
 
 2026-10-22后续规划：[系统架构与实施合同](../bmad/architecture.md)补分动作准入、用途grant、operation、资料／案件／合同、作业与迁移；[客户端阶段和任务](../client/IMPLEMENTATION_PLAN.md)统一推进。保持下文模块化单体决定，本轮不改服务端源码或部署；新增模型和路径均为拟议合同，未计入现行OpenAPI。

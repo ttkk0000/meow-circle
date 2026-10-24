@@ -34,18 +34,26 @@ import com.ttkk0000.meowcircle.kmpapp.R
                 Text("M&D",fontFamily = BrandFont,style = MaterialTheme.typography.headlineSmall)
                 Text(if(mode == "register") "加入 M&D" else if(mode == "recover") "找回账号密码" else "欢迎回到 M&D",style = MaterialTheme.typography.headlineSmall)
                 Text("meow & doggie · 游客也能浏览公开内容",color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
-                    listOf("password" to "密码登录","email" to "邮箱验证码","phone" to "手机验证码","register" to "注册","recover" to "找回密码").forEach { (value,label) ->
-                        TextButton({ mode = value; code = ""; password = ""; agreed = false; store.editAuth(AuthForm(visible = true)) },enabled = !busy) { Text(if(mode == value) "● $label" else label) }
-                    }
-                }
+                SegmentedTextBar(
+                    options = listOf("password" to "密码登录","email" to "邮箱验证码","phone" to "手机验证码","register" to "注册","recover" to "找回密码"),
+                    selected = mode,
+                    onSelect = { value -> mode = value; code = ""; password = ""; agreed = false; store.editAuth(AuthForm(visible = true)) },
+                    scrollable = true,
+                    enabled = !busy,
+                )
                 OutlinedTextField(identifier,{ identifier = it },Modifier.fillMaxWidth(),label = { Text(when(mode) { "password" -> "账号名 / 邮箱 / 手机号"; "phone" -> "已绑定手机号"; else -> "邮箱" }) },singleLine = true,enabled = !busy)
                 if(mode == "register") OutlinedTextField(username,{ username = it },Modifier.fillMaxWidth(),label = { Text("唯一账号名") },singleLine = true,enabled = !busy)
                 if(mode in listOf("password","register","recover")) OutlinedTextField(password,{ password = it },Modifier.fillMaxWidth(),label = { Text(if(mode == "recover") "新密码（至少10字节）" else "密码") },visualTransformation = PasswordVisualTransformation(),singleLine = true,enabled = !busy)
                 if(mode != "password") {
                     val channel = if(mode == "phone") s.capabilities.sms else s.capabilities.email
-                    OutlinedTextField(code,{ code = it },Modifier.fillMaxWidth(),label = { Text("验证码") },singleLine = true,enabled = !busy)
-                    FeatureButton(if(work.otpWait > 0) "${work.otpWait} 秒后可重发" else "发送验证码",!busy && channel && identifier.isNotBlank() && work.otpWait == 0 && (mode != "register" || policyReady && agreed)) {
+                    OtpVerificationFields(
+                        code = code,
+                        onCodeChange = { code = it },
+                        otpWait = work.otpWait,
+                        sendLabel = "发送验证码",
+                        enabled = !busy,
+                        canSend = channel && identifier.isNotBlank() && (mode != "register" || policyReady && agreed),
+                    ) {
                         f.sendOTP(email = if(mode != "phone") identifier else "",phone = if(mode == "phone") identifier else "",purpose = when(mode) { "register" -> "email_register"; "recover" -> "email_recover"; "phone" -> "login"; else -> "email_login" })
                     }
                     if(!channel) Text("当前环境尚未接通此验证码渠道，请使用已有账号密码登录。")
@@ -74,6 +82,7 @@ import com.ttkk0000.meowcircle.kmpapp.R
                     }
                 }
                 if(s.capabilities.providers.any { it in listOf("wechat","qq") }) Text("微信／QQ 尚未配置本机官方 SDK 回跳，当前无法发起。")
+                TextButton({ store.cancelLogin();f.open(FeatureRoute(FeaturePage.Rules)) },enabled = !busy) { Text("阅读服务说明与规则草案") }
                 TextButton({ store.cancelLogin() },enabled = !busy) { Text("继续以游客身份浏览") }
     }
 }

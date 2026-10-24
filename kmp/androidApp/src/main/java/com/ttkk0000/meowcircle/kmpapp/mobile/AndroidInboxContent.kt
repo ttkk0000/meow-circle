@@ -15,12 +15,15 @@ import com.ttkk0000.meowcircle.client.*
     var unreadOnly by rememberSaveable(s.user?.id) { mutableStateOf(false) }
     LaunchedEffect(category,s.user?.id) { if(category != 0) store.loadNotifications() }
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
-        Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf("聊天","互动","通知").forEachIndexed { index,label ->
+        ChoiceChipBar(
+            options = listOf(0 to "聊天",1 to "互动",2 to "通知"),
+            selected = category,
+            onSelect = { category = it },
+            badge = { index ->
                 val count = s.inbox?.let { inbox -> if(index == 0) inbox.direct.values.sum() + inbox.groups.values.sum() else inbox.notifications.filterKeys { key -> if(index == 1) key == "interactions" else key !in listOf("interactions","direct_messages","groups") }.values.sum() }
-                FilterChip(category == index,{ category = index },label = { Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) { Text(label); UnreadBadge(count) } })
-            }
-        }
+                UnreadBadge(count)
+            },
+        )
         Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
             TextButton({ unreadOnly = !unreadOnly }) { Text(if(unreadOnly) "显示全部消息" else "仅看未读") }
             TextButton({ store.features.open(FeatureRoute(FeaturePage.Settings)) }) { Text("提醒设置") }

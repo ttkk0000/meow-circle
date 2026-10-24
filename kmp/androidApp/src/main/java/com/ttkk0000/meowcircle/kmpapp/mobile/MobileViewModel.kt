@@ -18,13 +18,17 @@ data class PendingTaskLink(val kind: String, val id: Long, val owner: Long) {
     val label: String get() = when(kind) { "pets" -> "宠物详情"; "entries" -> "社区动态"; "cases" -> "寻宠求助"; "offers" -> "有偿信息"; "adoptions" -> "领养进度"; "appointments" -> "预约安排"; "groups" -> "群聊"; "conversations" -> "私信"; "claims" -> "认领进度"; "reviews" -> "核实事项"; else -> "原任务" }
 }
 
-class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: LocalWorkspaceDrafts, replies: LocalWorkspaceDrafts, private val saved: SavedStateHandle = SavedStateHandle()) : ViewModel() {
+class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: LocalWorkspaceDrafts, replies: LocalWorkspaceDrafts, private val saved: SavedStateHandle = SavedStateHandle()) : MobileMviViewModel<MobileHostState, MobileHostIntent, MobileHostEffect>(MobileHostState()) {
     private val linkKinds = setOf("pets","entries","cases","offers","adoptions","appointments","claims","reviews","groups","conversations")
     val store = MobileStore(api, ownsApi = false, localDrafts = drafts, localWorkspaces = workspaces, localReplies = replies)
     val uiSession = AndroidUiSessionState()
     private val queuedLink = MutableStateFlow<PendingTaskLink?>(null)
     val pendingLink = queuedLink.asStateFlow()
     init {
+        bindStore(store,{ current,mobile -> current.copy(mobile = mobile) },{ MobileHostEffect.StoreEffect(it) })
+        bindStore(store.features,{ current,features -> current.copy(features = features) },{ MobileHostEffect.FeatureEffect(it) })
+        bindStore(store.features.sensitive,{ current,sensitive -> current.copy(sensitive = sensitive) },{ MobileHostEffect.SensitiveEffect(it) })
+        bindState(queuedLink) { current,link -> current.copy(pendingLink = link) }
         // 系统状态只保存资源路由，不保存密码、验证码、材料或临时证明。
         val route = saved.get<String>("mobileRoute")
         if (saved.get<Long>("routeOwner") == (api.user.value?.id ?: 0L) && route != null) restoreRoute(route)
@@ -49,9 +53,21 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
                 }
                 Triple(state.user?.id ?: 0L,state.tab.name + "|" + destination,feature?.let { "${it.page.name}:${it.id}:${it.kind}:${it.peer}" }.orEmpty())
             }.collect { (owner,base,feature) ->
-                saved["routeOwner"] = owner; saved["mobileRoute"] = "$base|$feature"
+                val serialized = "$base|$feature"
+                saved["routeOwner"] = owner; saved["mobileRoute"] = serialized
+                reduce { it.copy(routeOwner = owner,serializedRoute = serialized) }
                 if(queuedLink.value?.owner?.let { it != 0L && it != owner } == true) dismissPendingLink()
             }
+        }
+    }
+    override fun accept(intent: MobileHostIntent) {
+        when (intent) {
+            is MobileHostIntent.Store -> store.accept(intent.intent)
+            is MobileHostIntent.Feature -> store.features.accept(intent.intent)
+            is MobileHostIntent.Sensitive -> store.features.sensitive.accept(intent.intent)
+            is MobileHostIntent.QueueLink -> openLink(intent.uri)
+            MobileHostIntent.OpenPendingLink -> openPendingLink()
+            MobileHostIntent.DismissPendingLink -> dismissPendingLink()
         }
     }
     private fun restoreRoute(raw: String) {
@@ -119,7 +135,7 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
         kind == "conversations" -> MobileDestination.Chat(id)
         else -> null
     }
-    override fun onCleared() { uiSession.clear(); store.close() }
+    override fun onCleared() { uiSession.clear(); store.close(); super.onCleared() }
     class Factory(private val api: MobileApi, private val drafts: LocalComposeDrafts, private val workspaces: LocalWorkspaceDrafts, private val replies: LocalWorkspaceDrafts) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>,extras: CreationExtras): T {

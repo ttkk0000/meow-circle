@@ -14,6 +14,20 @@ for guard in ("old.generation == generation", "owner != value", "values.clear()"
     assert guard in session, guard
 assert "val uiSession = AndroidUiSessionState()" in source["MobileViewModel.kt"]
 assert "uiSession.clear(); store.close()" in source["MobileViewModel.kt"]
+assert "MobileMviViewModel<MobileHostState, MobileHostIntent, MobileHostEffect>" in source["MobileViewModel.kt"]
+assert "abstract class MobileMviViewModel" in source["AndroidMviBase.kt"] and "MviViewModel<State, Intent, Effect>" in source["AndroidMviBase.kt"]
+for mvi_helper in ("fun MviStatusBanner(", "fun PendingLinkBanner(", "fun <S : Any, I : Any, E : Any> MviStoreHost(", "fun <E : Any> CollectMviEffects("):
+    assert mvi_helper in source["AndroidMviBase.kt"], mvi_helper
+for page_comp in ("fun <T> ChoiceChipBar(", "fun <T> SegmentedTextBar(", "fun PhotoQueueList(", "fun OtpVerificationFields("):
+    assert page_comp in source["AndroidPageComponents.kt"], page_comp
+shared_client = root / "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client"
+assert "abstract class MviStore<State : Any, Intent : Any, Effect : Any>" in (shared_client / "MviStore.kt").read_text(encoding="utf-8")
+for store_file, base_type in (
+    ("MobileStore.kt", "MviStore<MobileState, MobileStoreIntent, MobileStoreEffect>"),
+    ("MobileFeatureStore.kt", "MviStore<FeatureState, FeatureStoreIntent, FeatureStoreEffect>"),
+    ("SensitiveActionStore.kt", "MviStore<SensitiveActionState, SensitiveStoreIntent, SensitiveStoreEffect>"),
+):
+    assert base_type in (shared_client / store_file).read_text(encoding="utf-8"), (store_file, base_type)
 assert "appViewModel.uiSession" in (android / "MainActivity.kt").read_text(encoding="utf-8")
 shell = source["AndroidMobileApp.kt"]
 assert "key(owner)" in shell and "session.useOwner(owner)" in shell

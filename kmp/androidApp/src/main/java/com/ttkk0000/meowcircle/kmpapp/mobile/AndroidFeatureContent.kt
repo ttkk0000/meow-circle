@@ -25,17 +25,21 @@ internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
     if(replaceSaved) MobileAlertDialog(onDismissRequest = { replaceSaved = false },title = { Text("读取本机已保存版本") },text = { Text("此账号所有表单的未保存输入将被放弃，读取本机已保存的表单和原附件。不会提交或重新上传。") },
         confirmButton = { TextButton({ replaceSaved = false; f.replaceWithSavedDrafts() }) { Text("放弃未保存输入并读取") } },dismissButton = { TextButton({ replaceSaved = false }) { Text("继续编辑") } })
     FeatureColumn {
-        if (s.loading || s.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
-        s.notice?.let { Text(it, color = MaterialTheme.colorScheme.primary) }
-        s.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
-        s.draftError?.let { Text(it,color = MaterialTheme.colorScheme.error) }
-        if (!s.draftReady) {
+        val readingOnly=route.page in listOf(FeaturePage.Rules,FeaturePage.Reading,FeaturePage.SettingsHome)
+        MviStatusBanner(
+            loading = s.loading || s.busy,
+            notice = s.notice,
+            error = s.error,
+            secondaryError = if (!readingOnly) s.draftError else null,
+        )
+        if (!s.draftReady && !readingOnly) {
             Text("正在读取此账号的本机私有表单；读取完成前保留原文件。")
             if (!s.draftRestoring) FeatureButton("重试读取本机表单") { f.restoreDrafts() }
             return@FeatureColumn
         }
         if (store.state.value.user == null && route.page !in listOf(FeaturePage.Member, FeaturePage.Offers,
-                FeaturePage.Offer, FeaturePage.CaseWork, FeaturePage.Safety, FeaturePage.Recovery, FeaturePage.DataRequests)) {
+                FeaturePage.Offer, FeaturePage.CaseWork, FeaturePage.Safety, FeaturePage.Recovery, FeaturePage.DataRequests,
+                FeaturePage.Rules, FeaturePage.Reading, FeaturePage.SettingsHome, FeaturePage.GroupDirectory, FeaturePage.GroupPreview, FeaturePage.PetDiary, FeaturePage.Map)) {
             FeatureSection("登录后继续") {
                 Text("登录后可查看和处理${route.page.title}，当前页面会保留。")
                 FeaturePrimary("登录", !s.busy) { store.showLogin() }
@@ -43,14 +47,14 @@ internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
             }
             return@FeatureColumn
         }
-        if (s.draftError != null) { FeatureButton("重试保存本机表单",!s.busy) { f.retryDraftSave() }; FeatureButton("读取本机已保存版本",!s.busy) { replaceSaved = true } }
+        if (s.draftError != null && !readingOnly) { FeatureButton("重试保存本机表单",!s.busy) { f.retryDraftSave() }; FeatureButton("读取本机已保存版本",!s.busy) { replaceSaved = true } }
         if (s.conflict) {
             Text("记录已变化。当前输入保留，先核对最新记录；放弃当前修改后才能采用新版本。")
             FeatureButton("放弃此表单修改并重新载入", !s.busy) { f.discardAndReload() }
         }
         if (s.unconfirmedResult) Text("此页保留了结果未知的操作，不能重复提交。可刷新核对实际记录；具备操作回执的请求请从待核对操作查询。",color = MaterialTheme.colorScheme.error)
         if (s.error != null) FeatureButton("重新读取", !s.busy) { f.reload() }
-        if (s.pending.isNotEmpty() && route.page != FeaturePage.Recovery) FeatureButton("核对原操作结果", !s.busy) { f.open(FeatureRoute(FeaturePage.Recovery)) }
+        if (s.pending.isNotEmpty() && route.page != FeaturePage.Recovery && !readingOnly) FeatureButton("核对原操作结果", !s.busy) { f.open(FeatureRoute(FeaturePage.Recovery)) }
         val missingRecord = when (route.page) {
             FeaturePage.Member -> s.member == null
             FeaturePage.ProfileEdit -> s.profile == null
@@ -64,6 +68,8 @@ internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
             FeaturePage.Offer, FeaturePage.OfferEdit -> route.id > 0 && s.offer == null
             FeaturePage.Review -> route.id > 0 && s.review == null
             FeaturePage.Security -> s.methods == null
+            FeaturePage.Reading -> s.readingDocument == null
+            FeaturePage.Rules -> s.readingCatalog == null
             else -> false
         }
         if (missingRecord) {
@@ -114,8 +120,17 @@ internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
             if (s.scope != null && s.stage in listOf(SensitiveStage.Review, SensitiveStage.Failed)) {
                 OutlinedTextField(password, { password = it }, label = { Text("当前密码") }, visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(currentPhone, { currentPhone = it }, label = { Text("当前完整手机号（使用验证码时填写）") }, modifier = Modifier.fillMaxWidth())
-                FeatureButton(if(common.otpWait > 0) "${common.otpWait} 秒后重发" else "发送本次用途验证码",!busy && !common.busy && common.otpWait == 0 && currentPhone.isNotBlank()) { f.sendOTP(phone = currentPhone,purpose = "reauth") }
-                OutlinedTextField(code, { code = it }, label = { Text("本次用途验证码") }, modifier = Modifier.fillMaxWidth())
+                OtpVerificationFields(
+                    code = code,
+                    onCodeChange = { code = it },
+                    otpWait = common.otpWait,
+                    sendLabel = "发送本次用途验证码",
+                    codeLabel = "本次用途验证码",
+                    waitSuffix = "秒后重发",
+                    enabled = !busy && !common.busy,
+                    canSend = currentPhone.isNotBlank(),
+                    sendFirst = true,
+                ) { f.sendOTP(phone = currentPhone,purpose = "reauth") }
                 FeatureButton("验证本次用途", !busy && (password.isNotBlank() || code.isNotBlank())) { f.sensitive.verify(password, code); password = ""; code = "" }
             }
             if (s.stage == SensitiveStage.ReadyToSubmit || s.stage == SensitiveStage.Review && s.scope == null) CheckLine("我已核对上述对象、范围与内容", agreed, { agreed = it })
@@ -182,14 +197,16 @@ internal fun stateLabel(value: String): String = mapOf("active" to "有效", "pe
     val photos = s.photos[route].orEmpty()
     Text(if (private) "材料仅用于当前私密事项" else "照片将用于当前公开资料", color = MaterialTheme.colorScheme.onSurfaceVariant)
     PhotoPickerButton(maxPhotos - photos.size, !s.busy && !s.loading && s.confirmation == null && !s.unconfirmedResult, { f.addPhotos(it.take((maxPhotos - photos.size).coerceAtLeast(0)),private,safety) }, f::notify)
-    photos.forEachIndexed { index, photo ->
-        FeatureSection("${index + 1}. ${photo.name}") {
-            if (!safety) photo.mediaId?.let { MobilePhoto(store,it,store.state.value.user?.id,photo.name,Modifier.fillMaxWidth().heightIn(max = 180.dp)) }
-            if (photo.uploading) LinearProgressIndicator(Modifier.fillMaxWidth())
-            photo.error?.let { Text(it, color = MaterialTheme.colorScheme.error); FeatureButton("重试此照片", !s.busy) { f.retryPhoto(route,photo.key,private,safety) } }
-            Row { TextButton({ f.movePhoto(photo.key,-1) }, enabled = !s.busy && index > 0) { Text("前移") }; TextButton({ f.movePhoto(photo.key,1) }, enabled = !s.busy && index < photos.lastIndex) { Text("后移") }; TextButton({ f.removePhoto(photo.key) },enabled = !s.busy) { Text("移除") } }
-        }
-    }
+    PhotoQueueList(
+        store = store,
+        photos = photos,
+        ownerId = store.state.value.user?.id,
+        busy = s.busy,
+        showPreview = !safety,
+        onRetry = { key -> f.retryPhoto(route, key, private, safety) },
+        onMove = f::movePhoto,
+        onRemove = f::removePhoto,
+    )
 }
 
 @Composable internal fun AndroidFeatureMaster(store: MobileStore,s: FeatureState) {

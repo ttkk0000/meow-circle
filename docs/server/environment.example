@@ -7,6 +7,16 @@ REDIS_URL=
 JWT_SECRET=
 ADMIN_KEY=
 CORS_ALLOW_ORIGIN=http://localhost:8080
+# Browser Cookie/CSRF adapter allowed origin for web-client (/api/v2/auth/browser/*).
+MND_WEB_ORIGIN=http://localhost:5173
+# Optional external JSON catalog path for /api/v2/reading/* and /api/v2/publications/*.
+# Defaults to embedded internal/platform/mobileapi/reading-drafts.json when unset.
+MND_READING_CATALOG=
+# Local directory for private media objects (/api/v2/media/*).
+MND_MOBILE_MEDIA_DIR=data/mobile-media
+# Keep false in production; run migrations/001..009 explicitly before starting server.
+MND_AUTO_MIGRATE=0
+MND_ALLOW_MEMORY_MOBILE=0
 
 # Keep these OFF for ordinary development; never enable in production.
 MND_SEED_DEMO=0

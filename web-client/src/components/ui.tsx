@@ -25,12 +25,14 @@ export function Button({
   disabled,
   kind = "secondary",
   type = "button",
+  pressed,
 }: {
   children: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
   kind?: "primary" | "secondary" | "quiet" | "danger";
   type?: "button" | "submit";
+  pressed?: boolean;
 }) {
   return (
     <button
@@ -38,6 +40,7 @@ export function Button({
       className={`button ${kind}`}
       onClick={onClick}
       disabled={disabled}
+      aria-pressed={pressed}
     >
       {children}
     </button>

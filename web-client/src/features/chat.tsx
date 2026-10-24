@@ -29,6 +29,7 @@ import {
   Notice,
   PrivateImage,
   QueryState,
+  TaskPage,
 } from "../components/ui";
 import { Author } from "./Records";
 import { Attachments } from "../components/Attachments";
@@ -54,6 +55,148 @@ interface Expressions {
   favorites: string[];
   recent: string[];
 }
+/** 收藏与最近记录共用版本校验；失败后重新读取，不静默覆盖其他设备的改动。 */
+function useExpressionLibrary(owner: bigint) {
+  const catalog = useQuery<Catalog>("expression-catalog");
+  const expressions = useQuery<Page<Expressions>>(owner ? "expressions" : null);
+  const expression = expressions.data?.items[0];
+  const locked = useRef(false);
+  const [saving, setSaving] = useState(false);
+  async function remember(item: string, favorite = false) {
+    if (!owner || locked.current || expressions.loading || expressions.error)
+      return;
+    locked.current = true;
+    setSaving(true);
+    try {
+      const old = expression?.data ?? { favorites: [], recent: [] };
+      if (
+        favorite &&
+        !old.favorites.includes(item) &&
+        old.favorites.length >= 100
+      )
+        throw new Error("最多收藏100项，请先移除其他表情");
+      const next = favorite
+        ? {
+            ...old,
+            favorites: old.favorites.includes(item)
+              ? old.favorites.filter((id) => id !== item)
+              : [...old.favorites, item],
+          }
+        : {
+            ...old,
+            recent: [item, ...old.recent.filter((id) => id !== item)].slice(
+              0,
+              40,
+            ),
+          };
+      await api.request("expressions", {
+        method: "PUT",
+        body: { version: expression?.version ?? 0n, expressions: next },
+        owner,
+      });
+      await reload("expressions");
+    } catch (error) {
+      if (error instanceof HttpError && error.status === 409)
+        await reload("expressions");
+      throw error;
+    } finally {
+      locked.current = false;
+      setSaving(false);
+    }
+  }
+  return { catalog, expressions, expression, saving, remember };
+}
+
+export function ExpressionSettings() {
+  const owner = useSession().user?.id ?? 0n;
+  const { catalog, expressions, expression, saving, remember } =
+    useExpressionLibrary(owner);
+  const [tab, setTab] = useState("favorites"),
+    [error, setError] = useState("");
+  const favorites = expression?.data.favorites ?? [];
+  const selected = new Set(
+    tab === "recent" ? expression?.data.recent : favorites,
+  );
+  const shown = (id: string) => tab === "all" || selected.has(id);
+  const busy = saving || expressions.loading;
+  async function toggle(id: string) {
+    setError("");
+    try {
+      await remember(id, true);
+    } catch (e) {
+      setError(explain(e));
+    }
+  }
+  return (
+    <TaskPage
+      title="表情与贴纸"
+      actions={
+        <Button kind="primary" onClick={() => navigate("/settings")}>
+          返回设置
+        </Button>
+      }
+    >
+      <p className="muted">
+        收藏与最近记录按账号同步；在输入框选择表情后才会插入或发送。
+      </p>
+      <Choices
+        label="表情分类"
+        value={tab}
+        onChange={setTab}
+        choices={[
+          ["favorites", "收藏"],
+          ["recent", "最近"],
+          ["all", "全部"],
+        ]}
+      />
+      <QueryState
+        loading={catalog.loading || expressions.loading}
+        error={catalog.error || expressions.error}
+        onRetry={() => {
+          void reload("expression-catalog");
+          void reload("expressions");
+        }}
+      >
+        {tab !== "all" && !selected.size ? (
+          <Notice
+            title={tab === "recent" ? "还没有最近使用记录" : "还没有收藏的表情"}
+          >
+            可在全部表情中收藏，或回到评论和聊天输入框使用。
+          </Notice>
+        ) : null}
+        <div className="expression-grid expression-manager-grid">
+          {catalog.data?.emoji
+            .filter((item) => shown(item.id))
+            .map((item) => (
+              <div className="expression-cell" key={item.id}>
+                <span role="img" aria-label={item.label}>
+                  {item.text}
+                </span>
+                <Button disabled={busy} onClick={() => void toggle(item.id)}>
+                  {favorites.includes(item.id) ? "取消收藏" : "收藏"}
+                </Button>
+              </div>
+            ))}
+        </div>
+        <div className="expression-grid expression-manager-grid">
+          {catalog.data?.stickers
+            .filter((item) => shown(item.id))
+            .map((item) => (
+              <Card key={item.id}>
+                <StickerImage item={item} />
+                <Button disabled={busy} onClick={() => void toggle(item.id)}>
+                  {favorites.includes(item.id) ? "取消收藏" : "收藏"}
+                  {item.label}
+                </Button>
+              </Card>
+            ))}
+        </div>
+        {error ? <Notice title={error} error /> : null}
+      </QueryState>
+    </TaskPage>
+  );
+}
+
 function StickerImage({ item }: { item: Sticker }) {
   return (
     <span
@@ -91,7 +234,7 @@ export function Composer({
   canSend = true,
   allowMedia = true,
 }: {
-  kind: "entries" | "conversations" | "groups";
+  kind: "entries" | "pets" | "conversations" | "groups";
   id: bigint;
   reply?: bigint;
   onSent: () => void;
@@ -114,9 +257,7 @@ export function Composer({
   const [guestDraft, setGuestDraft] = useState<Draft>();
   const textarea = useRef<HTMLTextAreaElement>(null);
   const composingRef = useRef(false);
-  const catalog = useQuery<Catalog>("expression-catalog");
-  const expressions = useQuery<Page<Expressions>>(owner ? "expressions" : null);
-  const expression = expressions.data?.items[0];
+  const { catalog, expression, remember } = useExpressionLibrary(owner);
   const qualification = useQuery<{
     interaction: boolean;
     contract_version: bigint;
@@ -144,7 +285,7 @@ export function Composer({
       .catch((e) => {
         if (active) setError(explain(e));
       });
-    if (owner && kind === "entries")
+    if (owner && ["entries", "pets"].includes(kind))
       void readDraft(0n, route)
         .then((saved) => {
           if (
@@ -283,29 +424,8 @@ export function Composer({
     }
   }
   async function rememberExpression(item: string, favorite = false) {
-    if (!owner) return;
     try {
-      const old = expression?.data ?? { favorites: [], recent: [] };
-      const next = favorite
-        ? {
-            ...old,
-            favorites: old.favorites.includes(item)
-              ? old.favorites.filter((x) => x !== item)
-              : [...old.favorites, item].slice(0, 100),
-          }
-        : {
-            ...old,
-            recent: [item, ...old.recent.filter((x) => x !== item)].slice(
-              0,
-              40,
-            ),
-          };
-      await api.request("expressions", {
-        method: "PUT",
-        body: { version: expression?.version ?? 0n, expressions: next },
-        owner,
-      });
-      void reload("expressions");
+      await remember(item, favorite);
     } catch (e) {
       setError(explain(e));
     }
@@ -334,22 +454,21 @@ export function Composer({
         throw new Error("请先输入内容或选择照片");
       if (!sticker && allowMedia && current.photos.some((p) => !p.mediaId))
         throw new Error("请先逐张完成上传");
-      const body =
-        kind === "entries"
-          ? {
-              content: { text, sticker_id: sticker?.id ?? "" },
-              reply_to: reply,
-              idempotency_key: current.requestId,
-            }
-          : {
-              content: { text, sticker_id: sticker?.id ?? "" },
-              media_ids:
-                sticker || !allowMedia
-                  ? []
-                  : current.photos.map((p) => p.mediaId),
-              idempotency_key: current.requestId,
-            };
-      const path = `${kind}/${id}/${kind === "entries" ? "comments" : "messages"}`;
+      const body = ["entries", "pets"].includes(kind)
+        ? {
+            content: { text, sticker_id: sticker?.id ?? "" },
+            reply_to: reply,
+            idempotency_key: current.requestId,
+          }
+        : {
+            content: { text, sticker_id: sticker?.id ?? "" },
+            media_ids:
+              sticker || !allowMedia
+                ? []
+                : current.photos.map((p) => p.mediaId),
+            idempotency_key: current.requestId,
+          };
+      const path = `${kind}/${id}/${["entries", "pets"].includes(kind) ? "comments" : "messages"}`;
       latest.current = {
         ...current,
         uncertain: true,
@@ -461,7 +580,9 @@ export function Composer({
       ) : null}
       <div className="composer-row">
         <textarea
-          aria-label={kind === "entries" ? "说点什么…" : "发送消息…"}
+          aria-label={
+            ["entries", "pets"].includes(kind) ? "说点什么…" : "发送消息…"
+          }
           ref={textarea}
           rows={1}
           maxLength={2000}
@@ -507,7 +628,7 @@ export function Composer({
           发送
         </Button>
       </div>
-      {kind !== "entries" && draft ? (
+      {!["entries", "pets"].includes(kind) && draft ? (
         <Attachments
           photos={draft.photos}
           disabled={disabled || !canSend || !allowMedia}

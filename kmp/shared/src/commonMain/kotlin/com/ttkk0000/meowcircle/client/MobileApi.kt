@@ -69,6 +69,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         this(baseUrl, secrets, device, createPlatformHttpClient(mobileJson()))
     private val root = baseUrl.trim().trimEnd('/')
     val storageScope: String get() = root
+    fun readingDownloadURL(key: String): String { require(Regex("^[a-z][a-z0-9-]{0,63}$").matches(key));return "$root/reading/$key/download" }
     internal val json = mobileJson()
     private val sessionMutex = Mutex()
     private var storageUnavailable = false

@@ -19,7 +19,6 @@ import {
   TaskPage,
 } from "../components/ui";
 import { OTPButton, PurposeCheck } from "../components/PurposeCheck";
-import { LegalLinks } from "./AuthDialog";
 import { workflowURL } from "./workflows";
 
 export interface Profile {
@@ -57,7 +56,7 @@ export function Mine({ login }: { login: () => void }) {
         )}
       </Card>
       <Card title="我的任务">
-        <RowLink title="我的发布" to={`/entries?owner=${u?.id ?? 0n}`} />
+        <RowLink title="我的发布" to="/publications" />
         <RowLink title="我的宠物" to={`/pets?owner=${u?.id ?? 0n}`} />
         <RowLink title="领养申请与交接" to="/adoptions" />
         <RowLink title="预约与到访" to="/appointments" />
@@ -67,7 +66,7 @@ export function Mine({ login }: { login: () => void }) {
       </Card>
       <Card title="设置与协助">
         <RowLink title="本机草稿与待核对操作" to="/recovery" />
-        <RowLink title="消息与附近提醒设置" to="/settings" />
+        <RowLink title="设置与隐私" to="/settings" />
         <RowLink title="账号安全与交流资格" to="/security" />
         <RowLink title="儿童监护授权" to="/guardians" />
         <RowLink
@@ -446,34 +445,5 @@ function AccountChange({
       )}
       {error ? <Notice title={error} error /> : null}
     </Modal>
-  );
-}
-export function Rules() {
-  return (
-    <TaskPage title="规则与权益">
-      <Card title="M&amp;D · meow &amp; doggie">
-        <p>
-          猫咪优先，也欢迎狗狗的陪伴。发布时说明来源；线下见面、费用与照护责任须以当前双方确认的真实记录为准。
-        </p>
-        <LegalLinks />
-      </Card>
-      <Card title="当前事项的处理入口">
-        <RowLink
-          title="安全与隐私求助，游客也可提交"
-          to={workflowURL("safety")}
-        />
-        <RowLink
-          title="正式权利通知与原链路声明"
-          to={workflowURL("safety", "", 0n, { type: "rights_notice" })}
-        />
-        <RowLink
-          title="资料删除、注销与未结事项协助"
-          to={workflowURL("data")}
-        />
-        <RowLink title="核实、举报与申诉" to="/reviews" />
-        <RowLink title="原操作与受限事项进度" to="/recovery" />
-        <RowLink title="账号安全与儿童监护" to="/security" />
-      </Card>
-    </TaskPage>
   );
 }

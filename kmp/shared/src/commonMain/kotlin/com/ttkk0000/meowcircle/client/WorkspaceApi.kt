@@ -46,3 +46,17 @@ suspend fun MobileApi.richComment(id: Long, content: MessageBody, key: String, r
     durablePost("entries/$id/comments", CommentInput(content, key, replyTo), key)
 suspend fun MobileApi.richMessage(id: Long, group: Boolean, content: MessageBody, media: List<Long>, key: String): MobileRecord<MessageBody> =
     durablePost("${if (group) "groups" else "conversations"}/$id/messages", SendMessageInput(content, key, media), key)
+
+@Serializable data class CommentMetrics(@SerialName("comment_id") val commentId: Long,val likes: Long,@SerialName("viewer_liked") val viewerLiked: Boolean)
+suspend fun MobileApi.discussionComments(id: Long,pet: Boolean,cursor: Long = 0): MobilePage<CommentBody> =
+    get(if(pet) "pet_comments" else "entry_comments",mapOf("reference_id" to "$id","cursor" to "$cursor"))
+suspend fun MobileApi.commentMetrics(kind: String,ids: List<Long>): List<CommentMetrics> {
+    require(kind in listOf("entry_comments","pet_comments"))
+    return if(ids.isEmpty()) emptyList() else get("comment-metrics",mapOf("kind" to kind,"ids" to ids.take(50).joinToString(",")))
+}
+suspend fun MobileApi.richPetComment(id: Long,content: MessageBody,key: String,replyTo: Long): MobileRecord<CommentBody> =
+    durablePost("pets/$id/comments",CommentInput(content,key,replyTo),key)
+suspend fun MobileApi.reactComment(kind: String,id: Long,liked: Boolean): kotlinx.serialization.json.JsonElement {
+    require(kind in listOf("entry_comments","pet_comments"))
+    return receiptWrite("$kind/$id/reaction",ReactionInput(liked))
+}

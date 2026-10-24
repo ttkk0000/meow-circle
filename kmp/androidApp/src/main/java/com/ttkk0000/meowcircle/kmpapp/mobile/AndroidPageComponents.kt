@@ -1,6 +1,7 @@
 package com.ttkk0000.meowcircle.kmpapp.mobile
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -79,14 +80,19 @@ internal val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
         Column(Modifier.padding(16.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) { Text(title,fontWeight = FontWeight.Bold); Text(text,style = MaterialTheme.typography.bodySmall) }
     }
 }
-@Composable internal fun MemberSection(store: MobileStore,id: Long,content: @Composable ColumnScope.() -> Unit) {
+@Composable internal fun MemberSection(store: MobileStore,id: Long,compact: Boolean = false,content: @Composable ColumnScope.() -> Unit) {
     val state by store.state.collectAsStateWithLifecycle()
     LaunchedEffect(id,state.user?.id) { store.ensureMember(id) }
     val member = state.members[id]
     val name = member?.nickname?.ifBlank { member.username } ?: "宠友资料待核对"
-    TaskSection(name) {
-        avatarMediaId(member?.avatarUrl.orEmpty())?.let { media -> MobilePhoto(store,media,state.user?.id,"$name 的头像",Modifier.size(48.dp).clip(CircleShape)) }
-        content()
+    Card(colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.surface),modifier=Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(if(compact) 12.dp else 16.dp),verticalArrangement=Arrangement.spacedBy(if(compact) 8.dp else 12.dp)) {
+            Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                avatarMediaId(member?.avatarUrl.orEmpty())?.let { media -> MobilePhoto(store,media,state.user?.id,"$name 的头像",Modifier.size(if(compact) 32.dp else 48.dp).clip(CircleShape)) }
+                Text(name,style=if(compact) MaterialTheme.typography.labelMedium else MaterialTheme.typography.titleMedium)
+            }
+            content()
+        }
     }
 }
 @Composable internal fun NavigationRow(title: String,detail: String = "",onClick: () -> Unit) {
@@ -135,6 +141,123 @@ internal val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
         items(page.items,key = { it.id }) { row(it) }
         item { PageFooter(page,retry,more,emptyText,refreshVisible = true) }
     }
+    }
+}
+
+@Composable internal fun <T> ChoiceChipBar(
+    options: List<Pair<T, String>>,
+    selected: T,
+    onSelect: (T) -> Unit,
+    scrollable: Boolean = false,
+    enabled: Boolean = true,
+    badge: (@Composable (T) -> Unit)? = null,
+) {
+    val modifier = if (scrollable) Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()) else Modifier.fillMaxWidth()
+    Row(modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        options.forEach { (value, label) ->
+            FilterChip(
+                selected = selected == value,
+                onClick = { onSelect(value) },
+                enabled = enabled,
+                label = {
+                    if (badge == null) Text(label)
+                    else Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) { Text(label); badge(value) }
+                },
+            )
+        }
+    }
+}
+
+@Composable internal fun <T> SegmentedTextBar(
+    options: List<Pair<T, String>>,
+    selected: T,
+    onSelect: (T) -> Unit,
+    scrollable: Boolean = false,
+    enabled: Boolean = true,
+) {
+    val modifier = if (scrollable) Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()) else Modifier
+    Row(modifier) {
+        options.forEach { (value, label) ->
+            TextButton(onClick = { onSelect(value) }, enabled = enabled) {
+                Text(if (selected == value) "● $label" else label)
+            }
+        }
+    }
+}
+
+@Composable internal fun PhotoQueueList(
+    store: MobileStore,
+    photos: List<PhotoAttachment>,
+    ownerId: Long?,
+    busy: Boolean,
+    showPreview: Boolean = true,
+    compactPreview: Boolean = false,
+    onRetry: (String) -> Unit,
+    onMove: (String, Int) -> Unit,
+    onRemove: (String) -> Unit,
+) {
+    photos.forEachIndexed { index, photo ->
+        MndSection("${index + 1}. ${photo.name}") {
+            if (showPreview) {
+                photo.mediaId?.let { mediaId ->
+                    MobilePhoto(
+                        store,
+                        mediaId,
+                        ownerId,
+                        photo.name,
+                        if (compactPreview) Modifier.size(112.dp) else Modifier.fillMaxWidth().heightIn(max = 180.dp),
+                    )
+                }
+            }
+            if (photo.uploading) LinearProgressIndicator(Modifier.fillMaxWidth())
+            photo.error?.let {
+                Text(it, color = MaterialTheme.colorScheme.error)
+                MndSecondaryButton("重试此照片", !busy) { onRetry(photo.key) }
+            }
+            Row {
+                TextButton({ onMove(photo.key, -1) }, enabled = !busy && index > 0) { Text("前移") }
+                TextButton({ onMove(photo.key, 1) }, enabled = !busy && index < photos.lastIndex) { Text("后移") }
+                TextButton({ onRemove(photo.key) }, enabled = !busy) { Text("移除") }
+            }
+        }
+    }
+}
+
+@Composable internal fun OtpVerificationFields(
+    code: String,
+    onCodeChange: (String) -> Unit,
+    otpWait: Int,
+    sendLabel: String,
+    codeLabel: String = "验证码",
+    waitSuffix: String = "秒后可重发",
+    enabled: Boolean = true,
+    canSend: Boolean = true,
+    sendFirst: Boolean = false,
+    onSend: () -> Unit,
+) {
+    val sendAction: @Composable () -> Unit = {
+        MndSecondaryButton(
+            label = if (otpWait > 0) "$otpWait $waitSuffix" else sendLabel,
+            enabled = enabled && canSend && otpWait == 0,
+            onClick = onSend,
+        )
+    }
+    val codeField: @Composable () -> Unit = {
+        OutlinedTextField(
+            value = code,
+            onValueChange = onCodeChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(codeLabel) },
+            singleLine = true,
+            enabled = enabled,
+        )
+    }
+    if (sendFirst) {
+        sendAction()
+        codeField()
+    } else {
+        codeField()
+        sendAction()
     }
 }
 

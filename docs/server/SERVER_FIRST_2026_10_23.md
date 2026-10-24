@@ -1,5 +1,7 @@
 # 服务端优先完善与作业交接
 
+> **2026-10-24 后续更新**：在本文批次之后，服务端已新增公开阅读与法规制度库（`internal/platform/mobileapi/reading.go`）、浏览器 `HttpOnly Cookie + X-MND-CSRF` 会话适配（`browser.go`）、宠物评论与表情反应（`009_pet_discussions.sql` / `comment_reactions.go`）、内容/救助订阅通知与第 6 个后台作业 `content_updates`（`content_subscriptions.go`）、群目录检索与群主转让（`group_directory.go`）、宠物唯一放置与候选队列（`adoption_placement.go`）、跨单据证据保留（`evidence_retention.go`）。当前 OpenAPI 为 `230` Paths / `259` Operations / `112` Schemas，共 `44` 张 `mobile_*` 聚合表。最新服务端架构短板与待完善清单见[服务端完整性审计（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。
+
 2026-10-23，AI-20261023-SERVER-FIRST。用户要求服务器未完善时优先处理；本轮只扩服务端，保留前批公共KMP和生命周期未提交成果。基线main／`5de631b669d312ddd461d015ed137dad16c6ed02`，本批未提交／推送。源码与静态检查完成，不能据此宣称服务器已可上线。
 
 ## 本批修正

@@ -1,5 +1,11 @@
 # M&D 系统架构与技术实施合同
 
+> **2026-10-24 架构与源码基线更新**：
+> - **产品与体验基线**：已同步至 [PRD v2.1（FR-001 至 FR-042，含 EPIC-008 监护/AI标识/双城准入/数据权利/游客安全/证据保全）](prd.md)、[UX v2.1（UX-01 至 UX-17）](ux-design.md)、[首批城市物种准入与四类标准协议模板](../design/MND_CITY_SPECIES_AND_CONTRACT_TEMPLATES.md)。
+> - **服务端基线**：OpenAPI 3.1 已扩至 `230` Paths / `259` Operations / `112` Schemas，PostgreSQL 迁移扩至 `001`–`009`（共 `44` 张 `mobile_*` 聚合表），后台 `cmd/worker` 作业扩至 6 类（`push` / `nearby_alerts` / `content_updates` / `privacy_cleanup` / `provider_revocations` / `maintenance`），并新增浏览器 `HttpOnly Cookie + X-MND-CSRF` 会话适配与独立公开阅读/法规目录（`/api/v2/reading/*`、`/api/v2/publications/*`）。
+> - **客户端基线**：`kmp/shared/.../client`、`kmp/androidApp/.../mobile` 与新 `web-client/`（React + TypeScript + Vite）已完成 740 跨端布局映射与源码落地（见[2026-10-24客户端说明](../client/FIGMA_ANDROID_WEB_2026_10_24.md)）。
+> - **待完善项**：容器与 Makefile 迁移脚本同步（`008`–`009`）、PostgreSQL `GIN(media_ids)` 索引、`SERIALIZABLE` 事务内 `allRecords()` 查询收敛及多副本高可用改造详见[服务端完整性审计与待完善清单（2026-10-24）](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。
+
 规划基线：2026-10-22，AI-20261022-TECH-PLAN；当前状态更新：2026-10-23，AI-20261023-CLOSURE-IMPLEMENT。服务端、公共KMP及Android主要合同已有后续源码，不能再把全部路径称为拟议；运行／迁移／供应商尚未验收。当前差距查[功能账本](../client/CURRENT_DELIVERY_STATUS_2026_10_23.md)，新增状态规则查[闭环合同](../design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)。本文承接[PRD](prd.md)、[安全合同](../design/MND_SAFETY_AND_LIFECYCLE_SPEC.md)、[操作合同](../design/MND_LOGIC_FLOW_CONTRACT.md)和[法律设计增补](../design/MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md)。[准入核对](gate-check.md)及[追溯JSON](implementation-trace-2026-10-22.json)保留当时规划快照，不作当前完成证明。
 
 ## 1. 系统范围与当前证据

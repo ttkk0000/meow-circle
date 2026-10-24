@@ -1,8 +1,15 @@
 # Runbook
 
-当前v2请先读[2026-10-23部署、运营与恢复手册](server/V2_RELEASE_RUNBOOK_2026_10_23.md)。下文为旧端历史操作参考，命令存在不授予构建、服务或迁移权限；当前环境仍遵守根AGENTS中的Go／Gradle禁令。
+> **2026-10-24 v2 运维与验收必读**：
+> - **v2 部署与恢复手册**：[M&D v2 部署、运营与恢复交接手册（2026-10-23）](server/V2_RELEASE_RUNBOOK_2026_10_23.md)
+> - **v2 服务端完整性审计与配置缺口**：[服务端完整性审计与待完善清单（2026-10-24）](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（含 `migrations/001`–`009` 全量顺序、`docker-compose.yml` / `Makefile` 漏挂 `008`–`009` 提醒、`cmd/worker` 6 类后台作业与环境变量模板 [`environment.example`](server/environment.example)）
+> - **静态检查脚本（不触发 Go / Gradle 编译）**：
+>   - `python3 scripts/export_mobile_openapi.py`（静态生成 `docs/api/mobile-v2.openapi.json`）
+>   - `python3 scripts/check_mobile_static.py`（核对 44 张表、OpenAPI 操作/Schema 与 KMP DTO）
+>   - `python3 scripts/check_client_first_batch_static.py`（核对 Android / iOS / Web 客户端静态源码）
+> - **硬性禁令提醒**：在当前机器上严禁运行 `gradle` / `./gradlew` / `go build` / `go run` / `go test`（见根目录 `AGENTS.md`）。下文为早期 v1 阶段的操作参考。
 
-Last updated: 2026-06-06
+Last updated: 2026-10-24 (v1 baseline below originally recorded 2026-06-06)
 
 This runbook captures how to run, verify, and safely change the current M&D
 repository. It is intentionally practical: start here when you need the system

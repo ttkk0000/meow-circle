@@ -1,6 +1,6 @@
 # M&D 客户端代码实施与完成标准
 
-2026-10-24最新：Android手机／平板的Figma对齐、公共页面与新Web消费端见[本批说明](FIGMA_ANDROID_WEB_2026_10_24.md)、[740状态追踪](figma-implementation-trace-2026-10-24.json)及[Web接入](../../web-client/README.md)。保留2026-10-23的日期／人员选择、分页、方向状态、深链、领养闭环与服务端作业。本批新增源码／静态结果另记，不把映射、历史证据或页面入口当作全量视觉／运行通过；iOS／Desktop未同步迁移。
+2026-10-24最新：Android手机／平板的Figma对齐、公共页面（含独立公开阅读与法规制度库 `AndroidReadingContent.kt` / `AndroidPublicationsContent.kt`）、宠物评论与反应、群目录及新Web消费端（`web-client/`，含 `ReadingPages.tsx` / `Publications.tsx`）见[本批说明](FIGMA_ANDROID_WEB_2026_10_24.md)、[740状态追踪](figma-implementation-trace-2026-10-24.json)及[Web接入](../../web-client/README.md)。服务端与产品同步状态见[PRD v2.1](../bmad/prd.md)、[UX v2.1](../bmad/ux-design.md)、[Figma产品对齐核查](../design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md)与[服务端完整性审计（2026-10-24）](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（OpenAPI 扩至 `230` Paths / `259` Operations / `112` Schemas / `44` 张 `mobile_*` 表）。保留2026-10-23的日期／人员选择、分页、方向状态、深链、领养闭环与服务端作业。本批新增源码／静态结果另记，不把映射、历史证据或页面入口当作全量视觉／运行通过；iOS／Desktop未同步迁移。
 
 2026-10-23最新：已接入[Android UI框架／10个基础组件与维护规范](UI_COMPONENTS.md)，主题与尺寸集中；[平板状态续作](PAD_STATE_AND_UI_2026_10_23.md)补主从列表／双列表单的可移动内容、日期与人员筛选、流程内输入状态和同意绑定。58份客户端源码与30扩展分派等静态通过，横竖屏／焦点／IME／设备仍未运行验收。只改Android入口，未迁移苹果或旧Web／Desktop。
 

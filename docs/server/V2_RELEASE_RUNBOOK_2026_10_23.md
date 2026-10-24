@@ -1,5 +1,7 @@
 # M&D v2 部署、运营与恢复交接手册
 
+> **2026-10-24 补充说明**：数据库迁移范围已扩至 `001`–`009`（新增 `009_pet_discussions.sql` 宠物评论与表情反应表），独立 worker 作业扩至 6 类（新增 `content_updates`），环境变量新增 `MND_WEB_ORIGIN` 与 `MND_READING_CATALOG`。部署前须先修复 `docker-compose.yml` / `Makefile` 漏挂 `008`–`009` 及 `Dockerfile` 未打包 `cmd/worker` 的问题，详见[服务端完整性审计与待完善清单（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。
+
 2026-10-23，AI-20261023-CLOSURE-IMPLEMENT。供获明确授权后的环境实施与验收；本文没有执行下列动作。当前Go／Gradle运行禁令继续有效。旧[Runbook](../RUNBOOK.md)保留旧端参考，不能作为新v2已部署证明。
 
 ## 1. 放行记录

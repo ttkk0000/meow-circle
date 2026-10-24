@@ -78,10 +78,11 @@ const messages: Record<string, string> = {
   publication_declaration_required: "请核对本次内容来源声明",
 };
 const publicPath = (path: string) =>
-  /^(group-directory|entries|pets|offers|cases)(?:\/\d+)?$/.test(
+  /^reading(?:\/[a-z][a-z0-9-]{0,63}(?:\/download)?)?(?:\?|$)/.test(path) ||
+  /^(group-directory|entries|pets|offers|cases|entry_comments|pet_comments)(?:\/\d+)?$/.test(
     path.split("?")[0],
   ) ||
-  /^(auth\/capabilities|media\/\d+\/content|share\/(?:entries|pets|offers|cases)\/\d+|users\/\d+|entry-metrics|expression-catalog|expression-assets\/v1\/[^/]+|(?:pets|offers)\/\d+\/verifications)(?:\?|$)/.test(
+  /^(auth\/capabilities|media\/\d+\/content|share\/(?:entries|pets|offers|cases)\/\d+|users\/\d+|entry-metrics|comment-metrics|expression-catalog|expression-assets\/v1\/[^/]+|(?:pets|offers)\/\d+\/verifications)(?:\?|$)/.test(
     path,
   );
 function normalizeRecords(value: unknown): void {

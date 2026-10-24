@@ -3479,9 +3479,9 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAuthDialog.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
-      "web_module_route": "/security",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "web_source": "web-client/src/App.tsx",
+      "web_module_route": "/users/{id}",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -3687,12 +3687,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt",
-      "web_source": "web-client/src/features/Records.tsx",
-      "web_module_route": "/",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/guide",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "106:1425",
+        "311:199",
+        "311:201",
+        "311:202"
+      ],
       "runtime_verified": false
     },
     {
@@ -6272,12 +6277,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Recovery.tsx",
-      "web_module_route": "/recovery",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/reading?type=inventory",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "460:17428"
+      ],
       "runtime_verified": false
     },
     {
@@ -11291,8 +11298,8 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
       "web_module_route": "/rules",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
@@ -13834,7 +13841,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -13860,7 +13867,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -13886,7 +13893,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -13912,7 +13919,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -13938,7 +13945,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -13964,7 +13971,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -13990,7 +13997,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -14016,7 +14023,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "external_configuration_and_runtime_required",
       "note": "保留真实不可用／等待状态；不能以本地变量模拟供应商、核验或系统权限。",
       "remote_screenshots_inspected": [],
@@ -14042,7 +14049,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "external_configuration_and_runtime_required",
       "note": "保留真实不可用／等待状态；不能以本地变量模拟供应商、核验或系统权限。",
       "remote_screenshots_inspected": [],
@@ -14068,7 +14075,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -14094,7 +14101,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -14124,7 +14131,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -14150,7 +14157,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -14176,7 +14183,7 @@
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
       "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "web_module_route": "/notification-settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
       "remote_screenshots_inspected": [],
@@ -15538,12 +15545,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/settings",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/privacy",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "56:76"
+      ],
       "runtime_verified": false
     },
     {
@@ -15725,11 +15734,13 @@
         "tabletL": "cross-platform-full-state.json"
       },
       "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
-      "web_module_route": "/pets",
+      "web_source": "web-client/src/App.tsx",
+      "web_module_route": "/users/{id}",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "106:1406"
+      ],
       "runtime_verified": false
     },
     {
@@ -15750,12 +15761,14 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Recovery.tsx",
-      "web_module_route": "/recovery",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/reading?type=providers",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "632:357526"
+      ],
       "runtime_verified": false
     },
     {
@@ -16712,12 +16725,14 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Recovery.tsx",
-      "web_module_route": "/recovery",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/reading?type=retention",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "632:357509"
+      ],
       "runtime_verified": false
     },
     {
@@ -17648,12 +17663,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/rules",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/rules?view=appeal",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "460:17483"
+      ],
       "runtime_verified": false
     },
     {
@@ -17674,12 +17691,14 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/rules",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/rules?view=changes",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "632:357528"
+      ],
       "runtime_verified": false
     },
     {
@@ -17700,12 +17719,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/rules",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/reading?type=adoption",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "460:17468"
+      ],
       "runtime_verified": false
     },
     {
@@ -17726,12 +17747,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/rules",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/rules?view=history",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "460:17473"
+      ],
       "runtime_verified": false
     },
     {
@@ -17752,12 +17775,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
       "web_module_route": "/rules",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "460:17463"
+      ],
       "runtime_verified": false
     },
     {
@@ -17882,12 +17907,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAuthDialog.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
-      "web_module_route": "/security",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/reading?type=sdk",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "460:17453"
+      ],
       "runtime_verified": false
     },
     {
@@ -17934,12 +17961,14 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/rules",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/reading?type=seller",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "632:357529"
+      ],
       "runtime_verified": false
     },
     {
@@ -18146,12 +18175,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/rules",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/reading?type=service",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "460:17458"
+      ],
       "runtime_verified": false
     },
     {
@@ -18172,12 +18203,14 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
       "web_module_route": "/settings",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "56:75"
+      ],
       "runtime_verified": false
     },
     {
@@ -18926,12 +18959,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/rules",
+      "android_source": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt",
+      "web_source": "web-client/src/features/ReadingPages.tsx",
+      "web_module_route": "/reading?type=teen",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "remote_screenshots_inspected": [
+        "460:17408"
+      ],
       "runtime_verified": false
     },
     {

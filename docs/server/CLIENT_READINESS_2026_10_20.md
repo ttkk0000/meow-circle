@@ -1,5 +1,7 @@
 # Android / iOS 接入前服务端核对
 
+> **2026-10-24 当前基线**：OpenAPI 3.1 已扩展至 `230` Paths / `259` Operations / `112` Schemas，PostgreSQL 迁移覆盖 `001`–`009`（44 张 `mobile_*` 表），新增 Web 浏览器 `Cookie + CSRF` 适配、独立阅读与法规目录（`/reading/*`、`/publications/*`）、宠物评论与表情反应、内容更新订阅等接口。最新服务端状态与剩余架构短板见[服务端完整性审计（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)与[现行 API 交接](MOBILE_SERVER.md)。
+
 2026-10-23当前：[服务端优先完善与余量](SERVER_FIRST_2026_10_23.md)及[现行API交接](MOBILE_SERVER.md)替代下文早期接口清单；当前209路径／236操作／100schema仅静态检查通过，仍无编译／运行验收。
 
 2026-10-22后续源码修订见[实施记录](SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)：邮箱与手机号资格、会话epoch、用途grant、操作回执及业务/清理合同已新增，原141路径/恒拒绝属于修订前取样。新增代码与008迁移尚未运行验收；此历史核对正文保留，不作为当前代码接口清单。

@@ -222,7 +222,7 @@ small {
   min-width: 0;
 }
 .task-content {
-  max-width: 852px;
+  max-width: 820px;
   margin: 0 auto;
   padding: 16px;
   display: flex;
@@ -237,7 +237,7 @@ small {
   flex: none;
 }
 .task-actions > div {
-  max-width: 820px;
+  max-width: 788px;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
@@ -1124,6 +1124,31 @@ dialog > header {
   border-radius: 16px;
   background: var(--subtle);
 }
+.reading-cover {
+  width: 100%;
+  aspect-ratio: 358/240;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+@media (min-width: 680px) {
+  .reading-cover {
+    height: 360px;
+    aspect-ratio: auto;
+  }
+}
+.reading-heading {
+  font-size: 20px;
+  line-height: 30px;
+}
+.reading-lead {
+  font-size: 28px;
+  line-height: 40px;
+}
+.reading-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
 .author {
   display: inline-flex;
@@ -1140,4 +1165,58 @@ dialog > header {
 .mini-avatar .icon {
   width: 20px;
   height: 20px;
+}
+
+.expression-manager-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 192px), 1fr));
+}
+.reading-label {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+}
+.comment-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.comment-actions > .button:first-child {
+  margin-right: auto;
+}
+.comment-actions [aria-pressed="true"] {
+  background: var(--brand-soft);
+}
+.comment-menu {
+  position: relative;
+}
+.comment-menu summary {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  min-height: 48px;
+  cursor: pointer;
+  list-style: none;
+}
+.comment-menu summary::-webkit-details-marker {
+  display: none;
+}
+.comment-menu-items {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  min-width: 180px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  z-index: 5;
 }

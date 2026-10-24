@@ -1,5 +1,9 @@
 # M&D 技术实施准入核对
 
+> **2026-10-24 复核更新**：
+> 1. [PRD v2.1](prd.md) 已将原 34 条 FR 扩展为 **42 条 FR（`FR-001`–`FR-042`）与 `EPIC-008`**，[UX v2.1](ux-design.md) 已扩展至 **`UX-01`–`UX-17`**。新增的 `FR-035`–`FR-042` 均已对应到服务端 `B04`–`B12` 模块（`qualification.go`、`appointment_admission.go`、`adoption_placement.go`、`evidence_retention.go`、`data_requests.go`、`reading.go`）与 Android / `web-client` 源码（见[Figma与产品对齐核查](../design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md)）。
+> 2. 服务端源码已达 `230` Paths / `259` Operations / `112` Schemas / `44` 张 `mobile_*` 表，但因**尚未执行真实编译、数据库 `001`–`009` 迁移、外部供应商联调与生产运营认领**，公开上线准入继续维持 **FAIL（仅限源码与静态验收通过）**。服务端剩余 6 项工程短板见[服务端完整性审计（2026-10-24）](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。
+
 2026-10-22源码补充：后续[服务端／共享层批次](../server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)已补B04–B12核心合同及静态核对。下文“未实现”为规划时快照；未做类型／运行验收，真实运营事实未落实，完整上线决策仍FAIL。
 
 - 日期：2026-10-22；复核：Codex，任务AI-20261022-TECH-PLAN。
