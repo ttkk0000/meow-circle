@@ -32,6 +32,7 @@ import { Chat } from "./features/chat";
 import { Recovery } from "./features/Recovery";
 import { MapPage } from "./features/MapPage";
 import { ContentPage } from "./features/ContentPage";
+import { InboxReadAll } from "./components/InboxReadAll";
 import { WorkflowEditor } from "./features/WorkflowEditor";
 import { workflows, workflowURL, type Context } from "./features/workflows";
 
@@ -589,6 +590,7 @@ function InboxPage({ params }: { params: URLSearchParams }) {
       <Check checked={unread} onChange={setUnread}>
         仅看未读
       </Check>
+      <InboxReadAll />
       {error ? <Notice title={error} error /> : null}
       {tab === "chat" ? (
         <>
@@ -603,9 +605,14 @@ function InboxPage({ params }: { params: URLSearchParams }) {
             loading={direct.loading || groups.loading}
             error={direct.error || groups.error}
             onRetry={() => {
-              direct.refresh();
-              groups.refresh();
+              direct.retry();
+              groups.retry();
             }}
+            keepContent={
+              (!!direct.rows.length || !!groups.rows.length) &&
+              !direct.denied &&
+              !groups.denied
+            }
           >
             {direct.rows
               .filter(
@@ -644,7 +651,7 @@ function InboxPage({ params }: { params: URLSearchParams }) {
                   detail={
                     Array.isArray(row.data.muted) &&
                     row.data.muted.includes(session.user?.id)
-                      ? "免打扰 · 不计入全局总数"
+                      ? "免打扰 · 未读保留"
                       : "群聊"
                   }
                   muted={
@@ -662,7 +669,8 @@ function InboxPage({ params }: { params: URLSearchParams }) {
         <QueryState
           loading={notices.loading}
           error={notices.error}
-          onRetry={notices.refresh}
+          onRetry={notices.retry}
+          keepContent={!!notices.rows.length && !notices.denied}
         >
           {notificationRows.map((row) => (
             <MessageRow

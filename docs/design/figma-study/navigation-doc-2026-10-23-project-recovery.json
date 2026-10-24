@@ -1,0 +1,106 @@
+{
+  "texts": [
+    {
+      "id": "396:6",
+      "text": "先进入手机总览，或在下方按功能选择设备。所有入口都定位到现有原画板。 完整跳转入口：05 功能索引 →",
+      "ranges": [
+        {
+          "start": 0,
+          "end": 42,
+          "link": null
+        },
+        {
+          "start": 42,
+          "end": 51,
+          "link": {
+            "type": "NODE",
+            "value": "403:5"
+          }
+        }
+      ],
+      "w": 1440,
+      "h": 26
+    },
+    {
+      "id": "396:36",
+      "text": "功能索引 · 原稿定位",
+      "ranges": [
+        {
+          "start": 0,
+          "end": 11,
+          "link": null
+        }
+      ],
+      "w": 416,
+      "h": 30
+    },
+    {
+      "id": "396:37",
+      "text": "功能分组、各端原稿与增补评审入口",
+      "ranges": [
+        {
+          "start": 0,
+          "end": 16,
+          "link": null
+        }
+      ],
+      "w": 416,
+      "h": 22
+    },
+    {
+      "id": "I396:38;296:7",
+      "text": "进入功能索引 ↗",
+      "ranges": [
+        {
+          "start": 0,
+          "end": 8,
+          "link": {
+            "type": "NODE",
+            "value": "403:5"
+          }
+        }
+      ],
+      "w": 160,
+      "h": 22
+    },
+    {
+      "id": "I396:15;296:7",
+      "text": "进入手机总览 ↗",
+      "ranges": [
+        {
+          "start": 0,
+          "end": 8,
+          "link": {
+            "type": "NODE",
+            "value": "425:1839840"
+          }
+        }
+      ],
+      "w": 160,
+      "h": 22
+    }
+  ],
+  "button": {
+    "id": "396:38",
+    "name": "原稿入口 / 进入功能索引 ↗",
+    "reactions": [
+      {
+        "action": {
+          "type": "URL",
+          "url": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5",
+          "openInNewTab": false
+        },
+        "actions": [
+          {
+            "type": "URL",
+            "url": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5",
+            "openInNewTab": false
+          }
+        ],
+        "trigger": {
+          "type": "ON_CLICK"
+        }
+      }
+    ]
+  }
+}

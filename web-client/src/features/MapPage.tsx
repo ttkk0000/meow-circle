@@ -148,18 +148,24 @@ export function MapPage() {
         />
       </div>
       {error ? <Notice title={error} error /> : null}
-      {record ? (
+      {record && record.data.location_precision !== "area" ? (
         <CoarseMap
           latitude={Number(record.data.latitude)}
           longitude={Number(record.data.longitude)}
         />
-      ) : lat !== undefined && lon !== undefined ? (
+      ) : !record && lat !== undefined && lon !== undefined ? (
         <CoarseMap latitude={lat} longitude={lon} />
+      ) : null}
+      {record?.data.location_precision === "area" ? (
+        <Notice title="此求助没有地图点">
+          {String(record.data.city)} · {String(record.data.area)}
+        </Notice>
       ) : null}
       <QueryState
         loading={page.loading}
         error={page.error}
-        onRetry={page.refresh}
+        onRetry={page.retry}
+        keepContent={!!page.rows.length && !page.denied}
       >
         {page.rows.map((row) => (
           <Card key={String(row.id)} title={String(row.data.title)}>

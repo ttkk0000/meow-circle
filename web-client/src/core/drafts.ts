@@ -15,7 +15,7 @@ export interface Draft {
   route: string;
   revision: number;
   values: Record<string, unknown>;
-  ui?: { origin?: string };
+  ui?: { origin?: string; keepLocation?: boolean };
   baseVersion: bigint;
   photos: PhotoDraft[];
   requestId: string;
@@ -266,7 +266,7 @@ export async function clearOwner(owner: bigint) {
           revision: old.revision + 1,
           values: {},
           photos: [],
-          uncertain: false,
+          uncertain: old.uncertain,
           original: undefined,
           access: undefined,
         });

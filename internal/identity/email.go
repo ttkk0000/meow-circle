@@ -78,7 +78,7 @@ func (s *Service) IssueEmailOTP(ctx context.Context, actor int64, client string,
 	}
 	code := fmt.Sprintf("%06d", n.Int64())
 	var challenge mobile.Record
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		if in.Purpose == "rights_contact" {
 			r, e := tx.ByKey(mobile.AuthChallenges, mobile.Fingerprint(in.SafetyToken))
 			if e != nil {
@@ -135,7 +135,7 @@ func (s *Service) IssueEmailOTP(ctx context.Context, actor int64, client string,
 		return
 	}
 	delivery := s.Email.Send(ctx, address, code, in.Purpose)
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		r, e := tx.Get(mobile.OTPChallenges, challenge.ID)
 		if e != nil {
 			return e
@@ -275,6 +275,9 @@ func (s *Service) RecoverEmail(ctx context.Context, in EmailInput) error {
 		}
 		a.RevokeBefore, valid = s.Now(), true
 		a.SessionEpoch++
+		if e := mobile.DisablePushDevices(tx, r.OwnerID, "", true); e != nil {
+			return e
+		}
 		return set(tx, mobile.Accounts, &r, a)
 	})
 	if e == nil && !valid {
@@ -284,7 +287,7 @@ func (s *Service) RecoverEmail(ctx context.Context, in EmailInput) error {
 }
 func (s *Service) VerifyPhone(ctx context.Context, actor int64, code string) error {
 	valid := false
-	e := s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	e := s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		if e := active(tx, actor); e != nil {
 			return e
 		}

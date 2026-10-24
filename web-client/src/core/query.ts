@@ -1,10 +1,11 @@
 import { useEffect, useSyncExternalStore } from "react";
-import { api, explain, isAbort } from "./api";
+import { api, explain, isAbort, HttpError } from "./api";
 
 interface QueryState<T> {
   data?: T;
   loading: boolean;
   error?: string;
+  denied?: boolean;
 }
 interface Entry {
   state: QueryState<unknown>;
@@ -35,8 +36,16 @@ export async function reload(path: string) {
     const data = await api.request(path, { signal: abort.signal });
     if (!abort.signal.aborted) record.state = { data, loading: false };
   } catch (error) {
-    if (!isAbort(error) && !abort.signal.aborted)
-      record.state = { loading: false, error: explain(error) };
+    if (!isAbort(error) && !abort.signal.aborted) {
+      const denied =
+        error instanceof HttpError && [401, 403, 404].includes(error.status);
+      record.state = {
+        data: denied ? undefined : record.state.data,
+        loading: false,
+        error: explain(error),
+        denied,
+      };
+    }
   } finally {
     if (!abort.signal.aborted) {
       record.abort = undefined;

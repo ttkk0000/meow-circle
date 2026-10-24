@@ -23,7 +23,20 @@ sealed interface MobileDestination {
 }
 
 data class PageState<T>(val items: List<MobileRecord<T>> = emptyList(), val next: Long = 0, val loading: Boolean = false,
-    val loaded: Boolean = false, val error: String? = null)
+    val loaded: Boolean = false, val error: String? = null, val appending: Boolean = false) {
+    val refreshing: Boolean get() = loading && loaded && !appending
+    val canLoadMore: Boolean get() = loaded && next != 0L && !loading && (error == null || appending)
+    val empty: Boolean get() = loaded && items.isEmpty() && next == 0L && !loading && error == null
+    val exhausted: Boolean get() = loaded && items.isNotEmpty() && next == 0L && !loading && error == null
+
+    fun starting(more: Boolean): PageState<T> = copy(loading = true, error = null, appending = more)
+    fun failed(message: String, clear: Boolean = false): PageState<T> =
+        if (clear) PageState(error = message) else copy(loading = false, error = message)
+    fun completed(result: MobilePage<T>, more: Boolean): PageState<T> {
+        check(result.nextCursor == 0L || result.nextCursor > if (more) next else 0L) { "分页游标未前进" }
+        return PageState(((if (more) items else emptyList()) + result.items).distinctBy { it.id }, result.nextCursor, loaded = true)
+    }
+}
 
 data class AuthForm(val visible: Boolean = false, val username: String = "", val password: String = "", val error: String? = null)
 
@@ -47,6 +60,7 @@ data class MobileState(
     val members: Map<Long,PublicMember> = emptyMap(), val metrics: Map<Long, EntryMetrics> = emptyMap(), val inbox: InboxSummary? = null, val inboxError: String? = null,
     val feedSpace: String = "community", val feedKeyword: String = "", val feedCity: String = "",
     val petKeyword: String = "", val petCity: String = "", val petSpecies: String = "",
+    val inboxReadAll: InboxReadAllState = InboxReadAllState(),
     val emoji: List<EmojiItem> = emptyList(), val stickers: List<StickerItem> = emptyList(), val detailLoading: Boolean = false, val detailError: String? = null,
     val expressionState: MobileRecord<ExpressionBody>? = null,
     val busy: Boolean = false, val notice: String? = null, val conflict: Boolean = false,
@@ -272,6 +286,86 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         try { val summary = api.inbox(); _state.update { it.copy(inbox = summary, inboxError = null) } }
         catch (e: CancellationException) { throw e }
         catch (e: Exception) { _state.update { it.copy(inboxError = e.mobileMessage()) } }
+    }
+    fun prepareInboxReadAll() {
+        if (_state.value.user == null) { showLogin(); return }
+        val current = _state.value.inboxReadAll
+        if (current.snapshot != null || current.prepareRequestId.isNotEmpty() || current.resultUnknown) {
+            _state.update { it.copy(inboxReadAll = it.inboxReadAll.copy(visible = true)) }; return
+        }
+        // After process death the secure command journal, rather than an empty
+        // in-memory dialog, determines whether an earlier intent is unresolved.
+        try {
+            api.pendingInboxReadAll()?.let { pending ->
+                _state.update { it.copy(inboxReadAll = InboxReadAllState(visible = true, resultUnknown = true,
+                    error = "原全部已读请求待核对，请重试原请求；不会重新核销新增消息",
+                    prepareRequestId = if (pending.confirmation == null) pending.requestId else "",
+                    confirmRequestId = if (pending.confirmation != null) pending.requestId else "",
+                    recoveredConfirmation = pending.confirmation)) }
+                return
+            }
+        } catch (e: Exception) { pickerFailed(e.mobileMessage()); return }
+        runInboxReadAll(confirm = false)
+    }
+
+    fun confirmInboxReadAll() {
+        if (_state.value.inboxReadAll.resultUnknown) {
+            pickerFailed("提交结果待核对，请重试原请求"); return
+        }
+        runInboxReadAll(confirm = true)
+    }
+
+    fun retryInboxReadAll() = runInboxReadAll(confirm = _state.value.inboxReadAll.confirmRequestId.isNotEmpty(), retry = true)
+
+    fun dismissInboxReadAll() {
+        _state.update { state -> state.copy(inboxReadAll = state.inboxReadAll.hidden()) }
+    }
+
+    fun restartInboxReadAll() {
+        val current = _state.value.inboxReadAll
+        if (_state.value.busy || current.preparing || current.submitting) return
+        if (current.resultUnknown) { prepareInboxReadAll(); return }
+        _state.update { it.copy(inboxReadAll = InboxReadAllState()) }
+        prepareInboxReadAll()
+    }
+
+    private fun runInboxReadAll(confirm: Boolean, retry: Boolean = false) {
+        val current = _state.value.inboxReadAll
+        if (_state.value.busy || _state.value.user == null || current.preparing || current.submitting) return
+        val snapshot = current.snapshot
+        if (confirm && snapshot == null && current.recoveredConfirmation == null || retry && !current.canRetry) return
+        val key = (if (confirm) current.confirmRequestId else current.prepareRequestId).ifEmpty { newRequestKey() }
+        val epoch = accountEpoch
+        command {
+            _state.update { it.copy(inboxReadAll = current.copy(preparing = !confirm, submitting = confirm,
+                visible = true, error = null, prepareRequestId = if (confirm) current.prepareRequestId else key,
+                confirmRequestId = if (confirm) key else current.confirmRequestId)) }
+            try {
+                // An uncertain result is retried with its original persisted bytes
+                // and request ID. A 404 receipt does not authorize a new intent.
+                if (retry && current.resultUnknown && api.commandStatus(key)?.phase != "committed") api.retryOriginal(key)
+                if (confirm) {
+                    val input = current.recoveredConfirmation ?: InboxReadAllInput(snapshot!!.snapshotId, snapshot.version, key)
+                    val result = api.confirmInboxReadAll(input)
+                    if (epoch != accountEpoch) return@command
+                    _state.update { it.copy(inboxReadAll = InboxReadAllState(),
+                        notice = "已核销 ${result.appliedCount} 条未读${if (result.skippedCount > 0) "，${result.skippedCount} 条已不可访问" else ""}；新消息和待处理事项仍保留") }
+                    // Never optimistically zero the inbox: new arrivals and muted
+                    // messages are reconciled from the authoritative summary.
+                    refreshInbox()
+                    loadNotifications()
+                } else {
+                    val result = api.prepareInboxReadAll(InboxSnapshotInput(key))
+                    if (epoch != accountEpoch) return@command
+                    _state.update { it.copy(inboxReadAll = InboxReadAllState(snapshot = result, prepareRequestId = key, visible = it.inboxReadAll.visible)) }
+                }
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) {
+                if (epoch == accountEpoch) _state.update { state -> state.copy(inboxReadAll = state.inboxReadAll.copy(
+                    preparing = false, submitting = false, error = e.mobileMessage(), resultUnknown = e is OperationResultUnknown)) }
+                throw e
+            }
+        }
     }
     private fun canEditReply(): Boolean {
         if (!replyReady) { pickerFailed("本机消息草稿尚未恢复，请先重试读取"); return false }
@@ -534,8 +628,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             MobileTab.Adoption -> loadPage("pets", more, { it.pets }, { s, p -> s.copy(pets = p) }, { api.adoptionPets(it,_state.value.petKeyword,_state.value.petCity,_state.value.petSpecies) }, filter = { it.data.adoptionAvailable })
             MobileTab.Publish -> if (_state.value.user != null && !_state.value.draftLoaded) restoreComposeDraft()
             MobileTab.Messages -> if (_state.value.user != null) {
-                loadPage("conversations", more, { it.conversations }, { s, p -> s.copy(conversations = p) }, { api.conversations(it) })
-                loadPage("groups", more, { it.groups }, { s, p -> s.copy(groups = p) }, { api.groups(it) })
+                loadConversations(more)
+                loadGroups(more)
                 refreshInbox()
             }
             MobileTab.Profile -> _state.value.user?.let { user ->
@@ -545,13 +639,22 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         }
     }
 
+    fun loadConversations(more: Boolean = false) {
+        if (_state.value.user == null) return
+        loadPage("conversations", more, { it.conversations }, { s, p -> s.copy(conversations = p) }, { api.conversations(it) })
+    }
+    fun loadGroups(more: Boolean = false) {
+        if (_state.value.user == null) return
+        loadPage("groups", more, { it.groups }, { s, p -> s.copy(groups = p) }, { api.groups(it) })
+    }
+
     private fun <T> loadPage(key: String, more: Boolean, get: (MobileState) -> PageState<T>,
         put: (MobileState, PageState<T>) -> MobileState, fetch: suspend (Long) -> MobilePage<T>,
         filter: (MobileRecord<T>) -> Boolean = { true }, after: suspend () -> Unit = {}) {
         val old = get(_state.value)
         val epoch = accountEpoch
-        if (old.loading || more && (old.next == 0L || !old.loaded)) return
-        _state.update { put(it, (if (more) old else PageState()).copy(loading = true)) }
+        if (old.loading || more && !old.canLoadMore) return
+        _state.update { put(it, old.starting(more)) }
         task(key) {
             try {
                 var cursor = if (more) old.next else 0L
@@ -568,13 +671,14 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 currentCoroutineContext().ensureActive()
                 if (epoch != accountEpoch) return@task
                 _state.update { put(it, PageState(((if (more) old.items else emptyList()) + selected).distinctBy { row -> row.id }, cursor, loaded = true)) }
-                after()
             } catch (e: CancellationException) { throw e }
             catch (e: Exception) {
                 if (epoch == accountEpoch) _state.update { put(it,
-                    if (e is MobileApiException && e.status in listOf(401, 403, 404)) PageState(error = e.mobileMessage())
-                    else get(it).copy(loading = false, error = e.mobileMessage())) }
+                    get(it).failed(e.mobileMessage(), e is MobileApiException && e.status in listOf(401, 403, 404))) }
+                return@task
             }
+            // 附加统计失败不能将已成功读取的列表变成翻页失败。
+            after()
         }
     }
 
@@ -653,7 +757,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val s = _state.value
         val pet = s.pet ?: return@command
         if (s.applicationText.isBlank()) { _state.update { it.copy(notice = "请填写照护与领养计划") }; return@command }
-        val record = api.apply(pet.id, s.applicationText.trim())
+        val record = api.apply(pet.id, s.applicationText.trim(), cycle = pet.data.adoptionCycle)
         _state.update { it.copy(applying = false, applicationText = "", busy = false) }
         open(MobileDestination.Application(record.id))
     }
@@ -670,6 +774,10 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 else add("withdraw" to "撤回申请")
             }
             if (record.state == "needs_info" && !publisher) { add("supplement" to "提交补充"); add("withdraw" to "撤回申请") }
+            if (record.state == "withdrawn" && !publisher) add("resubmit" to "核对并重新申请本轮领养")
+            if (record.state == "waitlisted") {
+                if (publisher) add("resume_candidate" to "邀请继续核对领养安排") else add("withdraw" to "退出候补")
+            }
             if (record.state == "trial_proposed") {
                 if (actor !in record.data.trialConfirmations) add("confirm_trial" to "确认试养条款")
                 add("decline_trial" to "拒绝本次试养提案")
@@ -687,7 +795,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val s = _state.value
         val record = s.application ?: return
         if (adoptionActions().none { it.first == action }) return
-        if (action in listOf("supplement", "request_supplement", "support", "request_return") && s.actionNote.isBlank()) {
+        if (action in listOf("supplement", "request_supplement", "support", "request_return", "resubmit") && s.actionNote.isBlank()) {
             _state.update { it.copy(notice = "请先填写补充说明") }; return
         }
         _state.update { it.copy(confirmation = AdoptionCommand(record, action, label, s.actionNote)) }
@@ -794,6 +902,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         if (s.photos.any { it.mediaId == null }) { _state.update { it.copy(notice = "请先完成照片上传，或移除上传失败的照片") }; return }
         command {
             val input = EntryInput(s.composeEntry.copy(text = s.composeText.trim(), title = s.composeTitle.trim()), mediaIds = s.photos.mapNotNull { it.mediaId }, clientRequestId = newRequestKey())
+            features.requireCurrentAudience(input.entry.audience)
             val preview = api.previewPublication(input)
             _state.update { it.copy(publicationConfirmation = input.copy(declaration = PublicationDeclaration(preview.manifestHash, preview.origin)), notice = "请核对当前内容与照片，并确认来源声明后发布") }
         }
@@ -810,11 +919,13 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             // A changed origin invalidates the old manifest and requires a new preview.
             if (origin != pending.declaration.origin) {
                 val revised = pending.copy(declaration = PublicationDeclaration(origin = origin))
+                features.requireCurrentAudience(revised.entry.audience)
                 val preview = api.previewPublication(revised)
                 if (epoch != accountEpoch) return@command
                 _state.update { it.copy(publicationConfirmation = revised.copy(declaration = PublicationDeclaration(preview.manifestHash, origin)), notice = "来源已改变，请重新确认当前声明") }
                 return@command
             }
+            features.requireCurrentAudience(pending.entry.audience)
             val prepared = api.preparePublication(pending.copy(declaration = pending.declaration.copy(confirmed = true)))
             if (epoch != accountEpoch) return@command
             localPublicationKey = prepared.clientRequestId
@@ -1128,5 +1239,7 @@ fun adoptionStateLabel(state: String): String = when (state) {
     "submitted" -> "申请已提交"; "needs_info" -> "等待补充"; "supplemented" -> "已补充资料"
     "approved" -> "申请已同意"; "rejected" -> "申请未通过"; "withdrawn" -> "已撤回"
     "trial_proposed" -> "试养提案待确认"; "trial_active" -> "试养中"; "handover_pending" -> "等待另一方确认交接"
-    "completed" -> "交接已完成"; "return_requested" -> "退养协商中"; else -> "状态待核对"
+    "waitlisted" -> "候补中，不会自动进入试养"; "closed_other_placement" -> "本轮已由其他安排完成交接"
+    "reserved_trial" -> "当前已有试养安排"; "placed" -> "本轮交接已完成"
+    "completed" -> "交接已完成"; "return_requested" -> "退养协商中"; "return_agreed" -> "接回安排已确认，实际接回待确认"; "returned" -> "双方已确认接回"; else -> "状态待核对"
 }

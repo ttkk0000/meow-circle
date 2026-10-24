@@ -50,6 +50,14 @@ function actionOptions(
     const publisher = integer(d.publisher_id) === owner;
     const applicant = integer(d.applicant_id) === owner;
     if (!publisher && !applicant) return [];
+    if (applicant && state === "withdrawn")
+      add("adoption-action", "resubmit", "核对并重新申请本轮领养");
+    if (state === "waitlisted")
+      add(
+        "adoption-action",
+        publisher ? "resume_candidate" : "withdraw",
+        publisher ? "邀请继续核对安排" : "退出候补",
+      );
     if (publisher && ["submitted", "supplemented"].includes(state))
       ["approve", "reject", "request_supplement"].forEach((a) =>
         add("adoption-action", a),
@@ -94,7 +102,16 @@ function actionOptions(
         { flow: "care", label: "记录私密照护近况" },
       );
     }
-    if (!["withdrawn", "rejected", "returned"].includes(state))
+    if (
+      [
+        "approved",
+        "trial_proposed",
+        "trial_active",
+        "handover_pending",
+        "completed",
+        "return_requested",
+      ].includes(state)
+    )
       list.push({ flow: "contract", label: "提出协议新版本" });
   }
   if (
@@ -273,7 +290,7 @@ function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
       {error ? <Notice title={error} error /> : null}
       {notice ? <Notice title={notice} /> : null}
       <div className="actions-row">
-        <Author id={r.owner_id} />
+        {r.owner_id > 0n ? <Author id={r.owner_id} /> : null}
         {canShare ? (
           <Button kind="quiet" onClick={() => void share()}>
             分享公开链接
@@ -371,10 +388,16 @@ function ResourceBody({ kind, row: r }: { kind: string; row: RecordData }) {
       {kind === "cases" ? (
         <>
           <ContentSubscription id={r.id} kind="case" />
-          <CoarseMap
-            latitude={Number(d.latitude)}
-            longitude={Number(d.longitude)}
-          />
+          {d.location_precision !== "area" ? (
+            <CoarseMap
+              latitude={Number(d.latitude)}
+              longitude={Number(d.longitude)}
+            />
+          ) : (
+            <Notice title="此求助仅提供文字区域">
+              {String(d.city)} · {String(d.area)}
+            </Notice>
+          )}
           <RowLink
             title="提供私密目击线索"
             to={workflowURL("lead", kind, r.id)}
@@ -560,6 +583,15 @@ function Versions({ kind, row: r }: { kind: string; row: RecordData }) {
                           })}
                         />
                       ) : null}
+                      {status === "pending" && owner === proposed ? (
+                        <RowLink
+                          title="撤回本人提出的接回方案"
+                          to={workflowURL("return-action", kind, r.id, {
+                            action: "withdraw",
+                            revision: String(revision),
+                          })}
+                        />
+                      ) : null}
                       {status === "pending" ? (
                         <RowLink
                           title="拒绝此接回方案"
@@ -603,7 +635,8 @@ function Comments({
       <QueryState
         loading={page.loading}
         error={page.error}
-        onRetry={page.refresh}
+        onRetry={page.retry}
+        keepContent={!!page.rows.length && !page.denied}
       >
         {page.rows.map((row) => (
           <section key={String(row.id)}>

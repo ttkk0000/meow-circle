@@ -6,8 +6,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.TextRange
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,11 +21,10 @@ import java.time.format.DateTimeFormatter
 internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
     val f = store.features
     val route = s.route ?: return
-    var replaceSaved by remember(route) { mutableStateOf(false) }
+    var replaceSaved by rememberSessionUiState("replaceSaved") { false }
     if(replaceSaved) MobileAlertDialog(onDismissRequest = { replaceSaved = false },title = { Text("读取本机已保存版本") },text = { Text("此账号所有表单的未保存输入将被放弃，读取本机已保存的表单和原附件。不会提交或重新上传。") },
         confirmButton = { TextButton({ replaceSaved = false; f.replaceWithSavedDrafts() }) { Text("放弃未保存输入并读取") } },dismissButton = { TextButton({ replaceSaved = false }) { Text("继续编辑") } })
     FeatureColumn {
-        Text(route.page.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
         if (s.loading || s.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
         s.notice?.let { Text(it, color = MaterialTheme.colorScheme.primary) }
         s.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
@@ -32,6 +32,15 @@ internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
         if (!s.draftReady) {
             Text("正在读取此账号的本机私有表单；读取完成前保留原文件。")
             if (!s.draftRestoring) FeatureButton("重试读取本机表单") { f.restoreDrafts() }
+            return@FeatureColumn
+        }
+        if (store.state.value.user == null && route.page !in listOf(FeaturePage.Member, FeaturePage.Offers,
+                FeaturePage.Offer, FeaturePage.CaseWork, FeaturePage.Safety, FeaturePage.Recovery, FeaturePage.DataRequests)) {
+            FeatureSection("登录后继续") {
+                Text("登录后可查看和处理${route.page.title}，当前页面会保留。")
+                FeaturePrimary("登录", !s.busy) { store.showLogin() }
+                FeatureButton("免注册安全与隐私求助") { f.open(FeatureRoute(FeaturePage.Safety)) }
+            }
             return@FeatureColumn
         }
         if (s.draftError != null) { FeatureButton("重试保存本机表单",!s.busy) { f.retryDraftSave() }; FeatureButton("读取本机已保存版本",!s.busy) { replaceSaved = true } }
@@ -42,6 +51,29 @@ internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
         if (s.unconfirmedResult) Text("此页保留了结果未知的操作，不能重复提交。可刷新核对实际记录；具备操作回执的请求请从待核对操作查询。",color = MaterialTheme.colorScheme.error)
         if (s.error != null) FeatureButton("重新读取", !s.busy) { f.reload() }
         if (s.pending.isNotEmpty() && route.page != FeaturePage.Recovery) FeatureButton("核对原操作结果", !s.busy) { f.open(FeatureRoute(FeaturePage.Recovery)) }
+        val missingRecord = when (route.page) {
+            FeaturePage.Member -> s.member == null
+            FeaturePage.ProfileEdit -> s.profile == null
+            FeaturePage.EntryEdit -> s.entry == null
+            FeaturePage.PetEdit, FeaturePage.Collaborators -> route.id > 0 && route.kind != "care" && s.pet == null
+            FeaturePage.Group -> s.group == null
+            FeaturePage.Appointment, FeaturePage.AppointmentEdit -> route.id > 0 && s.appointment == null
+            FeaturePage.CaseWork, FeaturePage.CaseEdit -> route.id > 0 && s.case == null
+            FeaturePage.Claim -> s.claim == null
+            FeaturePage.AdoptionWork, FeaturePage.ContractEdit, FeaturePage.ReturnEdit -> route.kind != "care" && s.adoption == null
+            FeaturePage.Offer, FeaturePage.OfferEdit -> route.id > 0 && s.offer == null
+            FeaturePage.Review -> route.id > 0 && s.review == null
+            FeaturePage.Security -> s.methods == null
+            else -> false
+        }
+        if (missingRecord) {
+            if (s.loading) Text("正在读取当前记录…") else FeatureSection("暂时无法显示此记录") {
+                Text("记录可能已变化，或当前账号没有访问权限。请重新读取，当前输入会保留。")
+                if (s.error == null) FeatureButton("重新读取") { f.reload() }
+                FeatureButton("返回上一页") { f.back() }
+            }
+            return@FeatureColumn
+        }
         when (route.page) {
             FeaturePage.EntryEdit, FeaturePage.Friends, FeaturePage.Member, FeaturePage.ProfileEdit, FeaturePage.PetEdit, FeaturePage.PetDiary,
             FeaturePage.Collaborators, FeaturePage.Invitations, FeaturePage.GroupCreate, FeaturePage.Group, FeaturePage.GroupDirectory, FeaturePage.GroupPreview, FeaturePage.Content -> SocialFeature(store, s, route)
@@ -69,10 +101,11 @@ internal fun AndroidFeatureContent(store: MobileStore, s: FeatureState) {
     val s by f.sensitive.state.collectAsStateWithLifecycle()
     val common by f.state.collectAsStateWithLifecycle()
     if (s.stage == SensitiveStage.Idle) return
-    var password by remember(s.clientRequestId) { mutableStateOf("") }
-    var code by remember(s.clientRequestId) { mutableStateOf("") }
-    var currentPhone by remember(s.clientRequestId) { mutableStateOf("") }
-    var agreed by remember(s.clientRequestId) { mutableStateOf(false) }
+    val scope = "transient:sensitive:${s.clientRequestId}"
+    var password by rememberSessionUiState("password", scope) { "" }
+    var code by rememberSessionUiState("code", scope) { "" }
+    var currentPhone by rememberSessionUiState("currentPhone", scope) { "" }
+    var agreed by rememberSessionUiState("agreed", scope, s.intent) { false }
     val busy = common.busy || s.stage in listOf(SensitiveStage.LoadingScope, SensitiveStage.Verifying, SensitiveStage.Submitting)
     MobileAlertDialog(onDismissRequest = { if (!busy) f.sensitive.dismiss() }, title = { Text("核对本次操作") },
         text = { Column(Modifier.heightIn(max = 520.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -98,7 +131,9 @@ private fun sensitiveSummary(intent: SensitiveIntent?): String = when (intent) {
     is SensitiveIntent.Account -> "账号安全：${mapOf("phone" to "更换手机号", "email" to "绑定邮箱", "password" to "更改密码", "unlink" to "解绑登录方式")[intent.action].orEmpty()}\n${intent.input.phone.ifBlank { intent.input.email }}${intent.input.identityId.takeIf { it > 0 }?.let { " · 登录方式 #$it" }.orEmpty()}\n成功后需要重新登录。"
     is SensitiveIntent.Guardian -> "监护授权 #${intent.id}：${if (intent.input.consent) "同意指定范围" else "拒绝"}。监护授权不会替代成年人资格。\n${intent.reviewSummary}"
     is SensitiveIntent.Contract -> "接受领养协议 #${intent.id} 的第 ${intent.input.revision} 版。只确认此版本，不代表双方已完成交接。\n${intent.reviewSummary}"
-    is SensitiveIntent.DataRequest -> "${dataTypeLabel(intent.input.type)}\n字段：${intent.input.fields.joinToString()}\n指定记录：${intent.input.selections.joinToString { "${it.kind} #${it.id}" }}\n${intent.input.note}\n提交后可能需要人工处理或分类保全，请在受限进度中查看结果。"
+    is SensitiveIntent.DataRequest -> if (intent.input.type == "close_account")
+        "注销账号\n范围包括此账号的个人资料、内容、附件、登录授权及订阅等。提交后会立即退出，未结事项与必要保全分别处理，不会将排队显示为全部删除。\n${intent.input.note}\n本设备仍可通过受限进度查询原事项。"
+        else "${dataTypeLabel(intent.input.type)}\n字段：${intent.input.fields.joinToString { field -> mapOf("bio" to "个人介绍", "avatar" to "头像", "nickname" to "昵称")[field] ?: field }}\n指定记录：${intent.input.selections.joinToString { "${resourceLabel(it.kind)} #${it.id}" }}\n${intent.input.note}\n提交后可能需要人工处理或分类保全，请在受限进度中查看结果。"
     is SensitiveIntent.Rights -> "${rightsTypeLabel(intent.input.type)}\n目标 ${intent.input.targetKind} #${intent.input.targetId}\n原事项 #${intent.input.relatedCaseId}\n${intent.input.reason}\n${intent.input.statement}\n提交主体：${intent.input.legalName}\n具体权利：${intent.input.rightType}\n原事项版本：${intent.input.version}\n材料说明：${intent.input.evidenceDescription}\n材料 ${intent.input.mediaIds.size} 张，仅用于本次事项。"
     null -> "正在准备本次操作范围"
 }
@@ -112,26 +147,27 @@ private fun purposeLabel(value: String) = when {
 internal fun dataTypeLabel(v: String) = mapOf("erase_fields" to "删除指定资料／内容", "close_account" to "注销账号", "matters_assistance" to "未结事项协助")[v] ?: v
 internal fun rightsTypeLabel(v: String) = mapOf("safety" to "安全求助", "privacy" to "隐私报告", "data_assistance" to "资料事项协助", "rights_notice" to "正式权利通知", "counterstatement" to "对原通知提交声明", "supplement" to "补充原事项")[v] ?: v
 @Composable internal fun FeatureColumn(content: @Composable ColumnScope.() -> Unit) { TaskColumn(14,content) }
-@Composable internal fun FeatureSection(title: String,content: @Composable ColumnScope.() -> Unit) { TaskSection(title,content) }
+@Composable internal fun FeatureSection(title: String,content: @Composable ColumnScope.() -> Unit) { MndSection(title,content = content) }
 @Composable internal fun FeatureButton(label: String, enabled: Boolean = true, onClick: () -> Unit) {
-    OutlinedButton(onClick, Modifier.fillMaxWidth().heightIn(min = 48.dp), enabled = enabled) { Text(label) }
+    MndSecondaryButton(label, enabled, onClick = onClick)
 }
 @Composable internal fun FeaturePrimary(label: String, enabled: Boolean = true, onClick: () -> Unit) {
     TaskPrimary(label,enabled,onClick)
 }
 @Composable internal fun FormField(f: MobileFeatureStore, s: FeatureState, key: String, label: String, fallback: String = "", lines: Int = 1, numeric: Boolean = false) {
-    OutlinedTextField(f.field(key, fallback), { f.edit(key, it) }, Modifier.fillMaxWidth(), label = { Text(label) }, minLines = lines,
-        maxLines = if (lines == 1) 2 else 10, enabled = !s.busy && !s.loading && s.confirmation == null,
+    val text = f.field(key, fallback)
+    var editor by rememberPrivateEditor(text,"form-${s.route}-$key")
+    LaunchedEffect(text) { if (editor.text != text) editor = TextFieldValue(text,TextRange(text.length)) }
+    MndRichTextField(editor, { next -> f.edit(key,next.text); if (f.field(key,fallback) == next.text) editor = next }, label, minLines = lines,
+        maxLines = if (lines == 1) 2 else 10,
+        enabled = !s.busy && !s.loading && s.confirmation == null && !s.unconfirmedResult,
         keyboardOptions = KeyboardOptions(keyboardType = if (numeric) KeyboardType.Decimal else KeyboardType.Text))
 }
 @Composable internal fun ChoiceField(f: MobileFeatureStore, s: FeatureState, key: String, label: String, options: List<Pair<String,String>>, fallback: String) {
-    Text(label, fontWeight = FontWeight.Medium)
-    Column { options.forEach { (id, text) -> CheckLine(text, f.field(key, fallback) == id, { if (it) f.edit(key, id) }, !s.busy && !s.loading) } }
+    MndChoiceGroup(label, f.field(key, fallback), options, !s.busy && !s.loading && s.confirmation == null && !s.unconfirmedResult) { f.edit(key, it) }
 }
 @Composable internal fun CheckLine(label: String, checked: Boolean, onChecked: (Boolean) -> Unit, enabled: Boolean = true) {
-    Row(Modifier.fillMaxWidth().heightIn(min = 48.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-        Checkbox(checked, onChecked, enabled = enabled); Text(label, Modifier.weight(1f))
-    }
+    MndCheckLine(label, checked, onChecked, enabled)
 }
 internal fun money(cents: Long): String = BigDecimal.valueOf(cents, 2).toPlainString() + " 元"
 internal fun cents(value: String): Long? = runCatching { BigDecimal(value.trim()).movePointRight(2).longValueExact().takeIf { it in 0..100000000 } }.getOrNull()
@@ -145,7 +181,7 @@ internal fun stateLabel(value: String): String = mapOf("active" to "有效", "pe
     LaunchedEffect(route, existing, s.loading) { if (!s.loading) f.initializePhotos(existing) }
     val photos = s.photos[route].orEmpty()
     Text(if (private) "材料仅用于当前私密事项" else "照片将用于当前公开资料", color = MaterialTheme.colorScheme.onSurfaceVariant)
-    PhotoPickerButton(maxPhotos - photos.size, !s.busy && !s.loading, { f.addPhotos(it.take((maxPhotos - photos.size).coerceAtLeast(0)),private,safety) }, f::notify)
+    PhotoPickerButton(maxPhotos - photos.size, !s.busy && !s.loading && s.confirmation == null && !s.unconfirmedResult, { f.addPhotos(it.take((maxPhotos - photos.size).coerceAtLeast(0)),private,safety) }, f::notify)
     photos.forEachIndexed { index, photo ->
         FeatureSection("${index + 1}. ${photo.name}") {
             if (!safety) photo.mediaId?.let { MobilePhoto(store,it,store.state.value.user?.id,photo.name,Modifier.fillMaxWidth().heightIn(max = 180.dp)) }

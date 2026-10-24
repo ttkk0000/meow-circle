@@ -1,5 +1,7 @@
 # Runbook
 
+当前v2请先读[2026-10-23部署、运营与恢复手册](server/V2_RELEASE_RUNBOOK_2026_10_23.md)。下文为旧端历史操作参考，命令存在不授予构建、服务或迁移权限；当前环境仍遵守根AGENTS中的Go／Gradle禁令。
+
 Last updated: 2026-06-06
 
 This runbook captures how to run, verify, and safely change the current M&D

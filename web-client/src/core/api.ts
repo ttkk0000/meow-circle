@@ -259,7 +259,12 @@ class BrowserAPI {
     );
     if (epoch !== this.epoch)
       throw new DOMException("账号已变化", "AbortError");
-    if (response.status === 401 && retry && !path.startsWith("auth/")) {
+    if (
+      response.status === 401 &&
+      retry &&
+      this.session.refreshable &&
+      !path.startsWith("auth/")
+    ) {
       await this.refresh();
       if (epoch !== this.epoch)
         throw new DOMException("账号已变化", "AbortError");

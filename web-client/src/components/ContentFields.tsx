@@ -1,7 +1,9 @@
 import { useSession } from "../core/session";
+import { useState } from "react";
+import { useQuery } from "../core/query";
 import { usePages } from "../core/pages";
 import { integer } from "../core/wire";
-import type { RecordData } from "../core/api";
+import type { RecordData, User } from "../core/api";
 import {
   Button,
   Card,
@@ -11,6 +13,111 @@ import {
   PrivateImage,
   QueryState,
 } from "./ui";
+
+function PersonChoice({
+  id,
+  checked,
+  onChange,
+  disabled,
+  filter = "",
+}: {
+  id: bigint;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  disabled: boolean;
+  filter?: string;
+}) {
+  const person = useQuery<User>(`users/${id}`);
+  const name = person.data?.nickname || person.data?.username || `宠友 #${id}`;
+  if (filter && !name.toLowerCase().includes(filter.toLowerCase()) && !checked)
+    return null;
+  return (
+    <Check
+      checked={checked}
+      onChange={onChange}
+      disabled={disabled || !person.data}
+    >
+      <span className="author">
+        <PrivateImage
+          id={
+            integer(
+              person.data?.avatar_url?.match(/\/media\/(\d+)\/content/)?.[1],
+            ) || undefined
+          }
+          alt="宠友头像"
+          className="mini-avatar"
+        />
+        {name}
+        {person.error ? " · 资料暂不可读" : person.loading ? " · 正在读取" : ""}
+      </span>
+    </Check>
+  );
+}
+
+export function PeopleSelector({
+  value,
+  onChange,
+  disabled,
+  ids,
+}: {
+  value: bigint;
+  onChange: (value: bigint) => void;
+  disabled: boolean;
+  ids?: bigint[];
+}) {
+  const owner = useSession().user?.id;
+  const friends = usePages(
+    "friendships",
+    { state: "accepted" },
+    ids === undefined && !!owner,
+  );
+  const [filter, setFilter] = useState("");
+  const candidates = (
+    ids ??
+    friends.rows.map((friend) =>
+      integer(friend.data.requester_id) === owner
+        ? integer(friend.data.recipient_id)
+        : integer(friend.data.requester_id),
+    )
+  ).filter((id) => id > 0n && id !== owner);
+  return (
+    <Card title={ids ? "选择当前群成员" : "选择当前好友"}>
+      <Field
+        label="筛选已加载的昵称"
+        value={filter}
+        onChange={setFilter}
+        disabled={disabled}
+      />
+      <QueryState
+        loading={ids ? false : friends.loading}
+        error={ids ? undefined : friends.error}
+        onRetry={friends.retry}
+        keepContent={!!friends.rows.length && !friends.denied}
+      >
+        {candidates.map((id) => (
+          <PersonChoice
+            key={String(id)}
+            id={id}
+            checked={value === id}
+            onChange={(checked) => onChange(checked ? id : 0n)}
+            disabled={disabled}
+            filter={filter}
+          />
+        ))}
+        {value > 0n && !candidates.includes(value) ? (
+          <p className="disclosure">
+            原选择尚未出现在当前可用范围，请继续加载或重新选择；不会自动更换对象。
+          </p>
+        ) : null}
+        {!ids && friends.next ? (
+          <Button disabled={disabled || friends.loading} onClick={friends.more}>
+            继续读取好友
+          </Button>
+        ) : null}
+      </QueryState>
+    </Card>
+  );
+}
 
 export function PetSelector({
   value,
@@ -28,7 +135,8 @@ export function PetSelector({
       <QueryState
         loading={pets.loading}
         error={pets.error}
-        onRetry={pets.refresh}
+        onRetry={pets.retry}
+        keepContent={!!pets.rows.length && !pets.denied}
       >
         {pets.rows.map((pet) => (
           <button
@@ -115,7 +223,8 @@ export function AudienceFields({
           <QueryState
             loading={friends.loading}
             error={friends.error}
-            onRetry={friends.refresh}
+            onRetry={friends.retry}
+            keepContent={!!friends.rows.length && !friends.denied}
           >
             {friends.rows.map((friend) => {
               const id =
@@ -123,8 +232,9 @@ export function AudienceFields({
                   ? integer(friend.data.recipient_id)
                   : integer(friend.data.requester_id);
               return (
-                <Check
+                <PersonChoice
                   key={String(id)}
+                  id={id}
                   disabled={disabled}
                   checked={selected.includes(id)}
                   onChange={(checked) =>
@@ -135,9 +245,7 @@ export function AudienceFields({
                         : selected.filter((v) => v !== id),
                     })
                   }
-                >
-                  宠友 #{String(id)}
-                </Check>
+                />
               );
             })}
             {friends.next ? (

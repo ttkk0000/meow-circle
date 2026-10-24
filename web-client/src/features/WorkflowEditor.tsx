@@ -34,8 +34,8 @@ import {
 import { workflows, type Context } from "./workflows";
 import { PurposeCheck } from "../components/PurposeCheck";
 import { Attachments, PhotoPreview } from "../components/Attachments";
-import { EntryFields } from "../components/ContentFields";
-import { LocateButton } from "./MapPage";
+import { EntryFields, PeopleSelector } from "../components/ContentFields";
+import { DataSelector, type DataSelection } from "../components/DataSelector";
 
 interface Prepared {
   body: Record<string, unknown>;
@@ -109,6 +109,10 @@ export function WorkflowEditor({
   const [verifiedContact, setVerifiedContact] = useState("");
   const [uploading, setUploading] = useState<Set<string>>(new Set());
   const formOmit = [...(workflow?.omit ?? [])];
+  if (flow === "data") formOmit.push("selections", "fields");
+  if (["friend", "friend-action", "invite", "group-action"].includes(flow))
+    formOmit.push("user_id");
+  if (flow === "invite") formOmit.push("target_id", "scope");
   if (flow === "group-action") {
     const action = context.params.get("action");
     if (action !== "directory")
@@ -368,6 +372,30 @@ export function WorkflowEditor({
       if (properties.version) body.version = current.baseVersion;
       if (properties.media_ids)
         body.media_ids = current.photos.map((p) => p.mediaId);
+      if (flow === "case") {
+        const details = body.case as Record<string, unknown>;
+        const old = context.record?.data;
+        const keep =
+          !!current.ui?.keepLocation &&
+          old &&
+          old.location_precision !== "area" &&
+          details.city === old.city &&
+          details.area === old.area;
+        body.case = {
+          ...details,
+          location_precision: keep ? "approximate" : "area",
+          latitude: keep ? old.latitude : 0,
+          longitude: keep ? old.longitude : 0,
+        };
+      }
+      if (flow === "nearby")
+        body.subscription = {
+          ...(body.subscription as Record<string, unknown>),
+          latitude: 0,
+          longitude: 0,
+          radius_km: 0,
+          location_precision: "city",
+        };
       if (flow === "profile") {
         const user = session.user!;
         body.nickname = body.nickname || user.nickname;
@@ -601,27 +629,114 @@ export function WorkflowEditor({
       }
     >
       {restoring ? <p role="status">正在恢复本机私有草稿…</p> : null}
-      {draft && ["case", "nearby"].includes(flow) ? (
-        <LocateButton
-          onLocation={(latitude, longitude) =>
-            update((old) => {
-              const field = flow === "case" ? "case" : "subscription";
-              return {
-                ...old,
-                values: {
-                  ...old.values,
-                  [field]: {
-                    ...(old.values[field] as Record<string, unknown>),
-                    latitude,
-                    longitude,
-                  },
-                },
-                requestId: key(),
-              };
-            })
+      {draft && flow === "data" ? (
+        <>
+          {draft.values.type === "erase_fields" ? (
+            <Card title="需要处理的个人资料字段">
+              {[
+                ["bio", "个人介绍"],
+                ["avatar", "头像"],
+                ["nickname", "昵称"],
+              ].map(([value, label]) => (
+                <Check
+                  key={value}
+                  checked={
+                    Array.isArray(draft.values.fields) &&
+                    draft.values.fields.includes(value)
+                  }
+                  disabled={busy || !!prepared || !!draft.uncertain}
+                  onChange={(selected) =>
+                    update((old) => {
+                      const fields = Array.isArray(old.values.fields)
+                        ? old.values.fields
+                        : [];
+                      return {
+                        ...old,
+                        values: {
+                          ...old.values,
+                          fields: selected
+                            ? [...fields, value]
+                            : fields.filter((field) => field !== value),
+                        },
+                        requestId: key(),
+                      };
+                    })
+                  }
+                >
+                  {label}
+                </Check>
+              ))}
+            </Card>
+          ) : null}
+          {draft.values.type !== "close_account" ? (
+            <DataSelector
+              value={(draft.values.selections ?? []) as DataSelection[]}
+              onChange={(selections) =>
+                update((old) => ({
+                  ...old,
+                  values: { ...old.values, selections },
+                  requestId: key(),
+                }))
+              }
+              assistance={draft.values.type === "matters_assistance"}
+              disabled={busy || !!prepared || !!draft.uncertain}
+            />
+          ) : null}
+        </>
+      ) : null}
+      {draft &&
+      (flow === "invite" ||
+        (flow === "group-action" &&
+          ["transfer", "remove_member"].includes(
+            context.params.get("action") ?? "",
+          ))) ? (
+        <PeopleSelector
+          value={integer(draft.values.user_id)}
+          onChange={(user_id) =>
+            update((old) => ({
+              ...old,
+              values: { ...old.values, user_id },
+              requestId: key(),
+            }))
           }
-          onError={setError}
+          disabled={busy || !!prepared || !!draft.uncertain}
+          ids={
+            flow === "group-action" &&
+            Array.isArray(context.record?.data.members)
+              ? (context.record?.data.members as unknown[]).map((value) =>
+                  integer(value),
+                )
+              : undefined
+          }
         />
+      ) : null}
+      {draft && ["case", "nearby"].includes(flow) ? (
+        <Notice
+          title={
+            flow === "nearby" ? "本次按城市保存提醒" : "城市与文字区域即可发布"
+          }
+        >
+          {flow === "nearby"
+            ? "确认后按所选城市匹配；原距离范围会改为城市，不要求经纬度。"
+            : "不把文字区域当成地图点。只有你明确保留且城市／区域未变时，才继续使用原大致地点。"}
+          {flow === "case" &&
+          context.record &&
+          context.record.data.location_precision !== "area" ? (
+            <Check
+              checked={draft.ui?.keepLocation ?? false}
+              disabled={busy || !!prepared || !!draft.uncertain}
+              onChange={(keepLocation) =>
+                update((old) => ({
+                  ...old,
+                  ui: { ...old.ui, keepLocation },
+                  requestId: key(),
+                }))
+              }
+            >
+              主动保留原大致地图点
+            </Check>
+          ) : null}
+        </Notice>
       ) : null}
       {conflict ? (
         <Notice title="服务端版本已变化，当前输入保留">

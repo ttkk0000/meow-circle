@@ -132,6 +132,9 @@ func (t *mobileTx) List(k mobile.Kind, f mobile.Filter) ([]mobile.Record, error)
 	if f.State != "" {
 		add("state = $%d", f.State)
 	}
+	if f.KeyPrefix != "" {
+		add("strpos(record_key, $%d) = 1", f.KeyPrefix)
+	}
 	args = append(args, limit)
 	query := "SELECT " + mobileColumns + " FROM " + table + " WHERE " + strings.Join(where, " AND ") + fmt.Sprintf(" ORDER BY id LIMIT $%d", len(args))
 	rows, err := t.tx.Query(t.ctx, query, args...)
@@ -199,6 +202,9 @@ func (t *mobileTx) Count(k mobile.Kind, f mobile.Filter) (int64, error) {
 	}
 	if f.State != "" {
 		add("state=$%d", f.State)
+	}
+	if f.KeyPrefix != "" {
+		add("strpos(record_key, $%d) = 1", f.KeyPrefix)
 	}
 	if f.PublicOnly {
 		where = append(where, "public=TRUE")

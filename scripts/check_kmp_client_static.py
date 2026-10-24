@@ -67,7 +67,7 @@ expected_fields = {
     "MessageInput": {"content", "media_ids", "idempotency_key"},
     "EntryInput": {"entry", "version", "media_ids", "client_request_id", "declaration"},
     "PetInput": {"pet", "version", "media_ids", "client_request_id"},
-    "AdoptionInput": {"pet_id", "message", "client_request_id"},
+    "AdoptionInput": {"pet_id", "message", "client_request_id", "adoption_cycle"},
 }
 for name, fields in expected_fields.items():
     assert fields == set(schemas[name]["properties"]), (name, schemas[name])

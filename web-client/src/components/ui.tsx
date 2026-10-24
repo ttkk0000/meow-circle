@@ -392,11 +392,13 @@ export function QueryState({
   error,
   children,
   onRetry,
+  keepContent = false,
 }: {
   loading: boolean;
   error?: string;
   children?: ReactNode;
   onRetry?: () => void;
+  keepContent?: boolean;
 }) {
   return (
     <>
@@ -409,9 +411,8 @@ export function QueryState({
         <Notice title={error} error>
           {onRetry ? <Button onClick={onRetry}>重试读取</Button> : null}
         </Notice>
-      ) : (
-        children
-      )}
+      ) : null}
+      {!error || keepContent ? children : null}
     </>
   );
 }

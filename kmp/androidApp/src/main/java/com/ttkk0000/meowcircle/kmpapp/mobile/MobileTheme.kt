@@ -40,6 +40,6 @@ private val DefaultTypography = Typography().let { t -> Typography(
 @Composable
 fun MobileTheme(content: @Composable () -> Unit) {
     MaterialTheme(colorScheme = DefaultColors, typography = DefaultTypography,
-        shapes = Shapes(small = RoundedCornerShape(16.dp), medium = RoundedCornerShape(16.dp), large = RoundedCornerShape(24.dp)),
+        shapes = Shapes(small = RoundedCornerShape(MobileUi.cardRadius), medium = RoundedCornerShape(MobileUi.cardRadius), large = RoundedCornerShape(MobileUi.dialogRadius)),
         content = content)
 }

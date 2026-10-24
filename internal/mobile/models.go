@@ -9,6 +9,9 @@ type Audience struct {
 
 type Pet struct {
 	City              string   `json:"city,omitempty"`
+	AdoptionCycle     int64    `json:"adoption_cycle"`
+	AdoptionOpened    bool     `json:"adoption_opened"`
+	PlacementState    string   `json:"placement_state,omitempty"`
 	Name              string   `json:"name"`
 	Species           string   `json:"species"`
 	Breed             string   `json:"breed,omitempty"`
@@ -52,19 +55,20 @@ type Comment struct {
 }
 
 type Case struct {
-	Type            string    `json:"type"` // lost, found
-	PetID           int64     `json:"pet_id,omitempty"`
-	Title           string    `json:"title"`
-	Species         string    `json:"species"`
-	Description     string    `json:"description"`
-	City            string    `json:"city"`
-	Area            string    `json:"area"`
-	Latitude        float64   `json:"latitude"` // coarse public centre
-	Longitude       float64   `json:"longitude"`
-	OccurredAt      time.Time `json:"occurred_at"`
-	PrivateLocation string    `json:"private_location,omitempty"`
-	ClosureReason   string    `json:"closure_reason,omitempty"`
-	MatchedClaimID  int64     `json:"matched_claim_id,omitempty"`
+	LocationPrecision string    `json:"location_precision,omitempty"` // area: no public coordinate; approximate: coarse point
+	Type              string    `json:"type"`                         // lost, found
+	PetID             int64     `json:"pet_id,omitempty"`
+	Title             string    `json:"title"`
+	Species           string    `json:"species"`
+	Description       string    `json:"description"`
+	City              string    `json:"city"`
+	Area              string    `json:"area"`
+	Latitude          float64   `json:"latitude"` // coarse public centre
+	Longitude         float64   `json:"longitude"`
+	OccurredAt        time.Time `json:"occurred_at"`
+	PrivateLocation   string    `json:"private_location,omitempty"`
+	ClosureReason     string    `json:"closure_reason,omitempty"`
+	MatchedClaimID    int64     `json:"matched_claim_id,omitempty"`
 }
 
 type Claim struct {
@@ -76,13 +80,14 @@ type Claim struct {
 }
 
 type Subscription struct {
-	Species   string  `json:"species,omitempty"`
-	City      string  `json:"city"`
-	Latitude  float64 `json:"latitude"`
-	Longitude float64 `json:"longitude"`
-	RadiusKM  float64 `json:"radius_km"`
-	Frequency string  `json:"frequency"`
-	Enabled   bool    `json:"enabled"`
+	Species           string  `json:"species,omitempty"`
+	LocationPrecision string  `json:"location_precision,omitempty"` // city or approximate; empty preserves legacy point semantics
+	City              string  `json:"city"`
+	Latitude          float64 `json:"latitude"`
+	Longitude         float64 `json:"longitude"`
+	RadiusKM          float64 `json:"radius_km"`
+	Frequency         string  `json:"frequency"`
+	Enabled           bool    `json:"enabled"`
 }
 
 type AppointmentTerms struct {
@@ -119,6 +124,7 @@ type Appointment struct {
 }
 
 type Adoption struct {
+	AdoptionCycle         int64              `json:"adoption_cycle"`
 	Contracts             []ContractRevision `json:"contracts"`
 	EffectiveContract     int64              `json:"effective_contract"`
 	ReturnPlans           []ReturnPlan       `json:"return_plans"`
@@ -205,7 +211,7 @@ type Notification struct {
 	TargetKind   Kind             `json:"target_kind"`
 	TargetID     int64            `json:"target_id"`
 	Read         bool             `json:"read"`
-	PushState    string           `json:"push_state"` // queued, suppressed, delivered
+	PushState    string           `json:"push_state"` // queued, suppressed, accepted, delivered
 }
 
 type MediaFile struct {

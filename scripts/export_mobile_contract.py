@@ -115,9 +115,9 @@ for action in ("request", "accept", "decline", "withdraw", "remove", "block", "u
     operation("/friendships/" + action, "post", "Friend " + action, "FriendInput")
 for kind, actions, name in (
     ("claims", "match reject request_supplement supplement resubmit withdraw dispute confirm_handover", "StateInput"),
-    ("adoptions", "request_supplement supplement approve reject withdraw propose_trial confirm_trial decline_trial confirm_handover support request_return", "AdoptionAction"),
+    ("adoptions", "request_supplement supplement approve reject withdraw resubmit resume_candidate propose_trial confirm_trial decline_trial confirm_handover support request_return", "AdoptionAction"),
     ("appointments", "propose restore confirm decline withdraw_change cancel expire safety_hold", "AppointmentAction"),
-    ("groups", "notice transfer accept_transfer decline_transfer revoke_transfer dissolve leave remove_member mute", "GroupAction"),
+    ("groups", "directory notice transfer accept_transfer decline_transfer revoke_transfer dissolve leave remove_member mute", "GroupAction"),
     ("conversations", "accept decline", "StateInput"), ("invitations", "accept decline revoke", "StateInput"),
     ("notifications", "read", "StateInput")):
     for action in actions.split():
@@ -129,7 +129,7 @@ for kind in ("groups", "conversations"):
     operation("/" + kind + "/{id}/read", "post", "Explicit read receipt", {"type": "object", "properties": {"through_message_id": {"type": "integer"}}, "required": ["through_message_id"], "additionalProperties": False})
 operation("/entries/{id}/reaction", "post", "Set desired reaction state", {"type": "object", "properties": {"liked": {"type": "boolean"}}, "required": ["liked"], "additionalProperties": False})
 operation("/cases/{id}/leads", "post", "Submit a private lead", {"type": "object", "properties": {"text": {"type": "string"}, "media_ids": {"type": "array", "items": {"type": "integer"}}}, "additionalProperties": False})
-operation("/reviews/{id}/supplement", "post", "Supplement a needs_info review", {"type": "object", "properties": {"version": {"type": "integer"}, "note": {"type": "string"}, "media_ids": {"type": "array", "items": {"type": "integer"}}}, "additionalProperties": False})
+operation("/reviews/{id}/supplement", "post", "Supplement a needs_info review using the original client request ID", "StateInput")
 for kind in ("pets", "offers"):
     operation("/" + kind + "/{id}/verifications", "get", "Version-scoped public verification summaries", public=True)
 for path, name in (("otp", "OTPInput"), ("phone", "PhoneLogin"), ("password", "PasswordInput"), ("reauth", "ReauthInput"), ("oauth-start", "OAuthStart"), ("oauth-finish", "OAuthFinish"), ("oauth-resolve", "ResolveInput")):
@@ -152,7 +152,7 @@ operation("/expression-catalog", "get", "128 Unicode emoji and 24 static cat sti
 operation("/ops/reviews", "get", "Staff review queue; cursor parameter", staff=True)
 operation("/ops/reviews/{id}", "post", "Staff decision and narrow verification expiry", "ReviewDecision", staff=True)
 operation("/ops/claim-disputes/{id}", "post", "End disputed match without declaring ownership", "StateInput", staff=True)
-for path, keys in (("nearby-alerts", ("case_id", "cursor")), ("provider-revocations", ("cursor",))):
+for path, keys in (("nearby-alerts", ("case_id", "cursor")), ("case-watch-alerts", ("case_id", "cursor")), ("provider-revocations", ("cursor",))):
     operation("/ops/" + path, "post", "Process a bounded, retryable operations batch", {"type": "object", "properties": {key: {"type": "integer"} for key in keys}, "additionalProperties": False}, staff=True)
 operation("/ops/outbox", "get", "Pending domain events, excluding provider credentials", staff=True)
 
@@ -171,6 +171,18 @@ def typed(path, method, summary, body=None, result=None, public=False, staff=Fal
         item["responses"]["200"]["content"]["application/json"]["schema"] = {
             "allOf": [ref("Envelope")], "properties": {"data": dto(result)}}
     return item
+
+dto("ContentSubscriptions")
+dto("GroupDirectoryBody")
+typed("/content-subscriptions", "get", "Private followed authors and watched cases; no audience privileges")
+typed("/content-subscriptions", "post", "Versioned durable update of content subscriptions", "ContentSubscriptionInput")
+typed("/group-directory", "get", "Public group introduction projection without member identities", public=True)
+typed("/group-directory/{id}", "get", "Read the current public group introduction", public=True)
+typed("/group-directory/{id}/request", "post", "Apply to the current group owner using an original request ID", "GroupJoinInput")
+paths["/api/v2/pets"]["get"].setdefault("parameters", []).append({"name":"adoption","in":"query","schema":{"type":"boolean"},"description":"Only open adoption introductions; original ACL still applies"})
+
+typed("/inbox/read-all/snapshot", "post", "Prepare an immutable 10-minute read-all snapshot without acknowledging tasks", "InboxSnapshotInput", "InboxReadSnapshot")
+typed("/inbox/read-all", "post", "Acknowledge only the prepared snapshot; newer messages remain unread", "InboxReadAllInput", "InboxReadAllResult")
 
 typed("/eligibility", "get", "Server qualification; unknown evidence denies outward actions", result="Eligibility")
 item = typed("/operations/{key}", "get", "Look up the original command; not-found never authorizes a new key", result="Operation")
@@ -202,17 +214,24 @@ item["security"].append({"safetyAccess":[],"bearerAuth":[]})
 typed("/safety/tickets/{id}","get","Minimal receipt, without target existence or private identities",result="RightsReceipt",access="safetyAccess")
 for action in ("propose","accept","decline","scope"):
     typed("/adoptions/{id}/contracts/"+action,"post","Versioned contract "+action,"ContractInput","PurposeScope" if action=="scope" else None)
-for action in ("propose","accept","decline","handover"):
+for action in ("propose","accept","decline","withdraw","handover"):
     typed("/adoptions/{id}/returns/"+action,"post","Versioned safe return "+action,"ReturnInput")
 for path,body in (("age-evidence","AgeEvidenceInput"),("guardian-evidence","GuardianEvidenceInput"),("authority","AuthorityInput"),("deliveries","DeliveryClaim"),("revenue","RevenueInput")):
     typed("/ops/"+path,"post","Named role-checked operation: "+path,body,staff=True)
 typed("/ops/deliveries/{id}/result","post","Per-consumer lease result; no global ACK","DeliveryResult",staff=True)
+for job in ("push", "nearby_alerts", "content_updates", "privacy_cleanup", "provider_revocations", "maintenance"):
+    typed("/ops/jobs/"+job,"post","Execute one bounded job batch with durable continuation: "+job,"JobInput","JobResult",staff=True)
+typed("/ops/data-requests/{id}","get","Audited privacy worker inventory without query capability, materials, contact or hold basis",result="DataRequestWork",staff=True)
 for action,body in (("process","StateInput"),("hold","DataHoldInput"),("external","ExternalErasureInput")):
     typed("/ops/data-requests/{id}/"+action,"post","Selective data lifecycle: "+action,body,staff=True)
 typed("/ops/legacy-erasure","post","Adapt historical payloads without pretending cleanup completed",{"type":"object","properties":{"cursor":{"type":"integer","format":"int64"}}},staff=True)
 typed("/ops/media-erasure/{id}/process","post","Remove only an unheld physical copy after reference checking",staff=True)
 typed("/ops/upload-expiry","post","Expire upload leases and sweep only old unreferenced managed files; privacy role and explicit scheduler required","UploadCleanupInput","UploadCleanupResult",staff=True)
 typed("/ops/rights-cases/{id}/decision","post","Record rights workflow decision and transfer status","RightsDecision",staff=True)
+item=typed("/ops/rights-cases","get","Named moderator queue of minimal receipts and evidence review deadlines",result="RightsQueuePage",staff=True)
+item["parameters"]=[{"name":"cursor","in":"query","schema":{"type":"integer","format":"int64","minimum":0}}]
+typed("/ops/rights-cases/{id}","get","Audited moderator case details; expired evidence stays redacted until a justified versioned extension",result="RightsCaseDetails",staff=True)
+typed("/ops/retention-expiry","post","Privacy-only bounded evidence expiry; closed cases, elapsed deadline and no active scoped hold required","RetentionExpiryInput","RetentionExpiryResult",staff=True)
 typed("/ops/push/{id}/dispatch","post","Lookup before provider send; accepted is distinct from delivered",staff=True)
 item=typed("/safety/media","post","Private guest evidence JPEG/PNG; same metadata and size limits",access="safetyAccess")
 item["requestBody"]=upload["requestBody"]
@@ -227,11 +246,26 @@ item["parameters"][0]["schema"]={"type":"string","minLength":8,"maxLength":100}
 # Read responses as precise DTOs without exposing persistence/session bodies.
 dto("OAuthResult")
 dto("OTPResult")
-item=typed("/share/{kind}/{id}","get","Guest-safe preview data; the Web landing page is a separate UI task",result="ShareCard",public=True)
+item=typed("/share/{kind}/{id}","get","Guest-safe preview data; relative_url points to the /share/{kind}/{id} HTML landing page",result="ShareCard",public=True)
 item["parameters"][0]["schema"]={"type":"string","enum":["entries","pets","cases","offers"]}
 typed("/ops/revenue","get","Audited page of actual settlements; no automatic external reporting",staff=True)
 for path in ("privacy-expiry","challenge-expiry","token-expiry"):
     typed("/ops/"+path,"post","Bounded privacy retention worker; deployment scheduler calls explicitly",{"type":"object","properties":{"cursor":{"type":"integer","format":"int64"}}},staff=True)
+
+# Existing versioned/desired-state DTOs retain compatibility. This optional
+# header opts into a durable receipt; replay must use the original body/key.
+receipt_routes = [("/"+kind+"/{id}", "delete") for kind in ("pets","offers","entries","entry_comments","drafts")]
+receipt_routes += [("/"+kind,"put") for kind in ("subscriptions","preferences","expressions","drafts")]
+receipt_routes += [("/entries/{id}/reaction","post"),("/cases/{id}/leads","post"),("/visit_feedback","post")]
+receipt_routes += [("/inbox/read-all/snapshot","post"),("/inbox/read-all","post")]
+receipt_routes += [("/"+kind+"/{id}/"+action,"post") for kind,actions in (
+    ("conversations",("accept","decline","read")),("invitations",("accept","decline","revoke")),
+    ("groups",("read",)),("notifications",("read",))) for action in actions]
+for path, method in receipt_routes:
+    paths["/api/v2"+path][method].setdefault("parameters",[]).append({
+        "name":"Idempotency-Key","in":"header","required":False,
+        "schema":{"type":"string","minLength":8,"maxLength":100,"pattern":"^[A-Za-z0-9_-]+$"},
+        "description":"Optional operation receipt key. Retain the exact payload for retries; a body client_request_id must match."})
 
 # Recursively add named field DTOs and reject dangling references. No service,
 # persistence/session challenge or encrypted provider credential DTO is exported.
@@ -241,7 +275,7 @@ while True:
         break
     for name in sorted(missing):
         dto(name)
-result = {"openapi": "3.1.0", "info": {"title": "M&D mobile modular monolith API", "version": "2.0.0", "description": "Source contract, 2026-10-22. Not build- or runtime-verified. Currency amounts are integer CNY cents. IDs/cursors are int64; clients must preserve precision. See docs/server/MOBILE_SERVER.md for workflows, privacy projections and deployment limits."},
+result = {"openapi": "3.1.0", "info": {"title": "M&D mobile modular monolith API", "version": "2.0.0", "description": "Source contract, 2026-10-23. Not build- or runtime-verified. Currency amounts are integer CNY cents. IDs/cursors are int64; clients must preserve precision. See docs/server/MOBILE_SERVER.md for workflows, privacy projections and deployment limits."},
           "paths": paths, "components": {"securitySchemes": {"bearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "opaque revocable session"}, "operatorToken": {"type": "apiKey", "in": "header", "name": "X-Operator-Token"}, "safetyAccess": {"type": "apiKey", "in": "header", "name": "X-Safety-Token"}, "requestAccess": {"type": "apiKey", "in": "header", "name": "X-Request-Access"}}, "schemas": schemas}}
 destination = ROOT / "docs/api/mobile-v2.openapi.json"
 destination.parent.mkdir(parents=True, exist_ok=True)

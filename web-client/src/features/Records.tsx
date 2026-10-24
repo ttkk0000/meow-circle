@@ -157,7 +157,8 @@ export function Feed({
       <QueryState
         loading={page.loading}
         error={page.error}
-        onRetry={page.refresh}
+        onRetry={page.retry}
+        keepContent={!!page.rows.length && !page.denied}
       >
         <div className="feed-grid">
           {Array.from(
@@ -379,8 +380,6 @@ export function Records({
       cases: "case",
       offers: "offer",
       groups: "group",
-      friendships: "friend",
-      invitations: "invite",
     } as Record<string, string>
   )[kind];
   return (
@@ -437,7 +436,8 @@ export function Records({
       <QueryState
         loading={page.loading}
         error={page.error}
-        onRetry={page.refresh}
+        onRetry={page.retry}
+        keepContent={!!page.rows.length && !page.denied}
       >
         {page.rows.map((row) => (
           <RecordCard key={String(row.id)} kind={kind} row={row} />

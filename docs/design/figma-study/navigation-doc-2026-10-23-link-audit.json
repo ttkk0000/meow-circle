@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-23",
+  "phase": "pre_change_actual_read_results",
+  "source": "Actual Figma readbacks in the preceding tool runtime; no rerun implied",
+  "boards": [
+    {
+      "page": "395:2",
+      "root": "395:3",
+      "textCount": 172,
+      "links": 118,
+      "checkedNodeTargets": 118
+    },
+    {
+      "page": "56:25",
+      "root": "425:1839840",
+      "textCount": 1204,
+      "links": 1179,
+      "checkedNodeTargets": 1177
+    },
+    {
+      "page": "403:2",
+      "root": "425:1839880",
+      "textCount": 1217,
+      "links": 1195,
+      "checkedNodeTargets": 1194
+    },
+    {
+      "page": "403:3",
+      "root": "425:1839920",
+      "textCount": 1787,
+      "links": 1765,
+      "checkedNodeTargets": 1763
+    },
+    {
+      "page": "403:4",
+      "root": "425:1839960",
+      "textCount": 1201,
+      "links": 1179,
+      "checkedNodeTargets": 1178
+    }
+  ],
+  "invalid": 0,
+  "missing": 0,
+  "phoneIntentionalUnlinked": [
+    "appointmentNarrow",
+    "authNarrow",
+    "expressionNarrow"
+  ],
+  "note": "5436 complete-text hyperlinks; mixed range hyperlinks were excluded from this count. All checked NODE targets existed. No mass empty-link defect observed."
+}

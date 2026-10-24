@@ -1,0 +1,657 @@
+{
+  "pageName": "07 可点击原型（示意）",
+  "roots": [
+    {
+      "id": "30:3",
+      "name": "Prototype / community",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:6",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [],
+        "children": [
+          {
+            "id": "30:7",
+            "name": "Section / M&D   /   社区",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:7",
+        "text": "M&D   /   社区",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 5,
+        "digest": "679f71c"
+      }
+    },
+    {
+      "id": "30:44",
+      "name": "Prototype / adoption",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:47",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [],
+        "children": [
+          {
+            "id": "30:48",
+            "name": "Section / M&D   /   领养",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:48",
+        "text": "M&D   /   领养",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 5,
+        "digest": "d269fcd6"
+      }
+    },
+    {
+      "id": "30:95",
+      "name": "Prototype / find",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:98",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [],
+        "children": [
+          {
+            "id": "30:99",
+            "name": "Section / M&D   /   找宠",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:99",
+        "text": "M&D   /   找宠",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 5,
+        "digest": "d2799267"
+      }
+    },
+    {
+      "id": "30:139",
+      "name": "Prototype / adoptionDetail",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:142",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "30:143",
+            "name": "Section / ‹  领养详情",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:143",
+        "text": "‹  领养详情",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 1,
+        "digest": "cbdfdbf2"
+      }
+    },
+    {
+      "id": "30:169",
+      "name": "Prototype / petDetail",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:172",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "30:173",
+            "name": "Section / ‹  来源与约见",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:173",
+        "text": "‹  来源与约见",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 1,
+        "digest": "de23c740"
+      }
+    },
+    {
+      "id": "30:208",
+      "name": "Prototype / mine",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:211",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [],
+        "children": [
+          {
+            "id": "30:212",
+            "name": "Section / M&D   /   我的",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:212",
+        "text": "M&D   /   我的",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 6,
+        "digest": "d1984b39"
+      }
+    },
+    {
+      "id": "30:248",
+      "name": "Prototype / apply",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:251",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "30:252",
+            "name": "Section / ‹  申请领养",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:252",
+        "text": "‹  申请领养",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 0,
+        "digest": "741638a5"
+      }
+    },
+    {
+      "id": "30:283",
+      "name": "Prototype / appointment",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:286",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "30:287",
+            "name": "Section / ‹  确认预约",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:287",
+        "text": "‹  确认预约",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 0,
+        "digest": "741638a5"
+      }
+    },
+    {
+      "id": "30:323",
+      "name": "Prototype / change",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:326",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "30:327",
+            "name": "Section / ‹  安排变更",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:327",
+        "text": "‹  安排变更",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 0,
+        "digest": "741638a5"
+      }
+    },
+    {
+      "id": "30:351",
+      "name": "Prototype / chat",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:354",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "30:355",
+            "name": "Section / ‹  预约会话",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:355",
+        "text": "‹  预约会话",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 1,
+        "digest": "a6f8960c"
+      }
+    },
+    {
+      "id": "30:381",
+      "name": "Prototype / publish",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:384",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "30:385",
+            "name": "Section / ‹  发布信息",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:385",
+        "text": "‹  发布信息",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 0,
+        "digest": "741638a5"
+      }
+    },
+    {
+      "id": "30:425",
+      "name": "Prototype / complaint",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:428",
+        "w": 390,
+        "h": 72,
+        "layout": "VERTICAL",
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "30:429",
+            "name": "Section / ‹  报告问题",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "title": {
+        "id": "30:429",
+        "text": "‹  报告问题",
+        "font": {
+          "family": "Noto Sans SC",
+          "style": "Bold",
+          "variationSettings": {
+            "wght": 700
+          }
+        },
+        "fontSize": 20,
+        "lineHeight": {
+          "unit": "PIXELS",
+          "value": 30
+        },
+        "w": 350,
+        "h": 30,
+        "link": null
+      },
+      "otherActions": {
+        "count": 0,
+        "digest": "741638a5"
+      }
+    }
+  ]
+}

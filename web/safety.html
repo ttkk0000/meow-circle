@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,noarchive">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>安全求助与权利反馈 · M&amp;D</title><link rel="stylesheet" href="/safety.css"><script src="/safety.js" defer></script></head>
+<body><header><strong>M&amp;D</strong><span>meow &amp; doggie</span></header><main>
+<h1>安全求助与权利反馈</h1><p>无需注册或安装 App。请只提供处理本事项必要的信息；受理不代表已经认定事实或完成处置。</p>
+<section aria-labelledby="session-title"><h2 id="session-title">本设备查询方式</h2><p>默认只在当前页面内保留受限凭据。关闭后可能无法自行恢复，请先记录回执；回执编号本身不能恢复查询权限。</p>
+<label class="check"><input id="remember" type="checkbox">允许本标签页临时保存凭据、原请求和回执，便于刷新后恢复（请勿在共用设备开启）</label>
+<button id="forget" type="button">清除此页面的本机凭据</button></section>
+<form id="request-form"><fieldset id="fields"><legend>描述事项</legend>
+<label for="type">事项类型</label><select id="type"><option value="safety">安全求助／不符举报</option><option value="privacy">隐私问题</option><option value="rights_notice">正式权利通知</option><option value="supplement">对本设备已有事项补充</option></select>
+<p class="note">权属相关的反声明需要登录后的主体与用途核验，请从 App 原事项办理；本页不会将其伪装成普通举报。</p>
+<label for="target">相关公开内容链接（可选）</label><input id="target" type="text" inputmode="url" placeholder="同一网站的 /share/… 链接" autocomplete="off" maxlength="500">
+<p id="target-status" class="note"></p>
+<label for="reason">情况说明</label><textarea id="reason" required maxlength="3000" rows="5"></textarea>
+<label for="evidence">证据说明／具体权利依据</label><textarea id="evidence" maxlength="4000" rows="4"></textarea>
+<p class="note">可以先提交文字说明。图片原件请使用 App 的私密材料入口，不要在公开内容中贴证件、电话或家庭地址。</p>
+<div id="formal" hidden><h2>正式权利通知</h2><p>联系邮箱验证、姓名、权利类型、事实与真实性声明均需完成；邮件渠道不可用时无法提交正式通知。</p>
+<label for="email">接收本事项联系的邮箱</label><input id="email" type="email" autocomplete="email" maxlength="254">
+<button id="send-code" type="button">发送本事项验证码</button><label for="code">邮箱验证码</label><input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12">
+<button id="verify-code" type="button">验证此次联系邮箱</button><p id="contact-status" role="status"></p>
+<label for="name">真实姓名／主体名称</label><input id="name" maxlength="120" autocomplete="name">
+<label for="right-type">权利类型</label><input id="right-type" maxlength="100" placeholder="例如著作权、肖像权">
+<label for="statement">真实性与责任声明</label><textarea id="statement" maxlength="2000" rows="3"></textarea></div>
+<label class="check"><input id="confirmed" type="checkbox" required>我已核对本次内容和用途，主动提交；正式通知中的身份及权利声明由本人负责。</label>
+<button id="preview" type="submit">核对本次提交</button></fieldset></form>
+<section id="preview-panel" hidden aria-labelledby="preview-title"><h2 id="preview-title">最后核对</h2><pre id="preview-text"></pre><p>提交成功后将显示真实回执。网络结果不明时，只核对这一次原请求，不新建事项。</p>
+<div class="actions"><button id="submit" type="button">确认提交本次事项</button><button id="edit" type="button">返回编辑</button></div></section>
+<section id="receipt-panel" hidden><h2>本次事项进度</h2><p id="receipt-text"></p><div class="actions"><button id="refresh" type="button">查询最新进度</button><button id="supplement" type="button">对这条事项补充</button><button id="new-request" type="button">另建一个事项</button></div></section>
+<p id="status" role="status" aria-live="polite"></p><div class="actions"><button id="reconcile" type="button" hidden>只核对原请求</button><button id="retry" type="button" hidden>按原内容重试</button></div>
+<noscript>此页面需要启用 JavaScript 才能安全提交和核对回执。</noscript></main><footer>本页不提供付款、担保或自动事实认定。紧急事项请联系当地实际可提供帮助的机构。</footer></body></html>

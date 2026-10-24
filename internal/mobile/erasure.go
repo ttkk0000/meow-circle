@@ -18,7 +18,7 @@ func (s *Service) NewDataCapability(ctx context.Context, actor int64) (token str
 	if err != nil {
 		return
 	}
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
 		}
@@ -57,20 +57,12 @@ func (s *Service) PrepareMediaErasure(ctx context.Context, operator string, id i
 		if r.State != "erasure_pending" && r.State != "deleting" {
 			return ErrConflict
 		}
-		requests, e := allRecords(tx, DataRequests, Filter{OwnerID: r.OwnerID})
+		held, _, e := mediaRetention(tx, r, s.Now())
 		if e != nil {
 			return e
 		}
-		for _, request := range requests {
-			d, e := Decode[DataRequest](request)
-			if e != nil {
-				return e
-			}
-			for _, h := range d.Holds {
-				if !h.Released && h.Kind == Media && h.ID == id {
-					return Denied("media_under_scoped_hold")
-				}
-			}
+		if held {
+			return Denied("media_under_scoped_hold")
 		}
 		file, e := Decode[MediaFile](r)
 		if e != nil {

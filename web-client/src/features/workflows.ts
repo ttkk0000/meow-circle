@@ -37,6 +37,7 @@ export const actionNames: Record<string, string> = {
   request_supplement: "请求补充",
   supplement: "补充",
   resubmit: "重新提交材料",
+  resume_candidate: "邀请继续核对安排",
   approve: "同意申请",
   reject: "拒绝申请",
   propose_trial: "提出试养",
@@ -69,6 +70,8 @@ export const actionNames: Record<string, string> = {
 };
 const actionGroups: Record<string, string[]> = {
   adoptions: [
+    "resubmit",
+    "resume_candidate",
     "request_supplement",
     "supplement",
     "approve",
@@ -457,7 +460,7 @@ export const workflows: Record<string, Workflow> = {
     schema: "ReturnInput",
     path: (c) => {
       const action = c.params.get("action");
-      if (!["accept", "decline", "handover"].includes(action ?? ""))
+      if (!["accept", "decline", "withdraw", "handover"].includes(action ?? ""))
         throw new Error("无效接回动作");
       return `adoptions/${c.id}/returns/${action}`;
     },

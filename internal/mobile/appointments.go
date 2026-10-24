@@ -88,6 +88,9 @@ func (s *Service) CreateAppointment(ctx context.Context, actor int64, in Appoint
 				return ErrForbidden
 			}
 		}
+		if e = s.appointmentContextCurrent(tx, in.ContextKind, in.ContextID, in.Terms); e != nil {
+			return e
+		}
 		if e = s.appointmentAdmission(tx, in.ContextKind, in.ContextID, in.Terms); e != nil {
 			return e
 		}
@@ -189,6 +192,9 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 			if e = s.termsValid(terms); e != nil {
 				return e
 			}
+			if e = s.appointmentContextCurrent(tx, a.ContextKind, a.ContextID, terms); e != nil {
+				return e
+			}
 			if e = s.appointmentAdmission(tx, a.ContextKind, a.ContextID, terms); e != nil {
 				return e
 			}
@@ -207,11 +213,19 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 				return ErrConflict
 			}
 			v := &a.Versions[pending]
+			if e = s.appointmentContextCurrent(tx, a.ContextKind, a.ContextID, v.Terms); e != nil {
+				return e
+			}
 			if e = s.appointmentAdmission(tx, a.ContextKind, a.ContextID, v.Terms); e != nil {
 				return e
 			}
 			v.Confirmations = Unique(append(v.Confirmations, actor))
 			if len(v.Confirmations) == 2 {
+				for _, party := range Unique(append([]int64{r.OwnerID}, r.Participants...)) {
+					if e = s.adult(tx, party); e != nil {
+						return e
+					}
+				}
 				for i := range a.Versions {
 					if a.Versions[i].Number == a.EffectiveVersion {
 						a.Versions[i].Status = "replaced"
@@ -278,6 +292,79 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 	return
 }
 
+// Restoring or confirming a stored version must pass the same current-object
+// checks as creating it; its old disclosure is evidence, not a new permission.
+func (s *Service) appointmentContextCurrent(tx Tx, kind string, id int64, terms AppointmentTerms) error {
+	var pet Record
+	var e error
+	applicationID := int64(0)
+	switch kind {
+	case "case":
+		r, e := tx.Get(Cases, id)
+		if e != nil {
+			return e
+		}
+		if r.State != "active" && r.State != "matched" {
+			return ErrConflict
+		}
+		return nil
+	case "offer":
+		r, e := tx.Get(Offers, id)
+		if e != nil {
+			return e
+		}
+		o, e := Decode[Offer](r)
+		if e != nil {
+			return e
+		}
+		if r.State != "published" || !o.ValidUntil.After(s.Now()) || terms.Snapshot == nil || terms.Snapshot.OfferID != id || terms.Snapshot.OfferVersion != r.Version {
+			return ErrConflict
+		}
+		pet, e = tx.Get(Pets, o.PetID)
+		if e != nil {
+			return e
+		}
+		if pet.OwnerID != r.OwnerID || pet.Version != o.PetVersion {
+			return ErrConflict
+		}
+	case "visit":
+		pet, e = tx.Get(Pets, id)
+		if e != nil {
+			return e
+		}
+	case "adoption":
+		r, e := tx.Get(Adoptions, id)
+		if e != nil {
+			return e
+		}
+		if adoptionTerminal(r.State) && r.State != "completed" {
+			return ErrConflict
+		}
+		a, e := Decode[Adoption](r)
+		if e != nil {
+			return e
+		}
+		pet, _, e = adoptionPet(tx, a)
+		if e != nil {
+			return e
+		}
+		applicationID = r.ID
+	default:
+		return Invalid("invalid appointment context")
+	}
+	if pet.State != "active" {
+		return ErrConflict
+	}
+	occupied, e := otherPlacement(tx, pet.ID, applicationID)
+	if e != nil {
+		return e
+	}
+	if occupied {
+		return Denied("pet_placement_conflict")
+	}
+	return nil
+}
+
 func (s *Service) captureOffer(tx Tx, actor int64, r Record, t *AppointmentTerms) error {
 	o, e := Decode[Offer](r)
 	if e != nil {
@@ -292,6 +379,13 @@ func (s *Service) captureOffer(tx Tx, actor int64, r Record, t *AppointmentTerms
 	}
 	if pet.Version != o.PetVersion {
 		return ErrConflict
+	}
+	occupied, e := otherPlacement(tx, pet.ID, 0)
+	if e != nil {
+		return e
+	}
+	if occupied {
+		return Denied("pet_placement_conflict")
 	}
 	p, e := Decode[Pet](pet)
 	if e != nil {
@@ -333,7 +427,7 @@ func (s *Service) Feedback(ctx context.Context, actor int64, in Feedback) (out R
 			return out, Invalid("invalid checklist value")
 		}
 	}
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.mutate(ctx, actor, "visit.feedback", in.AppointmentID, in, VisitFeedback, &out, func(tx Tx) error {
 		if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
@@ -351,12 +445,44 @@ func (s *Service) Feedback(ctx context.Context, actor int64, in Feedback) (out R
 		if a.EffectiveVersion == 0 || in.Version != a.EffectiveVersion {
 			return ErrConflict
 		}
+		found := false
 		for _, v := range a.Versions {
-			if v.Number == in.Version && v.Terms.StartsAt.After(s.Now()) {
+			if v.Number != in.Version {
+				continue
+			}
+			found = true
+			if v.Status != "effective" || v.Terms.StartsAt.IsZero() {
+				return ErrConflict
+			}
+			if v.Terms.StartsAt.After(s.Now()) {
 				return Invalid("visit has not occurred")
 			}
 		}
-		r := Record{OwnerID: actor, Participants: append([]int64{p.OwnerID}, p.Participants...), RefID: p.ID, State: "submitted"}
+		if !found {
+			return ErrConflict
+		}
+		key := fmt.Sprintf("visit:%d:%d:%d", p.ID, in.Version, actor)
+		old, e := tx.ByKey(VisitFeedback, key)
+		if e == nil {
+			v, e := Decode[Feedback](old)
+			if e != nil {
+				return e
+			}
+			if v.Note != in.Note || len(v.Items) != len(in.Items) {
+				return ErrConflict
+			}
+			for name, value := range in.Items {
+				if v.Items[name] != value {
+					return ErrConflict
+				}
+			}
+			out = old
+			return nil
+		}
+		if e != ErrNotFound {
+			return e
+		}
+		r := Record{OwnerID: actor, Key: key, Participants: append([]int64{p.OwnerID}, p.Participants...), RefID: p.ID, State: "submitted"}
 		if e = save(tx, VisitFeedback, &r, in, actor, "visit.feedback_submitted"); e != nil {
 			return e
 		}

@@ -38,3 +38,15 @@ MND_OPERATORS_JSON=
 # A provider acceptance receipt is distinct from end-device delivery.
 PUSH_GATEWAY_URL=
 PUSH_GATEWAY_TOKEN=
+
+# Separate worker process; never started implicitly by the API server.
+# Jobs: push / nearby_alerts / content_updates / privacy_cleanup / provider_revocations / maintenance.
+# Each job needs its own named operator and checkpoint file. privacy_cleanup
+# needs worker + privacy roles; maintenance needs privacy; others need worker.
+# Consumers must include the selected non-maintenance job name.
+MND_WORKER_JOB=
+MND_WORKER_API_URL=https://api.example.invalid/api/v2
+MND_WORKER_OPERATOR_TOKEN=
+MND_WORKER_STATE_FILE=
+MND_WORKER_INTERVAL_SECONDS=30
+MND_WORKER_ALLOW_LOOPBACK_HTTP=0

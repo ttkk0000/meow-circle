@@ -39,6 +39,11 @@ export function usePages(
     rows: RecordData[];
   }>({ identity, rows: pageMemory.get(identity)?.rows ?? [] });
   useEffect(() => {
+    if (result.denied) {
+      pageMemory.delete(identity);
+      setCollected({ identity, rows: [] });
+      return;
+    }
     if (!result.data) return;
     setCollected((old) => {
       const map = new Map(
@@ -53,10 +58,12 @@ export function usePages(
         pageMemory.delete(pageMemory.keys().next().value!);
       return { identity, rows };
     });
-  }, [result.data, identity, cursor]);
+  }, [result.data, result.denied, identity, cursor]);
   return {
     ...result,
-    rows: collected.identity === identity ? collected.rows : [],
+    rows:
+      !result.denied && collected.identity === identity ? collected.rows : [],
+    retry: () => void reload(path),
     more: () => {
       if (result.data?.next_cursor && !result.loading)
         setPage({ identity, cursor: result.data.next_cursor });

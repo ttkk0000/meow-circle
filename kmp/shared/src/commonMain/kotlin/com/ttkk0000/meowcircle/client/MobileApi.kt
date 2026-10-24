@@ -41,8 +41,10 @@ fun Throwable.mobileMessage(): String = when (this) {
         "adult_required" -> "商业发布和线下签约需要成年人使用本人账号办理"
         "purpose_grant_required", "purpose_grant_invalid" -> "请重新核对本次操作并完成用途验证"
         "idempotency_conflict" -> "此请求编号对应的内容已改变，请核对原操作结果"
+        "inbox_snapshot_expired" -> "本次未读范围已过期，请关闭确认后重新获取，新增消息仍会保留"
         "publication_declaration_required" -> "内容或照片已改变，请重新确认来源声明"
         "effective_contract_required", "contract_change_pending" -> "请先完成双方对同一版本条款的确认"
+        "pet_placement_conflict" -> "这只宠物已有领养安排，请刷新查看当前进度；候补不会自动进入试养"
         "city_rule_unavailable", "city_action_unavailable" -> "当前城市或物种的业务规则暂未开放"
         else -> when (status) {
         400 -> "请检查填写内容后再试"
@@ -209,9 +211,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
 
     suspend fun removeResource(kind: String, id: Long, version: Long) {
         require(kind in listOf("pets", "offers", "entries", "entry_comments", "drafts") && id > 0)
-        val account = session?.user?.id
-        decode<JsonElement>(checked("$kind/$id", HttpMethod.Delete, json.encodeToString(StateInput(version)), emptyMap(), true))
-        if (account != session?.user?.id) throw MobileApiException(401, "account changed")
+        receiptWrite<JsonElement,StateInput>("$kind/$id", StateInput(version), method = "DELETE")
     }
 
     suspend fun capabilities(): LoginCapabilities = get("auth/capabilities", authenticated = false)
@@ -331,11 +331,12 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
             val old = vault.commands.firstOrNull { it.owner == owner && it.id == key } ?: throw MobileApiException(404,"command not found")
             if (!old.replayable) throw MobileApiException(403,"fresh scoped verification required","purpose_grant_required")
             if (old.phase !in listOf("sent","result_unknown","prepared")) throw MobileApiException(409,"command is already resolved")
-            persist(vault.copy(commands = vault.commands.map { if (it.owner == owner && it.id == key) it.copy(phase = "prepared") else it }))
+            persist(vault.copy(commands = vault.commands.map { if (it.owner == owner && it.id == key)
+                it.copy(phase = "prepared", uncertainReplay = it.uncertainReplay || it.phase in listOf("sent", "result_unknown")) else it }))
             old
         }
         // Explicit retry of the original bytes and key; never invent a new intent after 404.
-        durableRequest(command.path,command.body,command.id)
+        durableRequest(command.path,command.body,command.id,method = command.method,receiptHeader = command.receiptHeader)
         return sessionMutex.withLock { vault.commands.first { it.owner == owner && it.id == key }.receipt ?: throw OperationResultUnknown(key) }
     }
 
@@ -350,15 +351,16 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     }
 
     private fun logicalBody(body: String): JsonObject = JsonObject(json.parseToJsonElement(body).jsonObject.filterKeys { it !in listOf("client_request_id", "idempotency_key") })
-    internal suspend fun durableRequest(path: String, body: String, key: String, sensitive: Boolean = false): JsonElement {
-        require(key.length in 8..100)
+    internal suspend fun durableRequest(path: String, body: String, key: String, sensitive: Boolean = false,
+        method: String = "POST", receiptHeader: Boolean = false): JsonElement {
+        require(key.length in 8..100 && method in listOf("POST", "PUT", "PATCH", "DELETE"))
         val snapshot = if (sensitive) JsonObject(json.parseToJsonElement(body).jsonObject.filterKeys { it !in listOf("reauth_token","password","code") }).toString() else body
         val owner = session?.user?.id ?: throw MobileApiException(401, "authentication required")
         val command = sessionMutex.withLock {
             val existing = vault.commands.firstOrNull { it.owner == owner && it.id == key }
-            if (existing != null && (existing.path != path || existing.body != snapshot)) throw MobileApiException(409, "request body changed", "idempotency_conflict")
-            val unresolved = vault.commands.firstOrNull { it.owner == owner && it.path == path && logicalBody(it.body) == logicalBody(snapshot) && it.phase !in listOf("committed", "rejected") }
-            val selected = existing ?: unresolved ?: DurableCommand(owner, key, path, snapshot,replayable = !sensitive)
+            if (existing != null && (existing.path != path || existing.body != snapshot || existing.method != method || existing.receiptHeader != receiptHeader)) throw MobileApiException(409, "request body changed", "idempotency_conflict")
+            val unresolved = vault.commands.firstOrNull { it.owner == owner && it.path == path && it.method == method && it.receiptHeader == receiptHeader && logicalBody(it.body) == logicalBody(snapshot) && it.phase !in listOf("committed", "rejected") }
+            val selected = existing ?: unresolved ?: DurableCommand(owner, key, path, snapshot,replayable = !sensitive,method = method,receiptHeader = receiptHeader)
             if (selected.phase in listOf("sent", "result_unknown")) throw OperationResultUnknown(selected.id)
             if (selected.phase == "committed") return@withLock selected
             val kept = vault.commands.filterNot { it.owner == owner && it.id == selected.id }
@@ -367,13 +369,24 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
             persist(vault.copy(commands = kept + selected.copy(phase = "sent")))
             selected
         }
+        val httpMethod = when(command.method) { "PUT" -> HttpMethod.Put; "PATCH" -> HttpMethod.Patch; "DELETE" -> HttpMethod.Delete; else -> HttpMethod.Post }
+        val requestHeaders = if (command.receiptHeader) mapOf("Idempotency-Key" to command.id) else emptyMap()
         if (command.phase == "committed") {
+            // Receipt-only results (read markers/deletion) have no public GET.
+            // Replaying the exact command rechecks its current server ACL.
+            if (command.receiptHeader) {
+                val replay = decode<JsonElement>(checked(command.path,httpMethod,command.body,emptyMap(),true,requestHeaders))
+                if (session?.user?.id != owner) throw MobileApiException(401, "account changed")
+                return replay
+            }
             val receipt = command.receipt ?: operation(command.id)
             return get("${receipt.resultKind}/${receipt.resultId}")
         }
+        var writeConfirmed = false
         try {
-            val result = decode<JsonElement>(checked(command.path, HttpMethod.Post, if (sensitive) body else command.body, emptyMap(), true))
-            val obj = result.jsonObject
+            val result = decode<JsonElement>(checked(command.path, httpMethod, if (sensitive) body else command.body, emptyMap(), true,requestHeaders))
+            writeConfirmed = true
+            if (session?.user?.id != owner) throw MobileApiException(401, "account changed")
             val kind = when {
                 path == "content-subscriptions" -> "preferences"
                 path.startsWith("group-directory/") && path.endsWith("/request") -> "invitations"
@@ -381,13 +394,19 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
                 path.endsWith("/messages") -> if (path.startsWith("groups/")) "group_messages" else "messages"
                 else -> path.substringBefore('/')
             }
-            val receipt = OperationReceipt(command.id, path, 0, kind, obj.getValue("id").jsonPrimitive.long, obj.getValue("version").jsonPrimitive.long, "committed")
+            val receipt = if (command.receiptHeader) operation(command.id) else {
+                val obj = result.jsonObject
+                OperationReceipt(command.id, path, 0, kind, obj.getValue("id").jsonPrimitive.long, obj.getValue("version").jsonPrimitive.long, "committed")
+            }
+            if (receipt.clientRequestId != command.id || receipt.state != "committed") throw OperationResultUnknown(command.id)
             withContext(NonCancellable) { sessionMutex.withLock {
                 persist(vault.copy(commands = vault.commands.map { if (it.owner == owner && it.id == command.id) it.copy(phase = "committed", receipt = receipt) else it }))
             } }
             return result
         } catch (e: Exception) {
-            val knownRejection = e is MobileApiException && e.status in listOf(400, 401, 403, 404, 409, 422, 429)
+            // A later refusal (e.g. expired session) cannot prove that the first
+            // uncertain attempt failed. Keep the original intent recoverable.
+            val knownRejection = !command.uncertainReplay && !writeConfirmed && e is MobileApiException && e.status in listOf(400, 401, 403, 404, 409, 422, 429)
             withContext(NonCancellable) { sessionMutex.withLock {
                 try { persist(vault.copy(commands = vault.commands.map { if (it.owner == owner && it.id == command.id) it.copy(phase = if (knownRejection) "rejected" else "result_unknown") else it })) }
                 catch (_: MobileStorageException) { /* The previously persisted sent record remains recoverable. */ }
@@ -398,6 +417,10 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     }
     internal suspend inline fun <reified T, reified B> durablePost(path: String, body: B, key: String): T =
         json.decodeFromJsonElement(durableRequest(path, json.encodeToString(body), key))
+    internal suspend inline fun <reified T, reified B> durablePatch(path: String, body: B, key: String): T =
+        json.decodeFromJsonElement(durableRequest(path,json.encodeToString(body),key,method = "PATCH"))
+    internal suspend inline fun <reified T, reified B> receiptWrite(path: String, body: B, key: String = newRequestKey(), method: String = "POST"): T =
+        json.decodeFromJsonElement(durableRequest(path,json.encodeToString(body),key,method = method,receiptHeader = true))
     internal suspend inline fun <reified T, reified B> sensitivePost(path: String, body: B, key: String): T =
         json.decodeFromJsonElement(durableRequest(path,json.encodeToString(body),key,true))
     suspend fun password(username: String, password: String) = sessionMutex.withLock {
@@ -431,7 +454,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun metrics(ids: List<Long>): List<EntryMetrics> = if (ids.isEmpty()) emptyList() else get("entry-metrics", mapOf("ids" to ids.take(50).joinToString(",")))
     suspend fun comments(id: Long, cursor: Long = 0): MobilePage<CommentBody> = get("entry_comments", mapOf("reference_id" to "$id", "cursor" to "$cursor"))
     suspend fun comment(id: Long, text: String, key: String): MobileRecord<CommentBody> = durablePost("entries/$id/comments", CommentInput(MessageBody(text), key), key)
-    suspend fun react(id: Long, liked: Boolean): JsonElement = post("entries/$id/reaction", ReactionInput(liked))
+    suspend fun react(id: Long, liked: Boolean): JsonElement = receiptWrite("entries/$id/reaction", ReactionInput(liked))
     suspend fun previewPublication(input: EntryInput): PublicationPreview = post("entries/preview", input)
     suspend fun preparePublication(input: EntryInput): EntryInput {
         val owner = session?.user?.id ?: throw MobileApiException(401, "authentication required")
@@ -465,7 +488,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         val command = if (input.clientRequestId.isEmpty()) input.copy(clientRequestId = newRequestKey()) else input
         return durablePost("pets",command,command.clientRequestId)
     }
-    suspend fun apply(id: Long, message: String, key: String = newRequestKey()): MobileRecord<AdoptionBody> = durablePost("adoptions", AdoptionInput(id, message, key), key)
+    suspend fun apply(id: Long, message: String, key: String = newRequestKey(), cycle: Long = 0): MobileRecord<AdoptionBody> = durablePost("adoptions", AdoptionInput(id, message, key, cycle), key)
     suspend fun adoptions(cursor: Long = 0): MobilePage<AdoptionBody> = get("adoptions", mapOf("cursor" to "$cursor"))
     suspend fun adoption(id: Long): MobileRecord<AdoptionBody> = get("adoptions/$id")
     suspend fun adoptionAction(id: Long, action: String, input: AdoptionActionInput): MobileRecord<AdoptionBody> {
@@ -478,13 +501,23 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun groups(cursor: Long = 0): MobilePage<GroupBody> = get("groups", mapOf("cursor" to "$cursor"))
     suspend fun conversation(id: Long): MobileRecord<ConversationBody> = get("conversations/$id")
     suspend fun startConversation(user: Long, key: String = newRequestKey()): MobileRecord<ConversationBody> = durablePost("conversations", ConversationInput(user, key), key)
-    suspend fun conversationAction(id: Long, version: Long, action: String): MobileRecord<ConversationBody> = post("conversations/$id/$action", StateInput(version))
+    suspend fun conversationAction(id: Long, version: Long, action: String): MobileRecord<ConversationBody> = receiptWrite("conversations/$id/$action", StateInput(version))
     suspend fun messages(id: Long, group: Boolean, cursor: Long = 0): MobilePage<MessageBody> = get(if (group) "group_messages" else "messages", mapOf("reference_id" to "$id", "cursor" to "$cursor"))
     suspend fun send(id: Long, group: Boolean, text: String, key: String): MobileRecord<MessageBody> = durablePost("${if (group) "groups" else "conversations"}/$id/messages", SendMessageInput(MessageBody(text), key), key)
-    suspend fun readMessages(id: Long, group: Boolean, through: Long): JsonElement = post("${if (group) "groups" else "conversations"}/$id/read", ReadInput(through))
+    suspend fun readMessages(id: Long, group: Boolean, through: Long): JsonElement = receiptWrite("${if (group) "groups" else "conversations"}/$id/read", ReadInput(through))
     suspend fun inbox(): InboxSummary = get("inbox-summary")
+    internal fun pendingInboxReadAll(): InboxReadAllRecovery? {
+        val command = vault.commands.lastOrNull { it.owner == session?.user?.id &&
+            it.path in listOf("inbox/read-all", "inbox/read-all/snapshot") && it.phase !in listOf("committed", "rejected") } ?: return null
+        return InboxReadAllRecovery(command.id, if (command.path == "inbox/read-all")
+            json.decodeFromString<InboxReadAllInput>(command.body) else null)
+    }
+    suspend fun prepareInboxReadAll(input: InboxSnapshotInput): InboxReadSnapshot =
+        receiptWrite("inbox/read-all/snapshot", input, input.clientRequestId)
+    suspend fun confirmInboxReadAll(input: InboxReadAllInput): InboxReadAllResult =
+        receiptWrite("inbox/read-all", input, input.clientRequestId)
     suspend fun notifications(cursor: Long = 0): MobilePage<NotificationBody> = get("notifications", mapOf("cursor" to "$cursor"))
-    suspend fun readNotification(id: Long, version: Long): MobileRecord<NotificationBody> = post("notifications/$id/read", StateInput(version))
+    suspend fun readNotification(id: Long, version: Long): MobileRecord<NotificationBody> = receiptWrite("notifications/$id/read", StateInput(version))
     suspend fun expressions(): ExpressionCatalog = get("expression-catalog", authenticated = false)
     suspend fun drafts(cursor: Long = 0): MobilePage<DraftBody> = get("drafts", mapOf("cursor" to "$cursor"))
     internal suspend fun saveComposeDraft(version: Long, title: String, text: String, ids: List<Long>, entry: EntryBody? = null): MobileRecord<DraftBody> {

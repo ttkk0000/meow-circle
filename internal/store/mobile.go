@@ -109,7 +109,7 @@ func (t *memoryMobileTx) List(kind mobile.Kind, f mobile.Filter) ([]mobile.Recor
 		if r.ID <= f.After || f.OwnerID > 0 && r.OwnerID != f.OwnerID ||
 			f.ParticipantID > 0 && r.OwnerID != f.ParticipantID && !mobile.Has(r.Participants, f.ParticipantID) ||
 			f.RefID > 0 && r.RefID != f.RefID || f.MediaID > 0 && !mobile.Has(r.MediaIDs, f.MediaID) ||
-			f.PublicOnly && !r.Public || f.State != "" && r.State != f.State {
+			f.PublicOnly && !r.Public || f.State != "" && r.State != f.State || f.KeyPrefix != "" && !strings.HasPrefix(r.Key, f.KeyPrefix) {
 			continue
 		}
 		rows = append(rows, copyMobileRecord(r))

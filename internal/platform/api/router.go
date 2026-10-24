@@ -673,7 +673,7 @@ func (r *Router) routes() {
 	r.mux.HandleFunc("/app", func(w http.ResponseWriter, req *http.Request) {
 		http.Redirect(w, req, "/app/", http.StatusPermanentRedirect)
 	})
-	r.mux.HandleFunc("/share/", r.mobileAPI.ShareHandler)
+	r.mux.HandleFunc("/share/", r.mobileAPI.PublicSharePage)
 	webDir := filepath.Join(getWorkingDir(), "web")
 	uploadsDir := filepath.Join(getWorkingDir(), "data", "uploads")
 	r.mux.Handle("/", http.FileServer(http.Dir(webDir)))

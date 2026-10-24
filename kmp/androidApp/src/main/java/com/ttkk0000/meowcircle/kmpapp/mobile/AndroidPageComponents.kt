@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Alignment
@@ -36,6 +37,7 @@ private object DesignImageLoader {
 
 private data class TaskAction(val label: String,val enabled: Boolean,val run: () -> Unit)
 private val LocalPrimaryAction = staticCompositionLocalOf<((Any,TaskAction?) -> Unit)?> { null }
+internal val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
 
 /** 表单正文独立滚动，主操作保持可达；不会创建第二个业务 Store。 */
 @Composable internal fun TaskColumn(spacing: Int = 16,content: @Composable ColumnScope.() -> Unit) {
@@ -48,11 +50,11 @@ private val LocalPrimaryAction = staticCompositionLocalOf<((Any,TaskAction?) -> 
     } }
     Column(Modifier.fillMaxSize()) {
         CompositionLocalProvider(LocalPrimaryAction provides register) {
-            Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement = Arrangement.spacedBy(spacing.dp),content = content)
+            MndForm(Modifier.weight(1f),gap = spacing.dp,content = content)
         }
         if(actions.isNotEmpty()) Surface(color = MaterialTheme.colorScheme.surface) {
             Column(Modifier.fillMaxWidth().heightIn(max = 168.dp).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp,vertical = 12.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                actions.forEach { (_,primary) -> Button(primary.run,Modifier.fillMaxWidth().heightIn(min = 48.dp),enabled = primary.enabled) { Text(primary.label) } }
+                actions.forEach { (_,primary) -> MndPrimaryButton(primary.label,primary.enabled,onClick = primary.run) }
             }
         }
     }
@@ -70,17 +72,25 @@ private val LocalPrimaryAction = staticCompositionLocalOf<((Any,TaskAction?) -> 
     }
 }
 @Composable internal fun TaskSection(title: String,content: @Composable ColumnScope.() -> Unit) {
-    Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp),verticalArrangement = Arrangement.spacedBy(12.dp)) { Text(title,style = MaterialTheme.typography.titleMedium,fontWeight = FontWeight.Bold); content() }
-    }
+    MndSection(title,content = content)
 }
 @Composable internal fun TaskNotice(title: String,text: String) {
     Surface(color = MaterialTheme.colorScheme.surfaceVariant,shape = MaterialTheme.shapes.medium,modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) { Text(title,fontWeight = FontWeight.Bold); Text(text,style = MaterialTheme.typography.bodySmall) }
     }
 }
+@Composable internal fun MemberSection(store: MobileStore,id: Long,content: @Composable ColumnScope.() -> Unit) {
+    val state by store.state.collectAsStateWithLifecycle()
+    LaunchedEffect(id,state.user?.id) { store.ensureMember(id) }
+    val member = state.members[id]
+    val name = member?.nickname?.ifBlank { member.username } ?: "宠友资料待核对"
+    TaskSection(name) {
+        avatarMediaId(member?.avatarUrl.orEmpty())?.let { media -> MobilePhoto(store,media,state.user?.id,"$name 的头像",Modifier.size(48.dp).clip(CircleShape)) }
+        content()
+    }
+}
 @Composable internal fun NavigationRow(title: String,detail: String = "",onClick: () -> Unit) {
-    Row(Modifier.fillMaxWidth().clickable(onClick = onClick).heightIn(min = 64.dp).padding(vertical = 12.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    Row(Modifier.fillMaxWidth().clickable(enabled = LocalTaskNavigationEnabled.current,onClick = onClick).heightIn(min = 64.dp).padding(vertical = 12.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Column(Modifier.weight(1f),verticalArrangement = Arrangement.spacedBy(4.dp)) { Text(title,style = MaterialTheme.typography.bodyLarge); if(detail.isNotBlank()) Text(detail,color = MaterialTheme.colorScheme.onSurfaceVariant,style = MaterialTheme.typography.bodySmall) }
         DesignIcon("chevron-right",null)
     }
@@ -105,7 +115,10 @@ private val LocalPrimaryAction = staticCompositionLocalOf<((Any,TaskAction?) -> 
             Box(Modifier.fillMaxWidth().clickable { store.open(MobileDestination.Entry(record.id)) }) { MobilePhoto(store,record.mediaIds.firstOrNull(),s.user?.id,record.data.title.ifBlank { "宠物日常照片" },Modifier.fillMaxWidth().aspectRatio(173f / 190f)) }
             Column(Modifier.fillMaxWidth().clickable { store.open(MobileDestination.Entry(record.id)) }.padding(8.dp),verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(record.data.title.ifBlank { record.data.text },minLines = 2,maxLines = 2,overflow = TextOverflow.Ellipsis,fontWeight = FontWeight.Bold,style = MaterialTheme.typography.titleMedium)
-                Text(author?.nickname?.ifBlank { author.username } ?: if(record.ownerId == s.user?.id) s.user?.nickname.orEmpty() else "宠友 #${record.ownerId}",maxLines = 1,style = MaterialTheme.typography.bodySmall,color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Row(Modifier.fillMaxWidth().clickable { store.features.open(FeatureRoute(FeaturePage.Member,record.ownerId)) },verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    avatarMediaId(author?.avatarUrl.orEmpty())?.let { id -> MobilePhoto(store,id,s.user?.id,"发布人头像",Modifier.size(24.dp).clip(CircleShape)) }
+                    Text(author?.nickname?.ifBlank { author.username } ?: if(record.ownerId == s.user?.id) s.user?.nickname.orEmpty() else "宠友 #${record.ownerId}",maxLines = 1,style = MaterialTheme.typography.bodySmall,color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
             }
             Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
                 TextButton({ store.toggleReaction(record.id) },enabled = metrics != null && !s.busy,contentPadding = PaddingValues(8.dp),modifier = Modifier.weight(1f).heightIn(min = 48.dp)) { DesignIcon("heart",if(metrics?.viewerLiked == true) "取消喜欢" else "喜欢"); Spacer(Modifier.width(8.dp)); Text(metrics?.likes?.toString() ?: "—") }
@@ -114,11 +127,14 @@ private val LocalPrimaryAction = staticCompositionLocalOf<((Any,TaskAction?) -> 
         }
     }
 }
-@Composable internal fun <T> RecordList(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,header: @Composable () -> Unit = {},row: @Composable (MobileRecord<T>) -> Unit) {
-    LazyColumn(Modifier.fillMaxSize(),contentPadding = PaddingValues(16.dp),verticalArrangement = Arrangement.spacedBy(16.dp)) {
+@Composable internal fun <T> RecordList(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,emptyText: String = "暂时没有可显示的内容",header: @Composable () -> Unit = {},row: @Composable (MobileRecord<T>) -> Unit) {
+    Column(Modifier.fillMaxSize()) {
+    PageRefresh(page)
+    LazyColumn(Modifier.weight(1f),contentPadding = PaddingValues(MobileUi.pagePadding),verticalArrangement = Arrangement.spacedBy(MobileUi.sectionGap)) {
         item { Text(title,style = MaterialTheme.typography.titleLarge,fontWeight = FontWeight.Bold) };item { header() }
         items(page.items,key = { it.id }) { row(it) }
-        item { PageFooter(page,retry,more) }
+        item { PageFooter(page,retry,more,emptyText,refreshVisible = true) }
+    }
     }
 }
 

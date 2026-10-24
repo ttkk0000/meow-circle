@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"time"
 )
 
 type UploadCleanupInput struct {
@@ -19,23 +20,9 @@ type UploadCleanupResult struct {
 }
 
 // 保全不因上传租约过期而自动释放；期限复核和解除由原业务处理。
-func uploadHold(tx Tx, r Record) (bool, error) {
-	requests, err := allRecords(tx, DataRequests, Filter{OwnerID: r.OwnerID})
-	if err != nil {
-		return false, err
-	}
-	for _, request := range requests {
-		d, err := Decode[DataRequest](request)
-		if err != nil {
-			return false, err
-		}
-		for _, hold := range d.Holds {
-			if !hold.Released && hold.Kind == Media && hold.ID == r.ID {
-				return true, nil
-			}
-		}
-	}
-	return false, nil
+func uploadHold(tx Tx, r Record, now time.Time) (bool, error) {
+	held, _, err := mediaRetention(tx, r, now)
+	return held, err
 }
 
 func (s *Service) ExpireMediaUploads(ctx context.Context, operator string, after int64) (next int64, count int, err error) {
@@ -56,7 +43,7 @@ func (s *Service) ExpireMediaUploads(ctx context.Context, operator string, after
 			if file.UploadLeaseUntil != nil && file.UploadLeaseUntil.After(s.Now()) {
 				continue
 			}
-			held, e := uploadHold(tx, r)
+			held, e := uploadHold(tx, r, s.Now())
 			if e != nil {
 				return e
 			}
@@ -119,7 +106,7 @@ func (s *Service) UploadFilesInUse(ctx context.Context, names []string) (used ma
 				if len(matches) == 0 {
 					continue
 				}
-				held, e := uploadHold(tx, r)
+				held, e := uploadHold(tx, r, s.Now())
 				if e != nil {
 					return e
 				}

@@ -1,0 +1,118 @@
+{
+  "mutatedNodeIds": [
+    "319:840749",
+    "319:933461",
+    "319:1026309",
+    "319:1118869",
+    "319:1211417",
+    "319:1304125",
+    "319:1396977",
+    "319:1489581"
+  ],
+  "rows": [
+    {
+      "id": "319:840749",
+      "parent": "319:838007",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "319:933461",
+      "parent": "319:930745",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "319:1026309",
+      "parent": "319:1023554",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "319:1118869",
+      "parent": "319:1116187",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "319:1211417",
+      "parent": "319:1208735",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "319:1304125",
+      "parent": "319:1301407",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "319:1396977",
+      "parent": "319:1394222",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    },
+    {
+      "id": "319:1489581",
+      "parent": "319:1486891",
+      "w": 144,
+      "h": 144,
+      "ratio": {
+        "x": 144,
+        "y": 144
+      },
+      "children": 153,
+      "badChildren": 0,
+      "sampleBindingsPreserved": true
+    }
+  ]
+}

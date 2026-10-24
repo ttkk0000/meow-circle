@@ -748,8 +748,8 @@ small {
   font-size: 26px;
 }
 .sticker {
-  width: 96px;
-  height: 96px;
+  width: 144px;
+  height: 144px;
   background-image: url("/app/assets/mnd-cat-stickers.png");
   background-size: 600% 400%;
   background-repeat: no-repeat;

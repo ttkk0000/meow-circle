@@ -71,6 +71,7 @@ func (s *Service) directoryRecord(tx Tx, r Record, actor int64) (Record, error) 
 		}
 	}
 	r.Participants = nil
+	r.OwnerID = 0
 	r.MediaIDs = nil
 	r.Key = ""
 	e = SetBody(&r, GroupDirectoryBody{Name: g.Name, City: g.City, Summary: g.Summary, MemberCount: len(g.Members), Member: Has(g.Members, actor)})

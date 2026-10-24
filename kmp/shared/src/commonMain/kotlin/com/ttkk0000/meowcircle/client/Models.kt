@@ -35,7 +35,10 @@ data class Audience(val mode: String = "public", @SerialName("user_ids") val use
 @Serializable
 data class PetBody(val name: String, val species: String, val breed: String = "", val birthday: String = "",
     val sex: String = "", val bio: String = "", val health: String = "", val missing: Boolean = false,
-    val audience: Audience = Audience(), @SerialName("adoption_available") val adoptionAvailable: Boolean = false, val city: String = "")
+    val audience: Audience = Audience(), @SerialName("adoption_available") val adoptionAvailable: Boolean = false, val city: String = "",
+    @SerialName("adoption_cycle") val adoptionCycle: Long = 0, @SerialName("placement_state") val placementState: String = "",
+    @SerialName("adoption_opened") val adoptionOpened: Boolean = false)
+
 
 @Serializable
 data class EntryBody(val text: String, val space: String = "community", val title: String = "", val category: String = "daily_share",
@@ -58,7 +61,8 @@ data class AdoptionBody(@SerialName("pet_id") val petId: Long, @SerialName("appl
     @SerialName("handover_confirmations") val handoverConfirmations: List<Long> = emptyList(),
     @SerialName("completed_at") val completedAt: String? = null,
     val contracts: List<ContractRevision>? = null, @SerialName("effective_contract") val effectiveContract: Long = 0,
-    @SerialName("return_plans") val returnPlans: List<ReturnPlan>? = null, @SerialName("effective_return") val effectiveReturn: Long = 0)
+    @SerialName("return_plans") val returnPlans: List<ReturnPlan>? = null, @SerialName("effective_return") val effectiveReturn: Long = 0,
+    @SerialName("adoption_cycle") val adoptionCycle: Long = 0)
 
 @Serializable
 data class ConversationBody(@SerialName("requester_id") val requesterId: Long, @SerialName("recipient_id") val recipientId: Long)
@@ -74,7 +78,8 @@ data class MessageBody(val text: String = "", @SerialName("sticker_id") val stic
 data class CaseBody(val type: String, val title: String, val species: String, val description: String, val city: String, val area: String,
     val latitude: Double, val longitude: Double, @SerialName("occurred_at") val occurredAt: String,
     @SerialName("pet_id") val petId: Long = 0, @SerialName("closure_reason") val closureReason: String = "",
-    @SerialName("private_location") val privateLocation: String = "", @SerialName("matched_claim_id") val matchedClaimId: Long = 0)
+    @SerialName("private_location") val privateLocation: String = "", @SerialName("matched_claim_id") val matchedClaimId: Long = 0,
+    @SerialName("location_precision") val locationPrecision: String = "approximate")
 
 @Serializable
 data class NotificationBody(val category: String, val text: String, val read: Boolean,
@@ -84,6 +89,7 @@ data class NotificationBody(val category: String, val text: String, val read: Bo
 @Serializable
 data class InboxSummary(val direct: Map<String, Int> = emptyMap(), val groups: Map<String, Int> = emptyMap(),
     @SerialName("global_total") val globalTotal: Int? = null,
+    @SerialName("muted_groups") val mutedGroups: Map<String, Int> = emptyMap(),
     val notifications: Map<String, Int> = emptyMap(), @SerialName("message_requests") val messageRequests: Int = 0,
     val pending: Map<String,Int> = emptyMap(),
     @SerialName("direct_first_unread") val directFirstUnread: Map<String,Long> = emptyMap(),
@@ -111,7 +117,8 @@ internal data class RefreshInput(@SerialName("access_token") val accessToken: St
 @Serializable
 internal data class LogoutInput(val all: Boolean = false)
 @Serializable
-data class AdoptionInput(@SerialName("pet_id") val petId: Long, val message: String, @SerialName("client_request_id") val clientRequestId: String = "")
+data class AdoptionInput(@SerialName("pet_id") val petId: Long, val message: String, @SerialName("client_request_id") val clientRequestId: String = "",
+    @SerialName("adoption_cycle") val adoptionCycle: Long = 0)
 @Serializable
 data class AdoptionActionInput(val version: Long, val note: String = "", @SerialName("trial_until") val trialUntil: String? = null,
     @SerialName("client_request_id") val clientRequestId: String = "")

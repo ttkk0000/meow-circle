@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"strings"
 	"time"
 )
 
@@ -23,6 +24,8 @@ func (s *Service) SaveCase(ctx context.Context, actor, id int64, in CaseInput) (
 		return out, ErrConflict
 	}
 	c := in.Case
+	c.City = strings.TrimSpace(c.City)
+	c.Area = strings.TrimSpace(c.Area)
 	if c.Type != "lost" && c.Type != "found" {
 		return out, Invalid("type must be lost or found")
 	}
@@ -37,6 +40,9 @@ func (s *Service) SaveCase(ctx context.Context, actor, id int64, in CaseInput) (
 	}
 	if !coordinates(c.Latitude, c.Longitude) || c.City == "" || len(c.City) > 120 || len(c.Area) > 200 || c.OccurredAt.IsZero() || c.OccurredAt.After(s.Now()) {
 		return out, Invalid("invalid location or occurrence date")
+	}
+	if !HasString([]string{"", "area", "approximate"}, c.LocationPrecision) || c.LocationPrecision == "area" && (c.Latitude != 0 || c.Longitude != 0) {
+		return out, Invalid("invalid location precision")
 	}
 	if c.Species != "cat" && c.Species != "dog" {
 		return out, Invalid("invalid species")
@@ -323,7 +329,10 @@ func (s *Service) Lead(ctx context.Context, actor, caseID int64, text string, me
 	if err = textValid(text, 2000, true); err != nil {
 		return
 	}
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.mutate(ctx, actor, "lead.submit", caseID, struct {
+		Text     string  `json:"text"`
+		MediaIDs []int64 `json:"media_ids"`
+	}{text, media}, Leads, &out, func(tx Tx) error {
 		if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
@@ -331,13 +340,37 @@ func (s *Service) Lead(ctx context.Context, actor, caseID int64, text string, me
 		if e != nil {
 			return e
 		}
+		ok, e := s.canRead(tx, Cases, p, actor)
+		if e != nil {
+			return e
+		}
+		if !ok {
+			return ErrForbidden
+		}
 		if p.State != "active" && p.State != "matched" {
 			return ErrConflict
 		}
 		if e = s.attachments(tx, actor, media); e != nil {
 			return e
 		}
-		r := Record{OwnerID: actor, Participants: []int64{p.OwnerID}, RefID: caseID, MediaIDs: media, State: "submitted"}
+		_, hash, e := commandKey(struct {
+			CommandMeta
+			Text     string  `json:"text"`
+			MediaIDs []int64 `json:"media_ids"`
+		}{CommandMeta{ClientRequestID: "legacy-lead"}, text, media})
+		if e != nil {
+			return e
+		}
+		key := fmt.Sprintf("lead:%d:%d:%s", actor, caseID, hash)
+		old, e := tx.ByKey(Leads, key)
+		if e == nil {
+			out = old
+			return nil
+		}
+		if e != ErrNotFound {
+			return e
+		}
+		r := Record{OwnerID: actor, Key: key, Participants: []int64{p.OwnerID}, RefID: caseID, MediaIDs: media, State: "submitted"}
 		if e = save(tx, Leads, &r, Lead{text}, actor, "lead.submitted"); e != nil {
 			return e
 		}
@@ -357,10 +390,20 @@ func (s *Service) Subscribe(ctx context.Context, actor int64, in SubscriptionInp
 	if !HasString([]string{"", "cat", "dog"}, v.Species) {
 		return out, Invalid("invalid nearby species")
 	}
-	if !coordinates(v.Latitude, v.Longitude) || v.RadiusKM < 5 || v.RadiusKM > 100 || len(v.City) > 120 || !HasString([]string{"instant", "daily", "off"}, v.Frequency) {
+	v.City = strings.TrimSpace(v.City)
+	if !coordinates(v.Latitude, v.Longitude) || len(v.City) > 120 || !HasString([]string{"instant", "daily", "off"}, v.Frequency) {
 		return out, Invalid("invalid nearby subscription")
 	}
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	if !HasString([]string{"", "city", "approximate"}, v.LocationPrecision) || v.LocationPrecision == "city" && (v.City == "" || v.Latitude != 0 || v.Longitude != 0) {
+		return out, Invalid("invalid subscription precision")
+	}
+	if v.LocationPrecision != "city" && (v.RadiusKM < 5 || v.RadiusKM > 100) {
+		return out, Invalid("invalid nearby radius")
+	}
+	if v.LocationPrecision == "city" {
+		v.RadiusKM = 0
+	}
+	err = s.mutate(ctx, actor, "subscription.save", 0, in, Subscriptions, &out, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
 		}
@@ -389,6 +432,7 @@ func (s *Service) Subscribe(ctx context.Context, actor int64, in SubscriptionInp
 }
 
 type AdoptionInput struct {
+	AdoptionCycle int64 `json:"adoption_cycle"`
 	CommandMeta
 	PetID   int64  `json:"pet_id"`
 	Message string `json:"message"`
@@ -424,7 +468,10 @@ func (s *Service) ApplyAdoption(ctx context.Context, actor int64, in AdoptionInp
 		if b {
 			return ErrForbidden
 		}
-		key := fmt.Sprintf("%d:%d", pet.ID, actor)
+		if in.AdoptionCycle != p.AdoptionCycle {
+			return ErrConflict
+		}
+		key := adoptionKey(pet.ID, actor, p.AdoptionCycle)
 		old, e := tx.ByKey(Adoptions, key)
 		if e == nil {
 			out = old
@@ -434,7 +481,7 @@ func (s *Service) ApplyAdoption(ctx context.Context, actor int64, in AdoptionInp
 			return e
 		}
 		r := Record{OwnerID: pet.OwnerID, Participants: []int64{actor}, RefID: pet.ID, Key: key, State: "submitted"}
-		if e = save(tx, Adoptions, &r, Adoption{PetID: pet.ID, ApplicantID: actor, PublisherID: pet.OwnerID, Message: in.Message, TrialConfirmations: []int64{}, HandoverConfirmations: []int64{}}, actor, "adoption.applied"); e != nil {
+		if e = save(tx, Adoptions, &r, Adoption{AdoptionCycle: p.AdoptionCycle, PetID: pet.ID, ApplicantID: actor, PublisherID: pet.OwnerID, Message: in.Message, TrialConfirmations: []int64{}, HandoverConfirmations: []int64{}}, actor, "adoption.applied"); e != nil {
 			return e
 		}
 		out = r
@@ -478,6 +525,11 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 			return e
 		}
 		publisher := actor == a.PublisherID
+		// Lock the common aggregate before changing any application state.
+		petRecord, petBody, e := adoptionPet(tx, a)
+		if e != nil && action != "support" && action != "request_return" {
+			return e
+		}
 		if HasString([]string{"propose_trial", "confirm_trial", "confirm_handover"}, action) {
 			if e = s.adult(tx, actor); e != nil {
 				return e
@@ -494,6 +546,9 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 			if contract == nil || len(contract.AcceptedBy) != 2 {
 				return Denied("effective_contract_required")
 			}
+			if contract.Terms.Species != petBody.Species {
+				return Denied("contract_disclosure_mismatch")
+			}
 			if e = s.disposition(tx, a.PublisherID, a.PetID); e != nil {
 				return e
 			}
@@ -505,6 +560,43 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 			}
 		}
 		switch action {
+		case "resubmit", "resume_candidate":
+			if petRecord.OwnerID != a.PublisherID || !petBody.AdoptionAvailable || petRecord.State != "active" {
+				return ErrConflict
+			}
+			b, e := blocked(tx, a.PublisherID, a.ApplicantID)
+			if e != nil {
+				return e
+			}
+			if b {
+				return ErrForbidden
+			}
+			if action == "resubmit" {
+				if publisher || r.State != "withdrawn" || in.Note == "" {
+					return ErrForbidden
+				}
+				a.Message = in.Note
+				if e = textValid(a.Message, 2000, true); e != nil {
+					return e
+				}
+				resetAdoptionConsent(&a)
+				r.State = "submitted"
+			} else {
+				if !publisher || r.State != "waitlisted" {
+					return ErrForbidden
+				}
+				occupied, e := otherPlacement(tx, a.PetID, r.ID)
+				if e != nil {
+					return e
+				}
+				if occupied {
+					return Denied("pet_placement_conflict")
+				}
+				// A waitlist invitation never reuses the former family's accepted
+				// terms or confirmations as consent to this resumed arrangement.
+				resetAdoptionConsent(&a)
+				r.State = "approved"
+			}
 		case "request_supplement":
 			if !publisher || (r.State != "submitted" && r.State != "supplemented") || in.Note == "" {
 				return ErrForbidden
@@ -520,12 +612,23 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 			if !publisher || (r.State != "submitted" && r.State != "supplemented") {
 				return ErrForbidden
 			}
+			if action == "approve" && (!petBody.AdoptionAvailable || petRecord.State != "active" || petRecord.OwnerID != a.PublisherID) {
+				return ErrConflict
+			}
 			r.State = "approved"
 			if action == "reject" {
 				r.State = "rejected"
+			} else {
+				occupied, e := otherPlacement(tx, a.PetID, r.ID)
+				if e != nil {
+					return e
+				}
+				if occupied {
+					r.State = "waitlisted"
+				}
 			}
 		case "withdraw":
-			if publisher || !HasString([]string{"submitted", "needs_info", "supplemented", "approved", "trial_proposed"}, r.State) {
+			if publisher || !HasString([]string{"submitted", "needs_info", "supplemented", "approved", "trial_proposed", "waitlisted"}, r.State) {
 				return ErrForbidden
 			}
 			r.State = "withdrawn"
@@ -546,6 +649,9 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 			}
 			a.TrialConfirmations = Unique(append(a.TrialConfirmations, actor))
 			if len(a.TrialConfirmations) == 2 {
+				if e = s.reserveAdoption(tx, actor, r, a, "reserved_trial"); e != nil {
+					return e
+				}
 				r.State = "trial_active"
 			}
 		case "decline_trial":
@@ -558,6 +664,9 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 			if !HasString([]string{"approved", "trial_active", "handover_pending"}, r.State) {
 				return ErrConflict
 			}
+			if e = s.reserveAdoption(tx, actor, r, a, "handover_pending"); e != nil {
+				return e
+			}
 			a.HandoverConfirmations = Unique(append(a.HandoverConfirmations, actor))
 			r.State = "handover_pending"
 			if len(a.HandoverConfirmations) == 2 {
@@ -569,18 +678,22 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 				if e != nil {
 					return e
 				}
-				if pet.OwnerID != a.PublisherID || !p.AdoptionAvailable {
+				if pet.OwnerID != a.PublisherID {
 					return ErrConflict
 				}
 				now := s.Now()
 				a.CompletedAt = &now
 				r.State = "completed"
 				p.AdoptionAvailable = false
+				p.PlacementState = "placed"
 				p.Audience = Audience{Mode: "private"}
 				pet.OwnerID = a.ApplicantID
 				pet.Public = false
 				pet.MediaIDs = nil
 				if e = save(tx, Pets, &pet, p, actor, "pet.custody_transferred"); e != nil {
+					return e
+				}
+				if e = s.closeOtherAdoptions(tx, actor, r, "本轮领养交接已完成，你的申请已结束，历史记录仍可查看"); e != nil {
 					return e
 				}
 				offers, e := allRecords(tx, Offers, Filter{RefID: pet.ID})
@@ -597,10 +710,10 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 				}
 			}
 		case "support", "request_return":
-			if !HasString([]string{"trial_active", "handover_pending", "completed", "return_requested"}, r.State) || in.Note == "" {
+			if !HasString([]string{"trial_active", "handover_pending", "completed", "return_requested", "return_agreed"}, r.State) || in.Note == "" {
 				return ErrConflict
 			}
-			if action == "request_return" {
+			if action == "request_return" && r.State != "return_agreed" {
 				r.State = "return_requested"
 			}
 			review := Record{OwnerID: actor, State: "submitted", RefID: r.ID}
@@ -647,7 +760,7 @@ func (s *Service) Care(ctx context.Context, actor, adoptionID int64, in CareInpu
 		if e != nil {
 			return e
 		}
-		if (p.State != "completed" && p.State != "return_requested") || a.CompletedAt == nil || s.Now().After(a.CompletedAt.Add(30*24*time.Hour)) {
+		if !HasString([]string{"completed", "return_requested", "return_agreed"}, p.State) || a.CompletedAt == nil || s.Now().After(a.CompletedAt.Add(30*24*time.Hour)) {
 			return ErrConflict
 		}
 		allowed := actor == a.ApplicantID

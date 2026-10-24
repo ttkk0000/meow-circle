@@ -99,6 +99,13 @@ func (s *Service) SaveOffer(ctx context.Context, actor, id int64, in OfferInput)
 		if pet.Version != o.PetVersion || pet.State != "active" {
 			return ErrConflict
 		}
+		occupied, e := otherPlacement(tx, pet.ID, 0)
+		if e != nil {
+			return e
+		}
+		if occupied {
+			return Denied("pet_placement_conflict")
+		}
 		if e = s.disposition(tx, actor, pet.ID); e != nil {
 			return e
 		}

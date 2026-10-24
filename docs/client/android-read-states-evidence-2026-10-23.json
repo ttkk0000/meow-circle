@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-23",
+  "branch": "main",
+  "head": "5de631b",
+  "scope": "Android phone/tablet + necessary KMP shared; Apple UI deferred",
+  "staticChecks": {
+    "androidFeatureScript": "passed; 30 route branches; source/config only",
+    "kmpClientScript": "passed; 50 Kotlin/Swift source files; lexical only",
+    "readStateWiring": "passed; request retry bindings, separate cursors, photo account keys, sticker Fit",
+    "encodingAndWhitespace": "12 target source files UTF-8 no BOM; no conflict markers/trailing spaces",
+    "handoffLinks": 10
+  },
+  "regressionSourceCases": 7,
+  "testsRun": false,
+  "typeChecking": false,
+  "buildsRun": false,
+  "deviceOrRuntime": false,
+  "files": [
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "efca87b2070071014c08806e8a31d9f072c54b87c4409738717474bbbf059c62"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "3f8478c0583a1e47f2d16b846f1a109d6c071a6beab065e7899baf5b964a7950"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidLoadStates.kt",
+      "sha256": "97d64179ab16c13ac469090df0d22badb660154a5bd5e39e827b428c3ca17596"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMedia.kt",
+      "sha256": "76acfa17cdd08fba63bebd5e9fe3a7429add820178a79973f002b422e18048be"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt",
+      "sha256": "f960c3edfc94f66c37e1aad39f1ced50e249ff0d28f9f0daea4e8b03d20c5ca0"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt",
+      "sha256": "407caa83fc51b095ae714e9acb3b48da6e99a8d38ea835d42ff6b3f2b58ae435"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+      "sha256": "8a8933925820373904fc0009b88bb2a1ff4f09cb57d4d9dd040b8fe1d195f498"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "sha256": "8093cbd25d928c208ef5598838bc86c41514b27752d140657576e180328e24d7"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidOfferFeatures.kt",
+      "sha256": "33293c7711d8a3f442a5ee8eb65de761dbc5e2b0eae51bffa6cc7f676510552c"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+      "sha256": "24e85457bf0920afa7c7145dca2e1f612ec4db22bbcd75eecf3bcdbe0c5d0f13"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPetFields.kt",
+      "sha256": "6b1d974f0dfdfa4de2c15a7304890428a7fcbd550dc0ebc1b63e3944c6d1f6ca"
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/PageStateTest.kt",
+      "sha256": "5c2f067e972fc991942d285b675063cbe396332ac40ff4d2ebeb8d26bcccefae"
+    }
+  ],
+  "pending": [
+    "Figma legal board final screenshot and extra review-button saved-state read: transport unavailable",
+    "Kotlin compilation/type checking, regression execution and Android phone/tablet device acceptance are unverified",
+    "Apple UI and Web/Desktop UI not implemented in this batch"
+  ],
+  "git": "Existing mixed uncommitted work preserved; no commit or push"
+}

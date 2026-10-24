@@ -11,6 +11,8 @@ import androidx.activity.viewModels
 import com.ttkk0000.meowcircle.kmpapp.mobile.MndApplication
 import com.ttkk0000.meowcircle.kmpapp.mobile.MobileViewModel
 import com.ttkk0000.meowcircle.kmpapp.mobile.AndroidMobileApp
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 class MainActivity : ComponentActivity() {
     private val appViewModel by viewModels<MobileViewModel> {
@@ -26,7 +28,8 @@ class MainActivity : ComponentActivity() {
         )
         if (savedInstanceState == null) appViewModel.openLink(intent?.data)
         setContent {
-            AndroidMobileApp(appViewModel.store)
+            val pending by appViewModel.pendingLink.collectAsStateWithLifecycle()
+            AndroidMobileApp(appViewModel.store,pending,appViewModel::openPendingLink,appViewModel::dismissPendingLink,appViewModel.uiSession)
         }
     }
 

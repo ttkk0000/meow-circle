@@ -23,12 +23,24 @@ func (s *Service) RegisterPushDevice(ctx context.Context, actor int64, in PushDe
 	if !HasString([]string{"android", "ios"}, in.Platform) || len(in.Token) < 16 || len(in.Token) > 4096 || !HasString([]string{"granted", "denied", "unknown"}, in.Permission) {
 		return out, Invalid("invalid push device")
 	}
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
 		}
 		key := in.Platform + ":" + Fingerprint(in.Token)
 		r, e := tx.ByKey(PushDevices, key)
+		if e == nil && in.Version == 0 && r.State == "disabled" {
+			// Retain an opaque disabled record for old cleanup requests. A new
+			// registration gets its own ID and cannot change that record's owner.
+			r.Key = fmt.Sprintf("%s:disabled:%d", key, r.ID)
+			if e = SetBody(&r, pushBinding{}); e != nil {
+				return e
+			}
+			if e = tx.Save(PushDevices, &r); e != nil {
+				return e
+			}
+			e = ErrNotFound
+		}
 		if e == ErrNotFound {
 			if in.Version != 0 {
 				return ErrConflict
@@ -40,15 +52,26 @@ func (s *Service) RegisterPushDevice(ctx context.Context, actor int64, in PushDe
 			if r.OwnerID != actor {
 				return Denied("push_device_owned_by_another_account")
 			}
-			if e = expected(r, in.Version); e != nil {
+			current, e := Decode[PushDeviceInput](r)
+			if e != nil {
 				return e
+			}
+			matchingRegistration := in.Version == 0 && current.Token == in.Token && current.Platform == in.Platform && current.Permission == in.Permission && current.Enabled == in.Enabled
+			if !matchingRegistration {
+				if e = expected(r, in.Version); e != nil {
+					return e
+				}
 			}
 		}
 		r.State = "disabled"
 		if in.Enabled && in.Permission == "granted" {
 			r.State = "enabled"
 		}
-		if e = SetBody(&r, in); e != nil {
+		stored := in
+		if r.State == "disabled" {
+			stored.Token = ""
+		}
+		if e = SetBody(&r, pushBinding{stored, SessionKey(ctx)}); e != nil {
 			return e
 		}
 		if e = tx.Save(PushDevices, &r); e != nil {
@@ -99,19 +122,11 @@ func (s *Service) PushWork(ctx context.Context, id int64) (out []PushWork, err e
 		if n.PushState != "queued" || n.DeliverAfter != nil && n.DeliverAfter.After(s.Now()) {
 			return ErrConflict
 		}
-		if e = s.active(tx, r.OwnerID); e != nil {
-			return e
-		}
-		pref, e := tx.ByKey(Preferences, fmt.Sprint(r.OwnerID))
-		if e != nil {
-			return Denied("push_permission_withdrawn")
-		}
-		p, e := Decode[Preference](pref)
+		allowed, e := s.pushAllowed(tx, r, n)
 		if e != nil {
 			return e
 		}
-		allowed := map[string]bool{"direct_messages": p.DirectMessages, "groups": p.Groups, "applications": p.Applications, "interactions": p.Interactions, "nearby": true}[n.Category]
-		if !p.PushPermission || p.Frequency == "off" || !allowed {
+		if !allowed {
 			return Denied("push_permission_withdrawn")
 		}
 		rows, e := allRecords(tx, PushDevices, Filter{OwnerID: r.OwnerID, State: "enabled"})
@@ -165,9 +180,6 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 	if operator == "" {
 		return ErrForbidden
 	}
-	if s.Push == nil {
-		return ErrUnavailable
-	}
 	suppressed := false
 	if e := s.Repo.Update(ctx, func(tx Tx) error {
 		r, e := tx.Get(Notifications, id)
@@ -177,6 +189,10 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 		n, e := Decode[Notification](r)
 		if e != nil {
 			return e
+		}
+		if HasString([]string{"accepted", "delivered", "suppressed"}, n.PushState) {
+			suppressed = true
+			return nil
 		}
 		if n.PushState != "queued" {
 			return ErrConflict
@@ -203,9 +219,8 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 		} else if e != ErrNotFound {
 			return e
 		}
-		if e = s.active(tx, r.OwnerID); e == ErrUnauthorized || e == ErrNotFound {
-			allowed = false
-		} else if e != nil {
+		allowed, e = s.pushAllowed(tx, r, n)
+		if e != nil {
 			return e
 		}
 		if !allowed {
@@ -226,6 +241,9 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 	if suppressed {
 		return nil
 	}
+	if s.Push == nil {
+		return ErrUnavailable
+	}
 	work, e := s.PushWork(ctx, id)
 	if e != nil {
 		return e
@@ -235,6 +253,9 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 	}
 	receipts := []PushAcceptance{}
 	for _, item := range work {
+		if e := s.validatePushWork(ctx, item); e != nil {
+			return e
+		}
 		lookup, e := s.Push.Lookup(ctx, item.Payload.IdempotencyKey)
 		if e != nil {
 			return ErrUnavailable
@@ -243,6 +264,9 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 		switch lookup.State {
 		case "accepted":
 		case "not_found":
+			if e := s.validatePushWork(ctx, item); e != nil {
+				return e
+			}
 			receipt, e = s.Push.Send(ctx, item.Payload)
 			if e != nil {
 				return ErrUnavailable
@@ -256,4 +280,17 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 		receipts = append(receipts, receipt)
 	}
 	return s.RecordPushAcceptance(ctx, operator, id, work[0].Version, receipts)
+}
+
+func (s *Service) validatePushWork(ctx context.Context, item PushWork) error {
+	current, e := s.PushWork(ctx, item.NotificationID)
+	if e != nil {
+		return e
+	}
+	for _, candidate := range current {
+		if candidate.Payload.IdempotencyKey == item.Payload.IdempotencyKey && candidate.Payload.Token == item.Payload.Token {
+			return nil
+		}
+	}
+	return Denied("push_permission_withdrawn")
 }

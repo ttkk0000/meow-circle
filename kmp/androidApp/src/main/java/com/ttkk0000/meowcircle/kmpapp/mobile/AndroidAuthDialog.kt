@@ -21,9 +21,12 @@ import com.ttkk0000.meowcircle.kmpapp.R
 @Composable internal fun AndroidAuthDialog(store: MobileStore,s: MobileState) {
     val f = store.features; val work by f.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    var mode by remember { mutableStateOf("password") }
-    var identifier by remember { mutableStateOf("") }; var password by remember { mutableStateOf("") }
-    var code by remember { mutableStateOf("") }; var username by remember { mutableStateOf("") }; var agreed by remember { mutableStateOf(false) }
+    var mode by rememberSessionUiState("mode", "transient:auth") { "password" }
+    var identifier by rememberSessionUiState("identifier", "transient:auth") { "" }
+    var password by rememberSessionUiState("password", "transient:auth") { "" }
+    var code by rememberSessionUiState("code", "transient:auth") { "" }
+    var username by rememberSessionUiState("username", "transient:auth") { "" }
+    var agreed by rememberSessionUiState("agreed", "transient:auth", generation = termsGeneration(context)) { false }
     val terms = context.getString(R.string.mnd_terms_url); val privacy = context.getString(R.string.mnd_privacy_url)
     val policyReady = listOf(terms,privacy).all { url -> runCatching { Uri.parse(url).let { it.scheme == "https" && !it.host.isNullOrBlank() } }.getOrDefault(false) }
     val busy = s.busy || work.busy
@@ -74,3 +77,6 @@ import com.ttkk0000.meowcircle.kmpapp.R
                 TextButton({ store.cancelLogin() },enabled = !busy) { Text("继续以游客身份浏览") }
     }
 }
+
+private fun termsGeneration(context: android.content.Context) =
+    context.getString(R.string.mnd_terms_url) to context.getString(R.string.mnd_privacy_url)

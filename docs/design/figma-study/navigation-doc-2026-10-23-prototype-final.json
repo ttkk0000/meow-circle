@@ -1,0 +1,429 @@
+{
+  "pageName": "07 早期概念原型（非现行）",
+  "roots": [
+    {
+      "id": "30:3",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:6",
+        "w": 390,
+        "h": 72,
+        "reactions": []
+      },
+      "title": [
+        {
+          "id": "30:7",
+          "text": "M&D · 社区（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 5,
+      "otherActionDigest": "6ee19875"
+    },
+    {
+      "id": "30:44",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:47",
+        "w": 390,
+        "h": 72,
+        "reactions": []
+      },
+      "title": [
+        {
+          "id": "30:48",
+          "text": "M&D · 领养（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 5,
+      "otherActionDigest": "2d76812b"
+    },
+    {
+      "id": "30:95",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:98",
+        "w": 390,
+        "h": 72,
+        "reactions": []
+      },
+      "title": [
+        {
+          "id": "30:99",
+          "text": "M&D · 找宠（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 5,
+      "otherActionDigest": "31559826"
+    },
+    {
+      "id": "30:139",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:142",
+        "w": 390,
+        "h": 72,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      "title": [
+        {
+          "id": "30:143",
+          "text": "M&D · ‹  领养详情（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 1,
+      "otherActionDigest": "18bf8ef"
+    },
+    {
+      "id": "30:169",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:172",
+        "w": 390,
+        "h": 72,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      "title": [
+        {
+          "id": "30:173",
+          "text": "M&D · ‹  来源与约见（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 1,
+      "otherActionDigest": "77c1d579"
+    },
+    {
+      "id": "30:208",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:211",
+        "w": 390,
+        "h": 72,
+        "reactions": []
+      },
+      "title": [
+        {
+          "id": "30:212",
+          "text": "M&D · 我的（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 6,
+      "otherActionDigest": "b8066fb7"
+    },
+    {
+      "id": "30:248",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:251",
+        "w": 390,
+        "h": 72,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      "title": [
+        {
+          "id": "30:252",
+          "text": "M&D · ‹  申请领养（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 0,
+      "otherActionDigest": "741638a5"
+    },
+    {
+      "id": "30:283",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:286",
+        "w": 390,
+        "h": 72,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      "title": [
+        {
+          "id": "30:287",
+          "text": "M&D · ‹  确认预约（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 0,
+      "otherActionDigest": "741638a5"
+    },
+    {
+      "id": "30:323",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:326",
+        "w": 390,
+        "h": 72,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      "title": [
+        {
+          "id": "30:327",
+          "text": "M&D · ‹  安排变更（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 0,
+      "otherActionDigest": "741638a5"
+    },
+    {
+      "id": "30:351",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:354",
+        "w": 390,
+        "h": 72,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      "title": [
+        {
+          "id": "30:355",
+          "text": "M&D · ‹  预约会话（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 1,
+      "otherActionDigest": "6bd3f369"
+    },
+    {
+      "id": "30:381",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:384",
+        "w": 390,
+        "h": 72,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      "title": [
+        {
+          "id": "30:385",
+          "text": "M&D · ‹  发布信息（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 0,
+      "otherActionDigest": "741638a5"
+    },
+    {
+      "id": "30:425",
+      "w": 390,
+      "h": 844,
+      "bar": {
+        "id": "30:428",
+        "w": 390,
+        "h": 72,
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      "title": [
+        {
+          "id": "30:429",
+          "text": "M&D · ‹  报告问题（早期示意）\n现行原稿见01–05 →",
+          "h": 44,
+          "links": [
+            {
+              "type": "URL",
+              "value": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=403-5"
+            }
+          ]
+        }
+      ],
+      "otherActionCount": 0,
+      "otherActionDigest": "741638a5"
+    }
+  ]
+}

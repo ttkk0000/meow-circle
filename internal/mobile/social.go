@@ -65,11 +65,43 @@ func (s *Service) SavePet(ctx context.Context, actor, id int64, in PetInput) (ou
 			}
 		}
 		r := Record{OwnerID: actor, State: "active"}
+		in.Pet.AdoptionCycle = 0
+		in.Pet.PlacementState = ""
+		in.Pet.AdoptionOpened = in.Pet.AdoptionAvailable
 		if id > 0 {
 			var e error
 			r, e = writable(tx, Pets, id, actor, in.Version)
 			if e != nil {
 				return e
+			}
+			old, e := Decode[Pet](r)
+			if e != nil {
+				return e
+			}
+			in.Pet.AdoptionCycle = old.AdoptionCycle
+			in.Pet.PlacementState = old.PlacementState
+			in.Pet.AdoptionOpened = old.AdoptionOpened || old.AdoptionAvailable || in.Pet.AdoptionAvailable
+			if in.Pet.AdoptionAvailable && !old.AdoptionAvailable {
+				occupied, e := otherPlacement(tx, id, 0)
+				if e != nil {
+					return e
+				}
+				if occupied {
+					return Denied("pet_placement_conflict")
+				}
+				previous, e := tx.Count(Adoptions, Filter{RefID: id})
+				if e != nil {
+					return e
+				}
+				// The first opening stays at legacy cycle 0. Only a reopening
+				// advances it; historical applications also identify legacy rounds.
+				if old.AdoptionOpened || previous > 0 {
+					in.Pet.AdoptionCycle++
+				}
+				in.Pet.PlacementState = ""
+				if e = s.closeOtherAdoptions(tx, actor, Record{RefID: id}, "上一轮领养已结束，历史申请仍可查看；新一轮需重新核对提交"); e != nil {
+					return e
+				}
 			}
 		}
 		r.MediaIDs = in.MediaIDs
@@ -377,7 +409,9 @@ func (s *Service) Comment(ctx context.Context, actor, entry int64, in CommentInp
 	return
 }
 func (s *Service) React(ctx context.Context, actor, entry int64, liked bool) (out Record, err error) {
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.mutate(ctx, actor, "entry.react", entry, struct {
+		Liked bool `json:"liked"`
+	}{liked}, Reactions, &out, func(tx Tx) error {
 		if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
@@ -424,7 +458,10 @@ func (s *Service) Remove(ctx context.Context, actor int64, k Kind, id, version i
 	if k != Pets && k != Offers && k != Entries && k != Comments && k != Drafts {
 		return ErrForbidden
 	}
-	return s.Repo.Update(ctx, func(tx Tx) error {
+	var out Record
+	return s.mutate(ctx, actor, "resource.remove."+string(k), id, struct {
+		Version int64 `json:"version"`
+	}{version}, k, &out, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
 		}
@@ -432,10 +469,23 @@ func (s *Service) Remove(ctx context.Context, actor int64, k Kind, id, version i
 		if e != nil {
 			return e
 		}
+		if k == Pets {
+			occupied, e := otherPlacement(tx, id, 0)
+			if e != nil {
+				return e
+			}
+			if occupied {
+				return Denied("pet_placement_conflict")
+			}
+		}
 		r.State = "deleted"
 		r.Public = false
 		r.MediaIDs = nil
-		return save(tx, k, &r, struct{}{}, actor, string(k)+".deleted")
+		if e = save(tx, k, &r, struct{}{}, actor, string(k)+".deleted"); e != nil {
+			return e
+		}
+		out = r
+		return nil
 	})
 }
 func contentValid(c RichContent) error {
@@ -732,7 +782,9 @@ func (s *Service) Invite(ctx context.Context, actor int64, in InviteInput) (out 
 }
 func mustInviteExpiry(r Record) time.Time { i, _ := Decode[Invitation](r); return i.ExpiresAt }
 func (s *Service) Invitation(ctx context.Context, actor, id, version int64, action string) (out Record, err error) {
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.mutate(ctx, actor, "invitation."+action, id, struct {
+		Version int64 `json:"version"`
+	}{version}, Invitations, &out, func(tx Tx) error {
 		if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
@@ -910,7 +962,9 @@ func (s *Service) Conversation(ctx context.Context, actor int64, in Conversation
 	return
 }
 func (s *Service) ConversationAction(ctx context.Context, actor, id, version int64, action string) (out Record, err error) {
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.mutate(ctx, actor, "conversation."+action, id, struct {
+		Version int64 `json:"version"`
+	}{version}, Conversations, &out, func(tx Tx) error {
 		if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
@@ -1109,7 +1163,7 @@ func (s *Service) Settings(ctx context.Context, actor int64, k Kind, in Settings
 	default:
 		return out, ErrForbidden
 	}
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.mutate(ctx, actor, string(k)+".settings", 0, in, k, &out, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
 		}
@@ -1171,7 +1225,9 @@ func sameIDs(a, b []int64) bool {
 	return true
 }
 func (s *Service) ReadNotification(ctx context.Context, actor, id, version int64) (out Record, err error) {
-	err = s.Repo.Update(ctx, func(tx Tx) error {
+	err = s.mutate(ctx, actor, "notification.read", id, struct {
+		Version int64 `json:"version"`
+	}{version}, Notifications, &out, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {
 			return e
 		}
@@ -1188,8 +1244,8 @@ func (s *Service) ReadNotification(ctx context.Context, actor, id, version int64
 		if e = save(tx, Notifications, &r, n, actor, "notification.read"); e != nil {
 			return e
 		}
-		out = r
-		return nil
+		out, e = project(Notifications, r, actor)
+		return e
 	})
 	return
 }

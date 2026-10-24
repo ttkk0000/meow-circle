@@ -1,5 +1,7 @@
 # M&D 设计交接索引
 
+2026-10-23现行增补：[业务闭环与交互合同](MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)补领养独占／候补、申请周期、接回截止／撤回、人员与区域选择、HTTPS及游客入口；[当前交付账本](../client/CURRENT_DELIVERY_STATUS_2026_10_23.md)连接设计与源码／验收。已有候补／冲突／撤回／过期五布局继续复用；远端本轮核对与修订状态另留证，不把文档更新当画板写入。
+
 更新：2026-10-22｜品牌：M&D / meow & doggie
 
 新移动端已获批准使用Figma手机V2默认浅色，Noto Sans SC／Manrope、既有语义色及组件；Android／iOS与各自平板按[移动实施记录](../client/MOBILE_IMPLEMENTATION_2026_10_20.md)和[自适应合同](figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md)实施。旧Stitch镜像及未迁移旧端保留各自规则，不能用历史“待批准”重新阻塞已授权工作，也不能混用两套Token。

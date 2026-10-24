@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -31,13 +30,32 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ttkk0000.meowcircle.client.*
 
 // 按当前窗口与输入占用选择布局；手机、平板始终共用同一个 Store。
-internal data class AndroidWindowPolicy(val rail: Boolean, val master: Boolean, val contextPane: Boolean)
+internal data class AndroidWindowPolicy(val rail: Boolean, val master: Boolean, val contextPane: Boolean, val keyboard: Boolean = false)
+
+internal fun androidWindowPolicy(width: Float, height: Float, fontScale: Float, keyboard: Boolean): AndroidWindowPolicy {
+    val scale = fontScale.coerceAtLeast(1f)
+    val rail = width >= 680f
+    val readableWidth = (width - if (rail) 80f else 0f) / scale
+    return AndroidWindowPolicy(rail, width >= 980f && readableWidth >= 900f && height >= 480f && !keyboard,
+        width >= 1100f && readableWidth >= 1020f && height >= 600f && !keyboard, keyboard)
+}
 
 @Composable
-fun AndroidMobileApp(store: MobileStore) {
+fun AndroidMobileApp(store: MobileStore, pendingLink: PendingTaskLink? = null, openPendingLink: () -> Unit = {}, dismissPendingLink: () -> Unit = {}, uiSession: AndroidUiSessionState? = null) {
     val state by store.state.collectAsStateWithLifecycle()
     val features by store.features.state.collectAsStateWithLifecycle()
     val sensitive by store.features.sensitive.state.collectAsStateWithLifecycle()
+    val session = uiSession ?: remember { AndroidUiSessionState() }
+    val owner = state.user?.id ?: 0L
+    remember(session, owner) { session.useOwner(owner) }
+    SideEffect {
+        session.retainTransientScopes(buildSet {
+            features.route?.let { add(featureUiScope(it)) }
+            if (state.auth.visible) add("transient:auth")
+            if (sensitive.stage != SensitiveStage.Idle) add("transient:sensitive:${sensitive.clientRequestId}")
+            state.publicationConfirmation?.let { add("transient:publication:${it.clientRequestId}") }
+        })
+    }
     BackHandler(state.auth.visible || state.publicationConfirmation != null || features.route != null || sensitive.stage != SensitiveStage.Idle || state.destination != MobileDestination.Home || state.applying || state.confirmation != null) {
         when {
             features.busy -> Unit
@@ -48,49 +66,67 @@ fun AndroidMobileApp(store: MobileStore) {
             else -> store.back()
         }
     }
-    MobileTheme {
+    CompositionLocalProvider(LocalUiSession provides session) { key(owner) { MobileTheme {
         AndroidAdaptiveWindow {
-            val keyboard = WindowInsets.ime.getBottom(androidx.compose.ui.platform.LocalDensity.current) > 0
-            val policy = AndroidWindowPolicy(rail = maxWidth >= 680.dp, master = maxWidth >= 980.dp && maxHeight >= 480.dp && !keyboard,
-                contextPane = maxWidth >= 1100.dp && maxHeight >= 600.dp && !keyboard)
-            MobileShell(store, state, features, policy)
+            val density = androidx.compose.ui.platform.LocalDensity.current
+            val keyboard = WindowInsets.ime.getBottom(density) > 0
+            val policy = androidWindowPolicy(maxWidth.value, maxHeight.value, density.fontScale, keyboard)
+            val navigationLocked = state.busy || features.busy || state.auth.visible || state.publicationConfirmation != null ||
+                state.confirmation != null || features.confirmation != null || sensitive.stage != SensitiveStage.Idle
+            MobileShell(store, state, features, policy, navigationLocked, pendingLink, openPendingLink, dismissPendingLink)
         }
-    }
+    } } }
 }
 
 @Composable
-private fun MobileShell(store: MobileStore, state: MobileState, features: FeatureState, policy: AndroidWindowPolicy) {
+private fun MobileShell(store: MobileStore, state: MobileState, features: FeatureState, policy: AndroidWindowPolicy, navigationLocked: Boolean,
+    pendingLink: PendingTaskLink?, openPendingLink: () -> Unit, dismissPendingLink: () -> Unit) {
     val f = store.features
     val saved = androidx.compose.runtime.saveable.rememberSaveableStateHolder()
-    fun select(tab: MobileTab) { if (!features.busy && state.publicationConfirmation == null) { f.closeRoute(); store.select(tab) } }
+    // One content instance moves between full-width and the master pane.
+    val home = remember(store, saved) { movableContentOf<MobileState> { current ->
+        saved.SaveableStateProvider("${current.user?.id ?: 0}-home-${current.tab}") {
+            CompositionLocalProvider(LocalUiScope provides "screen:home-${current.tab}") { HomeContent(store,current) }
+        }
+    } }
+    fun select(tab: MobileTab) { if (!navigationLocked) { f.closeRoute(); store.select(tab) } }
     val unread = state.inbox?.globalTotal
     val showMaster = policy.master && features.route == null && state.tab in listOf(MobileTab.Adoption,MobileTab.Messages) && state.destination != MobileDestination.Home
     val showFeatureMaster = policy.master && features.route?.page in listOf(FeaturePage.Appointment,FeaturePage.Offer,FeaturePage.Claim,FeaturePage.Review)
     val showComposePreview = policy.master && state.tab == MobileTab.Publish && features.route == null && state.destination == MobileDestination.Home
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        bottomBar = { if (!policy.rail && features.route == null && state.destination == MobileDestination.Home && state.tab != MobileTab.Publish) NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
-            MobileTab.entries.forEach { tab -> NavigationBarItem(selected = state.tab == tab,
+        bottomBar = { if (!policy.rail && !policy.keyboard && features.route == null && state.destination == MobileDestination.Home && state.tab != MobileTab.Publish) NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
+            MobileTab.entries.forEach { tab -> NavigationBarItem(selected = state.tab == tab, enabled = !navigationLocked,
                 onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if (unread > 99) "99+" else unread.toString()) } }) { DesignIcon(tab.designIcon(),tab.label) } }, label = { Text(tab.label) }) }
         } }, contentWindowInsets = WindowInsets.safeDrawing,
     ) { padding ->
         Row(Modifier.fillMaxSize().padding(padding).imePadding()) {
             if (policy.rail) NavigationRail(containerColor = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxHeight().verticalScroll(rememberScrollState())) {
                 Text("M&D", Modifier.padding(vertical = 20.dp), fontFamily = BrandFont, fontWeight = FontWeight.ExtraBold)
-                MobileTab.entries.forEach { tab -> NavigationRailItem(selected = state.tab == tab,
+                MobileTab.entries.forEach { tab -> NavigationRailItem(selected = state.tab == tab, enabled = !navigationLocked,
                     onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if(unread > 99) "99+" else "$unread") } }) { DesignIcon(tab.designIcon(),tab.label) } }, label = { Text(tab.label) }) }
             }
-            if (policy.contextPane && !showMaster && !showFeatureMaster && !showComposePreview) ContextPane(store, state, features, Modifier.width(224.dp).fillMaxHeight())
+            if (policy.contextPane && !showMaster && !showFeatureMaster && !showComposePreview) ContextPane(store, state, features, Modifier.width(224.dp).fillMaxHeight(), enabled = !navigationLocked)
             Column(Modifier.weight(1f).fillMaxHeight()) {
+                pendingLink?.let { link ->
+                    Column(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.secondaryContainer).padding(horizontal = 16.dp,vertical = 8.dp)) {
+                        Text("有待查看的${link.label}，当前输入仍保留。",style = MaterialTheme.typography.bodyMedium)
+                        Row {
+                            TextButton(openPendingLink,enabled = !navigationLocked && !state.restoring) { Text("查看链接") }
+                            TextButton(dismissPendingLink) { Text("暂不查看") }
+                        }
+                    }
+                }
                 Row(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (features.route != null || state.destination != MobileDestination.Home) IconButton(onClick = { if (!f.back()) store.back() }, enabled = !state.busy && !features.busy) { Icon(Icons.Outlined.ArrowBack, "返回") }
                     Column(Modifier.weight(1f).padding(vertical = 12.dp)) {
                         Text(features.route?.page?.title ?: if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                         if (features.route == null && state.destination == MobileDestination.Home && state.tab == MobileTab.Community) Text("meow & doggie", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    if (state.user == null) TextButton(onClick = store::showLogin) { Text("登录") }
-                    IconButton(onClick = { f.open(FeatureRoute(FeaturePage.Safety)) }) { Icon(Icons.Outlined.HelpOutline,"安全与隐私求助") }
-                    IconButton(onClick = { if(features.route != null) f.reload() else if(state.destination == MobileDestination.Home) store.refreshHome() else store.reloadDetail(); store.refreshInbox() }, enabled = !state.busy && !features.busy) { Icon(Icons.Outlined.Refresh,"重新载入") }
+                    if (state.user == null) TextButton(onClick = store::showLogin, enabled = !navigationLocked) { Text("登录") }
+                    IconButton(onClick = { f.open(FeatureRoute(FeaturePage.Safety)) }, enabled = !navigationLocked) { Icon(Icons.Outlined.HelpOutline,"安全与隐私求助") }
+                    IconButton(onClick = { if(features.route != null) f.reload() else if(state.destination == MobileDestination.Home) store.refreshHome() else store.reloadDetail(); store.refreshInbox() }, enabled = !navigationLocked) { Icon(Icons.Outlined.Refresh,"重新载入") }
                 }
                 if (state.restoring || state.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
                 state.notice?.let { notice ->
@@ -102,7 +138,7 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                 if(state.inboxError != null) Text("未读读取失败，保留上次结果",Modifier.padding(horizontal = 16.dp),style = MaterialTheme.typography.labelSmall)
                 Row(Modifier.fillMaxSize()) {
                     if (showMaster) {
-                        Box(Modifier.width(300.dp).fillMaxHeight()) { saved.SaveableStateProvider("${state.user?.id ?: 0}-home-${state.tab}") { HomeContent(store,state) } }
+                        Box(Modifier.width(300.dp).fillMaxHeight()) { home(state) }
                         VerticalDivider()
                     }
                     if(showFeatureMaster) {
@@ -110,16 +146,18 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                         VerticalDivider()
                     }
                     Box(Modifier.weight(1f).fillMaxHeight(),contentAlignment = Alignment.TopCenter) {
-                        Box(Modifier.widthIn(max = 820.dp).fillMaxSize()) {
+                        Box(Modifier.widthIn(max = MobileUi.contentWidth).fillMaxSize()) {
                             val key = features.route?.let { "feature-${it.page}-${it.id}-${it.kind}-${it.peer}" } ?: if(state.destination == MobileDestination.Home) "home-${state.tab}" else "detail-${state.destination}"
-                            saved.SaveableStateProvider("${state.user?.id ?: 0}-$key") {
-                                if(features.route != null) AndroidFeatureContent(store,features)
-                                else if(state.destination == MobileDestination.Home) HomeContent(store,state) else DetailContent(store,state)
+                            if(features.route == null && state.destination == MobileDestination.Home) home(state)
+                            else saved.SaveableStateProvider("${state.user?.id ?: 0}-$key") {
+                                CompositionLocalProvider(LocalUiScope provides (features.route?.let(::featureUiScope) ?: "screen:$key")) {
+                                    if(features.route != null) AndroidFeatureContent(store,features) else DetailContent(store,state)
+                                }
                             }
                         }
                     }
                     if(showComposePreview) {
-                        VerticalDivider(); Column(Modifier.width(280.dp).fillMaxHeight().verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        VerticalDivider(); Column(Modifier.width(280.dp).fillMaxHeight().verticalScroll(rememberScrollState()).padding(MobileUi.pagePadding),verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             Text("发布预览",style = MaterialTheme.typography.titleMedium); Text(state.composeTitle); Text(state.composeText); Text(audienceLabel(state.composeEntry.audience.mode))
                             state.photos.mapNotNull { it.mediaId }.forEach { MobilePhoto(store,it,state.user?.id,"发布预览",Modifier.fillMaxWidth().aspectRatio(1f)) }
                         }
@@ -129,6 +167,7 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
         }
     }
     if (state.auth.visible) AndroidAuthDialog(store,state)
+    InboxReadAllDialog(store,state)
     FeatureDialogs(store,features)
     PublicationDialog(store,state)
     state.confirmation?.let { command ->
@@ -140,7 +179,8 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
 }
 
 @Composable
-internal fun ContextPane(store: MobileStore, state: MobileState, features: FeatureState, modifier: Modifier) {
+internal fun ContextPane(store: MobileStore, state: MobileState, features: FeatureState, modifier: Modifier, enabled: Boolean = true) {
+    CompositionLocalProvider(LocalTaskNavigationEnabled provides enabled) {
     val f = store.features
     Column(modifier.background(MaterialTheme.colorScheme.surfaceVariant).padding(20.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(features.route?.page?.title ?: state.tab.label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
@@ -198,12 +238,14 @@ internal fun ContextPane(store: MobileStore, state: MobileState, features: Featu
     }
 }
 
+}
+
 @Composable
 private fun HomeContent(store: MobileStore, s: MobileState) {
     when (s.tab) {
         MobileTab.Community -> Feed(store, s)
         MobileTab.Adoption -> Records(s.pets, "先了解，再决定", { store.refreshHome() }, { store.refreshHome(true) },
-            header = { AdoptionFilters(store,s);Text("领养不是免费买宠。具体条件、健康未知和必要费用都应分别说明。", color = MaterialTheme.colorScheme.onSurfaceVariant) }) { row ->
+            emptyText = "当前暂无待领养宠物", header = { AdoptionFilters(store,s);Text("领养不是免费买宠。具体条件、健康未知和必要费用都应分别说明。", color = MaterialTheme.colorScheme.onSurfaceVariant) }) { row ->
             PetCard(store, s, row) { store.open(MobileDestination.Pet(row.id)) }
         }
         MobileTab.Publish -> PublishScreen(store, s)
@@ -229,12 +271,13 @@ private fun Feed(store: MobileStore, s: MobileState) {
     BoxWithConstraints(Modifier.fillMaxSize()) {
     LazyVerticalGrid(columns = GridCells.Fixed(if(maxWidth >= 364.dp) 2 else 1), modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        item(span = { GridItemSpan(maxLineSpan) }) { PageRefresh(s.entries) }
         item(span = { GridItemSpan(maxLineSpan) }) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(s.feedKeyword) }
+                var query by rememberSessionUiState("feed.query") { mutableStateOf(s.feedKeyword) }
                 OutlinedTextField(query,{ query = it },Modifier.fillMaxWidth(),label = { Text("搜索宠友日常与互助") },trailingIcon = { IconButton({ store.filterFeed(s.feedSpace,query) }) { Icon(Icons.Outlined.Search,"搜索") } },singleLine = true)
                 Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) { listOf("community" to "推荐","following" to "关注","circle" to "宠友圈","local" to "同城").forEach { (id,label) -> FilterChip(s.feedSpace == id,{ store.filterFeed(id) },label = { Text(label) },modifier = Modifier.padding(end = 8.dp)) } }
-                if(s.feedSpace == "local") { var city by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(s.feedCity) }; OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("手动选择城市，不含精确定位") },trailingIcon = { TextButton({ store.filterFeed("local",city = city) }) { Text("查看") } }) }
+                if(s.feedSpace == "local") { var city by rememberSessionUiState("feed.city") { mutableStateOf(s.feedCity) }; OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("手动选择城市，不含精确定位") },trailingIcon = { TextButton({ store.filterFeed("local",city = city) }) { Text("查看") } }) }
                 NavigationRow("晒晒今天的小可爱…","照片、日记与宠友分享") { store.select(MobileTab.Publish) }
             }
         }
@@ -290,17 +333,18 @@ private fun DetailContent(store: MobileStore, s: MobileState) {
             FeatureButton("私密线索与认领") { store.features.open(FeatureRoute(FeaturePage.CaseWork,record.id)) }
             FeatureButton("报告安全或隐私问题") { store.features.open(FeatureRoute(FeaturePage.Safety,kind = "cases",peer = record.id)) }
         } }
-        MobileDestination.Help -> Records(s.cases, "走失互助", { store.reloadDetail() }, { store.reloadDetail(true) },header = {
+        MobileDestination.Help -> Records(s.cases, "走失互助", { store.reloadDetail() }, { store.reloadDetail(true) }, emptyText = "暂无可显示的走失或拾获信息", header = {
             FeatureButton("发布走失／拾获求助") { if(s.user == null) store.showLogin() else store.features.open(FeatureRoute(FeaturePage.CaseEdit)) }
             FeatureButton("互助地图") { store.features.open(FeatureRoute(FeaturePage.Map)) }
             FeatureButton("附近提醒") { store.features.open(FeatureRoute(FeaturePage.Nearby)) }
         }) { row ->
             ActionCard(row.data.title, "${row.data.city} · ${row.data.area}\n${if (row.data.type == "lost") "走失" else "拾获"}") { store.open(MobileDestination.Case(row.id)) }
         }
-        MobileDestination.Applications -> if (s.user == null) SignInPrompt(store) else Records(s.applications, "领养申请进度", { store.reloadDetail() }, { store.reloadDetail(true) }) { row ->
+        MobileDestination.Applications -> if (s.user == null) SignInPrompt(store) else Records(s.applications, "领养申请进度", { store.reloadDetail() }, { store.reloadDetail(true) }, emptyText = "暂无领养申请") { row ->
             ActionCard(adoptionStateLabel(row.state), row.data.message) { store.open(MobileDestination.Application(row.id)) }
         }
-        MobileDestination.Notifications -> if (s.user == null) SignInPrompt(store) else Records(s.notifications, "通知", { store.reloadDetail() }, { store.reloadDetail(true) },header = {
+        MobileDestination.Notifications -> if (s.user == null) SignInPrompt(store) else Records(s.notifications, "通知", { store.reloadDetail() }, { store.reloadDetail(true) }, emptyText = "暂无通知", header = {
+            FeatureButton("全部消息与通知标为已读",!s.busy && !s.inboxReadAll.preparing && !s.inboxReadAll.submitting) { store.prepareInboxReadAll() }
             FeatureButton("通知与附近提醒设置") { store.features.open(FeatureRoute(FeaturePage.Settings)) }
             Text("进入本页不会清空未读；待处理事项与已读分开。")
             if(s.notifications.items.any { !it.data.read }) FeatureButton("将当前载入通知标为已读",!s.busy) {
@@ -309,7 +353,7 @@ private fun DetailContent(store: MobileStore, s: MobileState) {
             }
         }) { row ->
             Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(Modifier.padding(MobileUi.pagePadding), verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
                     Text(row.data.text, fontWeight = if (row.data.read) FontWeight.Normal else FontWeight.Bold)
                     TextButton(onClick = { openNotification(store,row.data) }) { Text("查看对应事项") }
                     if (!row.data.read) TextButton(onClick = { store.readNotification(row) }, enabled = !s.busy) { Text("标为已读") }
@@ -342,9 +386,9 @@ private fun PetDetail(store: MobileStore, s: MobileState) {
                 SectionTitle("介绍一下你的照护计划")
                 Text("说明居住环境、照护时间和已有宠物。提交前可返回修改。")
                 OutlinedTextField(s.applicationText, store::editApplication, Modifier.fillMaxWidth(), label = { Text("领养申请摘要") }, minLines = 5, enabled = !s.busy)
-                Button(onClick = store::submitApplication, enabled = !s.busy && s.applicationText.isNotBlank(), modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text("确认并提交申请") }
-            } else Button(onClick = store::beginApplication, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text("申请领养") }
-            OutlinedButton(onClick = store::contactPetOwner, enabled = !s.busy, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text("联系发布人") }
+                Button(onClick = store::submitApplication, enabled = !s.busy && s.applicationText.isNotBlank(), modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("确认并提交申请") }
+            } else Button(onClick = store::beginApplication, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("申请领养") }
+            OutlinedButton(onClick = store::contactPetOwner, enabled = !s.busy, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("联系发布人") }
         }
     }
 }
@@ -374,7 +418,7 @@ private fun EntryDetail(store: MobileStore, s: MobileState) {
         item { SectionTitle("评论"); if(s.comments.items.isNotEmpty()) Text("评论中的“回复此评论”会绑定原评论，不自动发送。",style = MaterialTheme.typography.labelSmall) }
         items(s.comments.items, key = { it.id }) { row ->
             Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
-                Column(Modifier.fillMaxWidth().padding(16.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(Modifier.fillMaxWidth().padding(MobileUi.pagePadding),verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
                     if(row.data.replyTo > 0) Text("回复评论 #${row.data.replyTo}",style = MaterialTheme.typography.labelSmall)
                     Text(row.data.text); if(row.data.stickerId.isNotBlank()) StickerPhoto(row.data.stickerId,row.data.stickerId)
                     TextButton({ store.replyTo(row.id) }) { Text("回复此评论") }
@@ -382,7 +426,7 @@ private fun EntryDetail(store: MobileStore, s: MobileState) {
                 }
             }
         }
-        item { PageFooter(s.comments, { store.loadComments() }, { store.loadComments(true) }) }
+        item { PageFooter(s.comments, { store.loadComments() }, { store.loadComments(true) }, "还没有评论") }
     }
     ReplyEditor(store, s, "说点什么…")
     }
@@ -403,7 +447,7 @@ private fun ApplicationDetail(store: MobileStore, s: MobileState) {
         OutlinedTextField(s.actionNote, store::editActionNote, Modifier.fillMaxWidth(), label = { Text("补充说明") }, minLines = 3, enabled = !s.busy)
         store.adoptionActions().forEach { (action, label) ->
             OutlinedButton(onClick = { store.requestAdoptionAction(action, label) }, enabled = !s.busy && !s.conflict,
-                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text(label) }
+                modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text(label) }
         }
     }
 }
@@ -418,7 +462,7 @@ private fun ChatScreen(store: MobileStore, s: MobileState, chat: MobileDestinati
         if(chat.group) TextButton({ store.features.open(FeatureRoute(FeaturePage.Group,chat.id)) }) { Text("群公告、成员与管理") }
         if (conversation?.state == "pending") {
             Text("对方接受前，发起人仅可发送一条文字。", Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            if (conversation.data.recipientId == s.user?.id) Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            if (conversation.data.recipientId == s.user?.id) Row(horizontalArrangement = Arrangement.spacedBy(MobileUi.contentGap)) {
                 Button(onClick = { store.answerMessageRequest("accept") }, enabled = !s.busy) { Text("接受消息请求") }
                 OutlinedButton(onClick = { store.answerMessageRequest("decline") }, enabled = !s.busy) { Text("拒绝") }
             }
@@ -427,15 +471,16 @@ private fun ChatScreen(store: MobileStore, s: MobileState, chat: MobileDestinati
             if(firstUnread != null) TextButton({ store.loadMessages(); uiScope.launch { listState.scrollToItem(0) } },enabled = !s.messages.loading) { Text("定位首条未读") }
             TextButton({ store.loadMessages(fromBeginning = true); uiScope.launch { listState.scrollToItem(0) } },enabled = !s.messages.loading) { Text("读取较早历史") }
         }
-        LazyColumn(Modifier.weight(1f),state = listState, verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 16.dp)) {
+        PageRefresh(s.messages)
+        LazyColumn(Modifier.weight(1f),state = listState, verticalArrangement = Arrangement.spacedBy(MobileUi.contentGap), contentPadding = PaddingValues(vertical = 16.dp)) {
             items(s.messages.items, key = { it.id }) { row ->
                 if(row.id == firstUnread) Text("以下为未读消息",color = MaterialTheme.colorScheme.primary,style = MaterialTheme.typography.labelMedium)
                 BoxWithConstraints(Modifier.fillMaxWidth()) {
                     val bubbleWidth = minOf(560.dp, maxWidth * 0.78f)
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = if (row.ownerId == s.user?.id) Arrangement.End else Arrangement.Start) {
-                        Surface(shape = RoundedCornerShape(16.dp), color = if (row.ownerId == s.user?.id) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
+                        Surface(shape = MaterialTheme.shapes.medium, color = if (row.ownerId == s.user?.id) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
                             modifier = Modifier.widthIn(max = bubbleWidth)) {
-                            Column(Modifier.padding(14.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Column(Modifier.padding(14.dp),verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
                                 if(row.data.text.isNotBlank()) Text(row.data.text)
                                 if(row.data.stickerId.isNotBlank()) StickerPhoto(row.data.stickerId,row.data.stickerId)
                                 row.mediaIds.forEach { MobilePhoto(store,it,s.user?.id,"消息照片",Modifier.fillMaxWidth().aspectRatio(1.25f)) }
@@ -444,17 +489,17 @@ private fun ChatScreen(store: MobileStore, s: MobileState, chat: MobileDestinati
                     }
                 }
             }
-            item { PageFooter(s.messages, { store.loadMessages() }, { store.loadMessages(true) }) }
+            item { PageFooter(s.messages, { store.loadMessages() }, { store.loadMessages(true) }, "暂无消息", refreshVisible = true) }
         }
         if (s.messages.items.isNotEmpty()) TextButton(onClick = store::markChatRead, enabled = !s.busy) { Text("将已载入消息标为已读") }
         val canSend = (chat.group && s.group?.let { it.state == "active" && s.user?.id in it.data.members } == true) || conversation?.state == "accepted" || conversation?.let { it.state == "pending" && it.data.requesterId == s.user?.id && s.messages.loaded && s.messages.items.isEmpty() } == true
-        if (canSend) ReplyEditor(store, s, "消息") else Text("当前会话暂不可发送", Modifier.padding(16.dp))
+        if (canSend) ReplyEditor(store, s, "消息") else Text("当前会话暂不可发送", Modifier.padding(MobileUi.pagePadding))
     }
 }
 
 @Composable
 private fun ReplyEditor(store: MobileStore, s: MobileState, label: String) {
-    var replaceSaved by remember(s.user?.id) { mutableStateOf(false) }
+    var replaceSaved by rememberSessionUiState("reply.replaceSaved") { false }
     if(replaceSaved) MobileAlertDialog(onDismissRequest = { replaceSaved = false },title = { Text("读取本机消息草稿") },text = { Text("放弃此账号未保存的评论与聊天输入，读取本机已保存的原文和附件。不会自动发送。") },
         confirmButton = { TextButton({ replaceSaved = false; store.replaceWithSavedReplies() }) { Text("放弃未保存输入并读取") } },dismissButton = { TextButton({ replaceSaved = false }) { Text("继续编辑") } })
     var editor by rememberPrivateEditor(s.reply,"reply-${s.user?.id}-${s.destination}")
@@ -463,7 +508,7 @@ private fun ReplyEditor(store: MobileStore, s: MobileState, label: String) {
     val chat = s.destination as? MobileDestination.Chat
     val richAllowed = chat == null || chat.group || s.conversation?.state == "accepted"
     BoxWithConstraints(Modifier.fillMaxWidth()) {
-        Column(Modifier.heightIn(max = minOf(420.dp,maxHeight * 0.65f)).verticalScroll(rememberScrollState()),verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(Modifier.heightIn(max = minOf(420.dp,maxHeight * 0.65f)).verticalScroll(rememberScrollState()),verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
             if(s.replyDraftRestoring) { LinearProgressIndicator(Modifier.fillMaxWidth()); Text("正在恢复本机消息草稿") }
             s.guestReplySuggestion?.let { text -> FeatureSection("登录前的评论输入") { Text(text); FeatureButton("用登录前的评论替换当前输入",!s.busy && s.replyDraftReady) { store.useGuestReply() } } }
             s.replyDraftError?.let {
@@ -472,7 +517,7 @@ private fun ReplyEditor(store: MobileStore, s: MobileState, label: String) {
                 else { FeatureButton("重试保存当前消息草稿",!s.busy) { store.retryReplySave() }; FeatureButton("读取本机已保存版本",!s.busy) { replaceSaved = true } }
             }
             if(s.replyTo > 0) Row { Text("回复评论 #${s.replyTo}",Modifier.weight(1f)); TextButton({ store.replyTo(0) }) { Text("取消回复") } }
-            OutlinedTextField(editor, { if (store.editReply(it.text)) editor = it }, Modifier.fillMaxWidth(), label = { Text(label) }, enabled = !s.busy, maxLines = 5)
+            MndRichTextField(editor, { if (store.editReply(it.text)) editor = it }, label, enabled = !s.busy, maxLines = 5)
             if(s.replySticker.isNotBlank()) { StickerPhoto(s.replySticker,s.replySticker); TextButton({ store.selectSticker("") },enabled = !s.busy) { Text("移除待发送贴纸") } }
             if(chat != null && richAllowed) PhotoPickerButton(9 - s.replyPhotos.size,!s.busy,store::addReplyPhotos,store::pickerFailed)
             s.replyPhotos.forEach { photo ->
@@ -485,7 +530,7 @@ private fun ReplyEditor(store: MobileStore, s: MobileState, label: String) {
             }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 TextButton(onClick = { emojiOpen = !emojiOpen }) { Text(if (emojiOpen) "收起表情" else "表情与贴纸") }
-                Button(onClick = store::sendReply, enabled = !s.busy && (s.reply.isNotBlank() || s.replySticker.isNotBlank() || s.replyPhotos.isNotEmpty()) && s.replyPhotos.all { it.mediaId != null }, modifier = Modifier.heightIn(min = 48.dp)) { Text("发送") }
+                Button(onClick = store::sendReply, enabled = !s.busy && (s.reply.isNotBlank() || s.replySticker.isNotBlank() || s.replyPhotos.isNotEmpty()) && s.replyPhotos.all { it.mediaId != null }, modifier = Modifier.heightIn(min = MobileUi.actionHeight)) { Text("发送") }
             }
             if (emojiOpen) ExpressionPanel(store,s,editor,{ editor = it },richAllowed)
             if(s.pendingOperations.isNotEmpty()) FeatureButton("核对原消息结果") { store.features.open(FeatureRoute(FeaturePage.Recovery)) }
@@ -502,8 +547,8 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
     if (s.user == null) { SignInPrompt(store); return }
     ScrollContent {
         SectionTitle("分享和猫咪的日常")
-        OutlinedTextField(s.composeTitle, { store.editCompose(it, s.composeText) }, Modifier.fillMaxWidth(), label = { Text("标题（选填）") }, enabled = !s.busy)
-        OutlinedTextField(composer, { next -> store.editCompose(s.composeTitle,next.text); if(store.state.value.composeText == next.text) composer = next }, Modifier.fillMaxWidth(), label = { Text("今天想分享什么？") }, minLines = 6, enabled = !s.busy)
+        MndTextField(s.composeTitle, { store.editCompose(it, s.composeText) }, "标题（选填）", enabled = !s.busy, maxLines = Int.MAX_VALUE)
+        MndRichTextField(composer, { next -> store.editCompose(s.composeTitle,next.text); if(store.state.value.composeText == next.text) composer = next }, "今天想分享什么？", minLines = 6, maxLines = Int.MAX_VALUE, enabled = !s.busy)
         TextButton({ emojiOpen = !emojiOpen }) { Text(if(emojiOpen) "收起表情" else "插入表情") }
         if(emojiOpen) ComposeEmojiPanel(store,s,composer) { next -> store.editCompose(s.composeTitle,next.text); if(store.state.value.composeText == next.text) composer = next }
         OutlinedTextField(s.composeEntry.city,store::editComposeCity,Modifier.fillMaxWidth(),label = { Text("城市（选填，不含精确定位）") },enabled = !s.busy)
@@ -511,7 +556,7 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
         PhotoPickerButton(store, 9 - s.photos.size, !s.busy)
         s.photos.forEachIndexed { index, photo ->
             Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
-                Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
                     Text("${index + 1}. ${photo.name}")
                     photo.mediaId?.let { MobilePhoto(store, it, s.user?.id, photo.name, Modifier.size(112.dp)) }
                     if (photo.uploading) LinearProgressIndicator(Modifier.fillMaxWidth())
@@ -525,7 +570,7 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
             }
         }
         if (s.draftLoading) LinearProgressIndicator(Modifier.fillMaxWidth())
-        OutlinedButton(onClick = store::saveComposeDraft, enabled = !s.busy && s.draftLoaded && !s.draftLoading && s.photos.all { it.mediaId != null }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text("保存草稿") }
+        OutlinedButton(onClick = store::saveComposeDraft, enabled = !s.busy && s.draftLoaded && !s.draftLoading && s.photos.all { it.mediaId != null }, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("保存草稿") }
         TextButton(onClick = { replaceDraft = true }, enabled = !s.busy && !s.draftLoading) { Text("用云端草稿替换当前输入") }
         TaskPrimary("预览这篇日常",!s.busy && s.composeAudienceValid && (s.composeText.isNotBlank() || s.photos.isNotEmpty()) && s.photos.all { it.mediaId != null },store::publish)
     }
@@ -534,7 +579,7 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
 
 @Composable
 private fun ProfileScreen(store: MobileStore, s: MobileState) {
-    Records(s.myPets, s.user?.nickname.orEmpty(), { store.refreshHome() }, { store.refreshHome(true) }, header = {
+    Records(s.myPets, s.user?.nickname.orEmpty(), { store.refreshHome() }, { store.refreshHome(true) }, emptyText = "还没有宠物档案，可从上方新增", header = {
         Text(s.user?.bio.orEmpty())
         NavigationRow("规则与权益") { store.features.open(FeatureRoute(FeaturePage.Rules)) }
         NavigationRow("编辑个人资料") { store.features.open(FeatureRoute(FeaturePage.ProfileEdit)) }
@@ -558,30 +603,20 @@ private fun ProfileScreen(store: MobileStore, s: MobileState) {
 }
 
 @Composable private fun SignInPrompt(store: MobileStore) { Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) { Text("登录后继续此任务"); Button(onClick = store::showLogin) { Text("登录") } }
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(MobileUi.sectionGap)) { Text("登录后继续此任务"); Button(onClick = store::showLogin) { Text("登录") } }
 } }
 @Composable private fun ScrollContent(content: @Composable ColumnScope.() -> Unit) { TaskColumn(content = content) }
-@Composable private fun SectionTitle(text: String) { Text(text, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold) }
+@Composable private fun SectionTitle(text: String) { MndScreenTitle(text) }
 @Composable private fun ActionCard(title: String, detail: String, action: () -> Unit) {
-    Card(onClick = action, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { Text(title, fontWeight = FontWeight.Bold); Text(detail, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-    }
+    MndActionCard(title, detail, action)
 }
 @Composable private fun Photos(store: MobileStore, media: List<Long>, account: Long?, description: String) {
     AndroidMediaGallery(store,media,account,description)
 }
-@Composable private fun ErrorPanel(error: String, retry: () -> Unit) { Column(Modifier.fillMaxWidth().padding(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+@Composable private fun ErrorPanel(error: String, retry: () -> Unit) { Column(Modifier.fillMaxWidth().padding(24.dp), verticalArrangement = Arrangement.spacedBy(MobileUi.sectionGap)) {
     Text(error); OutlinedButton(onClick = retry) { Text("重新载入") }
 } }
-@Composable private fun <T> Records(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,header: @Composable () -> Unit = {},row: @Composable (MobileRecord<T>) -> Unit) { RecordList(page,title,retry,more,header,row) }
-@Composable internal fun <T> PageFooter(page: PageState<T>, retry: () -> Unit, more: () -> Unit) {
-    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        if (page.loading) CircularProgressIndicator(Modifier.padding(16.dp))
-        page.error?.let { Text(it); OutlinedButton(onClick = retry) { Text("重试") } }
-        if (page.loaded && page.items.isEmpty() && !page.loading && page.error == null) Text("暂时没有可显示的内容", color = MaterialTheme.colorScheme.onSurfaceVariant)
-        if (page.loaded && page.next != 0L && !page.loading) OutlinedButton(onClick = more, modifier = Modifier.heightIn(min = 48.dp)) { Text("继续加载") }
-    }
-}
+@Composable private fun <T> Records(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,emptyText: String = "暂时没有可显示的内容",header: @Composable () -> Unit = {},row: @Composable (MobileRecord<T>) -> Unit) { RecordList(page,title,retry,more,emptyText,header,row) }
 private fun MobileTab.designIcon(): String = when(this) {
     MobileTab.Community -> "house"; MobileTab.Adoption -> "heart-handshake"; MobileTab.Publish -> "circle-plus"; MobileTab.Messages -> "message-circle"; MobileTab.Profile -> "user-round"
 }

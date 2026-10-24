@@ -55,6 +55,7 @@ export function Recovery() {
               (d): d is Draft =>
                 !!d &&
                 (!!d.original ||
+                  d.uncertain ||
                   !!d.photos.length ||
                   !!Object.keys(d.values).length),
             ),

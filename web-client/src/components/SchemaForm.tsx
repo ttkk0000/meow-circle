@@ -200,6 +200,13 @@ const formHidden = new Set([
   "matched_claim_id",
   "push_permission",
   "content",
+  "adoption_cycle",
+  "adoption_opened",
+  "placement_state",
+  "latitude",
+  "longitude",
+  "radius_km",
+  "location_precision",
 ]);
 const enumFields: Record<string, Array<[string, string]>> = {
   species: [

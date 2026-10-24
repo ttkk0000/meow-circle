@@ -92,9 +92,10 @@ import kotlin.math.round
     CoarseLocationButton("${store.state.value.user?.id}-$route",{ lat,lon -> f.edit("latitude",lat.toString());f.edit("longitude",lon.toString()) },f::notify)
     FeatureButton("按当前大致区域查看",!s.loading) { f.reload() }
     val first = s.mapCases.items.firstOrNull { it.id == (f.field("selected").toLongOrNull() ?: route.id) } ?: s.mapCases.items.firstOrNull()
-    if(first != null) CoarseMap(first.data.latitude,first.data.longitude)
+    if(first != null && first.data.locationPrecision != "area") CoarseMap(first.data.latitude,first.data.longitude)
+    else if(first != null) Text("此求助仅提供城市和文字区域，没有地图点。")
     TaskNotice("公开位置为大致区域","不展示家庭地址或精确距离。拒绝定位仍可按城市查看，不持续后台读取位置。")
     s.mapCases.items.forEach { row -> FeatureSection(row.data.title) { Text("${row.data.city} · ${row.data.area}");TextButton({ f.edit("selected",row.id.toString()) }) { Text("查看此大致区域") }; NavigationRow("查看原求助与进度") { f.closeRoute();store.open(MobileDestination.Case(row.id)) } } }
-    MoreFeature(s.mapCases.next,s.loading) { f.reload(true) }
+    PageFooter(s.mapCases, { f.reload() }, { f.reload(true) }, enabled = !s.loading)
     if(s.mapCases.loaded && s.mapCases.items.isEmpty()) Text("当前条件暂无求助")
 }

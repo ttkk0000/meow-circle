@@ -1,0 +1,363 @@
+{
+  "task": "AI-20261023-ANDROID-FINISH",
+  "date": "2026-10-23",
+  "branch": "main",
+  "head": "5de631b",
+  "status": "source_written_static_only",
+  "uncommitted": true,
+  "scope": [
+    "Android phone/tablet",
+    "required KMP shared/client",
+    "Go mobile v2",
+    "minimum guest share/safety web"
+  ],
+  "validation": {
+    "openapi": {
+      "paths": 214,
+      "schemas": 104,
+      "method": "static declaration export"
+    },
+    "dto_pairs": 55,
+    "client_source_files_checked": 55,
+    "android_feature_dispatches": 30,
+    "safety_controls": 34,
+    "checks": [
+      {
+        "name": "contracts",
+        "command": "python scripts/check_server_shared_contract_static.py",
+        "exit_code": 0,
+        "output": "Static cross-language check: 55 DTO pairs match; private commands and recovery guards present. No type checking or tests executed."
+      },
+      {
+        "name": "KMP",
+        "command": "python scripts/check_kmp_client_static.py",
+        "exit_code": 0,
+        "output": "Static source/configuration checks passed: 55 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution."
+      },
+      {
+        "name": "Android",
+        "command": "$env:PYTHONIOENCODING='utf-8'\npython scripts/check_android_feature_static.py",
+        "exit_code": 0,
+        "output": "Android 源码静态核对：30 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。"
+      },
+      {
+        "name": "integration",
+        "command": "python scripts/check_android_finish_static.py",
+        "exit_code": 0,
+        "output": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation."
+      },
+      {
+        "name": "JavaScript",
+        "command": "node --check web/safety.js",
+        "exit_code": 0,
+        "output": ""
+      }
+    ],
+    "go_format": {
+      "name": "Go-format",
+      "cmd": "gofmt -l internal/mobile/models.go internal/mobile/share.go internal/mobile/nearby.go internal/mobile/query.go internal/mobile/push_policy.go internal/mobile/region_matching_test.go internal/mobile/location_precision_test.go internal/mobile/adoption_placement.go internal/mobile/adoption_closure_test.go internal/mobile/contracts.go internal/mobile/rescue.go internal/mobile/appointments.go internal/mobile/inbox.go internal/mobile/inbox_snapshot.go internal/mobile/inbox_snapshot_test.go internal/platform/mobileapi/handler.go internal/platform/mobileapi/public_web.go internal/platform/mobileapi/public_web_test.go internal/platform/api/router.go",
+      "exit_code": 0,
+      "output": ""
+    },
+    "tests": {
+      "execution": "not_run",
+      "target_go_functions": 23,
+      "target_kmp_functions": 5,
+      "note": "Go count includes five prior adoption regression sources."
+    },
+    "no_compilation": true,
+    "no_type_checking": true,
+    "no_runtime": true,
+    "no_browser": true,
+    "no_device": true,
+    "no_migration": true,
+    "no_service": true,
+    "no_commit_or_push": true,
+    "delivery_files_utf8_no_bom_no_conflict": 54,
+    "existing_local_doc_links": 56
+  },
+  "remaining": [
+    "content favorites/follow contract and implementation",
+    "group member naming and public avatar contract",
+    "real OAuth/SMS/email/eligibility/guardian/business policy providers",
+    "system push and map channels",
+    "formal HTTPS/app association and social metadata verification",
+    "operations scheduling and recovery",
+    "types/build/integration/concurrency/phone/tablet validation"
+  ],
+  "inputs": [
+    "internal/mobile/models.go",
+    "internal/mobile/share.go",
+    "internal/mobile/nearby.go",
+    "internal/mobile/query.go",
+    "internal/mobile/push_policy.go",
+    "internal/mobile/region_matching_test.go",
+    "internal/mobile/location_precision_test.go",
+    "internal/mobile/adoption_placement.go",
+    "internal/mobile/adoption_closure_test.go",
+    "internal/mobile/contracts.go",
+    "internal/mobile/rescue.go",
+    "internal/mobile/appointments.go",
+    "internal/mobile/inbox.go",
+    "internal/mobile/inbox_snapshot.go",
+    "internal/mobile/inbox_snapshot_test.go",
+    "internal/platform/mobileapi/handler.go",
+    "internal/platform/mobileapi/public_web.go",
+    "internal/platform/mobileapi/public_web_test.go",
+    "internal/platform/api/router.go",
+    "kmp/androidApp/build.gradle.kts",
+    "kmp/androidApp/src/main/AndroidManifest.xml",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPeopleFields.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidRegionFields.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidInboxReadAll.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/PolicyModels.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InboxReadAllModels.kt",
+    "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/InboxReadAllTest.kt",
+    "web/safety.html",
+    "web/safety.css",
+    "web/safety.js",
+    "scripts/export_mobile_contract.py",
+    "scripts/check_server_shared_contract_static.py",
+    "scripts/check_android_finish_static.py",
+    "docs/api/mobile-v2.openapi.json",
+    "docs/client/ANDROID_REMAINING_2026_10_23.md",
+    "docs/client/CURRENT_DELIVERY_STATUS_2026_10_23.md",
+    "docs/client/README.md",
+    "docs/server/ADOPTION_CLOSURE_2026_10_23.md",
+    "docs/ai/README.md",
+    "docs/ai/CONTEXT.md",
+    "docs/ai/TASKS.md",
+    "docs/ai/TASK_LOG.md"
+  ],
+  "files": {
+    "internal/mobile/models.go": {
+      "sha256": "175e45e99357a1eec09f7d408c88e7a31fc37df4cd88528af3af74c3eff78ee8",
+      "bytes": 9967
+    },
+    "internal/mobile/share.go": {
+      "sha256": "f8f0d80a0cbcb3ed8fadf5025372fed68c9801eebb2938ca1ee9aa0a0592ee22",
+      "bytes": 2381
+    },
+    "internal/mobile/nearby.go": {
+      "sha256": "fa4681c19869c5b6a76306d35490ac27eab5ea1b50e6246fd4bb27d483b7105f",
+      "bytes": 4001
+    },
+    "internal/mobile/query.go": {
+      "sha256": "8e00cd324370ad6b69b3991fc5a1c748e05328d8f15f3774f7aad98f839b2591",
+      "bytes": 1384
+    },
+    "internal/mobile/push_policy.go": {
+      "sha256": "8d3351cc5eb3a3281838de7d80ae2111cf0b48c382981602948515142ad04541",
+      "bytes": 3042
+    },
+    "internal/mobile/region_matching_test.go": {
+      "sha256": "43b29833f7ef56c9b1d5850f81af8611020e13828fffae80b2c4e9162d6f2535",
+      "bytes": 943
+    },
+    "internal/mobile/location_precision_test.go": {
+      "sha256": "84cf601243e5490100417d18bb07ccb993522e6ea58ad733038806e2de469592",
+      "bytes": 2331
+    },
+    "internal/mobile/adoption_placement.go": {
+      "sha256": "cf72ac6fd16a09855528f638ef420bfa1e3624abd41fad417a05070310bd73c9",
+      "bytes": 3524
+    },
+    "internal/mobile/adoption_closure_test.go": {
+      "sha256": "8d602c24a8b4f1f936079eb16d72abfd1e2d5121f4f1d7af7c1a73470a3ce22c",
+      "bytes": 12592
+    },
+    "internal/mobile/contracts.go": {
+      "sha256": "1948a64b787dec8f79f062a791dd62e065e555509495b8b36809ec4112b4ecfc",
+      "bytes": 11453
+    },
+    "internal/mobile/rescue.go": {
+      "sha256": "b6a63a641a0d5ca66fc30f20eb11b3a13d0c7cdc9c9bac78362535f89f7bf54a",
+      "bytes": 24426
+    },
+    "internal/mobile/appointments.go": {
+      "sha256": "3d01cef2dcd4ca0f5a778e598e76a2daa4bef7c93320ea3fa133dda75f4539ec",
+      "bytes": 13172
+    },
+    "internal/mobile/inbox.go": {
+      "sha256": "fc34cb417c752aa0851d3e4a8e289fd35abe646229cddaec84cff8d835435ba6",
+      "bytes": 6000
+    },
+    "internal/mobile/inbox_snapshot.go": {
+      "sha256": "9b23ca2f2eb15e6967bae21ecc6fddb667d7e8e4108848e62b7190b18c4f59a6",
+      "bytes": 9983
+    },
+    "internal/mobile/inbox_snapshot_test.go": {
+      "sha256": "f8c952e9554affbd7f42eb66094c4b3f9dc16ff04a4566162baecb6f042a47fb",
+      "bytes": 7828
+    },
+    "internal/platform/mobileapi/handler.go": {
+      "sha256": "51c9e810afe834f8974e6e1919db9443421002bfeca5b0a5fa177641d7bc3ff6",
+      "bytes": 30320
+    },
+    "internal/platform/mobileapi/public_web.go": {
+      "sha256": "814d5c470d1a13535263ec35351f35f4adbe4e2c62f57bf2278801aa950d3b6d",
+      "bytes": 7380
+    },
+    "internal/platform/mobileapi/public_web_test.go": {
+      "sha256": "7d9197d7593c4d9a27e0565367b511eb9d7bd6de5361a0b74c2146b3a7ef4c12",
+      "bytes": 6524
+    },
+    "internal/platform/api/router.go": {
+      "sha256": "4ff6c549e9ef3565f1309a470784b24cd989b92482f3eb867f33a8ba016eefd8",
+      "bytes": 56000
+    },
+    "kmp/androidApp/build.gradle.kts": {
+      "sha256": "005c973f1e353ca0227b040830d75efbd281e6e30f053c10eff8c895fc008e42",
+      "bytes": 2948
+    },
+    "kmp/androidApp/src/main/AndroidManifest.xml": {
+      "sha256": "ba92d0fa35b49f64099e2f0781f259bc5309efd4737d7575f48e6a06b5f28e37",
+      "bytes": 1853
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt": {
+      "sha256": "4231b28dc843c06b30d4c81ff9ca871bddba01a42904457a50e40ceb1ccc98fe",
+      "bytes": 1714
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt": {
+      "sha256": "cf71aa69fa8b96a8ff038804ff0fab558c546df13e3270e11e68c9af7d5d3317",
+      "bytes": 29992
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt": {
+      "sha256": "87cdcc940448d6f527210c26edaf5405a23ec087db16747cd0eb244b8776d2d5",
+      "bytes": 30638
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt": {
+      "sha256": "b2a5fbf30f3fafa9719423c1dc56a25aeb1aa323796415229d273d90fa751694",
+      "bytes": 12980
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPeopleFields.kt": {
+      "sha256": "432c53c09a103b32e7648392d160f19e1cd3f62a78f2ab7b308dc06e2fc78fb4",
+      "bytes": 5934
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidRegionFields.kt": {
+      "sha256": "951b113ff52aa2d60ea2dd5237cfd94d1c524f795ee63f8b6f8e1c115de31d9b",
+      "bytes": 1278
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidInboxReadAll.kt": {
+      "sha256": "cb895b12ea5eca40449c16a27c4c44d32fac91817ae548f3a6d1d708af0a830c",
+      "bytes": 2183
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt": {
+      "sha256": "80a08cda9269e5776791187765c2c4c8249fa1d775c87026bf5b229f8e06bd08",
+      "bytes": 51504
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt": {
+      "sha256": "e0bb94534e1c8ae75bb11de5242c64b9e785fc6095b70f1b5f94343772a25b97",
+      "bytes": 8342
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt": {
+      "sha256": "e18a8912233ae884b1c55be1858c08f498e1fb0a4ece8e0fb45ccc43d0661ff4",
+      "bytes": 20711
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt": {
+      "sha256": "8eec26d7803c10769f65e7433dd297dec33bc9001860e0ea3ae13a2df7402d6b",
+      "bytes": 9678
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt": {
+      "sha256": "e0afcecc43e3925dba6f8b97b3960acf0c8c11102d9cd0746df55f2633606f9a",
+      "bytes": 9863
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/PolicyModels.kt": {
+      "sha256": "18baedc9fca4852306f5ad768364c62cb841fcf0d55233c6ffd54d8bee0da5dc",
+      "bytes": 7254
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": {
+      "sha256": "3711ea3b8c3e34629a1ab87a1eb9d85dabf3453e6604e7acad2ef4552feb60ed",
+      "bytes": 39291
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": {
+      "sha256": "43d7b0e23a7c0ddd54e740d0dea3cae74574fa4c7af138094bb2a4fa2471947f",
+      "bytes": 76338
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": {
+      "sha256": "ef4a7e8e7ca92b8e7a1d830ba8ee6863ba0bd97d3e40d05ca086e504bba824a1",
+      "bytes": 55099
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InboxReadAllModels.kt": {
+      "sha256": "aaca98b57bf2c8c0afdaa9c7cf464f35297abc1ae490ff26dbca8d0ed19579da",
+      "bytes": 1842
+    },
+    "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/InboxReadAllTest.kt": {
+      "sha256": "b1e13f1ec06d106991220661f61309ed77a50ea14aca7ca007248c2b8248c525",
+      "bytes": 6752
+    },
+    "web/safety.html": {
+      "sha256": "a7a74f29d4c8f22d6c8946d1827f785d93d0cb4c4f4d541fe203b2d796a485e3",
+      "bytes": 4917
+    },
+    "web/safety.css": {
+      "sha256": "f4ee431240f9ba5c16527834882b2476ee9f0ac55280dbfda532205d7979fc45",
+      "bytes": 1982
+    },
+    "web/safety.js": {
+      "sha256": "cf63a39b04b093fa4953072a71c25bdc66d9036b8eb01a3b09fff2ab060a8672",
+      "bytes": 16765
+    },
+    "scripts/export_mobile_contract.py": {
+      "sha256": "9167f175b22c75c24949603db9dcdbd4b942d07df0225ee77fe73dbeb1cc346c",
+      "bytes": 24012
+    },
+    "scripts/check_server_shared_contract_static.py": {
+      "sha256": "c94ce3f58dc332683743298904c5b0e926112229f31ec35d11674fbe5941dce7",
+      "bytes": 3924
+    },
+    "scripts/check_android_finish_static.py": {
+      "sha256": "a38227210ca2c63f125d789ffa18e2d9bfa9c6979297b573766ac92a920bb475",
+      "bytes": 3814
+    },
+    "docs/api/mobile-v2.openapi.json": {
+      "sha256": "0a0236c21d43d6848e0e5fc04e35273d9a92c6fb7d8c5427c7f4a58b44c84182",
+      "bytes": 827372
+    },
+    "docs/client/ANDROID_REMAINING_2026_10_23.md": {
+      "sha256": "00d3505923bc95354c1e99215d8c481ae321d4bae338d3af47b894022008f591",
+      "bytes": 9145
+    },
+    "docs/client/CURRENT_DELIVERY_STATUS_2026_10_23.md": {
+      "sha256": "322a78ec77dfcfa95a03825ba47388a3b4e8233f0850eed23ca4e31bbeddb9ba",
+      "bytes": 8485
+    },
+    "docs/client/README.md": {
+      "sha256": "06164edf5aab0156358e9f4a21184114a473760d9672d8e67d6a5232e9a4f003",
+      "bytes": 8833
+    },
+    "docs/server/ADOPTION_CLOSURE_2026_10_23.md": {
+      "sha256": "decf6f9b9e87da513b3bbed3e8698f8678d43757eedea2d26c9d495ced14bbd8",
+      "bytes": 6951
+    },
+    "docs/ai/README.md": {
+      "sha256": "66750a18118268c0258a71bbcc1de701dc049775b2aa4e663d3ae6a12d708de5",
+      "bytes": 5018
+    },
+    "docs/ai/CONTEXT.md": {
+      "sha256": "dd89e5220c59619a61c38f2079df3f9d25e51ed8d61cea5a6cc65d41cd85eb2c",
+      "bytes": 28605
+    },
+    "docs/ai/TASKS.md": {
+      "sha256": "fd87022e86d2a05f5b210d857abcceca32c3177b2b0bb1600eb055b4568907e4",
+      "bytes": 23949
+    },
+    "docs/ai/TASK_LOG.md": {
+      "sha256": "5a3be3343eab3f9660538a07a9ede05b08a909817a369d7b483d10580b0fb560",
+      "bytes": 67859
+    }
+  },
+  "created_at": "2026-10-23T17:47:54.764143+08:00"
+}

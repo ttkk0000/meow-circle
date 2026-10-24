@@ -9,7 +9,7 @@ import com.ttkk0000.meowcircle.client.*
     if(route.page == FeaturePage.AdoptionWork && route.kind == "care") {
         Text("仅当前授权事项的私密照护近况；协议、申请材料与公开档案不在此权限中。")
         s.care.items.forEach { update -> FeatureSection(if(update.data.needsHelp) "需要协助" else "照护近况") { Text(update.data.text); update.mediaIds.forEach { MobilePhoto(store,it,actor,"授权照护照片") } } }
-        MoreFeature(s.care.next,s.loading) { f.reload(true) }
+        PageFooter(s.care, { f.reload() }, { f.reload(true) }, "暂无私密照护近况", enabled = !s.loading && !s.busy)
         FormField(f,s,"careText","补充照护近况",lines = 5)
         CheckLine("需要协助",f.field("needsHelp","false").toBoolean(),{ f.edit("needsHelp",it.toString()) },!s.busy)
         FeaturePhotos(store,s,private = true)
@@ -24,8 +24,7 @@ import com.ttkk0000.meowcircle.client.*
                 if (row.data.pendingVersion > 0) Text("待确认提案 V${row.data.pendingVersion}")
                 FeatureButton("查看安排") { f.open(FeatureRoute(FeaturePage.Appointment,row.id)) }
             } }
-            if (s.appointments.loaded && s.appointments.items.isEmpty()) Text("暂无预约，请从宠物、领养申请、互助或有偿信息中发起。")
-            MoreFeature(s.appointments.next,s.loading) { f.reload(true) }
+            PageFooter(s.appointments, { f.reload() }, { f.reload(true) }, "暂无预约，请从宠物、领养申请、互助或有偿信息中发起。", enabled = !s.loading && !s.busy)
         }
         FeaturePage.Appointment -> s.appointment?.let { record ->
             val body = record.data
@@ -51,10 +50,14 @@ import com.ttkk0000.meowcircle.client.*
                 FeatureButton("取消整个预约",!s.busy && f.field("note").isNotBlank()) { act("cancel","取消当前有效安排及提案") }
             }
             if (body.effectiveVersion > 0 && record.state == "confirmed") {
+                val feedbackReady = body.effectiveTerms?.startsAt?.let { time -> runCatching {
+                    !java.time.OffsetDateTime.parse(time).toInstant().isAfter(java.time.Instant.now())
+                }.getOrDefault(false) } == true
                 FeatureSection("到访后逐项反馈") {
+                    Text(if (feedbackReady) "同一有效版本仅提交一份反馈。请核对后提交；反馈不代表身份或健康保证。" else "预约时间尚未到，暂不能提交到访反馈。")
                     listOf("identity" to "主体身份","pet" to "宠物信息","reception" to "接待方","place" to "地点","fees" to "费用").forEach { (key,label) -> ChoiceField(f,s,"feedback_$key",label,listOf("match" to "一致","mismatch" to "不一致","unknown" to "尚未核实"),"unknown") }
                     FormField(f,s,"feedbackNote","反馈说明",lines = 3)
-                    FeatureButton("提交到访反馈",!s.busy) {
+                    FeatureButton("提交到访反馈",!s.busy && feedbackReady) {
                         val input = FeedbackInput(record.id,body.effectiveVersion,listOf("identity","pet","reception","place","fees").associateWith { f.field("feedback_$it","unknown") },f.field("feedbackNote"))
                         f.confirm("提交到访反馈","仅描述本次到访所见；未核实项目保持未知。") { f.api.feedback(input) }
                     }
@@ -68,18 +71,18 @@ import com.ttkk0000.meowcircle.client.*
             if (route.id == 0L) Text("从当前事项发起预约；对象与参与人由此入口绑定。")
             FeaturePrimary("核对预约提案",!s.busy && !s.loading) {
                 val terms = appointmentTerms(f,original)
-                if (terms == null) f.notify("请填写带时区的有效时间、地点、接待方、宠物、全部费用及收款方。金额最多两位小数。") else {
+                if (terms == null) f.notify("请选择时间并填写地点、接待方、宠物、全部费用及收款方。金额最多两位小数。") else {
                     val record = s.appointment
                     val context = if (record == null) "${route.kind} #${route.peer}" else "${record.data.contextKind} #${record.data.contextId}"
                     val input = record?.let { AppointmentAction(f.version(it.version),newRequestKey(),terms = terms) }
                     val creation = if (record == null) AppointmentInput(route.kind,route.peer,f.field("peer").toLongOrNull() ?: 0,terms,newRequestKey()) else null
                     f.confirm("提交预约提案","$context\n${displayTime(terms.startsAt)} · ${terms.place}\n接待：${terms.reception}\n费用 ${money(terms.amountCents)}，到访费 ${money(terms.visitFeeCents)}\n${terms.requiredFees}\n双方确认前，新提案不会覆盖原有效安排。") {
-                        val result = if (record == null) { val request = requireNotNull(creation); require(request.peerId > 0); f.api.createAppointment(request) } else f.api.appointmentAction(record.id,"propose",input!!)
+                        val result = if (record == null) { val request = requireNotNull(creation); f.requireAppointmentContext(request.contextKind,request.contextId,request.peerId); f.api.createAppointment(request) } else f.api.appointmentAction(record.id,"propose",input!!)
                         f.completeTo(FeatureRoute(FeaturePage.Appointment,result.id))
                     }
                 }
             }
-            if (route.id == 0L) FormField(f,s,"peer","对方用户编号",numeric = true)
+            if (route.id == 0L) Text("参与人由原事项绑定，提交时会重新核对；不需要先加好友。")
             FeatureButton("查看全部预约") { f.open(FeatureRoute(FeaturePage.Appointments)) }
         }
         FeaturePage.CaseEdit -> {
@@ -89,22 +92,28 @@ import com.ttkk0000.meowcircle.client.*
             FormField(f,s,"title","标题",body?.title.orEmpty())
             ChoiceField(f,s,"species","物种",listOf("cat" to "猫咪","dog" to "狗狗"),body?.species ?: "cat")
             FormField(f,s,"description","特征与经过",body?.description.orEmpty(),5)
-            FormField(f,s,"city","城市",body?.city.orEmpty()); FormField(f,s,"area","公开大致区域",body?.area.orEmpty())
-            FormField(f,s,"latitude","大致纬度",body?.latitude?.toString().orEmpty(),numeric = true)
-            FormField(f,s,"longitude","大致经度",body?.longitude?.toString().orEmpty(),numeric = true)
+            RegionFields(f,s,body?.city.orEmpty(),body?.area.orEmpty())
+            if (body != null && body.locationPrecision != "area") {
+                val sameRegion = selectedCity(f,body.city) == body.city && f.field("area",body.area) == body.area
+                CheckLine("保留原来主动提供的大致地点",sameRegion && f.field("keepPoint","true").toBoolean(),{ f.edit("keepPoint",it.toString()) },!s.busy && sameRegion)
+                Text("取消或修改城市／区域后，本次只公开文字区域，不再沿用原地点。")
+            }
             FormField(f,s,"privateLocation","私密位置补充（仅授权处理）",body?.privateLocation.orEmpty(),2)
-            FormField(f,s,"occurred","发生时间（如 2026-10-22T09:00+08:00）",body?.occurredAt.orEmpty())
-            FormField(f,s,"pet","我的宠物编号（可留空）",body?.petId?.takeIf { it > 0 }?.toString().orEmpty(),numeric = true)
+            DateTimeField(f,s,"occurred","发生时间",body?.occurredAt.orEmpty())
+            PetChoiceField(f,s,"pet",body?.petId ?: 0,optional = true)
             FeaturePhotos(store,s,old?.mediaIds.orEmpty())
             FeaturePrimary("核对并发布求助",!s.busy && !s.loading) {
-                val lat = f.field("latitude",body?.latitude?.toString().orEmpty()).toDoubleOrNull()
-                val lon = f.field("longitude",body?.longitude?.toString().orEmpty()).toDoubleOrNull()
+                val keepPoint = body != null && body.locationPrecision != "area" && f.field("keepPoint","true").toBoolean() &&
+                    selectedCity(f,body.city) == body.city && f.field("area",body.area) == body.area
+                val lat = if(keepPoint) body!!.latitude else 0.0
+                val lon = if(keepPoint) body!!.longitude else 0.0
                 val time = dateTime(f.field("occurred",body?.occurredAt.orEmpty()))
-                val title = f.field("title",body?.title.orEmpty()); val text = f.field("description",body?.description.orEmpty()); val city = f.field("city",body?.city.orEmpty())
-                if (lat == null || lon == null || !lat.isFinite() || !lon.isFinite() || lat !in -90.0..90.0 || lon !in -180.0..180.0 || time == null || title.isBlank() || text.isBlank() || city.isBlank()) f.notify("请检查标题、特征、城市、坐标和发生时间") else {
+                val title = f.field("title",body?.title.orEmpty()); val text = f.field("description",body?.description.orEmpty()); val city = selectedCity(f,body?.city.orEmpty())
+                if (time == null || title.isBlank() || text.isBlank() || city.isBlank() || f.field("area",body?.area.orEmpty()).isBlank()) f.notify("请检查标题、特征、城市、大致区域和发生时间") else {
                     val input = CaseInput(CaseBody(body?.type ?: f.field("type","lost"),title,f.field("species",body?.species ?: "cat"),text,city,f.field("area",body?.area.orEmpty()),lat,lon,time,
-                        petId = f.field("pet",body?.petId?.toString().orEmpty()).toLongOrNull() ?: 0,privateLocation = f.field("privateLocation",body?.privateLocation.orEmpty())),newRequestKey(),f.version(old?.version ?: 0),f.mediaIds(old?.mediaIds.orEmpty()))
-                    f.confirm("发布求助","$title\n$city · ${input.case.area}\n公开位置为粗略位置，私密补充和认领材料不会公开。") { val result = if (old == null) f.api.createCase(input) else f.api.editCase(old.id,input); store.reloadDetail(); f.completeTo(FeatureRoute(FeaturePage.CaseWork,result.id)) }
+                        petId = f.field("pet",body?.petId?.toString().orEmpty()).toLongOrNull() ?: 0,privateLocation = f.field("privateLocation",body?.privateLocation.orEmpty()),locationPrecision = if(keepPoint) "approximate" else "area"),newRequestKey(),f.version(old?.version ?: 0),f.mediaIds(old?.mediaIds.orEmpty()))
+                    val locationSummary = if(keepPoint) "公开位置保留原先的大致地点" else "只公开城市与文字区域，不包含地点坐标"
+                    f.confirm("发布求助","$title\n$city · ${input.case.area}\n$locationSummary，私密补充和认领材料不会公开。") { val result = if (old == null) f.api.createCase(input) else f.api.editCase(old.id,input); store.reloadDetail(); f.completeTo(FeatureRoute(FeaturePage.CaseWork,result.id)) }
                 }
             }
         }
@@ -130,9 +139,16 @@ import com.ttkk0000.meowcircle.client.*
                 }
             }
             Text("仅展示你有权查看的线索与认领材料。")
-            s.claims.items.forEach { claim -> FeatureButton("认领 #${claim.id} · ${stateLabel(claim.state)}") { f.open(FeatureRoute(FeaturePage.Claim,claim.id)) } }
-            s.leads.items.forEach { lead -> FeatureSection("私密线索 #${lead.id}") { Text(lead.data.text); lead.mediaIds.forEach { MobilePhoto(store,it,actor,"私密线索照片") } } }
-            if (s.claims.next != 0L || s.leads.next != 0L) FeatureButton("继续载入材料",!s.loading) { f.reload(true) }
+            if (actor != null) {
+                Text("认领材料")
+                s.claims.items.forEach { claim -> FeatureButton("认领 #${claim.id} · ${stateLabel(claim.state)}") { f.open(FeatureRoute(FeaturePage.Claim,claim.id)) } }
+                PageFooter(s.claims, { f.reload(material = CaseMaterial.Claims) }, { f.reload(true, CaseMaterial.Claims) },
+                    "暂无你有权查看的认领材料", enabled = !s.loading && !s.busy)
+                Text("私密线索")
+                s.leads.items.forEach { lead -> FeatureSection("私密线索 #${lead.id}") { Text(lead.data.text); lead.mediaIds.forEach { MobilePhoto(store,it,actor,"私密线索照片") } } }
+                PageFooter(s.leads, { f.reload(material = CaseMaterial.Leads) }, { f.reload(true, CaseMaterial.Leads) },
+                    "暂无你有权查看的线索", enabled = !s.loading && !s.busy)
+            }
             FeatureButton("为此事项提议预约",actor != null && record.ownerId != actor) { f.open(FeatureRoute(FeaturePage.AppointmentEdit,kind = "case",peer = record.id)); f.edit("peer",record.ownerId.toString()) }
         }
         FeaturePage.Claim -> s.claim?.let { claim ->
@@ -176,7 +192,7 @@ import com.ttkk0000.meowcircle.client.*
             if (party && record.state in listOf("approved","trial_proposed","trial_active","handover_pending")) {
                 FeatureButton("提出新协议") { f.open(FeatureRoute(FeaturePage.ContractEdit,record.id)) }
                 FormField(f,s,"trialTerms","试养照护与安全条款",lines = 4)
-                FormField(f,s,"trialUntil","试养截止（带时区）")
+                DateTimeField(f,s,"trialUntil","试养截止")
                 FeatureButton("提出试养安排",!s.busy && record.state in listOf("approved","trial_proposed")) {
                     val time = dateTime(f.field("trialUntil")); val note = f.field("trialTerms")
                     if (time == null || note.isBlank()) f.notify("请填写试养条款和带时区的截止时间") else {
@@ -188,14 +204,23 @@ import com.ttkk0000.meowcircle.client.*
                 if (party) FeatureButton("提出安全接回方案") { f.open(FeatureRoute(FeaturePage.ReturnEdit,record.id)) }
                 body.returnPlans.orEmpty().forEach { plan -> FeatureSection("接回 V${plan.number} · ${stateLabel(plan.state)}") {
                     Text("${displayTime(plan.terms.startsAt)} · ${plan.terms.place}\n接待 ${plan.terms.reception}\n接回前照护 ${plan.terms.careUntil}\n费用 ${plan.terms.costs}\n安全 ${plan.terms.safety}")
+                    val proposalValid = runCatching { java.time.Instant.parse(plan.terms.startsAt).isAfter(java.time.Instant.now()) }.getOrDefault(false)
                     Text("方案确认 ${plan.confirmations.size}/2 · 实际交接确认 ${plan.handover.size}/2")
-                    val actions = buildList { if (party && plan.state == "pending") { if (actor !in plan.confirmations) add("accept" to "确认此版接回方案"); add("decline" to "拒绝此版方案") }; if (party && plan.state == "effective" && actor !in plan.handover) add("handover" to "确认我方已完成接回交接") }
+                    if (plan.state == "pending") Text(if (proposalValid) "确认截止：${displayTime(plan.terms.startsAt)}；原有效安排仍保留。" else "本次未生效提案已过期，请重新协商；当前照护与求助继续。")
+                    val actions = buildList {
+                        if (party && plan.state == "pending") {
+                            if (proposalValid && actor !in plan.confirmations) add("accept" to "确认此版接回方案")
+                            if (actor == plan.proposedBy) add("withdraw" to "撤回本人未生效提案")
+                            else if (proposalValid) add("decline" to "拒绝此版方案")
+                        }
+                        if (party && plan.state == "effective" && body.effectiveReturn == plan.number && actor !in plan.handover) add("handover" to "确认我方已完成接回交接")
+                    }
                     actions.forEach { (action,label) -> FeatureButton(label,!s.busy) { val input = ReturnInput(record.version,newRequestKey(),plan.number); f.confirm(label,"接回 V${plan.number}\n单方确认不结束退养；实际交接与方案同意分开记录。") { f.api.returnPlan(record.id,action,input); f.reload() } } }
                 } }
             }
             FeatureSection("私密照护近况") {
                 s.care.items.forEach { update -> Text("${if (update.data.needsHelp) "需要协助 · " else ""}${update.data.text}"); update.mediaIds.forEach { MobilePhoto(store,it,actor,"私密照护照片") } }
-                MoreFeature(s.care.next,s.loading) { f.reload(true) }
+                PageFooter(s.care, { f.reload() }, { f.reload(true) }, "暂无私密照护近况", enabled = !s.loading && !s.busy)
                 if(actor != body.publisherId && record.state in listOf("completed","return_requested")) {
                 FormField(f,s,"careText","近况与照护记录",lines = 5)
                 CheckLine("需要协助",f.field("needsHelp","false").toBoolean(),{ f.edit("needsHelp",it.toString()) },!s.busy)
@@ -215,7 +240,7 @@ import com.ttkk0000.meowcircle.client.*
             FormField(f,s,"responsibilities","双方照护与交接责任",lines = 4); FormField(f,s,"health","已知健康情况及未知事项",lines = 4)
             FormField(f,s,"returns","退养与安全接回条款",lines = 4); FormField(f,s,"amount","基础金额（元）","0",numeric = true)
             FormField(f,s,"payee","收款方／无款项说明"); FeeFields(f,s)
-            FormField(f,s,"trialUntil","试养截止（选填，带时区）")
+            DateTimeField(f,s,"trialUntil","试养截止（选填）",optional = true)
             FormField(f,s,"offerId","有偿信息编号（如适用）",numeric = true); FormField(f,s,"offerVersion","披露版本（如适用）",numeric = true)
             FeaturePrimary("提交协议提案",!s.busy) {
                 val amount = cents(f.field("amount","0")); val fees = formFees(f); val until = f.field("trialUntil")
@@ -227,7 +252,7 @@ import com.ttkk0000.meowcircle.client.*
             }
         }
         FeaturePage.ReturnEdit -> s.adoption?.let { record ->
-            FormField(f,s,"starts","接回时间（带时区）"); FormField(f,s,"place","接回地点"); FormField(f,s,"reception","接回人与接待方")
+            DateTimeField(f,s,"starts","接回时间"); FormField(f,s,"place","接回地点"); FormField(f,s,"reception","接回人与接待方")
             FormField(f,s,"careUntil","接回前由谁照护及安排",lines = 3); FormField(f,s,"costs","费用承担",lines = 3); FormField(f,s,"safety","安全与异常联络安排",lines = 4)
             FeaturePrimary("提出安全接回方案",!s.busy) {
                 val time = dateTime(f.field("starts"))
@@ -245,10 +270,10 @@ import com.ttkk0000.meowcircle.client.*
     t.snapshot?.let { Text("披露快照 #${it.offerId} V${it.offerVersion}；聊天中的变更不替代此快照。") }
 }
 @Composable private fun AppointmentFields(f: MobileFeatureStore,s: FeatureState,old: AppointmentTerms?) {
-    FormField(f,s,"starts","时间（如 2026-10-23T14:30+08:00）",old?.startsAt.orEmpty()); FormField(f,s,"city","城市",old?.city.orEmpty())
+    DateTimeField(f,s,"starts","预约时间",old?.startsAt.orEmpty()); FormField(f,s,"city","城市",old?.city.orEmpty())
     ChoiceField(f,s,"species","物种",listOf("cat" to "猫咪","dog" to "狗狗"),old?.species?.ifBlank { "cat" } ?: "cat")
-    FormField(f,s,"place","准确地点（仅预约参与方）",old?.place.orEmpty()); FormField(f,s,"reception","接待方与关系",old?.reception.orEmpty())
-    FormField(f,s,"petName","宠物名字",old?.petName.orEmpty()); FormField(f,s,"amount","基础金额（元）",old?.amountCents?.let { java.math.BigDecimal.valueOf(it,2).toPlainString() } ?: "0",numeric = true)
+    FormPair({ FormField(f,s,"place","准确地点（仅预约参与方）",old?.place.orEmpty()) }, { FormField(f,s,"reception","接待方与关系",old?.reception.orEmpty()) })
+    FormPair({ FormField(f,s,"petName","宠物名字",old?.petName.orEmpty()) }, { FormField(f,s,"amount","基础金额（元）",old?.amountCents?.let { java.math.BigDecimal.valueOf(it,2).toPlainString() } ?: "0",numeric = true) })
     FormField(f,s,"visitFee","到访费（元）",old?.visitFeeCents?.let { java.math.BigDecimal.valueOf(it,2).toPlainString() } ?: "0",numeric = true)
     FormField(f,s,"requiredFees","其他必付费用明细（没有请写无）",old?.requiredFees.orEmpty(),3); FormField(f,s,"payee","收款方／无款项说明",old?.payee.orEmpty())
 }

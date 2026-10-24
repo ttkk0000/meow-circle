@@ -675,6 +675,9 @@ export function Chat({
   const reading = useRef(false);
   const [mark, setMark] = useState(first);
   useEffect(() => {
+    if (messages.denied || parent.denied) setLoaded([]);
+  }, [messages.denied, parent.denied]);
+  useEffect(() => {
     if (!messages.data) return;
     setLoaded((old) => {
       const rows = new Map((cursor ? old : []).map((row) => [row.id, row]));

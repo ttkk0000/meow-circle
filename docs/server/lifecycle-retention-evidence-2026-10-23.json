@@ -1,0 +1,123 @@
+{
+  "task": "AI-20261023-LIFECYCLE",
+  "recorded_at": "2026-10-23T00:58:15.445171+08:00",
+  "branch": "main",
+  "baseline": "5de631b669d312ddd461d015ed137dad16c6ed02",
+  "level": "source_and_static_only",
+  "hash_format": "SHA256 of UTF-8 text normalized to LF, without BOM",
+  "prior_dirty_paths": [
+    "docs/ai/CONTEXT.md",
+    "docs/ai/TASKS.md",
+    "docs/ai/TASK_LOG.md"
+  ],
+  "checks": {
+    "gofmt": "modified Go source and regression source parsed/formatted; no type checking",
+    "check_mobile_static": "passed",
+    "check_kmp_client_static": "passed",
+    "check_server_shared_contract_static": "passed",
+    "check_android_feature_static": "passed; 15 file reads changed to explicit UTF-8 after Windows GBK failure",
+    "paths": 203,
+    "operations": 230,
+    "schemas": 95,
+    "module_tables": 42,
+    "dto_pairs": 48,
+    "kotlin_swift_files": 45,
+    "android_extension_pages": 30,
+    "regression_cases_source_only": 10
+  },
+  "not_executed": [
+    "type checking",
+    "compilation/build/package/install",
+    "application tests",
+    "migration",
+    "service/provider/device runtime",
+    "deployment",
+    "commit/push"
+  ],
+  "remaining": [
+    "real retention policy and named operator review",
+    "job scheduler and external processor/backup cleanup receipts",
+    "other write-operation receipts",
+    "legacy completed requests lacking item evidence require reconciliation, never guessed erasure",
+    "platform channels and full iOS UI",
+    "authorized runtime verification and query-plan/scale measurements"
+  ],
+  "source_fingerprints": [
+    {
+      "path": "internal/mobile/data_requests.go",
+      "sha256": "be4408d80aaffdf90120225e4f916cb1170eeb8e5a95a110842d47f93befe959"
+    },
+    {
+      "path": "internal/mobile/erasure.go",
+      "sha256": "8054405e42b22a20786265891730f1efb62233eed9826a1c58c20f7c9d6786ad"
+    },
+    {
+      "path": "internal/mobile/evidence_retention.go",
+      "sha256": "64218f9f5f231303209ed24255e0e82b8c72498ccc7a0ea4268c87e0b7493143"
+    },
+    {
+      "path": "internal/mobile/evidence_retention_test.go",
+      "sha256": "9ba56190ca4bfc8055138ffb1f61a90be2adad07e65798d7ebc63c428e5e71f6"
+    },
+    {
+      "path": "internal/mobile/expiry.go",
+      "sha256": "10656826f6c6d07c4d08f26a78a14d3d7782638755bf8bf189eef1614813f416"
+    },
+    {
+      "path": "internal/mobile/media_cleanup.go",
+      "sha256": "c1f718d927dd0799a515f65f188d9852e4149b4f845744408712add2ef5fa41a"
+    },
+    {
+      "path": "internal/mobile/rights.go",
+      "sha256": "583a717e9af9d15b1b9fbf1b2605545c449e6fed1fdab1f91fc36a10d2761bad"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256": "bc3c167a221e24a27e7cab1375a71ba4a7b11d3a3aa02753b945de1522547da8"
+    },
+    {
+      "path": "internal/platform/mobileapi/ops_auth.go",
+      "sha256": "0c760980ec3e1d3e97de8d8ad9774efcad7a85b455e365844869c83914085782"
+    },
+    {
+      "path": "internal/platform/mobileapi/retention_test.go",
+      "sha256": "5c5a05e93621d9f8363a76c1727bd142cb609020ea1d422358bcbae85eefd6ce"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/DataRequestProgress.kt",
+      "sha256": "6d3af8d53b1fafef4a9fe4a78b2c715a4e583a15c42c473e5b273bb3f3cbfcd7"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "07be036757961ba293c1b4ed72d57d4473736a5364aa1f5d8ad584d5f3b11153"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/PolicyModels.kt",
+      "sha256": "2f2b12cb12f4a74025ecda26e55c42996e0e5fdccb80b905dbf501ea72dfd0d8"
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/DataRequestProgressTest.kt",
+      "sha256": "1a168f5f19539a927ada67da0bc9d0274df75554aec350c8c796804c53ed6bbc"
+    },
+    {
+      "path": "scripts/check_android_feature_static.py",
+      "sha256": "da1d47c80f50e74d86092095c5be9fa0acb621e0deee189b05cc229ea9017b4c"
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256": "a1514985cdae721236000904bb07a5ed879a665a8337cf356e4dc4801d67f7b3"
+    },
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256": "e9a4ec5da8a4eae0df55cfd909b25969d8fcc4a883b3cacabf4c75c46b3cb4b1"
+    }
+  ],
+  "file_checks": {
+    "changed_text_files": 25,
+    "document_files": 7,
+    "local_links": 180,
+    "json_files": 2,
+    "encoding_and_whitespace_findings": 0,
+    "tracked_diff_whitespace": "passed; line-ending notices only"
+  }
+}

@@ -75,7 +75,7 @@ func (s *Service) SaveProfile(ctx context.Context, actor int64, in ProfileInput)
 	if !mobile.HasString([]string{"honey", "mint", "night", "neutral"}, in.Theme) || !mobile.HasString([]string{"picnic", "desk", "arcade", "garden"}, in.Background) {
 		return out, mobile.Invalid("unknown theme or profile background")
 	}
-	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
+	err = s.actorUpdate(ctx, actor, func(tx mobile.Tx) error {
 		if e := active(tx, actor); e != nil {
 			return e
 		}

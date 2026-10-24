@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.ttkk0000.meowcircle.client.*
+import kotlinx.serialization.json.JsonPrimitive
 
 @Composable internal fun AccountFeature(store: MobileStore,s: FeatureState,route: FeatureRoute) {
     val f = store.features; val actor = store.state.value.user?.id
@@ -51,18 +52,16 @@ import com.ttkk0000.meowcircle.client.*
         FeaturePage.Map -> MapFeature(store,s,route)
         FeaturePage.Nearby -> {
             val old = s.subscription?.data
-            Text("仅保存你主动选择的区域；不持续后台定位。可手动填写城市与大致中心。")
-            FormField(f,s,"city","城市",old?.city.orEmpty()); FormField(f,s,"latitude","中心纬度",old?.latitude?.toString().orEmpty(),numeric = true); FormField(f,s,"longitude","中心经度",old?.longitude?.toString().orEmpty(),numeric = true)
-            CoarseLocationButton("${actor}-$route",{ lat,lon -> f.edit("latitude",lat.toString());f.edit("longitude",lon.toString()) },f::notify)
-            FormField(f,s,"radius","半径（5–100 km）",old?.radiusKm?.toString() ?: "10",numeric = true)
+            RegionFields(f,s,old?.city.orEmpty(),withArea = false)
+            if (old != null && old.locationPrecision != "city") Text("原提醒使用距离范围；本次保存将改为所选城市。原设置在你确认前继续保留。")
             ChoiceField(f,s,"species","物种",listOf("" to "全部","cat" to "猫咪","dog" to "狗狗"),old?.species ?: "")
             ChoiceField(f,s,"frequency","频率",listOf("instant" to "即时","daily" to "每日汇总","off" to "关闭提醒"),old?.frequency ?: "daily")
             CheckLine("启用该区域提醒",f.field("enabled",(old?.enabled ?: false).toString()).toBoolean(),{ f.edit("enabled",it.toString()) },!s.busy)
             FeaturePrimary("保存附近提醒",!s.busy && !s.loading && s.error == null) {
-                val lat = f.field("latitude",old?.latitude?.toString().orEmpty()).toDoubleOrNull(); val lon = f.field("longitude",old?.longitude?.toString().orEmpty()).toDoubleOrNull(); val radius = f.field("radius",old?.radiusKm?.toString() ?: "10").toDoubleOrNull(); val city = f.field("city",old?.city.orEmpty())
-                if (lat == null || lon == null || radius == null || !lat.isFinite() || !lon.isFinite() || !radius.isFinite() || lat !in -90.0..90.0 || lon !in -180.0..180.0 || radius !in 5.0..100.0 || city.isBlank()) f.notify("请填写有效城市、中心坐标及 5–100 km 范围") else {
-                    val input = SubscriptionInput(SubscriptionBody(city,lat,lon,radius,f.field("frequency",old?.frequency ?: "daily"),f.field("enabled",(old?.enabled ?: false).toString()).toBoolean(),f.field("species",old?.species ?: "")),f.version(s.subscription?.version ?: 0))
-                    f.confirm("保存附近提醒","$city · $radius km\n${if(input.subscription.enabled) "启用" else "停用"}，按所选频率提醒。") { f.api.saveSubscription(input); f.discardAndReload() }
+                val city = selectedCity(f,old?.city.orEmpty())
+                if (city.isBlank()) f.notify("请选择或填写城市") else {
+                    val input = SubscriptionInput(SubscriptionBody(city,0.0,0.0,10.0,f.field("frequency",old?.frequency ?: "daily"),f.field("enabled",(old?.enabled ?: false).toString()).toBoolean(),locationPrecision = "city", species = f.field("species",old?.species ?: "")),f.version(s.subscription?.version ?: 0))
+                    f.confirm("保存同城提醒","$city · 全城范围\n${if(input.subscription.enabled) "启用" else "停用"}，按所选频率提醒。") { f.api.saveSubscription(input); f.discardAndReload() }
                 }
             }
         }
@@ -99,7 +98,10 @@ import com.ttkk0000.meowcircle.client.*
             FeaturePrimary("核对请求范围",!s.busy) {
                 val type = f.field("type","erase_fields"); val fields = listOf("bio","avatar","nickname").filter { f.field("delete_$it","false").toBoolean() }
                 val selections = selectedData(f)
-                if (type == "erase_fields" && fields.isEmpty() && selections.isEmpty()) f.notify("请选择要删除的资料字段或具体记录") else f.prepareSensitive(SensitiveIntent.DataRequest(DataRequestInput(type,newRequestKey(),"",if(type == "erase_fields") fields else emptyList(),selections,f.field("note"))))
+                val selected = if (type == "close_account") emptyList() else selections
+                if (type == "erase_fields" && fields.isEmpty() && selected.isEmpty()) f.notify("请选择要删除的资料字段或具体记录")
+                else if (selected.size > 200 || selected.any { it.kind !in selectionKinds(type == "matters_assistance").map { option -> option.first } }) f.notify("所选记录不适用于本次请求，请移除后重新核对")
+                else f.prepareSensitive(SensitiveIntent.DataRequest(DataRequestInput(type,newRequestKey(),"",if(type == "erase_fields") fields else emptyList(),selected,f.field("note"))))
             }
             RestrictedResults(f,s)
         }
@@ -110,8 +112,7 @@ import com.ttkk0000.meowcircle.client.*
             s.reviews.items.forEach { review -> FeatureSection("${reviewTypeLabel(review.data.type)} · ${stateLabel(review.state)}") {
                 Text(review.data.reason); FeatureButton("查看事项与补充") { f.open(FeatureRoute(FeaturePage.Review,review.id)) }
             } }
-            MoreFeature(s.reviews.next,s.loading) { f.reload(true) }
-            if (s.reviews.loaded && s.reviews.items.isEmpty()) Text("暂无事项")
+            PageFooter(s.reviews, { f.reload() }, { f.reload(true) }, "暂无核实、举报或申诉事项", enabled = !s.loading && !s.busy)
         }
         FeaturePage.Review -> ReviewFeature(store,s,route)
         FeaturePage.Expressions -> {
@@ -142,7 +143,8 @@ import com.ttkk0000.meowcircle.client.*
         eligible?.reasons?.forEach { Text(MobileApiException(403,"eligibility required",it).mobileMessage()) }
         Text("年龄信息来自核实服务；此处不会将自行勾选成年作为验证。")
     }
-    var phone by remember(s.route) { mutableStateOf("") }; var email by remember(s.route) { mutableStateOf("") }; var code by remember(s.route) { mutableStateOf("") }; var newPassword by remember(s.route) { mutableStateOf("") }
+    var phone by rememberSessionUiState("security.phone") { "" }; var email by rememberSessionUiState("security.email") { "" }
+    var code by rememberSessionUiState("security.code") { "" }; var newPassword by rememberSessionUiState("security.newPassword") { "" }
     FeatureSection("验证当前手机号") {
         OutlinedTextField(phone,{ phone = it },label = { Text("完整当前手机号") })
         OutlinedTextField(code,{ code = it },label = { Text("验证码") })
@@ -185,8 +187,8 @@ import com.ttkk0000.meowcircle.client.*
 
 @Composable private fun SafetyFeature(store: MobileStore,s: FeatureState,route: FeatureRoute) {
     val f = store.features
-    var contact by remember(route) { mutableStateOf("") }; var code by remember(route) { mutableStateOf("") }
-    var verifiedContact by remember(route) { mutableStateOf<String?>(null) }
+    var contact by rememberSessionUiState("safety.contact") { "" }; var code by rememberSessionUiState("safety.code") { "" }
+    var verifiedContact by rememberSessionUiState<String?>("safety.verifiedContact") { null }
     ChoiceField(f,s,"type","事项类型",listOf("safety" to "安全求助","privacy" to "隐私报告","rights_notice" to "正式权利通知","counterstatement" to "对原通知提交声明","supplement" to "补充原事项","data_assistance" to "资料事项协助"),if(route.id > 0) "supplement" else "safety")
     val type = f.field("type",if(route.id > 0) "supplement" else "safety")
     if (route.peer > 0 && route.kind.isNotBlank()) Text("关联对象：${resourceLabel(route.kind)} #${route.peer}") else {
@@ -247,20 +249,58 @@ import com.ttkk0000.meowcircle.client.*
     FeatureSection("本设备受限进度") {
         Text("凭证保存在本机安全存储，不显示或复制到普通表单。")
         s.restricted.filter { it.type in listOf("data_request","safety_ticket") }.forEach { access -> FeatureButton(if(access.type == "data_request") "查询资料请求 #${access.id.takeIf { it > 0 } ?: "待核对"}" else "查询安全事项 #${access.id.takeIf { it > 0 } ?: "待核对"}",!s.busy) { f.lookup(access) } }
-        s.dataStatus?.let { Text("请求 #${it.id} · ${dataTypeLabel(it.type)}\n${stateLabel(it.state)} · 待处理 ${it.pending} · 保全 ${it.held}\n外部处理 ${it.externalState}") }
+        s.dataStatus?.let { status ->
+            val progress = status.progress()
+            Text("请求 #${status.id} · ${dataTypeLabel(status.type)}")
+            Text(progress.message, color = if (progress.reviewRequired) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)
+            if (status.progressVersion == 1 && progress.phase != DataRequestPhase.NeedsReconciliation) {
+                Text("已处理 ${status.erased} · 待处理 ${status.pending} · 保全 ${status.held}")
+                if (status.physicalPending > 0) Text("附件物理清理待确认 ${status.physicalPending}")
+                if (status.providerPending > 0) Text("外部账号授权待处理 ${status.providerPending}")
+                if (status.restrictedCopies > 0) Text("仍有 ${status.restrictedCopies} 份受限副本保留")
+                if (status.pendingFields.isNotEmpty()) Text("待处理资料：${status.pendingFields.joinToString { field -> mapOf("bio" to "个人介绍", "avatar" to "头像", "nickname" to "昵称")[field] ?: "其他资料" }}")
+            }
+            progress.nextReviewAt?.let { Text("下次复核 ${displayTime(it)}") }
+        }
         s.rightsStatus?.let { result ->
             Text("事项 #${result.id} · ${rightsTypeLabel(result.type)}\n${stateLabel(result.state)} · 版本 ${result.version}\n复核日期 ${displayTime(result.reviewDue)}")
+            Text(when (result.evidenceState) {
+                "erased" -> "本事项关联材料已按期限清理；这不代表所有外部副本均已删除。"
+                "review_due" -> "材料已到复核期限，受控读取需重新核对。"
+                "retained" -> "材料按当前事项的限定用途保留，不会公开展示。"
+                else -> "材料处理状态待核对。"
+            })
             val original = s.restricted.firstOrNull { it.type == "safety_ticket" && (it.id == result.id || it.id == 0L && it.clientRequestId == s.lookupRequestId) }
             if (original != null) FeatureButton("在原事项追加材料",!s.busy) { f.useSafetyAccess(original); f.open(FeatureRoute(FeaturePage.Safety,result.id)); f.edit("version",result.version.toString()) }
         }
     }
 }
 @Composable private fun SelectionFields(f: MobileFeatureStore,s: FeatureState) {
-    ChoiceField(f,s,"selectionKind","指定记录类型",listOf("entries" to "动态","pets" to "宠物档案","media" to "照片","cases" to "走失求助","adoptions" to "领养事项","appointments" to "预约"),"entries")
-    FormField(f,s,"selectionId","记录编号",numeric = true)
-    FeatureButton("加入本次范围",!s.busy) { val id = f.field("selectionId").toLongOrNull(); if(id == null || id <= 0) f.notify("请输入有效记录编号") else { val item = "${f.field("selectionKind","entries")}:$id"; f.edit("selections",(f.field("selections").split(',').filter { it.isNotBlank() } + item).distinct().joinToString(",")); f.edit("selectionId","") } }
+    val assistance = f.field("type","erase_fields") == "matters_assistance"
+    val options = selectionKinds(assistance)
+    val kind = f.field("selectionKind","entries").takeIf { value -> options.any { it.first == value } }
+    ChoiceField(f,s,"selectionKind","从当前记录中选择",options,"entries")
+    LaunchedEffect(kind,assistance,s.route) { if (kind != null) f.loadDataChoices(kind,assistance) }
+    if (kind == null) Text("请先选择适用于本次请求的记录类型。")
+    else if (s.dataChoiceKind == kind && s.dataChoiceAssistance == assistance) {
+        s.dataChoices.items.forEach { record ->
+            val item = "$kind:${record.id}"
+            val title = listOf("title","name","text","message").firstNotNullOfOrNull { field ->
+                (record.data[field] as? JsonPrimitive)?.content?.takeIf { it.isNotBlank() } }?.take(64)
+            CheckLine("${title ?: resourceLabel(kind)} · #${record.id} · ${stateLabel(record.state)}",selectedData(f).any { it.kind == kind && it.id == record.id },{ checked ->
+                val current = f.field("selections").split(',').filter { it.isNotBlank() }
+                if (checked && current.size >= 200) f.notify("一次最多选择200条记录") else f.edit("selections",(if (checked) (current + item).distinct() else current - item).joinToString(","))
+            },!s.busy && !s.loading && !s.unconfirmedResult)
+        }
+        PageFooter(s.dataChoices, { f.loadDataChoices(kind,assistance) }, { f.loadDataChoices(kind,assistance,true) },
+            "此类型暂无可选记录。", enabled = !s.dataChoiceLoading && !s.busy)
+        if (s.dataChoices.loaded && s.dataChoices.error == null) FeatureButton("重新读取记录",!s.dataChoiceLoading) { f.loadDataChoices(kind,assistance) }
+    }
+    if (selectedData(f).isNotEmpty()) Text("本次已选 ${selectedData(f).size} 条，可逐条移除：")
     selectedData(f).forEach { selection -> FeatureButton("移除：${resourceLabel(selection.kind)} #${selection.id}",!s.busy) { f.edit("selections",f.field("selections").split(',').filterNot { it == "${selection.kind}:${selection.id}" }.joinToString(",")) } }
 }
+private fun selectionKinds(assistance: Boolean) = listOf("entries" to "动态","pets" to "宠物档案","media" to "照片","cases" to "走失求助","offers" to "有偿信息","drafts" to "草稿","subscriptions" to "附近订阅") +
+    if (assistance) listOf("adoptions" to "领养事项","appointments" to "预约","reviews" to "核实事项") else emptyList()
 private fun selectedData(f: MobileFeatureStore) = f.field("selections").split(',').mapNotNull { item -> val parts = item.split(':'); if(parts.size == 2) parts[1].toLongOrNull()?.let { DataSelection(parts[0],it) } else null }
 private fun reviewTypeLabel(v: String) = mapOf("verification" to "核实","report" to "举报","appeal" to "申诉","support" to "协助","recovery" to "恢复")[v] ?: v
 internal fun resourceLabel(v: String) = mapOf("pets" to "宠物档案","entries" to "动态","offers" to "有偿信息","cases" to "走失求助","media" to "照片","adoptions" to "领养事项","appointments" to "预约")[v] ?: v

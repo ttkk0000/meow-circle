@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-23",
+  "task": "AI-20261023-CLOSURE-IMPLEMENT",
+  "branch": "main",
+  "head": "5de631b",
+  "workingTree": "Includes previous uncommitted changes. No commit or push.",
+  "sequence": [
+    "Design state contract and document corrections",
+    "Current delivery ledger and release runbook",
+    "Figma existing state text updates",
+    "Go invariant and KMP/Android source implementation"
+  ],
+  "figma": {
+    "sessionId": "abead578-694a-4065-a0de-b5b690e7624e",
+    "savedTextNodes": 10,
+    "independentReadback": true,
+    "viewedScreenshots": [
+      "506:60845",
+      "506:60863"
+    ],
+    "scope": "Two existing states across five layouts; no prototype playback or full-file audit",
+    "recovery": "Transport failed; read confirmed original text before retry. Final independent read confirmed all 10 updates."
+  },
+  "checks": {
+    "go": "gofmt parsing/formatting of 8 changed Go files; no types or tests",
+    "contract": {
+      "paths": 212,
+      "operations": 239,
+      "schemas": 100,
+      "dtoPairs": 49
+    },
+    "kmp": "50 Kotlin/Swift files: lexical delimiters, configuration and request fields",
+    "android": "30 extension dispatches, references, single Store, adaptive boundaries, resources",
+    "regressionSource": "5 Go test functions added, not executed"
+  },
+  "notExecuted": [
+    "Go build/run/test",
+    "Gradle",
+    "Type checking",
+    "Database migration",
+    "Services or worker",
+    "Device or emulator",
+    "Supplier integration",
+    "Deployment"
+  ],
+  "files": [
+    {
+      "path": "docs/design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md",
+      "sha256": "e05534f92eb3433c9875d5120286eff792fc28b3ffc167003b9c4e5ac6d06e06"
+    },
+    {
+      "path": "docs/client/CURRENT_DELIVERY_STATUS_2026_10_23.md",
+      "sha256": "6dcd258cdcce3e3a0ce655039b58ace1db7caba4f2affcb5cbb39a7c44f95654"
+    },
+    {
+      "path": "docs/server/V2_RELEASE_RUNBOOK_2026_10_23.md",
+      "sha256": "12e439c70da95d4167f090efa724741984ce435d7d6343e750b07e36ca3e3095"
+    },
+    {
+      "path": "docs/server/ADOPTION_CLOSURE_2026_10_23.md",
+      "sha256": "cb09207a17782aa0424b769d70697698c84381864a18bc459e9e87767c788b88"
+    },
+    {
+      "path": "docs/bmad/ux-design.md",
+      "sha256": "f8b5b6b86199bf37ba38c136b0e98c4594c0a94ab6ba6c5de77f2f101873b64f"
+    },
+    {
+      "path": "docs/bmad/prd.md",
+      "sha256": "cacf9ad9f046b7f68aad98b1c4daf4e64e3ca74f49b3047d88472bfccf916af5"
+    },
+    {
+      "path": "docs/bmad/architecture.md",
+      "sha256": "e4f967cf10697af96850b22e3247e779569d8103404735bcaa53a941474057a8"
+    },
+    {
+      "path": "docs/client/FEATURE_DELIVERY_MATRIX.md",
+      "sha256": "44202e91d9dbb264d08622cfcee8af0528ce23f40dca7f3ec47a7bd1519556d1"
+    },
+    {
+      "path": "docs/client/IMPLEMENTATION_PLAN.md",
+      "sha256": "4135996020c5201773f0f6b582c95c6ad8bed40e377e3af9341b8358057b5e30"
+    },
+    {
+      "path": "docs/client/TASKS.md",
+      "sha256": "15ec4f475799dc931a34464e467a0dd911a5a817df30759cddadc412719ab2e5"
+    },
+    {
+      "path": "docs/design/MND_COLD_START_LOST_PETS_AND_AUTH_SPEC.md",
+      "sha256": "ae99ccbca94228d932529aff4c8963f8d3ac0009ad55ca1c1e80c6592fbdbf76"
+    },
+    {
+      "path": "docs/design/MND_SAFETY_AND_LIFECYCLE_SPEC.md",
+      "sha256": "c78f59ccc270be7f5ce5df93d186b98a52298d17d3894c4ec3845b532cce7f8c"
+    },
+    {
+      "path": "docs/design/MND_LOGIC_FLOW_CONTRACT.md",
+      "sha256": "c71adac3b83a103a874c6b1401c8628a85916d390f130cc7a114ae42317c2e2d"
+    },
+    {
+      "path": "internal/mobile/adoption_placement.go",
+      "sha256": "9ab8d4d35850929e2be4a4579373983aef3bee170c213d6460d8fed2630a9bcf"
+    },
+    {
+      "path": "internal/mobile/adoption_closure_test.go",
+      "sha256": "5630c66913fa4c59615bb34c52e3e0838bef84ef7c54dff050a9d59b71d2185a"
+    },
+    {
+      "path": "internal/mobile/models.go",
+      "sha256": "a337073599bcb6c90c998a1030712168abe4a04a78bea8f4c9adb42e3dd10a66"
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "sha256": "ab3cada2d33d6e5ef7266237fcad587976e7ec0e4b2c890f5c8729a58a7a9f79"
+    },
+    {
+      "path": "internal/mobile/rescue.go",
+      "sha256": "5b005503b1ac0ca310547ea570f688882037d7976a1995afc7dfe7daa94b911d"
+    },
+    {
+      "path": "internal/mobile/contracts.go",
+      "sha256": "89d6d3062b86febe0875ab5ea93c62fd338bc232c90ec687ba59e330f8756112"
+    },
+    {
+      "path": "internal/mobile/offers.go",
+      "sha256": "79a0f32469d68dae49d4b2a16d09c7932906bc9415b035a1262a49a9bb178f7c"
+    },
+    {
+      "path": "internal/mobile/appointments.go",
+      "sha256": "6dab3b93ff144ade6819429010b72f4c2d397bfd7eae6260a1f6fe27c45f6b10"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt",
+      "sha256": "27db20938d1c007de272657d624bed5c7584cb3d9229aaf63b0f6345dec7fb72"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256": "7f2c1d57f7fb8d4e872581f61f76f15c929387234c8af93374e7fa5e9b72843a"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "3b5978f1776f010a247004a2f17e765ba08956d933644fc654a0c881d5b768c5"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidCareFeatures.kt",
+      "sha256": "d14c00bc2b6085028032c21dd66530a22c369c4ce3723a935865c13100057b4a"
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256": "68b40a85c9fc50251051151d4b837760f639ebee7b141a85a9d4421f95e4da5d"
+    },
+    {
+      "path": "scripts/check_kmp_client_static.py",
+      "sha256": "541b1e606ded183bcc1a5ebb73717ff1d730442718562175e0caf568ce336c9a"
+    },
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256": "9780b075a3352af861f36eb385a3ea47ecc3ae56d9449074835ddd9789d7a921"
+    },
+    {
+      "path": "docs/design/figma-study/closure-2026-10-23-figma-write.json",
+      "sha256": "057e0f9191c085fc153327b8f384ddb80cd229eede41cfca693eb3b5727cd491"
+    },
+    {
+      "path": "docs/design/figma-study/closure-2026-10-23-figma-final.json",
+      "sha256": "cfad7d09f4e32658eec60e69efffcd67a696e65f4f289a49352b481d8c555096"
+    }
+  ],
+  "documentChecks": {
+    "targetDocuments": 13,
+    "missingLocalLinks": 0,
+    "utf8Bom": 0,
+    "incrementalWhitespace": "passed; existing LF/CRLF notices only"
+  }
+}

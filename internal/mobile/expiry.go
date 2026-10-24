@@ -34,21 +34,9 @@ func (s *Service) PurgeExpiredSafety(ctx context.Context, operator string, after
 			if active {
 				continue
 			}
-			cases, e := allRecords(tx, RightsCases, Filter{MediaID: r.ID})
+			retained, _, e := mediaRetention(tx, r, s.Now())
 			if e != nil {
 				return e
-			}
-			retained := false
-			for _, c := range cases {
-				v, e := Decode[struct {
-					Case RightsCase `json:"case"`
-				}](c)
-				if e != nil {
-					return e
-				}
-				if v.Case.EvidenceUntil.After(s.Now()) {
-					retained = true
-				}
 			}
 			if retained {
 				continue

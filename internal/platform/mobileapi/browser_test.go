@@ -132,7 +132,7 @@ func TestBrowserConfigurationSPAFallbackAndPrivateShareStayClosed(t *testing.T) 
 		t.Fatal(err)
 	}
 	w = httptest.NewRecorder()
-	h.ShareHandler(w, httptest.NewRequest("GET", "/share/entries/"+jsonInt(entry.ID), nil))
+	h.PublicSharePage(w, httptest.NewRequest("GET", "/share/entries/"+jsonInt(entry.ID), nil))
 	if w.Code != 404 || strings.Contains(w.Body.String(), "private-share-secret") {
 		t.Fatal("private share exposed", w.Code)
 	}

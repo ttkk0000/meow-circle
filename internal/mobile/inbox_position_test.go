@@ -58,7 +58,7 @@ func TestFirstUnreadPositionIgnoresOwnMessagesAndAdvancesWithReceipt(t *testing.
 	}
 }
 
-func TestGlobalUnreadExcludesMutedGroupsAndNeverIncludesPendingTasks(t *testing.T) {
+func TestGlobalUnreadPreservesCurrentMutedPolicyAndSeparatesPendingTasks(t *testing.T) {
 	s, _ := fixture(t)
 	ctx := context.Background()
 	group, err := s.CreateGroup(ctx, 1, mobile.GroupInput{CommandMeta: meta(), Name: "免打扰回归"})
@@ -87,7 +87,7 @@ func TestGlobalUnreadExcludesMutedGroupsAndNeverIncludesPendingTasks(t *testing.
 		t.Fatal(err)
 	}
 	after, err := s.Unread(ctx, 2)
-	if err != nil || after.Groups[group.ID] != 1 || after.GlobalTotal != before.GlobalTotal-1 {
-		t.Fatal("mute changed local unread or retained global badge", before, after, err)
+	if err != nil || after.Groups[group.ID] != 1 || after.MutedGroups[group.ID] != 1 || after.GlobalTotal != before.GlobalTotal {
+		t.Fatal("mute changed the current count policy", before, after, err)
 	}
 }

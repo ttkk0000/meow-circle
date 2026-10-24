@@ -59,7 +59,7 @@ func TestDirectoryProjectionAndPendingRequestsFollowCurrentGroupOwner(t *testing
 		t.Fatal(err)
 	}
 	preview, err := s.GroupDirectory(ctx, 0, 0, g.ID, "", "")
-	if err != nil || len(preview.Items) != 1 || len(preview.Items[0].Participants) != 0 {
+	if err != nil || len(preview.Items) != 1 || len(preview.Items[0].Participants) != 0 || preview.Items[0].OwnerID != 0 {
 		t.Fatalf("projection: %v", err)
 	}
 	if _, err = s.Get(ctx, 3, mobile.Groups, g.ID); !errors.Is(err, mobile.ErrNotFound) {

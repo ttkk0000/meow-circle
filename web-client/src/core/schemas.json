@@ -260,6 +260,10 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "adoption_cycle": {
+        "type": "integer",
+        "format": "int64"
+      },
       "client_request_id": {
         "type": "string"
       },
@@ -818,6 +822,9 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "global_total": {
+        "type": "integer"
+      },
       "pending": {
         "type": "object",
         "additionalProperties": {
@@ -831,6 +838,12 @@
         }
       },
       "groups": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer"
+        }
+      },
+      "muted_groups": {
         "type": "object",
         "additionalProperties": {
           "type": "integer"
@@ -858,10 +871,6 @@
       },
       "message_requests": {
         "type": "integer"
-      },
-      "global_total": {
-        "type": "integer",
-        "description": "全局未读事件数；排除免打扰群聊及重复私信／群提醒，不含待处理业务事项。"
       }
     }
   },
@@ -892,6 +901,152 @@
       },
       "internal_note": {
         "type": "string"
+      }
+    }
+  },
+  "ContentSubscriptions": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "followed_users": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "watched_cases": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "GroupDirectoryBody": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "member_count": {
+        "type": "integer"
+      },
+      "member": {
+        "type": "boolean"
+      }
+    }
+  },
+  "ContentSubscriptionInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "followed_users": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "watched_cases": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "GroupJoinInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "note": {
+        "type": "string"
+      }
+    }
+  },
+  "InboxSnapshotInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      }
+    }
+  },
+  "InboxReadSnapshot": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "snapshot_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "count": {
+        "type": "integer"
+      },
+      "muted_count": {
+        "type": "integer"
+      },
+      "expires_at": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
+  "InboxReadAllInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "snapshot_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "InboxReadAllResult": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "snapshot_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "applied_count": {
+        "type": "integer"
+      },
+      "skipped_count": {
+        "type": "integer"
       }
     }
   },
@@ -1127,6 +1282,41 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "progress_version": {
+        "type": "integer"
+      },
+      "erased": {
+        "type": "integer"
+      },
+      "physical_pending": {
+        "type": "integer"
+      },
+      "provider_pending": {
+        "type": "integer"
+      },
+      "restricted_copies": {
+        "type": "integer"
+      },
+      "pending_fields": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "next_review_at": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "review_required": {
+        "type": "boolean"
+      },
       "id": {
         "type": "integer",
         "format": "int64"
@@ -1224,6 +1414,9 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "evidence_state": {
+        "type": "string"
+      },
       "id": {
         "type": "integer",
         "format": "int64"
@@ -1435,6 +1628,10 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "cursor": {
+        "type": "integer",
+        "format": "int64"
+      },
       "consumer": {
         "type": "string"
       },
@@ -1450,6 +1647,75 @@
       },
       "retry_after_seconds": {
         "type": "integer"
+      }
+    }
+  },
+  "JobInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "positions": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/JobPosition"
+        }
+      }
+    }
+  },
+  "JobResult": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "state": {
+        "type": "string"
+      },
+      "delivery_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "processed": {
+        "type": "integer"
+      },
+      "retry_after_seconds": {
+        "type": "integer"
+      },
+      "positions": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/JobPosition"
+        }
+      }
+    }
+  },
+  "DataRequestWork": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "progress_version": {
+        "type": "integer"
+      },
+      "external_state": {
+        "type": "string"
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DataItem"
+        }
       }
     }
   },
@@ -1564,6 +1830,96 @@
       },
       "transfer_state": {
         "type": "string"
+      }
+    }
+  },
+  "RightsQueuePage": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RightsQueueItem"
+        }
+      },
+      "next_cursor": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "RightsCaseDetails": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "receipt": {
+        "$ref": "#/components/schemas/RightsQueueItem"
+      },
+      "evidence_available": {
+        "type": "boolean"
+      },
+      "target_kind": {
+        "type": "string"
+      },
+      "target_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "related_case_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "contact": {
+        "type": "string"
+      },
+      "legal_name": {
+        "type": "string"
+      },
+      "right_type": {
+        "type": "string"
+      },
+      "statement": {
+        "type": "string"
+      },
+      "messages": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RightsMessage"
+        }
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  },
+  "RetentionExpiryInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "cursor": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "RetentionExpiryResult": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "next_cursor": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "erased": {
+        "type": "integer"
+      },
+      "held": {
+        "type": "integer"
       }
     }
   },
@@ -1693,6 +2049,9 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "location_precision": {
+        "type": "string"
+      },
       "type": {
         "type": "string"
       },
@@ -1840,6 +2199,22 @@
       }
     }
   },
+  "DataItem": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      }
+    }
+  },
   "DataSelection": {
     "type": "object",
     "additionalProperties": false,
@@ -1883,6 +2258,9 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "city": {
+        "type": "string"
+      },
       "content_origin": {
         "type": "string"
       },
@@ -1910,9 +2288,6 @@
       },
       "audience": {
         "$ref": "#/components/schemas/Audience"
-      },
-      "city": {
-        "type": "string"
       }
     }
   },
@@ -1951,6 +2326,19 @@
         "type": "string"
       },
       "responsible": {
+        "type": "string"
+      }
+    }
+  },
+  "JobPosition": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "cursor": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "after": {
         "type": "string"
       }
     }
@@ -2070,6 +2458,19 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "city": {
+        "type": "string"
+      },
+      "adoption_cycle": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "adoption_opened": {
+        "type": "boolean"
+      },
+      "placement_state": {
+        "type": "string"
+      },
       "name": {
         "type": "string"
       },
@@ -2099,10 +2500,6 @@
       },
       "adoption_available": {
         "type": "boolean"
-      },
-      "city": {
-        "type": "string",
-        "maxLength": 120
       }
     }
   },
@@ -2110,6 +2507,16 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "content": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/ContentSubscriptions"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
       "direct_messages": {
         "type": "boolean"
       },
@@ -2127,16 +2534,6 @@
       },
       "push_permission": {
         "type": "boolean"
-      },
-      "content": {
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/ContentSubscriptions"
-          },
-          {
-            "type": "null"
-          }
-        ]
       }
     }
   },
@@ -2192,10 +2589,72 @@
       }
     }
   },
+  "RightsMessage": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "type": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      },
+      "evidence": {
+        "type": "string"
+      },
+      "at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "actor_role": {
+        "type": "string"
+      }
+    }
+  },
+  "RightsQueueItem": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "review_due": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "evidence_until": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "evidence_state": {
+        "type": "string"
+      },
+      "transfer_state": {
+        "type": "string"
+      }
+    }
+  },
   "Subscription": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "species": {
+        "type": "string"
+      },
+      "location_precision": {
+        "type": "string"
+      },
       "city": {
         "type": "string"
       },
@@ -2213,9 +2672,6 @@
       },
       "enabled": {
         "type": "boolean"
-      },
-      "species": {
-        "type": "string"
       }
     }
   },
@@ -2274,86 +2730,6 @@
       }
     }
   },
-  "ContentSubscriptions": {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "followed_users": {
-        "type": "array",
-        "items": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "watched_cases": {
-        "type": "array",
-        "items": {
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    }
-  },
-  "ContentSubscriptionInput": {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "client_request_id": {
-        "type": "string"
-      },
-      "version": {
-        "type": "integer",
-        "format": "int64"
-      },
-      "followed_users": {
-        "type": "array",
-        "items": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "watched_cases": {
-        "type": "array",
-        "items": {
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    }
-  },
-  "GroupJoinInput": {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "client_request_id": {
-        "type": "string"
-      },
-      "note": {
-        "type": "string"
-      }
-    }
-  },
-  "GroupDirectoryBody": {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "name": {
-        "type": "string"
-      },
-      "city": {
-        "type": "string"
-      },
-      "summary": {
-        "type": "string"
-      },
-      "member_count": {
-        "type": "integer"
-      },
-      "member": {
-        "type": "boolean"
-      }
-    }
-  },
   "LeadInput": {
     "type": "object",
     "properties": {
@@ -2370,21 +2746,6 @@
     "additionalProperties": false
   },
   "ReviewSupplement": {
-    "type": "object",
-    "properties": {
-      "version": {
-        "type": "integer"
-      },
-      "note": {
-        "type": "string"
-      },
-      "media_ids": {
-        "type": "array",
-        "items": {
-          "type": "integer"
-        }
-      }
-    },
-    "additionalProperties": false
+    "$ref": "#/components/schemas/StateInput"
   }
 }

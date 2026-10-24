@@ -1,12 +1,12 @@
 # M&D 系统架构与技术实施合同
 
-日期：2026-10-22；任务AI-20261022-TECH-PLAN。状态：技术方案与静态源码核对完成，尚未实施本次新增合同。本文承接[PRD](prd.md)、[现行安全合同](../design/MND_SAFETY_AND_LIFECYCLE_SPEC.md)、[六处操作合同](../design/MND_LOGIC_FLOW_CONTRACT.md)和[法律设计增补](../design/MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md)；执行顺序以[客户端实施方案](../client/IMPLEMENTATION_PLAN.md)与[任务](../client/TASKS.md)为准。[准入核对](gate-check.md)及[逐项追溯](implementation-trace-2026-10-22.json)区分规划覆盖与实际实现。
+规划基线：2026-10-22，AI-20261022-TECH-PLAN；当前状态更新：2026-10-23，AI-20261023-CLOSURE-IMPLEMENT。服务端、公共KMP及Android主要合同已有后续源码，不能再把全部路径称为拟议；运行／迁移／供应商尚未验收。当前差距查[功能账本](../client/CURRENT_DELIVERY_STATUS_2026_10_23.md)，新增状态规则查[闭环合同](../design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)。本文承接[PRD](prd.md)、[安全合同](../design/MND_SAFETY_AND_LIFECYCLE_SPEC.md)、[操作合同](../design/MND_LOGIC_FLOW_CONTRACT.md)和[法律设计增补](../design/MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md)。[准入核对](gate-check.md)及[追溯JSON](implementation-trace-2026-10-22.json)保留当时规划快照，不作当前完成证明。
 
 ## 1. 系统范围与当前证据
 
 目标是让社区、领养、走失互助、出售披露和预约在同一套身份、授权、版本和资料生命周期规则下工作。首发武汉、上海；猫优先、doggie友好。沿用已确认的14岁以上交流、未满14岁有效监护授权、商业发布及线下签约由成年人以本人账号办理。微信绑定替代当前手机号资格仍未获确认，继续执行现行认证合同。
 
-当前工作树main／ebfc469，存在大量未提交与未跟踪成果；该提交不包含全部现状。以下只证明磁盘源码及文档，不是运行结果。
+下表为2026-10-22规划前工作树main／ebfc469的历史检查，已被后续批次部分替代，**不是当前缺口清单**。现行资格已由服务端eligibility消费，禁止据旧“恒拒绝”描述重写或退回本地verified。当前工作树main／5de631b仍含大量未提交成果；具体已写／待接／未运行按当前账本和批次证据逐项核对。
 
 | 范围 | 本轮核对事实 | 实施含义 |
 |---|---|---|
@@ -126,7 +126,7 @@ PostgreSQL SERIALIZABLE仍会发生可识别的序列化冲突，需要应用明
 
 ## 5. API与客户端合同
 
-所有下列新增路径为拟议合同，尚未写入现行OpenAPI、路由或客户端。已有路径保持现状；领取任务时先冻结请求／响应、状态、角色、错误码、示例和兼容策略，再编码。
+下表是规划时的接口责任清单，名称不自动等于实际路径。当前精确路径／DTO以[OpenAPI](../api/mobile-v2.openapi.json)及Go handler为准；身份、资格、用途、操作回执、资料请求和案件等已存在源码，Web Cookie／CSRF、部分全局已读和平台渠道仍需交付。修改前核对当前合同，禁止重复创建已存在接口；新领养状态按闭环合同冻结后同步服务端／shared／Android。
 
 | 合同组 | 已有／拟议入口 | 冻结重点 |
 |---|---|---|

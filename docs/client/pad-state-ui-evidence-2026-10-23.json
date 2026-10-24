@@ -1,0 +1,180 @@
+{
+  "task": "AI-20261023-PAD-STATE",
+  "date": "2026-10-23",
+  "branch": "main",
+  "head": "5de631b",
+  "uncommitted": true,
+  "status": "source_written_static_only",
+  "scope": [
+    "Android phone/tablet orientation and window state retention",
+    "application UI primitives and existing metrics",
+    "documentation and static checks"
+  ],
+  "validation": {
+    "client_files": 58,
+    "feature_dispatches": 30,
+    "ui_primitives": 10,
+    "checks": [
+      {
+        "name": "Android",
+        "command": "$env:PYTHONIOENCODING='utf-8'\npython scripts/check_android_feature_static.py",
+        "exit_code": 0,
+        "output": "Android 源码静态核对：30 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。"
+      },
+      {
+        "name": "previous-integration",
+        "command": "python scripts/check_android_finish_static.py",
+        "exit_code": 0,
+        "output": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation."
+      },
+      {
+        "name": "KMP",
+        "command": "python scripts/check_kmp_client_static.py",
+        "exit_code": 0,
+        "output": "Static source/configuration checks passed: 58 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution."
+      },
+      {
+        "name": "UI",
+        "command": "python scripts/check_android_ui_static.py",
+        "exit_code": 0,
+        "output": "Static UI check passed: 10 shared primitives, metrics/theme wiring, ViewModel UI session and movable form/home composition. No compilation, runtime or device validation."
+      }
+    ],
+    "diff_check": "No whitespace errors; existing LF-to-CRLF Git warnings retained",
+    "no_compilation": true,
+    "no_type_checking": true,
+    "no_ui_tests": true,
+    "no_device": true,
+    "no_browser": true,
+    "no_service": true,
+    "no_server_changes": true,
+    "no_dependency_changes": true,
+    "no_ios_ui_changes": true,
+    "no_commit_or_push": true,
+    "utf8_no_bom_no_conflicts_no_trailing_space": 27,
+    "local_doc_links": 8
+  },
+  "retention": {
+    "activity_recreation": "ViewModel Store plus values-only UI session, saveable scroll/cursor metadata",
+    "responsive_reflow": "single movable home content and movable FormPair fields",
+    "private_ui": "memory only; scope closure/owner switch clears; not restored after process death",
+    "pending_intents": "retain original intent; reflow never submits"
+  },
+  "remaining": [
+    "Android OEM/native picker behavior on rotation",
+    "actual list anchor retention, focus and IME session",
+    "split screen, fold, keyboard, large fonts and Activity/process lifecycle validation",
+    "specialized Material controls remain; first component-library batch is not a full migration of every client"
+  ],
+  "files": {
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt": {
+      "sha256": "f0bc05f376e71777ee7abdd31a6d6f06c1f4b21b8363b814e4de1e108c94ed72",
+      "bytes": 1737
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileTheme.kt": {
+      "sha256": "b5486c74c726eece064943c8e2e7593ccda95409123b874cb318c2b7b71ddefd",
+      "bytes": 2944
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileUi.kt": {
+      "sha256": "25897637b0a3da4c03698a426c279a9f3f67d270eed30ec48d6cec990f16790a",
+      "bytes": 580
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileComponents.kt": {
+      "sha256": "45ef694a719d59f2f61d630b1d20ccc2c6d939ae65ee4d5f290070f42ddc4588",
+      "bytes": 5639
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidUiSessionState.kt": {
+      "sha256": "b40f1dbcd05498c47ce1ebf8200ce7dfe02721f80299739dbfa36c90af09ae3f",
+      "bytes": 1957
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt": {
+      "sha256": "044a6f24919b206d981daa478620b0d42f7d714583c52e61068ace2c980c3aa2",
+      "bytes": 8406
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt": {
+      "sha256": "dad60a2ad0e1568a1f4a7e2879048203070588059d9f9c7a8823d4ba40ba82df",
+      "bytes": 51985
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidFeatureContent.kt": {
+      "sha256": "ce11e914c4c241fb9c2a0329d4a9484552631730201eec1d857316eb3aa643f8",
+      "bytes": 20207
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDialog.kt": {
+      "sha256": "cd01ed5a1f508d23d86966df06c561597198f4b33059f3c400378f502bdd31d0",
+      "bytes": 2212
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDateFields.kt": {
+      "sha256": "0cab918b7de760a82f673e3581d4f2898f7656ab5f378e24aaecb81856f30658",
+      "bytes": 5468
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAuthDialog.kt": {
+      "sha256": "288c08b78559427f8f88fba236d893f31c6142992a261daafab8aca7ac12c797",
+      "bytes": 7836
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt": {
+      "sha256": "9fe25d9e060a4cce4c10c4cfa8ad792f26063b65b7023da641f9c3b930c34a5e",
+      "bytes": 30061
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt": {
+      "sha256": "aa510918a01afba03fc1f2c06e48335b060c7f03e824a50e2c9273908f85805f",
+      "bytes": 13118
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPeopleFields.kt": {
+      "sha256": "40dc5bf98ed4becaa92646caaf36c1bf7baef893a62871177364a5a441d804d3",
+      "bytes": 5933
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPetFields.kt": {
+      "sha256": "4e97e98fef66a08678331df70b5edb1c6393457591a9616303d819252b8c1c45",
+      "bytes": 3067
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidLoadStates.kt": {
+      "sha256": "ce07535b75d8e8bd334046cae7bd48c2d29f7b195bb1c5cf75e606c44ade1e3e",
+      "bytes": 3313
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/README.md": {
+      "sha256": "09caacbf774eae818c811321cf95b813e71b4d29e6a06b8b5c5338e64c3bb2dc",
+      "bytes": 1053
+    },
+    "scripts/check_android_ui_static.py": {
+      "sha256": "9742e83ebdf6ef6261eaf01792958b96d6e9acc022fd2428029f503904df63a8",
+      "bytes": 3418
+    },
+    "docs/client/UI_COMPONENTS.md": {
+      "sha256": "67097092b6fbc4f4927bb294a6772a1db38072ea40ef2e0003182e53b883dc85",
+      "bytes": 8303
+    },
+    "docs/client/PAD_STATE_AND_UI_2026_10_23.md": {
+      "sha256": "fd2fcec36168813deda34788b3a7fdffd59e826ead6fcc6b4273b38c208049f8",
+      "bytes": 6824
+    },
+    "docs/client/README.md": {
+      "sha256": "dd53e2394d042558f64ab0a0eb761aa411698d916dd4826813c8daf00d626f65",
+      "bytes": 9297
+    },
+    "docs/client/DESIGN_AND_ACCEPTANCE.md": {
+      "sha256": "9ad5a7c81829fb80ed0eb1a7bdd3feeed8d5b1f318cd3b703fb17ce1e018c37e",
+      "bytes": 12791
+    },
+    "docs/client/CURRENT_DELIVERY_STATUS_2026_10_23.md": {
+      "sha256": "82585c83f64ef6844b8a87cda71068f4571bf87291e930e04e1d36ac18605fdf",
+      "bytes": 8898
+    },
+    "docs/design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md": {
+      "sha256": "ae55b805392581a44ea8a4dcc98a1440074d3767cc38c9fcec2db838f3c3a6dc",
+      "bytes": 5393
+    },
+    "docs/ai/CONTEXT.md": {
+      "sha256": "3cc837222b4a5038838f47ebfcc3b194b53591b512cb80a8d99b93142ab6fcdc",
+      "bytes": 29551
+    },
+    "docs/ai/TASKS.md": {
+      "sha256": "e30c1296f02e2a73b4a88636ee6cf703df07a1192204bb535945344932875858",
+      "bytes": 24567
+    },
+    "docs/ai/TASK_LOG.md": {
+      "sha256": "8cb23bc4bb17fa810cc4307895c2389d3f804220b484d5db36987d3add9ac57b",
+      "bytes": 69858
+    }
+  },
+  "created_at": "2026-10-23T18:30:37.382432+08:00"
+}
