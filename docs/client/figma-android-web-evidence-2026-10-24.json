@@ -1,0 +1,193 @@
+{
+  "date": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261023-FIGMA-ANDROID-WEB",
+  "git": {
+    "initial_head": "5de631b669d312ddd461d015ed137dad16c6ed02",
+    "source_checkpoint": "03f717b",
+    "fetched_remote": "fde2137bfb17119fd388a3f04d77c139c1fd138f",
+    "merged_source_head": "d31385decb2587131a6dec8b81752886c15a9f6b",
+    "push_status": "blocked_by_missing_https_credential",
+    "forced_push": false
+  },
+  "scope": [
+    "Android phone",
+    "Android tablet",
+    "Web consumer client",
+    "necessary shared and HTTP contracts"
+  ],
+  "design": {
+    "file_key": "3OFOC3vu18Kx9sRPjummOC",
+    "indexed_states": 740,
+    "consumer_states": 737,
+    "operator_reference_states": 3,
+    "meaning": "源码归属索引，不能视为逐屏视觉或功能验收。",
+    "visually_verified_all": false,
+    "runtime_verified_states": 0
+  },
+  "checks": [
+    {
+      "name": "mobile",
+      "exit_code": 0,
+      "output": "Static only: 42 feature tables, 249 operations, 108 schemas, 128/24 assets; no dangling references or BOM"
+    },
+    {
+      "name": "kmp",
+      "exit_code": 0,
+      "output": "Static source/configuration checks passed: 63 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution."
+    },
+    {
+      "name": "cross",
+      "exit_code": 0,
+      "output": "Static cross-language check: 62 DTO pairs match; private commands and recovery guards present. No type checking or tests executed."
+    },
+    {
+      "name": "android",
+      "exit_code": 0,
+      "output": "Android 源码静态核对：36 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。"
+    },
+    {
+      "name": "native-ui",
+      "exit_code": 0,
+      "output": "Static UI check passed: 10 shared primitives, metrics/theme wiring, ViewModel UI session and movable form/home composition. No compilation, runtime or device validation."
+    },
+    {
+      "name": "integration",
+      "exit_code": 0,
+      "output": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation."
+    },
+    {
+      "name": "web",
+      "exit_code": 0,
+      "output": "Web只读检查：33份TS/TSX、150个本地引用、110份schema、15枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。"
+    },
+    {
+      "name": "derived",
+      "exit_code": 0,
+      "output": "Web合同派生：110份schema、214个消费者操作；只读检查\n{'states': 740, 'contract_gaps': 0, 'runtime_verified': 0}"
+    },
+    {
+      "name": "syntax_format_markers",
+      "exit_code": 0,
+      "output": "80份Kotlin／TS／TSX含Vite配置语法树通过；未类型检查、编译或运行。\nGo语法／格式读取： 59 份；未编译。\n暂存来源的BOM／冲突标记／高置信秘密模式检查通过，未输出凭据内容。"
+    }
+  ],
+  "not_executed": [
+    "Gradle",
+    "Go build/run/test",
+    "TypeScript typecheck/build",
+    "application tests/lint",
+    "app/server/browser/emulator startup",
+    "migration/deployment",
+    "Web application dependency installation"
+  ],
+  "known_external_requirements": [
+    "formal policy URLs",
+    "OAuth and SMS/email providers",
+    "age/guardian evidence and actual responsible staff",
+    "city/commercial eligibility",
+    "map embedding configuration",
+    "push and worker scheduling",
+    "multi-replica browser refresh coordination",
+    "full visual and device/runtime acceptance"
+  ],
+  "source_sha256": {
+    "docs/api/mobile-v2.openapi.json": "df9f8ef6ef999e155d5eac02b16aba65663c657a5521a5204af457f828478a1c",
+    "internal/mobile/content_directory_test.go": "c7edf19ee5de4e94a50ce847513693869d0a45efc536219707974ff17b56269c",
+    "internal/mobile/content_subscriptions.go": "5c76815459f3cd422df2161b898076bff894ec8f4c2639226b31edd40f267d03",
+    "internal/mobile/delivery.go": "9501a28120fcb2838daf8d837cf95efd79ffe3f36907edfdc69f888087bd7ede",
+    "internal/mobile/group_directory.go": "c094939c9e1f790b9c9e7cf1dcfb58f4270255339dee190b7507ff23365ec0f8",
+    "internal/mobile/inbox.go": "6a2af4ae50449f9fd7283492211b4b9d77a7f3544da7b2202158a0f630e11653",
+    "internal/mobile/inbox_position_test.go": "d3bb8e0030ef835892c301ccf19f4c78a9b94fcaa95cc2633fadc522f97c64b8",
+    "internal/mobile/models.go": "578095c8d6a92c8e924c2c3848839454271b26b01135a874bdeed7437f438c71",
+    "internal/mobile/nearby.go": "e157c7f377dd4df025db8f20cbab63a962afc6a44f1d7830496ee33fc5dddbde",
+    "internal/mobile/query.go": "3228a62013cfba5e1900699f16913a7db5852bcb908df070984338c73dc6f0a3",
+    "internal/mobile/rescue.go": "a89a863a9fd2790daa64cf5f2ca63f7d8630be1ec49f96192d4da87fb63da8f5",
+    "internal/mobile/service.go": "8e899d47ce7ca90187d24eaf24eb983cc33b240ca12c0119c25e2e66c9f81a32",
+    "internal/mobile/social.go": "71ea987a96726d455c13bbd62f05f3334ebabb61481d26f4843cea4a33e3a9be",
+    "internal/mobile/trust.go": "c18776005faf604d8223907ccceee87e56d3bd12dbc95a2e7f9597af13623063",
+    "internal/platform/api/router.go": "a44d5964bab6f02285cc97b1dd2565242146a93238e6df5c09d26dea04bf67ca",
+    "internal/platform/mobileapi/browser.go": "87ce33644efb312eef6188330b900a6d4fafc3661c96ba4b0c8593774a479729",
+    "internal/platform/mobileapi/browser_static.go": "0df58ebe0e272c74a7a8ec7b0f288103697812d53928a27cac1a8c254cd0ccab",
+    "internal/platform/mobileapi/browser_test.go": "1ea7f9ea0846f450ccf6a6bf50810c27eca835eb9463c95f65b68ad20d6c4d07",
+    "internal/platform/mobileapi/handler.go": "7811c953d0d97ff06cb531e3a86c58c0d417d8b8bfd7e890ef36a9b269f0d79d",
+    "internal/platform/mobileapi/jobs.go": "76b822a85b1d1975a70fc5d0bf17e15c913eff09c8976c8187f07e8bab81ba30",
+    "internal/platform/mobileapi/ops_auth.go": "1e0f2171f7183310cb2eabd4f1b5b421e2f83059d5c5d9146c0cb2cd68a96d17",
+    "internal/platform/mobileapi/public_web.go": "886156b8a6666502c545266a7734fd8e8446e542907e4910ce2d4b600cf8e679",
+    "internal/platform/mobileworker/runner.go": "43b2f6d0e38f2bccab2398785ed97b72fe382c1640a7510aca0cb41d66164f90",
+    "kmp/androidApp/build.gradle.kts": "0d7c48e2dcdc7d69a52df4f772899c137b2875e3b02b55a951a06600ebdf466c",
+    "kmp/androidApp/src/main/AndroidManifest.xml": "646c1ba54077c3082e41b319001b29bd5246bfd16b787f0148a4db96e003835c",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt": "148834e9a6115a9a5fa3ebb2c7d8be70197a327739ec201eca57f5c15f890b5a",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAuthDialog.kt": "93cb27817c1571777c9f732b0e3ce9b9522d76aa2b321081265ffc963c136c48",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidContentSubscriptions.kt": "6f42fe94fad3a050e120e42a14526c4800bf73ee4a3674b94adfa4ba2630b367",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDialog.kt": "8ba3a0097842b2b304a37f034188f79d9000637380b5eee2454b278783f22ebe",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidFeatureContent.kt": "daf0acac2c0b983146a0474b42b59e3827d2bae2ad149b0129294db8bfab0c34",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidInboxContent.kt": "4025f02aba6dbc2dad35480fa82c61eba670fefedd81741e74f89f9b21af989f",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMapContent.kt": "bccf7eca6fa55578aeb783ace4bf2bb001dc0f98c2c3ea9455b1900e25d53904",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMedia.kt": "a90ac24eb5f20cd36a0fb0e1e7aa8ed06d6e9481c79331639c89d32d55b745fe",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMediaGallery.kt": "dbc6d4a5a6695ceabe91706af7f5556d96fab168ebd41f0938b29436e84f915f",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt": "0d4f136ed8a7e689fb8ce05324621e41fd172cbfd1fad74f0b43fc56326467b1",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPageComponents.kt": "18b60cd876485e5b85194c3022713f3b4f05f7c411dd09df71f5de182358a25a",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidSocialFeatures.kt": "6856f1e266dbd7487076690418708d3fc04119a8b911c60104ca14cba6e34653",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileTheme.kt": "90230dafe51880b76b10aad2daef66898adbac14b6a1dc2958709d5fab1be22c",
+    "kmp/androidApp/src/main/res/values/strings.xml": "b973a02330c31d162204d7db3dcb1e1ee98407768dc055e67279c1a5fc7d547f",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt": "9151caf1c8071921cc20b58903c9c8cc81d24e7678c9a19ba04ef5f1f342d8fe",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt": "a9a7e15be4a41033605b26aa3d0ee663b8cf3489ea487d4d061ba707e5312c88",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": "411023c17f9c737b69bc4bda28c9677387ef59f9413cfaad2f12b124ce493758",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "d92e87df72f2796ceff9cc564fbb6625b2404c1381d8bfb90892cfec9c5cad01",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "f32fe0b0d05faf01ef444f2a2527f592c8dc48aafce489fe051a1fca3abbffd1",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt": "f9a0f9aeae25067a90fa0a2bb595e53ab8c3a79f883aa307acf490685718a540",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/WorkspaceApi.kt": "34df21e936cc5f75eae9a46596da7f1a36d5525c4cf0eaab16407100092436bf",
+    "scripts/check_android_feature_static.py": "f7f6d6394ef657f0c5185113b5645b53b19d09d53a15c38c8f2c3fe778e7ff75",
+    "scripts/check_server_shared_contract_static.py": "9f9ce5015d0169b140055e50b5510deba7b0c58ff353f63e96e1f5152c1563dc",
+    "scripts/check_web_client_static.py": "a474deac4a15c07d43fa64f868bf97d94f668add9c45aa55385277705d7e35a8",
+    "scripts/export_mobile_contract.py": "85d7e3b678cd7ead3f832ea40ab155f06e7034a1a3d3078b0b871fe61e4c7eb1",
+    "scripts/sync_figma_implementation_trace.py": "9bb4444dc6139fdfd7e9ef85824a2a4591cb88fc4a15ff2898c93dea6bb4d84a",
+    "scripts/sync_web_contract.py": "60a1d457ae910f66c5c779348459327d22638eefff627c0ed8aaecb7ce7b7297",
+    "web-client/index.html": "8e007ccd804fe662815cdd6a79081df8fadb6dc09a3cd53ca7caf9c6b2702517",
+    "web-client/package-lock.json": "a6938bfcfcc82b5d780db2bb2917b30ceece0cd9e2c3db27aadd0a4fd3c993a0",
+    "web-client/package.json": "42f0353588a9aecf45ac7a506c9b7bcc93937be55f6e3f49e5bf3392772576fe",
+    "web-client/public/assets/figma/manifest.json": "3d7d3435fccd6e5d65b3ccdd4f65e9c00fac121951d93737b935b35710ba21e4",
+    "web-client/src/App.tsx": "1de8a31d5322de5f9291303a0e54a9f734227cc99910766b4b009c46e09b14a9",
+    "web-client/src/components/Attachments.tsx": "051e3704907b5048b9da14952dd68547ea65f03305bc120e6babb6dc99b8acb9",
+    "web-client/src/components/ContentFields.tsx": "6452e8917909dbbd771b9d6f8aea937810b36cfe9f421e705dbb9cdb293c2f28",
+    "web-client/src/components/ContentSubscription.tsx": "e9069d008cba07d82e9f33e110122d4f633e459a03c491b8e6d9490c093e6ae9",
+    "web-client/src/components/DataSelector.tsx": "d111ac3bbb39a13ec52d8e1ab22920aad7a9f5b6ab4763b7efc5a15c5ac061a6",
+    "web-client/src/components/InboxReadAll.tsx": "c0ec63ff8edde4de4968fa5c8a1d18d9ecdd9cb3aabd9ea3999ca5324feebe51",
+    "web-client/src/components/MediaGallery.tsx": "1221c2773acee54475ac882649e78de33122397d9368f3825d4c967ad3347083",
+    "web-client/src/components/PurposeCheck.tsx": "35ebc38061202b5866652ddea8139d77cf3effdc4e3b26c0de651818a995e884",
+    "web-client/src/components/RetrySubmission.tsx": "50eaa73ef2285251903d17273132682d5f61e51f51cfb7adb4fe96ef6a943ed6",
+    "web-client/src/components/SchemaForm.tsx": "5b4545a1724c19ba74b97b580f06987ad488e0e3748389fe0fb21471b50e884c",
+    "web-client/src/components/ui.tsx": "2289c626183caf8b1dd4a3d9aac9a93bb38117f60564a4dd7437673093376133",
+    "web-client/src/core/api.ts": "a0d566cd10284b9c29ef7f847f91b1da9c7f8431a7b939588fd044ed498eba76",
+    "web-client/src/core/contract.ts": "da10870e7048385e78ab73c24e0014dfee4389de1ea006c8b4019bd653559147",
+    "web-client/src/core/drafts.ts": "0f5050b4a77d8ecb0a81958849a33e31a1e871fcbef3301c3672c77028ff33d4",
+    "web-client/src/core/pages.ts": "66eebd654484a4cac438151e6d90ca53decc0788091cc501d906a661c7571316",
+    "web-client/src/core/photos.ts": "557db1f4071c3164d547288c78e7b94d057164aacf12908719587fcbd11680d2",
+    "web-client/src/core/query.ts": "9cd358e3a9fa749af0693cf30d0ac61be859e01225370c03c647decdbd2ad82a",
+    "web-client/src/core/router.ts": "603426239ad37c9b22065bc0c1844e07a39837ce8e836a3d88d77613e107e9d9",
+    "web-client/src/core/routes.ts": "4fdb77c3d481b012856bfd8a5afc05e4b46e0ae7f7bdec81200fdec8154b6d8d",
+    "web-client/src/core/schemas.json": "3ef51949b6e4395a0747503a85601528697c731bf2e31ec41e5ecbf47cdf2691",
+    "web-client/src/core/session.ts": "3a3f4ac02d51bda2098bdca14981804aa2f4cb488b724bc94a7df0da318fd824",
+    "web-client/src/core/wire.ts": "c7d79e0fd73cb2a0af3e2af808474ba9eb01d93d82907c716c94e76259f19697",
+    "web-client/src/features/Account.tsx": "2167d1fe2cfceb6198b6b4f30a0f7e3391c125c76149002ab728767d2d2b3300",
+    "web-client/src/features/AuthDialog.tsx": "d77a57b2407d5f725ee142729a6128185261dcc018437bf817d0df04047c8ebe",
+    "web-client/src/features/ContentPage.tsx": "71b5d1c81c7ba00b88d0285a51521b4d83d8a093e9e31159e87ba68f2559a57d",
+    "web-client/src/features/MapPage.tsx": "4b4f447ba56550aa5a9ed2ab0e10f2bf325a29b7c8cf92943d173f76928d4323",
+    "web-client/src/features/Records.tsx": "58acdcc92c442569dadac02aa647d95240359f3549c176028b1b686fbc73daa5",
+    "web-client/src/features/Recovery.tsx": "bce916357c0f496c45076e49af954a09f556787088fd080f49db39c65fec0c6d",
+    "web-client/src/features/ResourcePage.tsx": "962e0996c9fcff1efcbeab2fedab3dbd91f601558e99fff9b040c04fe5fa2510",
+    "web-client/src/features/WorkflowEditor.tsx": "4bb0dbff713917cd3cb3b0aab34961e98a0a569e17cbbdd79cea84b98720e7ca",
+    "web-client/src/features/chat.tsx": "db2bc443b83605f45778a75486d153e4e9c51ef993e9c69830138e46635b05d0",
+    "web-client/src/features/workflows.ts": "1b4d7ac5a2a76e2595124beb2051127991d232e282558c5fc8582b9cfc5a707e",
+    "web-client/src/main.tsx": "55096f2a4779dd0ba1f40315c6d9a27b763de82732fcf0bb3502f4cea0623fe3",
+    "web-client/src/styles.css": "515b69500dee16387e61ff8364d037471c8b8cf405b75466805344dd3a43ab7f",
+    "web-client/src/vite-env.d.ts": "e8a4343c135635fa1ec59bb421d7a7c3efa5e8586eadfef6713cf1572427056b",
+    "web-client/vite.config.ts": "47ec61d16bc0c0b8f568781d5ce1b2d7e437fa9cc08d8b302be82e3bfdd2012a"
+  },
+  "contract_counts": {
+    "paths": 221,
+    "operations": 249,
+    "schemas": 108
+  }
+}
