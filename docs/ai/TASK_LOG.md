@@ -7,7 +7,7 @@
 - 收口：真实JPEG原图原样保留，修正文件后缀／尺寸；阅读type-路由保存、返回栈、宠物评论回执与回复目标恢复、禁止评论照片入口；过滤已清空的发布与缺失父评论。保留MVI基类和公共控件，修正MutableState重复包装、选择条窄屏换行。Compose／Makefile补迁移入口，Dockerfile补Web／worker打包源码。
 - 验证：10项只读脚本通过，44表／230路径／259操作／112schema、68源码配置／66DTO／39分派，Web35TS／166引用／114schema／224操作／18SVG；88语法树、12Go格式／语法读取、71源SHA与冲突／空白／高置信秘密扫描通过。新增5项Go回归只有源码，未执行。740状态仍仅归属追踪，runtime_verified=0。
 - 交付：[续审说明](../client/FIGMA_READING_PUBLICATIONS_2026_10_24.md)、[独立证据](../client/figma-reading-publications-evidence-2026-10-24.json)。首批92份源证据未覆盖写。未编译、类型检查、构建、测试、迁移、应用／浏览器／设备或调度运行，也未借CI绕过。
-- Git：本次fetch后HEAD da12eef相对origin/main领先4／落后0；正在保存收尾并正常推送，最终回执另补。执行标记暂保留到Git回执落定。
+- Git回执：源码已提交`4d0106c`（34文件），保留da12eef及先前合并历史。用户回复HTTPS“已验证”后，普通push、临时指定账号、加useHttpPath三次均退出128：无用户名／无密码。内置osxkeychain助手存在，无gh CLI或替代Git；未改持久配置、强推、提取或输出凭据。等待用户在已验证终端push最新main后核远端SHA，当前未推送。执行标记释放，无已确认后台任务。
 
 
 ## AI-20261024-GIT-COMMIT · 提交当前工作树源码与全量文档成果

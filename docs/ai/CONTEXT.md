@@ -4,7 +4,7 @@
 
 ## 当前目标与执行状态
 
-2026-10-24 Codex逐页续审收尾进行中：已核对Gemini的`da12eef`，保留MVI／公共控件及全部已保存源码；追加独立领养交流、阅读路由／宠物回执与回复目标恢复、真实JPEG资源元数据、空正文拒绝、已删除发布过滤及008／009与Web／worker打包入口修正。当前正在运行只读静态与语法／资源检查，未编译／测试／启动。用户已回复HTTPS“已验证”，本批完成后正常提交推送，实际回执待记录。详见[续审](../client/FIGMA_READING_PUBLICATIONS_2026_10_24.md)。
+2026-10-24 Codex逐页源码／静态收口已保存`4d0106c`，保留Gemini `da12eef`的MVI／公共控件和文档。独立阅读／隐私／设置、发布管理、独立领养交流、原请求／回复目标恢复、真实JPEG元数据、失效内容过滤和008／009与Web／worker交付接线已补；[续审](../client/FIGMA_READING_PUBLICATIONS_2026_10_24.md)／[71份源指纹](../client/figma-reading-publications-evidence-2026-10-24.json)。10只读脚本、88语法树、12Go格式／语法读取通过，未编译／类型检查／测试／迁移／启动；740状态仍非逐屏验收。**推送仍未完成**：用户回复HTTPS“已验证”后，普通push、临时指定账号、再加useHttpPath三次均退出128，当前进程始终取不到用户名或密码；内置osxkeychain助手存在，无gh CLI或替代Git，也未修改持久配置或读取密钥。须在用户已验证终端执行`git push origin main`后核对远端SHA。本批执行标记释放，无已确认后台任务；等待用户推送回执后继续远端核对。
 
 2026-10-24 当前工作树成果本地提交已完成（`AI-20261024-GIT-COMMIT`，Gemini），本会话执行标记已释放：
 - 按用户“提交”指令，在完成全部 6 项只读静态检查脚本（`check_mobile_static.py`、`check_kmp_client_static.py`、`check_android_ui_static.py`、`check_android_feature_static.py`、`check_android_finish_static.py`、`check_server_shared_contract_static.py`，涵盖 `44` 张表、`259` 个操作、`112` 个 Schema、`68` 份 Kotlin/Swift、`39` 个扩展页面、`66` 对 DTO）核对后，将当前工作树中的 KMP/Android MVI 基类与公共组件复用、独立阅读目录／宠物评论反应／我的发布全栈源码、产品／服务端／客户端全量文档更新及 AI 跟踪记录一并提交至本地 `main` 分支（未强推或改动 Git 凭据配置；未运行编译或测试）。
