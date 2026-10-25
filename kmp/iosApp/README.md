@@ -11,3 +11,5 @@
 - API、原生地图、官方授权AppID及Universal Link均从本次构建环境提供；Secret不进App。默认占位不产生真实授权。实际启用的Apple／Associated Domains能力在Archive时生成对应entitlements。
 
 本轮未生成Xcode工程、解析Pods、编译、签名或安装，也未伪造Podfile.lock。真实SDK解析／ABI、iPhone／iPad布局和运行仍待获准环境验证。地图与页面源码边界见[全端进展](../../docs/client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)。
+
+任务分享通过Swift宿主进入共享白名单解析，官方授权回调优先。`mnd` scheme只接受最小目标；HTTPS分享可选`MND_SHARE_ASSOCIATED_DOMAIN`，须与API主机相同、配置真实AASA与本人签名能力，默认空。各Scene只显示待查看提示，不自动覆盖输入。详见[2026-10-26续作](../../docs/client/FIGMA_FLOW_CONTINUATION_2026_10_26.md)。

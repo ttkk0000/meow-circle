@@ -245,13 +245,16 @@ func publicKind(k Kind) bool {
 }
 func queryKind(k Kind) bool {
 	switch k {
-	case Pets, Offers, Entries, Comments, PetComments, Reactions, Friendships, Cases, Claims, Leads, Subscriptions, Appointments, Adoptions, CareUpdates, Groups, GroupMessages, Conversations, Messages, Invitations, Notifications, Preferences, Expressions, Drafts, Media, Reviews, VisitFeedback:
+	case Pets, Offers, Entries, Comments, PetComments, Reactions, Friendships, Cases, Claims, Leads, Subscriptions, Appointments, Adoptions, CareUpdates, Groups, GroupMessages, Conversations, Messages, Invitations, Notifications, Preferences, Expressions, Drafts, Media, Reviews, VisitFeedback, SourceDeclarations:
 		return true
 	}
 	return false
 }
 
 func (s *Service) canRead(tx Tx, k Kind, r Record, actor int64) (bool, error) {
+	if k == SourceDeclarations {
+		return actor > 0 && r.OwnerID == actor && r.State == "active", nil
+	}
 	if actor != r.OwnerID && (publicKind(k) || k == Media) {
 		ok, e := s.publicProcessingAllowed(tx, r.OwnerID)
 		if e != nil || !ok {
@@ -348,6 +351,13 @@ func (s *Service) canRead(tx Tx, k Kind, r Record, actor int64) (bool, error) {
 		}
 		return s.canRead(tx, parent, p, actor)
 	}
+	if k == Leads {
+		_, e := s.leadContext(tx, r, actor)
+		if errors.Is(e, ErrNotFound) || errors.Is(e, ErrForbidden) {
+			return false, nil
+		}
+		return e == nil, e
+	}
 	if k == CareUpdates {
 		p, e := tx.Get(Adoptions, r.RefID)
 		if e != nil {
@@ -378,6 +388,12 @@ func (s *Service) canRead(tx Tx, k Kind, r Record, actor int64) (bool, error) {
 		}
 		c, e := Decode[Conversation](r)
 		if e != nil {
+			return false, e
+		}
+		if e = s.leadConversationContext(tx, r, c, actor, false); e != nil {
+			if errors.Is(e, ErrNotFound) || errors.Is(e, ErrForbidden) {
+				return false, nil
+			}
 			return false, e
 		}
 		b, e := blocked(tx, c.RequesterID, c.RecipientID)
@@ -547,6 +563,9 @@ func (s *Service) ListFiltered(ctx context.Context, actor int64, k Kind, after, 
 			return ErrUnauthorized
 		}
 		f := Filter{After: after, RefID: ref, Limit: 500}
+		if k == SourceDeclarations {
+			f.OwnerID = actor
+		}
 		var content ContentSubscriptions
 		if q.Following || q.Watched {
 			if actor <= 0 {

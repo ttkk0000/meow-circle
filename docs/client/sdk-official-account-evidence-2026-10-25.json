@@ -1,0 +1,89 @@
+{
+  "task": "AI-20261025-SDK-OFFICIAL-ACCOUNT-CODE",
+  "recorded_at": "2026-10-25T20:36:39+08:00",
+  "head": "eed8fcd",
+  "level": "source-and-static-only",
+  "registration": "paused-by-user; personal-subject; no-account-created",
+  "checks": {
+    "read_only_scripts": [
+      "check_provider_auth_static.py",
+      "check_delivery_static.py",
+      "check_remaining_code_static.py"
+    ],
+    "go_files_parsed_and_formatted": 6,
+    "kotlin_syntax_trees": 1,
+    "local_document_links": 67,
+    "go_regression_functions_source_only": 6,
+    "diff_and_conflict_scan": "passed"
+  },
+  "not_executed": [
+    "compilation",
+    "type-check",
+    "test",
+    "SDK-resolution",
+    "application-start",
+    "migration",
+    "CI",
+    "deployment",
+    "commit",
+    "push"
+  ],
+  "files": [
+    {
+      "path": "internal/platform/wechatofficial/config.go",
+      "sha256": "b601419f4021b08d67fec80a37a16c35ff75d9572926d1496aa26edd3de9c708"
+    },
+    {
+      "path": "internal/platform/wechatofficial/handler.go",
+      "sha256": "43eb447aa95d8f29b03b7289dc79980e33e33bb36432436ad4f80ce6ef1bfaaf"
+    },
+    {
+      "path": "internal/platform/wechatofficial/protocol.go",
+      "sha256": "39361684bd1a5732bc106d6e86d7657388cb080600f3d89b906809fc4eb108cc"
+    },
+    {
+      "path": "internal/platform/wechatofficial/handler_test.go",
+      "sha256": "47fef1717bc675c24498a757c7b08132aac0f7dbe61059581402d03d9b7bd6bd"
+    },
+    {
+      "path": "internal/platform/api/router.go",
+      "sha256": "da4312849812e0b7359232fcdef4043ed8b3b35191b701c8eac72fb62eb3627f"
+    },
+    {
+      "path": "internal/platform/envfile/secrets.go",
+      "sha256": "91b7373b8dda4208ed625b410dea2c3623006bc8acc8b60e7e433c14b7a4aa83"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidProviderAuth.kt",
+      "sha256": "10e301a5be1509f7f1425309e42abf009f637f566a20f220c6524cde885542e6"
+    },
+    {
+      "path": "scripts/check_provider_auth_static.py",
+      "sha256": "18af5a204094d87163344ea0a8d8b41f2b55e412aa79c3cc0ff2671a390277e3"
+    },
+    {
+      "path": "deploy/runtime.example.env",
+      "sha256": "20284e7bf662561ea04a9ae3403afebe1d3cb4495afb5c1101b22bbee0979756"
+    },
+    {
+      "path": "docs/server/environment.example",
+      "sha256": "664176241f3f233fd4bfb6043f12289c1a90ad8711e1096b17fb368fb01a20a1"
+    },
+    {
+      "path": "docs/client/SDK_OFFICIAL_ACCOUNT_CODE_2026_10_25.md",
+      "sha256": "4662a210be76bf5b7aaba075c72c27cac504f2c6f1c23e17e62e6c532f3e3c70"
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "dab17acbfe542b5303addbe4993074f4a41b44398d23f24fcb9122f74380f746"
+    },
+    {
+      "path": "docs/client/DELIVERY_GUIDE_2026_10_25.md",
+      "sha256": "f3534af9867f2f27aa19bd308bac4e290b8cd7c9b95b5f9b38cb9afa2d85439d"
+    },
+    {
+      "path": "docs/client/PLATFORM_REGISTRATION_2026_10_25.md",
+      "sha256": "3fed875d7a22fdc0296c5b7ca2b3df0ef1456f322e92b0927f5db1225162bad4"
+    }
+  ]
+}

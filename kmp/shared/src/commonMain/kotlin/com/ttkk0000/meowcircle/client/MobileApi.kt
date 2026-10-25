@@ -2,6 +2,7 @@ package com.ttkk0000.meowcircle.client
 
 import com.ttkk0000.meowcircle.createPlatformHttpClient
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.onUpload
 import io.ktor.client.request.*
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.MultiPartFormDataContent
@@ -46,6 +47,7 @@ fun Throwable.mobileMessage(): String = when (this) {
         "idempotency_conflict" -> "此请求编号对应的内容已改变，请核对原操作结果"
         "inbox_snapshot_expired" -> "本次未读范围已过期，请关闭确认后重新获取，新增消息仍会保留"
         "publication_declaration_required" -> "内容或照片已改变，请重新确认来源声明"
+        "known_ai_cannot_be_denied" -> "材料已有 AI 来源标识，不能声明为原创；请重新核对来源，原稿保留"
         "effective_contract_required", "contract_change_pending" -> "请先完成双方对同一版本条款的确认"
         "pet_placement_conflict" -> "这只宠物已有领养安排，请刷新查看当前进度；候补不会自动进入试养"
         "city_rule_unavailable", "city_action_unavailable" -> "当前城市或物种的业务规则暂未开放"
@@ -129,25 +131,35 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         } catch (_: Exception) { throw MobileStorageException() }
     }
 
-    private suspend fun response(path: String, method: HttpMethod, token: String?, body: Any?, query: Map<String, String>, extraHeaders: Map<String, String> = emptyMap()): HttpResponse =
+    private suspend fun response(path: String, method: HttpMethod, token: String?, body: Any?, query: Map<String, String>, extraHeaders: Map<String, String> = emptyMap(), progress: ((Long, Long?) -> Unit)? = null): HttpResponse = try {
         http.request("$root/api/v2/$path") {
             this.method = method
             header(HttpHeaders.Accept, ContentType.Application.Json)
             if (token != null) bearerAuth(token)
             extraHeaders.forEach { (name, value) -> header(name, value) }
+            if (progress != null) onUpload { sent, total -> progress(sent, total) }
             url { query.forEach { (key, value) -> parameters.append(key, value) } }
             if (body != null) {
                 contentType(if (body is MultiPartFormDataContent) body.contentType else ContentType.Application.Json)
                 setBody(body)
             }
         }
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: SerializationException) {
+        throw e
+    } catch (e: IllegalArgumentException) {
+        throw e
+    } catch (e: Exception) {
+        throw MobileConnectionException(e)
+    }
 
     private suspend fun checked(path: String, method: HttpMethod, body: Any?, query: Map<String, String>, authenticated: Boolean,
-        extraHeaders: Map<String, String> = emptyMap()): HttpResponse {
+        extraHeaders: Map<String, String> = emptyMap(), progress: ((Long, Long?) -> Unit)? = null): HttpResponse {
         val epoch = revision
         val original = if (authenticated) session else null
         var usedToken = original?.token
-        var result = response(path, method, original?.token, body, query, extraHeaders)
+        var result = response(path, method, original?.token, body, query, extraHeaders, progress)
         if (result.status.value == 401 && original != null) {
             result.bodyAsText() // release the first response before another request
             val fresh = sessionMutex.withLock {
@@ -166,7 +178,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
             }
             // A logout or account switch must not replay an old account's command.
             if (fresh.user.id != original.user.id) throw MobileApiException(401, "account changed")
-            result = response(path, method, fresh.token, body, query, extraHeaders)
+            result = response(path, method, fresh.token, body, query, extraHeaders, progress)
             usedToken = fresh.token
         }
         if (authenticated && original != null && session?.user?.id != original.user.id) {
@@ -466,6 +478,25 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun comment(id: Long, text: String, key: String): MobileRecord<CommentBody> = durablePost("entries/$id/comments", CommentInput(MessageBody(text), key), key)
     suspend fun react(id: Long, liked: Boolean): JsonElement = receiptWrite("entries/$id/reaction", ReactionInput(liked))
     suspend fun previewPublication(input: EntryInput): PublicationPreview = post("entries/preview", input)
+    suspend fun declareSource(input: SourceDeclarationInput): MobileRecord<SourceDeclarationBody> = durablePost("source_declarations",input,input.clientRequestId)
+    suspend fun prepareSourceDeclaration(input: SourceDeclarationInput): SourceDeclarationInput {
+        val owner = session?.user?.id ?: throw MobileApiException(401,"authentication required")
+        return sessionMutex.withLock {
+            if (session?.user?.id != owner) throw MobileApiException(401,"account changed")
+            require(input.rightsConfirmed && input.clientRequestId.length in 8..100)
+            val body = json.encodeToString(input)
+            val existing = vault.commands.firstOrNull { it.owner == owner && it.id == input.clientRequestId }
+            if (existing != null && (existing.path != "source_declarations" || existing.body != body)) throw MobileApiException(409,"request body changed","idempotency_conflict")
+            val unresolved = vault.commands.firstOrNull { it.owner == owner && it.path == "source_declarations" && logicalBody(it.body) == logicalBody(body) && it.phase !in listOf("committed","rejected") }
+            val selected = existing ?: unresolved ?: DurableCommand(owner,input.clientRequestId,"source_declarations",body)
+            if (existing == null && unresolved == null) {
+                if (vault.commands.count { it.phase !in listOf("committed","rejected") } >= 16) throw MobileApiException(409,"reconcile pending commands","pending_operations_limit")
+                persist(vault.copy(commands = vault.commands + selected))
+            }
+            json.decodeFromString<SourceDeclarationInput>(selected.body)
+        }
+    }
+    suspend fun sourceDeclaration(id: Long): MobileRecord<SourceDeclarationBody> = get("source_declarations/$id")
     suspend fun preparePublication(input: EntryInput): EntryInput {
         val owner = session?.user?.id ?: throw MobileApiException(401, "authentication required")
         return sessionMutex.withLock {
@@ -527,6 +558,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun confirmInboxReadAll(input: InboxReadAllInput): InboxReadAllResult =
         receiptWrite("inbox/read-all", input, input.clientRequestId)
     suspend fun notifications(cursor: Long = 0): MobilePage<NotificationBody> = get("notifications", mapOf("cursor" to "$cursor"))
+    suspend fun notification(id: Long): MobileRecord<NotificationBody> = get("notifications/$id")
     suspend fun readNotification(id: Long, version: Long): MobileRecord<NotificationBody> = receiptWrite("notifications/$id/read", StateInput(version))
     suspend fun expressions(): ExpressionCatalog = get("expression-catalog", authenticated = false)
     suspend fun drafts(cursor: Long = 0): MobilePage<DraftBody> = get("drafts", mapOf("cursor" to "$cursor"))
@@ -538,10 +570,10 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         return record
     }
 
-    suspend fun upload(photo: SelectedPhoto,key: String): MobileRecord<MediaBody> = uploadScoped(photo,key,null)
-    suspend fun uploadPrivate(photo: SelectedPhoto,key: String): MobileRecord<MediaBody> = uploadScoped(photo,key,null,"private")
-    suspend fun uploadSafetyEvidence(photo: SelectedPhoto,key: String,safetyToken: String): MobileRecord<MediaBody> = uploadScoped(photo,key,safetyToken)
-    private suspend fun uploadScoped(photo: SelectedPhoto, key: String, safetyToken: String?, mediaScope: String = "public"): MobileRecord<MediaBody> {
+    suspend fun upload(photo: SelectedPhoto,key: String, progress: ((Long, Long?) -> Unit)? = null): MobileRecord<MediaBody> = uploadScoped(photo,key,null,progress = progress)
+    suspend fun uploadPrivate(photo: SelectedPhoto,key: String, progress: ((Long, Long?) -> Unit)? = null): MobileRecord<MediaBody> = uploadScoped(photo,key,null,"private",progress)
+    suspend fun uploadSafetyEvidence(photo: SelectedPhoto,key: String,safetyToken: String, progress: ((Long, Long?) -> Unit)? = null): MobileRecord<MediaBody> = uploadScoped(photo,key,safetyToken,progress = progress)
+    private suspend fun uploadScoped(photo: SelectedPhoto, key: String, safetyToken: String?, mediaScope: String = "public", progress: ((Long, Long?) -> Unit)? = null): MobileRecord<MediaBody> {
         val account = session?.user?.id
         require(photo.mime in listOf("image/jpeg", "image/png") && photo.bytes.size in 1..10 * 1024 * 1024)
         val multipart = MultiPartFormDataContent(formData {
@@ -551,7 +583,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
                 append(HttpHeaders.ContentDisposition, "filename=\"${if (photo.mime == "image/png") "photo.png" else "photo.jpg"}\"")
             })
         })
-        val record = decode<MobileRecord<MediaBody>>(checked(if (safetyToken == null) "media" else "safety/media", HttpMethod.Post, multipart, emptyMap(), safetyToken == null, buildMap { put("Idempotency-Key",key); if (safetyToken != null) put("X-Safety-Token",safetyToken) }))
+        val record = decode<MobileRecord<MediaBody>>(checked(if (safetyToken == null) "media" else "safety/media", HttpMethod.Post, multipart, emptyMap(), safetyToken == null, buildMap { put("Idempotency-Key",key); if (safetyToken != null) put("X-Safety-Token",safetyToken) }, progress))
         if (safetyToken == null && account != session?.user?.id) throw MobileApiException(401, "account changed")
         return record
     }

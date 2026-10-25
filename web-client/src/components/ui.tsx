@@ -2,7 +2,8 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { api } from "../core/api";
 import { badge, integer } from "../core/wire";
 import { navigate } from "../core/router";
-import { useSession } from "../core/session";
+import { useSession, requestSignIn } from "../core/session";
+import { readStateCopy, type ReadFailure } from "../core/readState";
 
 const scrollMemory = new Map<string, number>();
 let scrollEpoch = -1;
@@ -73,15 +74,17 @@ export function Notice({
   children,
   error = false,
   warning = false,
+  success = false,
 }: {
   title: string;
   children?: ReactNode;
   error?: boolean;
   warning?: boolean;
+  success?: boolean;
 }) {
   return (
     <aside
-      className={`notice ${error ? "error" : warning ? "warning" : ""}`}
+      className={`notice ${error ? "error" : warning ? "warning" : success ? "success" : ""}`}
       role={error ? "alert" : "status"}
     >
       <strong>{title}</strong>
@@ -98,9 +101,72 @@ export function Empty({
 }) {
   return (
     <section className="empty">
-      <Icon name="paw-print" />
+      <span className="state-icon-slot">
+        <Icon name="state-paw-print" />
+      </span>
       <h2>{title}</h2>
       {children}
+    </section>
+  );
+}
+export function ReadFailureCard({
+  failure = "service",
+  error,
+  readAt,
+  onRetry,
+}: {
+  failure?: ReadFailure;
+  error: string;
+  readAt?: number;
+  onRetry?: () => void;
+}) {
+  const copy = readStateCopy[failure];
+  const unavailable = ["signin", "forbidden", "unavailable"].includes(failure);
+  return (
+    <section className="read-state stack" role="status" aria-live="polite">
+      <Empty title={copy.title}>
+        <p>{copy.detail}</p>
+      </Empty>
+      {readAt ? (
+        <p className="caption muted">
+          上次成功读取：{new Date(readAt).toLocaleString("zh-CN")}
+        </p>
+      ) : null}
+      <p className="caption muted">{error}</p>
+      {onRetry ? <Button onClick={onRetry}>重新读取</Button> : null}
+      {failure === "signin" ? (
+        <Button onClick={requestSignIn}>重新登录</Button>
+      ) : null}
+      {!unavailable ? (
+        <>
+          <Button kind="quiet" onClick={() => navigate("/recovery")}>
+            查看草稿与待核对操作
+          </Button>
+          <Button kind="primary" onClick={() => navigate("/")}>
+            回到社区
+          </Button>
+        </>
+      ) : null}
+      {unavailable ? (
+        <>
+          <RowLink
+            title="查看已有沟通"
+            detail="保留必要处理记录"
+            to="/messages"
+          />
+          <RowLink
+            title="报告问题或申请复核"
+            detail="区分内容撤回与处理结论"
+            to="/safety"
+          />
+          <Button kind="quiet" onClick={() => navigate("/pets")}>
+            找找其他领养信息
+          </Button>
+          <Button kind="primary" onClick={() => navigate("/")}>
+            回到社区
+          </Button>
+        </>
+      ) : null}
     </section>
   );
 }
@@ -142,15 +208,17 @@ export function TaskPage({
   children,
   actions,
   subtitle,
+  scrollScope = "task",
 }: {
   title: string;
   children: ReactNode;
   actions?: ReactNode;
   subtitle?: string;
+  scrollScope?: string;
 }) {
   const session = useSession();
   const scroller = useRef<HTMLDivElement>(null);
-  const scrollKey = `${session.user?.id ?? 0n}|${location.pathname}${location.search}`;
+  const scrollKey = `${session.user?.id ?? 0n}|${location.pathname}${location.search}|${scrollScope}`;
   useEffect(() => {
     if (scrollEpoch !== api.epoch) {
       scrollMemory.clear();
@@ -410,12 +478,16 @@ export function QueryState({
   children,
   onRetry,
   keepContent = false,
+  failure,
+  readAt,
 }: {
   loading: boolean;
   error?: string;
   children?: ReactNode;
   onRetry?: () => void;
   keepContent?: boolean;
+  failure?: ReadFailure;
+  readAt?: number;
 }) {
   return (
     <>
@@ -425,9 +497,12 @@ export function QueryState({
         </p>
       ) : null}
       {error ? (
-        <Notice title={error} error>
-          {onRetry ? <Button onClick={onRetry}>重试读取</Button> : null}
-        </Notice>
+        <ReadFailureCard
+          error={error}
+          failure={failure}
+          readAt={readAt}
+          onRetry={onRetry}
+        />
       ) : null}
       {!error || keepContent ? children : null}
     </>

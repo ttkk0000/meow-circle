@@ -265,12 +265,12 @@ func (t *mobileTx) SaveUser(u *domain.User) error {
 // Readiness is called at startup, never to silently substitute volatile storage.
 func (s *Store) CheckMobileSchema(ctx context.Context) error {
 	var ready bool
-	err := s.pool.QueryRow(ctx, "SELECT to_regclass('mobile_accounts') IS NOT NULL AND to_regclass('mobile_outbox') IS NOT NULL AND to_regclass('mobile_qualifications') IS NOT NULL AND to_regclass('mobile_operations') IS NOT NULL AND to_regclass('mobile_data_requests') IS NOT NULL AND to_regclass('mobile_pet_comments') IS NOT NULL AND to_regclass('mobile_comment_reactions') IS NOT NULL AND to_regclass('mnd_worker_checkpoints') IS NOT NULL").Scan(&ready)
+	err := s.pool.QueryRow(ctx, "SELECT to_regclass('mobile_accounts') IS NOT NULL AND to_regclass('mobile_outbox') IS NOT NULL AND to_regclass('mobile_qualifications') IS NOT NULL AND to_regclass('mobile_operations') IS NOT NULL AND to_regclass('mobile_data_requests') IS NOT NULL AND to_regclass('mobile_pet_comments') IS NOT NULL AND to_regclass('mobile_comment_reactions') IS NOT NULL AND to_regclass('mnd_worker_checkpoints') IS NOT NULL AND to_regclass('mobile_source_declarations') IS NOT NULL").Scan(&ready)
 	if err != nil {
 		return err
 	}
 	if !ready {
-		return fmt.Errorf("mobile schema missing: apply migrations through 012_worker_checkpoints.sql")
+		return fmt.Errorf("mobile schema missing: apply migrations through 013_source_declarations.sql (includes 012_worker_checkpoints.sql)")
 	}
 	return nil
 }

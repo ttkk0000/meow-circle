@@ -47,4 +47,29 @@ contains("internal/platform/mobileapi/browser.go","h.webProviderBody(w, r, path)
 contains("internal/platform/mobileapi/browser_provider.go",'credential["client"]',"h.webProviderID(\"wechat\")","h.takeLogin(w, response)", 'result["login"] = sanitized["data"]')
 contains("internal/platform/mobileauth/tencent_apps.go",'credential.Client != "web"','u.Path != "/app/provider-callback"',"previous.client.Secret != secret")
 contains("internal/identity/service.go",'Code: "identity_in_use"',"if actor > 0 && linked.OwnerID != actor",'if actor <= 0 || (r.OwnerID > 0 && r.OwnerID != actor)',"mobile.ConsumePurpose")
-print("官方授权静态边界：原生SDK固定来源、原挑战回跳、账号选择／用途验证／显式确认、取消竞态与HttpOnly会话适配；仅源码核对，未执行SDK／类型检查／测试。")
+# 公众号回调是独立的服务器协议，不得混用App登录或将消息作为账号关联证明。
+official = root / "internal/platform/wechatofficial"
+production = [file for file in official.glob("*.go") if not file.name.endswith("_test.go")]
+assert {p.name for p in production} == {"config.go", "handler.go", "protocol.go"}
+for file in production:
+    text = file.read_text()
+    assert '"kitty-circle/' not in text, (file, "公众号回调不能依赖身份／业务存储")
+    assert not re.search(r'\b(?:log|fmt)\.(?:Print|Fatal|Panic)', text), file
+config = contains("internal/platform/wechatofficial/config.go", 'const CallbackPath = "/integrations/wechat/official/callback"', 'if !config.Enabled', 'enabled == "1"')
+names = set(re.findall(r'os.Getenv\("(MND_WECHAT_OFFICIAL_[A-Z_]+)"\)', config))
+assert len(names) == 5
+runtime = (root / "deploy/runtime.example.env").read_text()
+environment = (root / "docs/server/environment.example").read_text()
+for name in names:
+    assert name + "=" in environment, name
+    assert name + "=" in runtime or name + "_FILE=" in runtime, name
+    for directory in [root / "web-client/src", root / "kmp"]:
+        for file in directory.rglob("*"):
+            if file.is_file() and file.suffix in {".kt", ".swift", ".ts", ".tsx"}:
+                assert name not in file.read_text(), (file, "公众号凭据不能进入客户端")
+assert 'MND_WECHAT_OFFICIAL_ENABLED=0' in runtime and 'MND_WECHAT_OFFICIAL_ENABLED=0' in environment
+contains("internal/platform/api/router.go", 'wechatofficial.FromEnvironment()', 'r.mux.Handle(wechatofficial.CallbackPath, r.officialAccount)')
+contains("internal/platform/envfile/secrets.go", 'Load("MND_WECHAT_OFFICIAL_TOKEN", "MND_WECHAT_OFFICIAL_ENCODING_AES_KEY")')
+contains("internal/platform/wechatofficial/handler.go", 'query.Get("encrypt_type") != "aes"', 'http.MaxBytesReader', 'now.Add(-5*time.Minute)', 'outer["ToUserName"] != h.config.OriginalID', 'message["ToUserName"] != h.config.OriginalID')
+contains("internal/platform/wechatofficial/protocol.go", 'subtle.ConstantTimeCompare', 'padding > 32', 'depth > 16', 'case xml.Directive:', 'data[end:], []byte(h.config.AppID)')
+print("官方授权静态边界：原生SDK固定来源、原挑战回跳、用途／显式确认、HttpOnly适配及独立公众号安全回调／默认关闭／服务端Secret接线；仅源码核对，未执行SDK／类型检查／测试。")

@@ -9,6 +9,7 @@ type PublicationDeclaration struct {
 	ManifestHash string `json:"manifest_hash"`
 	Origin       string `json:"origin"` // original, ai_generated, ai_modified, unknown
 	Confirmed    bool   `json:"confirmed"`
+	RecordID     int64  `json:"record_id,omitempty"`
 }
 type PublicationPreview struct {
 	ManifestHash         string `json:"manifest_hash"`
@@ -21,7 +22,13 @@ func (s *Service) publicationManifest(tx Tx, actor int64, in EntryInput) (Public
 	if !HasString([]string{"original", "ai_generated", "ai_modified", "unknown"}, in.Declaration.Origin) {
 		return PublicationPreview{}, Invalid("choose a content origin")
 	}
-	if e := s.publicAttachments(tx, actor, in.MediaIDs); e != nil {
+	var attachmentError error
+	if in.Entry.Audience.Mode == "private" {
+		attachmentError = s.attachments(tx, actor, in.MediaIDs)
+	} else {
+		attachmentError = s.publicAttachments(tx, actor, in.MediaIDs)
+	}
+	if e := attachmentError; e != nil {
 		return PublicationPreview{}, e
 	}
 	type part struct {

@@ -60,6 +60,8 @@ targets:
         MND_APNS_ENABLED: $(MND_APNS_ENABLED)
         LSApplicationQueriesSchemes: [weixin, weixinULAPI, mqq, mqqapi, mqqopensdkapiV2, mqqopensdkapiV3, tim]
         CFBundleURLTypes:
+          - CFBundleURLName: mnd-task
+            CFBundleURLSchemes: [mnd]
           - CFBundleURLName: wechat
             CFBundleURLSchemes: [$(MND_WECHAT_IOS_APP_ID)]
           - CFBundleURLName: qq

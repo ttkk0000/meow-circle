@@ -7,15 +7,36 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.ttkk0000.meowcircle.client.MobileStore
+import com.ttkk0000.meowcircle.client.SelectedPhoto
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+
+/** 预览仅在当前账号的内存中解码，不将照片字节复制到系统恢复状态。 */
+@Composable fun LocalPhotoPreview(key: String, owner: Long?, description: String, modifier: Modifier, read: suspend (String) -> SelectedPhoto?) {
+    val platform = LocalClientPlatform.current
+    val reader by rememberUpdatedState(read)
+    val preview by produceState<ImageBitmap?>(null, key, owner) {
+        try {
+            val photo = reader(key)
+            value = photo?.let { withContext(Dispatchers.Default) { platform.decodeImage(it.bytes) } }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: Exception) {
+            value = null
+        }
+    }
+    val bitmap = preview
+    if (bitmap != null) Image(bitmap, description, modifier.clip(MaterialTheme.shapes.medium), contentScale = ContentScale.Crop)
+    else Box(modifier.clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceVariant), contentAlignment = Alignment.Center) { Text("本机照片预览", style = MaterialTheme.typography.bodySmall) }
+}
 
 private sealed interface PhotoState {
     data object Loading : PhotoState

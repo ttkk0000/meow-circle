@@ -1,0 +1,466 @@
+{
+  "task": "AI-20261026-FIGMA-FLOW-CONTINUATION",
+  "date": "2026-10-26",
+  "captured_at": "2026-10-26T01:18:11+08:00",
+  "branch": "main",
+  "head": "eed8fcd750101eaf4ef81e1822195fd31dea6ebe",
+  "meaning": "本批相关完整文件快照，包含保留的既有在途修改；不是全项目完成、提交差异或运行验收证明。跟踪文件与本证据自身不纳入指纹，避免循环。",
+  "runtime_verified": false,
+  "design": {
+    "file_key": "3OFOC3vu18Kx9sRPjummOC",
+    "contexts": 10,
+    "screenshots_inspected": true,
+    "runtime_screenshots": false
+  },
+  "checks": [
+    {
+      "name": "check_mobile_static",
+      "exit_code": 0,
+      "result": "Static only: 45 feature tables, 278 operations, 126 schemas, 128/24 assets; no dangling references or BOM"
+    },
+    {
+      "name": "check_kmp_client_static",
+      "exit_code": 0,
+      "result": "Static source/configuration checks passed: 102 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution."
+    },
+    {
+      "name": "check_android_ui_static",
+      "exit_code": 0,
+      "result": "Static UI check passed: 10 shared primitives, metrics/theme wiring, ViewModel UI session and movable form/home composition. No compilation, runtime or device validation."
+    },
+    {
+      "name": "check_android_feature_static",
+      "exit_code": 0,
+      "result": "Android 源码静态核对：45 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。"
+    },
+    {
+      "name": "check_android_finish_static",
+      "exit_code": 0,
+      "result": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation."
+    },
+    {
+      "name": "check_server_shared_contract_static",
+      "exit_code": 0,
+      "result": "Static cross-language check: 77 DTO pairs match; private commands and recovery guards present. No type checking or tests executed."
+    },
+    {
+      "name": "check_web_client_static",
+      "exit_code": 0,
+      "result": "Web只读检查：63份TS/TSX、281个本地引用、128份schema、22枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。"
+    },
+    {
+      "name": "check_delivery_static",
+      "exit_code": 0,
+      "result": "交付静态核对：13服务／8独立worker、13迁移与账本、Secret文件加载、Android APK/AAB签名、iOS Archive/IPA/设备入口、Desktop及手动App CI；未构建／迁移／打包／安装／启动。"
+    },
+    {
+      "name": "check_guardian_invites_static",
+      "exit_code": 0,
+      "result": "监护流程静态核对：5份最小DTO、短时单次邀请／原编号恢复、独立关系核实、监护人范围授权／撤回、公共原生与Web专用页面、具名运营角色；未运行核验、类型检查或测试。"
+    },
+    {
+      "name": "check_age_assurance_static",
+      "exit_code": 0,
+      "result": "年龄核验静态核对：3份最小DTO、原编号账本／并发恢复、服务端可信结果／有效期／替换校验、原生与Web分状态和原任务返回；未运行网关、类型检查或测试。"
+    },
+    {
+      "name": "check_provider_auth_static",
+      "exit_code": 0,
+      "result": "官方授权静态边界：原生SDK固定来源、原挑战回跳、用途／显式确认、HttpOnly适配及独立公众号安全回调／默认关闭／服务端Secret接线；仅源码核对，未执行SDK／类型检查／测试。"
+    },
+    {
+      "name": "check_client_ui_static",
+      "exit_code": 0,
+      "result": "公共UI只读核对：36份公共源码、45个功能分派、3套平台端口、128枚Noto原图、22枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。"
+    },
+    {
+      "name": "check_figma_reading_static",
+      "exit_code": 0,
+      "result": "阅读／发布只读核对：10类材料、4向指南原图／几何、公共正文和下载合同、评论原键恢复／图片限制、本人筛选与全部顺序迁移入口一致；未执行类型检查、编译、测试、迁移或应用。"
+    },
+    {
+      "name": "check_operations_static",
+      "exit_code": 0,
+      "result": "运维静态核对：14类页面、13路径／15操作／25schemas、环境与角色／回执／版本守卫、010迁移、10枚24px原SVG；未编译、类型检查、测试或启动。"
+    },
+    {
+      "name": "check_remaining_code_static",
+      "exit_code": 0,
+      "result": "续作只读核对：8作业跨合同／部署一致、设备权限／撤回、会话加密回执、Desktop本机回跳、45表索引、私有存储及5份草案接线；未执行类型检查、编译、测试或应用。"
+    },
+    {
+      "name": "check_page_gap_static",
+      "exit_code": 0,
+      "result": "页面缺口只读核对：13份设计上下文／截图、状态分类与缓存时间、三端帮助页、通知编号／账号／交互锁、媒体进度／原编号／排序／保存与740条索引；未执行类型检查、编译、测试或应用。"
+    },
+    {
+      "name": "check_publication_flow_static",
+      "exit_code": 0,
+      "result": "声明／分享只读核对：10份设计上下文，独立追加记录／原回执／私密范围／跨语言DTO接线，三端公共预览与来源状态、双端链接解析及Swift回调优先；未编译／测试／迁移／运行。"
+    }
+  ],
+  "syntax": {
+    "clean_complete_files": 21,
+    "existing_large_file_grammar_limits": [
+      "MobileStore.kt",
+      "MobileApi.kt",
+      "MobileFeatureStore.kt"
+    ],
+    "clean_method_fragments": 23,
+    "go_format_syntax_files": 10,
+    "python_ast_files": 7,
+    "yaml_files": 2,
+    "json_core_files": 3,
+    "css_prettier_parse": true,
+    "meaning": "语法／格式读取不代表类型检查、编译或测试"
+  },
+  "regression_source": {
+    "go_functions": 4,
+    "kmp_functions": 4,
+    "executed": false
+  },
+  "contract": {
+    "paths": 247,
+    "operations": 278,
+    "server_schemas": 126,
+    "web_schemas": 128,
+    "shared_dto_pairs": 77,
+    "business_tables": 45,
+    "migrations": 13
+  },
+  "not_executed": [
+    "编译／Gradle／Go build-run-test／Xcode或Web构建",
+    "类型检查／测试／lint",
+    "App／服务／CI／迁移／打包／安装／签名／部署",
+    "平台注册／提交／推送"
+  ],
+  "deferred_by_user": [
+    "运维发布／重启执行器",
+    "完整搜索接收端"
+  ],
+  "files": [
+    {
+      "path": "docker-compose.yml",
+      "sha256": "30acd0d63051525638f1de269455aae9f8f2a75c8d3b9a832fc0f3bb8be93719",
+      "bytes": 2037
+    },
+    {
+      "path": "deploy/examples/ios.env.example",
+      "sha256": "7a7633ca961ecb41ccd43d31cdaeeace4f3cf93925aee2815cd6a760b01dd634",
+      "bytes": 797
+    },
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256": "72efb8481b97497b68131b30fd5a051aa3d02a185e0d26dea05b92241c316723",
+      "bytes": 921984
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "385476e1f20abeb91350d06d2d2835d6e4e90037705afc020069b05508248be7",
+      "bytes": 13613
+    },
+    {
+      "path": "docs/client/DELIVERY_GUIDE_2026_10_25.md",
+      "sha256": "fa1b1292a889abc14dc2a346fa683b4fd3a14243208718a561a91a6b9707c1e4",
+      "bytes": 13447
+    },
+    {
+      "path": "docs/client/FIGMA_FLOW_CONTINUATION_2026_10_26.md",
+      "sha256": "25c5365316ff925b3dbf7159162af7ebb074119968d28074adcdaccb5d5a31ff",
+      "bytes": 6097
+    },
+    {
+      "path": "docs/client/figma-implementation-trace-2026-10-24.json",
+      "sha256": "4b08e5aae04ed0281955b90d85bc57029a0b79af5f31741cd91b1f824d2f677b",
+      "bytes": 1079411
+    },
+    {
+      "path": "docs/server/SOURCE_DECLARATIONS_2026_10_26.md",
+      "sha256": "67e268d195687258710b16f392c6e1cbc5f9fa3acba184b4a6aa6476f19a0fff",
+      "bytes": 3868
+    },
+    {
+      "path": "internal/mobile/repository.go",
+      "sha256": "4f26dc09f2a3105c286a373ebc92ae7920f8d561f4378660cf2a10c9f4d55e6e",
+      "bytes": 5708
+    },
+    {
+      "path": "internal/mobile/publication.go",
+      "sha256": "ab87d3c2310f30c505115ed8e5d969f9cec7de127b38909d9558b265963071dd",
+      "bytes": 2267
+    },
+    {
+      "path": "internal/mobile/source_declarations.go",
+      "sha256": "d10727c4dfc671a826688a5646890f85cbf00ab8c4818cde4867b8469f406793",
+      "bytes": 2397
+    },
+    {
+      "path": "internal/mobile/source_declarations_test.go",
+      "sha256": "7eac00152133ed904f01b4388ba86c0ab8a8881711fe15b85e7f5e39d98391ab",
+      "bytes": 4446
+    },
+    {
+      "path": "internal/mobile/service.go",
+      "sha256": "1d92a0f6a9eccb1a3e5f50c28d9518d1299e72787fa59aabc4a1cbe46063bd98",
+      "bytes": 14483
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "sha256": "dab03bf2c82ee36b726c26ca522c98ef9329a17cb9414797324851ed57f972a6",
+      "bytes": 34324
+    },
+    {
+      "path": "internal/mobile/erasure.go",
+      "sha256": "ba7c3cca3f6c52241240cc7ef5b296a07f8038e683bae382e6ecbb115c018929",
+      "bytes": 8273
+    },
+    {
+      "path": "internal/mobile/data_requests.go",
+      "sha256": "6d6de9c2841167cecd2c269f6038eedc15550467af92faab9805ac9cfb6265cf",
+      "bytes": 18001
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256": "e11b0f34f4ff1d09a281441421afefcbaa33e0b0a279a889592bc00b5efaa398",
+      "bytes": 36117
+    },
+    {
+      "path": "internal/store/postgres/mobile.go",
+      "sha256": "2f6321a8503d5b243db0ffee47236900230bb0fd7f13d7764045abd7a445fb80",
+      "bytes": 9240
+    },
+    {
+      "path": "kmp/iosApp/README.md",
+      "sha256": "ba7bc1d4f604bbd8428d1d6b4d51ea4344ecce469e0405280073b0a49413e6cf",
+      "bytes": 1950
+    },
+    {
+      "path": "kmp/iosApp/project.yml",
+      "sha256": "aae485020240e4d2514269aa6b45c995509f822d505c0f9f295d86b1a36eff0b",
+      "bytes": 3781
+    },
+    {
+      "path": "kmp/iosApp/ComposeApp/MndComposeApp.swift",
+      "sha256": "b90b4552b95249d3f46d4ca7384fb30810252dce2bc02db2c07c166a5518da90",
+      "bytes": 2153
+    },
+    {
+      "path": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/MainViewController.kt",
+      "sha256": "bc3fda094f59575a5c151a575039cbff9f8fb01fa5bc309686d0a0b4fbe8a07b",
+      "bytes": 3796
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt",
+      "sha256": "407b901e0eb86bc4e42a2a30228f117eb3b1ed0b144393235654c385727b90c0",
+      "bytes": 8209
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/PolicyModels.kt",
+      "sha256": "e77339ec19a294073d706e40065dc2303d6fbaf99a6825418cee83558f69dc9d",
+      "bytes": 7824
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256": "42ad3727021150b9f0fd9e63d277e0e366fd4b725a3257dbe1b5c7bc7c3c6ed8",
+      "bytes": 42867
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "e4b7eed54c3b31a70caf9da93f332a58413c9ef5cb25846a31967f77c550495a",
+      "bytes": 97154
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "43cba87a8a159009bd92aa0d03674ca60f19598f864ab3eefa92afc8790814d5",
+      "bytes": 62838
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/LocalComposeDrafts.kt",
+      "sha256": "4548a333c7137f46f2864be410cb035d0d47b4cb3dd2abbb0154293baf125012",
+      "bytes": 5916
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/TaskLinks.kt",
+      "sha256": "09fa8768d9bdf21098b4dd7fdd6302c6533fc400292c39febb2c6df29c073183",
+      "bytes": 2623
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/TaskLinksTest.kt",
+      "sha256": "b6a6b53274356dd61ce2d2b70270b4631ec448dcd7fae81f3768dbefa2775618",
+      "bytes": 1785
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "sha256": "1493a8d889176b0ae78b171986b5af1864cda7a90e67b7dd5cee2c2dde688ea1",
+      "bytes": 10916
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "sha256": "bfc663f0042287a545fe18af4de14b8d1f4d19c62690185226b6e2b1ae0bba77",
+      "bytes": 7901
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "sha256": "da9c341df011ccb33b28c7dd552daa27d2644569b002a269110748435e969aa0",
+      "bytes": 59208
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
+      "sha256": "538454bce68655aed34cba00270f473fd46513d88802c42419d88f4074557b39",
+      "bytes": 30184
+    },
+    {
+      "path": "migrations/013_source_declarations.sql",
+      "sha256": "acfb587fd22d14ccf0016758683c6ff0b13dccff93c70920c68c5a54f0d0adef",
+      "bytes": 1196
+    },
+    {
+      "path": "scripts/mobile.py",
+      "sha256": "af2295e58ff9f4ffe70fa6e6f91c9bdf5f6e1f102d2a030a679474a808f91441",
+      "bytes": 12090
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256": "50eb6e114c6fa182c3cb92dd7fed559f26dd2c99799b781054778b4fecdf931b",
+      "bytes": 29402
+    },
+    {
+      "path": "scripts/sync_figma_implementation_trace.py",
+      "sha256": "3f9a136d98ec4ecfc95fcc18a8a1342a38b21d85f37d0a25d3a41969a09bb0c5",
+      "bytes": 13623
+    },
+    {
+      "path": "scripts/check_mobile_static.py",
+      "sha256": "5bf453576eec1dfde528a8bcc89d28c9829f00c98a6469401bffa7209c67f950",
+      "bytes": 3076
+    },
+    {
+      "path": "scripts/check_remaining_code_static.py",
+      "sha256": "e892159aae3538f0213ab2ba9550b0ad014de6fd87b3eba37e508c1d50765d34",
+      "bytes": 6576
+    },
+    {
+      "path": "scripts/check_server_shared_contract_static.py",
+      "sha256": "efd250cd90d5b18fc2f112bf4646efa00d13c2134215ef16268236572e96d837",
+      "bytes": 4795
+    },
+    {
+      "path": "scripts/check_publication_flow_static.py",
+      "sha256": "5cbcb83f6b264aad868523d0ed03cc7e17693bafde1ea6a076c55d37e8f8b699",
+      "bytes": 4335
+    },
+    {
+      "path": "web-client/src/core/api.ts",
+      "sha256": "f7c2ec30ee6edf526afce0aebe60a941bbe252654dcf5eaf508a80bffb1021d5",
+      "bytes": 10344
+    },
+    {
+      "path": "web-client/src/core/drafts.ts",
+      "sha256": "19b4dc9123d2139b010df06512257e95e9e8c905799cb7a6c804a1deabba1cc7",
+      "bytes": 8545
+    },
+    {
+      "path": "web-client/src/core/contract.ts",
+      "sha256": "caa92deb16e3904cbb0561a2ee26bcf67691859bdd3b8755ca48a6df884821d0",
+      "bytes": 20202
+    },
+    {
+      "path": "web-client/src/core/routes.ts",
+      "sha256": "4b4020d88fdf27a87b1865c11658011edce3f4e4d12ea54fb89ad5a2507d77f5",
+      "bytes": 13261
+    },
+    {
+      "path": "web-client/src/components/ui.tsx",
+      "sha256": "3f1b405bf551418790e6ff502659bcec02d34a67901c33dfcd497f0ca13befb1",
+      "bytes": 11893
+    },
+    {
+      "path": "web-client/src/components/DataSelector.tsx",
+      "sha256": "54eca77bfdbaaea19f7f525738d7ee255bcd51ed0f2b5e27f5860c2f9a6f8f0c",
+      "bytes": 4032
+    },
+    {
+      "path": "web-client/src/components/RetrySubmission.tsx",
+      "sha256": "9d530082579660bfed71c6dbc5bf63be689df4edb5d1a1a65f972d433d21096b",
+      "bytes": 4776
+    },
+    {
+      "path": "web-client/src/features/WorkflowEditor.tsx",
+      "sha256": "b5cab08791a973b4f5b72c4448ae1c72a03c2b1c33aa855f1642162ff6485bd8",
+      "bytes": 48888
+    },
+    {
+      "path": "web-client/src/features/PublicationPreview.tsx",
+      "sha256": "a134e50b3a9ed6efba4a19d21e35c6e86d5e05043c3f80627749098baf263352",
+      "bytes": 10475
+    },
+    {
+      "path": "web-client/src/features/Recovery.tsx",
+      "sha256": "7cc87fef0210bdf8cbfff73a78ee48c93b5f896be54ab14924f3902dab7a89cb",
+      "bytes": 10136
+    },
+    {
+      "path": "web-client/src/styles.css",
+      "sha256": "a26f27ca0ddb7d6cb44c49eec6f8c424e8d6606d92047dcf736f86a9ae658deb",
+      "bytes": 23050
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/56_34.json",
+      "sha256": "661d1b2dca37ce5d19e01a2c3b62510e04c959eaa1350ef11eb3d194660c3d14",
+      "bytes": 13963
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/632_357495.json",
+      "sha256": "a12a6a57c03262ca413e671cf42c876aca70f974877fa1cf6a6a0eb9b90d0787",
+      "bytes": 12744
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/632_357496.json",
+      "sha256": "272578068e8c945c24a15cf5ff5ace0cb6584bc8bc1f4b09681ef32355345b8b",
+      "bytes": 15684
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/632_357497.json",
+      "sha256": "723b933544a4ed13714f0ccf10263edfb8d7d427becf3438b0925bd22fde4977",
+      "bytes": 14925
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/632_357498.json",
+      "sha256": "25ffcd614431ef248015c754deb0a612f01f079da39942cb1eeeb4fe9dde717c",
+      "bytes": 11778
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/632_357499.json",
+      "sha256": "10f6195c0b5fcc00e33053031c7a2dec9ad3bd221247f8832e98ffb2b22a9f05",
+      "bytes": 14160
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/632_357500.json",
+      "sha256": "842ed132fb7d328c2a23a2fcdc534f3fb9d0572844c399a9a06cabfc7827553a",
+      "bytes": 11826
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/311_378836.json",
+      "sha256": "d19a57942cc7087083ab8e946ea2fefaa882e499d3f176451b45f326d0139b56",
+      "bytes": 26111
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/311_378838.json",
+      "sha256": "b8720090a7c7d0f17bedd0d73f3d99d1cc513dee9affb0fba7a37b9e73d08b99",
+      "bytes": 24314
+    },
+    {
+      "path": "docs/design/figma-study/publication-flow-2026-10-26/311_378839.json",
+      "sha256": "0c0621c9703662693eddd187040f837fe20c6489f0653a985e508f45410fe522",
+      "bytes": 29083
+    }
+  ],
+  "file_count": 63,
+  "final_non_execution_checks": {
+    "fingerprints": 63,
+    "encoding_and_conflict_files": 67,
+    "local_document_links": 18,
+    "git_diff_check": "passed",
+    "head": "eed8fcd"
+  }
+}

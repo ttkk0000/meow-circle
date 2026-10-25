@@ -1,0 +1,359 @@
+{
+  "task": "AI-20261025-FIGMA-PAGE-GAPS",
+  "recorded_at": "2026-10-25T22:37:35+08:00",
+  "head": "eed8fcd",
+  "level": "source-and-static-only",
+  "coverage": {
+    "state_index": 740,
+    "business_families": {
+      "auth": 105,
+      "adoption": 94,
+      "publishing-media": 20,
+      "verification-reports": 29,
+      "appointments": 29,
+      "circle-friends": 47,
+      "messages": 20,
+      "community": 24,
+      "offers-visits": 11,
+      "lost-found": 73,
+      "global-states": 4,
+      "safety-data": 58,
+      "pet-diary": 44,
+      "expressions": 91,
+      "groups": 35,
+      "rules": 9,
+      "nearby": 28,
+      "settings-notifications": 16,
+      "operator-reference": 3
+    },
+    "dedicated_source_states": 11,
+    "runtime_verified": 0,
+    "shared_ui_sources": 35,
+    "feature_page_dispatches": 45,
+    "primitive_components": 10,
+    "figma_original_svg_count": 22,
+    "figma_contexts_and_screenshots_inspected": 13
+  },
+  "verification": {
+    "read_only_scripts": {
+      "check_mobile_static": "passed",
+      "check_kmp_client_static": "passed",
+      "check_android_ui_static": "passed",
+      "check_android_feature_static": "passed",
+      "check_android_finish_static": "passed",
+      "check_server_shared_contract_static": "passed",
+      "check_web_client_static": "passed",
+      "check_delivery_static": "passed",
+      "check_guardian_invites_static": "passed",
+      "check_age_assurance_static": "passed",
+      "check_provider_auth_static": "passed",
+      "check_client_ui_static": "passed",
+      "check_figma_reading_static": "passed",
+      "check_operations_static": "passed",
+      "check_remaining_code_static": "passed",
+      "check_page_gap_static": "passed"
+    },
+    "worktree_syntax_trees_clean": {
+      "kotlin": 19,
+      "swift": 1,
+      "tsx": 17,
+      "ts": 7
+    },
+    "preexisting_large_file_parser_limits": 4,
+    "related_methods_parsed_independently": 20,
+    "typescript_format_parse_files": 24,
+    "kmp_regression_functions_source_only": 5,
+    "diff_and_conflict_scan": "passed"
+  },
+  "not_executed": [
+    "compilation",
+    "type_check",
+    "tests",
+    "SDK_resolution",
+    "application_or_server_start",
+    "CI",
+    "migration",
+    "deployment",
+    "packaging",
+    "commit",
+    "push"
+  ],
+  "unchanged_deferred_code": [
+    "operations_execution_adapters",
+    "full_search_receiver"
+  ],
+  "files": [
+    {
+      "path": "docs/client/FIGMA_PAGE_GAPS_2026_10_25.md",
+      "sha256": "a51258ac33bd9f895a79e13eb915301ab64f323096ed4fd0acf7b223c17c98ab"
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "caa821a061fd183044a19144ddaef8cfd66f69d944f6cb9d888bddfe1a65d489"
+    },
+    {
+      "path": "docs/client/figma-implementation-trace-2026-10-24.json",
+      "sha256": "fc948ce7040393abc5f1cd66986c974c1ef01b62e5be861386e3c20aa865fe49"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/106-1424.json",
+      "sha256": "98b3d8867ef6bfe9d8de3662dc1a8cec6eb6fe2b87de084218f87075090155f6"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/238-371770.json",
+      "sha256": "eb738a264d7db698492007544d8e201697a9f5b13cb515f4d80f4ee897dc38b5"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/240-368353.json",
+      "sha256": "e4799c745474a627e1f0d55981c6049656748f9fea1908c0c9af427fc6dda8d0"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/240-368361.json",
+      "sha256": "1270933c6515e7e1f682807e384d3839ec7d40e57603a85839bd1ad972ea2042"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/240-368362.json",
+      "sha256": "43fe9fd9c574f12d5e89344c7c498d101af93c5ef54dbc3d690c887bc3d799a9"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/240-368363.json",
+      "sha256": "e50505a04e420743e4fc5fef263070fd62049b40bc36c99d888a3f720fb218cb"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/311-380192.json",
+      "sha256": "4516407bfce1575e0404ead0a8ca692e6b4dbef19565bcc5cad37c8aea602bc7"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/311-380195.json",
+      "sha256": "162cb50201381e41fc227104db2cb37c3352d7cf22913070acae8518fe36165d"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/56-28.json",
+      "sha256": "fd713a3ba9e897bd28fff473fa36ad53a8e0b01bbadab3788ceaf4d51dc8ace5"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/56-81.json",
+      "sha256": "53eb9f2d8286b472c893722a6b04850ca6e2378daa91257cafa74df6ee0b32b1"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/56-82.json",
+      "sha256": "9cc69d80b2fb6d1850f67d7682631a0cd220ea938206ac92c65b6970727f2f8e"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/56-83.json",
+      "sha256": "d898bdc8c8bbd607fac9c82ce86e4d2565b6fca9771002555b9851b63e5ce33a"
+    },
+    {
+      "path": "docs/design/figma-study/page-gaps-2026-10-25/56-84.json",
+      "sha256": "c594a2dcc63398a33a648afe1c8dc8e3d1e30f582632634ea4e68c6a7784dda4"
+    },
+    {
+      "path": "kmp/androidApp/src/main/assets/figma/state-paw-print.svg",
+      "sha256": "1b80595172ed5cbb29934e4a3b20e79bffebb0aa38aea1b78ca3b79130ddcd2a"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt",
+      "sha256": "b9a8c39fb4bbf3c88c216d464a632d98eeb03a948caf8fcab2f9ac0b54e3443b"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidClientPlatform.kt",
+      "sha256": "b3acd5bb1581fb64cee898e5c1ef701e3d3c60b91c957f4b1c13e229a7ceefae"
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDevicePush.kt",
+      "sha256": "1f06d4df2a61c351d62757970967b9761e304ae708dae6514ceb5e388249fb00"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/state-paw-print.svg",
+      "sha256": "1b80595172ed5cbb29934e4a3b20e79bffebb0aa38aea1b78ca3b79130ddcd2a"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
+      "sha256": "24844330e86be8b014b65b317144194fe13d9c7abe2eacd70c7c5bb165f8e75e"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientPlatform.kt",
+      "sha256": "21c52da87f2321fe43ae985b07995d3347e14366e5055711e2346201454b9661"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientUiSession.kt",
+      "sha256": "0b3c723fe924489dd35e87a4fcf6ab9e01c41335330e820fb2657314cc6f4cca"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt",
+      "sha256": "37c0be3f602f7004f02c1b665c7fb6a3bd63a90f0aeb29542c3276132dd8eeaa"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "sha256": "5c379af6834bcd19d7407b30581f6be57b8a546db2c299cc5ff880183aadfe37"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "sha256": "bcbfeafc8f466886a9b60ce3336ab74b48ce30253bbdc150acf468edda26475e"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256": "3527c3e2fb7ce84385c503bfd7ef2a6e72f50dd63ebd91ec20f173c68d7edcf8"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LoadStates.kt",
+      "sha256": "7bb17d100b40b6096592815f3be5cb0a49e40a361c8ff290fc7ef01d83308346"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "sha256": "0e3ef6d5b9637e3d69444dce2c2ad704561a73d9a6e63a72a85baea94157e64d"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Photos.kt",
+      "sha256": "68b632adba711f187f4a959093654b8fb7ff8b83d059c80b228c09a5d763b20c"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "sha256": "00511d30bee2ba5ff2c4015f87182ac9a8f2005ccc5c859b59db50846d62b4b7"
+    },
+    {
+      "path": "kmp/iosApp/ComposeApp/NativeDevicePush.swift",
+      "sha256": "c1341b450dd1f7c12cd0d47feefced4be2a72b3efa32cd9c28195402488524b6"
+    },
+    {
+      "path": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosClientPlatform.kt",
+      "sha256": "13bd6f81bf5f8338fd8db2c454b32674a3c692887b79124261d5f267d758e46f"
+    },
+    {
+      "path": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/MainViewController.kt",
+      "sha256": "7c30441cae471acd157dfa49742144f2c99b594884bb5b8a4f7192421e04f1cd"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ClientReadState.kt",
+      "sha256": "b67e49b702e28027a74afa1439e50340e246e2973c666d9014e8b3f6c1ba0ea8"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256": "1a6734caa4f5e1d3bc67b89803ca737800b9bb3fbb8b0239532783c3d445da55"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "37a771884d999718005790903fe047fefca3b8ffafb2863004258db8f396f548"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "12a9dc6f82590cf7beecb6313bc399debdff469ad3bccf40df83955ada650ff2"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt",
+      "sha256": "0390f0a0602d447202dcf613b885929a1d7527dfa40c42efcef5d385276892ac"
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/ClientReadStateTest.kt",
+      "sha256": "e52fe731161b18ac765e712eb8c9bf521acb639c40b6dd5621b2a69cc0832129"
+    },
+    {
+      "path": "scripts/check_client_ui_static.py",
+      "sha256": "44df3e9108652df0ddd238d7d641ae7c79c1d6c67f44dc7306c3d2d5222d3516"
+    },
+    {
+      "path": "scripts/check_page_gap_static.py",
+      "sha256": "3880d8712e201deb8c213b1fd4366cba4180a7660594619b26033e152e1909f7"
+    },
+    {
+      "path": "scripts/sync_figma_implementation_trace.py",
+      "sha256": "eaf73aa9368cf74d0fca93826d27740cee8199325c310c89d8c4f5f5c54cf6ff"
+    },
+    {
+      "path": "web-client/public/assets/figma/manifest.json",
+      "sha256": "bca74641eb897f3b6837341530b2d90d730b2005c877df219e10c5c3f82e7af0"
+    },
+    {
+      "path": "web-client/public/assets/figma/state-paw-print.svg",
+      "sha256": "1b80595172ed5cbb29934e4a3b20e79bffebb0aa38aea1b78ca3b79130ddcd2a"
+    },
+    {
+      "path": "web-client/src/App.tsx",
+      "sha256": "ea68d1ed73600fa7bc6f840e387862c1bd8dc26ba4b879930c503b0952e493be"
+    },
+    {
+      "path": "web-client/src/components/Attachments.tsx",
+      "sha256": "fedf2d9b72a4d3bd346392b7e0b7f19cb6705c402ee89df7088006cec53474af"
+    },
+    {
+      "path": "web-client/src/components/ContentFields.tsx",
+      "sha256": "44c287426e1daf8bb219bcb84fb4b5e124a67127001c60e2a4ce5427b90d37c0"
+    },
+    {
+      "path": "web-client/src/components/DataSelector.tsx",
+      "sha256": "1dc1a9e01586d62495ca2ca8833c0b9dcb11f341e413a7462f96b700e6b2a8f9"
+    },
+    {
+      "path": "web-client/src/components/ui.tsx",
+      "sha256": "dd194b02a6010ed80ac0a6cbfb5136605f7ceabd72ac08e0739f90df0f7e2da1"
+    },
+    {
+      "path": "web-client/src/core/api.ts",
+      "sha256": "f03b05795eaa81513b07bfc4e9cb4429243cd6b23783d94358d7ff4f4edcddbd"
+    },
+    {
+      "path": "web-client/src/core/photos.ts",
+      "sha256": "8114831916de6734280ec443c4fd2460c82d73b61753a01d6c24d83f963905cb"
+    },
+    {
+      "path": "web-client/src/core/query.ts",
+      "sha256": "6f70bed3e57dca1cc5f94a75448f80689637b6cb02905db1f805108afaa59982"
+    },
+    {
+      "path": "web-client/src/core/readState.ts",
+      "sha256": "5dcb357df1db080c251c9c32c3c3bc63fdabb56647e6dabc720f6f533e6661d0"
+    },
+    {
+      "path": "web-client/src/core/session.ts",
+      "sha256": "89c341b61b94256fc5a3df27b370b6054d84b883b2c1d5204b9fd2b7b866a56b"
+    },
+    {
+      "path": "web-client/src/core/upload.ts",
+      "sha256": "fb429ca6c9dad1cd358418ba6fb269dabb6c2b37573ffc93316b0f6ed30af091"
+    },
+    {
+      "path": "web-client/src/features/ContentPage.tsx",
+      "sha256": "d3d986950e6643f7ddcc1f3b053d4461e169d0b04b251e196aa6876270bd257d"
+    },
+    {
+      "path": "web-client/src/features/MapPage.tsx",
+      "sha256": "272185fc0680d0bb38ec9e59674aa843eb323bc09f983a0d9844db5b45b575ad"
+    },
+    {
+      "path": "web-client/src/features/NotificationPage.tsx",
+      "sha256": "f3bf7cef89f754201b63e5d8c633ec83a0a16323f8916a0bb426f15b7ccc7c35"
+    },
+    {
+      "path": "web-client/src/features/PermissionPages.tsx",
+      "sha256": "ae2b297b54b50f973ae60289e213ced905471089f45ee9853014c84fcfcf0893"
+    },
+    {
+      "path": "web-client/src/features/Publications.tsx",
+      "sha256": "3a6050c97bc0ba1ba1a651542289087e2666d14eb98ff5c2f2204dbb23917aa4"
+    },
+    {
+      "path": "web-client/src/features/ReadingPages.tsx",
+      "sha256": "be7dae709e02628d21a607a5ec27236501f9dfd19197df92948fe70e581b4204"
+    },
+    {
+      "path": "web-client/src/features/Records.tsx",
+      "sha256": "c6ecf527095ab246b070937937b8ee79874ad37e19b39621f9c87ffb3309934a"
+    },
+    {
+      "path": "web-client/src/features/ResourcePage.tsx",
+      "sha256": "3fc3fa982d7b1ad2a0ac618485893327ba0ff19e43bde7a70872262236c59e04"
+    },
+    {
+      "path": "web-client/src/features/WorkflowEditor.tsx",
+      "sha256": "b6c77bf224a5eb4ed89c49f872fdc3ea49c539486fac12e36e22cf5f3adca8e5"
+    },
+    {
+      "path": "web-client/src/features/chat.tsx",
+      "sha256": "a14aae0231c0187fb6d42dbf4a8dce7a7d6e61c7977cfa6c3f3c1ca6dc827b7d"
+    },
+    {
+      "path": "web-client/src/styles.css",
+      "sha256": "8c2263b3a6a0a78c8fbef6b60bdda4be80bcc41ef6f48213bcf706e45eb69c64"
+    }
+  ]
+}

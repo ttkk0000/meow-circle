@@ -22,6 +22,7 @@ kinds = set(re.findall(r'\bKind\s*=\s*"([a-z_]+)"', kinds_source))
 tables = set(re.findall(r'CREATE TABLE IF NOT EXISTS mobile_([a-z_]+)', sql))
 tables |= set(re.findall(r'CREATE TABLE IF NOT EXISTS mobile_([a-z_]+)', (root / "migrations/009_pet_discussions.sql").read_text()))
 tables |= set(re.search(r"FOREACH module IN ARRAY ARRAY\[(.*?)\]",policy_sql,re.S).group(1).replace("'", "").split(","))
+tables |= set(re.findall(r'CREATE TABLE IF NOT EXISTS mobile_([a-z_]+)', (root / "migrations/013_source_declarations.sql").read_text()))
 assert kinds == tables, {"missing": kinds - tables, "extra": tables - kinds}
 assert sql.count("BEGIN;") == 1 and sql.count("COMMIT;") == 1
 for source in (root / "internal/mobile").glob("*.go"):

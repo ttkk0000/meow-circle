@@ -95,12 +95,25 @@ external_prefix = ('authProvider_', 'authCallback', 'adultProvider', 'adultPasse
 representatives = {'home': ['56:27', '311:23', '311:25', '311:26'], 'composePost': ['56:33', '311:378832'], 'post': ['56:32'], 'adopt': ['56:35'], 'messages': ['56:61', '311:379700'], 'mine': ['56:73'], 'login': ['56:70'], 'appointment': ['56:63', '311:379780'], 'lostList': ['56:54'], 'groupChat': ['106:1439'], 'legalCenter': ['632:357494'], 'following': ['106:1387'], 'groupDiscover': ['106:1436'], 'petOther': ['142:2913'], 'careGuide': ['106:1425', '311:199', '311:201', '311:202'], 'rules': ['460:17463'], 'ruleDetail': ['460:17468'], 'ruleHistory': ['460:17473'], 'ruleChange': ['632:357528'], 'ruleAppeal': ['460:17483'], 'serviceTerms': ['460:17458'], 'teenPrivacy': ['460:17408'], 'sellerNotice': ['632:357529'], 'settings': ['56:75'], 'privacy': ['56:76'], 'profileActions': ['106:1406'], 'dataInventory': ['460:17428'], 'sdkList': ['460:17453'], 'providerData': ['632:357526'], 'retention': ['632:357509'], 'myPublishes':['56:53'], 'adoptionComments':['142:3011','145:8407','220:335999']}
 representatives.update({'accountChoice':['460:17333'],'accountConflict':['460:17338'],'authProviderCancelled':['238:371728'],'authProviderUnavailable':['238:371727'],'authCallbackExpired':['238:371729'],'authProvider_wechat':['238:371731'],'authLinkExisting':['238:371737'],'authLinkConfirm':['238:371738'],'ageRange':['460:17378'],'adultNotice':['506:6819'],'adultProvider':['506:6824'],'adultPending':['506:6829']})
 representatives.update({'guardianInvite':['460:17383'],'guardianReview':['460:17388'],'guardianWaiting':['460:17393'],'guardianActive':['460:17398'],'guardianRevoked':['460:17403'],'guardianProtection':['632:357527']})
+# 2026-10-25本批实际回读截图与高保真上下文；仍不作为客户端运行验收。
+representatives.update({'offline':['56:81','311:380192','311:380195'],'noResults':['56:82'],
+ 'contentUnavailable':['56:83'],'permission':['56:84'],'homeEmpty':['56:28'],
+ 'notificationPermissionHelp':['240:368353'],'mediaChoose':['238:371770'],'mediaPermission':['106:1424'],
+ 'mediaUploading':['240:368361'],'mediaPartialFailure':['240:368362'],'mediaReorder':['240:368363']})
+representatives.update({'postPreview':['56:34','311:378836','311:378838','311:378839'],'aiChoice':['632:357495'],'aiReview':['632:357496'],'aiClearReview':['632:357497'],'aiChecking':['632:357498'],'aiResult':['632:357499'],'aiRestriction':['632:357500']})
+representatives.update({'lostLeadInbox':['142:2952'],'lostLeadEmpty':['142:2953'],'lostLeadDetail':['142:2954','311:379528','311:379531'],'lostLeadHelpful':['142:2955'],'lostLeadNotMatch':['142:2956'],'lostLeadChat':['142:2978','145:7246','220:341399']})
 rows = []
 for key in sorted(roots):
     group = family(key)
     a, w, route = entries[group]
     if key in ('lostMap','lostAreaMap'):
         a,w,route='MapPage.kt','features/MapPage.tsx','/map'
+    elif key in ('lostLeadInbox','lostLeadEmpty'):
+        a,w,route='LeadPages.kt','features/LeadPages.tsx','/leads?ref={caseId}'
+    elif key in ('lostLeadDetail','lostLeadHelpful','lostLeadNotMatch'):
+        a,w,route='LeadPages.kt','features/LeadPages.tsx','/leads/{id}' + ('?view=reviewed&version={version}' if key in ('lostLeadHelpful','lostLeadNotMatch') else '')
+    elif key == 'lostLeadChat':
+        a,w,route='ConsumerApp.kt','features/chat.tsx','/conversations/{id}'
     elif key in ('circlePhotoViewer','diaryPhotoViewer'):
         a,w='MediaGallery.kt','components/MediaGallery.tsx'
     elif key == 'following':
@@ -124,6 +137,16 @@ for key in sorted(roots):
         a,w,route='SocialPages.kt','features/ResourcePage.tsx','/users/{id}'
     elif group == 'settings-notifications':
         route='/notification-settings'
+    if key in ('offline','noResults','contentUnavailable'):
+        a,w='ReadStatePages.kt','components/ui.tsx'
+        route={'offline':'/','noResults':'/pets','contentUnavailable':'/pets/{id}'}[key]
+    elif key in ('permission','notificationPermissionHelp','mediaPermission'):
+        a,w='ReadStatePages.kt','features/PermissionPages.tsx'
+        route={'permission':'/location-help','notificationPermissionHelp':'/notification-help','mediaPermission':'/photo-help'}[key]
+    elif key in ('mediaChoose','mediaUploading','mediaPartialFailure','mediaReady','mediaRemoved','mediaReorder'):
+        a,w='PageComponents.kt','components/Attachments.tsx'
+    if key in ('postPreview','aiChoice','aiReview','aiClearReview','aiChecking','aiResult','aiRestriction'):
+        a,w,route='PublicationPages.kt','features/PublicationPreview.tsx','/publish'
     if group == 'auth' and (key.startswith(('authProvider','authCallback','authLink','accountChoice','linkExisting','linkConfirm'))):
         a,w='ProviderAuthPages.kt','features/ProviderSignIn.tsx'
     if key.startswith('adult') or key == 'ageRange':
@@ -140,6 +163,15 @@ for key in sorted(roots):
     elif key.startswith(external_prefix):
         status = 'external_configuration_and_runtime_required'
         note = '保留真实不可用／等待状态；不能以本地变量模拟供应商、核验或系统权限。'
+    if key in ('offline','noResults','contentUnavailable','permission','homeEmpty','notificationPermissionHelp','mediaPermission','mediaChoose','mediaUploading','mediaPartialFailure','mediaReorder'):
+        status = 'dedicated_state_source_not_runtime_verified'
+        note = '2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。'
+    if key in ('postPreview','aiChoice','aiReview','aiClearReview','aiChecking','aiResult','aiRestriction'):
+        status = 'dedicated_state_source_not_runtime_verified'
+        note = '2026-10-26回读手机7状态及发布预览Web／平板双向稿；独立声明追加记录、真实回执、原请求恢复、来源限制与最终发布分离，复用公共任务架构。13号迁移及各端运行／类型／视觉仍未验收。'
+    if key in ('lostLeadInbox','lostLeadEmpty','lostLeadDetail','lostLeadHelpful','lostLeadNotMatch','lostLeadChat'):
+        status = 'dedicated_state_source_not_runtime_verified'
+        note = '2026-10-26回读私密线索列表／空态／详情／两类结果、目击者聊天及可见输入条，详情核对Web与横平板；实际标记／独立上下文会话绑定服务端原请求、版本与当前求助权限，关闭后历史只读、移除撤回关联读取。未编译、类型检查、回归执行、设备或像素验收。'
     rows.append({'key':key,'name':names.get(key,key),'family':group,'design_roots':roots[key],
                  'root_sources':provenance[key],'android_source':android+a if a else None,
                  'web_source':'web-client/src/'+w if w else None,'web_module_route':route,

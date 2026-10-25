@@ -17,7 +17,7 @@ import com.ttkk0000.meowcircle.kmpapp.BuildConfig
 typealias PendingTaskLink = com.ttkk0000.meowcircle.clientui.PendingTaskLink
 
 class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: LocalWorkspaceDrafts, replies: LocalWorkspaceDrafts, private val saved: SavedStateHandle = SavedStateHandle()) : MobileMviViewModel<MobileHostState, MobileHostIntent, MobileHostEffect>(MobileHostState()) {
-    private val linkKinds = setOf("pets","entries","cases","offers","adoptions","appointments","claims","reviews","groups","conversations")
+    private val linkKinds = taskLinkKinds
     val store = MobileStore(api, ownsApi = false, localDrafts = drafts, localWorkspaces = workspaces, localReplies = replies)
     val uiSession = AndroidUiSessionState()
     private val queuedLink = MutableStateFlow<PendingTaskLink?>(null)
@@ -32,7 +32,7 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
         if (saved.get<Long>("routeOwner") == (api.user.value?.id ?: 0L) && route != null) restoreRoute(route)
         saved.get<String>("pendingTaskLink")?.split(':')?.takeIf { it.size == 3 }?.let { parts ->
             val owner = parts[2].toLongOrNull(); val id = parts[1].toLongOrNull()
-            if(owner != null && id != null && id > 0 && (owner == 0L || owner == (api.user.value?.id ?: 0L)) && parts[0] in linkKinds)
+            if(owner != null && id != null && id > 0 && id.toString() == parts[1] && (owner == 0L && parts[0] in publicTaskLinkKinds || owner > 0L && owner == api.user.value?.id) && parts[0] in linkKinds)
                 queuedLink.value = PendingTaskLink(parts[0],id,owner)
         }
         viewModelScope.launch {
@@ -78,26 +78,12 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
             if(feature.size == 4) store.features.open(FeatureRoute(FeaturePage.valueOf(feature[0]),feature[1].toLong(),feature[2],feature[3].toLong()))
         }
     }
-    private fun linkLocked(): Boolean = store.state.value.let { s -> store.features.state.value.let { f ->
-        s.restoring || s.busy || f.busy || s.auth.visible || s.confirmation != null || s.publicationConfirmation != null ||
-            f.confirmation != null || store.features.sensitive.state.value.stage != SensitiveStage.Idle
-    } }
+    private fun linkLocked(): Boolean = !store.canOpenNotification()
     /** Queue only an allowlisted object, never external credentials or a write action. */
     fun openLink(uri: Uri?): Boolean {
-        if(uri == null || uri.query != null || uri.fragment != null || uri.userInfo != null) return false
-        val parts = if(uri.scheme == "mnd") {
-            if(uri.port != -1 || uri.pathSegments.size != 1) return false
-            listOf(uri.host ?: return false,uri.pathSegments.single())
-        } else {
-            val configured = Uri.parse(BuildConfig.API_BASE_URL)
-            if(uri.scheme != "https" || configured.scheme != "https" || uri.host != configured.host || uri.port != configured.port || uri.pathSegments.size != 3 || uri.pathSegments.first() != "share") return false
-            uri.pathSegments.drop(1)
-        }
-        val kind = parts[0]; val id = parts[1].toLongOrNull() ?: return false
-        if(kind !in linkKinds || id <= 0 || id.toString() != parts[1]) return false
-        val public = kind in setOf("pets","entries","cases","offers")
-        if(uri.scheme == "https" && !public) return false
-        queuedLink.value = PendingTaskLink(kind,id,if(public) 0 else store.state.value.user?.id ?: 0)
+        val target = parseTaskLink(uri?.toString() ?: return false, BuildConfig.API_BASE_URL) ?: return false
+        val owner = if (target.isPublic) 0L else store.state.value.user?.id ?: return false
+        queuedLink.value = PendingTaskLink(target.kind,target.id,owner)
         savePendingLink()
         val editing = store.state.value.applying || store.state.value.tab == MobileTab.Publish || store.features.state.value.route != null
         if(!linkLocked() && !editing && store.state.value.destination == MobileDestination.Home) openPendingLink()

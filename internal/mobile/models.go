@@ -164,12 +164,17 @@ type Group struct {
 type GroupMessage struct{ RichContent }
 
 type Conversation struct {
-	RequesterID int64 `json:"requester_id"`
-	RecipientID int64 `json:"recipient_id"`
+	RequesterID int64  `json:"requester_id"`
+	RecipientID int64  `json:"recipient_id"`
+	ContextKind string `json:"context_kind,omitempty"`
+	ContextID   int64  `json:"context_id,omitempty"`
 }
 type Message struct{ RichContent }
 type Lead struct {
-	Text string `json:"text"`
+	Text       string     `json:"text"`
+	Assessment string     `json:"assessment,omitempty"`
+	ReviewedBy int64      `json:"reviewed_by,omitempty"`
+	ReviewedAt *time.Time `json:"reviewed_at,omitempty"`
 }
 
 type Invitation struct {

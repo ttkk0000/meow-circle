@@ -1,5 +1,6 @@
 import { encodeWire, parseWire } from "./wire";
 import { routeAllowed } from "./routes";
+import { uploadWithProgress } from "./upload";
 
 export interface User {
   id: bigint;
@@ -80,6 +81,8 @@ const messages: Record<string, string> = {
   idempotency_conflict: "原编号与原内容不一致，请核对原操作",
   version_conflict: "版本已变化，当前输入保留",
   publication_declaration_required: "请核对本次内容来源声明",
+  known_ai_cannot_be_denied:
+    "材料已有 AI 来源标识，不能声明为原创；请重新核对来源，原稿保留",
 };
 const publicPath = (path: string) =>
   /^reading(?:\/[a-z][a-z0-9-]{0,63}(?:\/download)?)?(?:\?|$)/.test(path) ||
@@ -219,6 +222,7 @@ class BrowserAPI {
       signal?: AbortSignal;
       blob?: boolean;
       owner?: bigint;
+      onUploadProgress?: (percent: number | undefined) => void;
     } = {},
     retry = true,
   ): Promise<T> {
@@ -246,22 +250,30 @@ class BrowserAPI {
     const multipart = options.body instanceof FormData;
     if (options.body !== undefined && !multipart)
       headers.set("Content-Type", "application/json");
-    const response = await fetch(
-      (isPublic ? "/api/v2/" : "/api/web/v2/") + path,
-      {
-        method,
-        headers,
-        credentials: "same-origin",
-        cache: "no-store",
-        signal: options.signal,
-        body:
-          options.body === undefined
-            ? undefined
-            : multipart
-              ? (options.body as FormData)
-              : encodeWire(options.body),
-      },
-    );
+    const url = (isPublic ? "/api/v2/" : "/api/web/v2/") + path;
+    const response =
+      multipart && options.onUploadProgress
+        ? await uploadWithProgress(
+            url,
+            method,
+            headers,
+            options.body as FormData,
+            options.onUploadProgress,
+            options.signal,
+          )
+        : await fetch(url, {
+            method,
+            headers,
+            credentials: "same-origin",
+            cache: "no-store",
+            signal: options.signal,
+            body:
+              options.body === undefined
+                ? undefined
+                : multipart
+                  ? (options.body as FormData)
+                  : encodeWire(options.body),
+          });
     if (epoch !== this.epoch)
       throw new DOMException("账号已变化", "AbortError");
     if (

@@ -88,7 +88,7 @@ func validDataInput(in DataRequestInput) error {
 		if in.Type == "matters_assistance" && v.ID > 0 && queryKind(v.Kind) {
 			continue
 		}
-		if v.ID <= 0 || !HasKind([]Kind{Entries, Comments, PetComments, Pets, Cases, Offers, Drafts, Media, Subscriptions}, v.Kind) {
+		if v.ID <= 0 || !HasKind([]Kind{Entries, Comments, PetComments, Pets, Cases, Offers, Drafts, SourceDeclarations, Media, Subscriptions}, v.Kind) {
 			return Invalid("invalid data selection")
 		}
 	}
@@ -153,7 +153,7 @@ func (s *Service) SubmitDataRequest(ctx context.Context, actor int64, in DataReq
 			}
 			d.Fields = []string{"bio", "avatar", "nickname"}
 			d.ExternalState = "pending_inventory"
-			for _, kind := range []Kind{Entries, Comments, PetComments, CommentReactions, Pets, Cases, Offers, Drafts, Media, Subscriptions, Qualifications, Guardians, Identities, Preferences, Expressions, PushDevices, Sessions, AuthChallenges} {
+			for _, kind := range []Kind{Entries, Comments, PetComments, CommentReactions, Pets, Cases, Offers, Drafts, SourceDeclarations, Media, Subscriptions, Qualifications, Guardians, Identities, Preferences, Expressions, PushDevices, Sessions, AuthChallenges} {
 				rows, e := allRecords(tx, kind, Filter{OwnerID: actor})
 				if e != nil {
 					return e

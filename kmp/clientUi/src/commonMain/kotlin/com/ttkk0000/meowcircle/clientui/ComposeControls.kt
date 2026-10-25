@@ -15,23 +15,6 @@ import com.ttkk0000.meowcircle.client.*
 val originChoices = listOf("original" to "原创／实拍","ai_generated" to "AI 生成","ai_modified" to "AI 修改","unknown" to "来源尚不确定")
 fun originLabel(v: String) = originChoices.firstOrNull { it.first == v }?.second ?: "未提供来源声明"
 
-@Composable fun PublicationDialog(store: MobileStore,s: MobileState) {
-    val input = s.publicationConfirmation ?: return
-    val scope = "transient:publication:${input.clientRequestId}"
-    var origin by rememberSessionUiState("origin", scope, input) { input.declaration.origin }
-    var confirmed by rememberSessionUiState("confirmed", scope, input) { false }
-    MobileAlertDialog(onDismissRequest = store::dismissPublication,title = { Text("核对内容与来源") },text = {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(input.entry.title.ifBlank { "当前发布内容" }); Text(input.entry.text)
-            Text("${input.mediaIds.size} 张照片 · ${audienceLabel(input.entry.audience.mode)}")
-            androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) { items(input.mediaIds.size) { index -> MobilePhoto(store,input.mediaIds[index],s.user?.id,"核对发布照片 ${index + 1}",Modifier.size(96.dp)) } }
-            originChoices.forEach { (id,label) -> CheckLine(label,origin == id,{ if(it) { origin = id; confirmed = false } },!s.busy) }
-            CheckLine("我已核对当前内容、照片、受众和来源声明",confirmed,{ confirmed = it },!s.busy)
-            Text("来源改变后会重新生成核对内容，须再次主动确认。已识别的 AI 内容不能声明为原创。",style = MaterialTheme.typography.labelSmall)
-        }
-    },confirmButton = { TextButton({ store.confirmPublication(origin,confirmed) },enabled = !s.busy && confirmed) { Text(if(origin == input.declaration.origin) "确认发布" else "更新来源后重新核对") } },dismissButton = { TextButton(store::dismissPublication,enabled = !s.busy) { Text("返回编辑") } })
-}
-
 @Composable fun ComposeAudience(store: MobileStore,s: MobileState) {
     val feature by store.features.state.collectAsState()
     Text("发布空间与可见范围",style = MaterialTheme.typography.titleMedium)
@@ -92,23 +75,7 @@ fun originLabel(v: String) = originChoices.firstOrNull { it.first == v }?.second
     },enabled = !s.busy && (editor.selection.max > 0)) { Text("删除上一颗表情／选区") }
 }
 fun openNotification(store: MobileStore,body: NotificationBody) {
-    if(body.targetId <= 0) { store.pickerFailed("通知对象已失效，请重新读取通知"); return }
-    val feature = when(body.targetKind) {
-        "appointments" -> FeatureRoute(FeaturePage.Appointment,body.targetId)
-        "invitations" -> FeatureRoute(FeaturePage.Invitations)
-        "claims" -> FeatureRoute(FeaturePage.Claim,body.targetId)
-        "offers" -> FeatureRoute(FeaturePage.Offer,body.targetId)
-        "reviews" -> FeatureRoute(FeaturePage.Review,body.targetId)
-        "guardians" -> FeatureRoute(FeaturePage.Guardians,body.targetId)
-        "friendships" -> FeatureRoute(FeaturePage.Friends)
-        else -> null
-    }
-    if(feature != null) store.features.open(feature) else when(body.targetKind) {
-        "entries" -> store.open(MobileDestination.Entry(body.targetId)); "pets" -> store.open(MobileDestination.Pet(body.targetId))
-        "adoptions" -> store.open(MobileDestination.Application(body.targetId)); "cases" -> store.open(MobileDestination.Case(body.targetId))
-        "conversations" -> store.open(MobileDestination.Chat(body.targetId)); "groups" -> store.open(MobileDestination.Chat(body.targetId,true))
-        else -> store.pickerFailed("此通知暂无可打开的有效对象，请在事项列表核对")
-    }
+    if (!store.openNotification(body)) store.pickerFailed("此通知暂无可打开的有效对象，请在事项列表核对")
 }
 
 @Composable fun ComposeEmojiPanel(store: MobileStore,s: MobileState,editor: TextFieldValue,onEdit: (TextFieldValue) -> Unit) {

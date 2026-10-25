@@ -221,6 +221,8 @@ export function ResourcePage({
     <QueryState
       loading={result.loading}
       error={result.error}
+      failure={result.failure}
+      readAt={result.readAt}
       onRetry={() => void reload(path)}
     >
       {result.data ? (
@@ -801,6 +803,8 @@ function Comments({
       <QueryState
         loading={page.loading}
         error={page.error}
+        failure={page.failure}
+        readAt={page.readAt}
         onRetry={page.retry}
         keepContent={!!page.rows.length && !page.denied}
       >
@@ -847,7 +851,12 @@ export function Member({ id }: { id: bigint }) {
   }
   return (
     <TaskPage title={result.data?.nickname || "宠友主页"}>
-      <QueryState loading={result.loading} error={result.error}>
+      <QueryState
+        loading={result.loading}
+        error={result.error}
+        failure={result.failure}
+        readAt={result.readAt}
+      >
         {result.data ? (
           <>
             <Card>

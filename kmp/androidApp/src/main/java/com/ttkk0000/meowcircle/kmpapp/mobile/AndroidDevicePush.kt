@@ -13,6 +13,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.ttkk0000.meowcircle.kmpapp.BuildConfig
 import com.ttkk0000.meowcircle.kmpapp.MainActivity
 import com.ttkk0000.meowcircle.kmpapp.R
+import com.ttkk0000.meowcircle.client.canonicalNotificationId
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 
@@ -59,12 +60,15 @@ internal class AndroidDevicePush(private val app: MndApplication) {
         } catch (_: Exception) { requesting = false; app.mobileApi.devicePush.channelFailed() }
     }
 
-    fun receive() {
-        // 不信任供应商正文／对象路由；点击只回到应用，原草稿不被覆盖。
+    fun receive(notificationId: String? = null) {
+        // 仅传递待核对的通知编号；正文与对象路由由当前账号重新向服务端读取。
         if (app.mobileApi.user.value == null || !manager.areNotificationsEnabled()) return
         manager.createNotificationChannel(NotificationChannel(CHANNEL, "M&D动态提醒", NotificationManager.IMPORTANCE_DEFAULT))
         val intent = Intent(app, MainActivity::class.java).setAction("com.ttkk0000.meowcircle.OPEN_INBOX")
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        notificationId?.let(::canonicalNotificationId)?.let {
+            intent.putExtra("mnd_notification_id", it.toString())
+        }
         val pending = PendingIntent.getActivity(app, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val notification = Notification.Builder(app, CHANNEL).setSmallIcon(R.drawable.ic_mnd_notification)
             .setContentTitle("M&D").setContentText("有新的动态，请打开应用查看")
@@ -77,5 +81,5 @@ internal class AndroidDevicePush(private val app: MndApplication) {
 
 class MndFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) { (application as MndApplication).devicePush.tokenChanged(token) }
-    override fun onMessageReceived(message: RemoteMessage) { (application as MndApplication).devicePush.receive() }
+    override fun onMessageReceived(message: RemoteMessage) { (application as MndApplication).devicePush.receive(message.data["notification_id"]) }
 }

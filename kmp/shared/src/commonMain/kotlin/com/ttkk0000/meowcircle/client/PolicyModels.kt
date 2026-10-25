@@ -40,7 +40,14 @@ data class OperationReceipt(@SerialName("client_request_id") val clientRequestId
     @SerialName("object_id") val objectId: Long, @SerialName("result_kind") val resultKind: String,
     @SerialName("result_id") val resultId: Long, @SerialName("result_version") val resultVersion: Long, val state: String)
 @Serializable
-data class PublicationDeclaration(@SerialName("manifest_hash") val manifestHash: String = "", val origin: String = "unknown", val confirmed: Boolean = false)
+data class PublicationDeclaration(@SerialName("manifest_hash") val manifestHash: String = "", val origin: String = "unknown", val confirmed: Boolean = false,
+    @SerialName("record_id") val recordId: Long = 0)
+@Serializable
+data class SourceDeclarationInput(@SerialName("client_request_id") val clientRequestId: String, val content: EntryInput,
+    @SerialName("rights_confirmed") val rightsConfirmed: Boolean, @SerialName("previous_id") val previousId: Long = 0)
+@Serializable
+data class SourceDeclarationBody(@SerialName("manifest_hash") val manifestHash: String, val origin: String,
+    @SerialName("previous_id") val previousId: Long = 0)
 @Serializable
 data class PublicationPreview(@SerialName("manifest_hash") val manifestHash: String, val origin: String,
     @SerialName("requires_confirmation") val requiresConfirmation: Boolean)

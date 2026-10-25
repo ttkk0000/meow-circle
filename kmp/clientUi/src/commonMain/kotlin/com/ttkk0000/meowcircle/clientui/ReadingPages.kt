@@ -17,6 +17,8 @@ private val dataReadingTypes=setOf("privacy","inventory","sdk","providers","rete
 fun featureTitle(s: FeatureState): String {
     val route=s.route ?: return ""
     return when(route.page) {
+        FeaturePage.LeadInbox -> if(s.leads.loaded && !s.leads.loading && !s.loading && s.leads.error == null && s.error == null && s.leads.items.isEmpty() && s.leads.next == 0L) "还没有新线索" else s.case?.data?.title?.let { "${it}的线索" } ?: "私密线索"
+        FeaturePage.Lead -> if(leadReviewMinimumVersion(route.kind)?.let { leadAssessmentRecorded(s.lead,s.case,it) } == true) "线索处理已记录" else route.page.title
         FeaturePage.Reading -> s.readingDocument?.title ?: if(route.kind=="care-first-cat") "养宠指南" else "阅读说明"
         FeaturePage.Rules -> when(route.kind) { "history" -> "规则历史与下载";"changes" -> "规则变更与退出";"appeal" -> "处理依据与人工申诉";else -> "平台规则中心" }
         FeaturePage.Guardians -> if(route.kind=="protection") "未成年人保护设置" else s.guardians.firstOrNull{it.id==route.id}?.let{guardian -> when {

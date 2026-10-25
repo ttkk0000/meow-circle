@@ -84,7 +84,12 @@ data class ClaimInput(@SerialName("pet_name") val petName: String, val evidence:
 data class VersionedAction(val version: Long, val note: String = "", @SerialName("media_ids") val mediaIds: List<Long> = emptyList(),
     @SerialName("client_request_id") val clientRequestId: String = "")
 @Serializable
-data class LeadBody(val text: String)
+data class LeadBody(val text: String, val assessment: String = "", @SerialName("reviewed_by") val reviewedBy: Long = 0,
+    @SerialName("reviewed_at") val reviewedAt: String? = null)
+@Serializable
+data class LeadAssessmentInput(val version: Long, @SerialName("client_request_id") val clientRequestId: String, val assessment: String)
+@Serializable
+data class LeadContactInput(val version: Long, @SerialName("client_request_id") val clientRequestId: String)
 @Serializable
 data class LeadInput(val text: String, @SerialName("media_ids") val mediaIds: List<Long> = emptyList())
 @Serializable

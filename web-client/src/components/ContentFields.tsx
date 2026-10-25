@@ -135,6 +135,8 @@ export function PetSelector({
       <QueryState
         loading={pets.loading}
         error={pets.error}
+        failure={pets.failure}
+        readAt={pets.readAt}
         onRetry={pets.retry}
         keepContent={!!pets.rows.length && !pets.denied}
       >
@@ -223,6 +225,8 @@ export function AudienceFields({
           <QueryState
             loading={friends.loading}
             error={friends.error}
+            failure={friends.failure}
+            readAt={friends.readAt}
             onRetry={friends.retry}
             keepContent={!!friends.rows.length && !friends.denied}
           >

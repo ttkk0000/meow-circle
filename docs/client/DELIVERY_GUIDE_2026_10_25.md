@@ -1,8 +1,12 @@
 # 部署、打包与安装运行入口（2026-10-25）
 
+2026-10-26增量：[独立来源声明](../server/SOURCE_DECLARATIONS_2026_10_26.md)新增13号顺序迁移与就绪检查；iOS可选分享Associated Domain见[续作交接](FIGMA_FLOW_CONTINUATION_2026_10_26.md)。源码接线已补，未执行构建、迁移或部署。
+
 任务 `AI-20261025-DELIVERY`。本批补齐配置和脚本，以下命令均为获准环境中的操作说明，**本轮没有执行构建、迁移、安装、启动或发布**。已有 AppID 占位符保留；真实域名、证书、供应商与运营资料由部署方提供。源码接线不能代替实际运行验收。
 
 用户后续要求先用占位配置，模板集中在 [deploy/examples](../../deploy/examples/README.md)。这是文本示例，不代表服务器或签名已配置；没有将该回复当作运行授权。
+
+公众号独立安全模式回调与各端SDK变量对照见[接入说明](SDK_OFFICIAL_ACCOUNT_CODE_2026_10_25.md)。默认关闭，Token／AESKey可用现有 `provider-secrets` 只读挂载；本批不注册／认证平台账号或启用真实回调。
 
 2026-10-25后续源码补齐：设备推送、Desktop官方回跳、S3端口、8个worker与011／012迁移见[续作交接](REMAINING_CODE_IMPLEMENTATION_2026_10_25.md)。原批次证据保持历史快照。
 

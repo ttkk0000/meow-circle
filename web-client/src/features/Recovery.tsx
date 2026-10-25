@@ -8,6 +8,7 @@ import {
   readDraft,
   saveDraft,
   type Draft,
+  draftCommandKey,
 } from "../core/drafts";
 import { useSession } from "../core/session";
 import { navigate, resourceRoute } from "../core/router";
@@ -119,9 +120,18 @@ function RecoveryCard({
     setMissing(false);
     setError("");
     try {
+      if (!draftCommandKey(draft))
+        throw new Error("原声明编号缺失，请保留快照核对，不会改用发布编号");
       const result = await api.request<Receipt>(
-        `operations/${draft.requestId}`,
+        `operations/${draftCommandKey(draft)}`,
       );
+      if (result.client_request_id !== draftCommandKey(draft))
+        throw new Error("原回执编号与快照不一致，请保留输入核对");
+      if (
+        draft.original?.path === "source_declarations" &&
+        result.result_kind !== "source_declarations"
+      )
+        throw new Error("回执不属于原来源声明，请保留快照核对");
       setReceipt(result);
     } catch (e) {
       if (e instanceof HttpError && e.status === 404) {
@@ -146,7 +156,7 @@ function RecoveryCard({
   const to = receipt && resourceRoute(receipt.result_kind, receipt.result_id);
   return (
     <Card title={draft.uncertain ? "原操作结果待核对" : "本机未提交草稿"}>
-      <p className="caption muted">原编号 {draft.requestId}</p>
+      <p className="caption muted">原编号 {draftCommandKey(draft)}</p>
       <p>
         照片 {draft.photos.length} 张 · 基准版本 {String(draft.baseVersion)}
       </p>
@@ -162,9 +172,15 @@ function RecoveryCard({
               {to ? (
                 <Button onClick={() => navigate(to)}>查看真实结果记录</Button>
               ) : null}
-              <Button onClick={() => void clear()} disabled={busy}>
-                回执已核对，清除此本机快照
-              </Button>
+              {draft.original?.path === "source_declarations" ? (
+                <Button onClick={() => navigate(draft.route)}>
+                  回到原稿继续核对声明，保留正文与照片
+                </Button>
+              ) : (
+                <Button onClick={() => void clear()} disabled={busy}>
+                  回执已核对，清除此本机快照
+                </Button>
+              )}
             </Notice>
           ) : null}
           {missing && draft.original ? (

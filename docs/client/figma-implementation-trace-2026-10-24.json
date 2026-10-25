@@ -1299,15 +1299,17 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "web_source": "web-client/src/features/PublicationPreview.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读手机7状态及发布预览Web／平板双向稿；独立声明追加记录、真实回执、原请求恢复、来源限制与最终发布分离，复用公共任务架构。13号迁移及各端运行／类型／视觉仍未验收。",
+      "remote_screenshots_inspected": [
+        "632:357498"
+      ],
       "runtime_verified": false
     },
     {
@@ -1328,15 +1330,17 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "web_source": "web-client/src/features/PublicationPreview.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读手机7状态及发布预览Web／平板双向稿；独立声明追加记录、真实回执、原请求恢复、来源限制与最终发布分离，复用公共任务架构。13号迁移及各端运行／类型／视觉仍未验收。",
+      "remote_screenshots_inspected": [
+        "632:357495"
+      ],
       "runtime_verified": false
     },
     {
@@ -1357,15 +1361,17 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "web_source": "web-client/src/features/PublicationPreview.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读手机7状态及发布预览Web／平板双向稿；独立声明追加记录、真实回执、原请求恢复、来源限制与最终发布分离，复用公共任务架构。13号迁移及各端运行／类型／视觉仍未验收。",
+      "remote_screenshots_inspected": [
+        "632:357497"
+      ],
       "runtime_verified": false
     },
     {
@@ -1386,15 +1392,17 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "web_source": "web-client/src/features/PublicationPreview.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读手机7状态及发布预览Web／平板双向稿；独立声明追加记录、真实回执、原请求恢复、来源限制与最终发布分离，复用公共任务架构。13号迁移及各端运行／类型／视觉仍未验收。",
+      "remote_screenshots_inspected": [
+        "632:357500"
+      ],
       "runtime_verified": false
     },
     {
@@ -1415,15 +1423,17 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "web_source": "web-client/src/features/PublicationPreview.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读手机7状态及发布预览Web／平板双向稿；独立声明追加记录、真实回执、原请求恢复、来源限制与最终发布分离，复用公共任务架构。13号迁移及各端运行／类型／视觉仍未验收。",
+      "remote_screenshots_inspected": [
+        "632:357499"
+      ],
       "runtime_verified": false
     },
     {
@@ -1444,15 +1454,17 @@
         "tabletP": "legal-design-2026-10-22-state.json",
         "tabletL": "legal-design-2026-10-22-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "web_source": "web-client/src/features/PublicationPreview.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读手机7状态及发布预览Web／平板双向稿；独立声明追加记录、真实回执、原请求恢复、来源限制与最终发布分离，复用公共任务架构。13号迁移及各端运行／类型／视觉仍未验收。",
+      "remote_screenshots_inspected": [
+        "632:357496"
+      ],
       "runtime_verified": false
     },
     {
@@ -6297,15 +6309,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "web_source": "web-client/src/components/ui.tsx",
-      "web_module_route": "/recovery",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "web_module_route": "/pets/{id}",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "56:83"
+      ],
       "runtime_verified": false
     },
     {
@@ -12579,9 +12593,11 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "56:28"
+      ],
       "runtime_verified": false
     },
     {
@@ -13331,15 +13347,19 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/cases",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "web_source": "web-client/src/features/chat.tsx",
+      "web_module_route": "/conversations/{id}",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读私密线索列表／空态／详情／两类结果、目击者聊天及可见输入条，详情核对Web与横平板；实际标记／独立上下文会话绑定服务端原请求、版本与当前求助权限，关闭后历史只读、移除撤回关联读取。未编译、类型检查、回归执行、设备或像素验收。",
+      "remote_screenshots_inspected": [
+        "142:2978",
+        "145:7246",
+        "220:341399"
+      ],
       "runtime_verified": false
     },
     {
@@ -13360,15 +13380,19 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/cases",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "web_source": "web-client/src/features/LeadPages.tsx",
+      "web_module_route": "/leads/{id}",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读私密线索列表／空态／详情／两类结果、目击者聊天及可见输入条，详情核对Web与横平板；实际标记／独立上下文会话绑定服务端原请求、版本与当前求助权限，关闭后历史只读、移除撤回关联读取。未编译、类型检查、回归执行、设备或像素验收。",
+      "remote_screenshots_inspected": [
+        "142:2954",
+        "311:379528",
+        "311:379531"
+      ],
       "runtime_verified": false
     },
     {
@@ -13389,15 +13413,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/cases",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "web_source": "web-client/src/features/LeadPages.tsx",
+      "web_module_route": "/leads?ref={caseId}",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读私密线索列表／空态／详情／两类结果、目击者聊天及可见输入条，详情核对Web与横平板；实际标记／独立上下文会话绑定服务端原请求、版本与当前求助权限，关闭后历史只读、移除撤回关联读取。未编译、类型检查、回归执行、设备或像素验收。",
+      "remote_screenshots_inspected": [
+        "142:2953"
+      ],
       "runtime_verified": false
     },
     {
@@ -13447,15 +13473,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/cases",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "web_source": "web-client/src/features/LeadPages.tsx",
+      "web_module_route": "/leads/{id}?view=reviewed&version={version}",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读私密线索列表／空态／详情／两类结果、目击者聊天及可见输入条，详情核对Web与横平板；实际标记／独立上下文会话绑定服务端原请求、版本与当前求助权限，关闭后历史只读、移除撤回关联读取。未编译、类型检查、回归执行、设备或像素验收。",
+      "remote_screenshots_inspected": [
+        "142:2955"
+      ],
       "runtime_verified": false
     },
     {
@@ -13476,15 +13504,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/cases",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "web_source": "web-client/src/features/LeadPages.tsx",
+      "web_module_route": "/leads?ref={caseId}",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读私密线索列表／空态／详情／两类结果、目击者聊天及可见输入条，详情核对Web与横平板；实际标记／独立上下文会话绑定服务端原请求、版本与当前求助权限，关闭后历史只读、移除撤回关联读取。未编译、类型检查、回归执行、设备或像素验收。",
+      "remote_screenshots_inspected": [
+        "142:2952"
+      ],
       "runtime_verified": false
     },
     {
@@ -13505,15 +13535,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
-      "web_module_route": "/cases",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "web_source": "web-client/src/features/LeadPages.tsx",
+      "web_module_route": "/leads/{id}?view=reviewed&version={version}",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读私密线索列表／空态／详情／两类结果、目击者聊天及可见输入条，详情核对Web与横平板；实际标记／独立上下文会话绑定服务端原请求、版本与当前求助权限，关闭后历史只读、移除撤回关联读取。未编译、类型检查、回归执行、设备或像素验收。",
+      "remote_screenshots_inspected": [
+        "142:2956"
+      ],
       "runtime_verified": false
     },
     {
@@ -14145,15 +14177,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "web_source": "web-client/src/components/Attachments.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "238:371770"
+      ],
       "runtime_verified": false
     },
     {
@@ -14207,15 +14241,17 @@
         "webN": "cross-platform-full-state.json",
         "tabletN": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "web_source": "web-client/src/components/Attachments.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "240:368362"
+      ],
       "runtime_verified": false
     },
     {
@@ -14236,15 +14272,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
-      "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "web_source": "web-client/src/features/PermissionPages.tsx",
+      "web_module_route": "/photo-help",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "106:1424"
+      ],
       "runtime_verified": false
     },
     {
@@ -14265,11 +14303,11 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "web_source": "web-client/src/components/Attachments.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
@@ -14294,11 +14332,11 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "web_source": "web-client/src/components/Attachments.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
@@ -14323,15 +14361,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "web_source": "web-client/src/components/Attachments.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "240:368363"
+      ],
       "runtime_verified": false
     },
     {
@@ -14352,15 +14392,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "web_source": "web-client/src/components/Attachments.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "240:368361"
+      ],
       "runtime_verified": false
     },
     {
@@ -15436,15 +15478,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "web_source": "web-client/src/components/ui.tsx",
-      "web_module_route": "/recovery",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "web_module_route": "/pets",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "56:82"
+      ],
       "runtime_verified": false
     },
     {
@@ -15697,15 +15741,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
-      "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "web_source": "web-client/src/features/PermissionPages.tsx",
+      "web_module_route": "/notification-help",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "external_configuration_and_runtime_required",
-      "note": "保留真实不可用／等待状态；不能以本地变量模拟供应商、核验或系统权限。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "240:368353"
+      ],
       "runtime_verified": false
     },
     {
@@ -15879,15 +15925,19 @@
         "webN": "cross-platform-full-state.json",
         "tabletN": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "web_source": "web-client/src/components/ui.tsx",
-      "web_module_route": "/recovery",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "web_module_route": "/",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "56:81",
+        "311:380192",
+        "311:380195"
+      ],
       "runtime_verified": false
     },
     {
@@ -16169,15 +16219,17 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
-      "web_source": "web-client/src/components/ui.tsx",
-      "web_module_route": "/recovery",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "web_source": "web-client/src/features/PermissionPages.tsx",
+      "web_module_route": "/location-help",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "remote_screenshots_inspected": [
+        "56:84"
+      ],
       "runtime_verified": false
     },
     {
@@ -17308,15 +17360,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "web_source": "web-client/src/features/PublicationPreview.tsx",
       "web_module_route": "/publish",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "2026-10-26回读手机7状态及发布预览Web／平板双向稿；独立声明追加记录、真实回执、原请求恢复、来源限制与最终发布分离，复用公共任务架构。13号迁移及各端运行／类型／视觉仍未验收。",
+      "remote_screenshots_inspected": [
+        "56:34",
+        "311:378836",
+        "311:378838",
+        "311:378839"
+      ],
       "runtime_verified": false
     },
     {

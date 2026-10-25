@@ -34,7 +34,10 @@ assert postgres.count('where, args := mobilePredicates(f)') == 2
 assert all(value in postgres for value in ['ANY($%d::text[])', 'ALL($%d::text[])', 'record_key LIKE', '012_worker_checkpoints.sql'])
 modules = set(re.findall(r'^\s*\w+\s+Kind = "([a-z_]+)"', read('internal/mobile/repository.go'), re.M))
 index_sql = read('migrations/011_mobile_query_indexes.sql')
-assert modules == set(re.findall(r"'([a-z_]+)'", index_sql.split('FOREACH module IN ARRAY ARRAY[', 1)[1].split('] LOOP', 1)[0]))
+assert modules - {"source_declarations"} == set(re.findall(r"'([a-z_]+)'", index_sql.split('FOREACH module IN ARRAY ARRAY[', 1)[1].split('] LOOP', 1)[0]))
+source_sql = read('migrations/013_source_declarations.sql')
+assert 'mobile_source_declarations(owner_id,id)' in source_sql and 'mobile_source_declarations(owner_id,state,id)' in source_sql
+assert 'mobile_source_declarations' in postgres and '013_source_declarations.sql' in postgres
 assert 'text_pattern_ops' in index_sql and 'media_ids' in index_sql and 'participants' in index_sql
 
 browser = read('internal/platform/mobileapi/browser.go')

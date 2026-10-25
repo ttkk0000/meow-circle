@@ -65,7 +65,8 @@ data class AdoptionBody(@SerialName("pet_id") val petId: Long, @SerialName("appl
     @SerialName("adoption_cycle") val adoptionCycle: Long = 0)
 
 @Serializable
-data class ConversationBody(@SerialName("requester_id") val requesterId: Long, @SerialName("recipient_id") val recipientId: Long)
+data class ConversationBody(@SerialName("requester_id") val requesterId: Long, @SerialName("recipient_id") val recipientId: Long,
+    @SerialName("context_kind") val contextKind: String = "", @SerialName("context_id") val contextId: Long = 0)
 
 @Serializable
 data class GroupBody(val name: String, val notice: String = "", val members: List<Long> = emptyList(), val muted: List<Long> = emptyList(),
@@ -156,4 +157,9 @@ internal data class DraftInput(val version: Long, val draft: DraftBody, val key:
 
 data class SelectedPhoto(val name: String, val mime: String, val bytes: ByteArray)
 data class PhotoAttachment(val key: String, val name: String, val mediaId: Long? = null,
-    val uploading: Boolean = false, val error: String? = null, val mime: String = "image/jpeg")
+    val uploading: Boolean = false, val error: String? = null, val mime: String = "image/jpeg", val uploadPercent: Int? = null)
+
+fun uploadPercentage(sent: Long, total: Long?): Int? = total?.takeIf { it > 0 }?.let {
+    (sent.coerceAtLeast(0).toDouble() / it * 100).toInt().coerceIn(0, 100)
+}
+fun PhotoAttachment.withProgress(sent: Long, total: Long?): PhotoAttachment = copy(uploadPercent = uploadPercentage(sent, total))

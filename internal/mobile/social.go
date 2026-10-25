@@ -301,6 +301,9 @@ func (s *Service) SaveEntry(ctx context.Context, actor, id int64, in EntryInput)
 			if !in.Declaration.Confirmed || preview.ManifestHash != in.Declaration.ManifestHash {
 				return Denied("publication_declaration_required")
 			}
+			if e = s.requireSourceRecord(tx, actor, in.Declaration); e != nil {
+				return e
+			}
 			in.Entry.ContentOrigin = in.Declaration.Origin
 			if in.Declaration.Origin == "ai_generated" || in.Declaration.Origin == "ai_modified" {
 				for _, mediaID := range in.MediaIDs {
@@ -978,7 +981,7 @@ func (s *Service) Conversation(ctx context.Context, actor int64, in Conversation
 			state = "accepted"
 		}
 		r = Record{OwnerID: actor, Participants: []int64{in.UserID}, Key: pair(actor, in.UserID), State: state}
-		if e = save(tx, Conversations, &r, Conversation{actor, in.UserID}, actor, "conversation.created"); e != nil {
+		if e = save(tx, Conversations, &r, Conversation{RequesterID: actor, RecipientID: in.UserID}, actor, "conversation.created"); e != nil {
 			return e
 		}
 		out = r
@@ -1011,11 +1014,17 @@ func (s *Service) ConversationAction(ctx context.Context, actor, id, version int
 		if c.RecipientID != actor || r.State != "pending" {
 			return ErrForbidden
 		}
+		if e = s.leadConversationContext(tx, r, c, actor, false); e != nil {
+			return e
+		}
 		if action != "accept" && action != "decline" {
 			return Invalid("invalid request action")
 		}
 		r.State = "declined"
 		if action == "accept" {
+			if e = s.leadConversationContext(tx, r, c, actor, true); e != nil {
+				return e
+			}
 			if e := s.directContact(tx, c.RequesterID, c.RecipientID); e != nil {
 				return e
 			}
@@ -1093,6 +1102,9 @@ func (s *Service) Message(ctx context.Context, actor, parentID int64, group bool
 		if !group {
 			c, e := Decode[Conversation](p)
 			if e != nil {
+				return e
+			}
+			if e = s.leadConversationContext(tx, p, c, actor, true); e != nil {
 				return e
 			}
 			if e := s.directContact(tx, c.RequesterID, c.RecipientID); e != nil {

@@ -11,12 +11,12 @@ enum class FeaturePage(val title: String) {
     Publications("我的发布"), EntryEdit("编辑动态"), Friends("好友与宠友圈"), Member("宠友资料"), ProfileEdit("编辑资料"), PetEdit("宠物档案"), PetDiary("独立图文日记"),
     Collaborators("协作与邀请"), Invitations("收到与发出的邀请"), GroupCreate("创建群聊"), Group("群聊管理"), GroupDirectory("发现宠友群"), GroupPreview("群简介与加入申请"), Content("关注与求助订阅"),
     Appointments("预约"), Appointment("预约详情"), AppointmentEdit("预约安排"),
-    CaseEdit("走失与拾获发布"), CaseWork("线索与认领"), Claim("私密认领材料"),
+    CaseEdit("走失与拾获发布"), CaseWork("线索与认领"), LeadInbox("私密线索"), Lead("核实这条线索"), Claim("私密认领材料"),
     AdoptionWork("领养照护与协议"), ContractEdit("协议提案"), ReturnEdit("安全接回安排"),
     Offers("有偿信息"), Offer("披露详情"), OfferEdit("编辑披露"),
-    SettingsHome("设置"), Settings("通知设置"), Nearby("附近提醒"), Map("互助地图"), Reviews("核实与举报"), Review("核实事项"),
+    SettingsHome("设置"), Settings("通知设置"), NotificationHelp("开启系统通知"), LocationHelp("不提供定位也可以"), Nearby("附近提醒"), Map("互助地图"), Reviews("核实与举报"), Review("核实事项"),
     Safety("安全与隐私求助"), DataRequests("资料与账号请求"), Security("账号安全"),
-    Recovery("待核对操作"), Expressions("表情与贴纸"), Rules("规则与权益"), Reading("阅读说明"), Age("年龄与使用范围"), Adult("成年资格核对"), Guardians("监护授权与管理")
+    Recovery("待核对操作"), PhotoHelp("照片选择说明"), Expressions("表情与贴纸"), Rules("规则与权益"), Reading("阅读说明"), Age("年龄与使用范围"), Adult("成年资格核对"), Guardians("监护授权与管理")
 }
 enum class CaseMaterial { Claims, Leads }
 
@@ -30,6 +30,7 @@ data class FeatureState(
     val readingCatalog: ReadingCatalog? = null,val readingDocument: ReadingDocument? = null,
     val route: FeatureRoute? = null, val forms: Map<FeatureRoute, FeatureForm> = emptyMap(),
     val loading: Boolean = false, val busy: Boolean = false, val error: String? = null, val notice: String? = null,
+    val readFailure: ClientReadFailure? = null,
     val conflict: Boolean = false, val confirmation: FeatureConfirmation? = null,
     val mapCases: PageState<CaseBody> = PageState(), val diary: PageState<EntryBody> = PageState(), val directory: PageState<GroupDirectoryBody> = PageState(), val groupPreview: MobileRecord<GroupDirectoryBody>? = null, val contentSubscriptions: MobileRecord<ContentSubscriptions>? = null,
     val friends: PageState<FriendBody> = PageState(), val invitations: PageState<InvitationBody> = PageState(),
@@ -38,7 +39,7 @@ data class FeatureState(
     val care: PageState<CareBody> = PageState(), val reviews: PageState<ReviewBody> = PageState(),
     val entry: MobileRecord<EntryBody>? = null, val member: PublicMember? = null, val profile: MobileProfile? = null, val pet: MobileRecord<PetBody>? = null,
     val group: MobileRecord<GroupBody>? = null, val appointment: MobileRecord<AppointmentBody>? = null,
-    val case: MobileRecord<CaseBody>? = null, val claim: MobileRecord<ClaimBody>? = null,
+    val case: MobileRecord<CaseBody>? = null, val lead: MobileRecord<LeadBody>? = null, val claim: MobileRecord<ClaimBody>? = null,
     val adoption: MobileRecord<AdoptionBody>? = null, val offer: MobileRecord<OfferBody>? = null,
     val review: MobileRecord<ReviewBody>? = null, val verifications: List<VerificationSummary> = emptyList(),
     val preference: MobileRecord<PreferenceBody>? = null, val subscription: MobileRecord<SubscriptionBody>? = null,
@@ -163,8 +164,8 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         if (mutable.value.busy) return
         mutable.value.route?.takeIf { it != route }?.let(history::add)
         revision++; loading?.cancel(); dismissConfirmation()
-        mutable.update { it.copy(route = route, loading = false, error = null, notice = null, conflict = false,
-            readingDocument = null,groupPreview = null, mapCases = PageState(), diary = PageState(), entry = null, member = null, pet = null, group = null, appointment = null, case = null, claim = null, adoption = null,
+        mutable.update { it.copy(route = route, loading = false, error = null, readFailure = null, notice = null, conflict = false,
+            readingDocument = null,groupPreview = null, mapCases = PageState(), diary = PageState(), entry = null, member = null, pet = null, group = null, appointment = null, case = null, lead = null, claim = null, adoption = null,
             offer = null, review = null, verifications = emptyList(), claims = PageState(), leads = PageState(), care = PageState(),
             unconfirmedResult = route in uncertainRoutes) }
         reload()
@@ -175,7 +176,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         if (mutable.value.busy) return true
         if (mutable.value.confirmation != null) { dismissConfirmation(); return true }
         val previous = history.removeLastOrNull()
-        revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, notice = null,readingDocument = null,groupPreview = null,mapCases = PageState(),diary = PageState(),entry = null,member = null,pet = null,group = null,appointment = null,case = null,claim = null,adoption = null,offer = null,review = null,unconfirmedResult = previous in uncertainRoutes) }
+        revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, readFailure = null, notice = null,readingDocument = null,groupPreview = null,mapCases = PageState(),diary = PageState(),entry = null,member = null,pet = null,group = null,appointment = null,case = null,claim = null,adoption = null,offer = null,review = null,unconfirmedResult = previous in uncertainRoutes) }
         if (previous != null) reload()
         return true
     }
@@ -287,7 +288,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         val currentRevision = ++revision
         val currentEpoch = epoch
         loading?.cancel()
-        mutable.update { it.copy(loading = true, error = null) }
+        mutable.update { it.copy(loading = true, error = null, readFailure = null) }
         loading = scope.launch {
             fun current() = revision == currentRevision && epoch == currentEpoch
             try {
@@ -334,6 +335,17 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                             loadFeaturePage(more, ::current, { it.leads }, { s, p -> s.copy(leads = p) }) { api.leads(route.id, it) }
                         }
                     }
+                    FeaturePage.LeadInbox -> {
+                        if (!more || mutable.value.case == null) {
+                            val p = api.case(route.id)
+                            if (current()) mutable.update { it.copy(case = p) }
+                        }
+                        loadFeaturePage(more,::current,{it.leads},{state,page->state.copy(leads=page)}) {api.leads(route.id,it)}
+                    }
+                    FeaturePage.Lead -> {
+                        val p = api.leadRecord(route.id); val c = api.case(p.referenceId)
+                        if(current()) { mutable.update {it.copy(lead=p,case=c)}; capture(p.version) }
+                    }
                     FeaturePage.Claim -> {
                         val p = api.claimRecord(route.id); val c = api.case(p.referenceId)
                         if (current()) { mutable.update { it.copy(claim = p, case = c) }; capture(p.version) }
@@ -377,33 +389,32 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                         val guardians=api.guardians();val eligibility=api.eligibility();val catalog=api.readingCatalog()
                         if(current())mutable.update{it.copy(guardians=guardians,eligibility=eligibility,readingCatalog=catalog)}
                     }
-                    FeaturePage.GroupCreate, FeaturePage.SettingsHome -> Unit
+                    FeaturePage.GroupCreate, FeaturePage.SettingsHome, FeaturePage.NotificationHelp, FeaturePage.LocationHelp, FeaturePage.PhotoHelp -> Unit
                 }
-            } catch (e: CancellationException) { throw e }
-            catch (e: Exception) {
-                if (current()) mutable.update { it.copy(error = e.mobileMessage(),
+            } catch (e: CancellationException) { throw e } catch (e: Exception) {
+                if (current()) mutable.update { it.copy(error = e.mobileMessage(), readFailure = e.readFailure(),
                     readingDocument = if (denied(e)) null else it.readingDocument,
                     readingCatalog = if (denied(e)) null else it.readingCatalog,
                     groupPreview = if (denied(e)) null else it.groupPreview,
                     contentSubscriptions = if (denied(e)) null else it.contentSubscriptions,
-                    diary = if (denied(e)) it.diary.failed(e.mobileMessage(), clear = true) else it.diary,
-                    mapCases = if (denied(e)) it.mapCases.failed(e.mobileMessage(), clear = true) else it.mapCases,
+                    diary = if (denied(e)) it.diary.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.diary,
+                    mapCases = if (denied(e)) it.mapCases.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.mapCases,
                     // 权限被撤销时立即清除受保护的数据。
                     entry = if (denied(e)) null else it.entry, pet = if (denied(e)) null else it.pet,
                     profile = if (denied(e)) null else it.profile, member = if (denied(e)) null else it.member,
-                    case = if (denied(e)) null else it.case, appointment = if (denied(e)) null else it.appointment,
+                    case = if (denied(e)) null else it.case, lead = if (denied(e)) null else it.lead, appointment = if (denied(e)) null else it.appointment,
                     offer = if (denied(e)) null else it.offer, review = if (denied(e)) null else it.review,
                     verifications = if (denied(e)) emptyList() else it.verifications,
                     claim = if (denied(e)) null else it.claim, group = if (denied(e)) null else it.group,
                     adoption = if (denied(e)) null else it.adoption,
-                    friends = if (denied(e)) it.friends.failed(e.mobileMessage(), clear = true) else it.friends,
-                    invitations = if (denied(e)) it.invitations.failed(e.mobileMessage(), clear = true) else it.invitations,
-                    appointments = if (denied(e)) it.appointments.failed(e.mobileMessage(), clear = true) else it.appointments,
-                    offers = if (denied(e)) it.offers.failed(e.mobileMessage(), clear = true) else it.offers,
-                    reviews = if (denied(e)) it.reviews.failed(e.mobileMessage(), clear = true) else it.reviews,
-                    claims = if (denied(e)) it.claims.failed(e.mobileMessage(), clear = true) else it.claims,
-                    leads = if (denied(e)) it.leads.failed(e.mobileMessage(), clear = true) else it.leads,
-                    care = if (denied(e)) it.care.failed(e.mobileMessage(), clear = true) else it.care) }
+                    friends = if (denied(e)) it.friends.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.friends,
+                    invitations = if (denied(e)) it.invitations.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.invitations,
+                    appointments = if (denied(e)) it.appointments.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.appointments,
+                    offers = if (denied(e)) it.offers.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.offers,
+                    reviews = if (denied(e)) it.reviews.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.reviews,
+                    claims = if (denied(e)) it.claims.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.claims,
+                    leads = if (denied(e)) it.leads.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.leads,
+                    care = if (denied(e)) it.care.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.care) }
             } finally { if (current()) mutable.update { it.copy(loading = false) } }
         }
     }
@@ -420,7 +431,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             if (current()) mutable.update { put(it, old.completed(result, more)) }
         } catch (e: CancellationException) { throw e }
         catch (e: Exception) {
-            if (current()) mutable.update { put(it, get(it).failed(e.mobileMessage(), denied(e))) }
+            if (current()) mutable.update { put(it, get(it).failed(e.mobileMessage(), denied(e), e.readFailure())) }
             if (denied(e)) throw e
         }
     }
@@ -542,7 +553,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         catch (e: Exception) {
             // 此时尚未发出写请求；读取失败不能被操作恢复机制误记为提交结果未知。
             if (epoch == originalEpoch && denied(e)) mutable.update { it.copy(
-                peopleChoices = it.peopleChoices.failed(e.mobileMessage(), clear = true), people = emptyMap(),
+                peopleChoices = it.peopleChoices.failed(e.mobileMessage(), clear = true, failure = e.readFailure()), people = emptyMap(),
                 peopleUnavailable = it.peopleUnavailable + wanted, peopleErrors = emptySet()) }
             if (e is MobileApiException && e.status in listOf(401, 422)) throw e
             throw MobileApiException(422, "暂时无法核对所选人员，请重试；原选择与可见范围已保留")
@@ -618,7 +629,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     }
     fun loadDataChoices(kind: String, assistance: Boolean, more: Boolean = false) {
         val account = owner ?: return
-        require(kind in listOf("entries", "entry_comments", "pet_comments", "pets", "media", "cases", "offers", "drafts", "subscriptions") ||
+        require(kind in listOf("entries", "entry_comments", "pet_comments", "pets", "media", "cases", "offers", "drafts", "source_declarations", "subscriptions") ||
             assistance && kind in listOf("adoptions", "appointments", "reviews"))
         val same = mutable.value.dataChoiceKind == kind && mutable.value.dataChoiceAssistance == assistance
         if (same && (mutable.value.dataChoiceLoading || more && !mutable.value.dataChoices.canLoadMore)) return
@@ -638,8 +649,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     if (!assistance) put("owner_id", account.toString())
                 })
                 if (current()) mutable.update { it.copy(dataChoices = old.completed(result, append)) }
-            } catch (e: CancellationException) { throw e }
-            catch (e: Exception) {
+            } catch (e: CancellationException) { throw e } catch (e: Exception) {
                 if (current()) mutable.update { it.copy(dataChoiceError = e.mobileMessage(),
                     dataChoices = it.dataChoices.failed(e.mobileMessage(), denied(e))) }
             } finally {
@@ -730,19 +740,27 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         fun update(change: (PhotoAttachment) -> PhotoAttachment) {
             if (epoch == originalEpoch) mutable.update { it.copy(photos = it.photos + (route to it.photos[route].orEmpty().map { item -> if (item.key == key) change(item) else item })) }
         }
-        update { it.copy(uploading = true,error = null) }
+        update { it.copy(uploading = true,error = null,uploadPercent = null) }
         photoJobs[key] = scope.launch {
             try {
                 val photo = photoBytes[key] ?: localDrafts?.photo(owner ?: 0L,WorkspacePhoto(key,item.name,item.mime,private = storedScope.first,safety = storedScope.second))?.also { photoBytes[key] = it }
                     ?: throw LocalDraftException("原照片不可读，请重新读取或移除后选择")
                 persistDrafts()
-                val result = if (storedScope.second) api.uploadSafetyEvidence(photo,key,safetyToken(route)) else if (storedScope.first) api.uploadPrivate(photo,key) else api.upload(photo,key)
+                val progress: (Long, Long?) -> Unit = { sent, total -> update { it.withProgress(sent,total) } }
+                val result = if (storedScope.second) api.uploadSafetyEvidence(photo,key,safetyToken(route),progress) else if (storedScope.first) api.uploadPrivate(photo,key,progress) else api.upload(photo,key,progress)
                 update { it.copy(mediaId = result.id,uploading = false) }
                 persistDrafts()
                 if (epoch == originalEpoch) photoBytes.remove(key)
-            } catch (e: CancellationException) { throw e }
-            catch (e: Exception) { update { it.copy(uploading = false,error = e.mobileMessage()) } }
+            } catch (e: CancellationException) { throw e } catch (e: Exception) { update { it.copy(uploading = false,error = e.mobileMessage()) } }
         }
+    }
+    suspend fun localPhotoPreview(route: FeatureRoute, key: String): SelectedPhoto? {
+        if (route != mutable.value.route) return null
+        val originalEpoch = epoch
+        val item = mutable.value.photos[route].orEmpty().firstOrNull { it.key == key } ?: return null
+        val scope = photoScopes[key] ?: (false to false)
+        val photo = photoBytes[key] ?: localDrafts?.photo(owner ?: 0L, WorkspacePhoto(key,item.name,item.mime,private = scope.first,safety = scope.second))
+        return photo.takeIf { epoch == originalEpoch && route == mutable.value.route }
     }
     fun removePhoto(key: String) {
         val route = mutable.value.route ?: return

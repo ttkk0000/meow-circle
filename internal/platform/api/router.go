@@ -24,6 +24,7 @@ import (
 	"kitty-circle/internal/platform/opsapi"
 	"kitty-circle/internal/platform/payment"
 	"kitty-circle/internal/platform/phoneotp"
+	"kitty-circle/internal/platform/wechatofficial"
 	"kitty-circle/internal/store"
 	"kitty-circle/internal/store/cache"
 	"kitty-circle/internal/store/postgres"
@@ -49,6 +50,7 @@ type Router struct {
 	identity          *identity.Service
 	mobileAPI         *mobileapi.Handler
 	browserAPI        *mobileapi.BrowserHandler
+	officialAccount   http.Handler
 	legacyDevelopment bool
 	store             store.Store
 	storeKind         string
@@ -134,6 +136,10 @@ func NewRouterWithError() (*Router, error) {
 		r.identity.PublicAppOrigin = r.browserAPI.Origin
 	}
 	if err = r.configureOperations(); err != nil {
+		return nil, err
+	}
+	r.officialAccount, err = wechatofficial.FromEnvironment()
+	if err != nil {
 		return nil, err
 	}
 	r.routes()
@@ -687,6 +693,7 @@ func (l *loggingResponseWriter) Write(b []byte) (int, error) {
 }
 
 func (r *Router) routes() {
+	r.mux.Handle(wechatofficial.CallbackPath, r.officialAccount)
 	r.mux.Handle("/maps/amap/_AMapService/", mobileapi.AmapProxy(os.Getenv("MND_AMAP_JS_KEY"), os.Getenv("MND_AMAP_JS_SECURITY_CODE"), strings.TrimRight(os.Getenv("MND_WEB_ORIGIN"), "/")))
 	r.mux.Handle("/api/v2/", r.mobileAPI)
 	r.mux.Handle("/api/ops/v1/", r.operationsAPI)

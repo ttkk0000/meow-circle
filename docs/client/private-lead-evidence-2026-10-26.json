@@ -1,0 +1,538 @@
+{
+  "task": "AI-20261026-CARE-PROGRESS",
+  "date": "2026-10-26",
+  "captured_at": "2026-10-26T06:08:07+08:00",
+  "branch": "main",
+  "head": "eed8fcd750101eaf4ef81e1822195fd31dea6ebe",
+  "meaning": "本批相关完整文件快照，包含保留的既有在途修改；不是全部页面完成、提交差异、类型或运行验收证明。AI跟踪和本证据自身不纳入指纹，避免循环。",
+  "runtime_verified": false,
+  "design": {
+    "file_key": "3OFOC3vu18Kx9sRPjummOC",
+    "context_files": 11,
+    "high_fidelity": 9,
+    "sparse_bridges": 2,
+    "root_chat_screenshot_inspected": true,
+    "composer_scope": "只核对当前可见的关闭键盘输入条；生成代码内的其它表情变体不作为已逐一查看。",
+    "temporary_asset_urls_redacted": true,
+    "runtime_screenshots": false
+  },
+  "checks": [
+    {
+      "name": "check_mobile_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_kmp_client_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_android_ui_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_android_feature_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_android_finish_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_client_ui_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_web_client_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_server_shared_contract_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_age_assurance_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_guardian_invites_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_provider_auth_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_operations_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_delivery_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_remaining_code_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_figma_reading_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_page_gap_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_publication_flow_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    },
+    {
+      "name": "check_lead_flow_static",
+      "exit_code": 0,
+      "meaning": "本批实际执行的只读检查；最终相关修改后复核，不执行产品源码。"
+    }
+  ],
+  "syntax": {
+    "complete_files": [
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt",
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+      "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/LeadStatus.kt",
+      "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt",
+      "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt",
+      "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "web-client/src/features/LeadPages.tsx",
+      "web-client/src/core/lead.ts",
+      "web-client/src/components/CaseContextCard.tsx",
+      "web-client/src/features/chat.tsx",
+      "web-client/src/features/WorkflowEditor.tsx",
+      "web-client/src/features/workflows.ts",
+      "web-client/src/App.tsx",
+      "web-client/src/components/ui.tsx",
+      "web-client/src/core/contract.ts",
+      "web-client/src/core/routes.ts"
+    ],
+    "large_file_method_fragments": [
+      "MobileStore.kt:open",
+      "MobileStore.kt:reloadDetail",
+      "MobileFeatureStore.kt:open",
+      "MobileFeatureStore.kt:reload"
+    ],
+    "large_file_state_declarations": 2,
+    "parser_limit": "既有两个大文件不作为完整解析通过；仅独立读取修改的方法和状态声明，open软关键字仅在解析副本替换。",
+    "go_format_syntax": [
+      "internal/mobile/lead_review.go",
+      "internal/mobile/lead_review_test.go",
+      "internal/mobile/models.go",
+      "internal/mobile/rescue.go",
+      "internal/mobile/service.go",
+      "internal/mobile/social.go",
+      "internal/platform/mobileapi/handler.go"
+    ],
+    "python_ast": [
+      "scripts/export_mobile_contract.py",
+      "scripts/check_server_shared_contract_static.py",
+      "scripts/sync_figma_implementation_trace.py",
+      "scripts/check_lead_flow_static.py",
+      "scripts/check_figma_reading_static.py"
+    ],
+    "json_files": 14,
+    "assets": [
+      {
+        "name": "smile",
+        "sha256": "86e0043d2790ccff2d03ce2d5c3350796fe1cb5af18f3aae3bb37551073bac3e",
+        "figma_download_matches": true,
+        "intrinsic": [
+          24,
+          24
+        ],
+        "files": [
+          "web-client/public/assets/figma/smile.svg",
+          "kmp/clientUi/src/commonMain/composeResources/files/figma/smile.svg",
+          "kmp/androidApp/src/main/assets/figma/smile.svg"
+        ]
+      },
+      {
+        "name": "state-paw-print",
+        "sha256": "1b80595172ed5cbb29934e4a3b20e79bffebb0aa38aea1b78ca3b79130ddcd2a",
+        "figma_download_matches": true,
+        "intrinsic": [
+          24,
+          24
+        ],
+        "files": [
+          "web-client/public/assets/figma/state-paw-print.svg",
+          "kmp/clientUi/src/commonMain/composeResources/files/figma/state-paw-print.svg",
+          "kmp/androidApp/src/main/assets/figma/state-paw-print.svg"
+        ]
+      }
+    ],
+    "compilation": false,
+    "type_checking": false,
+    "tests_executed": false
+  },
+  "regression_source": {
+    "go_functions": [
+      "TestLeadAssessmentPreservesEvidenceAndCaseState",
+      "TestLeadConversationIsIsolatedAndDoesNotGrantConsent",
+      "TestClosedCaseKeepsLeadHistoryButStopsNewContact",
+      "TestRemovedCaseRevokesLeadConversationMessageAndMedia",
+      "TestLeadContactRechecksBlockAndVersion",
+      "TestLeadContactCannotBypassAdultContactPolicy",
+      "TestLeadAccessUsesCurrentPublisherInsteadOfParticipantSnapshot"
+    ],
+    "executed": false
+  },
+  "contract": {
+    "paths": 249,
+    "operations": 280,
+    "server_schemas": 130,
+    "web_schemas": 132,
+    "shared_dto_pairs": 81,
+    "business_tables": 45,
+    "migrations": 13
+  },
+  "not_executed": [
+    "编译／构建／Gradle／Go build-run-test／Xcode",
+    "类型检查／测试／lint",
+    "App／服务／CI／迁移／打包／安装／签名／部署",
+    "平台注册／提交／推送"
+  ],
+  "deferred_by_user": [
+    "运维发布／重启执行器",
+    "完整搜索接收端"
+  ],
+  "files": [
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256": "3fa020df018192abf10735caa50b4f667bb4f5694a9b024f630b7bf792221a71",
+      "bytes": 929760
+    },
+    {
+      "path": "docs/client/PRIVATE_LEAD_FLOW_2026_10_26.md",
+      "sha256": "e99eb0969ea40756f1a8249a391d37f86cfc7817c57a9a0d2e2d2d35d136283e",
+      "bytes": 5558
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "09d7002946561eab26254a36a4b68e6b7f914a294ecfe2b61ff80774b17cb265",
+      "bytes": 13903
+    },
+    {
+      "path": "docs/client/figma-implementation-trace-2026-10-24.json",
+      "sha256": "5ff0fd973861aa7e7006d019cd63fb0d86423ef0458bf244765f49ec0a1ccaed",
+      "bytes": 1081242
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/142_2952.json",
+      "sha256": "428b9d9a582da40e9cd7819af98665fc074fc0a213de36d1570b49c21ce4841b",
+      "bytes": 11037
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/142_2953.json",
+      "sha256": "a79963cdde368a318b475e31cad4293533c42617ac6ff5ea0b2d08705b4199f1",
+      "bytes": 9278
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/142_2954.json",
+      "sha256": "a725c5675cf25dfa592cccea6020480d1d8454ac75de7ba24f6560ac7fec491d",
+      "bytes": 11790
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/142_2955.json",
+      "sha256": "949aa257f1d894a568a1fca307b1624196c1dc5c05411e7bbb0e2f8c9c055faa",
+      "bytes": 8504
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/142_2956.json",
+      "sha256": "a92afbbf3b4945645a3ebeb21580d2df34138f9fa98c93d0aefbe97da0d5aa4f",
+      "bytes": 8492
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/142_2978.json",
+      "sha256": "03b075f63f66291c7323e568d063af34b164510472a55ae4fb839bb57026db18",
+      "bytes": 3356
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/145_7246.json",
+      "sha256": "c195d3efc323e650147d7402cec5fd13d9b848f11edb02bbdb6622fce447cc89",
+      "bytes": 10201
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/220_341398.json",
+      "sha256": "3cf4f0588be3f7e9045cc70edd271b0453e2ee61197bf2a699d5443497bcac98",
+      "bytes": 1135
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/220_341399.json",
+      "sha256": "8a446972fe2548e33885e3117af51556df48e173261e76b73632af9cc6ab91d7",
+      "bytes": 397162
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/311_379528.json",
+      "sha256": "db344a7f0b6d90a0be3e9bc62adae88342319a1f346ac29244abe9571850da3e",
+      "bytes": 24771
+    },
+    {
+      "path": "docs/design/figma-study/lead-flow-2026-10-26/311_379531.json",
+      "sha256": "eb2764d0307e6146c076b397858eef66cb4ad66b942a5642125fd4d699a9c43b",
+      "bytes": 27256
+    },
+    {
+      "path": "docs/server/PRIVATE_LEAD_CONTRACT_2026_10_26.md",
+      "sha256": "91724afa5fafab873983cb4174ef64fe01b6871c81d227ce6536f32d61311e9d",
+      "bytes": 3728
+    },
+    {
+      "path": "internal/mobile/lead_review.go",
+      "sha256": "3480b93b7cf72734d90ed8361eaa3e45e50577935f8d9a5f1e062f2961d7649e",
+      "bytes": 4576
+    },
+    {
+      "path": "internal/mobile/lead_review_test.go",
+      "sha256": "84e408c732efc6795e2a200e66c257aabb5eb64426c7379912ec6f74b1b7aec5",
+      "bytes": 10004
+    },
+    {
+      "path": "internal/mobile/models.go",
+      "sha256": "071abc167f0b2e08bbeff3f1de12a5296478ac3256c7eea83099e573c4008cbb",
+      "bytes": 11009
+    },
+    {
+      "path": "internal/mobile/rescue.go",
+      "sha256": "1dbe5dbcff3a9c86d65aff241a79e035ebebc0b5d97091a15c6e35b32de40cec",
+      "bytes": 24876
+    },
+    {
+      "path": "internal/mobile/service.go",
+      "sha256": "903bc1e627ce5a67a18457fa3d2ed152d03df49dc9a2bc32dee8c6d1b658b67b",
+      "bytes": 14835
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "sha256": "532b969af2abbe3357b1b9eb6695a245edeff5a6d1d5cf71201e41b62b58e56c",
+      "bytes": 34615
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256": "dec17aad53bb2dd1e6feacab84c791f8566718d1b383245230cd5978f7343873",
+      "bytes": 36483
+    },
+    {
+      "path": "kmp/androidApp/src/main/assets/figma/smile.svg",
+      "sha256": "86e0043d2790ccff2d03ce2d5c3350796fe1cb5af18f3aae3bb37551073bac3e",
+      "bytes": 697
+    },
+    {
+      "path": "kmp/androidApp/src/main/assets/figma/state-paw-print.svg",
+      "sha256": "1b80595172ed5cbb29934e4a3b20e79bffebb0aa38aea1b78ca3b79130ddcd2a",
+      "bytes": 1569
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/smile.svg",
+      "sha256": "86e0043d2790ccff2d03ce2d5c3350796fe1cb5af18f3aae3bb37551073bac3e",
+      "bytes": 697
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/state-paw-print.svg",
+      "sha256": "1b80595172ed5cbb29934e4a3b20e79bffebb0aa38aea1b78ca3b79130ddcd2a",
+      "bytes": 1569
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "sha256": "02aa9eacb2ffcc153935bcd40070352f1ecb7ab325eb91104d0d462944040f1b",
+      "bytes": 30888
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "sha256": "59829fee03be48112dac41120cbb05df2c25b4bd8cdb4d5bd757aef078e63b03",
+      "bytes": 3200
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt",
+      "sha256": "d7f45d7fe9e2c5f1e3c34a04bc9c13397855709eedac0eff9968f1c075fb0aad",
+      "bytes": 6577
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "sha256": "f7e1c19d79a860f0d67e9a0c00204eff8b8b4579202bfde404fdd04fa11a14d9",
+      "bytes": 61198
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256": "00959cef75a334ccfd8cffbd01e4bcb1c90fce68d31a700a8b1f354fd8f9635d",
+      "bytes": 19747
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt",
+      "sha256": "f9c7878aeb94bfb0d894a22873dbf73db130c80f13c497f2096824a0ea5ec03a",
+      "bytes": 6424
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "sha256": "82b018767e69ec0662513923d7027c1b7c66928ff79a86dd4ead487797dce53a",
+      "bytes": 17718
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+      "sha256": "91b24d5132df3c1f33598c26f7acdf363dc26b40235c060b78cd300989756872",
+      "bytes": 13055
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "sha256": "012f444b44e5ae38bd8ffb4a545896fae7bad28a75d43d020ee780301f97e3ef",
+      "bytes": 8387
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt",
+      "sha256": "74d262e05be9702905f62c943f9c455668ec3c35e60e8ff147929f039edb28aa",
+      "bytes": 11378
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/LeadStatus.kt",
+      "sha256": "976d3ba56191d477b8450a14f9a75647e1293c31a40ca91ada3922ba3211de1d",
+      "bytes": 2495
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "59f36ad42e9df0b70c6abc4b80234a6fd0a15a7341f078d04eb3cbd98702bcff",
+      "bytes": 63659
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "3b66a9758962f6448b559e054976964c2d224f9a04d77a813527aaa5f11310e2",
+      "bytes": 97550
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt",
+      "sha256": "5b9c09444b06a4b07af19d20f771624688df2868ef5eeac342af5bc56f4e26ac",
+      "bytes": 10227
+    },
+    {
+      "path": "scripts/check_figma_reading_static.py",
+      "sha256": "8f03ec7884b5e7bd4352d6e17cca4e9c4bff5bbd9c93ad02da3754e1d02f3bab",
+      "bytes": 5384
+    },
+    {
+      "path": "scripts/check_lead_flow_static.py",
+      "sha256": "38c112ac0c68fbfe127587422330af1f02008060328e661f66dc1e5e6ba521f2",
+      "bytes": 5838
+    },
+    {
+      "path": "scripts/check_server_shared_contract_static.py",
+      "sha256": "cad6ba4f4e761750ae4a0710dc967eb431b7ce78f186c05d5a8b0fd4612b50dd",
+      "bytes": 4933
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256": "8b4bbbb94b9cba30c5b56917be36d5fe0ee1b1729a5a8934390f3ce6325a661d",
+      "bytes": 29701
+    },
+    {
+      "path": "scripts/sync_figma_implementation_trace.py",
+      "sha256": "7781bf67f51bdac6e905596e9db699d43477cdafd80642561a261b054588b2be",
+      "bytes": 14904
+    },
+    {
+      "path": "web-client/public/assets/figma/smile.svg",
+      "sha256": "86e0043d2790ccff2d03ce2d5c3350796fe1cb5af18f3aae3bb37551073bac3e",
+      "bytes": 697
+    },
+    {
+      "path": "web-client/public/assets/figma/state-paw-print.svg",
+      "sha256": "1b80595172ed5cbb29934e4a3b20e79bffebb0aa38aea1b78ca3b79130ddcd2a",
+      "bytes": 1569
+    },
+    {
+      "path": "web-client/src/App.tsx",
+      "sha256": "f066981cfe39e687aa35feb406b2e31bb53c48670ad6cf595137f6e118ed2f53",
+      "bytes": 25458
+    },
+    {
+      "path": "web-client/src/components/CaseContextCard.tsx",
+      "sha256": "67efa88ec3b8a035b04ea6c778d735b564cc250ad7bf8af9f361a223cf556967",
+      "bytes": 879
+    },
+    {
+      "path": "web-client/src/components/ui.tsx",
+      "sha256": "720937188504e09f69cfa1b349523198c0f6660ac61db9d157e84a27ebbc26f8",
+      "bytes": 11955
+    },
+    {
+      "path": "web-client/src/core/contract.ts",
+      "sha256": "9eb581a6e057ff67e3e93f5957e8520c8f97b5b56dc111625b744a52e760dc58",
+      "bytes": 20657
+    },
+    {
+      "path": "web-client/src/core/lead.ts",
+      "sha256": "ff93a8d3fd3f4c503283cec3726f00a9e811dd93aee01d6ab35209a36da1f2af",
+      "bytes": 1742
+    },
+    {
+      "path": "web-client/src/core/routes.ts",
+      "sha256": "d099600429294deee0b0de2f8ae1bf9dd1ca6c6dfb9d0ece5bdc793ee8a0f4fb",
+      "bytes": 13384
+    },
+    {
+      "path": "web-client/src/core/schemas.json",
+      "sha256": "a51e0af58df6499b89dcf3d72ca9ea000d92958407a6e8320c603cfbb98dc772",
+      "bytes": 62491
+    },
+    {
+      "path": "web-client/src/features/LeadPages.tsx",
+      "sha256": "ad41261dbeb204524ebfa881d53f415f90ad63782c8d2a710ed53f0103c72eee",
+      "bytes": 7478
+    },
+    {
+      "path": "web-client/src/features/WorkflowEditor.tsx",
+      "sha256": "01d67d4f6bd7e26fee5179e2cbaff94065d70f3cb2018a13209adf165bfaa511",
+      "bytes": 49809
+    },
+    {
+      "path": "web-client/src/features/chat.tsx",
+      "sha256": "cef9f8d82f0a4667113c646cd97decfc1b19291676b90870f793c74502f2906c",
+      "bytes": 37800
+    },
+    {
+      "path": "web-client/src/features/workflows.ts",
+      "sha256": "704a3d065605cfcbc2ab7fe6aa14d4923ba0d35ebd7ba16651c7611cea9808ee",
+      "bytes": 15760
+    },
+    {
+      "path": "web-client/src/styles.css",
+      "sha256": "3a7555f3ba394fec70da1808bf8b8141f056720e6f58b72d77570faf6f9c88da",
+      "bytes": 23581
+    }
+  ],
+  "file_count": 60,
+  "final_non_execution_checks": {
+    "encoding_and_conflict_files": 64,
+    "css_parse": true,
+    "git_diff_check": "passed",
+    "navigation_row_calls": 156,
+    "legacy_third_position_callbacks_preserved": 2,
+    "fingerprints": 60,
+    "local_document_links": 13
+  }
+}

@@ -156,6 +156,8 @@ export function ReadingPage({
       <QueryState
         loading={result.loading}
         error={result.error}
+        failure={result.failure}
+        readAt={result.readAt}
         onRetry={() => void reload(byType ? "reading" : path!)}
       >
         {!result.loading && !result.error && !document ? (
@@ -335,6 +337,8 @@ export function Rules({
       <QueryState
         loading={result.loading}
         error={result.error}
+        failure={result.failure}
+        readAt={result.readAt}
         onRetry={() => void reload("reading")}
       >
         {view === "history" ? (

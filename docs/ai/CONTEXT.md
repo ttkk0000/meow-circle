@@ -1,8 +1,18 @@
 # 当前项目快照
 
-更新：2026-10-25（Asia/Shanghai，UTC+08:00）。维护者：Codex。本页是接手摘要；执行状态见 [TASKS.md](TASKS.md)，结果见 [TASK_LOG.md](TASK_LOG.md)。
+更新：2026-10-26（Asia/Shanghai，UTC+08:00）。维护者：Codex。本页是接手摘要；执行状态见 [TASKS.md](TASKS.md)，结果见 [TASK_LOG.md](TASK_LOG.md)。
 
 ## 当前目标与执行状态
+
+2026-10-26 `AI-20261026-CARE-PROGRESS`本批私密线索源码／静态交付，执行标记释放：[客户端续作](../client/PRIVATE_LEAD_FLOW_2026_10_26.md)、[服务端合同](../server/PRIVATE_LEAD_CONTRACT_2026_10_26.md)、[60文件证据](../client/private-lead-evidence-2026-10-26.json)。核对照护业务后优先补线索列表／空态、详情、两类真实处理结果及目击者独立会话；当前父权限、关闭／移除、原请求和最低结果版本接线已写。11份设计上下文（9高保真＋2稀疏桥）、18只读检查、22完整语法树／4方法片段、7Go格式；7回归仅源码。当前249路径／280操作／130服务端schemas、132Web schemas、81DTO、37公共UI／47分派、45表／13迁移，无新增迁移。全量740状态仍未运行验收；其它业务状态、正式配置及设备／网络／数据库验证继续待做。未构建、类型检查、测试、启动、对外注册、提交或推送；旧63文件指纹仅历史快照。
+
+2026-10-26 用户要求未写完的代码继续实现；`AI-20261026-FIGMA-FLOW-CONTINUATION`本批源码／静态完成，执行标记释放。[来源流程与分享进入](../client/FIGMA_FLOW_CONTINUATION_2026_10_26.md)／[63文件证据](../client/figma-flow-evidence-2026-10-26.json)：10份Figma上下文／截图、发布预览与6来源状态、独立追加声明及真实原回执／冷启动草稿恢复、私密附件范围、Android／iOS共享链接解析与Swift回调优先；复用36公共UI／45分派／10基础组件。新增13迁移、私密声明表与3操作；当前247路径／278操作／126schema、77 DTO、45业务表。17只读脚本、21完整语法树／3既有大文件23方法片段、10Go格式语法、Python AST／YAML／JSON／CSS及diff／链接／冲突核对；4Go＋4KMP回归函数仅源码。740仍全部未运行验收，未编译／测试／启动／迁移／CI／注册／提交推送；保持Swift宿主＋Compose与KMP共享逻辑，运维执行器与完整搜索仍占位。旧68文件证据是前批历史快照，不能套用为本批当前文件指纹。
+
+2026-10-25 用户要求核对缺失页面并完善源码；`AI-20261025-FIGMA-PAGE-GAPS`本批源码／静态完成，执行标记释放。[交付](../client/FIGMA_PAGE_GAPS_2026_10_25.md)／[68文件指纹](../client/figma-page-gaps-evidence-2026-10-25.json)：13份Figma上下文／截图，独立连接／失权／不可用／空结果状态、3类权限说明、真实媒体进度／预览／拖动排序／失败恢复、系统通知编号回源与账号／交互锁及Web通知入口；复用35公共UI／45扩展分派／原10 primitives，新增1枚原SVG（三端一致，共22）。16只读脚本、44干净语法树和4份既有大文件中20方法片段、24 TS格式读取、JSON／链接／diff／冲突扫描通过；5KMP回归函数仅源码。740状态仍未逐端运行验收；无编译／类型检查／测试／启动／平台注册／提交推送。保留KMP共享逻辑＋Compose页面＋Swift宿主，运维执行器与完整搜索接收端继续按用户此前决定占位。
+
+2026-10-25 用户已明确注册主体为个人，随后要求“先不管吧先只写代码”。外部注册暂停，`AI-20261025-PLATFORM-REGISTRATION`执行标记释放；未注册成功或取得AppID／Key。公众号独立安全模式回调与配置接线本批源码／静态完成（`AI-20261025-SDK-OFFICIAL-ACCOUNT-CODE`），执行标记释放；[交付](../client/SDK_OFFICIAL_ACCOUNT_CODE_2026_10_25.md)／[14文件指纹](../client/sdk-official-account-evidence-2026-10-25.json)。默认关闭，GET校验、AES消息／回复和关注／帮助被动回复不接身份／业务存储；3只读脚本、6Go格式语法、1Kotlin语法树、67链接、diff／冲突扫描通过，6Go回归函数仅源码。真实配置继续空占位；未继续浏览器注册、未构建／测试／启动／提交推送，平台未联调。微信开放／公众平台注册的站点安全拦截仍有效，不绕过。[注册记录](../client/PLATFORM_REGISTRATION_2026_10_25.md)。
+
+2026-10-25 用户要求全面补齐剩余编码，本批源码／静态已交付（`AI-20261025-REMAINING-CODE`），执行标记释放。[续作交接](../client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md)／[90文件证据](../client/remaining-code-evidence-2026-10-25.json)：状态筛选与011索引、Web跨副本续期加密回执、Desktop官方Web回跳、Android FCM／iOS APNs与应用级推送协调、当前会话／账号级推送撤回、012数据库作业协调、私有S3端口、两类最小投影事件及5份完整草案。当前245 Paths／275 Ops／124 Schemas，75对DTO；8worker／13服务／12迁移。15项只读脚本、37 Go格式语法、11 Kotlin／2 Swift／58 TS/TSX语法树、4 YAML、17链接和diff／冲突扫描通过，7个Go回归函数仅源码。用户明确运维发布／重启执行器及完整搜索接收端暂时占位，先交付源码；明确不迁移SwiftUI，保留Swift宿主＋Compose页面与KMP共享逻辑。没有编译／类型检查／测试／启动／CI／迁移／部署／提交推送，不能称生产或全Figma状态验收完成。本轮起点77c479a；交付核对发现同一工作树已出现eed8fcd，包含大部分源码，本会话未执行提交或推送。当前main／eed8fcd，Web回跳排版／异常守卫及交接尚未提交。
 
 2026-10-25 用户指令“代码提交推送”，全量在途成果本地 Git 提交已完成（`AI-20261025-CODE-COMMIT-PUSH`，Gemini），执行标记已释放：
 - 成果汇总结算：全量纳入本轮交付链（`scripts/delivery.py`、`scripts/mobile.py`、Compose 13 服务与 8 独立 worker 编排）、业务续作（`REMAINING_CODE_IMPLEMENTATION_2026_10_25.md`：原生设备推送 FCM/APNs、Desktop 官方授权回跳、011/012 迁移与索引、私有 S3 存储路径适配、8 作业协调与租约检查点、搜索与审计事件消费、15 类草案材料）、后台技术运维平台前后端（`/app/ops` 14 类页面、010 迁移与 13 路径 / 15 操作 / 25 schemas）、监护人邀请与范围授权保护、年龄核验专用流程、官方第三方登录、全量架构与 12 份 PlantUML 建模图谱。

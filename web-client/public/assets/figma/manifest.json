@@ -141,6 +141,13 @@
         24,
         24
       ]
+    },
+    {
+      "name": "state-paw-print",
+      "source_node": "56:81",
+      "file": "web-client/public/assets/figma/state-paw-print.svg",
+      "sha256": "1b80595172ed5cbb29934e4a3b20e79bffebb0aa38aea1b78ca3b79130ddcd2a",
+      "source_layer": "I60:2767;56:115"
     }
   ],
   "note": "静态图标原样导出。宠物／头像／动态照片由真实API数据提供，不把设计样例作为业务数据。"

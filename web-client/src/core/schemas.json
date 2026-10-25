@@ -1308,6 +1308,118 @@
       }
     }
   },
+  "SourceDeclarationBody": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "manifest_hash": {
+        "type": "string"
+      },
+      "origin": {
+        "type": "string"
+      },
+      "previous_id": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "SourceDeclarationInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "content": {
+        "$ref": "#/components/schemas/EntryInput"
+      },
+      "rights_confirmed": {
+        "type": "boolean"
+      },
+      "previous_id": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "Lead": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "text": {
+        "type": "string"
+      },
+      "assessment": {
+        "type": "string"
+      },
+      "reviewed_by": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "reviewed_at": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "Conversation": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "requester_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "recipient_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "context_kind": {
+        "type": "string"
+      },
+      "context_id": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "LeadAssessmentInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "assessment": {
+        "type": "string"
+      }
+    }
+  },
+  "LeadContactInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
   "PublicationPreview": {
     "type": "object",
     "additionalProperties": false,
@@ -2896,6 +3008,10 @@
       },
       "confirmed": {
         "type": "boolean"
+      },
+      "record_id": {
+        "type": "integer",
+        "format": "int64"
       }
     }
   },

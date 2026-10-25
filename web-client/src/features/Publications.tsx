@@ -50,6 +50,8 @@ export function Publications({ params }: { params: URLSearchParams }) {
       <QueryState
         loading={page.loading}
         error={page.error}
+        failure={page.failure}
+        readAt={page.readAt}
         onRetry={page.retry}
         keepContent={!!page.rows.length && !page.denied}
       >

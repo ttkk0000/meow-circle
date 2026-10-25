@@ -148,12 +148,15 @@ import com.ttkk0000.meowcircle.client.*
                 PageFooter(s.claims, { f.reload(material = CaseMaterial.Claims) }, { f.reload(true, CaseMaterial.Claims) },
                     "暂无你有权查看的认领材料", enabled = !s.loading && !s.busy)
                 Text("私密线索")
-                s.leads.items.forEach { lead -> FeatureSection("私密线索 #${lead.id}") { Text(lead.data.text); lead.mediaIds.forEach { MobilePhoto(store,it,actor,"私密线索照片") } } }
+                s.leads.items.forEach { lead -> NavigationRow("${leadAssessmentLabel(lead.data.assessment)} · ${displayTime(lead.createdAt)}",lead.data.text.take(100),compact = true) { f.open(FeatureRoute(FeaturePage.Lead,lead.id)) } }
+                FeatureButton("查看本案私密线索列表") { f.open(FeatureRoute(FeaturePage.LeadInbox,record.id)) }
                 PageFooter(s.leads, { f.reload(material = CaseMaterial.Leads) }, { f.reload(true, CaseMaterial.Leads) },
                     "暂无你有权查看的线索", enabled = !s.loading && !s.busy)
             }
             FeatureButton("为此事项提议预约",actor != null && record.ownerId != actor) { f.open(FeatureRoute(FeaturePage.AppointmentEdit,kind = "case",peer = record.id)); f.edit("peer",record.ownerId.toString()) }
         }
+        FeaturePage.LeadInbox -> LeadInboxPage(store,s,route)
+        FeaturePage.Lead -> LeadDetailPage(store,s,route)
         FeaturePage.Claim -> s.claim?.let { claim ->
             val publisher = s.case?.ownerId == actor; val mine = claim.ownerId == actor
             FeatureSection("${claim.data.petName} · ${stateLabel(claim.state)}") {

@@ -84,7 +84,7 @@ def ios_settings(args, release=False):
     settings = []
     endpoint = args.api_url or os.environ.get("MND_API_BASE_URL", "http://127.0.0.1:8080")
     settings.append("MND_API_BASE_URL=" + origin(endpoint, release))
-    public = ["MND_AMAP_IOS_KEY", "MND_TERMS_URL", "MND_PRIVACY_URL", "MND_WECHAT_IOS_APP_ID", "MND_QQ_IOS_APP_ID", "MND_WECHAT_UNIVERSAL_LINK", "MND_QQ_UNIVERSAL_LINK", "MND_APPLE_SIGNIN_ENABLED", "MND_PROVIDER_ASSOCIATED_DOMAIN", "MND_APNS_ENABLED"]
+    public = ["MND_AMAP_IOS_KEY", "MND_TERMS_URL", "MND_PRIVACY_URL", "MND_WECHAT_IOS_APP_ID", "MND_QQ_IOS_APP_ID", "MND_WECHAT_UNIVERSAL_LINK", "MND_QQ_UNIVERSAL_LINK", "MND_APPLE_SIGNIN_ENABLED", "MND_PROVIDER_ASSOCIATED_DOMAIN", "MND_SHARE_ASSOCIATED_DOMAIN", "MND_APNS_ENABLED"]
     for name in public:
         if value := os.environ.get(name): settings.append(name + "=" + value)
     if version := os.environ.get("MND_VERSION_NAME"):
@@ -116,10 +116,16 @@ def ios(args):
             team = os.environ.get("MND_IOS_TEAM_ID", "")
             if not re.fullmatch(r"[A-Z0-9]{10}", team): raise ValueError("Archive需要真实MND_IOS_TEAM_ID及本机签名证书")
             entitlements = {}
-            domain = os.environ.get("MND_PROVIDER_ASSOCIATED_DOMAIN", "")
-            if domain:
-                if not re.fullmatch(r"[a-zA-Z0-9.-]+", domain) or domain.endswith(".invalid"): raise ValueError("Associated Domain必须是真实域名")
-                entitlements["com.apple.developer.associated-domains"] = ["applinks:" + domain]
+            domains = []
+            for name in ["MND_PROVIDER_ASSOCIATED_DOMAIN", "MND_SHARE_ASSOCIATED_DOMAIN"]:
+                domain = os.environ.get(name, "").lower()
+                if not domain: continue
+                if not re.fullmatch(r"[a-zA-Z0-9.-]+", domain) or domain.endswith((".invalid", ".example", ".test")): raise ValueError("Associated Domain必须是真实域名")
+                if name == "MND_SHARE_ASSOCIATED_DOMAIN":
+                    endpoint = urlsplit(args.api_url or os.environ.get("MND_API_BASE_URL", ""))
+                    if endpoint.scheme != "https" or endpoint.hostname != domain: raise ValueError("分享Associated Domain必须与HTTPS API主机一致")
+                if domain not in domains: domains.append(domain)
+            if domains: entitlements["com.apple.developer.associated-domains"] = ["applinks:" + domain for domain in domains]
             if os.environ.get("MND_APPLE_SIGNIN_ENABLED") == "YES": entitlements["com.apple.developer.applesignin"] = ["Default"]
             if os.environ.get("MND_APNS_ENABLED") == "YES":
                 apns = os.environ.get("MND_APNS_ENVIRONMENT") or "production"

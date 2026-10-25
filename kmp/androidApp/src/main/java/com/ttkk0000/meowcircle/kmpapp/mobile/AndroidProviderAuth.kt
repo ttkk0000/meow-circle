@@ -25,7 +25,7 @@ internal object AndroidProviderAuth {
     private val lock = Any()
     private val pending = mutableMapOf<String,Pending>()
     val providers: Set<String> get() = buildSet {
-        if (BuildConfig.WECHAT_APP_ID != "wx0000000000000000") add("wechat")
+        if (BuildConfig.WECHAT_APP_ID.matches(Regex("wx[A-Za-z0-9]{16}")) && BuildConfig.WECHAT_APP_ID != "wx0000000000000000") add("wechat")
         if (BuildConfig.QQ_APP_ID.matches(Regex("[1-9][0-9]{4,19}"))) add("qq")
     }
     suspend fun authorize(activity: Activity, provider: String, challenge: ProviderChallenge): ProviderCredential? = suspendCancellableCoroutine { continuation ->

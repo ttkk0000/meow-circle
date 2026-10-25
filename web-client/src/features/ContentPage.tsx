@@ -15,6 +15,8 @@ export function ContentPage() {
       <QueryState
         loading={result.loading}
         error={result.error}
+        failure={result.failure}
+        readAt={result.readAt}
         onRetry={() => void reload("content-subscriptions")}
       >
         <Card title="关注的作者">

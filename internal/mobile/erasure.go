@@ -222,7 +222,7 @@ func (s *Service) AdaptLegacyErasure(ctx context.Context, operator string, after
 			request, e := tx.ByKey(DataRequests, key)
 			if e == ErrNotFound {
 				d := DataRequest{Type: "close_account", Fields: []string{"bio", "avatar", "nickname"}, Items: []DataItem{}, Holds: []DataHold{}, ExternalState: "pending_inventory", QueryExpiresAt: s.Now()}
-				for _, kind := range []Kind{Entries, Comments, PetComments, CommentReactions, Pets, Cases, Offers, Drafts, Media, Subscriptions, Qualifications, Guardians, Identities, Preferences, Expressions, PushDevices, Sessions, AuthChallenges} {
+				for _, kind := range []Kind{Entries, Comments, PetComments, CommentReactions, Pets, Cases, Offers, Drafts, SourceDeclarations, Media, Subscriptions, Qualifications, Guardians, Identities, Preferences, Expressions, PushDevices, Sessions, AuthChallenges} {
 					items, e := allRecords(tx, kind, Filter{OwnerID: v.UserID})
 					if e != nil {
 						return e

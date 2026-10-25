@@ -1,0 +1,14 @@
+{
+  "file_key": "3OFOC3vu18Kx9sRPjummOC",
+  "node_id": "220:341398",
+  "read_session": "c7908466-130a-443c-bb81-18eb277c4f0a",
+  "read_date": "2026-10-26",
+  "high_fidelity": false,
+  "screenshot_inspected": false,
+  "screenshot_note": "在142:2978整屏截图及220:341399高保真子组件中核对可见输入条。",
+  "temporary_asset_urls_redacted": true,
+  "text": [
+    "<frame id=\"220:341398\" name=\"Message composer\" x=\"0\" y=\"760\" width=\"390\" height=\"84\">\n  <instance id=\"220:341399\" name=\"Composer / keyboard closed\" x=\"0\" y=\"0\" width=\"390\" height=\"64\" />\n  <frame id=\"220:344095\" name=\"Bottom safe area\" x=\"0\" y=\"64\" width=\"390\" height=\"20\">\n    <rounded-rectangle id=\"220:344096\" name=\"Rectangle\" x=\"131\" y=\"8\" width=\"128\" height=\"4\" />\n  </frame>\n</frame>",
+    "IMPORTANT: The design was too large to fit into context with get_design_context. Instead you have received a sparse metadata response, you MUST call get_design_context on the IDs of the sublayers to get the full code. Split up the calls to ensure the sublayers do not also exceed the context limit."
+  ]
+}

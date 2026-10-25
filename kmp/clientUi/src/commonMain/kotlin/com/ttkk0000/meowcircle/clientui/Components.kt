@@ -1,7 +1,8 @@
 package com.ttkk0000.meowcircle.clientui
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,6 +11,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -20,7 +23,8 @@ import androidx.compose.ui.unit.dp
 
 /** UI primitives have no Store, API, navigation or automatic submit side effect. */
 @Composable fun MndForm(modifier: Modifier = Modifier, gap: Dp = MobileUi.formGap, content: @Composable ColumnScope.() -> Unit) {
-    Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(MobileUi.pagePadding),
+    val scroll = rememberTaskScrollState()
+    Column(modifier.fillMaxSize().verticalScroll(scroll).padding(MobileUi.pagePadding),
         verticalArrangement = Arrangement.spacedBy(gap), content = content)
 }
 
@@ -59,8 +63,16 @@ import androidx.compose.ui.unit.dp
 
 @Composable fun MndRichTextField(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit, label: String,
     modifier: Modifier = Modifier.fillMaxWidth(), enabled: Boolean = true, minLines: Int = 1, maxLines: Int = 10,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default) {
-    OutlinedTextField(value, onValueChange, modifier, enabled = enabled, label = { Text(label) }, minLines = minLines, maxLines = maxLines, keyboardOptions = keyboardOptions)
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default, compact: Boolean = false) {
+    if (compact) BasicTextField(value,onValueChange,modifier.semantics { contentDescription = label },enabled = enabled,
+        textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
+        minLines = minLines,maxLines = maxLines,keyboardOptions = keyboardOptions,cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        decorationBox = { inner -> Box(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceVariant,MaterialTheme.shapes.medium)
+            .heightIn(min = MobileUi.actionHeight).padding(12.dp),contentAlignment = Alignment.CenterStart) {
+            if(value.text.isEmpty()) Text(label,style = MaterialTheme.typography.bodyMedium,color = MaterialTheme.colorScheme.onSurfaceVariant)
+            inner()
+        } })
+    else OutlinedTextField(value, onValueChange, modifier, enabled = enabled, label = { Text(label) }, minLines = minLines, maxLines = maxLines, keyboardOptions = keyboardOptions)
 }
 
 @Composable fun MndScreenTitle(text: String) {

@@ -26,6 +26,7 @@ data class LocalComposeDraft(
     val title: String = "", val text: String = "", val edited: Boolean = false,
     val photos: List<LocalComposePhoto> = emptyList(), val publicationKey: String? = null,
     val entry: EntryBody? = null,
+    val sourceRequestId: String? = null, val sourceRecord: MobileRecord<SourceDeclarationBody>? = null,
 )
 
 class LocalDraftException(val reason: String) : Exception(reason)
@@ -41,7 +42,9 @@ class LocalComposeDrafts(private val files: ComposeDraftFiles, val server: Strin
             draft.photos.size > 9 || draft.photos.map { it.key }.toSet().size != draft.photos.size ||
             draft.photos.any { !it.key.matches(Regex("[a-f0-9]{32}")) || it.name.length > 200 ||
                 it.mime !in listOf("image/jpeg", "image/png") || it.mediaId?.let { id -> id <= 0 } == true } ||
-            draft.publicationKey?.let { it.length !in 8..100 } == true) {
+            draft.publicationKey?.let { it.length !in 8..100 } == true ||
+            draft.sourceRequestId?.let { !it.matches(Regex("[A-Za-z0-9_-]{8,100}")) } == true ||
+            draft.sourceRecord?.let { it.id <= 0 || it.ownerId != owner } == true) {
             throw LocalDraftException("本地草稿与当前账号或服务不一致，请保留文件并核对")
         }
     }

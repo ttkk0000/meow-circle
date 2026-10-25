@@ -22,6 +22,7 @@ services:
       - ./migrations/010_operations_console.sql:/docker-entrypoint-initdb.d/010_operations_console.sql:ro
       - ./migrations/011_mobile_query_indexes.sql:/docker-entrypoint-initdb.d/011_mobile_query_indexes.sql:ro
       - ./migrations/012_worker_checkpoints.sql:/docker-entrypoint-initdb.d/012_worker_checkpoints.sql:ro
+      - ./migrations/013_source_declarations.sql:/docker-entrypoint-initdb.d/013_source_declarations.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U meow -d meow"]
       interval: 5s

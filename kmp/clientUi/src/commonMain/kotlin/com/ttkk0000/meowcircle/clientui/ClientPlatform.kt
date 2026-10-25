@@ -26,6 +26,7 @@ interface ClientUiPlatform {
     @Composable fun NotificationPermission(content: @Composable (Boolean) -> Unit)
     fun decodeImage(bytes: ByteArray): ImageBitmap?
     fun openLink(url: String): Boolean
+    fun openNotificationSettings(): Boolean = false
 }
 
 val LocalClientPlatform = staticCompositionLocalOf<ClientUiPlatform> { error("ClientUiPlatform is required") }

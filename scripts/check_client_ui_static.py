@@ -83,4 +83,4 @@ assert len(trace["states"]) == 740 and trace["counts"]["runtime_verified"] == 0
 for row in trace["states"]:
     for key in ["android_source", "ios_source", "desktop_source", "web_source"]:
         if row[key]: assert (root / row[key]).is_file(), (row["key"], key)
-print(f"公共UI只读核对：{len(sources)}份公共源码、{len(pages)}个功能分派、3套平台端口、{len(catalog['emoji'])}枚Noto原图、21枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。")
+print(f"公共UI只读核对：{len(sources)}份公共源码、{len(pages)}个功能分派、3套平台端口、{len(catalog['emoji'])}枚Noto原图、{len(manifest['assets'])}枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。")

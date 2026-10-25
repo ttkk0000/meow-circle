@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { api, explain, query, type RecordData, type User } from "../core/api";
 import { usePages, titleOf } from "../core/pages";
 import { reload, useQuery } from "../core/query";
@@ -158,6 +158,8 @@ export function Feed({
       <QueryState
         loading={page.loading}
         error={page.error}
+        failure={page.failure}
+        readAt={page.readAt}
         onRetry={page.retry}
         keepContent={!!page.rows.length && !page.denied}
       >
@@ -174,7 +176,43 @@ export function Feed({
             ),
           )}
         </div>
-        <PageEnd page={page} />
+        <PageEnd
+          page={page}
+          empty={
+            <>
+              <Empty
+                title={
+                  search || city || space !== "community"
+                    ? "这次还没有合适的结果"
+                    : "第一份日常，等你来分享"
+                }
+              >
+                <p>
+                  {search || city || space !== "community"
+                    ? "可以调整搜索或城市；不会把其它范围的内容偷偷当作当前结果。"
+                    : "这里还没有真实内容。可以先看看养宠指南，或记录你和宠物的一天。"}
+                </p>
+              </Empty>
+              {search || city || space !== "community" ? (
+                <Button
+                  onClick={() => {
+                    setWord("");
+                    setSearch("");
+                    setCity("");
+                    setSpace("community");
+                    replaceFilters({ q: "", city: "", space: "" });
+                  }}
+                >
+                  清空条件并查看推荐
+                </Button>
+              ) : null}
+              <Button onClick={() => navigate("/guide")}>看看养宠指南</Button>
+              <Button kind="primary" onClick={() => navigate("/publish")}>
+                晒晒我的宠物
+              </Button>
+            </>
+          }
+        />
       </QueryState>
     </TaskPage>
   );
@@ -259,12 +297,27 @@ function FeedBatch({
     </>
   );
 }
-export function PageEnd({ page }: { page: ReturnType<typeof usePages> }) {
+export function PageEnd({
+  page,
+  empty,
+}: {
+  page: ReturnType<typeof usePages>;
+  empty?: ReactNode;
+}) {
   return (
     <>
-      {!page.loading && !page.rows.length ? (
-        <Empty title="这里还没有内容" />
-      ) : null}
+      {!page.loading &&
+      !page.error &&
+      page.data &&
+      !page.data.items.length &&
+      !page.rows.length &&
+      page.next === 0n
+        ? (empty ?? (
+            <Empty title="这里还没有内容">
+              <p>当前范围暂无可显示的记录；可以调整筛选或稍后重新读取。</p>
+            </Empty>
+          ))
+        : null}
       {page.next > 0n ? (
         <Button onClick={page.more} disabled={page.loading}>
           继续加载
@@ -434,16 +487,43 @@ export function Records({
         </Notice>
       ) : null}
       {kind === "cases" ? <RowLink title="附近走失提醒" to="/nearby" /> : null}
+      {["pets", "cases", "offers"].includes(kind) ? (
+        <RowLink title="不提供定位也可以" to="/location-help" />
+      ) : null}
       <QueryState
         loading={page.loading}
         error={page.error}
+        failure={page.failure}
+        readAt={page.readAt}
         onRetry={page.retry}
         keepContent={!!page.rows.length && !page.denied}
       >
         {page.rows.map((row) => (
           <RecordCard key={String(row.id)} kind={kind} row={row} />
         ))}
-        <PageEnd page={page} />
+        <PageEnd
+          page={page}
+          empty={
+            search || city || species ? (
+              <>
+                <Empty title="这次还没有合适的结果">
+                  <p>可以放宽区域或条件；不把其它城市内容偷偷当成本地结果。</p>
+                </Empty>
+                <Button
+                  onClick={() => {
+                    setWord("");
+                    setSearch("");
+                    setCity("");
+                    setSpecies("");
+                    replaceFilters({ q: "", city: "", species: "" });
+                  }}
+                >
+                  清空条件
+                </Button>
+              </>
+            ) : undefined
+          }
+        />
       </QueryState>
     </TaskPage>
   );

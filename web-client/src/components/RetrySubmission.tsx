@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { api, explain } from "../core/api";
-import type { Draft } from "../core/drafts";
+import { draftCommandKey, type Draft } from "../core/drafts";
 import { parseWire, integer } from "../core/wire";
 import { Facts } from "./SchemaForm";
 import { PurposeCheck } from "./PurposeCheck";
@@ -36,6 +36,11 @@ export function RetrySubmission({
     setGrant("");
     try {
       const snapshot = parseWire<Record<string, unknown>>(original.body);
+      if (
+        original.path === "source_declarations" &&
+        snapshot.client_request_id !== draftCommandKey(draft)
+      )
+        throw new Error("原声明编号与快照不一致，请保留输入核对");
       if (draft.access?.type === "data")
         snapshot.query_token = draft.access.token;
       let path: string | undefined;
@@ -119,7 +124,7 @@ export function RetrySubmission({
             </Button>
           }
         >
-          <Notice title={`原编号 ${draft.requestId}`}>
+          <Notice title={`原编号 ${draftCommandKey(draft)}`}>
             未找到回执不代表失败。保留原对象、版本与内容，服务端将再次核对权限和幂等结果。
           </Notice>
           <Facts value={body} />

@@ -413,6 +413,12 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 					return h.Service.CreateAppointment(ctx, actor, in)
 				})
 			}
+		case mobile.SourceDeclarations:
+			if r.Method == http.MethodPost && id == 0 {
+				return invoke(r, func(in mobile.SourceDeclarationInput) (mobile.Record, error) {
+					return h.Service.DeclareSource(ctx, actor, in)
+				})
+			}
 		case mobile.Reviews:
 			if r.Method == http.MethodPost && id == 0 {
 				return invoke(r, func(in mobile.ReviewInput) (mobile.Record, error) { return h.Service.SubmitReview(ctx, actor, in) })
@@ -465,6 +471,17 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 				Liked bool `json:"liked"`
 			}) (mobile.Record, error) {
 				return h.Service.React(ctx, actor, id, in.Liked)
+			})
+		}
+	case mobile.Leads:
+		if action == "assessment" {
+			return invoke(r, func(in mobile.LeadAssessmentInput) (mobile.Record, error) {
+				return h.Service.AssessLead(ctx, actor, id, in)
+			})
+		}
+		if action == "contact" {
+			return invoke(r, func(in mobile.LeadContactInput) (mobile.Record, error) {
+				return h.Service.LeadConversation(ctx, actor, id, in)
 			})
 		}
 	case mobile.Cases:

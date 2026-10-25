@@ -297,3 +297,19 @@ export async function preparePhoto(
     scope,
   };
 }
+/** 拖动和键盘按钮共用同一有序队列；原照片Key与上传编号保持。 */
+export function movePhoto<T>(items: T[], index: number, offset: number): T[] {
+  const target = index + offset;
+  if (
+    !Number.isInteger(index) ||
+    !Number.isInteger(target) ||
+    index < 0 ||
+    index >= items.length ||
+    target < 0 ||
+    target >= items.length
+  )
+    return items;
+  const next = [...items];
+  next.splice(target, 0, next.splice(index, 1)[0]);
+  return next;
+}

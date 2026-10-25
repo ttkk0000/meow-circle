@@ -1,5 +1,8 @@
 package com.ttkk0000.meowcircle.clientui
 
+import androidx.compose.foundation.ScrollState
+import kotlinx.coroutines.flow.collect
+
 import androidx.compose.runtime.*
 import com.ttkk0000.meowcircle.client.FeaturePage
 import com.ttkk0000.meowcircle.client.FeatureRoute
@@ -30,6 +33,16 @@ class ClientUiSessionState {
 }
 
 val LocalUiSession = staticCompositionLocalOf<ClientUiSessionState> { error("Client UI session is required") }
+
+/** 只把滚动整数留在账号／任务内存；错误页使用独立scope，不覆盖原阅读位置。 */
+@Composable fun rememberTaskScrollState(): ScrollState {
+    val scope = LocalUiScope.current
+    val saved = rememberSessionUiState("scroll.form") { 0 }
+    val scroll = remember(scope, saved) { ScrollState(initial = saved.value) }
+    LaunchedEffect(scroll) { snapshotFlow { scroll.value }.collect { saved.value = it } }
+    DisposableEffect(scroll) { onDispose { saved.value = scroll.value } }
+    return scroll
+}
 val LocalUiScope = staticCompositionLocalOf { "screen:root" }
 fun featureUiScope(route: FeatureRoute): String =
     "${if (route.page in setOf(FeaturePage.Security, FeaturePage.Safety)) "transient" else "screen"}:feature-${route.page}-${route.id}-${route.kind}-${route.peer}"

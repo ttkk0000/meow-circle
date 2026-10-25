@@ -8,7 +8,7 @@ import {
   type Page,
   type RecordData,
 } from "./core/api";
-import { useSession } from "./core/session";
+import { useSession, signInEvent } from "./core/session";
 import { back, navigate, resourceRoute, useRoute } from "./core/router";
 import { useQuery, reload, invalidateQueries } from "./core/query";
 import { integer } from "./core/wire";
@@ -33,10 +33,17 @@ import { Guardians, GuardianProtection } from "./features/GuardianPages";
 import { Rules, ReadingPage, SettingsHome } from "./features/ReadingPages";
 import { Feed, PageEnd, Records, titles } from "./features/Records";
 import { ResourcePage, Member } from "./features/ResourcePage";
+import { LeadInbox, LeadPage } from "./features/LeadPages";
 import { Chat } from "./features/chat";
 import { Recovery } from "./features/Recovery";
 import { MapPage } from "./features/MapPage";
 import { ContentPage } from "./features/ContentPage";
+import {
+  LocationHelp,
+  NotificationHelp,
+  PhotoChoiceHelp,
+} from "./features/PermissionPages";
+import { NotificationPage } from "./features/NotificationPage";
 import { InboxReadAll } from "./components/InboxReadAll";
 import { WorkflowEditor } from "./features/WorkflowEditor";
 import { workflows, workflowURL, type Context } from "./features/workflows";
@@ -159,6 +166,11 @@ export default function App() {
   const path = u.pathname;
   const session = useSession();
   const [login, setLogin] = useState(false);
+  useEffect(() => {
+    const show = () => setLogin(true);
+    window.addEventListener(signInEvent, show);
+    return () => window.removeEventListener(signInEvent, show);
+  }, []);
   const [menu, setMenu] = useState(false);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
@@ -370,6 +382,9 @@ const anonymous = new Set([
   "/privacy",
   "/settings",
   "/guardian-protection",
+  "/location-help",
+  "/notification-help",
+  "/photo-help",
   "/publish",
   "/mine",
   "/recovery",
@@ -426,12 +441,22 @@ function RouteContent({
     );
   if (path === "/publications") return <Publications params={params} />;
   if (path === "/settings") return <SettingsHome />;
+  if (path === "/location-help") return <LocationHelp />;
+  if (path === "/notification-help") return <NotificationHelp />;
+  if (path === "/photo-help") return <PhotoChoiceHelp />;
   if (path === "/expressions") return <ExpressionSettings />;
   if (path === "/map") return <MapPage />;
   if (path === "/content") return <ContentPage />;
   if (path === "/publish") return <Publish />;
   if (path === "/messages" || path === "/notifications")
     return <InboxPage params={params} />;
+  if (
+    kind === "notifications" &&
+    pieces.length === 2 &&
+    id > 0n &&
+    String(id) === pieces[1]
+  )
+    return <NotificationPage id={id} />;
   if (path === "/recovery") return <Recovery />;
   if (path === "/security") return <Security />;
   if (path === "/age") return <AgeRange />;
@@ -446,6 +471,10 @@ function RouteContent({
   if (path === "/notification-settings" || path === "/nearby")
     return <SettingsEditor nearby={path === "/nearby"} />;
   if (path === "/edit") return <EditorRoute params={params} />;
+  if (kind === "leads" && pieces.length === 1)
+    return <LeadInbox caseId={integer(params.get("ref"))} />;
+  if (kind === "leads" && pieces.length === 2 && id > 0n)
+    return <LeadPage id={id} />;
   if (pieces.length === 1 && lists.has(kind))
     return (
       <Records
@@ -507,6 +536,8 @@ function EditorRoute({ params }: { params: URLSearchParams }) {
       <QueryState
         loading={result.loading}
         error={result.error}
+        failure={result.failure}
+        readAt={result.readAt}
         onRetry={() => void reload(`${kind}/${id}`)}
       />
     );
@@ -516,7 +547,14 @@ function EditorRoute({ params }: { params: URLSearchParams }) {
 function ProfileEditor() {
   const result = useQuery<Profile>("profile");
   if (!result.data)
-    return <QueryState loading={result.loading} error={result.error} />;
+    return (
+      <QueryState
+        loading={result.loading}
+        error={result.error}
+        failure={result.failure}
+        readAt={result.readAt}
+      />
+    );
   const p = result.data;
   const record: RecordData = {
     id: p.user.id,
@@ -553,7 +591,14 @@ function SettingsEditor({ nearby }: { nearby: boolean }) {
   const path = nearby ? "subscriptions" : "preferences";
   const result = useQuery<Page>(path);
   if (!result.data)
-    return <QueryState loading={result.loading} error={result.error} />;
+    return (
+      <QueryState
+        loading={result.loading}
+        error={result.error}
+        failure={result.failure}
+        readAt={result.readAt}
+      />
+    );
   const record = result.data.items[0];
   return (
     <WorkflowEditor
@@ -713,6 +758,8 @@ function InboxPage({ params }: { params: URLSearchParams }) {
         <QueryState
           loading={notices.loading}
           error={notices.error}
+          failure={notices.failure}
+          readAt={notices.readAt}
           onRetry={notices.retry}
           keepContent={!!notices.rows.length && !notices.denied}
         >

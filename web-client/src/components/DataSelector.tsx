@@ -16,6 +16,7 @@ const kinds: Array<[string, string]> = [
   ["cases", "寻宠求助"],
   ["offers", "有偿信息"],
   ["drafts", "云端草稿"],
+  ["source_declarations", "来源声明"],
   ["media", "自己的照片"],
   ["subscriptions", "区域提醒"],
 ];
@@ -87,6 +88,8 @@ export function DataSelector({
       <QueryState
         loading={page.loading}
         error={page.error}
+        failure={page.failure}
+        readAt={page.readAt}
         onRetry={page.retry}
         keepContent={!!page.rows.length && !page.denied}
       >

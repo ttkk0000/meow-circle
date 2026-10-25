@@ -42,14 +42,13 @@ import com.ttkk0000.meowcircle.client.PageState
                     page.loaded -> "刷新失败，当前内容已保留"
                     else -> "暂时无法加载"
                 }
-                Column(Modifier.widthIn(max = 480.dp).fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite },
+                Column(Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite },
                     verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
                     Text(title, color = MaterialTheme.colorScheme.error)
-                    Text(error, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    MndSecondaryButton(if (page.appending) "重试下一页" else "重新加载", enabled, onClick = if (page.appending) more else retry)
+                    ReadFailureContent(page.failure, error, if (page.appending) more else retry, page.readAt, enabled)
                 }
             }
-            page.empty -> Text(emptyText, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            page.empty -> EmptyResults(title = emptyText, detail = "当前条件下没有可显示的记录。可以调整筛选或稍后重新读取；不会混入其它范围的内容。")
             page.exhausted -> Text("没有更多了", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             page.canLoadMore -> MndSecondaryButton("加载下一页", enabled, modifier = Modifier, onClick = more)
             !page.loaded -> MndSecondaryButton("加载内容", enabled, modifier = Modifier, onClick = retry)

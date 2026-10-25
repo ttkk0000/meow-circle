@@ -20,12 +20,12 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
     var replaceSaved by rememberSessionUiState("replaceSaved") { false }
     if(replaceSaved) MobileAlertDialog(onDismissRequest = { replaceSaved = false },title = { Text("读取本机已保存版本") },text = { Text("此账号所有表单的未保存输入将被放弃，读取本机已保存的表单和原附件。不会提交或重新上传。") },
         confirmButton = { TextButton({ replaceSaved = false; f.replaceWithSavedDrafts() }) { Text("放弃未保存输入并读取") } },dismissButton = { TextButton({ replaceSaved = false }) { Text("继续编辑") } })
-    FeatureColumn {
-        val readingOnly=route.page in listOf(FeaturePage.Rules,FeaturePage.Reading,FeaturePage.SettingsHome)
+    FeatureColumn(spacing = if(route.page in listOf(FeaturePage.Lead,FeaturePage.LeadInbox)) 16 else 14) {
+        val readingOnly=route.page in listOf(FeaturePage.Rules,FeaturePage.Reading,FeaturePage.SettingsHome,FeaturePage.NotificationHelp,FeaturePage.LocationHelp,FeaturePage.PhotoHelp)
         MviStatusBanner(
             loading = s.loading || s.busy,
             notice = s.notice,
-            error = s.error,
+            error = if (s.readFailure == null) s.error else null,
             secondaryError = if (!readingOnly) s.draftError else null,
         )
         if (!s.draftReady && !readingOnly) {
@@ -35,7 +35,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
         }
         if (store.state.value.user == null && route.page !in listOf(FeaturePage.Member, FeaturePage.Offers,
                 FeaturePage.Offer, FeaturePage.CaseWork, FeaturePage.Safety, FeaturePage.Recovery, FeaturePage.DataRequests,
-                FeaturePage.Rules, FeaturePage.Reading, FeaturePage.SettingsHome, FeaturePage.GroupDirectory, FeaturePage.GroupPreview, FeaturePage.PetDiary, FeaturePage.Map)) {
+                FeaturePage.Rules, FeaturePage.Reading, FeaturePage.SettingsHome, FeaturePage.NotificationHelp, FeaturePage.LocationHelp, FeaturePage.PhotoHelp, FeaturePage.GroupDirectory, FeaturePage.GroupPreview, FeaturePage.PetDiary, FeaturePage.Map)) {
             FeatureSection("登录后继续") {
                 Text("登录后可查看和处理${route.page.title}，当前页面会保留。")
                 FeaturePrimary("登录", !s.busy) { store.showLogin() }
@@ -58,7 +58,8 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             FeaturePage.PetEdit, FeaturePage.Collaborators -> route.id > 0 && route.kind != "care" && s.pet == null
             FeaturePage.Group -> s.group == null
             FeaturePage.Appointment, FeaturePage.AppointmentEdit -> route.id > 0 && s.appointment == null
-            FeaturePage.CaseWork, FeaturePage.CaseEdit -> route.id > 0 && s.case == null
+            FeaturePage.CaseWork, FeaturePage.CaseEdit, FeaturePage.LeadInbox -> route.id > 0 && s.case == null
+            FeaturePage.Lead -> s.lead == null || s.case == null
             FeaturePage.Claim -> s.claim == null
             FeaturePage.AdoptionWork, FeaturePage.ContractEdit, FeaturePage.ReturnEdit -> route.kind != "care" && s.adoption == null
             FeaturePage.Offer, FeaturePage.OfferEdit -> route.id > 0 && s.offer == null
@@ -69,13 +70,14 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             else -> false
         }
         if (missingRecord) {
-            if (s.loading) Text("正在读取当前记录…") else FeatureSection("暂时无法显示此记录") {
-                Text("记录可能已变化，或当前账号没有访问权限。请重新读取，当前输入会保留。")
-                if (s.error == null) FeatureButton("重新读取") { f.reload() }
+            if (s.loading) Text("正在读取当前记录…") else {
+                ReadFailureContent(s.readFailure, s.error ?: "记录可能已变化，或当前账号没有访问权限。", { f.reload() })
+                UnavailableTaskActions(store, s.readFailure)
                 FeatureButton("返回上一页") { f.back() }
             }
             return@FeatureColumn
         }
+        if (s.readFailure != null && s.error != null) ReadFailureContent(s.readFailure, s.error, { f.reload() })
         when (route.page) {
             FeaturePage.EntryEdit, FeaturePage.Friends, FeaturePage.Member, FeaturePage.ProfileEdit, FeaturePage.PetEdit, FeaturePage.PetDiary,
             FeaturePage.Collaborators, FeaturePage.Invitations, FeaturePage.GroupCreate, FeaturePage.Group, FeaturePage.GroupDirectory, FeaturePage.GroupPreview, FeaturePage.Content -> SocialFeature(store, s, route)
@@ -158,7 +160,7 @@ private fun purposeLabel(value: String) = when {
 }
 fun dataTypeLabel(v: String) = mapOf("erase_fields" to "删除指定资料／内容", "close_account" to "注销账号", "matters_assistance" to "未结事项协助")[v] ?: v
 fun rightsTypeLabel(v: String) = mapOf("safety" to "安全求助", "privacy" to "隐私报告", "data_assistance" to "资料事项协助", "rights_notice" to "正式权利通知", "counterstatement" to "对原通知提交声明", "supplement" to "补充原事项")[v] ?: v
-@Composable fun FeatureColumn(content: @Composable ColumnScope.() -> Unit) { TaskColumn(14,content) }
+@Composable fun FeatureColumn(spacing: Int = 14,content: @Composable ColumnScope.() -> Unit) { TaskColumn(spacing,content) }
 @Composable fun FeatureSection(title: String,content: @Composable ColumnScope.() -> Unit) { MndSection(title,content = content) }
 @Composable fun FeatureButton(label: String, enabled: Boolean = true, onClick: () -> Unit) {
     MndSecondaryButton(label, enabled, onClick = onClick)
@@ -199,6 +201,8 @@ fun stateLabel(value: String): String = mapOf("active" to "有效", "pending" to
         onRetry = { key -> f.retryPhoto(route, key, private, safety) },
         onMove = f::movePhoto,
         onRemove = f::removePhoto,
+        localPreview = { key -> f.localPhotoPreview(route, key) },
+        onSaveOrder = f::retryDraftSave,
     )
 }
 

@@ -23,24 +23,27 @@ sealed interface MobileDestination {
 }
 
 data class PageState<T>(val items: List<MobileRecord<T>> = emptyList(), val next: Long = 0, val loading: Boolean = false,
-    val loaded: Boolean = false, val error: String? = null, val appending: Boolean = false) {
+    val loaded: Boolean = false, val error: String? = null, val appending: Boolean = false,
+    val failure: ClientReadFailure? = null, val readAt: String? = null) {
     val refreshing: Boolean get() = loading && loaded && !appending
     val canLoadMore: Boolean get() = loaded && next != 0L && !loading && (error == null || appending)
     val empty: Boolean get() = loaded && items.isEmpty() && next == 0L && !loading && error == null
     val exhausted: Boolean get() = loaded && items.isNotEmpty() && next == 0L && !loading && error == null
 
-    fun starting(more: Boolean): PageState<T> = copy(loading = true, error = null, appending = more)
-    fun failed(message: String, clear: Boolean = false): PageState<T> =
-        if (clear) PageState(error = message) else copy(loading = false, error = message)
+    fun starting(more: Boolean): PageState<T> = copy(loading = true, error = null, failure = null, appending = more)
+    fun failed(message: String, clear: Boolean = false, failure: ClientReadFailure? = null): PageState<T> =
+        if (clear) PageState(error = message, failure = failure) else copy(loading = false, error = message, failure = failure)
     fun completed(result: MobilePage<T>, more: Boolean): PageState<T> {
         check(result.nextCursor == 0L || result.nextCursor > if (more) next else 0L) { "分页游标未前进" }
-        return PageState(((if (more) items else emptyList()) + result.items).distinctBy { it.id }, result.nextCursor, loaded = true)
+        return PageState(((if (more) items else emptyList()) + result.items).distinctBy { it.id }, result.nextCursor, loaded = true, readAt = clientReadTimestamp())
     }
 }
 
 data class AuthForm(val visible: Boolean = false, val username: String = "", val password: String = "", val error: String? = null,val errorCode: String = "")
 
 data class AdoptionCommand(val record: MobileRecord<AdoptionBody>, val action: String, val label: String, val note: String)
+data class PendingNotification(val id: Long, val owner: Long)
+fun canonicalNotificationId(raw: String): Long? = raw.takeIf { it.length in 1..19 }?.toLongOrNull()?.takeIf { it > 0 && it.toString() == raw }
 
 data class MobileState(
     val restoring: Boolean = true, val user: MobileUser? = null, val tab: MobileTab = MobileTab.Community,
@@ -48,6 +51,11 @@ data class MobileState(
     val capabilities: LoginCapabilities = LoginCapabilities(), val capabilityError: String? = null,
     val eligibility: Eligibility? = null, val pendingOperations: List<CommandRecovery> = emptyList(),
     val publicationConfirmation: EntryInput? = null,
+    val publicationIssue: String? = null,
+    val publicationSourceRequest: String? = null,
+    val publicationSourceRecord: MobileRecord<SourceDeclarationBody>? = null,
+    val publicationSourceResult: Boolean = false,
+    val pendingTaskLink: PendingClientTaskLink? = null,
     val composeAudienceValid: Boolean = true,
     val entries: PageState<EntryBody> = PageState(), val pets: PageState<PetBody> = PageState(),
     val myPets: PageState<PetBody> = PageState(), val applications: PageState<AdoptionBody> = PageState(),
@@ -56,12 +64,16 @@ data class MobileState(
     val comments: PageState<CommentBody> = PageState(), val commentMetrics: Map<Long,CommentMetrics> = emptyMap(), val notifications: PageState<NotificationBody> = PageState(),
     val petChecks: List<VerificationSummary> = emptyList(), val pet: MobileRecord<PetBody>? = null, val entry: MobileRecord<EntryBody>? = null,
     val application: MobileRecord<AdoptionBody>? = null, val case: MobileRecord<CaseBody>? = null,
-    val conversation: MobileRecord<ConversationBody>? = null, val group: MobileRecord<GroupBody>? = null, val profile: MobileProfile? = null,
+    val conversation: MobileRecord<ConversationBody>? = null, val chatLead: MobileRecord<LeadBody>? = null, val chatCase: MobileRecord<CaseBody>? = null, val group: MobileRecord<GroupBody>? = null, val profile: MobileProfile? = null,
     val members: Map<Long,PublicMember> = emptyMap(), val metrics: Map<Long, EntryMetrics> = emptyMap(), val inbox: InboxSummary? = null, val inboxError: String? = null,
+    val inboxReadAt: String? = null, val inboxFailure: ClientReadFailure? = null,
     val feedSpace: String = "community", val feedKeyword: String = "", val feedCity: String = "",
     val petKeyword: String = "", val petCity: String = "", val petSpecies: String = "",
     val inboxReadAll: InboxReadAllState = InboxReadAllState(),
     val emoji: List<EmojiItem> = emptyList(), val stickers: List<StickerItem> = emptyList(), val detailLoading: Boolean = false, val detailError: String? = null,
+    val detailFailure: ClientReadFailure? = null,
+    val pendingNotification: PendingNotification? = null, val notificationLoading: Boolean = false,
+    val notificationError: String? = null,
     val expressionState: MobileRecord<ExpressionBody>? = null,
     val busy: Boolean = false, val notice: String? = null, val conflict: Boolean = false,
     val applying: Boolean = false, val applicationText: String = "", val actionNote: String = "",
@@ -169,6 +181,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         _state.update { old ->
             MobileState(restoring = old.restoring, user = user, tab = old.tab,
                 destination = old.destination, auth = if (user != null) AuthForm() else old.auth,
+                pendingNotification = old.pendingNotification?.takeIf { user != null && (it.owner == 0L || it.owner == user.id) },
+                pendingTaskLink = old.pendingTaskLink?.takeIf { it.owner == 0L || it.owner == user?.id },
                 capabilities = old.capabilities, capabilityError = old.capabilityError, emoji = old.emoji, stickers = old.stickers)
         }
         if (user != null && localDrafts != null) restoreLocalComposeDraft(user.id)
@@ -210,7 +224,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         pendingGuestReply = null
         history.clear()
         detailRevision++
-        _state.update { it.copy(tab = tab, destination = MobileDestination.Home, detailError = null, applying = false, confirmation = null,guestReplySuggestion = null) }
+        _state.update { it.copy(tab = tab, destination = MobileDestination.Home, detailError = null, detailFailure = null, applying = false, confirmation = null,guestReplySuggestion = null) }
         if (tab in listOf(MobileTab.Publish, MobileTab.Messages, MobileTab.Profile) && _state.value.user == null) showLogin()
         refreshHome()
     }
@@ -223,9 +237,9 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         detailRevision++
         replyKey = replyKeys.getOrPut(destination) { newKey() }
         _state.update { it.copy(destination = destination, pet = null, petChecks = emptyList(), entry = null, case = null, application = null,
-            conversation = null, group = null, comments = PageState(), commentMetrics = emptyMap(), messages = PageState(), reply = replyDrafts[destination].orEmpty(),
+            conversation = null, chatLead = null, chatCase = null, group = null, comments = PageState(), commentMetrics = emptyMap(), messages = PageState(), reply = replyDrafts[destination].orEmpty(),
             replyTo = richReplies[destination]?.first ?: 0, replySticker = richReplies[destination]?.second.orEmpty(), replyPhotos = replyPhotos[destination].orEmpty(), actionNote = "",
-            applying = false, applicationText = "", detailError = null, conflict = false, confirmation = null,guestReplySuggestion = null) }
+            applying = false, applicationText = "", detailError = null, detailFailure = null, conflict = false, confirmation = null,guestReplySuggestion = null) }
         reloadDetail()
     }
 
@@ -242,7 +256,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         pendingGuestReply = null
         replyKey = replyKeys.getOrPut(previous) { newKey() }
         _state.update { it.copy(destination = previous,guestReplySuggestion = null,comments = PageState(),commentMetrics = emptyMap(),
-            detailError = null, confirmation = null, applying = false, reply = replyDrafts[previous].orEmpty(), replyTo = richReplies[previous]?.first ?: 0, replySticker = richReplies[previous]?.second.orEmpty(), replyPhotos = replyPhotos[previous].orEmpty()) }
+            detailError = null, detailFailure = null, confirmation = null, applying = false, reply = replyDrafts[previous].orEmpty(), replyTo = richReplies[previous]?.first ?: 0, replySticker = richReplies[previous]?.second.orEmpty(), replyPhotos = replyPhotos[previous].orEmpty()) }
         reloadDetail()
         return true
     }
@@ -298,12 +312,178 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val s = _state.value
         editComposeOptions(s.composeEntry.space,s.composeEntry.audience.copy(userIds = values),s.composeEntry.petId,s.composeEntry.category)
     }
-    fun dismissPublication() { if (!_state.value.busy) _state.update { it.copy(publicationConfirmation = null) } }
+    fun dismissPublication() { if (!_state.value.busy) _state.update { it.copy(publicationConfirmation = null, publicationIssue = null, publicationSourceResult = false) } }
+    fun hidePublicationSourceResult() { if (!_state.value.busy) _state.update { it.copy(publicationSourceResult = false) } }
+    fun clearPublicationIssue() { if (!_state.value.busy) _state.update { it.copy(publicationIssue = null) } }
+    fun recheckPublicationSource(origin: String, rightsConfirmed: Boolean) = command {
+        if (!rightsConfirmed || !canEditCompose() || _state.value.publicationSourceRequest != null) return@command
+        val epoch = accountEpoch
+        val pending = _state.value.publicationConfirmation ?: return@command
+        val revised = pending.copy(declaration = PublicationDeclaration(origin = origin))
+        features.requireCurrentAudience(revised.entry.audience)
+        val preview = api.previewPublication(revised)
+        if (epoch != accountEpoch || _state.value.publicationConfirmation != pending) return@command
+        val checked = revised.copy(declaration = PublicationDeclaration(preview.manifestHash,preview.origin))
+        val previous = _state.value.publicationSourceRecord?.let { prior ->
+            try { api.sourceDeclaration(prior.id).takeIf { it.ownerId == _state.value.user?.id && it.state == "active" } }
+            catch (e: MobileApiException) { if (e.status in listOf(403,404)) null else throw e }
+        }
+        if (epoch != accountEpoch) return@command
+        val prepared = api.prepareSourceDeclaration(SourceDeclarationInput(newRequestKey(),checked,true,previous?.id ?: 0))
+        if (epoch != accountEpoch) return@command
+        val key = prepared.clientRequestId
+        _state.update { it.copy(publicationConfirmation = checked, publicationSourceRequest = key, publicationIssue = null) }
+        try {
+            persistCompose()
+            if (epoch != accountEpoch) return@command
+            val record = api.declareSource(prepared)
+            if (epoch == accountEpoch && _state.value.publicationSourceRequest == key) acceptPublicationSource(record)
+        } catch (e: Exception) {
+            if (epoch == accountEpoch && api.commandStatus(key)?.phase in listOf(null,"rejected")) {
+                _state.update { it.copy(publicationSourceRequest = null) }
+                withContext(NonCancellable) { persistCompose() }
+            }
+            throw e
+        }
+    }
+    private suspend fun acceptPublicationSource(record: MobileRecord<SourceDeclarationBody>) {
+        val epoch = accountEpoch
+        var pending = _state.value.publicationConfirmation
+        if (record.id <= 0 || record.ownerId != _state.value.user?.id || record.ownerId != api.user.value?.id || record.state != "active") throw MobileApiException(403,"source record is not available")
+        if (pending != null && pending.declaration.origin != record.data.origin) {
+            val candidate = pending.copy(declaration = PublicationDeclaration(origin = record.data.origin))
+            val preview = try { api.previewPublication(candidate) }
+            catch (e: CancellationException) { throw e } catch (_: Exception) { null }
+            if (epoch != accountEpoch || record.ownerId != api.user.value?.id) return
+            if (preview != null && preview.manifestHash == record.data.manifestHash) pending = candidate.copy(declaration = PublicationDeclaration(preview.manifestHash,preview.origin))
+        }
+        val matches = pending != null && pending.declaration.manifestHash == record.data.manifestHash && pending.declaration.origin == record.data.origin
+        val resolved = pending
+        _state.update { it.copy(publicationSourceRecord = record, publicationSourceRequest = null, publicationSourceResult = true,
+            publicationConfirmation = if (matches && resolved != null) resolved.copy(declaration = resolved.declaration.copy(recordId = record.id)) else resolved,
+            notice = "来源声明已记录；内容尚未发布，发布资格和受众仍需核对") }
+        persistCompose()
+    }
+    fun queryPublicationSource() = command {
+        val key = _state.value.publicationSourceRequest ?: return@command
+        val epoch = accountEpoch
+        try {
+            val receipt = api.reconcileOperation(key)
+            if (receipt.clientRequestId != key || receipt.command != "source.declare" || receipt.state != "committed" || receipt.resultKind != "source_declarations") throw OperationResultUnknown(key)
+            val record = api.sourceDeclaration(receipt.resultId)
+            if (epoch == accountEpoch && _state.value.publicationSourceRequest == key) acceptPublicationSource(record)
+        } catch (e: MobileApiException) {
+            if (e.status == 404) { if (epoch == accountEpoch && _state.value.publicationSourceRequest == key) _state.update { it.copy(notice = "暂未查到声明回执，保留原请求，请勿重复提交") } } else throw e
+        }
+    }
+    private suspend fun finishRecoveredSource(receipt: OperationReceipt) {
+        if (receipt.command != "source.declare" || receipt.state != "committed" || receipt.resultKind != "source_declarations" || receipt.clientRequestId != _state.value.publicationSourceRequest) return
+        val epoch = accountEpoch
+        val record = api.sourceDeclaration(receipt.resultId)
+        if (epoch == accountEpoch && receipt.clientRequestId == _state.value.publicationSourceRequest) acceptPublicationSource(record)
+    }
+    fun queueTaskLink(target: TaskLinkTarget): Boolean {
+        if (target.kind !in taskLinkKinds || target.id <= 0) return false
+        val owner = if (target.isPublic) 0L else api.user.value?.id ?: return false
+        _state.update { it.copy(pendingTaskLink = PendingClientTaskLink(target, owner)) }
+        return true
+    }
+    fun dismissTaskLink() { _state.update { it.copy(pendingTaskLink = null) } }
+    fun openPendingTaskLink() {
+        val pending = _state.value.pendingTaskLink ?: return
+        if (!canOpenNotification()) return
+        if (_state.value.user?.id != api.user.value?.id) return
+        if (pending.owner != 0L && pending.owner != _state.value.user?.id) { dismissTaskLink(); return }
+        taskLinkDestination(pending.target)?.let { target -> features.closeRoute(); this.open(target); dismissTaskLink(); return }
+        taskLinkFeature(pending.target)?.let { target -> features.open(target); dismissTaskLink() }
+    }
+
+    /** 推送只携带通知编号，不采信正文、目标类型、URL或任何写入指令。 */
+    fun queueNotification(raw: String): Boolean {
+        val id = canonicalNotificationId(raw) ?: return false
+        val pending = PendingNotification(id, _state.value.user?.id ?: 0L)
+        if (_state.value.pendingNotification == pending) return true
+        jobs.remove("notification-link")?.cancel()
+        _state.update { it.copy(pendingNotification = pending, notificationError = null, notificationLoading = false) }
+        return true
+    }
+    fun queueInboxNotification() {
+        jobs.remove("notification-link")?.cancel()
+        _state.update { it.copy(pendingNotification = PendingNotification(0, it.user?.id ?: 0L), notificationError = null, notificationLoading = false) }
+    }
+    fun dismissNotification() {
+        jobs.remove("notification-link")?.cancel()
+        _state.update { it.copy(pendingNotification = null, notificationError = null, notificationLoading = false) }
+    }
+    fun canOpenNotification(): Boolean = _state.value.let { s -> features.state.value.let { f ->
+        !s.restoring && !s.busy && !s.notificationLoading && !f.busy && !s.auth.visible && s.confirmation == null &&
+            s.publicationConfirmation == null && f.confirmation == null && !s.inboxReadAll.visible && !features.age.state.value.busy &&
+            features.sensitive.state.value.stage == SensitiveStage.Idle && providerAuth.state.value.stage == ProviderAuthStage.Idle
+    } }
+    fun openPendingNotification() {
+        val pending = _state.value.pendingNotification ?: return
+        if (!canOpenNotification()) return
+        val actor = _state.value.user?.id ?: run { showLogin(); return }
+        if (pending.owner != 0L && pending.owner != actor) { dismissNotification(); return }
+        if (pending.id == 0L) { features.closeRoute(); select(MobileTab.Messages); dismissNotification(); return }
+        val epoch = accountEpoch
+        val original = _state.value
+        val route = features.state.value.route
+        _state.update { it.copy(notificationLoading = true, notificationError = null) }
+        task("notification-link") {
+            fun current() = epoch == accountEpoch && _state.value.pendingNotification == pending
+            try {
+                val record = api.notification(pending.id)
+                if (!current()) return@task
+                if (record.ownerId != actor || record.id != pending.id) throw MobileApiException(403, "notification unavailable")
+                if (_state.value.destination != original.destination || _state.value.tab != original.tab || features.state.value.route != route) return@task
+                _state.update { it.copy(notificationLoading = false) }
+                if (!canOpenNotification()) return@task
+                if (!openNotification(record.data)) throw MobileApiException(404, "notification target unavailable")
+                dismissNotification()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                if (current()) _state.update { it.copy(notificationError = e.mobileMessage()) }
+            } finally {
+                if (current()) _state.update { it.copy(notificationLoading = false) }
+            }
+        }
+    }
+
+    /** 站内列表和系统通知共用白名单；打开事项本身不标已读、不确认或提交。 */
+    fun openNotification(body: NotificationBody): Boolean {
+        if (body.targetId <= 0) return false
+        val feature = when (body.targetKind) {
+            "appointments" -> FeatureRoute(FeaturePage.Appointment, body.targetId)
+            "invitations" -> FeatureRoute(FeaturePage.Invitations)
+            "claims" -> FeatureRoute(FeaturePage.Claim, body.targetId)
+            "offers" -> FeatureRoute(FeaturePage.Offer, body.targetId)
+            "reviews" -> FeatureRoute(FeaturePage.Review, body.targetId)
+            "guardians" -> FeatureRoute(FeaturePage.Guardians, body.targetId)
+            "friendships" -> FeatureRoute(FeaturePage.Friends)
+            else -> null
+        }
+        if (feature != null) { features.open(feature); return true }
+        val target = when (body.targetKind) {
+            "entries" -> MobileDestination.Entry(body.targetId)
+            "pets" -> MobileDestination.Pet(body.targetId)
+            "adoptions" -> MobileDestination.Application(body.targetId)
+            "cases" -> MobileDestination.Case(body.targetId)
+            "conversations" -> MobileDestination.Chat(body.targetId)
+            "groups" -> MobileDestination.Chat(body.targetId, true)
+            else -> return false
+        }
+        features.closeRoute(); this.open(target)
+        return true
+    }
     fun refreshInbox() = task("inbox") {
         if (_state.value.user == null) return@task
-        try { val summary = api.inbox(); api.devicePush.updateBadge(summary.globalTotal); _state.update { it.copy(inbox = summary, inboxError = null) } }
+        try { val summary = api.inbox(); api.devicePush.updateBadge(summary.globalTotal); _state.update { it.copy(inbox = summary, inboxError = null, inboxFailure = null, inboxReadAt = clientReadTimestamp()) } }
         catch (e: CancellationException) { throw e }
-        catch (e: Exception) { _state.update { it.copy(inboxError = e.mobileMessage()) } }
+        catch (e: Exception) { _state.update { it.copy(inboxError = e.mobileMessage(), inboxFailure = e.readFailure(),
+            inbox = if (e is MobileApiException && e.status in listOf(401,403,404)) null else it.inbox,
+            inboxReadAt = if (e is MobileApiException && e.status in listOf(401,403,404)) null else it.inboxReadAt) } }
     }
     fun prepareInboxReadAll() {
         if (_state.value.user == null) { showLogin(); return }
@@ -429,19 +609,17 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             replyPhotos[chat] = replyPhotos[chat].orEmpty().map { if (it.key == key) change(it) else it }
             if (_state.value.destination == chat) _state.update { it.copy(replyPhotos = replyPhotos[chat].orEmpty()) }
         }
-        update { it.copy(uploading = true,error = null) }
+        update { it.copy(uploading = true,error = null,uploadPercent = null) }
         task("reply-photo-$key") {
             try {
                 val photo = replyPhotoBytes[key] ?: localReplies?.photo(_state.value.user?.id ?: 0L,WorkspacePhoto(item.key,item.name,item.mime))?.also { replyPhotoBytes[key] = it }
                     ?: throw LocalDraftException("原照片不可读，请移除后重新选择")
                 persistReplies()
-                val result = api.uploadPrivate(photo,key)
+                val result = api.uploadPrivate(photo,key) { sent, total -> update { it.withProgress(sent,total) } }
                 update { it.copy(uploading = false,mediaId = result.id) }
                 persistReplies()
                 if (epoch == accountEpoch) replyPhotoBytes.remove(key)
-            }
-            catch (e: CancellationException) { throw e }
-            catch (e: Exception) { update { it.copy(uploading = false,error = e.mobileMessage()) } }
+            } catch (e: CancellationException) { throw e } catch (e: Exception) { update { it.copy(uploading = false,error = e.mobileMessage()) } }
         }
     }
     fun removeReplyPhoto(key: String) {
@@ -450,6 +628,19 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         jobs.remove("reply-photo-$key")?.cancel(); replyPhotoBytes.remove(key)
         replyPhotos[destination] = replyPhotos[destination].orEmpty().filterNot { it.key == key }
         replyKey = newKey(); replyKeys[destination] = replyKey; _state.update { it.copy(replyPhotos = replyPhotos[destination].orEmpty()) }
+        scheduleReplySave()
+    }
+    fun moveReplyPhoto(key: String, offset: Int) {
+        if (!canEditReply() || _state.value.busy) return
+        val destination = _state.value.destination
+        val photos = replyPhotos[destination].orEmpty().toMutableList()
+        val index = photos.indexOfFirst { it.key == key }
+        val target = index + offset
+        if (index < 0 || target !in photos.indices || index == target) return
+        photos.add(target, photos.removeAt(index))
+        replyPhotos[destination] = photos
+        replyKey = newKey(); replyKeys[destination] = replyKey
+        _state.update { it.copy(replyPhotos = photos) }
         scheduleReplySave()
     }
     fun editApplication(text: String) { if (withinLimit(text, 2000)) _state.update { it.copy(applicationText = text) } }
@@ -503,7 +694,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             val snapshot = LocalComposeDraft(server = api.storageScope, owner = owner,
                 cloudVersion = draftVersion, cloudLoaded = s.draftLoaded, title = s.composeTitle, text = s.composeText,
                 edited = s.composeEdited, photos = s.photos.map { LocalComposePhoto(it.key, it.name, it.mime, it.mediaId) },
-                publicationKey = localPublicationKey, entry = s.composeEntry)
+                publicationKey = localPublicationKey, entry = s.composeEntry, sourceRequestId = s.publicationSourceRequest, sourceRecord = s.publicationSourceRecord)
             val bytes = photoBytes.toMap()
             try {
                 withContext(NonCancellable) {
@@ -511,14 +702,18 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                     if (epoch == accountEpoch) localRevision = saved.revision
                 }
                 if (epoch != accountEpoch) throw CancellationException("Account changed")
-            } catch (e: CancellationException) { throw e }
-            catch (e: LocalDraftException) { throw e }
-            catch (_: Exception) { throw LocalDraftException("设备草稿尚未保存，已保留当前输入，请解锁设备并重试") }
+            } catch (e: CancellationException) { throw e } catch (e: LocalDraftException) { throw e } catch (_: Exception) { throw LocalDraftException("设备草稿尚未保存，已保留当前输入，请解锁设备并重试") }
         }
     }
 
     private fun scheduleLocalSave() {
         if (localReady && _state.value.user != null && localDrafts != null) task("local-save") { persistCompose() }
+    }
+    fun saveLocalPhotoOrder() {
+        if (_state.value.user == null) { showLogin(); return }
+        if (!canEditCompose()) return
+        if (localDrafts == null) { pickerFailed("本机草稿存储暂不可用"); return }
+        task("local-save") { persistCompose(); _state.update { it.copy(notice = "照片顺序已保存到本机草稿，尚未发布") } }
     }
 
     private fun restoreLocalComposeDraft(owner: Long) = task("local-restore") {
@@ -530,9 +725,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             val restored = draft?.photos.orEmpty().map { photo ->
                 var error: String? = null
                 if (photo.mediaId == null) {
-                    try { restoredBytes[photo.key] = storage.photo(owner, photo) }
-                    catch (e: CancellationException) { throw e }
-                    catch (_: Exception) { error = "原照片暂不可读，请重试或移除后重新选择" }
+                    try { restoredBytes[photo.key] = storage.photo(owner, photo) } catch (e: CancellationException) { throw e } catch (_: Exception) { error = "原照片暂不可读，请重试或移除后重新选择" }
                 }
                 PhotoAttachment(photo.key, photo.name, photo.mediaId, error = error ?: if (photo.mediaId == null) "上传未完成，请按原编号重试" else null, mime = photo.mime)
             }
@@ -544,6 +737,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             localReady = true
             _state.update { it.copy(composeTitle = draft?.title.orEmpty(), composeText = draft?.text.orEmpty(), photos = restored,
                 composeEdited = draft?.edited ?: false, draftLoaded = draft?.cloudLoaded ?: false, composeEntry = draft?.entry ?: EntryBody(""),
+                publicationSourceRequest = draft?.sourceRequestId?.takeUnless { api.commandStatus(it)?.phase == "rejected" } ?: api.recoverableCommands().firstOrNull { it.command == "source_declarations" }?.clientRequestId, publicationSourceRecord = draft?.sourceRecord,
                 pendingOperations = pendingCommands(), notice = if (draft != null && restored.any { photo -> photo.mediaId == null }) "本地草稿和照片已恢复，未自动重新上传或发布" else it.notice) }
             val status = localPublicationKey?.let(api::commandStatus)
             if (status?.phase == "committed") finishRecoveredPublication(status.receipt)
@@ -553,9 +747,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 _state.update { it.copy(pendingOperations = pendingCommands()) }
             }
             if (_state.value.tab == MobileTab.Publish && !_state.value.draftLoaded) restoreComposeDraft()
-        } catch (e: CancellationException) { throw e }
-        catch (e: LocalDraftException) { throw e }
-        catch (_: Exception) { throw LocalDraftException("本地草稿暂不可读，请解锁设备后重试，原文件未被覆盖") }
+        } catch (e: CancellationException) { throw e } catch (e: LocalDraftException) { throw e } catch (_: Exception) { throw LocalDraftException("本地草稿暂不可读，请解锁设备后重试，原文件未被覆盖") }
     }
     private fun withinLimit(text: String, max: Int): Boolean {
         // Reject the edit as a unit; never split a surrogate, emoji sequence or IME composition with take().
@@ -636,10 +828,9 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         _state.update { it.copy(busy = true, notice = null, conflict = false) }
         scope.launch {
             val epoch = accountEpoch
-            try { block() }
-            catch (e: CancellationException) { throw e }
-            catch (e: Exception) {
-                if (epoch == accountEpoch) _state.update { it.copy(notice = e.mobileMessage(), conflict = e is MobileApiException && e.status == 409) }
+            try { block() } catch (e: CancellationException) { throw e } catch (e: Exception) {
+                if (epoch == accountEpoch) _state.update { it.copy(notice = e.mobileMessage(), conflict = e is MobileApiException && e.status == 409,
+                    publicationIssue = if (it.publicationConfirmation != null && e is MobileApiException && e.code == "known_ai_cannot_be_denied") e.code else it.publicationIssue) }
             } finally { if (epoch == accountEpoch) _state.update { it.copy(busy = false, pendingOperations = pendingCommands()) } }
         }
     }
@@ -696,11 +887,11 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 } while (selected.isEmpty() && cursor != 0L && rounds < 10)
                 currentCoroutineContext().ensureActive()
                 if (epoch != accountEpoch) return@task
-                _state.update { put(it, PageState(((if (more) old.items else emptyList()) + selected).distinctBy { row -> row.id }, cursor, loaded = true)) }
+                _state.update { put(it, PageState(((if (more) old.items else emptyList()) + selected).distinctBy { row -> row.id }, cursor, loaded = true, readAt = clientReadTimestamp())) }
             } catch (e: CancellationException) { throw e }
             catch (e: Exception) {
                 if (epoch == accountEpoch) _state.update { put(it,
-                    get(it).failed(e.mobileMessage(), e is MobileApiException && e.status in listOf(401, 403, 404))) }
+                    get(it).failed(e.mobileMessage(), e is MobileApiException && e.status in listOf(401, 403, 404), e.readFailure())) }
                 return@task
             }
             // 附加统计失败不能将已成功读取的列表变成翻页失败。
@@ -719,7 +910,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             MobileDestination.Applications -> if (s.user == null) showLogin() else loadPage("applications", more, { it.applications }, { state, p -> state.copy(applications = p) }, { api.adoptions(it) })
             MobileDestination.Notifications -> if (s.user == null) showLogin() else loadNotifications(more)
             else -> {
-                _state.update { it.copy(detailLoading = true, detailError = null, conflict = false, confirmation = null) }
+                _state.update { it.copy(detailLoading = true, detailError = null, detailFailure = null, conflict = false, confirmation = null) }
                 task("detail") {
                     try {
                         when (destination) {
@@ -735,16 +926,17 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                             is MobileDestination.Chat -> {
                                 if (destination.group) { val record = api.group(destination.id); if (current()) _state.update { it.copy(group = record) } } else {
                                     val record = api.conversation(destination.id)
-                                    if (current()) _state.update { it.copy(conversation = record) }
+                                    val lead = if (record.data.contextKind == "lead") api.leadRecord(record.data.contextId) else null
+                                    val parent = lead?.let { api.case(it.referenceId) }
+                                    if (current()) _state.update { it.copy(conversation = record,chatLead = lead,chatCase = parent) }
                                 }
                                 if (current()) loadMessages(more)
                             }
                             else -> Unit
                         }
-                    } catch (e: CancellationException) { throw e }
-                    catch (e: Exception) {
+                    } catch (e: CancellationException) { throw e } catch (e: Exception) {
                         if (current()) _state.update { it.copy(pet = null, petChecks = emptyList(), entry = null, application = null, case = null,
-                            conversation = null, group = null, comments = PageState(), messages = PageState(), detailError = e.mobileMessage()) }
+                            conversation = null, chatLead = null, chatCase = null, group = null, comments = PageState(), messages = PageState(), detailError = e.mobileMessage(), detailFailure = e.readFailure()) }
                     } finally { if (current()) _state.update { it.copy(detailLoading = false) } }
                 }
             }
@@ -790,7 +982,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 api.devicePush.updateBadge(summary.globalTotal)
                 currentCoroutineContext().ensureActive()
                 if (epoch != accountEpoch) throw CancellationException("Account changed")
-                _state.update { it.copy(inbox = summary,inboxError = null) }
+                _state.update { it.copy(inbox = summary,inboxError = null, inboxFailure = null, inboxReadAt = clientReadTimestamp()) }
                 (if(chat.group) summary.groupFirstUnread else summary.directFirstUnread)[chat.id.toString()]
             } else null
             api.messages(chat.id, chat.group, first?.takeIf { it > 0 }?.minus(1) ?: cursor)
@@ -917,7 +1109,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         api.readMessages(chat.id, chat.group, through)
         val inbox = api.inbox()
         api.devicePush.updateBadge(inbox.globalTotal)
-        _state.update { it.copy(inbox = inbox, notice = "已标为已读") }
+        _state.update { it.copy(inbox = inbox, inboxError = null, inboxFailure = null, inboxReadAt = clientReadTimestamp(), notice = "已标为已读") }
     }
     fun answerMessageRequest(action: String) = command {
         if (!requireInteractionContract()) return@command
@@ -952,16 +1144,25 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         if (s.composeText.isBlank() && s.photos.isEmpty()) return
         if (s.photos.any { it.mediaId == null }) { _state.update { it.copy(notice = "请先完成照片上传，或移除上传失败的照片") }; return }
         command {
-            val input = EntryInput(s.composeEntry.copy(text = s.composeText.trim(), title = s.composeTitle.trim()), mediaIds = s.photos.mapNotNull { it.mediaId }, clientRequestId = newRequestKey())
+            val epoch = accountEpoch
+            var input = EntryInput(s.composeEntry.copy(text = s.composeText.trim(), title = s.composeTitle.trim()), mediaIds = s.photos.mapNotNull { it.mediaId }, clientRequestId = newRequestKey(), declaration = PublicationDeclaration(origin = s.publicationSourceRecord?.data?.origin ?: "unknown"))
             features.requireCurrentAudience(input.entry.audience)
-            val preview = api.previewPublication(input)
-            _state.update { it.copy(publicationConfirmation = input.copy(declaration = PublicationDeclaration(preview.manifestHash, preview.origin)), notice = "请核对当前内容与照片，并确认来源声明后发布") }
+            var issue: String? = null
+            val preview = try { api.previewPublication(input) } catch (e: MobileApiException) {
+                if (e.code != "known_ai_cannot_be_denied") throw e
+                input = input.copy(declaration = PublicationDeclaration(origin = "unknown"))
+                issue = e.code
+                api.previewPublication(input)
+            }
+            if (epoch != accountEpoch) return@command
+            val source = s.publicationSourceRecord?.takeIf { it.ownerId == s.user.id && it.data.manifestHash == preview.manifestHash && it.data.origin == preview.origin }
+            _state.update { it.copy(publicationConfirmation = input.copy(declaration = PublicationDeclaration(preview.manifestHash, preview.origin, recordId = source?.id ?: 0)), publicationSourceRequest = it.publicationSourceRequest ?: api.recoverableCommands().firstOrNull { it.command == "source_declarations" }?.clientRequestId, publicationSourceResult = false, publicationIssue = issue, notice = "请核对当前内容与照片，并确认来源声明后发布") }
         }
     }
 
     fun confirmPublication(origin: String, confirmed: Boolean) = command {
             val epoch = accountEpoch
-            if (!confirmed || _state.value.composeEntry.audience.mode != "private" && !requireInteractionContract()) return@command
+            if (_state.value.publicationSourceRequest != null || !canEditCompose() || !confirmed || _state.value.composeEntry.audience.mode != "private" && !requireInteractionContract()) return@command
             val s = _state.value
             val pending = s.publicationConfirmation ?: return@command
             if (pending.entry.text != s.composeText.trim() || pending.entry.title != s.composeTitle.trim() || pending.entry != s.composeEntry.copy(text = s.composeText.trim(), title = s.composeTitle.trim()) || pending.mediaIds != s.photos.mapNotNull { it.mediaId }) {
@@ -995,7 +1196,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             if (epoch != accountEpoch) return@command
             _state.update { it.copy(busy = false) }
             select(MobileTab.Community)
-            open(MobileDestination.Entry(record.id))
+            this.open(MobileDestination.Entry(record.id))
     }
 
     private suspend fun finishRecoveredPublication(receipt: OperationReceipt?) {
@@ -1003,10 +1204,9 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val epoch = accountEpoch
         localPublicationKey = null
         photoBytes.clear()
-        _state.update { it.copy(composeTitle = "", composeText = "", composeEntry = EntryBody(""), photos = emptyList(), composeEdited = true, publicationConfirmation = null) }
+        _state.update { it.copy(composeTitle = "", composeText = "", composeEntry = EntryBody(""), photos = emptyList(), composeEdited = true, publicationConfirmation = null, publicationSourceRecord = null, publicationSourceResult = false, publicationSourceRequest = null) }
         // 先持久化已确认结果后的空草稿，避免清理云端前进程退出又显示旧稿。
-        try { persistCompose() }
-        catch (e: Exception) { if (epoch == accountEpoch) localReady = false; throw e }
+        try { persistCompose() } catch (e: Exception) { if (epoch == accountEpoch) localReady = false; throw e }
         var notice = "原发布已成功，本地草稿已清理"
         try {
             val cleared = api.saveComposeDraft(draftVersion, "", "", emptyList())
@@ -1014,8 +1214,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             draftVersion = cleared.version
             _state.update { it.copy(composeEdited = false, draftLoaded = true) }
             persistCompose()
-        } catch (e: CancellationException) { throw e }
-        catch (_: Exception) { notice = "原发布已成功，云端旧草稿暂未清理；本地不会自动恢复旧稿" }
+        } catch (e: CancellationException) { throw e } catch (_: Exception) { notice = "原发布已成功，云端旧草稿暂未清理；本地不会自动恢复旧稿" }
         _state.update { it.copy(pendingOperations = pendingCommands(), notice = notice) }
     }
 
@@ -1041,6 +1240,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             features.operationResolved(receipt)
             finishRecoveredReply(receipt)
             finishRecoveredPublication(receipt)
+            finishRecoveredSource(receipt)
             _state.update { it.copy(pendingOperations = pendingCommands(), notice = if (receipt.state == "committed") "已核对：原操作已成功，请查看原记录" else "原操作仍在处理中") }
         } catch (e: MobileApiException) {
             if (e.status == 404) _state.update { it.copy(pendingOperations = pendingCommands(), notice = "暂未查到回执，结果仍待核对，请勿重复提交") } else throw e
@@ -1068,6 +1268,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         features.operationResolved(receipt)
         finishRecoveredReply(receipt)
         finishRecoveredPublication(receipt)
+        finishRecoveredSource(receipt)
         _state.update { it.copy(pendingOperations = pendingCommands(),notice = "已按原请求编号核对并重试，请查看原记录") }
     }
 
@@ -1115,7 +1316,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val owner = _state.value.user?.id ?: return
         if (_state.value.photos.find { it.key == key }?.uploading != false) return
         val epoch = accountEpoch
-        _state.update { it.copy(photos = it.photos.map { item -> if (item.key == key) item.copy(uploading = true, error = null) else item }) }
+        _state.update { it.copy(photos = it.photos.map { item -> if (item.key == key) item.copy(uploading = true, error = null, uploadPercent = null) else item }) }
         task("photo-$key") {
             try {
                 val photo = photoBytes[key] ?: localDrafts?.photo(owner, LocalComposePhoto(item.key, item.name, item.mime))
@@ -1123,17 +1324,31 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 if (epoch != accountEpoch) return@task
                 photoBytes[key] = photo
                 persistCompose()
-                val result = uploads.withPermit { api.upload(photo, key) }
+                val result = uploads.withPermit { api.upload(photo, key) { sent, total ->
+                    if (epoch == accountEpoch) _state.update { state -> state.copy(photos = state.photos.map { current -> if (current.key == key) current.withProgress(sent,total) else current }) }
+                } }
                 if (epoch == accountEpoch) {
                     _state.update { it.copy(photos = it.photos.map { item -> if (item.key == key) item.copy(mediaId = result.id, uploading = false) else item }) }
                     persistCompose()
                     photoBytes.remove(key)
                 }
-            } catch (e: CancellationException) { throw e }
-            catch (e: Exception) {
+            } catch (e: CancellationException) { throw e } catch (e: Exception) {
                 if (epoch == accountEpoch) _state.update { it.copy(photos = it.photos.map { item -> if (item.key == key) item.copy(uploading = false, error = e.mobileMessage()) else item }) }
             }
         }
+    }
+
+    suspend fun localPhotoPreview(key: String): SelectedPhoto? {
+        val owner = _state.value.user?.id ?: return null
+        val epoch = accountEpoch
+        val compose = _state.value.photos.firstOrNull { it.key == key }
+        val reply = _state.value.replyPhotos.firstOrNull { it.key == key }
+        val result = when {
+            compose != null -> photoBytes[key] ?: localDrafts?.photo(owner, LocalComposePhoto(key, compose.name, compose.mime))
+            reply != null -> replyPhotoBytes[key] ?: localReplies?.photo(owner, WorkspacePhoto(key, reply.name, reply.mime))
+            else -> null
+        }
+        return result.takeIf { epoch == accountEpoch }
     }
 
     fun removePhoto(key: String) {

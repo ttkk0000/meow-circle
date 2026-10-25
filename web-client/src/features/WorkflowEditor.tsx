@@ -12,7 +12,7 @@ import { encodeWire, integer, key, parseWire } from "../core/wire";
 import { navigate } from "../core/router";
 import { invalidateQueries } from "../core/query";
 import { useSession } from "../core/session";
-import { preparePhoto } from "../core/photos";
+import { preparePhoto, movePhoto } from "../core/photos";
 import {
   Facts,
   schemaDefault,
@@ -38,6 +38,14 @@ import { EntryFields, PeopleSelector } from "../components/ContentFields";
 import { DataSelector, type DataSelection } from "../components/DataSelector";
 
 import { WorkflowFields } from "../components/WorkflowFields";
+import {
+  PublicationPreview,
+  PublicationSourceRestriction,
+  PublicationSourceReview,
+  PublicationSourcePending,
+  PublicationSourceResult,
+  type SourceDeclarationRecord,
+} from "./PublicationPreview";
 
 import { AmapView } from "../maps/AmapView";
 import { cityCenter, type MapPoint } from "../maps/amap";
@@ -47,6 +55,17 @@ interface Prepared {
   scope?: Record<string, unknown>;
   path: string;
   method: string;
+  photos?: PhotoDraft[];
+  fingerprint?: string;
+}
+function publicationFingerprint(draft: Draft) {
+  return encodeWire({
+    values: draft.values,
+    photos: draft.photos.map((p) => [p.key, p.mediaId, p.scope]),
+    origin: draft.ui?.origin,
+    requestId: draft.requestId,
+    version: draft.baseVersion,
+  });
 }
 const privateFields = new Set([
   "password",
@@ -105,6 +124,9 @@ export function WorkflowEditor({
   const [busy, setBusy] = useState(false);
   const [restoring, setRestoring] = useState(true);
   const [prepared, setPrepared] = useState<Prepared>();
+  const [sourceRestricted, setSourceRestricted] = useState(false);
+  const [sourceReview, setSourceReview] = useState(false);
+  const [sourceResult, setSourceResult] = useState<SourceDeclarationRecord>();
   const [conflict, setConflict] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<RecordData>();
   const [agreed, setAgreed] = useState(false);
@@ -113,6 +135,9 @@ export function WorkflowEditor({
   const [contactCode, setContactCode] = useState("");
   const [verifiedContact, setVerifiedContact] = useState("");
   const [uploading, setUploading] = useState<Set<string>>(new Set());
+  const [uploadProgress, setUploadProgress] = useState<
+    Record<string, number | undefined>
+  >({});
   const formOmit = [...(workflow?.omit ?? [])];
   if (flow === "data") formOmit.push("selections", "fields");
   if (["friend", "friend-action", "invite", "group-action"].includes(flow))
@@ -146,8 +171,14 @@ export function WorkflowEditor({
     let active = true;
     blocked.current = false;
     setRestoring(true);
+    setBusy(false);
+    setAgreed(false);
+    setGrant("");
     setDraft(undefined);
     setPrepared(undefined);
+    setSourceRestricted(false);
+    setSourceReview(false);
+    setSourceResult(undefined);
     setError("");
     void readDraft(owner, route)
       .then(async (saved) => {
@@ -323,6 +354,8 @@ export function WorkflowEditor({
   async function upload(photo: PhotoDraft) {
     if (!latest.current || !photo.blob || uploading.has(photo.key) || busy)
       return;
+    const draftKey = latest.current.key;
+    const epoch = api.epoch;
     setUploading((old) => new Set(old).add(photo.key));
     setError("");
     try {
@@ -335,11 +368,25 @@ export function WorkflowEditor({
       form.append("file", photo.blob, photo.name);
       const result = await api.request<RecordData>(
         photo.scope === "safety" ? "safety/media" : "media",
-        { method: "POST", body: form, headers, owner },
+        {
+          method: "POST",
+          body: form,
+          headers,
+          owner,
+          onUploadProgress: (percent) => {
+            if (epoch === api.epoch && latest.current?.key === draftKey)
+              setUploadProgress((old) =>
+                old[photo.key] === percent
+                  ? old
+                  : { ...old, [photo.key]: percent },
+              );
+          },
+        },
       );
+      if (epoch !== api.epoch || latest.current?.key !== draftKey) return;
       replace({
-        ...latest.current!,
-        photos: latest.current!.photos.map((p) =>
+        ...latest.current,
+        photos: latest.current.photos.map((p) =>
           p.key === photo.key
             ? { ...p, mediaId: result.id, blob: undefined, error: undefined }
             : p,
@@ -347,8 +394,26 @@ export function WorkflowEditor({
       });
       await persist();
     } catch (error) {
-      setError(explain(error));
+      if (epoch !== api.epoch || latest.current?.key !== draftKey) return;
+      const message = explain(error);
+      replace({
+        ...latest.current,
+        photos: latest.current.photos.map((p) =>
+          p.key === photo.key ? { ...p, error: message } : p,
+        ),
+      });
+      setError(message);
+      try {
+        await persist();
+      } catch (saveError) {
+        setError(explain(saveError));
+      }
     } finally {
+      setUploadProgress((old) => {
+        const next = { ...old };
+        delete next[photo.key];
+        return next;
+      });
       setUploading((old) => {
         const next = new Set(old);
         next.delete(photo.key);
@@ -358,7 +423,19 @@ export function WorkflowEditor({
   }
   async function prepare() {
     const current = latest.current;
-    if (!current || !workflow || busy || blocked.current || conflict) return;
+    if (
+      !current ||
+      !workflow ||
+      busy ||
+      blocked.current ||
+      conflict ||
+      current.uncertain
+    )
+      return;
+    const epoch = api.epoch;
+    const fingerprint = publicationFingerprint(current);
+    let sourceRequestSent = false;
+    let sourceCommitted = false;
     setBusy(true);
     setError("");
     setGrant("");
@@ -451,18 +528,111 @@ export function WorkflowEditor({
             "私密照片不能自动改为公开用途，请明确移除并重新选择要公开的照片",
           );
         const origin = current.ui?.origin ?? "unknown";
-        body.declaration = audience?.mode === "private" ? {} : { origin };
-        if (audience?.mode !== "private") {
-          const preview = await api.request<{
-            manifest_hash: string;
-            origin: string;
-          }>("entries/preview", { method: "POST", body, owner });
-          body.declaration = {
-            manifest_hash: preview.manifest_hash,
-            origin: preview.origin,
-            confirmed: true,
-          };
+        body.declaration = { origin };
+        const preview = await api.request<{
+          manifest_hash: string;
+          origin: string;
+        }>("entries/preview", { method: "POST", body, owner });
+        if (epoch !== api.epoch || latest.current?.key !== current.key) return;
+        const previous = current.ui?.source;
+        let prior: SourceDeclarationRecord | undefined;
+        if (previous?.recordId) {
+          try {
+            prior = await api.request<SourceDeclarationRecord>(
+              `source_declarations/${previous.recordId}`,
+              { owner },
+            );
+          } catch (error) {
+            if (
+              !(error instanceof HttpError && [403, 404].includes(error.status))
+            )
+              throw error;
+          }
         }
+        const previousId =
+          prior?.owner_id === owner && prior.state === "active" ? prior.id : 0n;
+        let record: SourceDeclarationRecord;
+        if (
+          prior &&
+          previousId > 0n &&
+          prior.data.manifest_hash === preview.manifest_hash &&
+          prior.data.origin === preview.origin
+        ) {
+          record = prior;
+        } else {
+          const requestId = key();
+          const content = {
+            ...body,
+            declaration: {
+              manifest_hash: preview.manifest_hash,
+              origin: preview.origin,
+              confirmed: false,
+            },
+          };
+          const sourceBody = {
+            client_request_id: requestId,
+            content,
+            rights_confirmed: true,
+            previous_id: previousId,
+          };
+          replace({
+            ...latest.current,
+            uncertain: true,
+            ui: {
+              ...latest.current.ui,
+              source: {
+                requestId,
+                manifestHash: preview.manifest_hash,
+                origin: preview.origin,
+              },
+            },
+            original: {
+              path: "source_declarations",
+              method: "POST",
+              body: encodeWire(sourceBody),
+              replayable: true,
+            },
+          });
+          await persist();
+          if (epoch !== api.epoch || latest.current?.key !== current.key)
+            return;
+          sourceRequestSent = true;
+          record = await api.request<SourceDeclarationRecord>(
+            "source_declarations",
+            { method: "POST", body: sourceBody, owner },
+          );
+          sourceCommitted = true;
+        }
+        if (epoch !== api.epoch || latest.current?.key !== current.key) return;
+        if (
+          record.id <= 0n ||
+          record.owner_id !== owner ||
+          record.state !== "active" ||
+          record.data.manifest_hash !== preview.manifest_hash ||
+          record.data.origin !== preview.origin
+        )
+          throw new Error("来源记录与当前账号或内容不符，请保留原请求核对");
+        replace({
+          ...latest.current,
+          uncertain: false,
+          original: undefined,
+          ui: {
+            ...latest.current.ui,
+            source: {
+              requestId: latest.current.ui?.source?.requestId ?? "",
+              manifestHash: preview.manifest_hash,
+              origin: preview.origin,
+              recordId: record.id,
+            },
+          },
+        });
+        if (sourceCommitted) setSourceResult(record);
+        body.declaration = {
+          manifest_hash: preview.manifest_hash,
+          origin: preview.origin,
+          confirmed: true,
+          record_id: record.id,
+        };
       }
       await persist();
       const scopePath = workflow.scope?.(context, body);
@@ -474,8 +644,14 @@ export function WorkflowEditor({
               owner,
             })
           : undefined;
+      if (epoch !== api.epoch || latest.current?.key !== current.key) return;
+      if (fingerprint !== publicationFingerprint(latest.current))
+        throw new Error("草稿已变化，请重新核对发布内容");
       setPrepared({
         body,
+        ...(workflow.preview
+          ? { photos: current.photos.map((p) => ({ ...p })), fingerprint }
+          : {}),
         path: workflow.path(context),
         method:
           workflow.method ??
@@ -485,9 +661,97 @@ export function WorkflowEditor({
         scope,
       });
     } catch (error) {
-      setError(explain(error));
+      if (epoch === api.epoch && latest.current?.key === current.key) {
+        if (
+          !sourceCommitted &&
+          latest.current.original?.path === "source_declarations" &&
+          (!sourceRequestSent ||
+            (error instanceof HttpError &&
+              [400, 401, 403, 404, 409, 422, 429].includes(error.status)))
+        ) {
+          replace({ ...latest.current, uncertain: false, original: undefined });
+          await persist().catch(() => {});
+        }
+        if (epoch !== api.epoch || latest.current?.key !== current.key) return;
+        setError(explain(error));
+        if (
+          workflow.preview &&
+          error instanceof HttpError &&
+          error.code === "known_ai_cannot_be_denied"
+        )
+          setSourceRestricted(true);
+      }
     } finally {
-      setBusy(false);
+      if (epoch === api.epoch && latest.current?.key === current.key)
+        setBusy(false);
+    }
+  }
+  async function querySource() {
+    const current = latest.current;
+    const source = current?.ui?.source;
+    if (
+      !current ||
+      !source ||
+      busy ||
+      current.original?.path !== "source_declarations"
+    )
+      return;
+    const epoch = api.epoch;
+    const same = () =>
+      epoch === api.epoch && latest.current?.key === current.key;
+    setBusy(true);
+    setError("");
+    try {
+      const receipt = await api.request<{
+        client_request_id: string;
+        command: string;
+        state: string;
+        result_kind: string;
+        result_id: bigint;
+      }>(`operations/${source.requestId}`, { owner });
+      if (!same()) return;
+      if (
+        receipt.client_request_id !== source.requestId ||
+        receipt.command !== "source.declare" ||
+        receipt.state !== "committed" ||
+        receipt.result_kind !== "source_declarations"
+      )
+        throw new Error("原声明仍待确认，请勿重复提交");
+      const record = await api.request<SourceDeclarationRecord>(
+        `source_declarations/${receipt.result_id}`,
+        { owner },
+      );
+      if (!same()) return;
+      if (
+        record.id !== receipt.result_id ||
+        record.owner_id !== owner ||
+        record.state !== "active" ||
+        record.data.manifest_hash !== source.manifestHash ||
+        record.data.origin !== source.origin
+      )
+        throw new Error("原声明回执与记录不一致，请保留输入核对");
+      replace({
+        ...latest.current!,
+        uncertain: false,
+        original: undefined,
+        ui: {
+          ...latest.current!.ui,
+          source: { ...source, recordId: record.id },
+        },
+      });
+      setSourceResult(record);
+      setPrepared(undefined);
+      setAgreed(false);
+      await persist();
+    } catch (error) {
+      if (same())
+        setError(
+          error instanceof HttpError && error.status === 404
+            ? "暂未查到声明回执，保留原请求，请勿重复提交"
+            : explain(error),
+        );
+    } finally {
+      if (same()) setBusy(false);
     }
   }
   async function loadCurrent() {
@@ -528,10 +792,23 @@ export function WorkflowEditor({
       !latest.current
     )
       return;
+    if (
+      prepared.fingerprint &&
+      prepared.fingerprint !== publicationFingerprint(latest.current)
+    ) {
+      setPrepared(undefined);
+      setAgreed(false);
+      setError("草稿已变化，请重新核对发布内容");
+      return;
+    }
     setBusy(true);
     setError("");
     const proof = grant;
     setGrant("");
+    const epoch = api.epoch;
+    const taskKey = latest.current.key;
+    const currentTask = () =>
+      epoch === api.epoch && latest.current?.key === taskKey;
     let sent = false;
     try {
       const body = {
@@ -550,6 +827,7 @@ export function WorkflowEditor({
         },
       });
       await persist();
+      if (!currentTask()) return;
       sent = true;
       const headers: Record<string, string> = {};
       if (flow === "safety")
@@ -558,13 +836,16 @@ export function WorkflowEditor({
         prepared.path,
         { method: prepared.method, body, headers, owner },
       );
+      if (!currentTask()) return;
       const current = latest.current!;
       if (current.access) {
         const recovery = newDraft(0n, `capability:${current.requestId}`);
         recovery.access = { ...current.access, id: result?.id };
         await saveDraft(recovery);
+        if (!currentTask()) return;
       }
       const cleared = await clearDraft(current);
+      if (!currentTask()) return;
       replace(cleared);
       revision.current = cleared.revision;
       setPrepared(undefined);
@@ -573,7 +854,9 @@ export function WorkflowEditor({
         api.endSession();
         navigate("/recovery");
       } else if (workflow.after && (result?.id ?? context.id) > 0n)
-        navigate(`/${workflow.after}/${result?.id ?? context.id}`);
+        navigate(
+          `/${workflow.after}/${result?.id ?? context.id}${workflow.afterView ? `?view=${encodeURIComponent(workflow.afterView)}&version=${result && "version" in result ? String(result.version) : "0"}` : ""}`,
+        );
       else {
         setNotice("已提交，请以当前记录或受限查询结果为准");
         navigate(
@@ -585,6 +868,7 @@ export function WorkflowEditor({
         );
       }
     } catch (error) {
+      if (!currentTask()) return;
       if (
         !sent ||
         (error instanceof HttpError &&
@@ -595,13 +879,20 @@ export function WorkflowEditor({
           await persist().catch(() => {});
         }
       }
+      if (!currentTask()) return;
+      if (
+        workflow.preview &&
+        error instanceof HttpError &&
+        error.code === "known_ai_cannot_be_denied"
+      )
+        setSourceRestricted(true);
       if (error instanceof HttpError && error.status === 409) setConflict(true);
       setError(
         sent ? "原操作已发送，请先核对结果。" + explain(error) : explain(error),
       );
       setPrepared(undefined);
     } finally {
-      setBusy(false);
+      if (currentTask()) setBusy(false);
     }
   }
   if (!workflow)
@@ -617,6 +908,104 @@ export function WorkflowEditor({
           登录后会重新校验当前对象与权限，不自动提交。
         </Notice>
       </TaskPage>
+    );
+  if (workflow.preview && sourceResult)
+    return (
+      <PublicationSourceResult
+        record={sourceResult}
+        busy={busy}
+        error={error}
+        onContinue={() => {
+          if (!busy) {
+            setSourceResult(undefined);
+            if (!prepared) void prepare();
+          }
+        }}
+        onCorrect={() => {
+          if (!busy) {
+            setSourceResult(undefined);
+            setPrepared(undefined);
+            setSourceReview(true);
+            setAgreed(false);
+          }
+        }}
+      />
+    );
+  if (
+    workflow.preview &&
+    draft?.uncertain &&
+    draft.original?.path === "source_declarations" &&
+    draft.ui?.source &&
+    sourceReview
+  )
+    return (
+      <PublicationSourcePending
+        requestId={draft.ui.source.requestId}
+        busy={busy}
+        error={error}
+        onQuery={() => void querySource()}
+        onBack={() => {
+          if (!busy) setSourceReview(false);
+        }}
+      />
+    );
+  if (workflow.preview && sourceRestricted)
+    return (
+      <PublicationSourceRestriction
+        onBack={() => {
+          setSourceRestricted(false);
+          setSourceReview(false);
+          setAgreed(false);
+        }}
+      />
+    );
+  if (workflow.preview && prepared)
+    return (
+      <PublicationPreview
+        body={prepared.body}
+        photos={prepared.photos ?? []}
+        user={session.user}
+        busy={busy}
+        agreed={agreed}
+        error={error}
+        onAgree={setAgreed}
+        onSubmit={() => void submit()}
+        onSource={() => {
+          if (!busy) {
+            setPrepared(undefined);
+            setAgreed(false);
+            setSourceReview(true);
+          }
+        }}
+        onBack={() => {
+          if (!busy) {
+            setPrepared(undefined);
+            setSourceReview(false);
+            setAgreed(false);
+            setGrant("");
+          }
+        }}
+      />
+    );
+  if (workflow.preview && sourceReview && draft)
+    return (
+      <PublicationSourceReview
+        entry={(draft.values.entry ?? {}) as Record<string, unknown>}
+        origin={draft.ui?.origin ?? "unknown"}
+        busy={busy}
+        error={error}
+        onOrigin={(origin) =>
+          update((old) => ({
+            ...old,
+            ui: { ...old.ui, origin },
+            requestId: key(),
+          }))
+        }
+        onConfirm={() => void prepare()}
+        onBack={() => {
+          if (!busy) setSourceReview(false);
+        }}
+      />
     );
   return (
     <TaskPage
@@ -638,12 +1027,46 @@ export function WorkflowEditor({
             blocked.current ||
             conflict
           }
-          onClick={() => void prepare()}
+          onClick={() =>
+            workflow.preview ? setSourceReview(true) : void prepare()
+          }
         >
           核对本次内容
         </Button>
       }
     >
+      {flow === "lead-assessment" ? (
+        <Notice
+          title={
+            draft?.values.assessment === "helpful"
+              ? "标记有帮助"
+              : draft?.values.assessment === "not_match"
+                ? "标记不匹配"
+                : "处理标记待核对"
+          }
+        >
+          只保存本条线索的处理标记；保留原始描述和照片，不将求助改为已找回。提交仍按当前发布人角色与版本校验。
+        </Notice>
+      ) : null}
+      {flow === "lead-contact" ? (
+        <Notice title="本条私密线索的站内联系">
+          会话对象由服务器从原线索核对；对方接受前限一条文字，请勿付费换线索。
+        </Notice>
+      ) : null}
+      {flow === "settings" ? (
+        <RowLink
+          title="系统通知权限说明"
+          detail="拒绝系统权限仍可读取站内消息"
+          to="/notification-help"
+        />
+      ) : null}
+      {flow === "nearby" || flow === "case" ? (
+        <RowLink
+          title="不提供定位也可以"
+          detail="手动选城市、填写大致区域"
+          to="/location-help"
+        />
+      ) : null}
       {restoring ? <p role="status">正在恢复本机私有草稿…</p> : null}
       {session.authenticated &&
       [
@@ -899,6 +1322,11 @@ export function WorkflowEditor({
         <Notice title="原操作结果待核对">
           当前正文、照片和原编号已锁定；先到恢复中心核对，不能重新创建请求。
           <Button onClick={() => navigate("/recovery")}>核对原操作</Button>
+          {draft.original?.path === "source_declarations" ? (
+            <Button onClick={() => setSourceReview(true)}>
+              查询原来源声明
+            </Button>
+          ) : null}
         </Notice>
       ) : null}
       {workflow.media && draft ? (
@@ -912,8 +1340,10 @@ export function WorkflowEditor({
             disabled={busy || !!prepared || !!draft.uncertain}
             limit={flow === "profile" ? 1 : 9}
             uploading={uploading}
+            progress={uploadProgress}
             onSelect={(files) => void selectPhotos(files)}
-            onUpload={(photo) => void upload(photo)}
+            onUpload={upload}
+            onSaveOrder={persist}
             onRemove={(photoKey) =>
               update((old) => ({
                 ...old,
@@ -922,12 +1352,10 @@ export function WorkflowEditor({
             }
             onMove={(index, direction) =>
               update((old) => {
-                const photos = [...old.photos];
-                [photos[index + direction], photos[index]] = [
-                  photos[index],
-                  photos[index + direction],
-                ];
-                return { ...old, photos };
+                return {
+                  ...old,
+                  photos: movePhoto(old.photos, index, direction),
+                };
               })
             }
           />
@@ -961,23 +1389,12 @@ export function WorkflowEditor({
         )
       ) : null}
       {workflow.preview ? (
-        <Choices
-          label="内容来源"
-          value={draft?.ui?.origin ?? "unknown"}
-          onChange={(origin) =>
-            update((old) => ({
-              ...old,
-              ui: { ...old.ui, origin },
-              requestId: key(),
-            }))
-          }
-          disabled={busy || !!prepared || !!draft?.uncertain}
-          choices={[
-            ["original", "原创／实拍"],
-            ["ai_generated", "AI生成"],
-            ["ai_modified", "AI修改"],
-            ["unknown", "来源尚不确定"],
-          ]}
+        <RowLink
+          title="内容来源与 AI 声明"
+          detail="按实际来源选择；服务端核对后仍需确认发布"
+          onClick={() => {
+            if (!busy && !prepared && !draft?.uncertain) setSourceReview(true);
+          }}
         />
       ) : null}
       {flow === "safety" &&

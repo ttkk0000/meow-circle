@@ -144,6 +144,12 @@ internal class IosClientPlatform : ClientUiPlatform {
     }
 
     override fun decodeImage(bytes: ByteArray): ImageBitmap? = runCatching { SkiaImage.makeFromEncoded(bytes).toComposeImageBitmap() }.getOrNull()
+    override fun openNotificationSettings(): Boolean {
+        val target = NSURL(string = UIApplicationOpenSettingsURLString) ?: return false
+        if (!UIApplication.sharedApplication.canOpenURL(target)) return false
+        UIApplication.sharedApplication.openURL(target, options = emptyMap<Any?, Any>(), completionHandler = null)
+        return true
+    }
     override fun openLink(url: String): Boolean {
         if (!isPublicHttps(url)) return false
         val target = NSURL(string = url) ?: return false

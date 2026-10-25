@@ -377,7 +377,7 @@ func (s *Service) Lead(ctx context.Context, actor, caseID int64, text string, me
 			return e
 		}
 		r := Record{OwnerID: actor, Key: key, Participants: []int64{p.OwnerID}, RefID: caseID, MediaIDs: media, State: "submitted"}
-		if e = save(tx, Leads, &r, Lead{text}, actor, "lead.submitted"); e != nil {
+		if e = save(tx, Leads, &r, Lead{Text: text}, actor, "lead.submitted"); e != nil {
 			return e
 		}
 		out = r

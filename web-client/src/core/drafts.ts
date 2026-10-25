@@ -17,6 +17,12 @@ export interface Draft {
   values: Record<string, unknown>;
   ui?: {
     origin?: string;
+    source?: {
+      requestId: string;
+      manifestHash: string;
+      origin: string;
+      recordId?: bigint;
+    };
     keepLocation?: boolean;
     mapLocation?: {
       latitude: number;
@@ -42,6 +48,12 @@ export interface Draft {
     requestId: string;
     id?: bigint;
   };
+}
+/** 声明与发布分别使用原请求编号，恢复时不混用。 */
+export function draftCommandKey(draft: Draft) {
+  return draft.original?.path === "source_declarations"
+    ? (draft.ui?.source?.requestId ?? "")
+    : draft.requestId;
 }
 let opening: Promise<IDBDatabase> | undefined;
 function database() {

@@ -10,11 +10,16 @@ final class NativeDevicePush: NSObject, @preconcurrency IosPushController, @prec
     private var token = ""
     private var enabled = false
     private var registering = false
+    private var pendingNotificationID: String?
+    private var pendingInbox = false
     private var configured: Bool { Bundle.main.object(forInfoDictionaryKey: "MND_APNS_ENABLED") as? String == "YES" }
 
     func attach(client: IosClient) {
         self.client = client
         UNUserNotificationCenter.current().delegate = self
+        if let pendingNotificationID { client.openNotification(notificationId: pendingNotificationID) }
+        else if pendingInbox { client.openInboxNotification() }
+        pendingNotificationID = nil; pendingInbox = false
         refresh()
     }
     func setEnabled(enabled: Bool) {
@@ -51,7 +56,25 @@ final class NativeDevicePush: NSObject, @preconcurrency IosPushController, @prec
         }
     }
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        await MainActor.run { self.foreground() }
+        guard response.actionIdentifier == UNNotificationDefaultActionIdentifier else { return }
+        // 不采信供应商的URL或私密正文，只读取当前账号可见的原通知。
+        let raw = response.notification.request.content.userInfo["notification_id"]
+        // 与FCM data保持一致，十进制字符串可保留超过2^53的通知编号。
+        let text = raw as? String
+        let identifier = text.flatMap { value -> String? in
+            guard let number = Int64(value), number > 0, String(number) == value else { return nil }
+            return value
+        }
+        await MainActor.run {
+            self.foreground()
+            if let client = self.client {
+                if let identifier { client.openNotification(notificationId: identifier) }
+                else { client.openInboxNotification() }
+            } else {
+                self.pendingNotificationID = identifier
+                self.pendingInbox = identifier == nil
+            }
+        }
     }
 }
 

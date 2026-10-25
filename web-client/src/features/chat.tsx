@@ -17,9 +17,11 @@ import {
 } from "../core/drafts";
 import { useQuery, reload } from "../core/query";
 import { useSession } from "../core/session";
+import { canContactLead, type LeadRecord } from "../core/lead";
+import { CaseContextCard } from "../components/CaseContextCard";
 import { navigate } from "../core/router";
 import { encodeWire, integer, key } from "../core/wire";
-import { preparePhoto } from "../core/photos";
+import { preparePhoto, movePhoto } from "../core/photos";
 import {
   Button,
   Card,
@@ -256,6 +258,7 @@ export function Composer({
   onSent,
   canSend = true,
   allowMedia = true,
+  compact = false,
 }: {
   kind: "entries" | "pets" | "conversations" | "groups";
   id: bigint;
@@ -264,6 +267,7 @@ export function Composer({
   onSent: () => void;
   canSend?: boolean;
   allowMedia?: boolean;
+  compact?: boolean;
 }) {
   const owner = useSession().user?.id ?? 0n;
   const route = `/${kind}/${id}/composer`;
@@ -274,6 +278,10 @@ export function Composer({
   const blocked = useRef(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [uploadingKey, setUploadingKey] = useState<string>();
+  const [uploadProgress, setUploadProgress] = useState<
+    Record<string, number | undefined>
+  >({});
   const [picker, setPicker] = useState(false);
   const [expressionTab, setExpressionTab] = useState("emoji");
   const [preview, setPreview] = useState<Sticker>();
@@ -433,6 +441,7 @@ export function Composer({
     const current = latest.current;
     const epoch = api.epoch;
     setBusy(true);
+    setUploadingKey(photo.key);
     try {
       await persist();
       const form = new FormData();
@@ -443,21 +452,45 @@ export function Composer({
         headers: { "Idempotency-Key": photo.key },
         body: form,
         owner,
+        onUploadProgress: (percent) => {
+          if (epoch === api.epoch && latest.current?.key === current.key)
+            setUploadProgress((old) =>
+              old[photo.key] === percent
+                ? old
+                : { ...old, [photo.key]: percent },
+            );
+        },
       });
       if (epoch !== api.epoch || latest.current?.key !== current.key) return;
       latest.current = {
         ...latest.current,
         photos: latest.current.photos.map((p) =>
           p.key === photo.key
-            ? { ...p, mediaId: media.id, blob: undefined }
+            ? { ...p, mediaId: media.id, blob: undefined, error: undefined }
             : p,
         ),
       };
       setDraft(latest.current);
       await persist();
     } catch (e) {
-      setError(explain(e));
+      if (epoch !== api.epoch || latest.current?.key !== current.key) return;
+      const message = explain(e);
+      latest.current = {
+        ...latest.current,
+        photos: latest.current.photos.map((p) =>
+          p.key === photo.key ? { ...p, error: message } : p,
+        ),
+      };
+      setDraft(latest.current);
+      setError(message);
+      try {
+        await persist();
+      } catch (saveError) {
+        setError(explain(saveError));
+      }
     } finally {
+      setUploadingKey(undefined);
+      setUploadProgress({});
       setBusy(false);
     }
   }
@@ -642,6 +675,7 @@ export function Composer({
           }
           ref={textarea}
           rows={1}
+          placeholder={compact ? "发送消息…" : undefined}
           maxLength={2000}
           value={String(draft?.values.text ?? "")}
           disabled={disabled}
@@ -679,18 +713,31 @@ export function Composer({
         </button>
         <Button
           kind="primary"
-          disabled={disabled || !allowed || composing}
+          disabled={
+            disabled ||
+            !allowed ||
+            composing ||
+            (compact &&
+              !String(draft?.values.text ?? "").trim() &&
+              !draft?.values.sticker_id &&
+              !draft?.photos.length)
+          }
           onClick={() => void send()}
         >
           {["entries", "pets"].includes(kind) ? "发布" : "发送"}
         </Button>
       </div>
-      {!["entries", "pets"].includes(kind) && draft ? (
+      {!["entries", "pets"].includes(kind) &&
+      draft &&
+      (!compact || picker || draft.photos.length > 0) ? (
         <Attachments
           photos={draft.photos}
+          uploading={new Set(uploadingKey ? [uploadingKey] : [])}
+          progress={uploadProgress}
           disabled={disabled || !canSend || !allowMedia}
           onSelect={(files) => void select(files)}
-          onUpload={(photo) => void upload(photo)}
+          onUpload={upload}
+          onSaveOrder={persist}
           onRemove={(photoKey) =>
             update((d) => ({
               ...d,
@@ -699,12 +746,7 @@ export function Composer({
           }
           onMove={(index, direction) =>
             update((d) => {
-              const photos = [...d.photos];
-              [photos[index + direction], photos[index]] = [
-                photos[index],
-                photos[index + direction],
-              ];
-              return { ...d, photos };
+              return { ...d, photos: movePhoto(d.photos, index, direction) };
             })
           }
         />
@@ -837,6 +879,31 @@ export function Chat({
   const owner = useSession().user?.id ?? 0n;
   const path = `${kind}/${id}`;
   const parent = useQuery<RecordData>(path);
+  const isLead =
+    kind === "conversations" && parent.data?.data.context_kind === "lead";
+  const leadId = integer(parent.data?.data.context_id);
+  const leadPath = isLead && leadId > 0n ? `leads/${leadId}` : null;
+  const lead = useQuery<LeadRecord>(leadPath);
+  const casePath =
+    isLead && lead.data ? `cases/${lead.data.reference_id}` : null;
+  const leadCase = useQuery<RecordData>(casePath);
+  const contextReady =
+    !isLead ||
+    (!!lead.data &&
+      !!leadCase.data &&
+      lead.data.id === leadId &&
+      lead.data.reference_id === leadCase.data.id &&
+      !parent.loading &&
+      !lead.loading &&
+      !leadCase.loading &&
+      !lead.error &&
+      !leadCase.error);
+  const contextWritable =
+    !isLead ||
+    (contextReady &&
+      !!lead.data &&
+      !!leadCase.data &&
+      canContactLead(lead.data, leadCase.data, owner));
   const summary = useQuery<Inbox>("inbox-summary");
   const child = kind === "groups" ? "group_messages" : "messages";
   const first =
@@ -853,8 +920,9 @@ export function Chat({
   const reading = useRef(false);
   const [mark, setMark] = useState(first);
   useEffect(() => {
-    if (messages.denied || parent.denied) setLoaded([]);
-  }, [messages.denied, parent.denied]);
+    if (messages.denied || parent.denied || lead.denied || leadCase.denied)
+      setLoaded([]);
+  }, [messages.denied, parent.denied, lead.denied, leadCase.denied]);
   useEffect(() => {
     if (!messages.data) return;
     setLoaded((old) => {
@@ -867,7 +935,7 @@ export function Chat({
   }, [messages.data, cursor]);
   useEffect(() => {
     const node = visible.current;
-    if (!node || !parent.data) return;
+    if (!node || !parent.data || !contextReady) return;
     let active = true;
     const epoch = api.epoch;
     const inView = new Set<bigint>();
@@ -922,7 +990,7 @@ export function Chat({
       document.removeEventListener("visibilitychange", readVisible);
       window.removeEventListener("focus", readVisible);
     };
-  }, [loaded, path, parent.data, owner]);
+  }, [loaded, path, parent.data, owner, contextReady]);
   const p = parent.data;
   const data = p?.data;
   const member =
@@ -930,6 +998,7 @@ export function Chat({
     Array.isArray(data?.members) &&
     data.members.includes(owner);
   const canSend =
+    contextWritable &&
     !!p &&
     (kind === "groups"
       ? p.state === "active" && member
@@ -942,7 +1011,13 @@ export function Chat({
   return (
     <section className="chat-page">
       <header className="task-toolbar">
-        <h1>{kind === "groups" ? String(data?.name ?? "群聊") : "私信"}</h1>
+        <h1>
+          {kind === "groups"
+            ? String(data?.name ?? "群聊")
+            : isLead
+              ? "私密线索会话"
+              : "私信"}
+        </h1>
         {kind === "groups" ? (
           <Button
             kind="quiet"
@@ -955,6 +1030,8 @@ export function Chat({
       <QueryState
         loading={parent.loading}
         error={parent.error}
+        failure={parent.failure}
+        readAt={parent.readAt}
         onRetry={() => void reload(path)}
       >
         {kind === "groups" ? (
@@ -971,6 +1048,7 @@ export function Chat({
                 {["accept", "decline"].map((action) => (
                   <Button
                     key={action}
+                    disabled={action === "accept" && !contextWritable}
                     onClick={() =>
                       navigate(
                         workflowURL("state-action", kind, id, { action }),
@@ -1009,42 +1087,81 @@ export function Chat({
         ) : null}
         {error ? <Notice title={error} error /> : null}
         <div className="chat-messages" ref={visible}>
-          <QueryState
-            loading={messages.loading}
-            error={messages.error}
-            onRetry={() => void reload(messagesPath)}
-          >
-            {loaded.map((row) => (
-              <div
-                key={String(row.id)}
-                data-message={String(row.id)}
-                className={`bubble ${row.owner_id === owner ? "mine" : ""}`}
-              >
-                {row.id === (mark || first) ? (
-                  <p className="caption disclosure">以下是本次首条未读</p>
-                ) : null}
-                <Author id={row.owner_id} />
-                <RichText content={row.data} />
-                {row.media_ids?.map((media) => (
-                  <PrivateImage key={String(media)} id={media} alt="会话照片" />
-                ))}
-              </div>
-            ))}
-            {messages.data?.next_cursor ? (
-              <Button
-                onClick={() => setCursor(messages.data!.next_cursor)}
-                disabled={messages.loading}
-              >
-                继续读取消息
-              </Button>
-            ) : null}
-          </QueryState>
+          {isLead ? (
+            <QueryState
+              loading={lead.loading || leadCase.loading}
+              error={lead.error || leadCase.error}
+              failure={lead.failure ?? leadCase.failure}
+              readAt={lead.readAt}
+              onRetry={() => {
+                if (leadPath) void reload(leadPath);
+                if (casePath) void reload(casePath);
+                void reload(path);
+              }}
+            >
+              {contextReady && leadCase.data ? (
+                <>
+                  <CaseContextCard parent={leadCase.data} />
+                  <Notice title={`私密线索 #${leadId} · 目击者会话`}>
+                    {contextWritable
+                      ? "保持站内联系，不先付费换线索。"
+                      : "本次求助已停止新联系，当前仅查看私密历史。"}
+                  </Notice>
+                </>
+              ) : (
+                <Notice title="正在核对私密线索上下文">
+                  核对当前访问范围后再显示消息，输入保留。
+                </Notice>
+              )}
+            </QueryState>
+          ) : null}
+          {contextReady ? (
+            <QueryState
+              loading={messages.loading}
+              error={messages.error}
+              failure={messages.failure}
+              readAt={messages.readAt}
+              onRetry={() => void reload(messagesPath)}
+            >
+              {loaded.map((row) => (
+                <div
+                  key={String(row.id)}
+                  data-message={String(row.id)}
+                  className={`bubble ${row.owner_id === owner ? "mine" : ""}`}
+                >
+                  {row.id === (mark || first) ? (
+                    <p className="caption disclosure">以下是本次首条未读</p>
+                  ) : null}
+                  <Author id={row.owner_id} />
+                  <RichText content={row.data} />
+                  {row.media_ids?.map((media) => (
+                    <PrivateImage
+                      key={String(media)}
+                      id={media}
+                      alt="会话照片"
+                    />
+                  ))}
+                </div>
+              ))}
+              {messages.data?.next_cursor ? (
+                <Button
+                  onClick={() => setCursor(messages.data!.next_cursor)}
+                  disabled={messages.loading}
+                >
+                  继续读取消息
+                </Button>
+              ) : null}
+            </QueryState>
+          ) : null}
         </div>
         <Composer
           kind={kind}
           id={id}
+          compact={isLead}
           canSend={canSend}
-          allowMedia={kind === "groups" || p?.state === "accepted"}
+          allowMedia={
+            contextWritable && (kind === "groups" || p?.state === "accepted")
+          }
           onSent={() => {
             void reload(messagesPath);
             void reload(path);

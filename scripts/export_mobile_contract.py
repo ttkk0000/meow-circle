@@ -14,7 +14,7 @@ for folder in ("internal/mobile", "internal/identity"):
         if source.name.endswith("_test.go"):
             continue
         text = source.read_text(encoding="utf-8-sig")
-        for match in re.finditer(r"(?ms)^type (\w+) struct\s*\{(.*?)^\}", text):
+        for match in re.finditer(r"(?ms)^type (\w+) struct[ \t]*\{[ \t]*\n(.*?)^\}", text):
             # Single-line embedded structs are handled below, not allowed to
             # consume the following declaration's closing brace.
             if "}" in match.group(2).splitlines()[0]:
@@ -101,7 +101,7 @@ def operation(path, method, summary, body=None, public=False, staff=False, respo
     return item
 
 
-readable = "pets offers entries entry_comments pet_comments entry_reactions friendships cases claims leads subscriptions appointments adoptions care_updates groups group_messages conversations messages invitations notifications preferences expressions drafts media reviews visit_feedback".split()
+readable = "pets offers entries entry_comments pet_comments entry_reactions friendships cases claims leads subscriptions appointments adoptions care_updates groups group_messages conversations messages invitations notifications preferences expressions drafts media reviews visit_feedback source_declarations".split()
 for kind in readable:
     public = kind in ("pets", "offers", "entries", "cases", "entry_comments", "pet_comments", "entry_reactions")
     op = operation("/" + kind, "get", "List visible " + kind, public=public)
@@ -213,6 +213,12 @@ typed("/auth/age-assurance", "post", "Explicit consent, immutable task and origi
 typed("/auth/age-assurance/{id}/query", "post", "Query original provider request and apply only trusted bounded evidence", result="AgeAssuranceStatus")
 item = typed("/operations/{key}", "get", "Look up the original command; not-found never authorizes a new key", result="Operation")
 item["parameters"][0]["schema"] = {"type":"string","minLength":8,"maxLength":100}
+dto("SourceDeclarationBody")
+typed("/source_declarations", "post", "Append an immutable manifest-bound source declaration; never publish content", "SourceDeclarationInput")
+dto("Lead")
+dto("Conversation")
+typed("/leads/{id}/assessment", "post", "Versioned private case-owner assessment; never resolve a case", "LeadAssessmentInput")
+typed("/leads/{id}/contact", "post", "Explicit witness conversation derived from the current private lead", "LeadContactInput")
 typed("/entries/preview", "post", "Bind declaration to exact content and media versions", "EntryInput", "PublicationPreview")
 for path, body in (("email-otp","EmailOTPInput"),("email","EmailInput"),("register","EmailInput"),("email-recover","EmailInput")):
     typed("/auth/"+path,"post","Explicit purpose email authentication: "+path,body,public=True)

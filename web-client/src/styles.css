@@ -18,6 +18,7 @@
   --canvas: #f7f8fa;
   --surface: #fffefc;
   --subtle: #f0f2f5;
+  --success-soft: #e8f4ed;
   --ink: #202329;
   --muted: #616771;
   --brand: #c84b3d;
@@ -85,6 +86,7 @@ h1 {
 }
 .page-headline { font-size: 28px; line-height: 40px; font-weight: 700; }
 .notice.warning { background: var(--warning-soft); }
+.notice.success { background: var(--success-soft); }
 h2 {
   font-size: 16px;
   line-height: 24px;
@@ -280,12 +282,12 @@ small {
   color: var(--danger);
 }
 .empty {
-  padding: 32px 24px;
+  padding: 24px;
   display: flex;
   align-items: center;
   text-align: center;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   background: var(--surface);
   border-radius: var(--radius);
   color: var(--muted);
@@ -293,7 +295,13 @@ small {
 .empty h2 {
   color: var(--ink);
   font-size: 20px;
+  line-height: 30px;
 }
+.state-icon-slot { display: block; width: 48px; height: 48px; flex-shrink: 0; text-align: left; }
+.empty p { font-size: 14px; line-height: 22px; margin: 0; }
+.read-state { width: 100%; }
+.photo-drag-handle { touch-action: none; cursor: grab; }
+.photo-queue progress { display: block; width: 100%; accent-color: var(--brand); }
 .button {
   border: 1px solid var(--brand);
   background: var(--brand-soft);
@@ -478,6 +486,13 @@ small {
   border-radius: 16px;
   background: var(--subtle);
 }
+.publication-author { display: flex; flex-direction: column; gap: 4px; }
+.publication-cover, .publication-photo { margin: 0; }
+.publication-cover { container-type: inline-size; }
+.publication-cover .media { width: 100%; height: 240px; object-fit: cover; }
+@container (min-width: 600px) { .publication-cover .media { height: 360px; } }
+.publication-photo .media { width: 100%; max-height: 480px; object-fit: contain; }
+.publication-text { white-space: pre-wrap; overflow-wrap: anywhere; }
 .media-empty {
   display: flex;
   align-items: center;
@@ -1250,3 +1265,10 @@ dialog > header {
 .provider-callback { max-width:520px; margin:48px auto; padding:24px; }
 
 .break-anywhere { overflow-wrap: anywhere; }
+
+.lead-case-summary { display: flex; gap: 12px; align-items: flex-start; }
+.lead-case-summary .media { width: 64px; height: 64px; flex: 0 0 64px; object-fit: cover; }
+.lead-photos { container-type: inline-size; }
+.lead-photos .gallery { display: flex; flex-direction: column; gap: 16px; }
+.lead-photos .gallery .media { width: 100%; height: 170px; object-fit: cover; }
+@container (min-width: 600px) { .lead-photos .gallery .media { height: 360px; } }

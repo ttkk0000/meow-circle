@@ -135,6 +135,8 @@ export function MapPage() {
       <QueryState
         loading={page.loading}
         error={page.error}
+        failure={page.failure}
+        readAt={page.readAt}
         onRetry={() => void page.reload()}
       />
       {!page.loading && !rows.length ? <p>当前条件暂无已载入求助</p> : null}

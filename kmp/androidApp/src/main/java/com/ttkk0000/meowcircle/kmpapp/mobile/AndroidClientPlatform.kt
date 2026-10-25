@@ -15,6 +15,12 @@ import com.ttkk0000.meowcircle.kmpapp.R
 /** Android仅保留系统能力，手机／平板使用同一公共页面和Store。 */
 internal class AndroidClientPlatform(private val context: Context) : ClientUiPlatform {
     override val kind = ClientPlatformKind.Android
+    override fun openNotificationSettings(): Boolean = runCatching {
+        context.startActivity(Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            .putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, context.packageName)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        true
+    }.getOrDefault(false)
     override val providers get() = AndroidProviderAuth.providers
     override suspend fun authorizeProvider(provider: String, challenge: ProviderChallenge): ProviderCredential? {
         var target = context

@@ -26,8 +26,14 @@ struct MndComposeApp: App {
             ComposeRoot(client: client)
                 .ignoresSafeArea() // Compose owns safeDrawing and keyboard insets.
                 .preferredColorScheme(.light)
-                .onOpenURL { _ = providerFactory.handle(url: $0) }
-                .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { _ = providerFactory.handle(activity: $0) }
+                .onOpenURL { url in
+                    if !providerFactory.handle(url: url) { _ = client.openTaskLink(url: url.absoluteString) }
+                }
+                .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
+                    if !providerFactory.handle(activity: activity), let url = activity.webpageURL {
+                        _ = client.openTaskLink(url: url.absoluteString)
+                    }
+                }
                 .onChange(of: scenePhase) { _, phase in if phase == .active { NativeDevicePush.shared.foreground() } }
         }
     }

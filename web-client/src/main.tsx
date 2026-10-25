@@ -16,7 +16,8 @@ if (!root) throw new Error("缺少 Web 宿主节点");
 const callback =
   location.pathname.replace(/\/$/, "") === "/app/provider-callback";
 const result = callback ? takeProviderCallback() : undefined;
-const desktopProvider = location.pathname.replace(/\/$/, "") === "/app/desktop-provider";
+const desktopProvider =
+  location.pathname.replace(/\/$/, "") === "/app/desktop-provider";
 const desktopHandoff = desktopProvider ? takeDesktopHandoff() : undefined;
 const guardianClaim =
   location.pathname.replace(/\/$/, "") === "/app/guardian-invite";
@@ -33,7 +34,9 @@ createRoot(root).render(
     {callback ? (
       <ProviderCallbackPage result={result} />
     ) : desktopProvider ? (
-      <Suspense fallback={<p role="status">正在载入桌面授权…</p>}><DesktopProvider handoff={desktopHandoff} /></Suspense>
+      <Suspense fallback={<p role="status">正在载入桌面授权…</p>}>
+        <DesktopProvider handoff={desktopHandoff} />
+      </Suspense>
     ) : guardianClaim ? (
       <GuardianClaimPage handoff={guardianHandoff} />
     ) : location.pathname.replace(/\/$/, "") === "/app/ops" ? (

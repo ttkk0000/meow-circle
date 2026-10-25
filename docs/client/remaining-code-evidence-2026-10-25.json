@@ -1,0 +1,870 @@
+{
+  "task": "AI-20261025-REMAINING-CODE",
+  "date": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "captured_at_utc": "2026-10-25T11:16:40.447989+00:00",
+  "branch": "main",
+  "head": "eed8fcd",
+  "phase": "source_and_static_only",
+  "scope_decisions": {
+    "ios": "Keep Swift host and Compose pages; retain shared KMP logic; no SwiftUI migration",
+    "operations_executor_and_full_search_receiver": "User explicitly deferred; placeholders retained"
+  },
+  "contract": {
+    "paths": 245,
+    "operations": 275,
+    "schemas": 124,
+    "shared_dto_pairs": 75
+  },
+  "static_checks": [
+    {
+      "script": "scripts/check_mobile_static.py",
+      "return_code": 0,
+      "output": "Static only: 44 feature tables, 275 operations, 124 schemas, 128/24 assets; no dangling references or BOM",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_kmp_client_static.py",
+      "return_code": 0,
+      "output": "Static source/configuration checks passed: 96 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution.",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_android_ui_static.py",
+      "return_code": 0,
+      "output": "Static UI check passed: 10 shared primitives, metrics/theme wiring, ViewModel UI session and movable form/home composition. No compilation, runtime or device validation.",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_android_feature_static.py",
+      "return_code": 0,
+      "output": "Android 源码静态核对：42 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_android_finish_static.py",
+      "return_code": 0,
+      "output": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation.",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_server_shared_contract_static.py",
+      "return_code": 0,
+      "output": "Static cross-language check: 75 DTO pairs match; private commands and recovery guards present. No type checking or tests executed.",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_web_client_static.py",
+      "return_code": 0,
+      "output": "Web只读检查：58份TS/TSX、258个本地引用、126份schema、21枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_delivery_static.py",
+      "return_code": 0,
+      "output": "交付静态核对：13服务／8独立worker、12迁移与账本、Secret文件加载、Android APK/AAB签名、iOS Archive/IPA/设备入口、Desktop及手动App CI；未构建／迁移／打包／安装／启动。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_guardian_invites_static.py",
+      "return_code": 0,
+      "output": "监护流程静态核对：5份最小DTO、短时单次邀请／原编号恢复、独立关系核实、监护人范围授权／撤回、公共原生与Web专用页面、具名运营角色；未运行核验、类型检查或测试。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_age_assurance_static.py",
+      "return_code": 0,
+      "output": "年龄核验静态核对：3份最小DTO、原编号账本／并发恢复、服务端可信结果／有效期／替换校验、原生与Web分状态和原任务返回；未运行网关、类型检查或测试。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_provider_auth_static.py",
+      "return_code": 0,
+      "output": "官方授权静态边界：原生SDK固定来源、原挑战回跳、账号选择／用途验证／显式确认、取消竞态与HttpOnly会话适配；仅源码核对，未执行SDK／类型检查／测试。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_client_ui_static.py",
+      "return_code": 0,
+      "output": "公共UI只读核对：34份公共源码、42个功能分派、3套平台端口、128枚Noto原图、21枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_figma_reading_static.py",
+      "return_code": 0,
+      "output": "阅读／发布只读核对：10类材料、4向指南原图／几何、公共正文和下载合同、评论原键恢复／图片限制、本人筛选与全部顺序迁移入口一致；未执行类型检查、编译、测试、迁移或应用。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_operations_static.py",
+      "return_code": 0,
+      "output": "运维静态核对：14类页面、13路径／15操作／25schemas、环境与角色／回执／版本守卫、010迁移、10枚24px原SVG；未编译、类型检查、测试或启动。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_remaining_code_static.py",
+      "return_code": 0,
+      "output": "续作只读核对：8作业跨合同／部署一致、设备权限／撤回、会话加密回执、Desktop本机回跳、44表索引、私有存储及5份草案接线；未执行类型检查、编译、测试或应用。",
+      "error": ""
+    }
+  ],
+  "followup_static_checks_passed": [
+    "scripts/check_web_client_static.py",
+    "scripts/check_remaining_code_static.py"
+  ],
+  "syntax": {
+    "syntax_trees": [
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/DevicePushCoordinator.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/PolicyModels.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDevicePush.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MndApplication.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/DesktopProviderAuth.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/DesktopClientPlatform.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosDevicePush.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/MainViewController.kt",
+        "errors": []
+      },
+      {
+        "file": "kmp/iosApp/ComposeApp/NativeDevicePush.swift",
+        "errors": []
+      },
+      {
+        "file": "kmp/iosApp/ComposeApp/MndComposeApp.swift",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/api.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/contract.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/desktopProvider.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/drafts.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/pages.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/photos.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/provider.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/query.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/router.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/routes.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/session.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/core/wire.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/workflows.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/maps/amap.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/client.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/demo.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/models.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/useOperations.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/vite-env.d.ts",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/App.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/AccountConflict.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/Attachments.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/AuthPolicies.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/ContentFields.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/ContentSubscription.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/DataSelector.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/InboxReadAll.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/MediaGallery.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/PurposeCheck.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/RetrySubmission.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/SchemaForm.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/WorkflowFields.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/components/ui.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/Account.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/AgePages.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/AuthDialog.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/ContentPage.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/DesktopProvider.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/GuardianPages.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/MapPage.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/ProviderSignIn.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/Publications.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/ReadingPages.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/Records.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/Recovery.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/ResourcePage.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/WorkflowEditor.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/features/chat.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/main.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/maps/AmapView.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/ActionForms.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/DetailPages.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/OpsApp.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/OverviewPages.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/RecordPages.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/context.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operations/ui.tsx",
+        "errors": []
+      },
+      {
+        "file": "web-client/src/operator/OperatorApp.tsx",
+        "errors": []
+      }
+    ],
+    "yaml": [
+      "deploy/compose.production.yml",
+      "docker-compose.yml",
+      "kmp/iosApp/project.yml",
+      ".github/workflows/app-packages.yml"
+    ]
+  },
+  "go_formatted_and_syntax_read": 37,
+  "conflict_markers": [],
+  "git_diff_check": "passed",
+  "local_document_links": [
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "../../migrations/011_mobile_query_indexes.sql"
+    },
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "../../migrations/012_worker_checkpoints.sql"
+    },
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "../../deploy/examples/android.env.example"
+    },
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "../../deploy/examples/ios.env.example"
+    },
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "../../deploy/examples/desktop.env.example"
+    },
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "../server/environment.example"
+    },
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "../../deploy/runtime.example.env"
+    },
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "DELIVERY_GUIDE_2026_10_25.md"
+    },
+    {
+      "from": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "target": "remaining-code-evidence-2026-10-25.json"
+    },
+    {
+      "from": "deploy/examples/README.md",
+      "target": "server-target.env.example"
+    },
+    {
+      "from": "deploy/examples/README.md",
+      "target": "compose.env.example"
+    },
+    {
+      "from": "deploy/examples/README.md",
+      "target": "android.env.example"
+    },
+    {
+      "from": "deploy/examples/README.md",
+      "target": "ios.env.example"
+    },
+    {
+      "from": "deploy/examples/README.md",
+      "target": "desktop.env.example"
+    },
+    {
+      "from": "deploy/examples/README.md",
+      "target": "../runtime.example.env"
+    },
+    {
+      "from": "deploy/examples/README.md",
+      "target": "../../kmp/iosApp/ExportOptions.example.plist"
+    },
+    {
+      "from": "deploy/examples/README.md",
+      "target": "../../docs/client/DELIVERY_GUIDE_2026_10_25.md"
+    }
+  ],
+  "regression_functions_source_only": 7,
+  "not_executed": [
+    "compilation",
+    "type_checking",
+    "tests",
+    "lint",
+    "Gradle",
+    "application_or_service_launch",
+    "device_or_browser_QA",
+    "migrations",
+    "CI",
+    "deployment",
+    "packaging",
+    "commit",
+    "push"
+  ],
+  "files": [
+    {
+      "file": "internal/mobile/repository.go",
+      "sha256": "890cd2dd9a048aec8d0659b117c202e02361b327a24e3b9dad983c819f1715d1"
+    },
+    {
+      "file": "internal/mobile/adoption_placement.go",
+      "sha256": "025f5fba9e15d09a997c4a0c136a3f475348ed77822c032690fcd7c9f53f7858"
+    },
+    {
+      "file": "internal/mobile/media_cleanup.go",
+      "sha256": "9d5afe1bc67e7268fd1017410c1cf3d4bd3a4f88fa1fe5cee059b343f11449d8"
+    },
+    {
+      "file": "internal/mobile/push.go",
+      "sha256": "8c835de264413a1b3098ca3aa4c7b5eb8727acf709fe6c3444a397ce9a82ae03"
+    },
+    {
+      "file": "internal/mobile/push_policy.go",
+      "sha256": "dd052cb20b916237370b5dbbcc66507f6d06072c04d10d58edb0bf643fd452ed"
+    },
+    {
+      "file": "internal/mobile/projection.go",
+      "sha256": "fea7d84e9bdee12bf42ba66190f6ba69e1d8d14b934fe0f60a4a096422be36fc"
+    },
+    {
+      "file": "internal/mobile/service.go",
+      "sha256": "211a9dd8f56bc5547ad046a19ad3a91d5725143218f964abf3d05a8d9fcb0aa0"
+    },
+    {
+      "file": "internal/mobile/social.go",
+      "sha256": "43ae2ddf0bf785700d8bc7a3a6680a5dbdb8044a934c9d69905740aad202ad8c"
+    },
+    {
+      "file": "internal/mobile/jobs.go",
+      "sha256": "b8717d8ed1d6412a9c7d76ed403bc1096fdac984b5403ec52603b0b31bc102d2"
+    },
+    {
+      "file": "internal/mobile/device_rotation_test.go",
+      "sha256": "317a62ad943fdbe75dba8ca0f891e335c57e4e0ef47447f383d4d545a2c87fe0"
+    },
+    {
+      "file": "internal/identity/service.go",
+      "sha256": "a89b43b5a2b41703cfe7278457a33b7d8bb0cb1a0ffcb4781113faac2966b624"
+    },
+    {
+      "file": "internal/identity/auth_replay.go",
+      "sha256": "55d76f39fd65420d4b58282f09f77b13d9af5f8bb18840a1870c1a0affc1b316"
+    },
+    {
+      "file": "internal/identity/browser_refresh_test.go",
+      "sha256": "dab6f08df6377a83da8f720701c6f8f6e61359fcedff8b8168406db05d0bd453"
+    },
+    {
+      "file": "internal/jobcoord/coordinator.go",
+      "sha256": "af3676b44ecb1ea0a20a36044776f64e1001e9c662fba1a500e96dbc32c81bb7"
+    },
+    {
+      "file": "internal/jobcoord/postgres.go",
+      "sha256": "b2df8e7f9be2a0665d7d60efd8745436aa49c3f9a59c277b5f10d669ab85e90b"
+    },
+    {
+      "file": "internal/jobcoord/coordinator_test.go",
+      "sha256": "310b04857d18e47c72f7f16ea432a9b6373dc83d2f952a30020ec0ad3cea57e9"
+    },
+    {
+      "file": "internal/mediablob/storage.go",
+      "sha256": "39f7ab9816a054832120a2b89985f2af330e4dc6cab87b17cfad0cab877b5f31"
+    },
+    {
+      "file": "internal/mediablob/s3.go",
+      "sha256": "2c7e46e22b4bb7e61497e70cfd973800f1f686d973a318d087390b8aef050848"
+    },
+    {
+      "file": "internal/mediablob/s3_test.go",
+      "sha256": "99b21f69a7983924dfb58e9829c8566d696e3aa039c55a77bf148203976c1b5b"
+    },
+    {
+      "file": "internal/store/mobile.go",
+      "sha256": "3433bc1ecdcc647fea80ad177af385f67c7862a15dc99f12b7863559d71e5128"
+    },
+    {
+      "file": "internal/store/jobcoord.go",
+      "sha256": "230a4f338bb73248c547209d2ede5fe258732e2eee1e9bff8c0118ab69360082"
+    },
+    {
+      "file": "internal/store/postgres/mobile.go",
+      "sha256": "f638c9fac18cc6511ec72d723b694004e9cda84c2cdeeccd95b48e5c825ac9bd"
+    },
+    {
+      "file": "internal/store/postgres/jobcoord.go",
+      "sha256": "4fc15bfb6ea5f1bcfc3f3a3c7c38520ff7dd5cdfc355a26c724fdf1df3198539"
+    },
+    {
+      "file": "internal/store/cache/jobcoord.go",
+      "sha256": "4c97441ff189ab633c6890aaca34dc24e986fb2028a79b7da7bf689e646e8fff"
+    },
+    {
+      "file": "internal/platform/mobileapi/handler.go",
+      "sha256": "541021932e0c1eb4beb98d0170c0dea2e4923e8c54cd872644ef1a5e131ac61f"
+    },
+    {
+      "file": "internal/platform/mobileapi/browser.go",
+      "sha256": "63f3a8cac2a343091849d9db31106d92a1a2b71e21c6fb0361ce1d43c6469adf"
+    },
+    {
+      "file": "internal/platform/mobileapi/jobs.go",
+      "sha256": "8c4c3bc27822784f8650fcd7dad0fdd1fe9ba112e33d9cbaa837618328481130"
+    },
+    {
+      "file": "internal/platform/mobileapi/media.go",
+      "sha256": "8a4ffe7b23f06aa3ab37d083d313ad3f6828bd12624aa1e3a4b15e298aadae80"
+    },
+    {
+      "file": "internal/platform/mobileapi/media_storage.go",
+      "sha256": "1f622296874b54d29dd0753e9da36dc38494468a6303cca18b4000fc0ee82019"
+    },
+    {
+      "file": "internal/platform/mobileapi/media_cleanup.go",
+      "sha256": "2913a7f66e540ee71239714556e70c8c224e5823b9ddce4910a60cbcde55eab7"
+    },
+    {
+      "file": "internal/platform/mobileapi/erasure.go",
+      "sha256": "23f34ee2c99cf46facbbd955776d7ae994ff5770b757632671a31aa0e389927f"
+    },
+    {
+      "file": "internal/platform/mobileauth/projection.go",
+      "sha256": "c9862ca371b11db7d94d3fc1c1a72317ad31a9cb56d0dcc1b0732244d1fbedbd"
+    },
+    {
+      "file": "internal/platform/mobileworker/runner.go",
+      "sha256": "4d6c33087bf327fa60f79c756a7524a3930412c892e76466eff931fdfd3af607"
+    },
+    {
+      "file": "internal/platform/api/router.go",
+      "sha256": "248a94280ed0a47fa09ac536aea2123a34deb663727657b086a1fff55921dde7"
+    },
+    {
+      "file": "internal/platform/api/operations.go",
+      "sha256": "3d18e37ec41b2ab25a9b7b9f35eaaa50a7746bdac0664a7c9ee2a7fa5342e0d9"
+    },
+    {
+      "file": "internal/platform/envfile/secrets.go",
+      "sha256": "0b8c83ee9a1e3d429d062452f4e7f8412184ba95562e9a08a30ea5eb526e5eab"
+    },
+    {
+      "file": "internal/operations/service.go",
+      "sha256": "a59693406fbbddc5010476e3fa48181a602fe5019271ffd46e2a7300f2890cec"
+    },
+    {
+      "file": "migrations/011_mobile_query_indexes.sql",
+      "sha256": "56253e473979c905de9cad01ca996bf7c60f13b6d6638a4dbeaaa6fad2214400"
+    },
+    {
+      "file": "migrations/012_worker_checkpoints.sql",
+      "sha256": "1976d6b87f7d11fe08a971b55c35c220e5e9d03162a600919da672074d3c6c3c"
+    },
+    {
+      "file": "kmp/androidApp/build.gradle.kts",
+      "sha256": "88dc674d7d72f97a9c88d15819ae8a1ea314f6d5339ddf0310153a2e9cf3bc11"
+    },
+    {
+      "file": "kmp/androidApp/src/main/AndroidManifest.xml",
+      "sha256": "a2a0d9a7a288cfa40b869d73001b8a0a794e5ead6d20bda37e02d36aac6b44b6"
+    },
+    {
+      "file": "kmp/androidApp/src/main/res/drawable/ic_mnd_notification.xml",
+      "sha256": "fd4597a5a5381b459bcd284d475e32946b90553564af6edbecce12cfd1d8e7a6"
+    },
+    {
+      "file": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt",
+      "sha256": "5ac651b6d917a6de65c6aa8a34fcf9f129d4824a6568db8d6eb46faa186d25fc"
+    },
+    {
+      "file": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MndApplication.kt",
+      "sha256": "0209f7cea17907154dc0398c37f60b2f762914b1126ad3563500d529db99428c"
+    },
+    {
+      "file": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDevicePush.kt",
+      "sha256": "b30f8ef82918fc90e6d98268cb3d90273cfa83297448342270b83bfa82a93d81"
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/DevicePushCoordinator.kt",
+      "sha256": "0b28bf96c564a11568b0bec04121bd2e1ce299dd5ec772619f0d03ada8395896"
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256": "f3054e33e5e096e3fc1c7f1de48f956b6ba67fb72531913110f721626c84265e"
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "81dedf5e3f87f6b4862e4d7d0ca28048377d2f0ca02d8f2db6dc1f3343344a6b"
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "sha256": "6f2b5d36c59de3e371a22ee434a7c19b3afe602a0187ae3bfd0e28774028bc8e"
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/PolicyModels.kt",
+      "sha256": "6633f9ced93e2111ef638cdbd18f59328679260fc9f6516d1be6d82f10b332b4"
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
+      "sha256": "48ae29996c14d2582bc38eca1f66c521fb411c551301041e32f65a782345a93c"
+    },
+    {
+      "file": "kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/DesktopProviderAuth.kt",
+      "sha256": "4bfee0d01697daac7a4431bb350fafc786f2363e020956a29e16e961feeb95ec"
+    },
+    {
+      "file": "kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/DesktopClientPlatform.kt",
+      "sha256": "c5d247e4b778c5133445cfce529992cdc8a04757b34ea1a21674fdedaeafecc8"
+    },
+    {
+      "file": "kmp/desktopApp/build.gradle.kts",
+      "sha256": "6b9d159c6ac03f52911e2c9971990a851ada8eb6fb7bad5396f3cd48ed2e022c"
+    },
+    {
+      "file": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosDevicePush.kt",
+      "sha256": "4f361afda0bea6fbbf67e428e239195ac84586a28fa982cae8f474e6eb88dba8"
+    },
+    {
+      "file": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/MainViewController.kt",
+      "sha256": "24dccf2aa51e6d752cd588f0ef8ea3399ff6169b341299f3e609592f80aa4ed6"
+    },
+    {
+      "file": "kmp/iosApp/ComposeApp/NativeDevicePush.swift",
+      "sha256": "a87f2105bd06a42b44a668af6bdef8dcdb2aca406caef8f7f332fe2a50d68337"
+    },
+    {
+      "file": "kmp/iosApp/ComposeApp/MndComposeApp.swift",
+      "sha256": "3180c4ec57fee2809ce9af7cca8064834c083d941fb674010f3d894bcba6c61a"
+    },
+    {
+      "file": "kmp/iosApp/project.yml",
+      "sha256": "ef38b66ca3fb648c9862eec50ea35128ff9cf20a8fee39584d4c84c0118cdc35"
+    },
+    {
+      "file": "web-client/src/core/desktopProvider.ts",
+      "sha256": "edfb5fc03ddd28a3aa134c0759b2270a830e7f24937cf6c52b253aa1c6990da9"
+    },
+    {
+      "file": "web-client/src/features/DesktopProvider.tsx",
+      "sha256": "849cb8c605cf506ca1d72d95659a430f2a9ecbd1c7b870bffe7895d4fe3242c3"
+    },
+    {
+      "file": "web-client/src/main.tsx",
+      "sha256": "04fdf761e55e0c45ed19ac14046523d362010aa2e4df137bd6865b4efd4fc521"
+    },
+    {
+      "file": "web-client/src/operations/models.ts",
+      "sha256": "fa3d1d62ee481dba11965928c7cc80a8aa651c96345bafcc544c938adb5ffd49"
+    },
+    {
+      "file": "web-client/src/core/schemas.json",
+      "sha256": "4a8baad1d47b5428e9bd82ed8643a4e8aed46028a72d34b01a33907919a717e5"
+    },
+    {
+      "file": "web-client/src/core/contract.ts",
+      "sha256": "d23b700f266c1446f7b319258432290fadfb9f26eff3b7aed270968a1ddfebe2"
+    },
+    {
+      "file": "web-client/src/core/routes.ts",
+      "sha256": "b6602bc1886487937f4e645f5b85ce32d02ec8de93d2d30e0bf7a2e5168ae81b"
+    },
+    {
+      "file": "docs/api/mobile-v2.openapi.json",
+      "sha256": "c24f6d4b3ccc29396b87ef9e986c353542b953c306c17d80dd49559c3bcacdff"
+    },
+    {
+      "file": "internal/platform/mobileapi/reading-drafts.json",
+      "sha256": "22dfeb84cf1040b716692517460250596e21937675d3f57bfe68101680d2fe61"
+    },
+    {
+      "file": "scripts/export_mobile_contract.py",
+      "sha256": "37f845168c847005effde38dd24f99e2614e56aacbacb54988f5c843a7caaa0a"
+    },
+    {
+      "file": "scripts/mobile.py",
+      "sha256": "069f54f38c284abfcf48e1563abe4ff5116494df2e6e563a8164dd327efe13c3"
+    },
+    {
+      "file": "scripts/delivery.py",
+      "sha256": "aee4abf27dac8d44eb6962a2a81f8a283d187e1305eef72db57da7fadd8b1ffb"
+    },
+    {
+      "file": "scripts/check_server_shared_contract_static.py",
+      "sha256": "e5581c0a327fcc93c48b29b2345af59751efac08ebb1ed4f6c5bea0f9181e86a"
+    },
+    {
+      "file": "scripts/check_figma_reading_static.py",
+      "sha256": "82746500962d691f1baf125bbd910ef60d4f15b36d3484ba08c07cbdbf39bac1"
+    },
+    {
+      "file": "scripts/check_delivery_static.py",
+      "sha256": "b85e33f8d50ef950c7c9f7b72bae6c74d60439f26e6f092e9df48298958659bc"
+    },
+    {
+      "file": "scripts/check_remaining_code_static.py",
+      "sha256": "f6094c08dfc613276886d6d5ee093a76646e789b7b76c2a1143f36a28242c2e3"
+    },
+    {
+      "file": "docker-compose.yml",
+      "sha256": "f8c45d6467eab5d6b770a41e06ca252468c5866ee5623d1121fabf182aa42330"
+    },
+    {
+      "file": "deploy/compose.production.yml",
+      "sha256": "0787700874db7ada421e727deacc5b5b03cc45fc2f8dc8d44fd525192b706524"
+    },
+    {
+      "file": "deploy/runtime.example.env",
+      "sha256": "4e95d8ef48be93959ad6c452c596b6a7ca69596a781c13141966830e1149644d"
+    },
+    {
+      "file": "docs/server/environment.example",
+      "sha256": "3d8955c1d7f72e8a1f6ca3e4e973ce0a80dd794aacc034e6bc36311d5f91543f"
+    },
+    {
+      "file": "deploy/examples/android.env.example",
+      "sha256": "4a8a2ae7cb35a0ecb3725e44e3ee16982280f63dc544ad49ba19389c01333bf4"
+    },
+    {
+      "file": "deploy/examples/ios.env.example",
+      "sha256": "bffe5e9ba335d6cf053d1f5acb9ebf6c0e1aa5140b240309815f666b137e51f3"
+    },
+    {
+      "file": "deploy/examples/desktop.env.example",
+      "sha256": "7e1e91306e4f593c872ede17eeea40b7d75b66b8bd0aa7fcb5d1fb7bd367ca19"
+    },
+    {
+      "file": "deploy/examples/README.md",
+      "sha256": "e44506053cf8df8b335355184d25df952bddecd3438314a8e515a8d74c39583f"
+    },
+    {
+      "file": ".github/workflows/app-packages.yml",
+      "sha256": "329d65ae99f7933c105ff63a3015bd8ba90cecb84986c80228026306ca8a268a"
+    },
+    {
+      "file": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "sha256": "de82ae2c309f3cd7c453ddcf5f7f975b424fffb569da8a9f40ab6d118ab10f39"
+    },
+    {
+      "file": "docs/client/DEPENDENCY_BASELINE_2026_10_20.md",
+      "sha256": "e5c47bedebf8ef919de117908db97cba61a4a602bdb9d950aab4a2819b6bb3bf"
+    },
+    {
+      "file": "docs/client/DELIVERY_GUIDE_2026_10_25.md",
+      "sha256": "de65f7858df13394b73a46482bb431c778b8eb9dfbc257b35d8bb0691585cae7"
+    },
+    {
+      "file": "docs/client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md",
+      "sha256": "51342f66f52ac7db8f0d347350f1b619c4af53129cf46347b5bd8c26fe7d49a0"
+    },
+    {
+      "file": "docs/client/README.md",
+      "sha256": "266a5d0b1d066bfa86622e55baa630759aceff0cbb1b5bf8314cac27a9a47460"
+    },
+    {
+      "file": "docs/server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md",
+      "sha256": "4031dbcb1e9add666b10b682caf11102dd7aa0cbb2be2ea01ace96f7bd4db9f2"
+    }
+  ],
+  "followup_syntax_files": [
+    "web-client/src/core/desktopProvider.ts",
+    "web-client/src/features/DesktopProvider.tsx",
+    "web-client/src/main.tsx",
+    "web-client/src/operations/models.ts"
+  ],
+  "starting_head": "77c479a",
+  "observed_commit_during_task": "eed8fcd",
+  "commit_executed_by_this_session": false,
+  "push_executed_by_this_session": false
+}

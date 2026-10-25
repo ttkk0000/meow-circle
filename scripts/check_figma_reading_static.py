@@ -60,7 +60,7 @@ feature = (shared / 'MobileFeatureStore.kt').read_text()
 assert '"owner_id" to "$account"' in feature and 'fun selectPublications' in feature
 assert 'startsWith("type-")' in feature and 'readingDocument = if (denied(e)) null' in feature
 composer = (web / 'src/features/chat.tsx').read_text()
-assert '!["entries", "pets"].includes(kind) && draft' in composer
+assert '!["entries","pets"].includes(kind)&&draft' in re.sub(r'\s+', '', composer)
 assert 'reply_to:reply??integer(current.values.reply_to)' in re.sub(r'\s+', '', composer)
 assert 'onReplyChange' in composer and 'useExpressionLibrary(owner)' in composer
 make = (root / 'Makefile').read_text()

@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
         )
         if (savedInstanceState == null) appViewModel.openLink(intent?.data)
+        consumeNotification(intent)
         setContent {
             val pending by appViewModel.pendingLink.collectAsStateWithLifecycle()
             AndroidMobileApp(appViewModel.store,pending,appViewModel::openPendingLink,appViewModel::dismissPendingLink,appViewModel.uiSession)
@@ -41,6 +42,13 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        consumeNotification(intent)
         appViewModel.openLink(intent.data)
+    }
+    private fun consumeNotification(value: Intent?) {
+        if (value == null || value.action !in listOf("com.ttkk0000.meowcircle.OPEN_INBOX", Intent.ACTION_MAIN)) return
+        val raw = value.getStringExtra("mnd_notification_id") ?: value.getStringExtra("notification_id")
+        value.removeExtra("mnd_notification_id"); value.removeExtra("notification_id")
+        if (raw == null || !appViewModel.store.queueNotification(raw)) appViewModel.store.queueInboxNotification()
     }
 }

@@ -1,6 +1,7 @@
 package com.ttkk0000.meowcircle.clientui
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,6 +11,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -68,8 +71,8 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
 @Composable fun TaskSection(title: String,content: @Composable ColumnScope.() -> Unit) {
     MndSection(title,content = content)
 }
-@Composable fun TaskNotice(title: String,text: String,warning: Boolean = false) {
-    Surface(color = if(warning) ClientWarningSurface else MaterialTheme.colorScheme.surfaceVariant,shape = MaterialTheme.shapes.medium,modifier = Modifier.fillMaxWidth()) {
+@Composable fun TaskNotice(title: String,text: String,warning: Boolean = false,success: Boolean = false) {
+    Surface(color = if(warning) ClientWarningSurface else if(success) ClientSuccessSurface else MaterialTheme.colorScheme.surfaceVariant,shape = MaterialTheme.shapes.medium,modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) { Text(title,fontWeight = FontWeight.Bold); Text(text,style = MaterialTheme.typography.bodySmall) }
     }
 }
@@ -89,7 +92,10 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     }
 }
 @Composable fun NavigationRow(title: String,detail: String = "",onClick: () -> Unit) {
-    Row(Modifier.fillMaxWidth().clickable(enabled = LocalTaskNavigationEnabled.current,onClick = onClick).heightIn(min = 64.dp).padding(vertical = 12.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    NavigationRow(title,detail,compact = false,onClick = onClick)
+}
+@Composable fun NavigationRow(title: String,detail: String = "",compact: Boolean,onClick: () -> Unit) {
+    Row(Modifier.fillMaxWidth().clickable(enabled = LocalTaskNavigationEnabled.current,onClick = onClick).heightIn(min = 64.dp).padding(vertical = if(compact) 0.dp else 12.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(if(compact) 8.dp else 12.dp)) {
         Column(Modifier.weight(1f),verticalArrangement = Arrangement.spacedBy(4.dp)) { Text(title,style = MaterialTheme.typography.bodyLarge); if(detail.isNotBlank()) Text(detail,color = MaterialTheme.colorScheme.onSurfaceVariant,style = MaterialTheme.typography.bodySmall) }
         DesignIcon("chevron-right",null)
     }
@@ -190,31 +196,64 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     onRetry: (String) -> Unit,
     onMove: (String, Int) -> Unit,
     onRemove: (String) -> Unit,
+    localPreview: suspend (String) -> SelectedPhoto? = store::localPhotoPreview,
+    onSaveOrder: (() -> Unit)? = null,
 ) {
+    FeatureButton("照片选择说明") { store.features.open(FeatureRoute(FeaturePage.PhotoHelp)) }
     photos.forEachIndexed { index, photo ->
-        MndSection("${index + 1}. ${photo.name}") {
-            if (showPreview) {
-                photo.mediaId?.let { mediaId ->
-                    MobilePhoto(
-                        store,
-                        mediaId,
-                        ownerId,
-                        photo.name,
-                        if (compactPreview) Modifier.size(112.dp) else Modifier.fillMaxWidth().heightIn(max = 180.dp),
-                    )
+        key(photo.key) {
+            var dragY by remember { mutableFloatStateOf(0f) }
+            var rowHeight by remember { mutableIntStateOf(1) }
+            val move by rememberUpdatedState(onMove)
+            Column(Modifier.onSizeChanged { rowHeight = it.height.coerceAtLeast(1) }) {
+                MndSection("第 ${index + 1} 张${if (index == 0) " · 封面" else ""} · ${photo.name}") {
+                    if (showPreview) {
+                        photo.mediaId?.let { mediaId ->
+                            MobilePhoto(
+                                store,
+                                mediaId,
+                                ownerId,
+                                photo.name,
+                                if (compactPreview) Modifier.size(112.dp) else Modifier.fillMaxWidth().heightIn(max = 180.dp),
+                            )
+                        }
+                        if (photo.mediaId == null) LocalPhotoPreview(photo.key, ownerId, photo.name,
+                            if (compactPreview) Modifier.size(112.dp) else Modifier.fillMaxWidth().height(172.dp), localPreview)
+                    }
+                    if (photo.uploading) {
+                        val percent = photo.uploadPercent
+                        Text(if (percent == null) "等待上传进度…" else if (percent == 100) "已传输 100% · 等待服务器确认" else "上传中 $percent%")
+                        if (percent == null) LinearProgressIndicator(Modifier.fillMaxWidth())
+                        else LinearProgressIndicator(progress = { percent / 100f }, modifier = Modifier.fillMaxWidth())
+                    } else if (photo.mediaId != null) Text("已完成 · 已加入本次草稿", style = MaterialTheme.typography.bodySmall)
+                    Text("长按拖动调整顺序，第一张作为封面", Modifier.fillMaxWidth().heightIn(min = 48.dp).pointerInput(photo.key, busy) {
+                        if (!busy) detectDragGesturesAfterLongPress(
+                            onDragStart = { dragY = 0f }, onDragEnd = { dragY = 0f }, onDragCancel = { dragY = 0f },
+                            onDrag = { change, distance ->
+                                change.consume(); dragY += distance.y
+                                if (kotlin.math.abs(dragY) >= rowHeight / 2f) { move(photo.key, if (dragY > 0) 1 else -1); dragY = 0f }
+                            })
+                    }, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                    photo.error?.let {
+                        Text(it, color = MaterialTheme.colorScheme.error)
+                        MndSecondaryButton("重试此照片", !busy) { onRetry(photo.key) }
+                    }
+                    Row {
+                        TextButton({ onMove(photo.key, -1) }, enabled = !busy && index > 0) { Text("前移") }
+                        TextButton({ onMove(photo.key, 1) }, enabled = !busy && index < photos.lastIndex) { Text("后移") }
+                        TextButton({ onRemove(photo.key) }, enabled = !busy) { Text("移除") }
+                    }
                 }
             }
-            if (photo.uploading) LinearProgressIndicator(Modifier.fillMaxWidth())
-            photo.error?.let {
-                Text(it, color = MaterialTheme.colorScheme.error)
-                MndSecondaryButton("重试此照片", !busy) { onRetry(photo.key) }
-            }
-            Row {
-                TextButton({ onMove(photo.key, -1) }, enabled = !busy && index > 0) { Text("前移") }
-                TextButton({ onMove(photo.key, 1) }, enabled = !busy && index < photos.lastIndex) { Text("后移") }
-                TextButton({ onRemove(photo.key) }, enabled = !busy) { Text("移除") }
-            }
         }
+    }
+    if (photos.isNotEmpty() && onSaveOrder != null) MndSecondaryButton("保存顺序到本机草稿", !busy, onClick = onSaveOrder)
+    val failed = photos.filter { it.mediaId == null && it.error != null && !it.uploading }
+    if (failed.isNotEmpty()) {
+        Text("已完成 ${photos.count { it.mediaId != null }} 张 · 未完成 ${failed.size} 张")
+        MndSecondaryButton("重试失败照片", !busy) { failed.forEach { onRetry(it.key) } }
+        MndSecondaryButton("移除失败照片", !busy) { failed.forEach { onRemove(it.key) } }
+        Text("已完成的照片与原上传编号会保留；未完成照片不会冒充上传成功。", style = MaterialTheme.typography.bodySmall)
     }
 }
 

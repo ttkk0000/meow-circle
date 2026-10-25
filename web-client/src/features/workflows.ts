@@ -18,6 +18,7 @@ export interface Workflow {
   omit?: string[];
   initial?: (c: Context) => Record<string, unknown>;
   after?: string;
+  afterView?: string;
   preview?: boolean;
   scope?: (c: Context, body: Record<string, unknown>) => string | null;
   guest?: boolean;
@@ -301,6 +302,29 @@ export const workflows: Record<string, Workflow> = {
     path: (c) => `adoptions/${c.id}/care_updates`,
     media: "private",
     after: "adoptions",
+    replayable: true,
+  },
+  "lead-assessment": {
+    title: "核对私密线索处理",
+    schema: "LeadAssessmentInput",
+    path: (c) => {
+      if (c.kind !== "leads" || c.id <= 0n) throw new Error("请从原线索进入");
+      return `leads/${c.id}/assessment`;
+    },
+    omit: ["assessment"],
+    initial: (c) => ({ assessment: c.params.get("assessment") ?? "" }),
+    after: "leads",
+    afterView: "reviewed",
+    replayable: true,
+  },
+  "lead-contact": {
+    title: "核对站内联系",
+    schema: "LeadContactInput",
+    path: (c) => {
+      if (c.kind !== "leads" || c.id <= 0n) throw new Error("请从原线索进入");
+      return `leads/${c.id}/contact`;
+    },
+    after: "conversations",
     replayable: true,
   },
   lead: {

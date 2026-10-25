@@ -16,6 +16,9 @@ import kotlinx.serialization.json.JsonPrimitive
         FeaturePage.Rules -> RulesContent(store,s,route)
         FeaturePage.Reading -> ReadingContent(store,s)
         FeaturePage.SettingsHome -> SettingsHomeContent(store)
+        FeaturePage.NotificationHelp -> NotificationHelpContent(store)
+        FeaturePage.LocationHelp -> LocationHelpContent(store)
+        FeaturePage.PhotoHelp -> PhotoHelpContent(store)
         FeaturePage.Age -> AgeRangeContent(store,s)
         FeaturePage.Adult -> AgeAssuranceContent(store,route)
         FeaturePage.Guardians -> if(route.kind=="protection") GuardianProtectionContent(store) else GuardiansContent(store,s,route)
@@ -36,10 +39,12 @@ import kotlinx.serialization.json.JsonPrimitive
             val push by f.api.devicePush.status.collectAsState()
             Text("${push.message}。站内未读以服务端为准。")
             FeatureButton("重新核对设备通道", !s.busy) { f.api.devicePush.refresh() }
+            FeatureButton("系统通知权限说明") { f.open(FeatureRoute(FeaturePage.NotificationHelp)) }
             FeatureButton("附近提醒") { f.open(FeatureRoute(FeaturePage.Nearby)) }
         }
         FeaturePage.Map -> MapFeature(store,s,route)
         FeaturePage.Nearby -> {
+            FeatureButton("不提供定位也可以") { f.open(FeatureRoute(FeaturePage.LocationHelp)) }
             val old = s.subscription?.data
             RegionFields(f,s,old?.city.orEmpty(),withArea = false)
             if (old != null && old.locationPrecision != "city") Text("原提醒使用距离范围；本次保存将改为所选城市。原设置在你确认前继续保留。")
@@ -295,7 +300,7 @@ import kotlinx.serialization.json.JsonPrimitive
     if (selectedData(f).isNotEmpty()) Text("本次已选 ${selectedData(f).size} 条，可逐条移除：")
     selectedData(f).forEach { selection -> FeatureButton("移除：${resourceLabel(selection.kind)} #${selection.id}",!s.busy) { f.edit("selections",f.field("selections").split(',').filterNot { it == "${selection.kind}:${selection.id}" }.joinToString(",")) } }
 }
-private fun selectionKinds(assistance: Boolean) = listOf("entries" to "动态","entry_comments" to "动态评论","pet_comments" to "领养交流评论","pets" to "宠物档案","media" to "照片","cases" to "走失求助","offers" to "有偿信息","drafts" to "草稿","subscriptions" to "附近订阅") +
+private fun selectionKinds(assistance: Boolean) = listOf("entries" to "动态","entry_comments" to "动态评论","pet_comments" to "领养交流评论","pets" to "宠物档案","media" to "照片","cases" to "走失求助","offers" to "有偿信息","drafts" to "草稿","source_declarations" to "来源声明","subscriptions" to "附近订阅") +
     if (assistance) listOf("adoptions" to "领养事项","appointments" to "预约","reviews" to "核实事项") else emptyList()
 private fun selectedData(f: MobileFeatureStore) = f.field("selections").split(',').mapNotNull { item -> val parts = item.split(':'); if(parts.size == 2) parts[1].toLongOrNull()?.let { DataSelection(parts[0],it) } else null }
 private fun reviewTypeLabel(v: String) = mapOf("verification" to "核实","report" to "举报","appeal" to "申诉","support" to "协助","recovery" to "恢复")[v] ?: v
