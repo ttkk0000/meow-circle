@@ -168,6 +168,42 @@ func (s *Service) adult(tx Tx, actor int64) error {
 	return nil
 }
 
+// 陌生人私信只向双方均有有效成年结果的账号开放消息请求。
+// 已双向确认的好友可继续受保护的日常交流；不向调用方透露对方年龄。
+func (s *Service) directContact(tx Tx, actor, peer int64) error {
+	b, err := blocked(tx, actor, peer)
+	if err != nil {
+		return err
+	}
+	if b {
+		return ErrForbidden
+	}
+	connected, err := friends(tx, actor, peer)
+	if err != nil {
+		return err
+	}
+	if connected {
+		return nil
+	}
+	for _, id := range []int64{actor, peer} {
+		r, err := tx.ByKey(Qualifications, fmt.Sprint(id))
+		if errors.Is(err, ErrNotFound) {
+			return Denied("contact_restricted")
+		}
+		if err != nil {
+			return err
+		}
+		proof, err := Decode[Qualification](r)
+		if err != nil {
+			return err
+		}
+		if proof.AgeBand != "adult" || !proof.AgeValidUntil.After(s.Now()) {
+			return Denied("contact_restricted")
+		}
+	}
+	return nil
+}
+
 // The identity module calls this only after consuming a real OTP in the same transaction.
 func RecordPhoneProof(tx Tx, actor int64, phone string, now time.Time) error {
 	r, e := tx.ByKey(Qualifications, fmt.Sprint(actor))
@@ -208,25 +244,34 @@ func (s *Service) RecordAgeEvidence(ctx context.Context, operator string, in Age
 		if e := s.active(tx, in.ActorID); e != nil {
 			return e
 		}
-		r, e := tx.ByKey(Qualifications, fmt.Sprint(in.ActorID))
-		q := Qualification{}
-		if errors.Is(e, ErrNotFound) {
-			r = Record{OwnerID: in.ActorID, Key: fmt.Sprint(in.ActorID), State: "active"}
-		} else if e != nil {
-			return e
-		} else {
-			q, e = Decode[Qualification](r)
-			if e != nil {
-				return e
-			}
-		}
-		q.AgeBand, q.AgeValidUntil, q.EvidenceRef, q.VerifiedBy = in.AgeBand, in.ValidUntil, in.EvidenceRef, operator
-		if e = save(tx, Qualifications, &r, q, in.ActorID, "qualification.age_recorded"); e != nil {
-			return e
-		}
-		return audit(tx, operator, "qualification.age_recorded", Qualifications, r.ID)
+		return RecordTrustedAgeProof(tx, in.ActorID, in.AgeBand, in.ValidUntil, in.EvidenceRef, operator, s.Now())
 	})
 }
+
+// 仅供具名运营和服务端核验通道调用，不开放用户自报资格入口。
+func RecordTrustedAgeProof(tx Tx, actor int64, band string, until time.Time, evidence, verifier string, now time.Time) error {
+	if actor <= 0 || verifier == "" || !HasString([]string{"under14", "14_17", "adult"}, band) || !until.After(now) || until.After(now.Add(366*24*time.Hour)) || textValid(evidence, 120, true) != nil {
+		return Invalid("invalid trusted age proof")
+	}
+	r, e := tx.ByKey(Qualifications, fmt.Sprint(actor))
+	q := Qualification{}
+	if errors.Is(e, ErrNotFound) {
+		r = Record{OwnerID: actor, Key: fmt.Sprint(actor), State: "active"}
+	} else if e != nil {
+		return e
+	} else {
+		q, e = Decode[Qualification](r)
+		if e != nil {
+			return e
+		}
+	}
+	q.AgeBand, q.AgeValidUntil, q.EvidenceRef, q.VerifiedBy = band, until, evidence, verifier
+	if e = save(tx, Qualifications, &r, q, actor, "qualification.age_recorded"); e != nil {
+		return e
+	}
+	return audit(tx, verifier, "qualification.age_recorded", Qualifications, r.ID)
+}
+
 func audit(tx Tx, operator, action string, kind Kind, id int64) error {
 	r := Record{RefID: id, State: "recorded"}
 	if e := SetBody(&r, struct {

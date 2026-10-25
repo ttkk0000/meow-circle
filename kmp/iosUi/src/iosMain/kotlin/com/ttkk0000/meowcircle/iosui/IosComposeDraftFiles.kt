@@ -7,14 +7,15 @@ import kotlinx.cinterop.*
 import platform.Foundation.*
 import platform.posix.memcpy
 
-class IosComposeDraftFiles : ComposeDraftFiles {
+class IosComposeDraftFiles(private val namespace: String = "mnd-compose", private val manifestLimit: ULong = 128uL * 1024uL) : ComposeDraftFiles {
+    init { require(namespace.matches(Regex("mnd-[a-z-]+"))) }
     private val manager = NSFileManager.defaultManager
 
     private fun directory(owner: Long): String {
         require(owner > 0)
         val support = (manager.URLsForDirectory(NSApplicationSupportDirectory, NSUserDomainMask).first() as NSURL).path
             ?: error("Private draft directory unavailable")
-        val path = "$support/mnd-compose/$owner"
+        val path = "$support/$namespace/$owner"
         check(manager.createDirectoryAtPath(path, withIntermediateDirectories = true,
             attributes = mapOf(NSFileProtectionKey to NSFileProtectionCompleteUntilFirstUserAuthentication), error = null))
         check(NSURL.fileURLWithPath(path).setResourceValue(true, forKey = NSURLIsExcludedFromBackupKey, error = null))
@@ -30,7 +31,7 @@ class IosComposeDraftFiles : ComposeDraftFiles {
         val path = file(owner, name)
         if (!manager.fileExistsAtPath(path)) return null
         val data = NSData.dataWithContentsOfFile(path) ?: error("Private draft file unavailable")
-        check(data.length <= if (name == "manifest.json") 128uL * 1024uL else 10uL * 1024uL * 1024uL)
+        check(data.length <= if (name == "manifest.json") manifestLimit else 10uL * 1024uL * 1024uL)
         return ByteArray(data.length.toInt()).also { bytes ->
             if (bytes.isNotEmpty()) bytes.usePinned { memcpy(it.addressOf(0), data.bytes, data.length) }
         }

@@ -28,6 +28,8 @@ import {
 } from "./components/ui";
 import { AuthDialog } from "./features/AuthDialog";
 import { Mine, Security, type Profile } from "./features/Account";
+import { AgeRange, AgeAssurance } from "./features/AgePages";
+import { Guardians, GuardianProtection } from "./features/GuardianPages";
 import { Rules, ReadingPage, SettingsHome } from "./features/ReadingPages";
 import { Feed, PageEnd, Records, titles } from "./features/Records";
 import { ResourcePage, Member } from "./features/ResourcePage";
@@ -352,7 +354,6 @@ const lists = new Set([
   "groups",
   "reviews",
   "claims",
-  "guardians",
   "care-updates",
   "leads",
 ]);
@@ -368,6 +369,7 @@ const anonymous = new Set([
   "/guide",
   "/privacy",
   "/settings",
+  "/guardian-protection",
   "/publish",
   "/mine",
   "/recovery",
@@ -432,6 +434,14 @@ function RouteContent({
     return <InboxPage params={params} />;
   if (path === "/recovery") return <Recovery />;
   if (path === "/security") return <Security />;
+  if (path === "/age") return <AgeRange />;
+  if (path === "/age-check") return <AgeAssurance params={params} />;
+  if (path === "/guardian-protection") return <GuardianProtection />;
+  if (
+    path === "/guardians" ||
+    (kind === "guardians" && pieces.length === 2 && id > 0n)
+  )
+    return <Guardians id={id} />;
   if (path === "/profile-edit") return <ProfileEditor />;
   if (path === "/notification-settings" || path === "/nearby")
     return <SettingsEditor nearby={path === "/nearby"} />;
@@ -488,7 +498,10 @@ function EditorRoute({ params }: { params: URLSearchParams }) {
   const kind = params.get("kind") ?? "";
   const id = integer(params.get("id"));
   const resource = id > 0n && !!resourceRoute(kind, id);
-  const result = useQuery<RecordData>(resource ? `${kind}/${id}` : null);
+  const result = useQuery<RecordData>(
+    resource && flow !== "guardian" ? `${kind}/${id}` : null,
+  );
+  if (flow === "guardian") return <Guardians id={id} />;
   if (resource && (result.loading || !result.data))
     return (
       <QueryState

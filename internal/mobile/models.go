@@ -55,6 +55,7 @@ type Comment struct {
 }
 
 type Case struct {
+	CoordinateSystem  string    `json:"coordinate_system,omitempty"`  // gcj02 / wgs84; 空值表示旧数据来源未知
 	LocationPrecision string    `json:"location_precision,omitempty"` // area: no public coordinate; approximate: coarse point
 	Type              string    `json:"type"`                         // lost, found
 	PetID             int64     `json:"pet_id,omitempty"`
@@ -80,6 +81,7 @@ type Claim struct {
 }
 
 type Subscription struct {
+	CoordinateSystem  string  `json:"coordinate_system,omitempty"`
 	Species           string  `json:"species,omitempty"`
 	LocationPrecision string  `json:"location_precision,omitempty"` // city or approximate; empty preserves legacy point semantics
 	City              string  `json:"city"`

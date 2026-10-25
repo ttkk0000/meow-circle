@@ -51,7 +51,8 @@ suspend fun MobileApi.findSafetyTicket(key: String,token: String): RightsReceipt
 suspend fun MobileApi.requestSafetyContactOTP(token: String,email: String): OTPReceipt = post("safety/contact-otp",EmailOTPInput(email,"rights_contact"),false,mapOf("X-Safety-Token" to token))
 suspend fun MobileApi.verifySafetyContact(token: String,email: String,code: String): JsonElement = post("safety/contact-verify",EmailAuthInput(email,code),false,mapOf("X-Safety-Token" to token))
 suspend fun MobileApi.registerPushDevice(input: PushDeviceInput): PushDeviceReceipt = post("push-devices",input)
-suspend fun MobileApi.savePreferences(version: Long,preference: PreferenceBody): MobileRecord<PreferenceBody> = receiptWrite("preferences",SettingsInput(version,preference = preference),method = "PUT")
+suspend fun MobileApi.savePreferences(version: Long,preference: PreferenceBody): MobileRecord<PreferenceBody> =
+    receiptWrite<MobileRecord<PreferenceBody>,SettingsInput>("preferences",SettingsInput(version,preference = preference),method = "PUT").also { devicePush.preferencesSaved(it.data) }
 suspend fun MobileApi.saveExpressions(version: Long,expressions: ExpressionBody): MobileRecord<ExpressionBody> = receiptWrite("expressions",SettingsInput(version,expressions = expressions),method = "PUT")
 suspend fun MobileApi.saveSubscription(input: SubscriptionInput): MobileRecord<SubscriptionBody> = receiptWrite("subscriptions",input,method = "PUT")
 suspend fun MobileApi.safetyTicketStatus(id: Long,token: String): RightsReceipt = get("safety/tickets/$id",authenticated = false,headers = mapOf("X-Safety-Token" to token))

@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 本批地图只支持手动选点，不继承SDK合包的定位／电话权限。 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
+    <queries>
+        <package android:name="com.tencent.mm" />
+        <package android:name="com.tencent.mobileqq" />
+        <package android:name="com.tencent.tim" />
+    </queries>
 
     <application
         android:name=".mobile.MndApplication"
@@ -13,6 +23,12 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="${allowCleartextTraffic}"
         android:theme="@style/Theme.MeowKmp">
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="${amapApiKey}" />
+        <meta-data android:name="firebase_messaging_auto_init_enabled" android:value="false" />
+        <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true" />
+        <service android:name=".mobile.MndFirebaseMessagingService" android:exported="false">
+            <intent-filter><action android:name="com.google.firebase.MESSAGING_EVENT" /></intent-filter>
+        </service>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -35,5 +51,16 @@
                 <data android:scheme="https" android:host="${appLinkHost}" android:pathPrefix="/share/" />
             </intent-filter>
         </activity>
+        <activity android:name=".mobile.OfficialProviderActivity" android:exported="false" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".wxapi.WXEntryActivity" android:exported="true" android:launchMode="singleTop" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="com.tencent.tauth.AuthActivity" android:exported="true" android:noHistory="true" android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="${qqAuthScheme}" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tencent.connect.common.AssistActivity" android:exported="false" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 </manifest>

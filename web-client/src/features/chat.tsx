@@ -169,9 +169,7 @@ export function ExpressionSettings() {
             .filter((item) => shown(item.id))
             .map((item) => (
               <div className="expression-cell" key={item.id}>
-                <span role="img" aria-label={item.label}>
-                  {item.text}
-                </span>
+                <EmojiImage item={item} />
                 <Button disabled={busy} onClick={() => void toggle(item.id)}>
                   {favorites.includes(item.id) ? "取消收藏" : "收藏"}
                 </Button>
@@ -209,14 +207,38 @@ function StickerImage({ item }: { item: Sticker }) {
     />
   );
 }
+function EmojiImage({ item, sent = false }: { item: Emoji; sent?: boolean }) {
+  return /^\/api\/v2\/expression-assets\/v1\/emoji_u[a-f0-9_]+\.svg$/.test(
+    item.asset_url,
+  ) ? (
+    <img
+      className={sent ? "emoji-image sent" : "emoji-image"}
+      src={item.asset_url}
+      alt={item.label}
+      width={sent ? 72 : 32}
+      height={sent ? 72 : 32}
+    />
+  ) : (
+    <span>{item.label}</span>
+  );
+}
 export function RichText({ content }: { content: Record<string, unknown> }) {
   const catalog = useQuery<Catalog>("expression-catalog");
   const selected = catalog.data?.stickers.find(
     (item) => item.id === content.sticker_id,
   );
+  const emoji = catalog.data?.emoji.find(
+    (item) => item.text === String(content.text ?? "").trim(),
+  );
   return (
     <div className="stack">
-      {content.text ? <p className="prose">{String(content.text)}</p> : null}
+      {emoji ? (
+        <div className="sent-expression">
+          <EmojiImage item={emoji} sent />
+        </div>
+      ) : content.text ? (
+        <p className="prose">{String(content.text)}</p>
+      ) : null}
       {selected ? (
         <StickerImage item={selected} />
       ) : content.sticker_id ? (
@@ -728,7 +750,7 @@ export function Composer({
                     void rememberExpression(emoji.id);
                   }}
                 >
-                  {emoji.text}
+                  <EmojiImage item={emoji} />
                 </button>
                 <button
                   type="button"

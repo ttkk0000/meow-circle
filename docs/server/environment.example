@@ -1,3 +1,8 @@
+# 2026-10-25交付：cmd/server支持下列敏感设置的NAME_FILE形式，与直值互斥：
+# DATABASE_URL REDIS_URL JWT_SECRET ADMIN_KEY MND_OPERATORS_JSON，网关Token，
+# 各端WECHAT/QQ AppSecret、Apple ClientSecret/EncryptionKey及高德JS安全码。
+# 详见 internal/platform/envfile/secrets.go；文件不应进入镜像或源码仓库。
+# 生产编排与App交付说明：docs/client/DELIVERY_GUIDE_2026_10_25.md
 # Documentation only. The server reads process environment; it does not load this file.
 # Development is explicit. Production must set DATABASE_URL and strong secrets.
 APP_ENV=development
@@ -9,6 +14,9 @@ ADMIN_KEY=
 CORS_ALLOW_ORIGIN=http://localhost:8080
 # Browser Cookie/CSRF adapter allowed origin for web-client (/api/web/v2/*).
 MND_WEB_ORIGIN=http://localhost:5173
+# 与前端公开JS Key相同；安全密钥仅服务端保管，原生两端使用各自Key。
+MND_AMAP_JS_KEY=
+MND_AMAP_JS_SECURITY_CODE=
 # Optional external JSON catalog path for public /api/v2/reading/*.
 # Defaults to embedded internal/platform/mobileapi/reading-drafts.json when unset.
 MND_READING_CATALOG=
@@ -44,6 +52,11 @@ MND_CONTENT_PROPAGATOR=
 # Named operators: JSON array with id, token (>=32 bytes), roles, consumers.
 # Supply secrets through deployment secret management. Never ship in clients.
 MND_OPERATORS_JSON=
+# 独立技术运维控制台 /app/ops；默认关闭，不会从消费者登录推导权限。
+# 先应用010_operations_console.sql。运维角色：ops_viewer / ops_oncall / ops_release / ops_admin。
+# 人工运维身份需另配environments，例如["staging"]；已有worker角色不会自动获得控制台权限。
+MND_OPS_ENVIRONMENT=
+MND_RELEASE_VERSION=
 # HTTPS push gateway implementing POST /lookup and /send with durable dedup.
 # A provider acceptance receipt is distinct from end-device delivery.
 PUSH_GATEWAY_URL=
@@ -60,3 +73,45 @@ MND_WORKER_OPERATOR_TOKEN=
 MND_WORKER_STATE_FILE=
 MND_WORKER_INTERVAL_SECONDS=30
 MND_WORKER_ALLOW_LOOPBACK_HTTP=0
+
+# 多端官方登录（占位符）。Secret仅写部署环境，绝不能传给Web构建。
+# 不同AppID分别核验并保留独立身份；关联原账号仍需用途验证。
+WECHAT_ANDROID_LOGIN_APP_ID=
+WECHAT_ANDROID_LOGIN_APP_SECRET=
+WECHAT_IOS_LOGIN_APP_ID=
+WECHAT_IOS_LOGIN_APP_SECRET=
+WECHAT_WEB_LOGIN_APP_ID=
+WECHAT_WEB_LOGIN_APP_SECRET=
+WECHAT_WEB_LOGIN_REDIRECT_URI=https://example.invalid/app/provider-callback
+QQ_ANDROID_LOGIN_APP_ID=
+QQ_ANDROID_LOGIN_APP_SECRET=
+QQ_IOS_LOGIN_APP_ID=
+QQ_IOS_LOGIN_APP_SECRET=
+QQ_WEB_LOGIN_APP_ID=
+QQ_WEB_LOGIN_APP_SECRET=
+QQ_WEB_LOGIN_REDIRECT_URI=https://example.invalid/app/provider-callback
+
+# 成年资格通道。留空关闭；只接必要结果，不接证件号、原件或生物信息。
+# Gateway提供POST /requests及/requests/{reference}/query，合同见专项交接。
+AGE_GATEWAY_URL=
+AGE_GATEWAY_TOKEN=
+AGE_PROVIDER_NAME=
+AGE_PROVIDER_PRIVACY_URL=
+AGE_PROVIDER_LAUNCH_ORIGIN=
+
+# 媒体存储默认local；私有S3路径式适配仅允许从未启用版本控制的独立桶。
+# 切换前须迁移和核对已有对象；不会自动复制或清空旧目录。
+MND_MEDIA_BACKEND=local
+MND_S3_ENDPOINT=
+MND_S3_REGION=
+MND_S3_BUCKET=
+MND_S3_PREFIX=meow-circle/
+MND_S3_ACCESS_KEY_FILE=
+MND_S3_SECRET_KEY_FILE=
+MND_S3_SESSION_TOKEN_FILE=
+
+# 独立投影网关：幂等接收最小失效／审计事件，不复制用户正文。
+MND_SEARCH_PROJECTION_URL=
+MND_SEARCH_PROJECTION_TOKEN_FILE=
+MND_AUDIT_PROJECTION_URL=
+MND_AUDIT_PROJECTION_TOKEN_FILE=

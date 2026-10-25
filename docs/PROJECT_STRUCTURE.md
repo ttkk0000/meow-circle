@@ -1,23 +1,25 @@
 # Project Structure
 
-Last updated: 2026-10-24
+Last updated: 2026-10-25
 
 This document maps the real repository structure for M&D (`meow & doggie`). It is meant for
 engineers and future agents who need to understand where both the current **v2 modular monolith / multi-platform clients** and the legacy v1 surfaces live before editing.
 
-## 0. Current v2 Directory Additions (2026-10-24 Baseline)
+> **Architecture & UML Reference**: See [`docs/CODE_LOGIC_AND_UML_REFERENCE.md`](CODE_LOGIC_AND_UML_REFERENCE.md) and the standalone PlantUML diagrams in [`docs/uml/`](uml/README.md) (especially [`01-system-component-architecture.puml`](uml/01-system-component-architecture.puml), [`02-kmp-mvi-and-clientui-class-diagram.puml`](uml/02-kmp-mvi-and-clientui-class-diagram.puml), [`03-server-domain-and-service-class-diagram.puml`](uml/03-server-domain-and-service-class-diagram.puml), and [`04-database-er-schema.puml`](uml/04-database-er-schema.puml)).
+
+## 0. Current v2 Directory Additions (2026-10-25 Baseline)
 
 ```text
 meow-circle/
 ├── cmd/
-│   ├── server/                  # Main HTTP server (/api/v2, /app/, public safety/share pages, legacy /api/v1)
+│   ├── server/                  # Main HTTP server (/api/v2: 241 paths / 271 operations / 123 schemas, /maps/amap/_AMapService/, /app/, public safety/share pages, legacy /api/v1)
 │   └── worker/                  # Standalone v2 background worker (push, nearby_alerts, content_updates, privacy_cleanup, provider_revocations, maintenance)
 ├── internal/
-│   ├── identity/                # v2 3-identifier auth, OTP, OAuth, session rotation, eligibility & reauth grants
-│   ├── mobile/                  # v2 domain facade (44 aggregate kinds, adoption placement, appointment admission, evidence retention, comments/reactions, outbox)
+│   ├── identity/                # v2 3-identifier auth, OTP, OAuth/Provider create-vs-link, external age assurance, 15m guardian invites, adult claims, session rotation, eligibility & reauth grants
+│   ├── mobile/                  # v2 domain facade (44 aggregate kinds, adoption placement, appointment admission, lost-pet coarse GCJ-02/WGS-84 map, evidence retention, comments/reactions, outbox)
 │   ├── platform/
-│   │   ├── mobileapi/           # v2 HTTP handlers, browser Cookie/CSRF adapter, reading/publications catalog, media privacy, worker job endpoints
-│   │   ├── mobileauth/          # SMS, Email OTP, WeChat, QQ, and Apple Sign-In/revocation gateway adapters
+│   │   ├── mobileapi/           # v2 HTTP handlers, browser Cookie/CSRF adapter, browser provider OAuth start/callback, Amap reverse proxy, guardian invite & adult claim routes, reading/publications, media privacy, worker job endpoints
+│   │   ├── mobileauth/          # SMS, Email OTP, WeChat, QQ, Apple Sign-In/revocation, and external Age Assurance HMAC gateway adapters
 │   │   └── mobileworker/        # Worker HTTP client and durable SHA-256 checkpoint state manager
 │   └── store/postgres/mobile.go # PostgreSQL SERIALIZABLE repository & schema verifier for 005..009
 ├── migrations/
@@ -28,15 +30,17 @@ meow-circle/
 │   ├── 008_mobile_policy_commands.sql # 10 policy/grant/contract/hold/operation/data-request tables
 │   └── 009_pet_discussions.sql  # 2 pet comment & comment reaction tables (total 44 mobile_* tables)
 ├── kmp/
-│   ├── shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ # Shared v2 DTOs, Transport, MobileStore, ReadingModels
-│   ├── androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/ # v2 Android phone & tablet Compose UI (30+ routes & reading/publications)
-│   ├── iosUi/                   # Compose Multiplatform for iOS UI module
-│   ├── iosApp/ComposeApp/       # Thin iOS host embedding Compose Multiplatform
-│   └── desktopApp/              # Compose Desktop client
-└── web-client/                  # Standalone v2 React + TypeScript + Vite consumer web app (/app/, Cookie+CSRF auth, lossless IDs, 740-state parity)
+│   ├── shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ # 16 files: MviStore base, MobileStore, MobileFeatureStore (42 FeaturePages), SensitiveActionStore, ProviderAuthStore, AgeAssuranceStore, GuardianInviteStore, LostMap, 74 DTO pairs
+│   ├── clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ # 34 common Compose UI files shared across Android, iOS, and Desktop (ConsumerApp, FeaturePages, PageComponents, StatusComponents, ClientUiPlatform)
+│   ├── androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/ # v2 Android phone & tablet host (API 26..37, MobileMviViewModel, AndroidClientPlatform, AndroidNativeMap AMap 3D SDK, AndroidProviderAuth, WXEntryActivity)
+│   ├── iosUi/                   # Compose Multiplatform for iOS UI host (IosClientPlatform, IosNativeMap, IosProviderAuth)
+│   ├── iosApp/ComposeApp/       # Thin iOS Swift host (AmapNativeMap.swift MAMapView, NativeProviderAuth.swift ASAuthorization/WXApi/TencentOAuth)
+│   └── desktopApp/              # Compose Desktop client (JVM 21, DesktopClientPlatform, DesktopStorage java-keyring 1.0.4 + AES-256-GCM, LostMapScreen browser handoff)
+├── web-client/                  # Standalone v2 React + TypeScript + Vite consumer web app (/app/* Cookie+CSRF, AmapView JS API 2.0) & isolated Operator Workbench (/app/operator credentials: 'omit')
+└── docs/uml/                    # 12 standalone PlantUML (.puml) architecture, class, ER, sequence, and state machine diagrams
 ```
 
-> See [Server Completeness Audit (2026-10-24)](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md) and [Client README](client/README.md) for current verification boundaries.
+> See [Code Logic & UML Reference](CODE_LOGIC_AND_UML_REFERENCE.md), [Server Completeness Audit (2026-10-24)](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md), and [Client README](client/README.md) for current verification boundaries.
 
 ## 1. High-Level Shape
 

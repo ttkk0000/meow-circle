@@ -23,7 +23,8 @@ for file in kmp.glob("**/build.gradle.kts"):
 shared = kmp / "shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client"
 android = kmp / "androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile"
 ios = kmp / "iosUi"
-files = list(shared.glob("*.kt")) + list(android.glob("*.kt")) + list(ios.rglob("*.kt"))
+client_ui = kmp / "clientUi"
+files = list(client_ui.rglob("*.kt")) + list(shared.glob("*.kt")) + list(android.glob("*.kt")) + list(ios.rglob("*.kt"))
 files += list((kmp / "shared/src/commonTest").rglob("*.kt")) + list((kmp / "iosApp/ComposeApp").glob("*.swift"))
 
 def delimiters(source, file):

@@ -1,6 +1,6 @@
 # 功能交付矩阵
 
-> **2026-10-24 最新状态同步**：产品需求已升级至 [PRD v2.1（FR-001 至 FR-042，新增 EPIC-008）](../bmad/prd.md) 与 [UX v2.1（UX-01 至 UX-17）](../bmad/ux-design.md)，服务端 OpenAPI 已扩至 `230` Paths / `259` Operations / `112` Schemas（44 张 `mobile_*` 表），Android 与新 `web-client` 均已补齐公开阅读/法规目录、宠物评论反应、内容更新订阅与群目录源码（见[2026-10-24客户端交接](FIGMA_ANDROID_WEB_2026_10_24.md)与[服务端完整性审计](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。
+> **2026-10-25 最新状态同步**：产品需求已升级至 [PRD v2.1（FR-001 至 FR-042，新增 EPIC-008）](../bmad/prd.md) 与 [UX v2.1（UX-01 至 UX-17）](../bmad/ux-design.md)，服务端 OpenAPI 已扩至 `241` Paths / `271` Operations / `123` Server Schemas（`74` 对跨语言 DTO，`44` 张 `mobile_*` 表），客户端已通过 `kmp/shared` + `kmp/clientUi`（`34` 个共享 Compose 文件、`42` 个 `FeaturePage`）完成 Android、iOS、Desktop 与 `web-client`（含 `/app/operator`）全端源码落地及 12 项静态检查（见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)、[`docs/uml/`](../uml/README.md)、[全量 Figma 四端实现](ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)与[服务端完整性审计](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。
 
 2026-10-23现行入口：[F00–F14当前交付账本](CURRENT_DELIVERY_STATUS_2026_10_23.md)逐项列源码入口、平台状态、阻塞与责任角色；[业务闭环合同](../design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)细化领养／接回、选择器和HTTPS续接。下文是完整验收标准，不作为“全部待实施”或“全部已完成”的状态表。
 

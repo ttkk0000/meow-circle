@@ -1,0 +1,397 @@
+const assetPathPrefix = "https://www.figma.com/api/mcp/asset/b86d39a5-117a-48be-92df-ea2795d51c13";
+const imgLucideBell = `${assetPathPrefix}/5007d.svg`;
+const imgMDMobileV3SocialAvatar = `${assetPathPrefix}/52666.png`;
+const imgLucideMessageCircle = `${assetPathPrefix}/8c12f.svg`;
+const imgLucideHouse = `${assetPathPrefix}/083ca.svg`;
+const imgLucideHeartHandshake = `${assetPathPrefix}/3742b.svg`;
+const imgLucideCirclePlus = `${assetPathPrefix}/1cc76.svg`;
+const imgLucideMessageCircle1 = `${assetPathPrefix}/e0a6c.svg`;
+const imgLucideUserRound = `${assetPathPrefix}/00fc1.svg`;
+
+function MDMobileV2IconBell({ className }: { className?: string }) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative size-[24px]"} data-node-id="56:86" data-name="M&D Mobile V2 / Icon / bell">
+      <div className="relative shrink-0 size-[24px]" data-node-id="56:87" data-name="Lucide / bell">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideBell} />
+      </div>
+    </div>
+  );
+}
+
+function MDMobileV3SocialAvatar({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative rounded-[var(--mnd-study-radius-999,999px)] size-[48px]"} data-node-id="105:315" data-name="M&D Mobile V3 / socialAvatar">
+      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[var(--mnd-study-radius-999,999px)] size-full" src={imgMDMobileV3SocialAvatar} />
+    </div>
+  );
+}
+
+type MDMobileV2ActionProps = {
+  className?: string;
+  label?: string;
+  style?: "Quiet";
+};
+
+function MDMobileV2Action({ className, label = "主要操作", style = "Quiet" }: MDMobileV2ActionProps) {
+  return (
+    <div className={className || "content-stretch flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] w-[88px]"} data-node-id="56:181">
+      <p className="[word-break:break-word] flex-[1_0_0] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] min-w-px relative text-[14px] text-[color:var(--mnd-button-study-quiet,#9e382a)]" data-node-id="56:186">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+type MDUnreadBadgeProps = {
+  className?: string;
+  count?: string;
+  tone?: "Accent" | "Muted";
+};
+
+function MDUnreadBadge({ className, count = "8", tone = "Accent" }: MDUnreadBadgeProps) {
+  const isMuted = tone === "Muted";
+  return (
+    <div className={className || `content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] ${isMuted ? "bg-[var(--mnd-study-color-subtle,#f0f2f5)]" : "bg-[var(--mnd-button-study-primary,#c84b3d)]"}`} id={isMuted ? "node-353_4" : "node-353_2"}>
+      {tone === "Accent" && (
+        <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-button-study-onPrimary,#fffefc)] whitespace-nowrap" data-node-id="353:3">
+          {count}
+        </p>
+      )}
+      {isMuted && (
+        <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] whitespace-nowrap" data-node-id="353:5">
+          {count}
+        </p>
+      )}
+    </div>
+  );
+}
+
+export default function Messages() {
+  return (
+    <div className="bg-[var(--mnd-study-color-background,#f7f8fa)] content-stretch flex flex-col items-start overflow-clip relative rounded-[20px] size-full" data-node-id="56:61" data-name="手机 / 消息 · 最新未读 [messages]">
+      <div className="[word-break:break-word] bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex font-['Noto_Sans_SC:Regular'] font-normal h-[28px] items-center leading-[20px] overflow-clip px-[20px] relative shrink-0 text-[12px] w-[390px]" data-node-id="488:149976" data-name="Status / learning disclosure">
+        <p className="relative shrink-0 text-[color:var(--mnd-study-color-ink,#202329)] w-[100px]" data-node-id="488:149977">
+          9:41
+        </p>
+        <p className="relative shrink-0 text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[250px]" data-node-id="488:149978">
+          学习示意 · 非真实数据
+        </p>
+      </div>
+      <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[56px] items-center overflow-clip px-[var(--mnd-study-space-16,16px)] relative shrink-0 w-[390px]" data-node-id="488:149979" data-name="Toolbar">
+        <p className="[word-break:break-word] font-['Noto_Sans_SC:Bold'] font-bold leading-[30px] relative shrink-0 text-[20px] text-[color:var(--mnd-study-color-ink,#202329)] whitespace-nowrap" data-node-id="488:149980">
+          消息
+        </p>
+        <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="488:149981" data-name="Flexible space" />
+        <MDMobileV2Action className="content-stretch cursor-pointer flex h-[44px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[92px]" label="全部已读" />
+      </div>
+      <div className="bg-[var(--mnd-study-color-background,#f7f8fa)] content-stretch flex flex-[1_0_0] flex-col gap-[var(--mnd-study-space-12,12px)] items-start min-h-px overflow-x-clip overflow-y-auto p-[var(--mnd-study-space-16,16px)] relative w-[390px]" data-node-id="488:149984" data-name="Scrollable viewport">
+        <div className="content-stretch cursor-pointer flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-start overflow-clip relative shrink-0 w-[358px]" data-node-id="488:149985" data-name="Inbox category tabs">
+          <a className="bg-[var(--mnd-study-color-brandsoft,#fff1eb)] content-stretch flex gap-[var(--mnd-study-space-4,4px)] h-[48px] items-center justify-center overflow-clip p-[var(--mnd-study-space-8,8px)] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0 w-[114px]" data-node-id="488:149986" data-name="Tab / 聊天">
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-brand,#9e382a)] text-left whitespace-nowrap" data-node-id="488:149987">
+              聊天
+            </p>
+            <MDUnreadBadge className="bg-[var(--mnd-button-study-primary,#c84b3d)] content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0" count="83" />
+          </a>
+          <a className="content-stretch flex gap-[var(--mnd-study-space-4,4px)] h-[48px] items-center justify-center overflow-clip p-[var(--mnd-study-space-8,8px)] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0 w-[114px]" data-node-id="488:149989" data-name="Tab / 互动">
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left whitespace-nowrap" data-node-id="488:149990">
+              互动
+            </p>
+            <div className="bg-[var(--mnd-study-color-subtle,#f0f2f5)] content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0" data-node-id="488:149991" data-name="M&D / Unread / Badge">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-left whitespace-nowrap" data-node-id="I488:149991;353:5">
+                16
+              </p>
+            </div>
+          </a>
+          <a className="content-stretch flex gap-[var(--mnd-study-space-4,4px)] h-[48px] items-center justify-center overflow-clip p-[var(--mnd-study-space-8,8px)] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0 w-[114px]" data-node-id="488:149992" data-name="Tab / 通知">
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left whitespace-nowrap" data-node-id="488:149993">
+              通知
+            </p>
+            <div className="bg-[var(--mnd-study-color-subtle,#f0f2f5)] content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0" data-node-id="488:149994" data-name="M&D / Unread / Badge">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-left whitespace-nowrap" data-node-id="I488:149994;353:5">
+                8
+              </p>
+            </div>
+          </a>
+        </div>
+        <div className="content-stretch flex h-[40px] items-center overflow-clip relative shrink-0 w-[358px]" data-node-id="488:149995" data-name="Inbox filter">
+          <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] whitespace-nowrap" data-node-id="488:149996">
+            全部消息
+          </p>
+          <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="488:149997" data-name="Flexible space" />
+          <MDMobileV2Action className="content-stretch flex h-[44px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[100px]" label="仅看未读" />
+        </div>
+        <a className="content-stretch cursor-pointer flex gap-[var(--mnd-study-space-12,12px)] h-[88px] items-center py-[8px] relative shrink-0 w-[358px]" data-node-id="488:149999" data-name="M&D / Unread / Message row">
+          <div className="bg-[var(--mnd-study-color-brandsoft,#fff1eb)] content-stretch flex items-center justify-center overflow-clip relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 size-[48px]" data-node-id="I488:149999;353:19" data-name="Notice icon slot">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I488:149999;353:20" data-name="Notice icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I488:149999;353:20;56:126" data-name="Lucide / message-circle">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMessageCircle} />
+              </div>
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col h-[66px] items-start min-w-px overflow-clip relative text-left" data-node-id="I488:149999;353:24" data-name="Message copy">
+            <p className="font-['Noto_Sans_SC:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:149999;353:25">
+              消息请求
+            </p>
+            <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:149999;353:26">
+              有新朋友想和你交流
+            </p>
+            <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[234px]" data-node-id="I488:149999;353:27">
+              3条未读 · 接受后才能发图片
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] h-[60px] items-end overflow-clip relative shrink-0 w-[52px]" data-node-id="I488:149999;353:28" data-name="Time and unread">
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[52px]" data-node-id="I488:149999;353:29">
+              刚刚
+            </p>
+            <div className="bg-[var(--mnd-button-study-primary,#c84b3d)] content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0" data-node-id="I488:149999;353:30" data-name="Unread counter">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-button-study-onPrimary,#fffefc)] text-left whitespace-nowrap" data-node-id="I488:149999;353:30;353:3">
+                3
+              </p>
+            </div>
+          </div>
+        </a>
+        <a className="content-stretch cursor-pointer flex gap-[var(--mnd-study-space-12,12px)] h-[88px] items-center py-[8px] relative shrink-0 w-[358px]" data-node-id="488:150000" data-name="M&D / Unread / Message row">
+          <MDMobileV3SocialAvatar className="relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0 size-[48px]" />
+          <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col h-[66px] items-start min-w-px overflow-clip relative text-left" data-node-id="I488:150000;353:10" data-name="Message copy">
+            <p className="font-['Noto_Sans_SC:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:150000;353:11">
+              布丁的铲屎官
+            </p>
+            <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:150000;353:12">
+              原来你家也喜欢晒太阳呀。
+            </p>
+            <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[234px]" data-node-id="I488:150000;353:13">
+              日常交流
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] h-[60px] items-end overflow-clip relative shrink-0 w-[52px]" data-node-id="I488:150000;353:14" data-name="Time and unread">
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[52px]" data-node-id="I488:150000;353:15">
+              10:24
+            </p>
+            <div className="bg-[var(--mnd-button-study-primary,#c84b3d)] content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0" data-node-id="I488:150000;353:16" data-name="Unread counter">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-button-study-onPrimary,#fffefc)] text-left whitespace-nowrap" data-node-id="I488:150000;353:16;353:3">
+                6
+              </p>
+            </div>
+          </div>
+        </a>
+        <a className="content-stretch cursor-pointer flex gap-[var(--mnd-study-space-12,12px)] h-[88px] items-center py-[8px] relative shrink-0 w-[358px]" data-node-id="488:150001" data-name="M&D / Unread / Message row">
+          <MDMobileV3SocialAvatar className="relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0 size-[48px]" />
+          <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col h-[66px] items-start min-w-px overflow-clip relative text-left" data-node-id="I488:150001;353:10" data-name="Message copy">
+            <p className="font-['Noto_Sans_SC:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:150001;353:11">
+              小满的照护者
+            </p>
+            <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:150001;353:12">
+              周六下午的安排可以吗？
+            </p>
+            <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[234px]" data-node-id="I488:150001;353:13">
+              领养交流 · 小满
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] h-[60px] items-end overflow-clip relative shrink-0 w-[52px]" data-node-id="I488:150001;353:14" data-name="Time and unread">
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[52px]" data-node-id="I488:150001;353:15">
+              10:20
+            </p>
+            <div className="bg-[var(--mnd-button-study-primary,#c84b3d)] content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0" data-node-id="I488:150001;353:16" data-name="Unread counter">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-button-study-onPrimary,#fffefc)] text-left whitespace-nowrap" data-node-id="I488:150001;353:16;353:3">
+                12
+              </p>
+            </div>
+          </div>
+        </a>
+        <a className="content-stretch cursor-pointer flex gap-[var(--mnd-study-space-12,12px)] h-[88px] items-center py-[8px] relative shrink-0 w-[358px]" data-node-id="488:150002" data-name="M&D / Unread / Message row">
+          <div className="bg-[var(--mnd-study-color-brandsoft,#fff1eb)] content-stretch flex items-center justify-center overflow-clip relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 size-[48px]" data-node-id="I488:150002;353:19" data-name="Notice icon slot">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I488:150002;353:20" data-name="Notice icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I488:150002;353:20;56:126" data-name="Lucide / message-circle">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMessageCircle} />
+              </div>
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col h-[66px] items-start min-w-px overflow-clip relative text-left" data-node-id="I488:150002;353:24" data-name="Message copy">
+            <p className="font-['Noto_Sans_SC:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:150002;353:25">
+              武汉猫友日常
+            </p>
+            <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:150002;353:26">
+              [有人@我] 布丁：周末一起晒猫
+            </p>
+            <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[234px]" data-node-id="I488:150002;353:27">
+              62条未读 · 含3次@我
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] h-[60px] items-end overflow-clip relative shrink-0 w-[52px]" data-node-id="I488:150002;353:28" data-name="Time and unread">
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[52px]" data-node-id="I488:150002;353:29">
+              10:18
+            </p>
+            <div className="bg-[var(--mnd-button-study-primary,#c84b3d)] content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0" data-node-id="I488:150002;353:30" data-name="Unread counter">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-button-study-onPrimary,#fffefc)] text-left whitespace-nowrap" data-node-id="I488:150002;353:30;353:3">
+                62
+              </p>
+            </div>
+          </div>
+        </a>
+        <div className="content-stretch flex gap-[var(--mnd-study-space-12,12px)] h-[88px] items-center py-[8px] relative shrink-0 w-[358px]" data-node-id="488:150003" data-name="M&D / Unread / Message row">
+          <div className="bg-[var(--mnd-study-color-brandsoft,#fff1eb)] content-stretch flex items-center justify-center overflow-clip relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 size-[48px]" data-node-id="I488:150003;353:19" data-name="Notice icon slot">
+            <MDMobileV2IconBell className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" />
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col h-[66px] items-start min-w-px overflow-clip relative" data-node-id="I488:150003;353:24" data-name="Message copy">
+            <p className="font-['Noto_Sans_SC:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-muted,#616771)] w-[234px]" data-node-id="I488:150003;353:25">
+              猫咪好物交流
+            </p>
+            <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] w-[234px]" data-node-id="I488:150003;353:26">
+              免打扰 · 团子分享了一张照片
+            </p>
+            <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[234px]" data-node-id="I488:150003;353:27">
+              免打扰 · 不计入消息总数
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] h-[60px] items-end overflow-clip relative shrink-0 w-[52px]" data-node-id="I488:150003;353:28" data-name="Time and unread">
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[52px]" data-node-id="I488:150003;353:29">
+              昨天
+            </p>
+            <div className="bg-[var(--mnd-study-color-subtle,#f0f2f5)] content-stretch flex h-[20px] items-center justify-center px-[6px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0" data-node-id="I488:150003;353:30" data-name="Unread counter">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] whitespace-nowrap" data-node-id="I488:150003;353:30;353:5">
+                99+
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col h-[84px] items-center overflow-clip pb-[12px] pt-[var(--mnd-study-space-8,8px)] px-[var(--mnd-study-space-8,8px)] relative shrink-0 w-[390px]" data-node-id="488:150063" data-name="Persistent navigation">
+        <div className="content-stretch cursor-pointer flex items-start overflow-clip relative shrink-0 w-[374px]" data-node-id="488:150064" data-name="Four destinations plus publish action">
+          <a className="content-stretch flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="488:150065" data-name="Instance / nav">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I488:150065;56:222" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I488:150065;56:222;56:164" data-name="Lucide / house">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHouse} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[min-content]" data-node-id="I488:150065;56:226">
+              社区
+            </p>
+          </a>
+          <a className="content-stretch flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="488:150066" data-name="Instance / nav">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I488:150066;56:222" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I488:150066;56:222;56:151" data-name="Lucide / heart-handshake">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHeartHandshake} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[min-content]" data-node-id="I488:150066;56:226">
+              领养
+            </p>
+          </a>
+          <a className="content-stretch flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="488:150067" data-name="Instance / nav">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I488:150067;56:222" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I488:150067;56:222;56:95" data-name="Lucide / circle-plus">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideCirclePlus} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[min-content]" data-node-id="I488:150067;56:226">
+              发布
+            </p>
+          </a>
+          <a className="content-stretch flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="488:150068" data-name="Instance / navActive">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I488:150068;56:228" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I488:150068;56:228;56:126" data-name="Lucide / message-circle">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMessageCircle1} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-brand,#9e382a)] text-center w-[min-content]" data-node-id="I488:150068;56:232">
+              消息
+            </p>
+            <div className="bg-[var(--mnd-study-color-brand,#9e382a)] h-[3px] relative shrink-0 w-[20px]" data-node-id="I488:150068;62:1813" data-name="Current destination indicator" />
+          </a>
+          <a className="content-stretch flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="488:150069" data-name="Instance / nav">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I488:150069;56:222" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I488:150069;56:222;56:147" data-name="Lucide / user-round">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideUserRound} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[min-content]" data-node-id="I488:150069;56:226">
+              我的
+            </p>
+          </a>
+        </div>
+        <div className="bg-[var(--mnd-study-color-ink,#202329)] h-[4px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0 w-[120px]" data-node-id="488:150070" data-name="Home indicator" />
+        <div className="absolute bg-[var(--mnd-button-study-primary,#c84b3d)] content-stretch flex h-[20px] items-center justify-center left-[263.4px] px-[6px] rounded-[var(--mnd-study-radius-999,999px)] top-[3px]" data-node-id="488:150071" data-name="Global unread / 99+">
+          <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-button-study-onPrimary,#fffefc)] whitespace-nowrap" data-node-id="I488:150071;353:3">
+            99+
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+
+These styles are contained in the design: M&D Study/Caption: Font(family: "Noto Sans SC", style: Regular, size: 12, weight: 400, lineHeight: 20, letterSpacing: 0), M&D Study/Section: Font(family: "Noto Sans SC", style: Bold, size: 20, weight: 700, lineHeight: 30, letterSpacing: 0), M&D Study/Label: Font(family: "Noto Sans SC", style: Medium, size: 14, weight: 500, lineHeight: 22, letterSpacing: 0), M&D Mobile V2/Strong: Font(family: "Noto Sans SC", style: Bold, size: 16, weight: 700, lineHeight: 24, letterSpacing: 0).
+
+Component descriptions: The following components have usage descriptions or documentation links defined in Figma. These descriptions provide important context about the intended usage, best practices, and any constraints for each component. Follow these guidelines when implementing or using these components.
+
+## M&D Mobile V2 / Action
+**Node ID:** 56:183
+
+已按用户明确要求，将 01 清爽亲切应用至普通手机59屏。保留Label和Style属性以及实例ID；主按钮珊瑚白字，次按钮浅珊瑚细边，16圆角、48触控高度。其余设备和旧主题未迁移。焦点、按下与加载规范参照70:186的Friendly变体。
+
+## M&D / Unread / Badge
+**Node ID:** 353:7
+
+0 hidden; 1–99 literal; 100+ shown as 99+. Count is unread events, never pending tasks. Muted is excluded from the proposed global numeric total.
+
+## M&D / Unread / Message row
+**Node ID:** 353:32
+
+Editable conversation and notice rows. Unread counts are distinct from pending workflow status. Photo and icon assets reuse the current M&D library.
+
+## M&D Mobile V2 / Icon / message-circle
+**Node ID:** 56:125
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V3 / socialAvatar
+**Node ID:** 105:315
+
+手机学习稿 Friendly 社交组件；复用字体、语义颜色与照片。交互为设计演示，不连接真实服务。
+
+## M&D Mobile V2 / Icon / bell
+**Node ID:** 56:86
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Navigation / nav
+**Node ID:** 56:221
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / house
+**Node ID:** 56:163
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / heart-handshake
+**Node ID:** 56:150
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / circle-plus
+**Node ID:** 56:94
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Navigation / navActive
+**Node ID:** 56:227
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / user-round
+**Node ID:** 56:146
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+The generated code contains image and SVG URL constants, e.g. const image = `${assetPathPrefix}/<asset file name>`, where assetPathPrefix is declared once at the top of the code and every asset URL interpolates it. These URLs are temporary download sources and expire after 7 days. Download each asset into the project with curl -L, then replace its URL in the generated code with a reference to the downloaded asset. Never use the temporary URLs as runtime image sources.

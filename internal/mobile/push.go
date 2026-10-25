@@ -19,6 +19,39 @@ type PushDeviceReceipt struct {
 	State   string `json:"state"`
 }
 
+type PushDeviceLookup struct {
+	Platform string `json:"platform"`
+	Token    string `json:"token"`
+}
+
+// 只返回当前账号绑定的版本，不回显Token；用于进程重启和结果不确定后的核对。
+func (s *Service) PushDeviceStatus(ctx context.Context, actor int64, in PushDeviceLookup) (out PushDeviceReceipt, err error) {
+	if !HasString([]string{"android", "ios"}, in.Platform) || len(in.Token) < 16 || len(in.Token) > 4096 {
+		return out, Invalid("invalid push device")
+	}
+	err = s.Repo.View(ctx, func(tx Tx) error {
+		if e := s.active(tx, actor); e != nil {
+			return e
+		}
+		r, e := tx.ByKey(PushDevices, in.Platform+":"+Fingerprint(in.Token))
+		if e == ErrNotFound {
+			return nil
+		}
+		if e != nil {
+			return e
+		}
+		if r.OwnerID != actor {
+			if r.State == "disabled" {
+				return nil
+			}
+			return Denied("push_device_owned_by_another_account")
+		}
+		out = PushDeviceReceipt{r.ID, r.Version, r.State}
+		return nil
+	})
+	return
+}
+
 func (s *Service) RegisterPushDevice(ctx context.Context, actor int64, in PushDeviceInput) (out PushDeviceReceipt, err error) {
 	if !HasString([]string{"android", "ios"}, in.Platform) || len(in.Token) < 16 || len(in.Token) > 4096 || !HasString([]string{"granted", "denied", "unknown"}, in.Permission) {
 		return out, Invalid("invalid push device")
@@ -76,6 +109,33 @@ func (s *Service) RegisterPushDevice(ctx context.Context, actor int64, in PushDe
 		}
 		if e = tx.Save(PushDevices, &r); e != nil {
 			return e
+		}
+		if r.State == "enabled" && SessionKey(ctx) != "" {
+			// 同一会话的Token轮换原子撤销旧通道，避免重复发送；不影响其它设备。
+			rows, err := allRecords(tx, PushDevices, Filter{OwnerID: actor, State: "enabled"})
+			if err != nil {
+				return err
+			}
+			for _, previous := range rows {
+				if previous.ID == r.ID {
+					continue
+				}
+				binding, err := Decode[pushBinding](previous)
+				if err != nil {
+					return err
+				}
+				if binding.Platform != in.Platform || binding.SessionKey != SessionKey(ctx) {
+					continue
+				}
+				binding.Token, binding.Enabled = "", false
+				previous.State = "disabled"
+				if err = SetBody(&previous, binding); err != nil {
+					return err
+				}
+				if err = tx.Save(PushDevices, &previous); err != nil {
+					return err
+				}
+			}
 		}
 		out = PushDeviceReceipt{r.ID, r.Version, r.State}
 		return nil

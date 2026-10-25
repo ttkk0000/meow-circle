@@ -13,6 +13,9 @@ export interface Schema {
 }
 export const schemas = schemasSource as unknown as Record<string, Schema>;
 const labels: Record<string, string> = {
+  invite_id: "原邀请编号",
+  invite_version: "原邀请版本",
+  evidence_ref: "已核实证据的最小私有引用",
   discoverable: "在群发现页展示公开简介",
   summary: "公开简介",
   member_count: "成员人数",
@@ -207,6 +210,7 @@ const formHidden = new Set([
   "longitude",
   "radius_km",
   "location_precision",
+  "coordinate_system",
 ]);
 const enumFields: Record<string, Array<[string, string]>> = {
   species: [
@@ -357,19 +361,26 @@ export function SchemaForm({
   onChange,
   disabled = false,
   omit = [],
+  include,
 }: {
   name: string;
   value: Record<string, unknown>;
   onChange: (value: Record<string, unknown>) => void;
   disabled?: boolean;
   omit?: string[];
+  include?: readonly string[];
 }) {
   const schema = schemas[name];
   if (!schema) return <p role="alert">此表单合同尚不可用</p>;
   return (
     <div className="stack">
       {Object.entries(schema.properties ?? {})
-        .filter(([key]) => !formHidden.has(key) && !omit.includes(key))
+        .filter(
+          ([key]) =>
+            !formHidden.has(key) &&
+            !omit.includes(key) &&
+            (!include || include.includes(key)),
+        )
         .map(([key, raw]) => (
           <SchemaField
             key={key}
@@ -377,7 +388,12 @@ export function SchemaForm({
             parent={name}
             raw={raw}
             value={value[key]}
-            disabled={disabled}
+            disabled={
+              disabled ||
+              (name === "Pet" &&
+                key === "adoption_available" &&
+                !["cat", "dog"].includes(String(value.species)))
+            }
             onChange={(field) => onChange({ ...value, [key]: field })}
           />
         ))}

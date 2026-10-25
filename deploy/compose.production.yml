@@ -1,0 +1,236 @@
+name: mnd
+x-worker: &worker
+  image: ${MND_IMAGE:?set MND_IMAGE}
+  entrypoint: ["/app/meow-worker"]
+  command: ["-once=false"]
+  restart: unless-stopped
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  tmpfs: ["/tmp:mode=1777"]
+  healthcheck: {disable: true}
+  depends_on:
+    api: {condition: service_healthy}
+    caddy: {condition: service_started}
+x-worker-env: &worker-env
+  MND_WORKER_API_URL: https://${MND_DOMAIN:?set MND_DOMAIN}/api/v2
+  MND_WORKER_OPERATOR_TOKEN_FILE: /run/secrets/worker_token
+  MND_WORKER_STATE_FILE: /app/worker-data/checkpoint.json
+  MND_WORKER_INTERVAL_SECONDS: "30"
+  MND_WORKER_ALLOW_LOOPBACK_HTTP: "0"
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: meow
+      POSTGRES_DB: meow
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets: [postgres_password]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U meow -d meow"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    secrets: [redis_password]
+    volumes:
+      - redis_data:/data
+      - ${MND_DEPLOY_DIR:?set MND_DEPLOY_DIR}/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=$$(cat /run/secrets/redis_password) redis-cli ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  migrate:
+    image: ${MND_IMAGE:?set MND_IMAGE}
+    entrypoint: ["/app/meow-migrate"]
+    command: ["-dir=/app/migrations"]
+    restart: "no"
+    read_only: true
+    environment:
+      DATABASE_URL_FILE: /run/secrets/database_url
+    secrets: [database_url]
+    depends_on:
+      postgres: {condition: service_healthy}
+    healthcheck: {disable: true}
+  api:
+    image: ${MND_IMAGE:?set MND_IMAGE}
+    build:
+      context: ${MND_SOURCE_DIR:?set MND_SOURCE_DIR}
+      args:
+        VITE_MND_TERMS_URL: ${VITE_MND_TERMS_URL:-}
+        VITE_MND_PRIVACY_URL: ${VITE_MND_PRIVACY_URL:-}
+        VITE_MND_AMAP_JS_KEY: ${VITE_MND_AMAP_JS_KEY:-}
+        VITE_MND_WECHAT_WEB_APP_ID: ${VITE_MND_WECHAT_WEB_APP_ID:-}
+        VITE_MND_QQ_WEB_APP_ID: ${VITE_MND_QQ_WEB_APP_ID:-}
+        VITE_MND_OAUTH_REDIRECT_URI: https://${MND_DOMAIN}/app/provider-callback
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs: ["/tmp:mode=1777"]
+    env_file: ["${MND_DEPLOY_DIR}/runtime.env"]
+    environment:
+      APP_ENV: production
+      APP_PORT: "8080"
+      DATABASE_URL_FILE: /run/secrets/database_url
+      REDIS_URL_FILE: /run/secrets/redis_url
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
+      ADMIN_KEY_FILE: /run/secrets/admin_key
+      MND_OPERATORS_JSON_FILE: /run/secrets/operators_json
+      MND_WEB_ORIGIN: https://${MND_DOMAIN}
+      CORS_ALLOW_ORIGIN: https://${MND_DOMAIN}
+      MND_MOBILE_MEDIA_DIR: /app/data/mobile-media
+      MND_READING_CATALOG: ${MND_READING_CATALOG:-}
+      MND_WEB_DIST: /app/web-client/dist
+      MND_AUTO_MIGRATE: "0"
+      MND_ALLOW_MEMORY_MOBILE: "0"
+      MND_SEED_DEMO: "0"
+      MND_ENABLE_LEGACY_AUTH: "0"
+      MND_ENABLE_MOCK_PAYMENT: "0"
+    secrets: [database_url, redis_url, jwt_secret, admin_key, operators_json]
+    volumes:
+      - media_data:/app/data
+      - ${MND_DEPLOY_DIR}/provider-secrets:/run/provider-secrets:ro
+      - ${MND_DEPLOY_DIR}/reading:/app/reading:ro
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      migrate: {condition: service_completed_successfully}
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      MND_DOMAIN: ${MND_DOMAIN}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ${MND_SOURCE_DIR}/deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ${MND_DEPLOY_DIR}/associations:/srv/associations:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      api: {condition: service_healthy}
+  worker-push:
+    <<: *worker
+    environment:
+      <<: *worker-env
+      MND_WORKER_JOB: push
+    secrets:
+      - source: worker_push
+        target: worker_token
+    volumes: ["worker_push_data:/app/worker-data"]
+  worker-nearby-alerts:
+    <<: *worker
+    environment:
+      <<: *worker-env
+      MND_WORKER_JOB: nearby_alerts
+    secrets:
+      - source: worker_nearby_alerts
+        target: worker_token
+    volumes: ["worker_nearby_alerts_data:/app/worker-data"]
+  worker-content-updates:
+    <<: *worker
+    environment:
+      <<: *worker-env
+      MND_WORKER_JOB: content_updates
+    secrets:
+      - source: worker_content_updates
+        target: worker_token
+    volumes: ["worker_content_updates_data:/app/worker-data"]
+  worker-privacy-cleanup:
+    <<: *worker
+    environment:
+      <<: *worker-env
+      MND_WORKER_JOB: privacy_cleanup
+    secrets:
+      - source: worker_privacy_cleanup
+        target: worker_token
+    volumes: ["worker_privacy_cleanup_data:/app/worker-data"]
+  worker-provider-revocations:
+    <<: *worker
+    environment:
+      <<: *worker-env
+      MND_WORKER_JOB: provider_revocations
+    secrets:
+      - source: worker_provider_revocations
+        target: worker_token
+    volumes: ["worker_provider_revocations_data:/app/worker-data"]
+  worker-maintenance:
+    <<: *worker
+    environment:
+      <<: *worker-env
+      MND_WORKER_JOB: maintenance
+    secrets:
+      - source: worker_maintenance
+        target: worker_token
+    volumes: ["worker_maintenance_data:/app/worker-data"]
+  worker-search-projection:
+    <<: *worker
+    environment:
+      <<: *worker-env
+      MND_WORKER_JOB: search_projection
+    secrets:
+      - source: worker_search_projection
+        target: worker_token
+    volumes: ["worker_search_projection_data:/app/worker-data"]
+  worker-audit-projection:
+    <<: *worker
+    environment:
+      <<: *worker-env
+      MND_WORKER_JOB: audit_projection
+    secrets:
+      - source: worker_audit_projection
+        target: worker_token
+    volumes: ["worker_audit_projection_data:/app/worker-data"]
+
+secrets:
+  postgres_password:
+    file: ${MND_DEPLOY_DIR}/secrets/postgres_password
+  redis_password:
+    file: ${MND_DEPLOY_DIR}/secrets/redis_password
+  database_url:
+    file: ${MND_DEPLOY_DIR}/secrets/database_url
+  redis_url:
+    file: ${MND_DEPLOY_DIR}/secrets/redis_url
+  jwt_secret:
+    file: ${MND_DEPLOY_DIR}/secrets/jwt_secret
+  admin_key:
+    file: ${MND_DEPLOY_DIR}/secrets/admin_key
+  operators_json:
+    file: ${MND_DEPLOY_DIR}/secrets/operators_json
+  worker_push:
+    file: ${MND_DEPLOY_DIR}/secrets/worker_push
+  worker_nearby_alerts:
+    file: ${MND_DEPLOY_DIR}/secrets/worker_nearby_alerts
+  worker_content_updates:
+    file: ${MND_DEPLOY_DIR}/secrets/worker_content_updates
+  worker_privacy_cleanup:
+    file: ${MND_DEPLOY_DIR}/secrets/worker_privacy_cleanup
+  worker_provider_revocations:
+    file: ${MND_DEPLOY_DIR}/secrets/worker_provider_revocations
+  worker_maintenance:
+    file: ${MND_DEPLOY_DIR}/secrets/worker_maintenance
+  worker_search_projection:
+    file: ${MND_DEPLOY_DIR}/secrets/worker_search_projection
+  worker_audit_projection:
+    file: ${MND_DEPLOY_DIR}/secrets/worker_audit_projection
+
+volumes:
+  postgres_data: {}
+  redis_data: {}
+  media_data: {}
+  caddy_data: {}
+  caddy_config: {}
+  worker_push_data: {}
+  worker_nearby_alerts_data: {}
+  worker_content_updates_data: {}
+  worker_privacy_cleanup_data: {}
+  worker_provider_revocations_data: {}
+  worker_maintenance_data: {}
+  worker_search_projection_data: {}
+  worker_audit_projection_data: {}

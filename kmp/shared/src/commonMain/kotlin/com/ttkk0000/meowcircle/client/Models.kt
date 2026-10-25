@@ -79,7 +79,8 @@ data class CaseBody(val type: String, val title: String, val species: String, va
     val latitude: Double, val longitude: Double, @SerialName("occurred_at") val occurredAt: String,
     @SerialName("pet_id") val petId: Long = 0, @SerialName("closure_reason") val closureReason: String = "",
     @SerialName("private_location") val privateLocation: String = "", @SerialName("matched_claim_id") val matchedClaimId: Long = 0,
-    @SerialName("location_precision") val locationPrecision: String = "approximate")
+    @SerialName("location_precision") val locationPrecision: String = "approximate",
+    @SerialName("coordinate_system") val coordinateSystem: String = "")
 
 @Serializable
 data class NotificationBody(val category: String, val text: String, val read: Boolean,

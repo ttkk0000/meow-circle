@@ -1,0 +1,11 @@
+{$MND_DOMAIN} {
+    encode zstd gzip
+    handle /.well-known/* {
+        root * /srv/associations
+        file_server
+        header Content-Type application/json
+    }
+    handle {
+        reverse_proxy api:8080
+    }
+}

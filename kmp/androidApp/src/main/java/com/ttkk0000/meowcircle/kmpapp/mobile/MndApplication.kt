@@ -8,6 +8,8 @@ import com.ttkk0000.meowcircle.kmpapp.BuildConfig
 
 /** Activities have separate navigation stores but one process-wide refresh coordinator. */
 class MndApplication : Application() {
+    internal val devicePush by lazy { AndroidDevicePush(this) }
+    override fun onCreate() { super.onCreate(); devicePush }
     val mobileApi by lazy { MobileApi(BuildConfig.API_BASE_URL, AndroidSecretStorage(this), "android") }
     val composeDrafts by lazy { LocalComposeDrafts(AndroidComposeDraftFiles(this), mobileApi.storageScope) }
     val workspaceDrafts by lazy { workspace("mnd-workflows","mnd-workflows-guest") }

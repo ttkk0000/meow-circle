@@ -1,15 +1,38 @@
 package mobileapi
 
 import (
+	"context"
 	"errors"
 	"net/http"
 
 	"kitty-circle/internal/mobile"
 )
 
-func (h *Handler) runJob(r *http.Request, op Operator, job string, in mobile.JobInput) (out mobile.JobResult, err error) {
+// 服务端位点权威；worker本地文件仅保留传输恢复信息，不再跨副本各自推进维护扫描。
+func (h *Handler) runJob(r *http.Request, op Operator, job string, in mobile.JobInput) (mobile.JobResult, error) {
+	if h.Jobs == nil {
+		return h.executeJob(r, op, job, in)
+	}
+	if job != "maintenance" && !op.permitsConsumer(job) {
+		return mobile.JobResult{}, mobile.ErrForbidden
+	}
+	if job == "privacy_cleanup" && !mobile.HasString(op.Roles, "privacy") {
+		return mobile.JobResult{}, mobile.ErrForbidden
+	}
+	for name, position := range in.Positions {
+		allowed := job == "maintenance" && mobile.HasString([]string{"safety", "otp", "tokens", "evidence", "uploads"}, name) || job == "provider_revocations" && name == "revocations"
+		if !allowed || position.Cursor < 0 || position.After != "" && name != "uploads" {
+			return mobile.JobResult{}, mobile.Invalid("invalid job position")
+		}
+	}
+	return h.Jobs.Run(r.Context(), job, func(ctx context.Context, stored mobile.JobInput) (mobile.JobResult, error) {
+		return h.executeJob(r.WithContext(ctx), op, job, stored)
+	})
+}
+
+func (h *Handler) executeJob(r *http.Request, op Operator, job string, in mobile.JobInput) (out mobile.JobResult, err error) {
 	out.Positions = map[string]mobile.JobPosition{}
-	if !mobile.HasString([]string{"push", "nearby_alerts", "content_updates", "privacy_cleanup", "provider_revocations", "maintenance"}, job) {
+	if !mobile.ValidJob(job) {
 		return out, mobile.ErrNotFound
 	}
 	for name, position := range in.Positions {
@@ -51,6 +74,14 @@ func (h *Handler) runJob(r *http.Request, op Operator, job string, in mobile.Job
 	switch job {
 	case "push":
 		err = h.Service.DispatchPush(r.Context(), op.ID, item.Event.Event.AggregateID)
+		if err == nil {
+			out.Processed = 1
+		}
+	case "search_projection", "audit_projection":
+		err = h.Service.DispatchProjection(r.Context(), job, item.Event)
+		if err == nil {
+			out.Processed = 1
+		}
 	case "nearby_alerts":
 		var batch mobile.AlertBatch
 		batch, err = h.Service.NearbyAlerts(r.Context(), item.Event.Event.AggregateID, lease.Cursor)

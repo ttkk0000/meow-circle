@@ -1,0 +1,115 @@
+const assetPathPrefix = "https://www.figma.com/api/mcp/asset/e49e6d3f-612d-422d-97cf-fe623fff54ea";
+const imgLucideChevronLeft = `${assetPathPrefix}/e9e91.svg`;
+
+type MDMobileV2ActionProps = {
+  className?: string;
+  label?: string;
+  style?: "Primary";
+};
+
+function MDMobileV2Action({ className, label = "主要操作", style = "Primary" }: MDMobileV2ActionProps) {
+  return (
+    <div className={className || "bg-[var(--mnd-button-study-primary,#c84b3d)] content-stretch flex h-[48px] items-center justify-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] w-[96px]"} data-node-id="56:179">
+      <p className="[word-break:break-word] flex-[1_0_0] font-['Noto_Sans_SC:Medium'] font-medium leading-[24px] min-w-px relative text-[16px] text-[color:var(--mnd-button-study-onPrimary,#fffefc)] text-center" data-node-id="56:184">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+function MDMobileV2IconChevronLeft({ className }: { className?: string }) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative size-[24px]"} data-node-id="56:153" data-name="M&D Mobile V2 / Icon / chevron-left">
+      <div className="relative shrink-0 size-[24px]" data-node-id="56:154" data-name="Lucide / chevron-left">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronLeft} />
+      </div>
+    </div>
+  );
+}
+
+export default function ClosureAdultExpired() {
+  return (
+    <div className="bg-[var(--mnd-study-color-background,#f7f8fa)] content-stretch flex flex-col items-start overflow-clip relative rounded-[28px] size-full" data-node-id="506:6854" data-name="手机 / 成年资格需要重新核对 [closure:adultExpired]">
+      <div className="[word-break:break-word] bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex font-['Noto_Sans_SC:Regular'] font-normal h-[28px] items-center leading-[20px] overflow-clip px-[16px] relative shrink-0 text-[12px] w-[390px]" data-node-id="508:1853051" data-name="Status / learning disclosure">
+        <p className="relative shrink-0 text-[color:var(--mnd-study-color-ink,#202329)] w-[60px]" data-node-id="508:1853052">
+          9:41
+        </p>
+        <p className="relative shrink-0 text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[298px]" data-node-id="508:1853053">
+          学习示意 · 非真实资料
+        </p>
+      </div>
+      <div className="content-stretch flex h-[816px] items-start overflow-clip relative shrink-0 w-[390px]" data-node-id="508:1853054" data-name="Responsive workspace">
+        <div className="content-stretch flex flex-col h-[816px] items-start overflow-clip relative shrink-0 w-[390px]" data-node-id="508:1853055" data-name="Current task">
+          <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex gap-[4px] h-[56px] items-center overflow-clip p-[4px] relative shrink-0 w-[390px]" data-node-id="508:1853056" data-name="Toolbar">
+            <a className="content-stretch cursor-pointer flex flex-col items-start overflow-clip p-[12px] relative shrink-0 size-[48px]" data-node-id="508:1853057" data-name="Back">
+              <MDMobileV2IconChevronLeft className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" />
+            </a>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Bold'] font-bold leading-[30px] relative shrink-0 text-[20px] text-[color:var(--mnd-study-color-ink,#202329)] w-[326px]" data-node-id="508:1853062">
+              成年资格需要重新核对
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col h-[672px] items-center overflow-x-clip overflow-y-auto relative shrink-0 w-[390px]" data-node-id="508:1853063" data-name="Scrollable viewport">
+            <div className="[word-break:break-word] content-stretch flex flex-col gap-[16px] items-start overflow-clip p-[16px] relative shrink-0 w-[390px]" data-node-id="508:1853064" data-name="Task content">
+              <div className="bg-[var(--mnd-study-color-warningsoft,#fff5de)] content-stretch flex flex-col gap-[8px] items-start overflow-clip p-[16px] relative rounded-[16px] shrink-0 w-[358px]" data-node-id="508:1853065" data-name="Notice / 原结果已失效">
+                <p className="font-['Noto_Sans_SC:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-[326px]" data-node-id="508:1853066">
+                  原结果已失效
+                </p>
+                <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] w-[326px]" data-node-id="508:1853067">
+                  不沿用旧结果放行新业务；原预约和必要历史仍保留。
+                </p>
+              </div>
+              <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col gap-[12px] items-start overflow-clip p-[16px] relative rounded-[16px] shrink-0 w-[358px]" data-node-id="508:1853068" data-name="Decision facts">
+                <div className="content-stretch flex flex-col gap-[6px] items-start overflow-clip relative shrink-0 w-[326px]" data-node-id="508:1853069" data-name="Fact / 结果状态">
+                  <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] w-[326px]" data-node-id="508:1853070">
+                    结果状态
+                  </p>
+                  <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[26px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-[326px]" data-node-id="508:1853071">
+                    失效 / 撤销 / 当前会话需重新验证
+                  </p>
+                </div>
+                <div className="content-stretch flex flex-col gap-[6px] items-start overflow-clip relative shrink-0 w-[326px]" data-node-id="508:1853072" data-name="Fact / 下一步">
+                  <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] w-[326px]" data-node-id="508:1853073">
+                    下一步
+                  </p>
+                  <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[26px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-[326px]" data-node-id="508:1853074">
+                    重新核对或申请复核
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col gap-[8px] h-[88px] items-center overflow-clip p-[16px] relative shrink-0 w-[390px]" data-node-id="508:1853075" data-name="Persistent task actions">
+            <MDMobileV2Action className="bg-[var(--mnd-button-study-primary,#c84b3d)] content-stretch cursor-pointer flex h-[48px] items-center justify-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[358px]" label="重新核对本次用途" />
+            <div className="bg-[var(--mnd-study-color-ink,#202329)] h-[4px] relative rounded-[999px] shrink-0 w-[120px]" data-node-id="508:1853079" data-name="Home indicator" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+
+These styles are contained in the design: M&D Study/Caption: Font(family: "Noto Sans SC", style: Regular, size: 12, weight: 400, lineHeight: 20, letterSpacing: 0), M&D Study/Section: Font(family: "Noto Sans SC", style: Bold, size: 20, weight: 700, lineHeight: 30, letterSpacing: 0), M&D Mobile V2/Strong: Font(family: "Noto Sans SC", style: Bold, size: 16, weight: 700, lineHeight: 24, letterSpacing: 0), M&D Study/Label: Font(family: "Noto Sans SC", style: Medium, size: 14, weight: 500, lineHeight: 22, letterSpacing: 0), M&D Study/Body: Font(family: "Noto Sans SC", style: Regular, size: 16, weight: 400, lineHeight: 26, letterSpacing: 0), M&D Button study/Label: Font(family: "Noto Sans SC", style: Medium, size: 16, weight: 500, lineHeight: 24, letterSpacing: 0).
+
+Component descriptions: The following components have usage descriptions or documentation links defined in Figma. These descriptions provide important context about the intended usage, best practices, and any constraints for each component. Follow these guidelines when implementing or using these components.
+
+## M&D Mobile V2 / Icon / chevron-left
+**Node ID:** 56:153
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Action
+**Node ID:** 56:183
+
+已按用户明确要求，将 01 清爽亲切应用至普通手机59屏。保留Label和Style属性以及实例ID；主按钮珊瑚白字，次按钮浅珊瑚细边，16圆角、48触控高度。其余设备和旧主题未迁移。焦点、按下与加载规范参照70:186的Friendly变体。
+
+The generated code contains image and SVG URL constants, e.g. const image = `${assetPathPrefix}/<asset file name>`, where assetPathPrefix is declared once at the top of the code and every asset URL interpolates it. These URLs are temporary download sources and expire after 7 days. Download each asset into the project with curl -L, then replace its URL in the generated code with a reference to the downloaded asset. Never use the temporary URLs as runtime image sources.

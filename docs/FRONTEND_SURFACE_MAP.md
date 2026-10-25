@@ -1,20 +1,22 @@
 # Frontend Surface Map
 
-Last updated: 2026-10-24
+Last updated: 2026-10-25
 
-This document maps all user-visible frontend surfaces across the **2026-10-24 v2 multi-platform clients** (Figma V2 Default Light Contract, 740 cross-platform states) and the legacy Stitch V2 static/v1 surfaces.
+This document maps all user-visible frontend surfaces across the **2026-10-25 v2 multi-platform clients** (Figma V2 Default Light Contract, 740 cross-platform states, `kmp/clientUi` 34-file shared Compose UI, `42` `FeaturePage` routes) and the legacy Stitch V2 static/v1 surfaces.
 
-## 0. Current v2 Consumer & Public Surfaces (2026-10-24 Baseline)
+## 0. Current v2 Consumer, Operator & Public Surfaces (2026-10-25 Baseline)
 
 | Surface | Path / Entry | Tech Stack & Auth | Current Scope |
 | --- | --- | --- | --- |
-| **Android Phone & Tablet (v2)** | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/` (`AndroidMobileApp.kt`, `AndroidReadingContent.kt`, `AndroidPublicationsContent.kt`, etc.) | Jetpack Compose + `kmp/shared/.../client` (`MobileStore.kt`), Opaque Bearer pair | 5 primary tabs + 30 extended task routes + independent reading/publications pages + adaptive tablet master-detail/two-column forms (API 26–37). |
-| **Web Consumer App (v2)** | `web-client/` (`src/App.tsx`, `src/ReadingPages.tsx`, `src/Publications.tsx`) served at `/app/` by `browser_static.go` | React + TypeScript + Vite, Browser `HttpOnly Cookie + X-MND-CSRF`, lossless string IDs | Full v2 consumer web parity across 740 tracked states, including community, adoption, lost/found, appointments, offers, reading/publications, and account rights. |
+| **Shared KMP Compose UI (`kmp/clientUi`)** | `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/` (`34` common files: `ConsumerApp.kt`, `FeaturePages.kt`, `PageComponents.kt`, `StatusComponents.kt`, etc.) | Compose Multiplatform 1.10.2 + `kmp/shared/.../client` (`MviStore`, `MobileStore`, `MobileFeatureStore`) | Shared across Android, iOS, and Desktop: 5 primary tabs + `42` `FeaturePage` routes + adaptive `Compact` / `Medium` / `Expanded` layouts + `ClientUiPlatform` port. |
+| **Android Phone & Tablet (v2)** | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/` (`AndroidMobileApp.kt`, `AndroidMviBase.kt`, `AndroidClientPlatform.kt`, `AndroidNativeMap.kt`, `AndroidProviderAuth.kt`) | Jetpack Compose + `kmp/clientUi` + AMap 3D SDK `11.3.100`, Opaque Bearer pair | Full 5 primary tabs + `42` `FeaturePage`s + native AMap `MapView` + WeChat/QQ native provider auth + EncryptedSharedPreferences vault (API 26–37). |
+| **iPhone & iPad (v2)** | `kmp/iosUi/` (`IosClientPlatform.kt`, `IosNativeMap.kt`, `IosProviderAuth.kt`) + `kmp/iosApp/ComposeApp/` (`AmapNativeMap.swift`, `NativeProviderAuth.swift`) | Compose Multiplatform for iOS + `kmp/clientUi` + CocoaPods `AMap3DMap 11.2.100` | Full 5 primary tabs + `42` `FeaturePage`s + native `MAMapView` + Sign in with Apple / WeChat / QQ bridge + Keychain vault. |
+| **Desktop App (v2)** | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/` (`Main.kt`, `DesktopClientPlatform.kt`, `DesktopStorage.kt`, `LostMapScreen.kt`) | Compose Desktop (JVM 21) + `kmp/clientUi` + `java-keyring:1.0.4` AES-256-GCM | Full desktop multi-pane workspace (`Expanded` / `Medium` / `Compact`), OS keyring encrypted command vault, and `/app/map` browser coordinate handoff. |
+| **Web Consumer App (v2)** | `web-client/` (`src/App.tsx`, `src/maps/AmapView.tsx`, `src/features/ProviderSignIn.tsx`, `src/features/GuardianPages.tsx`, `src/features/AgePages.tsx`) served at `/app/` | React 19 + TypeScript 5.8 + Vite 6, Browser `HttpOnly Cookie + X-MND-CSRF`, lossless string IDs | Full v2 consumer web parity across 740 tracked states, AMap JS API 2.0 via `/maps/amap/_AMapService/`, browser OAuth redirect/callback, and IndexedDB AES-GCM vault. |
+| **Web Operator Workbench (v2)** | `web-client/src/operator/OperatorApp.tsx` served at `/app/operator` | React + in-memory named operator credentials (`credentials: 'omit'`) | Isolated operator console (`ops_reviewer`, `safety_specialist`, `privacy_officer`, `identity_verifier`) for moderation, safety holds, guardian invites, and adult relationship claim reviews. |
 | **Guest Safety & Public Share Web (v2)** | `web/safety.html` (`web/safety.js`, `web/safety.css`) & `internal/platform/mobileapi/public_web.go` | Vanilla HTML/JS + Go SSR share metadata | Unauthenticated emergency pet safety / privacy / minor protection reporting (`/api/v2/safety-reports`) and HTTPS deep-link handoff cards. |
-| **iPhone & iPad (v2)** | `kmp/iosUi/` + `kmp/iosApp/ComposeApp/` | Compose Multiplatform for iOS + thin SwiftUI host (`MndMobileUI`) | First-batch v2 shared store wiring and adaptive shell in place; full 30-route expansion scheduled after Android & Web runtime sign-off. |
-| **Desktop App** | `kmp/desktopApp/` | Compose Desktop + `kmp/shared` | Desktop workspace shell; full v2 store migration scheduled after mobile/web sign-off. |
 
-> For detailed v2 UI components, Figma 740-state trace, and acceptance criteria, see [Client README](client/README.md), [2026-10-24 Figma Android & Web Handoff](client/FIGMA_ANDROID_WEB_2026_10_24.md), and [Figma Product Alignment Check](design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md). The sections below document the earlier Stitch V2 static and `/api/v1` surfaces.
+> For detailed v2 code logic, UML diagrams, UI components, and Figma 740-state trace, see [Code Logic & UML Reference](CODE_LOGIC_AND_UML_REFERENCE.md), [PlantUML Diagrams](uml/README.md), [Client README](client/README.md), and [All Figma Implementation Handoff (2026-10-24)](client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md). The sections below document the earlier Stitch V2 static and `/api/v1` surfaces.
 
 ## 1. Surface Families
 

@@ -1,0 +1,54 @@
+@startuml 12-inbox-unread-snapshot-and-chat-sequence
+!theme plain
+skinparam backgroundColor #FFFDF9
+skinparam defaultFontName "PingFang SC, Inter, sans-serif"
+skinparam roundcorner 8
+skinparam SequenceMessageAlign center
+skinparam ArrowColor #5C534E
+
+title F11 Inbox 99+ Unread Aggregation, 10-Minute Read-All Snapshot, Chat Emoji/Stickers & Pet Discussions (009)
+
+actor "User" as User
+participant "Client UI & MobileStore\n(ChatScreen / PetWorkspace /\nEntryDetail)" as Client
+participant "Go API\n(mobile.Service)" as Api
+database "PostgreSQL\n(mobile_conversations / mobile_messages /\nmobile_inbox_snapshots /\nmobile_pet_comments / mobile_comment_reactions)" as Db
+
+== 1. Global Unread Aggregation (99+ Cap) & 10-Minute InboxReadSnapshot ==
+User -> Client : Open Messages Tab / Refresh Bootstrap
+Client -> Api : GET /api/v2/inbox/summary
+Api -> Db : Aggregate unread counts across direct conversations + system notifications\nCreate 10-minute `mobile_inbox_snapshots` (id=snapshotToken, watermark_at=NOW(), expires_at=NOW()+10m)
+Api --> Client : 200 InboxSummaryView\n{totalUnreadCount, badgeText: "99+" (if >99), snapshotToken, snapshotExpiresAt, conversations}
+
+User -> Client : Tap "Mark All as Read"
+Client -> Api : POST /api/v2/inbox/read-all\n{snapshotToken}
+Api -> Db : Lookup mobile_inbox_snapshots(snapshotToken, userID)
+alt Snapshot valid & now <= expires_at
+  Api -> Db : Mark messages & notifications with created_at <= snapshot.watermark_at as read\n(New messages arriving AFTER watermark_at remain unread!)
+  Api --> Client : 200 InboxReadAllResult {markedCount, remainingUnreadCount}
+else Snapshot expired (> 10 minutes old)
+  Api --> Client : 409 Conflict {code: "inbox_snapshot_expired", message: "Refresh inbox before marking all read"}
+end
+
+== 2. Conversation First-Unread Anchor, 128 Noto Emojis & 24 Custom Stickers (144dp) ==
+User -> Client : Open Conversation Detail
+Client -> Api : GET /api/v2/conversations/{id}/messages?anchor=first_unread
+Api -> Db : Resolve user's last_read_seq_no -> compute `firstUnreadMessageId` & message slice
+Api --> Client : 200 ConversationMessagesResponse\n{firstUnreadMessageId, messages, composerCapabilities: {unicodeEmojis: 128, stickerPackSize: 24, stickerRenderDp: 144}}
+
+User -> Client : Pick Unicode Emoji (128 Noto grid) or Custom Sticker (24 pack @ 144dp)
+Client -> Api : POST /api/v2/conversations/{id}/messages\n{kind: "text"|"sticker", body, stickerCode}
+Api -> Db : Verify Stranger DM Minor Protection Gate (directContact)\nINSERT mobile_messages (seq_no++) & update conversation last_message_at
+Api --> Client : 201 MessageView
+
+== 3. Pet & Entry Threaded Comments and Reactions (Migration 009: mobile_pet_comments & mobile_comment_reactions) ==
+User -> Client : View Pet Profile or Entry Detail -> Post Comment or Toggle Reaction
+Client -> Api : POST /api/v2/pets/{petId}/comments\n{body, parentCommentId, attachmentMediaIds}
+Api -> Db : Verify communityPosting qualification gate\nINSERT mobile_pet_comments (pet_id, owner_id, parent_id, status='visible')
+Api --> Client : 201 PetCommentView
+
+User -> Client : Tap Reaction Chip (e.g. "paw_like", "heart", "fish_treat") on Comment
+Client -> Api : POST /api/v2/comments/{commentId}/reactions/toggle\n{reactionCode: "paw_like"}
+Api -> Db : BEGIN SERIALIZABLE\nToggle row in mobile_comment_reactions(comment_id, owner_id, reaction_code)\nRecompute aggregated reaction counts on comment\nCOMMIT
+Api --> Client : 200 CommentReactionSummary {commentId, reactions: [{code: "paw_like", count: 12, viewerReacted: true}]}
+
+@enduml

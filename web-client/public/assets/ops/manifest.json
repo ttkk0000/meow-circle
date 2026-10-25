@@ -1,0 +1,85 @@
+{
+  "file_key": "3OFOC3vu18Kx9sRPjummOC",
+  "assets": [
+    {
+      "name": "house",
+      "source_node": "56:163",
+      "file": "web-client/public/assets/ops/house.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "9607a8ec39bdbaadbd2d4be586bef489aca63419920f37902739aab827948ae0"
+    },
+    {
+      "name": "sliders-horizontal",
+      "source_node": "56:128",
+      "file": "web-client/public/assets/ops/sliders-horizontal.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "db7a73f4e34f0b47e0b11766a3d4b5f94cd19c9342d471def150779ca332657c"
+    },
+    {
+      "name": "clock",
+      "source_node": "211:9419",
+      "file": "web-client/public/assets/ops/clock.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "5b7ccc12d214a7ce6119f1fc5e1afa757bf7eaeced56d974ea5d120744936ec4"
+    },
+    {
+      "name": "arrow-right",
+      "source_node": "56:159",
+      "file": "web-client/public/assets/ops/arrow-right.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "b99f648cc0f324a165fae592db2eec1bb892d5103487795c09bb4536859e86c0"
+    },
+    {
+      "name": "check",
+      "source_node": "56:111",
+      "file": "web-client/public/assets/ops/check.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "b31cb013fde20eeeca789ea5cb37897f330924f0443a08b86a2bd8e7d25eaf07"
+    },
+    {
+      "name": "bell",
+      "source_node": "56:86",
+      "file": "web-client/public/assets/ops/bell.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "b016d0fbe2d9a8ca4de460c242f2bdbe6d6c5dc9c7b23d5bbba56f5191fcc68c"
+    },
+    {
+      "name": "bookmark",
+      "source_node": "56:176",
+      "file": "web-client/public/assets/ops/bookmark.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "54a5da60b9a1756816ccfc9b3db3f8b4854626726487dd3d50f75cb1b461a772"
+    },
+    {
+      "name": "shield-check",
+      "source_node": "56:172",
+      "file": "web-client/public/assets/ops/shield-check.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "71a8226d7f75072a5c5eeff036680a7d974ad3aeb82da730e937f0a2700182b6"
+    },
+    {
+      "name": "circle-alert",
+      "source_node": "56:167",
+      "file": "web-client/public/assets/ops/circle-alert.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "2ec0b40d83f4878478a171f7cc1c305a03a02aa2ce905ed8e973be65b256bc69"
+    },
+    {
+      "name": "search",
+      "source_node": "56:90",
+      "file": "web-client/public/assets/ops/search.svg",
+      "width": 24,
+      "height": 24,
+      "sha256": "a0dda696d0595b3934262207d53322ece43c7e306e0bd57d3cf2f84318d94470"
+    }
+  ]
+}

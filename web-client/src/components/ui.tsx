@@ -7,11 +7,19 @@ import { useSession } from "../core/session";
 const scrollMemory = new Map<string, number>();
 let scrollEpoch = -1;
 
-export function Icon({ name, label }: { name: string; label?: string }) {
+export function Icon({
+  name,
+  label,
+  collection = "figma",
+}: {
+  name: string;
+  label?: string;
+  collection?: "figma" | "ops";
+}) {
   return (
     <img
       className="icon"
-      src={`/app/assets/figma/${name}.svg`}
+      src={`/app/assets/${collection}/${name}.svg`}
       width="24"
       height="24"
       alt={label ?? ""}
@@ -64,14 +72,16 @@ export function Notice({
   title,
   children,
   error = false,
+  warning = false,
 }: {
   title: string;
   children?: ReactNode;
   error?: boolean;
+  warning?: boolean;
 }) {
   return (
     <aside
-      className={`notice ${error ? "error" : ""}`}
+      className={`notice ${error ? "error" : warning ? "warning" : ""}`}
       role={error ? "alert" : "status"}
     >
       <strong>{title}</strong>
@@ -206,6 +216,7 @@ export function Field({
   multiline = false,
   disabled = false,
   hint,
+  autoComplete,
 }: {
   label: string;
   value: string;
@@ -214,6 +225,7 @@ export function Field({
   multiline?: boolean;
   disabled?: boolean;
   hint?: string;
+  autoComplete?: string;
 }) {
   const id = useId();
   return (
@@ -236,7 +248,9 @@ export function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
-          autoComplete={type === "password" ? "current-password" : "off"}
+          autoComplete={
+            autoComplete ?? (type === "password" ? "current-password" : "off")
+          }
         />
       )}{" "}
       {hint ? <small id={`${id}-hint`}>{hint}</small> : null}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { api, explain } from "../core/api";
-import { Button, Check, Choices, Field, Modal, Notice } from "../components/ui";
+import { api, explain, HttpError } from "../core/api";
+import { AccountConflict } from "../components/AccountConflict";
+import { Button, Check, Field, Modal, Notice, Icon } from "../components/ui";
 import { navigate } from "../core/router";
 import { integer } from "../core/wire";
 
@@ -11,38 +12,13 @@ export interface Capabilities {
   registration: boolean;
   interaction_contract: bigint;
   scoped_reauth: boolean;
+  providers: string[];
 }
-export const configuredURL = (value: unknown) => {
-  try {
-    const u = new URL(String(value));
-    return u.protocol === "https:" ? u.href : undefined;
-  } catch {
-    return undefined;
-  }
-};
-export const termsURL = configuredURL(import.meta.env.VITE_MND_TERMS_URL);
-export const privacyURL = configuredURL(import.meta.env.VITE_MND_PRIVACY_URL);
-export function LegalLinks() {
-  return (
-    <div className="legal-links">
-      {termsURL ? (
-        <a href={termsURL} target="_blank" rel="noopener noreferrer">
-          用户协议
-        </a>
-      ) : (
-        <span>用户协议尚未配置</span>
-      )}
-      {privacyURL ? (
-        <a href={privacyURL} target="_blank" rel="noopener noreferrer">
-          隐私政策
-        </a>
-      ) : (
-        <span>隐私政策尚未配置</span>
-      )}
-    </div>
-  );
-}
+import { LegalLinks, termsURL, privacyURL } from "../components/AuthPolicies";
+import { ProviderSignIn } from "./ProviderSignIn";
+
 export function AuthDialog({ onClose }: { onClose: () => void }) {
+  const [provider, setProvider] = useState("");
   const [mode, setMode] = useState("password");
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -51,6 +27,7 @@ export function AuthDialog({ onClose }: { onClose: () => void }) {
   const [agreed, setAgreed] = useState(false);
   const [cap, setCap] = useState<Capabilities>();
   const [error, setError] = useState("");
+  const [errorCode, setErrorCode] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const [until, setUntil] = useState(0);
@@ -129,6 +106,7 @@ export function AuthDialog({ onClose }: { onClose: () => void }) {
     if (!available || busy) return;
     setBusy(true);
     setError("");
+    setErrorCode("");
     try {
       if (mode === "register" && (!agreed || !termsURL || !privacyURL))
         throw new Error("请阅读当前协议并明确同意后注册");
@@ -166,11 +144,29 @@ export function AuthDialog({ onClose }: { onClose: () => void }) {
       } else onClose();
     } catch (e) {
       setError(explain(e));
+      setErrorCode(e instanceof HttpError ? e.code : "");
     } finally {
       setPassword("");
       setCode("");
       setBusy(false);
     }
+  }
+  if (provider)
+    return (
+      <ProviderSignIn
+        provider={provider}
+        onBack={() => setProvider("")}
+        onClose={onClose}
+        capabilities={cap}
+      />
+    );
+  function changeMode(next: string) {
+    setMode(next);
+    setCode("");
+    setPassword("");
+    setError("");
+    setErrorCode("");
+    setAgreed(false);
   }
   return (
     <Modal
@@ -201,27 +197,28 @@ export function AuthDialog({ onClose }: { onClose: () => void }) {
     >
       <div>
         <span className="brand">M&amp;D</span>
-        <p className="muted">meow &amp; doggie · 和小可爱一起，记录每一天</p>
+        <p className="muted">meow &amp; doggie · 和毛孩子一起长大</p>
       </div>
-      <Choices
-        label="登录方式"
-        value={mode}
-        disabled={busy}
-        choices={[
-          ["password", "账号密码"],
-          ["email", "邮箱验证码"],
-          ["phone", "手机号验证码"],
-          ["register", "邮箱注册"],
-          ["email-recover", "邮箱恢复"],
-          ["recover", "手机恢复"],
-        ]}
-        onChange={(next) => {
-          setMode(next);
-          setCode("");
-          setPassword("");
-          setError("");
-        }}
-      />
+      {mode !== "password" ? (
+        <div className="auth-mode-heading">
+          <h2>
+            {mode === "register"
+              ? "邮箱注册"
+              : mode.includes("recover")
+                ? "找回密码"
+                : mode === "email"
+                  ? "邮箱验证码登录"
+                  : "已绑定手机登录"}
+          </h2>
+          <Button
+            kind="quiet"
+            disabled={busy}
+            onClick={() => changeMode("password")}
+          >
+            返回密码登录
+          </Button>
+        </div>
+      ) : null}
       {!available ? (
         <Notice
           title={cap ? "当前方式尚未由服务启用" : "正在读取实际登录能力"}
@@ -293,10 +290,84 @@ export function AuthDialog({ onClose }: { onClose: () => void }) {
       >
         阅读服务说明与规则草案
       </Button>
-      <Notice title="微信／QQ 登录暂不可用">
-        Web 尚未接入真实供应商回调。可使用服务已启用的账号登录方式。
-      </Notice>
+      <nav className="auth-method-links" aria-label="账号登录与恢复">
+        <Button
+          kind="quiet"
+          disabled={busy}
+          onClick={() => changeMode(mode === "email" ? "phone" : "email")}
+        >
+          {mode === "email" ? "手机验证码登录" : "邮箱验证码登录"}
+        </Button>
+        <Button
+          kind="quiet"
+          disabled={busy}
+          onClick={() => changeMode("register")}
+        >
+          注册账号
+        </Button>
+        <Button
+          kind="quiet"
+          disabled={busy}
+          onClick={() => changeMode("email-recover")}
+        >
+          邮箱找回密码
+        </Button>
+        <Button
+          kind="quiet"
+          disabled={busy}
+          onClick={() => changeMode("recover")}
+        >
+          已绑定手机恢复
+        </Button>
+      </nav>
+      <div className="provider-methods" aria-label="其他登录方式">
+        <span className="muted">其他登录方式</span>
+        <div>
+          <Button
+            disabled={busy}
+            onClick={() => {
+              setPassword("");
+              setCode("");
+              setProvider("wechat");
+            }}
+          >
+            <Icon name="provider-wechat" />
+            微信
+          </Button>
+          <Button
+            disabled={busy}
+            onClick={() => {
+              setPassword("");
+              setCode("");
+              setProvider("qq");
+            }}
+          >
+            <Icon name="provider-qq" />
+            QQ
+          </Button>
+        </div>
+        <p className="caption muted">
+          请选择当前可用的登录方式，登录后可继续刚才的任务。
+        </p>
+      </div>
       {notice ? <Notice title={notice} /> : null}
+      {errorCode === "identity_in_use" ? (
+        <>
+          <AccountConflict />
+          <Button onClick={() => changeMode("password")}>登录原账号</Button>
+          <Button onClick={() => changeMode("email-recover")}>
+            找回原账号
+          </Button>
+          <Button
+            onClick={() => {
+              changeMode("register");
+              setIdentifier("");
+            }}
+          >
+            换一个邮箱
+          </Button>
+        </>
+      ) : null}
       {error ? <Notice title={error} error /> : null}
     </Modal>
   );

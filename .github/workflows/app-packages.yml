@@ -1,0 +1,167 @@
+name: App packages (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Target artifact
+        type: choice
+        required: true
+        options: [android-debug, android-release, ios-simulator, ios-archive, desktop]
+      api_origin:
+        description: API origin (HTTPS required for release)
+        type: string
+        default: https://example.invalid
+      version_name:
+        description: Version name
+        type: string
+        default: 0.1.0
+      version_code:
+        description: Positive build number
+        type: string
+        default: '1'
+      xcode_developer_dir:
+        description: Installed Xcode matching the dependency baseline
+        type: string
+        default: /Applications/Xcode_26.4.app/Contents/Developer
+permissions:
+  contents: read
+jobs:
+  android:
+    if: startsWith(inputs.platform, 'android-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      MND_VERSION_NAME: ${{ inputs.version_name }}
+      MND_VERSION_CODE: ${{ inputs.version_code }}
+      MND_API_BASE_URL: ${{ inputs.api_origin }}
+      MND_AMAP_ANDROID_KEY: ${{ secrets.MND_AMAP_ANDROID_KEY }}
+      MND_WECHAT_ANDROID_APP_ID: ${{ vars.MND_WECHAT_ANDROID_APP_ID }}
+      MND_QQ_ANDROID_APP_ID: ${{ vars.MND_QQ_ANDROID_APP_ID }}
+      MND_FCM_ANDROID_APP_ID: ${{ vars.MND_FCM_ANDROID_APP_ID }}
+      MND_FCM_PROJECT_ID: ${{ vars.MND_FCM_PROJECT_ID }}
+      MND_FCM_SENDER_ID: ${{ vars.MND_FCM_SENDER_ID }}
+      MND_FCM_ANDROID_API_KEY: ${{ vars.MND_FCM_ANDROID_API_KEY }}
+      MND_ANDROID_STORE_PASSWORD: ${{ secrets.MND_ANDROID_STORE_PASSWORD }}
+      MND_ANDROID_KEY_ALIAS: ${{ secrets.MND_ANDROID_KEY_ALIAS }}
+      MND_ANDROID_KEY_PASSWORD: ${{ secrets.MND_ANDROID_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install pinned Android platform
+        run: sdkmanager 'platforms;android-37' 'build-tools;37.0.0' 'platform-tools'
+      - name: Prepare release keystore
+        if: inputs.platform == 'android-release'
+        env:
+          KEYSTORE_DATA: ${{ secrets.MND_ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          python3 - <<'PY'
+          import os,base64
+          from pathlib import Path
+          data=os.environ.get('KEYSTORE_DATA','')
+          if not data: raise SystemExit('Missing release keystore secret')
+          p=Path(os.environ['RUNNER_TEMP'])/'mnd-signing/release.jks';p.parent.mkdir(mode=0o700,parents=True,exist_ok=True)
+          p.write_bytes(base64.b64decode("".join(data.split()),validate=True));p.chmod(0o600)
+          with open(os.environ['GITHUB_ENV'],'a') as f: f.write('MND_ANDROID_KEYSTORE='+str(p)+'\n')
+          PY
+      - name: Package current Android app
+        env:
+          TARGET: ${{ inputs.platform }}
+        run: |
+          if [ "$TARGET" = android-release ]; then
+            python3 scripts/mobile.py android release --api-url "$MND_API_BASE_URL"
+          else
+            python3 scripts/mobile.py android debug --api-url "$MND_API_BASE_URL"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mnd-${{ inputs.platform }}
+          path: artifacts/android
+          if-no-files-found: error
+          retention-days: 14
+      - name: Remove transient signing file
+        if: always()
+        run: python3 -c 'import os; from pathlib import Path; (Path(os.environ["RUNNER_TEMP"])/"mnd-signing/release.jks").unlink(missing_ok=True)'
+  ios:
+    if: startsWith(inputs.platform, 'ios-')
+    runs-on: macos-26
+    timeout-minutes: 50
+    env:
+      DEVELOPER_DIR: ${{ inputs.xcode_developer_dir }}
+      MND_API_BASE_URL: ${{ inputs.api_origin }}
+      MND_VERSION_NAME: ${{ inputs.version_name }}
+      MND_VERSION_CODE: ${{ inputs.version_code }}
+      MND_IOS_TEAM_ID: ${{ vars.MND_IOS_TEAM_ID }}
+      MND_AMAP_IOS_KEY: ${{ secrets.MND_AMAP_IOS_KEY }}
+      MND_WECHAT_IOS_APP_ID: ${{ vars.MND_WECHAT_IOS_APP_ID }}
+      MND_QQ_IOS_APP_ID: ${{ vars.MND_QQ_IOS_APP_ID }}
+      MND_WECHAT_UNIVERSAL_LINK: ${{ vars.MND_WECHAT_UNIVERSAL_LINK }}
+      MND_QQ_UNIVERSAL_LINK: ${{ vars.MND_QQ_UNIVERSAL_LINK }}
+      MND_PROVIDER_ASSOCIATED_DOMAIN: ${{ vars.MND_PROVIDER_ASSOCIATED_DOMAIN }}
+      MND_APPLE_SIGNIN_ENABLED: ${{ vars.MND_APPLE_SIGNIN_ENABLED }}
+      MND_APNS_ENABLED: ${{ vars.MND_APNS_ENABLED }}
+      MND_APNS_ENVIRONMENT: ${{ vars.MND_APNS_ENVIRONMENT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Validate Xcode path
+        run: test -x "$DEVELOPER_DIR/usr/bin/xcodebuild"
+      - name: Install workspace tools
+        run: brew install xcodegen cocoapods
+      - name: Prepare private signing keychain
+        if: inputs.platform == 'ios-archive'
+        env:
+          CERTIFICATE_DATA: ${{ secrets.MND_IOS_CERTIFICATE_BASE64 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.MND_IOS_CERTIFICATE_PASSWORD }}
+          PROFILE_DATA: ${{ secrets.MND_IOS_PROFILE_BASE64 }}
+        run: python3 scripts/ios_ci_signing.py prepare
+      - name: Package current iPhone/iPad app
+        env:
+          TARGET: ${{ inputs.platform }}
+        run: |
+          if [ "$TARGET" = ios-archive ]; then
+            python3 scripts/mobile.py ios archive --api-url "$MND_API_BASE_URL"
+          else
+            python3 scripts/mobile.py ios simulator --api-url "$MND_API_BASE_URL"
+          fi
+      - name: Export IPA when configured
+        if: inputs.platform == 'ios-archive'
+        env:
+          EXPORT_OPTIONS_DATA: ${{ secrets.MND_IOS_EXPORT_OPTIONS_BASE64 }}
+        run: python3 scripts/ios_ci_signing.py export
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mnd-${{ inputs.platform }}
+          path: artifacts/ios
+          if-no-files-found: error
+          retention-days: 14
+      - name: Remove private signing materials
+        if: always() && inputs.platform == 'ios-archive'
+        run: python3 scripts/ios_ci_signing.py cleanup
+  desktop:
+    if: inputs.platform == 'desktop'
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-26]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Package current OS desktop client
+        run: python scripts/mobile.py desktop package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mnd-desktop-${{ matrix.os }}
+          path: kmp/desktopApp/build/compose/binaries/main
+          if-no-files-found: error
+          retention-days: 14

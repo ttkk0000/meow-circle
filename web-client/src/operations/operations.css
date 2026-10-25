@@ -1,0 +1,952 @@
+/* 对应 M&D Ops Figma 793:21；沿用全局字体、Light V2表面与文本变量。 */
+.ops-workspace {
+  --brand: var(--quiet);
+  --ops-radius: 8px;
+  --ops-border: #e0e3e8;
+  --ops-success: #176c49;
+  --ops-success-soft: #e8f4ed;
+  --ops-warning: #86540a;
+  --ops-warning-soft: #fff5de;
+  --ops-danger: #b42332;
+  --ops-danger-soft: #fdeef0;
+  display: grid;
+  grid-template-columns: 216px minmax(0, 1fr);
+  grid-template-rows: 80px minmax(920px, 1fr);
+  min-height: max(1000px, 100dvh);
+  color: var(--ink);
+  background: var(--canvas);
+  font-size: 14px;
+  line-height: 22px;
+}
+.ops-workspace button,
+.ops-workspace a {
+  touch-action: manipulation;
+}
+.ops-workspace .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 1px solid var(--ops-border);
+  border-radius: var(--ops-radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.ops-workspace .button.primary {
+  background: var(--brand);
+  color: var(--surface);
+  border-color: var(--brand);
+}
+.ops-workspace .button.quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--brand);
+  padding: 8px 0;
+}
+.ops-workspace .button:disabled {
+  background: var(--subtle);
+  border-color: transparent;
+  color: var(--muted);
+  opacity: 1;
+}
+.ops-workspace :focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+.ops-skip {
+  position: fixed;
+  top: -80px;
+  left: 232px;
+  z-index: 20;
+  padding: 12px;
+  background: var(--surface);
+}
+.ops-skip:focus {
+  top: 12px;
+}
+.ops-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100dvh;
+  overflow-y: auto;
+  grid-column: 1;
+  grid-row: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 720px;
+  background: var(--surface);
+  border: 1px solid var(--ops-border);
+}
+.ops-brand {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 23px 12px;
+  color: var(--ink);
+  gap: 4px;
+  text-decoration: none;
+}
+.ops-brand strong {
+  font:
+    800 32px/40px Manrope,
+    sans-serif;
+}
+.ops-brand span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 20px;
+}
+.ops-nav-caption {
+  margin: 7px 23px 20px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-sidebar nav {
+  display: grid;
+  gap: 4px;
+  padding: 0 11px;
+}
+.ops-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.ops-nav-item:hover {
+  background: var(--subtle);
+  text-decoration: none;
+}
+.ops-nav-item.active {
+  background: var(--brand-soft);
+}
+.ops-workspace .icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  flex: 0 0 24px;
+  object-fit: contain;
+}
+.ops-sidebar-env {
+  margin: auto 15px 0;
+  min-height: 144px;
+  padding: 16px;
+  border-radius: var(--ops-radius);
+  background: var(--subtle);
+}
+.ops-sidebar-env p {
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-sidebar-env strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+.ops-sidebar-env small {
+  display: block;
+  margin-top: 18px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-identity {
+  margin: 40px 23px 32px;
+  overflow-wrap: anywhere;
+}
+.ops-identity small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 16px 32px;
+  background: var(--surface);
+  border: 1px solid var(--ops-border);
+  border-left: 0;
+}
+.ops-topbar > strong {
+  font-size: 16px;
+  line-height: 24px;
+}
+.ops-topbar > .button {
+  display: none;
+}
+.ops-topbar-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.ops-environment-mark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  min-width: 220px;
+  max-width: 306px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--subtle);
+  font-size: 12px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+.ops-main {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  position: relative;
+  padding: 16px 32px 20px;
+}
+.ops-main:focus {
+  outline: none;
+}
+.ops-page-header {
+  margin-bottom: 22px;
+}
+.ops-page-header > p:first-child {
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-page-header h1 {
+  max-width: calc(100% - 180px);
+  margin: 10px 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 40px;
+  overflow-wrap: anywhere;
+}
+.ops-page-header > p:last-child {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.ops-page-body,
+.ops-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+.ops-page-actions {
+  position: absolute;
+  right: 32px;
+  top: 46px;
+  display: flex;
+  gap: 12px;
+}
+.ops-footer {
+  margin-top: auto;
+  padding-top: 36px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-notice {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  min-height: 76px;
+  padding: 12px 16px;
+  border-radius: var(--ops-radius);
+  background: var(--subtle);
+}
+.ops-notice > .icon {
+  margin-top: 12px;
+}
+.ops-notice > .notice {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
+.ops-notice .notice strong {
+  display: block;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+}
+.ops-notice .notice > div {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-notice .button {
+  margin-top: 8px;
+}
+.ops-notice-error {
+  background: var(--ops-danger-soft);
+}
+.ops-notice-error .notice strong {
+  color: var(--ops-danger);
+}
+.ops-page-body > .ops-notice:first-child {
+  margin-bottom: -4px;
+}
+.ops-workspace .card {
+  display: block;
+  min-width: 0;
+  margin: 0;
+  padding: 16px 20px 20px;
+  background: var(--surface);
+  border: 1px solid var(--ops-border);
+  border-radius: var(--ops-radius);
+  box-shadow: none;
+}
+.ops-workspace .card > h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+}
+.ops-panel {
+  min-width: 0;
+}
+.ops-panel > .card {
+  height: 100%;
+}
+.ops-panel-description {
+  margin-top: 6px;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 20px;
+}
+.ops-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.ops-metric > .card {
+  height: 100%;
+  min-height: 124px;
+  padding: 16px 20px;
+}
+.ops-metric strong {
+  display: block;
+  margin: 4px 0 8px;
+  font-size: 28px;
+  line-height: 40px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.ops-metric small {
+  display: block;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.ops-columns-wide {
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+}
+.ops-columns-wide > .ops-panel > .card {
+  min-height: 288px;
+}
+.ops-signal-list,
+.ops-workspace dl {
+  margin: 0;
+}
+.ops-summary {
+  min-height: 76px;
+  padding: 8px 0 18px;
+  min-width: 0;
+}
+.ops-summary dt {
+  margin: 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-summary dd {
+  margin: 6px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+.ops-signal-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+}
+.ops-signal-list + .button {
+  margin-top: 6px;
+  min-width: 172px;
+}
+.ops-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+  color: var(--muted);
+  background: var(--subtle);
+  font-weight: 400;
+}
+.ops-status.success {
+  color: var(--ops-success);
+  background: var(--ops-success-soft);
+}
+.ops-status.warning {
+  color: var(--ops-warning);
+  background: var(--ops-warning-soft);
+}
+.ops-status.danger {
+  color: var(--ops-danger);
+  background: var(--ops-danger-soft);
+}
+.ops-status.brand {
+  color: var(--brand);
+  background: var(--brand-soft);
+}
+.ops-todos {
+  margin: 16px 0 18px;
+  padding: 0;
+  list-style: none;
+}
+.ops-todos li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 16px;
+  padding: 10px 0 26px;
+}
+.ops-todos li > span {
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+.ops-todos strong {
+  font-size: 16px;
+  line-height: 24px;
+}
+.ops-todos small {
+  display: block;
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ops-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 40px;
+  flex-wrap: wrap;
+}
+.ops-toolbar > .button {
+  margin-left: auto;
+}
+.ops-search {
+  flex: 1 1 320px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 424px;
+  min-height: 40px;
+  padding: 7px 12px;
+  border: 1px solid var(--ops-border);
+  border-radius: var(--ops-radius);
+  background: var(--surface);
+}
+.ops-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline-offset: 6px;
+  background: transparent;
+  font-size: 14px;
+  line-height: 22px;
+}
+.ops-search input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+.ops-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.ops-select select {
+  max-width: 160px;
+  min-height: 40px;
+  border: 1px solid var(--ops-border);
+  border-radius: var(--ops-radius);
+  padding: 6px 10px;
+  background: var(--surface);
+}
+.ops-caption {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 20px;
+}
+.ops-table-group {
+  gap: 16px;
+}
+.ops-data-panel > .card {
+  padding: 16px 20px 0;
+}
+.ops-data-panel .card > h2 {
+  margin-bottom: 18px;
+}
+.ops-table-scroll {
+  overflow-x: auto;
+  min-width: 0;
+}
+.ops-workspace table {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.ops-workspace col:nth-child(1) {
+  width: 25%;
+}
+.ops-workspace col:nth-child(2) {
+  width: 19.65%;
+}
+.ops-workspace col:nth-child(3),
+.ops-workspace col:nth-child(4) {
+  width: 16.96%;
+}
+.ops-workspace col:nth-child(5) {
+  width: 21.43%;
+}
+.ops-workspace th {
+  height: 40px;
+  padding: 9px 12px;
+  text-align: left;
+  background: var(--subtle);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.ops-workspace td {
+  height: 64px;
+  padding: 12px;
+  border-bottom: 1px solid var(--ops-border);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  vertical-align: middle;
+}
+.ops-workspace tr:last-child td {
+  border-bottom: 0;
+}
+.ops-workspace td .button.quiet {
+  text-align: left;
+  white-space: normal;
+  min-height: 36px;
+}
+.ops-workspace td .ops-status {
+  max-width: 100%;
+  white-space: normal;
+}
+.ops-dense td {
+  height: 48px;
+  padding-block: 8px;
+}
+.ops-workspace tbody tr:hover {
+  background: var(--canvas);
+}
+.ops-link {
+  color: var(--brand);
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+.ops-ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ops-page-end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 0;
+  color: var(--muted);
+}
+.ops-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 20px;
+  text-align: center;
+}
+.ops-empty strong {
+  font-size: 16px;
+  line-height: 24px;
+}
+.ops-empty > div {
+  color: var(--muted);
+}
+.ops-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.ops-actions-split {
+  justify-content: space-between;
+}
+.ops-actions > .button {
+  min-width: 144px;
+}
+.ops-checklist {
+  display: grid;
+  gap: 20px;
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+}
+.ops-checklist small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 20px;
+}
+.ops-log {
+  display: grid;
+  gap: 1px;
+  margin: 16px -1px -20px;
+}
+.ops-log > div {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--subtle);
+  font-size: 12px;
+  line-height: 20px;
+}
+.ops-log time {
+  color: var(--muted);
+}
+.ops-timeline {
+  display: grid;
+  gap: 24px;
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+.ops-timeline li {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 24px;
+}
+.ops-timeline time {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 24px;
+}
+.ops-timeline strong {
+  font-size: 16px;
+  line-height: 24px;
+}
+.ops-timeline p,
+.ops-timeline small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+.ops-system-state > .card {
+  min-height: 640px;
+}
+.ops-state-content {
+  max-width: 760px;
+  margin: 32px auto 14px;
+}
+.ops-state-content > .icon {
+  display: block;
+  margin: 0 auto 36px;
+}
+.ops-state-content > h2 {
+  text-align: center;
+  font-size: 28px;
+  line-height: 40px;
+  margin-bottom: 24px;
+}
+.ops-state-content > p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 26px;
+}
+.ops-state-content > ol {
+  list-style: none;
+  padding: 0;
+  margin: 40px 0;
+  display: grid;
+  gap: 20px;
+}
+.ops-state-content > ol p {
+  margin-top: 8px;
+  color: var(--muted);
+}
+.ops-state-content > dl {
+  margin: 40px 0;
+}
+.ops-state-content > .ops-actions {
+  margin-top: 32px;
+}
+.ops-confirm > .card {
+  position: relative;
+  padding: 24px 32px;
+}
+.ops-confirm .ops-columns {
+  margin-top: 40px;
+}
+.ops-confirm-status {
+  position: absolute;
+  right: 32px;
+  top: 24px;
+}
+.ops-form {
+  display: grid;
+  gap: 24px;
+  margin: 24px 0;
+}
+.ops-workspace .field {
+  font-size: 14px;
+  line-height: 22px;
+  gap: 12px;
+}
+.ops-workspace .field input,
+.ops-workspace .field textarea,
+.ops-workspace .field select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--ops-border);
+  border-radius: var(--ops-radius);
+  background: var(--surface);
+  padding: 10px 16px;
+}
+.ops-workspace .field textarea {
+  min-height: 88px;
+}
+.ops-workspace .field > small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 20px;
+}
+.ops-wrap {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.ops-workspace dialog {
+  width: min(720px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  padding: 24px;
+  border: 1px solid var(--ops-border);
+  border-radius: var(--ops-radius);
+  color: var(--ink);
+  background: var(--surface);
+}
+.ops-workspace dialog .dialog-content {
+  padding-block: 20px;
+}
+.ops-workspace dialog .dialog-actions {
+  flex-wrap: wrap;
+}
+.ops-workspace .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (min-width: 1500px) {
+  .ops-main {
+    padding-inline: max(32px, calc((100vw - 1440px) / 2));
+  }
+}
+@media (max-width: 1199px) {
+  .ops-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ops-topbar-actions {
+    gap: 10px;
+  }
+  .ops-environment-mark {
+    min-width: 0;
+    max-width: 240px;
+  }
+  .ops-columns-wide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ops-topbar {
+    padding-inline: 24px;
+  }
+}
+@media (max-width: 899px) {
+  .ops-workspace {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-height: 100dvh;
+  }
+  .ops-sidebar {
+    display: none;
+  }
+  .ops-sidebar.open {
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: 72px;
+    bottom: 0;
+    width: 248px;
+    height: calc(100dvh - 72px);
+    min-height: 0;
+    overflow-y: auto;
+    z-index: 5;
+    border-right: 1px solid var(--ops-border);
+  }
+  .ops-sidebar.open .ops-sidebar-env {
+    margin-top: 32px;
+  }
+  .ops-topbar {
+    grid-column: 1;
+    min-height: 72px;
+    flex-wrap: wrap;
+    padding: 12px 20px;
+  }
+  .ops-topbar > .button {
+    display: inline-flex;
+  }
+  .ops-topbar > strong {
+    font-size: 14px;
+  }
+  .ops-topbar-actions {
+    flex-wrap: wrap;
+  }
+  .ops-main {
+    grid-column: 1;
+    padding: 20px;
+  }
+  .ops-page-header h1 {
+    max-width: none;
+  }
+  .ops-page-actions {
+    position: static;
+    flex-wrap: wrap;
+  }
+  .ops-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ops-state-content {
+    margin-block: 32px;
+  }
+  .ops-confirm > .card {
+    padding: 24px 20px;
+  }
+}
+@media (max-width: 599px) {
+  .ops-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ops-topbar-actions {
+    width: 100%;
+    margin-left: 0;
+  }
+  .ops-environment-mark {
+    flex: 1;
+    max-width: none;
+  }
+  .ops-page-header h1,
+  .ops-state-content > h2 {
+    font-size: 24px;
+    line-height: 36px;
+  }
+  .ops-toolbar {
+    gap: 12px;
+  }
+  .ops-search {
+    flex-basis: 100%;
+    max-width: none;
+  }
+  .ops-signal-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-bottom: 16px;
+  }
+  .ops-signal-row .ops-status {
+    justify-self: start;
+  }
+  .ops-signal-row .ops-summary {
+    padding-bottom: 4px;
+  }
+  .ops-log > div,
+  .ops-timeline li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .ops-actions > .button {
+    flex: 1;
+  }
+  .ops-page-end {
+    flex-direction: column;
+  }
+  .ops-notice {
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .ops-workspace dialog {
+    padding: 20px;
+  }
+}

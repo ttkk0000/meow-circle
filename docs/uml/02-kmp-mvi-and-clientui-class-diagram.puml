@@ -1,0 +1,232 @@
+@startuml 02-kmp-mvi-and-clientui-class-diagram
+!theme plain
+skinparam backgroundColor #FFFDF9
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "PingFang SC, Inter, sans-serif"
+skinparam roundcorner 8
+skinparam ClassBorderColor #D8CFC4
+skinparam ClassBackgroundColor #FFFFFF
+skinparam PackageBorderColor #E6DFD5
+skinparam ArrowColor #5C534E
+
+title KMP Shared MVI Architecture & Shared Compose UI (kmp/shared + kmp/clientUi) Class Diagram
+
+package "kmp/shared: Core MVI Framework (com.ttkk0000.meowcircle.client)" {
+  interface "MviStateOwner<State, Intent, Effect>" as MviStateOwner {
+    + state: StateFlow<State>
+    + effects: SharedFlow<Effect>
+    + dispatch(intent: Intent)
+  }
+
+  abstract class "MviStore<State, Intent, Effect>" as MviStore {
+    # scope: CoroutineScope
+    - mutableState: MutableStateFlow<State>
+    - mutableEffects: MutableSharedFlow<Effect>
+    + currentState: State
+    + dispatch(intent: Intent)
+    # {abstract} handleIntent(intent: Intent)
+    # updateState(reducer: (State) -> State)
+    # emitEffect(effect: Effect)
+    # launchGuarded(onError: (Throwable) -> Unit, block: suspend CoroutineScope.() -> Unit): Job
+  }
+
+  class MobileStore {
+    - api: MobileApiClient
+    - sessionStorage: SessionStorage
+    - preferencesStorage: PreferencesStorage
+    + selectDestination(destination: TopLevelDestination)
+    + submitPasswordSignIn(account: String, password: String)
+    + submitPhoneSignIn(phone: String, code: String)
+    + refreshBootstrap()
+    + sendChatMessage(conversationId: String, body: String)
+    + markAllConversationsRead()
+  }
+
+  class MobileFeatureStore {
+    + api: MobileApiClient
+    + sensitive: SensitiveActionStore
+    + providerAuth: ProviderAuthStore
+    + ageAssurance: AgeAssuranceStore
+    + guardianInvites: GuardianInviteStore
+    + openPage(page: FeaturePage)
+    + loadFeaturePage(page: FeaturePage)
+    + submitAdoptionApplication(listingId: String, req: CreateAdoptionApplicationRequest)
+    + submitAppointment(req: CreateAppointmentRequest)
+    + submitLostReport(req: CreateLostReportRequest)
+    + submitPublicationRevision(publicationId: String, req: CreatePublicationRevisionRequest)
+    + submitDataRequest(kind: String)
+  }
+
+  class SensitiveActionStore {
+    - api: MobileApiClient
+    - vault: CommandVault
+    + ensureGrantAndExecute(purpose: String, commandType: String, payloadJson: String, block: suspend (reauthToken: String, requestId: String) -> Unit)
+    + submitPasswordReauth(purpose: String, password: String)
+    + submitSmsReauth(purpose: String, code: String)
+    + reconcileUnknownCommand(commandId: String)
+    + savePhotoBatchDraft(draft: LocalPhotoBatchDraft)
+  }
+
+  class ProviderAuthStore {
+    - api: MobileApiClient
+    - bridge: NativeProviderAuthBridge
+    + startSignIn(provider: ThirdPartyAuthProvider)
+    + startLink(provider: ThirdPartyAuthProvider, reauthGrant: String?)
+    + handleNativeResult(result: NativeProviderAuthResult)
+    + clearConflict()
+  }
+
+  class AgeAssuranceStore {
+    - api: MobileApiClient
+    + refreshState()
+    + startSession(method: String, returnUrl: String?)
+    + completeCallback(sessionId: String, status: String, ageBand: String?, signature: String?)
+  }
+
+  class GuardianInviteStore {
+    - api: MobileApiClient
+    + loadMinorInvites()
+    + createMinorInvite(guardianPhone: String, relationship: String)
+    + revokeMinorInvite(inviteId: String)
+    + lookupInviteByCode(inviteCode: String)
+    + acceptInviteAsGuardian(inviteCode: String, reauthToken: String, scopes: List<String>)
+    + submitAdultRelationshipClaim(req: CreateAdultRelationshipClaimRequest)
+  }
+
+  enum FeaturePage {
+    FollowRequests
+    BlockedAccounts
+    Search
+    TopicDetail
+    EntryComposer
+    PetWorkspace
+    Favorites
+    Lists
+    ContentSubscriptions
+    AdoptionCenter
+    AdoptionListingEditor
+    AdoptionApplicationCenter
+    Appointments
+    LostPetCenter
+    LostMap
+    OfferCenter
+    SellerOnboarding
+    DisputeCenter
+    ReportsSafety
+    Notifications
+    NotificationPreferences
+    QualificationCenter
+    AgeAssurance
+    GuardianConsent
+    GuardianMinorInvites
+    GuardianAcceptInvite
+    AdultRelationshipClaims
+    SessionManagement
+    AccountIdentities
+    ProviderSignIn
+    AccountConflict
+    ReauthHistory
+    DataPrivacyCenter
+    AccountClosure
+    MediaQueue
+    UnknownCommandRecovery
+    Publications
+    PublicationDetail
+    PublicationWorkspace
+    ReadingLibrary
+    ReadingPlans
+    ReadingNotes
+  }
+}
+
+package "kmp/clientUi: Shared Multiplatform Compose UI (com.ttkk0000.meowcircle.clientui)" {
+  interface ClientUiPlatform {
+    + platformName: String
+    + capabilities: ClientPlatformCapabilities
+    + pickLocalMedia(maxItems: Int, onPicked: (List<PickedLocalMedia>) -> Unit)
+    + openExternalUrl(url: String)
+    + copyToClipboard(label: String, text: String)
+    + renderNativeLostMap(state: LostMapUiState, onAction: (LostMapUiAction) -> Unit)
+  }
+
+  class ConsumerApp {
+    + Render(store: MobileStore, featureStore: MobileFeatureStore, platform: ClientUiPlatform)
+  }
+
+  class FeaturePages {
+    + RenderFeaturePage(page: FeaturePage, store: MobileStore, featureStore: MobileFeatureStore, platform: ClientUiPlatform)
+  }
+
+  class PageComponents <<Composable Library>> {
+    + ChoiceChipBar<T>(items: List<T>, selected: T, onSelect: (T) -> Unit)
+    + SegmentedTextBar(options: List<String>, selectedIndex: Int, onSelect: (Int) -> Unit)
+    + PhotoQueueList(items: List<LocalPhotoQueueItem>, onRemove: (String) -> Unit)
+    + OtpVerificationFields(code: String, onCodeChange: (String) -> Unit, onSendOtp: () -> Unit)
+  }
+
+  class StatusComponents <<Composable Library>> {
+    + MviStatusBanner(loading: Boolean, error: String?, notice: String?, onDismiss: () -> Unit)
+    + PendingLinkBanner(url: String?, onOpen: (String) -> Unit, onDismiss: () -> Unit)
+  }
+}
+
+package "kmp/androidApp: Android Host & ViewModel Adapters" {
+  abstract class "MobileMviViewModel<State, Intent, Effect, S : MviStore<State, Intent, Effect>>" as MobileMviViewModel {
+    + store: S
+    + state: StateFlow<State>
+    + effects: SharedFlow<Effect>
+    + dispatch(intent: Intent)
+  }
+
+  class MobileViewModel {
+    + featureStore: MobileFeatureStore
+    + sensitiveStore: SensitiveActionStore
+  }
+
+  class AndroidClientPlatform {
+    - context: Context
+    - providerAuth: AndroidProviderAuth
+  }
+}
+
+package "kmp/iosUi & kmp/desktopApp: iOS & Desktop Hosts" {
+  class IosClientPlatform {
+    - mapController: IosNativeMapController
+    - providerAuth: IosProviderAuth
+  }
+
+  class DesktopClientPlatform {
+    - storage: DesktopStorage
+  }
+}
+
+MviStateOwner <|.. MviStore
+MviStore <|-- MobileStore
+MviStore <|-- MobileFeatureStore
+MviStore <|-- SensitiveActionStore
+MviStore <|-- GuardianInviteStore
+
+MobileFeatureStore *-- "1" SensitiveActionStore
+MobileFeatureStore *-- "1" ProviderAuthStore
+MobileFeatureStore *-- "1" AgeAssuranceStore
+MobileFeatureStore *-- "1" GuardianInviteStore
+MobileFeatureStore --> FeaturePage
+
+MobileMviViewModel --> MviStore
+MobileMviViewModel <|-- MobileViewModel
+MobileViewModel *-- MobileStore
+MobileViewModel *-- MobileFeatureStore
+
+ConsumerApp --> MobileStore
+ConsumerApp --> MobileFeatureStore
+ConsumerApp --> ClientUiPlatform
+ConsumerApp --> FeaturePages
+FeaturePages --> FeaturePage
+FeaturePages --> PageComponents
+FeaturePages --> StatusComponents
+
+ClientUiPlatform <|.. AndroidClientPlatform
+ClientUiPlatform <|.. IosClientPlatform
+ClientUiPlatform <|.. DesktopClientPlatform
+
+@enduml

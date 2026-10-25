@@ -1,6 +1,8 @@
 # M&D 文档入口
 
-2026-10-24 服务端完整性审计与全栈文档收口：新增[服务端完整性审计与待完善清单（2026-10-24）](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（梳理 `44` 张 `mobile_*` 表、`230` Paths / `259` Operations / `112` Schemas、6 类 `cmd/worker` 作业基线，以及 `008`–`009` 迁移挂载、`GIN(media_ids)` 索引、`SERIALIZABLE` 事务内 `allRecords()` 查询收敛等 6 大待完善项），并同步更新服务端、客户端（[Android 与 Web 740 状态交接](client/FIGMA_ANDROID_WEB_2026_10_24.md)）、BMAD 架构及根级工程文档。
+2026-10-25 全栈代码逻辑总览与 PlantUML 架构图谱收口：新增[全栈代码逻辑与 PlantUML 架构总览手册](CODE_LOGIC_AND_UML_REFERENCE.md)与[独立 PlantUML (`.puml`) 图谱目录](uml/README.md)（共 12 份 `.puml` 架构图、类图、ER 图、时序图与状态机图），并将全仓库文档统一对齐至 **2026-10-25 最新源码基线**：OpenAPI `241` Paths / `271` Operations / `123` Server Schemas（Web 派生 `125` Schemas）、`74` 对跨语言 DTO、PostgreSQL `001`–`009` 迁移与 `44` 张 `mobile_*` 领域表、`kmp/shared` 泛型 `MviStore` 体系、`kmp/clientUi` `34` 个三端共享 Compose 文件与 `42` 个 `FeaturePage` 二级业务页、[全量 Figma 四端实现交接](client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)、[高德地图四端与代理交接](client/AMAP_IMPLEMENTATION_2026_10_24.md)、[三方官方认证与冲突恢复](client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)、[外部年龄核验网关](client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)及[监护人 15 分钟邀请与成年关系申诉](client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)。
+
+2026-10-24 服务端完整性审计与全栈文档收口：新增[服务端完整性审计与待完善清单（2026-10-24）](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（梳理 `44` 张 `mobile_*` 表、最新 `241` Paths / `271` Operations / `123` Schemas、6 类 `cmd/worker` 作业基线，以及 `008`–`009` 迁移挂载、`GIN(media_ids)` 索引、`SERIALIZABLE` 事务内 `allRecords()` 查询收敛等 6 大待完善项），并同步更新服务端、客户端（[Android 与 Web 740 状态交接](client/FIGMA_ANDROID_WEB_2026_10_24.md)）、BMAD 架构及根级工程文档。
 
 2026-10-24 产品文档全量收口与 Figma 核查：[PRD 2.1](bmad/prd.md)（新增 `FR-035`–`FR-042` / `EPIC-008`）、[UX 规格 2.1](bmad/ux-design.md)（新增 `UX-13`–`UX-17`）、[双城分物种准入、四方标准协议与运营 SOP 草案](design/MND_CITY_SPECIES_AND_CONTRACT_TEMPLATES.md)（补齐 `LC08`/`LC09`/`LC01`/`LC02`/`LC10`）及 [Figma 产品与设计台账对齐核查](design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md)。
 
@@ -71,6 +73,8 @@ M&D = meow & doggie，猫优先、doggie 友好。
 
 ## 工程资料
 
+- [全栈代码逻辑与 PlantUML 架构总览手册](CODE_LOGIC_AND_UML_REFERENCE.md)
+- [PlantUML (`.puml`) 独立架构图谱索引（12 张图）](uml/README.md)
 - [项目结构](PROJECT_STRUCTURE.md)
 - [API 与数据流](API_AND_DATA_FLOW.md)
 - [前端页面地图](FRONTEND_SURFACE_MAP.md)

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"kitty-circle/internal/platform/envfile"
 	"log"
 	"net"
 	"net/http"
@@ -18,6 +19,9 @@ import (
 )
 
 func main() {
+	if err := envfile.LoadServer(); err != nil {
+		log.Fatal(err)
+	}
 	port := getEnv("APP_PORT", "8080")
 	maxOpenConns := getEnvInt("MAX_OPEN_CONNS", 500)
 	var openConns atomic.Int64

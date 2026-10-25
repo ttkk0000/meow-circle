@@ -12,10 +12,12 @@ import (
 )
 
 type Service struct {
-	Repo       Repository
-	Now        func() time.Time
-	Propagator string
-	Push       PushSender
+	Repo             Repository
+	Now              func() time.Time
+	Propagator       string
+	Push             PushSender
+	SearchProjection ProjectionSink
+	AuditProjection  ProjectionSink
 }
 
 func New(repo Repository) *Service {
@@ -523,6 +525,9 @@ func (s *Service) List(ctx context.Context, actor int64, k Kind, after, ref int6
 }
 
 func (s *Service) ListFiltered(ctx context.Context, actor int64, k Kind, after, ref int64, limit int, q Query) (out Page, err error) {
+	if !HasString([]string{"", "gcj02", "wgs84"}, q.CoordinateSystem) {
+		return out, Invalid("invalid coordinate system")
+	}
 	if len(q.Keyword) > 120 || len(q.City) > 120 || math.IsNaN(q.RadiusKM) || math.IsInf(q.RadiusKM, 0) || q.RadiusKM < 0 || q.RadiusKM > 100 || (q.RadiusKM > 0 && !coordinates(q.Latitude, q.Longitude)) {
 		return out, Invalid("invalid search filters")
 	}

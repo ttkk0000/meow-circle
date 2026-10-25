@@ -1,5 +1,127 @@
 # AI 工作结果日志
 
+迁移说明：历史条目保留 Android 文件原名，相关链接现指向 `clientUi` 的迁移后源码；历史验证范围未改写。
+
+## AI-20261025-CODE-COMMIT-PUSH / 2026-10-25 UTC+08:00 / 全量成果本地提交与远端推送
+
+- 来源：用户指令“代码提交推送”，本轮实际操作。Gemini (Antigravity)，`main` 分支。
+- 交付与成果结算：整合并提交全量在途工作树代码、配置、迁移与文档，包含：
+  1. 部署与App交付阶段体系（`scripts/delivery.py`、`scripts/mobile.py`、Compose 13 服务与 8 独立 worker 编排、环境配置模板 `deploy/examples/*`、Secret 文件加载、Android APK/AAB 签名与指定设备入口、iOS Archive/IPA、Desktop 构件目标及手动 App CI）；
+  2. 剩余业务代码续作（原生设备推送 FCM/APNs 协调器、Desktop 官方授权本机回跳与适配、`011_mobile_query_indexes.sql` 与 `012_worker_checkpoints.sql`、私有媒体 S3 路径式适配、8 个独立 worker 检查点与租约协调、搜索与审计事件消费、15 类草案阅读材料与协议正文）；
+  3. 技术运维平台前后端全栈（`internal/operations`、`internal/platform/opsapi`、`web-client/src/operations` 独立 `/app/ops` 工作台 14 类页面、`010_operations_console.sql` 与 13 路径 / 15 操作 / 25 schemas 合同）；
+  4. 监护人邀请与未成年人保护（短时单次邀请、本人领取／独立关系核实、范围授权与撤回、具名运营接线）；
+  5. 年龄核验专用流程（资格核实与可信结果置换、多端页面及网关适配）；
+  6. 官方第三方登录（微信、QQ、Apple 原生 SDK 桥与 Web 官方回跳挑战校验）；
+  7. 全量代码逻辑参考手册（`docs/CODE_LOGIC_AND_UML_REFERENCE.md`）与 12 份独立 PlantUML 图谱（`docs/uml/*.puml`）。
+- 静态验证：全量 15 项只读静态检查脚本（`check_delivery_static.py`、`check_remaining_code_static.py`、`check_operations_static.py`、`check_guardian_invites_static.py`、`check_age_assurance_static.py`、`check_provider_auth_static.py`、`check_client_ui_static.py`、`check_android_feature_static.py`、`check_android_ui_static.py`、`check_android_finish_static.py`、`check_kmp_client_static.py`、`check_server_shared_contract_static.py`、`check_figma_reading_static.py`、`check_web_client_static.py`、`check_mobile_static.py`）全量通过；未运行 Gradle 或 Go 编译/测试。
+- 提交与推送结果：本地已完成 Git 提交；在尝试推送时，因非交互式执行环境无法弹出交互式凭据输入框（提示 `Username for 'https://github.com':`），已保持单次退出，未残留后台阻塞进程；已记录提交 SHA 与推送指引。
+
+## AI-20261025-OPS-IMPLEMENT / 2026-10-25 UTC+08:00 / 技术运维代码实现
+
+- 来源：用户在14张运维Figma设计交付后要求“代码实现”，本轮实际操作。Codex，main / 77c479a，保留所有既有未提交源码、地图和Gemini成果；不提交／推送。
+- 已读全局与仓库规则、AI跟踪、Stitch镜像与对齐规则、运维设计和现有Web／API。使用figma-design-to-code、React best practices与karpathy-guidelines；14稿均取得高保真上下文，首稿含截图，10枚原SVG直接下载并保留24×24尺寸，不嵌整屏图片、不改远端设计。
+- `web-client/src/operations` 新增独立 `/app/ops` 工作台，覆盖8主页面、3详情、3状态。公共外壳／表格／筛选／分页／状态／指标／详情／表单复用原Button、Card、Notice、Field、Modal与Icon；Icon新增可选资源组、Field新增可选autocomplete，旧默认保留。模块延迟加载，原运营页增加独立入口。设计示例无网络且不可提交；真实与未知状态分开，身份切换销毁旧详情，凭据仅内存与取消请求代次。
+- 新增 `internal/operations`、`internal/platform/opsapi` 及存储适配，独立环境范围／角色、原请求号＋摘要回放与业务／审计同事务、版本与负责人处置、真实任务结果观测／自动故障事件、源码与账本SHA-256比较、发布准备与补齐。空闲和正常续接不是恢复证据；记录摘要／外部引用不授予执行权限。原worker租约／游标／ACK业务未改，遥测失败不让已执行业务伪称没执行。
+- 新增 `010_operations_console.sql`、独立运维OpenAPI（13路径／15操作／25schemas）、空值默认关闭的配置说明、[交接](../server/OPERATIONS_CONSOLE_2026_10_25.md)及[49份指纹](../server/operations-evidence-2026-10-25.json)。未应用迁移或生成任何真实凭据，未改001–009。运维部署／重启／重试、外部观测与证据执行器尚未接入，按钮与接口边界保持关闭。
+- 验证：5项只读脚本（operations、web、delivery、server_shared_contract、guardian_invites）通过；14 TS/TSX逐文件语法树、17 Go仅gofmt语法／格式读取、25 schemas与来源字段、10枚SVG尺寸／指纹、28本地文档链接、UTF-8／无BOM／冲突标记和git diff --check通过。只对本批Web源运行Prettier排版，未安装应用依赖或修改依赖锁。
+- 新增5个Go回归函数（含7角色／环境拒绝场景），覆盖同号重放／换内容冲突、跨环境、负责人／恢复证据、发布引用不放行、请求体上限；未执行。没有运行Gradle、Go构建／测试、TS类型检查、Web构建、lint、浏览器／应用、迁移或部署，遵循仓库默认规则。
+- 本批源码与静态范围完成；真实配置、010实际应用、类型／编译／设备／浏览器及联调均待后续明确执行。执行标记释放，无后台任务。
+
+## AI-20261025-OPS-FIGMA / 2026-10-25 UTC+08:00 / 后台技术运维Figma设计
+
+- 来源：用户“你可以设计下后台运维的设计图在figma”，本轮实际操作；Codex，main / 77c479a，保留已有未提交源码、地图和Gemini文档，未提交／推送。
+- 先读AI记录、设计规则与部署／交付事实，按figma-use、figma-generate-design、figma-generate-library技能核对Code Connect（无）、原三运营稿与桌面参考、现有组件／变量／文字样式。无新增主题或变量，复用Light V2、Noto Sans SC／Manrope、原导航与图标。
+- 在既有Figma文件 `3OFOC3vu18Kx9sRPjummOC` 新增独立页 `793:21`：8主页面（总览、服务、worker、发布、迁移、告警、审计、权限）＋3详情＋3状态，14稿1440×1000；18主组件含变体、2组件集、组件实例展示与设计说明。未改消费者原稿或原运营三稿。
+- 原型134条显式跳转；只对有对应示例编号的列表行连详情，不将其他行误连同一示例。筛选／输入等未仿真数据逻辑，发布与确认保持无执行动作。全稿标注设计示例／未连接环境，实时采集、告警和执行控制均为接入规划。
+- 结构回读14稿、文字样式／变量／组件属性、零整屏图片填充，画板／表格文字越界0；15张新截图（14稿＋组件展示）均已查看。修复顶部环境标记、迁移长文件名、禁用按钮换行与一条不对应事件编号的跳转。最后写入MCP超时后只读回读确认保存，没有重复写入。
+- [设计交接](../design/figma-study/ops-2026-10-25/README.md)与[nodes-and-validation.json](../design/figma-study/ops-2026-10-25/nodes-and-validation.json)保存链接、组件／节点和截图证据；不保存下载地址或凭据。最终JSON计数、15张PNG尺寸／SHA-256、交接本地链接、UTF-8／无BOM／冲突标记与git diff --check通过；分支仍main / 77c479a。
+- 仅Figma与本地设计／AI文档，未改业务源码；未编译／构建／测试／lint／服务或应用启动／部署。本任务没有构建需求，并遵循仓库默认不构建规则。设计层完成，实际技术运维控制台编码与真实环境接入仍需后续实施。执行标记释放。
+
+## AI-20261025-DELIVERY / 2026-10-25 UTC+08:00 / 用户要求先用占位配置
+
+- 来源：本轮实际操作。用户对实际服务器／签名／执行问题回复“先搞个占用的”，本轮已在评论中明确按“先用占位配置”处理；没有将其视为Gradle／CI运行或真实部署授权。
+- main / 77c479a，保留既有源码及Gemini文档。新增deploy/examples四份环境模板和README：服务器地址／SSH路径、Compose域名与目录、Android签名变量、iOS Team及能力；mnd.example.invalid和REPLACE路径清晰标记，密码／密钥留空，没有生成假证书或真实凭据。
+- scripts/delivery.py检测MND_CONFIG_MODE=placeholder，在调用Docker前关闭操作；真实init明确写production模式。已有Android／iOS真实HTTPS／签名及Team校验不放宽。更新交付手册及check_delivery_static.py，旧交付阶段回执保留历史，本轮来源见[占位阶段快照](../client/delivery-placeholder-evidence-2026-10-25.json)。
+- 交付静态检查通过，4份模板值核对、2Python AST、本地文档链接、UTF-8／无BOM／冲突／空白／可Git跟踪核对及git diff --check通过。未调用init、Docker、Gradle、Go构建／测试、App、设备或CI；没有提交／推送。
+- 本轮占位文本与源码范围已完成；实际域名／签名和运行仍未验证。执行标记释放，无后台任务。
+
+
+## AI-20261025-DELIVERY / 2026-10-25 UTC+08:00 / 部署与App交付链源码收口
+
+- 来源：用户在部署／打包缺口核对后要求“全部搞好”，本轮实际操作；Codex，main / 77c479a，保留全部既有源码及Gemini新增PlantUML／逻辑文档，没有提交或推送。
+- Docker按目录复制构建源码并排除本机配置／签名；Web先类型检查再构建的入口已写。镜像新增迁移、健康探针及nonroot持久目录；生产Compose补11服务、TLS、数据库／Redis认证、API媒体卷、6独立worker及Secret文件加载。只在将来显式init时生成服务凭据，本轮没有生成凭据或消费者／人工账号。
+- cmd/migrate使用advisory锁、逐文件事务和原文件SHA-256账本，剥离007–009外层事务并保留DO块；旧库必须显式核实基线，基线记录单事务提交。部署脚本先停旧写入口及worker再迁移；备份停写，不清卷或自动破坏性恢复。
+- Android补外部Release签名／HTTPS／版本校验与APK+AAB；移除机器专属JDK路径。iOS改当前iosUi任务及workspace，生成按已启用能力配置的entitlements，Archive／IPA与指定设备入口、临时CI Keychain／描述文件／always清理已写。Desktop提供当前OS分发入口。未安装、读取或配置本机真实证书。
+- CI补Web类型检查／bundle、完整迁移与Docker开发烟测配置；App workflow仅手动触发，含Android、iOS及三OS Desktop构件归档，未dispatch。说明见[交付手册](../client/DELIVERY_GUIDE_2026_10_25.md)和[26份源码指纹／静态回执](../client/delivery-evidence-2026-10-25.json)。
+- 13项只读脚本通过；39份变更Go仅gofmt格式／语法读取，4Python AST、4YAML语法、JSON／plist及Android KTS语法树通过；78个交付相关本地链接有效，编码／BOM／冲突和非MD空白扫描、git diff --check通过。新增两份Secret／迁移回归源码未执行。
+- 未运行Docker、Go build/run/test、Gradle、npm typecheck/build、XcodeGen、Pods、Xcode、CI、adb或设备／服务。部署／安装成功尚无证据，真实域名、签名、正式渠道与人员材料仍待。已通过问题卡请求服务器／域名、签名配置位置及独立CI执行明确授权；Gradle确认来自根AGENTS规则，用户原“不推送”保留。本轮执行标记释放，无后台任务。
+
+
+## AI-20261025-CODE-LOGIC-DOCS-PLANTUML / 2026-10-25T11:32:00+08:00 / 全量代码逻辑文档完善与独立 PlantUML (`.puml`) 建模
+
+- 来源：本轮实际操作。Gemini (Antigravity)，`main / 77c479a`，完整保留 Codex 在途业务与交付源码，仅新增/更新文档与 PlantUML 文件。
+- 独立 PlantUML 图谱（[`docs/uml/`](../uml/README.md)）：新建 12 份 `.puml` 文件与索引 [`docs/uml/README.md`](../uml/README.md)，涵盖系统组件与部署架构（`01`）、KMP MVI + `clientUi` 类图（`02`）、Go 服务端领域与服务类图（`03`）、PostgreSQL `001`–`009` 全量 ER 图（`04`）、官方三方认证 Create vs Link 与 `409 identity_in_use` 冲突时序（`05`）、外部年龄核验网关与 15 分钟监护人邀请/独立成年关系申诉/未成年人陌生私信 `directContact` 门禁时序（`06`）、`SERIALIZABLE` 幂等命令账本与 10 分钟单次 `reauth` 及 `OperationResultUnknown` 恢复时序（`07`）、`F07` 领养试养宠物级排他锁与双向退回状态机（`08`）、`F08` 上下文绑定预约准入与双轨改期/`safety_hold` 状态机（`09`）、`F09` 高德地图粗粒度坐标隐私（`GCJ-02`/`WGS-84` 两位小数）与安全代理及认领交接时序（`10`）、`F12` 数据导出/擦除/注销冷静期与证据保全锁及 `cmd/worker` 6 类后台作业时序（`11`）、`F11` 全局 `99+` 未读与 10 分钟快照已读及 `009` 宠物嵌套评论反应时序（`12`）。
+- 全栈代码逻辑总览与文档同步：新建 [`docs/CODE_LOGIC_AND_UML_REFERENCE.md`](../CODE_LOGIC_AND_UML_REFERENCE.md)，并同步更新 [`docs/README.md`](../README.md)、[`PROJECT_STRUCTURE.md`](../PROJECT_STRUCTURE.md)、[`API_AND_DATA_FLOW.md`](../API_AND_DATA_FLOW.md)、[`FRONTEND_SURFACE_MAP.md`](../FRONTEND_SURFACE_MAP.md)、[`RUNBOOK.md`](../RUNBOOK.md)、[`docs/bmad/architecture.md`](../bmad/architecture.md)、[`docs/bmad/gate-check.md`](../bmad/gate-check.md)、[`docs/server/ARCHITECTURE.md`](../server/ARCHITECTURE.md)、[`docs/server/MOBILE_SERVER.md`](../server/MOBILE_SERVER.md)、[`docs/server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md`](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)、[`docs/server/SERVER_FIRST_2026_10_23.md`](../server/SERVER_FIRST_2026_10_23.md)、[`docs/server/V2_RELEASE_RUNBOOK_2026_10_23.md`](../server/V2_RELEASE_RUNBOOK_2026_10_23.md)、[`docs/server/CLIENT_READINESS_2026_10_20.md`](../server/CLIENT_READINESS_2026_10_20.md)、[`docs/client/README.md`](../client/README.md)、[`docs/client/CURRENT_DELIVERY_STATUS_2026_10_23.md`](../client/CURRENT_DELIVERY_STATUS_2026_10_23.md)、[`docs/client/FEATURE_DELIVERY_MATRIX.md`](../client/FEATURE_DELIVERY_MATRIX.md)、[`docs/client/TASKS.md`](../client/TASKS.md) 至 2026-10-25 最新基线（`241` Paths / `271` Operations / `123` Server Schemas / `125` Web Schemas / `74` 对 DTO / `44` 张 `mobile_*` 表 / `34` 个 `kmp/clientUi` 文件 / `42` 个 `FeaturePage`）。
+- 验证边界：12 份 `.puml` 文件 `@startuml`/`@enduml` 闭合与 UTF-8 无 BOM 校验通过，19 份 Markdown 文档本地相对链接与 UTF-8 无 BOM 校验通过，8 项核心只读静态检查脚本通过；未运行 Gradle 或 Go 编译/测试，本会话执行标记已释放。
+
+## AI-20261024-ALL-FIGMA / 2026-10-25 UTC+08:00 / 监护页面、关系核实与保护校验
+
+- 来源：本轮实际操作。Codex，main / 77c479a，保留全部地图／Gemini／公共UI在途成果；用户继续全Figma页面任务，正式授权应用信息已答占位符。本轮没有提交或推送。
+- 新增共享GuardianInviteStore与最小DTO、公共GuardianPages、Web专用管理／领取／保护页面；42扩展分派／34公共源码，替换账号安全内的重复授权按钮与Web通用授权表单。原生只用transient内存；URL片段口令在路由读取前清除，登录切换清输入。公共组件沿用，工具栏的年龄状态读取作用域一并修正。
+- 服务端增加6消费者操作和具名identity_verifier队列，正式已发布规则／HTTPS精确origin不足时关闭；原编号／内容指纹／单活邀请／单次领取、版本取消与过期清理后旧键恢复。领取只待核实；具名核实后仍等本人scope／reauth和明确范围确认，儿童不能代点。运营表单固定双方及原邀请版本，只记录最小证据引用。
+- 实际发现陌生人保护稿与普通私信请求有差距，补事务内directContact：创建、接受、发送都复查；成年陌生账号走普通请求，未成年人／未知或过期结果仅已确认好友可继续受保护日常交流。屏蔽／拒绝／退出关系不因交流资格失效关闭，错误码不暴露对方年龄。两份Go回归仅源码未执行。
+- 已读／查看6根监护Figma完整上下文与PNG，并更新实际源码归属；740状态仍非逐屏视觉／操作验收。详见[本批接口、页面与限制](../client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)。
+- 最终12项只读脚本通过；74DTO、241路径／271操作／123服务schema／125Webschema、45TS／212引用。105份Kotlin/KTS/TS/TSX逐文件隔离解析无新增文件错误，4原有大shared文件HEAD同有grammar限制；Python原生解析器批量复用曾异常，改逐文件隔离后未异常，不把语法树作为类型证据。Go仅gofmt格式／语法读取，git diff --check、编码／BOM／冲突和非Markdown尾空白扫描通过。
+- 未运行编译／类型检查／测试／lint／依赖解析／工程生成／服务／应用／浏览器／模拟器。任务尚未结束，下一步继续其他专用状态和五布局差异；真实配置、人员核实与运行验收仍待。本轮执行标记释放，无已确认后台任务。
+
+
+## AI-20261024-ALL-FIGMA / 2026-10-25 UTC+08:00 / 成年资格专用流程与静态收口
+
+- 来源：本轮实际操作，Codex，main / 77c479a，未提交工作树保留地图、Gemini及本轮公共UI迁移成果。
+- 实际核实LR02专用流程未落实，补AgeAssuranceStore、公共AgePages与React页面，现41扩展分派／33公共源码；账号安全及预约／协议／接回／披露入口接线，Web跳转先等待草稿保存；用途确认冻结原任务，回跳不视为成功，返回原任务仍主动复核提交。
+- 服务端新增4个私有年龄接口、默认关闭的可信最小网关、原编号账本／并发复用／unknown只查询；15分钟核验与24小时短期恢复期限分开，终结清回跳凭据，资格过期／后续复核替换会重新收紧页面状态。原具名运营与供应商共享事务内资格保存／审计。网关是工程适配边界，未选正式供应商、未配置真实凭据。
+- 11项只读脚本全通过；101份变更Kotlin／KTS／TS／TSX语法树无新增错误，四个原有大shared文件保留HEAD同类grammar限制。git diff --check、冲突标记、UTF-8／BOM和非Markdown尾空白扫描通过。69DTO、235路径／264操作／116服务schema／118Webschema；年龄及授权回归仅源码，未执行。
+- 读取12根年龄／成年Figma完整上下文／PNG保存；只将实际查看样本记为设计截图证据，740索引仍非逐状态、逐像素或运行验收。[本阶段入口与边界](../client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)。
+- 未编译／类型检查／测试／lint／依赖解析／工程生成／启动／提交／推送。执行状态：进行中，继续其余监护与专用状态核对；不宣称全部Figma已完成。
+
+
+## AI-20261024-ALL-FIGMA / 2026-10-25 UTC+08:00 / 授权阶段续作
+
+- 来源：本轮实际操作。Codex，main / 77c479a，保留原地图、Gemini及公共UI迁移全部未提交成果；用户最新“继续”，官方应用信息已答先用占位符。
+- 新增共享ProviderAuthStore与公共账号选择／独立创建确认／用途验证／确认关联／取消／过期／冲突状态，固定工具栏与底部次操作复用；Android微信／QQ、iOS微信／QQ／Apple桥和Web官方弹窗／同源回跳源码已写，登录与安全设置复用。
+- 服务端多应用AppID选择、Web专用回调／凭据平台校验、嵌套OAuth会话转HttpOnly Cookie、identity_in_use隐私冲突已写。Apple补一次性code；QQ旧回跳并发槽、Web取消后迟到start防护已补。官方SDK只下载读档案／头文件／方法表，没有运行／安装。详见[阶段说明](../client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)。
+- 10项只读脚本通过；95变更Kotlin／KTS／TS／TSX语法树无新增错误，四个原有大shared源码存在HEAD同类parser限制。三个新增Go回归文件仅源码。未编译／类型检查／测试／lint／工程生成／依赖解析／启动／提交／推送。
+- 原Figma accountChoice传输错误已重试成功，新增8根原上下文／PNG落盘；740仍是源码族索引，非逐状态或运行验收。正在继续盘点年龄资格等被宽泛映射覆盖的专用流程；正式密钥不是本轮源码续作阻塞。
+- 执行状态：进行中；继续本任务，不代表全部Figma已完成。
+
+
+
+## AI-20261024-ALL-FIGMA · 公共UI／全端入口阶段（2026-10-24，UTC+08:00）
+
+来源：本轮实际操作。main / 77c479a，保留地图批次、Gemini MVI与未提交成果，无提交／推送。按用户全端Figma与公共组件要求，新建clientUi迁移31份公共源码／39分派／10 primitive，Android改薄宿主，iOS全端入口及私有业务／回复草稿与系统能力，Desktop改v2入口／原生日期照片／系统钥匙串随机密钥加密保险库；旧Stitch和旧SwiftUI参考保留。Web新增WorkflowFields、Noto原图几何、独立运营三稿；新增ops/context仅本人角色和真实材料，不出Token。Figma代表根／子节点的原图与上下文存本地，740追踪改真实路径，未标全量完成。
+
+9只读脚本本轮通过（31公共源码、39扩展页、128／24原图、21SVG、39TS／179引用、66DTO、231路径／260操作／113schema）；未编译／类型检查／test／lint／应用／服务启动，未访问本机钥匙串或安装SDK。最后完成公共接线及静态引用修复，继续官方SDK回跳／账号选择／关联与逐状态审计；账号选择get_design_context遇MCP传输错误，未使用失败结果编码。已询问公开AppID／回调域名或本机配置路径，未索取密钥。工程选择已登记DECISIONS，实施和具体缺口见docs/client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md。
+
+执行状态：进行中，当前会话继续；本条不代表后台编译、测试或平台验收。
+
+## AI-20261024-AMAP-IMPLEMENT · Android／iOS原生高德与Web地图
+
+- 时间／执行者：2026-10-24（Asia/Shanghai，UTC+08:00），Codex，本轮实际源码操作，起点 `main / 77c479a`；保留此前未提交成本评估与Gemini成果。用户选定手机／平板原生、其他端Web，并确认Android／iOS一起接入；仍不推送。
+- 源码：[接入与配置](../client/AMAP_IMPLEMENTATION_2026_10_24.md)。Android共享原生MapView容器／选点器、SDK依赖与权限合并限制；iOS以Swift薄适配＋UIKitView嵌入MAMapView，接入互助地图／最小发布编辑，新增Podfile但未安装。Web以AmapView复用地图／详情／表单，安全密钥留服务端固定上游代理；Desktop使用系统浏览器复用Web，不传桌面令牌。Docker公开Key参数和各端说明同步。
+- 合同：Case／Subscription／半径查询补coordinate_system，服务端白名单与同坐标系距离校验；已知WGS显示转换，未知旧点不猜来源、不强转。共享点先粗化再入表单，仍两位小数；不持久化精确点击。230路径／112schema及Web114派生schema同步，无SQL迁移。
+- 验证：5项只读脚本通过（73份Kotlin／Swift、66对DTO、39页面分派、公共UI、Web37份源码／171引用／18原SVG）；22份完整语法树加Map分支独立解析通过，既有MobileFeatureStore解析器错误与HEAD相同；Swift只有词法／源码对应项检查。Go格式／语法读取通过；新增距离与代理拒绝回归源码，未执行测试。最终57个改动路径UTF-8／空白／冲突与35个新增本地文档引用核对通过，`git diff --check`通过。
+- 外部资料：只读官方SDK／坐标／隐私接口及Maven／CocoaPods元数据，未下载或解析SDK产物；Figma session／设计上下文均传输失败，沿用仓库已有布局和设计回读，未宣称新截图或像素验收。
+- 边界与恢复：未编译、构建、test、lint、类型检查、迁移、启动、设备、CI、申请Key、采购、提交或推送。剩余实际Key／许可、Pods与Gradle依赖／原生头文件、ABI／16KB页大小及手机平板运行验收；本批只有源码与静态证据。执行标记释放，无本轮后台任务。
+
+## AI-20261024-AMAP-ASSESS · 高德寻宠地图成本与接入评估
+
+- 时间／执行者：2026-10-24（Asia/Shanghai，UTC+08:00），Codex，本轮实际评估。工作树 `main / 77c479a`；用户明确先不推送，停止远端认证／推送重试。
+- 授权与产物：只读高德官方价格／许可／JS API／坐标转换／轻量SDK文档及现有地图源码；新增[成本与改造评估](../client/AMAP_LOST_PET_ASSESSMENT_2026_10_24.md)，更新自身快照和任务。未改Gemini或既有业务成果。
+- 结论：商业基础技术服务许可公示5万元／年；地图／LBS／搜索按服务请求与配额核算，10万JS初始化＋1万解析＋1万搜索的基价算例为90元／月，适用许可配额且未耗尽时可无额外调用费。共用H5估5～8人日，Android原生加Web估8～12人日；不是供应商报价或排期承诺。
+- 源码核对：现有Web iframe与Android WebView是模板占位，未接高德SDK；服务端和客户端两位小数为公里级，未显式记录坐标系，私密位置是文字。公开精度、历史来源与坐标转换、主体许可及多端覆盖为实施前确认项；公共高德POI发布不在自有标点范围。
+- 验证边界：仅文档空白／冲突标记、UTF-8与本地引用静态核对；未编译、构建、test、lint、类型检查、迁移、启动或设备运行，遵循当前全局规则。未申请Key、采购、接入、提交或推送。
+- 恢复点：评估文档已完成；预算与许可资格确认后，需用户明确实施范围再接入。执行标记释放，无本轮后台任务。
+
 ## AI-20261023-FIGMA-ANDROID-WEB · 独立页面续审与Gemini接入收口
 
 - 时间／执行者：2026-10-24（Asia/Shanghai），Codex，本轮实际源码操作。接续d31385d／5a3d786，期间Gemini将阅读／发布／评论及其MVI／文档保存为da12eef；已核对、保留，在其上继续修正。用户再次强调全部Figma页面、提示Gemini修改，并回复HTTPS“已验证”。
@@ -14,7 +136,7 @@
 
 - 时间／执行者：2026-10-24T13:26:00+08:00，Gemini（Antigravity），按用户“提交”指令执行；起点 `main / 5a3d786`。
 - 纳入范围：
-  1. KMP 共享层 [`MviStore.kt`](../../kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MviStore.kt) 抽象基类及 `MobileStore`、`MobileFeatureStore`、`SensitiveActionStore` 继承复用；Android [`AndroidMviBase.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMviBase.kt)（`MobileMviViewModel`、`MviStoreHost`、`MviStatusBanner`、`PendingLinkBanner`）与 [`AndroidPageComponents.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPageComponents.kt) 公共组件（`ChoiceChipBar`、`SegmentedTextBar`、`PhotoQueueList`、`OtpVerificationFields`）抽取与跨页面复用。
+  1. KMP 共享层 [`MviStore.kt`](../../kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MviStore.kt) 抽象基类及 `MobileStore`、`MobileFeatureStore`、`SensitiveActionStore` 继承复用；Android [`AndroidMviBase.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMviBase.kt)（`MobileMviViewModel`、`MviStoreHost`、`MviStatusBanner`、`PendingLinkBanner`）与 [`AndroidPageComponents.kt`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt) 公共组件（`ChoiceChipBar`、`SegmentedTextBar`、`PhotoQueueList`、`OtpVerificationFields`）抽取与跨页面复用。
   2. 工作树既有在途的独立阅读目录／宠物评论与表情反应／我的发布全栈源码（`migrations/009_pet_discussions.sql`、`internal/mobile/{reading,comment_reactions}.go`、`internal/platform/mobileapi/{reading.go,reading-drafts.json,reading_test.go}`、`kmp/shared/.../ReadingModels.kt`、`kmp/androidApp/.../{AndroidReadingContent,AndroidPublicationsContent}.kt`、`web-client/src/features/{ReadingPages,Publications}.tsx` 及关联图标／指南静态资源）。
   3. 产品文档 2.1 收口、双城准入与四方协议模板草案、Figma 台账对齐核查、服务端完整性审计报告及全量服务端／客户端／BMAD／根级工程文档同步。
 - 静态验证：`check_mobile_static.py`、`check_kmp_client_static.py`、`check_android_ui_static.py`、`check_android_feature_static.py`、`check_android_finish_static.py`、`check_server_shared_contract_static.py` 全部通过；未运行编译或测试。本会话执行标记已释放。
@@ -30,8 +152,8 @@
      - 新建 [`kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMviBase.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMviBase.kt)，提供继承自 [`MviViewModel`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/architecture/mvi/MviViewModel.kt) 的 `MobileMviViewModel<State, Intent, Effect>` 抽象基类（含 `bindState`、`forwardEffects`、`bindStore` 原语）、宿主状态契约 `MobileHostState`/`MobileHostIntent`/`MobileHostEffect`，以及 Compose MVI 容器与横幅组件 `MviStoreHost`、`MviViewModelHost`、`CollectMviEffects`、`MviStatusBanner`、`PendingLinkBanner`。
      - 重构 [`MobileViewModel.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt) 继承 `MobileMviViewModel<MobileHostState, MobileHostIntent, MobileHostEffect>`，统一桥接 `store`、`store.features`、`store.features.sensitive` 与 `pendingLink`，同时保留 `uiSession = AndroidUiSessionState()` 与 `SavedStateHandle` 路由恢复。
   3. Android 页面级高频公共组件抽取与全量接入：
-     - 在 [`AndroidPageComponents.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPageComponents.kt) 抽取新增 `ChoiceChipBar`（单选 FilterChip 栏，支持横向滚动与角标插槽）、`SegmentedTextBar`（分段文本切换栏）、`PhotoQueueList`（照片上传进度、单图重试、前后移动与移除队列）、`OtpVerificationFields`（验证码输入框＋倒计时重发按钮组合）。
-     - 在 [`AndroidMobileApp.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt)、[`AndroidFeatureContent.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidFeatureContent.kt)、[`AndroidAccountFeatures.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAccountFeatures.kt)、[`AndroidAuthDialog.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAuthDialog.kt)、[`AndroidInboxContent.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidInboxContent.kt)、[`AndroidComposeControls.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt) 中替换重复 UI 样板代码。
+     - 在 [`AndroidPageComponents.kt`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt) 抽取新增 `ChoiceChipBar`（单选 FilterChip 栏，支持横向滚动与角标插槽）、`SegmentedTextBar`（分段文本切换栏）、`PhotoQueueList`（照片上传进度、单图重试、前后移动与移除队列）、`OtpVerificationFields`（验证码输入框＋倒计时重发按钮组合）。
+     - 在 [`AndroidMobileApp.kt`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMobileApp.kt)、[`AndroidFeatureContent.kt`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt)、[`AndroidAccountFeatures.kt`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt)、[`AndroidAuthDialog.kt`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt)、[`AndroidInboxContent.kt`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InboxPages.kt)、[`AndroidComposeControls.kt`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt) 中替换重复 UI 样板代码。
      - 更新 [`docs/client/UI_COMPONENTS.md`](../client/UI_COMPONENTS.md)、[`mobile/README.md`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/README.md) 与 [`scripts/check_android_ui_static.py`](../../scripts/check_android_ui_static.py)。
 - 静态验证：`check_kmp_client_static.py`（68 份 Kotlin/Swift）、`check_android_ui_static.py`（10 基础 primitive + MVI 基类与 4 项页面公共组件断言）、`check_android_feature_static.py`（39 个扩展页面分派与无行尾空白）、`check_android_finish_static.py`（34 游客控件与单实例约束）、`check_server_shared_contract_static.py`（66 对 DTO）全部通过。
 - 验证边界：未运行编译，遵循全局不自行编译规则，未执行 Gradle/Go、测试或设备运行。本会话执行标记已释放。

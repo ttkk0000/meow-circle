@@ -12,6 +12,16 @@ settings:
     MARKETING_VERSION: "0.1.0"
     CURRENT_PROJECT_VERSION: "1"
     MND_API_BASE_URL: "http://127.0.0.1:8080"
+    MND_AMAP_IOS_KEY: ""
+    MND_TERMS_URL: ""
+    MND_PRIVACY_URL: ""
+    MND_WECHAT_IOS_APP_ID: "wx0000000000000000"
+    MND_QQ_IOS_APP_ID: "00000000"
+    MND_WECHAT_UNIVERSAL_LINK: "https://example.invalid/oauth/wechat/"
+    MND_QQ_UNIVERSAL_LINK: "https://example.invalid/oauth/qq/"
+    MND_APPLE_SIGNIN_ENABLED: "NO"
+    MND_APNS_ENABLED: "NO"
+    MND_PROVIDER_ASSOCIATED_DOMAIN: "example.invalid"
     SWIFT_STRICT_CONCURRENCY: complete
 
 targets:
@@ -21,7 +31,7 @@ targets:
     sources:
       - path: ComposeApp
     info:
-      path: MndIOS/Info.plist
+      path: Generated/Info.plist
       properties:
         CFBundleDisplayName: "M&D"
         UILaunchScreen: {}
@@ -39,10 +49,29 @@ targets:
           - UIInterfaceOrientationLandscapeRight
         UIRequiresFullScreen: false
         MND_API_BASE_URL: $(MND_API_BASE_URL)
+        MND_AMAP_IOS_KEY: $(MND_AMAP_IOS_KEY)
+        MND_TERMS_URL: $(MND_TERMS_URL)
+        MND_PRIVACY_URL: $(MND_PRIVACY_URL)
+        MND_WECHAT_IOS_APP_ID: $(MND_WECHAT_IOS_APP_ID)
+        MND_QQ_IOS_APP_ID: $(MND_QQ_IOS_APP_ID)
+        MND_WECHAT_UNIVERSAL_LINK: $(MND_WECHAT_UNIVERSAL_LINK)
+        MND_QQ_UNIVERSAL_LINK: $(MND_QQ_UNIVERSAL_LINK)
+        MND_APPLE_SIGNIN_ENABLED: $(MND_APPLE_SIGNIN_ENABLED)
+        MND_APNS_ENABLED: $(MND_APNS_ENABLED)
+        LSApplicationQueriesSchemes: [weixin, weixinULAPI, mqq, mqqapi, mqqopensdkapiV2, mqqopensdkapiV3, tim]
+        CFBundleURLTypes:
+          - CFBundleURLName: wechat
+            CFBundleURLSchemes: [$(MND_WECHAT_IOS_APP_ID)]
+          - CFBundleURLName: qq
+            CFBundleURLSchemes: [tencent$(MND_QQ_IOS_APP_ID)]
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
     settings:
       base:
+        MND_ENTITLEMENTS_FILE: ComposeApp/MndBase.entitlements
+        CODE_SIGN_ENTITLEMENTS: $(MND_ENTITLEMENTS_FILE)
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_OBJC_BRIDGING_HEADER: ComposeApp/MndProviderBridge.h
         PRODUCT_BUNDLE_IDENTIFIER: com.ttkk0000.meowcircle.ios
         PRODUCT_NAME: "M&D"
         GENERATE_INFOPLIST_FILE: false

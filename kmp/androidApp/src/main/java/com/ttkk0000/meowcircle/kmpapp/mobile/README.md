@@ -1,12 +1,12 @@
-# Android 手机／平板 UI
+# Android 手机／平板原生宿主
 
-现行入口使用批准的 Figma V2 默认浅色，Android手机／平板同一个 Store，苹果 UI 在独立目录。
+2026-10-24消费者页面已迁移到独立 `kmp/clientUi` 公共库，手机、平板、iOS和Desktop复用页面组件及已有共享业务Store。当前默认Figma浅色，不改旧Stitch镜像。
 
-- 主题：`MobileTheme.kt`；尺寸：`MobileUi.kt`。
-- 纯视觉／输入组件：`MobileComponents.kt`；页面级公共组件：`AndroidPageComponents.kt`（`TaskColumn`、`ChoiceChipBar`、`SegmentedTextBar`、`PhotoQueueList`、`OtpVerificationFields`、`RecordList` 等）；业务表单适配：`AndroidFeatureContent.kt`。
-- MVI 基类与容器：共享层 `MviStore.kt`（`MviStore` / `MviStateOwner`，由 `MobileStore`、`MobileFeatureStore`、`SensitiveActionStore` 继承复用）＋ Android 层 `AndroidMviBase.kt`（`MobileMviViewModel`、`MviStoreHost`、`MviViewModelHost`、`CollectMviEffects`、`MviStatusBanner`、`PendingLinkBanner`）。
-- 窗口／铰链：`AndroidAdaptiveWindow.kt`；框架和五主入口：`AndroidMobileApp.kt`。
-- 日期、人员、宠物、区域、图片、通用读取状态分别由 `AndroidDateFields`、`AndroidPeopleFields`、`AndroidPetFields`、`AndroidRegionFields`、`AndroidMedia`、`AndroidLoadStates` 复用。
-- `MobileViewModel`（继承 `MobileMviViewModel`）保存业务 owner 与 `AndroidUiSessionState`；不要按横竖屏新建 Store，不把密码或私密正文放进系统 Bundle。
+- `AndroidMobileApp`：薄入口，注入 `AndroidClientPlatform`，不创建第二个业务Store。
+- `MobileViewModel`／`AndroidMviBase`：保留Gemini MVI聚合、生命周期、深链队列与恢复；UI会话和待查看深链值使用公共类型别名。
+- `AndroidAdaptiveWindow`：真实系统栏／IME／铰链；公共正文按当前可用区域调整主从与侧栏。
+- `AndroidPhotoPicker`／`AndroidImageOrigin`：真实照片与来源元数据；`AndroidDateFields`：系统日期／时间确认；`AndroidNotificationPermission`：真实系统权限。
+- `AndroidSecretStorage`／`AndroidComposeDraftFiles`：Keystore及私有草稿；`MndApplication`：进程API刷新和跨Activity草稿协调。
+- `AndroidNativeMap`：原生高德MapView；地图列表与CaseMapPicker在公共库，仍不新增业务Store。
 
-完整[组件目录与维护规范](../../../../../../../../../../docs/client/UI_COMPONENTS.md)、[横竖屏状态交接](../../../../../../../../../../docs/client/PAD_STATE_AND_UI_2026_10_23.md)。项目根的禁止编译／运行规则仍适用，文档不是运行授权。
+页面、主题、尺寸、任务骨架与组件见 `kmp/clientUi/README.md` 和 `docs/client/UI_COMPONENTS.md`。禁止构建／测试／启动规则仍适用，当前只有源码／只读检查证据。

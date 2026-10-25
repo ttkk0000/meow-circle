@@ -7,22 +7,23 @@ import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parents[1]
 android = root / 'kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile'
+client_ui = root / "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui"
 shared = root / 'kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client'
 feature = (shared / 'MobileFeatureStore.kt').read_text(encoding="utf-8")
 enum = feature.split('enum class FeaturePage', 1)[1].split('data class FeatureRoute', 1)[0]
 pages = set(re.findall(r'\b(\w+)\("', enum))
-ui = '\n'.join((android / file).read_text(encoding="utf-8") for file in [
-    'AndroidSocialFeatures.kt', 'AndroidCareFeatures.kt', 'AndroidOfferFeatures.kt', 'AndroidAccountFeatures.kt'])
+ui = '\n'.join((client_ui / file).read_text(encoding="utf-8") for file in [
+    'SocialPages.kt', 'CarePages.kt', 'OfferPages.kt', 'AccountPages.kt'])
 handled = set(re.findall(r'FeaturePage\.(\w+)\s*->', ui))
 assert pages == handled, ('缺少具体页面实现', pages - handled, handled - pages)
 store = (shared / 'MobileStore.kt').read_text(encoding="utf-8")
 store_methods = set(re.findall(r'\bfun\s+(\w+)\s*\(', store))
 feature_methods = set(re.findall(r'\bfun\s+(\w+)\s*\(', feature))
-all_android = '\n'.join(p.read_text(encoding="utf-8") for p in android.glob('*.kt'))
+all_android = '\n'.join(p.read_text(encoding="utf-8") for p in list(android.glob('*.kt')) + list(client_ui.glob('*.kt')))
 assert set(re.findall(r'\bstore::(\w+)', all_android)) <= store_methods
 assert set(re.findall(r'\bf::(\w+)', all_android)) <= feature_methods
 assert 'val features = MobileFeatureStore(api, scope, localWorkspaces)' in store
-assert 'MobileStore(' not in (android / 'AndroidMobileApp.kt').read_text(encoding="utf-8")
+assert 'MobileStore(' not in (client_ui / 'ConsumerApp.kt').read_text(encoding="utf-8")
 assert 'TextFieldValue.Saver' not in all_android, '私密正文不能复制进系统恢复 Bundle'
 assert 'rememberPrivateEditor' in all_android
 assert 'unknown' in feature and 'uncertainRoutes' in feature and 'operationResolved' in feature
@@ -47,8 +48,8 @@ assert any(p.attrib.get(ns + 'name') == 'android.permission.POST_NOTIFICATIONS' 
 activity = manifest.find('application/activity')
 assert ns + 'screenOrientation' not in activity.attrib
 assert any(e.attrib.get(ns + 'scheme') == 'mnd' for e in activity.findall('intent-filter/data'))
-policy = (android / 'AndroidMobileApp.kt').read_text(encoding="utf-8")
-for boundary in ('width >= 680f', 'width >= 980f', 'height >= 480f', 'width >= 1100f', 'readableWidth >= 900f', 'readableWidth >= 1020f', 'WindowInsets.ime', 'SaveableStateProvider', 'AndroidFeatureMaster'):
+policy = (client_ui / 'ConsumerApp.kt').read_text(encoding="utf-8")
+for boundary in ('width >= 680f', 'width >= 980f', 'height >= 480f', 'width >= 1100f', 'readableWidth >= 900f', 'readableWidth >= 1020f', 'WindowInsets.ime', 'SaveableStateProvider', 'ClientFeatureMaster'):
     assert boundary in policy, boundary
 assert 'fontScale.coerceAtLeast(1f)' in policy and '!policy.keyboard' in policy
 assert 'enabled = !navigationLocked' in policy
@@ -62,7 +63,7 @@ assert struct.unpack('>II', atlas.read_bytes()[16:24]) == (1536, 1024)
 catalog = json.loads((root / 'internal/mobile/catalog.json').read_text(encoding="utf-8"))
 assert len(catalog['stickers']) == 24
 assert {s['id'] for s in catalog['stickers']} == {f'sticker-{n:02}' for n in range(1,25)}
-for p in list(android.glob('*.kt')) + [shared / 'MobileFeatureStore.kt', shared / 'WorkspaceApi.kt']:
+for p in list(android.glob('*.kt')) + list(client_ui.glob('*.kt')) + [shared / 'MobileFeatureStore.kt', shared / 'WorkspaceApi.kt']:
     source = p.read_text(encoding="utf-8")
     assert not p.read_bytes().startswith(b'\xef\xbb\xbf'), p
     assert not re.search(r'^(<<<<<<<|=======|>>>>>>>)', source, re.M), p

@@ -39,27 +39,27 @@ for filename in ['design-closure-2026-10-21-state.json', 'logic-fix-2026-10-21-s
     data = json.loads((design / filename).read_text())
     merge(data.get('effectiveCoreRoots', data.get('roots', {})), filename)
 
-android = 'kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/'
+android = 'kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/'
 entries = {
- 'community': ('AndroidMobileApp.kt', 'features/Records.tsx', '/'),
- 'publishing-media': ('AndroidComposeControls.kt', 'features/WorkflowEditor.tsx', '/publish'),
- 'adoption': ('AndroidCareFeatures.kt', 'features/ResourcePage.tsx', '/adoptions'),
- 'verification-reports': ('AndroidAccountFeatures.kt', 'features/ResourcePage.tsx', '/reviews'),
- 'pet-diary': ('AndroidSocialFeatures.kt', 'features/WorkflowEditor.tsx', '/pets'),
- 'lost-found': ('AndroidCareFeatures.kt', 'features/ResourcePage.tsx', '/cases'),
- 'messages': ('AndroidInboxContent.kt', 'features/chat.tsx', '/messages'),
- 'appointments': ('AndroidCareFeatures.kt', 'features/ResourcePage.tsx', '/appointments'),
- 'auth': ('AndroidAuthDialog.kt', 'features/AuthDialog.tsx', '/security'),
- 'settings-notifications': ('AndroidAccountFeatures.kt', 'features/Account.tsx', '/settings'),
- 'offers-visits': ('AndroidOfferFeatures.kt', 'features/ResourcePage.tsx', '/offers'),
- 'global-states': ('AndroidFeatureContent.kt', 'components/ui.tsx', '/recovery'),
- 'groups': ('AndroidSocialFeatures.kt', 'features/chat.tsx', '/groups'),
- 'circle-friends': ('AndroidSocialFeatures.kt', 'components/ContentFields.tsx', '/friendships'),
- 'nearby': ('AndroidAccountFeatures.kt', 'features/WorkflowEditor.tsx', '/nearby'),
- 'expressions': ('AndroidComposeControls.kt', 'features/chat.tsx', '/messages'),
- 'safety-data': ('AndroidAccountFeatures.kt', 'features/Recovery.tsx', '/recovery'),
- 'rules': ('AndroidReadingContent.kt', 'features/ReadingPages.tsx', '/rules'),
- 'operator-reference': (None, None, None),
+ 'community': ('ConsumerApp.kt', 'features/Records.tsx', '/'),
+ 'publishing-media': ('ComposeControls.kt', 'features/WorkflowEditor.tsx', '/publish'),
+ 'adoption': ('CarePages.kt', 'features/ResourcePage.tsx', '/adoptions'),
+ 'verification-reports': ('AccountPages.kt', 'features/ResourcePage.tsx', '/reviews'),
+ 'pet-diary': ('SocialPages.kt', 'features/WorkflowEditor.tsx', '/pets'),
+ 'lost-found': ('CarePages.kt', 'features/ResourcePage.tsx', '/cases'),
+ 'messages': ('InboxPages.kt', 'features/chat.tsx', '/messages'),
+ 'appointments': ('CarePages.kt', 'features/ResourcePage.tsx', '/appointments'),
+ 'auth': ('AuthPages.kt', 'features/AuthDialog.tsx', '/security'),
+ 'settings-notifications': ('AccountPages.kt', 'features/Account.tsx', '/settings'),
+ 'offers-visits': ('OfferPages.kt', 'features/ResourcePage.tsx', '/offers'),
+ 'global-states': ('FeaturePages.kt', 'components/ui.tsx', '/recovery'),
+ 'groups': ('SocialPages.kt', 'features/chat.tsx', '/groups'),
+ 'circle-friends': ('SocialPages.kt', 'components/ContentFields.tsx', '/friendships'),
+ 'nearby': ('AccountPages.kt', 'features/WorkflowEditor.tsx', '/nearby'),
+ 'expressions': ('ComposeControls.kt', 'features/chat.tsx', '/messages'),
+ 'safety-data': ('AccountPages.kt', 'features/Recovery.tsx', '/recovery'),
+ 'rules': ('ReadingPages.kt', 'features/ReadingPages.tsx', '/rules'),
+ 'operator-reference': (None, 'operator/OperatorApp.tsx', '/operator'),
 }
 
 
@@ -93,40 +93,48 @@ contract_gaps = {}
 
 external_prefix = ('authProvider_', 'authCallback', 'adultProvider', 'adultPassed', 'adultPending', 'guardianProtection', 'nearbyPermission', 'notificationPermission')
 representatives = {'home': ['56:27', '311:23', '311:25', '311:26'], 'composePost': ['56:33', '311:378832'], 'post': ['56:32'], 'adopt': ['56:35'], 'messages': ['56:61', '311:379700'], 'mine': ['56:73'], 'login': ['56:70'], 'appointment': ['56:63', '311:379780'], 'lostList': ['56:54'], 'groupChat': ['106:1439'], 'legalCenter': ['632:357494'], 'following': ['106:1387'], 'groupDiscover': ['106:1436'], 'petOther': ['142:2913'], 'careGuide': ['106:1425', '311:199', '311:201', '311:202'], 'rules': ['460:17463'], 'ruleDetail': ['460:17468'], 'ruleHistory': ['460:17473'], 'ruleChange': ['632:357528'], 'ruleAppeal': ['460:17483'], 'serviceTerms': ['460:17458'], 'teenPrivacy': ['460:17408'], 'sellerNotice': ['632:357529'], 'settings': ['56:75'], 'privacy': ['56:76'], 'profileActions': ['106:1406'], 'dataInventory': ['460:17428'], 'sdkList': ['460:17453'], 'providerData': ['632:357526'], 'retention': ['632:357509'], 'myPublishes':['56:53'], 'adoptionComments':['142:3011','145:8407','220:335999']}
+representatives.update({'accountChoice':['460:17333'],'accountConflict':['460:17338'],'authProviderCancelled':['238:371728'],'authProviderUnavailable':['238:371727'],'authCallbackExpired':['238:371729'],'authProvider_wechat':['238:371731'],'authLinkExisting':['238:371737'],'authLinkConfirm':['238:371738'],'ageRange':['460:17378'],'adultNotice':['506:6819'],'adultProvider':['506:6824'],'adultPending':['506:6829']})
+representatives.update({'guardianInvite':['460:17383'],'guardianReview':['460:17388'],'guardianWaiting':['460:17393'],'guardianActive':['460:17398'],'guardianRevoked':['460:17403'],'guardianProtection':['632:357527']})
 rows = []
 for key in sorted(roots):
     group = family(key)
     a, w, route = entries[group]
     if key in ('lostMap','lostAreaMap'):
-        a,w,route='AndroidMapContent.kt','features/MapPage.tsx','/map'
+        a,w,route='MapPage.kt','features/MapPage.tsx','/map'
     elif key in ('circlePhotoViewer','diaryPhotoViewer'):
-        a,w='AndroidMediaGallery.kt','components/MediaGallery.tsx'
+        a,w='MediaGallery.kt','components/MediaGallery.tsx'
     elif key == 'following':
-        a,w,route='AndroidContentSubscriptions.kt','features/ContentPage.tsx','/content'
+        a,w,route='ContentSubscriptions.kt','features/ContentPage.tsx','/content'
     elif key in ('groupDiscover','groupJoinPending','groupJoinReview'):
-        a,w,route='AndroidSocialFeatures.kt','features/ResourcePage.tsx','/group-directory'
+        a,w,route='SocialPages.kt','features/ResourcePage.tsx','/group-directory'
     if key == 'myPublishes':
-        a,w,route='AndroidPublicationsContent.kt','features/Publications.tsx','/publications'
+        a,w,route='PublicationsPage.kt','features/Publications.tsx','/publications'
     elif key in ('adoptionComments','adoptionReply','adoptionCommentSent'):
-        a,w,route='AndroidMobileApp.kt','features/ResourcePage.tsx','/pets/{id}?view=discussion'
+        a,w,route='ConsumerApp.kt','features/ResourcePage.tsx','/pets/{id}?view=discussion'
     elif key == 'careGuide':
-        a,w,route='AndroidReadingContent.kt','features/ReadingPages.tsx','/guide'
+        a,w,route='ReadingPages.kt','features/ReadingPages.tsx','/guide'
     elif key in ('privacy','dataInventory','sdkList','providerData','retention','settings'):
-        a,w='AndroidReadingContent.kt','features/ReadingPages.tsx'
+        a,w='ReadingPages.kt','features/ReadingPages.tsx'
         route={'privacy':'/privacy','dataInventory':'/reading?type=inventory','sdkList':'/reading?type=sdk','providerData':'/reading?type=providers','retention':'/reading?type=retention','settings':'/settings'}[key]
     elif key in ('ruleDetail','serviceTerms','teenPrivacy','sellerNotice'):
         route='/reading?type='+{'ruleDetail':'adoption','serviceTerms':'service','teenPrivacy':'teen','sellerNotice':'seller'}[key]
     elif key in ('ruleHistory','ruleChange','ruleAppeal'):
         route='/rules?view='+{'ruleHistory':'history','ruleChange':'changes','ruleAppeal':'appeal'}[key]
     elif key in ('authorProfile','profileActions','authorFollowing'):
-        a,w,route='AndroidSocialFeatures.kt','features/ResourcePage.tsx','/users/{id}'
+        a,w,route='SocialPages.kt','features/ResourcePage.tsx','/users/{id}'
     elif group == 'settings-notifications':
         route='/notification-settings'
+    if group == 'auth' and (key.startswith(('authProvider','authCallback','authLink','accountChoice','linkExisting','linkConfirm'))):
+        a,w='ProviderAuthPages.kt','features/ProviderSignIn.tsx'
+    if key.startswith('adult') or key == 'ageRange':
+        a,w,route='AgePages.kt','features/AgePages.tsx','/age' if key == 'ageRange' else '/age-check'
+    if key.startswith('guardian'):
+        a,w,route='GuardianPages.kt','features/GuardianPages.tsx','/guardian-protection' if key == 'guardianProtection' else '/guardians'
     status = 'source_family_mapped_not_visually_verified'
     note = '使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。'
     if group == 'operator-reference':
-        status = 'outside_consumer_scope'
-        note = '授权运营示意不进入普通Android／Web消费者权限；本轮不实现运营后台。'
+        status = 'dedicated_operator_source_not_runtime_verified'
+        note = '三页在独立Web运营入口实现，手机／平板／桌面经响应式Web使用；消费者导航不暴露，具名凭据与服务端角色逐次校验。'
     if key in contract_gaps:
         status, note = 'contract_gap', contract_gaps[key]
     elif key.startswith(external_prefix):
@@ -135,9 +143,11 @@ for key in sorted(roots):
     rows.append({'key':key,'name':names.get(key,key),'family':group,'design_roots':roots[key],
                  'root_sources':provenance[key],'android_source':android+a if a else None,
                  'web_source':'web-client/src/'+w if w else None,'web_module_route':route,
+                 'ios_source':android+a if a else None,'desktop_source':android+a if a else None,
+                 'source_note':'Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。',
                  'implementation_status':status,'note':note,'remote_screenshots_inspected':representatives.get(key,[]),'runtime_verified':False})
 
-result = {'date':'2026-10-24','file_key':base['fileKey'],'task':'AI-20261023-FIGMA-ANDROID-WEB',
+result = {'date':'2026-10-24','file_key':base['fileKey'],'task':'AI-20261024-ALL-FIGMA',
  'meaning':'此表是全量设计索引与源码归属追踪，不是全部页面完成、视觉对齐或运行通过的证明。',
  'precedence':['baseline','mobile completion','design closure','logic fix effective roots','legal design'],
  'counts':{'states':len(rows),'contract_gaps':sum(r['implementation_status']=='contract_gap' for r in rows),'runtime_verified':0},'states':rows}
@@ -147,6 +157,6 @@ source=json.dumps(result,ensure_ascii=False,indent=2)+'\n'
 if args.write: path.write_text(source)
 else: assert path.read_text()==source, '设计追踪已过期，请先检查差异再用--write同步'
 for row in rows:
-    for key in ['android_source','web_source']:
+    for key in ['android_source','web_source','ios_source','desktop_source']:
         if row[key]: assert (root/row[key]).is_file(), row[key]
 print(result['counts'])

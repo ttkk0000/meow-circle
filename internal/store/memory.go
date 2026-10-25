@@ -8,6 +8,7 @@ import (
 
 	"kitty-circle/internal/domain"
 	"kitty-circle/internal/mobile"
+	"kitty-circle/internal/operations"
 	"kitty-circle/internal/platform/phoneotp"
 )
 
@@ -15,6 +16,7 @@ import (
 var _ Store = (*MemoryStore)(nil)
 
 type MemoryStore struct {
+	operations    operations.Repository
 	mobileRecords map[mobile.Kind]map[int64]mobile.Record
 	mobileSeq     int64
 	mu            sync.RWMutex
@@ -932,7 +934,6 @@ func (s *MemoryStore) CountFollowing(userID int64) int64 {
 	}
 	return 0
 }
-
 
 func (s *MemoryStore) TogglePostLike(userID, postID int64) (liked bool, count int64, ok bool) {
 	s.mu.Lock()

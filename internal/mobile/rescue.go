@@ -26,6 +26,12 @@ func (s *Service) SaveCase(ctx context.Context, actor, id int64, in CaseInput) (
 	c := in.Case
 	c.City = strings.TrimSpace(c.City)
 	c.Area = strings.TrimSpace(c.Area)
+	if !HasString([]string{"", "gcj02", "wgs84"}, c.CoordinateSystem) {
+		return out, Invalid("invalid coordinate system")
+	}
+	if c.LocationPrecision == "area" {
+		c.CoordinateSystem = ""
+	}
 	if c.Type != "lost" && c.Type != "found" {
 		return out, Invalid("type must be lost or found")
 	}
@@ -387,6 +393,9 @@ type SubscriptionInput struct {
 
 func (s *Service) Subscribe(ctx context.Context, actor int64, in SubscriptionInput) (out Record, err error) {
 	v := in.Subscription
+	if !HasString([]string{"", "gcj02", "wgs84"}, v.CoordinateSystem) {
+		return out, Invalid("invalid coordinate system")
+	}
 	if !HasString([]string{"", "cat", "dog"}, v.Species) {
 		return out, Invalid("invalid nearby species")
 	}
@@ -402,6 +411,7 @@ func (s *Service) Subscribe(ctx context.Context, actor int64, in SubscriptionInp
 	}
 	if v.LocationPrecision == "city" {
 		v.RadiusKM = 0
+		v.CoordinateSystem = ""
 	}
 	err = s.mutate(ctx, actor, "subscription.save", 0, in, Subscriptions, &out, func(tx Tx) error {
 		if e := s.active(tx, actor); e != nil {

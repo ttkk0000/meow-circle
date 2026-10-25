@@ -1,6 +1,18 @@
 # M&D 客户端代码实施与完成标准
 
-2026-10-24最新：Android手机／平板的Figma对齐、公共页面（含独立公开阅读与法规制度库 `AndroidReadingContent.kt` / `AndroidPublicationsContent.kt`）、宠物评论与反应、群目录及新Web消费端（`web-client/`，含 `ReadingPages.tsx` / `Publications.tsx`）见[本批说明](FIGMA_ANDROID_WEB_2026_10_24.md)、[740状态追踪](figma-implementation-trace-2026-10-24.json)及[Web接入](../../web-client/README.md)。服务端与产品同步状态见[PRD v2.1](../bmad/prd.md)、[UX v2.1](../bmad/ux-design.md)、[Figma产品对齐核查](../design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md)与[服务端完整性审计（2026-10-24）](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（OpenAPI 扩至 `230` Paths / `259` Operations / `112` Schemas / `44` 张 `mobile_*` 表）。保留2026-10-23的日期／人员选择、分页、方向状态、深链、领养闭环与服务端作业。本批新增源码／静态结果另记，不把映射、历史证据或页面入口当作全量视觉／运行通过；iOS／Desktop未同步迁移。
+最新源码续作与待配置／待运行边界：[2026-10-25剩余编码交付](REMAINING_CODE_IMPLEMENTATION_2026_10_25.md)。iOS当前为Swift宿主＋Compose页面，不是SwiftUI页面。
+
+2026-10-25：[当前部署与App打包运行入口](DELIVERY_GUIDE_2026_10_25.md)已补源码及静态核对，未执行部署／构建／运行。
+
+2026-10-25 全栈代码逻辑总览与 PlantUML 架构图谱收口：新增[全栈代码逻辑与 PlantUML 架构总览手册](../CODE_LOGIC_AND_UML_REFERENCE.md)及[独立 PlantUML (`.puml`) 图谱目录（12 张图）](../uml/README.md)，完整梳理 `kmp/shared` 泛型 `MviStore` 体系（`MobileStore`、`MobileFeatureStore`、`SensitiveActionStore`、`ProviderAuthStore`、`AgeAssuranceStore`、`GuardianInviteStore`）、`kmp/clientUi`（`34` 个三端共享 Compose UI 文件、`42` 个 `FeaturePage` 二级业务页、`ClientUiPlatform` 端口）、Android/iOS/Desktop 宿主、Web 消费端与 `/app/operator` 独立运营台，以及 Go 服务端（`241` Paths / `271` Operations / `123` Schemas / `74` 对跨语言 DTO / `44` 张 `mobile_*` 表）的端到端代码逻辑与状态机。
+
+2026-10-24全端公共页面进展见[专项记录](ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)。新增独立 `kmp/clientUi` 公共页面库，Android／iOS／Desktop接同一套42功能入口及组件，Web独立DOM、运营三稿有独立权限入口。旧“苹果后置”不再作为本轮范围；源码／静态不代表740状态及平台全部验收。
+
+2026-10-24地图专项：[高德原生／Web源码接入](AMAP_IMPLEMENTATION_2026_10_24.md)覆盖Android手机／平板、iPhone／iPad原生SDK和Web地图；Desktop通过浏览器复用Web入口。只对本次地图范围替代苹果后置。公开粗点与坐标系合同已同步，真实Key／许可、SDK解析、编译和运行验收尚未完成，用户仍要求不推送。
+
+2026-10-25当前专用流程：[监护邀请与保护](GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)、[年龄核验](AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)、[官方授权](PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)。源码／静态边界分别记录，均未运行验收。
+
+2026-10-24历史批次：Android手机／平板的Figma对齐、公共页面（含独立公开阅读与法规制度库 `AndroidReadingContent.kt` / `AndroidPublicationsContent.kt`）、宠物评论与反应、群目录及新Web消费端（`web-client/`，含 `ReadingPages.tsx` / `Publications.tsx`）见[本批说明](FIGMA_ANDROID_WEB_2026_10_24.md)、[740状态追踪](figma-implementation-trace-2026-10-24.json)及[Web接入](../../web-client/README.md)。服务端与产品同步状态见[PRD v2.1](../bmad/prd.md)、[UX v2.1](../bmad/ux-design.md)、[Figma产品对齐核查](../design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md)与[服务端完整性审计（2026-10-24）](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（OpenAPI 扩至 `230` Paths / `259` Operations / `112` Schemas / `44` 张 `mobile_*` 表）。保留2026-10-23的日期／人员选择、分页、方向状态、深链、领养闭环与服务端作业。本批新增源码／静态结果另记，不把映射、历史证据或页面入口当作全量视觉／运行通过；此历史批次的iOS／Desktop未迁移结论已由上方公共UI续作替代，运行仍未验收。
 
 2026-10-23最新：已接入[Android UI框架／10个基础组件与维护规范](UI_COMPONENTS.md)，主题与尺寸集中；[平板状态续作](PAD_STATE_AND_UI_2026_10_23.md)补主从列表／双列表单的可移动内容、日期与人员筛选、流程内输入状态和同意绑定。58份客户端源码与30扩展分派等静态通过，横竖屏／焦点／IME／设备仍未运行验收。只改Android入口，未迁移苹果或旧Web／Desktop。
 
@@ -30,6 +42,7 @@
 
 | 文档 | 解决的问题 |
 |---|---|
+| [全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md) · [PlantUML 图谱索引](../uml/README.md) | 全栈架构、KMP MVI + `clientUi` 类图、Go 服务端领域类图、数据库 ER 图与 8 条核心业务时序/状态机 |
 | [实施方案](IMPLEMENTATION_PLAN.md) | 架构、当前代码差距、目录、共享逻辑、平台能力、迁移与推进顺序 |
 | [功能交付矩阵](FEATURE_DELIVERY_MATRIX.md) | 每个功能有哪些页面、接口、状态、平台差异与完成条件 |
 | [视觉、平板与验收](DESIGN_AND_ACCEPTANCE.md) | 默认主题、Android 平板、iPad、Web 和桌面布局及验证矩阵 |

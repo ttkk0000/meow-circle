@@ -2,7 +2,8 @@ package mobile
 
 import (
 	"context"
-	"fmt"
+	"errors"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -76,54 +77,51 @@ func (s *Service) UploadFilesInUse(ctx context.Context, names []string) (used ma
 	if len(names) > 100 {
 		return nil, Invalid("cleanup batch exceeds 100 files")
 	}
-	wanted := map[string]bool{}
+	wanted := map[int64][]string{}
 	for _, name := range names {
-		wanted[name] = true
+		parts := strings.SplitN(name, "-", 4)
+		if len(parts) != 4 || parts[0] != "mnd" {
+			return nil, Invalid("invalid cleanup target")
+		}
+		id, e := strconv.ParseInt(parts[1], 10, 64)
+		if e != nil || id <= 0 {
+			return nil, Invalid("invalid cleanup target")
+		}
+		wanted[id] = append(wanted[id], name)
 	}
 	used = map[string]string{}
 	err = s.Repo.View(ctx, func(tx Tx) error {
-		var after int64
-		for {
-			rows, e := tx.List(Media, Filter{After: after, Limit: 100})
+		// 文件名已包含不可变的媒体ID；只读本批目标，不扫描整张媒体表。
+		for id, matches := range wanted {
+			r, e := tx.Get(Media, id)
+			if errors.Is(e, ErrNotFound) {
+				continue
+			}
 			if e != nil {
 				return e
 			}
-			for _, r := range rows {
-				after = r.ID
-				if r.State == "erased" {
-					continue
-				}
-				file, e := Decode[MediaFile](r)
-				if e != nil {
-					return e
-				}
-				matches := []string{}
-				for name := range wanted {
-					if name == file.Filename || strings.HasPrefix(name, fmt.Sprintf("mnd-%d-", r.ID)) {
-						matches = append(matches, name)
-					}
-				}
-				if len(matches) == 0 {
-					continue
-				}
-				held, e := uploadHold(tx, r, s.Now())
-				if e != nil {
-					return e
-				}
-				active := r.State != "upload_expired" && r.State != "uploading" ||
-					r.State == "uploading" && file.UploadLeaseUntil != nil && file.UploadLeaseUntil.After(s.Now())
-				for _, name := range matches {
-					if held {
-						used[name] = "held"
-					} else if active && name == file.Filename {
-						used[name] = r.State
-					}
-				}
+			if r.State == "erased" {
+				continue
 			}
-			if len(rows) < 100 {
-				return nil
+			file, e := Decode[MediaFile](r)
+			if e != nil {
+				return e
+			}
+			held, e := uploadHold(tx, r, s.Now())
+			if e != nil {
+				return e
+			}
+			active := r.State != "upload_expired" && r.State != "uploading" ||
+				r.State == "uploading" && file.UploadLeaseUntil != nil && file.UploadLeaseUntil.After(s.Now())
+			for _, name := range matches {
+				if held {
+					used[name] = "held"
+				} else if active && name == file.Filename {
+					used[name] = r.State
+				}
 			}
 		}
+		return nil
 	})
 	return
 }

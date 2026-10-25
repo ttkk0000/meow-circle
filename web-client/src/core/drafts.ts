@@ -15,7 +15,17 @@ export interface Draft {
   route: string;
   revision: number;
   values: Record<string, unknown>;
-  ui?: { origin?: string; keepLocation?: boolean };
+  ui?: {
+    origin?: string;
+    keepLocation?: boolean;
+    mapLocation?: {
+      latitude: number;
+      longitude: number;
+      coordinateSystem: "gcj02";
+      city: string;
+      area: string;
+    };
+  };
   baseVersion: bigint;
   photos: PhotoDraft[];
   requestId: string;

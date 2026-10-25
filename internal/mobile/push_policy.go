@@ -1,6 +1,21 @@
 package mobile
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+)
+
+func (s *Service) DisableCurrentPush(ctx context.Context, actor int64) error {
+	if SessionKey(ctx) == "" {
+		return ErrForbidden
+	}
+	return s.actorUpdate(ctx, actor, func(tx Tx) error {
+		if err := s.active(tx, actor); err != nil {
+			return err
+		}
+		return DisablePushDevices(tx, actor, SessionKey(ctx), false)
+	})
+}
 
 type pushBinding struct {
 	PushDeviceInput
@@ -10,7 +25,11 @@ type pushBinding struct {
 // Called in the same transaction as session revocation or account closure.
 // Legacy unbound registrations are disabled rather than guessed to be another device.
 func DisablePushDevices(tx Tx, actor int64, session string, all bool) error {
-	rows, e := allRecords(tx, PushDevices, Filter{OwnerID: actor})
+	filter := Filter{OwnerID: actor}
+	if !all {
+		filter.State = "enabled"
+	}
+	rows, e := allRecords(tx, PushDevices, filter)
 	if e != nil {
 		return e
 	}

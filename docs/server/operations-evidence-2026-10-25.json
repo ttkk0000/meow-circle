@@ -1,0 +1,264 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261025-OPS-IMPLEMENT",
+  "branch": "main",
+  "head": "77c479a",
+  "uncommitted": true,
+  "figma": {
+    "file_key": "3OFOC3vu18Kx9sRPjummOC",
+    "page_id": "793:21",
+    "screen_ids": [
+      "793:22",
+      "793:23",
+      "793:24",
+      "793:25",
+      "793:26",
+      "793:27",
+      "793:28",
+      "793:29",
+      "793:30",
+      "793:31",
+      "793:32",
+      "793:33",
+      "793:34",
+      "793:35"
+    ],
+    "design_contexts_read": 14,
+    "static_svg_assets": 10
+  },
+  "entry": "/app/ops",
+  "demo_entry": "/app/ops?mode=demo",
+  "scope": {
+    "web_views": 14,
+    "api_paths": 13,
+    "api_operations": 15,
+    "schemas": 25,
+    "migration": "010_operations_console.sql"
+  },
+  "verification": {
+    "static_scripts": [
+      "check_operations_static.py",
+      "check_web_client_static.py",
+      "check_delivery_static.py",
+      "check_server_shared_contract_static.py",
+      "check_guardian_invites_static.py"
+    ],
+    "typescript_syntax_files": 14,
+    "go_syntax_format_files": 17,
+    "local_document_links": 28,
+    "git_diff_check": "passed",
+    "compiled": false,
+    "typechecked": false,
+    "tests_executed": false,
+    "browser_started": false,
+    "migration_applied": false,
+    "deployed": false,
+    "committed": false,
+    "pushed": false
+  },
+  "limits": [
+    "运行与视觉验收未执行",
+    "需要真实环境与具名权限配置及010迁移",
+    "部署、重启、任务重试执行器与外部证据验证尚未接入，保持禁用",
+    "任务采样不等于进程心跳或完整历史"
+  ],
+  "files": [
+    {
+      "path": "deploy/runtime.example.env",
+      "sha256": "47c9414a2b7dcbd3140a4b7893ea5da33386af95b904f7a6d5904e5c5a78b171"
+    },
+    {
+      "path": "docs/api/operations-v1.openapi.json",
+      "sha256": "20fed123ecde2d4c8d4ad381526f86910628118cea58861c16180955aa82fd4e"
+    },
+    {
+      "path": "docs/server/OPERATIONS_CONSOLE_2026_10_25.md",
+      "sha256": "17d451b67d1d9315afb891f8e9299af440726ca31768f4ec7d3d7232a4877508"
+    },
+    {
+      "path": "docs/server/environment.example",
+      "sha256": "7a8c35574aecf9c46a6604d6b9977c1ac6dda4ee0cddcbe1bb2ac9f2a391d110"
+    },
+    {
+      "path": "internal/operations/memory.go",
+      "sha256": "591c05339cfd639c11816e4fa294a7ffd8820fba991859816eda7f15c5c24557"
+    },
+    {
+      "path": "internal/operations/migrations.go",
+      "sha256": "316d2fe9a52f776fa813960fefa12153a6b0696f03f3b50de7f1dc9aeb950b72"
+    },
+    {
+      "path": "internal/operations/postgres.go",
+      "sha256": "fb86944bbb3edcf1ef835579983f682d929990b3ab67fb3b09196a740d9c6448"
+    },
+    {
+      "path": "internal/operations/repository.go",
+      "sha256": "9555503467d20cef92cfd48c0b8fce919ebcd4ffe23d44fbefa09c34367b482d"
+    },
+    {
+      "path": "internal/operations/service.go",
+      "sha256": "1c5724cae918987d53cf494d515aec51bb5fefe21efa051c64e5151aed0d8583"
+    },
+    {
+      "path": "internal/operations/service_test.go",
+      "sha256": "86b276393e7970b7bcceef5c5b98a0dfed8c359a9acd1b06637947c6b0e8d6c4"
+    },
+    {
+      "path": "internal/platform/api/operations.go",
+      "sha256": "fc4a9591edb753452276bbd1b582887c4c0e12d036fbc1ef6e471f56b447f8e0"
+    },
+    {
+      "path": "internal/platform/api/router.go",
+      "sha256": "ba5a5ed769983ecc0252faa12de89dead54849388df0aeea75cb3ac0689e4385"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256": "cac14ace6b2986cd21e367689d59a374c5983a2bdd84e8eaaca5a80848c8fcff"
+    },
+    {
+      "path": "internal/platform/mobileapi/job_observer.go",
+      "sha256": "71bd1398595140158f1a52570d91338f97723aa42b28f00e85ab6ed1df339f2b"
+    },
+    {
+      "path": "internal/platform/mobileapi/ops_auth.go",
+      "sha256": "0baa6b351889616eb025022e0a02206bc43683fb918fd4a7f1b0c3b52396bdba"
+    },
+    {
+      "path": "internal/platform/opsapi/handler.go",
+      "sha256": "3d7037864151e69a928721c3a4e7b12412ba6778e5c1caf8364458f5b61822d2"
+    },
+    {
+      "path": "internal/platform/opsapi/handler_test.go",
+      "sha256": "4185aab972a6702e284432c259c704a4a5b0b4ba462c52a1eaa09c3b8f9084b4"
+    },
+    {
+      "path": "internal/store/cache/operations.go",
+      "sha256": "e1a47b7d1983ddf16b8ed8a4d21a4f893816ffece3ceb623808d744a979c2114"
+    },
+    {
+      "path": "internal/store/memory.go",
+      "sha256": "1b872f3c2c9c9ddd64225693c0bda6cd34996c78c1c85571cd8b49f6d5f9efb2"
+    },
+    {
+      "path": "internal/store/operations.go",
+      "sha256": "eed396a2c7e7bb8d2e05d0fca08415ecc916118f1a176858c22d865322f1c415"
+    },
+    {
+      "path": "internal/store/postgres/operations.go",
+      "sha256": "0fcc10b9eac3e98814251f6f541a56616fa43940b41bbc16b9e06254b1b5ce08"
+    },
+    {
+      "path": "migrations/010_operations_console.sql",
+      "sha256": "6299b41cf7ea174fab1ff39091049d9e515a1d303c55f3ce7eb1ac9cc4751528"
+    },
+    {
+      "path": "scripts/check_operations_static.py",
+      "sha256": "762e132b4a9a5765c83dcd05b419a6a885122d68d0ad17e62962f933f99a0d88"
+    },
+    {
+      "path": "web-client/public/assets/ops/arrow-right.svg",
+      "sha256": "b99f648cc0f324a165fae592db2eec1bb892d5103487795c09bb4536859e86c0"
+    },
+    {
+      "path": "web-client/public/assets/ops/bell.svg",
+      "sha256": "b016d0fbe2d9a8ca4de460c242f2bdbe6d6c5dc9c7b23d5bbba56f5191fcc68c"
+    },
+    {
+      "path": "web-client/public/assets/ops/bookmark.svg",
+      "sha256": "54a5da60b9a1756816ccfc9b3db3f8b4854626726487dd3d50f75cb1b461a772"
+    },
+    {
+      "path": "web-client/public/assets/ops/check.svg",
+      "sha256": "b31cb013fde20eeeca789ea5cb37897f330924f0443a08b86a2bd8e7d25eaf07"
+    },
+    {
+      "path": "web-client/public/assets/ops/circle-alert.svg",
+      "sha256": "2ec0b40d83f4878478a171f7cc1c305a03a02aa2ce905ed8e973be65b256bc69"
+    },
+    {
+      "path": "web-client/public/assets/ops/clock.svg",
+      "sha256": "5b7ccc12d214a7ce6119f1fc5e1afa757bf7eaeced56d974ea5d120744936ec4"
+    },
+    {
+      "path": "web-client/public/assets/ops/house.svg",
+      "sha256": "9607a8ec39bdbaadbd2d4be586bef489aca63419920f37902739aab827948ae0"
+    },
+    {
+      "path": "web-client/public/assets/ops/manifest.json",
+      "sha256": "8b2d39cf823ae2c32f1a12cfcc1d74c12a92b236a272cdc6d9c80b907782e186"
+    },
+    {
+      "path": "web-client/public/assets/ops/search.svg",
+      "sha256": "a0dda696d0595b3934262207d53322ece43c7e306e0bd57d3cf2f84318d94470"
+    },
+    {
+      "path": "web-client/public/assets/ops/shield-check.svg",
+      "sha256": "71a8226d7f75072a5c5eeff036680a7d974ad3aeb82da730e937f0a2700182b6"
+    },
+    {
+      "path": "web-client/public/assets/ops/sliders-horizontal.svg",
+      "sha256": "db7a73f4e34f0b47e0b11766a3d4b5f94cd19c9342d471def150779ca332657c"
+    },
+    {
+      "path": "web-client/src/components/ui.tsx",
+      "sha256": "4f998b3907790841854c644e7ddfba8614b8dcd373fcb88171de1595c1246313"
+    },
+    {
+      "path": "web-client/src/main.tsx",
+      "sha256": "ab9614d81818e7b7af1e5247fdda3569add69863f580ef24d9d137881a14897d"
+    },
+    {
+      "path": "web-client/src/operations/ActionForms.tsx",
+      "sha256": "873ef5f8da20d1ddd97f17ca47754b1e2c8ee704c4951a6811a94cd3052f6871"
+    },
+    {
+      "path": "web-client/src/operations/DetailPages.tsx",
+      "sha256": "b1a5177df831a2c0de0724796fcaa1574950a21dfccb017764f2d1409510be6b"
+    },
+    {
+      "path": "web-client/src/operations/OpsApp.tsx",
+      "sha256": "b5baa69fd340f55b802bf5c8b1fb8ad946d246627b9d6748baa1404dc90e085e"
+    },
+    {
+      "path": "web-client/src/operations/OverviewPages.tsx",
+      "sha256": "f878e6abd3698d016074fcf328c3b7a4b3766f326fc247dff517ca7008aad0d0"
+    },
+    {
+      "path": "web-client/src/operations/RecordPages.tsx",
+      "sha256": "35ea1163243a8518a329fea3cb99402c6665317401e72f957266317acc5dbf38"
+    },
+    {
+      "path": "web-client/src/operations/client.ts",
+      "sha256": "20b5d3415be66ff519cc26ce8cbf763e85ef953966eedf48c8a87aa60dfabc8c"
+    },
+    {
+      "path": "web-client/src/operations/context.tsx",
+      "sha256": "74583b9eae42fd0265ef44391be7b7c2f8953d762a23d0711b0628c93981bad7"
+    },
+    {
+      "path": "web-client/src/operations/demo.ts",
+      "sha256": "b52b2efa6ff0a967c6f10721a095f1374fd287579806582e6f309c44e4841277"
+    },
+    {
+      "path": "web-client/src/operations/models.ts",
+      "sha256": "42c3c54674a7c2ec4172dad0e1bd42e85eb4dc12bdfd2c44b359e68688f5b0f9"
+    },
+    {
+      "path": "web-client/src/operations/operations.css",
+      "sha256": "bcf881b55af71e7350fc803879986bc2d8baa8e3fd49f32c635d849256e8b3a1"
+    },
+    {
+      "path": "web-client/src/operations/ui.tsx",
+      "sha256": "a61ae70aa1dea1e8107c760282be606445857830f32b74a39a24b6c94f81d531"
+    },
+    {
+      "path": "web-client/src/operations/useOperations.ts",
+      "sha256": "5a0f0ec630e13f3a22dbe1dbbcffecfb15d2d1f0ffbdeaf6f75caab44c3b0b17"
+    },
+    {
+      "path": "web-client/src/operator/OperatorApp.tsx",
+      "sha256": "c8f5cc047c7b64b385e261495f78a7cd532d7270a39cb1b8a70c9cb13c8cce12"
+    }
+  ]
+}

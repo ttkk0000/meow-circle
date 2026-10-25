@@ -48,7 +48,8 @@ func adoptionPet(tx Tx, a Adoption) (Record, Pet, error) {
 }
 
 func otherPlacement(tx Tx, petID, applicationID int64) (bool, error) {
-	rows, e := allRecords(tx, Adoptions, Filter{RefID: petID})
+	// 至多一条是当前申请；两条足以判断是否存在其它占用，无需读取历史申请。
+	rows, e := tx.List(Adoptions, Filter{RefID: petID, States: []string{"trial_active", "handover_pending", "return_requested", "return_agreed"}, Limit: 2})
 	if e != nil {
 		return false, e
 	}
@@ -80,7 +81,7 @@ func (s *Service) reserveAdoption(tx Tx, actor int64, r Record, a Adoption, stat
 	if occupied {
 		return Denied("pet_placement_conflict")
 	}
-	rows, e := allRecords(tx, Adoptions, Filter{RefID: pet.ID})
+	rows, e := allRecords(tx, Adoptions, Filter{RefID: pet.ID, States: []string{"approved", "trial_proposed"}})
 	if e != nil {
 		return e
 	}
@@ -107,7 +108,7 @@ func (s *Service) reserveAdoption(tx Tx, actor int64, r Record, a Adoption, stat
 }
 
 func (s *Service) closeOtherAdoptions(tx Tx, actor int64, current Record, notice string) error {
-	rows, e := allRecords(tx, Adoptions, Filter{RefID: current.RefID})
+	rows, e := allRecords(tx, Adoptions, Filter{RefID: current.RefID, ExcludeStates: []string{"rejected", "withdrawn", "completed", "returned", "closed_other_placement", "deleted"}})
 	if e != nil {
 		return e
 	}

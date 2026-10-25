@@ -1,0 +1,12 @@
+source 'https://cdn.cocoapods.org/'
+platform :ios, '17.0'
+project 'MndIOS.xcodeproj'
+
+target 'MndIOS' do
+  use_frameworks! :linkage => :static
+  # 固定为本轮在CocoaPods官方分发元数据中核实存在的版本。
+  pod 'AMap3DMap', '11.2.100'
+  pod 'AMapFoundation', '1.9.1'
+  pod 'WechatOpenSDK-XCFramework', '2.0.9'
+  pod 'TencentOpenAPI', :podspec => './TencentOpenAPI.podspec'
+end

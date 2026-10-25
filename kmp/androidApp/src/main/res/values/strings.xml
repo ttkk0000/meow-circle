@@ -5,7 +5,6 @@
     <string name="mnd_terms_url" translatable="false"></string>
     <string name="mnd_privacy_url" translatable="false"></string>
     <!-- 经实际配置的HTTPS地图嵌入模板，仅传{lat}/{lon}/{zoom}大致中心，不传账号或凭据。 -->
-    <string name="mnd_map_embed_template" translatable="false"></string>
 
     <string name="nav_feed">动态</string>
     <string name="nav_market">市集</string>

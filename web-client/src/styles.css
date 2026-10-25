@@ -26,6 +26,7 @@
   --border: #e1e4e8;
   --control: #838a94;
   --danger: #a3332c;
+  --warning-soft: #fff5de;
   --radius: 16px;
   --space: 16px;
   line-height: 1.625;
@@ -82,6 +83,8 @@ h1 {
   font-size: 20px;
   line-height: 30px;
 }
+.page-headline { font-size: 28px; line-height: 40px; font-weight: 700; }
+.notice.warning { background: var(--warning-soft); }
 h2 {
   font-size: 16px;
   line-height: 24px;
@@ -1220,3 +1223,30 @@ dialog > header {
   border-radius: var(--radius);
   z-index: 5;
 }
+
+/* 高德底图保留原生Logo／版权；外层继续使用既有页面Token。 */
+.amap-panel { min-width: 0; width: 100%; }
+.amap-canvas { width: 100%; height: 360px; min-width: 0; border-radius: 16px; overflow: hidden; }
+@media (max-width: 600px) { .amap-canvas { height: 300px; } }
+
+/* 登录入口与任务表单复用页面骨架，窄窗自然换行。 */
+.auth-mode-heading, .auth-method-links { display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+.auth-mode-heading h2 { margin:0; }
+.provider-methods { border-top:1px solid var(--border); padding-top:16px; display:grid; gap:12px; }
+.provider-methods > div { display:flex; gap:12px; }
+.provider-methods .button { flex:1; display:flex; align-items:center; justify-content:center; gap:8px; }
+.provider-methods .icon { flex:none; }
+.workflow-sections { display:grid; gap:16px; min-width:0; }
+.workflow-sections > .stack:empty { display:none; }
+.workflow-sections .card { display:grid; gap:16px; }
+
+.operator-shell { height:100dvh; max-width:1100px; margin-inline:auto; display:flex; flex-direction:column; }
+.operator-shell > .task-page { min-height:0; flex:1; }
+.operator-shell .task-content { width:100%; }
+
+.emoji-image { width:32px; height:32px; object-fit:contain; flex:none; }
+.sent-expression { width:144px; height:144px; display:grid; place-items:center; flex:none; }
+.emoji-image.sent { width:72px; height:72px; }
+.provider-callback { max-width:520px; margin:48px auto; padding:24px; }
+
+.break-anywhere { overflow-wrap: anywhere; }

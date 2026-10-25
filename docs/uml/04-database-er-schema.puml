@@ -1,0 +1,217 @@
+@startuml 04-database-er-schema
+!theme plain
+skinparam backgroundColor #FFFDF9
+skinparam defaultFontName "PingFang SC, Inter, sans-serif"
+skinparam roundcorner 6
+skinparam ClassBorderColor #D8CFC4
+skinparam ClassBackgroundColor #FFFFFF
+skinparam PackageBorderColor #E6DFD5
+skinparam ArrowColor #5C534E
+hide circle
+skinparam linetype ortho
+
+title M&D V2 PostgreSQL Schema ER Diagram (Migrations 001..009: Identity, Ledger, Holds & 44 mobile_* Tables)
+
+package "002 & 007 & 008: Identity, Sessions, Qualification & Guardian Consents" {
+  entity "users" as users {
+    * id : TEXT <<PK>>
+    --
+    * username : TEXT <<UNIQUE>>
+    * display_name : TEXT
+    * account_status : TEXT
+    * created_at : TIMESTAMPTZ
+  }
+
+  entity "account_identities" as account_identities {
+    * id : TEXT <<PK>>
+    --
+    * user_id : TEXT <<FK>>
+    * provider : TEXT (phone/password/wechat/qq/apple)
+    * subject_hash : TEXT
+    * verified_at : TIMESTAMPTZ
+    --
+    UNIQUE(provider, subject_hash)
+  }
+
+  entity "user_sessions" as user_sessions {
+    * id : TEXT <<PK>>
+    --
+    * user_id : TEXT <<FK>>
+    * refresh_token_hash : TEXT <<UNIQUE>>
+    * device_name : TEXT
+    * platform : TEXT
+    * expires_at : TIMESTAMPTZ
+    * revoked_at : TIMESTAMPTZ
+  }
+
+  entity "auth_challenges" as auth_challenges {
+    * id : TEXT <<PK>>
+    --
+    * purpose : TEXT
+    * target_hash : TEXT
+    * code_hash : TEXT
+    * attempts : INT
+    * expires_at : TIMESTAMPTZ
+    * consumed_at : TIMESTAMPTZ
+  }
+
+  entity "purpose_reauth_grants" as purpose_reauth_grants {
+    * id : TEXT <<PK>>
+    --
+    * user_id : TEXT <<FK>>
+    * purpose : TEXT
+    * token_hash : TEXT <<UNIQUE>>
+    * expires_at : TIMESTAMPTZ (10 min TTL)
+    * consumed_at : TIMESTAMPTZ
+  }
+
+  entity "user_qualification_status" as user_qualification_status {
+    * user_id : TEXT <<PK, FK>>
+    --
+    * real_name_verified : BOOLEAN
+    * age_band : TEXT (unknown/minor_under_16/minor_16_17/adult_18_plus)
+    * age_assurance_state : TEXT
+    * guardian_consent_state : TEXT
+    * updated_at : TIMESTAMPTZ
+  }
+
+  entity "guardian_consents" as guardian_consents {
+    * id : TEXT <<PK>>
+    --
+    * minor_user_id : TEXT <<FK>>
+    * guardian_user_id : TEXT <<FK>>
+    * scopes_json : JSONB (communityPosting/directContact/careParticipation)
+    * status : TEXT (active/revoked/expired)
+    * granted_at : TIMESTAMPTZ
+    * revoked_at : TIMESTAMPTZ
+  }
+
+  entity "mobile_guardian_invites" as mobile_guardian_invites {
+    * id : TEXT <<PK>>
+    --
+    * owner_id : TEXT <<FK>> (minor_user_id)
+    * status : TEXT (pending/accepted/revoked/expired)
+    * payload : JSONB (code_hash, guardian_user_id, expires_at 15m)
+    * updated_at : TIMESTAMPTZ
+  }
+
+  entity "mobile_adult_relationship_claims" as mobile_adult_relationship_claims {
+    * id : TEXT <<PK>>
+    --
+    * owner_id : TEXT <<FK>>
+    * status : TEXT (pending_review/approved/rejected)
+    * payload : JSONB (evidence_media_ids, reviewer_id, decision_note)
+    * updated_at : TIMESTAMPTZ
+  }
+}
+
+package "004 & 005 & 006: Idempotency Ledger, Media Reservations, Evidence Holds & Outbox" {
+  entity "mobile_command_ledger" as mobile_command_ledger {
+    * user_id : TEXT <<PK>>
+    * request_id : TEXT <<PK>>
+    --
+    * command_type : TEXT
+    * payload_hash : TEXT
+    * status : TEXT (in_progress/completed/failed)
+    * response_status : INT
+    * response_json : JSONB
+    * created_at : TIMESTAMPTZ
+    * expires_at : TIMESTAMPTZ
+  }
+
+  entity "mobile_media_reservations" as mobile_media_reservations {
+    * id : TEXT <<PK>>
+    --
+    * owner_id : TEXT <<FK>>
+    * object_key : TEXT <<UNIQUE>>
+    * media_purpose : TEXT
+    * status : TEXT (reserved/attached/expired/pending_delete/deleted)
+    * expires_at : TIMESTAMPTZ
+  }
+
+  entity "mobile_evidence_holds" as mobile_evidence_holds {
+    * id : TEXT <<PK>>
+    --
+    * target_user_id : TEXT <<FK>>
+    * source_type : TEXT (report/dispute/safety_case/moderation)
+    * source_id : TEXT
+    * status : TEXT (active/released)
+    * created_by : TEXT
+    * released_by : TEXT
+    --
+    Blocks account closure & media deletion while active
+  }
+
+  entity "mobile_outbox_events" as mobile_outbox_events {
+    * id : TEXT <<PK>>
+    --
+    * topic : TEXT
+    * aggregate_id : TEXT
+    * payload : JSONB
+    * status : TEXT (pending/dispatched/failed)
+    * attempts : INT
+    * next_attempt_at : TIMESTAMPTZ
+  }
+}
+
+package "004..009: Core Domain Resource Tables (44 mobile_* Tables with Indexed Columns + JSONB Payload)" {
+  entity "Content, Pets & Discussions (004, 006, 009)" as tbl_content {
+    * mobile_entries (id, owner_id, visibility, status, payload)
+    * mobile_pets (id, owner_id, species, status, payload)
+    * mobile_pet_co_managers (id, pet_id, user_id, status, payload)
+    * mobile_pet_events (id, pet_id, owner_id, event_type, payload)
+    * mobile_pet_comments (id, pet_id, entry_id, owner_id, parent_id, status, payload)
+    * mobile_comment_reactions (id, comment_id, owner_id, reaction_code, payload)
+    * mobile_favorites (id, owner_id, target_type, target_id, payload)
+    * mobile_lists (id, owner_id, visibility, status, payload)
+    * mobile_content_subscriptions (id, owner_id, target_type, target_id, payload)
+    * mobile_publications (id, owner_id, slug, status, payload)
+    * mobile_publication_revisions (id, publication_id, owner_id, rev_no, status, payload)
+    * mobile_reading_items (id, owner_id, category, status, payload)
+    * mobile_reading_progress (id, owner_id, item_id, status, payload)
+    * mobile_reading_plans (id, owner_id, status, payload)
+    * mobile_reading_notes (id, owner_id, item_id, visibility, payload)
+  }
+
+  entity "Care Domain: Adoption, Appointments & Lost Pet (004, 006)" as tbl_care {
+    * mobile_adoption_listings (id, owner_id, pet_id, status, adoption_cycle, payload)
+    * mobile_adoption_applications (id, listing_id, pet_id, applicant_id, status, payload)
+    * mobile_adoption_contracts (id, application_id, rev_no, status, payload)
+    * mobile_appointments (id, requester_id, provider_id, context_type, status, payload)
+    * mobile_lost_reports (id, owner_id, pet_id, status, datum, coarse_lat, coarse_lng, payload)
+    * mobile_sighting_clues (id, report_id, reporter_id, status, payload)
+    * mobile_lost_claims (id, report_id, claimant_id, status, payload)
+  }
+
+  entity "Social, Inbox, Offers, Safety & Lifecycle (004, 005, 006)" as tbl_social_ops {
+    * mobile_follows (id, follower_id, followee_id, status, payload)
+    * mobile_blocks (id, blocker_id, blocked_id, status, payload)
+    * mobile_conversations (id, kind, status, last_message_at, payload)
+    * mobile_messages (id, conversation_id, sender_id, seq_no, status, payload)
+    * mobile_notifications (id, user_id, category, read_at, payload)
+    * mobile_inbox_snapshots (id, user_id, watermark_at, expires_at 10m, payload)
+    * mobile_seller_profiles (id, owner_id, status, payload)
+    * mobile_offers (id, seller_id, category, status, payload)
+    * mobile_offer_inquiries (id, offer_id, buyer_id, seller_id, status, payload)
+    * mobile_disputes (id, inquiry_id, initiator_id, status, payload)
+    * mobile_reports (id, reporter_id, target_type, target_id, status, payload)
+    * mobile_data_requests (id, owner_id, kind, status, payload)
+    * mobile_account_closures (id, owner_id, status, cool_off_until, payload)
+  }
+}
+
+users ||--o{ account_identities
+users ||--o{ user_sessions
+users ||--o{ purpose_reauth_grants
+users ||--|| user_qualification_status
+users ||--o{ guardian_consents : "minor / guardian"
+users ||--o{ mobile_guardian_invites : "minor owner"
+users ||--o{ mobile_adult_relationship_claims : "claimant"
+users ||--o{ mobile_command_ledger
+users ||--o{ mobile_media_reservations
+users ||--o{ mobile_evidence_holds
+users ||--o{ tbl_content
+users ||--o{ tbl_care
+users ||--o{ tbl_social_ops
+
+@enduml

@@ -21,6 +21,7 @@ import (
 	"kitty-circle/internal/platform/auth"
 	"kitty-circle/internal/platform/mobileapi"
 	"kitty-circle/internal/platform/mobileauth"
+	"kitty-circle/internal/platform/opsapi"
 	"kitty-circle/internal/platform/payment"
 	"kitty-circle/internal/platform/phoneotp"
 	"kitty-circle/internal/store"
@@ -44,6 +45,7 @@ const (
 const maxRequestBody = 1 << 20 // 1 MiB
 
 type Router struct {
+	operationsAPI     *opsapi.Handler
 	identity          *identity.Service
 	mobileAPI         *mobileapi.Handler
 	browserAPI        *mobileapi.BrowserHandler
@@ -89,6 +91,7 @@ func NewRouterWithError() (*Router, error) {
 		ensureDefaultUser(st)
 	}
 	identityService := mobileauth.FromEnvironment(st.MobileRepository(), secret)
+	identityService.Age = mobileauth.AgeGatewayFromEnvironment()
 	r := &Router{
 		identity:          identityService,
 		legacyDevelopment: development && os.Getenv("MND_ENABLE_LEGACY_AUTH") == "1",
@@ -104,9 +107,20 @@ func NewRouterWithError() (*Router, error) {
 		allowOrigin:       getEnv("CORS_ALLOW_ORIGIN", "*"),
 	}
 	r.mobileAPI = mobileapi.New(mobile.New(st.MobileRepository()), identityService, filepath.Join(getWorkingDir(), "data", "mobile-media"), adminKey)
+	if err := r.mobileAPI.ConfigureMediaStorage(); err != nil {
+		return nil, err
+	}
 	r.mobileAPI.Service.Propagator = os.Getenv("MND_CONTENT_PROPAGATOR")
 	if endpoint, token := os.Getenv("PUSH_GATEWAY_URL"), os.Getenv("PUSH_GATEWAY_TOKEN"); strings.HasPrefix(endpoint, "https://") && token != "" {
 		r.mobileAPI.Service.Push = mobileauth.GatewayPush{Endpoint: endpoint, Token: token}
+	}
+	r.mobileAPI.Service.SearchProjection, err = mobileauth.ProjectionFromEnvironment("MND_SEARCH_PROJECTION")
+	if err != nil {
+		return nil, err
+	}
+	r.mobileAPI.Service.AuditProjection, err = mobileauth.ProjectionFromEnvironment("MND_AUDIT_PROJECTION")
+	if err != nil {
+		return nil, err
 	}
 	r.mobileAPI.Operators, err = mobileapi.OperatorsFromEnvironment()
 	if err != nil {
@@ -114,6 +128,12 @@ func NewRouterWithError() (*Router, error) {
 	}
 	r.browserAPI, err = mobileapi.NewBrowser(r.mobileAPI, os.Getenv("MND_WEB_ORIGIN"), development)
 	if err != nil {
+		return nil, err
+	}
+	if strings.HasPrefix(r.browserAPI.Origin, "https://") {
+		r.identity.PublicAppOrigin = r.browserAPI.Origin
+	}
+	if err = r.configureOperations(); err != nil {
 		return nil, err
 	}
 	r.routes()
@@ -667,7 +687,9 @@ func (l *loggingResponseWriter) Write(b []byte) (int, error) {
 }
 
 func (r *Router) routes() {
+	r.mux.Handle("/maps/amap/_AMapService/", mobileapi.AmapProxy(os.Getenv("MND_AMAP_JS_KEY"), os.Getenv("MND_AMAP_JS_SECURITY_CODE"), strings.TrimRight(os.Getenv("MND_WEB_ORIGIN"), "/")))
 	r.mux.Handle("/api/v2/", r.mobileAPI)
+	r.mux.Handle("/api/ops/v1/", r.operationsAPI)
 	r.mux.Handle("/api/web/v2/", r.browserAPI)
 	r.mux.Handle("/app/", mobileapi.SPAHandler(getEnv("MND_WEB_DIST", filepath.Join(getWorkingDir(), "web-client", "dist"))))
 	r.mux.HandleFunc("/app", func(w http.ResponseWriter, req *http.Request) {

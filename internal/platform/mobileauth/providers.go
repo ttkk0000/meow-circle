@@ -53,6 +53,13 @@ func requestJSON(ctx context.Context, method, endpoint string, form url.Values, 
 type Tencent struct{ Provider, AppID, Secret string }
 
 func (t Tencent) Verify(ctx context.Context, c identity.Credential, nonce string) (identity.Subject, error) {
+	return t.verify(ctx, c, nonce, "")
+}
+
+func (t Tencent) verify(ctx context.Context, c identity.Credential, nonce, redirectURI string) (identity.Subject, error) {
+	if c.AppID != "" && c.AppID != t.AppID {
+		return identity.Subject{}, mobile.ErrUnauthorized
+	}
 	if t.AppID == "" || t.Secret == "" {
 		return identity.Subject{}, mobile.ErrUnavailable
 	}
@@ -84,7 +91,11 @@ func (t Tencent) Verify(ctx context.Context, c identity.Credential, nonce string
 			AccessToken string `json:"access_token"`
 			Error       int    `json:"error"`
 		}
-		e := requestJSON(ctx, http.MethodGet, "https://graph.qq.com/oauth2.0/token", url.Values{"client_id": {t.AppID}, "client_secret": {t.Secret}, "code": {c.Code}, "grant_type": {"authorization_code"}, "fmt": {"json"}}, &response)
+		form := url.Values{"client_id": {t.AppID}, "client_secret": {t.Secret}, "code": {c.Code}, "grant_type": {"authorization_code"}, "fmt": {"json"}}
+		if redirectURI != "" {
+			form.Set("redirect_uri", redirectURI)
+		}
+		e := requestJSON(ctx, http.MethodGet, "https://graph.qq.com/oauth2.0/token", form, &response)
 		if e != nil {
 			return identity.Subject{}, e
 		}
@@ -264,10 +275,8 @@ func (g GatewaySMS) Send(ctx context.Context, phone, code, purpose string) error
 func FromEnvironment(repo mobile.Repository, secret string) *identity.Service {
 	providers := map[string]identity.Provider{}
 	for _, name := range []string{"wechat", "qq"} {
-		prefix := strings.ToUpper(name)
-		id, key := os.Getenv(prefix+"_LOGIN_APP_ID"), os.Getenv(prefix+"_LOGIN_APP_SECRET")
-		if id != "" && key != "" {
-			providers[name] = Tencent{name, id, key}
+		if configured := tencentApplicationsFromEnvironment(name); configured != nil {
+			providers[name] = configured
 		}
 	}
 	if id, key := os.Getenv("APPLE_LOGIN_CLIENT_ID"), os.Getenv("APPLE_LOGIN_CLIENT_SECRET"); id != "" && key != "" {

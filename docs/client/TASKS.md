@@ -1,6 +1,6 @@
 # 客户端代码任务拆分
 
-> **2026-10-24 最新状态**：`W01`–`W04`（`web-client/`）、`A01`–`A04`（Android 手机/平板 740 状态对齐与独立公开阅读/法规目录）、`C01`–`C08`、`F00`–`F14` 共享模型及服务端 `B01`–`B12` 均已补齐源码并完成静态核查（见[2026-10-24客户端说明](FIGMA_ANDROID_WEB_2026_10_24.md)与[服务端完整性审计](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。所有任务仍保持“源码已写/静态通过、待编译与运行验收”口径，iOS（`I01`–`I04`）与 Desktop（`D01`–`D03`）新增强页面排在后续阶段。
+> **2026-10-25 最新状态**：`W01`–`W04`（`web-client/` 消费端与 `/app/operator` 独立运营台）、`A01`–`A04`（Android 手机/平板）、`I01`–`I04`（iPhone/iPad `kmp/iosUi` + `kmp/iosApp`）、`D01`–`D03`（Desktop `kmp/desktopApp`）、`kmp/clientUi`（`34` 个三端共享 Compose UI 文件、`42` 个 `FeaturePage`）、`C01`–`C08`、`F00`–`F14` 共享 MVI 模型及服务端 `B01`–`B12`（`241` Paths / `271` Operations / `123` Schemas / `44` 张 `mobile_*` 表）均已补齐源码并通过 12 个 Python 静态检查脚本（见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)、[`docs/uml/`](../uml/README.md)、[全量 Figma 四端实现](ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)、[高德地图接入](AMAP_IMPLEMENTATION_2026_10_24.md)、[三方官方认证](PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)、[外部年龄核验](AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)与[监护人邀请与成年申诉](GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)）。所有任务仍保持“源码已写/静态通过、待编译与运行验收”口径。
 
 2026-10-23闭环整改：[现行合同](../design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)和[F00–F14当前交付账本](CURRENT_DELIVERY_STATUS_2026_10_23.md)连接设计、源码与验收。优先F07/B10/B12宠物级独占／候补、申请周期和接回退出，再同步shared／Android手机和平板；苹果UI后置。其后F03/F04/F06人员／受众选择、F09区域选择、F00/A04深链续接、B02/W03最小安全网页分别领取。各项运行及B11真实人员配置不因文档更新而完成。
 

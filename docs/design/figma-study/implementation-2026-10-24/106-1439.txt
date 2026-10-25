@@ -1,0 +1,40 @@
+<frame id="106:1439" name="手机 / 05-C05 武汉猫友日常 [groupChat]" x="1880" y="96" width="390" height="844">
+  <frame id="110:2561" name="Status / learning disclosure" x="0" y="0" width="390" height="28">
+    <text id="110:2562" name="Caption / 9:41" x="20" y="4" width="100" height="20" />
+    <text id="110:2563" name="Caption / 学习示意 · 非真实数据" x="120" y="4" width="250" height="20" />
+  </frame>
+  <frame id="110:2564" name="Toolbar" x="0" y="28" width="390" height="56">
+    <frame id="110:2565" name="Back" x="8" y="4" width="48" height="48">
+      <instance id="110:2566" name="Instance / icon/chevron-left" x="12" y="12" width="24" height="24" />
+    </frame>
+    <text id="110:2569" name="Section / 武汉猫友日常" x="60" y="13" width="262" height="30" />
+    <frame id="110:2570" name="More" x="326" y="4" width="48" height="48">
+      <instance id="110:2571" name="Instance / icon/ellipsis" x="12" y="12" width="24" height="24" />
+    </frame>
+  </frame>
+  <frame id="110:2576" name="Scrollable viewport" x="0" y="84" width="390" height="676">
+    <frame id="110:2577" name="Task content" x="0" y="0" width="390" height="446">
+      <text id="110:2578" name="Caption / 武汉猫友日常 · 8 位成员" x="16" y="16" width="358" height="20" />
+      <frame id="110:2579" name="Notice / 群公告" x="16" y="52" width="358" height="102">
+        <text id="110:2580" name="Label / 群公告" x="16" y="16" width="326" height="22" />
+        <text id="110:2581" name="Caption / 友好晒宠，少一点广告，多一点可爱。不要发送家庭地" x="16" y="46" width="326" height="40" />
+      </frame>
+      <frame id="110:2582" name="Message alignment / Theirs" x="16" y="170" width="358" height="76">
+        <instance id="110:2583" name="Instance / bubbleTheirs" x="0" y="0" width="300" height="76" />
+      </frame>
+      <frame id="110:2585" name="Message alignment / Mine" x="16" y="262" width="358" height="76">
+        <instance id="110:2586" name="Instance / bubbleMine" x="58" y="0" width="300" height="76" />
+      </frame>
+      <frame id="110:2588" name="Message alignment / Theirs" x="16" y="354" width="358" height="76">
+        <instance id="110:2589" name="Instance / bubbleTheirs" x="0" y="0" width="300" height="76" />
+      </frame>
+    </frame>
+  </frame>
+  <frame id="220:354898" name="Message composer" x="0" y="760" width="390" height="84">
+    <instance id="220:354899" name="Composer / keyboard closed" x="0" y="0" width="390" height="64" />
+    <frame id="220:357595" name="Bottom safe area" x="0" y="64" width="390" height="20">
+      <rounded-rectangle id="220:357596" name="Rectangle" x="131" y="8" width="128" height="4" />
+    </frame>
+  </frame>
+</frame>
+IMPORTANT: The design was too large to fit into context with get_design_context. Instead you have received a sparse metadata response, you MUST call get_design_context on the IDs of the sublayers to get the full code. Split up the calls to ensure the sublayers do not also exceed the context limit.

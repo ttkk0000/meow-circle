@@ -3,6 +3,7 @@ package mobile
 import "strings"
 
 type Query struct {
+	CoordinateSystem                     string
 	Space, State, Keyword, City, Species string
 	OwnerID                              int64
 	Following, Watched, Adoption         bool
@@ -44,7 +45,7 @@ func matches(k Kind, r Record, q Query) (bool, error) {
 		text = v.Title + " " + v.Description
 		city = v.City
 		species = v.Species
-		if q.RadiusKM > 0 && (v.LocationPrecision == "area" || distanceKM(v.Latitude, v.Longitude, q.Latitude, q.Longitude) > q.RadiusKM) {
+		if q.RadiusKM > 0 && (v.LocationPrecision == "area" || v.CoordinateSystem != q.CoordinateSystem || distanceKM(v.Latitude, v.Longitude, q.Latitude, q.Longitude) > q.RadiusKM) {
 			return false, nil
 		}
 	case Offers:

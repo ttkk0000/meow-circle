@@ -108,6 +108,39 @@
       "source_node": "145:8407",
       "file": "web-client/public/assets/figma/comment-more.svg",
       "sha256": "ae3748326beb3f2624ac2f1962e69819eae4fc23c7171cd013fc41cb4d828bf0"
+    },
+    {
+      "name": "provider-wechat",
+      "source_node": "56:70",
+      "file": "web-client/public/assets/figma/provider-wechat.svg",
+      "sha256": "74b48b3d315337ce79cb644933b5f975e19996f564fcc4138ed67d45674c43ca",
+      "intrinsic_viewBox": "0 0 24 24",
+      "rendered_dimensions": [
+        24,
+        24
+      ]
+    },
+    {
+      "name": "provider-qq",
+      "source_node": "56:70",
+      "file": "web-client/public/assets/figma/provider-qq.svg",
+      "sha256": "3c94e923013fe13a5194c84d9a44e2d62225a7ea3537f3ad95a3cb72fdae1383",
+      "intrinsic_viewBox": "0 0 24 24",
+      "rendered_dimensions": [
+        24,
+        24
+      ]
+    },
+    {
+      "name": "provider-apple",
+      "source_node": "56:70",
+      "file": "web-client/public/assets/figma/provider-apple.svg",
+      "sha256": "2a1509dccd25e6d2bc7a11a8e52941077e1a48555e192ce638699b9f083c2a7c",
+      "intrinsic_viewBox": "0 0 24 24",
+      "rendered_dimensions": [
+        24,
+        24
+      ]
     }
   ],
   "note": "静态图标原样导出。宠物／头像／动态照片由真实API数据提供，不把设计样例作为业务数据。"

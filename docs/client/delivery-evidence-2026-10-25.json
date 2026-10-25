@@ -1,0 +1,223 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261025-DELIVERY",
+  "scope": "source/configuration and static only",
+  "files": [
+    {
+      "path": "Dockerfile",
+      "sha256": "40b3f56573c612df08ca9c5ca2a27cf7f9445c8126423c321205eab54f6475cd",
+      "bytes": 2091
+    },
+    {
+      "path": ".dockerignore",
+      "sha256": "749daee2982a3b03492160b663e9607b7d698296ffbd199880f0911ed4c05bde",
+      "bytes": 623
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "3d9e2401fbc53cf9305a167e3671ffa4fa1de6a3fce03fcba237faaf40c5f67e",
+      "bytes": 860
+    },
+    {
+      "path": "Makefile",
+      "sha256": "1781219d51bd4589811d25c8948f86b3b61cda2fbf72e3572f145ffe46a5411c",
+      "bytes": 7035
+    },
+    {
+      "path": "deploy/compose.production.yml",
+      "sha256": "fa08b7dac0e4185eff70b21bebc402d0723ef6461444c6818f51578530ee8fac",
+      "bytes": 6868
+    },
+    {
+      "path": "deploy/Caddyfile",
+      "sha256": "fb73e55c17995e92b6b032da0b5ca64e8d8f14c94f1e602dddbcb0007ae27ece",
+      "bytes": 221
+    },
+    {
+      "path": "deploy/runtime.example.env",
+      "sha256": "9aa9e800af7457c0791caa5a4346031666ed40e1b612a9d6bd2d7477b9903445",
+      "bytes": 1102
+    },
+    {
+      "path": "scripts/delivery.py",
+      "sha256": "baf36448614cb5af9001623b91713fc9479b89bb71992460af56994189220c4c",
+      "bytes": 7379
+    },
+    {
+      "path": "scripts/mobile.py",
+      "sha256": "0815b78ee9e8b4e35338acbe28cf22f017fe25d8dc455f5b82b18f5f6daf730d",
+      "bytes": 11175
+    },
+    {
+      "path": "scripts/ios_ci_signing.py",
+      "sha256": "2c764a7257c5119501a76d9a1ca73660715b8554496a6d93a29bf9cf50908461",
+      "bytes": 5161
+    },
+    {
+      "path": "scripts/check_delivery_static.py",
+      "sha256": "320eb0c02fefda9ff343face88c98a78cc8933bbcf106deb2317f1a0354fc061",
+      "bytes": 4271
+    },
+    {
+      "path": "cmd/server/main.go",
+      "sha256": "d4a30a47a4c94083b1d8a5f1f63d67ec87d4da1f31c2b42075543d80109c5307",
+      "bytes": 2705
+    },
+    {
+      "path": "cmd/worker/main.go",
+      "sha256": "341f4d5ca69dad54c261f85d7604f668f200f88e7a174fe3253ea2a0dd5c3644",
+      "bytes": 1748
+    },
+    {
+      "path": "cmd/migrate/main.go",
+      "sha256": "e113d11cdd6681f81301ff676ba0135dfef309a48d177684f3b5408944608a76",
+      "bytes": 5833
+    },
+    {
+      "path": "cmd/migrate/main_test.go",
+      "sha256": "44dcfc55100d42cd6eb978210d9cfefb739d1d7153c97495345a1cfac25b3386",
+      "bytes": 1331
+    },
+    {
+      "path": "cmd/healthcheck/main.go",
+      "sha256": "790b7122ae067b6abbfcf573d5e7597e588dbc2a7a650d8aeee03a42f4a5c052",
+      "bytes": 598
+    },
+    {
+      "path": "internal/platform/envfile/secrets.go",
+      "sha256": "f5c8b4ad3d82a593ef0cb3c75214891b980194074ebb5fd23ad69e1b8af5482a",
+      "bytes": 1607
+    },
+    {
+      "path": "internal/platform/envfile/secrets_test.go",
+      "sha256": "5f2873f6b6732ef9d3d1c1ceb08a69e6db1326da46d76bafc00cccb01c68cbce",
+      "bytes": 1135
+    },
+    {
+      "path": "kmp/androidApp/build.gradle.kts",
+      "sha256": "02f08b7e9b01050af0f1d37c39d16c0b29ae726a24e89fc29a7d7a3ba9c9703c",
+      "bytes": 8522
+    },
+    {
+      "path": "kmp/iosApp/project.yml",
+      "sha256": "1576d5b85fe84c30c838b451cd6f98fb57faec31221a630f72936bc08b0c2b61",
+      "bytes": 3632
+    },
+    {
+      "path": "kmp/iosApp/ComposeApp/MndBase.entitlements",
+      "sha256": "55a9c3dbd2e3925788619684eace456de8fcbdd4e0afb681237cdcff36d6bda9",
+      "bytes": 179
+    },
+    {
+      "path": "kmp/iosApp/ExportOptions.example.plist",
+      "sha256": "ac50fddb5fb3b125a7f9f2596285667692e84dc4375b10c1c22874bbefd46f21",
+      "bytes": 437
+    },
+    {
+      "path": "kmp/gradle.properties",
+      "sha256": "47064c90d052504d5c76aaf43143ccb36fc0efc5ec53263930f9deef68eb8dfe",
+      "bytes": 174
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "52ac77709d691538b59430129bf42ad171274118ebbbd118c389cf8ea4863843",
+      "bytes": 6071
+    },
+    {
+      "path": ".github/workflows/app-packages.yml",
+      "sha256": "5eb56bce95346a095d4d108de6665c8bb437b2a2dfd2afb862bc105400e369f3",
+      "bytes": 6438
+    },
+    {
+      "path": "web-client/tsconfig.json",
+      "sha256": "91aa01caa248d7d9bea3edf88bf49506ab4fe4d9b7416ccc48c690c8cedf5abc",
+      "bytes": 437
+    }
+  ],
+  "checks": [
+    {
+      "script": "check_delivery_static.py",
+      "exit_code": 0,
+      "output": "交付静态核对：11服务／6独立worker、9迁移与账本、Secret文件加载、Android APK/AAB签名、iOS Archive/IPA/设备入口、Desktop及手动App CI；未构建／迁移／打包／安装／启动。"
+    },
+    {
+      "script": "check_guardian_invites_static.py",
+      "exit_code": 0,
+      "output": "监护流程静态核对：5份最小DTO、短时单次邀请／原编号恢复、独立关系核实、监护人范围授权／撤回、公共原生与Web专用页面、具名运营角色；未运行核验、类型检查或测试。"
+    },
+    {
+      "script": "check_age_assurance_static.py",
+      "exit_code": 0,
+      "output": "年龄核验静态核对：3份最小DTO、原编号账本／并发恢复、服务端可信结果／有效期／替换校验、原生与Web分状态和原任务返回；未运行网关、类型检查或测试。"
+    },
+    {
+      "script": "check_provider_auth_static.py",
+      "exit_code": 0,
+      "output": "官方授权静态边界：原生SDK固定来源、原挑战回跳、账号选择／用途验证／显式确认、取消竞态与HttpOnly会话适配；仅源码核对，未执行SDK／类型检查／测试。"
+    },
+    {
+      "script": "check_client_ui_static.py",
+      "exit_code": 0,
+      "output": "公共UI只读核对：34份公共源码、42个功能分派、3套平台端口、128枚Noto原图、21枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。"
+    },
+    {
+      "script": "check_kmp_client_static.py",
+      "exit_code": 0,
+      "output": "Static source/configuration checks passed: 92 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution."
+    },
+    {
+      "script": "check_android_ui_static.py",
+      "exit_code": 0,
+      "output": "Static UI check passed: 10 shared primitives, metrics/theme wiring, ViewModel UI session and movable form/home composition. No compilation, runtime or device validation."
+    },
+    {
+      "script": "check_android_feature_static.py",
+      "exit_code": 0,
+      "output": "Android 源码静态核对：42 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。"
+    },
+    {
+      "script": "check_android_finish_static.py",
+      "exit_code": 0,
+      "output": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation."
+    },
+    {
+      "script": "check_figma_reading_static.py",
+      "exit_code": 0,
+      "output": "阅读／发布只读核对：10类材料、4向指南原图／几何、公共正文和下载合同、评论原键恢复／图片限制、本人筛选与9份迁移入口一致；未执行类型检查、编译、测试、迁移或应用。"
+    },
+    {
+      "script": "check_web_client_static.py",
+      "exit_code": 0,
+      "output": "Web只读检查：45份TS/TSX、212个本地引用、125份schema、21枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。"
+    },
+    {
+      "script": "check_server_shared_contract_static.py",
+      "exit_code": 0,
+      "output": "Static cross-language check: 74 DTO pairs match; private commands and recovery guards present. No type checking or tests executed."
+    },
+    {
+      "script": "check_mobile_static.py",
+      "exit_code": 0,
+      "output": "Static only: 44 feature tables, 271 operations, 123 schemas, 128/24 assets; no dangling references or BOM"
+    }
+  ],
+  "additional_checks": {
+    "python_AST_files": 4,
+    "YAML_syntax_files": 4,
+    "changed_Go_gofmt_files": 39,
+    "Android_KTS_syntax_tree": true,
+    "related_local_document_links": 78
+  },
+  "build_executed": false,
+  "CI_dispatched": false,
+  "migration_executed": false,
+  "installed_or_started": false,
+  "deployed": false,
+  "committed_or_pushed": false,
+  "pending": [
+    "deployment server/domain",
+    "signing configuration locations",
+    "explicit independent CI execution authorization"
+  ]
+}

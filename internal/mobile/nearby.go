@@ -25,7 +25,7 @@ func matchesSubscription(c Case, v Subscription) bool {
 	}
 	// An area-only case has no point. Do not interpret its 0/0 placeholder
 	// as an event location or guess that it falls inside a radius.
-	if c.LocationPrecision == "area" {
+	if c.LocationPrecision == "area" || c.CoordinateSystem != v.CoordinateSystem {
 		return false
 	}
 	return distanceKM(c.Latitude, c.Longitude, v.Latitude, v.Longitude) <= v.RadiusKM

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api, explain } from "../core/api";
 import { Button, Field, Notice } from "./ui";
 import { integer } from "../core/wire";
@@ -66,19 +66,28 @@ export function PurposeCheck({
   const [phone, setPhone] = useState("");
   const [working, setWorking] = useState(false);
   const [error, setError] = useState("");
+  const generation = useRef(0);
+  useEffect(() => {
+    generation.current++;
+    return () => {
+      generation.current++;
+    };
+  }, [scope]);
   const locked = busy || working;
   async function verify() {
+    const current = generation.current;
+    const owner = api.session.user?.id ?? 0n;
     setWorking(true);
     setError("");
     onGrant("");
     try {
       const result = await api.request<{ reauth_token: string }>(
         "auth/reauth",
-        { method: "POST", body: { scope, password, code } },
+        { method: "POST", owner, body: { scope, password, code } },
       );
-      onGrant(result.reauth_token);
+      if (current === generation.current) onGrant(result.reauth_token);
     } catch (e) {
-      setError(explain(e));
+      if (current === generation.current) setError(explain(e));
     } finally {
       setPassword("");
       setCode("");

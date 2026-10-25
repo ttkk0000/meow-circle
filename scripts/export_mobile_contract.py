@@ -23,6 +23,12 @@ for folder in ("internal/mobile", "internal/identity"):
         for name, embedded in re.findall(r"(?m)^type (\w+) struct\{\s*(\w+)\s*\}", text):
             definitions[name] = embedded
 
+# 具名运营上下文单独声明，不导出部署Operator结构中的凭据。
+ops_context = (ROOT / "internal/platform/mobileapi/ops_context.go").read_text()
+match = re.search(r"(?ms)^type OperatorContext struct\s*\{(.*?)^\}", ops_context)
+assert match
+definitions["OperatorContext"] = match.group(1)
+
 
 def ref(name):
     return {"$ref": "#/components/schemas/" + name}
@@ -101,6 +107,8 @@ for kind in readable:
     op = operation("/" + kind, "get", "List visible " + kind, public=public)
     op["parameters"] = [{"name": name, "in": "query", "schema": {"type": typ}}
                         for name, typ in (("cursor", "integer"), ("limit", "integer"), ("reference_id", "integer"), ("owner_id", "integer"), ("space", "string"), ("state", "string"), ("q", "string"), ("city", "string"), ("species", "string"), ("latitude", "number"), ("longitude", "number"), ("radius_km", "number"))]
+    if kind == "cases":
+        op["parameters"].append({"name": "coordinate_system", "in": "query", "schema": {"type": "string", "enum": ["", "gcj02", "wgs84"]}, "description": "Radius filters only compare coordinates in the same known system; empty retains legacy unknown-system matching."})
     operation("/" + kind + "/{id}", "get", "Read visible " + kind, public=public)
 for kind, name in (("pets", "PetInput"), ("entries", "EntryInput"), ("cases", "CaseInput"), ("offers", "OfferInput")):
     operation("/" + kind, "post", "Create " + kind, name)
@@ -178,6 +186,8 @@ def typed(path, method, summary, body=None, result=None, public=False, staff=Fal
             "allOf": [ref("Envelope")], "properties": {"data": dto(result)}}
     return item
 
+typed("/ops/context", "get", "Current named operator roles and configured reading material; no credential or blanket readiness claim", result="OperatorContext", staff=True)
+
 dto("ContentSubscriptions")
 dto("GroupDirectoryBody")
 typed("/content-subscriptions", "get", "Private followed authors and watched cases; no audience privileges")
@@ -196,6 +206,11 @@ reading_download["responses"]["200"]={"description":"Complete plain text", "cont
 typed("/inbox/read-all", "post", "Acknowledge only the prepared snapshot; newer messages remain unread", "InboxReadAllInput", "InboxReadAllResult")
 
 typed("/eligibility", "get", "Server qualification; unknown evidence denies outward actions", result="Eligibility")
+typed("/auth/age-assurance/config", "get", "Configured minimal age-verification channel; never a proof", result="AgeProviderInfo")
+age_current=typed("/auth/age-assurance/current", "get", "Current owner request, including unknown results; null when none", result="AgeAssuranceStatus")
+age_current["responses"]["200"]["content"]["application/json"]["schema"]["properties"]["data"]={"anyOf":[ref("AgeAssuranceStatus"),{"type":"null"}]}
+typed("/auth/age-assurance", "post", "Explicit consent, immutable task and original request; never auto-submit business", "AgeAssuranceInput", "AgeAssuranceStatus")
+typed("/auth/age-assurance/{id}/query", "post", "Query original provider request and apply only trusted bounded evidence", result="AgeAssuranceStatus")
 item = typed("/operations/{key}", "get", "Look up the original command; not-found never authorizes a new key", result="Operation")
 item["parameters"][0]["schema"] = {"type":"string","minLength":8,"maxLength":100}
 typed("/entries/preview", "post", "Bind declaration to exact content and media versions", "EntryInput", "PublicationPreview")
@@ -205,7 +220,16 @@ typed("/auth/verify-phone","post","Consume proof for the currently bound phone",
 for action in ("phone","password","unlink","email"):
     typed("/auth/account/"+action+"/scope","post","Compute server scope; no credential stored in grant","AccountInput","PurposeScope")
 typed("/push-devices","post","Register or disable this account's device; token stays private","PushDeviceInput","PushDeviceReceipt")
+typed("/push-devices/lookup","post","Look up this account device binding version without exposing its token","PushDeviceLookup","PushDeviceReceipt")
+typed("/push-devices/disable","post","Disable current session push bindings even when its device token is unavailable",{"type":"object","properties":{},"additionalProperties":False})
 typed("/guardians","get","Own verified guardian relationships")
+typed("/guardians/invites/config","get","Published guardian policy and available private invitation channel",result="GuardianInviteInfo")
+typed("/guardians/invites","get","Own or claimed invitations without child data or proof",result="GuardianInvitePage")
+typed("/guardians/invites","post","Explicit short single-use invitation; no relationship or consent is granted","GuardianInviteStart","GuardianInviteStatus")
+typed("/guardians/invites/claim","post","Adult independently claims invitation; relationship verification is still required","GuardianInviteClaim","GuardianInviteStatus")
+typed("/guardians/invites/{id}","get","Recover an owner/participant invitation without exposing private child data",result="GuardianInviteStatus")
+typed("/guardians/invites/{id}/cancel","post","Cancel only this original invitation or unverified request","StateInput","GuardianInviteStatus")
+typed("/ops/guardian-invites","get","Audited identity-verifier-only relationship intake",result="StaffGuardianInvitePage",staff=True)
 typed("/guardians/{id}","get","Read a participant relationship without verifier evidence")
 typed("/guardians/{id}/scope","post","Scope a specific verified relationship",result="PurposeScope")
 typed("/guardians/{id}/decision","post","Explicit consent or withdrawal; withdrawal needs no current-phone gate","GuardianDecision")
@@ -230,7 +254,7 @@ for action in ("propose","accept","decline","withdraw","handover"):
 for path,body in (("age-evidence","AgeEvidenceInput"),("guardian-evidence","GuardianEvidenceInput"),("authority","AuthorityInput"),("deliveries","DeliveryClaim"),("revenue","RevenueInput")):
     typed("/ops/"+path,"post","Named role-checked operation: "+path,body,staff=True)
 typed("/ops/deliveries/{id}/result","post","Per-consumer lease result; no global ACK","DeliveryResult",staff=True)
-for job in ("push", "nearby_alerts", "content_updates", "privacy_cleanup", "provider_revocations", "maintenance"):
+for job in ("push", "nearby_alerts", "content_updates", "privacy_cleanup", "provider_revocations", "maintenance", "search_projection", "audit_projection"):
     typed("/ops/jobs/"+job,"post","Execute one bounded job batch with durable continuation: "+job,"JobInput","JobResult",staff=True)
 typed("/ops/data-requests/{id}","get","Audited privacy worker inventory without query capability, materials, contact or hold basis",result="DataRequestWork",staff=True)
 for action,body in (("process","StateInput"),("hold","DataHoldInput"),("external","ExternalErasureInput")):

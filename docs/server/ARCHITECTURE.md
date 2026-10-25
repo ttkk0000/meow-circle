@@ -1,6 +1,6 @@
 # M&D Go 服务架构决策
 
-> **2026-10-24 状态更新**：当前服务端维持模块化单体架构，已扩展至 `001`–`009` 迁移（共 44 张 `mobile_*` 表）、OpenAPI `230` Paths / `259` Operations / `112` Schemas、6 类 `cmd/worker` 作业（`push` / `nearby_alerts` / `content_updates` / `privacy_cleanup` / `provider_revocations` / `maintenance`）。下文原第 52 行提到的 `safety_hold`、宠物唯一放置、跨单据证据保留、浏览器 Cookie/CSRF 会话适配及独立阅读目录均已完成源码落地（详见[领养闭环交接](ADOPTION_CLOSURE_2026_10_23.md)与[服务端完整性审计（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。
+> **2026-10-25 状态更新**：当前服务端维持模块化单体架构，已扩展至 `001`–`009` 迁移（共 44 张 `mobile_*` 表）、OpenAPI `241` Paths / `271` Operations / `123` Server Schemas（`74` 对跨语言 DTO）、6 类 `cmd/worker` 作业（`push` / `nearby_alerts` / `content_updates` / `privacy_cleanup` / `provider_revocations` / `maintenance`），并新增高德地图安全代理（`/maps/amap/_AMapService/`）、官方三方认证 Create vs Link 分离与浏览器网关、外部年龄核验网关（`age_gateway.go`）、未成年人 15 分钟一次性监护人邀请与独立成年关系申诉（`guardian_invites.go`）。完整服务端类图、ER 图与时序/状态机图见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)及[`docs/uml/`](../uml/README.md)。下文原第 52 行提到的 `safety_hold`、宠物唯一放置、跨单据证据保留、浏览器 Cookie/CSRF 会话适配及独立阅读目录均已完成源码落地（详见[领养闭环交接](ADOPTION_CLOSURE_2026_10_23.md)与[服务端完整性审计（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。
 
 2026-10-22实现批次：[服务端/共享层源码记录](SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)。保留本架构，扩展既有事务仓储Kind与typed DTO，未引入微服务或升级依赖。008迁移、用途/资格、请求回执及清理/运营端口已写；HTTP ops采用命名角色，旧X-Admin-Key不能访问v2 ops。
 

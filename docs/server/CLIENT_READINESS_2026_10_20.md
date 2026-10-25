@@ -1,6 +1,6 @@
 # Android / iOS 接入前服务端核对
 
-> **2026-10-24 当前基线**：OpenAPI 3.1 已扩展至 `230` Paths / `259` Operations / `112` Schemas，PostgreSQL 迁移覆盖 `001`–`009`（44 张 `mobile_*` 表），新增 Web 浏览器 `Cookie + CSRF` 适配、独立阅读与法规目录（`/reading/*`、`/publications/*`）、宠物评论与表情反应、内容更新订阅等接口。最新服务端状态与剩余架构短板见[服务端完整性审计（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)与[现行 API 交接](MOBILE_SERVER.md)。
+> **2026-10-25 当前基线**：OpenAPI 3.1 已扩展至 `241` Paths / `271` Operations / `123` Server Schemas（`74` 对跨语言 DTO），PostgreSQL 迁移覆盖 `001`–`009`（44 张 `mobile_*` 表），新增 Web 浏览器 `Cookie + CSRF` 适配、高德地图安全代理（`/maps/amap/_AMapService/`）、官方三方认证 Create vs Link 分离、外部年龄核验网关、未成年人 15 分钟一次性监护人邀请与独立成年关系申诉、独立阅读与法规目录（`/reading/*`、`/publications/*`）、宠物评论与表情反应、内容更新订阅等接口。全栈代码逻辑与 PlantUML 图谱见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)与[`docs/uml/`](../uml/README.md)；最新服务端状态见[服务端完整性审计（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)与[现行 API 交接](MOBILE_SERVER.md)。
 
 2026-10-23当前：[服务端优先完善与余量](SERVER_FIRST_2026_10_23.md)及[现行API交接](MOBILE_SERVER.md)替代下文早期接口清单；当前209路径／236操作／100schema仅静态检查通过，仍无编译／运行验收。
 

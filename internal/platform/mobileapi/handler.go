@@ -17,11 +17,17 @@ import (
 	"time"
 
 	"kitty-circle/internal/identity"
+	"kitty-circle/internal/jobcoord"
+	"kitty-circle/internal/mediablob"
 	"kitty-circle/internal/mobile"
+	"kitty-circle/internal/operations"
 	"kitty-circle/internal/platform/auth"
 )
 
 type Handler struct {
+	MediaStorage       mediablob.Storage
+	Jobs               jobcoord.Coordinator
+	Operations         *operations.Service
 	Service            *mobile.Service
 	Identity           *identity.Service
 	MediaDir, AdminKey string
@@ -55,6 +61,9 @@ func invoke[T any, R any](r *http.Request, fn func(T) (R, error)) (any, error) {
 	return fn(v)
 }
 func failure(w http.ResponseWriter, e error) {
+	if errors.Is(e, mediablob.ErrUnavailable) {
+		e = mobile.ErrUnavailable
+	}
 	status, message := 500, "internal server error"
 	var invalid mobile.ValidationError
 	var rule mobile.RuleError
@@ -62,7 +71,7 @@ func failure(w http.ResponseWriter, e error) {
 	switch {
 	case errors.As(e, &rule):
 		status, message, code = 403, rule.Message, rule.Code
-		if code == "idempotency_conflict" {
+		if code == "idempotency_conflict" || code == "identity_in_use" {
 			status = 409
 		}
 	case errors.As(e, &invalid):
@@ -198,6 +207,15 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if e == nil {
 			result, e = h.Service.PublicShare(r.Context(), mobile.Kind(path[1]), id)
 		}
+	} else if path[0] == "push-devices" && len(path) == 2 && path[1] == "disable" && r.Method == http.MethodPost {
+		_, e = payload[struct{}](r)
+		if e == nil {
+			e = h.Service.DisableCurrentPush(r.Context(), actor)
+		}
+	} else if path[0] == "push-devices" && len(path) == 2 && path[1] == "lookup" && r.Method == http.MethodPost {
+		result, e = invoke(r, func(in mobile.PushDeviceLookup) (mobile.PushDeviceReceipt, error) {
+			return h.Service.PushDeviceStatus(r.Context(), actor, in)
+		})
 	} else if path[0] == "push-devices" && len(path) == 1 && r.Method == http.MethodPost {
 		result, e = invoke(r, func(in mobile.PushDeviceInput) (mobile.PushDeviceReceipt, error) {
 			return h.Service.RegisterPushDevice(r.Context(), actor, in)
@@ -208,6 +226,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		result, e = invoke(r, func(in mobile.EntryInput) (mobile.PublicationPreview, error) {
 			return h.Service.PreviewPublication(r.Context(), actor, in)
 		})
+	} else if path[0] == "guardians" && len(path) > 1 && path[1] == "invites" {
+		result, e = h.guardianInvitations(r, actor, path[2:])
 	} else if path[0] == "guardians" {
 		result, e = h.guardians(r, actor, path[1:])
 	} else if path[0] == "safety" && len(path) == 2 && path[1] == "media" && r.Method == http.MethodPost {
@@ -330,7 +350,7 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 			lon, _ := strconv.ParseFloat(values.Get("longitude"), 64)
 			radius, _ := strconv.ParseFloat(values.Get("radius_km"), 64)
 			owner, _ := strconv.ParseInt(values.Get("owner_id"), 10, 64)
-			return h.Service.ListFiltered(ctx, actor, k, after, ref, limit, mobile.Query{Space: values.Get("space"), State: values.Get("state"), Keyword: values.Get("q"), City: values.Get("city"), Species: values.Get("species"), OwnerID: owner, Latitude: lat, Longitude: lon, RadiusKM: radius, Following: values.Get("following") == "true", Watched: values.Get("watched") == "true", Adoption: values.Get("adoption") == "true"})
+			return h.Service.ListFiltered(ctx, actor, k, after, ref, limit, mobile.Query{CoordinateSystem: values.Get("coordinate_system"), Space: values.Get("space"), State: values.Get("state"), Keyword: values.Get("q"), City: values.Get("city"), Species: values.Get("species"), OwnerID: owner, Latitude: lat, Longitude: lon, RadiusKM: radius, Following: values.Get("following") == "true", Watched: values.Get("watched") == "true", Adoption: values.Get("adoption") == "true"})
 		}
 		if len(path) == 2 {
 			return h.Service.Get(ctx, actor, k, id)
@@ -538,6 +558,34 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 	return nil, mobile.ErrNotFound
 }
 func (h *Handler) authentication(r *http.Request, actor int64, token string, path []string) (any, error) {
+	if len(path) > 0 && path[0] == "age-assurance" {
+		if actor <= 0 {
+			return nil, mobile.ErrUnauthorized
+		}
+		if len(path) == 2 && path[1] == "config" && r.Method == http.MethodGet {
+			return h.Identity.AgeCapability(), nil
+		}
+		if len(path) == 2 && path[1] == "current" && r.Method == http.MethodGet {
+			return h.Identity.CurrentAgeAssurance(r.Context(), actor)
+		}
+		if len(path) == 3 && path[2] == "query" && r.Method == http.MethodPost {
+			id, err := strconv.ParseInt(path[1], 10, 64)
+			if err != nil || id <= 0 {
+				return nil, mobile.Invalid("invalid assurance id")
+			}
+			return h.Identity.QueryAgeAssurance(r.Context(), actor, id)
+		}
+		if len(path) == 1 && r.Method == http.MethodPost {
+			if ok, _ := h.limiter.Allow("age:" + strconv.FormatInt(actor, 10)); !ok {
+				return nil, mobile.ErrRateLimited
+			}
+			h.limiter.RecordFailure("age:" + strconv.FormatInt(actor, 10))
+			return invoke(r, func(in identity.AgeAssuranceInput) (identity.AgeAssuranceStatus, error) {
+				return h.Identity.BeginAgeAssurance(r.Context(), actor, in)
+			})
+		}
+		return nil, mobile.ErrNotFound
+	}
 	if len(path) == 1 && path[0] == "capabilities" && r.Method == http.MethodGet {
 		return h.Identity.Capabilities(), nil
 	}
@@ -610,6 +658,9 @@ func (h *Handler) authentication(r *http.Request, actor int64, token string, pat
 			RefreshToken string `json:"refresh_token"`
 			Device       string `json:"device"`
 		}) (identity.LoginResult, error) {
+			if r.Context().Value(browserRefreshContext{}) == true {
+				return h.Identity.BrowserRefresh(ctx, in.AccessToken, in.RefreshToken)
+			}
 			return h.Identity.Refresh(ctx, in.AccessToken, in.RefreshToken, in.Device)
 		})
 	case "recover":
@@ -654,8 +705,11 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 		return nil, mobile.ErrForbidden
 	}
 	r = r.WithContext(mobile.WithOperator(r.Context(), op.ID))
+	if len(path) == 1 && path[0] == "context" && r.Method == http.MethodGet {
+		return operatorContext(op)
+	}
 	if len(path) == 2 && path[0] == "jobs" && r.Method == http.MethodPost {
-		return invoke(r, func(in mobile.JobInput) (mobile.JobResult, error) { return h.runJob(r, op, path[1], in) })
+		return invoke(r, func(in mobile.JobInput) (mobile.JobResult, error) { return h.observedJob(r, op, path[1], in) })
 	}
 	if len(path) == 2 && path[0] == "data-requests" && r.Method == http.MethodGet {
 		id, e := parseID(path[1])
@@ -686,6 +740,17 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 			}
 		}
 		return h.Service.RightsQueue(r.Context(), op.ID, after)
+	}
+	if len(path) == 1 && path[0] == "guardian-invites" && r.Method == http.MethodGet {
+		after := int64(0)
+		if raw := r.URL.Query().Get("cursor"); raw != "" {
+			var e error
+			after, e = strconv.ParseInt(raw, 10, 64)
+			if e != nil || after < 0 {
+				return nil, mobile.Invalid("invalid guardian review cursor")
+			}
+		}
+		return h.Service.GuardianInviteQueue(r.Context(), op.ID, after)
 	}
 	if len(path) == 1 && path[0] == "upload-expiry" && r.Method == http.MethodPost {
 		return invoke(r, func(in mobile.UploadCleanupInput) (mobile.UploadCleanupResult, error) {
@@ -787,6 +852,12 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 			return nil, h.Service.RecordAgeEvidence(r.Context(), op.ID, in)
 		case "guardian-evidence":
 			return invoke(r, func(in mobile.GuardianEvidenceInput) (mobile.Record, error) {
+				if in.InviteID > 0 {
+					info := h.guardianInviteInfo()
+					if !info.Available || in.PolicyVersion != info.PolicyVersion {
+						return mobile.Record{}, mobile.ErrConflict
+					}
+				}
 				return h.Service.RecordGuardianEvidence(r.Context(), op.ID, in)
 			})
 		case "authority":

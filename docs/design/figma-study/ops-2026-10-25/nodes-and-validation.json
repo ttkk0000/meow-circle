@@ -1,0 +1,566 @@
+{
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "pageId": "793:21",
+  "date": "2026-10-25",
+  "status": "设计完成；14稿与组件展示截图已逐项检查",
+  "screens": [
+    {
+      "id": "793:22",
+      "name": "01 运维总览",
+      "w": 1440,
+      "h": 1000,
+      "texts": 63,
+      "instances": 33,
+      "imageFills": 0,
+      "clicks": 9,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:23",
+      "name": "02 服务与依赖",
+      "w": 1440,
+      "h": 1000,
+      "texts": 64,
+      "instances": 34,
+      "imageFills": 0,
+      "clicks": 9,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:24",
+      "name": "03 Worker任务",
+      "w": 1440,
+      "h": 1000,
+      "texts": 64,
+      "instances": 34,
+      "imageFills": 0,
+      "clicks": 8,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:25",
+      "name": "04 版本与发布",
+      "w": 1440,
+      "h": 1000,
+      "texts": 64,
+      "instances": 33,
+      "imageFills": 0,
+      "clicks": 9,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:26",
+      "name": "05 迁移账本",
+      "w": 1440,
+      "h": 1000,
+      "texts": 79,
+      "instances": 40,
+      "imageFills": 0,
+      "clicks": 16,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:27",
+      "name": "06 告警事件",
+      "w": 1440,
+      "h": 1000,
+      "texts": 64,
+      "instances": 34,
+      "imageFills": 0,
+      "clicks": 8,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:28",
+      "name": "07 操作审计",
+      "w": 1440,
+      "h": 1000,
+      "texts": 64,
+      "instances": 34,
+      "imageFills": 0,
+      "clicks": 8,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:29",
+      "name": "08 环境与权限",
+      "w": 1440,
+      "h": 1000,
+      "texts": 65,
+      "instances": 35,
+      "imageFills": 0,
+      "clicks": 9,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:30",
+      "name": "09 发布核对详情",
+      "w": 1440,
+      "h": 1000,
+      "texts": 59,
+      "instances": 31,
+      "imageFills": 0,
+      "clicks": 10,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:31",
+      "name": "10 Worker详情",
+      "w": 1440,
+      "h": 1000,
+      "texts": 65,
+      "instances": 34,
+      "imageFills": 0,
+      "clicks": 9,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:32",
+      "name": "11 事件处理详情",
+      "w": 1440,
+      "h": 1000,
+      "texts": 49,
+      "instances": 24,
+      "imageFills": 0,
+      "clicks": 9,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:33",
+      "name": "12 环境未连接",
+      "w": 1440,
+      "h": 1000,
+      "texts": 34,
+      "instances": 20,
+      "imageFills": 0,
+      "clicks": 10,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:34",
+      "name": "13 访问受限",
+      "w": 1440,
+      "h": 1000,
+      "texts": 32,
+      "instances": 22,
+      "imageFills": 0,
+      "clicks": 10,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    },
+    {
+      "id": "793:35",
+      "name": "14 发布确认",
+      "w": 1440,
+      "h": 1000,
+      "texts": 40,
+      "instances": 24,
+      "imageFills": 0,
+      "clicks": 9,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      }
+    }
+  ],
+  "components": [
+    {
+      "id": "794:21",
+      "name": "Style=Primary",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:0",
+        "Style"
+      ]
+    },
+    {
+      "id": "794:22",
+      "name": "Style=Secondary",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:0",
+        "Style"
+      ]
+    },
+    {
+      "id": "794:23",
+      "name": "Style=Quiet",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:0",
+        "Style"
+      ]
+    },
+    {
+      "id": "794:24",
+      "name": "Style=Disabled",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:0",
+        "Style"
+      ]
+    },
+    {
+      "id": "794:25",
+      "name": "Style=Focus",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:0",
+        "Style"
+      ]
+    },
+    {
+      "id": "794:32",
+      "name": "Tone=Neutral",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:6",
+        "Tone"
+      ]
+    },
+    {
+      "id": "794:33",
+      "name": "Tone=Success",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:6",
+        "Tone"
+      ]
+    },
+    {
+      "id": "794:34",
+      "name": "Tone=Warning",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:6",
+        "Tone"
+      ]
+    },
+    {
+      "id": "794:35",
+      "name": "Tone=Danger",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:6",
+        "Tone"
+      ]
+    },
+    {
+      "id": "794:36",
+      "name": "Tone=Brand",
+      "bound": true,
+      "textStyleCount": 1,
+      "properties": [
+        "Label#794:6",
+        "Tone"
+      ]
+    },
+    {
+      "id": "794:43",
+      "name": "M&D Ops / Metric",
+      "bound": true,
+      "textStyleCount": 3,
+      "properties": [
+        "Label#794:12",
+        "Value#794:13",
+        "Hint#794:14"
+      ]
+    },
+    {
+      "id": "794:47",
+      "name": "M&D Ops / Table header",
+      "bound": true,
+      "textStyleCount": 5,
+      "properties": [
+        "A#794:15",
+        "B#794:17",
+        "C#794:19",
+        "D#794:21",
+        "E#794:22"
+      ]
+    },
+    {
+      "id": "794:48",
+      "name": "M&D Ops / Table row",
+      "bound": true,
+      "textStyleCount": 5,
+      "properties": [
+        "A#794:16",
+        "B#794:18",
+        "C#794:20",
+        "E#794:23"
+      ]
+    },
+    {
+      "id": "794:61",
+      "name": "M&D Ops / Notice",
+      "bound": true,
+      "textStyleCount": 2,
+      "properties": [
+        "Title#794:24",
+        "Description#794:25"
+      ]
+    },
+    {
+      "id": "794:69",
+      "name": "M&D Ops / Summary item",
+      "bound": true,
+      "textStyleCount": 2,
+      "properties": [
+        "Label#794:26",
+        "Value#794:27"
+      ]
+    },
+    {
+      "id": "794:72",
+      "name": "M&D Ops / Log line",
+      "bound": true,
+      "textStyleCount": 2,
+      "properties": [
+        "Time#794:28",
+        "Message#794:29"
+      ]
+    },
+    {
+      "id": "797:1880978",
+      "name": "M&D Ops / Table row compact",
+      "bound": true,
+      "textStyleCount": 5,
+      "properties": [
+        "A#794:16",
+        "B#794:18",
+        "C#794:20",
+        "E#794:23"
+      ]
+    },
+    {
+      "id": "795:26",
+      "name": "M&D Ops / Workspace shell",
+      "bound": true,
+      "textStyleCount": 19,
+      "properties": []
+    }
+  ],
+  "componentSets": 2,
+  "prototypeLinks": 134,
+  "structuralDefects": [],
+  "images": [
+    {
+      "nodeId": "793:22",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/01.png",
+      "sha256": "ca6da589ab18b5539e302113056a6ab4e8a464a9c1ca0a7db3ad03436ab53c99"
+    },
+    {
+      "nodeId": "793:23",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/02.png",
+      "sha256": "79c6acc0cfb24b7719bc89e40dfe9391c7b9cb408784ab94a69b65a839e567c6"
+    },
+    {
+      "nodeId": "793:24",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/03.png",
+      "sha256": "a099def6a55c4c5a1dc5e9e81e3287f15e9c45a7a80f8c12e7897662db1e90e3"
+    },
+    {
+      "nodeId": "793:25",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/04.png",
+      "sha256": "54671806b0d2b6527ac1bc9cd2f03c73ba2bf4cb36f5ed6fae5993f12e3edbd9"
+    },
+    {
+      "nodeId": "793:26",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/05.png",
+      "sha256": "0724e7100e0c94df23897e79317de690a6400dca4a9f0d3063a62794133fe516"
+    },
+    {
+      "nodeId": "793:27",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/06.png",
+      "sha256": "347d24d4a781c45f3c368827a7436387a6d2657e8c6a13430275ee9eba474ec1"
+    },
+    {
+      "nodeId": "793:28",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/07.png",
+      "sha256": "dfc03abf6e60cc6078a9a5733f3311e65b5eeb1f6bb5f270981df9e44754a8e0"
+    },
+    {
+      "nodeId": "793:29",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/08.png",
+      "sha256": "051c10445a2d79e82f59490ea8f8a40c24d3edfb23148866f9b0aa545ffb63fa"
+    },
+    {
+      "nodeId": "793:30",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/09.png",
+      "sha256": "d892eefcf790964b9da855aa505bd5595ec33f614b677b771e496f13f75604dc"
+    },
+    {
+      "nodeId": "793:31",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/10.png",
+      "sha256": "3ebb1578dbaea6d0a1fb9d1c7ed2e9ce03e0d14daa98cdae839c74a61b609664"
+    },
+    {
+      "nodeId": "793:32",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/11.png",
+      "sha256": "1b482a4aded248091c3d2d2db0efe268846ec7aa3c75ba89ba9360bc84fc81e7"
+    },
+    {
+      "nodeId": "793:33",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/12.png",
+      "sha256": "226e71b38115d76070f90c3344eceabbefe027e0eda3044c47fd6a900f592de3"
+    },
+    {
+      "nodeId": "793:34",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/13.png",
+      "sha256": "29fe3c939230bdf75c6ee010f5575b507feff4e36ba7cb230f59cb9e93bd365c"
+    },
+    {
+      "nodeId": "793:35",
+      "width": 1440,
+      "height": 1000,
+      "format": "png",
+      "original_width": 1440,
+      "original_height": 1000,
+      "file": "docs/design/figma-study/ops-2026-10-25/14.png",
+      "sha256": "f2c2452793a6523cf5d03441049cc86942d01ace213d5214f2026efa52fab906"
+    },
+    {
+      "nodeId": "793:37",
+      "width": 2320,
+      "height": 1180,
+      "format": "png",
+      "original_width": 2320,
+      "original_height": 1180,
+      "file": "docs/design/figma-study/ops-2026-10-25/components.png",
+      "sha256": "f4539f0266320c2d106baee09bf42dcdecefcfc6f53c8b669e9cf5904857da6b"
+    }
+  ],
+  "liveEnvironmentConnected": false,
+  "codeImplementedByThisTask": false,
+  "visualReview": {
+    "screens": 14,
+    "componentShowcase": true,
+    "screenOverflow": 0,
+    "tableCellOverflow": 0,
+    "intentionalEllipsis": [
+      "004_notifications_…sql",
+      "008_mobile_policy_…sql"
+    ],
+    "fixed": [
+      "顶部环境标记换行",
+      "迁移长文件名",
+      "发布禁用按钮换行",
+      "不对应事件编号的审计原型跳转"
+    ]
+  },
+  "acceptance": {
+    "editableLayers": true,
+    "existingComponentsPreserved": true,
+    "newTokens": 0,
+    "liveDeployment": false,
+    "allFilterControlsSimulated": false
+  },
+  "lastSaveReadback": {
+    "rowId": "799:941",
+    "reactions": [],
+    "constructionMode": {
+      "VariableCollectionId:14:6": "56:0"
+    },
+    "pageExists": "09 后台运维 · 设计与交互",
+    "frameCount": 14
+  }
+}

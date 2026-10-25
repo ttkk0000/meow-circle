@@ -1,10 +1,8 @@
 package mobileapi
 
 import (
-	"errors"
 	"kitty-circle/internal/mobile"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strconv"
 )
@@ -18,16 +16,7 @@ func (h *Handler) eraseMedia(r *http.Request, operator string, id int64) error {
 		return mobile.Invalid("invalid erasure target")
 	}
 	if work.DeletePhysical {
-		root, e := filepath.Abs(h.MediaDir)
-		if e != nil {
-			return e
-		}
-		target := filepath.Join(root, work.Filename)
-		relative, e := filepath.Rel(root, target)
-		if e != nil || relative != work.Filename {
-			return mobile.ErrForbidden
-		}
-		if e = os.Remove(target); e != nil && !errors.Is(e, os.ErrNotExist) {
+		if e = h.blobs().Remove(r.Context(), work.Filename); e != nil {
 			return e
 		}
 	}

@@ -921,6 +921,36 @@
       }
     }
   },
+  "OperatorContext": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "roles": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "operator_name": {
+        "type": "string"
+      },
+      "operator_address": {
+        "type": "string"
+      },
+      "operator_contact": {
+        "type": "string"
+      },
+      "published_types": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
   "ContentSubscriptions": {
     "type": "object",
     "additionalProperties": false,
@@ -1172,6 +1202,79 @@
       }
     }
   },
+  "AgeProviderInfo": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "available": {
+        "type": "boolean"
+      },
+      "name": {
+        "type": "string"
+      },
+      "privacy_url": {
+        "type": "string"
+      }
+    }
+  },
+  "AgeAssuranceStatus": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      },
+      "task_key": {
+        "type": "string"
+      },
+      "task_label": {
+        "type": "string"
+      },
+      "provider": {
+        "type": "string"
+      },
+      "launch_url": {
+        "type": "string"
+      },
+      "expires_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "valid_until": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "AgeAssuranceInput": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "task_key": {
+        "type": "string"
+      },
+      "task_label": {
+        "type": "string"
+      },
+      "accepted": {
+        "type": "boolean"
+      }
+    }
+  },
   "Operation": {
     "type": "object",
     "additionalProperties": false,
@@ -1318,6 +1421,138 @@
       },
       "state": {
         "type": "string"
+      }
+    }
+  },
+  "PushDeviceLookup": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "platform": {
+        "type": "string"
+      },
+      "token": {
+        "type": "string"
+      }
+    }
+  },
+  "GuardianInviteInfo": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "available": {
+        "type": "boolean"
+      },
+      "policy_version": {
+        "type": "string"
+      },
+      "policy_label": {
+        "type": "string"
+      },
+      "policy_key": {
+        "type": "string"
+      }
+    }
+  },
+  "GuardianInvitePage": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/GuardianInviteStatus"
+        }
+      },
+      "next_cursor": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
+  "GuardianInviteStart": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "policy_version": {
+        "type": "string"
+      },
+      "accepted": {
+        "type": "boolean"
+      }
+    }
+  },
+  "GuardianInviteStatus": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "state": {
+        "type": "string"
+      },
+      "policy_version": {
+        "type": "string"
+      },
+      "expires_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "guardian_record_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "share_url": {
+        "type": "string"
+      },
+      "mine": {
+        "type": "boolean"
+      },
+      "can_cancel": {
+        "type": "boolean"
+      }
+    }
+  },
+  "GuardianInviteClaim": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "client_request_id": {
+        "type": "string"
+      },
+      "token": {
+        "type": "string"
+      },
+      "policy_version": {
+        "type": "string"
+      },
+      "accepted": {
+        "type": "boolean"
+      }
+    }
+  },
+  "StaffGuardianInvitePage": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/StaffGuardianInvite"
+        }
+      },
+      "next_cursor": {
+        "type": "integer",
+        "format": "int64"
       }
     }
   },
@@ -1599,6 +1834,14 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "invite_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "invite_version": {
+        "type": "integer",
+        "format": "int64"
+      },
       "policy_version": {
         "type": "string"
       },
@@ -2144,6 +2387,9 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "coordinate_system": {
+        "type": "string"
+      },
       "location_precision": {
         "type": "string"
       },
@@ -2251,6 +2497,12 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "app_id": {
+        "type": "string"
+      },
+      "client": {
+        "type": "string"
+      },
       "code": {
         "type": "string"
       },
@@ -2752,10 +3004,42 @@
       }
     }
   },
+  "StaffGuardianInvite": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "child_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "guardian_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "policy_version": {
+        "type": "string"
+      },
+      "expires_at": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  },
   "Subscription": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
+      "coordinate_system": {
+        "type": "string"
+      },
       "species": {
         "type": "string"
       },

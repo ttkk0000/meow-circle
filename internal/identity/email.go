@@ -196,7 +196,7 @@ func (s *Service) EmailLogin(ctx context.Context, in EmailInput, register bool) 
 		var u domain.User
 		if register {
 			if e == nil {
-				return mobile.ErrConflict
+				return identifierInUse()
 			}
 			if !errors.Is(e, mobile.ErrNotFound) {
 				return e

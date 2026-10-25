@@ -16,7 +16,7 @@ enum class FeaturePage(val title: String) {
     Offers("有偿信息"), Offer("披露详情"), OfferEdit("编辑披露"),
     SettingsHome("设置"), Settings("通知设置"), Nearby("附近提醒"), Map("互助地图"), Reviews("核实与举报"), Review("核实事项"),
     Safety("安全与隐私求助"), DataRequests("资料与账号请求"), Security("账号安全"),
-    Recovery("待核对操作"), Expressions("表情与贴纸"), Rules("规则与权益"), Reading("阅读说明")
+    Recovery("待核对操作"), Expressions("表情与贴纸"), Rules("规则与权益"), Reading("阅读说明"), Age("年龄与使用范围"), Adult("成年资格核对"), Guardians("监护授权与管理")
 }
 enum class CaseMaterial { Claims, Leads }
 
@@ -63,6 +63,8 @@ data class FeatureState(
 class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, private val localDrafts: LocalWorkspaceDrafts? = null) :
     MviStore<FeatureState, FeatureStoreIntent, FeatureStoreEffect>(FeatureState(draftRestoring = localDrafts != null,draftReady = localDrafts == null), parentScope) {
     val sensitive = SensitiveActionStore(api, scope)
+    val age = AgeAssuranceStore(api,scope)
+    val guardianInvites = GuardianInviteStore(api,scope)
     private val history = mutableListOf<FeatureRoute>()
     private var loading: Job? = null
     private var commandJob: Job? = null
@@ -351,7 +353,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                         val checks = api.offerVerifications(route.id); if (current()) mutable.update { it.copy(verifications = checks) }
                     }
                     FeaturePage.Settings -> { val p = api.preferences().items.firstOrNull(); if (current()) { mutable.update { it.copy(preference = p) }; capture(p?.version ?: 0) } }
-                    FeaturePage.Map -> { val p: MobilePage<CaseBody> = if(route.id > 0) MobilePage(items = listOf(api.case(route.id))) else api.get("cases",buildMap { put("cursor",if(more) mutable.value.mapCases.next.toString() else "0");put("city",field("city"));if(field("latitude").isNotBlank() && field("longitude").isNotBlank()) { put("latitude",field("latitude"));put("longitude",field("longitude"));put("radius_km","10") } },authenticated = owner != null);if(current()) mutable.update { it.copy(mapCases = page(it.mapCases,p,more)) } }
+                    FeaturePage.Map -> { val p: MobilePage<CaseBody> = if(route.id > 0) MobilePage(items = listOf(api.case(route.id))) else api.get("cases",buildMap { put("cursor",if(more) mutable.value.mapCases.next.toString() else "0");put("city",field("city"));put("state","active") },authenticated = owner != null);if(current()) mutable.update { it.copy(mapCases = page(it.mapCases,p,more)) } }
                     FeaturePage.Nearby -> { val p = api.subscriptions().items.firstOrNull(); if (current()) { mutable.update { it.copy(subscription = p) }; capture(p?.version ?: 0) } }
                     FeaturePage.Expressions -> {
                         val catalog = api.expressions(); val p = api.expressionState().items.firstOrNull()
@@ -362,7 +364,6 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     FeaturePage.Security -> {
                         val methods = api.identityMethods(); val profile = api.profile(); val eligibility = api.eligibility()
                         if (current()) { mutable.update { it.copy(methods = methods, profile = profile, eligibility = eligibility) }; capture(profile.version) }
-                        val guardians = api.guardians(); if (current()) mutable.update { it.copy(guardians = guardians) }
                     }
                     FeaturePage.Recovery -> if (current()) mutable.update { it.copy(pending = api.recoverableCommands(), restricted = restricted()) }
                     FeaturePage.DataRequests, FeaturePage.Safety -> if (current()) mutable.update { it.copy(restricted = restricted()) }
@@ -370,6 +371,11 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     FeaturePage.Reading -> {
                         val document=if(route.kind.startsWith("type-")) api.readingCatalog().documentFor(route.kind.removePrefix("type-")) ?: throw MobileApiException(404,"not found") else api.readingDocument(route.kind)
                         if(current())mutable.update {it.copy(readingDocument = document)}
+                    }
+                    FeaturePage.Age, FeaturePage.Adult -> { val eligible = api.eligibility();if(current()) mutable.update { it.copy(eligibility = eligible) } }
+                    FeaturePage.Guardians -> {
+                        val guardians=api.guardians();val eligibility=api.eligibility();val catalog=api.readingCatalog()
+                        if(current())mutable.update{it.copy(guardians=guardians,eligibility=eligibility,readingCatalog=catalog)}
                     }
                     FeaturePage.GroupCreate, FeaturePage.SettingsHome -> Unit
                 }
@@ -835,5 +841,5 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
             catch (e: Exception) { if (epoch == originalEpoch) mutable.update { it.copy(draftRestoring = false,draftError = "本机表单未恢复：${e.mobileMessage()}。原文件未被覆盖") } }
         }
     }
-    override fun close() { sensitive.close(); super.close() }
+    override fun close() { guardianInvites.close(); age.close(); sensitive.close(); super.close() }
 }

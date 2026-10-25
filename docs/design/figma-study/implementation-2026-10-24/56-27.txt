@@ -1,0 +1,382 @@
+const assetPathPrefix = "https://www.figma.com/api/mcp/asset/6ec80255-8144-41c1-8e93-3d7001854cb9";
+const imgInstanceSocialAvatar = `${assetPathPrefix}/7ddf6.png`;
+const imgPhotoSocial = `${assetPathPrefix}/52666.png`;
+const imgPhotoSocial1 = `${assetPathPrefix}/62de9.png`;
+const imgPhotoSocial2 = `${assetPathPrefix}/7daf9.png`;
+const imgLucideCirclePlus = `${assetPathPrefix}/c607a.svg`;
+const imgLucideCamera = `${assetPathPrefix}/757e1.svg`;
+const imgLucideHeart = `${assetPathPrefix}/f6dc7.svg`;
+const imgLucideMessageCircle = `${assetPathPrefix}/e1c72.svg`;
+const imgLucideHouse = `${assetPathPrefix}/083ca.svg`;
+const imgLucideHeartHandshake = `${assetPathPrefix}/3742b.svg`;
+const imgLucideCirclePlus1 = `${assetPathPrefix}/1cc76.svg`;
+const imgLucideMessageCircle1 = `${assetPathPrefix}/c9ed9.svg`;
+const imgLucideUserRound = `${assetPathPrefix}/00fc1.svg`;
+
+type MDMobileV2ActionProps = {
+  className?: string;
+  label?: string;
+  style?: "Quiet";
+};
+
+function MDMobileV2Action({ className, label = "主要操作", style = "Quiet" }: MDMobileV2ActionProps) {
+  return (
+    <div className={className || "content-stretch flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] w-[88px]"} data-node-id="56:181">
+      <p className="[word-break:break-word] flex-[1_0_0] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] min-w-px relative text-[14px] text-[color:var(--mnd-button-study-quiet,#9e382a)]" data-node-id="56:186">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+export default function Component01A01Home() {
+  return (
+    <div className="bg-[var(--mnd-study-color-background,#f7f8fa)] content-stretch flex flex-col items-start overflow-clip relative rounded-[28px] size-full" data-node-id="56:27" data-name="手机 / 01-A01 推荐首页 [home]">
+      <div className="[word-break:break-word] bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex font-['Noto_Sans_SC:Regular'] font-normal h-[28px] items-center leading-[20px] overflow-clip px-[20px] relative shrink-0 text-[12px] w-[390px]" data-node-id="108:1387" data-name="Status / learning disclosure">
+        <p className="relative shrink-0 text-[color:var(--mnd-study-color-ink,#202329)] w-[100px]" data-node-id="108:1388">
+          9:41
+        </p>
+        <p className="relative shrink-0 text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[250px]" data-node-id="108:1389">
+          学习示意 · 非真实数据
+        </p>
+      </div>
+      <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex gap-[var(--mnd-study-space-4,4px)] h-[56px] items-center justify-between overflow-clip px-[16px] py-[var(--mnd-study-space-8,8px)] relative shrink-0 w-[390px]" data-node-id="108:1390" data-name="Toolbar">
+        <p className="[word-break:break-word] font-['Manrope:ExtraBold'] font-extrabold leading-[32px] relative shrink-0 text-[24px] text-[color:var(--mnd-study-color-ink,#202329)] w-[130px]" data-node-id="108:1391">{`M&D`}</p>
+        <MDMobileV2Action className="content-stretch cursor-pointer flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[132px]" label="武汉" />
+        <a className="content-stretch cursor-pointer flex flex-col items-start overflow-clip p-[var(--mnd-study-space-12,12px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 size-[48px]" data-node-id="108:1394" data-name="Publish shortcut">
+          <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="108:1395" data-name="Instance / icon/circle-plus">
+            <div className="relative shrink-0 size-[24px]" data-node-id="I108:1395;56:95" data-name="Lucide / circle-plus">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideCirclePlus} />
+            </div>
+          </div>
+        </a>
+      </div>
+      <div className="content-stretch flex flex-col h-[676px] items-start overflow-x-clip overflow-y-auto relative shrink-0 w-[390px]" data-node-id="108:1400" data-name="Scrollable viewport">
+        <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-16,16px)] items-start overflow-clip p-[var(--mnd-study-space-16,16px)] relative shrink-0 w-[390px]" data-node-id="108:1401" data-name="Task content">
+          <div className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] items-start overflow-clip relative shrink-0 w-[358px]" data-node-id="108:1402" data-name="Community destinations">
+            <div className="bg-[var(--mnd-study-color-brandsoft,#fff1eb)] content-stretch flex flex-col h-[48px] items-start justify-center overflow-clip p-[var(--mnd-study-space-12,12px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[83.5px]" data-node-id="108:1403" data-name="Tab / 推荐">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-brand,#9e382a)] text-center w-[59.5px]" data-node-id="108:1404">
+                推荐
+              </p>
+            </div>
+            <a className="content-stretch cursor-pointer flex flex-col h-[48px] items-start justify-center overflow-clip p-[var(--mnd-study-space-12,12px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[83.5px]" data-node-id="108:1405" data-name="Tab / 关注">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[59.5px]" data-node-id="108:1406">
+                关注
+              </p>
+            </a>
+            <a className="content-stretch cursor-pointer flex flex-col h-[48px] items-start justify-center overflow-clip p-[var(--mnd-study-space-12,12px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[83.5px]" data-node-id="153:5394" data-name="Tab / 宠友圈">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[59.5px]" data-node-id="153:5395">
+                宠友圈
+              </p>
+            </a>
+            <a className="content-stretch cursor-pointer flex flex-col h-[48px] items-start justify-center overflow-clip p-[var(--mnd-study-space-12,12px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[83.5px]" data-node-id="108:1407" data-name="Tab / 同城">
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[59.5px]" data-node-id="108:1408">
+                同城
+              </p>
+            </a>
+          </div>
+          <a className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch cursor-pointer flex gap-[var(--mnd-study-space-12,12px)] items-center overflow-clip p-[var(--mnd-study-space-12,12px)] relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[358px]" data-node-id="108:1409" data-name="Share a pet moment">
+            <div className="relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0 size-[40px]" data-node-id="108:1410" data-name="Instance / socialAvatar">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[var(--mnd-study-radius-999,999px)] size-full" src={imgInstanceSocialAvatar} />
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[246px]" data-node-id="108:1411">
+              晒晒今天的小可爱…
+            </p>
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="108:1412" data-name="Instance / icon/camera">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I108:1412;56:143" data-name="Lucide / camera">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideCamera} />
+              </div>
+            </div>
+          </a>
+          <div className="content-stretch cursor-pointer flex gap-[var(--mnd-study-space-12,12px)] items-start overflow-clip relative shrink-0 w-[358px]" data-node-id="108:1417" data-name="Cat-first community feed">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-16,16px)] items-start overflow-clip relative shrink-0 w-[173px]" data-node-id="108:1418" data-name="Feed left">
+              <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col items-start overflow-clip relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[173px]" data-node-id="108:1420" data-name="Instance / socialFeedTile">
+                <a className="block h-[190px] relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[173px]" data-node-id="I108:1420;105:335" data-name="Photo / social">
+                  <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[var(--mnd-mobile-v2-radius-card,16px)] size-full" src={imgPhotoSocial} />
+                </a>
+                <a className="[word-break:break-word] content-stretch flex flex-col gap-[var(--mnd-study-space-4,4px)] items-start overflow-clip p-[var(--mnd-study-space-8,8px)] relative shrink-0 text-left w-[173px]" data-node-id="I108:1420;105:336" data-name="Post copy">
+                  <p className="font-['Noto_Sans_SC:Bold'] font-bold h-[48px] leading-[24px] overflow-hidden relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] text-ellipsis w-[157px] whitespace-nowrap" data-node-id="I108:1420;105:337">
+                    太阳晒到肚皮啦
+                  </p>
+                  <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[157px]" data-node-id="I108:1420;105:338">
+                    布丁的铲屎官
+                  </p>
+                </a>
+                <div className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center overflow-clip px-[var(--mnd-study-space-8,8px)] relative shrink-0 w-[173px]" data-node-id="I108:1420;105:339" data-name="Feed engagement">
+                  <button className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center relative shrink-0 w-[76px]" data-node-id="I108:1420;105:340" data-name="Compact like">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1420;105:340;193:6374" data-name="Like graphic">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I108:1420;105:340;193:6374;56:157" data-name="Lucide / heart">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHeart} />
+                      </div>
+                    </div>
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[36px]" data-node-id="I108:1420;105:340;193:6377">
+                      12
+                    </p>
+                  </button>
+                  <a className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center overflow-clip py-[var(--mnd-study-space-4,4px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[73px]" data-node-id="I108:1420;105:345" data-name="Open comments">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1420;105:346" data-name="Instance / icon/message-circle">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I108:1420;105:346;56:126" data-name="Lucide / message-circle">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMessageCircle} />
+                      </div>
+                    </div>
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[36px]" data-node-id="I108:1420;105:349">
+                      3
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col items-start overflow-clip relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[173px]" data-node-id="108:1460" data-name="Instance / socialFeedTile">
+                <a className="block h-[190px] relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[173px]" data-node-id="I108:1460;105:335" data-name="Photo / social">
+                  <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[var(--mnd-mobile-v2-radius-card,16px)] size-full" src={imgPhotoSocial1} />
+                </a>
+                <a className="[word-break:break-word] content-stretch flex flex-col gap-[var(--mnd-study-space-4,4px)] items-start overflow-clip p-[var(--mnd-study-space-8,8px)] relative shrink-0 text-left w-[173px]" data-node-id="I108:1460;105:336" data-name="Post copy">
+                  <p className="font-['Noto_Sans_SC:Bold'] font-bold h-[48px] leading-[24px] overflow-hidden relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] text-ellipsis w-[157px] whitespace-nowrap" data-node-id="I108:1460;105:337">
+                    豆豆的散步打卡
+                  </p>
+                  <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[157px]" data-node-id="I108:1460;105:338">
+                    豆豆的朋友
+                  </p>
+                </a>
+                <div className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center overflow-clip px-[var(--mnd-study-space-8,8px)] relative shrink-0 w-[173px]" data-node-id="I108:1460;105:339" data-name="Feed engagement">
+                  <button className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center relative shrink-0 w-[76px]" data-node-id="I108:1460;105:340" data-name="Compact like">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1460;105:340;193:6374" data-name="Like graphic">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I108:1460;105:340;193:6374;56:157" data-name="Lucide / heart">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHeart} />
+                      </div>
+                    </div>
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[36px]" data-node-id="I108:1460;105:340;193:6377">
+                      8
+                    </p>
+                  </button>
+                  <a className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center overflow-clip py-[var(--mnd-study-space-4,4px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[73px]" data-node-id="I108:1460;105:345" data-name="Open comments">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1460;105:346" data-name="Instance / icon/message-circle">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I108:1460;105:346;56:126" data-name="Lucide / message-circle">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMessageCircle} />
+                      </div>
+                    </div>
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[36px]" data-node-id="I108:1460;105:349">
+                      2
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-16,16px)] items-start overflow-clip relative shrink-0 w-[173px]" data-node-id="108:1419" data-name="Feed right">
+              <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col items-start overflow-clip relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[173px]" data-node-id="108:1444" data-name="Instance / socialFeedTile">
+                <a className="block h-[190px] relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[173px]" data-node-id="I108:1444;105:335" data-name="Photo / social">
+                  <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[var(--mnd-mobile-v2-radius-card,16px)] size-full" src={imgInstanceSocialAvatar} />
+                </a>
+                <a className="[word-break:break-word] content-stretch flex flex-col gap-[var(--mnd-study-space-4,4px)] items-start overflow-clip p-[var(--mnd-study-space-8,8px)] relative shrink-0 text-left w-[173px]" data-node-id="I108:1444;105:336" data-name="Post copy">
+                  <p className="font-['Noto_Sans_SC:Bold'] font-bold h-[48px] leading-[24px] overflow-hidden relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] text-ellipsis w-[157px] whitespace-nowrap" data-node-id="I108:1444;105:337">
+                    小满午后的打盹时间
+                  </p>
+                  <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[157px]" data-node-id="I108:1444;105:338">
+                    小满的朋友
+                  </p>
+                </a>
+                <div className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center overflow-clip px-[var(--mnd-study-space-8,8px)] relative shrink-0 w-[173px]" data-node-id="I108:1444;105:339" data-name="Feed engagement">
+                  <button className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center relative shrink-0 w-[76px]" data-node-id="I108:1444;105:340" data-name="Compact like">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1444;105:340;193:6374" data-name="Like graphic">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I108:1444;105:340;193:6374;56:157" data-name="Lucide / heart">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHeart} />
+                      </div>
+                    </div>
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[36px]" data-node-id="I108:1444;105:340;193:6377">
+                      6
+                    </p>
+                  </button>
+                  <a className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center overflow-clip py-[var(--mnd-study-space-4,4px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[73px]" data-node-id="I108:1444;105:345" data-name="Open comments">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1444;105:346" data-name="Instance / icon/message-circle">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I108:1444;105:346;56:126" data-name="Lucide / message-circle">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMessageCircle} />
+                      </div>
+                    </div>
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[36px]" data-node-id="I108:1444;105:349">
+                      1
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col items-start overflow-clip relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[173px]" data-node-id="108:1476" data-name="Instance / socialFeedTile">
+                <a className="block h-[190px] relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-[173px]" data-node-id="I108:1476;105:335" data-name="Photo / social">
+                  <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[var(--mnd-mobile-v2-radius-card,16px)] size-full" src={imgPhotoSocial2} />
+                </a>
+                <a className="[word-break:break-word] content-stretch flex flex-col gap-[var(--mnd-study-space-4,4px)] items-start overflow-clip p-[var(--mnd-study-space-8,8px)] relative shrink-0 text-left w-[173px]" data-node-id="I108:1476;105:336" data-name="Post copy">
+                  <p className="font-['Noto_Sans_SC:Bold'] font-bold h-[48px] leading-[24px] overflow-hidden relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] text-ellipsis w-[157px] whitespace-nowrap" data-node-id="I108:1476;105:337">
+                    糯米今天也在认真吃草
+                  </p>
+                  <p className="font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-[157px]" data-node-id="I108:1476;105:338">
+                    糯米日记
+                  </p>
+                </a>
+                <div className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center overflow-clip px-[var(--mnd-study-space-8,8px)] relative shrink-0 w-[173px]" data-node-id="I108:1476;105:339" data-name="Feed engagement">
+                  <button className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center relative shrink-0 w-[76px]" data-node-id="I108:1476;105:340" data-name="Compact like">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1476;105:340;193:6374" data-name="Like graphic">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I108:1476;105:340;193:6374;56:157" data-name="Lucide / heart">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHeart} />
+                      </div>
+                    </div>
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[36px]" data-node-id="I108:1476;105:340;193:6377">
+                      5
+                    </p>
+                  </button>
+                  <a className="content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[48px] items-center overflow-clip py-[var(--mnd-study-space-4,4px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[73px]" data-node-id="I108:1476;105:345" data-name="Open comments">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1476;105:346" data-name="Instance / icon/message-circle">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I108:1476;105:346;56:126" data-name="Lucide / message-circle">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMessageCircle} />
+                      </div>
+                    </div>
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] text-left w-[36px]" data-node-id="I108:1476;105:349">
+                      1
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[8px] h-[48px] items-start overflow-clip relative shrink-0 w-full" data-node-id="495:17342" data-name="Closure / public-rules-entry">
+            <MDMobileV2Action className="content-stretch cursor-pointer flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[175px]" label="平台规则" />
+            <MDMobileV2Action className="content-stretch cursor-pointer flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[175px]" label="隐私与安全" />
+          </div>
+        </div>
+      </div>
+      <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col h-[84px] items-center overflow-clip pb-[12px] pt-[var(--mnd-study-space-8,8px)] px-[var(--mnd-study-space-8,8px)] relative shrink-0 w-[390px]" data-node-id="108:1492" data-name="Persistent navigation">
+        <div className="content-stretch flex items-start overflow-clip relative shrink-0 w-[374px]" data-node-id="108:1493" data-name="Four destinations plus publish action">
+          <div className="content-stretch flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="108:1494" data-name="Instance / navActive">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1494;56:228" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I108:1494;56:228;56:164" data-name="Lucide / house">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHouse} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-brand,#9e382a)] text-center w-[min-content]" data-node-id="I108:1494;56:232">
+              社区
+            </p>
+            <div className="bg-[var(--mnd-study-color-brand,#9e382a)] h-[3px] relative shrink-0 w-[20px]" data-node-id="I108:1494;62:1813" data-name="Current destination indicator" />
+          </div>
+          <a className="content-stretch cursor-pointer flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="108:1504" data-name="Instance / nav">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1504;56:222" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I108:1504;56:222;56:151" data-name="Lucide / heart-handshake">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHeartHandshake} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[min-content]" data-node-id="I108:1504;56:226">
+              领养
+            </p>
+          </a>
+          <a className="content-stretch cursor-pointer flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="108:1512" data-name="Instance / nav">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1512;56:222" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I108:1512;56:222;56:95" data-name="Lucide / circle-plus">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideCirclePlus1} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[min-content]" data-node-id="I108:1512;56:226">
+              发布
+            </p>
+          </a>
+          <a className="content-stretch cursor-pointer flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="108:1522" data-name="Instance / nav">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1522;56:222" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I108:1522;56:222;56:126" data-name="Lucide / message-circle">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMessageCircle1} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[min-content]" data-node-id="I108:1522;56:226">
+              消息
+            </p>
+          </a>
+          <a className="content-stretch cursor-pointer flex flex-col h-[56px] items-center relative shrink-0 w-[74.8px]" data-node-id="108:1530" data-name="Instance / nav">
+            <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" data-node-id="I108:1530;56:222" data-name="Navigation icon">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I108:1530;56:222;56:147" data-name="Lucide / user-round">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideUserRound} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] text-center w-[min-content]" data-node-id="I108:1530;56:226">
+              我的
+            </p>
+          </a>
+        </div>
+        <div className="bg-[var(--mnd-study-color-ink,#202329)] h-[4px] relative rounded-[var(--mnd-study-radius-999,999px)] shrink-0 w-[120px]" data-node-id="108:1539" data-name="Home indicator" />
+      </div>
+    </div>
+  );
+}
+
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+
+These styles are contained in the design: M&D Study/Caption: Font(family: "Noto Sans SC", style: Regular, size: 12, weight: 400, lineHeight: 20, letterSpacing: 0), M&D Mobile V2/MobileBrand: Font(family: "Manrope", style: ExtraBold, size: 24, weight: 800, lineHeight: 32, letterSpacing: 0), M&D Study/Label: Font(family: "Noto Sans SC", style: Medium, size: 14, weight: 500, lineHeight: 22, letterSpacing: 0), M&D Mobile V2/Strong: Font(family: "Noto Sans SC", style: Bold, size: 16, weight: 700, lineHeight: 24, letterSpacing: 0).
+
+Component descriptions: The following components have usage descriptions or documentation links defined in Figma. These descriptions provide important context about the intended usage, best practices, and any constraints for each component. Follow these guidelines when implementing or using these components.
+
+## M&D Mobile V2 / Action
+**Node ID:** 56:183
+
+已按用户明确要求，将 01 清爽亲切应用至普通手机59屏。保留Label和Style属性以及实例ID；主按钮珊瑚白字，次按钮浅珊瑚细边，16圆角、48触控高度。其余设备和旧主题未迁移。焦点、按下与加载规范参照70:186的Friendly变体。
+
+## M&D Mobile V2 / Icon / circle-plus
+**Node ID:** 56:94
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V3 / socialAvatar
+**Node ID:** 105:315
+
+手机学习稿 Friendly 社交组件；复用字体、语义颜色与照片。交互为设计演示，不连接真实服务。
+
+## M&D Mobile V2 / Icon / camera
+**Node ID:** 56:142
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V3 / socialFeedTile
+**Node ID:** 105:334
+
+双列日记卡片：图片190；标题固定两行，作者独立；48px互动行内统一24px图标框、8px数字间距。长标题不推低互动行。
+
+## M&D / Compact reaction
+**Node ID:** 193:6373
+
+卡片互动数量控件，图标24px框、数字14px、间距8px、48px触控高。Count为文本属性，状态仅改变爱心填充，不挤动计数。
+
+## M&D Mobile V2 / Icon / heart
+**Node ID:** 56:156
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / message-circle
+**Node ID:** 56:125
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Navigation / navActive
+**Node ID:** 56:227
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / house
+**Node ID:** 56:163
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Navigation / nav
+**Node ID:** 56:221
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / heart-handshake
+**Node ID:** 56:150
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / user-round
+**Node ID:** 56:146
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+The generated code contains image and SVG URL constants, e.g. const image = `${assetPathPrefix}/<asset file name>`, where assetPathPrefix is declared once at the top of the code and every asset URL interpolates it. These URLs are temporary download sources and expire after 7 days. Download each asset into the project with curl -L, then replace its URL in the generated code with a reference to the downloaded asset. Never use the temporary URLs as runtime image sources.

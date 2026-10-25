@@ -1,0 +1,62 @@
+@startuml 11-data-lifecycle-erasure-and-worker-jobs-sequence
+!theme plain
+skinparam backgroundColor #FFFDF9
+skinparam defaultFontName "PingFang SC, Inter, sans-serif"
+skinparam roundcorner 8
+skinparam SequenceMessageAlign center
+skinparam ArrowColor #5C534E
+
+title F12 Data Export/Erasure, Account Closure, Cross-Case Evidence Holds & 6 Background Worker Jobs
+
+actor "User" as User
+actor "Operator\n(safety_specialist /\nprivacy_officer)" as Operator
+participant "Client UI\n(DataPrivacyCenter /\nAccountClosure)" as Client
+participant "Go API\n(mobile.Service)" as Api
+participant "cmd/worker\n(mobileworker.Runner)" as Worker
+participant "S3 Object Storage" as S3
+database "PostgreSQL\n(mobile_data_requests /\nmobile_account_closures /\nmobile_evidence_holds)" as Db
+
+== 1. Cross-Case Evidence Hold Guard (Blocks Premature Destruction of Evidence) ==
+Operator -> Api : POST /api/v2/ops/evidence-holds\n(Role: safety_specialist) {targetUserId, sourceType: "dispute"|"safety_case", sourceId, reason}
+Api -> Db : INSERT mobile_evidence_holds (status='active')
+Api --> Operator : 201 EvidenceHoldView
+
+== 2. User Requests Data Export / Data Erasure / Account Closure with Reauth ==
+User -> Client : Open DataPrivacyCenter or AccountClosure -> Complete Reauth
+Client -> Api : POST /api/v2/privacy/data-requests (kind="export"|"erasure")\nOR POST /api/v2/account/closure\nHeader: X-Reauth-Token: <reauthToken>
+Api -> Db : Consume purpose_reauth_grant\nCheck HasActiveEvidenceHold(userID) + Check active Care obligations (Trial Adoption / Unresolved Claim)
+
+alt Active Evidence Hold OR Unresolved Care Obligation exists
+  Db --> Api : Hold active (e.g. hold_id="hold_123")
+  Api -> Db : INSERT mobile_data_requests / mobile_account_closures\nSET status = 'blocked_by_hold', progress_json = {stage: "blocked_by_evidence_hold"}
+  Api --> Client : 202 Accepted (Status: blocked_by_hold; transparent progress shown in UI)
+else No active holds or blocking obligations
+  Api -> Db : INSERT mobile_data_requests (status='queued') /\nINSERT mobile_account_closures (status='cooling_off', cool_off_until = now + 7d)
+  Api --> Client : 202 Accepted (DataRequestProgress: queued / cooling_off)
+end
+
+== 3. cmd/worker Periodic Execution of 6 Deterministic Maintenance Jobs ==
+loop Every Worker Tick (cmd/worker)
+  Worker -> Api : 1. RunExpireReservations(now)
+  Api -> Db : Expire unattached mobile_media_reservations past TTL -> status='pending_delete'
+
+  Worker -> Api : 2. RunExpireDomainDeadlines(now)
+  Api -> Db : Expire 15m guardian invites, 10m inbox snapshots, 72h adoption return proposals,\nand unaccepted appointment reschedule proposals (restoring effectiveVersion)
+
+  Worker -> Api : 3. RunProcessPendingDataRequests(now)
+  Api -> Db : Claim queued data export/erasure & matured account closures (now >= cool_off_until)\nRe-verify 0 active mobile_evidence_holds before destructive erasure
+  Api -> Db : Anonymize PII, revoke sessions, mark media 'pending_delete', update DataRequestProgress='completed'
+
+  Worker -> Api : 4. RunReconcileObjectDeletions(now)
+  Api -> Db : Select media in 'pending_delete' with 0 active evidence holds
+  Api -> S3 : DeleteObject(objectKey)
+  Api -> Db : Update reservation status='deleted'
+
+  Worker -> Api : 5. RunPurgeExpiredArtifacts(now)
+  Api -> Db : Purge expired data export bundles, expired command ledger rows & consumed reauth grants
+
+  Worker -> Api : 6. RunDispatchOutboxEvents(now)
+  Api -> Db : Claim pending mobile_outbox_events (FOR UPDATE SKIP LOCKED)\nDispatch notifications & audit hooks -> mark status='dispatched'
+end
+
+@enduml

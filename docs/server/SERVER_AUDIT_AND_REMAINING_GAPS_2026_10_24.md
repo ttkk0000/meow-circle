@@ -1,22 +1,25 @@
-# M&D / meow & doggie 服务端完整性审计与待完善清单（2026-10-24）
+# M&D / meow & doggie 服务端完整性审计与待完善清单（2026-10-24，2026-10-25 复核更新）
 
-> 状态：2026-10-24 服务端代码与基础设施静态审计快照  
-> 适用范围：`cmd/server`、`cmd/worker`、`internal/identity`、`internal/mobile`、`internal/platform/mobileapi`、`internal/store/postgres`、`migrations/001`–`009`、`docs/api/mobile-v2.openapi.json`、`Dockerfile`、`docker-compose.yml`、`Makefile`  
-> 验收口径说明：本文基于仓库源码与配置静态审计（未执行 `go build` / `go test` / `gradle`）。所有“已落地”均指**源码与 OpenAPI 契约级落地**，不等同于生产运行态验收。
+2026-10-25续作修正：[本批源码与边界](../client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md)。当前245 Paths／275 Operations／124 Schemas，75对DTO，12迁移与8类worker源码；011数组／前缀索引、活跃领养筛选、Web续期加密回执、012数据库作业协调、私有S3端口和两类最小投影事件已写。原审计部分“现状”已过期：`identity/rate.go`已是数据库预算，`qualification.go`已按Child RefID筛选，Outbox实际按100条分页，不能照旧文段重复修改。完整搜索引擎接收端及运维执行器按用户要求继续占位；所有构建／迁移／运行均未验证，下文保留为审计历史而非当前缺口逐项判定。
+
+> 状态：2026-10-24 服务端代码与基础设施静态审计快照（2026-10-25 同步最新 OpenAPI `241` Paths / `271` Operations / `123` Schemas 及 PlantUML 图谱 [`docs/uml/`](../uml/README.md)）
+> 适用范围：`cmd/server`、`cmd/worker`、`internal/identity`、`internal/mobile`、`internal/platform/mobileapi`、`internal/platform/mobileauth`、`internal/store/postgres`、`migrations/001`–`009`、`docs/api/mobile-v2.openapi.json`、`Dockerfile`、`docker-compose.yml`、`Makefile`
+> 验收口径说明：本文基于仓库源码与配置静态审计（未执行 `go build` / `go test` / `gradle`）。所有“已落地”均指**源码与 OpenAPI 契约级落地**，不等同于生产运行态验收。完整代码逻辑与 UML 图解见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)。
 
 ---
 
-## 1. 当前服务端源码基线总览（截至 2026-10-24）
+## 1. 当前服务端源码基线总览（截至 2026-10-25）
 
-经过 `2026-10-22` 至 `2026-10-24` 多批次演进，服务端 `/api/v2` 与 `cmd/worker` 已形成完整的业务域源码闭环：
+经过 `2026-10-22` 至 `2026-10-25` 多批次演进，服务端 `/api/v2` 与 `cmd/worker` 已形成完整的业务域源码闭环：
 
 | 维度 | 当前基线指标 | 关键源码与契约位置 |
 |---|---|---|
-| **OpenAPI 3.1 契约** | `230` Paths / `259` Operations / `112` Schemas | `docs/api/mobile-v2.openapi.json`、`internal/platform/mobileapi/assets.go` |
+| **OpenAPI 3.1 契约** | `241` Paths / `271` Operations / `123` Server Schemas（`74` 对跨语言 DTO） | `docs/api/mobile-v2.openapi.json`、`internal/platform/mobileapi/assets.go` |
 | **PostgreSQL 迁移** | `001`–`009` 共 9 个 SQL 迁移文件 | `migrations/001_init.sql` 至 `migrations/009_pet_discussions.sql` |
 | **`mobile_*` 聚合表** | **44 张**（`007` 32 张 + `008` 10 张 + `009` 2 张） | `internal/mobile/repository.go`（`Kinds` 切片共 44 项）、`internal/store/postgres/mobile.go` |
 | **Worker 后台任务** | **6 类**（`push` / `nearby_alerts` / `content_updates` / `privacy_cleanup` / `provider_revocations` / `maintenance`） | `cmd/worker/main.go`、`internal/platform/mobileapi/jobs.go` |
-| **认证与资格契约** | B04 账号合并 + B05 资格重算（`requireInteractionContract()`）+ 浏览器 `HttpOnly Cookie` + `X-MND-CSRF` 适配 | `internal/identity/service.go`、`internal/platform/mobileapi/browser.go` |
+| **认证、三方登录、年龄核验与监护人邀请** | B04 账号合并 + 官方三方 Create vs Link 分离（`409 identity_in_use`）+ 外部年龄核验网关（`age_gateway.go`）+ 未成年人 15 分钟一次性监护人邀请与独立成年关系申诉（`guardian_invites.go`）+ B05 资格重算（`requireInteractionContract()`）+ 浏览器 `HttpOnly Cookie` + `X-MND-CSRF` 适配 | `internal/identity/service.go`、`internal/identity/age_assurance.go`、`internal/identity/guardian_invites.go`、`internal/platform/mobileauth/tencent_apps.go`、`internal/platform/mobileapi/browser.go` |
+| **高德地图代理与粗粒度坐标隐私** | Web 高德 JS API 2.0 安全代理 `/maps/amap/_AMapService/`（服务端注入 `jscode`）+ `GCJ-02`/`WGS-84` 小数点后 2 位粗粒度坐标量化 | `internal/platform/mobileapi/amap.go`、`internal/mobile/lost_pet.go` |
 | **领养与寄养独占闭环** | 宠物级唯一活跃放置（`validatePetPlacementAvailable`）+ 候选队列（`waitlisted`）+ 重开周期递增（`adoption_cycle`）+ 72h 紧急转交（`safety_hold`） | `internal/mobile/adoption_placement.go`、`internal/mobile/authority.go`、`internal/mobile/service.go` |
 | **同城预约与合规准入** | 城市与物种准入（猫/狗直接开放；异宠须 `exotic_approved_city: true` 且资质有效）+ 医疗免责拦截 + 100m 地理隐私模糊 | `internal/mobile/appointment_admission.go`、`internal/mobile/qualification.go` |
 | **跨单据证据保留与注销** | 纠纷/回访/申诉/安全保留自动冻结关联消息、状态历史、审计与媒体（`BlockedByHold`），解冻前禁止物理清除 | `internal/mobile/evidence_retention.go`、`internal/mobile/data_requests.go` |

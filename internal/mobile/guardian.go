@@ -6,6 +6,8 @@ import (
 )
 
 type GuardianEvidenceInput struct {
+	InviteID      int64     `json:"invite_id"`
+	InviteVersion int64     `json:"invite_version"`
 	PolicyVersion string    `json:"policy_version"`
 	GuardianID    int64     `json:"guardian_id"`
 	ChildID       int64     `json:"child_id"`
@@ -27,11 +29,31 @@ func (s *Service) RecordGuardianEvidence(ctx context.Context, operator string, i
 		if e := s.active(tx, in.ChildID); e != nil {
 			return e
 		}
+		var invitation Record
+		var inviteBody GuardianInviteBody
+		if in.InviteID > 0 {
+			var e error
+			invitation, inviteBody, e = pendingGuardianInvite(tx, in, s.Now())
+			if e != nil {
+				return e
+			}
+		}
 		r := Record{OwnerID: in.GuardianID, RefID: in.ChildID, Participants: []int64{in.ChildID}, State: "verified_pending_consent"}
 		if e := save(tx, Guardians, &r, GuardianConsent{ChildID: in.ChildID, Scopes: []string{}, ValidUntil: in.ValidUntil, EvidenceRef: in.EvidenceRef, PolicyVersion: in.PolicyVersion}, in.GuardianID, "guardian.relationship_verified"); e != nil {
 			return e
 		}
 		out = r
+		if in.InviteID > 0 {
+			invitation.State = "guardian_relation_verified"
+			inviteBody.GuardianRecordID = r.ID
+			inviteBody.ExpiresAt = s.Now().Add(24 * time.Hour)
+			if e := SetBody(&invitation, inviteBody); e != nil {
+				return e
+			}
+			if e := tx.Save(AuthChallenges, &invitation); e != nil {
+				return e
+			}
+		}
 		return audit(tx, operator, "guardian.relationship_verified", Guardians, r.ID)
 	})
 	return

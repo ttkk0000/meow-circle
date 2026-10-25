@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"kitty-circle/internal/platform/envfile"
 	"log"
 	"os"
 	"os/signal"
@@ -15,6 +16,9 @@ import (
 )
 
 func main() {
+	if err := envfile.Load("MND_WORKER_OPERATOR_TOKEN"); err != nil {
+		log.Fatal(err)
+	}
 	once := flag.Bool("once", true, "run one bounded batch; set -once=false for an explicit continuous worker")
 	flag.Parse()
 	job := os.Getenv("MND_WORKER_JOB")

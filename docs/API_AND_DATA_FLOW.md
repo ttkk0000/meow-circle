@@ -1,30 +1,37 @@
 # API And Data Flow
 
-> **2026-10-24 v2 Architecture & Data Flow Update (Primary Baseline)**
+> **2026-10-25 v2 Architecture & Data Flow Update (Primary Baseline)**
 >
 > Since 2026-10-20, all active feature development uses the **`/api/v2`** contract and modular-monolith architecture. The legacy `/api/v1` sections below are retained strictly for historical reference (`MND_ENABLE_LEGACY_AUTH=0` disables v1 writes in production).
 >
 > ### v2 Quick Reference
-> - **Machine Contract**: [`docs/api/mobile-v2.openapi.json`](api/mobile-v2.openapi.json) (`230` Paths / `259` Operations / `112` Schemas).
+> - **Machine Contract**: [`docs/api/mobile-v2.openapi.json`](api/mobile-v2.openapi.json) (`241` Paths / `271` Operations / `123` Server Schemas; `125` Web derived schemas in `web-client/src/core/schemas.json`; `74` cross-language DTO pairs).
+> - **Code Logic & PlantUML Diagrams**: [`docs/CODE_LOGIC_AND_UML_REFERENCE.md`](CODE_LOGIC_AND_UML_REFERENCE.md) & [`docs/uml/README.md`](uml/README.md) (12 standalone `.puml` sequence, state, ER, class, and component diagrams).
 > - **Response Envelope (`internal/platform/mobileapi`)**:
 >   - Success: `{ "ok": true, "data": <T> }`
 >   - Error: `{ "ok": false, "error": "<CODE_OR_MESSAGE>" }`
-> - **Authentication & Eligibility (`internal/identity`, `internal/mobile/qualification.go`)**:
+> - **Authentication, Provider Auth, Age Assurance & Guardian Invites (`internal/identity`, `internal/mobile/qualification.go`)**:
 >   - Opaque, revocable random session pairs (`access_token` 1h / `refresh_token` 30d, SHA-256 hashed in DB) + browser `HttpOnly Cookie` & `X-MND-CSRF` adapter (`internal/platform/mobileapi/browser.go`).
->   - Three unique login identifiers (`username`, `email`, `phone`) resolve to a single `user_id` (`migrations/005_mobile_auth_identities.sql`).
->   - Login is decoupled from outbound interaction eligibility (`migrations/006_identity_eligibility.sql`); restricted mutations enforce `requireInteractionContract()`, minor guardian scope (`KindGuardians`), and single-use action/resource/version-bound `reauth` grants.
+>   - Three unique login identifiers (`username`, `email`, `phone`) resolve to a single `user_id` (`migrations/005_mobile_auth_identities.sql`). Explicit separation between provider sign-in (`create`) and logged-in identity binding (`link` with `reauth`, returning `409 identity_in_use` on conflict without auto-merge).
+>   - External Age Assurance gateway (`internal/identity/age_assurance.go`, `internal/platform/mobileauth/age_gateway.go`) + 15-minute single-use Guardian Invites & Independent Adult Relationship Claims (`internal/identity/guardian_invites.go`).
+>   - Login is decoupled from outbound interaction eligibility (`migrations/006_identity_eligibility.sql`); restricted mutations enforce `requireInteractionContract()`, minor guardian scope (`KindGuardians`, including stranger DM `directContact` gate in `internal/mobile/social.go`), and single-use action/resource/version-bound `reauth` grants.
+> - **Amap Security Proxy & Coarse Coordinate Privacy (`internal/platform/mobileapi/amap.go`, `internal/mobile/lost_pet.go`)**:
+>   - Web Amap JS API 2.0 proxies through `/maps/amap/_AMapService/` with server-injected `jscode`.
+>   - Public lost-pet coordinates are quantized to 2 decimal places (`GCJ-02` / `WGS-84` explicit datum isolation).
 > - **Transactional Storage (`internal/store/postgres/mobile.go`, `migrations/007`–`009`)**:
 >   - **44 `mobile_*` aggregate tables** (`32` in `007_mobile_modules.sql`, `10` in `008_mobile_policy_commands.sql`, `2` in `009_pet_discussions.sql`).
 >   - All mutations execute inside PostgreSQL `SERIALIZABLE` transactions with optimistic `version` CAS (`409 VERSION_CONFLICT` on stale writes) and `Idempotency-Key` / `client_request_id` receipt recovery (`mobile_operations`).
 > - **Asynchronous Outbox & Worker Jobs (`cmd/worker`, `internal/platform/mobileapi/jobs.go`)**:
 >   - 6 independent background jobs authenticated via named operator tokens (`MND_OPERATORS_JSON` + `X-Operator-Token`): `push`, `nearby_alerts`, `content_updates`, `privacy_cleanup`, `provider_revocations`, and `maintenance`.
 > - **Detailed v2 Documentation**:
+>   - [Code Logic & PlantUML Reference Manual](CODE_LOGIC_AND_UML_REFERENCE.md)
+>   - [PlantUML (`.puml`) Diagram Suite](uml/README.md)
 >   - [Mobile Server & v2 API Handoff](server/MOBILE_SERVER.md)
 >   - [Modular Monolith Architecture](server/ARCHITECTURE.md)
 >   - [Server Completeness Audit & Remaining Gaps (2026-10-24)](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)
 >   - [Client Implementation Plan & v2 Store](client/IMPLEMENTATION_PLAN.md)
 
-Last updated: 2026-10-24 (v1 baseline below originally recorded 2026-05-27)
+Last updated: 2026-10-25 (v1 baseline below originally recorded 2026-05-27)
 
 This document maps the current Go API, domain models, persistence strategy, and
 client contracts.

@@ -15,7 +15,7 @@ sealed interface SensitiveIntent {
 enum class SensitiveStage { Idle, LoadingScope, Review, Verifying, ReadyToSubmit, Submitting, ResultUnknown, Complete, Failed }
 data class SensitiveActionState(val stage: SensitiveStage = SensitiveStage.Idle, val intent: SensitiveIntent? = null,
     val scope: PurposeScope? = null, val error: String? = null, val clientRequestId: String? = null,
-    val resultId: Long? = null, val resultKind: String? = null)
+    val resultId: Long? = null, val resultKind: String? = null,val errorCode: String = "")
 
 /** Android and iOS own the UI; this owner supplies the same confirmation and recovery rules. */
 class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineScope) :
@@ -136,8 +136,8 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
                     else SensitiveActionState(SensitiveStage.ResultUnknown,error = e.mobileMessage(),clientRequestId = intent.key())
             } catch (e: Exception) {
                 expectedSignOut = false
-                if (revision == currentRevision) mutable.value = if (owner == submittedOwner) current.copy(stage = SensitiveStage.Failed,error = e.mobileMessage())
-                    else SensitiveActionState(SensitiveStage.Failed,error = e.mobileMessage(),clientRequestId = intent.key())
+                if (revision == currentRevision) mutable.value = if (owner == submittedOwner) current.copy(stage = SensitiveStage.Failed,error = e.mobileMessage(),errorCode = (e as? MobileApiException)?.code.orEmpty())
+                    else SensitiveActionState(SensitiveStage.Failed,error = e.mobileMessage(),clientRequestId = intent.key(),errorCode = (e as? MobileApiException)?.code.orEmpty())
             }
         }
     }

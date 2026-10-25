@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parents[1]
 android = root / "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile"
+client_ui = root / "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui"
 shared = root / "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client"
 
 class Page(HTMLParser):
@@ -46,10 +47,10 @@ for name, fields in {"InboxReadSnapshot": ("snapshot_id", "version"), "InboxRead
 for name in ("Case", "Subscription"):
     assert "location_precision" in schema["components"]["schemas"][name]["properties"]
 
-ui = (android / "AndroidMobileApp.kt").read_text(encoding="utf-8")
+ui = (client_ui / "ConsumerApp.kt").read_text(encoding="utf-8")
 assert ui.count("InboxReadAllDialog(store,state)") == 1, "read-all dialog must have one owner"
-assert "restartInboxReadAll" in (android / "AndroidInboxReadAll.kt").read_text(encoding="utf-8")
-care = (android / "AndroidCareFeatures.kt").read_text(encoding="utf-8")
+assert "restartInboxReadAll" in (client_ui / "InboxReadAll.kt").read_text(encoding="utf-8")
+care = (client_ui / "CarePages.kt").read_text(encoding="utf-8")
 assert "requireAppointmentContext(request.contextKind,request.contextId,request.peerId)" in care
 assert 'FormField(f,s,"latitude"' not in care and 'FormField(f,s,"longitude"' not in care
 assert "requireCurrentAudience" in (shared / "MobileStore.kt").read_text(encoding="utf-8")

@@ -130,7 +130,11 @@ func (s *Service) Friend(ctx context.Context, actor int64, action string, in Fri
 		return
 	}
 	err = s.command(ctx, actor, "friend."+action, 0, in, Friendships, &out, func(tx Tx) error {
-		if e := s.interaction(tx, actor); e != nil {
+		if HasString([]string{"block", "unblock", "decline", "withdraw", "remove"}, action) {
+			if e := s.active(tx, actor); e != nil {
+				return e
+			}
+		} else if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
 		if e := s.active(tx, in.UserID); e != nil {
@@ -942,12 +946,8 @@ func (s *Service) Conversation(ctx context.Context, actor int64, in Conversation
 		if e := s.active(tx, in.UserID); e != nil {
 			return e
 		}
-		b, e := blocked(tx, actor, in.UserID)
-		if e != nil {
+		if e := s.directContact(tx, actor, in.UserID); e != nil {
 			return e
-		}
-		if b {
-			return ErrForbidden
 		}
 		r, e := tx.ByKey(Conversations, pair(actor, in.UserID))
 		if e == nil {
@@ -990,7 +990,11 @@ func (s *Service) ConversationAction(ctx context.Context, actor, id, version int
 	err = s.mutate(ctx, actor, "conversation."+action, id, struct {
 		Version int64 `json:"version"`
 	}{version}, Conversations, &out, func(tx Tx) error {
-		if e := s.interaction(tx, actor); e != nil {
+		if action == "decline" {
+			if e := s.active(tx, actor); e != nil {
+				return e
+			}
+		} else if e := s.interaction(tx, actor); e != nil {
 			return e
 		}
 		r, e := tx.Get(Conversations, id)
@@ -1012,6 +1016,9 @@ func (s *Service) ConversationAction(ctx context.Context, actor, id, version int
 		}
 		r.State = "declined"
 		if action == "accept" {
+			if e := s.directContact(tx, c.RequesterID, c.RecipientID); e != nil {
+				return e
+			}
 			r.State = "accepted"
 		}
 		if e = save(tx, Conversations, &r, c, actor, "conversation."+action); e != nil {
@@ -1086,6 +1093,9 @@ func (s *Service) Message(ctx context.Context, actor, parentID int64, group bool
 		if !group {
 			c, e := Decode[Conversation](p)
 			if e != nil {
+				return e
+			}
+			if e := s.directContact(tx, c.RequesterID, c.RecipientID); e != nil {
 				return e
 			}
 			if p.State == "pending" {
@@ -1209,6 +1219,11 @@ func (s *Service) Settings(ctx context.Context, actor int64, k Kind, in Settings
 		r.State = "active"
 		if k == Preferences {
 			preference := *in.Preference
+			if !preference.PushPermission || preference.Frequency == "off" {
+				if e = DisablePushDevices(tx, actor, "", true); e != nil {
+					return e
+				}
+			}
 			preference.Content = nil
 			if r.Version > 0 {
 				previous, e := Decode[Preference](r)

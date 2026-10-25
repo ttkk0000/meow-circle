@@ -35,3 +35,7 @@
 - Wrapper 仅修改分发 URL；未执行 wrapper 任务、替换 wrapper JAR、安装 API 37 SDK 或产生锁文件 / 构建产物。尚不能声称已完成依赖解析、二进制兼容验证或供应链校验。
 
 未运行编译，遵循全局不自行编译规则。全部依赖的真实解析、Android API 26 / 37 运行、iPhone / iPad 和 Desktop 构建结果均未验证。
+
+## 2026-10-25 可选推送补充
+
+Android新增可选 `com.google.firebase:firebase-messaging:26.0.1` 主模块，版本及最低API24由[官方发布记录](https://firebase.google.com/support/release-notes/android)核对，与本工程最低API26相容；不引入KTX／Analytics或google-services插件。默认公开应用配置为空、自动初始化关闭，用户保存许可后才初始化。未下载／解析SDK产物、未执行Gradle；这不是依赖解析或二进制兼容性结果。接线、配置与剩余验证见[续作交接](REMAINING_CODE_IMPLEMENTATION_2026_10_25.md)。

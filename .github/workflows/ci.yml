@@ -112,7 +112,7 @@ jobs:
           # Distroless/static has no shell, so we can't `--help`. Instead
           # launch the server in the background, poll /healthz, and verify
           # we get HTTP 200 back before killing the container.
-          docker run -d --name meow-ci -p 18080:8080 kitty-circle:ci
+          docker run -d --name meow-ci -e APP_ENV=development -e MND_ALLOW_MEMORY_MOBILE=1 -p 18080:8080 kitty-circle:ci
           for i in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:18080/healthz > /tmp/healthz.json; then
               echo "healthz ok:"; cat /tmp/healthz.json; echo
@@ -178,14 +178,30 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends postgresql-client
 
-      - name: Apply migrations
-        run: |
-          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/001_init.sql
-          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/002_social.sql
-          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/003_user_phone.sql
-          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/004_notifications_actor_image.sql
+      - name: Apply complete migrations with ledger
+        run: go run ./cmd/migrate
 
       - name: Run integration tests
         run: |
           go test -tags=integration -race -count=1 -timeout=180s \
                   ./internal/store/postgres/...
+
+  web:
+    name: Web typecheck and bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: web-client/package-lock.json
+      - run: npm ci
+        working-directory: web-client
+      - run: npm run typecheck && npm run build
+        working-directory: web-client
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mnd-web
+          path: web-client/dist
+          if-no-files-found: error

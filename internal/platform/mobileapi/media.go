@@ -9,8 +9,8 @@ import (
 	"image/jpeg"
 	"image/png"
 	"io"
+	"kitty-circle/internal/mediablob"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strconv"
 
@@ -123,30 +123,7 @@ func (h *Handler) uploadFor(w http.ResponseWriter, r *http.Request, actor int64,
 		return nil, mobile.ErrForbidden
 	}
 
-	if e = os.MkdirAll(h.MediaDir, 0700); e != nil {
-		return nil, e
-	}
-	target := filepath.Join(h.MediaDir, filename)
-	f, e := os.CreateTemp(h.MediaDir, ".upload-"+filename+"-*")
-	if e != nil {
-		return nil, e
-	}
-	tempName := f.Name()
-	defer os.Remove(tempName)
-	{
-		_, writeErr := f.Write(encoded.Bytes())
-		if writeErr == nil {
-			writeErr = f.Sync()
-		}
-		closeErr := f.Close()
-		if writeErr != nil {
-			return nil, writeErr
-		}
-		if closeErr != nil {
-			return nil, closeErr
-		}
-	}
-	if e = os.Rename(tempName, target); e != nil {
+	if e = h.blobs().Put(r.Context(), filename, encoded.Bytes()); e != nil {
 		return nil, e
 	}
 	record, e = h.Service.CompleteReservedMedia(r.Context(), actor, safetyToken, record.ID, record.Version)
@@ -186,37 +163,29 @@ func (h *Handler) serveMediaFile(w http.ResponseWriter, r *http.Request, file mo
 	if filepath.Base(file.Filename) != file.Filename || file.Filename == "" {
 		return mobile.ErrNotFound
 	}
-	f, e := os.Open(filepath.Join(h.MediaDir, file.Filename))
-	if errors.Is(e, os.ErrNotExist) {
+	raw, modified, e := h.blobs().Read(r.Context(), file.Filename)
+	if errors.Is(e, mediablob.ErrNotFound) {
 		return mobile.ErrNotFound
 	}
 	if e != nil {
 		return e
 	}
-	defer f.Close()
-	info, e := f.Stat()
-	if e != nil {
-		return e
+	checksum := sha256.Sum256(raw)
+	if int64(len(raw)) != file.Size || hex.EncodeToString(checksum[:]) != file.SHA256 {
+		return mobile.ErrUnavailable
 	}
+	w.Header().Set("Content-Type", file.MIME)
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("Cache-Control", "private, no-store")
 	if file.SourceLabel != "" {
-		raw, e := io.ReadAll(io.LimitReader(f, maxImageBytes+1))
-		if e != nil {
-			return e
-		}
-		if len(raw) > maxImageBytes {
-			return mobile.ErrNotFound
-		}
 		marked, e := embedAIGC(raw, file.MIME, file.SourceLabel)
 		if e != nil {
 			return e
 		}
 		w.Header().Set("Content-Type", file.MIME)
-		http.ServeContent(w, r, "image", info.ModTime(), bytes.NewReader(marked))
+		http.ServeContent(w, r, "image", modified, bytes.NewReader(marked))
 		return nil
 	}
-	w.Header().Set("Content-Type", file.MIME)
-	w.Header().Set("X-Content-Type-Options", "nosniff")
-	w.Header().Set("Cache-Control", "private, no-store")
-	http.ServeContent(w, r, "image", info.ModTime(), f)
+	http.ServeContent(w, r, "image", modified, bytes.NewReader(raw))
 	return nil
 }

@@ -1,6 +1,6 @@
 # 手机端对应的 Go 服务接口与运行交接
 
-更新：2026-10-24。当前服务端续作见[服务端优先完善与作业交接](SERVER_FIRST_2026_10_23.md)、[证据保全／数据清理](LIFECYCLE_RETENTION_2026_10_23.md)、[领养送养闭环与安全保留](ADOPTION_CLOSURE_2026_10_23.md)、[服务端完整性审计与待完善清单（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。设计依据：[手机评审入口](../design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)；机器合同：[OpenAPI 3.1（230 Paths / 259 Operations / 112 Schemas）](../api/mobile-v2.openapi.json)。全部运行结果待验收。
+更新：2026-10-25。当前服务端全量代码逻辑与 UML 图谱见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)与[`docs/uml/`](../uml/README.md)；分项交接见[服务端优先完善与作业交接](SERVER_FIRST_2026_10_23.md)、[证据保全／数据清理](LIFECYCLE_RETENTION_2026_10_23.md)、[领养送养闭环与安全保留](ADOPTION_CLOSURE_2026_10_23.md)、[服务端完整性审计与待完善清单（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)、[三方官方认证](../client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)、[外部年龄核验网关](../client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)、[监护人 15 分钟邀请与成年关系申诉](../client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)。设计依据：[手机评审入口](../design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)；机器合同：[OpenAPI 3.1（241 Paths / 271 Operations / 123 Schemas）](../api/mobile-v2.openapi.json)。全部运行结果待验收。
 
 当前账号规则：[认证规划](../design/MND_MOBILE_AUTH_PLAN.md)。显式邮箱注册／OTP／密码登录与恢复、标识唯一约束、当前手机号证明、服务端交流／成年／监护关卡、浏览器 `HttpOnly Cookie + X-MND-CSRF` 会话适配已有源码；手机号登录仅允许已有账号，不自动建号。`008` 与 `009` 迁移、真实渠道／策略和运行尚未验收，微信绑定不能代替手机号交流资格。
 

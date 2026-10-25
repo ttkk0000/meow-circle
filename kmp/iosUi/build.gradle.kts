@@ -14,6 +14,7 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
+            implementation(project(":clientUi"))
             api(project(":shared"))
             implementation(compose.runtime)
             implementation(compose.foundation)

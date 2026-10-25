@@ -102,3 +102,6 @@ data class RestrictedAccess(val type: String, val clientRequestId: String, val t
 data class CommandRecovery(val clientRequestId: String, val command: String, val phase: String, val receipt: OperationReceipt? = null,
     val replayable: Boolean = true)
 class OperationResultUnknown(val clientRequestId: String) : Exception("Command outcome requires reconciliation")
+
+@Serializable
+data class PushDeviceLookup(val platform: String, val token: String)

@@ -15,6 +15,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(project(":clientUi"))
     implementation(project(":shared"))
     implementation(compose.desktop.currentOs)
     implementation(libs.cmpMaterial3)
@@ -22,16 +23,18 @@ dependencies {
     implementation(libs.ktorClientContentNegotiation)
     implementation(libs.ktorSerializationKotlinxJson)
     implementation(libs.ktorClientOkhttp)
+    implementation("com.github.javakeyring:java-keyring:1.0.4")
 }
 
 compose.desktop {
     application {
         mainClass = "com.ttkk0000.meowcircle.desktop.MainKt"
         nativeDistributions {
+            modules("jdk.httpserver")
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "MND Desktop"
             packageVersion = "1.0.0"
-            description = "M&D desktop client aligned to the Stitch V2 design system."
+            description = "M&D meow & doggie desktop client."
             vendor = "meow & doggie"
         }
     }

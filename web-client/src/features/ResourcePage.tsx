@@ -451,6 +451,7 @@ function ResourceBody({
             <CoarseMap
               latitude={Number(d.latitude)}
               longitude={Number(d.longitude)}
+              coordinateSystem={String(d.coordinate_system ?? "")}
             />
           ) : (
             <Notice title="此求助仅提供文字区域">

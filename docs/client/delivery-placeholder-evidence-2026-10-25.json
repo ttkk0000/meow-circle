@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261025-DELIVERY",
+  "phase": "placeholder templates",
+  "files": [
+    {
+      "path": "deploy/examples/README.md",
+      "sha256": "9c35dd48fbefca062cb1fd8330a353de1ed6a80266844cdce00008525b6794d7"
+    },
+    {
+      "path": "deploy/examples/android.env.example",
+      "sha256": "e6f162bd613f4524763166959822679ab24bd43acca3afc1d70e18886050d93b"
+    },
+    {
+      "path": "deploy/examples/compose.env.example",
+      "sha256": "be99ebb0701c610ebfa716c45b7cfec4e65b391eb57b202b2048312f9958d5ca"
+    },
+    {
+      "path": "deploy/examples/ios.env.example",
+      "sha256": "e41f4c4917e053c5d1a6fefb777c13e353747f35d067c2b80d53890f2267bf46"
+    },
+    {
+      "path": "deploy/examples/server-target.env.example",
+      "sha256": "07dd9431aaded612d4a11fb8d4942c9874d6f2cd45f99ccd5d59e3f830cf5e6b"
+    },
+    {
+      "path": "scripts/delivery.py",
+      "sha256": "9de041d89546bd3cef16993925218eef9a79d2aa1835c56ec9db8a113967a9b9"
+    },
+    {
+      "path": "scripts/check_delivery_static.py",
+      "sha256": "4fa8cc631ec43c40a3f1ce35f8014b48f5d0995b8a54bf09026d62e194beb80f"
+    },
+    {
+      "path": "docs/client/DELIVERY_GUIDE_2026_10_25.md",
+      "sha256": "92b342a0ae677d823fadc87e0e74dd3dc92c233e88f6acb09fd016608bbbd7b0"
+    }
+  ],
+  "checks": [
+    "delivery static check passed",
+    "four environment templates parsed as placeholder values",
+    "two Python AST reads passed",
+    "related local document links and UTF-8/whitespace checks passed",
+    "example files are not Git-ignored",
+    "git diff --check passed"
+  ],
+  "configuration_mode": "placeholder",
+  "secret_values_generated": false,
+  "build_or_CI_authorized": false,
+  "build_or_deploy_executed": false,
+  "committed_or_pushed": false
+}

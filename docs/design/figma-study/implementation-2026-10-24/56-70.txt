@@ -1,0 +1,253 @@
+const assetPathPrefix = "https://www.figma.com/api/mcp/asset/e79bef2c-4c49-4523-a7d4-d46df0b89c34";
+const imgLucideChevronRight = `${assetPathPrefix}/265fe.svg`;
+const imgSourceSimpleIconsQq = `${assetPathPrefix}/a16d7.svg`;
+const imgSourceSimpleIconsWechat = `${assetPathPrefix}/84c3d.svg`;
+const imgLucideChevronLeft = `${assetPathPrefix}/e9e91.svg`;
+const imgLucideCheck = `${assetPathPrefix}/0cc7b.svg`;
+
+type MDMobileV2ListRowProps = {
+  className?: string;
+  title?: string;
+  value?: string;
+};
+
+function MDMobileV2ListRow({ className, title = "列表名称", value = "当前值或下一步" }: MDMobileV2ListRowProps) {
+  return (
+    <div className={className || "content-stretch flex gap-[var(--mnd-study-space-8,8px)] h-[64px] items-center min-h-[64px] relative w-[326px]"} data-node-id="56:214" data-name="M&D Mobile V2 / List row">
+      <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col font-['Noto_Sans_SC:Regular'] font-normal gap-[var(--mnd-study-space-4,4px)] items-start min-w-px overflow-clip relative" data-node-id="56:215" data-name="Row copy">
+        <p className="leading-[26px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-full" data-node-id="56:216">
+          {title}
+        </p>
+        <p className="leading-[20px] relative shrink-0 text-[12px] text-[color:var(--mnd-study-color-muted,#616771)] w-full" data-node-id="56:217">
+          {value}
+        </p>
+      </div>
+      <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[20px]" data-node-id="56:218" data-name="Instance / icon/chevron-right">
+        <div className="relative shrink-0 size-[24px]" data-node-id="I56:218;56:140" data-name="Lucide / chevron-right">
+          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronRight} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MDAuthBrandQq({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="237:8983" data-name="M&D Auth / Brand / qq">
+      <div className="absolute left-0 size-[24px] top-0" data-node-id="234:372198" data-name="Source / Simple Icons qq">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSourceSimpleIconsQq} />
+      </div>
+    </div>
+  );
+}
+
+function MDAuthBrandWechat({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="237:8982" data-name="M&D Auth / Brand / wechat">
+      <div className="absolute left-0 size-[24px] top-0" data-node-id="234:8982" data-name="Source / Simple Icons wechat">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSourceSimpleIconsWechat} />
+      </div>
+    </div>
+  );
+}
+
+type MDMobileV2ActionProps = {
+  className?: string;
+  label?: string;
+  style?: "Primary" | "Quiet";
+};
+
+function MDMobileV2Action({ className, label = "主要操作", style = "Primary" }: MDMobileV2ActionProps) {
+  const isQuiet = style === "Quiet";
+  return (
+    <div className={className || `content-stretch flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] ${isQuiet ? "w-[88px]" : "bg-[var(--mnd-button-study-primary,#c84b3d)] justify-center w-[96px]"}`} id={isQuiet ? "node-56_181" : "node-56_179"}>
+      {style === "Primary" && (
+        <p className="[word-break:break-word] flex-[1_0_0] font-['Noto_Sans_SC:Medium'] font-medium leading-[24px] min-w-px relative text-[16px] text-[color:var(--mnd-button-study-onPrimary,#fffefc)] text-center" data-node-id="56:184">
+          {label}
+        </p>
+      )}
+      {isQuiet && (
+        <p className="[word-break:break-word] flex-[1_0_0] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] min-w-px relative text-[14px] text-[color:var(--mnd-button-study-quiet,#9e382a)]" data-node-id="56:186">
+          {label}
+        </p>
+      )}
+    </div>
+  );
+}
+
+type MDMobileV2FieldFieldProps = {
+  className?: string;
+  label?: string;
+  value?: string;
+};
+
+function MDMobileV2FieldField({ className, label = "字段标签", value = "请选择或填写" }: MDMobileV2FieldFieldProps) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative w-[358px]"} data-node-id="56:188" data-name="M&D Mobile V2 / Field / field">
+      <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] w-full" data-node-id="56:189">
+        {label}
+      </p>
+      <div className="bg-[var(--mnd-study-color-surface,#fffefc)] border border-[var(--mnd-study-color-controlborder,#838a94)] border-solid content-stretch flex gap-[var(--mnd-study-space-8,8px)] items-center min-h-[48px] overflow-clip p-[var(--mnd-study-space-12,12px)] relative rounded-[var(--mnd-mobile-v2-radius-card,16px)] shrink-0 w-full" data-node-id="56:190" data-name="Input control">
+        <p className="[word-break:break-word] flex-[1_0_0] font-['Noto_Sans_SC:Regular'] font-normal leading-[26px] min-w-px relative text-[16px] text-[color:var(--mnd-study-color-ink,#202329)]" data-node-id="56:191">
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function MDMobileV2IconChevronLeft({ className }: { className?: string }) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative size-[24px]"} data-node-id="56:153" data-name="M&D Mobile V2 / Icon / chevron-left">
+      <div className="relative shrink-0 size-[24px]" data-node-id="56:154" data-name="Lucide / chevron-left">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronLeft} />
+      </div>
+    </div>
+  );
+}
+
+export default function ClosureLogin() {
+  return (
+    <div className="bg-[var(--mnd-study-color-background,#f7f8fa)] content-stretch flex flex-col items-start overflow-clip relative rounded-[28px] size-full" data-node-id="56:70" data-name="手机 / 登录 / 注册 [closure:login]">
+      <div className="[word-break:break-word] bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex font-['Noto_Sans_SC:Regular'] font-normal h-[28px] items-center leading-[20px] overflow-clip px-[16px] relative shrink-0 text-[12px] w-[390px]" data-node-id="464:17777" data-name="Status / learning disclosure">
+        <p className="relative shrink-0 text-[color:var(--mnd-study-color-ink,#202329)] w-[60px]" data-node-id="464:17778">
+          9:41
+        </p>
+        <p className="relative shrink-0 text-[color:var(--mnd-study-color-muted,#616771)] text-right w-[298px]" data-node-id="464:17779">
+          学习示意 · 非真实资料
+        </p>
+      </div>
+      <div className="content-stretch flex h-[816px] items-start overflow-clip relative shrink-0 w-[390px]" data-node-id="464:17780" data-name="Responsive workspace">
+        <div className="content-stretch flex flex-col h-[816px] items-start overflow-clip relative shrink-0 w-[390px]" data-node-id="464:17781" data-name="Current task">
+          <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex gap-[4px] h-[56px] items-center overflow-clip p-[4px] relative shrink-0 w-[390px]" data-node-id="464:17782" data-name="Toolbar">
+            <a className="content-stretch cursor-pointer flex flex-col items-start overflow-clip p-[12px] relative shrink-0 size-[48px]" data-node-id="464:17783" data-name="Back">
+              <MDMobileV2IconChevronLeft className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 size-[24px]" />
+            </a>
+            <p className="[word-break:break-word] font-['Noto_Sans_SC:Bold'] font-bold leading-[30px] relative shrink-0 text-[20px] text-[color:var(--mnd-study-color-ink,#202329)] w-[326px]" data-node-id="464:17788">
+              登录 / 注册
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col h-[672px] items-center overflow-x-clip overflow-y-auto relative shrink-0 w-[390px]" data-node-id="464:17789" data-name="Scrollable viewport">
+            <div className="content-stretch flex flex-col gap-[16px] items-start overflow-clip p-[16px] relative shrink-0 w-[390px]" data-node-id="464:17790" data-name="Task content">
+              <p className="[word-break:break-word] font-['Manrope:ExtraBold'] font-extrabold leading-[32px] relative shrink-0 text-[24px] text-[color:var(--mnd-study-color-ink,#202329)] w-[358px]" data-node-id="464:17791">{`M&D`}</p>
+              <p className="[word-break:break-word] font-['Noto_Sans_SC:Bold'] font-bold leading-[40px] relative shrink-0 text-[28px] text-[color:var(--mnd-study-color-ink,#202329)] w-[358px]" data-node-id="464:17792">
+                和毛孩子，一起长大
+              </p>
+              <MDMobileV2FieldField className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 w-[358px]" label="账号名 / 邮箱 / 手机号" value="请输入登录标识" />
+              <MDMobileV2FieldField className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start relative shrink-0 w-[358px]" label="密码" value="请输入密码" />
+              <MDMobileV2ListRow className="content-stretch cursor-pointer flex gap-[var(--mnd-study-space-8,8px)] items-center min-h-[64px] relative shrink-0 w-[358px]" title="邮箱验证码登录 / 注册" value="不强制手机短信" />
+              <div className="content-stretch flex gap-[8px] items-center overflow-clip relative shrink-0 w-[358px]" data-node-id="464:17809" data-name="Consent / loginAgreement">
+                <button className="content-stretch cursor-pointer flex flex-col items-start overflow-clip p-[12px] relative shrink-0 size-[48px]" data-node-id="464:17810" data-name="Toggle / loginAgreement">
+                  <div className="bg-[var(--mnd-study-color-surface,#fffefc)] border border-[var(--mnd-study-color-controlborder,#838a94)] border-solid content-stretch flex flex-col items-start overflow-clip p-[2px] relative rounded-[8px] shrink-0 size-[24px]" data-node-id="464:17811" data-name="Checkbox">
+                    <div className="content-stretch flex flex-col gap-[var(--mnd-study-space-8,8px)] items-start opacity-[calc(var(--consent\/phone\/login\/loginagreement,0)/100)] relative shrink-0 size-[20px]" data-node-id="464:17812" data-name="Instance / icon/check">
+                      <div className="relative shrink-0 size-[24px]" data-node-id="I464:17812;56:112" data-name="Lucide / check">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideCheck} />
+                      </div>
+                    </div>
+                  </div>
+                </button>
+                <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] w-[302px]" data-node-id="464:17815">
+                  我已阅读并同意服务协议与隐私政策
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-[358px]" data-node-id="464:17817" data-name="Separate policy links">
+                <MDMobileV2Action className="content-stretch cursor-pointer flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[116.667px]" label="服务协议" style="Quiet" />
+                <MDMobileV2Action className="content-stretch cursor-pointer flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[116.667px]" label="隐私政策" style="Quiet" />
+                <MDMobileV2Action className="content-stretch cursor-pointer flex h-[48px] items-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[116.667px]" label="未成年人保护" style="Quiet" />
+              </div>
+              <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-[358px]" data-node-id="464:17827" data-name="Quick login providers">
+                <div className="content-stretch cursor-pointer flex gap-[12px] items-start overflow-clip relative shrink-0 w-[358px]" data-node-id="464:17828" data-name="WeChat and QQ">
+                  <button className="bg-[var(--mnd-study-color-surface,#fffefc)] border border-[var(--mnd-study-color-controlborder,#838a94)] border-solid content-stretch flex gap-[8px] items-center min-h-[48px] overflow-clip p-[12px] relative rounded-[24px] shrink-0 w-[173px]" data-node-id="464:17829" data-name="Login provider / wechat">
+                    <MDAuthBrandWechat className="h-[24px] relative shrink-0 w-[20px]" />
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] text-left w-[121px]" data-node-id="464:17833">
+                      微信
+                    </p>
+                  </button>
+                  <button className="bg-[var(--mnd-study-color-surface,#fffefc)] border border-[var(--mnd-study-color-controlborder,#838a94)] border-solid content-stretch flex gap-[8px] items-center min-h-[48px] overflow-clip p-[12px] relative rounded-[24px] shrink-0 w-[173px]" data-node-id="464:17835" data-name="Login provider / qq">
+                    <MDAuthBrandQq className="h-[24px] relative shrink-0 w-[20px]" />
+                    <p className="[word-break:break-word] font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-ink,#202329)] text-left w-[121px]" data-node-id="464:17839">
+                      QQ
+                    </p>
+                  </button>
+                </div>
+              </div>
+              <MDMobileV2ListRow className="content-stretch cursor-pointer flex gap-[var(--mnd-study-space-8,8px)] items-center min-h-[64px] relative shrink-0 w-[358px]" title="找回账号或密码" value="只恢复原账号" />
+              <div className="[word-break:break-word] bg-[var(--mnd-study-color-subtle,#f0f2f5)] content-stretch flex flex-col gap-[8px] items-start overflow-clip p-[16px] relative rounded-[16px] shrink-0 w-[358px]" data-node-id="464:17849" data-name="Notice / 登录与交流分开">
+                <p className="font-['Noto_Sans_SC:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--mnd-study-color-ink,#202329)] w-[326px]" data-node-id="464:17850">
+                  登录与交流分开
+                </p>
+                <p className="font-['Noto_Sans_SC:Medium'] font-medium leading-[22px] relative shrink-0 text-[14px] text-[color:var(--mnd-study-color-muted,#616771)] w-[326px]" data-node-id="464:17851">
+                  日常登录不强制短信。发布、评论和发送消息前，再核对当前手机号及年龄权限。
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--mnd-study-color-surface,#fffefc)] content-stretch flex flex-col gap-[8px] h-[88px] items-center overflow-clip p-[16px] relative shrink-0 w-[390px]" data-node-id="464:17852" data-name="Persistent task actions">
+            <button className="bg-[var(--consent\/phone\/login\/loginagreement\/fill,#f0f2f5)] content-stretch cursor-pointer flex h-[48px] items-center justify-center px-[var(--mnd-study-space-16,16px)] relative rounded-[var(--mnd-mobile-button-radius,24px)] shrink-0 w-[358px]" data-node-id="464:17853" data-name="Instance / primary">
+              <p className="[word-break:break-word] flex-[1_0_0] font-['Noto_Sans_SC:Medium'] font-medium leading-[24px] min-w-px relative text-[16px] text-[color:var(--consent\/phone\/login\/loginagreement\/ink,#616771)] text-center" data-node-id="I464:17853;56:184">
+                登录并继续
+              </p>
+            </button>
+            <div className="bg-[var(--mnd-study-color-ink,#202329)] h-[4px] relative rounded-[999px] shrink-0 w-[120px]" data-node-id="464:17856" data-name="Home indicator" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+
+These styles are contained in the design: M&D Study/Caption: Font(family: "Noto Sans SC", style: Regular, size: 12, weight: 400, lineHeight: 20, letterSpacing: 0), M&D Study/Section: Font(family: "Noto Sans SC", style: Bold, size: 20, weight: 700, lineHeight: 30, letterSpacing: 0), M&D Mobile V2/MobileBrand: Font(family: "Manrope", style: ExtraBold, size: 24, weight: 800, lineHeight: 32, letterSpacing: 0), M&D Study/Title: Font(family: "Noto Sans SC", style: Bold, size: 28, weight: 700, lineHeight: 40, letterSpacing: 0), M&D Study/Label: Font(family: "Noto Sans SC", style: Medium, size: 14, weight: 500, lineHeight: 22, letterSpacing: 0), M&D Study/Body: Font(family: "Noto Sans SC", style: Regular, size: 16, weight: 400, lineHeight: 26, letterSpacing: 0), M&D Mobile V2/Strong: Font(family: "Noto Sans SC", style: Bold, size: 16, weight: 700, lineHeight: 24, letterSpacing: 0), M&D Button study/Label: Font(family: "Noto Sans SC", style: Medium, size: 16, weight: 500, lineHeight: 24, letterSpacing: 0).
+
+Component descriptions: The following components have usage descriptions or documentation links defined in Figma. These descriptions provide important context about the intended usage, best practices, and any constraints for each component. Follow these guidelines when implementing or using these components.
+
+## M&D Mobile V2 / Icon / chevron-left
+**Node ID:** 56:153
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Field / field
+**Node ID:** 56:188
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / List row
+**Node ID:** 56:214
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / chevron-right
+**Node ID:** 56:139
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Icon / check
+**Node ID:** 56:111
+
+M&D 非商业手机 V2；局部可复用组件，学习配色与生产工程隔离。
+
+## M&D Mobile V2 / Action
+**Node ID:** 56:183
+
+已按用户明确要求，将 01 清爽亲切应用至普通手机59屏。保留Label和Style属性以及实例ID；主按钮珊瑚白字，次按钮浅珊瑚细边，16圆角、48触控高度。其余设备和旧主题未迁移。焦点、按下与加载规范参照70:186的Friendly变体。
+
+## M&D Auth / Brand / wechat
+**Node ID:** 237:8982
+
+Source: simple-icons primary repository; brand mark used only as a login provider identifier. Native import, keep original shape.
+
+## M&D Auth / Brand / qq
+**Node ID:** 237:8983
+
+Source: simple-icons primary repository; brand mark used only as a login provider identifier. Native import, keep original shape.
+
+The generated code contains image and SVG URL constants, e.g. const image = `${assetPathPrefix}/<asset file name>`, where assetPathPrefix is declared once at the top of the code and every asset URL interpolates it. These URLs are temporary download sources and expire after 7 days. Download each asset into the project with curl -L, then replace its URL in the generated code with a reference to the downloaded asset. Never use the temporary URLs as runtime image sources.

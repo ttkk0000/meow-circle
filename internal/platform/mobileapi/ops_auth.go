@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"kitty-circle/internal/mobile"
+	"kitty-circle/internal/operations"
 	"net/http"
 	"os"
 	"strings"
@@ -13,10 +14,11 @@ import (
 // Credentials are loaded from deployment configuration, never consumer code.
 // Each named worker is restricted to its own consumer and functional roles.
 type Operator struct {
-	ID        string   `json:"id"`
-	Token     string   `json:"token"`
-	Roles     []string `json:"roles"`
-	Consumers []string `json:"consumers"`
+	ID           string   `json:"id"`
+	Token        string   `json:"token"`
+	Roles        []string `json:"roles"`
+	Consumers    []string `json:"consumers"`
+	Environments []string `json:"environments,omitempty"`
 }
 
 func OperatorsFromEnvironment() ([]Operator, error) {
@@ -41,9 +43,14 @@ func OperatorsFromEnvironment() ([]Operator, error) {
 		}
 		for _, role := range op.Roles {
 			switch role {
-			case "identity_verifier", "authority_verifier", "worker", "privacy", "moderator", "evidence_reader", "finance":
+			case "identity_verifier", "authority_verifier", "worker", "privacy", "moderator", "evidence_reader", "finance", "ops_viewer", "ops_oncall", "ops_release", "ops_admin":
 			default:
 				return nil, fmt.Errorf("invalid operator role")
+			}
+		}
+		for _, environment := range op.Environments {
+			if !operations.ValidEnvironment(environment) {
+				return nil, fmt.Errorf("invalid operator environment")
 			}
 		}
 	}
@@ -58,6 +65,10 @@ func (h *Handler) operator(r *http.Request, role string) (Operator, bool) {
 		if subtle.ConstantTimeCompare([]byte(op.Token), []byte(token)) != 1 {
 			continue
 		}
+		// 空角色仅用于读取本人运营上下文，不放宽其他操作的角色要求。
+		if role == "" && len(op.Roles) > 0 {
+			return op, true
+		}
 		for _, allowed := range op.Roles {
 			if allowed == role {
 				return op, true
@@ -71,6 +82,8 @@ func operatorRole(path []string) string {
 		return ""
 	}
 	switch path[0] {
+	case "context":
+		return ""
 	case "jobs":
 		if len(path) == 2 && path[1] == "maintenance" {
 			return "privacy"
@@ -80,7 +93,7 @@ func operatorRole(path []string) string {
 		return "finance"
 	case "push":
 		return "worker"
-	case "age-evidence", "guardian-evidence":
+	case "age-evidence", "guardian-evidence", "guardian-invites":
 		return "identity_verifier"
 	case "authority":
 		return "authority_verifier"

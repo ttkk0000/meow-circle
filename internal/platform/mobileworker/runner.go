@@ -34,7 +34,7 @@ type Checkpoint struct {
 }
 
 func New(apiURL, token, job string, allowLoopbackHTTP bool) (*Runner, error) {
-	if !mobile.HasString([]string{"push", "nearby_alerts", "content_updates", "privacy_cleanup", "provider_revocations", "maintenance"}, job) || len(token) < 32 {
+	if !mobile.ValidJob(job) || len(token) < 32 {
 		return nil, errors.New("valid worker job and operator token are required")
 	}
 	u, e := url.Parse(apiURL)

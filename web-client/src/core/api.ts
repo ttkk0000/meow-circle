@@ -69,9 +69,13 @@ export class HttpError extends Error {
   }
 }
 const messages: Record<string, string> = {
+  identity_in_use:
+    "此登录标识已有绑定，请登录或找回原账号；不会覆盖资料、迁移聊天或透露其他账号信息",
   phone_verification_required: "请先验证当前绑定的手机号",
   adult_required: "此操作需要有效的成年人资格",
   guardian_consent_required: "请先核对有效的监护范围",
+  contact_restricted:
+    "此联系入口受保护设置限制，未发送消息；可使用好友确认、屏蔽或私密求助入口",
   purpose_grant_required: "请重新验证此次操作用途",
   idempotency_conflict: "原编号与原内容不一致，请核对原操作",
   version_conflict: "版本已变化，当前输入保留",
@@ -264,7 +268,7 @@ class BrowserAPI {
       response.status === 401 &&
       retry &&
       this.session.refreshable &&
-      !path.startsWith("auth/")
+      (!path.startsWith("auth/") || path.startsWith("auth/age-assurance"))
     ) {
       await this.refresh();
       if (epoch !== this.epoch)
@@ -280,7 +284,7 @@ class BrowserAPI {
         envelope.error,
       );
     if (
-      /^auth\/(password|email|register|phone|logout|account\/[^/]+)$/.test(
+      /^auth\/(password|email|register|phone|oauth-finish|oauth-resolve|logout|account\/[^/]+)$/.test(
         path,
       ) &&
       !path.endsWith("/scope")

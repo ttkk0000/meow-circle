@@ -1,6 +1,8 @@
 # M&D v2 部署、运营与恢复交接手册
 
-> **2026-10-24 补充说明**：数据库迁移范围已扩至 `001`–`009`（新增 `009_pet_discussions.sql` 宠物评论与表情反应表），独立 worker 作业扩至 6 类（新增 `content_updates`），环境变量新增 `MND_WEB_ORIGIN` 与 `MND_READING_CATALOG`。部署前须先修复 `docker-compose.yml` / `Makefile` 漏挂 `008`–`009` 及 `Dockerfile` 未打包 `cmd/worker` 的问题，详见[服务端完整性审计与待完善清单（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。
+2026-10-25交付源码增补：生产11服务编排、迁移摘要账本、Secret文件加载及当前App交付入口已写，见[部署与打包手册](../client/DELIVERY_GUIDE_2026_10_25.md)。保留本页运营／恢复及Gemini新增文档，仍未执行部署、迁移或构建。
+
+> **2026-10-25 补充说明**：数据库迁移范围已扩至 `001`–`009`（共 `44` 张 `mobile_*` 表），OpenAPI 扩至 `241` Paths / `271` Operations / `123` Schemas，独立 worker 作业扩至 6 类（新增 `content_updates`），并新增高德地图代理、三方浏览器认证、外部年龄核验网关与监护人 15 分钟邀请配置（见 [`environment.example`](environment.example)）。全量代码逻辑与 PlantUML 时序/状态机图见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)及[`docs/uml/`](../uml/README.md)；服务端待完善项详见[服务端完整性审计与待完善清单（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。
 
 2026-10-23，AI-20261023-CLOSURE-IMPLEMENT。供获明确授权后的环境实施与验收；本文没有执行下列动作。当前Go／Gradle运行禁令继续有效。旧[Runbook](../RUNBOOK.md)保留旧端参考，不能作为新v2已部署证明。
 

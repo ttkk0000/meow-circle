@@ -40,7 +40,7 @@
   "source": "Figma get_design_context supplied 7ddf6.png; downloaded unmodified with curl -L; source URL extension was PNG but original bytes are JPEG, stored with actual format extension without re-encoding",
   "callsites": [
     "web-client/src/features/ReadingPages.tsx",
-    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidReadingContent.kt"
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt"
   ],
   "geometry": "Phone 358:240, Web/tablet 360 high, Crop/object-fit cover, radius16. Effective rendering has not been executed.",
   "format": "JPEG"

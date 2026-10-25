@@ -14,7 +14,6 @@ import { invalidateQueries } from "../core/query";
 import { useSession } from "../core/session";
 import { preparePhoto } from "../core/photos";
 import {
-  SchemaForm,
   Facts,
   schemaDefault,
   schemas,
@@ -29,6 +28,7 @@ import {
   Modal,
   Notice,
   PrivateImage,
+  RowLink,
   TaskPage,
 } from "../components/ui";
 import { workflows, type Context } from "./workflows";
@@ -36,6 +36,11 @@ import { PurposeCheck } from "../components/PurposeCheck";
 import { Attachments, PhotoPreview } from "../components/Attachments";
 import { EntryFields, PeopleSelector } from "../components/ContentFields";
 import { DataSelector, type DataSelection } from "../components/DataSelector";
+
+import { WorkflowFields } from "../components/WorkflowFields";
+
+import { AmapView } from "../maps/AmapView";
+import { cityCenter, type MapPoint } from "../maps/amap";
 
 interface Prepared {
   body: Record<string, unknown>;
@@ -381,11 +386,21 @@ export function WorkflowEditor({
           old.location_precision !== "area" &&
           details.city === old.city &&
           details.area === old.area;
+        const selection = current.ui?.mapLocation;
+        const picked =
+          selection &&
+          selection.city === details.city &&
+          selection.area === details.area
+            ? selection
+            : undefined;
         body.case = {
           ...details,
-          location_precision: keep ? "approximate" : "area",
-          latitude: keep ? old.latitude : 0,
-          longitude: keep ? old.longitude : 0,
+          location_precision: picked || keep ? "approximate" : "area",
+          latitude: picked?.latitude ?? (keep ? old.latitude : 0),
+          longitude: picked?.longitude ?? (keep ? old.longitude : 0),
+          coordinate_system:
+            picked?.coordinateSystem ??
+            (keep ? (old.coordinate_system ?? "") : ""),
         };
       }
       if (flow === "nearby")
@@ -395,6 +410,7 @@ export function WorkflowEditor({
           longitude: 0,
           radius_km: 0,
           location_precision: "city",
+          coordinate_system: "",
         };
       if (flow === "profile") {
         const user = session.user!;
@@ -629,6 +645,34 @@ export function WorkflowEditor({
       }
     >
       {restoring ? <p role="status">正在恢复本机私有草稿…</p> : null}
+      {session.authenticated &&
+      [
+        "appointment",
+        "appointment-change",
+        "appointment-action",
+        "contract",
+        "contract-accept",
+        "return",
+        "return-action",
+        "offer",
+      ].includes(flow) ? (
+        <RowLink
+          title="核对本次成年业务资格"
+          detail="保留原草稿，核验后仍需主动确认"
+          onClick={() => {
+            if (busy || restoring || blocked.current) return;
+            setBusy(true);
+            void persist()
+              .then(() =>
+                navigate(
+                  `/age-check?from=${encodeURIComponent(route)}&label=${encodeURIComponent(workflow.title)}`,
+                ),
+              )
+              .catch((failure) => setError(explain(failure)))
+              .finally(() => setBusy(false));
+          }}
+        />
+      ) : null}
       {draft && flow === "data" ? (
         <>
           {draft.values.type === "erase_fields" ? (
@@ -718,7 +762,7 @@ export function WorkflowEditor({
         >
           {flow === "nearby"
             ? "确认后按所选城市匹配；原距离范围会改为城市，不要求经纬度。"
-            : "不把文字区域当成地图点。只有你明确保留且城市／区域未变时，才继续使用原大致地点。"}
+            : "不把文字区域当成地图点。可在下方主动选点；保留原点时须确认城市／区域未变。"}
           {flow === "case" &&
           context.record &&
           context.record.data.location_precision !== "area" ? (
@@ -738,6 +782,68 @@ export function WorkflowEditor({
           ) : null}
         </Notice>
       ) : null}
+      {draft && flow === "case"
+        ? (() => {
+            const body = (draft.values.case ?? {}) as Record<string, unknown>;
+            const city = String(body.city ?? ""),
+              area = String(body.area ?? "");
+            const selected = draft.ui?.mapLocation;
+            const point: MapPoint | undefined =
+              selected && selected.city === city && selected.area === area
+                ? { ...selected, id: "picked", title: "本次公开大致区域" }
+                : undefined;
+            return (
+              <Card title="最后见到的大致位置（可选）">
+                <AmapView
+                  points={point ? [point] : []}
+                  selectedId={point?.id}
+                  center={point ?? cityCenter(city)}
+                  disabled={busy || !!prepared || !!draft.uncertain}
+                  onPick={(value) =>
+                    update((old) => ({
+                      ...old,
+                      ui: {
+                        ...old.ui,
+                        keepLocation: false,
+                        mapLocation: {
+                          latitude: value.latitude,
+                          longitude: value.longitude,
+                          coordinateSystem: "gcj02",
+                          city,
+                          area,
+                        },
+                      },
+                      requestId: key(),
+                    }))
+                  }
+                />
+                {selected && !point ? (
+                  <p>
+                    城市或文字区域已变化，请重新选点；原点不会随新区域发布。
+                  </p>
+                ) : null}
+                {selected ? (
+                  <Button
+                    disabled={busy || !!prepared || !!draft.uncertain}
+                    onClick={() =>
+                      update((old) => ({
+                        ...old,
+                        ui: {
+                          ...old.ui,
+                          mapLocation: undefined,
+                          keepLocation: false,
+                        },
+                        requestId: key(),
+                      }))
+                    }
+                  >
+                    取消地图点，只保留文字区域
+                  </Button>
+                ) : null}
+              </Card>
+            );
+          })()
+        : null}
       {conflict ? (
         <Notice title="服务端版本已变化，当前输入保留">
           <Button onClick={() => void loadCurrent()} disabled={busy}>
@@ -841,7 +947,9 @@ export function WorkflowEditor({
             }
           />
         ) : (
-          <SchemaForm
+          <WorkflowFields
+            flow={flow}
+            envelope={workflow.envelope}
             name={workflow.schema}
             value={draft.values}
             disabled={busy || !!prepared || !!draft.uncertain}

@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261024-ALL-FIGMA",
+  "scope": "guardian source and static only",
+  "files": [
+    {
+      "path": "internal/identity/guardian_invites.go",
+      "bytes": 11461,
+      "sha256": "a3f19b5173d4b08b77f992e452c9928a31d5a9466a776793e2cf3330f86e6646"
+    },
+    {
+      "path": "internal/identity/guardian_invites_test.go",
+      "bytes": 7653,
+      "sha256": "d0bcdd58b6b50fe310226416f3bc7e11fca68280837e8d83c9666ff4d76c97e5"
+    },
+    {
+      "path": "internal/mobile/guardian.go",
+      "bytes": 4093,
+      "sha256": "2060d1ea25dbefaaa07e158831e0349320df06654de547ba37bb153194d4b7b4"
+    },
+    {
+      "path": "internal/mobile/guardian_invites.go",
+      "bytes": 2736,
+      "sha256": "a3817bd00a6d45c16c12cf2f085df6afe34a211cfd3d7774cb66193292350cf0"
+    },
+    {
+      "path": "internal/mobile/guardian_protection_test.go",
+      "bytes": 3479,
+      "sha256": "33491af248fd92b6f156943a0260f5a6459c1e367130884dfe6f03ba7f756ce7"
+    },
+    {
+      "path": "internal/mobile/qualification.go",
+      "bytes": 8422,
+      "sha256": "1c6676e84fc047820035d41e5d0c190b70497ecf72c158f143357badcca681f6"
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "bytes": 34079,
+      "sha256": "1788cc5600eb7c8ef9dde2771af6a898b807fb6727e63e8350ace89d2ef87e29"
+    },
+    {
+      "path": "internal/platform/mobileapi/guardian_invites.go",
+      "bytes": 2838,
+      "sha256": "5e2664f1633172892007534b46651f363bb56766d5bf2b35cb3e843c41a4ba24"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "bytes": 34955,
+      "sha256": "f84140fea0bc150cb8331df224fcf664bd3350fee8c0ba1bedf54f862e08323d"
+    },
+    {
+      "path": "internal/platform/mobileapi/ops_auth.go",
+      "bytes": 2991,
+      "sha256": "11d62b9d101053a8eccbc61a9ee95b162a5a5e714e412722a23c939e1caeef39"
+    },
+    {
+      "path": "internal/platform/api/router.go",
+      "bytes": 56992,
+      "sha256": "7eacdf4f32d99121f78f95dcbca2f3d10775afa88f07c938d164b9cda4d37f53"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/GuardianInviteStore.kt",
+      "bytes": 5813,
+      "sha256": "c756591c2848bf8ada6e7e6097600cfec56813ab7ff43f626ab2a06a3e0b26b3"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/GuardianPages.kt",
+      "bytes": 10038,
+      "sha256": "e8afc890b72da9c1a060f6f425f8bbd778c69a37e41d5d3fdbf3f8bcdaa3c850"
+    },
+    {
+      "path": "web-client/src/features/GuardianPages.tsx",
+      "bytes": 27102,
+      "sha256": "5af19c71cea7a8f54e76159f511264949b4be90286d6f97360578a8eba8cd269"
+    },
+    {
+      "path": "web-client/src/main.tsx",
+      "bytes": 1418,
+      "sha256": "1679f8a66b05b8b62bcdb1918495423c55629153bb39eb691e3913f92de4963d"
+    },
+    {
+      "path": "web-client/src/App.tsx",
+      "bytes": 24107,
+      "sha256": "fb2afa44dd30a2adfa1f12c870b4fc193039735f3929c5821e9a51b4e14dd11a"
+    },
+    {
+      "path": "web-client/src/components/PurposeCheck.tsx",
+      "bytes": 3796,
+      "sha256": "0e378417bbcab5e11d977f09b728acb6ce6e4557ae3528592c147b8010948103"
+    },
+    {
+      "path": "web-client/src/operator/OperatorApp.tsx",
+      "bytes": 19394,
+      "sha256": "69d6dc6fd8d00130b2ba8dbf5bdca8a0eba7915602a0f974e542980997b980a2"
+    },
+    {
+      "path": "scripts/check_guardian_invites_static.py",
+      "bytes": 4880,
+      "sha256": "9b66269782f4e5360e25dca990c6bf54cccf665b5c99a5605cfe05d9d103843a"
+    }
+  ],
+  "design_roots_inspected": [
+    "460:17383",
+    "460:17388",
+    "460:17393",
+    "460:17398",
+    "460:17403",
+    "632:357527"
+  ],
+  "static_checks": [
+    {
+      "exit_code": 0,
+      "output": "监护流程静态核对：5份最小DTO、短时单次邀请／原编号恢复、独立关系核实、监护人范围授权／撤回、公共原生与Web专用页面、具名运营角色；未运行核验、类型检查或测试。"
+    },
+    {
+      "exit_code": 0,
+      "output": "年龄核验静态核对：3份最小DTO、原编号账本／并发恢复、服务端可信结果／有效期／替换校验、原生与Web分状态和原任务返回；未运行网关、类型检查或测试。"
+    },
+    {
+      "exit_code": 0,
+      "output": "官方授权静态边界：原生SDK固定来源、原挑战回跳、账号选择／用途验证／显式确认、取消竞态与HttpOnly会话适配；仅源码核对，未执行SDK／类型检查／测试。"
+    },
+    {
+      "exit_code": 0,
+      "output": "公共UI只读核对：34份公共源码、42个功能分派、3套平台端口、128枚Noto原图、21枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。"
+    },
+    {
+      "exit_code": 0,
+      "output": "Static source/configuration checks passed: 92 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution."
+    },
+    {
+      "exit_code": 0,
+      "output": "Static UI check passed: 10 shared primitives, metrics/theme wiring, ViewModel UI session and movable form/home composition. No compilation, runtime or device validation."
+    },
+    {
+      "exit_code": 0,
+      "output": "Android 源码静态核对：42 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。"
+    },
+    {
+      "exit_code": 0,
+      "output": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation."
+    },
+    {
+      "exit_code": 0,
+      "output": "阅读／发布只读核对：10类材料、4向指南原图／几何、公共正文和下载合同、评论原键恢复／图片限制、本人筛选与9份迁移入口一致；未执行类型检查、编译、测试、迁移或应用。"
+    },
+    {
+      "exit_code": 0,
+      "output": "Web只读检查：45份TS/TSX、212个本地引用、125份schema、21枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。"
+    },
+    {
+      "exit_code": 0,
+      "output": "Static cross-language check: 74 DTO pairs match; private commands and recovery guards present. No type checking or tests executed."
+    },
+    {
+      "exit_code": 0,
+      "output": "Static only: 44 feature tables, 271 operations, 123 schemas, 128/24 assets; no dangling references or BOM"
+    }
+  ],
+  "counts": {
+    "paths": 241,
+    "operations": 271,
+    "server_schemas": 123,
+    "shared_DTO_pairs": 74,
+    "common_UI_sources": 34,
+    "extended_dispatch": 42,
+    "parsed_source_files": 105
+  },
+  "compile_verified": false,
+  "tests_executed": false,
+  "runtime_verified": false,
+  "all_figma_complete": false
+}

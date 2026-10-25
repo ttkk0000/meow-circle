@@ -47,3 +47,19 @@ redisdata/
 # ===== Local mobile SDK cache =====
 mobile/.android-sdk/
 .cursor/mcp.json
+
+# 私有交付配置与各端构件。
+/deploy/local/
+/artifacts/
+*.jks
+*.keystore
+*.p12
+*.p8
+*.mobileprovision
+kmp/iosApp/Pods/
+kmp/iosApp/*.xcodeproj/
+kmp/iosApp/*.xcworkspace/
+kmp/iosApp/*.xcconfig
+!kmp/iosApp/*.example.xcconfig
+
+kmp/iosApp/Generated/

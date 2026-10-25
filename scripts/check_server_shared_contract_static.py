@@ -25,6 +25,8 @@ for file in shared.glob("*.kt"):
         classes[match.group(1)] = {wire or name for wire, name in fields}
 
 mapping = {
+    "GuardianInviteInfo":"GuardianInviteInfo", "GuardianInviteStart":"GuardianInviteStart", "GuardianInviteClaim":"GuardianInviteClaim", "GuardianInviteStatus":"GuardianInviteStatus", "GuardianInvitePage":"GuardianInvitePage",
+    "AgeProviderInfo":"AgeProviderInfo", "AgeAssuranceInput":"AgeAssuranceInput", "AgeAssuranceStatus":"AgeAssuranceStatus",
     "CommentMetrics":"CommentMetrics", "ReadingFact":"ReadingFact", "ReadingDocument":"ReadingDocument", "ReadingCatalog":"ReadingCatalog",
     "Entry":"EntryBody", "Pet":"PetBody", "Preference":"PreferenceBody", "Subscription":"SubscriptionBody",
     "ContentSubscriptions":"ContentSubscriptions", "ContentSubscriptionInput":"ContentSubscriptionInput", "GroupDirectoryBody":"GroupDirectoryBody", "GroupJoinInput":"GroupJoinInput",
@@ -38,7 +40,7 @@ mapping = {
     "CareInput":"CareInput", "GroupInput":"GroupInput", "GroupAction":"GroupAction", "InviteInput":"InviteInput", "FriendInput":"FriendInput",
     "ReviewInput":"ReviewInput", "GuardianDecision":"GuardianDecision", "DataRequestInput":"DataRequestInput",
     "DataRequestStatus":"DataRequestStatus", "RightsInput":"RightsInput", "RightsReceipt":"RightsReceipt",
-    "PushDeviceInput":"PushDeviceInput", "PushDeviceReceipt":"PushDeviceReceipt", "Credential":"ProviderCredential",
+    "PushDeviceLookup":"PushDeviceLookup", "PushDeviceInput":"PushDeviceInput", "PushDeviceReceipt":"PushDeviceReceipt", "Credential":"ProviderCredential",
     "OAuthStart":"ProviderStart", "OAuthFinish":"ProviderFinish", "OAuthResult":"ProviderResult", "ResolveInput":"ProviderResolve",
     "Unread":"InboxSummary", "EmailInput":"EmailAuthInput", "EmailOTPInput":"EmailOTPInput", "OTPInput":"PhoneOTPInput", "Feedback":"FeedbackInput",
     "StateInput":"VersionedAction",

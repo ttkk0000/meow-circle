@@ -11,7 +11,7 @@ import {
   RowLink,
   TaskPage,
 } from "../components/ui";
-import { LegalLinks } from "./AuthDialog";
+import { LegalLinks } from "../components/AuthPolicies";
 import { workflowURL } from "./workflows";
 import type {
   DTOReadingFact,

@@ -1,5 +1,13 @@
 # M&D Web 消费端
 
+2026-10-25：新增独立技术运维入口 `/app/ops`，按14张运维Figma稿实现公共工作台、8主页面／3详情／3状态、筛选与分页、具名环境授权、任务观测、事件处置、发布准备与审计。显式设计示例入口 `/app/ops?mode=demo` 不发送运维请求。真实接入、010迁移、公共组件与边界见[运维源码交接](../docs/server/OPERATIONS_CONSOLE_2026_10_25.md)；本批未构建、类型检查或运行。
+
+2026-10-25：[部署与打包手册](../docs/client/DELIVERY_GUIDE_2026_10_25.md)提供生产编排及Web／App交付入口；未执行构建或部署。
+
+2026-10-25：新增 `/guardians`、`/guardians/{id}`、`/guardian-protection` 及清除片段口令的 `/guardian-invite`。监护邀请、独立关系核实与范围授权／撤回共用任务组件，运营入口补具名核验队列。见[源码与边界](../docs/client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)。
+
+2026-10-24：新增 `WorkflowFields` 页面分组、原Noto表情图、登录方式入口整理及独立 `/app/operator` 三张运营页面；运营凭据仅内存，独立具名／角色校验。消费者Cookie／CSRF合同保留。详见[全端进展](../docs/client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)，未构建、类型检查或启动浏览器。
+
 对应Figma手机V2默认浅色及跨端布局合同。独立于保留的旧`web/`，使用现行v2服务、React／TypeScript及公共任务页面组件。源码状态与设计追踪见[本批说明](../docs/client/FIGMA_ANDROID_WEB_2026_10_24.md)。本批未编译、类型检查、测试或启动。
 
 ## 代码入口
@@ -17,7 +25,7 @@
 
 Vite输出目录为本项目`dist`，Go路由以`MND_WEB_DIST`覆盖默认`web-client/dist`并托管`/app/`；深链回退仅应用页面，缺少产物返回503、缺失静态资源返回404。公开分享位于`/share/{kind}/{id}`，每次重新核对游客ACL，图片地址只使用配置的可信origin。
 
-地图需要可嵌入的HTTPS地址模板`VITE_MND_MAP_EMBED_TEMPLATE`，以`{lat}`／`{lon}`／`{zoom}`占位，仅传公开大致中心，不含账号、私密线索或家庭地址。缺配置显示实际不可用；Android对应`mnd_map_embed_template`。位置只在用户点击后单次读取，可手动输入；仅有文字区域的求助不会画成0/0地图点。发布不要求经纬度，旧地图点须主动选择保留且城市／区域未变；区域提醒按城市保存。
+地图现使用高德JS API 2.0及公共`AmapView`组件，配置公开`VITE_MND_AMAP_JS_KEY`；服务端配置相同`MND_AMAP_JS_KEY`、独立`MND_AMAP_JS_SECURITY_CODE`及精确`MND_WEB_ORIGIN`。安全密钥只在服务端代理保管，不打包进Vite产物。缺配置／未同意加载时保留文字区域。主动选点先舍入为公开粗点；仅文字区域和坐标来源不明的旧记录不造点。发布仍可只填写城市／区域，区域变化会使原选点失效。Android和iOS手机／平板使用各自原生SDK；Desktop入口复用这个Web地图。配置与源码边界见[高德接入](../docs/client/AMAP_IMPLEMENTATION_2026_10_24.md)。
 
 正式协议URL、OAuth供应商、短信／邮箱／年龄监护核验、系统推送及事件消费者调度须按真实环境配置。未配置时保留不可用或待核对状态，禁止固定成功。求助关注接入既有worker的`content_updates`作业与原租约／游标／ACK；还提供受保护的`case-watch-alerts`分批接口，消费者权限需显式包含相应名称。本批没有启动或配置调度器。免打扰排除全局数仍是原设计建议，保持服务端现行计数政策，不能用客户端自行减去未读数。
 
@@ -27,4 +35,4 @@ Vite输出目录为本项目`dist`，Go路由以`MND_WEB_DIST`覆盖默认`web-c
 
 草稿以origin、账号和任务隔离，保留原请求编号、原材料及版本；结果未知时先查原回执，不能重建编号。敏感验证码与用途授权仅驻内存。受限事项能力只允许查询／补充该事项，不是账号凭据；不要写进URL、日志或分享。
 
-独立阅读、设置、发布管理及宠物交流见[续审记录](../docs/client/FIGMA_READING_PUBLICATIONS_2026_10_24.md)。`MND_READING_CATALOG`指向同结构的UTF-8 JSON发布物；未配置时仅展示草案和指南，正式文本须包含真实主体与有效版本信息，不能覆盖既有历史文本。注册仍要求真实服务／隐私URL。容器源码已加入Web构建阶段及静态产物复制，可通过公开配置build args提供`VITE_MND_TERMS_URL`、`VITE_MND_PRIVACY_URL`、`VITE_MND_MAP_EMBED_TEMPLATE`；本批没有执行构建或部署。worker仅打包为独立二进制，不自动启动调度。
+独立阅读、设置、发布管理及宠物交流见[续审记录](../docs/client/FIGMA_READING_PUBLICATIONS_2026_10_24.md)。`MND_READING_CATALOG`指向同结构的UTF-8 JSON发布物；未配置时仅展示草案和指南，正式文本须包含真实主体与有效版本信息，不能覆盖既有历史文本。注册仍要求真实服务／隐私URL。容器源码已加入Web构建阶段及静态产物复制，可通过公开配置build args提供`VITE_MND_TERMS_URL`、`VITE_MND_PRIVACY_URL`、`VITE_MND_AMAP_JS_KEY`；本批没有执行构建或部署。worker仅打包为独立二进制，不自动启动调度。

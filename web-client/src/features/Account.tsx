@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { api, explain, type RecordData, type User } from "../core/api";
+import {
+  api,
+  explain,
+  HttpError,
+  type RecordData,
+  type User,
+} from "../core/api";
+import { AccountConflict } from "../components/AccountConflict";
 import { useSession } from "../core/session";
 import { reload, useQuery } from "../core/query";
 import { navigate } from "../core/router";
@@ -20,6 +27,8 @@ import {
 } from "../components/ui";
 import { OTPButton, PurposeCheck } from "../components/PurposeCheck";
 import { workflowURL } from "./workflows";
+import { ProviderSignIn } from "./ProviderSignIn";
+import type { Capabilities } from "./AuthDialog";
 
 export interface Profile {
   user: User;
@@ -106,6 +115,8 @@ export function Security() {
   const profile = useQuery<Profile>("profile");
   const methods = useQuery<Methods>("auth/methods");
   const eligibility = useQuery<Eligibility>("eligibility");
+  const capabilities = useQuery<Capabilities>("auth/capabilities");
+  const [provider, setProvider] = useState("");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
@@ -149,6 +160,11 @@ export function Security() {
         error={methods.error || profile.error}
       >
         <Card title="服务端资格">
+          <RowLink
+            title="年龄与使用范围"
+            detail="年龄、监护与成年业务分别核对"
+            to="/age"
+          />
           <p>
             交流：
             {eligibility.data?.contract_version === 1n &&
@@ -172,6 +188,7 @@ export function Security() {
             儿童交流须具备对应有效监护范围；线下、商业和签约仍按服务端成年人及城市准入规则校验。
           </Notice>
           <RowLink title="核对监护邀请" to="/guardians" />
+          <RowLink title="未成年人保护设置" to="/guardian-protection" />
           <RowLink title="申请核实与事项协助" to={workflowURL("review")} />
         </Card>
         <Card title="验证当前绑定的手机号">
@@ -229,6 +246,17 @@ export function Security() {
               }}
             />
           ))}
+          {[
+            ["wechat", "关联微信"],
+            ["qq", "关联QQ"],
+          ].map(([id, title]) => (
+            <RowLink
+              key={id}
+              title={title!}
+              detail="官方授权后，核对当前账号并确认本次关联"
+              onClick={() => setProvider(id!)}
+            />
+          ))}
         </Card>
         {notice ? <Notice title={notice} /> : null}
         {error ? <Notice title={error} error /> : null}
@@ -246,6 +274,18 @@ export function Security() {
             identity={identity}
             profile={profile.data}
             onClose={() => setChange(undefined)}
+          />
+        ) : null}
+        {provider && session.user ? (
+          <ProviderSignIn
+            provider={provider}
+            capabilities={capabilities.data}
+            onBack={() => setProvider("")}
+            onClose={() => {
+              setProvider("");
+              void reload("auth/methods");
+              void reload("profile");
+            }}
           />
         ) : null}
       </QueryState>
@@ -266,6 +306,7 @@ function AccountChange({
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [errorCode, setErrorCode] = useState("");
   const [scope, setScope] = useState<Record<string, unknown>>();
   const [grant, setGrant] = useState("");
   const [confirmed, setConfirmed] = useState(false);
@@ -331,6 +372,7 @@ function AccountChange({
       navigate("/mine");
     } catch (e) {
       setError(explain(e));
+      setErrorCode(e instanceof HttpError ? e.code : "");
     } finally {
       setValue("");
       setCode("");
@@ -363,6 +405,7 @@ function AccountChange({
         )
       }
     >
+      {errorCode === "identity_in_use" ? <AccountConflict /> : null}
       {uncertain ? (
         <Notice title="原变更结果待核对">
           请先重新登录后到恢复中心查询原编号 {request}，不能创建新编号重复提交。

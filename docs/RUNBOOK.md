@@ -1,15 +1,22 @@
 # Runbook
 
-> **2026-10-24 v2 运维与验收必读**：
+2026-10-25当前部署／App打包运行入口见[交付手册](client/DELIVERY_GUIDE_2026_10_25.md)。下方保留旧端与运营参考，源码接线不代表已部署或打包运行。
+
+> **2026-10-25 v2 运维、代码逻辑与静态验收必读**：
+> - **全栈代码逻辑与 PlantUML 架构手册**：[M&D 全栈代码逻辑与 PlantUML 架构总览手册](CODE_LOGIC_AND_UML_REFERENCE.md) · [独立 PlantUML (`.puml`) 图谱目录（12 张图）](uml/README.md)
 > - **v2 部署与恢复手册**：[M&D v2 部署、运营与恢复交接手册（2026-10-23）](server/V2_RELEASE_RUNBOOK_2026_10_23.md)
-> - **v2 服务端完整性审计与配置缺口**：[服务端完整性审计与待完善清单（2026-10-24）](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（含 `migrations/001`–`009` 全量顺序、`docker-compose.yml` / `Makefile` 漏挂 `008`–`009` 提醒、`cmd/worker` 6 类后台作业与环境变量模板 [`environment.example`](server/environment.example)）
-> - **静态检查脚本（不触发 Go / Gradle 编译）**：
+> - **v2 服务端完整性审计与配置缺口**：[服务端完整性审计与待完善清单（2026-10-24）](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（含 `migrations/001`–`009` 全量顺序、`44` 张 `mobile_*` 表、OpenAPI `241` Paths / `271` Operations / `123` Schemas、`cmd/worker` 6 类后台作业与环境变量模板 [`environment.example`](server/environment.example)）
+> - **静态检查脚本矩阵（12 个 Python 脚本，不触发 Go / Gradle 编译）**：
 >   - `python3 scripts/export_mobile_openapi.py`（静态生成 `docs/api/mobile-v2.openapi.json`）
->   - `python3 scripts/check_mobile_static.py`（核对 44 张表、OpenAPI 操作/Schema 与 KMP DTO）
->   - `python3 scripts/check_client_first_batch_static.py`（核对 Android / iOS / Web 客户端静态源码）
+>   - `python3 scripts/check_server_shared_contract_static.py`（核对 OpenAPI `241` Paths / `271` Operations / `123` Schemas 与 `74` 对跨语言 DTO）
+>   - `python3 scripts/check_mobile_static.py`（核对 44 张表、Go 服务端路由/状态机与 KMP DTO）
+>   - `python3 scripts/check_kmp_client_static.py`、`python3 scripts/check_client_ui_static.py`（核对 `kmp/shared` MVI Store 与 `kmp/clientUi` `34` 个共享 UI 文件 / `42` 个 `FeaturePage`）
+>   - `python3 scripts/check_android_ui_static.py`、`python3 scripts/check_android_feature_static.py`、`python3 scripts/check_android_finish_static.py`
+>   - `python3 scripts/check_provider_auth_static.py`、`python3 scripts/check_age_assurance_static.py`、`python3 scripts/check_guardian_invites_static.py`
+>   - `python3 scripts/check_web_client_static.py`、`python3 scripts/check_figma_reading_publications_static.py`
 > - **硬性禁令提醒**：在当前机器上严禁运行 `gradle` / `./gradlew` / `go build` / `go run` / `go test`（见根目录 `AGENTS.md`）。下文为早期 v1 阶段的操作参考。
 
-Last updated: 2026-10-24 (v1 baseline below originally recorded 2026-06-06)
+Last updated: 2026-10-25 (v1 baseline below originally recorded 2026-06-06)
 
 This runbook captures how to run, verify, and safely change the current M&D
 repository. It is intentionally practical: start here when you need the system

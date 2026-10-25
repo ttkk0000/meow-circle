@@ -99,15 +99,9 @@ func (t *mobileTx) ByKey(k mobile.Kind, key string) (mobile.Record, error) {
 	}
 	return scanMobile(t.tx.QueryRow(t.ctx, "SELECT "+mobileColumns+" FROM "+table+" WHERE record_key=$1"+lock, key))
 }
-func (t *mobileTx) List(k mobile.Kind, f mobile.Filter) ([]mobile.Record, error) {
-	table, err := mobileTable(k)
-	if err != nil {
-		return nil, err
-	}
-	limit := f.Limit
-	if limit <= 0 || limit > 500 {
-		limit = 100
-	}
+
+// List与Count共用筛选，避免分页计数和内存仓库产生不同可见范围。
+func mobilePredicates(f mobile.Filter) ([]string, []any) {
 	where, args := []string{"id > $1"}, []any{f.After}
 	add := func(predicate string, value any) {
 		args = append(args, value)
@@ -132,9 +126,31 @@ func (t *mobileTx) List(k mobile.Kind, f mobile.Filter) ([]mobile.Record, error)
 	if f.State != "" {
 		add("state = $%d", f.State)
 	}
-	if f.KeyPrefix != "" {
-		add("strpos(record_key, $%d) = 1", f.KeyPrefix)
+	if len(f.States) > 0 {
+		add("state = ANY($%d::text[])", f.States)
 	}
+	if len(f.ExcludeStates) > 0 {
+		add("state <> ALL($%d::text[])", f.ExcludeStates)
+	}
+	if f.KeyPrefix != "" {
+		// 业务前缀中的通配符必须按字面匹配；与迁移011的pattern索引配套。
+		prefix := strings.NewReplacer(`\`, `\\`, "%", `\%`, "_", `\_`).Replace(f.KeyPrefix)
+		where = append(where, "record_key <> ''")
+		add(`record_key LIKE $%d ESCAPE E'\\'`, prefix+"%")
+	}
+	return where, args
+}
+
+func (t *mobileTx) List(k mobile.Kind, f mobile.Filter) ([]mobile.Record, error) {
+	table, err := mobileTable(k)
+	if err != nil {
+		return nil, err
+	}
+	limit := f.Limit
+	if limit <= 0 || limit > 500 {
+		limit = 100
+	}
+	where, args := mobilePredicates(f)
 	args = append(args, limit)
 	query := "SELECT " + mobileColumns + " FROM " + table + " WHERE " + strings.Join(where, " AND ") + fmt.Sprintf(" ORDER BY id LIMIT $%d", len(args))
 	rows, err := t.tx.Query(t.ctx, query, args...)
@@ -189,33 +205,7 @@ func (t *mobileTx) Count(k mobile.Kind, f mobile.Filter) (int64, error) {
 	if e != nil {
 		return 0, e
 	}
-	where, args := []string{"id > $1"}, []any{f.After}
-	add := func(predicate string, value any) {
-		args = append(args, value)
-		where = append(where, fmt.Sprintf(predicate, len(args)))
-	}
-	if f.OwnerID > 0 {
-		add("owner_id=$%d", f.OwnerID)
-	}
-	if f.RefID > 0 {
-		add("reference_id=$%d", f.RefID)
-	}
-	if f.State != "" {
-		add("state=$%d", f.State)
-	}
-	if f.KeyPrefix != "" {
-		add("strpos(record_key, $%d) = 1", f.KeyPrefix)
-	}
-	if f.PublicOnly {
-		where = append(where, "public=TRUE")
-	}
-	if f.ParticipantID > 0 {
-		args = append(args, f.ParticipantID)
-		where = append(where, fmt.Sprintf("(owner_id=$%d OR participants @> ARRAY[$%d]::bigint[])", len(args), len(args)))
-	}
-	if f.MediaID > 0 {
-		add("media_ids @> ARRAY[$%d]::bigint[]", f.MediaID)
-	}
+	where, args := mobilePredicates(f)
 	var count int64
 	e = t.tx.QueryRow(t.ctx, "SELECT count(*) FROM "+table+" WHERE "+strings.Join(where, " AND "), args...).Scan(&count)
 	return count, mobileError(e)
@@ -275,12 +265,12 @@ func (t *mobileTx) SaveUser(u *domain.User) error {
 // Readiness is called at startup, never to silently substitute volatile storage.
 func (s *Store) CheckMobileSchema(ctx context.Context) error {
 	var ready bool
-	err := s.pool.QueryRow(ctx, "SELECT to_regclass('mobile_accounts') IS NOT NULL AND to_regclass('mobile_outbox') IS NOT NULL AND to_regclass('mobile_qualifications') IS NOT NULL AND to_regclass('mobile_operations') IS NOT NULL AND to_regclass('mobile_data_requests') IS NOT NULL AND to_regclass('mobile_pet_comments') IS NOT NULL AND to_regclass('mobile_comment_reactions') IS NOT NULL").Scan(&ready)
+	err := s.pool.QueryRow(ctx, "SELECT to_regclass('mobile_accounts') IS NOT NULL AND to_regclass('mobile_outbox') IS NOT NULL AND to_regclass('mobile_qualifications') IS NOT NULL AND to_regclass('mobile_operations') IS NOT NULL AND to_regclass('mobile_data_requests') IS NOT NULL AND to_regclass('mobile_pet_comments') IS NOT NULL AND to_regclass('mobile_comment_reactions') IS NOT NULL AND to_regclass('mnd_worker_checkpoints') IS NOT NULL").Scan(&ready)
 	if err != nil {
 		return err
 	}
 	if !ready {
-		return fmt.Errorf("mobile schema missing: apply migrations through 009_pet_discussions.sql")
+		return fmt.Errorf("mobile schema missing: apply migrations through 012_worker_checkpoints.sql")
 	}
 	return nil
 }

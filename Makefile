@@ -60,16 +60,8 @@ down: ## docker compose down
 	docker compose down
 
 .PHONY: migrate
-migrate: ## Initialize a new database with ordered migrations 001–009; existing databases apply pending files only
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/001_init.sql
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/002_social.sql
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/003_user_phone.sql
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/004_notifications_actor_image.sql
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/005_adoption.sql
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/006_listing_category.sql
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/007_mobile_modules.sql
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/008_mobile_policy_commands.sql
-	psql "$$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/009_pet_discussions.sql
+migrate: ## Apply pending migrations with checksums and an explicit legacy baseline
+	$(GO) run ./cmd/migrate
 
 .PHONY: docker
 docker: ## Build the production container image
@@ -108,7 +100,7 @@ package-kmp: package-kmp-android package-kmp-desktop ## Package KMP Android rele
 
 .PHONY: package-kmp-ios-framework
 package-kmp-ios-framework: ## Build/sign KMP shared iOS framework for Xcode (macOS/Xcode only)
-	cd $(KMP_DIR) && $(KMP_GRADLE) :shared:embedAndSignAppleFrameworkForXcode
+	cd $(KMP_DIR) && $(KMP_GRADLE) :iosUi:embedAndSignAppleFrameworkForXcode
 
 .PHONY: package-rn-web
 package-rn-web: ## Export RN/Expo web static bundle
@@ -149,3 +141,38 @@ kmp-android-run: ## Install and run KMP Android app on connected emulator/device
 .PHONY: clean
 clean: ## Remove build + coverage artefacts
 	rm -rf bin coverage.out coverage.html
+
+# ----- Current delivery entry points (explicit invocation only) ----------------
+.PHONY: delivery-init delivery-build delivery-up delivery-stop delivery-status app-android-debug app-android-release app-android-run app-ios-prepare app-ios-simulator app-ios-archive app-ios-export app-ios-run app-desktop-package
+DELIVERY_DIR ?= deploy/local
+API_URL ?= https://example.invalid
+DEVICE ?=
+EXPORT_OPTIONS ?=
+delivery-init: ## Initialize private production settings; DOMAIN and IMAGE are required
+	python3 scripts/delivery.py init --directory "$(DELIVERY_DIR)" --domain "$(DOMAIN)" --image "$(IMAGE)"
+delivery-build: ## Build API/Web/worker/migration image, without publishing
+	python3 scripts/delivery.py build --directory "$(DELIVERY_DIR)"
+delivery-up: ## Stop old writers, migrate and start production services
+	python3 scripts/delivery.py up --directory "$(DELIVERY_DIR)"
+delivery-stop: ## Stop production services while preserving volumes
+	python3 scripts/delivery.py stop --directory "$(DELIVERY_DIR)"
+delivery-status: ## Inspect production container state
+	python3 scripts/delivery.py status --directory "$(DELIVERY_DIR)"
+app-android-debug: ## Build current Android debug APK
+	python3 scripts/mobile.py android debug --api-url "$(MEOW_API_BASE_URL)"
+app-android-release: ## Build signed APK and AAB with externally supplied signing credentials
+	python3 scripts/mobile.py android release --api-url "$(API_URL)"
+app-android-run: ## Build/install/launch debug APK on the explicitly selected device
+	python3 scripts/mobile.py android run --api-url "$(MEOW_API_BASE_URL)" --device "$(DEVICE)"
+app-ios-prepare: ## Generate current Xcode workspace and resolve pinned Pods
+	python3 scripts/mobile.py ios prepare
+app-ios-simulator: ## Build current iPhone/iPad simulator app
+	python3 scripts/mobile.py ios simulator --api-url "$(MEOW_API_BASE_URL)"
+app-ios-archive: ## Archive a signed iPhone/iPad app using MND_IOS_TEAM_ID
+	python3 scripts/mobile.py ios archive --api-url "$(API_URL)"
+app-ios-export: ## Export IPA using a reviewed ExportOptions plist; never uploads
+	python3 scripts/mobile.py ios export --export-options "$(EXPORT_OPTIONS)"
+app-ios-run: ## Install/launch an existing simulator app on an explicit UDID
+	python3 scripts/mobile.py ios run --device "$(DEVICE)"
+app-desktop-package: ## Package current OS desktop distribution
+	python3 scripts/mobile.py desktop package

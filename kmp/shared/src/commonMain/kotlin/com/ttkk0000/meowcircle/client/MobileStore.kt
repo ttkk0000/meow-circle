@@ -38,7 +38,7 @@ data class PageState<T>(val items: List<MobileRecord<T>> = emptyList(), val next
     }
 }
 
-data class AuthForm(val visible: Boolean = false, val username: String = "", val password: String = "", val error: String? = null)
+data class AuthForm(val visible: Boolean = false, val username: String = "", val password: String = "", val error: String? = null,val errorCode: String = "")
 
 data class AdoptionCommand(val record: MobileRecord<AdoptionBody>, val action: String, val label: String, val note: String)
 
@@ -80,6 +80,13 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     private val localWorkspaces: LocalWorkspaceDrafts? = null, private val localReplies: LocalWorkspaceDrafts? = null) :
     MviStore<MobileState, MobileStoreIntent, MobileStoreEffect>(MobileState(replyDraftReady = localReplies == null)) {
     val features = MobileFeatureStore(api, scope, localWorkspaces)
+    private var providerGuest: Pair<MobileDestination,String>? = null
+    val providerAuth = ProviderAuthStore(api, scope) { session ->
+        val original = providerGuest; providerGuest = null
+        finishAuthentication(session,original?.second.orEmpty(),original?.first ?: _state.value.destination)
+        if(features.state.value.route != null) features.reload()
+    }
+
     private var accountEpoch = 0L
     private var detailRevision = 0L
     private val history = mutableListOf<MobileDestination>()
@@ -142,6 +149,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     }
 
     private fun accountChanged(user: MobileUser?) {
+        if(providerAuth.state.value.stage !in setOf(ProviderAuthStage.Checking,ProviderAuthStage.Verifying,ProviderAuthStage.Creating,ProviderAuthStage.Linking)) providerGuest = null
         val previousOwner = _state.value.user?.id
         val sensitiveSignOut = user == null && previousOwner != null && features.sensitive.state.value.stage == SensitiveStage.Submitting
         accountEpoch++
@@ -239,9 +247,9 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         return true
     }
 
-    fun showLogin() { _state.update { it.copy(auth = it.auth.copy(visible = true, error = null)) }; refreshCapabilities() }
+    fun showLogin() { _state.update { it.copy(auth = it.auth.copy(visible = true, error = null,errorCode = "")) }; refreshCapabilities() }
     fun cancelLogin() { if (_state.value.busy) return; resumeApply = null; _state.update { it.copy(auth = AuthForm()) } }
-    fun editAuth(form: AuthForm) { _state.update { it.copy(auth = form.copy(error = null)) } }
+    fun editAuth(form: AuthForm) { _state.update { it.copy(auth = form.copy(error = null,errorCode = "")) } }
     fun clearNotice() { _state.update { it.copy(notice = null) } }
     fun rememberExpression(id: String) = task("expression-$id") {
         if (_state.value.user == null) return@task
@@ -293,7 +301,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     fun dismissPublication() { if (!_state.value.busy) _state.update { it.copy(publicationConfirmation = null) } }
     fun refreshInbox() = task("inbox") {
         if (_state.value.user == null) return@task
-        try { val summary = api.inbox(); _state.update { it.copy(inbox = summary, inboxError = null) } }
+        try { val summary = api.inbox(); api.devicePush.updateBadge(summary.globalTotal); _state.update { it.copy(inbox = summary, inboxError = null) } }
         catch (e: CancellationException) { throw e }
         catch (e: Exception) { _state.update { it.copy(inboxError = e.mobileMessage()) } }
     }
@@ -557,6 +565,26 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         return false
     }
 
+    fun startProvider(provider: String, launcher: ProviderLauncher) {
+        if(_state.value.busy) return
+        if(providerGuest == null && _state.value.user == null) providerGuest = _state.value.destination to _state.value.reply
+        providerAuth.start(provider,launcher)
+    }
+
+    private fun finishAuthentication(session: LoginSession, guestReply: String, originalDestination: MobileDestination) {
+        if (_state.value.user?.id != session.user.id) accountChanged(session.user)
+        if (guestReply.isNotEmpty() && originalDestination == _state.value.destination && (originalDestination is MobileDestination.Entry || originalDestination is MobileDestination.Pet)) {
+            if (replyReady) _state.update { it.copy(guestReplySuggestion = guestReply) }
+            else pendingGuestReply = originalDestination to guestReply
+        }
+        _state.update { it.copy(auth = AuthForm(), notice = "登录成功，请确认后继续原任务") }
+        resumeApply?.let { id ->
+            resumeApply = null
+            if (_state.value.destination == MobileDestination.Pet(id)) _state.update { it.copy(applying = true) }
+        }
+        reloadDetail(); refreshHome()
+    }
+
     fun login() {
         val form = _state.value.auth
         authenticate { api.password(form.username.trim(), form.password) }
@@ -578,21 +606,9 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         _state.update { it.copy(busy = true, auth = it.auth.copy(password = "")) }
         scope.launch {
             try {
-                val session = login()
-                if (_state.value.user?.id != session.user.id) accountChanged(session.user)
-                if (guestReply.isNotEmpty() && originalDestination == _state.value.destination && (originalDestination is MobileDestination.Entry || originalDestination is MobileDestination.Pet)) {
-                    if (replyReady) _state.update { it.copy(guestReplySuggestion = guestReply) }
-                    else pendingGuestReply = originalDestination to guestReply
-                }
-                _state.update { it.copy(auth = AuthForm(), notice = "登录成功，请确认后继续原任务") }
-                resumeApply?.let { id ->
-                    resumeApply = null
-                    if (_state.value.destination == MobileDestination.Pet(id)) _state.update { it.copy(applying = true) }
-                }
-                reloadDetail()
-                refreshHome()
+                finishAuthentication(login(),guestReply,originalDestination)
             } catch (e: CancellationException) { throw e }
-            catch (e: Exception) { _state.update { it.copy(auth = it.auth.copy(error = e.mobileMessage())) } }
+            catch (e: Exception) { _state.update { it.copy(auth = it.auth.copy(error = e.mobileMessage(),errorCode = (e as? MobileApiException)?.code.orEmpty())) } }
             finally { _state.update { it.copy(busy = false) } }
         }
     }
@@ -771,6 +787,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         loadPage("messages", more, { it.messages }, { s, p -> s.copy(messages = p) }, { cursor ->
             val first = if (!more && !fromBeginning) {
                 val summary = api.inbox()
+                api.devicePush.updateBadge(summary.globalTotal)
                 currentCoroutineContext().ensureActive()
                 if (epoch != accountEpoch) throw CancellationException("Account changed")
                 _state.update { it.copy(inbox = summary,inboxError = null) }
@@ -899,6 +916,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val through = s.messages.items.maxOfOrNull { it.id } ?: return@command
         api.readMessages(chat.id, chat.group, through)
         val inbox = api.inbox()
+        api.devicePush.updateBadge(inbox.globalTotal)
         _state.update { it.copy(inbox = inbox, notice = "已标为已读") }
     }
     fun answerMessageRequest(action: String) = command {
@@ -1266,7 +1284,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         }
     }
     suspend fun media(id: Long): ByteArray = api.media(id)
-    override fun close() { features.close(); super.close(); if (ownsApi) api.close() }
+    override fun close() { providerAuth.close(); features.close(); super.close(); if (ownsApi) api.close() }
     private fun newKey(): String = Random.nextBytes(16).joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
 }
 

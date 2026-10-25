@@ -40,7 +40,13 @@ for item in manifest['assets']:
     assert hashlib.sha256(file.read_bytes()).hexdigest() == item['sha256'], file
     assert file.read_bytes() == (android / file.name).read_bytes(), ('两端原SVG不同', file)
     svg = ET.parse(file).getroot()
-    assert svg.attrib.get('width') == '24' and svg.attrib.get('height') == '24', file
+    if item.get('intrinsic_viewBox'):
+        assert svg.attrib.get('viewBox') == item['intrinsic_viewBox'] == '0 0 24 24', file
+        assert item['rendered_dimensions'] == [24, 24], file
+    else:
+        assert svg.attrib.get('width') == '24' and svg.attrib.get('height') == '24', file
+    common = root / 'kmp/clientUi/src/commonMain/composeResources/files/figma' / file.name
+    assert common.read_bytes() == file.read_bytes(), ('公共UI原SVG不同', common)
     names.add(item['name'])
 icons = set()
 for file in files:

@@ -2,6 +2,7 @@ package mobileapi
 
 import (
 	"bytes"
+	"context"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
@@ -14,8 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"sync"
-	"time"
 
 	"kitty-circle/internal/mobile"
 )
@@ -28,18 +27,13 @@ type browserPair struct {
 	Access  string `json:"access"`
 	Refresh string `json:"refresh"`
 }
-type refreshedPair struct {
-	Pair  browserPair
-	Until time.Time
-}
+type browserRefreshContext struct{}
 
 // BrowserHandler 只适配同源浏览器会话，权限／资格／版本仍由原 v2 Handler 校验。
 type BrowserHandler struct {
 	API         *Handler
 	Origin      string
 	Development bool
-	mu          sync.Mutex
-	recent      map[[32]byte]refreshedPair
 }
 
 func NewBrowser(api *Handler, origin string, development bool) (*BrowserHandler, error) {
@@ -51,7 +45,7 @@ func NewBrowser(api *Handler, origin string, development bool) (*BrowserHandler,
 			return nil, fmt.Errorf("MND_WEB_ORIGIN must be one exact HTTPS origin (development permits loopback HTTP)")
 		}
 	}
-	return &BrowserHandler{API: api, Origin: origin, Development: development, recent: make(map[[32]byte]refreshedPair)}, nil
+	return &BrowserHandler{API: api, Origin: origin, Development: development}, nil
 }
 func (h *BrowserHandler) cookie(w http.ResponseWriter, name, value string, age int) {
 	http.SetCookie(w, &http.Cookie{Name: name, Value: value, Path: browserPrefix, MaxAge: age, HttpOnly: true, Secure: !strings.HasPrefix(h.Origin, "http://"), SameSite: http.SameSiteStrictMode})
@@ -142,7 +136,11 @@ func (b *browserResponse) Write(data []byte) (int, error) {
 	return b.body.Write(data)
 }
 func (h *BrowserHandler) forward(r *http.Request, path string, pair browserPair, body []byte) *browserResponse {
-	clone := r.Clone(r.Context())
+	ctx := r.Context()
+	if path == "auth/refresh" {
+		ctx = context.WithValue(ctx, browserRefreshContext{}, true)
+	}
+	clone := r.Clone(ctx)
 	u := *r.URL
 	u.Path = "/api/v2/" + path
 	u.RawPath = ""
@@ -276,56 +274,33 @@ func (h *BrowserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			failure(w, mobile.ErrUnauthorized)
 			return
 		}
-		// 同一进程合并旧Cookie的并发轮换；浏览器另以Web Locks跨标签串行。
-		// 多副本部署需要会话粘性或统一轮换协调，不能把此锁当分布式保证。
-		h.mu.Lock()
-		defer h.mu.Unlock()
-		now := time.Now()
-		for key, value := range h.recent {
-			if now.After(value.Until) {
-				delete(h.recent, key)
-			}
-		}
-		key := sha256.Sum256([]byte(pair.Refresh))
-		if cached, ok := h.recent[key]; ok {
-			sealed, e := h.seal(cached.Pair)
-			if e != nil {
-				failure(w, e)
-				return
-			}
-			h.cookie(w, sessionCookie, sealed, 30*24*60*60)
-			_ = json.NewEncoder(w).Encode(map[string]any{"ok": true, "data": nil})
-			return
-		}
 		body, _ := json.Marshal(map[string]string{"access_token": pair.Access, "refresh_token": pair.Refresh, "device": "web-v2"})
 		response := h.forward(r, path, browserPair{}, body)
 		if response.status == 200 {
-			next, e := h.takeLogin(w, response)
+			_, e := h.takeLogin(w, response)
 			if e != nil {
 				failure(w, e)
 				return
 			}
-			if len(h.recent) >= 256 {
-				for key := range h.recent {
-					delete(h.recent, key)
-					break
-				}
-			}
-			h.recent[key] = refreshedPair{next, now.Add(30 * time.Second)}
+
 		} else if response.status == 401 {
 			h.cookie(w, sessionCookie, "", -1)
 		}
 		h.relay(w, response)
 		return
 	}
-	// 登录设备固定为Web；原生供应商回调不允许从此适配器冒用。
-	if strings.HasPrefix(path, "auth/oauth-") {
-		failure(w, mobile.ErrUnavailable)
-		return
-	}
 	var body []byte
+	if strings.HasPrefix(path, "auth/oauth-") {
+		body, e = h.webProviderBody(w, r, path)
+		if e != nil {
+			failure(w, e)
+			return
+		}
+	}
 	if browserLogin(path) {
-		body, e = io.ReadAll(http.MaxBytesReader(w, r.Body, 1<<20))
+		if body == nil {
+			body, e = io.ReadAll(http.MaxBytesReader(w, r.Body, 1<<20))
+		}
 		if e != nil {
 			failure(w, mobile.Invalid("request too large"))
 			return
@@ -343,10 +318,16 @@ func (h *BrowserHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	forwardPair := pair
-	if browserLogin(path) || path == "auth/capabilities" {
+	if browserLogin(path) && path != "auth/oauth-resolve" || path == "auth/capabilities" {
 		forwardPair = browserPair{}
 	}
 	response := h.forward(r, path, forwardPair, body)
+	if path == "auth/oauth-finish" && response.status == http.StatusOK {
+		if e := h.takeProviderLogin(w, response); e != nil {
+			failure(w, e)
+			return
+		}
+	}
 	if browserLogin(path) && response.status == 200 {
 		if _, e := h.takeLogin(w, response); e != nil {
 			failure(w, e)

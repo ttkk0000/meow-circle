@@ -104,6 +104,8 @@ type Filter struct {
 	After         int64
 	Limit         int
 	State         string
+	States        []string
+	ExcludeStates []string
 }
 
 // Tx implementations must isolate a callback atomically, roll back on error,

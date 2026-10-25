@@ -29,6 +29,8 @@ type Provider interface {
 	Verify(context.Context, Credential, string) (Subject, error)
 }
 type Credential struct {
+	AppID         string `json:"app_id"`
+	Client        string `json:"client"`
 	Code          string `json:"code"`
 	IdentityToken string `json:"identity_token"`
 	AccessToken   string `json:"access_token"`
@@ -40,12 +42,14 @@ type Subject struct {
 	Secret   string `json:"secret,omitempty"` // encrypted provider revocation token; never projected to clients
 }
 type Service struct {
-	Repo      mobile.Repository
-	SMS       SMS
-	Providers map[string]Provider
-	Secret    []byte
-	Now       func() time.Time
-	Email     EmailSender
+	Repo            mobile.Repository
+	SMS             SMS
+	Providers       map[string]Provider
+	Secret          []byte
+	Now             func() time.Time
+	Email           EmailSender
+	Age             AgeProvider
+	PublicAppOrigin string
 }
 
 func New(repo mobile.Repository, secret string, sms SMS, providers map[string]Provider) *Service {
@@ -80,11 +84,13 @@ type Account struct {
 	DeletionRequestedAt *time.Time `json:"deletion_requested_at,omitempty"`
 }
 type Session struct {
-	Epoch            int64     `json:"epoch"`
-	ExpiresAt        time.Time `json:"expires_at"`
-	RefreshHash      string    `json:"refresh_hash"`
-	RefreshExpiresAt time.Time `json:"refresh_expires_at"`
-	Device           string    `json:"device"`
+	Epoch              int64     `json:"epoch"`
+	ExpiresAt          time.Time `json:"expires_at"`
+	RefreshHash        string    `json:"refresh_hash"`
+	RefreshExpiresAt   time.Time `json:"refresh_expires_at"`
+	Device             string    `json:"device"`
+	BrowserReplay      string    `json:"browser_replay,omitempty"`
+	BrowserReplayUntil time.Time `json:"browser_replay_until,omitempty"`
 }
 type LoginResult struct {
 	User         domain.User `json:"user"`
@@ -227,7 +233,25 @@ func (s *Service) Authenticate(ctx context.Context, token string) (user domain.U
 	})
 	return
 }
-func (s *Service) Refresh(ctx context.Context, access, refresh, device string) (out LoginResult, err error) {
+func (s *Service) Refresh(ctx context.Context, access, refresh, device string) (LoginResult, error) {
+	return s.refresh(ctx, access, refresh, device, false)
+}
+
+// BrowserRefresh只由同源Cookie适配器调用；回执与会话轮换在同一事务持久化。
+func (s *Service) BrowserRefresh(ctx context.Context, access, refresh string) (out LoginResult, err error) {
+	for attempt := 0; attempt < 3; attempt++ {
+		out, err = s.refresh(ctx, access, refresh, "web-v2", true)
+		if !errors.Is(err, mobile.ErrConflict) || ctx.Err() != nil {
+			return
+		}
+	}
+	return
+}
+
+func (s *Service) refresh(ctx context.Context, access, refresh, device string, browser bool) (out LoginResult, err error) {
+	if len(access) < 32 || len(access) > 256 || len(refresh) < 32 || len(refresh) > 256 {
+		return out, mobile.ErrUnauthorized
+	}
 	err = s.Repo.Update(ctx, func(tx mobile.Tx) error {
 		r, e := tx.ByKey(mobile.Sessions, digest(access))
 		if e != nil {
@@ -237,7 +261,7 @@ func (s *Service) Refresh(ctx context.Context, access, refresh, device string) (
 		if e != nil {
 			return e
 		}
-		if r.State != "active" || !v.RefreshExpiresAt.After(s.Now()) || !hmac.Equal([]byte(v.RefreshHash), []byte(digest(refresh))) {
+		if !v.RefreshExpiresAt.After(s.Now()) || !hmac.Equal([]byte(v.RefreshHash), []byte(digest(refresh))) {
 			return mobile.ErrUnauthorized
 		}
 		if e = active(tx, r.OwnerID); e != nil {
@@ -255,6 +279,30 @@ func (s *Service) Refresh(ctx context.Context, access, refresh, device string) (
 		} else if !errors.Is(e, mobile.ErrNotFound) {
 			return e
 		}
+		if r.State != "active" {
+			if !browser || r.State != "rotated" || !v.BrowserReplayUntil.After(s.Now()) {
+				return mobile.ErrUnauthorized
+			}
+			var replay LoginResult
+			if e = s.openAuthReplay(r.Key, v.BrowserReplay, &replay); e != nil {
+				return e
+			}
+			next, e := tx.ByKey(mobile.Sessions, digest(replay.Token))
+			if e != nil || next.State != "active" || next.OwnerID != r.OwnerID {
+				return mobile.ErrUnauthorized
+			}
+			nextSession, e := mobile.Decode[Session](next)
+			if e != nil {
+				return e
+			}
+			if nextSession.Epoch != v.Epoch || !nextSession.ExpiresAt.After(s.Now()) {
+				return mobile.ErrUnauthorized
+			}
+			// 账号资料不从短期回执恢复，避免返回旧的用户展示字段。
+			replay.User, e = tx.User(r.OwnerID)
+			out = replay
+			return e
+		}
 		u, e := tx.User(r.OwnerID)
 		if e != nil {
 			return e
@@ -266,6 +314,16 @@ func (s *Service) Refresh(ctx context.Context, access, refresh, device string) (
 		out, e = s.issue(tx, u, device)
 		if e != nil {
 			return e
+		}
+		if browser {
+			v.BrowserReplay, e = s.sealAuthReplay(r.Key, out)
+			if e != nil {
+				return e
+			}
+			v.BrowserReplayUntil = s.Now().Add(30 * time.Second)
+			if e = set(tx, mobile.Sessions, &r, v); e != nil {
+				return e
+			}
 		}
 		return mobile.RotatePushSession(tx, u.ID, digest(access), digest(out.Token))
 	})
@@ -735,6 +793,9 @@ type OAuthResult struct {
 }
 
 func subjectKey(v Subject) string { return v.Provider + ":" + v.AppID + ":" + v.ID }
+func identifierInUse() error {
+	return mobile.RuleError{Code: "identity_in_use", Message: "login identifier is already bound; existing accounts are preserved"}
+}
 func (s *Service) Finish(ctx context.Context, actor int64, in OAuthFinish) (out OAuthResult, err error) {
 	var challenge mobile.Record
 	var c Challenge
@@ -786,7 +847,7 @@ func (s *Service) Finish(ctx context.Context, actor int64, in OAuthFinish) (out 
 		linked, e := tx.ByKey(mobile.Identities, subjectKey(subject))
 		if e == nil && linked.State == "active" {
 			if actor > 0 && linked.OwnerID != actor {
-				return mobile.ErrConflict
+				return identifierInUse()
 			}
 			u, e := tx.User(linked.OwnerID)
 			if e != nil {
@@ -902,10 +963,10 @@ func (s *Service) Resolve(ctx context.Context, actor int64, in ResolveInput) (ou
 				return e
 			}
 			if link.State == "revoked" && previous.Secret != "" {
-				return mobile.ErrConflict
+				return identifierInUse()
 			}
 			if link.State == "active" && link.OwnerID != u.ID {
-				return mobile.ErrConflict
+				return identifierInUse()
 			}
 			link.OwnerID = u.ID
 		} else if errors.Is(e, mobile.ErrNotFound) {
@@ -1060,6 +1121,13 @@ func (s *Service) Account(ctx context.Context, actor int64, action string, in Ac
 				return mobile.ErrUnauthorized
 			}
 			u.Phone = phone
+			previous, lookupErr := tx.UserByPhone(phone)
+			if lookupErr == nil && previous.ID != actor {
+				return identifierInUse()
+			}
+			if lookupErr != nil && !errors.Is(lookupErr, mobile.ErrNotFound) {
+				return lookupErr
+			}
 			if e = tx.SaveUser(&u); e != nil {
 				return e
 			}
@@ -1085,7 +1153,7 @@ func (s *Service) Account(ctx context.Context, actor int64, action string, in Ac
 				return mobile.ErrUnauthorized
 			}
 			if _, e = tx.ByKey(mobile.Identities, "email:"+address); e == nil {
-				return mobile.ErrConflict
+				return identifierInUse()
 			} else if !errors.Is(e, mobile.ErrNotFound) {
 				return e
 			}

@@ -6,7 +6,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.interop.LocalUIViewController
-import com.ttkk0000.meowcircle.client.MobileStore
 import com.ttkk0000.meowcircle.client.SelectedPhoto
 import kotlinx.cinterop.*
 import kotlinx.coroutines.*
@@ -20,11 +19,13 @@ import kotlin.coroutines.resume
 import kotlin.math.min
 
 @Composable
-internal actual fun PhotoPickerButton(store: MobileStore, remaining: Int, enabled: Boolean) {
+internal fun IosSelectPhotos(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit) {
     val controller = LocalUIViewController.current
     val scope = rememberCoroutineScope()
     var preparing by remember { mutableStateOf(false) }
-    val delegate = remember(store) {
+    val selected by rememberUpdatedState(onSelected)
+    val failed by rememberUpdatedState(onError)
+    val delegate = remember {
         object : NSObject(), PHPickerViewControllerDelegateProtocol {
             override fun picker(picker: PHPickerViewController, didFinishPicking: List<*>) {
                 picker.dismissViewControllerAnimated(true, null)
@@ -58,11 +59,9 @@ internal actual fun PhotoPickerButton(store: MobileStore, remaining: Int, enable
                             bytes.usePinned { memcpy(it.addressOf(0), jpeg.bytes, jpeg.length) }
                             SelectedPhoto("照片 ${index + 1}", "image/jpeg", bytes)
                         } }.awaitAll()
-                        store.addPhotos(photos.filterNotNull())
-                        if (photos.any { it == null }) store.pickerFailed("部分照片无法读取，请重新选择")
-                    } catch (e: CancellationException) { throw e }
-                    catch (_: Exception) { store.pickerFailed("照片暂时无法读取，请重新选择") }
-                    finally { preparing = false }
+                        selected(photos.filterNotNull())
+                        if (photos.any { it == null }) failed("部分照片无法读取，请重新选择")
+                    } catch (e: CancellationException) { throw e } catch (failure: Exception) { failed("照片暂时无法读取，请重新选择") } finally { preparing = false }
                 }
             }
         }

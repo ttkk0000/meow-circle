@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProviderCredential(val code: String = "", @SerialName("identity_token") val identityToken: String = "",
-    @SerialName("access_token") val accessToken: String = "")
+    @SerialName("access_token") val accessToken: String = "", @SerialName("app_id") val appId: String = "", val client: String = "")
 @Serializable
 data class ProviderStart(val provider: String, val resume: String = "", val scope: PurposeScope? = null)
 @Serializable

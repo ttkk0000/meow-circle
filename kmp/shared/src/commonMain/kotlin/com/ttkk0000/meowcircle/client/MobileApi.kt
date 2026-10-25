@@ -35,9 +35,12 @@ fun Throwable.mobileMessage(): String = when (this) {
     is MobileStorageException -> "设备安全存储暂不可用，请解锁设备后重试"
     is LocalDraftException -> reason
     is MobileApiException -> when (code) {
+        "identity_in_use" -> "此登录标识已有绑定；保留原账号资料和聊天，不会自动合并，也不会透露其他账号信息"
+        "provider_pending" -> "上一次官方授权尚未返回，请先在官方页面完成或取消；也可使用其他登录方式"
         "phone_verification_required" -> "请先验证当前绑定手机号，已保留输入"
         "age_verification_required" -> "请先完成年龄资格核验，已保留输入"
         "guardian_consent_required" -> "需要有效的监护授权，已保留输入"
+        "contact_restricted" -> "此联系入口受保护设置限制，未发送消息；可使用好友确认、屏蔽或私密求助入口"
         "adult_required" -> "商业发布和线下签约需要成年人使用本人账号办理"
         "purpose_grant_required", "purpose_grant_invalid" -> "请重新核对本次操作并完成用途验证"
         "idempotency_conflict" -> "此请求编号对应的内容已改变，请核对原操作结果"
@@ -79,6 +82,8 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     // 缓存身份只用于恢复私有输入；交流资格仍须重新从服务端读取。
     private val _user = MutableStateFlow<MobileUser?>(session?.user)
     val user = _user.asStateFlow()
+    private val devicePushDelegate = lazy { DevicePushCoordinator(this, device) }
+    val devicePush: DevicePushCoordinator get() = devicePushDelegate.value
     private var revision = 0L
     private var accountGeneration = 0L
 
@@ -217,6 +222,10 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
 
     suspend fun capabilities(): LoginCapabilities = get("auth/capabilities", authenticated = false)
     suspend fun identityMethods(): IdentityMethods = get("auth/methods")
+    suspend fun ageProvider(): AgeProviderInfo = get("auth/age-assurance/config")
+    suspend fun currentAgeAssurance(): AgeAssuranceStatus? = get("auth/age-assurance/current")
+    suspend fun beginAgeAssurance(input: AgeAssuranceInput): AgeAssuranceStatus = post("auth/age-assurance",input)
+    suspend fun queryAgeAssurance(id: Long): AgeAssuranceStatus = post("auth/age-assurance/$id/query",kotlinx.serialization.json.JsonObject(emptyMap()))
     suspend fun phoneLogin(input: PhoneLoginInput): LoginSession = sessionMutex.withLock {
         ensureStorage();post<LoginSession,PhoneLoginInput>("auth/phone",input.copy(device = device),false).also { save(it) }
     }
@@ -556,5 +565,5 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         return bytes
     }
 
-    fun close() { http.close() }
+    fun close() { if (devicePushDelegate.isInitialized()) devicePush.close(); http.close() }
 }

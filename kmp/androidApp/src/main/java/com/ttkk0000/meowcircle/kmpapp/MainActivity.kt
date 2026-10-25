@@ -15,6 +15,11 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 class MainActivity : ComponentActivity() {
+    override fun onResume() {
+        super.onResume()
+        (application as MndApplication).devicePush.refresh()
+        appViewModel.store.refreshInbox()
+    }
     private val appViewModel by viewModels<MobileViewModel> {
         val app = application as MndApplication
         MobileViewModel.Factory(app.mobileApi, app.composeDrafts, app.workspaceDrafts, app.replyDrafts)
