@@ -1,3 +1,5 @@
+import { mainlandCity } from "../core/cities";
+
 /** 仅在用户同意后加载。JS公开Key与服务端安全密钥分别配置。 */
 export interface MapPoint {
   id: string;
@@ -140,21 +142,14 @@ export function recordPoint(
   };
 }
 export function cityCenter(city = ""): MapPoint {
-  return city.includes("上海")
-    ? {
-        id: "center",
-        title: "上海",
-        latitude: 31.23,
-        longitude: 121.47,
-        coordinateSystem: "gcj02",
-      }
-    : {
-        id: "center",
-        title: "武汉",
-        latitude: 30.59,
-        longitude: 114.3,
-        coordinateSystem: "gcj02",
-      };
+  const entry = mainlandCity(city);
+  return {
+    id: entry ? "center" : "country-center",
+    title: entry?.name ?? "中国大陆",
+    latitude: entry?.latitude ?? 35,
+    longitude: entry?.longitude ?? 105,
+    coordinateSystem: "gcj02",
+  };
 }
 export function amapPosition(sdk: AmapSDK, point: MapPoint): Promise<number[]> {
   if (point.coordinateSystem === "gcj02")

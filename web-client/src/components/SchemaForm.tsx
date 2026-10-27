@@ -1,6 +1,7 @@
 import schemasSource from "../core/schemas.json";
 import { Card, Field, Choices, Check, Button } from "./ui";
 import { integer } from "../core/wire";
+import { CityField } from "./CityField";
 
 export interface Schema {
   type?: string;
@@ -417,6 +418,7 @@ function SchemaField({
 }) {
   const schema = resolved(raw);
   const nestedName = raw.$ref?.split("/").at(-1) ?? parent;
+  if (name === "city") return <CityField value={String(value ?? "")} onChange={onChange} disabled={disabled} />;
   const options =
     name === "type"
       ? types[parent]

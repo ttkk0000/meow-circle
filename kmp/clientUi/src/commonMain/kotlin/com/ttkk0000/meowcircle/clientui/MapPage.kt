@@ -16,7 +16,7 @@ import com.ttkk0000.meowcircle.client.*
 
 @Composable fun MapFeature(store: MobileStore, s: FeatureState, route: FeatureRoute) {
     val f = store.features
-    FormField(f, s, "city", "城市，可手动切换")
+    CityFormField(f, s)
     FeatureButton("按城市查看求助", !s.loading) { f.reload() }
     val kind = f.field("mapKind", "lost")
     ChoiceChipBar(listOf("lost" to "走失", "found" to "拾获", "all" to "全部"), kind, { f.edit("mapKind", it) })

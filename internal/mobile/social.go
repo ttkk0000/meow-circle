@@ -803,7 +803,7 @@ func (s *Service) Invite(ctx context.Context, actor int64, in InviteInput) (out 
 		r.OwnerID = actor
 		r.Participants = []int64{in.UserID}
 		r.State = "pending"
-		i := Invitation{in.Scope, in.TargetID, in.UserID, s.Now().Add(72 * time.Hour)}
+		i := Invitation{Scope: in.Scope, TargetID: in.TargetID, RecipientID: in.UserID, ExpiresAt: s.Now().Add(72 * time.Hour)}
 		if e = save(tx, Invitations, &r, i, actor, "invitation.created"); e != nil {
 			return e
 		}

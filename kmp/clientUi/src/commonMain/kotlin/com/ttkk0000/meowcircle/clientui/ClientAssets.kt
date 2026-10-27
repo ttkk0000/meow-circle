@@ -3,8 +3,10 @@ package com.ttkk0000.meowcircle.clientui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
@@ -48,6 +50,15 @@ private object AssetBytes {
     Box(modifier.size(24.dp)) {
         if (bytes != null) AsyncImage(bytes, description, imageLoader = LocalDesignImageLoader.current,
             modifier = Modifier.matchParentSize(), contentScale = ContentScale.Fit)
+    }
+}
+
+/** Family photos decorate empty states; never replace a real record's media. */
+@Composable fun CatPlaceholder(cat: String = "garfield") {
+    val name = if(cat == "golden") "golden" else "garfield"
+    Column {
+        BundledGuideImage("files/cats/$name-portrait.jpg","猫咪配图，非待领养或寻宠信息",Modifier.size(160.dp).clip(MaterialTheme.shapes.medium))
+        Text("猫咪配图 · 非待领养或寻宠信息",style = MaterialTheme.typography.bodySmall)
     }
 }
 

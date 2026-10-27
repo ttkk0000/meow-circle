@@ -3,6 +3,7 @@ package mobile
 import (
 	"context"
 	"fmt"
+	"kitty-circle/internal/region"
 	"time"
 )
 
@@ -33,9 +34,11 @@ func (s *Service) RecordAuthority(ctx context.Context, operator string, in Autho
 	}
 	key := fmt.Sprintf("pet:%d:%d:%s", in.ActorID, in.PetID, in.Scope)
 	if in.Scope == "city_rule" {
-		if !HasString([]string{"武汉", "上海"}, in.City) || in.RuleVersion == "" || len(in.Actions) == 0 {
+		city, known := region.Lookup(in.City)
+		if !known || in.RuleVersion == "" || len(in.Actions) == 0 {
 			return out, Invalid("city rule and permitted actions required")
 		}
+		in.City = city.Value
 		for _, a := range in.Actions {
 			if !HasString([]string{"adoption", "commercial", "offline"}, a) {
 				return out, Invalid("invalid city action")
@@ -93,7 +96,7 @@ func (s *Service) disposition(tx Tx, actor, petID int64) error {
 	return nil
 }
 func (s *Service) cityAdmission(tx Tx, city, species, action string) error {
-	r, e := tx.ByKey(Authorities, "city:"+city+":"+species)
+	r, e := tx.ByKey(Authorities, "city:"+region.Normalize(city)+":"+species)
 	if e == ErrNotFound {
 		return Denied("city_rule_unavailable")
 	}

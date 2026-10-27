@@ -59,7 +59,7 @@ fun featureTitle(s: FeatureState,actor: Long? = null): String {
     if(document.coverAsset=="first-cat") {
         BoxWithConstraints(Modifier.fillMaxWidth()) {
             val photoSize=if(maxWidth >= 600.dp) Modifier.height(360.dp) else Modifier.aspectRatio(358f/240f)
-            BundledGuideImage("files/first-cat.jpg","内容配图，非用户档案",modifier=Modifier.fillMaxWidth().then(photoSize).clip(MaterialTheme.shapes.medium),contentScale=ContentScale.Crop)
+            BundledGuideImage("files/cats/golden-portrait.jpg","金渐层猫内容配图，非用户档案",modifier=Modifier.fillMaxWidth().then(photoSize).clip(MaterialTheme.shapes.medium),contentScale=ContentScale.Fit)
         }
     }
     if(document.type!="guide") TaskNotice(readingStatus(document.status),document.notice.ifBlank { "查看适用版本与时间后，再决定是否继续。阅读不会自动同意新规则。" })

@@ -262,7 +262,7 @@ private fun HomeContent(store: MobileStore, s: MobileState) {
     var species by remember(s.petSpecies) { mutableStateOf(s.petSpecies) }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         OutlinedTextField(keyword,{ keyword = it },Modifier.fillMaxWidth(),label = { Text("搜索名字、品种或介绍") })
-        OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("城市，可手动选择") })
+        CityField(city,{ city = it })
         ChoiceChipBar(listOf("" to "全部","cat" to "猫咪","dog" to "狗狗"),species,{ species = it })
         FeatureButton("按当前条件筛选",!s.pets.loading) { store.filterPets(keyword.trim(),city.trim(),species) }
         if (s.pets.empty && (s.petKeyword.isNotBlank() || s.petCity.isNotBlank() || s.petSpecies.isNotBlank()))
@@ -282,7 +282,7 @@ private fun Feed(store: MobileStore, s: MobileState) {
                 var query by rememberSessionUiState("feed.query") { s.feedKeyword }
                 OutlinedTextField(query,{ query = it },Modifier.fillMaxWidth(),label = { Text("搜索宠友日常与互助") },trailingIcon = { IconButton({ store.filterFeed(s.feedSpace,query) }) { Icon(Icons.Outlined.Search,"搜索") } },singleLine = true)
                 ChoiceChipBar(listOf("community" to "推荐","following" to "关注","circle" to "宠友圈","local" to "同城"),s.feedSpace,{ store.filterFeed(it) },scrollable = true)
-                if(s.feedSpace == "local") { var city by rememberSessionUiState("feed.city") { s.feedCity }; OutlinedTextField(city,{ city = it },Modifier.fillMaxWidth(),label = { Text("手动选择城市，不含精确定位") },trailingIcon = { TextButton({ store.filterFeed("local",city = city) }) { Text("查看") } }) }
+                if(s.feedSpace == "local") CityField(s.feedCity,{ store.filterFeed("local",city = it) },"同城范围")
                 NavigationRow("晒晒今天的小可爱…","照片、日记与宠友分享") { store.select(MobileTab.Publish) }
                 NavigationRow("养宠指南","迎接第一只猫，先做好准备") {store.features.open(FeatureRoute(FeaturePage.Reading,kind="care-first-cat"))}
             }
@@ -299,6 +299,7 @@ private fun Feed(store: MobileStore, s: MobileState) {
             if (s.entries.empty) {
                 val filtered = s.feedKeyword.isNotBlank() || s.feedCity.isNotBlank() || s.feedSpace != "community"
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    CatPlaceholder()
                     HonestStateCard(if (filtered) "这次还没有合适的结果" else "第一份日常，等你来分享",
                         if (filtered) "可以调整搜索或城市；不会把其它范围的内容偷偷当作当前结果。" else "这里还没有真实内容。可以先看看养宠指南，或记录你和宠物的一天。")
                     if (filtered) FeatureButton("清空条件并查看推荐") { store.filterFeed("community", "", "") }
@@ -357,6 +358,7 @@ private fun DetailContent(store: MobileStore, s: MobileState) {
             FeatureButton("报告安全或隐私问题") { store.features.open(FeatureRoute(FeaturePage.Safety,kind = "cases",peer = record.id)) }
         } }
         MobileDestination.Help -> Records(s.cases, "走失互助", { store.reloadDetail() }, { store.reloadDetail(true) }, emptyText = "暂无可显示的走失或拾获信息", header = {
+            CityField(s.caseCity,store::filterCases,"求助城市")
             FeatureButton("发布走失／拾获求助") { if(s.user == null) store.showLogin() else store.features.open(FeatureRoute(FeaturePage.CaseEdit)) }
             FeatureButton("互助地图") { store.features.open(FeatureRoute(FeaturePage.Map)) }
             FeatureButton("附近提醒") { store.features.open(FeatureRoute(FeaturePage.Nearby)) }
@@ -636,7 +638,7 @@ private fun PublishScreen(store: MobileStore, s: MobileState) {
         MndRichTextField(composer, { next -> store.editCompose(s.composeTitle,next.text); if(store.state.value.composeText == next.text) composer = next }, "今天想分享什么？", minLines = 6, maxLines = Int.MAX_VALUE, enabled = !s.busy)
         TextButton({ emojiOpen = !emojiOpen }) { Text(if(emojiOpen) "收起表情" else "插入表情") }
         if(emojiOpen) ComposeEmojiPanel(store,s,composer) { next -> store.editCompose(s.composeTitle,next.text); if(store.state.value.composeText == next.text) composer = next }
-        OutlinedTextField(s.composeEntry.city,store::editComposeCity,Modifier.fillMaxWidth(),label = { Text("城市（选填，不含精确定位）") },enabled = !s.busy)
+        CityField(s.composeEntry.city,store::editComposeCity,"城市（选填，不含精确定位）",enabled = !s.busy)
         ComposeAudience(store,s)
         PhotoPickerButton(store, 9 - s.photos.size, !s.busy)
         PhotoQueueList(

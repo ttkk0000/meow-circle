@@ -13,7 +13,7 @@ import com.ttkk0000.meowcircle.client.*
             val old = record.data
             FormField(f,s,"title","标题",old.title)
             FormField(f,s,"text","正文",old.text,6)
-            FormField(f,s,"city","城市（选填，不含精确位置）",old.city)
+            CityFormField(f,s,old.city,"城市（选填，不含精确位置）")
             ChoiceField(f,s,"space","发布空间",listOf("community" to "公开社区","circle" to "宠友圈","diary" to "宠物日记"),old.space)
             val space = f.field("space",old.space)
             if(space != "community") AudienceFields(f,s,if(old.audience.mode == "public" && space == "circle") Audience("friends") else old.audience,publicAllowed = space != "circle")
@@ -98,7 +98,7 @@ import com.ttkk0000.meowcircle.client.*
             val record = s.pet; val pet = record?.data ?: PetBody("","cat",audience = Audience("private"))
             FormField(f,s,"name","宠物名字",pet.name)
             ChoiceField(f,s,"species","物种",listOf("cat" to "猫咪","dog" to "狗狗","rabbit" to "兔兔","other" to "其他宠物"),pet.species)
-            FormField(f,s,"city","城市（选填，不含家庭地址）",pet.city)
+            CityFormField(f,s,pet.city,"城市（选填，不含家庭地址）")
             FormField(f,s,"breed","品种（未知可留空）",pet.breed)
             DateTimeField(f,s,"birthday","生日（选填）",pet.birthday,dateOnly = true,optional = true)
             ChoiceField(f,s,"sex","性别",listOf("" to "未知","male" to "公","female" to "母"),pet.sex)
@@ -172,7 +172,7 @@ import com.ttkk0000.meowcircle.client.*
             FeatureSection("关注的求助") { content.data.watchedCases.forEach { id -> NavigationRow("求助 #$id") { f.closeRoute(); store.open(MobileDestination.Case(id)) } }; if(content.data.watchedCases.isEmpty()) Text("暂未关注走失或拾获求助") }
         }
         FeaturePage.GroupDirectory -> {
-            FormField(f,s,"city","城市，可手动切换")
+            CityFormField(f,s)
             FormField(f,s,"q","群名或介绍")
             FeatureButton("按条件查找",!s.loading) { f.reload() }
             TaskNotice("先看群介绍，再决定加入","发现页不展示成员身份、家庭地址、精确距离或聊天内容。入群申请须由当前群主核对。")
@@ -188,7 +188,7 @@ import com.ttkk0000.meowcircle.client.*
         FeaturePage.GroupCreate -> {
             FormField(f,s,"name","群聊名称")
             CheckLine("将群简介放入发现页（不公开群消息）",f.field("discoverable","false").toBoolean(),{ f.edit("discoverable",it.toString()) },!s.busy)
-            FormField(f,s,"city","城市（公开发现时必填）")
+            CityFormField(f,s,label = "城市（公开发现时必填）")
             FormField(f,s,"summary","公开群简介",lines = 3)
             FeaturePrimary("创建群聊",!s.busy && f.field("name").isNotBlank()) {
                 val input = GroupInput(f.field("name").trim(),newRequestKey(),f.field("discoverable","false").toBoolean(),f.field("city"),f.field("summary"))
@@ -206,7 +206,7 @@ import com.ttkk0000.meowcircle.client.*
             FeatureButton(if (actor in body.muted) "取消群免打扰" else "开启群免打扰",!s.busy) { action("mute","更改群免打扰") }
             if (owner) {
                 CheckLine("允许在发现页展示群简介",f.field("discoverable",body.discoverable.toString()).toBoolean(),{ f.edit("discoverable",it.toString()) },!s.busy)
-                FormField(f,s,"city","公开城市",body.city); FormField(f,s,"summary","公开群简介",body.summary,3)
+                CityFormField(f,s,body.city,"公开城市"); FormField(f,s,"summary","公开群简介",body.summary,3)
                 FeatureButton("核对并保存发现设置",!s.busy) { val input = GroupAction(f.version(group.version),newRequestKey(),discoverable = f.field("discoverable",body.discoverable.toString()).toBoolean(),city = f.field("city",body.city),summary = f.field("summary",body.summary)); f.confirm("更改群发现设置","仅展示群名、城市、简介与人数，不公开成员身份或群消息。") { f.api.groupAction(group.id,"directory",input); f.discardAndReload() } }
                 FormField(f,s,"notice","群公告",body.notice,4)
                 FeatureButton("保存公告",!s.busy) { action("notice","更新群公告",notice = f.field("notice",body.notice)) }

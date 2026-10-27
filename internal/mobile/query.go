@@ -1,6 +1,9 @@
 package mobile
 
-import "strings"
+import (
+	"kitty-circle/internal/region"
+	"strings"
+)
 
 type Query struct {
 	CoordinateSystem                     string
@@ -56,7 +59,7 @@ func matches(k Kind, r Record, q Query) (bool, error) {
 		text = v.Custodian + " " + v.Origin
 		city = v.City
 	}
-	if q.City != "" && city != q.City || q.Species != "" && species != q.Species {
+	if q.City != "" && !region.Same(city, q.City) || q.Species != "" && species != q.Species {
 		return false, nil
 	}
 	return q.Keyword == "" || strings.Contains(strings.ToLower(text), strings.ToLower(q.Keyword)), nil

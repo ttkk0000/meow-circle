@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kitty-circle/internal/region"
 	"math"
 	"time"
 )
@@ -17,7 +18,7 @@ func distanceKM(a, b, c, d float64) float64 {
 }
 
 func matchesSubscription(c Case, v Subscription) bool {
-	if v.City != c.City {
+	if !region.Same(v.City, c.City) {
 		return false
 	}
 	if v.LocationPrecision == "city" {

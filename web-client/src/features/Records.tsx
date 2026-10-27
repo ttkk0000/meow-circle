@@ -1,3 +1,5 @@
+import { CityField } from "../components/CityField";
+import { CatPlaceholder } from "../components/CatPlaceholder";
 import { useState, type ReactNode } from "react";
 import { api, explain, query, type RecordData, type User } from "../core/api";
 import { usePages, titleOf } from "../core/pages";
@@ -121,7 +123,7 @@ export function Feed({
         ))}
       </div>
       {space === "local" ? (
-        <Field
+        <CityField
           label="手动选择城市，不含精确定位"
           value={city}
           onChange={(value) => {
@@ -187,6 +189,7 @@ export function Feed({
                     : "第一份日常，等你来分享"
                 }
               >
+                <CatPlaceholder />
                 <p>
                   {search || city || space !== "community"
                     ? "可以调整搜索或城市；不会把其它范围的内容偷偷当作当前结果。"
@@ -464,7 +467,7 @@ export function Records({
             }}
           >
             <Field label="关键词" value={word} onChange={setWord} />
-            <Field label="城市" value={city} onChange={setCity} />
+            <CityField label="城市" value={city} onChange={setCity} />
             <Button type="submit">筛选</Button>
           </form>
           {kind !== "group-directory" ? (

@@ -1266,6 +1266,17 @@ dialog > header {
 
 .break-anywhere { overflow-wrap: anywhere; }
 
+.city-field { min-width: 0; margin: 0; padding: 12px; border: 1px solid var(--border); border-radius: 16px; }
+.city-field > button { width: 100%; min-height: 48px; text-align: left; }
+.city-field select { width: 100%; min-height: 48px; font: inherit; }
+.city-results { max-height: 320px; overflow-y: auto; display: grid; gap: 4px; }
+.city-results button { min-width: 0; min-height: 48px; display: flex; flex-direction: column; align-items: flex-start; padding: 8px 12px; text-align: left; overflow-wrap: anywhere; }
+.city-results small { font: inherit; font-size: .8em; }
+.cat-placeholder { margin: 0 0 16px; }
+.cat-placeholder img { width: 160px; max-width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 16px; }
+.cat-placeholder figcaption { color: var(--muted); font-size: .75rem; margin-top: 8px; }
+.reading-cover.cat-guide { object-fit: contain; background: var(--subtle); }
+
 .lead-case-summary { display: flex; gap: 12px; align-items: flex-start; }
 .lead-case-summary .media { width: 64px; height: 64px; flex: 0 0 64px; object-fit: cover; }
 .lead-photos { container-type: inline-size; }

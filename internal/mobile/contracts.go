@@ -3,6 +3,7 @@ package mobile
 import (
 	"context"
 	"encoding/json"
+	"kitty-circle/internal/region"
 	"time"
 )
 
@@ -109,7 +110,7 @@ func (s *Service) Contract(ctx context.Context, actor, id int64, action string, 
 				if offer.OwnerID != a.PublisherID || offer.RefID != a.PetID || offer.Version != t.OfferVersion || offer.State != "published" || !o.ValidUntil.After(s.Now()) {
 					return ErrConflict
 				}
-				if o.TotalCents != t.AmountCents || o.Nature != t.Nature || o.City != t.City || o.Payee != t.Payee {
+				if o.TotalCents != t.AmountCents || o.Nature != t.Nature || !region.Same(o.City, t.City) || o.Payee != t.Payee {
 					return Denied("contract_disclosure_mismatch")
 				}
 				left, _ := json.Marshal(o.Fees)

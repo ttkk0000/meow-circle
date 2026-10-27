@@ -65,6 +65,7 @@ import {
 } from "./PublicationPreview";
 
 import { AmapView } from "../maps/AmapView";
+import { sameCity } from "../core/cities";
 import { cityCenter, type MapPoint } from "../maps/amap";
 
 interface Prepared {
@@ -557,12 +558,12 @@ export function WorkflowEditor({
           !!current.ui?.keepLocation &&
           old &&
           old.location_precision !== "area" &&
-          details.city === old.city &&
+          sameCity(String(details.city ?? ""), String(old.city ?? "")) &&
           details.area === old.area;
         const selection = current.ui?.mapLocation;
         const picked =
           selection &&
-          selection.city === details.city &&
+          sameCity(selection.city, String(details.city ?? "")) &&
           selection.area === details.area
             ? selection
             : undefined;

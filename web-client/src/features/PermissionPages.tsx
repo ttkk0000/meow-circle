@@ -1,27 +1,24 @@
 import { Button, Empty, Notice, RowLink, TaskPage } from "../components/ui";
 import { back, navigate } from "../core/router";
+import { useState } from "react";
+import { CityField } from "../components/CityField";
 
 export function LocationHelp() {
+  const [city, setCity] = useState("");
   return (
     <TaskPage
       title="不提供定位也可以"
       actions={
-        <Button kind="primary" onClick={() => navigate("/pets")}>
-          手动选择城市
+        <Button kind="primary" disabled={!city} onClick={() => navigate(`/pets?city=${encodeURIComponent(city)}`)}>
+          查看所选城市
         </Button>
       }
     >
       <Empty title="手动选城市，一样能浏览">
         <p>不会因为拒绝定位阻止阅读。目击位置也可以手动说明。</p>
       </Empty>
-      {["武汉", "上海"].map((city) => (
-        <RowLink
-          key={city}
-          title={city}
-          detail="手动选择城市"
-          to={`/pets?city=${encodeURIComponent(city)}`}
-        />
-      ))}
+      <CityField value={city} onChange={setCity} allowEmpty={false} />
+      <RowLink title="浏览全部城市" to="/pets" />
       <Notice title="按需请求权限">
         只有你选择地图或拍照等动作时再解释原因；拒绝后提供替代。公开信息只填写大致区域，不填写门牌或私人精确地址。
       </Notice>

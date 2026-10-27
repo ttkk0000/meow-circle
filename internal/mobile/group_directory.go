@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kitty-circle/internal/region"
 	"strings"
 	"time"
 )
@@ -119,7 +120,7 @@ func (s *Service) GroupDirectory(ctx context.Context, actor, after, id int64, ke
 			if e != nil {
 				return e
 			}
-			if city != "" && body.City != city || keyword != "" && !strings.Contains(strings.ToLower(body.Name+body.Summary), strings.ToLower(keyword)) {
+			if city != "" && !region.Same(body.City, city) || keyword != "" && !strings.Contains(strings.ToLower(body.Name+body.Summary), strings.ToLower(keyword)) {
 				continue
 			}
 			out.Items = append(out.Items, entry)

@@ -53,7 +53,7 @@ import com.ttkk0000.meowcircle.client.*
             ChoiceField(f,s,"relationship","关系",listOf("direct" to "直接发布","employee" to "工作人员","agent" to "代理"),o?.relationship ?: "direct")
             FormField(f,s,"authority","处置与发布授权说明",o?.authoritySummary.orEmpty(),3)
             FormPair({ FormField(f,s,"custodian","实际照护者",o?.custodian.orEmpty()) }, { FormField(f,s,"custodianRelation","照护者与主体关系",o?.custodianRelationship.orEmpty()) })
-            FormField(f,s,"origin","宠物来源",o?.origin.orEmpty(),3); FormField(f,s,"city","城市",o?.city.orEmpty()); FormField(f,s,"area","公开区域",o?.area.orEmpty())
+            FormField(f,s,"origin","宠物来源",o?.origin.orEmpty(),3); CityFormField(f,s,o?.city.orEmpty(),allowEmpty = false); FormField(f,s,"area","公开区域",o?.area.orEmpty())
             FormField(f,s,"venue","地点类型",o?.venueType.orEmpty()); FormField(f,s,"privateAddress","私密准确地址（仅授权参与方）",o?.privateAddress.orEmpty())
             FormPair({ FormField(f,s,"reception","接待方",o?.reception.orEmpty()) }, { FormField(f,s,"receptionRelation","接待方与主体关系",o?.receptionRelationship.orEmpty()) })
             FormPair({ FormField(f,s,"payee","收款方",o?.payee.orEmpty()) }, { FormField(f,s,"responsible","实际责任方",o?.responsibleParty.orEmpty()) })

@@ -79,14 +79,16 @@ import com.ttkk0000.meowcircle.client.*
 
 @Composable fun LocationHelpContent(store: MobileStore) {
     HonestStateCard("手动选城市，一样能浏览", "不会因为拒绝定位阻止阅读。目击位置也可以手动说明。")
-    listOf("武汉", "上海").forEach { city -> NavigationRow(city, "手动选择城市") {
+    var city by rememberSessionUiState("location-help.city") { store.state.value.petCity }
+    CityField(city,{ city = it },allowEmpty = false)
+    FeatureButton("查看所选城市",city.isNotBlank()) {
         store.features.closeRoute(); store.select(MobileTab.Adoption)
         val state = store.state.value
         store.filterPets(state.petKeyword, city, state.petSpecies)
-    } }
+    }
     TaskNotice("按需请求权限", "只有你选择地图或拍照等动作时再解释原因；拒绝后提供替代。公开信息只填写大致区域，不填写门牌或私人精确地址。")
     FeatureButton("查看求助并提供手动目击线索") { store.features.closeRoute(); store.open(MobileDestination.Help) }
-    FeaturePrimary("手动选择其他城市") { store.features.closeRoute(); store.select(MobileTab.Adoption) }
+    FeaturePrimary("浏览全部城市") { store.features.closeRoute(); store.select(MobileTab.Adoption); store.filterPets("","","") }
 }
 
 @Composable fun PhotoHelpContent(store: MobileStore) {

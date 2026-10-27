@@ -1,5 +1,7 @@
 package mobile
 
+import "kitty-circle/internal/region"
+
 func (s *Service) appointmentAdmission(tx Tx, kind string, id int64, terms AppointmentTerms) error {
 	species, city := "", ""
 	switch kind {
@@ -63,7 +65,7 @@ func (s *Service) appointmentAdmission(tx Tx, kind string, id int64, terms Appoi
 	default:
 		return Invalid("invalid appointment context")
 	}
-	if species != terms.Species || city != "" && city != terms.City {
+	if species != terms.Species || city != "" && !region.Same(city, terms.City) {
 		return Denied("appointment_context_mismatch")
 	}
 	return s.cityAdmission(tx, terms.City, terms.Species, "offline")

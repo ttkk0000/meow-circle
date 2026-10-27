@@ -61,7 +61,7 @@ export function AmapView({
         if (!active || !container.current) return;
         sdk.current = api;
         instance = new api.Map(container.current, {
-          zoom: 12,
+          zoom: 4,
           center: [defaultCenter.longitude, defaultCenter.latitude],
           viewMode: "2D",
           resizeEnable: true,
@@ -148,7 +148,7 @@ export function AmapView({
           setPointError("部分地点暂无法转换，仍可在列表查看文字区域");
         try {
           const position = await amapPosition(api, focus);
-          if (active) instance.setZoomAndCenter(12, position);
+          if (active) instance.setZoomAndCenter(focus.id === "country-center" ? 4 : 12, position);
         } catch {
           if (active) setPointError("地点暂无法转换，请以文字区域为准");
         }

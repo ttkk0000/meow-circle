@@ -18,11 +18,12 @@ fun caseMapPoint(record: MobileRecord<CaseBody>): LostMapPoint? {
     return LostMapPoint(record.id.toString(), body.title, body.latitude, body.longitude, body.coordinateSystem)
 }
 
-fun mapCityCenter(city: String): LostMapPoint = if (city.contains("上海"))
-    LostMapPoint("center", "上海", 31.23, 121.47) else LostMapPoint("center", "武汉", 30.59, 114.30)
+fun mapCityCenter(city: String): LostMapPoint = mainlandCity(city)?.let {
+    LostMapPoint("center", it.name, it.latitude, it.longitude)
+} ?: LostMapPoint("country-center", "中国大陆", 35.0, 105.0)
 
 fun MobileFeatureStore.pickedCaseMapPoint(city: String, area: String): LostMapPoint? {
-    if (field("mapCity") != city || field("mapArea") != area) return null
+    if (!sameCity(field("mapCity"), city) || field("mapArea") != area) return null
     return coarseMapPoint(field("mapLatitude").toDoubleOrNull() ?: Double.NaN,
         field("mapLongitude").toDoubleOrNull() ?: Double.NaN)
 }

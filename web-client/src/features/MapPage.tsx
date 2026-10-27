@@ -1,10 +1,10 @@
+import { CityField } from "../components/CityField";
 import { useMemo, useState } from "react";
 import { usePages } from "../core/pages";
 import {
   Button,
   Card,
   Choices,
-  Field,
   Notice,
   QueryState,
   RowLink,
@@ -64,7 +64,7 @@ export function MapPage() {
       title="走失互助地图"
       actions={<RowLink to="/edit/case">发布走失／拾获求助</RowLink>}
     >
-      <Field
+      <CityField
         label="城市"
         value={city}
         onChange={(value) => {

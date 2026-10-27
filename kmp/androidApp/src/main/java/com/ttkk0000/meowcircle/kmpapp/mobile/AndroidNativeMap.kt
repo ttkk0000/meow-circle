@@ -105,7 +105,7 @@ import kotlinx.coroutines.delay
             }
             if (lastCenter != center || lastSelected != selectedId) {
                 val target = points.firstOrNull { it.id == selectedId } ?: center
-                target.amapCoordinate(context)?.let { map.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 12f)) }
+                target.amapCoordinate(context)?.let { map.moveCamera(CameraUpdateFactory.newLatLngZoom(it, if (target.id == "country-center") 4f else 12f)) }
                 lastCenter = center
                 lastSelected = selectedId
             }

@@ -68,7 +68,7 @@ import com.ttkk0000.meowcircle.client.*
             FormField(f,s,"description","特征与经过",body?.description.orEmpty(),5)
             RegionFields(f,s,body?.city.orEmpty(),body?.area.orEmpty())
             if (body != null && body.locationPrecision != "area") {
-                val sameRegion = selectedCity(f,body.city) == body.city && f.field("area",body.area) == body.area
+                val sameRegion = sameCity(selectedCity(f,body.city),body.city) && f.field("area",body.area) == body.area
                 CheckLine("保留原来主动提供的大致地点",sameRegion && f.field("keepPoint","true").toBoolean(),{ f.edit("keepPoint",it.toString()) },!s.busy && sameRegion)
                 Text("取消或修改城市／区域后，本次只公开文字区域，不再沿用原地点。")
             }
@@ -79,7 +79,7 @@ import com.ttkk0000.meowcircle.client.*
             FeaturePhotos(store,s,old?.mediaIds.orEmpty())
             FeaturePrimary("核对并发布求助",!s.busy && !s.loading) {
                 val keepPoint = body != null && body.locationPrecision != "area" && f.field("keepPoint","true").toBoolean() &&
-                    selectedCity(f,body.city) == body.city && f.field("area",body.area) == body.area
+                    sameCity(selectedCity(f,body.city),body.city) && f.field("area",body.area) == body.area
                 val picked = f.pickedCaseMapPoint(selectedCity(f,body?.city.orEmpty()),f.field("area",body?.area.orEmpty()))
                 val lat = picked?.latitude ?: if(keepPoint) body!!.latitude else 0.0
                 val lon = picked?.longitude ?: if(keepPoint) body!!.longitude else 0.0
@@ -207,7 +207,7 @@ import com.ttkk0000.meowcircle.client.*
         }
         FeaturePage.ContractEdit -> s.adoption?.let { record ->
             if(s.conflict || record.version > f.version(record.version)) FeatureButton("保留协议草稿并采用已读版本",!s.busy && !s.loading && !s.unconfirmedResult) {f.adoptAdoptionVersion()}
-            FormField(f,s,"city","适用城市"); ChoiceField(f,s,"species","物种",listOf("cat" to "猫咪","dog" to "狗狗"),"cat")
+            CityFormField(f,s,label = "适用城市",allowEmpty = false); ChoiceField(f,s,"species","物种",listOf("cat" to "猫咪","dog" to "狗狗"),"cat")
             ChoiceField(f,s,"nature","转让性质",listOf("adoption" to "领养","sale" to "出售","paid_transfer" to "有偿转让"),"adoption")
             FormField(f,s,"responsibilities","双方照护与交接责任",lines = 4); FormField(f,s,"health","已知健康情况及未知事项",lines = 4)
             FormField(f,s,"returns","退养与安全接回条款",lines = 4); FormField(f,s,"amount","基础金额（元）","0",numeric = true)
@@ -243,7 +243,7 @@ import com.ttkk0000.meowcircle.client.*
     t.snapshot?.let { Text("披露快照 #${it.offerId} V${it.offerVersion}；聊天中的变更不替代此快照。") }
 }
 @Composable private fun AppointmentFields(f: MobileFeatureStore,s: FeatureState,old: AppointmentTerms?) {
-    DateTimeField(f,s,"starts","预约时间",old?.startsAt.orEmpty()); FormField(f,s,"city","城市",old?.city.orEmpty())
+    DateTimeField(f,s,"starts","预约时间",old?.startsAt.orEmpty()); CityFormField(f,s,old?.city.orEmpty(),allowEmpty = false)
     ChoiceField(f,s,"species","物种",listOf("cat" to "猫咪","dog" to "狗狗"),old?.species?.ifBlank { "cat" } ?: "cat")
     FormPair({ FormField(f,s,"place","准确地点（仅预约参与方）",old?.place.orEmpty()) }, { FormField(f,s,"reception","接待方与关系",old?.reception.orEmpty()) })
     FormPair({ FormField(f,s,"petName","宠物名字",old?.petName.orEmpty()) }, { FormField(f,s,"amount","基础金额（元）",old?.amountCents?.let { centsText(it) } ?: "0",numeric = true) })

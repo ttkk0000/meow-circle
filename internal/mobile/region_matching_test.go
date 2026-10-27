@@ -23,3 +23,17 @@ func TestTextRegionNeverBecomesAnExactNearbyPoint(t *testing.T) {
 		t.Fatal("city subscription excluded a real coarse-point case")
 	}
 }
+
+func TestCityAliasesShareOnlyTheSameSubscriptionScope(t *testing.T) {
+	c := Case{City: "成都市", LocationPrecision: "area"}
+	if !matchesSubscription(c, Subscription{City: "成都", LocationPrecision: "city"}) {
+		t.Fatal("official city name missed legacy short name")
+	}
+	if matchesSubscription(c, Subscription{City: "重庆", LocationPrecision: "city"}) {
+		t.Fatal("city scope broadened")
+	}
+	c.City = "恩施市"
+	if matchesSubscription(c, Subscription{City: "恩施土家族苗族自治州", LocationPrecision: "city"}) {
+		t.Fatal("county city and prefecture were merged")
+	}
+}

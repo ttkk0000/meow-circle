@@ -69,6 +69,7 @@ data class MobileState(
     val inboxReadAt: String? = null, val inboxFailure: ClientReadFailure? = null,
     val feedSpace: String = "community", val feedKeyword: String = "", val feedCity: String = "",
     val petKeyword: String = "", val petCity: String = "", val petSpecies: String = "",
+    val caseCity: String = "",
     val inboxReadAll: InboxReadAllState = InboxReadAllState(),
     val emoji: List<EmojiItem> = emptyList(), val stickers: List<StickerItem> = emptyList(), val detailLoading: Boolean = false, val detailError: String? = null,
     val detailFailure: ClientReadFailure? = null,
@@ -290,6 +291,12 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         refreshHome()
     }
     fun editComposeCity(city: String) { if(!canEditCompose() || city.length > 120) return; _state.update { it.copy(composeEntry = it.composeEntry.copy(city = city),composeEdited = true,publicationConfirmation = null) }; scheduleLocalSave() }
+    fun filterCases(city: String) {
+        if(city.encodeToByteArray().size > 120) { pickerFailed("请核对城市"); return }
+        jobs.remove("cases")?.cancel()
+        _state.update { it.copy(caseCity = normalizeCity(city),cases = PageState()) }
+        reloadDetail()
+    }
     fun filterPets(keyword: String, city: String, species: String) {
         if(keyword.encodeToByteArray().size > 120 || city.encodeToByteArray().size > 120 || species !in listOf("","cat","dog")) { pickerFailed("请缩短搜索词并核对城市与物种");return }
         jobs.remove("pets")?.cancel()
@@ -906,7 +913,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         fun current() = revision == detailRevision && destination == _state.value.destination
         when (destination) {
             MobileDestination.Home -> Unit
-            MobileDestination.Help -> loadPage("cases", more, { it.cases }, { state, p -> state.copy(cases = p) }, { api.cases(it) })
+            MobileDestination.Help -> loadPage("cases", more, { it.cases }, { state, p -> state.copy(cases = p) }, { api.cases(it,_state.value.caseCity) })
             MobileDestination.Applications -> if (s.user == null) showLogin() else loadPage("applications", more, { it.applications }, { state, p -> state.copy(applications = p) }, { api.adoptions(it) })
             MobileDestination.Notifications -> if (s.user == null) showLogin() else loadNotifications(more)
             else -> {

@@ -80,7 +80,7 @@ private final class AmapNativeMapSurface: NSObject, @preconcurrency IosMapSurfac
         let focus = points.first { $0.id == selectedId } ?? center
         let focusKey = "\(focus.id)|\(focus.latitude)|\(focus.longitude)|\(focus.coordinateSystem)"
         if focused != focusKey, let position = coordinate(focus) {
-            map.setZoomLevel(12, animated: false)
+            map.setZoomLevel(focus.id == "country-center" ? 4 : 12, animated: false)
             map.setCenter(position, animated: false)
             focused = focusKey
         }
