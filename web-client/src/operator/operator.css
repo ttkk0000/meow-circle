@@ -1,0 +1,70 @@
+/* Figma 843:21业务后台，复用技术运维的Light V2纯视觉组件。 */
+.operator-workspace .ops-main {
+  padding-top: 24px;
+}
+.operator-workspace .ops-page-header {
+  margin-bottom: 28px;
+}
+.operator-workspace .ops-page-header > p:first-child {
+  display: none;
+}
+.operator-workspace .ops-page-header h1 {
+  max-width: 100%;
+  margin: 10px 0 8px;
+}
+.operator-workspace .ops-page-header > p:last-child {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.operator-workspace .ops-page-body {
+  gap: 16px;
+}
+.operator-workspace .ops-actions {
+  margin-top: 0;
+}
+.operator-workspace .ops-actions > .button {
+  min-width: 0;
+}
+.operator-workspace .ops-columns {
+  gap: 16px;
+}
+.operator-workspace .ops-panel .field,
+.operator-workspace .ops-panel .check {
+  margin-top: 16px;
+}
+.operator-workspace .ops-panel .ops-actions {
+  margin-top: 20px;
+}
+.operator-workspace .ops-panel > .card > p {
+  margin-top: 12px;
+}
+.operator-workspace .ops-panel .stack {
+  margin-top: 16px;
+}
+.operator-workspace .ops-status {
+  white-space: normal;
+  text-align: center;
+}
+.operator-id-form {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.operator-id-form .field {
+  flex: 1 1 260px;
+}
+.operator-workspace .ops-summary dd {
+  white-space: pre-wrap;
+}
+@media (max-width: 899px) {
+  .operator-workspace .ops-topbar-actions {
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: 8px;
+  }
+  .operator-workspace .ops-environment-mark {
+    min-width: 0;
+  }
+}

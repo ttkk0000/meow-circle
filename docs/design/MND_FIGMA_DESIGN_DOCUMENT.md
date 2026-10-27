@@ -1,5 +1,9 @@
 # M&D 设计交接索引
 
+2026-10-27：[业务后台13稿源码读取](figma-study/operator-implementation-2026-10-27/README.md)、[预约20稿](figma-study/appointment-implementation-2026-10-27/README.md)、[领养／接回25稿](figma-study/adoption-implementation-2026-10-27/README.md)已用于本轮实际页面与公共组件接线；[源码恢复点](../client/COMPLETE_LANDING_2026_10_27.md)区分设计、源码／静态与未完成的逐端验收，不将740条映射视为全量完成。
+
+2026-10-26新增：[业务后台管理13稿](figma-study/admin-2026-10-26/README.md)已写入原文件第11个页面“10 后台管理 · 业务与核验”，[原型起点843:22](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=843-22)。复用既有组件与Light V2，13图已核；消费者线索提交四状态的源码续作见[本批交接](../client/SYNC_PAGES_ADMIN_2026_10_26.md)。设计、源码与运行验收分别记录。
+
 2026-10-23现行增补：[业务闭环与交互合同](MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)补领养独占／候补、申请周期、接回截止／撤回、人员与区域选择、HTTPS及游客入口；[当前交付账本](../client/CURRENT_DELIVERY_STATUS_2026_10_23.md)连接设计与源码／验收。已有候补／冲突／撤回／过期五布局继续复用；远端本轮核对与修订状态另留证，不把文档更新当画板写入。
 
 更新：2026-10-22｜品牌：M&D / meow & doggie
@@ -9,6 +13,9 @@
 本轮用户已授权完善产品内容与Figma。[安全、年龄与生命周期合同](MND_SAFETY_AND_LIFECYCLE_SPEC.md)新增监护、成年人业务、单宠试养／候补、安全接回、预约风险暂停、资料权利与游客报告。[本轮修订交接](figma-study/DESIGN_CLOSURE_2026_10_21.md)与[精确节点账本](figma-study/design-closure-2026-10-21-state.json)区分设计、检查和实施缺口。
 
 ## 当前从哪里进入
+
+- [业务后台管理843:22](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=843-22)：工作台、举报／权利／资料／监护／准入、角色及确认／异常状态；[节点与截图](figma-study/admin-2026-10-26/nodes-and-validation.json)。
+- [技术运维793:22](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=793-22)：原独立14稿与组件展示保留，[交接](figma-study/ops-2026-10-25/README.md)。2026-10-22的9页目录为历史快照，现行文件另含本两页。
 
 - 最新[法律设计补充评审入口662:398665](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=662-398665)与[交接／最终验证状态](figma-study/LEGAL_DESIGN_HANDOFF_2026_10_22.md)：45组五布局225稿、四个独立回调与角色样例板；[法律设计合同](MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md)区分事项协助、正式注销、通知／声明与合同版本。真实经营与接口仍另行验收。
 - 最新[平板横竖屏预览优化](figma-study/PAD_PREVIEW_2026_10_22.md)：88个Flow收敛为两个，704组同状态横竖屏稿可点右上角预览按钮互切；按钮仅作Figma演示，客户端不实现。直接使用文档中的Pad竖屏／横屏预览链接，设备转动后仍需手动切换。

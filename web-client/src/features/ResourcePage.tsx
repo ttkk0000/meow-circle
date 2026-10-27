@@ -1,4 +1,12 @@
 import { useState } from "react";
+import {
+  adoptionActionOptions,
+  adoptionProgressTitle,
+  careStageAvailable,
+  returnActionAllowed,
+} from "../core/adoption";
+import { AdoptionProgress } from "./AdoptionPages";
+import { ReturnProgress } from "./ReturnPages";
 import { api, explain, type RecordData, type User } from "../core/api";
 import { useSession } from "../core/session";
 import { useQuery, reload } from "../core/query";
@@ -23,6 +31,7 @@ import { Composer, RichText } from "./chat";
 import { ContentSubscription } from "../components/ContentSubscription";
 import { MediaGallery } from "../components/MediaGallery";
 import { CoarseMap } from "./MapPage";
+import { AppointmentDetail } from "./AppointmentPages";
 
 type ObjectValue = Record<string, unknown>;
 const objects = (value: unknown) =>
@@ -48,103 +57,29 @@ function actionOptions(
   const add = (flow: string, action: string, label = actionNames[action]) =>
     list.push({ flow, label, extra: { action, owner: String(owner) } });
   if (kind === "adoptions") {
-    const publisher = integer(d.publisher_id) === owner;
-    const applicant = integer(d.applicant_id) === owner;
-    if (!publisher && !applicant) return [];
-    if (applicant && state === "withdrawn")
-      add("adoption-action", "resubmit", "核对并重新申请本轮领养");
-    if (state === "waitlisted")
+    const publisher = integer(d.publisher_id) === owner,
+      applicant = integer(d.applicant_id) === owner;
+    if (owner <= 0n || (!publisher && !applicant)) return [];
+    adoptionActionOptions(r, owner).forEach((action) =>
       add(
         "adoption-action",
-        publisher ? "resume_candidate" : "withdraw",
-        publisher ? "邀请继续核对安排" : "退出候补",
-      );
-    if (publisher && ["submitted", "supplemented"].includes(state))
-      ["approve", "reject", "request_supplement"].forEach((a) =>
-        add("adoption-action", a),
-      );
-    if (applicant && state === "needs_info")
-      add("adoption-action", "supplement");
-    if (
-      applicant &&
-      [
-        "submitted",
-        "needs_info",
-        "supplemented",
-        "approved",
-        "trial_proposed",
-      ].includes(state)
-    )
-      add("adoption-action", "withdraw");
-    if (["approved", "trial_proposed"].includes(state))
-      add("adoption-action", "propose_trial");
-    if (state === "trial_proposed") {
-      if (!has(d.trial_confirmations, owner))
-        add("adoption-action", "confirm_trial");
-      add("adoption-action", "decline_trial");
-    }
-    if (
-      ["approved", "trial_active", "handover_pending"].includes(state) &&
-      !has(d.handover_confirmations, owner)
-    )
-      add("adoption-action", "confirm_handover");
-    if (
-      [
-        "trial_active",
-        "handover_pending",
-        "completed",
-        "return_requested",
-      ].includes(state)
-    ) {
-      add("adoption-action", "support");
-      add("adoption-action", "request_return");
-      list.push(
-        { flow: "return", label: "提出安全接回方案" },
-        { flow: "care", label: "记录私密照护近况" },
-      );
-    }
+        action,
+        action === "approve" ? "同意继续沟通" : actionNames[action],
+      ),
+    );
+    if (["return_requested", "return_agreed"].includes(state))
+      list.push({ flow: "return", label: "提出安全接回方案" });
+    if (applicant && careStageAvailable(r))
+      list.push({ flow: "care", label: "记录私密照护近况" });
     if (
       [
         "approved",
         "trial_proposed",
         "trial_active",
         "handover_pending",
-        "completed",
-        "return_requested",
       ].includes(state)
     )
       list.push({ flow: "contract", label: "提出协议新版本" });
-  }
-  if (
-    (kind === "appointments" && own) ||
-    (kind === "appointments" && integer(d.peer_id) === owner)
-  ) {
-    if (!["cancelled", "expired"].includes(state)) {
-      add("appointment-action", "cancel");
-      if (state !== "safety_hold") {
-        add("appointment-action", "safety_hold");
-        list.push({
-          flow: "appointment-change",
-          label: "调整安排，提出新版本",
-        });
-        const pending = objects(d.versions).find(
-          (v) =>
-            integer(v.number) === integer(d.pending_version) &&
-            v.status === "pending",
-        );
-        if (pending) {
-          if (!has(pending.confirmations, owner))
-            add("appointment-action", "confirm");
-          add(
-            "appointment-action",
-            integer(pending.proposed_by) === owner
-              ? "withdraw_change"
-              : "decline",
-          );
-        }
-      }
-    }
-    list.push({ flow: "feedback", label: "逐项填写到访反馈" });
   }
   if (kind === "claims") {
     const publisher = parent?.owner_id === owner;
@@ -331,12 +266,16 @@ function ResourceBody({
       </TaskPage>
     );
   }
+  if (kind === "appointments")
+    return <AppointmentDetail row={r} actor={owner} />;
   return (
     <TaskPage
       title={
         kind === "entries"
           ? String(d.title || "晒宠日常")
-          : (titles[kind] ?? "事项详情")
+          : kind === "adoptions"
+            ? adoptionProgressTitle(r, owner)
+            : (titles[kind] ?? "事项详情")
       }
       subtitle={`#${r.id} · 版本 ${r.version} · ${stateLabel(r.state)}`}
       actions={kind === "entries" ? commentComposer : undefined}
@@ -362,6 +301,8 @@ function ResourceBody({
           ) : null}
           <Comments entry={r.id} reply={reply ?? 0n} onReply={setReply} />
         </>
+      ) : kind === "adoptions" ? (
+        <AdoptionProgress row={r} actor={owner} />
       ) : (
         <Card title="当前资料">
           <Facts value={d} />
@@ -390,10 +331,10 @@ function ResourceBody({
           )}
         </Card>
       ) : null}
-      {kind === "appointments" ? <Versions kind={kind} row={r} /> : null}
       {kind === "adoptions" ? (
         <>
-          <Versions kind={kind} row={r} />
+          <ReturnProgress row={r} actor={owner} />
+          <AdoptionVersions row={r} />
           <RowLink title="私密照护近况" to={`/care-updates?ref=${r.id}`} />
         </>
       ) : null}
@@ -560,15 +501,17 @@ function ResourceBody({
     </TaskPage>
   );
 }
-function Versions({ kind, row: r }: { kind: string; row: RecordData }) {
+function AdoptionVersions({ row: r }: { row: RecordData }) {
   const owner = useSession().user?.id ?? 0n;
-  const groups =
-    kind === "appointments"
-      ? ([["预约版本", objects(r.data.versions)]] as const)
-      : ([
-          ["协议版本", objects(r.data.contracts)],
-          ["安全接回方案", objects(r.data.return_plans)],
-        ] as const);
+  const party =
+    owner > 0n &&
+    [integer(r.data.applicant_id), integer(r.data.publisher_id)].includes(
+      owner,
+    );
+  const groups = [
+    ["协议版本", objects(r.data.contracts)],
+    ["安全接回方案", objects(r.data.return_plans)],
+  ] as const;
   return (
     <>
       {groups.map(([title, versions]) => (
@@ -579,14 +522,14 @@ function Versions({ kind, row: r }: { kind: string; row: RecordData }) {
             versions.map((v) => {
               const revision = integer(v.number);
               const status = String(v.status ?? v.state ?? "");
-              const proposed = integer(v.proposed_by);
               return (
                 <section
                   className="stack version-section"
                   key={String(revision)}
                 >
                   <strong>
-                    V{String(revision)} · {stateLabel(status)}
+                    {title === "安全接回方案" ? "R" : "V"}
+                    {String(revision)} · {stateLabel(status)}
                   </strong>
                   <Facts value={v.terms} />
                   <p className="caption muted">
@@ -600,79 +543,50 @@ function Versions({ kind, row: r }: { kind: string; row: RecordData }) {
                       .map(String)
                       .join("、") || "暂无"}
                   </p>
-                  {kind === "appointments" &&
-                  owner &&
-                  ["confirmed", "pending"].includes(r.state) ? (
-                    <RowLink
-                      title="以此历史内容提出新版本"
-                      to={workflowURL("appointment-action", kind, r.id, {
-                        action: "restore",
-                        revision: String(revision),
-                      })}
-                    />
-                  ) : null}
-                  {kind === "adoptions" &&
-                  owner &&
+                  {party &&
                   title === "协议版本" &&
                   status === "pending" &&
                   !has(v.accepted_by, owner) ? (
                     <>
                       <RowLink
                         title="核对条款并验证本次签约用途"
-                        to={workflowURL("contract-accept", kind, r.id, {
+                        to={workflowURL("contract-accept", "adoptions", r.id, {
                           revision: String(revision),
                         })}
                       />
                       <RowLink
                         title="拒绝此提案"
-                        to={workflowURL("contract-decline", kind, r.id, {
+                        to={workflowURL("contract-decline", "adoptions", r.id, {
                           revision: String(revision),
                         })}
                       />
                     </>
                   ) : null}
-                  {kind === "adoptions" &&
-                  owner &&
-                  title === "安全接回方案" &&
-                  ["pending", "accepted"].includes(status) ? (
-                    <>
-                      {status === "pending" && owner !== proposed ? (
-                        <RowLink
-                          title="核对并同意此接回方案"
-                          to={workflowURL("return-action", kind, r.id, {
-                            action: "accept",
-                            revision: String(revision),
-                          })}
-                        />
-                      ) : null}
-                      {status === "pending" && owner === proposed ? (
-                        <RowLink
-                          title="撤回本人提出的接回方案"
-                          to={workflowURL("return-action", kind, r.id, {
-                            action: "withdraw",
-                            revision: String(revision),
-                          })}
-                        />
-                      ) : null}
-                      {status === "pending" ? (
-                        <RowLink
-                          title="拒绝此接回方案"
-                          to={workflowURL("return-action", kind, r.id, {
-                            action: "decline",
-                            revision: String(revision),
-                          })}
-                        />
-                      ) : !has(v.handover, owner) ? (
-                        <RowLink
-                          title="确认本人已完成接回交接"
-                          to={workflowURL("return-action", kind, r.id, {
-                            action: "handover",
-                            revision: String(revision),
-                          })}
-                        />
-                      ) : null}
-                    </>
-                  ) : null}
+                  {title === "安全接回方案"
+                    ? (["accept", "withdraw", "decline", "handover"] as const)
+                        .filter((action) =>
+                          returnActionAllowed(r, owner, action, revision),
+                        )
+                        .map((action) => (
+                          <RowLink
+                            key={action}
+                            title={
+                              {
+                                accept: "核对并同意此接回方案",
+                                withdraw: "撤回本人未生效提案",
+                                decline: "拒绝此接回方案",
+                                handover: "确认本人已完成接回交接",
+                              }[action]
+                            }
+                            to={workflowURL(
+                              "return-action",
+                              "adoptions",
+                              r.id,
+                              { action, revision: String(revision) },
+                            )}
+                          />
+                        ))
+                    : null}
                 </section>
               );
             })

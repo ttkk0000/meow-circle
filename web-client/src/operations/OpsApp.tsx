@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Field, Modal } from "../components/ui";
 import { navigate, useRoute } from "../core/router";
 import { Operations, pagePath } from "./context";
 import { demoSnapshot } from "./demo";
 import { useOperations } from "./useOperations";
 import { sections, sectionFor, views, formatTime, type View } from "./models";
-import { OpsIcon, OpsNotice } from "./ui";
+import { OpsNotice } from "./ui";
 import { Overview, Services, Access, SystemState } from "./OverviewPages";
 import { Workers, Releases, Migrations, Alerts, Audit } from "./RecordPages";
 import {
@@ -14,7 +14,7 @@ import {
   IncidentDetail,
   ConfirmRelease,
 } from "./DetailPages";
-import "./operations.css";
+import { WorkspaceShell } from "../components/WorkspaceShell";
 
 const descriptions: Record<View, string> = {
   overview: "先确认环境，再定位服务、任务与待办；缺失数据保持未知。",
@@ -52,8 +52,6 @@ export default function OpsApp() {
   const session = useOperations(demo),
     [connection, setConnection] = useState(false),
     [token, setToken] = useState("");
-  const main = useRef<HTMLElement>(null),
-    [menu, setMenu] = useState(false);
   const active = sectionFor(view),
     data = demo ? demoSnapshot : session.snapshot;
   const go = (next: View, nextID?: string) =>
@@ -62,8 +60,6 @@ export default function OpsApp() {
     "/app" + pagePath(next, nextID, demo);
   useEffect(() => {
     document.title = `${titles[view]} · M&D 技术运维`;
-    setMenu(false);
-    main.current?.focus();
   }, [view, id]);
   useEffect(() => {
     if (session.forbidden && view !== "forbidden") go("forbidden");
@@ -92,116 +88,85 @@ export default function OpsApp() {
     <Operations.Provider
       value={{ session, demo, data, view: currentView, id, go, href }}
     >
-      <div className="ops-workspace">
-        <a className="ops-skip" href="#ops-main">
-          跳到页面内容
-        </a>
-        <aside
-          className={`ops-sidebar ${menu ? "open" : ""}`}
-          aria-label="技术运维导航"
+      <>
+        <WorkspaceShell
+          title={displayTitle}
+          subtitle={descriptions[currentView]}
+          heading="技术运维 / 环境工作台"
+          caption="TECHNICAL OPERATIONS"
+          breadcrumb={"技术运维 / " + titles[currentView]}
+          identity={
+            demo ? "值班账号 · 示例" : (session.context?.id ?? "尚未连接账号")
+          }
+          roles={
+            demo
+              ? "只读设计示例"
+              : (session.context?.roles.join(" / ") ?? "具名凭据 / 环境范围")
+          }
+          scope={
+            <>
+              <strong>{environment}</strong>
+              <small>
+                {demo
+                  ? "等待接入采集与权限服务"
+                  : data
+                    ? "采集结果以各信号时间为准"
+                    : "等待授权或读取采集"}
+              </small>
+            </>
+          }
+          navigation={sections.map(([key, label, icon]) => ({
+            key,
+            label,
+            icon,
+            href: href(key),
+            onSelect: () => go(key),
+          }))}
+          active={active}
+          focusKey={currentView + ":" + id}
+          actions={
+            <>
+              {demo ? (
+                <Button kind="quiet" onClick={() => changeMode(false)}>
+                  退出示例
+                </Button>
+              ) : session.context ? (
+                <>
+                  <Button
+                    disabled={session.busy}
+                    onClick={() => void session.refresh()}
+                  >
+                    {session.busy ? "正在读取…" : "刷新采集"}
+                  </Button>
+                  <Button kind="quiet" onClick={session.disconnect}>
+                    断开
+                  </Button>
+                </>
+              ) : (
+                <Button onClick={() => setConnection(true)}>连接环境</Button>
+              )}
+              <span className="ops-environment-mark">
+                {demo
+                  ? "设计示例 · 未连接环境"
+                  : data
+                    ? environment + " · 已授权采集"
+                    : environment + " · 未连接采集"}
+              </span>
+            </>
+          }
+          footer={
+            <>
+              M&amp;D 技术运维 /{" "}
+              {demo
+                ? "本页为设计示例，数据、时间和结果均为演示。"
+                : data
+                  ? "最近读取 " +
+                    formatTime(data.observed_at) +
+                    "；各信号分别判断完整性。"
+                  : "未连接采集，不把空值显示为健康或成功。"}
+            </>
+          }
         >
-          <a
-            className="ops-brand"
-            href={href("overview")}
-            onClick={(e) => {
-              e.preventDefault();
-              go("overview");
-            }}
-          >
-            <strong>M&amp;D</strong>
-            <span>meow &amp; doggie</span>
-          </a>
-          <p className="ops-nav-caption">TECHNICAL OPERATIONS</p>
-          <nav>
-            {sections.map(([key, label, icon]) => (
-              <a
-                className={`ops-nav-item ${active === key ? "active" : ""}`}
-                aria-current={active === key ? "page" : undefined}
-                key={key}
-                href={href(key)}
-                onClick={(e) => {
-                  if (
-                    e.button === 0 &&
-                    !e.metaKey &&
-                    !e.ctrlKey &&
-                    !e.shiftKey
-                  ) {
-                    e.preventDefault();
-                    go(key);
-                  }
-                }}
-              >
-                <OpsIcon name={icon} />
-                <span>{label}</span>
-              </a>
-            ))}
-          </nav>
-          <section className="ops-sidebar-env">
-            <p>当前工作空间</p>
-            <strong>{environment}</strong>
-            <small>
-              {demo
-                ? "等待接入采集与权限服务"
-                : data
-                  ? "采集结果以各信号时间为准"
-                  : "等待授权或读取采集"}
-            </small>
-          </section>
-          <div className="ops-identity">
-            <p>
-              {demo
-                ? "值班账号 · 示例"
-                : (session.context?.id ?? "尚未连接账号")}
-            </p>
-            <small>
-              {demo
-                ? "只读设计示例"
-                : session.context
-                  ? session.context.roles.join(" / ")
-                  : "具名凭据 / 环境范围"}
-            </small>
-          </div>
-        </aside>
-        <header className="ops-topbar">
-          <Button kind="quiet" onClick={() => setMenu(!menu)} pressed={menu}>
-            <span className="ops-menu-label">导航</span>
-          </Button>
-          <strong>技术运维 / 环境工作台</strong>
-          <div className="ops-topbar-actions">
-            {demo ? (
-              <Button kind="quiet" onClick={() => changeMode(false)}>
-                退出示例
-              </Button>
-            ) : session.context ? (
-              <>
-                <Button
-                  disabled={session.busy}
-                  onClick={() => void session.refresh()}
-                >
-                  {session.busy ? "正在读取…" : "刷新采集"}
-                </Button>
-                <Button kind="quiet" onClick={session.disconnect}>
-                  断开
-                </Button>
-              </>
-            ) : (
-              <Button onClick={() => setConnection(true)}>连接环境</Button>
-            )}
-            <span className="ops-environment-mark">
-              {demo
-                ? "设计示例 · 未连接环境"
-                : data
-                  ? `${environment} · 已授权采集`
-                  : `${environment} · 未连接采集`}
-            </span>
-          </div>
-        </header>
-        <main id="ops-main" className="ops-main" tabIndex={-1} ref={main}>
-          <header className="ops-page-header">
-            <p>技术运维 / {titles[currentView]}</p>
-            <h1>{displayTitle}</h1>
-            <p>{descriptions[currentView]}</p>
-          </header>
           <div
             className="ops-page-body"
             key={`${demo ? "demo" : session.client.epoch}:${currentView}:${id}`}
@@ -262,15 +227,7 @@ export default function OpsApp() {
               />
             )}
           </div>
-          <footer className="ops-footer">
-            M&amp;D 技术运维 /{" "}
-            {demo
-              ? "本页为设计示例，数据、时间和结果均为演示。"
-              : data
-                ? `最近读取 ${formatTime(data.observed_at)}；各信号分别判断完整性。`
-                : "未连接采集，不把空值显示为健康或成功。"}
-          </footer>
-        </main>
+        </WorkspaceShell>
         {connection && !demo ? (
           <Modal
             title="连接技术运维环境"
@@ -323,7 +280,7 @@ export default function OpsApp() {
             />
           </Modal>
         ) : null}
-      </div>
+      </>
     </Operations.Provider>
   );
 }

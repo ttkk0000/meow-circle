@@ -486,6 +486,10 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 		}
 	case mobile.Cases:
 		switch action {
+		case "lead-submissions":
+			return invoke(r, func(in mobile.LeadSubmissionInput) (mobile.Record, error) {
+				return h.Service.SubmitLead(ctx, actor, id, in)
+			})
 		case "claims":
 			return invoke(r, func(in mobile.ClaimInput) (mobile.Record, error) { return h.Service.Claim(ctx, actor, id, in) })
 		case "leads":
@@ -724,6 +728,27 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 	r = r.WithContext(mobile.WithOperator(r.Context(), op.ID))
 	if len(path) == 1 && path[0] == "context" && r.Method == http.MethodGet {
 		return operatorContext(op)
+	}
+	if len(path) == 1 && path[0] == "review-queue" && r.Method == http.MethodGet {
+		cursor := int64(0)
+		if raw := r.URL.Query().Get("cursor"); raw != "" {
+			var e error
+			cursor, e = strconv.ParseInt(raw, 10, 64)
+			if e != nil || cursor < 0 {
+				return nil, mobile.Invalid("invalid review cursor")
+			}
+		}
+		return h.Service.StaffReviewQueue(r.Context(), cursor)
+	}
+	if len(path) == 2 && r.Method == http.MethodGet && (path[0] == "reviews" || path[0] == "guardian-invites") {
+		id, e := parseID(path[1])
+		if e != nil {
+			return nil, e
+		}
+		if path[0] == "reviews" {
+			return h.Service.StaffReviewDetails(r.Context(), id)
+		}
+		return h.Service.StaffGuardianInviteDetails(r.Context(), id)
 	}
 	if len(path) == 2 && path[0] == "jobs" && r.Method == http.MethodPost {
 		return invoke(r, func(in mobile.JobInput) (mobile.JobResult, error) { return h.observedJob(r, op, path[1], in) })

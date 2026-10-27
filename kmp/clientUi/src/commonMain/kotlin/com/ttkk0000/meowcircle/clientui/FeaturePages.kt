@@ -20,7 +20,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
     var replaceSaved by rememberSessionUiState("replaceSaved") { false }
     if(replaceSaved) MobileAlertDialog(onDismissRequest = { replaceSaved = false },title = { Text("读取本机已保存版本") },text = { Text("此账号所有表单的未保存输入将被放弃，读取本机已保存的表单和原附件。不会提交或重新上传。") },
         confirmButton = { TextButton({ replaceSaved = false; f.replaceWithSavedDrafts() }) { Text("放弃未保存输入并读取") } },dismissButton = { TextButton({ replaceSaved = false }) { Text("继续编辑") } })
-    FeatureColumn(spacing = if(route.page in listOf(FeaturePage.Lead,FeaturePage.LeadInbox)) 16 else 14) {
+    FeatureColumn(spacing = if(route.page in listOf(FeaturePage.Lead,FeaturePage.LeadInbox,FeaturePage.LeadSubmit)) 16 else 14) {
         val readingOnly=route.page in listOf(FeaturePage.Rules,FeaturePage.Reading,FeaturePage.SettingsHome,FeaturePage.NotificationHelp,FeaturePage.LocationHelp,FeaturePage.PhotoHelp)
         MviStatusBanner(
             loading = s.loading || s.busy,
@@ -58,7 +58,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             FeaturePage.PetEdit, FeaturePage.Collaborators -> route.id > 0 && route.kind != "care" && s.pet == null
             FeaturePage.Group -> s.group == null
             FeaturePage.Appointment, FeaturePage.AppointmentEdit -> route.id > 0 && s.appointment == null
-            FeaturePage.CaseWork, FeaturePage.CaseEdit, FeaturePage.LeadInbox -> route.id > 0 && s.case == null
+            FeaturePage.CaseWork, FeaturePage.CaseEdit, FeaturePage.LeadInbox, FeaturePage.LeadSubmit -> route.id > 0 && s.case == null
             FeaturePage.Lead -> s.lead == null || s.case == null
             FeaturePage.Claim -> s.claim == null
             FeaturePage.AdoptionWork, FeaturePage.ContractEdit, FeaturePage.ReturnEdit -> route.kind != "care" && s.adoption == null
@@ -82,7 +82,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             FeaturePage.EntryEdit, FeaturePage.Friends, FeaturePage.Member, FeaturePage.ProfileEdit, FeaturePage.PetEdit, FeaturePage.PetDiary,
             FeaturePage.Collaborators, FeaturePage.Invitations, FeaturePage.GroupCreate, FeaturePage.Group, FeaturePage.GroupDirectory, FeaturePage.GroupPreview, FeaturePage.Content -> SocialFeature(store, s, route)
             FeaturePage.Appointments, FeaturePage.Appointment, FeaturePage.AppointmentEdit, FeaturePage.CaseEdit,
-            FeaturePage.CaseWork, FeaturePage.Claim, FeaturePage.AdoptionWork, FeaturePage.ContractEdit, FeaturePage.ReturnEdit -> CareFeature(store, s, route)
+            FeaturePage.CaseWork, FeaturePage.LeadInbox, FeaturePage.Lead, FeaturePage.LeadSubmit, FeaturePage.Claim, FeaturePage.AdoptionWork, FeaturePage.ContractEdit, FeaturePage.ReturnEdit -> CareFeature(store, s, route)
             FeaturePage.Offers, FeaturePage.Offer, FeaturePage.OfferEdit -> OfferFeature(store, s, route)
             else -> AccountFeature(store, s, route)
         }
@@ -92,7 +92,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
 
 @Composable fun FeatureDialogs(store: MobileStore, s: FeatureState) {
     val f = store.features
-    s.confirmation?.let { pending ->
+    s.confirmation?.takeUnless { s.route?.page == FeaturePage.LeadSubmit || s.route?.page == FeaturePage.Appointment && f.field("appointment_stage") == "cancel" || s.route?.page == FeaturePage.AdoptionWork && s.route?.kind != "care" }?.let { pending ->
         MobileAlertDialog(onDismissRequest = f::dismissConfirmation, title = { Text(pending.title) },
             text = { Column(Modifier.heightIn(max = 440.dp).verticalScroll(rememberScrollState())) { Text(pending.summary); s.error?.let { Text(it, color = MaterialTheme.colorScheme.error) } } },
             confirmButton = { TextButton(onClick = f::submitConfirmation, enabled = !s.busy && !s.conflict && !s.unconfirmedResult && s.pending.none { it.phase in listOf("sent", "result_unknown") }) { Text(if (s.busy) "正在提交" else "确认提交") } },

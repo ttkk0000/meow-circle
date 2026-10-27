@@ -147,6 +147,8 @@ export function DataTable({
   loading = false,
   empty = "当前没有记录",
   hideFilters = false,
+  stateName = stateLabel,
+  emptyDescription,
 }: {
   title: string;
   columns: string[];
@@ -157,6 +159,8 @@ export function DataTable({
   loading?: boolean;
   empty?: string;
   hideFilters?: boolean;
+  stateName?: (value: string) => string;
+  emptyDescription?: string;
 }) {
   const [query, setQuery] = useState(""),
     [state, setState] = useState(""),
@@ -199,7 +203,7 @@ export function DataTable({
               <option value="">全部</option>
               {states.map((value) => (
                 <option key={value} value={value}>
-                  {stateLabel(value)}
+                  {stateName(value)}
                 </option>
               ))}
             </select>
@@ -272,7 +276,8 @@ export function DataTable({
           <EmptyState title={rows.length ? "没有符合筛选的记录" : empty}>
             {rows.length
               ? "调整关键词或重置筛选后继续。"
-              : "空列表不代表系统健康；请核对采集来源与权限。"}
+              : (emptyDescription ??
+                "空列表不代表系统健康；请核对采集来源与权限。")}
           </EmptyState>
         ) : null}
         {more ? (

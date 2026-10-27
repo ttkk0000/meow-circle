@@ -46,6 +46,13 @@ enum = (shared / "MobileFeatureStore.kt").read_text().split("enum class FeatureP
 pages = set(re.findall(r'\b(\w+)\("', enum))
 dispatch = "\n".join(sources[name] for name in ["SocialPages.kt", "CarePages.kt", "OfferPages.kt", "AccountPages.kt"])
 assert pages == set(re.findall(r"FeaturePage\.(\w+)\s*->", dispatch))
+# 子页面存在还须由公共主入口分派，不能只检查各业务文件的when分支。
+for source, handler in [("SocialPages.kt", "SocialFeature"), ("CarePages.kt", "CareFeature"), ("OfferPages.kt", "OfferFeature")]:
+    branches = re.findall(r"((?:FeaturePage\.\w+\s*,\s*)*FeaturePage\.\w+)\s*->", sources[source])
+    expected_routes = {name for branch in branches for name in re.findall(r"FeaturePage\.(\w+)", branch)}
+    root_branches = re.findall(r"((?:FeaturePage\.\w+\s*,\s*)*FeaturePage\.\w+)\s*->\s*" + handler, sources["FeaturePages.kt"])
+    actual_routes = {name for branch in root_branches for name in re.findall(r"FeaturePage\.(\w+)", branch)}
+    assert expected_routes <= actual_routes, (handler, expected_routes - actual_routes)
 assert "val features = MobileFeatureStore(api, scope, localWorkspaces)" in (shared / "MobileStore.kt").read_text()
 assert "MobileStore(" not in sources["ConsumerApp.kt"]
 ios_client = (ios / "MainViewController.kt").read_text()
@@ -73,8 +80,8 @@ for item in catalog["emoji"]:
 assert 'EmojiPhoto(single,Modifier.size(72.dp))' in sources["ClientAssets.kt"]
 assert "Modifier.size(MobileUi.stickerSize)" in sources["ClientAssets.kt"]
 assert (assets / "files/mnd_cat_stickers.png").read_bytes() == (root / "internal/platform/mobileapi/assets/v1/mnd-cat-stickers-atlas-v1.png").read_bytes()
-operator = (root / "web-client/src/operator/OperatorApp.tsx").read_text()
-for guard in ['credentials: "omit"', '"X-Operator-Token": token', 'generation.current !== epoch', 'cache: "no-store"', 'setPrepared', 'version: receipt.version']:
+operator = "\n".join(path.read_text() for path in sorted((root / "web-client/src/operator").glob("*.ts*")))
+for guard in ['credentials: "omit"', '"X-Operator-Token": this.token', 'epoch !== this.generation', 'cache: "no-store"', 'setPrepared', 'versionOf(latest) !== pending.version']:
     assert guard in operator, guard
 assert not re.search(r"\b(localStorage|sessionStorage|indexedDB)\b", operator)
 assert "Token" not in (root / "internal/platform/mobileapi/ops_context.go").read_text().split("type OperatorContext struct", 1)[1]

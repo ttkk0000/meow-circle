@@ -1,6 +1,7 @@
 import type { RecordData } from "../core/api";
 import { integer } from "../core/wire";
 import { schemaDefault } from "../components/SchemaForm";
+import { currentAdoptionContract } from "../core/adoption";
 
 export interface Context {
   kind: string;
@@ -63,6 +64,7 @@ export const actionNames: Record<string, string> = {
   confirm: "确认当前提案",
   cancel: "取消安排",
   safety_hold: "安全暂停",
+  safety_repropose: "安全核对并提出新安排",
   restore: "以历史内容提出新提案",
   withdraw_change: "撤回待确认提案",
   close: "结束求助",
@@ -256,7 +258,8 @@ export const workflows: Record<string, Workflow> = {
   "appointment-change": {
     title: "提出预约新版本",
     schema: "AppointmentAction",
-    path: route("propose"),
+    path: (c) =>
+      `${c.kind}/${c.id}/${c.record?.state === "safety_hold" ? "safety_repropose" : "propose"}`,
     omit: ["restore_version"],
     initial: (c) => ({
       terms:
@@ -283,7 +286,7 @@ export const workflows: Record<string, Workflow> = {
     title: "接受指定版本协议",
     schema: "ContractInput",
     path: route("contracts/accept"),
-    omit: ["terms"],
+    omit: ["terms", "revision"],
     initial: (c) => ({ revision: integer(c.params.get("revision")) }),
     scope: route("contracts/scope"),
     after: "adoptions",
@@ -329,10 +332,12 @@ export const workflows: Record<string, Workflow> = {
   },
   lead: {
     title: "私密目击线索",
-    schema: "LeadInput",
-    path: route("leads"),
+    schema: "LeadSubmissionInput",
+    path: route("lead-submissions"),
     media: "private",
-    after: "cases",
+    after: "leads",
+    afterView: "submitted",
+    replayable: true,
   },
   claim: {
     title: "私密认领材料",
@@ -448,7 +453,18 @@ export const workflows: Record<string, Workflow> = {
     scope: (c, b) => (b.consent ? `guardians/${c.id}/scope` : null),
     after: "guardians",
   },
-  "adoption-action": actionWorkflow("AdoptionAction"),
+  "adoption-action": {
+    ...actionWorkflow("AdoptionAction"),
+    initial: (c) => {
+      if (c.params.get("action") !== "propose_trial" || !c.record) return {};
+      const contract = currentAdoptionContract(c.record),
+        terms = contract?.terms as Record<string, unknown> | undefined;
+      return {
+        note: terms?.responsibilities ?? "",
+        trial_until: terms?.trial_until ?? null,
+      };
+    },
+  },
   "appointment-action": {
     ...actionWorkflow("AppointmentAction"),
     omit: ["terms"],
@@ -488,7 +504,7 @@ export const workflows: Record<string, Workflow> = {
         throw new Error("无效接回动作");
       return `adoptions/${c.id}/returns/${action}`;
     },
-    omit: ["terms"],
+    omit: ["terms", "revision"],
     initial: (c) => ({ revision: integer(c.params.get("revision")) }),
     replayable: true,
     after: "adoptions",
@@ -497,7 +513,7 @@ export const workflows: Record<string, Workflow> = {
     title: "拒绝指定协议提案",
     schema: "ContractInput",
     path: route("contracts/decline"),
-    omit: ["terms"],
+    omit: ["terms", "revision"],
     initial: (c) => ({ revision: integer(c.params.get("revision")) }),
     replayable: true,
     after: "adoptions",

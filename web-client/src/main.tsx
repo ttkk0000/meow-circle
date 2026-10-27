@@ -1,7 +1,6 @@
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import OperatorApp from "./operator/OperatorApp";
 import { ProviderCallbackPage } from "./features/ProviderSignIn";
 import { GuardianClaimPage } from "./features/GuardianPages";
 import { takeProviderCallback } from "./core/provider";
@@ -9,6 +8,7 @@ import { takeDesktopHandoff } from "./core/desktopProvider";
 import "./styles.css";
 
 const OpsApp = lazy(() => import("./operations/OpsApp"));
+const OperatorApp = lazy(() => import("./operator/OperatorApp"));
 const DesktopProvider = lazy(() => import("./features/DesktopProvider"));
 
 const root = document.getElementById("root");
@@ -44,7 +44,9 @@ createRoot(root).render(
         <OpsApp />
       </Suspense>
     ) : location.pathname.replace(/\/$/, "") === "/app/operator" ? (
-      <OperatorApp />
+      <Suspense fallback={<p role="status">正在载入 M&amp;D 业务后台…</p>}>
+        <OperatorApp />
+      </Suspense>
     ) : (
       <App />
     )}

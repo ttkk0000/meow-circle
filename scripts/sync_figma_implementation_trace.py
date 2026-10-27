@@ -102,6 +102,13 @@ representatives.update({'offline':['56:81','311:380192','311:380195'],'noResults
  'mediaUploading':['240:368361'],'mediaPartialFailure':['240:368362'],'mediaReorder':['240:368363']})
 representatives.update({'postPreview':['56:34','311:378836','311:378838','311:378839'],'aiChoice':['632:357495'],'aiReview':['632:357496'],'aiClearReview':['632:357497'],'aiChecking':['632:357498'],'aiResult':['632:357499'],'aiRestriction':['632:357500']})
 representatives.update({'lostLeadInbox':['142:2952'],'lostLeadEmpty':['142:2953'],'lostLeadDetail':['142:2954','311:379528','311:379531'],'lostLeadHelpful':['142:2955'],'lostLeadNotMatch':['142:2956'],'lostLeadChat':['142:2978','145:7246','220:341399']})
+representatives.update({'lostLeadPhoto':['142:2948','311:379504','311:379507'],'lostLeadReview':['142:2949'],'lostLeadFailure':['142:2950'],'lostLeadSent':['142:2951']})
+representatives.update({'appointmentConfirmedV3':['252:371393'],'appointmentHistoryV2':['252:371389'],'appointmentRestoreReview':['252:371392'],'appointmentReview':['460:211426'],
+ 'safetyHold':['460:211421','460:211422','460:211425'],'holdCancel':['506:205509','506:205510','506:205513'],'holdCancelPending':['506:205514'],'holdCancelFailed':['506:205519'],'holdCancelled':['506:205524'],
+ 'holdReproposal':['506:205529','506:205530','506:205533'],'holdProposalWaiting':['506:205534'],'holdReleased':['506:205539','506:205540','506:205543']})
+representatives.update({'adoptionDecision':['240:368311'],'adoptionSupplement':['240:368312'],'trialAgreement':['240:368316','311:379012','311:379015'],'trialWaiting':['246:370291'],'trialOther':['246:370292'],'trialActive':['240:368317'],
+ 'handoverWaiting':['240:368319'],'handoverOther':['240:368320','311:379028','311:379031'],'handoverComplete':['240:368321'],'waitlist':['460:68717','460:68718','460:68721'],'placementConflict':['460:68722'],
+ 'returnReviewR2':['506:60825','506:60826','506:60829'],'returnWaitingR2':['506:60820'],'returnConfirmedR2':['506:60830'],'returnConflict':['506:60835'],'returnExpired':['506:60845'],'returnWithdrawR2':['506:60855']})
 rows = []
 for key in sorted(roots):
     group = family(key)
@@ -110,6 +117,10 @@ for key in sorted(roots):
         a,w,route='MapPage.kt','features/MapPage.tsx','/map'
     elif key in ('lostLeadInbox','lostLeadEmpty'):
         a,w,route='LeadPages.kt','features/LeadPages.tsx','/leads?ref={caseId}'
+    elif key in ('lostLeadPhoto','lostLeadReview','lostLeadFailure'):
+        a,w,route='LeadSubmissionPages.kt','features/LeadSubmissionPages.tsx','/edit?flow=lead&kind=cases&id={caseId}'
+    elif key == 'lostLeadSent':
+        a,w,route='LeadPages.kt','features/LeadPages.tsx','/leads/{id}?view=submitted&version={version}'
     elif key in ('lostLeadDetail','lostLeadHelpful','lostLeadNotMatch'):
         a,w,route='LeadPages.kt','features/LeadPages.tsx','/leads/{id}' + ('?view=reviewed&version={version}' if key in ('lostLeadHelpful','lostLeadNotMatch') else '')
     elif key == 'lostLeadChat':
@@ -172,6 +183,24 @@ for key in sorted(roots):
     if key in ('lostLeadInbox','lostLeadEmpty','lostLeadDetail','lostLeadHelpful','lostLeadNotMatch','lostLeadChat'):
         status = 'dedicated_state_source_not_runtime_verified'
         note = '2026-10-26回读私密线索列表／空态／详情／两类结果、目击者聊天及可见输入条，详情核对Web与横平板；实际标记／独立上下文会话绑定服务端原请求、版本与当前求助权限，关闭后历史只读、移除撤回关联读取。未编译、类型检查、回归执行、设备或像素验收。'
+    if key in ('lostLeadPhoto','lostLeadReview','lostLeadFailure','lostLeadSent'):
+        status = 'dedicated_state_source_not_runtime_verified'
+        note = '2026-10-26回读手机四状态及照片Web／横平板；同一私有草稿、完整检查页、真实失败／未知结果、原请求与求助版本、新旧入口兼容及收到结果最低版本门槛已写；公共入口分派遗漏已修正。未编译、类型检查、回归执行或逐端运行验收。'
+    if group == 'appointments':
+        a,w,route='AppointmentPages.kt','features/AppointmentPages.tsx','/appointments/{id}'
+        if key in ('appointment','appointmentNarrow','change','holdReproposal'):
+            a,w,route='CarePages.kt','features/WorkflowEditor.tsx','/workflow/appointment-change'
+    if key in ('appointmentConfirmedV3','appointmentHistoryV2','appointmentRestoreReview','appointmentReview','safetyHold','holdCancel','holdCancelPending','holdCancelFailed','holdCancelled','holdReproposal','holdProposalWaiting','holdReleased'):
+        status = 'dedicated_state_source_not_runtime_verified'
+        note = '2026-10-27回读12份手机状态与4状态Web／横平板共20上下文；预约详情／取消四状态、同暂停版本的新安排／双方具体核对、资格与披露复核、历史已替代版本恢复已接线。复用公共Compose与Web组件；未编译、类型检查、测试执行或逐端视觉／运行验收。'
+    if key in ('adoptionDecision','adoptionSupplement','trialAgreement','trialWaiting','trialOther','trialActive','handoverWaiting','handoverOther','handoverComplete','waitlist','placementConflict'):
+        a,w,route='AdoptionPages.kt','features/AdoptionPages.tsx','/adoptions/{id}'
+        status='dedicated_state_source_not_runtime_verified'
+        note='2026-10-27按当前角色／版本、同一生效协议与双方各自确认接入公共进度／完整检查；试养改从协议直接取条款与截止，旧草稿主动采用并保留。试养私密照护与交接完成后30天窗口分开，候补不披露其它家庭。未编译、类型检查、回归执行、设备或逐像素验收。'
+    if key in ('returnReviewR2','returnWaitingR2','returnConfirmedR2','returnConflict','returnExpired','returnWithdrawR2'):
+        a,w,route='CarePages.kt','features/ReturnPages.tsx','/adoptions/{id}'
+        status='dedicated_state_source_not_runtime_verified'
+        note='2026-10-27回读手机6状态及R2回应Web／横平板；公共完整方案检查、同版角色／确认截止、未知结果原请求、保留草稿后主动采用版本；Web修正effective交接入口，接受方案不等于实际交接完成。未编译、类型检查、测试执行或逐端视觉／运行验收。'
     rows.append({'key':key,'name':names.get(key,key),'family':group,'design_roots':roots[key],
                  'root_sources':provenance[key],'android_source':android+a if a else None,
                  'web_source':'web-client/src/'+w if w else None,'web_module_route':route,

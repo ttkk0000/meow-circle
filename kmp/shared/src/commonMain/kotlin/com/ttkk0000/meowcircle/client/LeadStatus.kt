@@ -21,6 +21,10 @@ fun leadAssessmentSummary(value: String): String = when(leadAssessment(value)) {
 }
 fun leadReviewMinimumVersion(kind: String): Long? = if(kind.startsWith("reviewed-"))
     kind.removePrefix("reviewed-").toLongOrNull()?.takeIf { it > 0 } else null
+fun leadSubmissionMinimumVersion(kind: String): Long? = if(kind.startsWith("submitted-"))
+    kind.removePrefix("submitted-").toLongOrNull()?.takeIf { it > 0 } else null
+fun leadSubmissionRecorded(lead: MobileRecord<LeadBody>?, actor: Long?, minimum: Long): Boolean =
+    minimum > 0 && lead != null && actor != null && lead.ownerId == actor && lead.version >= minimum && lead.state == "submitted"
 fun leadAssessmentRecorded(lead: MobileRecord<LeadBody>?, parent: MobileRecord<CaseBody>?, minimumVersion: Long): Boolean =
     lead != null && parent != null && lead.version >= minimumVersion && lead.referenceId == parent.id &&
         leadAssessment(lead.data.assessment) in listOf(LeadAssessment.Helpful,LeadAssessment.NotMatch) &&

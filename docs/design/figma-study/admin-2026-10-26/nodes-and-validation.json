@@ -1,0 +1,523 @@
+{
+  "date": "2026-10-26",
+  "file_key": "3OFOC3vu18Kx9sRPjummOC",
+  "page_id": "843:21",
+  "page_name": "10 后台管理 · 业务与核验",
+  "design_url": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=843-22",
+  "delivery": "可编辑业务后台设计；不是本批后台UI源码交付或运行验收",
+  "screens": [
+    {
+      "id": "843:22",
+      "name": "01 业务工作台",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 644,
+      "bodyChildren": 4,
+      "textCount": 60,
+      "instances": 33,
+      "disabledButtons": 0,
+      "fullScreenImages": 0,
+      "screenshot": "01.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:23",
+      "name": "02 举报与申诉",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 560,
+      "bodyChildren": 4,
+      "textCount": 51,
+      "instances": 32,
+      "disabledButtons": 0,
+      "fullScreenImages": 0,
+      "screenshot": "02.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:24",
+      "name": "03 事项核实详情",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 588,
+      "bodyChildren": 3,
+      "textCount": 44,
+      "instances": 30,
+      "disabledButtons": 0,
+      "fullScreenImages": 0,
+      "screenshot": "03.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:25",
+      "name": "04 权利事项",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 560,
+      "bodyChildren": 4,
+      "textCount": 51,
+      "instances": 32,
+      "disabledButtons": 0,
+      "fullScreenImages": 0,
+      "screenshot": "04.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:26",
+      "name": "05 权利处理详情",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 588,
+      "bodyChildren": 3,
+      "textCount": 44,
+      "instances": 30,
+      "disabledButtons": 1,
+      "fullScreenImages": 0,
+      "screenshot": "05.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:27",
+      "name": "06 资料与注销请求",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 596,
+      "bodyChildren": 4,
+      "textCount": 52,
+      "instances": 31,
+      "disabledButtons": 1,
+      "fullScreenImages": 0,
+      "screenshot": "06.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:28",
+      "name": "07 监护关系核验",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 532,
+      "bodyChildren": 4,
+      "textCount": 47,
+      "instances": 29,
+      "disabledButtons": 1,
+      "fullScreenImages": 0,
+      "screenshot": "07.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:29",
+      "name": "08 发布准入",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 568,
+      "bodyChildren": 3,
+      "textCount": 53,
+      "instances": 31,
+      "disabledButtons": 1,
+      "fullScreenImages": 0,
+      "screenshot": "08.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:30",
+      "name": "09 角色与会话",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 660,
+      "bodyChildren": 4,
+      "textCount": 56,
+      "instances": 32,
+      "disabledButtons": 0,
+      "fullScreenImages": 0,
+      "screenshot": "09.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:31",
+      "name": "10 提交确认",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 588,
+      "bodyChildren": 3,
+      "textCount": 44,
+      "instances": 30,
+      "disabledButtons": 1,
+      "fullScreenImages": 0,
+      "screenshot": "10.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:32",
+      "name": "11 结果待核对",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 588,
+      "bodyChildren": 3,
+      "textCount": 44,
+      "instances": 30,
+      "disabledButtons": 1,
+      "fullScreenImages": 0,
+      "screenshot": "11.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:33",
+      "name": "12 访问受限",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 588,
+      "bodyChildren": 3,
+      "textCount": 44,
+      "instances": 30,
+      "disabledButtons": 0,
+      "fullScreenImages": 0,
+      "screenshot": "12.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "843:34",
+      "name": "13 未连接",
+      "width": 1440,
+      "height": 1000,
+      "mode": {
+        "VariableCollectionId:14:6": "56:0"
+      },
+      "bodyHeight": 588,
+      "bodyChildren": 3,
+      "textCount": 44,
+      "instances": 30,
+      "disabledButtons": 1,
+      "fullScreenImages": 0,
+      "screenshot": "13.png",
+      "screenshot_meta": {
+        "width": 1440,
+        "height": 1000,
+        "original_width": 1440,
+        "original_height": 1000
+      },
+      "screenshot_inspected": true,
+      "runtime_verified": false
+    }
+  ],
+  "screen_count": 13,
+  "component_instances": 400,
+  "source_components": [
+    {
+      "id": "795:26",
+      "name": "M&D Ops / Workspace shell",
+      "type": "COMPONENT",
+      "properties": {}
+    },
+    {
+      "id": "794:26",
+      "name": "M&D Ops / Button",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Label#794:0": {
+          "type": "TEXT",
+          "defaultValue": "查看详情"
+        },
+        "Style": {
+          "type": "VARIANT",
+          "defaultValue": "Primary",
+          "variantOptions": [
+            "Primary",
+            "Secondary",
+            "Quiet",
+            "Disabled",
+            "Focus"
+          ]
+        }
+      }
+    },
+    {
+      "id": "794:37",
+      "name": "M&D Ops / Status",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Label#794:6": {
+          "type": "TEXT",
+          "defaultValue": "未连接"
+        },
+        "Tone": {
+          "type": "VARIANT",
+          "defaultValue": "Neutral",
+          "variantOptions": [
+            "Neutral",
+            "Success",
+            "Warning",
+            "Danger",
+            "Brand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "794:43",
+      "name": "M&D Ops / Metric",
+      "type": "COMPONENT",
+      "properties": {
+        "Label#794:12": {
+          "type": "TEXT",
+          "defaultValue": "待处理事件"
+        },
+        "Value#794:13": {
+          "type": "TEXT",
+          "defaultValue": "03"
+        },
+        "Hint#794:14": {
+          "type": "TEXT",
+          "defaultValue": "2 个需值班人员核对"
+        }
+      }
+    },
+    {
+      "id": "794:47",
+      "name": "M&D Ops / Table header",
+      "type": "COMPONENT",
+      "properties": {
+        "A#794:15": {
+          "type": "TEXT",
+          "defaultValue": "名称"
+        },
+        "B#794:17": {
+          "type": "TEXT",
+          "defaultValue": "分组"
+        },
+        "C#794:19": {
+          "type": "TEXT",
+          "defaultValue": "最近更新"
+        },
+        "D#794:21": {
+          "type": "TEXT",
+          "defaultValue": "状态"
+        },
+        "E#794:22": {
+          "type": "TEXT",
+          "defaultValue": "操作"
+        }
+      }
+    },
+    {
+      "id": "794:48",
+      "name": "M&D Ops / Table row",
+      "type": "COMPONENT",
+      "properties": {
+        "A#794:16": {
+          "type": "TEXT",
+          "defaultValue": "api / HTTP"
+        },
+        "B#794:18": {
+          "type": "TEXT",
+          "defaultValue": "应用服务"
+        },
+        "C#794:20": {
+          "type": "TEXT",
+          "defaultValue": "10:24:08"
+        },
+        "E#794:23": {
+          "type": "TEXT",
+          "defaultValue": "查看详情 →"
+        }
+      }
+    },
+    {
+      "id": "794:61",
+      "name": "M&D Ops / Notice",
+      "type": "COMPONENT",
+      "properties": {
+        "Title#794:24": {
+          "type": "TEXT",
+          "defaultValue": "尚未接入环境"
+        },
+        "Description#794:25": {
+          "type": "TEXT",
+          "defaultValue": "当前仅显示设计示例；接入后展示采集时间、来源与完整性。"
+        }
+      }
+    },
+    {
+      "id": "794:69",
+      "name": "M&D Ops / Summary item",
+      "type": "COMPONENT",
+      "properties": {
+        "Label#794:26": {
+          "type": "TEXT",
+          "defaultValue": "目标环境"
+        },
+        "Value#794:27": {
+          "type": "TEXT",
+          "defaultValue": "staging · 占位"
+        }
+      }
+    },
+    {
+      "id": "794:72",
+      "name": "M&D Ops / Log line",
+      "type": "COMPONENT",
+      "properties": {
+        "Time#794:28": {
+          "type": "TEXT",
+          "defaultValue": "10:24:08"
+        },
+        "Message#794:29": {
+          "type": "TEXT",
+          "defaultValue": "[示例] 校验已跳过：未配置真实环境"
+        }
+      }
+    }
+  ],
+  "flow_starting_points": [
+    {
+      "nodeId": "843:22",
+      "name": "后台管理 · 业务与核验（设计示例）"
+    }
+  ],
+  "prototype": {
+    "navMatched": 104,
+    "bodyMatched": 29,
+    "missing": [],
+    "iconMissing": [],
+    "selfInvalid": [],
+    "frames": 13,
+    "click_navigation": 126,
+    "current_nav_without_duplicate_jump": 7,
+    "technical_link": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=793-22",
+    "meaning": "13稿×8侧栏，7个当前主页面项无重复跳转；97个可点击侧栏加29个正文／返回入口，共126条。技术运维在新页打开Figma节点。",
+    "readback_after_timeout": true
+  },
+  "validation": {
+    "text_outside_screen_or_parent": [],
+    "full_screen_image_fills": 0,
+    "disabled_action_problems": 0,
+    "mode": "Mobile Light V2 / 56:0",
+    "runtime_verified": false
+  },
+  "notes": [
+    "13张最终1440×1000截图已逐张查看；修正中文按钮换行和筛选选中状态。",
+    "原型写入遇一次超时，随后只读回查104个侧栏状态、29个正文链接及全部图标，确认已保存；没有重复新建画板。",
+    "早期脚本节点能力检查与自身导航被工具拒绝后按错误修正；不将失败调用计为设计完成。",
+    "筛选／分页是界面设计，未仿真真实数据；示例编号不代表真实用户事项。",
+    "未改消费者稿、技术运维原组件、变量值；所有新页面复用现有组件与令牌。"
+  ]
+}

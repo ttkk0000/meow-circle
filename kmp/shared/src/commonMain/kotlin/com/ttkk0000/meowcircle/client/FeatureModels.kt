@@ -36,11 +36,14 @@ data class AppointmentTerms(@SerialName("starts_at") val startsAt: String, val p
     val payee: String, val snapshot: DisclosureSnapshot? = null, val city: String = "", val species: String = "")
 @Serializable
 data class AppointmentVersion(val number: Long, val terms: AppointmentTerms, @SerialName("proposed_by") val proposedBy: Long,
-    val confirmations: List<Long>, val status: String, @SerialName("created_at") val createdAt: String)
+    val confirmations: List<Long>, val status: String, @SerialName("created_at") val createdAt: String,
+    @SerialName("safety_hold_version") val safetyHoldVersion: Long = 0, @SerialName("resolution_note") val resolutionNote: String = "",
+    @SerialName("safety_checks") val safetyChecks: Map<String,String> = emptyMap())
 @Serializable
 data class AppointmentBody(@SerialName("context_kind") val contextKind: String, @SerialName("context_id") val contextId: Long,
     @SerialName("peer_id") val peerId: Long, @SerialName("effective_version") val effectiveVersion: Long,
-    @SerialName("pending_version") val pendingVersion: Long, val versions: List<AppointmentVersion>, val reason: String = "") {
+    @SerialName("pending_version") val pendingVersion: Long, val versions: List<AppointmentVersion>, val reason: String = "",
+    @SerialName("safety_hold_version") val safetyHoldVersion: Long = 0, @SerialName("safety_reason") val safetyReason: String = "") {
     val effectiveTerms: AppointmentTerms? get() = versions.firstOrNull { it.number == effectiveVersion && it.status == "effective" }?.terms
     val pendingTerms: AppointmentTerms? get() = versions.firstOrNull { it.number == pendingVersion && it.status == "pending" }?.terms
 }
@@ -92,6 +95,8 @@ data class LeadAssessmentInput(val version: Long, @SerialName("client_request_id
 data class LeadContactInput(val version: Long, @SerialName("client_request_id") val clientRequestId: String)
 @Serializable
 data class LeadInput(val text: String, @SerialName("media_ids") val mediaIds: List<Long> = emptyList())
+@Serializable data class LeadSubmissionInput(val version: Long, val text: String, @SerialName("media_ids") val mediaIds: List<Long> = emptyList(),
+    @SerialName("client_request_id") val clientRequestId: String)
 @Serializable
 data class CareBody(val text: String, @SerialName("needs_help") val needsHelp: Boolean)
 @Serializable

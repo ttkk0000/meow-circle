@@ -339,26 +339,6 @@ func (s *Service) Lead(ctx context.Context, actor, caseID int64, text string, me
 		Text     string  `json:"text"`
 		MediaIDs []int64 `json:"media_ids"`
 	}{text, media}, Leads, &out, func(tx Tx) error {
-		if e := s.interaction(tx, actor); e != nil {
-			return e
-		}
-		p, e := tx.Get(Cases, caseID)
-		if e != nil {
-			return e
-		}
-		ok, e := s.canRead(tx, Cases, p, actor)
-		if e != nil {
-			return e
-		}
-		if !ok {
-			return ErrForbidden
-		}
-		if p.State != "active" && p.State != "matched" {
-			return ErrConflict
-		}
-		if e = s.attachments(tx, actor, media); e != nil {
-			return e
-		}
 		_, hash, e := commandKey(struct {
 			CommandMeta
 			Text     string  `json:"text"`
@@ -368,20 +348,8 @@ func (s *Service) Lead(ctx context.Context, actor, caseID int64, text string, me
 			return e
 		}
 		key := fmt.Sprintf("lead:%d:%d:%s", actor, caseID, hash)
-		old, e := tx.ByKey(Leads, key)
-		if e == nil {
-			out = old
-			return nil
-		}
-		if e != ErrNotFound {
-			return e
-		}
-		r := Record{OwnerID: actor, Key: key, Participants: []int64{p.OwnerID}, RefID: caseID, MediaIDs: media, State: "submitted"}
-		if e = save(tx, Leads, &r, Lead{Text: text}, actor, "lead.submitted"); e != nil {
-			return e
-		}
-		out = r
-		return s.notify(tx, p.OwnerID, actor, "applications", Cases, caseID, "收到一条私密寻宠线索")
+		out, e = s.privateLead(tx, actor, caseID, 0, key, text, media)
+		return e
 	})
 	return
 }
@@ -754,6 +722,17 @@ type CareInput struct {
 	MediaIDs  []int64 `json:"media_ids"`
 }
 
+func carePostingOpen(r Record, a Adoption, now time.Time) bool {
+	trialConfirmed := Has(a.TrialConfirmations, a.ApplicantID) && Has(a.TrialConfirmations, a.PublisherID)
+	if r.State == "trial_active" && a.CompletedAt == nil && trialConfirmed {
+		return true
+	}
+	if a.CompletedAt == nil && HasString([]string{"handover_pending", "return_requested", "return_agreed"}, r.State) && (trialConfirmed || Has(a.HandoverConfirmations, a.ApplicantID)) {
+		return true
+	}
+	return HasString([]string{"completed", "return_requested", "return_agreed"}, r.State) && a.CompletedAt != nil && !now.After(a.CompletedAt.Add(30*24*time.Hour))
+}
+
 func (s *Service) Care(ctx context.Context, actor, adoptionID int64, in CareInput) (out Record, err error) {
 	if err = textValid(in.Text, 3000, len(in.MediaIDs) == 0); err != nil {
 		return
@@ -770,7 +749,7 @@ func (s *Service) Care(ctx context.Context, actor, adoptionID int64, in CareInpu
 		if e != nil {
 			return e
 		}
-		if !HasString([]string{"completed", "return_requested", "return_agreed"}, p.State) || a.CompletedAt == nil || s.Now().After(a.CompletedAt.Add(30*24*time.Hour)) {
+		if !carePostingOpen(p, a, s.Now()) {
 			return ErrConflict
 		}
 		allowed := actor == a.ApplicantID

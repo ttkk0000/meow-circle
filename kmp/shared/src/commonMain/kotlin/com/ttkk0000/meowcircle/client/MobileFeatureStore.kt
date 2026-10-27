@@ -11,7 +11,7 @@ enum class FeaturePage(val title: String) {
     Publications("我的发布"), EntryEdit("编辑动态"), Friends("好友与宠友圈"), Member("宠友资料"), ProfileEdit("编辑资料"), PetEdit("宠物档案"), PetDiary("独立图文日记"),
     Collaborators("协作与邀请"), Invitations("收到与发出的邀请"), GroupCreate("创建群聊"), Group("群聊管理"), GroupDirectory("发现宠友群"), GroupPreview("群简介与加入申请"), Content("关注与求助订阅"),
     Appointments("预约"), Appointment("预约详情"), AppointmentEdit("预约安排"),
-    CaseEdit("走失与拾获发布"), CaseWork("线索与认领"), LeadInbox("私密线索"), Lead("核实这条线索"), Claim("私密认领材料"),
+    CaseEdit("走失与拾获发布"), CaseWork("线索与认领"), LeadSubmit("私密目击线索"), LeadInbox("私密线索"), Lead("核实这条线索"), Claim("私密认领材料"),
     AdoptionWork("领养照护与协议"), ContractEdit("协议提案"), ReturnEdit("安全接回安排"),
     Offers("有偿信息"), Offer("披露详情"), OfferEdit("编辑披露"),
     SettingsHome("设置"), Settings("通知设置"), NotificationHelp("开启系统通知"), LocationHelp("不提供定位也可以"), Nearby("附近提醒"), Map("互助地图"), Reviews("核实与举报"), Review("核实事项"),
@@ -31,7 +31,7 @@ data class FeatureState(
     val route: FeatureRoute? = null, val forms: Map<FeatureRoute, FeatureForm> = emptyMap(),
     val loading: Boolean = false, val busy: Boolean = false, val error: String? = null, val notice: String? = null,
     val readFailure: ClientReadFailure? = null,
-    val conflict: Boolean = false, val confirmation: FeatureConfirmation? = null,
+    val conflict: Boolean = false, val confirmation: FeatureConfirmation? = null, val commandErrorCode: String? = null,
     val mapCases: PageState<CaseBody> = PageState(), val diary: PageState<EntryBody> = PageState(), val directory: PageState<GroupDirectoryBody> = PageState(), val groupPreview: MobileRecord<GroupDirectoryBody>? = null, val contentSubscriptions: MobileRecord<ContentSubscriptions>? = null,
     val friends: PageState<FriendBody> = PageState(), val invitations: PageState<InvitationBody> = PageState(),
     val appointments: PageState<AppointmentBody> = PageState(), val offers: PageState<OfferBody> = PageState(),
@@ -147,6 +147,17 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     }
     fun loadContentSubscriptions() { if(owner == null) return; val currentEpoch = epoch; scope.launch { try { val p = api.contentSubscriptions(); if(epoch == currentEpoch) mutable.update { it.copy(contentSubscriptions = p) } } catch(e: CancellationException) { throw e } catch(e: Exception) { if(epoch == currentEpoch) notify(e.message ?: "暂无法读取关注状态") } } }
     fun field(key: String, fallback: String = ""): String = mutable.value.route?.let { mutable.value.forms[it]?.values?.get(key) } ?: fallback
+    fun importLegacyLead() {
+        val state = mutable.value; val route = state.route ?: return
+        if(route.page != FeaturePage.LeadSubmit || state.busy || state.loading || state.confirmation != null || state.unconfirmedResult || !canEditDraft()) return
+        if(field("lead").isNotBlank() || state.photos[route].orEmpty().isNotEmpty()) { notify("当前草稿已有内容，不覆盖原稿"); return }
+        val old = FeatureRoute(FeaturePage.CaseWork,route.id)
+        val text = state.forms[old]?.values?.get("lead")?.takeIf { it.isNotBlank() } ?: return
+        val photos = state.photos[old].orEmpty().filter { it.mediaId != null && !it.uploading }.map { it.copy(key = newRequestKey()) }
+        edit("lead",text)
+        mutable.update { it.copy(photos = it.photos + (route to photos),notice = "已复制文字和已上传附件，请核对；旧表单未删除，未上传附件仍在原表单") }
+        scheduleDraftSave()
+    }
     fun edit(key: String, value: String) {
         if (!canEditDraft() || mutable.value.busy || mutable.value.confirmation != null || mutable.value.route in uncertainRoutes || value.length > 10000) return
         val route = mutable.value.route ?: return
@@ -154,6 +165,24 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         scheduleDraftSave()
     }
     fun version(fallback: Long = 0): Long = mutable.value.route?.let { mutable.value.forms[it]?.baseVersion } ?: fallback
+    fun adoptLeadVersion() {
+        mutable.value.case?.let {adoptReadVersion(it.id,it.version,setOf(FeaturePage.LeadSubmit),"求助")}
+    }
+    fun adoptAppointmentVersion() {
+        mutable.value.appointment?.let {adoptReadVersion(it.id,it.version,setOf(FeaturePage.Appointment,FeaturePage.AppointmentEdit),"预约")}
+    }
+    fun adoptAdoptionVersion() {
+        mutable.value.adoption?.let {adoptReadVersion(it.id,it.version,setOf(FeaturePage.AdoptionWork,FeaturePage.ContractEdit,FeaturePage.ReturnEdit),"领养事项")}
+    }
+    private fun adoptReadVersion(id: Long,version: Long,pages: Set<FeaturePage>,label: String) {
+        val state=mutable.value; val route=state.route ?: return
+        if(route.page !in pages || route.id != id || state.busy || state.loading || state.unconfirmedResult || route in uncertainRoutes || !canEditDraft()) return
+        val form=state.forms[route] ?: return
+        if(version <= (form.baseVersion ?: 0)) {notify("请先读取当前"+label+"版本，原输入继续保留");return}
+        pendingAction=null
+        mutable.update {it.copy(forms=it.forms+(route to form.copy(baseVersion=version)),conflict=false,confirmation=null,error=null,commandErrorCode=null,notice="已保留原输入并采用刚读取的"+label+"版本，请重新核对")}
+        scheduleDraftSave()
+    }
     private fun capture(version: Long) {
         if (!draftReady) return
         val route = mutable.value.route ?: return
@@ -265,7 +294,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     fun runCommand(action: suspend () -> Unit) {
         if (mutable.value.busy) return
         val originalEpoch = epoch
-        mutable.update { it.copy(busy = true, error = null, notice = null) }
+        mutable.update { it.copy(busy = true, error = null, notice = null,commandErrorCode = null) }
         commandJob = scope.launch {
             var actionStarted = false
             try { if (pendingAction != null) persistDrafts(); actionStarted = true; action(); if (epoch == originalEpoch) mutable.update { it.copy(notice = it.notice ?: "操作已完成，请以当前记录为准") } }
@@ -276,7 +305,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     if (unknown) uncertainRoutes.add(mutable.value.route)
                     if (e is OperationResultUnknown) uncertainRequests[e.clientRequestId] = mutable.value.route
                     mutable.update { it.copy(error = if (unknown) "${e.mobileMessage()}。提交结果待核对，请勿重建请求" else e.mobileMessage(),
-                        conflict = e is MobileApiException && e.status == 409, unconfirmedResult = unknown || it.unconfirmedResult,
+                        conflict = e is MobileApiException && e.status == 409, unconfirmedResult = unknown || it.unconfirmedResult,commandErrorCode = (e as? MobileApiException)?.code,
                         pending = api.recoverableCommands()) }
                 }
             } finally { if (epoch == originalEpoch) { mutable.update { it.copy(busy = false, pending = api.recoverableCommands()) }; scheduleDraftSave() } }
@@ -288,7 +317,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         val currentRevision = ++revision
         val currentEpoch = epoch
         loading?.cancel()
-        mutable.update { it.copy(loading = true, error = null, readFailure = null) }
+        mutable.update { it.copy(loading = true, error = null, readFailure = null,commandErrorCode = null) }
         loading = scope.launch {
             fun current() = revision == currentRevision && epoch == currentEpoch
             try {
@@ -334,6 +363,10 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                         if (material == null || material == CaseMaterial.Leads) {
                             loadFeaturePage(more, ::current, { it.leads }, { s, p -> s.copy(leads = p) }) { api.leads(route.id, it) }
                         }
+                    }
+                    FeaturePage.LeadSubmit -> {
+                        val parent = api.case(route.id)
+                        if(current()) { mutable.update { it.copy(case = parent) }; capture(parent.version) }
                     }
                     FeaturePage.LeadInbox -> {
                         if (!more || mutable.value.case == null) {

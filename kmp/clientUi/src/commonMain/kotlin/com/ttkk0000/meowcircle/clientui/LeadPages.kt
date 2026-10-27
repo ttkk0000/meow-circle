@@ -30,6 +30,14 @@ import com.ttkk0000.meowcircle.client.*
     val actor = store.state.value.user?.id
     val f = store.features
     val assessment = leadAssessment(lead.data.assessment)
+    val submittedVersion = leadSubmissionMinimumVersion(route.kind)
+    if(submittedVersion != null && leadSubmissionRecorded(lead,actor,submittedVersion)) {
+        TaskNotice("已收到",if(parent.state in listOf("active","matched")) "等待本案发布人核实，不代表已匹配或找回；不会移动公共标记或修改宠物状态。" else "记录曾被接收；本次求助已停止新联系，仍可查看你有权读取的历史。",success = true)
+        Text("私密线索 #${lead.id} · ${displayTime(lead.createdAt)}",style = MaterialTheme.typography.bodySmall)
+        TaskSecondary("返回本次求助",!state.busy) { f.open(FeatureRoute(FeaturePage.CaseWork,parent.id)) }
+        return
+    }
+    if(submittedVersion != null && lead.version < submittedVersion) TaskNotice("提交结果尚未回读","请重新读取本条线索，不会重复创建目击记录。")
     val minimum = leadReviewMinimumVersion(route.kind)
     val result = minimum != null && leadAssessmentRecorded(lead,parent,minimum)
     if (result) {

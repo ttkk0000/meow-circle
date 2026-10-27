@@ -14717,6 +14717,120 @@
         }
       }
     },
+    "/api/v2/appointments/{id}/safety_repropose": {
+      "post": {
+        "summary": "appointments safety_repropose",
+        "operationId": "post_appointments_id_safety_repropose",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Reload current version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppointmentAction"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/groups/{id}/directory": {
       "post": {
         "summary": "groups directory",
@@ -18469,6 +18583,120 @@
         }
       }
     },
+    "/api/v2/cases/{id}/lead-submissions": {
+      "post": {
+        "summary": "Submit a private lead with the original request and current case version",
+        "operationId": "post_cases_id_lead_submissions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Reload current version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadSubmissionInput"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/reviews/{id}/supplement": {
       "post": {
         "summary": "Supplement a needs_info review using the original client request ID",
@@ -21268,6 +21496,117 @@
             }
           }
         }
+      },
+      "get": {
+        "summary": "Audited moderator detail reread; expired evidence references are withheld",
+        "operationId": "get_ops_reviews_id",
+        "security": [
+          {
+            "operatorToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Record"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Reload current version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ]
       }
     },
     "/api/v2/ops/claim-disputes/{id}": {
@@ -22022,6 +22361,221 @@
             }
           }
         }
+      }
+    },
+    "/api/v2/ops/review-queue": {
+      "get": {
+        "summary": "Audited minimal moderator queue; cursor parameter, no private statements or materials",
+        "operationId": "get_ops_review_queue",
+        "security": [
+          {
+            "operatorToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/StaffReviewPage"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Reload current version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/ops/guardian-invites/{id}": {
+      "get": {
+        "summary": "Audited identity-verifier detail including terminal invite state, without nonce or identity materials",
+        "operationId": "get_ops_guardian_invites_id",
+        "security": [
+          {
+            "operatorToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Envelope"
+                    }
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/StaffGuardianInviteDetails"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Reload current version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Provider unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ]
       }
     },
     "/api/v2/content-subscriptions": {
@@ -33459,6 +34013,29 @@
           }
         }
       },
+      "LeadSubmissionInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "client_request_id": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "text": {
+            "type": "string"
+          },
+          "media_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      },
       "OTPInput": {
         "type": "object",
         "additionalProperties": false,
@@ -33761,6 +34338,64 @@
             "items": {
               "type": "string"
             }
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReadingDocument"
+            }
+          }
+        }
+      },
+      "StaffReviewPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StaffReviewItem"
+            }
+          },
+          "next_cursor": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "StaffGuardianInviteDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "child_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "guardian_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "policy_version": {
+            "type": "string"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "type": "string"
+          },
+          "guardian_record_id": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -35186,6 +35821,137 @@
           }
         }
       },
+      "Appointment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "safety_hold_version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "safety_reason": {
+            "type": "string"
+          },
+          "context_kind": {
+            "type": "string"
+          },
+          "context_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "peer_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "effective_version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pending_version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppointmentVersion"
+            }
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "Adoption": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "adoption_cycle": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "contracts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractRevision"
+            }
+          },
+          "effective_contract": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "return_plans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReturnPlan"
+            }
+          },
+          "effective_return": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pet_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "applicant_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "publisher_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "message": {
+            "type": "string"
+          },
+          "supplement": {
+            "type": "string"
+          },
+          "trial_terms": {
+            "type": "string"
+          },
+          "trial_until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "trial_confirmations": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "handover_confirmations": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
       "OAuthResult": {
         "type": "object",
         "additionalProperties": false,
@@ -35308,6 +36074,50 @@
           }
         }
       },
+      "AppointmentVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "safety_hold_version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "resolution_note": {
+            "type": "string"
+          },
+          "safety_checks": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "terms": {
+            "$ref": "#/components/schemas/AppointmentTerms"
+          },
+          "proposed_by": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "confirmations": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "Case": {
         "type": "object",
         "additionalProperties": false,
@@ -35359,6 +36169,40 @@
           "matched_claim_id": {
             "type": "integer",
             "format": "int64"
+          }
+        }
+      },
+      "ContractRevision": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "terms": {
+            "$ref": "#/components/schemas/ContractTerms"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "proposed_by": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "accepted_by": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -35840,6 +36684,40 @@
           }
         }
       },
+      "ReturnPlan": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "terms": {
+            "$ref": "#/components/schemas/ReturnTerms"
+          },
+          "proposed_by": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "confirmations": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "handover": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "state": {
+            "type": "string"
+          }
+        }
+      },
       "ReturnTerms": {
         "type": "object",
         "additionalProperties": false,
@@ -35957,6 +36835,30 @@
             "type": "string"
           },
           "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "StaffReviewItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "state": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "created_at": {
             "type": "string",
             "format": "date-time"
           }

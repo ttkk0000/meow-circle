@@ -14,11 +14,33 @@ import com.ttkk0000.meowcircle.client.*
 
 fun readingStatus(status: String) = when(status) { "published" -> "已发布文本";"archived" -> "历史只读文本";"proposed" -> "正在公示，未默认同意";"reference" -> "内容说明";else -> "草案预览，尚未正式生效" }
 private val dataReadingTypes=setOf("privacy","inventory","sdk","providers","retention")
-fun featureTitle(s: FeatureState): String {
+fun featureTitle(s: FeatureState,actor: Long? = null): String {
     val route=s.route ?: return ""
     return when(route.page) {
+        FeaturePage.AdoptionWork -> if(route.kind == "care") "授权照护近况" else if(s.confirmation != null) s.confirmation.title else s.adoption?.let {adoptionProgressTitle(it,actor)} ?: route.page.title
+        FeaturePage.AppointmentEdit -> if(s.appointment?.state == "safety_hold") "安全核对与新安排" else route.page.title
+        FeaturePage.Appointment -> when {
+            s.forms[route]?.values?.get("appointment_stage") == "cancel" && s.unconfirmedResult -> "取消结果待确认"
+            s.forms[route]?.values?.get("appointment_stage") == "cancel" && s.error != null -> "取消暂未完成"
+            s.forms[route]?.values?.get("appointment_stage") == "cancel" -> "确认取消这次预约"
+            s.appointment?.state == "cancelled" -> "本次预约已取消"
+            s.appointment?.state == "safety_hold" -> if(s.appointment.data.safetyProposal() != null) "新安排等待双方确认" else "预约已进入安全暂停"
+            s.appointment?.safetyResolved() == true -> "新安排已确认"
+            else -> route.page.title
+        }
         FeaturePage.LeadInbox -> if(s.leads.loaded && !s.leads.loading && !s.loading && s.leads.error == null && s.error == null && s.leads.items.isEmpty() && s.leads.next == 0L) "还没有新线索" else s.case?.data?.title?.let { "${it}的线索" } ?: "私密线索"
-        FeaturePage.Lead -> if(leadReviewMinimumVersion(route.kind)?.let { leadAssessmentRecorded(s.lead,s.case,it) } == true) "线索处理已记录" else route.page.title
+        FeaturePage.Lead -> when {
+            leadSubmissionMinimumVersion(route.kind)?.let { minimum -> s.lead?.let { it.version >= minimum && it.state == "submitted" } } == true -> "线索已收到"
+            leadReviewMinimumVersion(route.kind)?.let { leadAssessmentRecorded(s.lead,s.case,it) } == true -> "线索处理已记录"
+            else -> route.page.title
+        }
+        FeaturePage.LeadSubmit -> when {
+            s.error != null && s.unconfirmedResult -> "线索结果待核对"
+            s.error != null -> "线索尚未发送"
+            s.confirmation != null -> "检查私密线索"
+            s.forms[route]?.values?.get("lead_stage") == "photos" -> "线索照片说明"
+            else -> route.page.title
+        }
         FeaturePage.Reading -> s.readingDocument?.title ?: if(route.kind=="care-first-cat") "养宠指南" else "阅读说明"
         FeaturePage.Rules -> when(route.kind) { "history" -> "规则历史与下载";"changes" -> "规则变更与退出";"appeal" -> "处理依据与人工申诉";else -> "平台规则中心" }
         FeaturePage.Guardians -> if(route.kind=="protection") "未成年人保护设置" else s.guardians.firstOrNull{it.id==route.id}?.let{guardian -> when {

@@ -183,16 +183,19 @@ export function RowLink({
   detail,
   to,
   onClick,
+  disabled = false,
 }: {
   title: string;
   detail?: string;
   to?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }) {
   return (
     <button
       type="button"
       className="list-row"
+      disabled={disabled}
       onClick={onClick ?? (() => to && navigate(to))}
     >
       <span>
@@ -285,6 +288,7 @@ export function Field({
   disabled = false,
   hint,
   autoComplete,
+  maxLength,
 }: {
   label: string;
   value: string;
@@ -294,6 +298,7 @@ export function Field({
   disabled?: boolean;
   hint?: string;
   autoComplete?: string;
+  maxLength?: number;
 }) {
   const id = useId();
   return (
@@ -304,6 +309,7 @@ export function Field({
           id={id}
           aria-describedby={hint ? `${id}-hint` : undefined}
           rows={4}
+          maxLength={maxLength}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
@@ -311,6 +317,7 @@ export function Field({
       ) : (
         <input
           id={id}
+          maxLength={maxLength}
           aria-describedby={hint ? `${id}-hint` : undefined}
           type={type}
           value={value}

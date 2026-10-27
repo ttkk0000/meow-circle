@@ -124,7 +124,7 @@ for action in ("request", "accept", "decline", "withdraw", "remove", "block", "u
 for kind, actions, name in (
     ("claims", "match reject request_supplement supplement resubmit withdraw dispute confirm_handover", "StateInput"),
     ("adoptions", "request_supplement supplement approve reject withdraw resubmit resume_candidate propose_trial confirm_trial decline_trial confirm_handover support request_return", "AdoptionAction"),
-    ("appointments", "propose restore confirm decline withdraw_change cancel expire safety_hold", "AppointmentAction"),
+    ("appointments", "propose restore confirm decline withdraw_change cancel expire safety_hold safety_repropose", "AppointmentAction"),
     ("groups", "directory notice transfer accept_transfer decline_transfer revoke_transfer dissolve leave remove_member mute", "GroupAction"),
     ("conversations", "accept decline", "StateInput"), ("invitations", "accept decline revoke", "StateInput"),
     ("notifications", "read", "StateInput")):
@@ -143,6 +143,7 @@ comment_metrics["parameters"]=[{"name":"kind","in":"query","required":True,"sche
 comment_metrics["responses"]["200"]["content"]["application/json"]["schema"]={"allOf":[ref("Envelope"),{"type":"object","properties":{"data":{"type":"array","items":dto("CommentMetrics")}}}]}
 
 operation("/cases/{id}/leads", "post", "Submit a private lead", {"type": "object", "properties": {"text": {"type": "string"}, "media_ids": {"type": "array", "items": {"type": "integer"}}}, "additionalProperties": False})
+operation("/cases/{id}/lead-submissions", "post", "Submit a private lead with the original request and current case version", "LeadSubmissionInput")
 operation("/reviews/{id}/supplement", "post", "Supplement a needs_info review using the original client request ID", "StateInput")
 for kind in ("pets", "offers"):
     operation("/" + kind + "/{id}/verifications", "get", "Version-scoped public verification summaries", public=True)
@@ -187,6 +188,9 @@ def typed(path, method, summary, body=None, result=None, public=False, staff=Fal
     return item
 
 typed("/ops/context", "get", "Current named operator roles and configured reading material; no credential or blanket readiness claim", result="OperatorContext", staff=True)
+typed("/ops/review-queue", "get", "Audited minimal moderator queue; cursor parameter, no private statements or materials", result="StaffReviewPage", staff=True)
+typed("/ops/reviews/{id}", "get", "Audited moderator detail reread; expired evidence references are withheld", result="Record", staff=True)
+typed("/ops/guardian-invites/{id}", "get", "Audited identity-verifier detail including terminal invite state, without nonce or identity materials", result="StaffGuardianInviteDetails", staff=True)
 
 dto("ContentSubscriptions")
 dto("GroupDirectoryBody")
@@ -285,6 +289,8 @@ item=typed("/safety/requests/{key}","get","Recover the original guest submission
 item["parameters"][0]["schema"]={"type":"string","minLength":8,"maxLength":100}
 
 # Read responses as precise DTOs without exposing persistence/session bodies.
+dto("Appointment")
+dto("Adoption")
 dto("OAuthResult")
 dto("OTPResult")
 item=typed("/share/{kind}/{id}","get","Guest-safe preview data; relative_url points to the /share/{kind}/{id} HTML landing page",result="ShareCard",public=True)

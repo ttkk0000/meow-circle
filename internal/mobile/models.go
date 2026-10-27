@@ -107,22 +107,27 @@ type AppointmentTerms struct {
 }
 
 type AppointmentVersion struct {
-	Number        int64            `json:"number"`
-	Terms         AppointmentTerms `json:"terms"`
-	ProposedBy    int64            `json:"proposed_by"`
-	Confirmations []int64          `json:"confirmations"`
-	Status        string           `json:"status"`
-	CreatedAt     time.Time        `json:"created_at"`
+	SafetyHoldVersion int64             `json:"safety_hold_version,omitempty"`
+	ResolutionNote    string            `json:"resolution_note,omitempty"`
+	SafetyChecks      map[string]string `json:"safety_checks,omitempty"`
+	Number            int64             `json:"number"`
+	Terms             AppointmentTerms  `json:"terms"`
+	ProposedBy        int64             `json:"proposed_by"`
+	Confirmations     []int64           `json:"confirmations"`
+	Status            string            `json:"status"`
+	CreatedAt         time.Time         `json:"created_at"`
 }
 
 type Appointment struct {
-	ContextKind      string               `json:"context_kind"`
-	ContextID        int64                `json:"context_id"`
-	PeerID           int64                `json:"peer_id"`
-	EffectiveVersion int64                `json:"effective_version"`
-	PendingVersion   int64                `json:"pending_version"`
-	Versions         []AppointmentVersion `json:"versions"`
-	Reason           string               `json:"reason,omitempty"`
+	SafetyHoldVersion int64                `json:"safety_hold_version,omitempty"`
+	SafetyReason      string               `json:"safety_reason,omitempty"`
+	ContextKind       string               `json:"context_kind"`
+	ContextID         int64                `json:"context_id"`
+	PeerID            int64                `json:"peer_id"`
+	EffectiveVersion  int64                `json:"effective_version"`
+	PendingVersion    int64                `json:"pending_version"`
+	Versions          []AppointmentVersion `json:"versions"`
+	Reason            string               `json:"reason,omitempty"`
 }
 
 type Adoption struct {

@@ -1272,3 +1272,10 @@ dialog > header {
 .lead-photos .gallery { display: flex; flex-direction: column; gap: 16px; }
 .lead-photos .gallery .media { width: 100%; height: 170px; object-fit: cover; }
 @container (min-width: 600px) { .lead-photos .gallery .media { height: 360px; } }
+.lead-submission-photo { container-type: inline-size; }
+.appointment-panels { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,320px),1fr)); gap: 16px; }
+.appointment-facts { display: grid; gap: 20px; margin: 16px 0; }
+.appointment-facts dt { color: var(--muted); font-size: 14px; }
+.appointment-facts dd { margin: 8px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.lead-submission-photo .media { width: 100%; height: 260px; object-fit: cover; }
+@container (min-width: 600px) { .lead-submission-photo .media { height: 360px; } }

@@ -1,4 +1,21 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  AppointmentCancelTask,
+  AppointmentVersionReview,
+} from "./AppointmentPages";
+import { canConfirmAppointment } from "../core/appointment";
+import {
+  adoptionActionOptions,
+  currentAdoptionContract,
+  returnActionAllowed,
+} from "../core/adoption";
+import { AdoptionActionReview } from "./AdoptionPages";
+import { ReturnActionReview } from "./ReturnPages";
+import {
+  LeadReviewTask,
+  LeadPhotoTask,
+  LeadFailureTask,
+} from "./LeadSubmissionPages";
 import { api, explain, HttpError, type RecordData } from "../core/api";
 import {
   clearDraft,
@@ -120,10 +137,18 @@ export function WorkflowEditor({
   const queue = useRef(Promise.resolve());
   const blocked = useRef(false);
   const [error, setError] = useState("");
+  const [commandCode, setCommandCode] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const [restoring, setRestoring] = useState(true);
   const [prepared, setPrepared] = useState<Prepared>();
+  const [leadStage, setLeadStage] = useState<"form" | "photos" | "failure">(
+    "form",
+  );
+  useEffect(() => {
+    if (flow === "lead" && draft?.uncertain && !busy && !prepared)
+      setLeadStage("failure");
+  }, [flow, draft?.uncertain, busy, prepared]);
   const [sourceRestricted, setSourceRestricted] = useState(false);
   const [sourceReview, setSourceReview] = useState(false);
   const [sourceResult, setSourceResult] = useState<SourceDeclarationRecord>();
@@ -156,6 +181,7 @@ export function WorkflowEditor({
     context.params.get("action") !== "propose_trial"
   )
     formOmit.push("trial_until");
+  else if (flow === "adoption-action") formOmit.push("trial_until", "note");
   if (
     flow === "appointment-action" &&
     context.params.get("action") !== "restore"
@@ -171,12 +197,14 @@ export function WorkflowEditor({
     let active = true;
     blocked.current = false;
     setRestoring(true);
+    setCommandCode("");
     setBusy(false);
     setAgreed(false);
     setGrant("");
     setDraft(undefined);
     setPrepared(undefined);
     setSourceRestricted(false);
+    setLeadStage("form");
     setSourceReview(false);
     setSourceResult(undefined);
     setError("");
@@ -436,6 +464,7 @@ export function WorkflowEditor({
     const fingerprint = publicationFingerprint(current);
     let sourceRequestSent = false;
     let sourceCommitted = false;
+    setCommandCode("");
     setBusy(true);
     setError("");
     setGrant("");
@@ -454,6 +483,73 @@ export function WorkflowEditor({
       if (properties.version) body.version = current.baseVersion;
       if (properties.media_ids)
         body.media_ids = current.photos.map((p) => p.mediaId);
+      if (flow === "lead") {
+        if (
+          context.kind !== "cases" ||
+          !context.record ||
+          !["active", "matched"].includes(context.record.state) ||
+          context.record.owner_id === owner
+        )
+          throw new Error("当前求助不能新增目击线索；原稿继续保留");
+        if (
+          typeof body.text !== "string" ||
+          !body.text.trim() ||
+          body.text.length > 2000
+        )
+          throw new Error("请填写不超过2000字的目击描述，原输入未清空");
+      }
+      if (
+        flow === "appointment-change" &&
+        context.record?.state === "safety_hold" &&
+        !String(body.note ?? "").trim()
+      )
+        throw new Error(
+          "请填写具体问题、更正与本人核对说明；双方新确认前保持暂停。",
+        );
+      if (
+        flow === "appointment-action" &&
+        context.params.get("action") === "confirm" &&
+        context.record?.state === "safety_hold" &&
+        (!canConfirmAppointment(context.record, owner) ||
+          !String(body.note ?? "").trim())
+      )
+        throw new Error(
+          "先核对本次问题、更正与新安排并填写本人说明，不能确认旧版本或代替对方同意。",
+        );
+      if (flow === "adoption-action" && context.record) {
+        const action = context.params.get("action") ?? "";
+        if (!adoptionActionOptions(context.record, owner).includes(action))
+          throw new Error(
+            "当前事项、本人角色或协议不允许此动作，请返回读取最新申请进度。",
+          );
+        if (action === "propose_trial") {
+          const terms = currentAdoptionContract(context.record)?.terms as
+            | Record<string, unknown>
+            | undefined;
+          if (
+            !terms ||
+            body.note !== terms.responsibilities ||
+            Date.parse(String(body.trial_until)) !==
+              Date.parse(String(terms.trial_until))
+          )
+            throw new Error(
+              "本次试养必须采用双方已接受的当前协议。输入继续保留，需要更正时先提出协议新版本。",
+            );
+        }
+      }
+      if (
+        flow === "return-action" &&
+        context.record &&
+        !returnActionAllowed(
+          context.record,
+          owner,
+          context.params.get("action") ?? "",
+          integer(body.revision),
+        )
+      )
+        throw new Error(
+          "此接回方案、本人角色、确认截止或当前版本不允许该动作；原输入保留，请返回核对最新记录。",
+        );
       if (flow === "case") {
         const details = body.case as Record<string, unknown>;
         const old = context.record?.data;
@@ -649,7 +745,7 @@ export function WorkflowEditor({
         throw new Error("草稿已变化，请重新核对发布内容");
       setPrepared({
         body,
-        ...(workflow.preview
+        ...(workflow.preview || flow === "lead"
           ? { photos: current.photos.map((p) => ({ ...p })), fingerprint }
           : {}),
         path: workflow.path(context),
@@ -674,6 +770,7 @@ export function WorkflowEditor({
         }
         if (epoch !== api.epoch || latest.current?.key !== current.key) return;
         setError(explain(error));
+        if (flow === "lead") setLeadStage("failure");
         if (
           workflow.preview &&
           error instanceof HttpError &&
@@ -783,10 +880,10 @@ export function WorkflowEditor({
       setBusy(false);
     }
   }
-  async function submit() {
+  async function submit(leadConfirmed = false) {
     if (
       !prepared ||
-      !agreed ||
+      (!agreed && !(flow === "lead" && leadConfirmed)) ||
       busy ||
       (prepared.scope && !grant) ||
       !latest.current
@@ -869,6 +966,7 @@ export function WorkflowEditor({
       }
     } catch (error) {
       if (!currentTask()) return;
+      setCommandCode(error instanceof HttpError ? error.code : "");
       if (
         !sent ||
         (error instanceof HttpError &&
@@ -890,6 +988,7 @@ export function WorkflowEditor({
       setError(
         sent ? "原操作已发送，请先核对结果。" + explain(error) : explain(error),
       );
+      if (flow === "lead") setLeadStage("failure");
       setPrepared(undefined);
     } finally {
       if (currentTask()) setBusy(false);
@@ -908,6 +1007,188 @@ export function WorkflowEditor({
           登录后会重新校验当前对象与权限，不自动提交。
         </Notice>
       </TaskPage>
+    );
+  const conflictReview = conflict ? (
+    <Notice title="服务端版本已变化，当前输入保留">
+      <Button onClick={() => void loadCurrent()} disabled={busy}>
+        读取当前服务端版本
+      </Button>
+      {currentRecord ? (
+        <>
+          <p>
+            当前版本 {String(currentRecord.version)} ·{" "}
+            {String(currentRecord.state ?? "当前资料")}
+          </p>
+          <Facts value={currentRecord.data} />
+          <Button
+            disabled={busy}
+            onClick={() => {
+              if (
+                confirm(
+                  "已核对当前版本，保留本机输入并以此版本重新准备？不会自动提交。",
+                )
+              ) {
+                update((old) => ({
+                  ...old,
+                  baseVersion: currentRecord.version,
+                  requestId: key(),
+                }));
+                setConflict(false);
+                setCurrentRecord(undefined);
+              }
+            }}
+          >
+            保留输入，以此版本重新核对
+          </Button>
+        </>
+      ) : null}
+    </Notice>
+  ) : null;
+  const mediaEditor =
+    workflow.media && draft ? (
+      <Card
+        title={workflow.media === "safety" ? "当前事项的私密材料" : "添加照片"}
+      >
+        <Attachments
+          photos={draft.photos}
+          disabled={busy || !!prepared || !!draft.uncertain}
+          limit={flow === "profile" ? 1 : 9}
+          uploading={uploading}
+          progress={uploadProgress}
+          onSelect={(files) => void selectPhotos(files)}
+          onUpload={upload}
+          onSaveOrder={persist}
+          onRemove={(photoKey) =>
+            update((old) => ({
+              ...old,
+              photos: old.photos.filter((p) => p.key !== photoKey),
+            }))
+          }
+          onMove={(index, direction) =>
+            update((old) => ({
+              ...old,
+              photos: movePhoto(old.photos, index, direction),
+            }))
+          }
+        />
+      </Card>
+    ) : null;
+  if (
+    flow === "appointment-action" &&
+    context.params.get("action") === "cancel" &&
+    context.record &&
+    draft &&
+    !restoring
+  )
+    return (
+      <AppointmentCancelTask
+        row={context.record}
+        baseVersion={draft.baseVersion}
+        note={String(draft.values.note ?? "")}
+        onNote={(note) =>
+          update((old) => ({
+            ...old,
+            values: { ...old.values, note },
+            requestId: key(),
+          }))
+        }
+        prepared={!!prepared}
+        uncertain={!!draft.uncertain}
+        busy={busy}
+        error={error}
+        conflict={conflict || blocked.current}
+        agreed={agreed}
+        onAgree={setAgreed}
+        onReview={() => void prepare()}
+        onSubmit={() => void submit()}
+        onEdit={() => {
+          setPrepared(undefined);
+          setError("");
+          setAgreed(false);
+        }}
+        conflictActions={
+          <>
+            {conflictReview}
+            {blocked.current ? (
+              <Notice title="此草稿已由其它页面更新">
+                <Button
+                  disabled={busy}
+                  onClick={() => {
+                    if (
+                      confirm(
+                        "放弃本页未保存输入，读取其它页面已保存的私有草稿？",
+                      )
+                    )
+                      location.reload();
+                  }}
+                >
+                  读取已保存版本
+                </Button>
+              </Notice>
+            ) : null}
+          </>
+        }
+      />
+    );
+  if (flow === "lead" && leadStage === "failure")
+    return (
+      <LeadFailureTask
+        error={error}
+        uncertain={!!draft?.uncertain}
+        conflict={conflict}
+        busy={busy}
+        onBack={() => setLeadStage("form")}
+        onRetry={() => {
+          if (draft?.uncertain) navigate("/recovery");
+          else if (conflict) setLeadStage("form");
+          else {
+            setLeadStage("form");
+            void prepare();
+          }
+        }}
+      />
+    );
+  if (flow === "lead" && prepared)
+    return (
+      <LeadReviewTask
+        parent={context.record}
+        text={String(prepared.body.text ?? "")}
+        count={prepared.photos?.length ?? 0}
+        busy={busy}
+        disabled={busy || conflict || !!draft?.uncertain || blocked.current}
+        error={error}
+        onBack={() => {
+          if (!busy) {
+            setPrepared(undefined);
+            setAgreed(false);
+          }
+        }}
+        onSubmit={() => void submit(true)}
+      />
+    );
+  if (flow === "lead" && leadStage === "photos")
+    return (
+      <LeadPhotoTask
+        photo={draft?.photos[0]?.mediaId}
+        busy={busy}
+        error={error}
+        canEdit={!busy && !restoring && !draft?.uncertain && !blocked.current}
+        locked={
+          busy ||
+          restoring ||
+          !!draft?.uncertain ||
+          uploading.size > 0 ||
+          !!draft?.photos.some((p) => !p.mediaId) ||
+          blocked.current
+        }
+        onBack={() => setLeadStage("form")}
+        onSkip={() => {
+          update((old) => ({ ...old, photos: [], requestId: key() }));
+          setLeadStage("form");
+        }}
+      >
+        {mediaEditor}
+      </LeadPhotoTask>
     );
   if (workflow.preview && sourceResult)
     return (
@@ -1009,7 +1290,21 @@ export function WorkflowEditor({
     );
   return (
     <TaskPage
-      title={workflow.title}
+      title={
+        commandCode === "pet_placement_conflict" && flow === "adoption-action"
+          ? "试养状态已变化"
+          : flow === "adoption-action" &&
+              ["propose_trial", "confirm_trial", "confirm_handover"].includes(
+                context.params.get("action") ?? "",
+              )
+            ? context.params.get("action") === "confirm_handover"
+              ? "核对并确认实际交接"
+              : "确认试养安排"
+            : flow === "appointment-change" &&
+                context.record?.state === "safety_hold"
+              ? "安全核对与新安排"
+              : workflow.title
+      }
       subtitle={
         context.id > 0n
           ? `关联记录 #${context.id} · 基准版本 ${draft?.baseVersion ?? context.record?.version ?? 0n}`
@@ -1068,11 +1363,103 @@ export function WorkflowEditor({
         />
       ) : null}
       {restoring ? <p role="status">正在恢复本机私有草稿…</p> : null}
+      {flow === "adoption-action" &&
+      commandCode === "pet_placement_conflict" ? (
+        <Notice title="未能确认本次安排" warning>
+          当前宠物已有其它有效安排，原说明与输入继续保留；先读取最新进度，不沿用旧按钮继续交接。
+          <RowLink title="查看最新申请状态" to={"/adoptions/" + context.id} />
+        </Notice>
+      ) : null}
+      {flow === "adoption-action" && context.record ? (
+        <AdoptionActionReview
+          row={context.record}
+          action={context.params.get("action") ?? ""}
+        />
+      ) : null}
+      {flow === "return-action" && context.record && draft ? (
+        <ReturnActionReview
+          row={context.record}
+          revision={integer(draft.values.revision)}
+        />
+      ) : null}
+      {flow === "adoption-action" &&
+      context.params.get("action") === "propose_trial" &&
+      context.record &&
+      draft
+        ? (() => {
+            const contract = currentAdoptionContract(context.record),
+              terms = contract?.terms as Record<string, unknown> | undefined;
+            if (
+              !terms ||
+              (draft.values.note === terms.responsibilities &&
+                Date.parse(String(draft.values.trial_until)) ===
+                  Date.parse(String(terms.trial_until)))
+            )
+              return null;
+            return (
+              <Notice title="本机原试养草稿与当前生效协议不同">
+                原说明保留在本机；本次须主动选择采用双方已接受的安排，不自动改写或提交。
+                <Button
+                  disabled={
+                    busy || !!prepared || draft.uncertain || blocked.current
+                  }
+                  onClick={() =>
+                    update((old) => ({
+                      ...old,
+                      ui: {
+                        ...old.ui,
+                        previousTrial: {
+                          note: String(old.values.note ?? ""),
+                          trialUntil: old.values.trial_until
+                            ? String(old.values.trial_until)
+                            : null,
+                        },
+                      },
+                      values: {
+                        ...old.values,
+                        note: terms.responsibilities,
+                        trial_until: terms.trial_until,
+                      },
+                      requestId: key(),
+                    }))
+                  }
+                >
+                  采用此生效协议的试养安排
+                </Button>
+              </Notice>
+            );
+          })()
+        : null}
+      {flow === "adoption-action" && draft?.ui?.previousTrial ? (
+        <Card title="本机保留的原试养说明">
+          <p className="prose">{draft.ui.previousTrial.note}</p>
+          <p>{draft.ui.previousTrial.trialUntil ?? "原草稿未填写截止"}</p>
+        </Card>
+      ) : null}
+      {flow === "appointment-change" &&
+      context.record?.state === "safety_hold" ? (
+        <Notice title="安全暂停尚未解除">
+          填写具体问题、更正与本人核对说明。服务端会重新核对相关披露与资格；双方确认同一新版本前继续不出发。
+        </Notice>
+      ) : null}
+      {flow === "appointment-action" &&
+      context.record &&
+      ["confirm", "restore"].includes(context.params.get("action") ?? "") ? (
+        <AppointmentVersionReview
+          row={context.record}
+          revision={
+            context.params.get("action") === "restore"
+              ? integer(context.params.get("revision"))
+              : undefined
+          }
+        />
+      ) : null}
       {session.authenticated &&
       [
         "appointment",
         "appointment-change",
         "appointment-action",
+        "adoption-action",
         "contract",
         "contract-accept",
         "return",
@@ -1267,42 +1654,7 @@ export function WorkflowEditor({
             );
           })()
         : null}
-      {conflict ? (
-        <Notice title="服务端版本已变化，当前输入保留">
-          <Button onClick={() => void loadCurrent()} disabled={busy}>
-            读取当前服务端版本
-          </Button>
-          {currentRecord ? (
-            <>
-              <p>
-                当前版本 {String(currentRecord.version)} ·{" "}
-                {String(currentRecord.state ?? "当前资料")}
-              </p>
-              <Facts value={currentRecord.data} />
-              <Button
-                disabled={busy}
-                onClick={() => {
-                  if (
-                    confirm(
-                      "已核对当前版本，保留本机输入并以此版本重新准备？不会自动提交。",
-                    )
-                  ) {
-                    update((old) => ({
-                      ...old,
-                      baseVersion: currentRecord.version,
-                      requestId: key(),
-                    }));
-                    setConflict(false);
-                    setCurrentRecord(undefined);
-                  }
-                }}
-              >
-                保留输入，以此版本重新核对
-              </Button>
-            </>
-          ) : null}
-        </Notice>
-      ) : null}
+      {conflictReview}
       {error ? (
         <Notice title={error} error>
           {blocked.current ? (
@@ -1329,40 +1681,35 @@ export function WorkflowEditor({
           ) : null}
         </Notice>
       ) : null}
-      {workflow.media && draft ? (
-        <Card
-          title={
-            workflow.media === "safety" ? "当前事项的私密材料" : "添加照片"
-          }
-        >
-          <Attachments
-            photos={draft.photos}
+      {flow === "lead" ? (
+        <RowLink
+          title={`照片说明与选择（${draft?.photos.length ?? 0} 张）`}
+          disabled={busy || restoring || !!draft?.uncertain || blocked.current}
+          onClick={() => {
+            if (!busy && !draft?.uncertain && !restoring)
+              setLeadStage("photos");
+          }}
+        />
+      ) : (
+        mediaEditor
+      )}
+      {draft && !restoring ? (
+        flow === "lead" ? (
+          <Field
+            label="目击描述与手动地点"
+            multiline
+            value={String(draft.values.text ?? "")}
+            hint={`${String(draft.values.text ?? "").length}/2000 字；仅描述你实际看到的情况，不公开电话或门牌。`}
             disabled={busy || !!prepared || !!draft.uncertain}
-            limit={flow === "profile" ? 1 : 9}
-            uploading={uploading}
-            progress={uploadProgress}
-            onSelect={(files) => void selectPhotos(files)}
-            onUpload={upload}
-            onSaveOrder={persist}
-            onRemove={(photoKey) =>
+            onChange={(text) =>
               update((old) => ({
                 ...old,
-                photos: old.photos.filter((p) => p.key !== photoKey),
+                values: { ...old.values, text },
+                requestId: key(),
               }))
             }
-            onMove={(index, direction) =>
-              update((old) => {
-                return {
-                  ...old,
-                  photos: movePhoto(old.photos, index, direction),
-                };
-              })
-            }
           />
-        </Card>
-      ) : null}
-      {draft && !restoring ? (
-        flow === "entry" ? (
+        ) : flow === "entry" ? (
           <EntryFields
             value={(draft.values.entry ?? {}) as Record<string, unknown>}
             disabled={busy || !!prepared || !!draft.uncertain}
@@ -1478,6 +1825,32 @@ export function WorkflowEditor({
           }
         >
           <Facts value={prepared.body} />
+          {flow === "return-action" && context.record ? (
+            <ReturnActionReview
+              row={context.record}
+              revision={integer(prepared.body.revision)}
+            />
+          ) : null}
+          {flow === "adoption-action" && context.record ? (
+            <AdoptionActionReview
+              row={context.record}
+              action={context.params.get("action") ?? ""}
+            />
+          ) : null}
+          {flow === "appointment-action" &&
+          context.record &&
+          ["confirm", "restore"].includes(
+            context.params.get("action") ?? "",
+          ) ? (
+            <AppointmentVersionReview
+              row={context.record}
+              revision={
+                context.params.get("action") === "restore"
+                  ? integer(context.params.get("revision"))
+                  : undefined
+              }
+            />
+          ) : null}
           {flow === "contract-accept" &&
           Array.isArray(context.record?.data.contracts) ? (
             <Facts

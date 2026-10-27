@@ -17,6 +17,7 @@ export interface Draft {
   values: Record<string, unknown>;
   ui?: {
     origin?: string;
+    previousTrial?: { note: string; trialUntil: string | null };
     source?: {
       requestId: string;
       manifestHash: string;

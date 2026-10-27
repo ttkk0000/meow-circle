@@ -122,7 +122,7 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                 Row(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (state.publicationConfirmation != null || features.route != null || state.destination != MobileDestination.Home) IconButton(onClick = { if (!f.back()) { if (state.publicationConfirmation != null) store.dismissPublication() else store.back() } }, enabled = !state.busy && !features.busy) { Icon(Icons.Outlined.ArrowBack, "返回") }
                     Column(Modifier.weight(1f).padding(vertical = 12.dp)) {
-                        Text(if(features.route == null && state.publicationConfirmation != null) "发布前预览" else if(features.route?.page == FeaturePage.Adult) ageStageTitle(ageState.stage) else if(features.route!=null) featureTitle(features) else if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                        Text(if(features.route == null && state.publicationConfirmation != null) "发布前预览" else if(features.route?.page == FeaturePage.Adult) ageStageTitle(ageState.stage) else if(features.route!=null) featureTitle(features,state.user?.id) else if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                         if (features.route == null && state.destination == MobileDestination.Home && state.tab == MobileTab.Community) Text("meow & doggie", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     if (state.user == null) TextButton(onClick = store::showLogin, enabled = !navigationLocked) { Text("登录") }
@@ -184,7 +184,7 @@ fun ContextPane(store: MobileStore, state: MobileState, features: FeatureState, 
     CompositionLocalProvider(LocalTaskNavigationEnabled provides enabled) {
     val f = store.features
     Column(modifier.background(MaterialTheme.colorScheme.surfaceVariant).padding(20.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(features.route?.page?.title ?: state.tab.label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        Text(if(features.route != null) featureTitle(features,state.user?.id) else state.tab.label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         when(state.tab) {
             MobileTab.Community -> {
                 NavigationRow("推荐日常") { f.closeRoute(); store.select(MobileTab.Community); store.filterFeed("community") }

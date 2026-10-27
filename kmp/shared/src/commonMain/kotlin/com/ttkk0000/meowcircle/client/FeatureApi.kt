@@ -25,6 +25,7 @@ suspend fun MobileApi.claimAction(id: Long,action: String,input: VersionedAction
     return durablePost("claims/$id/$action",command,command.clientRequestId)
 }
 suspend fun MobileApi.lead(id: Long,input: LeadInput): MobileRecord<LeadBody> = receiptWrite("cases/$id/leads",input)
+suspend fun MobileApi.submitLead(id: Long,input: LeadSubmissionInput): MobileRecord<LeadBody> = durablePost("cases/$id/lead-submissions",input,input.clientRequestId)
 suspend fun MobileApi.leadRecord(id: Long): MobileRecord<LeadBody> = get("leads/$id")
 suspend fun MobileApi.assessLead(id: Long,input: LeadAssessmentInput): MobileRecord<LeadBody> = durablePost("leads/$id/assessment",input,input.clientRequestId)
 suspend fun MobileApi.contactLead(id: Long,input: LeadContactInput): MobileRecord<ConversationBody> = durablePost("leads/$id/contact",input,input.clientRequestId)

@@ -1004,38 +1004,18 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     }
 
     fun adoptionActions(): List<Pair<String, String>> {
-        val s = _state.value
-        val record = s.application ?: return emptyList()
-        val actor = s.user?.id ?: return emptyList()
-        val publisher = actor == record.data.publisherId
-        if (!publisher && actor != record.data.applicantId) return emptyList()
-        return buildList {
-            if (record.state in listOf("submitted", "supplemented")) {
-                if (publisher) { add("approve" to "同意申请"); add("request_supplement" to "请对方补充"); add("reject" to "拒绝申请") }
-                else add("withdraw" to "撤回申请")
-            }
-            if (record.state == "needs_info" && !publisher) { add("supplement" to "提交补充"); add("withdraw" to "撤回申请") }
-            if (record.state == "withdrawn" && !publisher) add("resubmit" to "核对并重新申请本轮领养")
-            if (record.state == "waitlisted") {
-                if (publisher) add("resume_candidate" to "邀请继续核对领养安排") else add("withdraw" to "退出候补")
-            }
-            if (record.state == "trial_proposed") {
-                if (actor !in record.data.trialConfirmations) add("confirm_trial" to "确认试养条款")
-                add("decline_trial" to "拒绝本次试养提案")
-            }
-            if (record.state in listOf("approved", "trial_active", "handover_pending") && actor !in record.data.handoverConfirmations)
-                add("confirm_handover" to "确认已经完成交接")
-            if (record.state in listOf("trial_active", "handover_pending", "completed", "return_requested")) {
-                add("support" to "请求协助"); add("request_return" to "发起退养协商")
-            }
-            if (!publisher && record.state in listOf("approved", "trial_proposed")) add("withdraw" to "撤回申请")
-        }
+        val state = _state.value
+        return state.application?.let {availableAdoptionActions(it,state.user?.id)} ?: emptyList()
     }
     fun requestAdoptionAction(action: String, label: String) {
         if (!requireInteractionContract()) return
         val s = _state.value
         val record = s.application ?: return
         if (adoptionActions().none { it.first == action }) return
+        if(action in listOf("confirm_trial","confirm_handover")) {
+            features.open(FeatureRoute(FeaturePage.AdoptionWork,record.id))
+            return
+        }
         if (action in listOf("supplement", "request_supplement", "support", "request_return", "resubmit") && s.actionNote.isBlank()) {
             _state.update { it.copy(notice = "请先填写补充说明") }; return
         }

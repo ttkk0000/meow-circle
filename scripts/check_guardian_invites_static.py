@@ -13,7 +13,7 @@ shared = read("kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/G
 native = read("kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/GuardianPages.kt")
 web = read("web-client/src/features/GuardianPages.tsx")
 main = read("web-client/src/main.tsx")
-operator = read("web-client/src/operator/OperatorApp.tsx")
+operator = "\n".join(path.read_text() for path in sorted((root / "web-client/src/operator").glob("*.ts*")))
 schema = json.loads(read("docs/api/mobile-v2.openapi.json"))
 for name in ["GuardianInviteInfo", "GuardianInviteStart", "GuardianInviteClaim", "GuardianInviteStatus", "GuardianInvitePage"]:
     assert name in identity and name in shared and name in schema["components"]["schemas"], name
@@ -52,7 +52,7 @@ assert 'new URLSearchParams(location.hash.slice(1))' in main
 assert main.index('history.replaceState(null') < main.index('createRoot(root).render')
 assert 'handoff.code = ""' in web
 assert '"identity_verifier"' in operator and '"GuardianEvidenceInput"' in operator
-assert 'credentials: "omit"' in operator and '"X-Operator-Token": token' in operator
+assert 'credentials: "omit"' in operator and '"X-Operator-Token": this.token' in operator
 routes = schema["paths"]
 for path in ["/guardians/invites/config", "/guardians/invites", "/guardians/invites/claim", "/guardians/invites/{id}", "/guardians/invites/{id}/cancel", "/ops/guardian-invites"]:
     assert "/api/v2" + path in routes, path

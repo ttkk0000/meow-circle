@@ -1,0 +1,1130 @@
+{
+  "task": "AI-20261027-COMPLETE-LANDING",
+  "date": "2026-10-27",
+  "head": "3b08d64b9c09d2129e3357c38178e43ab7129639",
+  "scope": "本轮涉及文件当前工作树指纹，部分文件含前批底稿；不表示已经提交或全量Figma完成。AI跟踪文件为可变恢复点，不纳入指纹。",
+  "compiled": false,
+  "typechecked": false,
+  "tests_executed": false,
+  "runtime_verified": false,
+  "design_contexts": 58,
+  "design_screenshots_new": 45,
+  "full_syntax_trees": 35,
+  "store_method_groups_parsed": 3,
+  "go_format_files": 10,
+  "regression_source_only": {
+    "go_tests": 12,
+    "kmp_tests": 4
+  },
+  "read_only_checks": 22,
+  "consumer_states": 740,
+  "consumer_states_runtime_verified": 0,
+  "static_artifacts": {
+    "utf8_text_files": 126,
+    "json_parsed": 62,
+    "python_ast": 9,
+    "local_markdown_links": 48
+  },
+  "figma_original_assets": [
+    {
+      "path": "web-client/public/assets/ops/circle-alert.svg",
+      "sha256": "2ec0b40d83f4878478a171f7cc1c305a03a02aa2ce905ed8e973be65b256bc69",
+      "intrinsic_size": [
+        24,
+        24
+      ],
+      "figma_download_matches": true
+    },
+    {
+      "path": "web-client/public/assets/ops/house.svg",
+      "sha256": "9607a8ec39bdbaadbd2d4be586bef489aca63419920f37902739aab827948ae0",
+      "intrinsic_size": [
+        24,
+        24
+      ],
+      "figma_download_matches": true
+    },
+    {
+      "path": "web-client/public/assets/figma/message-circle.svg",
+      "sha256": "2f3ab5470b538ef72db480b6f59f23b1ca317f7137bf392bd60bf4e036e0a7ae",
+      "intrinsic_size": [
+        24,
+        24
+      ],
+      "figma_download_matches": true
+    },
+    {
+      "path": "web-client/public/assets/ops/shield-check.svg",
+      "sha256": "71a8226d7f75072a5c5eeff036680a7d974ad3aeb82da730e937f0a2700182b6",
+      "intrinsic_size": [
+        24,
+        24
+      ],
+      "figma_download_matches": true
+    },
+    {
+      "path": "web-client/public/assets/figma/user-round.svg",
+      "sha256": "03ba03b24c3c5e3b9d0a5850da2e9d439af29e9dc18b2a1475eafc8b1ee624e1",
+      "intrinsic_size": [
+        24,
+        24
+      ],
+      "figma_download_matches": true
+    },
+    {
+      "path": "web-client/public/assets/ops/check.svg",
+      "sha256": "b31cb013fde20eeeca789ea5cb37897f330924f0443a08b86a2bd8e7d25eaf07",
+      "intrinsic_size": [
+        24,
+        24
+      ],
+      "figma_download_matches": true
+    },
+    {
+      "path": "web-client/public/assets/ops/sliders-horizontal.svg",
+      "sha256": "db7a73f4e34f0b47e0b11766a3d4b5f94cd19c9342d471def150779ca332657c",
+      "intrinsic_size": [
+        24,
+        24
+      ],
+      "figma_download_matches": true
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256": "109b822d36bbe50fd384c02fee2454980024c51f59aa3e00046513b2a3d6133d",
+      "bytes": 953082
+    },
+    {
+      "path": "docs/client/COMPLETE_LANDING_2026_10_27.md",
+      "sha256": "a32250a027113a5b7456c8769c95ec87a455f08b3ef43a04a9bb438ffdde5f03",
+      "bytes": 6995
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "4393d1865fad6ae8df0c139f79d1cf736073afc3e23d53e0f0a94fdfc2aed1a3",
+      "bytes": 14603
+    },
+    {
+      "path": "docs/client/complete-landing-checks-2026-10-27.json",
+      "sha256": "e099f63eab2e132afef5ee20952d76d64f06745e49e3d28c7a2cd8e7aecd34b8",
+      "bytes": 6340
+    },
+    {
+      "path": "docs/client/figma-implementation-trace-2026-10-24.json",
+      "sha256": "3f8be6644ae03e6dc8a6caf30952ff684003b53ee3753d9ada3f442a60213276",
+      "bytes": 1091505
+    },
+    {
+      "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+      "sha256": "e2bf7baa0b31228dccae9e18e0fb9255dc87777206c1746fb5b318ed406fe004",
+      "bytes": 9005
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368311.json",
+      "sha256": "75ca7b3217056e304b83c6e3f6a9221b93e3cda676390e108064442d539f1968",
+      "bytes": 12101
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368311.png",
+      "sha256": "0df0d84a4b4f163c82d1da974b17a9af565b8c0f388b8c0604747e5c5c6db2a8",
+      "bytes": 53296,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368312.json",
+      "sha256": "a2a121bfd3bb099f346b2aa14fd1a16c6e3327afc3a2eb7bfa6cb3f592c2dd4f",
+      "bytes": 10294
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368312.png",
+      "sha256": "08198064c409beca4e45b9b8b4028edb011f941bc56d543f7a7933e3246d8c4b",
+      "bytes": 24957,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368316.json",
+      "sha256": "4ed79b3510765a48b1d63463b31bf94dc9c2f9b80dfc6196037dc223712ba087",
+      "bytes": 14381
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368316.png",
+      "sha256": "3b3db2fd149efaf937ad025504dc7cd1d97ad3e1a3300fe2f772f73b5f10133a",
+      "bytes": 58587,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368317.json",
+      "sha256": "df12a2bb8e00439706146d28a8b32d4106130bc3551420920e493bf99f93abbb",
+      "bytes": 12584
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368317.png",
+      "sha256": "bd97819c434228eb9133a4ae150a57e6009bb3e39ac34c8b0176c785512bd097",
+      "bytes": 50914,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368319.json",
+      "sha256": "b9945600f50d24515ab77cf8ae81d48c8efc5d2f4c5746730d22cfa02ccc06c0",
+      "bytes": 12998
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368319.png",
+      "sha256": "21de3cef20c7881c8e9d739af4cf526f79f106cb0a0fe19f4ed3df57ba18b033",
+      "bytes": 50053,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368320.json",
+      "sha256": "501838a4138d71c50d7913b0872a7187d74962811f94ae2290dacb1f7d599b40",
+      "bytes": 13196
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368320.png",
+      "sha256": "9917597f7abea25bbbb8c8b32c88fc85095779154fb8a7b17b7cbf21314dcfc6",
+      "bytes": 48455,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368321.json",
+      "sha256": "32a09c4206f1998d1c6634de64afdcf908bd2e273ebc6ffa36c7019591731ebd",
+      "bytes": 10727
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/240-368321.png",
+      "sha256": "c93b209620d550e7f80906d88cc6cdc21aaacdb3ec507a0c88db07c27c962a42",
+      "bytes": 49160,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/246-370291.json",
+      "sha256": "6e95dff2920e8a02a4180f98ed87658a0d62c267b50375a9e613e2186c7e0331",
+      "bytes": 10576
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/246-370291.png",
+      "sha256": "87f895ed680e4149eea4dde7279331c11ebb690520a843787adbc24994cb3d0d",
+      "bytes": 26634,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/246-370292.json",
+      "sha256": "8f6585ea22717618d903d7e968239fb705ed2920c769adc76cfee859245404a5",
+      "bytes": 13753
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/246-370292.png",
+      "sha256": "18da77e3136e1727aa8b0f631c239a35b02803205844f4915d5a5c4bbc516422",
+      "bytes": 55765,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/311-379012.json",
+      "sha256": "185c6840e0e3efa6a6229fa938043c603ed038b990f4b13bc687eda91c43caf6",
+      "bytes": 28901
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/311-379012.png",
+      "sha256": "7f666b2dfb51a7b3187413c42342384951307aa4b4e55549788a592c87b1e7d5",
+      "bytes": 57978,
+      "image_dimensions": [
+        1024,
+        712
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/311-379015.json",
+      "sha256": "23c1fe19c46a31d1cdf855d2ac76087ef06259504a17965d61931974670b3e0e",
+      "bytes": 31235
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/311-379015.png",
+      "sha256": "4fc916343a78a28bbe76b9da32113d50da0a142948a05a893f7044ace26b8c2a",
+      "bytes": 77405,
+      "image_dimensions": [
+        1024,
+        716
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/311-379028.json",
+      "sha256": "14a0a529bdff7d0f5a4dfb17b9a0e938aba712ebff56f04e201e3ed8e4dc802c",
+      "bytes": 27408
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/311-379028.png",
+      "sha256": "7ad3f4aac3c9ba7f68991b37d18975e24cf11150063cd3e5130febbfcfff5e97",
+      "bytes": 49866,
+      "image_dimensions": [
+        1024,
+        712
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/311-379031.json",
+      "sha256": "f1c1264eed49c9191083cad52133d42e3fa4245e4e69af84162012234415ca2e",
+      "bytes": 28349
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/311-379031.png",
+      "sha256": "a8a153d8ec03418f1b1243af72fee2255d19fba3ae62eb7a3c01e2620120b8d1",
+      "bytes": 68104,
+      "image_dimensions": [
+        1024,
+        716
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/460-68717.json",
+      "sha256": "b776702b7bcc872191cce7d3e2ef28ad649145290cae94848635b6b7c55c7a2e",
+      "bytes": 12152
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/460-68717.png",
+      "sha256": "9cf7821d8eee5f31eaa5e34942829bb1c5d32802a65a657877305c3e93bbcf7c",
+      "bytes": 35429,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/460-68718.json",
+      "sha256": "45c4a4d8df527810cecbdfc2f60f0d628ebd478ba682719f8a31f33ea8567e4c",
+      "bytes": 24318
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/460-68718.png",
+      "sha256": "d53bdd1e7fa2370b3a9413cd5719cb4982f3b6875058f809b7c326b8b431109d",
+      "bytes": 40453,
+      "image_dimensions": [
+        1024,
+        712
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/460-68721.json",
+      "sha256": "666f0f0a0bc819834cf3c751093b3684c5d69702888fdd2c4368a73d7b4e96ba",
+      "bytes": 23873
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/460-68721.png",
+      "sha256": "f2fc47f1acf33377ceb04fceb475444160992edec45c0d61d9a0b48a8a0e5240",
+      "bytes": 53408,
+      "image_dimensions": [
+        1024,
+        716
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/460-68722.json",
+      "sha256": "45dbfbc32599a36deca82b32f87601215287b6c5735a982ead3b050fc3a94e3f",
+      "bytes": 11822
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/460-68722.png",
+      "sha256": "11d7b71220a0369bf5fc4d9b27f39779306ed4ba558c1a8e6f73d412ead95b62",
+      "bytes": 30437,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60820.json",
+      "sha256": "6a0f0602a99f098198b410f718cef3ef8f9c3ad97063e84fbeaa2656a64d1e1e",
+      "bytes": 17456
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60820.png",
+      "sha256": "b50852369b2f44a2697737338299e6cc994999767edc27ee6cba0a0d3d7e73cd",
+      "bytes": 54866,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60825.json",
+      "sha256": "ad5ed9ca60c5add327348322040db4867d9071f500f1df7c6fc089aa8f102cbf",
+      "bytes": 17955
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60825.png",
+      "sha256": "fe74e6a840a63f950e07bc5cea1f07bd7e699db8f22871a57d10dabf00839cb6",
+      "bytes": 56729,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60826.json",
+      "sha256": "cafda11e37b05a232cdde42d2bccc3d05baa1d05cc1ec90931a931e35a6b5198",
+      "bytes": 30956
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60826.png",
+      "sha256": "2812283f9f42e0c04be4fd84590288963cdcb4098dc6169803f41d5c4d3b5fa2",
+      "bytes": 57321,
+      "image_dimensions": [
+        1024,
+        712
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60829.json",
+      "sha256": "dc50d0ef64675947a4d949ea3938cc42ec67ade61959cac9b821904b5ea461be",
+      "bytes": 31049
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60829.png",
+      "sha256": "8a352a96491ee4e2ff144ce8d446032951cd7b3acc3703c33d08db8d911d29e7",
+      "bytes": 69630,
+      "image_dimensions": [
+        1024,
+        716
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60830.json",
+      "sha256": "c5e94f3632e8f24c07563658366132936e884f010dcc812cd827b2db8e9fff41",
+      "bytes": 16654
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60830.png",
+      "sha256": "4747a64326456259af951dc3cddd82f45e49368a447ca05b229717a0a961ab97",
+      "bytes": 54080,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60835.json",
+      "sha256": "66c64d4bbe485f3c6f3848328c0f0953b5f035d5623a94acddc843fe20ff08ca",
+      "bytes": 13706
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60835.png",
+      "sha256": "9225788da1f3a6d630e59c2bfb572e88bf2c864cec797e38587a02ee2767f773",
+      "bytes": 41218,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60845.json",
+      "sha256": "cb1472540c435d7527fa9d923ec9176a2c7d3587e27bc68a0ee74312dc3da72c",
+      "bytes": 11862
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60845.png",
+      "sha256": "b0e8286b1e96dfd54dcb1c7572f4b17c8e1680185eeac1268dffcea5906e4d70",
+      "bytes": 32386,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60855.json",
+      "sha256": "53eda150aff5fd7aaf325278a699b685f886954a9fe070a278caf806a971d9d3",
+      "bytes": 14135
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/506-60855.png",
+      "sha256": "5f5497ea4386e3246d72cd2244c2670f43e532570db3da8e29cafd8575ef26b0",
+      "bytes": 32965,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/README.md",
+      "sha256": "ac036ec9e607cb31c227dfc9e426b297274b62015b630dbc18f9167ca1849a9a",
+      "bytes": 1672
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/252-371389.json",
+      "sha256": "bfee152266341f2694567831d346d9910fb952dbefad4893715bde970db8cadc",
+      "bytes": 11581
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/252-371389.png",
+      "sha256": "68ffe558991948c9a15a8cdd7f72a5317e77bf0c5df7c2c126271053d4b5d560",
+      "bytes": 25172,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/252-371392.json",
+      "sha256": "78a863fcf2d92659d038a4acdfff7e7daa2c7e95aa6c5726616a78ebb77fa24b",
+      "bytes": 12320
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/252-371392.png",
+      "sha256": "ad310689873f05227b9714fb4d2e6461418c979d01c72d9ca4038847fe5f5438",
+      "bytes": 23666,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/252-371393.json",
+      "sha256": "cb460dce1f58008bad59a4f2a6fe646a0ad8c10096a523631ed28851adfe7285",
+      "bytes": 10603
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/252-371393.png",
+      "sha256": "e8dac104780958f865db05869b3c170886b63deeb880b8e188297634f47dc30a",
+      "bytes": 27007,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/460-211421.json",
+      "sha256": "3693d05db13a663b0f7092a16d04ec0e7d946a093dd93be8aab99c21da5f34f4",
+      "bytes": 14724
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/460-211421.png",
+      "sha256": "d46ce4c6936e8fb23631ffd90e7801c0110b96841caa384bc9680db7bcd47fff",
+      "bytes": 52788,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/460-211422.json",
+      "sha256": "32702f9362adf22574facc87b7713cadf70334b451024b203abde9c303966a95",
+      "bytes": 26960
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/460-211422.png",
+      "sha256": "9baff8d61ea177d5ea4916775fcf1af218d15a0f8c3cc0e5626d69e585527454",
+      "bytes": 53292,
+      "image_dimensions": [
+        1024,
+        712
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/460-211425.json",
+      "sha256": "d5e3f82a593cad373995078588c4839d6694d6c78c45021ea4bde794f6529641",
+      "bytes": 26467
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/460-211425.png",
+      "sha256": "d0243314e999119471fe793814ab75d5398e1a71e152790b6ecfb9268051b664",
+      "bytes": 69465,
+      "image_dimensions": [
+        1024,
+        716
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/460-211426.json",
+      "sha256": "9555c0dac03ea4f48d73122b013659340c65c5448f911cef73289d3dae81b5b1",
+      "bytes": 14285
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/460-211426.png",
+      "sha256": "bbd7b2917f643d7b09ad102a24ddbb73a75ca11ba314772f0e5f9df4e763530d",
+      "bytes": 46509,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205509.json",
+      "sha256": "36e03b92c15f5b1e1958b51d260e8fc5812f41705fee0dc1b22a35c134d2dc28",
+      "bytes": 17005
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205509.png",
+      "sha256": "93d9e7119e475b392160d69b0848760ba5362ce5626d143fe7dd01e5de0b9139",
+      "bytes": 53833,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205510.json",
+      "sha256": "837aab1a5f530fcc666a838b2ef00ad29026eef71484b17c33aff32270231ab6",
+      "bytes": 29209
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205510.png",
+      "sha256": "8743be472c57fa2128e6873b6e553e30c2ad2318a6dcfbc19504f7ad363cbc18",
+      "bytes": 54854,
+      "image_dimensions": [
+        1024,
+        712
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205513.json",
+      "sha256": "542990ad845f71c6c476baf8d87a0f991136c159a64e512cca9be99d8845838b",
+      "bytes": 28736
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205513.png",
+      "sha256": "dac30445d667c094d95014ebc06f22ea469ffd41873e06e87cc782935f64171a",
+      "bytes": 70932,
+      "image_dimensions": [
+        1024,
+        716
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205514.json",
+      "sha256": "0c6bbc6c6de5bff5be2767a767135c5585dea5d57bc25720538fb9e3c520b3fe",
+      "bytes": 11170
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205514.png",
+      "sha256": "9d06218f9659d305668483e54f7012cf052c849c26e822e21e0a153d5fc58ecf",
+      "bytes": 30377,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205519.json",
+      "sha256": "7f88d9a5697d46cd338eef91bbe300a1cd1cc6834fc3239c38069fdd8c503308",
+      "bytes": 11546
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205519.png",
+      "sha256": "186cf693094c64c2a23899abc4c2b18de3fb5b5b2decf19810f7f0df71de1a6f",
+      "bytes": 24971,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205524.json",
+      "sha256": "7c58500cf8420f42d9d1001c7fd88519b1b624eccaff9cea528e41aef2e10e92",
+      "bytes": 14183
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205524.png",
+      "sha256": "7366e426fe15044d2a6302b3c3210b6e89809781fdc40b96552e68b80174acee",
+      "bytes": 40159,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205529.json",
+      "sha256": "143b108a4e816aeeae6dd037278c39e355e65bfd49997ed07a69269c02ea33de",
+      "bytes": 16310
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205529.png",
+      "sha256": "4ac2219ea3ec6b2dc9d5aeba2fb0487b5f7f185154ca0550cd096784de69b236",
+      "bytes": 56851,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205530.json",
+      "sha256": "ea0b8b29de2bcb967c5503fe06515697c08860aa752bfbb56deb734da1958ebe",
+      "bytes": 28544
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205530.png",
+      "sha256": "60b63e8bba02f75cfb45c20686d4a8220b6dc24cb40d527190c47da3a0a1863e",
+      "bytes": 61493,
+      "image_dimensions": [
+        1024,
+        712
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205533.json",
+      "sha256": "45bea3e7a610d5d253457c88dc1e4639324078e9271c41f636e15850c7bdecc5",
+      "bytes": 28637
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205533.png",
+      "sha256": "8707c8eec3af5fdc440b50b067e0f52ceb84eba485060f498a94cd0e2c1081b4",
+      "bytes": 71472,
+      "image_dimensions": [
+        1024,
+        716
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205534.json",
+      "sha256": "dd39f6f64f30ad4f55d06c8b9e66aa90cea9af219ec2f9b6cdf5d4d8b5b861ee",
+      "bytes": 11973
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205534.png",
+      "sha256": "bf9d3b3ebe170362d251afe0f14a38dd021f085058a1b1f1f47bc59c3e26be9c",
+      "bytes": 36889,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205539.json",
+      "sha256": "4ce84803f9b6790d7b75765b88494fe42695213212d3a46340ccb33763514116",
+      "bytes": 11959
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205539.png",
+      "sha256": "6b994cda03289cacf48a5efc0e125eafd0c0d5ca438e494a46c6d9a36f51492f",
+      "bytes": 35101,
+      "image_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205540.json",
+      "sha256": "ddd27be9718149a792c866515f6e0a469ac6ff44b10795b012fc2d69d280ed70",
+      "bytes": 24195
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205540.png",
+      "sha256": "833c1088f694d5c9e84111801dd6a1efe864753114572b56ca5194349e5e5651",
+      "bytes": 42701,
+      "image_dimensions": [
+        1024,
+        712
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205543.json",
+      "sha256": "9447abe0422bfa3c0ccde42895101d74aad5d7cd8349835ad33a16f4f786080f",
+      "bytes": 23702
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/506-205543.png",
+      "sha256": "9f2ad811b97e1f4e6f2880204517a29961fb7742c9963dc2ce4e4031d1f47113",
+      "bytes": 53005,
+      "image_dimensions": [
+        1024,
+        716
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/README.md",
+      "sha256": "808a4c5fc113b612c917027a874080afd2c9de9337d84218907b741c673ea756",
+      "bytes": 1154
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-22.json",
+      "sha256": "1a07409f2da14b8f235756be061f224f2522110d9ebf02bac4f3bcde21408589",
+      "bytes": 38476
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-23.json",
+      "sha256": "2ee979f0046be561aee0a6ef95e352390cf3244bbb5f111132b663b6df91a203",
+      "bytes": 35799
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-24.json",
+      "sha256": "bc35a2a6e9eba09dc72d762390b8fcae3e0246def91d4f1e7f7e65719ae8f7ae",
+      "bytes": 31575
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-25.json",
+      "sha256": "87986f57892caf517eb6f5780456b619cff3088505682937543698a32cb24290",
+      "bytes": 35836
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-26.json",
+      "sha256": "8ccd9c9f0fc7cada0a9fe3878db602a3c40b7617390ef98907b220fc75b85381",
+      "bytes": 31611
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-27.json",
+      "sha256": "b7f65074be0d33b13d37d99c73d834ff01826d88931dd881aba612e24b671872",
+      "bytes": 35139
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-28.json",
+      "sha256": "270f60236ee204712c397bdaa3e3e6fb1923642479a36a5eccc9a7c5a354fe80",
+      "bytes": 32858
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-29.json",
+      "sha256": "0ada189bf931ff53273bc47b4bad22383b002ca53e32d1fba2679c5aebc6af19",
+      "bytes": 35751
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-30.json",
+      "sha256": "d1857dd8e090a926216d55db2c606e6b6823490407e072d13c95e7b5a632e141",
+      "bytes": 36691
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-31.json",
+      "sha256": "1a3027cd3450a97a440df2a80abb029934abe0d7c6ea859ad94843f9c381b3a4",
+      "bytes": 31524
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-32.json",
+      "sha256": "ef6b94afc8c86df2c7987f8ed27afdf59604b6a742443f10fbc590d17b9a581c",
+      "bytes": 31579
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-33.json",
+      "sha256": "85e83f31782e50271c93c1207ba3fb3699883c9d47066f64932dabcaada6c780",
+      "bytes": 31576
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/843-34.json",
+      "sha256": "f41d4ec918646b20b577ac109a5157ea519596557d5889b371c70022dfb3cca1",
+      "bytes": 31607
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/README.md",
+      "sha256": "a73a17fdb8971005989e263436b877dfc6885e7ee5ab628cb656358c86aa4020",
+      "bytes": 1007
+    },
+    {
+      "path": "internal/mobile/adoption_care_stage_test.go",
+      "sha256": "97f17f4e7557ff75dac8d83a168c4f9c86077206fd5f555690f087d56ef9e379",
+      "bytes": 2542
+    },
+    {
+      "path": "internal/mobile/appointment_safety_test.go",
+      "sha256": "1627147be5b3eb3ac7838f2b110dec5a188dda73dc17f216ce178a1ef09be4f3",
+      "bytes": 5760
+    },
+    {
+      "path": "internal/mobile/appointments.go",
+      "sha256": "25241944b37b3deae362d0c5744dfdb92fc06d675507ef9d7c3ad7a019db1b1f",
+      "bytes": 15102
+    },
+    {
+      "path": "internal/mobile/models.go",
+      "sha256": "645362a1ba2227b06a348a3ca774c682d81a8c9acdc277f1f7afd279f3e3cbf3",
+      "bytes": 11416
+    },
+    {
+      "path": "internal/mobile/operator_reads.go",
+      "sha256": "a2d39318b74a8c4495da9adc67d7ececa4684d1e2c3a646e4303d449dd6513f3",
+      "bytes": 2997
+    },
+    {
+      "path": "internal/mobile/operator_reads_test.go",
+      "sha256": "3ccf2f484584a8a3b2debc92ca55f674ac490d9a3e2b2d1c1b41ddb1a2aefa13",
+      "bytes": 3792
+    },
+    {
+      "path": "internal/mobile/rescue.go",
+      "sha256": "70d39b33e4138cb3174c10dcf25aa2f960e6e550c72b1329b2180825cc761222",
+      "bytes": 24605
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256": "29851e5c2614a7c62b11e5f439796dd4f134697b37070ec9b2392cdc7b8cf293",
+      "bytes": 37348
+    },
+    {
+      "path": "internal/platform/mobileapi/operator_pages_test.go",
+      "sha256": "e732ad8ed9c360229b2cf640ec8c3cfd8b53b251d6c2a5149faa12910b3ee569",
+      "bytes": 1606
+    },
+    {
+      "path": "internal/platform/mobileapi/ops_context.go",
+      "sha256": "7aa66b08d0b8711d660c63f7249a16591df8ee6afe78a9a731e544b311aa30e3",
+      "bytes": 1197
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AdoptionPages.kt",
+      "sha256": "b4b095f3f6bb38871087f0f4bcbec40c3272c287a57702883e7c5178749fd0e7",
+      "bytes": 7486
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AppointmentPages.kt",
+      "sha256": "e7eabfcff5095984cdbf9f8a603c7425cec9ceef7bb67641eaefa6b7c5d6ab99",
+      "bytes": 9423
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "sha256": "8acce263d2d0831c5e98b54ee9b663a279f2d7f3aee709427f41ca5ea14d7e9c",
+      "bytes": 27548
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "sha256": "3a1fbee24c2ab292c24c18888ec3bab0902747da75be345fd172671cfbe60ede",
+      "bytes": 61252
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256": "ccc948d70c8f1b40f005b64c779043e6ce70216058ca4da9c4b36872be016836",
+      "bytes": 20075
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+      "sha256": "09b0a2d91cdf68f7f0f8cdb8fbcab12d2c990b28c4ffe2e4dc3604d18f5e39e9",
+      "bytes": 14740
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AdoptionStatus.kt",
+      "sha256": "ec4ca7f63851b344ced4fd528c0a0d6c85f9b48a131e692f255956f640d37abe",
+      "bytes": 3543
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AppointmentStatus.kt",
+      "sha256": "ab158ab5575da232d8d7d3382e0440abc9e2f28aa238a6998ba9cfa19fd21c92",
+      "bytes": 1223
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt",
+      "sha256": "ca0099385157e89549614972a807c919a9fea1e085eb7d829983cb2c34c37b5b",
+      "bytes": 11943
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "82310b4e23b304abd716a463a9dd0e31b5f9ba614e189e0dddfab8cb090fd699",
+      "bytes": 66346
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "1b51599cf40789ee8b0afea501b9acb12283dff5d1bdfdaea9adb0fa73f6a7b2",
+      "bytes": 96028
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/AdoptionStatusTest.kt",
+      "sha256": "4f20ac2e43d6d5eee8d214605c3f3b065e909ba2fb16edc4290ca339675a14a5",
+      "bytes": 2072
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/AppointmentStatusTest.kt",
+      "sha256": "67fed79d91c9605f9b3e4952d364414141bd675853659410c7cdbc5dde1f695e",
+      "bytes": 1909
+    },
+    {
+      "path": "scripts/check_adoption_progress_static.py",
+      "sha256": "fea6d678a07c3e7dcc85067f9940f35e2a7d8f7baaa6ada5a9a6721db771c6f9",
+      "bytes": 3260
+    },
+    {
+      "path": "scripts/check_appointment_safety_static.py",
+      "sha256": "3d223fe497d84c3bcce9deea23579566f25ad2c4143907fbe6687f53e69d97de",
+      "bytes": 2759
+    },
+    {
+      "path": "scripts/check_client_ui_static.py",
+      "sha256": "969f63502aef3f44a0ca09718f39bc05b23cf08d413a9d85cf0fd3569fa01d84",
+      "bytes": 7146
+    },
+    {
+      "path": "scripts/check_guardian_invites_static.py",
+      "sha256": "0e77530c59bd7b59cc1282d5ac4ba359453e6ac6400917a496a145dbfd26428c",
+      "bytes": 4934
+    },
+    {
+      "path": "scripts/check_lead_submission_static.py",
+      "sha256": "e78fd44a650e3ddb2a7b7aec1fcdfdbba21077f6e63d19651d812dbd7a19d9fc",
+      "bytes": 6368
+    },
+    {
+      "path": "scripts/check_operator_pages_static.py",
+      "sha256": "5058b09c1229a7cb93ff9aa0b9dd052768e8f875bd336dd8d71e7c6370348182",
+      "bytes": 3013
+    },
+    {
+      "path": "scripts/check_server_shared_contract_static.py",
+      "sha256": "decd9b020da7e55103d0e26f7c656df239987c6e360e8ce091ab14e0cb5ebfee",
+      "bytes": 5155
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256": "ad0d264102ebcb497e17193d3fccd5f861ce392c75179e7aa69cfc6be2650379",
+      "bytes": 30400
+    },
+    {
+      "path": "scripts/sync_figma_implementation_trace.py",
+      "sha256": "25df665c1e6cf731a7b080bdedbea6a27aca246b2f2011ca676ce73e31697716",
+      "bytes": 19355
+    },
+    {
+      "path": "web-client/src/components/WorkspaceShell.tsx",
+      "sha256": "be586dda08c3526e877171837d88e5ca892739586e9a6883fe08d233208a203b",
+      "bytes": 3705
+    },
+    {
+      "path": "web-client/src/components/ui.tsx",
+      "sha256": "9a3ac02b3b0519ed2ce1319569bc6f21bde15396315b9a61312d5dca18ac1316",
+      "bytes": 12122
+    },
+    {
+      "path": "web-client/src/core/adoption.ts",
+      "sha256": "3633c03ccb0be05bfe6f7f4f1a913929730ef84c434490ef32fb52f29751d83b",
+      "bytes": 5681
+    },
+    {
+      "path": "web-client/src/core/appointment.ts",
+      "sha256": "da94b66b377a2a40fca96dcde81f3458da7871ab18a4666e22c51d1609fc5f56",
+      "bytes": 2181
+    },
+    {
+      "path": "web-client/src/core/contract.ts",
+      "sha256": "6e8a8d43c66e501caf54b721689bc7fe941aee48a946bfa1a56fb908fe15b53f",
+      "bytes": 22737
+    },
+    {
+      "path": "web-client/src/core/drafts.ts",
+      "sha256": "d959c8062295908bf99f1ce33d5c639a6c32797d64c94ee741277d9b26e6835f",
+      "bytes": 8610
+    },
+    {
+      "path": "web-client/src/core/routes.ts",
+      "sha256": "e0fc4ad338cc979c563bdb6c7bcab59728339ef7c0a642bd3a7574aa83a344cb",
+      "bytes": 13531
+    },
+    {
+      "path": "web-client/src/core/schemas.json",
+      "sha256": "517c91b7ca4b24d901a3d8ae64dadce038d638c2040e8b26e9fad163ba8c686c",
+      "bytes": 69588
+    },
+    {
+      "path": "web-client/src/features/AdoptionPages.tsx",
+      "sha256": "d78e12406aee8846e357436751f8e4aec054cb929b7a2ef434ed01399e37eb9c",
+      "bytes": 5138
+    },
+    {
+      "path": "web-client/src/features/AppointmentPages.tsx",
+      "sha256": "93960f150d0c2f174ac454a022ce9df705bc2db67fa3d01796f3b42715c3566d",
+      "bytes": 12307
+    },
+    {
+      "path": "web-client/src/features/ResourcePage.tsx",
+      "sha256": "6b706759a4180702a52d1eb6e640d51db72e3e5e70bc2b842024070c67c0cf4b",
+      "bytes": 26196
+    },
+    {
+      "path": "web-client/src/features/ReturnPages.tsx",
+      "sha256": "9ae06cf04fcbe77ddda3e247340912fee1e07b38b98625ad7c62e7e66a789deb",
+      "bytes": 4616
+    },
+    {
+      "path": "web-client/src/features/WorkflowEditor.tsx",
+      "sha256": "8379f0c1bd20be574338e2bedf9b72ccd514efec5f6fd28b79c92bbd0376bffa",
+      "bytes": 62953
+    },
+    {
+      "path": "web-client/src/features/workflows.ts",
+      "sha256": "10ce20988af5709a81dd759bfdcdcdaf86df70696e54749a97d2585a87c8219d",
+      "bytes": 16436
+    },
+    {
+      "path": "web-client/src/main.tsx",
+      "sha256": "0fa6fa416e745aa31347830741b23eab213f6b50b3c78c04f540443f7582ac62",
+      "bytes": 2280
+    },
+    {
+      "path": "web-client/src/operations/OpsApp.tsx",
+      "sha256": "dfd2b94726629013404fb2b4958a3a19b2baef06895b2c2ed75cd27c51525760",
+      "bytes": 10963
+    },
+    {
+      "path": "web-client/src/operations/ui.tsx",
+      "sha256": "5caa8dbe13a2912c3e9848ae9fe192ef461b74843dc406bf026c2ac5624ff2a6",
+      "bytes": 7395
+    },
+    {
+      "path": "web-client/src/operator/ContextPages.tsx",
+      "sha256": "a95734fdcd708efe1ac8f0fbd9fb07e801e3d2b1b03de9b3f391d9231fb6c146",
+      "bytes": 8541
+    },
+    {
+      "path": "web-client/src/operator/DetailPages.tsx",
+      "sha256": "3eefd907b9b29e81e4bd6bd1bbc6ee905dc44f1c0bcf0f1d9010d554a67a0006",
+      "bytes": 15922
+    },
+    {
+      "path": "web-client/src/operator/OperatorApp.tsx",
+      "sha256": "d89092d2cc38feeffaefd0a91445068bcd24eea6698e6d8d13302578a88f052d",
+      "bytes": 9655
+    },
+    {
+      "path": "web-client/src/operator/QueuePages.tsx",
+      "sha256": "095f8b420cfaa1e58cc7e4c928fcd3515b6a55c6e0746416e1e97593d611b1c1",
+      "bytes": 6080
+    },
+    {
+      "path": "web-client/src/operator/client.ts",
+      "sha256": "1a1fb8cee55ab53ec23bebb5307ed9f342eb9f4ec35a51ce80e79162ed41db71",
+      "bytes": 3817
+    },
+    {
+      "path": "web-client/src/operator/models.ts",
+      "sha256": "6e8c141030d3f1ec2ea0d40edb1a238a3f18f18092b054308934a73be7376927",
+      "bytes": 7619
+    },
+    {
+      "path": "web-client/src/operator/operator.css",
+      "sha256": "23a0d1e3f313146c2a4aa402bb0a044a74bd96115dc435760be46e72e92f575c",
+      "bytes": 1484
+    },
+    {
+      "path": "web-client/src/operator/ui.tsx",
+      "sha256": "0e222bf86a5af1e625afd045c03235fb591196a0e16146b2b2a793a72c010bfd",
+      "bytes": 1738
+    },
+    {
+      "path": "web-client/src/operator/useOperator.ts",
+      "sha256": "03155a566857b8b18812817af993772b51fa70203e69ac820cffe086440b9ee9",
+      "bytes": 12106
+    },
+    {
+      "path": "web-client/src/styles.css",
+      "sha256": "710a68c06e3ab6537b87d4cd5229e33d35eb72ff17b77c1ecd7cb9f717e5240d",
+      "bytes": 24140
+    }
+  ]
+}

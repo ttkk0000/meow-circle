@@ -99,6 +99,7 @@ export function LeadPage({ id }: { id: bigint }) {
   );
   const query = new URLSearchParams(location.search);
   const requested = query.get("view") === "reviewed";
+  const submitted = query.get("view") === "submitted";
   const minimum = integer(query.get("version"));
   const row = lead.data;
   const c = parent.data;
@@ -114,11 +115,22 @@ export function LeadPage({ id }: { id: bigint }) {
     row.data.reviewed_at &&
     row.data.reviewed_by === c.owner_id &&
     ["helpful", "not_match"].includes(row.data.assessment ?? "");
+  const received =
+    submitted &&
+    minimum > 0n &&
+    fresh &&
+    row &&
+    c &&
+    row.owner_id === owner &&
+    row.state === "submitted" &&
+    row.version >= minimum;
   return (
     <TaskPage
-      title={result ? "线索处理已记录" : "核实这条线索"}
+      title={
+        received ? "线索已收到" : result ? "线索处理已记录" : "核实这条线索"
+      }
       actions={
-        result && c ? (
+        (received || result) && c ? (
           <Button onClick={() => navigate(`/cases/${c.id}`)}>
             返回本次维护
           </Button>
@@ -143,7 +155,19 @@ export function LeadPage({ id }: { id: bigint }) {
         }}
       >
         {row && c ? (
-          result ? (
+          received ? (
+            <>
+              <Notice title="已收到" success>
+                {["active", "matched"].includes(c.state)
+                  ? "等待本案发布人核实，不代表已匹配或找回；不会移动公共标记或修改宠物状态。"
+                  : "记录曾被接收；本次求助已停止新联系，仍可查看你有权读取的历史。"}
+              </Notice>
+              <p className="muted">
+                私密线索 #{id.toString()} · {row.created_at}
+              </p>
+              <RowLink title="返回本次求助" to={`/cases/${c.id}`} />
+            </>
+          ) : result ? (
             <>
               <Notice
                 title={state.title}
@@ -170,7 +194,7 @@ export function LeadPage({ id }: { id: bigint }) {
               <p className="publication-text">{row.data.text}</p>
               <p className="muted">收到于 {row.created_at}</p>
               <Notice title={state.title}>{state.detail}</Notice>
-              {requested && row.version < minimum ? (
+              {(requested || submitted) && row.version < minimum ? (
                 <Notice title="当前结果尚未回读">
                   保留原请求，请重新读取当前记录，不会自动重复标记。
                 </Notice>

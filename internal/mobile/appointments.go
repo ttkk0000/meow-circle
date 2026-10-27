@@ -3,6 +3,7 @@ package mobile
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -143,8 +144,10 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 		if r.State == "cancelled" || r.State == "expired" {
 			return ErrConflict
 		}
-		if r.State == "safety_hold" && action != "cancel" {
-			return Denied("safety_hold_requires_resolution")
+		held := r.State == "safety_hold"
+		if held && a.SafetyHoldVersion == 0 && action == "safety_repropose" {
+			// 兼容旧暂停记录：首次重新协商时绑定当前记录版本，不复用旧确认。
+			a.SafetyHoldVersion, a.SafetyReason = r.Version, a.Reason
 		}
 		pending := -1
 		for i, v := range a.Versions {
@@ -152,18 +155,32 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 				pending = i
 			}
 		}
+		if held && action != "cancel" && action != "safety_repropose" {
+			if !HasString([]string{"confirm", "decline", "withdraw_change", "expire"}, action) || pending < 0 || a.SafetyHoldVersion <= 0 || a.Versions[pending].SafetyHoldVersion != a.SafetyHoldVersion || strings.TrimSpace(a.Versions[pending].ResolutionNote) == "" {
+				return Denied("safety_hold_requires_resolution")
+			}
+		}
 		switch action {
 		case "safety_hold":
-			if in.Note == "" {
+			if strings.TrimSpace(in.Note) == "" {
 				return Invalid("safety reason required")
 			}
 			r.State = "safety_hold"
-		case "propose", "restore":
+			a.SafetyHoldVersion = r.Version + 1
+			a.SafetyReason = in.Note
+			if pending >= 0 {
+				a.Versions[pending].Status = "superseded"
+			}
+			a.PendingVersion = 0
+		case "propose", "restore", "safety_repropose":
+			if action == "safety_repropose" && (!held || a.SafetyHoldVersion <= 0 || strings.TrimSpace(in.Note) == "") {
+				return Invalid("held appointment and specific safety resolution required")
+			}
 			var terms AppointmentTerms
 			if action == "restore" {
 				found := false
 				for _, v := range a.Versions {
-					if v.Number == in.RestoreVersion {
+					if v.Number == in.RestoreVersion && v.Status == "replaced" {
 						terms = v.Terms
 						found = true
 					}
@@ -203,16 +220,33 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 			}
 			number := int64(len(a.Versions) + 1)
 			a.Versions = append(a.Versions, AppointmentVersion{Number: number, Terms: terms, ProposedBy: actor, Confirmations: []int64{actor}, Status: "pending", CreatedAt: s.Now()})
+			if action == "safety_repropose" {
+				v := &a.Versions[len(a.Versions)-1]
+				v.SafetyHoldVersion, v.ResolutionNote = a.SafetyHoldVersion, in.Note
+				v.SafetyChecks = map[string]string{strconv.FormatInt(actor, 10): in.Note}
+			}
 			a.PendingVersion = number
 			r.State = "pending"
 			if a.EffectiveVersion > 0 {
 				r.State = "confirmed"
+			}
+			if held {
+				r.State = "safety_hold"
 			}
 		case "confirm":
 			if pending < 0 || a.Versions[pending].Status != "pending" || !a.Versions[pending].Terms.StartsAt.After(s.Now()) {
 				return ErrConflict
 			}
 			v := &a.Versions[pending]
+			if held {
+				if strings.TrimSpace(in.Note) == "" {
+					return Invalid("specific safety review acknowledgement required")
+				}
+				if v.SafetyChecks == nil {
+					v.SafetyChecks = map[string]string{}
+				}
+				v.SafetyChecks[strconv.FormatInt(actor, 10)] = in.Note
+			}
 			if e = s.appointmentContextCurrent(tx, a.ContextKind, a.ContextID, v.Terms); e != nil {
 				return e
 			}
@@ -222,6 +256,9 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 			v.Confirmations = Unique(append(v.Confirmations, actor))
 			if len(v.Confirmations) == 2 {
 				for _, party := range Unique(append([]int64{r.OwnerID}, r.Participants...)) {
+					if held && strings.TrimSpace(v.SafetyChecks[strconv.FormatInt(party, 10)]) == "" {
+						return Denied("both_safety_reviews_required")
+					}
 					if e = s.adult(tx, party); e != nil {
 						return e
 					}
@@ -252,6 +289,9 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 			if a.EffectiveVersion > 0 {
 				r.State = "confirmed"
 			}
+			if held {
+				r.State = "safety_hold"
+			}
 		case "cancel":
 			if in.Note == "" {
 				return Invalid("cancellation reason required")
@@ -264,6 +304,14 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 				}
 			}
 		case "expire":
+			if held {
+				if pending < 0 || a.Versions[pending].Terms.StartsAt.After(s.Now()) {
+					return ErrConflict
+				}
+				a.Versions[pending].Status = "expired"
+				a.PendingVersion = 0
+				break
+			}
 			latest := time.Time{}
 			for _, v := range a.Versions {
 				if (v.Number == a.EffectiveVersion || v.Number == a.PendingVersion) && v.Terms.StartsAt.After(latest) {
