@@ -126,7 +126,7 @@ for kind, actions, name in (
     ("adoptions", "request_supplement supplement approve reject withdraw resubmit resume_candidate propose_trial confirm_trial decline_trial confirm_handover support request_return", "AdoptionAction"),
     ("appointments", "propose restore confirm decline withdraw_change cancel expire safety_hold safety_repropose", "AppointmentAction"),
     ("groups", "directory notice transfer accept_transfer decline_transfer revoke_transfer dissolve leave remove_member mute", "GroupAction"),
-    ("conversations", "accept decline", "StateInput"), ("invitations", "accept decline revoke", "StateInput"),
+    ("conversations", "accept decline", "StateInput"), ("invitations", "accept decline revoke leave", "StateInput"),
     ("notifications", "read", "StateInput")):
     for action in actions.split():
         operation("/" + kind + "/{id}/" + action, "post", kind + " " + action, name)
@@ -187,7 +187,10 @@ def typed(path, method, summary, body=None, result=None, public=False, staff=Fal
             "allOf": [ref("Envelope")], "properties": {"data": dto(result)}}
     return item
 
+typed("/adoptions/{id}/care-context", "get", "Read current authorized care stage and posting capability without application, contract or party details", result="CareContext")
 typed("/ops/context", "get", "Current named operator roles and configured reading material; no credential or blanket readiness claim", result="OperatorContext", staff=True)
+authority_read = typed("/ops/authority", "get", "Audited exact-scope authority version lookup; no global user or authority directory", result="AuthoritySnapshot", staff=True)
+authority_read["parameters"] = [{"name": key, "in": "query", "schema": {"type": "integer" if key in ("actor_id", "pet_id") else "string"}} for key in ("actor_id", "pet_id", "scope", "city", "species")]
 typed("/ops/review-queue", "get", "Audited minimal moderator queue; cursor parameter, no private statements or materials", result="StaffReviewPage", staff=True)
 typed("/ops/reviews/{id}", "get", "Audited moderator detail reread; expired evidence references are withheld", result="Record", staff=True)
 typed("/ops/guardian-invites/{id}", "get", "Audited identity-verifier detail including terminal invite state, without nonce or identity materials", result="StaffGuardianInviteDetails", staff=True)
@@ -307,7 +310,7 @@ receipt_routes += [("/entry_comments/{id}/reaction","post"),("/pet_comments/{id}
 receipt_routes += [("/entries/{id}/reaction","post"),("/cases/{id}/leads","post"),("/visit_feedback","post")]
 receipt_routes += [("/inbox/read-all/snapshot","post"),("/inbox/read-all","post")]
 receipt_routes += [("/"+kind+"/{id}/"+action,"post") for kind,actions in (
-    ("conversations",("accept","decline","read")),("invitations",("accept","decline","revoke")),
+    ("conversations",("accept","decline","read")),("invitations",("accept","decline","revoke","leave")),
     ("groups",("read",)),("notifications",("read",))) for action in actions]
 for path, method in receipt_routes:
     paths["/api/v2"+path][method].setdefault("parameters",[]).append({

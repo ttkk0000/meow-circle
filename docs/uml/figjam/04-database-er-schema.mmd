@@ -1,0 +1,410 @@
+erDiagram
+ direction LR
+ users {
+ BIGINT id PK
+ }
+ mobileAccounts["mobile_accounts"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileAccounts : "owner_id"
+ mobileSessions["mobile_sessions"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileSessions : "owner_id"
+ mobileIdentities["mobile_identities"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileIdentities : "owner_id"
+ mobileAuthChallenges["mobile_auth_challenges"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileAuthChallenges : "owner_id"
+ mobileOtpChallenges["mobile_otp_challenges"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileOtpChallenges : "owner_id"
+ mobileFriendships["mobile_friendships"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileFriendships : "owner_id"
+ mobilePets["mobile_pets"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobilePets : "owner_id"
+ mobileOffers["mobile_offers"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileOffers : "owner_id"
+ mobileEntries["mobile_entries"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileEntries : "owner_id"
+ mobileEntryComments["mobile_entry_comments"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileEntryComments : "owner_id"
+ mobilePetComments["mobile_pet_comments"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobilePetComments : "owner_id"
+ mobileCommentReactions["mobile_comment_reactions"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileCommentReactions : "owner_id"
+ mobileEntryReactions["mobile_entry_reactions"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileEntryReactions : "owner_id"
+ mobileCases["mobile_cases"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileCases : "owner_id"
+ mobileClaims["mobile_claims"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileClaims : "owner_id"
+ mobileLeads["mobile_leads"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileLeads : "owner_id"
+ mobileSubscriptions["mobile_subscriptions"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileSubscriptions : "owner_id"
+ mobileAppointments["mobile_appointments"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileAppointments : "owner_id"
+ mobileAdoptions["mobile_adoptions"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileAdoptions : "owner_id"
+ mobileCareUpdates["mobile_care_updates"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileCareUpdates : "owner_id"
+ mobileGroups["mobile_groups"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileGroups : "owner_id"
+ mobileGroupMessages["mobile_group_messages"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileGroupMessages : "owner_id"
+ mobileConversations["mobile_conversations"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileConversations : "owner_id"
+ mobileMessages["mobile_messages"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileMessages : "owner_id"
+ mobileReceipts["mobile_receipts"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileReceipts : "owner_id"
+ mobileInvitations["mobile_invitations"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileInvitations : "owner_id"
+ mobileNotifications["mobile_notifications"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileNotifications : "owner_id"
+ mobilePreferences["mobile_preferences"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobilePreferences : "owner_id"
+ mobileExpressions["mobile_expressions"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileExpressions : "owner_id"
+ mobileDrafts["mobile_drafts"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileDrafts : "owner_id"
+ mobileMedia["mobile_media"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileMedia : "owner_id"
+ mobileReviews["mobile_reviews"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileReviews : "owner_id"
+ mobileVisitFeedback["mobile_visit_feedback"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileVisitFeedback : "owner_id"
+ mobileOutbox["mobile_outbox"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileOutbox : "owner_id"
+ mobileQualifications["mobile_qualifications"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileQualifications : "owner_id"
+ mobileGuardians["mobile_guardians"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileGuardians : "owner_id"
+ mobileOperations["mobile_operations"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileOperations : "owner_id"
+ mobileDeliveries["mobile_deliveries"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileDeliveries : "owner_id"
+ mobileDataRequests["mobile_data_requests"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileDataRequests : "owner_id"
+ mobileRightsCases["mobile_rights_cases"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileRightsCases : "owner_id"
+ mobileAuthorities["mobile_authorities"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileAuthorities : "owner_id"
+ mobileAuditEntries["mobile_audit_entries"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileAuditEntries : "owner_id"
+ mobilePushDevices["mobile_push_devices"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobilePushDevices : "owner_id"
+ mobileRevenueLedger["mobile_revenue_ledger"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileRevenueLedger : "owner_id"
+ mobileSourceDeclarations["mobile_source_declarations"] {
+ BIGINT id PK
+ BIGINT owner_id FK
+ BIGINT reference_id
+ TEXT state
+ BIGINT version
+ JSONB data
+ }
+ users o|--o{ mobileSourceDeclarations : "owner_id"

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "head": "1fe5302e7eb21c5767b84505dea69f47481f8c5f",
+  "paths": 253,
+  "operations": 285,
+  "serverSchemas": 139,
+  "webSchemas": 141,
+  "dtoPairs": 87,
+  "migrations": [
+    "001_init.sql",
+    "002_social.sql",
+    "003_user_phone.sql",
+    "004_notifications_actor_image.sql",
+    "005_adoption.sql",
+    "006_listing_category.sql",
+    "007_mobile_modules.sql",
+    "008_mobile_policy_commands.sql",
+    "009_pet_discussions.sql",
+    "010_operations_console.sql",
+    "011_mobile_query_indexes.sql",
+    "012_worker_checkpoints.sql",
+    "013_source_declarations.sql"
+  ],
+  "mobileTables": 45,
+  "sharedFiles": 28,
+  "clientUiFiles": 41,
+  "featurePages": 48,
+  "workerJobs": [
+    "push",
+    "nearby_alerts",
+    "content_updates",
+    "privacy_cleanup",
+    "provider_revocations",
+    "maintenance",
+    "search_projection",
+    "audit_projection"
+  ],
+  "verification": "源码读取与文档静态核对；未编译、未运行测试、未启动应用"
+}

@@ -1,5 +1,7 @@
 # 手机端对应的 Go 服务接口与运行交接
 
+> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 更新：2026-10-25。当前服务端全量代码逻辑与 UML 图谱见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)与[`docs/uml/`](../uml/README.md)；分项交接见[服务端优先完善与作业交接](SERVER_FIRST_2026_10_23.md)、[证据保全／数据清理](LIFECYCLE_RETENTION_2026_10_23.md)、[领养送养闭环与安全保留](ADOPTION_CLOSURE_2026_10_23.md)、[服务端完整性审计与待完善清单（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)、[三方官方认证](../client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)、[外部年龄核验网关](../client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)、[监护人 15 分钟邀请与成年关系申诉](../client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)。设计依据：[手机评审入口](../design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)；机器合同：[OpenAPI 3.1（241 Paths / 271 Operations / 123 Schemas）](../api/mobile-v2.openapi.json)。全部运行结果待验收。
 
 当前账号规则：[认证规划](../design/MND_MOBILE_AUTH_PLAN.md)。显式邮箱注册／OTP／密码登录与恢复、标识唯一约束、当前手机号证明、服务端交流／成年／监护关卡、浏览器 `HttpOnly Cookie + X-MND-CSRF` 会话适配已有源码；手机号登录仅允许已有账号，不自动建号。`008` 与 `009` 迁移、真实渠道／策略和运行尚未验收，微信绑定不能代替手机号交流资格。
@@ -93,7 +95,7 @@ GET 不修改已读；通过 `conversations/{id}/read`、`groups/{id}/read` 的 
 | PUSH_GATEWAY_URL / PUSH_GATEWAY_TOKEN | HTTPS查询／发送网关，稳定键去重；accepted不等于delivered |
 | MND_WORKER_* | 独立作业进程的目标、命名凭据、作业、间隔和游标文件；见本批交接 |
 
-迁移计划需备份后按序检查 `001`–`009`（共 44 张 `mobile_*` 聚合表，其中 `008` 包含标识冲突检测及策略／命令表，`009` 包含宠物评论与表情反应表）；本轮未执行迁移。注意 `docker-compose.yml` 与 `Makefile` 仍需同步补齐 `008`–`009`（详见[服务端完整性审计](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。历史导入 `migrations/backfill/legacy_to_mobile.sql` 不是启动步骤；旧图片、关注、订单或支付不转换为新权限、好友或交接证明。
+迁移需备份后按001–013顺序执行；当前45张mobile聚合表，另有010运维记录及012检查点表，013新增来源声明。docker-compose.yml已挂载至013，PostgreSQL Schema校验要求至013；本轮未执行迁移。旧完整性审计仅作为当时缺口快照。历史导入 `migrations/backfill/legacy_to_mobile.sql` 不是启动步骤；旧图片、关注、订单或支付不转换为新权限、好友或交接证明。
 
 `healthz` 是存活检查；`readyz` 有超时并真正读取事务存储，错误返回 503。新媒体目录需要持久卷、备份与磁盘配额；多副本必须共享媒体存储或替换为对象存储适配器。内存仓库不适合多副本。
 

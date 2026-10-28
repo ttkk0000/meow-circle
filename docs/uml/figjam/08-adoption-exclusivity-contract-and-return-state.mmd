@@ -1,0 +1,19 @@
+stateDiagram-v2
+ direction LR
+ state "handover_pending" as handoverPending
+ state "return_agreed" as returnAgreed
+ state "return_requested" as returnRequested
+ state "trial_active" as trialActive
+ state "trial_proposed" as trialProposed
+ [*] --> submitted
+ submitted --> approved: 发布者批准
+ approved --> trialProposed: 同版协议已生效
+ trialProposed --> trialActive: 双方确认并占用宠物
+ trialProposed --> approved: 拒绝试养
+ trialActive --> handoverPending: 交接确认未齐全
+ approved --> handoverPending: 协议与交接核对
+ handoverPending --> completed: 双方确认
+ trialActive --> returnRequested: 请求接回
+ handoverPending --> returnRequested: 请求接回
+ returnRequested --> returnAgreed: 同版方案生效
+ returnAgreed --> returned: 双方实际交接

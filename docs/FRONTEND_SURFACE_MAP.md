@@ -1,166 +1,41 @@
-# Frontend Surface Map
+# M&D 前端与多端页面地图
 
-Last updated: 2026-10-25
+更新：2026-10-27。以[现行基线](CURRENT_BASELINE.md)、[产品交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)和[文档目录](DOCUMENTATION_CATALOG.md)为准；本文仅记录源码与执行条件，不表示运行通过。
 
-This document maps all user-visible frontend surfaces across the **2026-10-25 v2 multi-platform clients** (Figma V2 Default Light Contract, 740 cross-platform states, `kmp/clientUi` 34-file shared Compose UI, `42` `FeaturePage` routes) and the legacy Stitch V2 static/v1 surfaces.
+## 当前客户端
 
-## 0. Current v2 Consumer, Operator & Public Surfaces (2026-10-25 Baseline)
+| 表面 | 入口与公共依赖 | 已有源码范围 | 尚未验收 |
+|---|---|---|---|
+| Android手机／平板 | androidApp/mobile＋shared＋clientUi | 共享Compose页面、窗口适配及Android系统桥接 | 设备、旋转／分屏、键盘、权限及真实SDK |
+| iPhone／iPad | iosUi＋iosApp/ComposeApp | Swift宿主＋Compose页面、地图／认证／安全存储桥接 | iOS设备、无障碍与真实回调 |
+| Desktop | desktopApp＋shared＋clientUi | 原生窗口、系统文件／钥匙串、浏览器能力接续 | 桌面环境、窗口与键盘恢复 |
+| Web消费端 | web-client/src/App.tsx，/app | 独立React DOM、Cookie／CSRF、任务和恢复组件 | 浏览器、响应式、网络／角色／视觉 |
+| 业务后台 | web-client/src/operator，/app/operator | 13页、分页队列／详情、角色与版本／未知结果 | 真实业务角色和当前环境 |
+| 技术运维 | web-client/src/ops，/app/ops | 14类页面、遥测、事件、交付准备与审计 | 发布／重启执行器仍占位，真实交付未验收 |
+| 游客安全与公开阅读 | 服务端公开页面、分享与阅读入口 | 免登录报告、回执与安全阅读合同 | 真实通道受理、隐私和失效链接 |
 
-| Surface | Path / Entry | Tech Stack & Auth | Current Scope |
-| --- | --- | --- | --- |
-| **Shared KMP Compose UI (`kmp/clientUi`)** | `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/` (`34` common files: `ConsumerApp.kt`, `FeaturePages.kt`, `PageComponents.kt`, `StatusComponents.kt`, etc.) | Compose Multiplatform 1.10.2 + `kmp/shared/.../client` (`MviStore`, `MobileStore`, `MobileFeatureStore`) | Shared across Android, iOS, and Desktop: 5 primary tabs + `42` `FeaturePage` routes + adaptive `Compact` / `Medium` / `Expanded` layouts + `ClientUiPlatform` port. |
-| **Android Phone & Tablet (v2)** | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/` (`AndroidMobileApp.kt`, `AndroidMviBase.kt`, `AndroidClientPlatform.kt`, `AndroidNativeMap.kt`, `AndroidProviderAuth.kt`) | Jetpack Compose + `kmp/clientUi` + AMap 3D SDK `11.3.100`, Opaque Bearer pair | Full 5 primary tabs + `42` `FeaturePage`s + native AMap `MapView` + WeChat/QQ native provider auth + EncryptedSharedPreferences vault (API 26–37). |
-| **iPhone & iPad (v2)** | `kmp/iosUi/` (`IosClientPlatform.kt`, `IosNativeMap.kt`, `IosProviderAuth.kt`) + `kmp/iosApp/ComposeApp/` (`AmapNativeMap.swift`, `NativeProviderAuth.swift`) | Compose Multiplatform for iOS + `kmp/clientUi` + CocoaPods `AMap3DMap 11.2.100` | Full 5 primary tabs + `42` `FeaturePage`s + native `MAMapView` + Sign in with Apple / WeChat / QQ bridge + Keychain vault. |
-| **Desktop App (v2)** | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/` (`Main.kt`, `DesktopClientPlatform.kt`, `DesktopStorage.kt`, `LostMapScreen.kt`) | Compose Desktop (JVM 21) + `kmp/clientUi` + `java-keyring:1.0.4` AES-256-GCM | Full desktop multi-pane workspace (`Expanded` / `Medium` / `Compact`), OS keyring encrypted command vault, and `/app/map` browser coordinate handoff. |
-| **Web Consumer App (v2)** | `web-client/` (`src/App.tsx`, `src/maps/AmapView.tsx`, `src/features/ProviderSignIn.tsx`, `src/features/GuardianPages.tsx`, `src/features/AgePages.tsx`) served at `/app/` | React 19 + TypeScript 5.8 + Vite 6, Browser `HttpOnly Cookie + X-MND-CSRF`, lossless string IDs | Full v2 consumer web parity across 740 tracked states, AMap JS API 2.0 via `/maps/amap/_AMapService/`, browser OAuth redirect/callback, and IndexedDB AES-GCM vault. |
-| **Web Operator Workbench (v2)** | `web-client/src/operator/OperatorApp.tsx` served at `/app/operator` | React + in-memory named operator credentials (`credentials: 'omit'`) | Isolated operator console (`ops_reviewer`, `safety_specialist`, `privacy_officer`, `identity_verifier`) for moderation, safety holds, guardian invites, and adult relationship claim reviews. |
-| **Guest Safety & Public Share Web (v2)** | `web/safety.html` (`web/safety.js`, `web/safety.css`) & `internal/platform/mobileapi/public_web.go` | Vanilla HTML/JS + Go SSR share metadata | Unauthenticated emergency pet safety / privacy / minor protection reporting (`/api/v2/safety-reports`) and HTTPS deep-link handoff cards. |
+公共clientUi有41份公共Kotlin文件、48个FeaturePage；shared/client目录28份文件。文件数不等于Figma740状态完成数，也不代表五种布局均已运行通过。各批恢复点见[客户端入口](client/README.md)。
 
-> For detailed v2 code logic, UML diagrams, UI components, and Figma 740-state trace, see [Code Logic & UML Reference](CODE_LOGIC_AND_UML_REFERENCE.md), [PlantUML Diagrams](uml/README.md), [Client README](client/README.md), and [All Figma Implementation Handoff (2026-10-24)](client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md). The sections below document the earlier Stitch V2 static and `/api/v1` surfaces.
+## 导航与布局
 
-## 1. Surface Families
+主导航按已批准设计为社区／领养／发布／消息／我的；宽屏保留互助入口，窄窗从任务上下文进入。Web App导航源包含互助，不以文档统一导航数量删除现有合法入口。
 
-| Family | Implementation | Status |
-| --- | --- | --- |
-| Production Web | Static HTML/CSS/JS under `web/` served by Go | M&D-aligned through page updates and `stitch-theme-bridge.css`. |
-| WebUI prototype | `web/cute.html`, `web/cute-ui.css`, `web/cute-ui.js` | Independent M&D browser product experience. |
-| Stitch V2 mirror | `.stitch/remote-assets`, `web/assets/stitch-remote`, `web/mnd-web-client-board.html`, `web/stitch-remote-gallery.html` | Full-size remote screenshots, source files, and local parity boards. |
-| Mobile design board | `web/pawpop-mobile.html` | Figma source board, not runtime app code. |
-| Desktop design board | `web/pawpop-desktop.html` | Figma source board and current desktop deliverable. |
-| Expo app | `mobile/app`, `mobile/src` | Runtime mobile app aligned to M&D. |
-| KMP Android app | `kmp/androidApp` + `kmp/shared` | Runtime Android Compose app aligned to M&D in source. |
-| KMP Desktop app | `kmp/desktopApp` + `kmp/shared` | Runtime Compose Desktop app aligned to M&D in source. |
+当前Figma V2默认浅色，旧主题按未迁移范围保留。窗口可用宽高决定单栏、主从与模块栏；旋转、分屏和关闭输入面板保留Store、对象、草稿、受众、列表及滚动上下文。具体尺寸查[跨端合同](design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md)，不在本表另造断点。
 
-## 2. Production Web Pages
+## 状态与系统能力
 
-| Page | Script | Styles | API Dependencies | Notes |
-| --- | --- | --- | --- | --- |
-| `/` / `index.html` | `app.js` | `theme.css`, `stitch-theme-bridge.css`, `styles.css` | posts, listings, auth state, search/profile preview | Public home/feed; static fallback behavior exists for review. |
-| `/discover.html` | `discover.js` | `theme.css`, `stitch-theme-bridge.css` | mostly static, links to posts/market | M&D circles page with real cat imagery. |
-| `/compose.html` | `compose.js` | bridge + toast | auth, posts, media | Redirects unauthenticated users to login. |
-| `/market.html` | `market.js` | bridge + toast | listings, optional static fallback | M&D market hero, filters, listing cards. |
-| `/post.html` | `post.js` | bridge + toast | post detail, comments, follow, report | Demo post when opened without backend/id. |
-| `/messages.html` | `messages.js` | bridge + toast | conversations, messages | Demo conversations when logged out/API unavailable. |
-| `/profile.html` | `profile.js` | bridge + toast | user profile, my posts, update profile | Supports profile background picker. |
-| `/login` / `/login.html` | `auth.js` | bridge + toast | login | Pretty route served by Go; static html also works. |
-| `/register` / `/register.html` | `auth.js` | bridge + toast | register, phone code | Pretty route served by Go; static html also works. |
-| `/dashboard` / `/dashboard.html` | `dashboard.js` | bridge, `styles.css`, `dashboard.css` | auth, posts, listings, media, orders, messages, notifications | Logged-in creator/seller workbench. |
-| `/admin` / `/admin.html` | `admin.js` | bridge, `admin.css` | admin summary/posts/comments/listings/media/reports/orders/audit | Requires `X-Admin-Key`. |
-| `/architecture.html` | `architecture.js` | bridge, `architecture.css` | `architecture-data.json` | Visual architecture page. |
+| 组件／桥接 | 目的 | 核对重点 |
+|---|---|---|
+| ConsumerApp与FeaturePages | 主壳和业务分派 | 根入口与子分派同时覆盖，不只检查类存在 |
+| ClientUiPlatform | 相册、地图、返回、日期、通知、链接和图片解码 | 各宿主真实端口实现，受限时说明原因 |
+| WorkspaceShell | 双后台公共框架 | 各后台会话与合同隔离，不继承消费者角色 |
+| 草稿／原请求恢复 | 明确失败、未知结果与冲突恢复 | 不换key自动重发，失权不恢复私密材料 |
+| CityField与猫咪配图 | 共享城市选择与真实空态说明 | 目录不授予业务准入，配图不冒充业务宠物 |
 
-Shared Web helpers:
+## 旧表面与视觉来源
 
-- `web/shared.js`: i18n, theme/language storage, toast helpers, auth helpers, static screen IDs.
-- `web/tw-stitch.js`: Tailwind CDN token config, now mapped to M&D.
-- `web/stitch-theme-bridge.css`: visual compatibility layer for old pages.
-- `web/stitch-toast.css`: toast styling.
+web/包含API v1兼容页面、Stitch设计板和cute静态原型；mobile/为旧Expo；KMP legacy Stitch代码保留兼容。cute不调用Go API，演示回退不能写成真实业务数据。原Figma设计继续为新客户端权威；本轮[Figma文档中心](figma-sync/README.md)用于阅读规范、表格和图谱，不取代原稿。
 
-## 3. WebUI Prototype
+## 验收记录
 
-Files:
-
-- `web/cute.html`
-- `web/cute-ui.css`
-- `web/cute-ui.js`
-
-Core flows represented:
-
-- Home/feed and search.
-- Post detail.
-- Discover/circles.
-- Market/listings.
-- Messages.
-- Auth.
-- Profile/background customization.
-- Compose post/listing.
-- Media/orders/notifications/safety concepts.
-
-Behavior:
-
-- Static-safe by default.
-- Uses live backend only with `?live=1` where implemented.
-- Persists theme with `mnd_cute_theme`.
-- Persists profile background with `mnd_cute_profile_bg`.
-
-## 4. Design Boards
-
-| Board | Purpose |
-| --- | --- |
-| `web/pawpop.html` | Overview of the three UI sets. |
-| `web/mnd-web-client-board.html` | Current Stitch V2 sync board with mobile, theme, component, and implementation contract references. |
-| `web/stitch-remote-gallery.html` | Full-size remote screenshot gallery with local source links. |
-| `web/pawpop-mobile.html` | Native mobile-like screen inventory for Figma. |
-| `web/pawpop-desktop.html` | Desktop client/workbench design inventory for Figma. |
-
-Rules:
-
-- Do not treat mobile board as responsive Web.
-- Do not treat desktop board as widened mobile.
-- Use `docs/design/MND_UI_ALIGNMENT_GUIDE.md` for tokens/copy/QA.
-
-## 5. Expo Route Map
-
-| Route | File | Purpose |
-| --- | --- | --- |
-| Root layout | `mobile/app/_layout.tsx` | Font loading, splash/loading, `AuthProvider`, route stack. |
-| Auth gate | `mobile/app/index.tsx` | Opens M&D loading state and redirects by auth status. |
-| Login | `mobile/app/(auth)/login.tsx` | M&D login with cat-first copy. |
-| Register | `mobile/app/(auth)/register.tsx` | M&D onboarding/register. |
-| Tabs layout | `mobile/app/(tabs)/_layout.tsx` | Bottom tab bar. |
-| Feed | `mobile/app/(tabs)/index.tsx` | Feed, search, hero, filter tabs. |
-| Discover | `mobile/app/(tabs)/discover.tsx` | Circles and market entry. |
-| Compose | `mobile/app/(tabs)/compose.tsx` | Create post. |
-| Market | `mobile/app/(tabs)/market.tsx` | Market/listings. |
-| Messages list | `mobile/app/(tabs)/messages/index.tsx` | Conversation list. |
-| Conversation | `mobile/app/(tabs)/messages/[peerId].tsx` | Message thread. |
-| Post detail | `mobile/app/(tabs)/post/[id].tsx` | Post detail/comments/actions. |
-| Profile | `mobile/app/(tabs)/profile.tsx` | Profile and user content. |
-
-## 6. KMP Android Screen Map
-
-| Screen | File | Purpose |
-| --- | --- | --- |
-| App shell | `MeowApp.kt` | Session restore, auth switch, compose/detail/feed navigation. |
-| Splash | `StitchSplashScreen.kt` | M&D loading state. |
-| Login | `StitchLoginScreen.kt` | M&D login. |
-| Register | `StitchRegisterScreen.kt` | M&D registration. |
-| Feed/Discover tabs | `StitchFeedScreen.kt` | Main authenticated app. |
-| Compose | `StitchComposeScreen.kt` | Create post. |
-| Post detail | `StitchPostDetailScreen.kt` | Detail, media pager, comments, follow. |
-| Loading | `StitchLoadingScreen.kt` | Shared loading state. |
-| Components | `ui/components/*` | Top bar, bottom nav, feed card, FAB, search field. |
-
-Internal file names still include `Stitch` because they began as imported
-reference surfaces. The visible UI is now M&D.
-
-## 7. KMP Desktop Screen Map
-
-| Surface | File | Purpose |
-| --- | --- | --- |
-| Desktop app shell | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/Main.kt` | Dense desktop feed/workspace layout with theme switching and Stitch refs. |
-| Desktop tokens | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/MndDesktopTheme.kt` | Honey, Mint, Night, and Neutral token set aligned to Stitch V2. |
-| Desktop Stitch refs | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/StitchDesktopReferences.kt` | Project, desktop screen, and theme screen IDs. |
-
-## 8. Visual QA Matrix
-
-| Surface | Desktop | Mobile | Notes |
-| --- | --- | --- | --- |
-| Web production pages | `1440x1000` | `390x844` | Smoke test routes listed in `MND_UI_ALIGNMENT_GUIDE.md`. |
-| WebUI prototype | `1440x1000` | responsive check | Verify theme/profile switching. |
-| Mobile board | browser desktop | browser mobile optional | Board is a Figma source, not app runtime. |
-| Desktop board | browser desktop | not required | Verify dense desktop panes, search states, admin detail. |
-| Expo | simulator/device | device-first | Static source review and visual QA when a safe Node environment is available. |
-| KMP Android | emulator/device | Android | Static source review only on this machine; do not run Gradle. |
-| KMP Desktop | desktop JVM | desktop | Static source review only on this machine; do not run Gradle. |
-
-## 9. Common Frontend Risks
-
-- Static Web pages may call `/api/v1/*` and receive 404 when served by a plain
-  static server. That is acceptable if demo fallback keeps the page usable.
-- Pretty routes like `/login` and `/dashboard` are served by Go. In static
-  server mode, use `.html` paths or tolerate redirect 404s during smoke checks.
-- Tailwind classes like `rounded-2xl` may remain in source, but
-  `stitch-theme-bridge.css` must make non-action surfaces render at 8px.
-- Do not remove static fallbacks unless the local Go backend is guaranteed
-  during design review.
-- Do not rename Web auth storage keys without migrating all page scripts.
+后续取得运行授权后，按具体状态、角色、对象版本与窗口逐项核对：加载／空／错误／失权／冲突／未知、键盘与返回、TalkBack／VoiceOver、字体放大、媒体与地图、方向与分屏、原请求恢复。本轮只有文档与静态核对，没有执行应用、构建、test或lint。

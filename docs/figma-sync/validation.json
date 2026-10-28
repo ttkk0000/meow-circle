@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "sourceHead": "1fe5302e7eb21c5767b84505dea69f47481f8c5f",
+  "markdownFiles": 175,
+  "utf8Verified": true,
+  "bomFiles": [],
+  "conflictMarkers": [],
+  "brokenLocalLinks": [],
+  "plantUmlPairs": 12,
+  "plantUmlRendered": false,
+  "figmaFullReadbackVolumes": 226,
+  "figmaContentMatches": 226,
+  "figmaSourceMarkers": 226,
+  "nativeDocumentLayoutOverlaps": 0,
+  "diagramSections": 12,
+  "nativeErTables": 45,
+  "uniqueMobileErTables": 45,
+  "erGroups": 5,
+  "imagesWithMatchingUploadReceipt": 49,
+  "imagesHaveRemoteImageFill": 49,
+  "productSvgFlows": 7,
+  "visualSamples": [
+    {
+      "fileKey": "t6ongKuaGHleURYNfsLA6e",
+      "nodeId": "12:2556"
+    },
+    {
+      "fileKey": "t6ongKuaGHleURYNfsLA6e",
+      "nodeId": "14:2659"
+    },
+    {
+      "fileKey": "t6ongKuaGHleURYNfsLA6e",
+      "nodeId": "3:2101"
+    },
+    {
+      "fileKey": "t6ongKuaGHleURYNfsLA6e",
+      "nodeId": "12:2555"
+    },
+    {
+      "fileKey": "JiFXEy785BcGEvaFBSswJ3",
+      "nodeId": "4:2"
+    }
+  ],
+  "visualRepairs": [
+    "两张类图层次和连线",
+    "预约状态自循环异常路径"
+  ],
+  "gitDiffCheck": {
+    "exitCode": 0,
+    "output": ""
+  },
+  "compiled": false,
+  "testsRun": false,
+  "lintRun": false,
+  "applicationStarted": false,
+  "migrationsRun": false,
+  "deployed": false
+}

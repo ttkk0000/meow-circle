@@ -200,7 +200,11 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 						}
 					}
 				case Invitations:
-					actionable = row.State == "pending" && row.OwnerID != actor
+					invitation, e := Decode[Invitation](row)
+					if e != nil {
+						return e
+					}
+					actionable = row.State == "pending" && invitation.RecipientID == actor && invitation.ExpiresAt.After(s.Now())
 				case Claims:
 					actionable = (row.OwnerID == actor && row.State == "needs_info") || (row.OwnerID != actor && row.State == "submitted")
 				case Reviews:

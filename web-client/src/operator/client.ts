@@ -47,9 +47,15 @@ export class OperatorClient {
   async request<T>(path: string, body?: Row): Promise<T> {
     const write = body !== undefined;
     const allowed = write
-      ? /^(?:guardian-evidence|reviews\/[1-9][0-9]{0,18}|rights-cases\/[1-9][0-9]{0,18}\/decision|data-requests\/[1-9][0-9]{0,18}\/(?:hold|process))$/
-      : /^(?:context|review-queue|guardian-invites(?:\/[1-9][0-9]{0,18})?|reviews\/[1-9][0-9]{0,18}|rights-cases(?:\/[1-9][0-9]{0,18})?|data-requests\/[1-9][0-9]{0,18})(?:\?cursor=\d{1,19})?$/;
-    if (!allowed.test(path)) throw new Error("无效业务后台请求");
+      ? /^(?:age-evidence|authority|revenue|guardian-evidence|reviews\/[1-9][0-9]{0,18}|rights-cases\/[1-9][0-9]{0,18}\/decision|data-requests\/[1-9][0-9]{0,18}\/(?:hold|process))$/
+      : /^(?:context|review-queue|revenue|guardian-invites(?:\/[1-9][0-9]{0,18})?|reviews\/[1-9][0-9]{0,18}|rights-cases(?:\/[1-9][0-9]{0,18})?|data-requests\/[1-9][0-9]{0,18})(?:\?cursor=\d{1,19})?$/;
+    const lookup =
+      !write &&
+      path.startsWith("authority?") &&
+      [...new URLSearchParams(path.slice(10)).keys()].every((k) =>
+        ["actor_id", "pet_id", "scope", "city", "species"].includes(k),
+      );
+    if (!allowed.test(path) && !lookup) throw new Error("无效业务后台请求");
     if (this.token.length < 32 || this.token.length > 4096)
       throw new OperatorError(401);
     const epoch = this.generation,

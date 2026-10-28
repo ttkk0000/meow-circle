@@ -412,7 +412,21 @@ func (s *Service) collaborator(tx Tx, scope string, target, actor int64) (bool, 
 	if e != nil {
 		return false, e
 	}
-	return r.State == "accepted", nil
+	if r.State != "accepted" {
+		return false, nil
+	}
+	body, e := Decode[Invitation](r)
+	if e != nil {
+		return false, e
+	}
+	if body.Scope != scope || body.TargetID != target || body.RecipientID != actor {
+		return false, nil
+	}
+	e = s.invitationAuthority(tx, r, body, false)
+	if invitationAccessEnded(e) {
+		return false, nil
+	}
+	return e == nil, e
 }
 func project(k Kind, r Record, actor int64) (Record, error) {
 	if k == Guardians {

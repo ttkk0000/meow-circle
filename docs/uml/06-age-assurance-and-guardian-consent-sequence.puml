@@ -1,73 +1,22 @@
 @startuml 06-age-assurance-and-guardian-consent-sequence
 !theme plain
-skinparam backgroundColor #FFFDF9
-skinparam defaultFontName "PingFang SC, Inter, sans-serif"
-skinparam roundcorner 8
-skinparam SequenceMessageAlign center
-skinparam ArrowColor #5C534E
+skinparam defaultFontName "Noto Sans SC"
+skinparam shadowing false
+title 年龄核验与十五分钟监护邀请
 
-title External Age Assurance, 15-Minute Guardian Invite, Adult Claim & Minor Stranger DM Gate Sequence
-
-actor "Minor / User" as Minor
-actor "Adult Guardian" as Guardian
-actor "Operator\n(identity_verifier)" as Operator
-participant "Client\n(AgeAssuranceStore /\nGuardianInviteStore)" as Client
-participant "External Age Gateway\n(mobileauth.AgeGateway)" as ExtAge
-participant "Go API\n(identity.Service /\nmobile.Service)" as Api
-database "PostgreSQL\n(user_qualification_status /\nmobile_guardian_invites /\nguardian_consents)" as Db
-
-== 1. External Age Assurance Session & Signed Callback ==
-Minor -> Client : Open AgeAssurance Page & tap "Start Age Verification"
-Client -> Api : POST /api/v2/qualification/age-assurance/sessions\n{method: "external_gateway", returnUrl}
-Api -> ExtAge : Build signed challenge URL (HMAC-SHA256)
-Api -> Db : Upsert age_assurance_session (state="pending")
-Api --> Client : 200 AgeAssuranceSessionView {sessionId, verificationUrl, expiresAt}
-
-Client -> ExtAge : Open verificationUrl in external browser / WebView
-ExtAge -> Api : POST /api/v2/qualification/age-assurance/callback\n{sessionId, status: "verified", ageBand: "minor_under_16"|"minor_16_17"|"adult_18_plus", signature}
-Api -> Api : Verify HMAC-SHA256 callback signature
-Api -> Db : UPDATE user_qualification_status\nSET age_band = $1, age_assurance_state = 'verified'
-Api --> Client : 200 QualificationStatus (Refreshed in AgeAssuranceStore)
-
-== 2. Minor Creates 15-Minute Single-Use Guardian Invite ==
-Minor -> Client : Open GuardianMinorInvites Page -> Enter Guardian Phone & Relationship
-Client -> Api : POST /api/v2/qualification/guardian-invites\n{guardianContactHint, relationship, requestedScopes: ["communityPosting","directContact","careParticipation"]}
-Api -> Api : Generate random inviteCode & SHA-256 hash (TTL = 15 minutes)
-Api -> Db : Revoke previous pending invites for minor\nINSERT mobile_guardian_invites (status='pending', expires_at = now + 15m)
-Api --> Client : 201 GuardianInviteCreatedView\n{inviteId, inviteCode (shown once), expiresAt}
-Minor -> Guardian : Share one-time inviteCode before 15m expiry
-
-== 3A. Path A: Guardian already has verified Adult (18+) + Real-Name status ==
-Guardian -> Client : Open GuardianAcceptInvite Page -> Lookup inviteCode
-Client -> Api : GET /api/v2/qualification/guardian-invites/lookup?code={inviteCode}
-Api -> Db : Lookup by SHA256(inviteCode), verify status='pending' & now < expires_at
-Api --> Client : 200 GuardianInviteLookupView {minorDisplayName, requestedScopes, expiresAt}
-
-Guardian -> Client : Complete Purpose Reauth (purpose="guardian_consent_grant") & Tap Accept
-Client -> Api : POST /api/v2/qualification/guardian-invites/accept\nHeader: X-Reauth-Token: <reauthToken>\n{inviteCode, grantedScopes}
-Api -> Db : BEGIN SERIALIZABLE\n1. Verify guardian user_qualification_status: age_band='adult_18_plus' AND real_name_verified=true\n2. Verify guardianUserID != minorUserID\n3. Consume purpose_reauth_grant\n4. Mark invite status='accepted'\n5. INSERT/UPDATE guardian_consents (status='active', scopes_json=grantedScopes)\n6. UPDATE minor user_qualification_status SET guardian_consent_state='active'\nCOMMIT
-Api --> Client : 200 GuardianConsentView (Active)
-
-== 3B. Path B: Guardian submits Independent Adult Relationship Claim (Reviewed by identity_verifier) ==
-Guardian -> Client : Open AdultRelationshipClaims Page -> Upload proof media & submit claim
-Client -> Api : POST /api/v2/qualification/adult-relationship-claims\n{minorUserId, relationship, evidenceMediaIds, note}
-Api -> Db : INSERT mobile_adult_relationship_claims (status='pending_review')
-Api --> Client : 201 AdultRelationshipClaimView
-
-Operator -> Api : POST /api/v2/ops/adult-relationship-claims/{claimId}/review\n(Role: identity_verifier) {decision: "approved", note}
-Api -> Db : UPDATE mobile_adult_relationship_claims SET status='approved'\nEnable guardian eligibility for minor consent acceptance
-Api --> Operator : 200 AdultRelationshipClaimView (Approved)
-
-== 4. Transactional Minor Protection Gate on Stranger Direct Messages (directContact) ==
-Minor -> Client : Attempt to send or receive Direct Message in Conversation
-Client -> Api : POST /api/v2/conversations/{id}/messages
-Api -> Db : Check sender & recipient age_band, mutual follow status, and guardian_consents
-alt Either party is minor AND not mutual friends AND lacks active 'directContact' guardian consent
-  Db --> Api : Gate Blocked (minor_direct_contact_restricted)
-  Api --> Client : 403 Forbidden\n{code: "guardian_consent_required", requiredScope: "directContact"}
-else Allowed (Adult-to-Adult OR Mutual Friends OR Active Guardian directContact Scope)
-  Api -> Db : INSERT mobile_messages & update conversation watermark
-  Api --> Client : 201 MessageView
-end
+participant "用户" as minor
+participant "客户端" as client
+participant "identity.Service" as api
+participant "年龄核验网关" as gateway
+participant "监护人" as guardian
+participant "mobile聚合事务" as db
+client -> api : 读取年龄核验配置并显式创建会话
+api -> gateway : 按配置发起签名请求
+gateway -> api : 查询或验证结果，未知保持关闭
+api -> db : 更新资格与状态
+minor -> api : 创建15分钟一次性监护邀请
+guardian -> api : 领取邀请并提交用途级确认
+api -> db : 核对当前双方资格、有效期和scope后保存
+client -> api : 重新读取服务端eligibility
 
 @enduml

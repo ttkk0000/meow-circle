@@ -36,7 +36,7 @@ data class FeatureState(
     val friends: PageState<FriendBody> = PageState(), val invitations: PageState<InvitationBody> = PageState(),
     val appointments: PageState<AppointmentBody> = PageState(), val offers: PageState<OfferBody> = PageState(),
     val claims: PageState<ClaimBody> = PageState(), val leads: PageState<LeadBody> = PageState(),
-    val care: PageState<CareBody> = PageState(), val reviews: PageState<ReviewBody> = PageState(),
+    val care: PageState<CareBody> = PageState(), val careContext: CareContext? = null, val reviews: PageState<ReviewBody> = PageState(),
     val entry: MobileRecord<EntryBody>? = null, val member: PublicMember? = null, val profile: MobileProfile? = null, val pet: MobileRecord<PetBody>? = null,
     val group: MobileRecord<GroupBody>? = null, val appointment: MobileRecord<AppointmentBody>? = null,
     val case: MobileRecord<CaseBody>? = null, val lead: MobileRecord<LeadBody>? = null, val claim: MobileRecord<ClaimBody>? = null,
@@ -195,7 +195,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         revision++; loading?.cancel(); dismissConfirmation()
         mutable.update { it.copy(route = route, loading = false, error = null, readFailure = null, notice = null, conflict = false,
             readingDocument = null,groupPreview = null, mapCases = PageState(), diary = PageState(), entry = null, member = null, pet = null, group = null, appointment = null, case = null, lead = null, claim = null, adoption = null,
-            offer = null, review = null, verifications = emptyList(), claims = PageState(), leads = PageState(), care = PageState(),
+            offer = null, review = null, verifications = emptyList(), claims = PageState(), leads = PageState(), care = PageState(), careContext = null,
             unconfirmedResult = route in uncertainRoutes) }
         reload()
         pendingSafetyReference?.let { safetyReferences[route] = it; pendingSafetyReference = null; scheduleDraftSave() }
@@ -205,7 +205,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         if (mutable.value.busy) return true
         if (mutable.value.confirmation != null) { dismissConfirmation(); return true }
         val previous = history.removeLastOrNull()
-        revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, readFailure = null, notice = null,readingDocument = null,groupPreview = null,mapCases = PageState(),diary = PageState(),entry = null,member = null,pet = null,group = null,appointment = null,case = null,claim = null,adoption = null,offer = null,review = null,unconfirmedResult = previous in uncertainRoutes) }
+        revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, readFailure = null, notice = null,readingDocument = null,groupPreview = null,mapCases = PageState(),diary = PageState(),entry = null,member = null,pet = null,group = null,appointment = null,case = null,claim = null,adoption = null,careContext = null,care = PageState(),offer = null,review = null,unconfirmedResult = previous in uncertainRoutes) }
         if (previous != null) reload()
         return true
     }
@@ -304,7 +304,12 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     val unknown = actionStarted && pendingAction != null && (e is OperationResultUnknown || e !is MobileApiException || e.status >= 500)
                     if (unknown) uncertainRoutes.add(mutable.value.route)
                     if (e is OperationResultUnknown) uncertainRequests[e.clientRequestId] = mutable.value.route
+                    val careDenied = mutable.value.route?.kind == "care" && mutable.value.route?.page == FeaturePage.AdoptionWork && denied(e)
+                    if(careDenied) pendingAction = null
                     mutable.update { it.copy(error = if (unknown) "${e.mobileMessage()}。提交结果待核对，请勿重建请求" else e.mobileMessage(),
+                        careContext = if(careDenied) null else it.careContext,
+                        care = if(careDenied) it.care.failed(e.mobileMessage(),clear = true,failure = e.readFailure()) else it.care,
+                        confirmation = if(careDenied) null else it.confirmation,
                         conflict = e is MobileApiException && e.status == 409, unconfirmedResult = unknown || it.unconfirmedResult,commandErrorCode = (e as? MobileApiException)?.code,
                         pending = api.recoverableCommands()) }
                 }
@@ -389,6 +394,8 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                             val p = api.adoption(route.id); if (current()) { mutable.update { it.copy(adoption = p) }; capture(p.version) }
                         }
                         if (route.page == FeaturePage.AdoptionWork) {
+                            val context = api.careContext(route.id)
+                            if(current()) mutable.update { it.copy(careContext = context) }
                             loadFeaturePage(more, ::current, { it.care }, { s, p -> s.copy(care = p) }) { api.careUpdates(route.id, it) }
                         }
                     }
@@ -440,6 +447,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     verifications = if (denied(e)) emptyList() else it.verifications,
                     claim = if (denied(e)) null else it.claim, group = if (denied(e)) null else it.group,
                     adoption = if (denied(e)) null else it.adoption,
+                    careContext = if (denied(e)) null else it.careContext,
                     friends = if (denied(e)) it.friends.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.friends,
                     invitations = if (denied(e)) it.invitations.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.invitations,
                     appointments = if (denied(e)) it.appointments.failed(e.mobileMessage(), clear = true, failure = e.readFailure()) else it.appointments,

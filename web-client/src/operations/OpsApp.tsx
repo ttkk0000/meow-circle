@@ -15,6 +15,7 @@ import {
   ConfirmRelease,
 } from "./DetailPages";
 import { WorkspaceShell } from "../components/WorkspaceShell";
+import { opsWorkspaces } from "../operator/roleWorkspaces";
 
 const descriptions: Record<View, string> = {
   overview: "先确认环境，再定位服务、任务与待办；缺失数据保持未知。",
@@ -44,14 +45,28 @@ const titles: Record<View, string> = {
 export default function OpsApp() {
   const route = useRoute(),
     params = new URLSearchParams(route.split("?")[1]);
-  const demo = params.get("mode") === "demo",
-    raw = params.get("view") ?? "overview";
-  const view = (views.includes(raw) ? raw : "overview") as View;
+  const demo = params.get("mode") === "demo";
   const selectedID = params.get("id") ?? "",
     id = /^[a-zA-Z0-9_-]{1,80}$/.test(selectedID) ? selectedID : "";
   const session = useOperations(demo),
     [connection, setConnection] = useState(false),
     [token, setToken] = useState("");
+  const [chosenRole, setChosenRole] = useState<string>();
+  useEffect(() => {
+    setChosenRole(undefined);
+  }, [session.context?.id, demo]);
+  const profiles = opsWorkspaces.filter((p) =>
+    demo ? p.role === "ops_viewer" : session.context?.roles.includes(p.role),
+  );
+  const profile = profiles.find((p) => p.role === chosenRole) ?? profiles[0];
+  const raw = params.get("view") ?? profile?.home ?? "overview";
+  const view = (views.includes(raw) ? raw : "overview") as View;
+  const sectionOrder = profile?.sections as readonly string[] | undefined;
+  const orderedSections = sectionOrder
+    ? [...sections].sort(
+        (a, b) => sectionOrder.indexOf(a[0]) - sectionOrder.indexOf(b[0]),
+      )
+    : [...sections];
   const active = sectionFor(view),
     data = demo ? demoSnapshot : session.snapshot;
   const go = (next: View, nextID?: string) =>
@@ -93,7 +108,7 @@ export default function OpsApp() {
           title={displayTitle}
           subtitle={descriptions[currentView]}
           heading="技术运维 / 环境工作台"
-          caption="TECHNICAL OPERATIONS"
+          caption={profile?.label ?? "TECHNICAL OPERATIONS"}
           breadcrumb={"技术运维 / " + titles[currentView]}
           identity={
             demo ? "值班账号 · 示例" : (session.context?.id ?? "尚未连接账号")
@@ -115,7 +130,7 @@ export default function OpsApp() {
               </small>
             </>
           }
-          navigation={sections.map(([key, label, icon]) => ({
+          navigation={orderedSections.map(([key, label, icon]) => ({
             key,
             label,
             icon,
@@ -126,6 +141,43 @@ export default function OpsApp() {
           focusKey={currentView + ":" + id}
           actions={
             <>
+              {profiles.length > 1 ? (
+                <label className="field">
+                  <span>工作重点</span>
+                  <select
+                    aria-label="选择已授权运维岗位"
+                    disabled={
+                      session.busy ||
+                      ![
+                        "overview",
+                        "services",
+                        "workers",
+                        "releases",
+                        "migrations",
+                        "alerts",
+                        "audit",
+                        "access",
+                      ].includes(view)
+                    }
+                    value={profile?.role ?? ""}
+                    onChange={(event) => {
+                      const next = profiles.find(
+                        (p) => p.role === event.target.value,
+                      );
+                      if (next) {
+                        setChosenRole(next.role);
+                        navigate(pagePath(next.home, undefined, demo));
+                      }
+                    }}
+                  >
+                    {profiles.map((p) => (
+                      <option key={p.role} value={p.role}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ) : null}
               {demo ? (
                 <Button kind="quiet" onClick={() => changeMode(false)}>
                   退出示例

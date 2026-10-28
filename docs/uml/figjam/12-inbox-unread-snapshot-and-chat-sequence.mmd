@@ -1,0 +1,15 @@
+sequenceDiagram
+ participant user as 用户
+ participant client as 消息中心
+ participant api as mobile.Service
+ participant db as mobile_receipts与消息
+ client->>api: 读取inbox-summary，不自动创建快照
+ api->>client: 三类真实计数与免打扰边界，超过99显示99+
+ user->>client: 主动点击全部已读
+ client->>api: POST inbox/read-all/snapshot
+ api->>db: 保存当前可见消息与通知范围，有效10分钟
+ api->>client: 返回snapshot_id、version、count与到期时间
+ user->>client: 确认已知范围
+ client->>api: POST inbox/read-all携带原请求与快照版本
+ api->>db: 核对当前权限并只推进快照内已读位置
+ api->>client: 返回applied_count与skipped_count；之后新消息未读

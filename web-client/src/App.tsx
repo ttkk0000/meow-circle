@@ -33,6 +33,8 @@ import { Guardians, GuardianProtection } from "./features/GuardianPages";
 import { Rules, ReadingPage, SettingsHome } from "./features/ReadingPages";
 import { Feed, PageEnd, Records, titles } from "./features/Records";
 import { ResourcePage, Member } from "./features/ResourcePage";
+import { CareCollaboration } from "./features/CareCollaboration";
+import { careReadOnlyReason, type CareContext } from "./core/care";
 import { LeadInbox, LeadPage } from "./features/LeadPages";
 import { Chat } from "./features/chat";
 import { Recovery } from "./features/Recovery";
@@ -117,7 +119,11 @@ function moduleFor(path: string, params: URLSearchParams) {
   )
     return "messages";
   if (/^\/(cases|claims|leads|nearby)/.test(path)) return "cases";
-  if (/^\/(pets|adoptions|appointments|offers|care-updates)/.test(path))
+  if (
+    /^\/(pets|adoptions|appointments|offers|care-updates|care-collaboration)/.test(
+      path,
+    )
+  )
     return "care";
   if (path === "/" || path === "/guide" || path.startsWith("/entries"))
     return "community";
@@ -475,6 +481,8 @@ function RouteContent({
     return <LeadInbox caseId={integer(params.get("ref"))} />;
   if (kind === "leads" && pieces.length === 2 && id > 0n)
     return <LeadPage id={id} />;
+  if (kind === "care-collaboration" && pieces.length === 2 && id > 0n)
+    return <CareCollaboration id={id} />;
   if (pieces.length === 1 && lists.has(kind))
     return (
       <Records
@@ -528,9 +536,42 @@ function EditorRoute({ params }: { params: URLSearchParams }) {
   const id = integer(params.get("id"));
   const resource = id > 0n && !!resourceRoute(kind, id);
   const result = useQuery<RecordData>(
-    resource && flow !== "guardian" ? `${kind}/${id}` : null,
+    resource && flow !== "guardian" && flow !== "care" ? `${kind}/${id}` : null,
   );
+  const carePath =
+    flow === "care" && kind === "adoptions" && id > 0n
+      ? `adoptions/${id}/care-context`
+      : null;
+  const care = useQuery<CareContext>(carePath);
   if (flow === "guardian") return <Guardians id={id} />;
+  if (flow === "care" && care.data?.can_post && !care.error && !care.loading)
+    return <WorkflowEditor flow={flow} context={{ kind, id, params }} />;
+  if (flow === "care")
+    return (
+      <TaskPage title="私密照护近况">
+        <QueryState
+          loading={care.loading}
+          error={care.error}
+          failure={care.failure}
+          readAt={care.readAt}
+          onRetry={() => {
+            if (carePath) void reload(carePath);
+          }}
+        >
+          {care.data && !care.loading ? (
+            <Notice title="当前仅可查阅">
+              {careReadOnlyReason(care.data)}
+              <RowLink
+                title="返回授权照护近况"
+                to={`/care-collaboration/${id}`}
+              />
+            </Notice>
+          ) : !carePath ? (
+            <Notice title="照护事项无效">请从获授权的照护事项进入。</Notice>
+          ) : null}
+        </QueryState>
+      </TaskPage>
+    );
   if (resource && (result.loading || !result.data))
     return (
       <QueryState

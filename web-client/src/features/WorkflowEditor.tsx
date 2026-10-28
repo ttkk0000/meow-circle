@@ -4,6 +4,8 @@ import {
   AppointmentVersionReview,
 } from "./AppointmentPages";
 import { canConfirmAppointment } from "../core/appointment";
+import { invitationActions } from "../core/invitation";
+import { careReadOnlyReason, type CareContext } from "../core/care";
 import {
   adoptionActionOptions,
   currentAdoptionContract,
@@ -484,6 +486,25 @@ export function WorkflowEditor({
       if (properties.version) body.version = current.baseVersion;
       if (properties.media_ids)
         body.media_ids = current.photos.map((p) => p.mediaId);
+      if (
+        flow === "invitation-action" &&
+        (context.kind !== "invitations" ||
+          !context.record ||
+          !invitationActions(context.record, owner).includes(
+            context.params.get("action") ?? "",
+          ))
+      )
+        throw new Error(
+          "当前邀请状态或操作角色已变化，请刷新核对。原请求编号继续保留。",
+        );
+      if (flow === "care") {
+        if (context.kind !== "adoptions" || context.id <= 0n)
+          throw new Error("请从获授权的照护事项进入。");
+        const care = await api.request<CareContext>(
+          `adoptions/${context.id}/care-context`,
+        );
+        if (!care.can_post) throw new Error(careReadOnlyReason(care));
+      }
       if (flow === "lead") {
         if (
           context.kind !== "cases" ||
@@ -951,7 +972,8 @@ export function WorkflowEditor({
       if (flow === "data" && body.type === "close_account") {
         api.endSession();
         navigate("/recovery");
-      } else if (workflow.after && (result?.id ?? context.id) > 0n)
+      } else if (flow === "care") navigate(`/care-collaboration/${context.id}`);
+      else if (workflow.after && (result?.id ?? context.id) > 0n)
         navigate(
           `/${workflow.after}/${result?.id ?? context.id}${workflow.afterView ? `?view=${encodeURIComponent(workflow.afterView)}&version=${result && "version" in result ? String(result.version) : "0"}` : ""}`,
         );
@@ -1342,6 +1364,19 @@ export function WorkflowEditor({
           }
         >
           只保存本条线索的处理标记；保留原始描述和照片，不将求助改为已找回。提交仍按当前发布人角色与版本校验。
+        </Notice>
+      ) : null}
+      {flow === "invitation-action" ? (
+        <Notice
+          title={
+            context.params.get("action") === "leave"
+              ? "退出本次协作"
+              : "核对本次邀请"
+          }
+        >
+          {context.params.get("action") === "leave"
+            ? "退出后不再拥有本次介绍或照护协作权限，原领养事项继续保留。"
+            : "接受时按当前归属、资格和阶段复核；接受截止只限制尚未接受的邀请。"}
         </Notice>
       ) : null}
       {flow === "lead-contact" ? (

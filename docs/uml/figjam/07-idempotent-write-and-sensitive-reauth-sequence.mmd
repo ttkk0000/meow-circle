@@ -1,0 +1,13 @@
+sequenceDiagram
+ participant client as SensitiveActionStore
+ participant api as API与identity
+ participant db as mobile_operations与业务事务
+ client->>api: 获取包含对象、版本、用途和payload摘要的scope
+ client->>api: auth/reauth提交当前身份凭据与scope
+ api->>db: mobile_auth_challenges保存5分钟purpose_grant
+ api->>client: 返回用途绑定的单次授权
+ client->>api: 原client_request_id、版本与reauth_token提交命令
+ api->>db: 写事务内核对身份、scope、权限、版本与原请求
+ db->>api: 原回执或提交结果
+ api->>client: 明确成功或失败；传输中断则结果未知
+ client->>api: operations原key回读对账；不自动换key重发

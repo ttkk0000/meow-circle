@@ -1,196 +1,30 @@
 @startuml 01-system-component-architecture
 !theme plain
-skinparam backgroundColor #FFFDF9
-skinparam componentStyle uml2
-skinparam defaultFontName "PingFang SC, Inter, sans-serif"
-skinparam roundcorner 8
-skinparam ArrowColor #5C534E
-skinparam PackageBorderColor #E6DFD5
-skinparam ComponentBorderColor #D8CFC4
-skinparam ComponentBackgroundColor #FFFFFF
+skinparam defaultFontName "Noto Sans SC"
+skinparam shadowing false
+title M&D 系统组件与外部能力边界
 
-title M&D (meow & doggie) V2 Full-Stack Multi-Platform System Component Architecture
-
-package "KMP Native & Desktop Clients (Kotlin 2.3.10 + Compose Multiplatform 1.10.2)" as KmpLayer {
-  package "kmp/shared (Common Domain, MVI & Transport)" as KmpShared {
-    [MviStore<S, I, E>] as MviBase
-    [MobileStore\n(Root Shell & Auth/Feed/Chat)] as MobileStore
-    [MobileFeatureStore\n(42 Feature Pages & Child Stores)] as MobileFeatureStore
-    [SensitiveActionStore\n(Reauth + CommandVault + Idempotency)] as SensitiveStore
-    [ProviderAuthStore\n(WeChat/QQ/Apple Create vs Link)] as ProviderStore
-    [AgeAssuranceStore\n(External Gateway Challenge/Callback)] as AgeStore
-    [GuardianInviteStore\n(15m Invite / Claim / Review / Revoke)] as GuardianStore
-    [MobileApiClient\n(74 DTOs / 241 Paths / Ktor HTTP)] as MobileApiClient
-    [LostMap Model\n(GCJ-02 / WGS-84 2-Decimal Coarse)] as LostMapModel
-  }
-
-  package "kmp/clientUi (34 Common Compose UI Files)" as KmpClientUi {
-    [ConsumerApp & AdaptiveShell\n(Compact <=600dp / Medium / Expanded)] as ConsumerApp
-    [FeaturePages Dispatcher\n(42 FeaturePage Routes)] as FeaturePages
-    [Common Components\n(ChoiceChipBar / SegmentedTextBar /\nPhotoQueueList / OtpVerificationFields /\nMviStatusBanner / PendingLinkBanner)] as CommonUiComponents
-    [ClientUiPlatform Port\n(File/Media/Map/Provider/Browser Hooks)] as ClientUiPlatform
-  }
-
-  package "kmp/androidApp (API 26..37)" as AndroidApp {
-    [MobileMviViewModel & AndroidMviBase] as AndroidVm
-    [AndroidClientPlatform] as AndroidPlatform
-    [AndroidNativeMap (AMap 3D SDK 11.3.100)] as AndroidMap
-    [AndroidProviderAuth & WXEntryActivity] as AndroidProvider
-    [AndroidSecureStorage (EncryptedSharedPreferences)] as AndroidStorage
-  }
-
-  package "kmp/iosUi & kmp/iosApp" as IosApp {
-    [MainViewController & IosClientPlatform] as IosPlatform
-    [IosNativeMap & AmapNativeMap.swift\n(AMap3DMap 11.2.100)] as IosMap
-    [IosProviderAuth & NativeProviderAuth.swift\n(ASAuthorization / WXApi / TencentOAuth)] as IosProvider
-    [IosKeychainStorage (kSecClassGenericPassword)] as IosStorage
-  }
-
-  package "kmp/desktopApp (JVM 21)" as DesktopApp {
-    [DesktopClientPlatform & Main.kt] as DesktopPlatform
-    [DesktopStorage\n(java-keyring 1.0.4 + AES-256-GCM)] as DesktopStorage
-    [LostMapScreen\n(Browser /app/map Handoff + GCJ-02 Copy)] as DesktopMap
-  }
-}
-
-package "Web Client (web-client: React 19 + TypeScript 5.8 + Vite 6)" as WebLayer {
-  [Consumer SPA (/app/*)\n(Cookie Session + X-CSRF-Token)] as WebConsumer
-  [Operator Workbench (/app/operator)\n(In-Memory Credentials + credentials: 'omit')] as WebOperator
-  [Web AmapView (JS API 2.0 + /maps/amap Proxy)] as WebMap
-  [Web ProviderSignIn & AccountConflict\n(Browser Redirect / Callback)] as WebProvider
-  [Web IndexedDB AES-GCM CommandVault] as WebVault
-}
-
-package "Go Backend Processes (cmd/api & cmd/worker)" as ServerLayer {
-  package "internal/platform/mobileapi (HTTP Transport & Gateways)" as MobileApiPkg {
-    [mobileapi.Handler\n(241 Paths / 271 Operations)] as ApiHandler
-    [Browser Cookie/CSRF & Origin Guard] as CookieGuard
-    [Operator Auth & Role Guard\n(ops_reviewer / safety_specialist /\nprivacy_officer / identity_verifier)] as OpsGuard
-    [Amap Security Reverse Proxy\n(/maps/amap/_AMapService/)] as AmapProxy
-    [Browser Provider Auth Gateway\n(/api/v2/auth/providers/{provider}/browser/*)] as BrowserProviderGw
-  }
-
-  package "internal/identity (Identity, Auth & Qualification Domain)" as IdentityPkg {
-    [identity.Service\n(Register / Login / Refresh / Logout)] as IdentityService
-    [PurposeReauth & OtpChallenges\n(10m Single-Use Grant + Cost 12 Bcrypt)] as ReauthEngine
-    [Qualification & AgeAssurance\n(ageBand / GuardianConsent / Posting Gates)] as QualificationEngine
-    [GuardianInvites & AdultClaims\n(15m HMAC Invite + Independent Adult Claim)] as GuardianInviteEngine
-  }
-
-  package "internal/mobile (Core Consumer & Governance Domain)" as MobilePkg {
-    [mobile.Service\n(Feed / Entries / Pets / Reading / Publications)] as MobileService
-    [Social & Stranger DM Gate\n(Minor directContact Consent Enforcement)] as SocialEngine
-    [Care Domain\n(F07 Adoption Exclusivity / F08 Dual-Track Appt /\nF09 Lost Pet Coarse Map)] as CareEngine
-    [Offers, Disputes & Safety Holds\n(F10 Inquiry-Only / Evidence Holds)] as OfferEngine
-    [Data Lifecycle & Erasure\n(F12 Export / Erasure / Account Closure)] as LifecycleEngine
-  }
-
-  package "internal/platform/mobileauth & External Adapters" as AdapterPkg {
-    [TencentApps Verifier\n(WeChat code2session / QQ OAuth2 / Apple JWKS)] as TencentVerifier
-    [External Age Gateway\n(HMAC-SHA256 Signed Challenge & Callback)] as AgeGatewayAdapter
-    [S3 Presigned Media Signer & Aliyun SMS] as S3SmsAdapter
-  }
-
-  package "cmd/worker & internal/platform/mobileworker" as WorkerPkg {
-    [mobileworker.Runner (6 Scheduled Jobs)\n1. ExpireReservations\n2. ExpireDomainDeadlines\n3. ProcessPendingDataRequests\n4. ReconcileObjectDeletions\n5. PurgeExpiredArtifacts\n6. DispatchOutboxEvents] as WorkerRunner
-  }
-
-  package "internal/platform/postgres" as PostgresPkg {
-    [postgres.MobileRepository\n(SERIALIZABLE Command Ledger + SQL Queries)] as PgRepo
-  }
-}
-
-database "PostgreSQL 16 (Migrations 001..009)" as PostgresDb {
-  [Identity & Security Tables\n(users / account_identities / auth_challenges /\nuser_sessions / user_qualification_status /\nguardian_consents / purpose_reauth_grants)] as DbIdentity
-  [Command Ledger, Outbox & Holds\n(mobile_command_ledger / mobile_outbox_events /\nmobile_media_reservations / mobile_evidence_holds)] as DbInfra
-  [44 mobile_* Domain Resource Tables\n(Entries / Pets / Discussions / Adoption / Appointments /\nLostReports / Offers / Inbox / Publications / Reading / Ops)] as DbDomain
-}
-
-cloud "External Cloud & Compliance Providers" as ExternalCloud {
-  [WeChat Open Platform / QQ Connect / Apple ID] as ExtOAuth
-  [External Age Assurance Provider] as ExtAge
-  [AutoNavi (AMap) Rest & Tile Service] as ExtAmap
-  [S3-Compatible Object Storage & Aliyun SMS] as ExtStorageSms
-}
-
-' Relationships inside KMP
-MviBase <|-- MobileStore
-MviBase <|-- MobileFeatureStore
-MviBase <|-- SensitiveStore
-MviBase <|-- GuardianStore
-MobileFeatureStore *-- SensitiveStore
-MobileFeatureStore *-- ProviderStore
-MobileFeatureStore *-- AgeStore
-MobileFeatureStore *-- GuardianStore
-MobileStore --> MobileApiClient
-MobileFeatureStore --> MobileApiClient
-MobileFeatureStore --> LostMapModel
-
-ConsumerApp --> MobileStore
-ConsumerApp --> MobileFeatureStore
-ConsumerApp --> FeaturePages
-FeaturePages --> CommonUiComponents
-ConsumerApp --> ClientUiPlatform
-
-AndroidPlatform ..|> ClientUiPlatform
-IosPlatform ..|> ClientUiPlatform
-DesktopPlatform ..|> ClientUiPlatform
-
-AndroidApp --> KmpClientUi
-AndroidApp --> KmpShared
-AndroidVm --> MviBase
-AndroidPlatform --> AndroidMap
-AndroidPlatform --> AndroidProvider
-AndroidPlatform --> AndroidStorage
-
-IosApp --> KmpClientUi
-IosApp --> KmpShared
-IosPlatform --> IosMap
-IosPlatform --> IosProvider
-IosPlatform --> IosStorage
-
-DesktopApp --> KmpClientUi
-DesktopApp --> KmpShared
-DesktopPlatform --> DesktopStorage
-DesktopPlatform --> DesktopMap
-
-' Client to Server connections
-MobileApiClient --> ApiHandler : HTTPS Bearer Token +\nX-Client-Request-Id
-WebConsumer --> ApiHandler : HTTPS HttpOnly Cookie +\nX-CSRF-Token
-WebOperator --> ApiHandler : HTTPS Basic/Bearer\n(Named Operator Principals)
-WebMap --> AmapProxy : Tile & Geocoding via\nInjected jscode
-WebProvider --> BrowserProviderGw : OAuth Redirect & Callback
-DesktopMap ..> WebConsumer : Opens /app/map in\nSystem Browser
-
-' Server internal relationships
-ApiHandler --> CookieGuard
-ApiHandler --> OpsGuard
-ApiHandler --> IdentityService
-ApiHandler --> MobileService
-BrowserProviderGw --> IdentityService
-IdentityService --> ReauthEngine
-IdentityService --> QualificationEngine
-IdentityService --> GuardianInviteEngine
-IdentityService --> TencentVerifier
-IdentityService --> AgeGatewayAdapter
-MobileService --> SocialEngine
-MobileService --> CareEngine
-MobileService --> OfferEngine
-MobileService --> LifecycleEngine
-MobileService --> S3SmsAdapter
-IdentityService --> PgRepo
-MobileService --> PgRepo
-WorkerRunner --> MobileService
-WorkerRunner --> PgRepo
-PgRepo --> PostgresDb
-
-' External connections
-TencentVerifier --> ExtOAuth
-BrowserProviderGw --> ExtOAuth
-AgeGatewayAdapter --> ExtAge
-AmapProxy --> ExtAmap
-AndroidMap --> ExtAmap
-IosMap --> ExtAmap
-S3SmsAdapter --> ExtStorageSms
-
+component "Android / iOS / Desktop" as native
+component "KMP clientUi / shared" as kmp
+component "Web /app" as web
+component "业务 /app/operator 与运维 /app/ops" as ops
+component "cmd/server + mobileapi.Handler" as api
+component "identity.Service" as identity
+component "mobile.Service" as domain
+component "mobile.Repository / Tx" as repo
+database "PostgreSQL 001–013" as db
+component "cmd/worker" as worker
+cloud "外部认证 / 年龄 / 高德 / 短信 / 存储" as providers
+native --> kmp
+kmp --> api : Bearer
+web --> api : Cookie + X-MND-CSRF
+ops --> api : 具名凭据与角色
+worker --> api : 具名job权限
+api --> identity
+api --> domain
+identity --> repo
+domain --> repo
+repo --> db
+api --> providers : 已配置适配器
+note bottom of providers : 正式参数与平台联调未完成；执行器及完整搜索接收端保留占位
 @enduml

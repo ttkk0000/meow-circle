@@ -1,5 +1,7 @@
 # M&D 系统架构与技术实施合同
 
+> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 > **2026-10-25 架构、代码逻辑与 PlantUML 基线更新**：
 > - **全栈代码逻辑与 UML 图谱**：已新增[全栈代码逻辑与 PlantUML 架构总览手册](../CODE_LOGIC_AND_UML_REFERENCE.md)及[独立 PlantUML (`.puml`) 图谱目录（12 张图）](../uml/README.md)，完整覆盖系统组件架构、KMP MVI + `clientUi` 类图、Go 服务端领域类图、PostgreSQL `001`–`009` ER 图及 8 条关键业务时序/状态机图。
 > - **产品与体验基线**：已同步至 [PRD v2.1（FR-001 至 FR-042，含 EPIC-008 监护/AI标识/双城准入/数据权利/游客安全/证据保全）](prd.md)、[UX v2.1（UX-01 至 UX-17）](ux-design.md)、[首批城市物种准入与四类标准协议模板](../design/MND_CITY_SPECIES_AND_CONTRACT_TEMPLATES.md)。

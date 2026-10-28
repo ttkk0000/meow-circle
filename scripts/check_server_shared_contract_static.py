@@ -39,7 +39,7 @@ mapping = {
     "Adoption":"AdoptionBody", "ContractRevision":"ContractRevision", "ReturnPlan":"ReturnPlan",
     "ContractInput":"ContractInput", "ContractTerms":"ContractTerms", "ReturnInput":"ReturnInput", "ReturnTerms":"ReturnTerms",
     "OfferInput":"OfferInput", "Offer":"OfferBody", "Fee":"Fee", "ClaimInput":"ClaimInput", "CaseInput":"CaseInput",
-    "CareInput":"CareInput", "GroupInput":"GroupInput", "GroupAction":"GroupAction", "InviteInput":"InviteInput", "FriendInput":"FriendInput",
+    "CareContext":"CareContext", "CareInput":"CareInput", "GroupInput":"GroupInput", "GroupAction":"GroupAction", "InviteInput":"InviteInput", "FriendInput":"FriendInput",
     "ReviewInput":"ReviewInput", "GuardianDecision":"GuardianDecision", "DataRequestInput":"DataRequestInput",
     "DataRequestStatus":"DataRequestStatus", "RightsInput":"RightsInput", "RightsReceipt":"RightsReceipt",
     "PushDeviceLookup":"PushDeviceLookup", "PushDeviceInput":"PushDeviceInput", "PushDeviceReceipt":"PushDeviceReceipt", "Credential":"ProviderCredential",

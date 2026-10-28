@@ -100,6 +100,9 @@ data class LeadInput(val text: String, @SerialName("media_ids") val mediaIds: Li
 @Serializable
 data class CareBody(val text: String, @SerialName("needs_help") val needsHelp: Boolean)
 @Serializable
+data class CareContext(@SerialName("adoption_id") val adoptionId: Long, val state: String,
+    @SerialName("can_post") val canPost: Boolean, val reason: String)
+@Serializable
 data class CareInput(val text: String, @SerialName("needs_help") val needsHelp: Boolean,
     @SerialName("client_request_id") val clientRequestId: String, @SerialName("media_ids") val mediaIds: List<Long> = emptyList())
 @Serializable

@@ -1,0 +1,225 @@
+{
+  "task": "AI-20261028-ADMIN-ROLES",
+  "date": "2026-10-28",
+  "head": "1fe5302e7eb21c5767b84505dea69f47481f8c5f",
+  "branch": "main",
+  "uncommitted": true,
+  "figmaDesign": "https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=888-1403",
+  "figmaSpec": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=21-2",
+  "counts": {
+    "paths": 255,
+    "operations": 288,
+    "serverSchemas": 141,
+    "webSchemas": 143,
+    "dtoPairs": 88,
+    "mobileTables": 45,
+    "migrations": 13
+  },
+  "validation": {
+    "readOnlyScripts": 9,
+    "typescriptSyntaxFiles": 22,
+    "kotlinFullFiles": 7,
+    "kotlinFragments": 5,
+    "goFormatSyntaxFiles": 12,
+    "runtime": false,
+    "compiled": false,
+    "testsExecuted": false,
+    "typeChecked": false,
+    "markdownFiles": 45,
+    "localLinks": 1140,
+    "missingLocalLinks": 0,
+    "gitDiffCheck": true,
+    "conflictAndBOMScan": true
+  },
+  "files": [
+    {
+      "path": "internal/mobile/authority_read.go",
+      "sha256": "85a4f25e3b276aed5f4ffbca2425d87c365e0f5223a8a6698a4e9688125eca8e"
+    },
+    {
+      "path": "internal/mobile/authority_read_test.go",
+      "sha256": "38cf5bd9942e7d80a7dd6ac77eaeb9c8d2c50a86887331128341d063fe8686ca"
+    },
+    {
+      "path": "internal/mobile/care_context.go",
+      "sha256": "e7f3652a07d5543d06a11657d388493da5f6f8f781631452f9362706bb07fadf"
+    },
+    {
+      "path": "internal/mobile/group_directory.go",
+      "sha256": "470c53c8d35e2b456e0bb0f3ceaa27d4dbaa2c14bf6b023af494e01e882636d8"
+    },
+    {
+      "path": "internal/mobile/inbox.go",
+      "sha256": "fee728ba271ecfe934c3d0d18f8974edf3e869fcb76c23c94edf55d92d81e7b1"
+    },
+    {
+      "path": "internal/mobile/inbox_snapshot_test.go",
+      "sha256": "ecc0169053b64addcf4256b93269a547651afab153ce73be1699e3459e28aecd"
+    },
+    {
+      "path": "internal/mobile/invitation_lifecycle_test.go",
+      "sha256": "27cdf88b80a9b4c1eb1d5a6d7c952ee6b58bb8c1ba4ab4c82cb18aa32befb7a8"
+    },
+    {
+      "path": "internal/mobile/invitation_policy.go",
+      "sha256": "b18a229b47a1cb32485a9661454aa57ca84ea7cf232185d26d1628790bade2b1"
+    },
+    {
+      "path": "internal/mobile/service.go",
+      "sha256": "751cdba7ea3241a36b7875b9a7774cc95b432499412623dd9d15ee591659e87f"
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "sha256": "cd0e3ed3fee7694eb224cb17e8c027376e90442dcb761e3a293e2e71aea5f453"
+    },
+    {
+      "path": "internal/platform/mobileapi/handler.go",
+      "sha256": "e010e3681928679f1fb16bf39b8f5f8af8c7263642ad720941e12c154d059a15"
+    },
+    {
+      "path": "internal/platform/mobileapi/operator_pages_test.go",
+      "sha256": "c684a6f9ea60d248ba32ce2c4bf7f1ef1afd0c75979319636af8417b53abe193"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "sha256": "3fc6aae15c1cf2eb16528cedfbfba0ad147be9079be50b0274a97b66895505a9"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256": "f53eb28a734dc97739a5d6844f74731f04328a295fb68ba40df6ee502f25fd24"
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "sha256": "a8444be96b45f6aa05da8ba342a5d46215637512c6a4b70ead0afb413b68759a"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "sha256": "4b5b118404a741dc229c8528c930a72d31b2ed27f47153f99569862c0ad75887"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt",
+      "sha256": "58d0d10e4a6c510baeb09b1a7ca4bc895e4a665e9d0c2741ec773247e6feb7a0"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InvitationStatus.kt",
+      "sha256": "ca6e5ea060a27bfeaebeb778d85c5ed57186d94d8debe9b222acbac1fd2b6bb0"
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "d31f53184b7e0f30ea7116f39e9d90cc4464ee01418b213b4dbc88836d775f57"
+    },
+    {
+      "path": "kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/InvitationStatusTest.kt",
+      "sha256": "a98e8de995af4a533ab5c9743c96e65f1b409e3babc623941c1f201123e116cd"
+    },
+    {
+      "path": "scripts/check_admin_role_workspaces_static.py",
+      "sha256": "699e10bbd09a5a79c0c8845321d4b6403b8daebca3eedd6cdf154ca4e6c03f38"
+    },
+    {
+      "path": "scripts/check_server_shared_contract_static.py",
+      "sha256": "84c2721c927b8622042132064009237382d5535bad0ab6e03c417478556c003c"
+    },
+    {
+      "path": "scripts/export_mobile_contract.py",
+      "sha256": "10f195a9d24cbf72198f624331a648acc1a1e66798ef0c7e44ca1ea9324f4f20"
+    },
+    {
+      "path": "web-client/src/App.tsx",
+      "sha256": "d6316954fc3014493f5161dad8455e6945f2acb6d017694de2c61e7bd57ab52e"
+    },
+    {
+      "path": "web-client/src/core/care.ts",
+      "sha256": "2ffccf848edfe46098dc7751b2aad167cf4ec45c15c576d073ead783f5125aaf"
+    },
+    {
+      "path": "web-client/src/core/contract.ts",
+      "sha256": "49b33fb5c4576e931f7b2529503299701bc3160da53e645aafd956f3cfd52bd9"
+    },
+    {
+      "path": "web-client/src/core/invitation.ts",
+      "sha256": "3cc1a2ecd3eaa94a8f054bb9f77fc174aa07514ec848e5fd42a912c025c6643d"
+    },
+    {
+      "path": "web-client/src/core/routes.ts",
+      "sha256": "30383bd7e0eb39d7f93991eeabbc964ad47e46cc7851c7bab9da4220a1babb3b"
+    },
+    {
+      "path": "web-client/src/core/schemas.json",
+      "sha256": "38bb6b6baaf9a846bb3d8047abb1892ce24d998c286696cfc74eb219d40b173e"
+    },
+    {
+      "path": "web-client/src/features/CareCollaboration.tsx",
+      "sha256": "eeb826a3d256289484b10fa25e357d764b6abc6bfab44b9e8ba2edbb69a8150a"
+    },
+    {
+      "path": "web-client/src/features/ResourcePage.tsx",
+      "sha256": "9fe7063133bfac017ede6453ba850b2ad2eb88b644392be03a0e85b128d6e8a8"
+    },
+    {
+      "path": "web-client/src/features/WorkflowEditor.tsx",
+      "sha256": "496dff6b7d6be53340eb8a98f0259e6cfce7d6f240490ec2203b9b89f5cd4f59"
+    },
+    {
+      "path": "web-client/src/features/workflows.ts",
+      "sha256": "5fd3269ef6cb2063c7a6d93020f7374891e006ce2e07279b8af7969eae3ebcbc"
+    },
+    {
+      "path": "web-client/src/operations/DetailPages.tsx",
+      "sha256": "253c2a9a72552feecbcbc294b4c1018a80b862c863d1d483ec03cfb8adf86545"
+    },
+    {
+      "path": "web-client/src/operations/OpsApp.tsx",
+      "sha256": "86d7902ec94e454eed7f0fb477ee248102e4cba9fbb9269e3f67de3bc426c983"
+    },
+    {
+      "path": "web-client/src/operations/RecordPages.tsx",
+      "sha256": "4a3dfd78e8ee4101791522e94dabe3aa54e51cd4a3427d82edd827d0354a8d04"
+    },
+    {
+      "path": "web-client/src/operations/client.ts",
+      "sha256": "4a2b5d860176969e38c7b4a4e2b947dcd59eabc3747cf7aaf647ddbdf8e286c1"
+    },
+    {
+      "path": "web-client/src/operations/useOperations.ts",
+      "sha256": "8286d1159ec67287af6ddb0cecfbf13d8f60819424e15b07984d4684daed030a"
+    },
+    {
+      "path": "web-client/src/operator/ContextPages.tsx",
+      "sha256": "225872da8ecac251a34a905cd77d715277a0ed33844f3d0aad40abf0168bbfbd"
+    },
+    {
+      "path": "web-client/src/operator/OperatorApp.tsx",
+      "sha256": "cc8da458ab01ed5fc916cb665c71fb9a99492ab95e8f7703aaffcff6e26e8992"
+    },
+    {
+      "path": "web-client/src/operator/QueuePages.tsx",
+      "sha256": "a4c9d0aa5a858795e3d5f866c29b146f28a204af2509f14e6695b4fc6f2e5e0a"
+    },
+    {
+      "path": "web-client/src/operator/RoleTasks.tsx",
+      "sha256": "66e2b47c467cc7f70c27d7f6286f36a7fd32cf3911bcc34bfdc001968a098965"
+    },
+    {
+      "path": "web-client/src/operator/client.ts",
+      "sha256": "238227602995a366558d4405b5e96ac30926185808df7be903c5ea56516939c1"
+    },
+    {
+      "path": "web-client/src/operator/models.ts",
+      "sha256": "44bf9dceb87d188255761bef1b730589a819ddcbdc0841ba76ca37e3e915aabc"
+    },
+    {
+      "path": "web-client/src/operator/roleWorkspaces.ts",
+      "sha256": "c7ac533eb705031c8732b03695a628067a452b49f20999bbb17f5e5da3257859"
+    },
+    {
+      "path": "web-client/src/operator/useOperator.ts",
+      "sha256": "b2f32f9d3efb1deb8bc5cd88203473636d9dbaa14165e14eba98654f9f9ae15b"
+    },
+    {
+      "path": "docs/api/mobile-v2.openapi.json",
+      "sha256": "43947fc2b379ac68c06235b7352b2f50c2e550e1ff2058948b3920710848914a"
+    }
+  ],
+  "figmaImplementationSpec": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=22-2"
+}

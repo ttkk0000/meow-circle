@@ -1,52 +1,19 @@
 @startuml 09-appointment-dual-track-and-safety-hold-state
 !theme plain
-skinparam backgroundColor #FFFDF9
-skinparam defaultFontName "PingFang SC, Inter, sans-serif"
-skinparam roundcorner 8
-skinparam StateBorderColor #D8CFC4
-skinparam StateBackgroundColor #FFFFFF
-skinparam ArrowColor #5C534E
+skinparam defaultFontName "Noto Sans SC"
+skinparam shadowing false
+title 预约有效版本、提案与安全暂停
 
-title F08 Context-Bound Appointment Admission, Dual-Track Reschedule & Safety Hold State Machine
-
-state "Context-Bound Admission Gate (Pre-Creation Validation)" as AdmissionGate {
-  state "Valid Context Required:\n1. Active Adoption Application (adoption_application)\n2. Active Lost Pet Claim (lost_claim)\n3. Verified Service Offer Inquiry (offer_inquiry)" as ContextCheck
-  [*] --> ContextCheck : POST /api/v2/appointments\n(Rejects arbitrary standalone cold-call bookings)
-}
-
-AdmissionGate --> Requested : Context active & neither party blocked
-
-state "Appointment Lifecycle (mobile_appointments)" as ApptSM {
-  state "Requested\n(Initial slot proposed)" as Requested
-  state "Confirmed\n(effectiveVersion vN locked)" as Confirmed
-
-  Requested --> Confirmed : Counterparty accepts initial slot\n[effectiveVersion = v1, pendingProposal = null]
-  Requested --> Cancelled : Requester withdraws OR\ncounterparty declines OR 48h expiry
-
-  state "Confirmed with Dual-Track Reschedule (effectiveVersion + pendingProposal)" as DualTrack {
-    state "ConfirmedActive\n(effectiveVersion = vN\npendingProposal = null)" as ConfirmedActive
-    state "ReschedulePending\n(effectiveVersion = vN remains in force!\npendingProposal = vN+1 awaiting response)" as ReschedulePending
-
-    [*] --> ConfirmedActive
-    ConfirmedActive --> ReschedulePending : Either party proposes new time/place\n[pendingProposal created with expiresAt]
-    ReschedulePending --> ConfirmedActive : Counterparty accepts pendingProposal\n[effectiveVersion := pendingProposal (vN+1);\npendingProposal := null]
-    ReschedulePending --> ConfirmedActive : Proposer withdraws proposal\nOR counterparty rejects proposal\nOR cmd/worker expires pendingProposal\n[effectiveVersion vN stays intact!]
-  }
-
-  Confirmed --> DualTrack
-  DualTrack --> CheckedIn : Bilateral check-in within active window of effectiveVersion
-  CheckedIn --> Completed : Service / Meet-up finished & confirmed
-  DualTrack --> Cancelled : Explicit cancellation before check-in
-
-  state "SafetyHold\n(Frozen by Report / Dispute / Operator safety_specialist)" as SafetyHold {
-    state "All user reschedule / check-in / completion mutations blocked;\nMobile Evidence Hold (mobile_evidence_holds) active" as HoldDetail
-  }
-
-  Requested --> SafetyHold : Safety report or operator freeze
-  DualTrack --> SafetyHold : Safety report or operator freeze
-  CheckedIn --> SafetyHold : Emergency safety trigger
-  SafetyHold --> DualTrack : Operator releases hold & restores schedule
-  SafetyHold --> CancelledBySafety : Operator terminates appointment for safety violation
-}
-
+[*] --> pending
+pending --> confirmed : 双方确认同一版本
+confirmed --> confirmed : 普通新提案不抹除原effectiveVersion
+confirmed --> safety_hold : 显式风险暂停
+safety_hold --> safety_hold : 同暂停版本重提／拒绝／撤回／到期
+safety_hold --> confirmed : 新提案绑定暂停版本且双方完成核对
+pending --> cancelled : 取消
+confirmed --> cancelled : 取消
+safety_hold --> cancelled : 取消
+note right of confirmed : effectiveVersion、pendingVersion、history独立
+恢复replaced历史只产生新提案
+note right of safety_hold : 旧确认不可解除当前暂停
 @enduml

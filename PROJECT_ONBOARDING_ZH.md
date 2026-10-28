@@ -1,5 +1,7 @@
 # kitty-circle 项目上手文档（Android / 鸿蒙背景版）
 
+> **2026-10-27 现行入口**：[源码与文档基线](docs/CURRENT_BASELINE.md) · [产品／交付状态](docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 这份文档假设你：
 
 - 写过 Android（Java/Kotlin）或鸿蒙（ArkTS/Java），理解 Activity / Service / ContentProvider 这套生命周期与分层

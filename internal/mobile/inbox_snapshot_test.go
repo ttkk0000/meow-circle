@@ -89,7 +89,7 @@ func TestInboxReadAllDoesNotAcceptRequestsOrClearPendingWork(t *testing.T) {
 	ctx := context.Background()
 	c := inboxConversation(t, s, false)
 	inboxMessage(t, s, c.ID, false)
-	invitation := serverRecord(t, repo, mobile.Invitations, mobile.Record{OwnerID: 1, Participants: []int64{2}, State: "pending"}, mobile.Invitation{})
+	invitation := serverRecord(t, repo, mobile.Invitations, mobile.Record{OwnerID: 1, Participants: []int64{2}, State: "pending"}, mobile.Invitation{Scope: "group_member", RecipientID: 2, ExpiresAt: time.Now().Add(time.Hour)})
 	before, e := s.Unread(ctx, 2)
 	if e != nil || before.MessageRequests != 1 || before.Pending["message_requests"] != 1 || before.Pending["invitations"] != 1 {
 		t.Fatal(before, e)

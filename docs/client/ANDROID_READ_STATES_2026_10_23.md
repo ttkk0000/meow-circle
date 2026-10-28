@@ -25,8 +25,8 @@
 
 - [共享PageState与主列表](../../kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt)：保留刷新内容、请求模式、独立会话分页；服务资格关卡未更改。
 - [扩展读取与选择列表](../../kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt)：共用状态转换，认领／线索支持指定材料读取。
-- [安卓通用状态](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidLoadStates.kt)：按容器宽度自然换行，错误面板最大480dp、动作至少48dp，进度／错误使用礼貌播报；沿用MaterialTheme默认浅色。
-- [照片](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMedia.kt)、[贴纸](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidComposeControls.kt)及现有各业务页接入。手机、平板横竖／窄窗使用同一组件及原Store，不另建业务状态。
+- [安卓通用状态](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt)：按容器宽度自然换行，错误面板最大480dp、动作至少48dp，进度／错误使用礼貌播报；沿用MaterialTheme默认浅色。
+- [照片](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt)、[贴纸](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt)及现有各业务页接入。手机、平板横竖／窄窗使用同一组件及原Store，不另建业务状态。
 
 本批没有修改依赖、包名、签名、旧Stitch镜像、苹果UI或服务器。Web／Desktop新业务UI尚未迁移，这些共享语义不代表所有平台的状态界面已实现。
 
@@ -41,3 +41,6 @@
 Figma导航修订与两项待补远端证据见[设计收尾](../design/figma-study/NAVIGATION_DOC_2026_10_23.md)。
 
 未运行编译，遵循全局不自行编译规则。未测试、设备运行、迁移、提交或推送。
+
+
+2026-10-27文档维护：上述旧Android专用文件已随公共clientUi迁移，链接改指当前承接文件；原文件名与批次结果保留作为历史证据，不表示重新运行。

@@ -337,6 +337,9 @@ func (h *Handler) resource(r *http.Request, actor int64, path []string) (any, er
 		return nil, mobile.ErrNotFound
 	}
 	ctx := r.Context()
+	if k == mobile.Adoptions && len(path) == 3 && path[2] == "care-context" && r.Method == http.MethodGet {
+		return h.Service.CareContext(ctx, actor, id)
+	}
 	if r.Method == http.MethodGet && len(path) == 3 && path[2] == "verifications" {
 		return h.Service.Verifications(ctx, actor, k, id)
 	}
@@ -816,6 +819,15 @@ func (h *Handler) operations(r *http.Request, path []string) (any, error) {
 			next, count, e = h.Identity.PurgeExpiredChallenges(r.Context(), in.Cursor)
 		}
 		return map[string]any{"next_cursor": next, "processed": count}, e
+	}
+	if len(path) == 1 && path[0] == "authority" && r.Method == http.MethodGet {
+		actor, e := strconv.ParseInt(r.URL.Query().Get("actor_id"), 10, 64)
+		pet, pe := strconv.ParseInt(r.URL.Query().Get("pet_id"), 10, 64)
+		scope := r.URL.Query().Get("scope")
+		if scope != "city_rule" && (e != nil || pe != nil) {
+			return nil, mobile.Invalid("actor and pet required")
+		}
+		return h.Service.AuthoritySnapshot(r.Context(), op.ID, mobile.AuthorityLookup{ActorID: actor, PetID: pet, Scope: scope, City: r.URL.Query().Get("city"), Species: r.URL.Query().Get("species")})
 	}
 	if len(path) == 1 && path[0] == "revenue" && r.Method == http.MethodGet {
 		after, _ := strconv.ParseInt(r.URL.Query().Get("cursor"), 10, 64)

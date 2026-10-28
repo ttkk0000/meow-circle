@@ -1,320 +1,46 @@
-# Runbook
+# M&D 运行、迁移与交付核对入口
 
-2026-10-25当前部署／App打包运行入口见[交付手册](client/DELIVERY_GUIDE_2026_10_25.md)。下方保留旧端与运营参考，源码接线不代表已部署或打包运行。
+更新：2026-10-27。以[现行基线](CURRENT_BASELINE.md)、[产品交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)和[文档目录](DOCUMENTATION_CATALOG.md)为准；本文仅记录源码与执行条件，不表示运行通过。
 
-> **2026-10-25 v2 运维、代码逻辑与静态验收必读**：
-> - **全栈代码逻辑与 PlantUML 架构手册**：[M&D 全栈代码逻辑与 PlantUML 架构总览手册](CODE_LOGIC_AND_UML_REFERENCE.md) · [独立 PlantUML (`.puml`) 图谱目录（12 张图）](uml/README.md)
-> - **v2 部署与恢复手册**：[M&D v2 部署、运营与恢复交接手册（2026-10-23）](server/V2_RELEASE_RUNBOOK_2026_10_23.md)
-> - **v2 服务端完整性审计与配置缺口**：[服务端完整性审计与待完善清单（2026-10-24）](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（含 `migrations/001`–`009` 全量顺序、`44` 张 `mobile_*` 表、OpenAPI `241` Paths / `271` Operations / `123` Schemas、`cmd/worker` 6 类后台作业与环境变量模板 [`environment.example`](server/environment.example)）
-> - **静态检查脚本矩阵（12 个 Python 脚本，不触发 Go / Gradle 编译）**：
->   - `python3 scripts/export_mobile_openapi.py`（静态生成 `docs/api/mobile-v2.openapi.json`）
->   - `python3 scripts/check_server_shared_contract_static.py`（核对 OpenAPI `241` Paths / `271` Operations / `123` Schemas 与 `74` 对跨语言 DTO）
->   - `python3 scripts/check_mobile_static.py`（核对 44 张表、Go 服务端路由/状态机与 KMP DTO）
->   - `python3 scripts/check_kmp_client_static.py`、`python3 scripts/check_client_ui_static.py`（核对 `kmp/shared` MVI Store 与 `kmp/clientUi` `34` 个共享 UI 文件 / `42` 个 `FeaturePage`）
->   - `python3 scripts/check_android_ui_static.py`、`python3 scripts/check_android_feature_static.py`、`python3 scripts/check_android_finish_static.py`
->   - `python3 scripts/check_provider_auth_static.py`、`python3 scripts/check_age_assurance_static.py`、`python3 scripts/check_guardian_invites_static.py`
->   - `python3 scripts/check_web_client_static.py`、`python3 scripts/check_figma_reading_publications_static.py`
-> - **硬性禁令提醒**：在当前机器上严禁运行 `gradle` / `./gradlew` / `go build` / `go run` / `go test`（见根目录 `AGENTS.md`）。下文为早期 v1 阶段的操作参考。
+## 当前执行规则
 
-Last updated: 2026-10-25 (v1 baseline below originally recorded 2026-06-06)
+本机AGENTS禁止Gradle与Go build／run／test，默认也不执行编译、构建、assemble、test、lint或应用启动。文档中的命令只是后续参考，不能当执行授权；本轮仅做文档静态核对和Figma写入。
 
-This runbook captures how to run, verify, and safely change the current M&D
-repository. It is intentionally practical: start here when you need the system
-up locally or when another agent needs a clean handoff.
+## 按目标选择手册
 
-## 1. Fast Local Modes
+| 目标 | 权威资料 | 先落实的条件 |
+|---|---|---|
+| 服务端环境与发布 | [v2恢复手册](server/V2_RELEASE_RUNBOOK_2026_10_23.md)、[服务端合同](server/MOBILE_SERVER.md) | 数据库、真实配置、备份与责任人 |
+| Android／iOS／Web交付 | [交付指南](client/DELIVERY_GUIDE_2026_10_25.md)、[占位模板](../deploy/examples/README.md) | 域名／证书／签名、真实参数与运行授权 |
+| 数据库升级 | [迁移清单](CURRENT_BASELINE.md)、[数据字典](DATA_DICTIONARY.md) | 001–013依序升级，既有库不依赖首次容器挂载 |
+| Worker与外部投递 | cmd/worker、mobileworker、mobileapi/jobs.go | 单个具名job权限、原检查点、租约与真实回执 |
+| 业务后台 | [10月27日源码交接](client/COMPLETE_LANDING_2026_10_27.md) | 当前角色／对象版本、未知结果人工核对 |
+| 运维台 | [运维源码合同](server/OPERATIONS_CONSOLE_2026_10_25.md) | 环境隔离、审批与审计；执行器仍占位 |
+| Figma文档 | [同步交接](figma-sync/README.md) | 文本／节点／来源摘要一致，保留历史状态 |
 
-| Mode | Use When | Commands |
-| --- | --- | --- |
-| Static Web review | You only need to inspect HTML/CSS/JS and design boards. | `cd web && python3 -m http.server 4173` |
-| Go API with memory store | You need the API without external services. | `make run` |
-| Go API with Postgres | You need persistence and migrations. | `make up`, set `DATABASE_URL`, then `make run` |
-| Go API with Postgres + Redis | You need cache behavior too. | `make up`, set `DATABASE_URL` and `REDIS_URL`, then `make run` |
-| Expo mobile | You need the runtime mobile app. | `cd mobile && npm install && npm start` |
-| KMP Android | You need Kotlin/Android source review. | Static file review only on this machine; do not run Gradle. |
-| KMP Desktop | You need the Compose Desktop client source. | Static file review only on this machine; do not run Gradle. |
+## 配置与启动前检查
 
-Recommended first smoke test for design-only changes:
+| 配置 | 当前语义 | 未满足时 |
+|---|---|---|
+| DATABASE_URL | 非development环境必需 | 返回配置错误；PostgreSQL失败不回退内存 |
+| REDIS_URL | 可选读缓存 | 失败可直连PostgreSQL |
+| APP_ENV、MND_ALLOW_MEMORY_MOBILE | development及显式内存边界 | 不将内存／demo开放为生产数据 |
+| MND_AUTO_MIGRATE | 示例默认0 | 不擅自对现有数据库升级 |
+| MND_WEB_ORIGIN | Web来源与Cookie／CSRF合同 | 不通过放开CORS绕过身份与角色 |
+| MND_OPERATORS_JSON、MND_OPS_ENVIRONMENT | 具名后台及环境 | 不使用消费者会话代替角色 |
+| MND_WORKER_JOB、API_URL、OPERATOR_TOKEN、STATE_FILE | 单个Worker任务和持久检查点 | 缺配置不得报告作业成功 |
+| 认证／地图／年龄／推送／存储配置 | 见[环境示例](server/environment.example) | 保持关闭或明确不可用，不记录真实Secret |
 
-```bash
-cd web
-python3 -m http.server 4173
-```
+环境示例与deploy/examples是模板，example.invalid、空凭据与占位参数不代表已经准备好。公众号及第三方注册此前按用户要求暂停，不因本轮文档整理恢复注册、认证或付费。
 
-Then open:
+## 数据库与恢复
 
-- `http://127.0.0.1:4173/index.html`
-- `http://127.0.0.1:4173/discover.html`
-- `http://127.0.0.1:4173/compose.html`
-- `http://127.0.0.1:4173/market.html`
-- `http://127.0.0.1:4173/messages.html`
-- `http://127.0.0.1:4173/profile.html`
-- `http://127.0.0.1:4173/login.html`
-- `http://127.0.0.1:4173/register.html`
-- `http://127.0.0.1:4173/dashboard.html`
-- `http://127.0.0.1:4173/admin.html`
-- `http://127.0.0.1:4173/post.html`
-- `http://127.0.0.1:4173/cute.html`
-- `http://127.0.0.1:4173/pawpop-mobile.html`
-- `http://127.0.0.1:4173/pawpop-desktop.html`
+001–013包含旧基础表、007的32张mobile表、008动态10表、009讨论2表、010运维记录、011查询索引、012Worker检查点和013来源声明。45张mobile表与技术表分别统计。已配置数据库但Schema不完整时服务初始化失败；应先备份并依手册核对迁移，不能自动重置或删库。
 
-## 2. Backend Runtime
+资料清理先核对证据保全、当前权限和外部对象回执；接受数据请求与清理完成分别展示。回滚／恢复必须保存业务版本、原请求和处理记录，不能用UI回退掩盖服务端已执行的命令。
 
-`cmd/server/main.go` starts a standard-library `http.Server` and installs
-`api.NewRouter()`.
+## 静态检查与证据
 
-Server defaults:
+可做的非编译核对包括git diff --check、冲突标记扫描、文档本地链接、源码符号／路径、OpenAPI与DTO字段映射、资源来源和指纹。实际执行结果应写明时间、工作树和范围。历史检查脚本“通过”、测试源码存在或设计截图不能当本轮运行证据。
 
-| Setting | Default | Notes |
-| --- | --- | --- |
-| Port | `8080` | Controlled by `APP_PORT`. |
-| Max open connections | `500` | Controlled by `MAX_OPEN_CONNS`; values `<= 0` disable the guard. |
-| Read header timeout | 5s | Protects slow header reads. |
-| Read timeout | 30s | Upload-friendly but bounded. |
-| Write timeout | 30s | Applies to API/static responses. |
-| Idle timeout | 90s | Keep-alive idle timeout. |
-| Shutdown drain | 10s | SIGINT/SIGTERM graceful shutdown window. |
-
-Memory-store run:
-
-```bash
-make run
-```
-
-Postgres/Redis run:
-
-```bash
-make up
-
-DATABASE_URL=postgres://meow:meowpass@localhost:5432/meow?sslmode=disable \
-REDIS_URL=redis://localhost:6379/0 \
-make run
-```
-
-Manual migrations for an existing database:
-
-```bash
-DATABASE_URL=postgres://meow:meowpass@localhost:5432/meow?sslmode=disable \
-make migrate
-```
-
-Health checks:
-
-```bash
-curl http://127.0.0.1:8080/healthz
-curl http://127.0.0.1:8080/readyz
-```
-
-Expected `store` values from `/healthz`:
-
-| Env | Store |
-| --- | --- |
-| No `DATABASE_URL` | `memory` |
-| `DATABASE_URL` only | `postgres` |
-| `DATABASE_URL` + `REDIS_URL` | `postgres+redis` |
-
-## 3. Environment Variables
-
-| Variable | Default | Used By | Notes |
-| --- | --- | --- | --- |
-| `APP_PORT` | `8080` | Go server | HTTP listen port. |
-| `MAX_OPEN_CONNS` | `500` | Go server | Connection guard. |
-| `DATABASE_URL` | empty | Store | Empty means memory store. |
-| `REDIS_URL` | empty | Cache | Used only with Postgres. |
-| `JWT_SECRET` | `change-me-in-production` | Auth | Must be replaced outside development. |
-| `ADMIN_KEY` | `admin123` | Admin Web/API | Must be replaced outside development. |
-| `CORS_ALLOW_ORIGIN` | `*` | API CORS | Use explicit origins outside development. |
-| `ALIPAY_APP_ID` | empty | Payment | Enables Alipay stub provider when set. |
-| `ALIPAY_PRIVATE_KEY` | empty | Payment | Stub config, do not commit real keys. |
-| `ALIPAY_GATEWAY` | official gateway | Payment | Optional override. |
-| `WECHAT_MCH_ID` | empty | Payment | Enables WeChat stub provider when set. |
-| `WECHAT_API_KEY` | empty | Payment | Stub config, do not commit real keys. |
-| `STRIPE_SECRET_KEY` | empty | Payment | Enables Stripe stub provider when set. |
-| `MEOW_LOG_SMS_CODE` | empty | Phone OTP | Set `1` to log development SMS codes. |
-| `MEOW_DEV_SMS_CODE` | empty | Phone OTP | Fixed dev code accepted by verification. |
-| `EXPO_PUBLIC_API_URL` | auto fallback | Expo | Bundle-time API base URL. |
-| `meow.api.base.url` | `http://10.0.2.2:8080` | KMP Android Gradle property | Override Android API base URL. |
-
-Security note: the old `MEOW_*` environment names are backend compatibility
-names, not visible product branding. Keep visible branding as `M&D`.
-
-## 4. Upload Storage
-
-Media uploads are handled by `internal/platform/api/media.go`.
-
-| Concern | Current Behavior |
-| --- | --- |
-| Multipart field | `file` |
-| Image limit | 10 MB |
-| Video limit | 200 MB |
-| Accepted images | JPEG, PNG, WebP, GIF |
-| Accepted videos | MP4, WebM, QuickTime/MOV |
-| Storage path | `data/uploads` under the process working directory |
-| Public URL | `/uploads/{filename}` |
-| Default media status | `approved` |
-
-The Docker runtime copies `web/` and `migrations/`, but uploaded files live in
-runtime storage. Mount or persist `data/uploads` for non-ephemeral deployments.
-
-## 5. Client Configuration
-
-### Static Web
-
-The Web app is served from `web/` by the Go server. Static server review also
-works for most pages because M&D fallback data was added to key scripts.
-
-Important local-storage keys:
-
-| Key | Used By | Do Not Rename Because |
-| --- | --- | --- |
-| `meow_token` | Web auth | Existing Web scripts expect it. |
-| `meow_user` | Web auth | Existing Web scripts expect it. |
-| `mnd_cute_theme` | `web/cute-ui.js` | WebUI theme switcher. |
-| `mnd_cute_profile_bg` | `web/cute-ui.js` | WebUI profile background switcher. |
-
-Use `?live=1` on `web/cute.html` when validating supported API hydration.
-
-### Expo
-
-Set the backend URL in `mobile/.env`:
-
-```bash
-EXPO_PUBLIC_API_URL=http://127.0.0.1:8080
-```
-
-For Android emulator API access, use:
-
-```bash
-EXPO_PUBLIC_API_URL=http://10.0.2.2:8080
-```
-
-Token storage:
-
-| Key | Store |
-| --- | --- |
-| `meow.auth.token` | Expo SecureStore, localStorage fallback on Web |
-| `meow.auth.user` | Expo SecureStore, localStorage fallback on Web |
-
-### KMP Android
-
-The default Android emulator base URL is `http://10.0.2.2:8080`.
-
-Do not run a local Gradle build on this machine. If another safe machine builds
-the app, pass `meow.api.base.url` as a Gradle property there.
-
-For a physical Android device, either use the host LAN IP or run:
-
-```bash
-adb reverse tcp:8080 tcp:8080
-```
-
-then set the Gradle property to `http://127.0.0.1:8080`.
-
-### KMP Desktop
-
-The desktop client lives in `kmp/desktopApp` and reuses `kmp/shared` through the
-`desktop` JVM target. It is aligned to the same Stitch V2 project refs and
-Honey/Mint/Night/Neutral tokens as Web, Expo, and KMP Android.
-
-Do not run a local Gradle build on this machine. Use static source review here;
-build and package `:desktopApp` only on a safe external machine.
-
-## 6. Verification Matrix
-
-| Change Area | Minimum Check | Stronger Check |
-| --- | --- | --- |
-| Docs only | `git diff --check -- docs` | Review docs hub links and stale naming search. |
-| Web CSS/HTML/JS | Static server smoke | Desktop `1440x1000` + mobile `390x844` browser screenshots. |
-| Go API | Static handler/store review on this machine | Run Go tests only on a machine with an approved compatible Go toolchain. |
-| Migrations | `make migrate` against a fresh DB | Integration tests plus manual create/read flows. |
-| Expo | Static source review on this machine | Device/simulator visual smoke when a safe Node environment is available. |
-| KMP shared/Android/Desktop | Static Kotlin/Compose review | Emulator/desktop visual smoke only when a safe external build is available. |
-| Docker | `make docker` | `make docker-run` and `/healthz` check. |
-
-Useful docs and code lint:
-
-```bash
-# Verify static HTML pages: structure, branding terms (M&D), and check for broken local links
-python scripts/verify_web_smoke.py
-
-# Git check and docs search
-git diff --check -- docs
-rg -n "TODO|TBD|Pawpop|Kitty Circle|喵友圈|铲屎官|Meow Circle" docs
-```
-
-Some hits are expected inside historical-file explanations or migration notes.
-Do not "fix" historical context by erasing useful warnings.
-
-## 7. Known Local Blockers
-
-These are machine/session-specific observations from the latest pass.
-
-| Blocker | Impact | Status / Workaround |
-| --- | --- | --- |
-| Gradle commands freeze this machine | KMP compile/emulator verification is unsafe locally | Do not run `gradle`, `gradlew`, `./gradlew`, or `gradlew.bat`; use static review. |
-| Local Go toolchain is not approved for this repo | Go tests/server are unsafe locally | Do not run `go build`, `go run`, or `go test`; use static Web checks for UI work. |
-
-Keep these in docs for troubleshooting references.
-
-## 8. Deployment Notes
-
-| File | Role |
-| --- | --- |
-| `Dockerfile` | Builds a static Go binary in `golang:1.25-alpine`, runs on distroless nonroot. |
-| `docker-compose.yml` | Local Postgres 16 and Redis 7 with migration files mounted for first boot. |
-| `Caddyfile` | Public `:80` reverse proxy to `127.0.0.1:8080`. |
-| `SECURITY.md` | Disclosure/security guidance. |
-
-Production checklist:
-
-1. Set `JWT_SECRET` and `ADMIN_KEY` to strong secrets.
-2. Replace wildcard `CORS_ALLOW_ORIGIN` with explicit origins.
-3. Use Postgres and run all migrations.
-4. Persist `data/uploads`.
-5. Decide whether Redis cache is needed for the traffic profile.
-6. Configure backup/restore for Postgres and uploaded media.
-7. Put Caddy or another TLS proxy in front of the Go process.
-
-## 9. Safe Change Order
-
-For backend/domain changes:
-
-1. Update `internal/domain/models.go`.
-2. Update `internal/store/store.go`.
-3. Update memory store.
-4. Update Postgres store and add a migration.
-5. Update API handlers and route docs.
-6. Update Web, Expo, and KMP clients.
-7. Update `docs/API_AND_DATA_FLOW.md`.
-8. Run the relevant checks from the verification matrix.
-
-For UI-system changes:
-
-1. Update `docs/design/MND_UI_ALIGNMENT_GUIDE.md`.
-2. Update Web tokens/bridge/prototype.
-3. Update Expo `mobile/src/theme.ts` and shared components.
-4. Update KMP Android and Desktop theme files.
-5. Update the design boards if the pattern changed.
-6. Update `docs/FRONTEND_SURFACE_MAP.md` and `docs/design/MND_DESIGN_MEMORY.md`.
-7. Run Web smoke checks and mobile/KMP checks when available.
-
-## 10. Naming Boundaries
-
-Visible product language:
-
-- Keep the mark as `M&D`.
-- Keep the lockup/supporting copy as `meow & doggie`.
-- Keep cats as the primary emotional center.
-- Doggie content remains a companion branch.
-
-Compatibility names that may remain in code:
-
-- Go module: `kitty-circle`.
-- Web auth keys: `meow_token`, `meow_user`.
-- Mobile auth keys: `meow.auth.token`, `meow.auth.user`.
-- Environment variables: `MEOW_LOG_SMS_CODE`, `MEOW_DEV_SMS_CODE`.
-- Removed old design references and stale Stitch export maps.
-- Internal class/function names such as `MeowCircleSdk` or `Stitch*`.
-
-Only rename compatibility names after checking routes, storage migration,
-mobile/KMP clients, and any persisted user data.
+构建、类型检查、数据库迁移、真实SDK回调、设备／浏览器、并发／网络恢复、无障碍与容量必须另有授权及可复现结果。当前整体发布未验收；完整搜索接收端与发布／重启执行器继续保持用户指定占位。

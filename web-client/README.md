@@ -1,5 +1,7 @@
 # M&D Web 消费端
 
+> **2026-10-27 现行入口**：[源码与文档基线](../docs/CURRENT_BASELINE.md) · [产品／交付状态](../docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 2026-10-25：新增独立技术运维入口 `/app/ops`，按14张运维Figma稿实现公共工作台、8主页面／3详情／3状态、筛选与分页、具名环境授权、任务观测、事件处置、发布准备与审计。显式设计示例入口 `/app/ops?mode=demo` 不发送运维请求。真实接入、010迁移、公共组件与边界见[运维源码交接](../docs/server/OPERATIONS_CONSOLE_2026_10_25.md)；本批未构建、类型检查或运行。
 
 2026-10-25：[部署与打包手册](../docs/client/DELIVERY_GUIDE_2026_10_25.md)提供生产编排及Web／App交付入口；未执行构建或部署。

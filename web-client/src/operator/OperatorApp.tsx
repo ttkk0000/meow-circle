@@ -26,6 +26,18 @@ import {
   type View,
 } from "./models";
 import { useOperator } from "./useOperator";
+import {
+  assignedWorkspaces,
+  workspaceAllows,
+  workspaceFor,
+  type BusinessRole,
+} from "./roleWorkspaces";
+import {
+  isRoleTask,
+  RoleTaskPage,
+  RoleRevenuePage,
+  useRoleTasks,
+} from "./RoleTasks";
 import "./operator.css";
 
 export default function OperatorApp() {
@@ -42,7 +54,23 @@ export default function OperatorApp() {
   const session = useOperator(),
     [connection, setConnection] = useState(false),
     [token, setToken] = useState("");
-  const go = (next: View, nextID?: string) => navigate(pagePath(next, nextID));
+  const roleTasks = useRoleTasks(session);
+  const [selectedRole, setSelectedRole] = useState<BusinessRole>();
+  const [switchTo, setSwitchTo] = useState<BusinessRole>();
+  useEffect(() => {
+    setSelectedRole(undefined);
+    setSwitchTo(undefined);
+  }, [session.context?.id]);
+  const workspaces = assignedWorkspaces(session.context?.roles ?? []);
+  const workspace = workspaceFor(
+    workspaces.some((w) => w.role === selectedRole)
+      ? selectedRole
+      : workspaces[0]?.role,
+  );
+  const go = (next: View, nextID?: string) => {
+    if (roleTasks.locked && next !== view) return;
+    navigate(pagePath(next, nextID));
+  };
   const connect = () => {
     setToken("");
     setConnection(true);
@@ -69,6 +97,8 @@ export default function OperatorApp() {
       : undefined);
   const current: View =
     session.forbidden ||
+    (session.context &&
+      !workspaceAllows(workspace?.role, view, session.prepared?.kind)) ||
     (session.context && requiredKind && !session.permits(requiredKind))
       ? "forbidden"
       : !session.context &&
@@ -123,9 +153,13 @@ export default function OperatorApp() {
   return (
     <>
       <WorkspaceShell
-        title={titles[current]}
+        title={
+          current === "dashboard" && workspace
+            ? workspace.home
+            : titles[current]
+        }
         heading="后台管理 / 业务与核验"
-        caption="业务运营与核验"
+        caption={workspace?.label ?? "角色与身份"}
         breadcrumb={"业务管理 / " + titles[current]}
         subtitle="具名角色与当前版本 · 按事项读取、核实与处理"
         identity={session.context?.id ?? "尚未连接账号"}
@@ -134,34 +168,68 @@ export default function OperatorApp() {
         }
         scope={
           <>
-            <strong>业务工作区</strong>
+            <strong>{workspace?.label ?? "无人工处理工作区"}</strong>
             <small>仅处理当前角色授权事项</small>
           </>
         }
         navigation={[
-          ...sections.map(([key, label, icon]) => ({
-            key,
-            label,
-            icon,
-            href: "/app" + pagePath(key),
-            onSelect: () => go(key),
-            collection:
-              key === "reviews" || key === "privacy" || key === "guardian"
-                ? ("figma" as const)
-                : ("ops" as const),
-          })),
-          {
-            key: "technical",
-            label: "技术运维",
-            icon: "sliders-horizontal",
-            href: "/app/ops",
-          },
+          ...sections
+            .filter(
+              ([key]) =>
+                workspaceAllows(workspace?.role, key) &&
+                (key !== "dashboard" || !!workspace),
+            )
+            .map(([key, label, icon]) => ({
+              key,
+              label,
+              icon,
+              href: "/app" + pagePath(key),
+              onSelect: () => go(key),
+              collection:
+                key === "reviews" || key === "privacy" || key === "guardian"
+                  ? ("figma" as const)
+                  : ("ops" as const),
+            })),
+          ...(session.context?.roles.some((r) => r.startsWith("ops_"))
+            ? [
+                {
+                  key: "technical",
+                  label: "技术运维",
+                  icon: "sliders-horizontal",
+                  href: "/app/ops",
+                },
+              ]
+            : []),
         ]}
         active={active}
         focusKey={current + ":" + id}
         className="operator-workspace"
         actions={
           <>
+            {workspaces.length > 1 ? (
+              <label className="field">
+                <span>当前岗位</span>
+                <select
+                  aria-label="切换已授权岗位"
+                  value={workspace?.role ?? ""}
+                  disabled={
+                    session.busy ||
+                    !!session.prepared ||
+                    roleTasks.locked ||
+                    roleTasks.reading
+                  }
+                  onChange={(event) =>
+                    setSwitchTo(event.target.value as BusinessRole)
+                  }
+                >
+                  {workspaces.map((w) => (
+                    <option key={w.role} value={w.role}>
+                      {w.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
             {session.context ? (
               <>
                 <Button
@@ -212,8 +280,18 @@ export default function OperatorApp() {
             </Button>
           </OpsNotice>
         ) : null}
+        {roleTasks.lostReference ? (
+          <OpsNotice title="原登记仍需核对">
+            恢复引用：{roleTasks.lostReference}
+            。身份或岗位范围已变化，原材料已清除；请由有权限的人员核对，不能据此认定成功或失败。
+          </OpsNotice>
+        ) : null}
         {current === "dashboard" ? (
-          <Dashboard session={session} go={go} />
+          <Dashboard session={session} workspace={workspace?.role} go={go} />
+        ) : isRoleTask(current) ? (
+          <RoleTaskPage key={current} flow={current} tasks={roleTasks} />
+        ) : current === "revenue" ? (
+          <RoleRevenuePage tasks={roleTasks} />
         ) : current === "reviews" ? (
           <QueuePage session={session} kind="reviews" go={go} />
         ) : current === "rights" ? (
@@ -247,6 +325,45 @@ export default function OperatorApp() {
           />
         )}
       </WorkspaceShell>
+      {switchTo ? (
+        <Modal
+          title="切换已授权岗位"
+          busy={session.busy}
+          onClose={() => setSwitchTo(undefined)}
+          actions={
+            <>
+              <Button onClick={() => setSwitchTo(undefined)}>取消</Button>
+              <Button
+                kind="primary"
+                disabled={
+                  session.busy ||
+                  !!session.prepared ||
+                  roleTasks.locked ||
+                  roleTasks.reading
+                }
+                onClick={() => {
+                  if (
+                    workspaces.some((w) => w.role === switchTo) &&
+                    session.clearWorkspace()
+                  ) {
+                    roleTasks.reset();
+                    setSelectedRole(switchTo);
+                    setSwitchTo(undefined);
+                    navigate(pagePath("dashboard"));
+                  }
+                }}
+              >
+                清空当前输入并切换
+              </Button>
+            </>
+          }
+        >
+          <p>
+            切换到{workspaceFor(switchTo)?.label}
+            。当前未提交输入和已读材料将清空，服务端角色与已完成事项不变。结果待核对的操作须先结束核对。
+          </p>
+        </Modal>
+      ) : null}
       {connection ? (
         <Modal
           title="连接业务后台"

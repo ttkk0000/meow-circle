@@ -61,7 +61,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             FeaturePage.CaseWork, FeaturePage.CaseEdit, FeaturePage.LeadInbox, FeaturePage.LeadSubmit -> route.id > 0 && s.case == null
             FeaturePage.Lead -> s.lead == null || s.case == null
             FeaturePage.Claim -> s.claim == null
-            FeaturePage.AdoptionWork, FeaturePage.ContractEdit, FeaturePage.ReturnEdit -> route.kind != "care" && s.adoption == null
+            FeaturePage.AdoptionWork, FeaturePage.ContractEdit, FeaturePage.ReturnEdit -> if(route.kind == "care") s.careContext == null else s.adoption == null
             FeaturePage.Offer, FeaturePage.OfferEdit -> route.id > 0 && s.offer == null
             FeaturePage.Review -> route.id > 0 && s.review == null
             FeaturePage.Security -> s.methods == null
@@ -184,7 +184,7 @@ fun rightsTypeLabel(v: String) = mapOf("safety" to "安全求助", "privacy" to 
     MndCheckLine(label, checked, onChecked, enabled)
 }
 fun ids(value: String): List<Long>? { if (value.isBlank()) return emptyList(); val parts = value.split(',', '，', ' ', '\n').filter { it.isNotBlank() }; val parsed = parts.mapNotNull { it.toLongOrNull()?.takeIf { id -> id > 0 } }; return parsed.distinct().takeIf { parsed.size == parts.size } }
-fun stateLabel(value: String): String = mapOf("active" to "有效", "pending" to "待确认", "accepted" to "已接受", "declined" to "已拒绝", "withdrawn" to "已撤回", "removed" to "已解除", "blocked" to "已拉黑", "revoked" to "已撤销", "expired" to "已过期", "dissolved" to "已解散", "effective" to "已生效", "cancelled" to "已取消", "safety_hold" to "安全暂停", "matched" to "材料匹配待交接", "disputed" to "存在争议", "completed" to "已完成", "needs_info" to "待补充", "submitted" to "已提交", "processing" to "处理中", "partially_held" to "部分保全", "held" to "保全中", "failed" to "处理失败", "approved" to "已同意", "rejected" to "未通过")[value] ?: "当前进度：$value"
+fun stateLabel(value: String): String = mapOf("active" to "有效", "pending" to "待确认", "accepted" to "已接受", "declined" to "已拒绝", "withdrawn" to "已撤回", "removed" to "已解除", "blocked" to "已拉黑", "revoked" to "已撤销", "left" to "已退出协作", "expired" to "已过期", "dissolved" to "已解散", "effective" to "已生效", "cancelled" to "已取消", "safety_hold" to "安全暂停", "matched" to "材料匹配待交接", "disputed" to "存在争议", "completed" to "已完成", "needs_info" to "待补充", "submitted" to "已提交", "processing" to "处理中", "partially_held" to "部分保全", "held" to "保全中", "failed" to "处理失败", "approved" to "已同意", "rejected" to "未通过")[value] ?: "当前进度：$value"
 
 @Composable fun FeaturePhotos(store: MobileStore, s: FeatureState, existing: List<Long> = emptyList(), private: Boolean = false, safety: Boolean = false, maxPhotos: Int = 9) {
     val f = store.features; val route = s.route ?: return

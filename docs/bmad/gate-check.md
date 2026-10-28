@@ -1,5 +1,7 @@
 # M&D 技术实施准入核对
 
+> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 > **2026-10-25 复核更新**：
 > 1. [PRD v2.1](prd.md) 已将原 34 条 FR 扩展为 **42 条 FR（`FR-001`–`FR-042`）与 `EPIC-008`**，[UX v2.1](ux-design.md) 已扩展至 **`UX-01`–`UX-17`**。全部 42 条 FR 的代码逻辑与 PlantUML 时序/状态机图已汇总于[全栈代码逻辑与 PlantUML 架构总览手册](../CODE_LOGIC_AND_UML_REFERENCE.md)及[`docs/uml/`](../uml/README.md)。
 > 2. 服务端源码已达 `241` Paths / `271` Operations / `123` Server Schemas / `74` 对跨语言 DTO / `44` 张 `mobile_*` 表，客户端已落地 `kmp/clientUi`（`34` 个共享 Compose 文件、`42` 个 `FeaturePage`）覆盖 Android、iOS、Desktop 与 `web-client`（含 `/app/operator`），且 12 个 Python 静态检查脚本全部通过；但因**尚未执行真实编译、数据库 `001`–`009` 迁移、外部供应商联调与生产运营认领**，公开上线准入继续维持 **FAIL（仅限源码与静态验收通过）**。服务端剩余工程短板见[服务端完整性审计（2026-10-24）](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)。

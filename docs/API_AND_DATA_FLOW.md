@@ -1,277 +1,49 @@
-# API And Data Flow
+# M&D API与数据流
 
-> **2026-10-25 v2 Architecture & Data Flow Update (Primary Baseline)**
->
-> Since 2026-10-20, all active feature development uses the **`/api/v2`** contract and modular-monolith architecture. The legacy `/api/v1` sections below are retained strictly for historical reference (`MND_ENABLE_LEGACY_AUTH=0` disables v1 writes in production).
->
-> ### v2 Quick Reference
-> - **Machine Contract**: [`docs/api/mobile-v2.openapi.json`](api/mobile-v2.openapi.json) (`241` Paths / `271` Operations / `123` Server Schemas; `125` Web derived schemas in `web-client/src/core/schemas.json`; `74` cross-language DTO pairs).
-> - **Code Logic & PlantUML Diagrams**: [`docs/CODE_LOGIC_AND_UML_REFERENCE.md`](CODE_LOGIC_AND_UML_REFERENCE.md) & [`docs/uml/README.md`](uml/README.md) (12 standalone `.puml` sequence, state, ER, class, and component diagrams).
-> - **Response Envelope (`internal/platform/mobileapi`)**:
->   - Success: `{ "ok": true, "data": <T> }`
->   - Error: `{ "ok": false, "error": "<CODE_OR_MESSAGE>" }`
-> - **Authentication, Provider Auth, Age Assurance & Guardian Invites (`internal/identity`, `internal/mobile/qualification.go`)**:
->   - Opaque, revocable random session pairs (`access_token` 1h / `refresh_token` 30d, SHA-256 hashed in DB) + browser `HttpOnly Cookie` & `X-MND-CSRF` adapter (`internal/platform/mobileapi/browser.go`).
->   - Three unique login identifiers (`username`, `email`, `phone`) resolve to a single `user_id` (`migrations/005_mobile_auth_identities.sql`). Explicit separation between provider sign-in (`create`) and logged-in identity binding (`link` with `reauth`, returning `409 identity_in_use` on conflict without auto-merge).
->   - External Age Assurance gateway (`internal/identity/age_assurance.go`, `internal/platform/mobileauth/age_gateway.go`) + 15-minute single-use Guardian Invites & Independent Adult Relationship Claims (`internal/identity/guardian_invites.go`).
->   - Login is decoupled from outbound interaction eligibility (`migrations/006_identity_eligibility.sql`); restricted mutations enforce `requireInteractionContract()`, minor guardian scope (`KindGuardians`, including stranger DM `directContact` gate in `internal/mobile/social.go`), and single-use action/resource/version-bound `reauth` grants.
-> - **Amap Security Proxy & Coarse Coordinate Privacy (`internal/platform/mobileapi/amap.go`, `internal/mobile/lost_pet.go`)**:
->   - Web Amap JS API 2.0 proxies through `/maps/amap/_AMapService/` with server-injected `jscode`.
->   - Public lost-pet coordinates are quantized to 2 decimal places (`GCJ-02` / `WGS-84` explicit datum isolation).
-> - **Transactional Storage (`internal/store/postgres/mobile.go`, `migrations/007`–`009`)**:
->   - **44 `mobile_*` aggregate tables** (`32` in `007_mobile_modules.sql`, `10` in `008_mobile_policy_commands.sql`, `2` in `009_pet_discussions.sql`).
->   - All mutations execute inside PostgreSQL `SERIALIZABLE` transactions with optimistic `version` CAS (`409 VERSION_CONFLICT` on stale writes) and `Idempotency-Key` / `client_request_id` receipt recovery (`mobile_operations`).
-> - **Asynchronous Outbox & Worker Jobs (`cmd/worker`, `internal/platform/mobileapi/jobs.go`)**:
->   - 6 independent background jobs authenticated via named operator tokens (`MND_OPERATORS_JSON` + `X-Operator-Token`): `push`, `nearby_alerts`, `content_updates`, `privacy_cleanup`, `provider_revocations`, and `maintenance`.
-> - **Detailed v2 Documentation**:
->   - [Code Logic & PlantUML Reference Manual](CODE_LOGIC_AND_UML_REFERENCE.md)
->   - [PlantUML (`.puml`) Diagram Suite](uml/README.md)
->   - [Mobile Server & v2 API Handoff](server/MOBILE_SERVER.md)
->   - [Modular Monolith Architecture](server/ARCHITECTURE.md)
->   - [Server Completeness Audit & Remaining Gaps (2026-10-24)](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)
->   - [Client Implementation Plan & v2 Store](client/IMPLEMENTATION_PLAN.md)
+更新：2026-10-27。以[现行基线](CURRENT_BASELINE.md)、[产品交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)和[文档目录](DOCUMENTATION_CATALOG.md)为准；本文仅记录源码与执行条件，不表示运行通过。
 
-Last updated: 2026-10-25 (v1 baseline below originally recorded 2026-05-27)
+## 权威合同与响应
 
-This document maps the current Go API, domain models, persistence strategy, and
-client contracts.
+当前V2接口为[OpenAPI](api/mobile-v2.openapi.json)，共253路径／285操作／139 schemas；[API速查](API_CATALOG.md)仅作索引。Web派生141 schemas，跨语言显式映射87对；维护时按字段和语义核对，不按类数量推断兼容。
 
-## 1. Response Envelope
+mobileapi.Handler成功返回ok=true及data；错误返回ok=false、error、error_code、request_id，HTTP状态与错误类别对应。401表示认证缺失，403表示权限或业务策略拒绝，409表示版本或幂等／身份冲突，429限流并返回Retry-After，503表示能力未配置或不可用。以handler.go为准，不能直接套用旧v1的code/message/data封套。
 
-All JSON API responses use the envelope in `internal/platform/api/router.go`:
+## 认证与权限链
 
-```json
-{
-  "code": 0,
-  "message": "ok",
-  "data": {}
-}
-```
+| 来源 | 会话传输 | 写入与隔离 |
+|---|---|---|
+| Android／iOS／Desktop | 原生Bearer会话 | 服务端当前身份、资格、资源与版本校验 |
+| Web消费端 | HttpOnly Cookie | Origin与X-MND-CSRF，浏览器适配器不接受客户端伪造身份 |
+| 业务后台 | 具名凭据与角色 | 凭据仅当前页面内存，队列／详情权限和版本复核 |
+| 技术运维／Worker | 具名环境与job权限 | 与消费者、业务后台分别持有合同；不得复用隐式角色 |
 
-Created responses use HTTP `201` with `message: "created"`. Errors use the HTTP
-status as `code` and a human-readable `message`.
+显式密码／手机／邮箱与oauth-start／finish／resolve以OpenAPI实际路径为准。三方登录、创建、绑定分开，identity_in_use不静默合并；短信不隐式注册。登录成功后仍读取eligibility，未知互动资格关闭。
 
-Clients that unwrap the envelope:
+## 通用写入数据流
 
-- Web: page scripts call `window.MeowShared` helpers or local fetch helpers.
-- Expo: `mobile/src/api.ts` uses `unwrapEnvelope`.
-- KMP: `MeowCircleSdk.unwrapData()` decodes `ApiEnvelope`.
+1. 客户端保存草稿、原client_request_id与已读对象版本；敏感操作先请求具体scope。
+2. auth/reauth核对scope与当前凭据，返回5分钟单次purpose_grant。
+3. HTTP层读取Idempotency-Key并与正文原请求关联；领域服务在事务内核对当前身份、父资源、权限、资格、版本和用途。
+4. pgx写事务使用SERIALIZABLE；Record.version成功递增，业务结果和mobile_operations原回执同事务持久化；必要通知／事件进入mobile_outbox。
+5. 明确失败保留可恢复输入；传输中断的未知结果按operations原key回读，不换key自动重发。回执回放仍核对当前ACL，不能因历史参与身份泄露失权内容。
 
-## 2. Auth And Admin
+## 特殊主路径
 
-| Concern | Current Behavior |
-| --- | --- |
-| User auth | `Authorization: Bearer <jwt>` |
-| JWT | HS256, issued by `internal/platform/auth/jwt.go`, default expiry 72h. |
-| Password | PBKDF2-SHA256 with per-user salt. |
-| Login rate limit | 5 failed attempts per username/IP within 10 minutes; returns 429. |
-| Registration phone verification | Optional normalized phone + SMS code through `phoneotp.Store`. |
-| Admin auth | Header `X-Admin-Key`, default `admin123`, override with `ADMIN_KEY`. |
-| CORS | `CORS_ALLOW_ORIGIN`, default `*`; allowed headers include `Content-Type`, `Authorization`, `X-Admin-Key`. |
+| 路径 | 数据／版本规则 | 时序或状态说明 |
+|---|---|---|
+| 发布与来源声明 | 独立追加声明绑定实际内容与附件，不覆写旧记录 | SOURCE_DECLARATIONS专项与图07 |
+| 预约 | effectiveVersion、pendingVersion及history分开；暂停同版重提后双方确认 | 图09 |
+| 领养、试养与接回 | pet_id＋adoption_cycle排他；协议／试养／实际交接分别确认 | 图08 |
+| 走失与私密线索 | 公开位置粗量化、坐标系明确；当前父权限与Lead版本重核 | 图10 |
+| 全部已读 | POST准备10分钟快照，确认只推进已知范围；GET汇总不产生快照，无成功后撤销 | 图12 |
+| 资料权利与清理 | 接受请求不等于清理完成；跨事项证据保全先核对 | 图11 |
 
-## 3. Route Map
+## 真实存储与异步交付
 
-### Health
+[数据字典](DATA_DICTIONARY.md)列45张mobile表与公共封套。身份、资格、用途授权、幂等、消息快照都使用实际mobile聚合，不存在旧图推测的account_identities或mobile_inbox_snapshots等独立表。
 
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| `GET` | `/healthz` | no | Service health and current store kind. |
-| `GET` | `/readyz` | no | Readiness check. |
+Worker接受8个具名job：push、nearby_alerts、content_updates、privacy_cleanup、provider_revocations、maintenance、search_projection、audit_projection。检查点、租约、投递和外部真实回执分开。完整搜索接收端及运维执行器按用户要求保留占位；不能据作业名存在宣称已上线。
 
-### Auth And Users
+## 维护与历史边界
 
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| `POST` | `/api/v1/auth/register` | no | Register and return JWT + user. |
-| `POST` | `/api/v1/auth/send-verification-code` | no | Send/create phone verification code. |
-| `POST` | `/api/v1/auth/login` | no | Login and return JWT + user. |
-| `GET` | `/api/v1/auth/me` | bearer | Current user. |
-| `PATCH` | `/api/v1/me` | bearer | Update nickname/avatar/bio. |
-| `GET` | `/api/v1/me/action-counts` | bearer | Compact badge counts for unread notifications, unread messages, and order actions. |
-| `GET` | `/api/v1/users/{id}` | no | Public profile. |
-
-### Search
-
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| `GET` | `/api/v1/search?q=&type=all|post|listing` | no | Search posts and listings. |
-
-### Posts And Social
-
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| `GET` | `/api/v1/posts?page=&page_size=&filter=rec|follow` | optional | Feed list with author, like count, liked state, first media. |
-| `POST` | `/api/v1/posts` | bearer | Create post after moderation and media ownership checks. |
-| `GET` | `/api/v1/posts/{id}` | optional | Post detail with author, media, comments, likes, follow state. |
-| `PATCH` | `/api/v1/posts/{id}` | bearer owner | Update own post. |
-| `DELETE` | `/api/v1/posts/{id}` | bearer owner | Delete own post. |
-| `POST` | `/api/v1/posts/{id}/comments` | bearer | Add comment and notify post author. |
-| `POST` | `/api/v1/posts/{id}/like` | bearer | Toggle like. |
-| `GET` | `/api/v1/me/posts` | bearer | Current user's posts. |
-| `POST` | `/api/v1/me/follow/{userID}` | bearer | Follow user. |
-| `DELETE` | `/api/v1/me/follow/{userID}` | bearer | Unfollow user. |
-
-### Listings And Market
-
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| `GET` | `/api/v1/listings?page=&page_size=` | no | Listing feed. |
-| `POST` | `/api/v1/listings` | bearer | Create listing after moderation and media ownership checks. |
-| `GET` | `/api/v1/listings/{id}` | no | Listing detail with media. |
-| `PATCH` | `/api/v1/listings/{id}` | bearer owner | Update own listing. |
-| `DELETE` | `/api/v1/listings/{id}` | bearer owner | Delete own listing. |
-| `GET` | `/api/v1/me/listings` | bearer | Current user's listings. |
-
-### Media And Reports
-
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| `GET` | `/api/v1/media` | bearer | Current user's media. |
-| `POST` | `/api/v1/media` | bearer | Multipart upload, field name `file`. |
-| `GET` | `/api/v1/media/{id}` | no | Media detail. |
-| `DELETE` | `/api/v1/media/{id}` | bearer owner | Delete own media. |
-| `POST` | `/api/v1/reports` | bearer | Report post/comment/listing/media. |
-| `GET` | `/uploads/{filename}` | no | Static uploaded media file. |
-
-### Messages And Notifications
-
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| `GET` | `/api/v1/notifications?unread=true` | bearer | Notifications and unread count. |
-| `POST` | `/api/v1/notifications/{id}/read` | bearer | Mark one notification read. |
-| `POST` | `/api/v1/notifications/read-all` | bearer | Mark all notifications read. |
-| `GET` | `/api/v1/me/conversations` | bearer | Conversation list. |
-| `GET` | `/api/v1/me/conversations/{peerID}` | bearer | Messages with peer, marks conversation read. |
-| `POST` | `/api/v1/messages` | bearer | Send message after moderation and notify recipient. |
-
-### Orders And Payments
-
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| `GET` | `/api/v1/payments/methods` | no | Supported payment methods. |
-| `POST` | `/api/v1/orders` | bearer buyer | Create order from listing. |
-| `GET` | `/api/v1/orders/{id}` | bearer participant | Order detail. |
-| `POST` | `/api/v1/orders/{id}/pay` | bearer buyer | Pay pending order. |
-| `POST` | `/api/v1/orders/{id}/cancel` | bearer buyer | Cancel pending order. |
-| `POST` | `/api/v1/orders/{id}/ship` | bearer seller | Mark paid order shipped. |
-| `POST` | `/api/v1/orders/{id}/complete` | bearer buyer | Confirm shipped order received. |
-| `POST` | `/api/v1/orders/{id}/refund` | bearer seller | Refund paid/shipped order. |
-| `GET` | `/api/v1/me/orders?role=buyer|seller` | bearer | Current user's orders. |
-
-### Admin
-
-All admin endpoints require `X-Admin-Key`.
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| `GET` | `/api/v1/admin/summary` | Counts for users/posts/listings/comments/reports/media/orders. |
-| `GET` | `/api/v1/admin/posts` | All posts. |
-| `DELETE` | `/api/v1/admin/posts/{id}` | Delete post. |
-| `GET` | `/api/v1/admin/comments` | All comments. |
-| `DELETE` | `/api/v1/admin/comments/{id}` | Delete comment. |
-| `GET` | `/api/v1/admin/listings` | All listings. |
-| `DELETE` | `/api/v1/admin/listings/{id}` | Delete listing. |
-| `GET` | `/api/v1/admin/media?status=pending|approved|rejected` | Media moderation queue. |
-| `POST` | `/api/v1/admin/media/{id}/approve` | Approve media. |
-| `POST` | `/api/v1/admin/media/{id}/reject` | Reject media. |
-| `DELETE` | `/api/v1/admin/media/{id}` | Force delete media. |
-| `GET` | `/api/v1/admin/reports?status=open|resolved|dismissed` | Report queue. |
-| `GET` | `/api/v1/admin/reports/{id}` | Report detail. |
-| `POST` | `/api/v1/admin/reports/{id}/resolve` | Resolve report. |
-| `POST` | `/api/v1/admin/reports/{id}/dismiss` | Dismiss report. |
-| `GET` | `/api/v1/admin/orders` | All orders. |
-| `GET` | `/api/v1/admin/audit-logs?limit=100` | Audit log list. |
-
-## 4. Core Domain Model Map
-
-| Model | Important Fields | Used By |
-| --- | --- | --- |
-| `User` | username, nickname, phone, avatar, bio, password hash/salt | Auth, profile, posts, messages, orders. |
-| `Post` | author, title, content, category, tags, media IDs, last reply | Feed, detail, comments, search. |
-| `Comment` | post, author, content | Post detail, notifications, admin. |
-| `Listing` | seller, type, title, description, price, media IDs | Market, orders, messages. |
-| `Media` | owner, kind, mime, size, filename, URL, status | Uploads, post/listing attachments, review. |
-| `Report` | reporter, target kind/id, reason, status, resolution | Safety/admin. |
-| `Order` | buyer, seller, listing, amount, status, payment method/tx | Commerce workflow. |
-| `Notification` | user, kind, title/body, ref, actor, image, read | Notification center and badges. |
-| `Message` | sender, recipient, content, read | Direct messages. |
-| `AuditLog` | actor, action, target, note, IP | Admin accountability. |
-
-## 5. Order State Machine
-
-```mermaid
-stateDiagram-v2
-  [*] --> pending_payment
-  pending_payment --> paid: pay
-  pending_payment --> cancelled: cancel
-  paid --> shipped: ship
-  paid --> refunded: refund
-  shipped --> completed: complete
-  shipped --> refunded: refund
-  completed --> [*]
-  cancelled --> [*]
-  refunded --> [*]
-```
-
-Guards:
-
-- Buyer can pay and cancel.
-- Seller can ship and refund.
-- Only buyer can complete.
-- Participants can view order detail.
-
-## 6. Write Path Example: Create Post
-
-```mermaid
-sequenceDiagram
-  participant C as Client
-  participant R as Go Router
-  participant A as JWT/Auth
-  participant F as Audit Filter
-  participant S as Store
-  participant N as Notifications
-
-  C->>R: POST /api/v1/posts + Bearer token
-  R->>A: parse token
-  A-->>R: user claims
-  R->>F: check title/content
-  F-->>R: accepted or keyword hit
-  R->>S: validate media ownership
-  R->>S: CreatePost
-  R-->>C: 201 envelope(data=post)
-  Note over R,N: Comments/messages/orders create notifications later.
-```
-
-## 7. Client Contract
-
-| Client | Contract Notes |
-| --- | --- |
-| Web | Uses `localStorage` keys `meow_token` and `meow_user`; do not rename without migrating scripts. |
-| Expo | Uses SecureStore keys `meow.auth.token` and `meow.auth.user`; API base from `EXPO_PUBLIC_API_URL`, Android emulator fallback `10.0.2.2`. |
-| KMP | `MeowCircleSdk` stores token/user JSON in `SessionStore`, uses Ktor, and points Android emulator at `10.0.2.2` by default. |
-
-## 8. Persistence Notes
-
-The `Store` interface currently returns zero values/false rather than propagating
-errors. Postgres implementations log errors internally. This keeps handlers
-simple for MVP, but means production-grade observability should include logs and
-admin/health checks.
-
-Redis cache is a read-through decorator for selected reads. Writes evict related
-keys. User-specific lists and participant-specific data bypass shared cache to
-avoid cross-user leakage.
-
-## 9. Change Checklist For Domain/API Work
-
-When adding a field or feature:
-
-1. Update `internal/domain/models.go`.
-2. Update `internal/store/store.go` if persistence behavior changes.
-3. Update `internal/store/memory.go`.
-4. Update relevant `internal/store/postgres/*.go`.
-5. Add a new migration.
-6. Update API handler validation/response.
-7. Update Web scripts and i18n copy if visible.
-8. Update `mobile/src/api.ts` types and KMP `Models.kt`.
-9. Update docs in `docs/`.
-10. Run only checks approved for the current machine. On this machine, default to static review and Web smoke checks; do not run Go build/run/test or Gradle.
+修改合同后核对服务端、OpenAPI、shared DTO与Web派生；[UML](uml/README.md)需保持实际对象、时限、路由和权限前提一致。旧v1交易、JWT及localStorage机制只适用于旧兼容页面，不自动构成V2支付或资格能力。旧版逐路由清单保留在Git历史，本轮以V2权威合同和静态速查代替过期复制表。

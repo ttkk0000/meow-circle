@@ -1,5 +1,7 @@
 # M&D 文档入口
 
+> **2026-10-28 现行入口**：[源码与文档基线](CURRENT_BASELINE.md) · [产品／交付状态](PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 2026-10-25 全栈代码逻辑总览与 PlantUML 架构图谱收口：新增[全栈代码逻辑与 PlantUML 架构总览手册](CODE_LOGIC_AND_UML_REFERENCE.md)与[独立 PlantUML (`.puml`) 图谱目录](uml/README.md)（共 12 份 `.puml` 架构图、类图、ER 图、时序图与状态机图），并将全仓库文档统一对齐至 **2026-10-25 最新源码基线**：OpenAPI `241` Paths / `271` Operations / `123` Server Schemas（Web 派生 `125` Schemas）、`74` 对跨语言 DTO、PostgreSQL `001`–`009` 迁移与 `44` 张 `mobile_*` 领域表、`kmp/shared` 泛型 `MviStore` 体系、`kmp/clientUi` `34` 个三端共享 Compose 文件与 `42` 个 `FeaturePage` 二级业务页、[全量 Figma 四端实现交接](client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)、[高德地图四端与代理交接](client/AMAP_IMPLEMENTATION_2026_10_24.md)、[三方官方认证与冲突恢复](client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)、[外部年龄核验网关](client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)及[监护人 15 分钟邀请与成年关系申诉](client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)。
 
 2026-10-24 服务端完整性审计与全栈文档收口：新增[服务端完整性审计与待完善清单（2026-10-24）](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（梳理 `44` 张 `mobile_*` 表、最新 `241` Paths / `271` Operations / `123` Schemas、6 类 `cmd/worker` 作业基线，以及 `008`–`009` 迁移挂载、`GIN(media_ids)` 索引、`SERIALIZABLE` 事务内 `allRecords()` 查询收敛等 6 大待完善项），并同步更新服务端、客户端（[Android 与 Web 740 状态交接](client/FIGMA_ANDROID_WEB_2026_10_24.md)）、BMAD 架构及根级工程文档。
@@ -48,10 +50,10 @@ M&D = meow & doggie，猫优先、doggie 友好。
 | 要解决的问题 | 文档 | 适用范围 |
 |---|---|---|
 | 为什么这样定位、哪些是用户决定 | [市场策略](bmad/research-report.md) | 2.0；事实、建议和待验证假设 |
-| 做什么、范围与验收 | [PRD](bmad/prd.md) | 2.1；业务需求（FR-001–FR-042）、优先级、状态和追踪 |
+| 做什么、范围与验收 | [PRD](bmad/prd.md) | 2.2；业务需求（FR-001–FR-042）、优先级、状态和追踪 |
 | 身份/来源/地点怎样披露 | [真实性规范](design/MND_TRUST_AND_DISCLOSURE_SPEC.md) | 字段、证据、预约版本、反馈和复核 |
 | 武汉/上海分物种准入与四方标准协议 | [双城准入与协议模板](design/MND_CITY_SPECIES_AND_CONTRACT_TEMPLATES.md) | 1.0；物种×行为准入、四方协议草案、运营 SLA 与未成年人审计清单 |
-| 用户怎么完成任务 | [UX 规格](bmad/ux-design.md) | 2.1；五主入口、UX-01–UX-17 页面、错误、退出、无障碍 |
+| 用户怎么完成任务 | [UX 规格](bmad/ux-design.md) | 2.2；五主入口、UX-01–UX-17 页面、错误、退出、无障碍 |
 | 客户端怎样交接 | [交互摘要](design/MND_CLIENT_INTERACTION_SPEC.md) | 精简索引，不重复完整 PRD |
 | 视觉怎样保持一致 | [UI 对齐指南](design/MND_UI_ALIGNMENT_GUIDE.md) | Stitch V2 色彩、字体、形状与映射（未迁移旧端参考） |
 | 设计素材与 Figma 台账从哪里来 | [设计交接索引](design/MND_FIGMA_DESIGN_DOCUMENT.md) · [2026-10-24 Figma 对齐核查](design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md) | 本地镜像、Figma 740 状态台账、交接顺序 |

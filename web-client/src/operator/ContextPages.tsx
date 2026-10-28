@@ -94,12 +94,22 @@ export function AccessPage({
     ["privacy", "资料请求与保全", "明确事项编号与具体范围"],
     ["identity_verifier", "监护关系核验", "可信关系证据与有效邀请"],
     ["authority_verifier", "处置权核验", "实际授权证明"],
+    ["finance", "实际收款与关联退款", "实际来源证据、预约版本与整数分"],
+    ["evidence_reader", "附加证据读取能力", "不单独授予业务处理工作区"],
+    ["worker", "精确consumer机器任务", "不授予人工业务审批"],
   ];
   return (
     <>
       <OpsNotice title="最小角色与会话">
         凭据仅驻留本页内存。消费者登录、worker及技术运维身份互不自动授予业务处理角色。
       </OpsNotice>
+      {s.lostResult ? (
+        <OpsNotice title="原事项结果仍需核对">
+          原事项 {s.lostResult.kind} / #{s.lostResult.id}，基准版本{" "}
+          {String(s.lostResult.version)}
+          。当前已失去处理角色，材料已清除；请由获授权人员核对，不把权限变化当作操作失败或成功。
+        </OpsNotice>
+      ) : null}
       <div className="ops-columns">
         <SummaryPanel
           title="具名账号"

@@ -1,60 +1,22 @@
 @startuml 10-lost-pet-amap-and-claim-handover-sequence
 !theme plain
-skinparam backgroundColor #FFFDF9
-skinparam defaultFontName "PingFang SC, Inter, sans-serif"
-skinparam roundcorner 8
-skinparam SequenceMessageAlign center
-skinparam ArrowColor #5C534E
+skinparam defaultFontName "Noto Sans SC"
+skinparam shadowing false
+title 走失粗位置、私密线索与认领交接
 
-title F09 Lost Pet Coarse Coordinate Privacy (GCJ-02/WGS-84), Amap Proxy, Nearby Matching & Bilateral Claim Handover
-
-actor "Pet Owner" as Owner
-actor "Community Finder" as Finder
-participant "Client UI & LostMap\n(Android MapView / iOS MAMapView /\nWeb AmapView / Desktop Browser Handoff)" as Client
-participant "Amap Reverse Proxy\n(mobileapi.ServeAmapProxy\n/maps/amap/_AMapService/)" as AmapProxy
-participant "AutoNavi AMap Cloud" as ExtAmap
-participant "Go API\n(mobile.Service)" as Api
-database "PostgreSQL\n(mobile_lost_reports /\nmobile_sighting_clues /\nmobile_lost_claims)" as Db
-
-== 1. Amap Privacy Compliance & 2-Decimal Coarse Coordinate Quantization ==
-Owner -> Client : Open LostMap Page -> Accept Amap Privacy Notice
-Client -> Client : Native: MapsInitializer.updatePrivacyShow/Agree (Android) /\nMAMapView.updatePrivacyShow/Agree (iOS)\nQuantize selected coordinate to 2 decimal places (~1.1 km grid):\ncoarseLat = round(lat, 2), coarseLng = round(lng, 2), datum = "GCJ-02" | "WGS-84"
-
-opt Web Map Tile / Reverse Geocode Request
-  Client -> AmapProxy : GET /maps/amap/_AMapService/v3/geocode/regeo?location=116.40,39.91
-  AmapProxy -> ExtAmap : Forward request with server-injected `jscode` (securityJsCode never exposed to browser)
-  ExtAmap --> AmapProxy : Geocode JSON
-  AmapProxy --> Client : Sanitized Geocode JSON
-end
-
-== 2. Publish Lost Pet Report with Coarse Public Marker ==
-Owner -> Client : Submit Lost Report (petId, coarseLat, coarseLng, datum="GCJ-02", lastSeenAreaText)
-Client -> Api : POST /api/v2/lost-reports\n{petId, coarseLat: 31.23, coarseLng: 121.47, datum: "GCJ-02", areaLabel, rewardNote}
-Api -> Api : Enforce 2-decimal truncation & reject high-precision raw GPS fields
-Api -> Db : INSERT mobile_lost_reports (status='active', datum='GCJ-02', coarse_lat=31.23, coarse_lng=121.47)
-Api --> Client : 201 LostReportView (Public marker visible on LostMap)
-
-== 3. Same-Datum Nearby Query & Sighting Clue Submission ==
-Finder -> Client : Browse LostMap in Shanghai (datum="GCJ-02", viewport center 31.23, 121.47)
-Client -> Api : GET /api/v2/lost-reports/nearby?datum=GCJ-02&lat=31.23&lng=121.47&radiusKm=15
-Api -> Db : Query active reports WHERE datum = 'GCJ-02' within bounding box\n(Never mixes GCJ-02 and WGS-84 without explicit datum filter)
-Db --> Api : Matching coarse LostReport markers
-Api --> Client : 200 LostReportListResponse
-
-Finder -> Client : Submit Sighting Clue or Found Claim with photo evidence
-Client -> Api : POST /api/v2/lost-reports/{reportId}/claims\n{evidenceMediaIds, finderNote, coarseLat, coarseLng, datum}
-Api -> Db : INSERT mobile_lost_claims (status='pending_owner_review')\n(Exact contact/meetup details kept private until owner accepts claim)
-Api --> Client : 201 LostClaimView
-
-== 4. Private Claim Verification, Context-Bound Appointment & Bilateral Handover ==
-Owner -> Client : Review Claim Evidence & Accept for Verification
-Client -> Api : POST /api/v2/lost-reports/{reportId}/claims/{claimId}/accept-review
-Api -> Db : UPDATE mobile_lost_claims SET status='in_handover'\nUnlock private conversation & context-bound appointment (context_type='lost_claim')
-Api --> Client : 200 LostClaimView (status='in_handover')
-
-Finder -> Api : POST /api/v2/lost-reports/{reportId}/claims/{claimId}/confirm-handover (Finder confirms)
-Owner -> Api : POST /api/v2/lost-reports/{reportId}/claims/{claimId}/confirm-handover (Owner confirms with Reauth)
-Api -> Db : BEGIN SERIALIZABLE\n1. Mark mobile_lost_claims status='completed_reunited'\n2. Mark mobile_lost_reports status='resolved_reunited' (removed from public active map)\n3. Archive other pending claims on same reportId\nCOMMIT
-Api --> Owner : 200 LostReportView (status='resolved_reunited')
+participant "目击者" as witness
+participant "客户端与地图" as client
+participant "mobile.Service" as api
+participant "求助发布者" as owner
+participant "cases与leads聚合" as db
+client -> api : 读取当前求助、城市、坐标系和粗精度
+api -> client : 公开范围与粗位置；私密地址不公开
+witness -> client : 输入线索时间与照片
+client -> api : 按Case版本和原请求提交lead-submissions
+api -> db : 同事务核对当前父权限、资格和本人附件
+api -> owner : 通知收到私密线索，不宣布已核实
+owner -> api : 处理线索或开启独立会话
+api -> db : 再次核对父求助状态和双方权限
+owner -> api : 认领凭证核对后双方另行确认交接
 
 @enduml

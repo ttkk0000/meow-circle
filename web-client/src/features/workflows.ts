@@ -118,7 +118,7 @@ const actionGroups: Record<string, string[]> = {
     "mute",
   ],
   friendships: ["accept", "decline", "withdraw", "remove", "block", "unblock"],
-  invitations: ["accept", "decline", "revoke"],
+  invitations: ["accept", "decline", "revoke", "leave"],
   conversations: ["accept", "decline"],
   cases: ["close"],
 };
@@ -221,6 +221,7 @@ export const workflows: Record<string, Workflow> = {
     title: "协作与成员邀请",
     schema: "InviteInput",
     path: () => "invitations",
+    after: "invitations",
     initial: (c) => ({
       target_id: c.id,
       scope: c.params.get("scope") ?? "adoption_editor",
@@ -479,6 +480,10 @@ export const workflows: Record<string, Workflow> = {
       summary: c.record?.data.summary ?? "",
     }),
   },
+  "invitation-action": {
+    ...actionWorkflow("StateInput"),
+    title: "核对邀请与协作",
+  },
   "state-action": { ...actionWorkflow("StateInput"), replayable: false },
   "friend-action": {
     ...actionWorkflow("FriendInput"),
@@ -557,6 +562,7 @@ export const stateLabels: Record<string, string> = {
   active: "有效",
   pending: "待确认",
   accepted: "已接受",
+  left: "已退出协作",
   declined: "已拒绝",
   withdrawn: "已撤回",
   removed: "已解除",

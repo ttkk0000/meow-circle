@@ -1,0 +1,287 @@
+{
+  "date": "2026-10-28",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "pageId": "888:1402",
+  "spec": {
+    "fileKey": "JiFXEy785BcGEvaFBSswJ3",
+    "nodeId": "21:2",
+    "source": "docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md",
+    "fullReadback": true,
+    "sourceSha256": "e2eaabb9fe33c7b1e2eab3ab93083d3939c85b952b1733c0912bd5860663a59d"
+  },
+  "homeFrames": [
+    {
+      "role": "moderator",
+      "id": "888:1403",
+      "title": "内容与权利工作台",
+      "navigation": [
+        "本岗工作台",
+        "举报与申诉",
+        "权利事项",
+        "发布准入",
+        "角色与会话"
+      ]
+    },
+    {
+      "role": "privacy",
+      "id": "888:1542",
+      "title": "资料保护工作台",
+      "navigation": [
+        "本岗工作台",
+        "资料与注销",
+        "保全与清理",
+        "角色与会话"
+      ]
+    },
+    {
+      "role": "identity_verifier",
+      "id": "888:1681",
+      "title": "身份与监护工作台",
+      "navigation": [
+        "本岗工作台",
+        "监护核验",
+        "年龄证据",
+        "角色与会话"
+      ]
+    },
+    {
+      "role": "authority_verifier",
+      "id": "888:1820",
+      "title": "发布授权工作台",
+      "navigation": [
+        "本岗工作台",
+        "授权证据",
+        "发布准入",
+        "角色与会话"
+      ]
+    },
+    {
+      "role": "finance",
+      "id": "888:1959",
+      "title": "实际收支工作台",
+      "navigation": [
+        "本岗工作台",
+        "实际收支台账",
+        "收款登记",
+        "退款登记",
+        "角色与会话"
+      ]
+    },
+    {
+      "role": "ops_viewer",
+      "id": "888:2098",
+      "title": "运维观察工作台",
+      "navigation": [
+        "运维总览",
+        "服务与依赖",
+        "Worker任务",
+        "版本与发布",
+        "迁移账本",
+        "告警事件",
+        "操作审计",
+        "环境与权限"
+      ]
+    },
+    {
+      "role": "ops_oncall",
+      "id": "888:2237",
+      "title": "值班处置工作台",
+      "navigation": [
+        "告警事件",
+        "服务与依赖",
+        "Worker任务",
+        "运维总览",
+        "迁移账本",
+        "版本与发布",
+        "操作审计",
+        "环境与权限"
+      ]
+    },
+    {
+      "role": "ops_release",
+      "id": "888:2376",
+      "title": "发布准备工作台",
+      "navigation": [
+        "版本与发布",
+        "迁移账本",
+        "服务与依赖",
+        "运维总览",
+        "Worker任务",
+        "告警事件",
+        "操作审计",
+        "环境与权限"
+      ]
+    },
+    {
+      "role": "ops_admin",
+      "id": "888:2515",
+      "title": "环境审计工作台",
+      "navigation": [
+        "环境与权限",
+        "操作审计",
+        "运维总览",
+        "服务与依赖",
+        "Worker任务",
+        "迁移账本",
+        "版本与发布",
+        "告警事件"
+      ]
+    }
+  ],
+  "taskFrames": [
+    {
+      "id": "890:2119",
+      "index": 0,
+      "title": "举报与权利 · 核对当前事项",
+      "role": "moderator"
+    },
+    {
+      "id": "890:2284",
+      "index": 1,
+      "title": "资料保护 · 保全与分类处理",
+      "role": "privacy"
+    },
+    {
+      "id": "890:2444",
+      "index": 2,
+      "title": "监护关系 · 核验证据",
+      "role": "identity_verifier"
+    },
+    {
+      "id": "890:2604",
+      "index": 3,
+      "title": "可信年龄区间 · 登记任务",
+      "role": "identity_verifier"
+    },
+    {
+      "id": "890:2764",
+      "index": 4,
+      "title": "发布授权 · 对象与范围",
+      "role": "authority_verifier"
+    },
+    {
+      "id": "890:2924",
+      "index": 5,
+      "title": "实际收款 · 事实登记",
+      "role": "finance"
+    },
+    {
+      "id": "890:3089",
+      "index": 6,
+      "title": "实际退款 · 原收款核对",
+      "role": "finance"
+    },
+    {
+      "id": "890:3254",
+      "index": 7,
+      "title": "多角色 · 切换本岗工作区",
+      "role": "moderator"
+    },
+    {
+      "id": "890:3419",
+      "index": 8,
+      "title": "访问受限 · 无人员工作区",
+      "role": "moderator"
+    }
+  ],
+  "validation": {
+    "frames": 18,
+    "dimensions": [
+      1440,
+      1000
+    ],
+    "reusedInstances": 496,
+    "fullScreenImages": 0,
+    "selfNavigationLinks": 0,
+    "colorMode": "56:0",
+    "screenshots": 18,
+    "privateLiveData": false,
+    "runtimeVerified": false
+  },
+  "notes": [
+    "外壳布局为角色导航解除实例，按钮、指标、摘要、行、图标仍引用原组件。",
+    "技术任务详情复用既有14稿；角色写权限以服务端capabilities为准，通用原型不代表已运行权限过滤。",
+    "规范全文已回读100行；18张PNG均保存，截图抽查并修正长按钮换行与无人员页面重复角色菜单。"
+  ],
+  "implementationSpec": {
+    "fileKey": "JiFXEy785BcGEvaFBSswJ3",
+    "nodeId": "22:2",
+    "totalLines": 36,
+    "hasMore": false,
+    "normalizedFullMatch": true
+  },
+  "screenshots": [
+    {
+      "file": "01.png",
+      "sha256": "3e64ae6a3d816b8a8c6a3a8a1b265d60fa7524eb1e0dc6ca08f6b0353e13d662"
+    },
+    {
+      "file": "02.png",
+      "sha256": "7521966123b87838f5ac765cab9e917e2cb23c79d2b7dc5fa17f4f04b8902166"
+    },
+    {
+      "file": "03.png",
+      "sha256": "2fb1316926195b2988fc75435a59f068da31a0c45dcd3fa60fc3b0d347a4e8b0"
+    },
+    {
+      "file": "04.png",
+      "sha256": "729a1e566e27953b72ba3c645bb03cd1620ebc505edf02556430302a61424fad"
+    },
+    {
+      "file": "05.png",
+      "sha256": "765d615694142d7d8d8c0f437300ec2624ae089e3b2e5fbcad821f96905f0fe2"
+    },
+    {
+      "file": "06.png",
+      "sha256": "250b429b8bb7ca00d6b2b6e7a69a41a321b4ab1157cad057f7d06c3a67fab90e"
+    },
+    {
+      "file": "07.png",
+      "sha256": "1de64e4050c1218a255f171f53d3a69366b5279f55b5fef7ed03573004dcb747"
+    },
+    {
+      "file": "08.png",
+      "sha256": "dde070f0654cc1c570656e08884bb41ae7f8b762d5a1186f1ba1366252f57363"
+    },
+    {
+      "file": "09.png",
+      "sha256": "a11996f123a157ce8a891ec8d6bbf64bf99dc7f1a86f4488b5990405658292c4"
+    },
+    {
+      "file": "10.png",
+      "sha256": "291b9aef1af18ad7f1a2db6c869c66fea0408f437941b616622fac5da5fdc57a"
+    },
+    {
+      "file": "11.png",
+      "sha256": "de51d13d317fd09598c1243108c57aa046853ee93a314377adad55f21b56327f"
+    },
+    {
+      "file": "12.png",
+      "sha256": "cb381003b9f7a6b5103dc19696fd1ea36844bcc88355de5a5b4675dce3c06cc0"
+    },
+    {
+      "file": "13.png",
+      "sha256": "e4dea3074bda6c60e4d8b40ad904cbbf897e63906f8182a24164c394a278672f"
+    },
+    {
+      "file": "14.png",
+      "sha256": "6bc559afa1f7bea4aa3a604915a4bffabea834cf7b6631e8be00428b1cdd264c"
+    },
+    {
+      "file": "15.png",
+      "sha256": "bf5cb934e8a266dacce1c4c7d62a644547670298c5967bbeb48eb439a8e09fab"
+    },
+    {
+      "file": "16.png",
+      "sha256": "c580edacb073bca8b3aba21a2c0f3663214b2907f4f3406138e7c04bc39ce3c2"
+    },
+    {
+      "file": "17.png",
+      "sha256": "38b9c7d4537441f0c00805a18800cf62afba37c042fad4be3bcfe0f5fe90d7cb"
+    },
+    {
+      "file": "18.png",
+      "sha256": "0ca8e932bc0be48cb03fc4e84b982f83015d128b6a9891717ccc238bedf44dc3"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+sequenceDiagram
+ participant witness as 目击者
+ participant client as 客户端与地图
+ participant api as mobile.Service
+ participant owner as 求助发布者
+ participant db as cases与leads聚合
+ client->>api: 读取当前求助、城市、坐标系和粗精度
+ api->>client: 公开范围与粗位置；私密地址不公开
+ witness->>client: 输入线索时间与照片
+ client->>api: 按Case版本和原请求提交lead-submissions
+ api->>db: 同事务核对当前父权限、资格和本人附件
+ api->>owner: 通知收到私密线索，不宣布已核实
+ owner->>api: 处理线索或开启独立会话
+ api->>db: 再次核对父求助状态和双方权限
+ owner->>api: 认领凭证核对后双方另行确认交接

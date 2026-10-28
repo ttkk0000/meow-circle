@@ -40,3 +40,16 @@ func TestOperatorContextIncludesTraceablePublicDocumentsWithoutCredential(t *tes
 		}
 	}
 }
+
+// 核验读取仍需独立authority_verifier，不因是后台账号或管理员便放行。
+func TestAuthorityLookupRejectsOtherOperatorRoles(t *testing.T) {
+	for _, role := range []string{"moderator", "privacy", "identity_verifier", "finance", "evidence_reader", "worker", "ops_viewer", "ops_oncall", "ops_release", "ops_admin"} {
+		token := strings.Repeat("fixture-authority-", 3)
+		h := Handler{Operators: []Operator{{ID: "fixture-operator", Token: token, Roles: []string{role}}}}
+		r := httptest.NewRequest("GET", "/api/v2/ops/authority?scope=city_rule&city=武汉&species=cat", nil)
+		r.Header.Set("X-Operator-Token", token)
+		if _, e := h.operations(r, []string{"authority"}); e != mobile.ErrForbidden {
+			t.Fatal(role, e)
+		}
+	}
+}

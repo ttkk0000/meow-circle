@@ -1,5 +1,9 @@
 # M&D 客户端代码实施与完成标准
 
+> **2026-10-28 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
+2026-10-28：[后台按角色先设计后编码](ADMIN_ROLE_WORKSPACES_2026_10_28.md)补9个人员工作区、角色／页面与字段权限、18份Figma新稿和年龄／授权／实际收支入口；旧邀请码闭环见[检查点](BUSINESS_COLLABORATION_2026_10_28.md)。均未运行验收。
+
 2026-10-27：[全量落地任务本轮恢复点](COMPLETE_LANDING_2026_10_27.md)补业务后台13页／双后台公共框架、预约暂停与取消状态、领养／协议内试养／交接／接回和私密照护；58份设计上下文与22项只读检查。源码和静态层已记录，740状态及各端运行验收没有升级为完成。
 
 2026-10-26：[远端同步与线索提交补页](SYNC_PAGES_ADMIN_2026_10_26.md)补照片／完整检查／失败／收到四状态及版本化原请求，修正公共主入口遗漏；[业务后台管理13稿](../design/figma-study/admin-2026-10-26/README.md)已建于Figma，保留原技术运维。38公共UI／48分派，未编译或运行验收。

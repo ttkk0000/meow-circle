@@ -1,5 +1,7 @@
 # M&D / meow & doggie Server (Go + Caddy)
 
+> **2026-10-28 现行入口**：[源码与文档基线](docs/CURRENT_BASELINE.md) · [产品／交付状态](docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 AI 或换电脑继续开发，先读[2026-10-22家里接手入口](docs/ai/HOME_HANDOFF_2026_10_22.md)、[项目内 AI 工作跟踪](docs/ai/README.md)、[当前快照](docs/ai/CONTEXT.md)和[任务状态](docs/ai/TASKS.md)。本批包含此前未提交的设计、合规、服务端及移动端源码；远端同步以Git回执为准，家里核对提交后继续，旧`ebfc469`不包含这些成果。
 
 M&D = meow & doggie。项目为猫猫优先、doggie 友好的社区服务端与多端客户端。

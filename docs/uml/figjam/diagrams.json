@@ -1,0 +1,366 @@
+[
+  {
+    "stem": "01-system-component-architecture",
+    "title": "M&D 系统组件与外部能力边界",
+    "kind": "flowchart",
+    "sources": [
+      "cmd/server/main.go",
+      "internal/mobile/repository.go",
+      "internal/platform/mobileapi/handler.go",
+      "internal/store/postgres/mobile.go"
+    ],
+    "puml": "docs/uml/01-system-component-architecture.puml",
+    "mermaid": "docs/uml/figjam/01-system-component-architecture.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "02-kmp-mvi-and-clientui-class-diagram",
+    "title": "KMP MVI 与共享UI类关系",
+    "kind": "class",
+    "sources": [
+      "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MviStore.kt",
+      "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt"
+    ],
+    "puml": "docs/uml/02-kmp-mvi-and-clientui-class-diagram.puml",
+    "mermaid": null,
+    "classes": [
+      [
+        "MviStateOwner",
+        "state: StateFlow<State>\neffects: Flow<Effect>\naccept(intent)\nclose()"
+      ],
+      [
+        "MviStore",
+        "reduce(reducer)\nsetState(next)\nsendEffect(effect)\nclose()"
+      ],
+      [
+        "MobileStore",
+        "主壳与会话\n共享业务状态与导航"
+      ],
+      [
+        "MobileFeatureStore",
+        "48个FeaturePage\n组合专业Store"
+      ],
+      [
+        "SensitiveActionStore",
+        "scope与用途认证\n原请求与未知结果恢复"
+      ],
+      [
+        "ProviderAuthStore",
+        "登录 / 绑定 / 冲突"
+      ],
+      [
+        "AgeAssuranceStore",
+        "年龄会话与查询"
+      ],
+      [
+        "GuardianInviteStore",
+        "邀请 / 撤销 / 领取"
+      ],
+      [
+        "ConsumerApp",
+        "共享Compose页面\n窗口自适应"
+      ],
+      [
+        "ClientUiPlatform",
+        "系统能力端口\nAndroid / iOS / Desktop"
+      ]
+    ],
+    "edges": [
+      [
+        "MviStore",
+        "MviStateOwner",
+        "实现"
+      ],
+      [
+        "MobileStore",
+        "MviStore",
+        "继承"
+      ],
+      [
+        "MobileFeatureStore",
+        "MviStore",
+        "继承"
+      ],
+      [
+        "SensitiveActionStore",
+        "MviStore",
+        "继承"
+      ],
+      [
+        "ProviderAuthStore",
+        "MviStore",
+        "继承"
+      ],
+      [
+        "AgeAssuranceStore",
+        "MviStore",
+        "继承"
+      ],
+      [
+        "GuardianInviteStore",
+        "MviStore",
+        "继承"
+      ],
+      [
+        "MobileFeatureStore",
+        "SensitiveActionStore",
+        "组合"
+      ],
+      [
+        "MobileFeatureStore",
+        "ProviderAuthStore",
+        "组合"
+      ],
+      [
+        "MobileFeatureStore",
+        "AgeAssuranceStore",
+        "组合"
+      ],
+      [
+        "MobileFeatureStore",
+        "GuardianInviteStore",
+        "组合"
+      ],
+      [
+        "ConsumerApp",
+        "MobileStore",
+        "读取"
+      ],
+      [
+        "ConsumerApp",
+        "MobileFeatureStore",
+        "读取"
+      ],
+      [
+        "ConsumerApp",
+        "ClientUiPlatform",
+        "平台能力"
+      ]
+    ]
+  },
+  {
+    "stem": "03-server-domain-and-service-class-diagram",
+    "title": "Go 服务、事务端口与适配器类关系",
+    "kind": "class",
+    "sources": [
+      "internal/mobile/repository.go",
+      "internal/identity/service.go",
+      "internal/platform/mobileapi/handler.go",
+      "internal/store/postgres/mobile.go"
+    ],
+    "puml": "docs/uml/03-server-domain-and-service-class-diagram.puml",
+    "mermaid": null,
+    "classes": [
+      [
+        "Handler",
+        "HTTP与浏览器适配\n会话 / Origin / CSRF"
+      ],
+      [
+        "IdentityService",
+        "账号认证与资格\n年龄与监护邀请"
+      ],
+      [
+        "MobileService",
+        "领域命令与权限\n领养 / 预约 / 线索"
+      ],
+      [
+        "Repository",
+        "View(ctx, fn)\nUpdate(ctx, fn)"
+      ],
+      [
+        "Tx",
+        "Get / ByKey / List\nSave / Delete / Count"
+      ],
+      [
+        "Record",
+        "ID / OwnerID / RefID\nState / Version / Data"
+      ],
+      [
+        "mobileRepository",
+        "pgx事务适配\n只读RepeatableRead\n写Serializable"
+      ],
+      [
+        "mobileTx",
+        "SQL与CAS\n聚合表白名单"
+      ],
+      [
+        "Runner",
+        "Tick / Load / Save\n具名job与检查点"
+      ]
+    ],
+    "edges": [
+      [
+        "Handler",
+        "IdentityService",
+        "调用"
+      ],
+      [
+        "Handler",
+        "MobileService",
+        "调用"
+      ],
+      [
+        "IdentityService",
+        "Repository",
+        "依赖"
+      ],
+      [
+        "MobileService",
+        "Repository",
+        "依赖"
+      ],
+      [
+        "Repository",
+        "Tx",
+        "事务回调"
+      ],
+      [
+        "mobileRepository",
+        "Repository",
+        "实现"
+      ],
+      [
+        "mobileTx",
+        "Tx",
+        "实现"
+      ],
+      [
+        "Tx",
+        "Record",
+        "读写"
+      ],
+      [
+        "Runner",
+        "Handler",
+        "HTTP作业"
+      ]
+    ]
+  },
+  {
+    "stem": "04-database-er-schema",
+    "title": "45张mobile聚合表实际Schema与owner关系",
+    "kind": "erDiagram",
+    "sources": [
+      "migrations/007_mobile_modules.sql",
+      "migrations/008_mobile_policy_commands.sql",
+      "migrations/009_pet_discussions.sql",
+      "migrations/013_source_declarations.sql"
+    ],
+    "puml": "docs/uml/04-database-er-schema.puml",
+    "mermaid": "docs/uml/figjam/04-database-er-schema.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "05-auth-provider-and-account-linking-sequence",
+    "title": "显式登录、三方认证与绑定冲突边界",
+    "kind": "sequenceDiagram",
+    "sources": [
+      "internal/identity/service.go",
+      "internal/identity/email.go",
+      "internal/platform/mobileapi/browser_provider.go"
+    ],
+    "puml": "docs/uml/05-auth-provider-and-account-linking-sequence.puml",
+    "mermaid": "docs/uml/figjam/05-auth-provider-and-account-linking-sequence.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "06-age-assurance-and-guardian-consent-sequence",
+    "title": "年龄核验与十五分钟监护邀请",
+    "kind": "sequenceDiagram",
+    "sources": [
+      "internal/identity/age_assurance.go",
+      "internal/identity/guardian_invites.go",
+      "internal/mobile/qualification.go"
+    ],
+    "puml": "docs/uml/06-age-assurance-and-guardian-consent-sequence.puml",
+    "mermaid": "docs/uml/figjam/06-age-assurance-and-guardian-consent-sequence.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "07-idempotent-write-and-sensitive-reauth-sequence",
+    "title": "五分钟用途认证、幂等写入与未知结果恢复",
+    "kind": "sequenceDiagram",
+    "sources": [
+      "internal/identity/service.go",
+      "internal/mobile/commands.go",
+      "internal/mobile/purpose.go"
+    ],
+    "puml": "docs/uml/07-idempotent-write-and-sensitive-reauth-sequence.puml",
+    "mermaid": "docs/uml/figjam/07-idempotent-write-and-sensitive-reauth-sequence.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "08-adoption-exclusivity-contract-and-return-state",
+    "title": "领养、试养、交接与安全接回状态",
+    "kind": "stateDiagram-v2",
+    "sources": [
+      "internal/mobile/rescue.go",
+      "internal/mobile/adoption_placement.go",
+      "internal/mobile/contracts.go"
+    ],
+    "puml": "docs/uml/08-adoption-exclusivity-contract-and-return-state.puml",
+    "mermaid": "docs/uml/figjam/08-adoption-exclusivity-contract-and-return-state.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "09-appointment-dual-track-and-safety-hold-state",
+    "title": "预约有效版本、提案与安全暂停",
+    "kind": "stateDiagram-v2",
+    "sources": [
+      "internal/mobile/appointments.go"
+    ],
+    "puml": "docs/uml/09-appointment-dual-track-and-safety-hold-state.puml",
+    "mermaid": "docs/uml/figjam/09-appointment-dual-track-and-safety-hold-state.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "10-lost-pet-amap-and-claim-handover-sequence",
+    "title": "走失粗位置、私密线索与认领交接",
+    "kind": "sequenceDiagram",
+    "sources": [
+      "internal/mobile/rescue.go",
+      "internal/mobile/lead_submission.go",
+      "internal/mobile/lead_review.go",
+      "internal/mobile/nearby.go"
+    ],
+    "puml": "docs/uml/10-lost-pet-amap-and-claim-handover-sequence.puml",
+    "mermaid": "docs/uml/figjam/10-lost-pet-amap-and-claim-handover-sequence.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "11-data-lifecycle-erasure-and-worker-jobs-sequence",
+    "title": "资料权利、保全、Worker与检查点",
+    "kind": "sequenceDiagram",
+    "sources": [
+      "internal/mobile/data_requests.go",
+      "internal/mobile/evidence_retention.go",
+      "internal/platform/mobileapi/jobs.go",
+      "cmd/worker/main.go"
+    ],
+    "puml": "docs/uml/11-data-lifecycle-erasure-and-worker-jobs-sequence.puml",
+    "mermaid": "docs/uml/figjam/11-data-lifecycle-erasure-and-worker-jobs-sequence.mmd",
+    "classes": null,
+    "edges": null
+  },
+  {
+    "stem": "12-inbox-unread-snapshot-and-chat-sequence",
+    "title": "未读汇总、十分钟确认快照与会话已读",
+    "kind": "sequenceDiagram",
+    "sources": [
+      "internal/mobile/inbox.go",
+      "internal/mobile/inbox_snapshot.go"
+    ],
+    "puml": "docs/uml/12-inbox-unread-snapshot-and-chat-sequence.puml",
+    "mermaid": "docs/uml/figjam/12-inbox-unread-snapshot-and-chat-sequence.mmd",
+    "classes": null,
+    "edges": null
+  }
+]

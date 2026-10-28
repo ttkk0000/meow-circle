@@ -274,16 +274,20 @@ export function ReleaseDetail() {
           <OpsLink view="confirm" id={record.id} button>
             查看发布确认
           </OpsLink>
-          <Button
-            disabled={demo || !session.context?.capabilities.release_write}
-            onClick={() => setEditing(true)}
-          >
-            补齐发布资料
-          </Button>
+          {demo || session.context?.capabilities.release_write ? (
+            <Button
+              disabled={demo || !session.context?.capabilities.release_write}
+              onClick={() => setEditing(true)}
+            >
+              补齐发布资料
+            </Button>
+          ) : null}
         </div>
-        <Button disabled>执行发布</Button>
+        {demo || session.context?.capabilities.release_write ? (
+          <Button disabled>执行发布</Button>
+        ) : null}
       </div>
-      {editing && session.context ? (
+      {editing && session.context?.capabilities.release_write ? (
         <CreateRelease
           key={`${record.id}:${record.version}:${session.context.id}`}
           record={record}
@@ -545,7 +549,11 @@ export function IncidentDetail() {
             <li>03 评估缓解措施与影响范围</li>
           </ol>
           <div className="ops-actions">
-            {record.state === "pending" ? (
+            {!canWork ? (
+              <p className="ops-caption">
+                当前岗位仅可查看事件；处置须具备值班角色。
+              </p>
+            ) : record.state === "pending" ? (
               <Button
                 kind="primary"
                 disabled={!canWork}

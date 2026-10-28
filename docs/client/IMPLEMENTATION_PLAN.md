@@ -1,5 +1,7 @@
 # 客户端详细实施方案
 
+> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 2026-10-24工程增补：全端实施使用独立 `kmp/clientUi` 复用消费者Compose页面，业务shared保持纯逻辑；Android、iOS、Desktop分别提供系统／窗口适配，Web为React DOM。此工程选择已记[决定](../ai/DECISIONS.md)，本文件旧“各自Compose UI”／“苹果后置”条目不覆盖最新范围。源码和未验收项见[专项进展](ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)。
 
 > **2026-10-24 最新进度**：服务端 `/api/v2`（230 Paths / 259 Operations / 112 Schemas，001–009 迁移）、`kmp/shared/.../client`、`kmp/androidApp/.../mobile` 以及独立 `web-client/`（React + TypeScript + Vite，支持 Cookie/CSRF 认证、无损 ID、公开阅读/法规目录与 740 布局追踪）已完成源码落地与静态对齐（详见[2026-10-24客户端说明](FIGMA_ANDROID_WEB_2026_10_24.md)与[服务端完整性审计](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。iOS（`kmp/iosUi`）与 Desktop（`kmp/desktopApp`）保持首批基础实现，待 Android 与 Web 运行验收后同步扩展。

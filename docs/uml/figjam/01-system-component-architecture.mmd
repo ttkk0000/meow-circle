@@ -1,0 +1,13 @@
+flowchart LR
+ native["Android / iOS / Desktop"] --> kmp["KMP clientUi 与 shared"]
+ kmp -->|"Bearer"| api["cmd/server 与 mobileapi.Handler"]
+ web["Web /app"] -->|"Cookie 与 X-MND-CSRF"| api
+ ops["业务后台与技术运维"] -->|"具名角色"| api
+ worker["cmd/worker 单个具名作业"] --> api
+ api --> identity["identity.Service"]
+ api --> domain["mobile.Service"]
+ identity --> repo["mobile.Repository 与 Tx"]
+ domain --> repo
+ repo --> db[("PostgreSQL 001至013")]
+ api --> providers["认证 年龄 高德 短信 存储适配器"]
+ providers --> pending["正式配置与真实联调待完成"]

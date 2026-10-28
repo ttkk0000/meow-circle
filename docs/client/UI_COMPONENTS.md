@@ -1,5 +1,7 @@
 # Android UI 基础框架与组件维护规范
 
+> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 2026-10-24现行入口已迁到独立 [clientUi](../../kmp/clientUi/README.md)：`ClientTheme`、`ClientMetrics`、`Components`、`PageComponents`、`FormLayout`、`TaskDialogs`、`LoadStates`、`StatusComponents`。Android／iOS／Desktop共用页面，平台端口各自实现；本页下方带2026-10-23／早期2026-10-24的说明是迁移前记录，其旧文件名应按[专项记录](ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)查现行源码。
 
 2026-10-24地图组件：`AndroidNativeMap.kt`提供手机／平板共用的`NativeLostMap`与`CaseMapPicker`；`shared/.../LostMap.kt`只承载公开粗点，不含私密事项。iOS以`IosMapSurface`桥接原生`MAMapView`，Web复用`AmapView`，均不新增业务Store。状态、配置与未运行边界见[地图交接](AMAP_IMPLEMENTATION_2026_10_24.md)。

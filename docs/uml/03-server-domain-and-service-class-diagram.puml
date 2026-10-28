@@ -1,129 +1,53 @@
 @startuml 03-server-domain-and-service-class-diagram
 !theme plain
-skinparam backgroundColor #FFFDF9
-skinparam classAttributeIconSize 0
-skinparam defaultFontName "PingFang SC, Inter, sans-serif"
-skinparam roundcorner 8
-skinparam ClassBorderColor #D8CFC4
-skinparam ClassBackgroundColor #FFFFFF
-skinparam PackageBorderColor #E6DFD5
-skinparam ArrowColor #5C534E
+skinparam defaultFontName "Noto Sans SC"
+skinparam shadowing false
+title Go 服务、事务端口与适配器类关系
 
-title Go V2 Server Domain, Service, Transport & Worker Class Diagram
-
-package "internal/identity (Identity, Auth, Qualification & Guardian Domain)" {
-  interface "identity.Repository" as IdentityRepo {
-    + CreateUserWithIdentity(ctx, user, identity, session): error
-    + GetAccountIdentity(ctx, provider, subjectHash): (AccountIdentity, error)
-    + LinkAccountIdentity(ctx, userID, identity): error
-    + CreateAuthChallenge(ctx, challenge): error
-    + ConsumeAuthChallenge(ctx, id, codeHash): error
-    + SavePurposeReauthGrant(ctx, grant): error
-    + ConsumePurposeReauthGrant(ctx, userID, purpose, tokenHash): error
-    + GetQualificationStatus(ctx, userID): (QualificationStatus, error)
-    + UpsertAgeAssuranceSession(ctx, session): error
-    + CreateGuardianInvite(ctx, invite): error
-    + AcceptGuardianInvite(ctx, codeHash, guardianUserID, scopes): error
-    + CreateAdultRelationshipClaim(ctx, claim): error
-    + ReviewAdultRelationshipClaim(ctx, claimID, reviewerID, decision): error
-  }
-
-  class "identity.Service" as IdentityService {
-    - repo: identity.Repository
-    - verifier: ThirdPartyIdentityVerifier
-    - ageGateway: AgeAssuranceGateway
-    - smsSender: SmsSender
-    + SignInWithPassword(ctx, req): (AuthSessionResponse, error)
-    + SignInWithPhoneCode(ctx, req): (AuthSessionResponse, error)
-    + SignInWithProvider(ctx, provider, req): (AuthSessionResponse, error)
-    + LinkProviderIdentity(ctx, userID, reauthToken, provider, req): (AccountIdentity, error)
-    + UnlinkProviderIdentity(ctx, userID, reauthToken, provider): error
-    + CreatePurposeReauth(ctx, userID, req): (PurposeReauthResponse, error)
-    + StartAgeAssurance(ctx, userID, req): (AgeAssuranceSessionView, error)
-    + CompleteAgeAssuranceCallback(ctx, req): (QualificationStatus, error)
-    + CreateGuardianInvite(ctx, minorUserID, req): (GuardianInviteCreatedView, error)
-    + AcceptGuardianInvite(ctx, guardianUserID, reauthToken, req): (GuardianConsentView, error)
-    + SubmitAdultRelationshipClaim(ctx, userID, req): (AdultRelationshipClaimView, error)
-    + ReviewAdultRelationshipClaim(ctx, operatorID, claimID, req): (AdultRelationshipClaimView, error)
-  }
+class Handler {
+HTTP与浏览器适配
+会话 / Origin / CSRF
 }
-
-package "internal/mobile (Core Consumer, Care, Social, Reading, Publications & Governance)" {
-  interface "mobile.Repository" as MobileRepo {
-    + ExecuteIdempotentCommand(ctx, userID, requestID, commandType, payloadHash, fn): (CommandResult, error)
-    + CheckSocialRelationshipAndConsent(ctx, senderID, recipientID): (RelationshipState, error)
-    + TransactAdoptionApplication(ctx, petID, listingID, applicantID, fn): error
-    + TransactAppointmentMutation(ctx, appointmentID, actorID, fn): error
-    + QueryNearbyLostReports(ctx, datum, coarseLat, coarseLng, radiusKm): ([]LostReport, error)
-    + AcquireEvidenceHold(ctx, hold): error
-    + ReleaseEvidenceHold(ctx, holdID, operatorID): error
-    + HasActiveEvidenceHold(ctx, targetType, targetID): (bool, error)
-    + ClaimNextOutboxBatch(ctx, limit): ([]OutboxEvent, error)
-  }
-
-  class "mobile.Service" as MobileService {
-    - repo: mobile.Repository
-    - identitySvc: *identity.Service
-    - mediaSigner: MediaPresigner
-    + GetBootstrap(ctx, userID): (BootstrapPayload, error)
-    + CreateEntry(ctx, userID, requestID, req): (EntryDetail, error)
-    + CreatePetComment(ctx, userID, petID, req): (PetCommentView, error)
-    + ToggleCommentReaction(ctx, userID, commentID, req): (CommentReactionSummary, error)
-    + SendDirectMessage(ctx, senderID, conversationID, req): (MessageView, error)
-    + MarkAllInboxRead(ctx, userID, snapshotToken): (InboxReadAllResult, error)
-    + ApplyForAdoption(ctx, userID, reauthToken, listingID, req): (AdoptionApplicationView, error)
-    + SelectTrialAdoptionApplicant(ctx, ownerID, listingID, applicationID): error
-    + ProposeAdoptionReturn(ctx, actorID, applicationID, req): (AdoptionReturnProposal, error)
-    + MutateAppointment(ctx, actorID, appointmentID, req): (AppointmentView, error)
-    + CreateLostReport(ctx, userID, req): (LostReportView, error)
-    + SubmitPublicationRevision(ctx, authorID, pubID, req): (PublicationRevisionView, error)
-    + ReviewPublicationRevision(ctx, operatorID, pubID, revID, req): error
-    + RequestDataErasure(ctx, userID, reauthToken, req): (DataLifecycleRequestView, error)
-    + RunExpireReservations(ctx, now): (int, error)
-    + RunExpireDomainDeadlines(ctx, now): (int, error)
-    + RunProcessPendingDataRequests(ctx, now): (int, error)
-    + RunReconcileObjectDeletions(ctx, now): (int, error)
-    + RunPurgeExpiredArtifacts(ctx, now): (int, error)
-    + RunDispatchOutboxEvents(ctx, now): (int, error)
-  }
+class "identity.Service" as IdentityService {
+账号认证与资格
+年龄与监护邀请
 }
-
-package "internal/platform/mobileapi (HTTP Handlers & Security Middleware)" {
-  class "mobileapi.Handler" as ApiHandler {
-    - identitySvc: *identity.Service
-    - mobileSvc: *mobile.Service
-    - operators: OperatorRegistry
-    - amapConfig: AmapProxyConfig
-    + RegisterRoutes(mux: *http.ServeMux)
-    + ServeAmapProxy(w, r)
-    + ServeBrowserProviderStart(w, r)
-    + ServeBrowserProviderCallback(w, r)
-    + RequireSession(next: http.HandlerFunc): http.HandlerFunc
-    + RequireOperatorRole(roles: ...string): Middleware
-    + RequirePurposeReauth(purpose: string): Middleware
-  }
+class "mobile.Service" as MobileService {
+领域命令与权限
+领养 / 预约 / 线索
 }
-
-package "internal/platform/postgres & internal/platform/mobileworker" {
-  class "postgres.MobileRepository" as PgMobileRepo {
-    - db: *sql.DB
-  }
-
-  class "mobileworker.Runner" as WorkerRunner {
-    - svc: *mobile.Service
-    - interval: time.Duration
-    + Start(ctx: context.Context): error
-    + RunOnce(ctx: context.Context): WorkerRunReport
-  }
+class Repository {
+View(ctx, fn)
+Update(ctx, fn)
 }
-
-IdentityRepo <|.. PgMobileRepo
-MobileRepo <|.. PgMobileRepo
-IdentityService --> IdentityRepo
-MobileService --> MobileRepo
-MobileService --> IdentityService
-ApiHandler --> IdentityService
-ApiHandler --> MobileService
-WorkerRunner --> MobileService
-
+class Tx {
+Get / ByKey / List
+Save / Delete / Count
+}
+class Record {
+ID / OwnerID / RefID
+State / Version / Data
+}
+class mobileRepository {
+pgx事务适配
+只读RepeatableRead
+写Serializable
+}
+class mobileTx {
+SQL与CAS
+聚合表白名单
+}
+class Runner {
+Tick / Load / Save
+具名job与检查点
+}
+Handler --> IdentityService : 调用
+Handler --> MobileService : 调用
+IdentityService --> Repository : 依赖
+MobileService --> Repository : 依赖
+Repository --> Tx : 事务回调
+mobileRepository --> Repository : 实现
+mobileTx --> Tx : 实现
+Tx --> Record : 读写
+Runner --> Handler : HTTP作业
 @enduml

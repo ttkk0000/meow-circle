@@ -760,7 +760,7 @@ func (s *Service) Invite(ctx context.Context, actor int64, in InviteInput) (out 
 			if actor != a.ApplicantID {
 				return ErrForbidden
 			}
-			if a.CompletedAt == nil || s.Now().After(a.CompletedAt.Add(30*24*time.Hour)) {
+			if !carePostingOpen(target, a, s.Now()) {
 				return ErrConflict
 			}
 		} else if e = owner(target, actor); e != nil {
@@ -774,12 +774,9 @@ func (s *Service) Invite(ctx context.Context, actor int64, in InviteInput) (out 
 			if e != nil {
 				return e
 			}
-			if !p.AdoptionAvailable {
+			if target.State != "active" || !p.AdoptionAvailable {
 				return ErrConflict
 			}
-		}
-		if k == Adoptions && target.State != "completed" {
-			return ErrConflict
 		}
 		key := fmt.Sprintf("%s:%d:%d", in.Scope, in.TargetID, in.UserID)
 		r, e := tx.ByKey(Invitations, key)
@@ -790,6 +787,16 @@ func (s *Service) Invite(ctx context.Context, actor int64, in InviteInput) (out 
 				return err
 			}
 			accepted = Has(g.Members, in.UserID)
+		} else if accepted {
+			previous, err := Decode[Invitation](r)
+			if err != nil {
+				return err
+			}
+			err = s.invitationAuthority(tx, r, previous, false)
+			if err != nil && !invitationAccessEnded(err) {
+				return err
+			}
+			accepted = err == nil
 		}
 		if e == nil && (accepted || r.OwnerID == actor && r.State == "pending" && s.Now().Before(mustInviteExpiry(r))) {
 			return ErrConflict
@@ -817,7 +824,12 @@ func (s *Service) Invitation(ctx context.Context, actor, id, version int64, acti
 	err = s.mutate(ctx, actor, "invitation."+action, id, struct {
 		Version int64 `json:"version"`
 	}{version}, Invitations, &out, func(tx Tx) error {
-		if e := s.interaction(tx, actor); e != nil {
+		// 拒绝、撤销与本人退出不要求仍有对外互动资格。
+		if action == "accept" {
+			if e := s.interaction(tx, actor); e != nil {
+				return e
+			}
+		} else if e := s.active(tx, actor); e != nil {
 			return e
 		}
 		r, e := tx.Get(Invitations, id)
@@ -833,11 +845,16 @@ func (s *Service) Invitation(ctx context.Context, actor, id, version int64, acti
 		}
 		switch action {
 		case "accept", "decline":
-			if actor != i.RecipientID || r.State != "pending" || !i.ExpiresAt.After(s.Now()) {
+			if actor != i.RecipientID || r.State != "pending" || action == "accept" && !i.ExpiresAt.After(s.Now()) {
 				return ErrConflict
 			}
 			r.State = "declined"
 			if action == "accept" {
+				if i.Scope != "group_request" {
+					if e = s.invitationAuthority(tx, r, i, true); e != nil {
+						return e
+					}
+				}
 				r.State = "accepted"
 				if i.Scope == "group_request" {
 					gRecord, e := tx.Get(Groups, i.TargetID)
@@ -879,7 +896,7 @@ func (s *Service) Invitation(ctx context.Context, actor, id, version int64, acti
 					if e != nil {
 						return e
 					}
-					if gRecord.State != "active" || gRecord.OwnerID != r.OwnerID || len(g.Members) >= 200 {
+					if gRecord.State != "active" || gRecord.OwnerID != r.OwnerID || Has(g.Members, actor) || len(g.Members) >= 200 {
 						return ErrConflict
 					}
 					g.Members = Unique(append(g.Members, actor))
@@ -899,8 +916,9 @@ func (s *Service) Invitation(ctx context.Context, actor, id, version int64, acti
 			if i.Scope == "group_request" && r.State == "accepted" {
 				return Invalid("use the explicit group leave action")
 			}
+			accepted := r.State == "accepted"
 			r.State = "revoked"
-			if i.Scope == "group_member" {
+			if i.Scope == "group_member" && accepted {
 				gRecord, e := tx.Get(Groups, i.TargetID)
 				if e != nil {
 					return e
@@ -916,11 +934,21 @@ func (s *Service) Invitation(ctx context.Context, actor, id, version int64, acti
 					return ErrConflict
 				}
 				g.Members = without(g.Members, i.RecipientID)
+				g.Muted = without(g.Muted, i.RecipientID)
+				if g.PendingTransferTo == i.RecipientID {
+					g.PendingTransferTo = 0
+					g.TransferExpiresAt = nil
+				}
 				gRecord.Participants = g.Members
 				if e = save(tx, Groups, &gRecord, g, actor, "group.member_removed"); e != nil {
 					return e
 				}
 			}
+		case "leave":
+			if actor != i.RecipientID || r.State != "accepted" || !HasString([]string{"adoption_editor", "caretaker"}, i.Scope) {
+				return ErrForbidden
+			}
+			r.State = "left"
 		default:
 			return Invalid("invalid invitation action")
 		}

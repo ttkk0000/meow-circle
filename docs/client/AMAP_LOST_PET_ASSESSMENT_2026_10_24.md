@@ -39,7 +39,7 @@
 | 源码／合同 | 读取到的事实 | 接入所需工作 |
 |---|---|---|
 | [Web 地图页](../../web-client/src/features/MapPage.tsx) | `VITE_MND_MAP_EMBED_TEMPLATE` iframe；选中一条记录展示中心；浏览器单次大致定位 | 实际 JS 地图、选点、多标点、聚合及事件协议；不是只补模板 URL 就完成 |
-| [Android 地图容器](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidMapContent.kt) | `mnd_map_embed_template` WebView；单次系统粗定位，没有高德 SDK | 可复用容器；补受控交互、生命周期、手机／平板触控布局和失败退化 |
+| [Android 地图容器](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/MapPage.kt) | `mnd_map_embed_template` WebView；单次系统粗定位，没有高德 SDK | 可复用容器；补受控交互、生命周期、手机／平板触控布局和失败退化 |
 | [寻宠模型](../../internal/mobile/models.go)／[保存逻辑](../../internal/mobile/rescue.go) | 有城市、区域、发生时间、经纬度和公开精度；`private_location` 是文字字段 | 明确坐标系／来源／公开范围合同，增加地图视野查询，保留无坐标记录 |
 | [现有位置合同](../design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md) | 城市／区域优先，可选粗点；展示、定位与导航分别处理 | 延续现有约束，不能把区域中心伪装成最后出现地点 |
 
@@ -69,3 +69,6 @@ Android 原生选型还须核实 SDK 与项目 min API 26／target API 37、ABI 
 评估结论：值得做，但应先确认 **5 万元／年许可预算或正式优惠资格**。低调用量不能消除商业授权固定成本；先共用 H5 是工程成本较低的方案。精度、坐标来源、许可多端覆盖确认后，才适合据此排期实施。
 
 本轮只生成此评估与 AI 跟踪文档，未改业务代码／依赖，未编译、构建、测试、lint、类型检查、迁移或启动应用；遵循当前全局规则与本次咨询范围。未提交、未推送，后续接入及采购仍需新的实施指令。
+
+
+2026-10-27文档维护：上述旧Android专用文件已随公共clientUi迁移，链接改指当前承接文件；原文件名与批次结果保留作为历史证据，不表示重新运行。

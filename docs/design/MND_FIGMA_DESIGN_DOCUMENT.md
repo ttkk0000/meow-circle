@@ -1,5 +1,9 @@
 # M&D 设计交接索引
 
+> **2026-10-28 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
+2026-10-28：[后台按角色详细设计18稿](figma-study/admin-roles-2026-10-28/README.md)与[原生权限规范](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=21-2)先完成并核对，再接[源码实现](../client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)。9个人员岗位、worker与附加证据能力分别处理；未运行验收。
+
 2026-10-27：[业务后台13稿源码读取](figma-study/operator-implementation-2026-10-27/README.md)、[预约20稿](figma-study/appointment-implementation-2026-10-27/README.md)、[领养／接回25稿](figma-study/adoption-implementation-2026-10-27/README.md)已用于本轮实际页面与公共组件接线；[源码恢复点](../client/COMPLETE_LANDING_2026_10_27.md)区分设计、源码／静态与未完成的逐端验收，不将740条映射视为全量完成。
 
 2026-10-26新增：[业务后台管理13稿](figma-study/admin-2026-10-26/README.md)已写入原文件第11个页面“10 后台管理 · 业务与核验”，[原型起点843:22](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=843-22)。复用既有组件与Light V2，13图已核；消费者线索提交四状态的源码续作见[本批交接](../client/SYNC_PAGES_ADMIN_2026_10_26.md)。设计、源码与运行验收分别记录。

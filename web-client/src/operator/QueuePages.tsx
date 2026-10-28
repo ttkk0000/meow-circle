@@ -12,6 +12,7 @@ import {
 } from "./models";
 import type { OperatorSession } from "./useOperator";
 import { BusinessStatus } from "./ui";
+import { workspaceFor, workspaceQueues } from "./roleWorkspaces";
 
 export function queueRows(
   kind: Kind,
@@ -117,11 +118,66 @@ export function QueuePage({
 export function Dashboard({
   session: s,
   go,
+  workspace,
 }: {
   session: OperatorSession;
   go: (view: View, id?: string) => void;
+  workspace?: string;
 }) {
-  const kinds: Kind[] = ["reviews", "rights-cases", "guardian-invites"];
+  const profile = workspaceFor(workspace);
+  const kinds: Kind[] = workspaceQueues(workspace);
+  if (!profile)
+    return (
+      <OpsNotice
+        title={s.context ? "当前身份无人工处理工作区" : "连接后读取本人岗位"}
+      >
+        worker与证据读取身份不自动获得人工处理权限。
+        <Button onClick={() => go("access")}>查看角色与用途</Button>
+      </OpsNotice>
+    );
+  if (!kinds.length) {
+    const links: Array<[View, string]> =
+      workspace === "privacy"
+        ? [["privacy", "按编号读取资料请求"]]
+        : workspace === "authority_verifier"
+          ? [
+              ["authority", "核对授权对象与证据"],
+              ["readiness", "核对公开准入配置"],
+            ]
+          : [
+              ["revenue", "读取实际收支台账"],
+              ["received", "登记实际收款"],
+              ["refund", "登记关联原收款的退款"],
+            ];
+    return (
+      <>
+        <OpsNotice title={profile.home}>
+          仅处理本岗的明确对象与范围；尚未读取的资料保持未知，不编造全站待办数量。
+        </OpsNotice>
+        <div className="ops-metrics">
+          <Metric label="当前岗位" value="已授权" hint={profile.label} />
+          <Metric
+            label="读取范围"
+            value={
+              workspace === "privacy"
+                ? "按请求编号"
+                : workspace === "authority_verifier"
+                  ? "按对象与范围"
+                  : "实际台账"
+            }
+            hint="不提供全用户私密目录"
+          />
+        </div>
+        <div className="ops-actions">
+          {links.map(([view, label]) => (
+            <Button key={view} onClick={() => go(view)}>
+              {label}
+            </Button>
+          ))}
+        </div>
+      </>
+    );
+  }
   const representatives = kinds
     .filter(s.permits)
     .flatMap((kind) =>
@@ -133,7 +189,7 @@ export function Dashboard({
         按具名角色读取必要事项。下列数字仅代表本会话已载入范围，不代表全站总数。
       </OpsNotice>
       <div className="ops-metrics">
-        {kinds.map((kind) => (
+        {kinds.filter(s.permits).map((kind) => (
           <Metric
             key={kind}
             label={
@@ -147,11 +203,13 @@ export function Dashboard({
             hint={s.permits(kind) ? "仅本页已载入事项" : "当前角色未授权"}
           />
         ))}
-        <Metric
-          label="发布准入"
-          value="待核对"
-          hint="读取配置不等于正式运营准入"
-        />
+        {workspace === "moderator" ? (
+          <Metric
+            label="发布准入"
+            value="待核对"
+            hint="读取配置不等于正式运营准入"
+          />
+        ) : null}
       </div>
       <div className="ops-actions">
         <Button
@@ -165,7 +223,11 @@ export function Dashboard({
         >
           读取本人工作范围
         </Button>
-        <Button onClick={() => go("readiness")}>核对发布准入</Button>
+        {workspace === "moderator" ? (
+          <Button onClick={() => go("readiness")}>核对发布准入</Button>
+        ) : (
+          <Button onClick={() => go("ageEvidence")}>登记可信年龄证据</Button>
+        )}
       </div>
       <DataTable
         title="当前角色的待核对事项"

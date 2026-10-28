@@ -1,0 +1,14 @@
+sequenceDiagram
+ participant user as 用户
+ participant client as 客户端
+ participant api as identity与HTTP
+ participant provider as 官方提供方
+ participant db as users与mobile聚合
+ user->>client: 主动选择登录或绑定
+ client->>api: password / phone / email / oauth-start
+ api->>provider: 三方流程才请求官方授权与验证
+ provider->>api: 返回已验证身份
+ api->>db: 核对现有身份与显式create或link模式
+ db->>api: 原身份归属或冲突结果
+ api->>client: 返回会话或显式冲突；禁止静默合并
+ client->>api: 读取eligibility，登录不自动授予互动资格

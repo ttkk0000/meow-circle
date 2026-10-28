@@ -1,0 +1,12 @@
+stateDiagram-v2
+ direction LR
+ state "safety_hold" as safetyHold
+ [*] --> pending
+ pending --> confirmed: 双方确认同版
+ confirmed --> confirmed: 提新版本保留旧有效安排
+ confirmed --> safetyHold: 显式风险暂停
+ safetyHold --> safetyHold: 同暂停版本重提或拒绝撤回到期
+ safetyHold --> confirmed: 同暂停版本新提案双确认
+ pending --> cancelled: 取消
+ confirmed --> cancelled: 取消
+ safetyHold --> cancelled: 取消

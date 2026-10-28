@@ -1,66 +1,20 @@
 @startuml 07-idempotent-write-and-sensitive-reauth-sequence
 !theme plain
-skinparam backgroundColor #FFFDF9
-skinparam defaultFontName "PingFang SC, Inter, sans-serif"
-skinparam roundcorner 8
-skinparam SequenceMessageAlign center
-skinparam ArrowColor #5C534E
+skinparam defaultFontName "Noto Sans SC"
+skinparam shadowing false
+title 五分钟用途认证、幂等写入与未知结果恢复
 
-title Idempotent Command Ledger, Sensitive Action Reauth, Unknown Result Reconciliation & Local Draft Recovery
-
-actor "User" as User
-participant "Client UI\n(FeaturePages / SensitiveSheets)" as Ui
-participant "SensitiveActionStore\n(kmp/shared)" as SensitiveStore
-participant "Encrypted CommandVault\n(Android EncryptedPrefs / iOS Keychain /\nDesktop java-keyring AES-GCM /\nWeb IndexedDB AES-GCM)" as Vault
-participant "Go API\n(mobileapi.Handler +\npostgres.MobileRepository)" as Api
-database "PostgreSQL\n(mobile_command_ledger +\npurpose_reauth_grants +\ndomain tables)" as Db
-
-== 1. Sensitive Write Preparation & Purpose Reauth Grant (10-Minute Single-Use) ==
-User -> Ui : Trigger high-risk action\n(e.g. Apply Adoption / Propose Return / Unlink Identity / Data Erasure / Account Closure)
-Ui -> SensitiveStore : ensureGrantAndExecute(purpose, commandType, payloadJson)
-SensitiveStore -> Vault : Check cached active grant for `purpose` & generate deterministic `requestId` (UUIDv4)\nPersist PendingCommand(requestId, commandType, payloadHash, status=PENDING)
-
-alt No valid cached Reauth Grant for `purpose`
-  SensitiveStore --> Ui : Show Reauth Modal (Password or SMS OTP)
-  User -> Ui : Submit credential
-  Ui -> SensitiveStore : submitPasswordReauth(purpose, password) / submitSmsReauth(purpose, code)
-  SensitiveStore -> Api : POST /api/v2/auth/reauth {purpose, method, credential}
-  Api -> Db : Verify credential & INSERT purpose_reauth_grants\n(token_hash=SHA256(token), expires_at=now+10m, consumed_at=NULL)
-  Api --> SensitiveStore : 200 {reauthToken, purpose, expiresAt}
-  SensitiveStore -> Vault : Store single-use reauthToken for `purpose`
-end
-
-== 2. Idempotent Command Execution under PostgreSQL SERIALIZABLE Transaction ==
-SensitiveStore -> Api : POST /api/v2/<domain-mutation>\nHeaders:\n  Authorization: Bearer <token>\n  X-Client-Request-Id: <requestId>\n  X-Reauth-Token: <reauthToken>\nBody: <payloadJson>
-
-Api -> Db : BEGIN ISOLATION LEVEL SERIALIZABLE
-Api -> Db : SELECT * FROM mobile_command_ledger\nWHERE user_id = $1 AND request_id = $2 FOR UPDATE
-
-alt New RequestId (First Execution)
-  Api -> Db : INSERT mobile_command_ledger (status='in_progress', payload_hash=SHA256(body))
-  Api -> Db : UPDATE purpose_reauth_grants SET consumed_at = NOW()\nWHERE user_id = $1 AND purpose = $2 AND token_hash = SHA256(reauthToken) AND consumed_at IS NULL AND expires_at > NOW()
-  Api -> Db : Execute domain state transition & INSERT mobile_outbox_events
-  Api -> Db : UPDATE mobile_command_ledger\nSET status='completed', response_status=200, response_json=<result>\nCOMMIT
-else Network Timeout / Connection Drop Before Response Reaches Client
-  Api --x SensitiveStore : Socket Timeout / EOF (OperationResultUnknown)
-  SensitiveStore -> Vault : Mark command status = UNKNOWN_RESULT\nPreserve local draft & photo queue items (Never auto-blind-retry non-idempotent side effects)
-  SensitiveStore --> Ui : Emit Effect -> Navigate / Banner to UnknownCommandRecovery Page
-end
-
-== 3. Deterministic Unknown Command Reconciliation & Exact Replay ==
-User -> Ui : Open UnknownCommandRecovery Page & tap "Reconcile / Retry"
-Ui -> SensitiveStore : reconcileUnknownCommand(requestId)
-SensitiveStore -> Api : GET /api/v2/commands/{requestId} (or Replay POST with same X-Client-Request-Id & identical payload)
-Api -> Db : Lookup mobile_command_ledger(user_id, request_id)
-
-alt Payload Hash Matches Completed Ledger Entry
-  Db --> Api : Found completed entry (response_status, response_json)
-  Api --> SensitiveStore : Replay exact stored HTTP status & JSON body (without re-running business mutation or requiring new reauth)
-  SensitiveStore -> Vault : Remove PendingCommand & clear associated LocalPhotoBatchDraft
-  SensitiveStore --> Ui : Restore confirmed state & notify user
-else Same RequestId Reused with Different Payload Hash
-  Db --> Api : payload_hash mismatch!
-  Api --> SensitiveStore : 409 Conflict {code: "idempotency_payload_mismatch"}
-end
+participant "SensitiveActionStore" as client
+participant "API与identity" as api
+participant "mobile_operations与业务事务" as db
+client -> api : 获取包含对象、版本、用途和payload摘要的scope
+client -> api : auth/reauth提交当前身份凭据与scope
+api -> db : mobile_auth_challenges保存5分钟purpose_grant
+api -> client : 返回用途绑定的单次授权
+client -> api : 原client_request_id、版本与reauth_token提交命令
+api -> db : 写事务内核对身份、scope、权限、版本与原请求
+db -> api : 原回执或提交结果
+api -> client : 明确成功或失败；传输中断则结果未知
+client -> api : operations原key回读对账；不自动换key重发
 
 @enduml

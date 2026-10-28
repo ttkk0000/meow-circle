@@ -31,6 +31,9 @@ export function useOperator() {
   const [queues, setQueues] = useState(emptyQueues);
   const [detail, setDetail] = useState<Detail>();
   const [drafts, setDrafts] = useState<Record<string, Row>>({});
+  const [lostResult, setLostResult] = useState<
+    { kind: Kind; id: string; version: bigint } | undefined
+  >();
   const [prepared, setPrepared] = useState<Prepared>();
   const preparedRef = useRef<Prepared | undefined>(undefined);
   const [busy, setBusy] = useState(false),
@@ -50,6 +53,7 @@ export function useOperator() {
     setQueues(emptyQueues());
     setDetail(undefined);
     setDrafts({});
+    setLostResult(undefined);
     remember(undefined);
     reads.current = 0;
     selection.current++;
@@ -111,6 +115,20 @@ export function useOperator() {
       !value.roles.every((r) => typeof r === "string")
     )
       throw new Error("后台身份响应不完整。");
+    const previous = contextRef.current;
+    if (
+      previous &&
+      (previous.id !== value.id ||
+        [...previous.roles].sort().join("|") !==
+          [...value.roles].sort().join("|"))
+    ) {
+      client.cancel();
+      selection.current++;
+      queueReads.current.clear();
+      reads.current = 0;
+      writing.current = false;
+      setBusy(false);
+    }
     contextRef.current = value;
     setContext(value);
     setQueues(
@@ -127,6 +145,26 @@ export function useOperator() {
         ? undefined
         : current,
     );
+    setDrafts((current) =>
+      Object.fromEntries(
+        Object.entries(current).filter(([key]) =>
+          value.roles.includes(roleFor(key.split("/")[0] as Kind)),
+        ),
+      ),
+    );
+    if (
+      preparedRef.current &&
+      !value.roles.includes(roleFor(preparedRef.current.kind))
+    ) {
+      const pending = preparedRef.current;
+      if (pending.phase === "unknown")
+        setLostResult({
+          kind: pending.kind,
+          id: pending.id,
+          version: pending.version,
+        });
+      remember(undefined);
+    }
     setForbidden(false);
     return value;
   }
@@ -361,6 +399,7 @@ export function useOperator() {
     detail,
     drafts,
     prepared,
+    lostResult,
     busy,
     error,
     forbidden,
@@ -383,6 +422,19 @@ export function useOperator() {
       if (preparedRef.current?.phase === "ready") remember(undefined);
     },
     permits,
+    clearWorkspace: () => {
+      if (writing.current || preparedRef.current || reads.current > 0)
+        return false;
+      client.cancel();
+      selection.current++;
+      queueReads.current.clear();
+      setQueues(emptyQueues());
+      setDetail(undefined);
+      setDrafts({});
+      setError("");
+      setForbidden(false);
+      return true;
+    },
   };
 }
 export type OperatorSession = ReturnType<typeof useOperator>;

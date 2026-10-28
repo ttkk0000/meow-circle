@@ -1,0 +1,15 @@
+sequenceDiagram
+ participant minor as 用户
+ participant client as 客户端
+ participant api as identity.Service
+ participant gateway as 年龄核验网关
+ participant guardian as 监护人
+ participant db as mobile聚合事务
+ client->>api: 读取年龄核验配置并显式创建会话
+ api->>gateway: 按配置发起签名请求
+ gateway->>api: 查询或验证结果，未知保持关闭
+ api->>db: 更新资格与状态
+ minor->>api: 创建15分钟一次性监护邀请
+ guardian->>api: 领取邀请并提交用途级确认
+ api->>db: 核对当前双方资格、有效期和scope后保存
+ client->>api: 重新读取服务端eligibility

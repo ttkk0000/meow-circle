@@ -32,6 +32,7 @@ import { ContentSubscription } from "../components/ContentSubscription";
 import { MediaGallery } from "../components/MediaGallery";
 import { CoarseMap } from "./MapPage";
 import { AppointmentDetail } from "./AppointmentPages";
+import { invitationActions } from "../core/invitation";
 
 type ObjectValue = Record<string, unknown>;
 const objects = (value: unknown) =>
@@ -132,10 +133,14 @@ function actionOptions(
     if (state !== "blocked") add("friend-action", "block");
     else if (integer(d.blocked_by) === owner) add("friend-action", "unblock");
   }
-  if (kind === "invitations" && state === "pending") {
-    if (integer(d.recipient_id) === owner)
-      ["accept", "decline"].forEach((a) => add("state-action", a));
-    else if (own) add("state-action", "revoke");
+  if (kind === "invitations") {
+    invitationActions(r, owner).forEach((action) =>
+      add(
+        "invitation-action",
+        action,
+        action === "leave" ? "退出协作" : actionNames[action],
+      ),
+    );
   }
   if (kind === "cases" && own && ["active", "matched"].includes(state))
     add("state-action", "close");
@@ -336,7 +341,30 @@ function ResourceBody({
           <ReturnProgress row={r} actor={owner} />
           <AdoptionVersions row={r} />
           <RowLink title="私密照护近况" to={`/care-updates?ref=${r.id}`} />
+          {integer(d.applicant_id) === owner && careStageAvailable(r) ? (
+            <RowLink
+              title="邀请私密照护协作"
+              to={workflowURL("invite", "adoptions", r.id, {
+                scope: "caretaker",
+              })}
+            />
+          ) : null}
         </>
+      ) : null}
+      {kind === "invitations" &&
+      r.state === "accepted" &&
+      integer(d.recipient_id) === owner ? (
+        d.scope === "caretaker" ? (
+          <RowLink
+            title="查看授权照护近况"
+            to={`/care-collaboration/${integer(d.target_id)}`}
+          />
+        ) : d.scope === "adoption_editor" ? (
+          <RowLink
+            title="维护该宠物介绍"
+            to={workflowURL("introduction", "pets", integer(d.target_id))}
+          />
+        ) : null
       ) : null}
       {kind === "group-directory" ? (
         <Card title="加入当前群聊">
@@ -366,7 +394,7 @@ function ResourceBody({
               to={workflowURL("application", "pets", r.id)}
             />
           ) : null}
-          {own ? (
+          {own && d.adoption_available ? (
             <>
               <RowLink
                 title="邀请介绍协作"
@@ -374,17 +402,13 @@ function ResourceBody({
                   scope: "adoption_editor",
                 })}
               />
-              <RowLink
-                title="邀请私密照护协作"
-                to={workflowURL("invite", "pets", r.id, { scope: "caretaker" })}
-              />
             </>
-          ) : (
+          ) : !own && d.adoption_available ? (
             <RowLink
               title="授权介绍协作"
               to={workflowURL("introduction", "pets", r.id)}
             />
-          )}
+          ) : null}
         </>
       ) : null}
       {kind === "cases" ? (

@@ -23,28 +23,63 @@ type GroupJoinInput struct {
 
 // 同一事务移交待审申请；旧群主不再保有申请资料或批准权。
 func (s *Service) transferGroupRequests(tx Tx, groupID, owner int64) error {
-	rows, e := tx.List(Invitations, Filter{RefID: groupID, State: "pending", Limit: 100})
-	if e != nil {
-		return e
-	}
-	for _, row := range rows {
-		v, e := Decode[Invitation](row)
+	after := int64(0)
+	for {
+		rows, e := tx.List(Invitations, Filter{RefID: groupID, State: "pending", After: after, Limit: 100})
 		if e != nil {
 			return e
 		}
-		if v.Scope != "group_request" || !v.ExpiresAt.After(s.Now()) {
-			continue
+		for _, row := range rows {
+			after = row.ID
+			v, e := Decode[Invitation](row)
+			if e != nil {
+				return e
+			}
+			if v.Scope != "group_request" {
+				continue
+			}
+			v.RecipientID = owner
+			row.Participants = Unique([]int64{row.OwnerID, owner})
+			if e = save(tx, Invitations, &row, v, owner, "group.request_transferred"); e != nil {
+				return e
+			}
+			if v.ExpiresAt.After(s.Now()) {
+				if e = s.notify(tx, owner, row.OwnerID, "applications", Invitations, row.ID, "群主变更后待审核的入群申请"); e != nil {
+					return e
+				}
+			}
 		}
-		v.RecipientID = owner
-		row.Participants = Unique([]int64{row.OwnerID, owner})
-		if e = save(tx, Invitations, &row, v, owner, "group.request_transferred"); e != nil {
-			return e
-		}
-		if e = s.notify(tx, owner, row.OwnerID, "applications", Invitations, row.ID, "群主变更后待审核的入群申请"); e != nil {
-			return e
+		if len(rows) < 100 {
+			return nil
 		}
 	}
-	return nil
+}
+
+// 按页计数当前有效申请；过期记录和群主发出的普通邀请不占待审名额。
+func (s *Service) pendingGroupRequests(tx Tx, groupID int64) (int, error) {
+	after, count := int64(0), 0
+	for {
+		rows, e := tx.List(Invitations, Filter{RefID: groupID, State: "pending", After: after, Limit: 100})
+		if e != nil {
+			return 0, e
+		}
+		for _, row := range rows {
+			after = row.ID
+			body, e := Decode[Invitation](row)
+			if e != nil {
+				return 0, e
+			}
+			if body.Scope == "group_request" && body.ExpiresAt.After(s.Now()) {
+				count++
+				if count >= 100 {
+					return count, nil
+				}
+			}
+		}
+		if len(rows) < 100 {
+			return count, nil
+		}
+	}
 }
 
 func (s *Service) directoryRecord(tx Tx, r Record, actor int64) (Record, error) {
@@ -154,7 +189,7 @@ func (s *Service) RequestGroupJoin(ctx context.Context, actor, id int64, in Grou
 		if Has(g.Members, actor) {
 			return ErrConflict
 		}
-		pending, e := tx.Count(Invitations, Filter{RefID: id, State: "pending"})
+		pending, e := s.pendingGroupRequests(tx, id)
 		if e != nil {
 			return e
 		}

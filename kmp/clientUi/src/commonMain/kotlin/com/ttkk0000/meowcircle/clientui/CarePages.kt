@@ -11,10 +11,15 @@ import com.ttkk0000.meowcircle.client.*
         Text("仅当前授权事项的私密照护近况；协议、申请材料与公开档案不在此权限中。")
         s.care.items.forEach { update -> FeatureSection(if(update.data.needsHelp) "需要协助" else "照护近况") { Text(update.data.text); update.mediaIds.forEach { MobilePhoto(store,it,actor,"授权照护照片") } } }
         PageFooter(s.care, { f.reload() }, { f.reload(true) }, "暂无私密照护近况", enabled = !s.loading && !s.busy)
+        val context = s.careContext
+        if(context == null || !context.canPost) {
+            if(context != null) Text(when(context.reason) { "interaction_required" -> "当前互动资格未满足，已授权的历史近况仍可查阅。"; "care_recipient_required" -> "由接收照护方或其授权协作者补充近况。"; else -> "当前阶段已结束近况提交，历史记录仍可查阅。" })
+            return
+        }
         FormField(f,s,"careText","补充照护近况",lines = 5)
         CheckLine("需要协助",f.field("needsHelp","false").toBoolean(),{ f.edit("needsHelp",it.toString()) },!s.busy)
         FeaturePhotos(store,s,private = true)
-        FeatureButton("提交私密近况",!s.busy && f.field("careText").isNotBlank()) { val input = CareInput(f.field("careText"),f.field("needsHelp","false").toBoolean(),newRequestKey(),f.mediaIds()); f.confirm("提交授权事项的照护近况",input.text) { f.api.care(route.id,input); f.discardAndReload() } }
+        FeatureButton("提交私密近况",!s.busy && !s.loading && s.error == null && f.field("careText").isNotBlank()) { val input = CareInput(f.field("careText"),f.field("needsHelp","false").toBoolean(),newRequestKey(),f.mediaIds()); f.confirm("提交授权事项的照护近况",input.text) { f.api.care(route.id,input); f.discardAndReload() } }
         return
     }
     if(route.page == FeaturePage.AdoptionWork && s.confirmation != null) {
@@ -192,7 +197,7 @@ import com.ttkk0000.meowcircle.client.*
             FeatureSection("私密照护近况") {
                 s.care.items.forEach { update -> Text("${if (update.data.needsHelp) "需要协助 · " else ""}${update.data.text}"); update.mediaIds.forEach { MobilePhoto(store,it,actor,"私密照护照片") } }
                 PageFooter(s.care, { f.reload() }, { f.reload(true) }, "暂无私密照护近况", enabled = !s.loading && !s.busy)
-                if(actor == body.applicantId && body.careStageAvailable(record.state)) {
+                if(actor == body.applicantId && s.careContext?.canPost == true) {
                 FormField(f,s,"careText","近况与照护记录",lines = 5)
                 CheckLine("需要协助",f.field("needsHelp","false").toBoolean(),{ f.edit("needsHelp",it.toString()) },!s.busy)
                 FeaturePhotos(store,s,private = true)
@@ -202,7 +207,7 @@ import com.ttkk0000.meowcircle.client.*
                 }
             }
             }
-            if (actor == body.applicantId) FeatureButton("邀请照护协作者") { f.open(FeatureRoute(FeaturePage.Collaborators,record.id,"care")) }
+            if (actor == body.applicantId && s.careContext?.canPost == true) FeatureButton("邀请照护协作者") { f.open(FeatureRoute(FeaturePage.Collaborators,record.id,"care")) }
             FeatureButton("提议领养事项预约",party) { f.open(FeatureRoute(FeaturePage.AppointmentEdit,kind = "adoption",peer = record.id)); f.edit("peer",(if (actor == body.applicantId) body.publisherId else body.applicantId).toString()) }
         }
         FeaturePage.ContractEdit -> s.adoption?.let { record ->

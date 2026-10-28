@@ -1,5 +1,7 @@
 # 默认主题、独立平板适配与验收
 
+> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
 2026-10-23实施补充：[UI组件与升级入口](UI_COMPONENTS.md)已将本文件现有颜色／字体／尺寸映射到MobileTheme、MobileUi和基础组件；[Android平板状态](PAD_STATE_AND_UI_2026_10_23.md)落实任务内存与布局移动。只完成源码／静态核对，没有设备验收；下文2026-10-20“只有文档”是原规划时点。
 
 更新：2026-10-20。本文区分“设计目标”“实现要求”“实际验证”。本轮只有文档，没有新增客户端验证结果。

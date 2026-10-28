@@ -29,11 +29,14 @@ export class OpsClient {
   get epoch() {
     return this.generation;
   }
-  disconnect() {
+  cancel() {
     this.generation++;
-    this.token = "";
     for (const request of this.controllers) request.abort();
     this.controllers.clear();
+  }
+  disconnect() {
+    this.cancel();
+    this.token = "";
   }
   connect(token: string) {
     this.disconnect();

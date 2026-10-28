@@ -93,13 +93,15 @@ export function Releases() {
   return (
     <>
       <div className="ops-page-actions">
-        <Button
-          kind="primary"
-          disabled={demo || !session.context?.capabilities.release_write}
-          onClick={() => setCreate(true)}
-        >
-          登记发布准备
-        </Button>
+        {demo || session.context?.capabilities.release_write ? (
+          <Button
+            kind="primary"
+            disabled={demo || !session.context?.capabilities.release_write}
+            onClick={() => setCreate(true)}
+          >
+            登记发布准备
+          </Button>
+        ) : null}
       </div>
       <EnvironmentNotice title="发布执行后端尚未接入">
         可以登记候选构件与核对证据，当前没有部署、重启或回滚的执行能力。
@@ -240,13 +242,15 @@ export function Alerts() {
   return (
     <>
       <div className="ops-page-actions">
-        <Button
-          kind="primary"
-          disabled={demo || !session.context?.capabilities.incident_write}
-          onClick={() => setCreate(true)}
-        >
-          登记事件
-        </Button>
+        {demo || session.context?.capabilities.incident_write ? (
+          <Button
+            kind="primary"
+            disabled={demo || !session.context?.capabilities.incident_write}
+            onClick={() => setCreate(true)}
+          >
+            登记事件
+          </Button>
+        ) : null}
       </div>
       <EnvironmentNotice>
         {demo

@@ -1,0 +1,16 @@
+sequenceDiagram
+ participant user as 用户
+ participant api as 服务端
+ participant db as PostgreSQL
+ participant worker as 具名Worker
+ participant external as 外部适配器
+ user->>api: 用途认证后申请资料导出、清理或注销
+ api->>db: 核对当前权限与跨事项证据保全
+ api->>db: 保存请求与outbox，接受不等于完成
+ worker->>api: 单个作业按原检查点请求有限批次
+ api->>db: 租约、幂等投递与游标
+ api->>external: 已配置的删除、推送、撤销或投影适配器
+ external->>api: 真实回执或待配置／失败
+ api->>db: 保存结果，失败保留重试与审计
+ api->>worker: 返回检查点和处理数量
+ user->>api: 按原编号回读进度与受保全原因

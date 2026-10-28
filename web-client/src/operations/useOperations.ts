@@ -5,6 +5,7 @@ import type { Context, Document, Page, Resource, Snapshot } from "./models";
 export function useOperations(demo: boolean) {
   const [client] = useState(() => new OpsClient());
   const [context, setContext] = useState<Context>();
+  const contextRef = useRef<Context>();
   const [snapshot, setSnapshot] = useState<Snapshot>();
   const [error, setError] = useState("");
   const [requestID, setRequestID] = useState("");
@@ -15,6 +16,7 @@ export function useOperations(demo: boolean) {
     sequence.current++;
     client.disconnect();
     setContext(undefined);
+    contextRef.current = undefined;
     setSnapshot(undefined);
     setError("");
     setRequestID("");
@@ -38,6 +40,7 @@ export function useOperations(demo: boolean) {
       ) {
         client.disconnect();
         setContext(undefined);
+        contextRef.current = undefined;
         setSnapshot(undefined);
         setForbidden(failure.status === 403);
       }
@@ -46,11 +49,35 @@ export function useOperations(demo: boolean) {
   );
   const refresh = useCallback(async () => {
     if (demo) return;
-    const seq = ++sequence.current,
-      epoch = client.epoch;
+    const seq = ++sequence.current;
+    let epoch = client.epoch;
     setBusy(true);
     setError("");
     try {
+      const identity = await client.context();
+      if (seq !== sequence.current || epoch !== client.epoch) return;
+      const before = contextRef.current;
+      if (
+        before &&
+        JSON.stringify([
+          before.id,
+          before.environment,
+          before.roles,
+          before.capabilities,
+        ]) !==
+          JSON.stringify([
+            identity.id,
+            identity.environment,
+            identity.roles,
+            identity.capabilities,
+          ])
+      ) {
+        client.cancel();
+        epoch = client.epoch;
+        setSnapshot(undefined);
+      }
+      contextRef.current = identity;
+      setContext(identity);
       const next = await client.snapshot();
       if (seq === sequence.current && epoch === client.epoch) setSnapshot(next);
     } catch (e) {
@@ -71,6 +98,7 @@ export function useOperations(demo: boolean) {
       const next = await client.context();
       if (seq !== sequence.current || epoch !== client.epoch) return;
       setContext(next);
+      contextRef.current = next;
       await refresh();
     } catch (e) {
       if (

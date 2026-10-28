@@ -158,11 +158,11 @@ import com.ttkk0000.meowcircle.client.*
         FeaturePage.Invitations -> {
             s.invitations.items.forEach { row -> FeatureSection("${invitationScope(row.data.scope)} · ${stateLabel(row.state)}") {
                 Text(row.data.note)
-                Text("事项 #${row.data.targetId} · 接收人 #${row.data.recipientId}\n有效期至 ${displayTime(row.data.expiresAt)}")
-                val actions = if (row.data.recipientId == actor && row.state == "pending") listOf("accept" to "接受","decline" to "拒绝") else if (row.ownerId == actor && row.state in listOf("pending","accepted") && !(row.state == "accepted" && row.data.scope == "group_request")) listOf("revoke" to "撤销授权") else emptyList()
-                actions.forEach { (action,label) -> FeatureButton(label,!s.busy) { val input = VersionedAction(row.version); f.confirm(label,"${invitationScope(row.data.scope)} #${row.data.targetId}") { f.api.invitationAction(row.id,action,input); f.reload(); store.refreshHome() } } }
-                if (row.state == "accepted" && row.data.scope == "adoption_editor") FeatureButton("维护该宠物介绍") { f.open(FeatureRoute(FeaturePage.Collaborators,row.data.targetId)) }
-                if (row.state == "accepted" && row.data.scope == "caretaker") FeatureButton("查看授权照护近况") { f.open(FeatureRoute(FeaturePage.AdoptionWork,row.data.targetId,"care")) }
+                Text("事项 #${row.data.targetId} · 接收人 #${row.data.recipientId}\n接受邀请截止 ${displayTime(row.data.expiresAt)}")
+                val actions = availableInvitationActions(row,actor)
+                actions.forEach { (action,label) -> FeatureButton(label,!s.busy && !s.loading) { val input = VersionedAction(row.version,clientRequestId = newRequestKey()); val note = if(action == "leave") "\n退出后不再拥有本次协作权限，原领养事项继续保留。" else ""; f.confirm(label,"${invitationScope(row.data.scope)} #${row.data.targetId}$note") { f.api.invitationAction(row.id,action,input); f.reload(); store.refreshHome() } } }
+                if (row.state == "accepted" && row.data.recipientId == actor && row.data.scope == "adoption_editor") FeatureButton("维护该宠物介绍") { f.open(FeatureRoute(FeaturePage.Collaborators,row.data.targetId)) }
+                if (row.state == "accepted" && row.data.recipientId == actor && row.data.scope == "caretaker") FeatureButton("查看授权照护近况") { f.open(FeatureRoute(FeaturePage.AdoptionWork,row.data.targetId,"care")) }
                 if (row.state == "accepted" && row.data.scope in listOf("group_member","group_request")) FeatureButton("进入群聊") { f.finishRoute(); store.open(MobileDestination.Chat(row.data.targetId,true)) }
             } }
             PageFooter(s.invitations, { f.reload() }, { f.reload(true) }, "暂无邀请", enabled = !s.loading && !s.busy)

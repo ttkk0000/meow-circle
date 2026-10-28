@@ -1,0 +1,5883 @@
+{
+  "version": 1,
+  "task": "AI-20261027-DOCS-FIGMA",
+  "date": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "sourceHead": "1fe5302e7eb21c5767b84505dea69f47481f8c5f",
+  "branch": "main",
+  "documentFileKey": "JiFXEy785BcGEvaFBSswJ3",
+  "documentNavigation": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=1-9",
+  "figjamFileKey": "t6ongKuaGHleURYNfsLA6e",
+  "figjamNavigation": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=18-2707",
+  "sourceMarkdownCount": 175,
+  "textSourceCount": 189,
+  "nativeTextVolumes": 226,
+  "files": [
+    {
+      "path": ".cursor/README.md",
+      "sha256": "de876fd155e8a252c126910db90c7bc56301c1961fdfe7d02a28cdb7f6b26546",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "协作规则／工具参考，不是产品需求",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:206",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-206",
+          "readback": {
+            "index": 0,
+            "nodeId": "6:206",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3921
+          }
+        }
+      ]
+    },
+    {
+      "path": ".cursor/USER_RULES_PASTE_DESIGN.md",
+      "sha256": "6502636df92e3a6012780f327a44a5b59c3a782a6c13cfdf0872b574390e2682",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "协作规则／工具参考，不是产品需求",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:208",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-208",
+          "readback": {
+            "index": 1,
+            "nodeId": "6:208",
+            "lines": 63,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4882
+          }
+        }
+      ]
+    },
+    {
+      "path": ".cursor/skills/besttry-design-user-context/SKILL.md",
+      "sha256": "906a454d90257fe4bab7669eeabe3c9416d77cda41eca50ead043cd54c7d0497",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "协作规则／工具参考，不是产品需求",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:210",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-210",
+          "readback": {
+            "index": 2,
+            "nodeId": "6:210",
+            "contentMatches": true,
+            "sourceMarker": true,
+            "hasMore": false
+          }
+        }
+      ]
+    },
+    {
+      "path": ".cursor/skills/karpathy-guidelines/SKILL.md",
+      "sha256": "6d46cb2f8c066f027c026ed8a91705b486e24f96e5448730ec902bacf881c98e",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "协作规则／工具参考，不是产品需求",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:212",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-212",
+          "readback": {
+            "index": 3,
+            "nodeId": "6:212",
+            "contentMatches": true,
+            "sourceMarker": true,
+            "hasMore": false
+          }
+        }
+      ]
+    },
+    {
+      "path": ".impeccable.md",
+      "sha256": "73568e4e33c439fc23ff0cb36d433792d18f68445a1bec7f11b8ecc4fb3e36d7",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "协作规则／工具参考，不是产品需求",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:214",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-214",
+          "readback": {
+            "index": 4,
+            "nodeId": "6:214",
+            "lines": 85,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3130
+          }
+        }
+      ]
+    },
+    {
+      "path": ".planning/2026-10-16-mobile-closure/findings.md",
+      "sha256": "331bba6dcea394a5bc4793bf343d33b894a859c9e89d030234d5cb59e7d811e9",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:216",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-216",
+          "readback": {
+            "index": 5,
+            "nodeId": "6:216",
+            "lines": 15,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 610
+          }
+        }
+      ]
+    },
+    {
+      "path": ".planning/2026-10-16-mobile-closure/progress.md",
+      "sha256": "9b76671b6e454f0cbb17f07f0366c79dc21cad3cb901f6c84ccab63e36a41945",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:218",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-218",
+          "readback": {
+            "index": 6,
+            "nodeId": "6:218",
+            "lines": 21,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1407
+          }
+        }
+      ]
+    },
+    {
+      "path": ".planning/2026-10-16-mobile-closure/task_plan.md",
+      "sha256": "6643d8266074947a3eaed3c9a954bec9986a4a1cb070d3791ba0d3ad66cb929a",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:220",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-220",
+          "readback": {
+            "index": 7,
+            "nodeId": "6:220",
+            "lines": 33,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1009
+          }
+        }
+      ]
+    },
+    {
+      "path": ".planning/2026-10-20-server-mobile/findings.md",
+      "sha256": "2d8cbacced02d70e79eecadfa3d48058b935f463e65e910d36fd7b405c716cbf",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:222",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-222",
+          "readback": {
+            "index": 8,
+            "nodeId": "6:222",
+            "lines": 15,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1287
+          }
+        }
+      ]
+    },
+    {
+      "path": ".planning/2026-10-20-server-mobile/progress.md",
+      "sha256": "ff4e69d83232d89ac44dd7a547c839c0503039dc2c14e1696e45b0654c18c114",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:224",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-224",
+          "readback": {
+            "index": 9,
+            "nodeId": "6:224",
+            "lines": 17,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2582
+          }
+        }
+      ]
+    },
+    {
+      "path": ".planning/2026-10-20-server-mobile/task_plan.md",
+      "sha256": "03a727823110ecadf211a170896cf434855449e77cbe362e573821d32caeb4fa",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:226",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-226",
+          "readback": {
+            "index": 10,
+            "nodeId": "6:226",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "diff": null
+          }
+        }
+      ]
+    },
+    {
+      "path": ".stitch/DESIGN.md",
+      "sha256": "a1e9cc0940419cbfabe292343cf27dd1b799289e8a3f7238ac186310e41a20fc",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 3,
+          "nodeId": "6:228",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-228",
+          "readback": {
+            "index": 11,
+            "nodeId": "6:228",
+            "lines": 568,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17570
+          }
+        },
+        {
+          "part": 2,
+          "parts": 3,
+          "nodeId": "6:230",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-230",
+          "readback": {
+            "index": 12,
+            "nodeId": "6:230",
+            "lines": 743,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17655
+          }
+        },
+        {
+          "part": 3,
+          "parts": 3,
+          "nodeId": "6:232",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-232",
+          "readback": {
+            "index": 13,
+            "nodeId": "6:232",
+            "lines": 48,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2377
+          }
+        }
+      ]
+    },
+    {
+      "path": ".stitch/remote-assets/sources/11388975682457720262.md",
+      "sha256": "7042c02db7a924e33404d972b51166a75f78acb41cee4ca2dcb1dcfb5f6a2402",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:234",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-234",
+          "readback": {
+            "index": 14,
+            "nodeId": "6:234",
+            "lines": 609,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17380
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:236",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-236",
+          "readback": {
+            "index": 15,
+            "nodeId": "6:236",
+            "lines": 281,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6287
+          }
+        }
+      ]
+    },
+    {
+      "path": ".stitch/remote-assets/sources/1187049162856747640.md",
+      "sha256": "a1e9cc0940419cbfabe292343cf27dd1b799289e8a3f7238ac186310e41a20fc",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 3,
+          "nodeId": "6:238",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-238",
+          "readback": {
+            "index": 16,
+            "nodeId": "6:238",
+            "lines": 568,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17640
+          }
+        },
+        {
+          "part": 2,
+          "parts": 3,
+          "nodeId": "6:240",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-240",
+          "readback": {
+            "index": 17,
+            "nodeId": "6:240",
+            "lines": 743,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17725
+          }
+        },
+        {
+          "part": 3,
+          "parts": 3,
+          "nodeId": "6:242",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-242",
+          "readback": {
+            "index": 18,
+            "nodeId": "6:242",
+            "lines": 48,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2447
+          }
+        }
+      ]
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "ad575a23a36aebbefb263d084dabe6ba96aa0bd2a5bd9851bbcfc4dec96bc26d",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "协作规则／工具参考，不是产品需求",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:244",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-244",
+          "readback": {
+            "index": 19,
+            "nodeId": "6:244",
+            "lines": 97,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 9416
+          }
+        }
+      ]
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha256": "bffa327db592b0c37e67cb34eb215538e9458245ff699c99b958712c9678f722",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "协作规则／工具参考，不是产品需求",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:246",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-246",
+          "readback": {
+            "index": 20,
+            "nodeId": "6:246",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "diff": null
+          }
+        }
+      ]
+    },
+    {
+      "path": "DESIGN.md",
+      "sha256": "8bd52c86081a798a172268f495cfe6d0241c8b66d1cf92178ff2550defb91758",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:248",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-248",
+          "readback": {
+            "index": 21,
+            "nodeId": "6:248",
+            "lines": 196,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6000
+          }
+        }
+      ]
+    },
+    {
+      "path": "GEMINI.md",
+      "sha256": "2a8f43f3b2266333a7c365a5fbfff0cae2455c04667efa73500e9989f59d0a9c",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "协作规则／工具参考，不是产品需求",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:250",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-250",
+          "readback": {
+            "index": 22,
+            "nodeId": "6:250",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "diff": null
+          }
+        }
+      ]
+    },
+    {
+      "path": "PROJECT_ONBOARDING_ZH.md",
+      "sha256": "91d090ea4052fc85e8fee49a482ec79dd0e555113c8f76532ee8c3ec57509cd3",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:252",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-252",
+          "readback": {
+            "index": 23,
+            "nodeId": "6:252",
+            "lines": 499,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 18404
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:254",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-254",
+          "readback": {
+            "index": 24,
+            "nodeId": "6:254",
+            "lines": 167,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5267
+          }
+        }
+      ]
+    },
+    {
+      "path": "README.md",
+      "sha256": "13ad2b7ae1ba9ad75a2539f4a788bf245e16b909285ec5493ad05287f09f9e4e",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:256",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-256",
+          "readback": {
+            "index": 25,
+            "nodeId": "6:256",
+            "lines": 342,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 11214
+          }
+        }
+      ]
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "0cfa436330380577d4f1ad8915f40b49da489ff7ab70a6547b0a7de2ec9acb7d",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:258",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-258",
+          "readback": {
+            "index": 26,
+            "nodeId": "6:258",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "diff": null
+          }
+        }
+      ]
+    },
+    {
+      "path": "cursor/DESIGN.md",
+      "sha256": "9fb54b7d44145b0449229af451a3161238fa3a24c6ce328ec08c8bbdfb6fa06a",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:260",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-260",
+          "readback": {
+            "index": 27,
+            "nodeId": "6:260",
+            "lines": 322,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 16910
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:262",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-262",
+          "readback": {
+            "index": 28,
+            "nodeId": "6:262",
+            "lines": 41,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2950
+          }
+        }
+      ]
+    },
+    {
+      "path": "deploy/examples/README.md",
+      "sha256": "e44506053cf8df8b335355184d25df952bddecd3438314a8e515a8d74c39583f",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:264",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-264",
+          "readback": {
+            "index": 29,
+            "nodeId": "6:264",
+            "lines": 31,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2219
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/API_AND_DATA_FLOW.md",
+      "sha256": "68cfcb207280b44121f0a9cb5158a6f0968d8a3fec3fb6f5353c40cfc3e9f3af",
+      "category": "05 架构与UML",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:266",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-266",
+          "readback": {
+            "index": 30,
+            "nodeId": "6:266",
+            "lines": 57,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2905
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/API_CATALOG.md",
+      "sha256": "5a759300949d46ae0305641e9c3d9eb6a9b755da2fd09f6fdbd8535e4eba5970",
+      "category": "04 服务端与API",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:268",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-268",
+          "readback": {
+            "index": 31,
+            "nodeId": "6:268",
+            "lines": 11,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 641
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:270",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-270",
+          "readback": {
+            "index": 32,
+            "nodeId": "6:270",
+            "lines": 297,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 23510
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/CLIENT_PARITY_CHECKLIST.md",
+      "sha256": "fd66217b87478bf76e50a4d68ba7aea6f93806bb28c216f1c4d5cdcd20b61b00",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:272",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-272",
+          "readback": {
+            "index": 33,
+            "nodeId": "6:272",
+            "lines": 109,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5075
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/CODE_LOGIC_AND_UML_REFERENCE.md",
+      "sha256": "ae76a8f1c0eb1854af73d9cc5216b34abcd7f2253550c8fdff73577cf330f9ab",
+      "category": "05 架构与UML",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:274",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-274",
+          "readback": {
+            "index": 34,
+            "nodeId": "6:274",
+            "lines": 60,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 7561
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/CURRENT_BASELINE.md",
+      "sha256": "26ccab5de8f5dee3212ca156ac808c8c42728c2d5172d09d5f710872c58aceee",
+      "category": "00 导航与现行基线",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:276",
+          "pageId": "0:1",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-276",
+          "readback": {
+            "index": 35,
+            "nodeId": "6:276",
+            "lines": 75,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6428
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/DATA_DICTIONARY.md",
+      "sha256": "d3fc4756d4dc6cbbf94a713eecac3062becea1443e81054c82b65f8018b2d4b0",
+      "category": "04 服务端与API",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:278",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-278",
+          "readback": {
+            "index": 36,
+            "nodeId": "6:278",
+            "lines": 79,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4356
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/DOCUMENTATION_CATALOG.md",
+      "sha256": "46c880740eac6a2fecfea51a1c569cf8fb0f57c7b4d4ba01a75917499516e76e",
+      "category": "00 导航与现行基线",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:280",
+          "pageId": "0:1",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-280",
+          "readback": {
+            "index": 37,
+            "nodeId": "6:280",
+            "lines": 135,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 15863
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:282",
+          "pageId": "0:1",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-282",
+          "readback": {
+            "index": 38,
+            "nodeId": "6:282",
+            "lines": 100,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 13940
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/FRONTEND_SURFACE_MAP.md",
+      "sha256": "5b61b76542babd0133aa7de49ed9a9c29b1065758cfaaa5c4defe6a7f9e8fb41",
+      "category": "05 架构与UML",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:284",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-284",
+          "readback": {
+            "index": 39,
+            "nodeId": "6:284",
+            "lines": 49,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2453
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+      "sha256": "6c80a61efc065913b3e8122fe28c4125ed932355170eb3d9c6105b7ecfeff06e",
+      "category": "00 导航与现行基线",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:286",
+          "pageId": "0:1",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-286",
+          "readback": {
+            "index": 40,
+            "nodeId": "6:286",
+            "lines": 42,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2672
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/PRODUCT_FLOW_REFERENCE.md",
+      "sha256": "24c4999d471e37ac4b15198b4a5cb5f28c3752f81fc438461f1744cda904ffae",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:288",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-288",
+          "readback": {
+            "index": 41,
+            "nodeId": "6:288",
+            "lines": 257,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 8603
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/PROJECT_STRUCTURE.md",
+      "sha256": "16af7fa3fe8309198dbada6010986c265da36696a03526bc0b02f0a4c73732c2",
+      "category": "05 架构与UML",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:290",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-290",
+          "readback": {
+            "index": 42,
+            "nodeId": "6:290",
+            "lines": 58,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3090
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "dfe1e201f6d2cd4b94a1fb08053d206bff3a5f7096976bd81e45deeabd9e8d81",
+      "category": "00 导航与现行基线",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:292",
+          "pageId": "0:1",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-292",
+          "readback": {
+            "index": 43,
+            "nodeId": "6:292",
+            "lines": 112,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 10684
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/RUNBOOK.md",
+      "sha256": "d8ad9aa23b771f464c6214fb216e98a0489895ad1193e7a90f2d757858baed83",
+      "category": "05 架构与UML",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:294",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-294",
+          "readback": {
+            "index": 44,
+            "nodeId": "6:294",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2992
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/TECHNICAL_IMPROVEMENT_OUTLINE.md",
+      "sha256": "7775f21f52abe4fb6db317ba0ee616cca35ecbb287c0a8c8ccec2d4ecf60c698",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:296",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-296",
+          "readback": {
+            "index": 45,
+            "nodeId": "6:296",
+            "lines": 219,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 12855
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/ai/CONTEXT.md",
+      "sha256": "ae77fcc5035214e39ac6590d475b452fa33460e5c847026c964c6a9fd21f9539",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:298",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-298",
+          "readback": {
+            "index": 46,
+            "nodeId": "6:298",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2338
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/ai/DECISIONS.md",
+      "sha256": "278113b9fe9df7a3677329be1ca3109061d48dd619e946e6c1f1ae1aa8ffb4da",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:300",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-300",
+          "readback": {
+            "index": 47,
+            "nodeId": "6:300",
+            "lines": 74,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6563
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/ai/HOME_HANDOFF_2026_10_22.md",
+      "sha256": "3dc87d6584f8d696d08ce712c09d0fa5ba7ead010fd1e653e72a10089db9f380",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:302",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-302",
+          "readback": {
+            "index": 48,
+            "nodeId": "6:302",
+            "lines": 52,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4074
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/ai/README.md",
+      "sha256": "372c33dc38f916650607ff337a9c8eb0ee56a2ed56061614d392a5d010eeef14",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:304",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-304",
+          "readback": {
+            "index": 49,
+            "nodeId": "6:304",
+            "lines": 70,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3043
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/ai/TASKS.md",
+      "sha256": "8175ae037a503146d030fcd1e8355bb214d0c864dc79a18ee437f3eaeecd5759",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 3,
+          "nodeId": "6:306",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-306",
+          "readback": {
+            "index": 50,
+            "nodeId": "6:306",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 770
+          }
+        },
+        {
+          "part": 2,
+          "parts": 3,
+          "nodeId": "6:308",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-308",
+          "readback": {
+            "index": 51,
+            "nodeId": "6:308",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 24271
+          }
+        },
+        {
+          "part": 3,
+          "parts": 3,
+          "nodeId": "6:310",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-310",
+          "readback": {
+            "index": 52,
+            "nodeId": "6:310",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4170
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/ai/TASK_LOG.md",
+      "sha256": "f01a0e541082aeaf9de34bf047634879a78bccac7136ffa2a859ee890fb70995",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 5,
+          "nodeId": "6:312",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-312",
+          "readback": {
+            "index": 53,
+            "nodeId": "6:312",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 18432
+          }
+        },
+        {
+          "part": 2,
+          "parts": 5,
+          "nodeId": "6:314",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-314",
+          "readback": {
+            "index": 54,
+            "nodeId": "6:314",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 16757
+          }
+        },
+        {
+          "part": 3,
+          "parts": 5,
+          "nodeId": "6:316",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-316",
+          "readback": {
+            "index": 55,
+            "nodeId": "6:316",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 21533
+          }
+        },
+        {
+          "part": 4,
+          "parts": 5,
+          "nodeId": "6:318",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-318",
+          "readback": {
+            "index": 56,
+            "nodeId": "6:318",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 20024
+          }
+        },
+        {
+          "part": 5,
+          "parts": 5,
+          "nodeId": "6:320",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-320",
+          "readback": {
+            "index": 57,
+            "nodeId": "6:320",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 9228
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/bmad/PRODUCT_CLOSURE_AUDIT_2026_10_23.md",
+      "sha256": "fb7ef346f29297f308c1492e55c9c26515f9bfc134673fb195bba8f97e5c08db",
+      "category": "01 产品与UX",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:322",
+          "pageId": "1:2",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-322",
+          "readback": {
+            "index": 58,
+            "nodeId": "6:322",
+            "lines": 166,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 10137
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/bmad/architecture.md",
+      "sha256": "3cf7a4fbc90042a02928756a18cd065df4aca2a58b174b21485e509f0293768a",
+      "category": "01 产品与UX",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:324",
+          "pageId": "1:2",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-324",
+          "readback": {
+            "index": 59,
+            "nodeId": "6:324",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "diff": null
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/bmad/gate-check.md",
+      "sha256": "18d118afd7175bc761c4651c3b8b967cf39f5446bbe1c74765ac61cccda437af",
+      "category": "01 产品与UX",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:326",
+          "pageId": "1:2",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-326",
+          "readback": {
+            "index": 60,
+            "nodeId": "6:326",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "diff": null
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/bmad/prd.md",
+      "sha256": "272f562b957dc896c3766c0d9e6df4a7b1ffdeb148cf4c10766bb2fe8539016b",
+      "category": "01 产品与UX",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:328",
+          "pageId": "1:2",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-328",
+          "readback": {
+            "index": 61,
+            "nodeId": "6:328",
+            "lines": 616,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 18787
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:330",
+          "pageId": "1:2",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-330",
+          "readback": {
+            "index": 62,
+            "nodeId": "6:330",
+            "lines": 97,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4000
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/bmad/research-report.md",
+      "sha256": "4d033c30d552e0c104b1d53f1f2a03b235fa0f6adf2a5c7e5c900ad04c1aa6b2",
+      "category": "01 产品与UX",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:332",
+          "pageId": "1:2",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-332",
+          "readback": {
+            "index": 63,
+            "nodeId": "6:332",
+            "lines": 194,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5667
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/bmad/ux-design.md",
+      "sha256": "6d871cc029af544f200be57bfc24955164aeb2d91a9463458308badaf33a3e47",
+      "category": "01 产品与UX",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:334",
+          "pageId": "1:2",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-334",
+          "readback": {
+            "index": 64,
+            "nodeId": "6:334",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 10482
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/AGENT_HANDOFF.md",
+      "sha256": "f9e57591b1d890e8484938e5ffcab2cc405f01335a657b6d78eb5a534ef14093",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:336",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-336",
+          "readback": {
+            "index": 65,
+            "nodeId": "6:336",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "diff": null
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md",
+      "sha256": "6d80f06ea31a20b7c354203b277dd4f66bad09fffe65c86ae4f34a054b13a87d",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:338",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-338",
+          "readback": {
+            "index": 66,
+            "nodeId": "6:338",
+            "lines": 59,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3706
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md",
+      "sha256": "51342f66f52ac7db8f0d347350f1b619c4af53129cf46347b5bd8c26fe7d49a0",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:340",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-340",
+          "readback": {
+            "index": 67,
+            "nodeId": "6:340",
+            "lines": 61,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4235
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/AMAP_IMPLEMENTATION_2026_10_24.md",
+      "sha256": "d48eaf9fc5b80528487e05c24daf84cd07d0bc31cf2168772be69be16ce1f16c",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:342",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-342",
+          "readback": {
+            "index": 68,
+            "nodeId": "6:342",
+            "lines": 72,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6631
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/AMAP_LOST_PET_ASSESSMENT_2026_10_24.md",
+      "sha256": "24f79c6c00cf5c45e8714c9994c0556fb77da850e1dab847c26d354fcc970764",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:344",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-344",
+          "readback": {
+            "index": 69,
+            "nodeId": "6:344",
+            "lines": 81,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5320
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/ANDROID_FEATURES_2026_10_22.md",
+      "sha256": "1281be66d0738717935425167f01f37c3369487fb9d917614cbc7dec53829bef",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:346",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-346",
+          "readback": {
+            "index": 70,
+            "nodeId": "6:346",
+            "lines": 85,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5853
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/ANDROID_PAGES_2026_10_23.md",
+      "sha256": "7cf3a054993e375bff55fda4e8649961eb5e332141a97975801b8645350a2a1e",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:348",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-348",
+          "readback": {
+            "index": 71,
+            "nodeId": "6:348",
+            "lines": 61,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3670
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/ANDROID_READ_STATES_2026_10_23.md",
+      "sha256": "fdad48bbc0d57ce69966ea25117264bf3f817f06a0b0399209781a9eea2bf694",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:350",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-350",
+          "readback": {
+            "index": 72,
+            "nodeId": "6:350",
+            "lines": 52,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3368
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/ANDROID_REMAINING_2026_10_23.md",
+      "sha256": "00d3505923bc95354c1e99215d8c481ae321d4bae338d3af47b894022008f591",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:352",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-352",
+          "readback": {
+            "index": 73,
+            "nodeId": "6:352",
+            "lines": 64,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4968
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/COMPLETE_LANDING_2026_10_27.md",
+      "sha256": "a32250a027113a5b7456c8769c95ec87a455f08b3ef43a04a9bb438ffdde5f03",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:354",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-354",
+          "readback": {
+            "index": 74,
+            "nodeId": "6:354",
+            "lines": 42,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3697
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/CURRENT_DELIVERY_STATUS_2026_10_23.md",
+      "sha256": "734f7f4c6ac2ac0f6def36df9b80c29c3bc4e460db20a84cfb6eb1bd3075feaa",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:356",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-356",
+          "readback": {
+            "index": 75,
+            "nodeId": "6:356",
+            "lines": 67,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 8218
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/DELIVERY_GUIDE_2026_10_25.md",
+      "sha256": "fa1b1292a889abc14dc2a346fa683b4fd3a14243208718a561a91a6b9707c1e4",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:358",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-358",
+          "readback": {
+            "index": 76,
+            "nodeId": "6:358",
+            "lines": 156,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 8834
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/DEPENDENCY_BASELINE_2026_10_20.md",
+      "sha256": "e5c47bedebf8ef919de117908db97cba61a4a602bdb9d950aab4a2819b6bb3bf",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:360",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-360",
+          "readback": {
+            "index": 77,
+            "nodeId": "6:360",
+            "lines": 49,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4042
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+      "sha256": "4996962f18265555cce496b947975765219d556c78b2953ee41f76c22b67e306",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:362",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-362",
+          "readback": {
+            "index": 78,
+            "nodeId": "6:362",
+            "lines": 168,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6823
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/FEATURE_DELIVERY_MATRIX.md",
+      "sha256": "728c00070447433dc9cea2b555da218664c2b6f8231786d358dafab35382d267",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:364",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-364",
+          "readback": {
+            "index": 79,
+            "nodeId": "6:364",
+            "lines": 206,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 12042
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/FIGMA_ANDROID_WEB_2026_10_24.md",
+      "sha256": "d45419c2115bccacad292ce2bd722861915b6605cb78a399283a415ccf14cb90",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:366",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-366",
+          "readback": {
+            "index": 80,
+            "nodeId": "6:366",
+            "lines": 37,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3671
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/FIGMA_FLOW_CONTINUATION_2026_10_26.md",
+      "sha256": "25c5365316ff925b3dbf7159162af7ebb074119968d28074adcdaccb5d5a31ff",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:368",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-368",
+          "readback": {
+            "index": 81,
+            "nodeId": "6:368",
+            "lines": 52,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3247
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/FIGMA_PAGE_GAPS_2026_10_25.md",
+      "sha256": "a51258ac33bd9f895a79e13eb915301ab64f323096ed4fd0acf7b223c17c98ab",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:370",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-370",
+          "readback": {
+            "index": 82,
+            "nodeId": "6:370",
+            "lines": 58,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4887
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/FIGMA_READING_PUBLICATIONS_2026_10_24.md",
+      "sha256": "f88f876c497ac4fb44f23c225e35a2cc435c666802df6d3cb01c96dfdbe38ffa",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:372",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-372",
+          "readback": {
+            "index": 83,
+            "nodeId": "6:372",
+            "lines": 55,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3692
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md",
+      "sha256": "c4c1f71a2e93a3597fe0d275806079d059e6f5d9c25daee9350ad0b87a58d431",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:374",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-374",
+          "readback": {
+            "index": 84,
+            "nodeId": "6:374",
+            "lines": 56,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3528
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/IMPLEMENTATION_PLAN.md",
+      "sha256": "584a5bc288c6bf37198bba467b8003ffe4f1e37d19d4b05156654abe3ed260ff",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:376",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-376",
+          "readback": {
+            "index": 85,
+            "nodeId": "6:376",
+            "lines": 310,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17511
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:378",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-378",
+          "readback": {
+            "index": 86,
+            "nodeId": "6:378",
+            "lines": 40,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2937
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/MAINLAND_CITIES_AND_CAT_ASSETS_2026_10_26.md",
+      "sha256": "577e7cdf7b6404aeebd67e80d473d29fc7033ef7bac718a926217595f856c090",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:380",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-380",
+          "readback": {
+            "index": 87,
+            "nodeId": "6:380",
+            "lines": 40,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2088
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/MOBILE_IMPLEMENTATION_2026_10_20.md",
+      "sha256": "513835ef8298c5fb1a8e4f83ed5340a8c5018ae3648077da8ed8f24832f2247f",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:382",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-382",
+          "readback": {
+            "index": 88,
+            "nodeId": "6:382",
+            "lines": 72,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5021
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/PAD_STATE_AND_UI_2026_10_23.md",
+      "sha256": "6051313518cf6264d0cdfa3d74e088ed29028871b3a28d1d0db27dcd37bfd509",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:384",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-384",
+          "readback": {
+            "index": 89,
+            "nodeId": "6:384",
+            "lines": 63,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3856
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/PLATFORM_REGISTRATION_2026_10_25.md",
+      "sha256": "3fed875d7a22fdc0296c5b7ca2b3df0ef1456f322e92b0927f5db1225162bad4",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:386",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-386",
+          "readback": {
+            "index": 90,
+            "nodeId": "6:386",
+            "lines": 44,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2173
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/PRIVATE_LEAD_FLOW_2026_10_26.md",
+      "sha256": "e99eb0969ea40756f1a8249a391d37f86cfc7817c57a9a0d2e2d2d35d136283e",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:388",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-388",
+          "readback": {
+            "index": 91,
+            "nodeId": "6:388",
+            "lines": 44,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3085
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md",
+      "sha256": "27e8896f09ecab4a1e252f7fe9ebb34c511a06bea39b293f7c3df931ce67fa88",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:390",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-390",
+          "readback": {
+            "index": 92,
+            "nodeId": "6:390",
+            "lines": 58,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4465
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "fb8cac973a99dafff9adabe1acb5d2f9fd59177d386119999672a7d771334ca8",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:392",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-392",
+          "readback": {
+            "index": 93,
+            "nodeId": "6:392",
+            "lines": 99,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 10872
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+      "sha256": "de82ae2c309f3cd7c453ddcf5f7f975b424fffb569da8a9f40ab6d118ab10f39",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:394",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-394",
+          "readback": {
+            "index": 94,
+            "nodeId": "6:394",
+            "lines": 54,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5495
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/SDK_OFFICIAL_ACCOUNT_CODE_2026_10_25.md",
+      "sha256": "4662a210be76bf5b7aaba075c72c27cac504f2c6f1c23e17e62e6c532f3e3c70",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:396",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-396",
+          "readback": {
+            "index": 95,
+            "nodeId": "6:396",
+            "lines": 58,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4253
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/SYNC_PAGES_ADMIN_2026_10_26.md",
+      "sha256": "606320c3142da58a5cb839947d9cb7eb6ee1ccfc68ae6dbe4788aa700da802bc",
+      "category": "03 客户端与交付",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:398",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-398",
+          "readback": {
+            "index": 96,
+            "nodeId": "6:398",
+            "lines": 48,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2998
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/TASKS.md",
+      "sha256": "1b15d7e2a07710b56f1c262c9d5bbfdfaab81216cc14de349896d03138743535",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:400",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-400",
+          "readback": {
+            "index": 97,
+            "nodeId": "6:400",
+            "lines": 165,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 10604
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/client/UI_COMPONENTS.md",
+      "sha256": "e8b80f196c4be3f6234ac071bd91a127c26f99399244860bbee34417d4ad1e1a",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:402",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-402",
+          "readback": {
+            "index": 98,
+            "nodeId": "6:402",
+            "lines": 103,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 8959
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/LEGAL_COMPLIANCE_REVIEW_2026_10_22.md",
+      "sha256": "88507e3b5b6cd72e830751627568f7741d8b0d3c617522f30f3134bd43dcb7cc",
+      "category": "02 设计规范与合同",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:404",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-404",
+          "readback": {
+            "index": 99,
+            "nodeId": "6:404",
+            "lines": 160,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 11321
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_CITY_SPECIES_AND_CONTRACT_TEMPLATES.md",
+      "sha256": "7f3d8a0acdff0aa1a80fa2ffc21dd4fba00c84cb082e8c45d999863b9ff39f25",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:406",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-406",
+          "readback": {
+            "index": 100,
+            "nodeId": "6:406",
+            "lines": 118,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 8427
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_CLIENT_INTERACTION_SPEC.md",
+      "sha256": "8f3e316be90c2725df2351234f2158de5c3f89ffcbd0a8acc67ffa2f5d27ff85",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:408",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-408",
+          "readback": {
+            "index": 101,
+            "nodeId": "6:408",
+            "lines": 61,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3432
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_COLD_START_LOST_PETS_AND_AUTH_SPEC.md",
+      "sha256": "ae99ccbca94228d932529aff4c8963f8d3ac0009ad55ca1c1e80c6592fbdbf76",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:410",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-410",
+          "readback": {
+            "index": 102,
+            "nodeId": "6:410",
+            "lines": 200,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 9413
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_DESIGN_MEMORY.md",
+      "sha256": "b9e8a8d730636f64c9557444236e47b57f72c945b25dbbb7bf164daa5a2a528a",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 3,
+          "nodeId": "6:412",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-412",
+          "readback": {
+            "index": 103,
+            "nodeId": "6:412",
+            "lines": 152,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17277
+          }
+        },
+        {
+          "part": 2,
+          "parts": 3,
+          "nodeId": "6:414",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-414",
+          "readback": {
+            "index": 104,
+            "nodeId": "6:414",
+            "lines": 238,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 19447
+          }
+        },
+        {
+          "part": 3,
+          "parts": 3,
+          "nodeId": "6:416",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-416",
+          "readback": {
+            "index": 105,
+            "nodeId": "6:416",
+            "lines": 63,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4800
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+      "sha256": "bd924b9b6f117aeeacecf4ecd619b548a72b4807badb2344f3fafb51bd771ab5",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:418",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-418",
+          "readback": {
+            "index": 106,
+            "nodeId": "6:418",
+            "lines": 73,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 8021
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_FIGMA_STUDY_BRIEF.md",
+      "sha256": "2d29a89e0e9d601c599ea38ff1d9b6d642e99d0fb518c5cbf199814662c2aeb5",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:420",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-420",
+          "readback": {
+            "index": 107,
+            "nodeId": "6:420",
+            "lines": 120,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5598
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+      "sha256": "576d0bed4bf09645d516c93e0394465d4bf68047fcf946adf4454716f73246b6",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:422",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-422",
+          "readback": {
+            "index": 108,
+            "nodeId": "6:422",
+            "lines": 56,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3143
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md",
+      "sha256": "2870048f0495afa8825c7e38502106d4b26b6ca6f8e47066954c921cb8a8ea67",
+      "category": "02 设计规范与合同",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:424",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-424",
+          "readback": {
+            "index": 109,
+            "nodeId": "6:424",
+            "lines": 52,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2743
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_LOGIC_FLOW_CONTRACT.md",
+      "sha256": "c71adac3b83a103a874c6b1401c8628a85916d390f130cc7a114ae42317c2e2d",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:426",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-426",
+          "readback": {
+            "index": 110,
+            "nodeId": "6:426",
+            "lines": 81,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3626
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_MOBILE_AUTH_PLAN.md",
+      "sha256": "c0a3bd0ba67d60d8c6e5b4ed218441dac6357a8287047dd2e8818dd1776ae720",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:428",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-428",
+          "readback": {
+            "index": 111,
+            "nodeId": "6:428",
+            "lines": 182,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 9646
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md",
+      "sha256": "e05534f92eb3433c9875d5120286eff792fc28b3ffc167003b9c4e5ac6d06e06",
+      "category": "02 设计规范与合同",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:430",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-430",
+          "readback": {
+            "index": 112,
+            "nodeId": "6:430",
+            "lines": 99,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4818
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_PRODUCT_DESIGN_SPEC_AND_AUDIT.md",
+      "sha256": "383c62112b69b88626de38ad2a71779fcfb5bb36838957dbf5d5e0209eb9b39c",
+      "category": "02 设计规范与合同",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:432",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-432",
+          "readback": {
+            "index": 113,
+            "nodeId": "6:432",
+            "lines": 599,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 18601
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_SAFETY_AND_LIFECYCLE_SPEC.md",
+      "sha256": "c78f59ccc270be7f5ce5df93d186b98a52298d17d3894c4ec3845b532cce7f8c",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:434",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-434",
+          "readback": {
+            "index": 114,
+            "nodeId": "6:434",
+            "lines": 167,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 8167
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_STITCH_AI_RULES.md",
+      "sha256": "88384966c64f9142bb192706c7e3cd8856b4b63bd4920864a739410d70d4097d",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:436",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-436",
+          "readback": {
+            "index": 115,
+            "nodeId": "6:436",
+            "lines": 69,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4317
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_TRUST_AND_DISCLOSURE_SPEC.md",
+      "sha256": "d4da51da50058878a62a1e56fa611d0724785eb1e26a0497b823024f860b4eff",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:438",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-438",
+          "readback": {
+            "index": 116,
+            "nodeId": "6:438",
+            "lines": 224,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 9004
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_UI_ALIGNMENT_GUIDE.md",
+      "sha256": "9582ff337534dcacf464cf8894f0eb65d14539423049526e8a6d7bf1669b2bec",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:440",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-440",
+          "readback": {
+            "index": 117,
+            "nodeId": "6:440",
+            "lines": 197,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 9172
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/PRODUCT_COMPLIANCE_FIGMA_AUDIT_2026_10_21.md",
+      "sha256": "3ecbc15fcf59f5005fe7dd28c6377508ba62a837be4df87df86d5bd97621a8d3",
+      "category": "02 设计规范与合同",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:442",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-442",
+          "readback": {
+            "index": 118,
+            "nodeId": "6:442",
+            "lines": 185,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 11750
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/PROJECT_OVERVIEW_DECK_CONTENT.md",
+      "sha256": "e6a6756d7c3aa677d5074fa42c35e64543c35088efe3196fa9e975d9f46a8c70",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:444",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-444",
+          "readback": {
+            "index": 119,
+            "nodeId": "6:444",
+            "lines": 91,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2549
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/SPRINT_PLANNING_BOARD.md",
+      "sha256": "32d8361fd276443093ae5b59fa94008d053f093b1685b07c4376eb49ca598e14",
+      "category": "02 设计规范与合同",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:446",
+          "pageId": "1:3",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-446",
+          "readback": {
+            "index": 120,
+            "nodeId": "6:446",
+            "lines": 71,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1782
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/BUTTON_COMPARISON_BRIEF.md",
+      "sha256": "77c3b45e5d8cd55a5711b447f82e6dab656f1d12324f460ed73cfe71d9aa63a3",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:448",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-448",
+          "readback": {
+            "index": 121,
+            "nodeId": "6:448",
+            "lines": 37,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2495
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md",
+      "sha256": "ae55b805392581a44ea8a4dcc98a1440074d3767cc38c9fcec2db838f3c3a6dc",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:450",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-450",
+          "readback": {
+            "index": 122,
+            "nodeId": "6:450",
+            "lines": 55,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2832
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/CROSS_PLATFORM_COVERAGE_AUDIT_2026_10_20.md",
+      "sha256": "a2925b9b0ee48d340ee6b5bdd9176eb5a8862e500ea38dfeeb9928b8a218487b",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:452",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-452",
+          "readback": {
+            "index": 123,
+            "nodeId": "6:452",
+            "lines": 91,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3978
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/CROSS_PLATFORM_FULL_COMPLETION_PLAN.md",
+      "sha256": "60cc16dc732fa974eb6b89fc1fbbd1f5b1d62eec41b2ef762ee04323c5522722",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:454",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-454",
+          "readback": {
+            "index": 124,
+            "nodeId": "6:454",
+            "lines": 38,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1655
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/CROSS_PLATFORM_FULL_MAPPING.md",
+      "sha256": "80fd14661efafbcee579f0c04df7c03a7819b0cdf616f629884a2cf57751ca51",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 15,
+          "nodeId": "6:456",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-456",
+          "readback": {
+            "index": 125,
+            "nodeId": "6:456",
+            "lines": 65,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 19338
+          }
+        },
+        {
+          "part": 2,
+          "parts": 15,
+          "nodeId": "6:458",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-458",
+          "readback": {
+            "index": 126,
+            "nodeId": "6:458",
+            "lines": 71,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 27886
+          }
+        },
+        {
+          "part": 3,
+          "parts": 15,
+          "nodeId": "6:460",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-460",
+          "readback": {
+            "index": 127,
+            "nodeId": "6:460",
+            "lines": 45,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 14484
+          }
+        },
+        {
+          "part": 4,
+          "parts": 15,
+          "nodeId": "6:462",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-462",
+          "readback": {
+            "index": 128,
+            "nodeId": "6:462",
+            "lines": 56,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 20993
+          }
+        },
+        {
+          "part": 5,
+          "parts": 15,
+          "nodeId": "6:464",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-464",
+          "readback": {
+            "index": 129,
+            "nodeId": "6:464",
+            "lines": 11,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1486
+          }
+        },
+        {
+          "part": 6,
+          "parts": 15,
+          "nodeId": "6:466",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-466",
+          "readback": {
+            "index": 130,
+            "nodeId": "6:466",
+            "lines": 83,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 33063
+          }
+        },
+        {
+          "part": 7,
+          "parts": 15,
+          "nodeId": "6:468",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-468",
+          "readback": {
+            "index": 131,
+            "nodeId": "6:468",
+            "lines": 34,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 10397
+          }
+        },
+        {
+          "part": 8,
+          "parts": 15,
+          "nodeId": "6:470",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-470",
+          "readback": {
+            "index": 132,
+            "nodeId": "6:470",
+            "lines": 36,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 10587
+          }
+        },
+        {
+          "part": 9,
+          "parts": 15,
+          "nodeId": "6:472",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-472",
+          "readback": {
+            "index": 133,
+            "nodeId": "6:472",
+            "lines": 68,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 26545
+          }
+        },
+        {
+          "part": 10,
+          "parts": 15,
+          "nodeId": "6:474",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-474",
+          "readback": {
+            "index": 134,
+            "nodeId": "6:474",
+            "lines": 53,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 14703
+          }
+        },
+        {
+          "part": 11,
+          "parts": 15,
+          "nodeId": "6:476",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-476",
+          "readback": {
+            "index": 135,
+            "nodeId": "6:476",
+            "lines": 51,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17172
+          }
+        },
+        {
+          "part": 12,
+          "parts": 15,
+          "nodeId": "6:478",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-478",
+          "readback": {
+            "index": 136,
+            "nodeId": "6:478",
+            "lines": 59,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 22567
+          }
+        },
+        {
+          "part": 13,
+          "parts": 15,
+          "nodeId": "6:480",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-480",
+          "readback": {
+            "index": 137,
+            "nodeId": "6:480",
+            "lines": 44,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 14068
+          }
+        },
+        {
+          "part": 14,
+          "parts": 15,
+          "nodeId": "6:482",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-482",
+          "readback": {
+            "index": 138,
+            "nodeId": "6:482",
+            "lines": 103,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 41085
+          }
+        },
+        {
+          "part": 15,
+          "parts": 15,
+          "nodeId": "6:484",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-484",
+          "readback": {
+            "index": 139,
+            "nodeId": "6:484",
+            "lines": 26,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3429
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/CROSS_PLATFORM_FULL_REVIEW_2026_10_20.md",
+      "sha256": "1f5d986d8222e28ad64b2c121b90b6db33f9b58607ce5a6240738a50e032504e",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:486",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-486",
+          "readback": {
+            "index": 140,
+            "nodeId": "6:486",
+            "lines": 68,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3872
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/CROSS_PLATFORM_LIGHT_PLAN.md",
+      "sha256": "60002b2cb07ebfe997c317155c0499047d3a37b0def190a6cbc5adeb80ba1ba0",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:488",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-488",
+          "readback": {
+            "index": 141,
+            "nodeId": "6:488",
+            "lines": 40,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1603
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/CROSS_PLATFORM_LIGHT_REVIEW_2026_10_20.md",
+      "sha256": "6317163aeb1242d071f80e0fd5c0464bc190a9f7447f5d353ed2a19c43e0cf87",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:490",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-490",
+          "readback": {
+            "index": 142,
+            "nodeId": "6:490",
+            "lines": 68,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4423
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/DESIGN_CLOSURE_2026_10_21.md",
+      "sha256": "6eb80401266fec1c0382702c86284ec5b0bc7ef12ed03b74e65f94b40da37523",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:492",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-492",
+          "readback": {
+            "index": 143,
+            "nodeId": "6:492",
+            "lines": 61,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4138
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/EXPRESSION_ASPECT_2026_10_23.md",
+      "sha256": "6e370b887e31023a54eb4feac0ae49a160f52f58a0ce1b03436c69e38f6f7fe8",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:494",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-494",
+          "readback": {
+            "index": 144,
+            "nodeId": "6:494",
+            "lines": 39,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2891
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/FIGMA_CANVAS_LAYOUT_2026_10_22.md",
+      "sha256": "66403b3306c899344d8e0097d2955bda5e94037dd88fbd692047ac83d32ca6a8",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:496",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-496",
+          "readback": {
+            "index": 145,
+            "nodeId": "6:496",
+            "lines": 57,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4879
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md",
+      "sha256": "64d26566fdb2110018cedf58d08ce9fbc55507368aaffbe93e559cf7739476d7",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:498",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-498",
+          "readback": {
+            "index": 146,
+            "nodeId": "6:498",
+            "lines": 113,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 11472
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/FRIENDLY_DIRECTION_BRIEF.md",
+      "sha256": "f40919c5d6cc48508db10eb0f1597d9234e92c6f5ccae0cabaced3fc814d419c",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:500",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-500",
+          "readback": {
+            "index": 147,
+            "nodeId": "6:500",
+            "lines": 31,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2265
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/FRIENDLY_MOBILE_ROLLOUT.md",
+      "sha256": "ff23b9077e65ff560d47a7194bc26f03d745c83d1bcee038bea32bac415c1936",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:502",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-502",
+          "readback": {
+            "index": 148,
+            "nodeId": "6:502",
+            "lines": 35,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2468
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/GLOBAL_UNREAD_HANDOFF_2026_10_20.md",
+      "sha256": "9aedbe9d46272452e561c771dda15f5aef4c7fef706cb51fbcbb39a91029f971",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:504",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-504",
+          "readback": {
+            "index": 149,
+            "nodeId": "6:504",
+            "lines": 61,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3927
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/INTERACTION_AND_EXPRESSION_REFINEMENT.md",
+      "sha256": "5842a3836eeb62b78958587de9396c92477f85b090c7e5f99f94c4d5c8e66961",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:506",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-506",
+          "readback": {
+            "index": 150,
+            "nodeId": "6:506",
+            "lines": 45,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3882
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/LEGAL_DESIGN_HANDOFF_2026_10_22.md",
+      "sha256": "a4d0a980db5f448e4c733e55d0aafe5d557e9fcf80517df20aac7607e7662b32",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:508",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-508",
+          "readback": {
+            "index": 151,
+            "nodeId": "6:508",
+            "lines": 70,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4306
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/LOGIC_AND_DESIGN_REVIEW_2026_10_21.md",
+      "sha256": "97ad8d77351034729b45ddc829ad224b0adcf275e9a1ff83b8e7593eb9d61011",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:510",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-510",
+          "readback": {
+            "index": 152,
+            "nodeId": "6:510",
+            "lines": 111,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6229
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/LOGIC_FIX_HANDOFF_2026_10_21.md",
+      "sha256": "53e18fec7ad8209e43496ec33f8f82a09d62891070e473f1623608e4cedf2ec8",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:512",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-512",
+          "readback": {
+            "index": 153,
+            "nodeId": "6:512",
+            "lines": 60,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4793
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md",
+      "sha256": "c92eef75d65974caffec3a9be77f52abedb873721577d72cf42138c357411d49",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:514",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-514",
+          "readback": {
+            "index": 154,
+            "nodeId": "6:514",
+            "lines": 65,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4003
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/MOBILE_V2_BRIEF.md",
+      "sha256": "41047543836703b0e95957dd185d175e96502efbf899bb3bde0c0924c57063fb",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:516",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-516",
+          "readback": {
+            "index": 155,
+            "nodeId": "6:516",
+            "lines": 88,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5432
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/NAVIGATION_DOC_2026_10_23.md",
+      "sha256": "c22e1c912a7bb3341b9e3a6f850f54677a8d67cbd370a693de9676309f2561cc",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:518",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-518",
+          "readback": {
+            "index": 156,
+            "nodeId": "6:518",
+            "lines": 37,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2520
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/NIGHT_DESIGN_BRIEF.md",
+      "sha256": "4d0e35a37c0f88bd99483bc52f39010f5f4d01467f00c3ddc0c0a249465319c6",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:520",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-520",
+          "readback": {
+            "index": 157,
+            "nodeId": "6:520",
+            "lines": 54,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2644
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/PAD_PREVIEW_2026_10_22.md",
+      "sha256": "2c70e5eefd234d2ad831cc50965dc8afcceddcd8ebf046c8300e9c24481a01b8",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:522",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-522",
+          "readback": {
+            "index": 158,
+            "nodeId": "6:522",
+            "lines": 41,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4330
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/PET_FRIENDS_CIRCLE_BRIEF.md",
+      "sha256": "759d0dbb8c080901a619ebdc463b88fa3b6931addaabeb0c165e5a8ec8ddad88",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:524",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-524",
+          "readback": {
+            "index": 159,
+            "nodeId": "6:524",
+            "lines": 124,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5317
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/PET_FRIENDS_CIRCLE_IMAGE_PROMPT.md",
+      "sha256": "fad270d04c5841569f4a2079e6cd5b75cd52b2c2ef23f0cddfc7beb6fa910492",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:526",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-526",
+          "readback": {
+            "index": 160,
+            "nodeId": "6:526",
+            "lines": 34,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 7207
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/PET_LOST_LINKAGE_BRIEF.md",
+      "sha256": "cb5ce0bd31be21b9606bae7e693c03627a4fd8a9bf21e3b60a13dcd453c4c6e9",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:528",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-528",
+          "readback": {
+            "index": 161,
+            "nodeId": "6:528",
+            "lines": 145,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6492
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/PET_LOST_LINKAGE_IMAGE_PROMPT.md",
+      "sha256": "a260c402c355f51589adde1cb49fcde6568fde7c6d59283b48e67cb0dba97812",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:530",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-530",
+          "readback": {
+            "index": 162,
+            "nodeId": "6:530",
+            "lines": 24,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5622
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/README.md",
+      "sha256": "6f46984c752c9bf4711e6acae910726209c1f37f52cc8b671475bd6a65f8686d",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:532",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-532",
+          "readback": {
+            "index": 163,
+            "nodeId": "6:532",
+            "lines": 128,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 12154
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/REMOTE_FIGMA_CHECK_2026_10_21.md",
+      "sha256": "e872be8542ba874eea3a539e753e14a6412b75f9f05c2058d2120a009f2d4351",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:534",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-534",
+          "readback": {
+            "index": 164,
+            "nodeId": "6:534",
+            "lines": 63,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3532
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/SOCIAL_CHAT_DESIGN_PLAN.md",
+      "sha256": "d9ce460b1c1d1e60764b95470d11067fcd277f449fb34b958e306d4dbfb3a3f9",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:536",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-536",
+          "readback": {
+            "index": 165,
+            "nodeId": "6:536",
+            "lines": 37,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2147
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/SOCIAL_CHAT_HANDOFF.md",
+      "sha256": "88182683f74981f558fd02bdb6a074d97c462cb9668554a845dc03dec7c9b49c",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:538",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-538",
+          "readback": {
+            "index": 166,
+            "nodeId": "6:538",
+            "lines": 79,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4651
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/WECHAT_STYLE_EXPRESSION_INTERACTION.md",
+      "sha256": "c2e0ce0f686464a02ec998c5545101cca691dc2ae01028ade6711a76367d5502",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:540",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-540",
+          "readback": {
+            "index": 167,
+            "nodeId": "6:540",
+            "lines": 46,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2375
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/admin-2026-10-26/README.md",
+      "sha256": "984fd4b979f32c197ca773d3e95092970b01d66098a7028d1e01b327f5776d97",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:542",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-542",
+          "readback": {
+            "index": 168,
+            "nodeId": "6:542",
+            "lines": 62,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4553
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/adoption-implementation-2026-10-27/README.md",
+      "sha256": "ac036ec9e607cb31c227dfc9e426b297274b62015b630dbc18f9167ca1849a9a",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:544",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-544",
+          "readback": {
+            "index": 169,
+            "nodeId": "6:544",
+            "lines": 19,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1314
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/appointment-implementation-2026-10-27/README.md",
+      "sha256": "808a4c5fc113b612c917027a874080afd2c9de9337d84218907b741c673ea756",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:546",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-546",
+          "readback": {
+            "index": 170,
+            "nodeId": "6:546",
+            "lines": 19,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1130
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/assets/README.md",
+      "sha256": "e0143480def3f22f761ce7eb33e7cfc533a3390f4bd09f6d9fd387cf5e65f818",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:548",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-548",
+          "readback": {
+            "index": 171,
+            "nodeId": "6:548",
+            "lines": 18,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 927
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/assets/auth-providers/README.md",
+      "sha256": "4357d5eee6bbf7319d0a8f5d28b4cd434669c2a7b45aa309f9dcc44bb0a610ff",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:550",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-550",
+          "readback": {
+            "index": 172,
+            "nodeId": "6:550",
+            "lines": 17,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 766
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/assets/mnd-cat-stickers-prompt.md",
+      "sha256": "bcc6a958c2bb6e572e57ebe400c60a0f863f694b3281fe46db5b5d06399c258c",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:552",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-552",
+          "readback": {
+            "index": 173,
+            "nodeId": "6:552",
+            "lines": 17,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2683
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/assets/noto-emoji/NOTICE.md",
+      "sha256": "95edaa976ef9c5fb5229f35539b768dcbc5c72680c77a1ac96baf131092f588a",
+      "category": "06 设计审计与历史",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:554",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-554",
+          "readback": {
+            "index": 174,
+            "nodeId": "6:554",
+            "lines": 19,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1390
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/MOBILE_READINESS_AUDIT.md",
+      "sha256": "2026cc76564d6a39f7a10e37138aa1ad541aaa0d537d3f2eef36f3b5b6fa0947",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:556",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-556",
+          "readback": {
+            "index": 175,
+            "nodeId": "6:556",
+            "lines": 267,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 10170
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-19-mobile-docs/MOBILE_DOC_COVERAGE_AUDIT.md",
+      "sha256": "38f1a20def49eb83d4b1b4097f3ad97236b7c90c47e7d4dfbe497339ac33335e",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:558",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-558",
+          "readback": {
+            "index": 176,
+            "nodeId": "6:558",
+            "lines": 170,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 9262
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-doc-design-consistency/REVIEW.md",
+      "sha256": "d7d81fc3cbbc8bb96a0d538d6ea71049e3dd8793110d8e153285d15c2f7982a8",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:560",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-560",
+          "readback": {
+            "index": 177,
+            "nodeId": "6:560",
+            "lines": 97,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6297
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/operator-implementation-2026-10-27/README.md",
+      "sha256": "a73a17fdb8971005989e263436b877dfc6885e7ee5ab628cb656358c86aa4020",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:562",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-562",
+          "readback": {
+            "index": 178,
+            "nodeId": "6:562",
+            "lines": 17,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1049
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/ops-2026-10-25/README.md",
+      "sha256": "2595a6d64f3d82630037e411557b5a4fd00f6c0148270ffc1b0ac7974c13d960",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:564",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-564",
+          "readback": {
+            "index": 179,
+            "nodeId": "6:564",
+            "lines": 94,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6333
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/publish-button-2026-10-26/README.md",
+      "sha256": "be5041877c22845ad97622eb4294c775ceec37c2222bfa8a56516643c8ee8732",
+      "category": "06 设计审计与历史",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:566",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-566",
+          "readback": {
+            "index": 180,
+            "nodeId": "6:566",
+            "lines": 25,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2262
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/figma-sync/README.md",
+      "sha256": "e8ab31d6e3bb1ca2f221eb980afa1f8cf7dfd86977b412ba5a84b6357390533d",
+      "category": "00 导航与现行基线",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:568",
+          "pageId": "0:1",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-568",
+          "readback": {
+            "index": 181,
+            "nodeId": "6:568",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3140
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/ADOPTION_CLOSURE_2026_10_23.md",
+      "sha256": "decf6f9b9e87da513b3bbed3e8698f8678d43757eedea2d26c9d495ced14bbd8",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:570",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-570",
+          "readback": {
+            "index": 182,
+            "nodeId": "6:570",
+            "lines": 65,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3964
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/ARCHITECTURE.md",
+      "sha256": "23e11c2041ef9a81e868635fb151999de738bdedd3775ea66775298722a9b437",
+      "category": "04 服务端与API",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:572",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-572",
+          "readback": {
+            "index": 183,
+            "nodeId": "6:572",
+            "lines": 64,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4593
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/CLIENT_READINESS_2026_10_20.md",
+      "sha256": "e9790d41d07152f2f37d2c047df7225110621fec92755e26a01049d87a176b9a",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:574",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-574",
+          "readback": {
+            "index": 184,
+            "nodeId": "6:574",
+            "lines": 54,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4353
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/LIFECYCLE_RETENTION_2026_10_23.md",
+      "sha256": "6d823f9745b7b483f0e785888dc85e170357dbf6bbd2118ad83f17c4fe5999d5",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:576",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-576",
+          "readback": {
+            "index": 185,
+            "nodeId": "6:576",
+            "lines": 54,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2990
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/MOBILE_SERVER.md",
+      "sha256": "fdd7a35ed563da1571386a3089aa1b3ef14675c0709fb82d167b0e4a5bb49a4b",
+      "category": "04 服务端与API",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:578",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-578",
+          "readback": {
+            "index": 186,
+            "nodeId": "6:578",
+            "lines": 120,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 9910
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/OPERATIONS_CONSOLE_2026_10_25.md",
+      "sha256": "17d451b67d1d9315afb891f8e9299af440726ca31768f4ec7d3d7232a4877508",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:580",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-580",
+          "readback": {
+            "index": 187,
+            "nodeId": "6:580",
+            "lines": 72,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 4544
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/PRIVATE_LEAD_CONTRACT_2026_10_26.md",
+      "sha256": "91724afa5fafab873983cb4174ef64fe01b6871c81d227ce6536f32d61311e9d",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:582",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-582",
+          "readback": {
+            "index": 188,
+            "nodeId": "6:582",
+            "lines": 41,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2225
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md",
+      "sha256": "4031dbcb1e9add666b10b682caf11102dd7aa0cbb2be2ea01ace96f7bd4db9f2",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:584",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-584",
+          "readback": {
+            "index": 189,
+            "nodeId": "6:584",
+            "lines": 144,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 12992
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/SERVER_FIRST_2026_10_23.md",
+      "sha256": "72d268101d9d9cafe0895c1b6f73ce88314f2d71d8be269eb869cdf587521bd7",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:586",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-586",
+          "readback": {
+            "index": 190,
+            "nodeId": "6:586",
+            "lines": 72,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 5997
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md",
+      "sha256": "409169a9c5713fd15af8a36f37807a2dad86ad9358a1af8728c832829cb41737",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:588",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-588",
+          "readback": {
+            "index": 191,
+            "nodeId": "6:588",
+            "lines": 55,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3752
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/SOURCE_DECLARATIONS_2026_10_26.md",
+      "sha256": "67e268d195687258710b16f392c6e1cbc5f9fa3acba184b4a6aa6476f19a0fff",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:590",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-590",
+          "readback": {
+            "index": 192,
+            "nodeId": "6:590",
+            "lines": 47,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2491
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/UPLOAD_RECOVERY_2026_10_22.md",
+      "sha256": "01404c3e9a272c6783ca2b3928e5b872ee0ee5e31b9820feba841a8b7e5a2ccc",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:592",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-592",
+          "readback": {
+            "index": 193,
+            "nodeId": "6:592",
+            "lines": 39,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2519
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/server/V2_RELEASE_RUNBOOK_2026_10_23.md",
+      "sha256": "613756dede265a3f349272debbabddda3277a98c39ad5ae51269d3de2442bc55",
+      "category": "04 服务端与API",
+      "status": "带日期／历史证据，按原日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:594",
+          "pageId": "1:5",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-594",
+          "readback": {
+            "index": 194,
+            "nodeId": "6:594",
+            "lines": 64,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3665
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/uml/README.md",
+      "sha256": "fbc17cff02c4bb8835b0d6eae0bf6134edfc87204529b7d917fc8106970d4d90",
+      "category": "05 架构与UML",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:596",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-596",
+          "readback": {
+            "index": 195,
+            "nodeId": "6:596",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2889
+          }
+        }
+      ]
+    },
+    {
+      "path": "internal/platform/mobileapi/assets/v1/NOTICE.md",
+      "sha256": "95edaa976ef9c5fb5229f35539b768dcbc5c72680c77a1ac96baf131092f588a",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:598",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-598",
+          "readback": {
+            "index": 196,
+            "nodeId": "6:598",
+            "lines": 19,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1382
+          }
+        }
+      ]
+    },
+    {
+      "path": "internal/region/README.md",
+      "sha256": "0919110ef91c10ebf56c37c6cc7fd1981bc6def82959476541ad4160399c0355",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:600",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-600",
+          "readback": {
+            "index": 197,
+            "nodeId": "6:600",
+            "lines": 21,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1650
+          }
+        }
+      ]
+    },
+    {
+      "path": "kmp/androidApp/src/main/assets/fonts/NOTICE.md",
+      "sha256": "ccc09df44bf5958c09ec7c36520fdb505ce3a3d8f4fe2eb7f01fdca0bc5749ca",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:602",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-602",
+          "readback": {
+            "index": 198,
+            "nodeId": "6:602",
+            "lines": 16,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 774
+          }
+        }
+      ]
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/README.md",
+      "sha256": "99f16b49214adb31840fa8e24ffb902ed122489c537d405fb2870c1c6f3b0502",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:604",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-604",
+          "readback": {
+            "index": 199,
+            "nodeId": "6:604",
+            "lines": 20,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1187
+          }
+        }
+      ]
+    },
+    {
+      "path": "kmp/clientUi/README.md",
+      "sha256": "4b3f646112a8990026c065741cbbc54a583990217f7566a7eb6c0617345c1f8a",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:606",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-606",
+          "readback": {
+            "index": 200,
+            "nodeId": "6:606",
+            "lines": 29,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2193
+          }
+        }
+      ]
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/emoji/NOTICE.md",
+      "sha256": "95edaa976ef9c5fb5229f35539b768dcbc5c72680c77a1ac96baf131092f588a",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:608",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-608",
+          "readback": {
+            "index": 201,
+            "nodeId": "6:608",
+            "lines": 19,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1420
+          }
+        }
+      ]
+    },
+    {
+      "path": "kmp/ios/README.md",
+      "sha256": "4fd791ca731ea7766db74d6886b150e7609576094b2b6d7a55e396424682a053",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:610",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-610",
+          "readback": {
+            "index": 202,
+            "nodeId": "6:610",
+            "lines": 28,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1232
+          }
+        }
+      ]
+    },
+    {
+      "path": "kmp/iosApp/README.md",
+      "sha256": "f818d09bb84cb1157ff52f0ad6dc0de92bc1d70cf07af9fff6fa5cf337e43382",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:612",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-612",
+          "readback": {
+            "index": 203,
+            "nodeId": "6:612",
+            "lines": 25,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2034
+          }
+        }
+      ]
+    },
+    {
+      "path": "mobile/README.md",
+      "sha256": "1106ad527bc44270c304fb72e1753dffaf00910861297143a3537276e8ef538a",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:614",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-614",
+          "readback": {
+            "index": 204,
+            "nodeId": "6:614",
+            "lines": 131,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3734
+          }
+        }
+      ]
+    },
+    {
+      "path": "web-client/README.md",
+      "sha256": "072802ad1577e175f08af03ff0cc18a8c898fbf6c91da706d859bff3070519c6",
+      "category": "03 客户端与交付",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:616",
+          "pageId": "1:4",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-616",
+          "readback": {
+            "index": 205,
+            "nodeId": "6:616",
+            "lines": 48,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3649
+          }
+        }
+      ]
+    },
+    {
+      "path": "web/assets/stitch-remote/sources/11388975682457720262.md",
+      "sha256": "7042c02db7a924e33404d972b51166a75f78acb41cee4ca2dcb1dcfb5f6a2402",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:618",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-618",
+          "readback": {
+            "index": 206,
+            "nodeId": "6:618",
+            "lines": 609,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17394
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:620",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-620",
+          "readback": {
+            "index": 207,
+            "nodeId": "6:620",
+            "lines": 281,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 6301
+          }
+        }
+      ]
+    },
+    {
+      "path": "web/assets/stitch-remote/sources/1187049162856747640.md",
+      "sha256": "a1e9cc0940419cbfabe292343cf27dd1b799289e8a3f7238ac186310e41a20fc",
+      "category": "07 AI跟踪与仓库说明",
+      "status": "现行入口或持续维护规范；正文历史段落按日期解释",
+      "kind": "markdown",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 3,
+          "nodeId": "6:622",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-622",
+          "readback": {
+            "index": 208,
+            "nodeId": "6:622",
+            "lines": 568,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17654
+          }
+        },
+        {
+          "part": 2,
+          "parts": 3,
+          "nodeId": "6:624",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-624",
+          "readback": {
+            "index": 209,
+            "nodeId": "6:624",
+            "lines": 743,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 17739
+          }
+        },
+        {
+          "part": 3,
+          "parts": 3,
+          "nodeId": "6:626",
+          "pageId": "1:8",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-626",
+          "readback": {
+            "index": 210,
+            "nodeId": "6:626",
+            "lines": 48,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2461
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/uml/01-system-component-architecture.puml",
+      "sha256": "fca92ddd7bdecfccfb84a9b5c0c2b5b9b23d52eb4c7086f964dc07c70f3094fd",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:628",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-628",
+          "readback": {
+            "index": 211,
+            "nodeId": "6:628",
+            "lines": 64,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1950
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/01-system-component-architecture.mmd",
+        "sha256": "9777ebba8e37dd64021a86de5ca46f5249e8a4f46920fc876f37c608d438c64a"
+      }
+    },
+    {
+      "path": "docs/uml/02-kmp-mvi-and-clientui-class-diagram.puml",
+      "sha256": "b41c9a8f39cc1c92a1afe50709360f33f32d9978e9d94dc95e19c2476266a7c9",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:630",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-630",
+          "readback": {
+            "index": 212,
+            "nodeId": "6:630",
+            "lines": 78,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1781
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/uml/03-server-domain-and-service-class-diagram.puml",
+      "sha256": "d2e9e42f216fdf7812e45d05891a5e2b25be1509c08109bdbd44d26ea15b9f51",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:632",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-632",
+          "readback": {
+            "index": 213,
+            "nodeId": "6:632",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1472
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/uml/04-database-er-schema.puml",
+      "sha256": "34996c6116b68a7497d8087324b05cd7f58a7b78c240f3743969f0d8773b2855",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 2,
+          "nodeId": "6:634",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-634",
+          "readback": {
+            "index": 214,
+            "nodeId": "6:634",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 11572
+          }
+        },
+        {
+          "part": 2,
+          "parts": 2,
+          "nodeId": "6:636",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-636",
+          "readback": {
+            "index": 215,
+            "nodeId": "6:636",
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 8832
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/04-database-er-schema.mmd",
+        "sha256": "c18846ed6ecf7246359fdf2436a41a823a7860486c871977c3cacd365e7fd523"
+      }
+    },
+    {
+      "path": "docs/uml/05-auth-provider-and-account-linking-sequence.puml",
+      "sha256": "09a8812a99bd88712e4107fdcc47797b9836bc938228b0cd2bcf81f723bcd46c",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:638",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-638",
+          "readback": {
+            "index": 216,
+            "nodeId": "6:638",
+            "lines": 56,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1630
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/05-auth-provider-and-account-linking-sequence.mmd",
+        "sha256": "a37d6593f30b89567774b13694a7f1f6f3faec60d03be086a58842fc422381c4"
+      }
+    },
+    {
+      "path": "docs/uml/06-age-assurance-and-guardian-consent-sequence.puml",
+      "sha256": "fbfef81c03da5cbc750c1ec783e29e545750192114717051df2b9dffba0e05b7",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:640",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-640",
+          "readback": {
+            "index": 217,
+            "nodeId": "6:640",
+            "lines": 58,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1622
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/06-age-assurance-and-guardian-consent-sequence.mmd",
+        "sha256": "ae27184301693a07ab146cf3630f4b1cb01dc83e99f0bb18de9cc677ee904a0e"
+      }
+    },
+    {
+      "path": "docs/uml/07-idempotent-write-and-sensitive-reauth-sequence.puml",
+      "sha256": "04343ce216ab0759e8be5da397e650c1bfce759b50431490e190f49970f28fe7",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:642",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-642",
+          "readback": {
+            "index": 218,
+            "nodeId": "6:642",
+            "lines": 54,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1756
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/07-idempotent-write-and-sensitive-reauth-sequence.mmd",
+        "sha256": "ef0059b41bcdfa8d55ebab35eb063050288ea43aec85e8117d76201149d2377c"
+      }
+    },
+    {
+      "path": "docs/uml/08-adoption-exclusivity-contract-and-return-state.puml",
+      "sha256": "48bed1ca222cb734bab762eb0212376d487900bc3b3b97cf8dc38ba07d921770",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:644",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-644",
+          "readback": {
+            "index": 219,
+            "nodeId": "6:644",
+            "lines": 63,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 2080
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/08-adoption-exclusivity-contract-and-return-state.mmd",
+        "sha256": "a187ad83070f36306e5ca0b1b32571fb049796d5ad7b4e8840bd135805a45d02"
+      }
+    },
+    {
+      "path": "docs/uml/09-appointment-dual-track-and-safety-hold-state.puml",
+      "sha256": "31ee872b7405a3186b5a949b1e74f16d0ee1024cde03ca34e1182ab59faca75f",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:646",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-646",
+          "readback": {
+            "index": 220,
+            "nodeId": "6:646",
+            "lines": 52,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1569
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/09-appointment-dual-track-and-safety-hold-state.mmd",
+        "sha256": "d7dcea0a807657a9b785a138202464a0515d743eda7fac0ac95ffa74d4482440"
+      }
+    },
+    {
+      "path": "docs/uml/10-lost-pet-amap-and-claim-handover-sequence.puml",
+      "sha256": "2c6a3eba4cf070fdccd20e595e761f575795915e6e1a2abd1b001f29062de88f",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:648",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-648",
+          "readback": {
+            "index": 221,
+            "nodeId": "6:648",
+            "lines": 58,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1664
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/10-lost-pet-amap-and-claim-handover-sequence.mmd",
+        "sha256": "cdf07c4264815c09b1c30a37abfb74355e74520b99d5b1eccf4f6e5dda4347d3"
+      }
+    },
+    {
+      "path": "docs/uml/11-data-lifecycle-erasure-and-worker-jobs-sequence.puml",
+      "sha256": "f081de0ccdea3d3625db7f4c35544834617dfcff2ec14d37380a0b565c169991",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:650",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-650",
+          "readback": {
+            "index": 222,
+            "nodeId": "6:650",
+            "lines": 60,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1676
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/11-data-lifecycle-erasure-and-worker-jobs-sequence.mmd",
+        "sha256": "e0ce880c1491ed17f9a6660b434426f2c11d41c60317f3904e0a0e050619e1c2"
+      }
+    },
+    {
+      "path": "docs/uml/12-inbox-unread-snapshot-and-chat-sequence.puml",
+      "sha256": "90a63e75913429fbecbf6559467ead8dae37d31a4e43a08c8f28e8774ab6ffb1",
+      "category": "05 架构与UML",
+      "status": "本轮按实际源码重核；图为选定主路径与关系",
+      "kind": "uml",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:652",
+          "pageId": "1:6",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-652",
+          "readback": {
+            "index": 223,
+            "nodeId": "6:652",
+            "lines": 58,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1790
+          }
+        }
+      ],
+      "additionalSource": {
+        "path": "docs/uml/figjam/12-inbox-unread-snapshot-and-chat-sequence.mmd",
+        "sha256": "3957dccf1b9473cdff93e257d60a4467e098aaedf038faaa6ee86053b13bf875"
+      }
+    },
+    {
+      "path": "docs/design/flows/mobile-auth.mmd",
+      "sha256": "65b9f436047db556525557856fcabeb0627f02057d2f95a44a69e7806f6f81dc",
+      "category": "06 设计审计与历史",
+      "status": "旧流程源，非当前Schema与完整业务状态",
+      "kind": "mermaid",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:654",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-654",
+          "readback": {
+            "index": 224,
+            "nodeId": "6:654",
+            "lines": 35,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 1029
+          }
+        }
+      ]
+    },
+    {
+      "path": "docs/design/flows/uml-class-diagram.mmd",
+      "sha256": "d011a8418f2ef469dd0c423b5ee4a4ec4d320f7cfe1426fe44dd91dabceebff7",
+      "category": "06 设计审计与历史",
+      "status": "旧流程源，非当前Schema与完整业务状态",
+      "kind": "mermaid",
+      "volumes": [
+        {
+          "part": 1,
+          "parts": 1,
+          "nodeId": "6:656",
+          "pageId": "1:7",
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-656",
+          "readback": {
+            "index": 225,
+            "nodeId": "6:656",
+            "lines": 142,
+            "sourceMarker": true,
+            "contentMatches": true,
+            "savedChars": 3197
+          }
+        }
+      ]
+    }
+  ],
+  "productFlows": [
+    {
+      "path": "docs/design/flows/01-product-overview.svg",
+      "sha256": "6e8cc625477bb8f03b660d90a9d02a24813d73262c1c8a50ee9fc4dafe0611b5",
+      "title": "01  产品全貌",
+      "nodeId": "4:2",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=4-2",
+      "editableTextNodes": 26
+    },
+    {
+      "path": "docs/design/flows/02-buyer-journey.svg",
+      "sha256": "69deaa4715640887ab2d49d19927cea5f6eca3d554828ea26a8a184fde9dfecc",
+      "title": "02  找猫用户旅程",
+      "nodeId": "4:61",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=4-61",
+      "editableTextNodes": 30
+    },
+    {
+      "path": "docs/design/flows/03-publisher-review.svg",
+      "sha256": "8570da80c9711e3027d1d514c698f51b7b68da7c20ea99aa56c654f314af7d4d",
+      "title": "03  发布方与材料审核",
+      "nodeId": "5:2",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=5-2",
+      "editableTextNodes": 28
+    },
+    {
+      "path": "docs/design/flows/04-appointment-change.svg",
+      "sha256": "e7ec8a6afa850d98b13060cff5b9621bca22908799a99228b3a68da9d6488f11",
+      "title": "04  预约关键变更与风险暂停",
+      "nodeId": "5:63",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=5-63",
+      "editableTextNodes": 31
+    },
+    {
+      "path": "docs/design/flows/05-adoption-journey.svg",
+      "sha256": "23d0ce4c65870acc10a5e80020ac046ea8c6edad0ad6ff64d150e7d3f4968bae",
+      "title": "05  领养旅程",
+      "nodeId": "5:129",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=5-129",
+      "editableTextNodes": 34
+    },
+    {
+      "path": "docs/design/flows/06-dispute-appeal.svg",
+      "sha256": "d6435c4910c07728f46f8bd7617f342678064e310905f687a07fe71fa8ed1fed",
+      "title": "06  举报、复核与申诉",
+      "nodeId": "6:52",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-52",
+      "editableTextNodes": 28
+    },
+    {
+      "path": "docs/design/flows/07-verification-boundaries.svg",
+      "sha256": "920dc4866eece2f345c9804305f4925ae66f25c29562b694864a51cd0610ae3b",
+      "title": "07  核验能证明什么",
+      "nodeId": "6:118",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-118",
+      "editableTextNodes": 40
+    }
+  ],
+  "images": [
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/01-feed.png",
+      "sha256": "d10072d0a55273de798b941beb591f6618e7833891df6f698524a509be525c6a",
+      "nodeId": "6:3",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-3",
+      "imageHash": "9ffa855d80b1def713273561ec10fefc74e46739",
+      "bytes": 58627,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/02-market.png",
+      "sha256": "e4a17871651d38595f5bb36066665e207bc83b322422241f8fa6b086a5c0f256",
+      "nodeId": "6:4",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-4",
+      "imageHash": "a459f337b8199b052d279558cbf1d0715bb6d35d",
+      "bytes": 57656,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/03-create.png",
+      "sha256": "d267fe6910d3e3b739da017e6c57a2f688c67a975184df489ddce46ed40169a7",
+      "nodeId": "6:5",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-5",
+      "imageHash": "670a7f1314c1ee65cde0aec2d3e11e020db6fe62",
+      "bytes": 42729,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/04-messages.png",
+      "sha256": "8def8a255915c5994626721eb733a185aca4ef1d1773a6cbb7c3692c52b6592f",
+      "nodeId": "6:6",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-6",
+      "imageHash": "a8d2e366597265af560555266700079e99dcf468",
+      "bytes": 44273,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/05-orders.png",
+      "sha256": "d19153beff311c24a85d1e9f950faa835752f14fcd4ea95d8f1cf66d902a7b4b",
+      "nodeId": "6:7",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-7",
+      "imageHash": "92337df0d6f7acc2d3c4d0c948b449a343fe2b03",
+      "bytes": 42112,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/06-profile.png",
+      "sha256": "de115917c0f243cd33a1d90ebe29aa58414d207dae25a22c54d1dc325a48433a",
+      "nodeId": "6:8",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-8",
+      "imageHash": "c3bfcd10a5c2046deaca9f857e1e646e5e9cef38",
+      "bytes": 52954,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/07-profile-desk.png",
+      "sha256": "d27042781454c3aca04596bfb12184eda1b58598d4e7b0a84469bd0d2f6325ed",
+      "nodeId": "6:9",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-9",
+      "imageHash": "30e260e6089b9b1fc8a5bfb42ab0eb9cd7654898",
+      "bytes": 57475,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/08-safety.png",
+      "sha256": "a380093a0e363481fa5bc25bf3c7756eca1d82fc55c4f8fcee4b9800e550a46a",
+      "nodeId": "6:10",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-10",
+      "imageHash": "af6e99b673aabac107e4d9e25510119ef6db74e3",
+      "bytes": 40249,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/09-mobile-feed-viewport.png",
+      "sha256": "e5751415ff3dcecc05ce2fd59553d1c4f2c062ee41c4296bc551b8fffe68dd5a",
+      "nodeId": "6:11",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-11",
+      "imageHash": "87fad9c63b138e7082e06a13c14c32012271560d",
+      "bytes": 34355,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/audit-assets/2026-08-30-core-flow/10-mobile-create-viewport.png",
+      "sha256": "3120bfd3f3b3cfae942cdadee66eaa65a3b6cb9bca956bc0095581b7f987b816",
+      "nodeId": "6:12",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-12",
+      "imageHash": "b74af9d2a484586f31fd6f4f896ad7673f50ff26",
+      "bytes": 29106,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/01-community.png",
+      "sha256": "7f7918b178cd3a49200d7545d671c3dfeb3154465e50d99bd9397b90d8a0eb17",
+      "nodeId": "6:13",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-13",
+      "imageHash": "79e0e4e1443bcc9dbd4e45bb6797b5c40b7f7a14",
+      "bytes": 226799,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/02-adoption-list.png",
+      "sha256": "ff9cd450e686af46ac3d4f192b552ad561d7c0eb57fe84b787b99bc74aa76904",
+      "nodeId": "6:14",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-14",
+      "imageHash": "e724bad965a05351005619ef1c62a04865070970",
+      "bytes": 82898,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/03-privacy.png",
+      "sha256": "49fb921d5c77c251e090d0aa9777b176502134915e54dee2ccf97bfae10fa5f7",
+      "nodeId": "6:15",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-15",
+      "imageHash": "3eea7745188f51c69f87b6bef34707127e5dcd4d",
+      "bytes": 55707,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/04-unread.png",
+      "sha256": "4daf29738a2524e3548a73c63f5533a0790460f47e8cd13bc373467381dfdeba",
+      "nodeId": "6:16",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-16",
+      "imageHash": "d5ab41ec241d75a892efd47f18d7d73ad62eec04",
+      "bytes": 77567,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/05-adoption-detail.png",
+      "sha256": "ba564e77c458ccdc3a35791224cca9dad7d04c2fb84d915cbcb943e5ed44f43f",
+      "nodeId": "6:17",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-17",
+      "imageHash": "4ae81e99cec395fb1e350d879415bf3ae761b016",
+      "bytes": 182063,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/06-login.png",
+      "sha256": "cb305b65186d21370c25b12967c455432e10301f05042dc5daf5cb381e277656",
+      "nodeId": "6:18",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-18",
+      "imageHash": "c7b98155fa3f0183b75a3e7a8779b685de696267",
+      "bytes": 37742,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/07-sale-detail.png",
+      "sha256": "69ca5ed5ea64c072716887f6c1e28bd94f96861d0f1392fd5f9fbbe1518f90f9",
+      "nodeId": "6:19",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-19",
+      "imageHash": "65c30e0bfcaa3468a13d412772d433d1fc59c79c",
+      "bytes": 197071,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/08-lost-detail.png",
+      "sha256": "faa86c730cd661b79e2548e0b4fc0914a8e89c12c67e102111597891ac74680d",
+      "nodeId": "6:20",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-20",
+      "imageHash": "e203dfe6f79392919e64167d3647618832e8a43b",
+      "bytes": 148388,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-product-compliance/09-tablet-home.png",
+      "sha256": "1c8c93026a507fe6fc9122c13ba91ce9ae2651faaf6c1f280ffb694960001067",
+      "nodeId": "6:21",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-21",
+      "imageHash": "9e289032c42432fcaab3663b28d7c1c53676ffe3",
+      "bytes": 528838,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/01-phoneCode.png",
+      "sha256": "1cac9b2983e9d3df5e35847827c49cebc7b7267e4336029220378a00b8be5128",
+      "nodeId": "6:22",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-22",
+      "imageHash": "6bcbd8ad18bee7ab0c19815d2d1cc6578eafda9b",
+      "bytes": 37464,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/02-emailError.png",
+      "sha256": "20fcfc1cb8c038fe4507b9e69d2163c5921425f13a498351c0f32405a49b8a8c",
+      "nodeId": "6:23",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-23",
+      "imageHash": "97071a2a2b0ab0594124cc169fc45bada66ff841",
+      "bytes": 41305,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/03-adultAssurance.png",
+      "sha256": "3bc8f53fd4a39e0bd561e7a471dc31197d81c3a684a70de9eee8e02bb1499229",
+      "nodeId": "6:24",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-24",
+      "imageHash": "c9f1aedba2b89cfbefbb644553e9abd54ee1d0de",
+      "bytes": 39614,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/04-accountIdentifiers.png",
+      "sha256": "4555d1f7e636bfacf2da9bfd01fe000082c0c622c5d745ce430314274f083e19",
+      "nodeId": "6:25",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-25",
+      "imageHash": "ec2c0cd522d8041031891b969a0b362d1885dcba",
+      "bytes": 46628,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/05-safetyHold.png",
+      "sha256": "4d463282c046961697f8985a4c3cd01fdd07f9b3f9195bfc3fafe26043191e23",
+      "nodeId": "6:26",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-26",
+      "imageHash": "f365d5d44ecfca5c68e4b976e9a92ad984c9abdc",
+      "bytes": 47769,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/06-returnProposal.png",
+      "sha256": "ae456c1c1bf95748874b7ac6375254b26e2ce568c1540c59bbf20f6962b7f1e2",
+      "nodeId": "6:27",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-27",
+      "imageHash": "af8577d872414766197f5de7035e15e741f37cb9",
+      "bytes": 42888,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/07-guestReceipt.png",
+      "sha256": "925ab6f8aec6832b11d3a054424cc54700b515cb5b53793e3e9154d582352155",
+      "nodeId": "6:28",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-28",
+      "imageHash": "51e0afdfa5b7744dae2964cdeebc00c3c9418060",
+      "bytes": 41307,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/08-guestReport.png",
+      "sha256": "07875a59eca25da591d1c2f0541254344b8852e2d72a36d368b5af7c068ed230",
+      "nodeId": "6:29",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-29",
+      "imageHash": "0310ee75ffb89ac891d119d18df6e98bfeda79d5",
+      "bytes": 52189,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/09-dataDelete.png",
+      "sha256": "00e2e9021212eed56333e7c6c0a0b76b2fba6a88c4d65a80a6006bea22f40f17",
+      "nodeId": "6:30",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-30",
+      "imageHash": "10604fff001072b874e1206a0364ddea85f267ec",
+      "bytes": 53142,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-21-logic-review/10-dataProgress.png",
+      "sha256": "e0b09dd8e7de65ca09e2db598d4e6fca73256e86c08fe0a34d020128435dd3ca",
+      "nodeId": "6:31",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-31",
+      "imageHash": "550135112965157cf3d243539754166eca792bd8",
+      "bytes": 45070,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/01-community-home.png",
+      "sha256": "58040d6ee64d725ef1e51306e3f5234a6922c291636b9032ad6f73c927efe38d",
+      "nodeId": "6:32",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-32",
+      "imageHash": "0826f3cade5a606b4e392482de971a1b63922de0",
+      "bytes": 236704,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/02-comments.png",
+      "sha256": "9cc533f9ad6df0ce97fa3de3c1d48358bcad1c39ab76f1a0bcbce45d07c5fd0d",
+      "nodeId": "6:33",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-33",
+      "imageHash": "2da94216462cbdb96ecaf8fd119644ec80b17eed",
+      "bytes": 50081,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/18-reply-thread.png",
+      "sha256": "9b5b02d736bb921a01baabec15d10fba3c14edf41df18ea44e3f856a6b263db6",
+      "nodeId": "6:34",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-34",
+      "imageHash": "1a4fa0c0dbc078028f224dfbbaa3ed3852f983ea",
+      "bytes": 46593,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/03-compose.png",
+      "sha256": "6b4ff425fc5ef30341ef8ecaffdaf712c091466e1f5d4424b7dbf6e204e9bd55",
+      "nodeId": "6:35",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-35",
+      "imageHash": "c0cba2caeb56af84787ad186c8137fce940d7137",
+      "bytes": 139700,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/04-pet-profile.png",
+      "sha256": "41bc5cc51cb25c2f2fcd1857d1776542345317f617b2d4542757162ee09467da",
+      "nodeId": "6:36",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-36",
+      "imageHash": "4e4f5df8fc494bba9e09c63af1f23a62e9088428",
+      "bytes": 170511,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/05-adoption-detail.png",
+      "sha256": "e51c9afb6363e5048b3f534252cae50ba58973fcc543a6b662c3b9fc1bfcbea8",
+      "nodeId": "6:37",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-37",
+      "imageHash": "18368f945022cda9275512a7e378f96fad33ea6b",
+      "bytes": 182295,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/19-application-form.png",
+      "sha256": "d77e54f14b083ad9e89c93b3675468ad640a349f888a32375ea6ebfcab2c2a80",
+      "nodeId": "6:38",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-38",
+      "imageHash": "0939f19aaef6eca1e0da7231d160e6691db9455c",
+      "bytes": 76659,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/06-application-review.png",
+      "sha256": "f44836b37a6983e27505a827079c5d6436c05985a3cfe22e32eaebb1b1e9f041",
+      "nodeId": "6:39",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-39",
+      "imageHash": "d7eea56a57192ed6859b4cb6829133491cb78b64",
+      "bytes": 46257,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/07-lost-map.png",
+      "sha256": "a1b44ecceb7cc5fa87d13558d1980ccf576094e1130587d5ff496000c0bead6f",
+      "nodeId": "6:40",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-40",
+      "imageHash": "baa1fe8530981283baef467087b9c915f197378b",
+      "bytes": 37920,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/08-lost-manage.png",
+      "sha256": "3861371627fe90e81bd26367941a026525604df11ee19a4911a79b869ff09ab7",
+      "nodeId": "6:41",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-41",
+      "imageHash": "3856c868548d0114cd28764325ccd4347a90db31",
+      "bytes": 43305,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/09-private-sighting.png",
+      "sha256": "e52a70a3531c6b21efb67c1c2759ad7a677da683ab8b588c37d22f0679c2d111",
+      "nodeId": "6:42",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-42",
+      "imageHash": "e071be9a86f47f984244254cb9409d933a1329fa",
+      "bytes": 50446,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/16-adoption-chat.png",
+      "sha256": "1f0ac0904a216408c605342fc41d2ce8942a02119fe18062e7be409632ea6d32",
+      "nodeId": "6:43",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-43",
+      "imageHash": "6a46df3c77bdf4dfc46bbc995686291648af8250",
+      "bytes": 67510,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/17-content-unavailable.png",
+      "sha256": "7b5f4713b098a5e34bf155cf2f54029a045e8f21b06d34dd5421cf6b6b51d74a",
+      "nodeId": "6:44",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-44",
+      "imageHash": "416532893799c13c646dde93f8339a92a9449b43",
+      "bytes": 36472,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/10-private-chat.png",
+      "sha256": "88a1408e1d60b76d1baf7f5f64f0fb1edc9845524477ddebf846b7533e062b21",
+      "nodeId": "6:45",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-45",
+      "imageHash": "6d71abbeebc595a73c5a54c3562ccbc938299ea1",
+      "bytes": 32131,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/11-group-chat.png",
+      "sha256": "d972bc5f84197176bd23f957a88778e3605f3bde46406a8ae2a65d9eb04bc9fc",
+      "nodeId": "6:46",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-46",
+      "imageHash": "cc02a15e969b7de65beb06b4fcdcf171c2f86e81",
+      "bytes": 41349,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/12-login.png",
+      "sha256": "1debf970603dbfe8b4e00bab8876e3598991d8159ad1b2cc8b06fad0ef708e3c",
+      "nodeId": "6:47",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-47",
+      "imageHash": "9113918b86d52e19f6651f59a2420b62e0df6a6e",
+      "bytes": 44493,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/13-privacy.png",
+      "sha256": "45f81eaf46ea42e29973662eddfb4be6ed52c9d31c7fdfa95929fa6a337f21bb",
+      "nodeId": "6:48",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-48",
+      "imageHash": "0fe7a40a57bfd868cc805d334b33fa69cb88c45b",
+      "bytes": 55621,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/14-report-progress.png",
+      "sha256": "3df64c4b53772eecf28f4371269d6a75ebaa439043826f97db537557a2a27ab8",
+      "nodeId": "6:49",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-49",
+      "imageHash": "8c133a8c4cb0e49b15b75f02c30df19196ae4303",
+      "bytes": 47323,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/15-offline.png",
+      "sha256": "54abba3790d449616e41987bb1421306fa5ac72ff82515aaffc15ac1c528fc23",
+      "nodeId": "6:50",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-50",
+      "imageHash": "afd6a4f51032f4efc107a0be3a824808f7919880",
+      "bytes": 38132,
+      "contentType": "image/png"
+    },
+    {
+      "path": "docs/design/figma-study/publish-button-2026-10-26/publish-button-pill.png",
+      "sha256": "8931a059d0f89c7a37912aa9394487a407435dfa2f5fe9f6ed1c890c180438fe",
+      "nodeId": "6:51",
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-51",
+      "imageHash": "05b90eea3ea661d077138015fded2b3fff12faee",
+      "bytes": 7842,
+      "contentType": "image/png"
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "M&D 系统组件与外部能力边界",
+      "kind": "flowchart",
+      "source": "docs/uml/01-system-component-architecture.puml",
+      "sha256": "fca92ddd7bdecfccfb84a9b5c0c2b5b9b23d52eb4c7086f964dc07c70f3094fd",
+      "mermaidSource": "docs/uml/figjam/01-system-component-architecture.mmd",
+      "mermaidSha256": "9777ebba8e37dd64021a86de5ca46f5249e8a4f46920fc876f37c608d438c64a",
+      "nodeId": "12:2552",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=12-2552",
+      "sourceReferences": [
+        "cmd/server/main.go",
+        "internal/mobile/repository.go",
+        "internal/platform/mobileapi/handler.go",
+        "internal/store/postgres/mobile.go"
+      ]
+    },
+    {
+      "title": "KMP MVI 与共享UI类关系",
+      "kind": "class",
+      "source": "docs/uml/02-kmp-mvi-and-clientui-class-diagram.puml",
+      "sha256": "b41c9a8f39cc1c92a1afe50709360f33f32d9978e9d94dc95e19c2476266a7c9",
+      "mermaidSource": null,
+      "mermaidSha256": null,
+      "nodeId": "12:2556",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=12-2556",
+      "sourceReferences": [
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MviStore.kt",
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt"
+      ]
+    },
+    {
+      "title": "Go 服务、事务端口与适配器类关系",
+      "kind": "class",
+      "source": "docs/uml/03-server-domain-and-service-class-diagram.puml",
+      "sha256": "d2e9e42f216fdf7812e45d05891a5e2b25be1509c08109bdbd44d26ea15b9f51",
+      "mermaidSource": null,
+      "mermaidSha256": null,
+      "nodeId": "12:2653",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=12-2653",
+      "sourceReferences": [
+        "internal/mobile/repository.go",
+        "internal/identity/service.go",
+        "internal/platform/mobileapi/handler.go",
+        "internal/store/postgres/mobile.go"
+      ]
+    },
+    {
+      "title": "45张mobile聚合表实际Schema与owner关系",
+      "kind": "erDiagram",
+      "source": "docs/uml/04-database-er-schema.puml",
+      "sha256": "34996c6116b68a7497d8087324b05cd7f58a7b78c240f3743969f0d8773b2855",
+      "mermaidSource": "docs/uml/figjam/04-database-er-schema.mmd",
+      "mermaidSha256": "c18846ed6ecf7246359fdf2436a41a823a7860486c871977c3cacd365e7fd523",
+      "nodeId": "12:2553",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=12-2553",
+      "sourceReferences": [
+        "migrations/007_mobile_modules.sql",
+        "migrations/008_mobile_policy_commands.sql",
+        "migrations/009_pet_discussions.sql",
+        "migrations/013_source_declarations.sql"
+      ]
+    },
+    {
+      "title": "显式登录、三方认证与绑定冲突边界",
+      "kind": "sequenceDiagram",
+      "source": "docs/uml/05-auth-provider-and-account-linking-sequence.puml",
+      "sha256": "09a8812a99bd88712e4107fdcc47797b9836bc938228b0cd2bcf81f723bcd46c",
+      "mermaidSource": "docs/uml/figjam/05-auth-provider-and-account-linking-sequence.mmd",
+      "mermaidSha256": "a37d6593f30b89567774b13694a7f1f6f3faec60d03be086a58842fc422381c4",
+      "nodeId": "3:2101",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=3-2101",
+      "sourceReferences": [
+        "internal/identity/service.go",
+        "internal/identity/email.go",
+        "internal/platform/mobileapi/browser_provider.go"
+      ]
+    },
+    {
+      "title": "年龄核验与十五分钟监护邀请",
+      "kind": "sequenceDiagram",
+      "source": "docs/uml/06-age-assurance-and-guardian-consent-sequence.puml",
+      "sha256": "fbfef81c03da5cbc750c1ec783e29e545750192114717051df2b9dffba0e05b7",
+      "mermaidSource": "docs/uml/figjam/06-age-assurance-and-guardian-consent-sequence.mmd",
+      "mermaidSha256": "ae27184301693a07ab146cf3630f4b1cb01dc83e99f0bb18de9cc677ee904a0e",
+      "nodeId": "4:2160",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=4-2160",
+      "sourceReferences": [
+        "internal/identity/age_assurance.go",
+        "internal/identity/guardian_invites.go",
+        "internal/mobile/qualification.go"
+      ]
+    },
+    {
+      "title": "五分钟用途认证、幂等写入与未知结果恢复",
+      "kind": "sequenceDiagram",
+      "source": "docs/uml/07-idempotent-write-and-sensitive-reauth-sequence.puml",
+      "sha256": "04343ce216ab0759e8be5da397e650c1bfce759b50431490e190f49970f28fe7",
+      "mermaidSource": "docs/uml/figjam/07-idempotent-write-and-sensitive-reauth-sequence.mmd",
+      "mermaidSha256": "ef0059b41bcdfa8d55ebab35eb063050288ea43aec85e8117d76201149d2377c",
+      "nodeId": "5:2226",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=5-2226",
+      "sourceReferences": [
+        "internal/identity/service.go",
+        "internal/mobile/commands.go",
+        "internal/mobile/purpose.go"
+      ]
+    },
+    {
+      "title": "领养、试养、交接与安全接回状态",
+      "kind": "stateDiagram-v2",
+      "source": "docs/uml/08-adoption-exclusivity-contract-and-return-state.puml",
+      "sha256": "48bed1ca222cb734bab762eb0212376d487900bc3b3b97cf8dc38ba07d921770",
+      "mermaidSource": "docs/uml/figjam/08-adoption-exclusivity-contract-and-return-state.mmd",
+      "mermaidSha256": "a187ad83070f36306e5ca0b1b32571fb049796d5ad7b4e8840bd135805a45d02",
+      "nodeId": "12:2554",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=12-2554",
+      "sourceReferences": [
+        "internal/mobile/rescue.go",
+        "internal/mobile/adoption_placement.go",
+        "internal/mobile/contracts.go"
+      ]
+    },
+    {
+      "title": "预约有效版本、提案与安全暂停",
+      "kind": "stateDiagram-v2",
+      "source": "docs/uml/09-appointment-dual-track-and-safety-hold-state.puml",
+      "sha256": "31ee872b7405a3186b5a949b1e74f16d0ee1024cde03ca34e1182ab59faca75f",
+      "mermaidSource": "docs/uml/figjam/09-appointment-dual-track-and-safety-hold-state.mmd",
+      "mermaidSha256": "d7dcea0a807657a9b785a138202464a0515d743eda7fac0ac95ffa74d4482440",
+      "nodeId": "12:2555",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=12-2555",
+      "sourceReferences": [
+        "internal/mobile/appointments.go"
+      ]
+    },
+    {
+      "title": "走失粗位置、私密线索与认领交接",
+      "kind": "sequenceDiagram",
+      "source": "docs/uml/10-lost-pet-amap-and-claim-handover-sequence.puml",
+      "sha256": "2c6a3eba4cf070fdccd20e595e761f575795915e6e1a2abd1b001f29062de88f",
+      "mermaidSource": "docs/uml/figjam/10-lost-pet-amap-and-claim-handover-sequence.mmd",
+      "mermaidSha256": "cdf07c4264815c09b1c30a37abfb74355e74520b99d5b1eccf4f6e5dda4347d3",
+      "nodeId": "8:2367",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=8-2367",
+      "sourceReferences": [
+        "internal/mobile/rescue.go",
+        "internal/mobile/lead_submission.go",
+        "internal/mobile/lead_review.go",
+        "internal/mobile/nearby.go"
+      ]
+    },
+    {
+      "title": "资料权利、保全、Worker与检查点",
+      "kind": "sequenceDiagram",
+      "source": "docs/uml/11-data-lifecycle-erasure-and-worker-jobs-sequence.puml",
+      "sha256": "f081de0ccdea3d3625db7f4c35544834617dfcff2ec14d37380a0b565c169991",
+      "mermaidSource": "docs/uml/figjam/11-data-lifecycle-erasure-and-worker-jobs-sequence.mmd",
+      "mermaidSha256": "e0ce880c1491ed17f9a6660b434426f2c11d41c60317f3904e0a0e050619e1c2",
+      "nodeId": "9:2429",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=9-2429",
+      "sourceReferences": [
+        "internal/mobile/data_requests.go",
+        "internal/mobile/evidence_retention.go",
+        "internal/platform/mobileapi/jobs.go",
+        "cmd/worker/main.go"
+      ]
+    },
+    {
+      "title": "未读汇总、十分钟确认快照与会话已读",
+      "kind": "sequenceDiagram",
+      "source": "docs/uml/12-inbox-unread-snapshot-and-chat-sequence.puml",
+      "sha256": "90a63e75913429fbecbf6559467ead8dae37d31a4e43a08c8f28e8774ab6ffb1",
+      "mermaidSource": "docs/uml/figjam/12-inbox-unread-snapshot-and-chat-sequence.mmd",
+      "mermaidSha256": "3957dccf1b9473cdff93e257d60a4467e098aaedf038faaa6ee86053b13bf875",
+      "nodeId": "10:2494",
+      "url": "https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=10-2494",
+      "sourceReferences": [
+        "internal/mobile/inbox.go",
+        "internal/mobile/inbox_snapshot.go"
+      ]
+    }
+  ],
+  "erGroups": [
+    {
+      "id": "14:2659",
+      "name": "04a 身份与安全",
+      "tableCount": 8
+    },
+    {
+      "id": "14:2674",
+      "name": "04b 社区与宠物",
+      "tableCount": 10
+    },
+    {
+      "id": "14:2689",
+      "name": "04c 互助照护与商业",
+      "tableCount": 10
+    },
+    {
+      "id": "14:2704",
+      "name": "04d 消息内容与媒体",
+      "tableCount": 9
+    },
+    {
+      "id": "14:2719",
+      "name": "04e 数据权利与交付",
+      "tableCount": 8
+    }
+  ],
+  "sourceBaseline": {
+    "date": "2026-10-27",
+    "timezone": "Asia/Shanghai",
+    "head": "1fe5302e7eb21c5767b84505dea69f47481f8c5f",
+    "paths": 253,
+    "operations": 285,
+    "serverSchemas": 139,
+    "webSchemas": 141,
+    "dtoPairs": 87,
+    "migrations": [
+      "001_init.sql",
+      "002_social.sql",
+      "003_user_phone.sql",
+      "004_notifications_actor_image.sql",
+      "005_adoption.sql",
+      "006_listing_category.sql",
+      "007_mobile_modules.sql",
+      "008_mobile_policy_commands.sql",
+      "009_pet_discussions.sql",
+      "010_operations_console.sql",
+      "011_mobile_query_indexes.sql",
+      "012_worker_checkpoints.sql",
+      "013_source_declarations.sql"
+    ],
+    "mobileTables": 45,
+    "sharedFiles": 28,
+    "clientUiFiles": 41,
+    "featurePages": 48,
+    "workerJobs": [
+      "push",
+      "nearby_alerts",
+      "content_updates",
+      "privacy_cleanup",
+      "provider_revocations",
+      "maintenance",
+      "search_projection",
+      "audit_projection"
+    ],
+    "verification": "源码读取与文档静态核对；未编译、未运行测试、未启动应用"
+  },
+  "localCommitCreated": false,
+  "pushed": false,
+  "skillsUnownedPreserved": true,
+  "limitations": [
+    "历史报告按其原日期与完成层次解读，并未把所有历史段落重判为当前源码结论",
+    "图谱为选定主路径和关系，复杂完整支路与字段查源码合同",
+    "图片为抽样视觉检查；没有所有图片逐像素或应用运行验收",
+    "原生GFM软换行、表格分隔线和引用格式会规范化；非字节级Markdown往返",
+    "未运行编译、构建、test、lint、应用、迁移或部署"
+  ]
+}

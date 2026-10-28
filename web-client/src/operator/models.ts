@@ -20,6 +20,11 @@ export const views = [
   "forbidden",
   "disconnected",
   "emergency",
+  "ageEvidence",
+  "authority",
+  "revenue",
+  "received",
+  "refund",
 ] as const;
 export type View = (typeof views)[number];
 export type Row = Record<string, unknown>;
@@ -69,6 +74,11 @@ export const sections: Array<[View, string, string]> = [
   ["rights", "权利事项", "shield-check"],
   ["privacy", "资料与注销", "user-round"],
   ["guardian", "监护核验", "user-round"],
+  ["ageEvidence", "年龄证据", "shield-check"],
+  ["authority", "授权证据", "shield-check"],
+  ["revenue", "实际收支台账", "bookmark"],
+  ["received", "收款登记", "check"],
+  ["refund", "退款登记", "arrow-right"],
   ["readiness", "发布准入", "check"],
   ["access", "角色与会话", "shield-check"],
 ];
@@ -87,6 +97,11 @@ export const titles: Record<View, string> = {
   forbidden: "访问受限",
   disconnected: "未连接",
   emergency: "安全事件响应",
+  ageEvidence: "可信年龄区间登记",
+  authority: "授权证据核对",
+  revenue: "实际收支台账",
+  received: "实际收款登记",
+  refund: "实际退款登记",
 };
 export const roleFor = (kind: Kind) =>
   kind === "guardian-invites"

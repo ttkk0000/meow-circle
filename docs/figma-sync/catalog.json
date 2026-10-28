@@ -1,0 +1,1052 @@
+[
+  {
+    "path": ".cursor/README.md",
+    "title": "kitty-circle — `.cursor` index",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "协作规则／工具参考，不是产品需求"
+  },
+  {
+    "path": ".cursor/USER_RULES_PASTE_DESIGN.md",
+    "title": "Cursor User Rules — Karpathy coding + kitty-circle user-facing UX (Git-tracked)",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "协作规则／工具参考，不是产品需求"
+  },
+  {
+    "path": ".cursor/skills/besttry-design-user-context/SKILL.md",
+    "title": "kitty-circle UI and experience (user-facing)",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "协作规则／工具参考，不是产品需求"
+  },
+  {
+    "path": ".cursor/skills/karpathy-guidelines/SKILL.md",
+    "title": "Karpathy Guidelines",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "协作规则／工具参考，不是产品需求"
+  },
+  {
+    "path": ".impeccable.md",
+    "title": "Impeccable Design Context — kitty-circle 喵友圈",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "协作规则／工具参考，不是产品需求"
+  },
+  {
+    "path": ".planning/2026-10-16-mobile-closure/findings.md",
+    "title": "当前证据",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": ".planning/2026-10-16-mobile-closure/progress.md",
+    "title": "进度",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": ".planning/2026-10-16-mobile-closure/task_plan.md",
+    "title": "手机设计闭环",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": ".planning/2026-10-20-server-mobile/findings.md",
+    "title": "Findings",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": ".planning/2026-10-20-server-mobile/progress.md",
+    "title": "Progress",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": ".planning/2026-10-20-server-mobile/task_plan.md",
+    "title": "Go server alignment with mobile design",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": ".stitch/DESIGN.md",
+    "title": "M&D Global DESIGN.md",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": ".stitch/remote-assets/sources/11388975682457720262.md",
+    "title": "M&D Global DESIGN.md",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": ".stitch/remote-assets/sources/1187049162856747640.md",
+    "title": "M&D Global DESIGN.md",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "AGENTS.md",
+    "title": "Agent Memory: M&D / meow & doggie",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "协作规则／工具参考，不是产品需求"
+  },
+  {
+    "path": "CLAUDE.md",
+    "title": "Claude Project Instructions",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "协作规则／工具参考，不是产品需求"
+  },
+  {
+    "path": "DESIGN.md",
+    "title": "M&D Stitch Remote Design Contract",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "GEMINI.md",
+    "title": "Gemini Project Instructions",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "协作规则／工具参考，不是产品需求"
+  },
+  {
+    "path": "PROJECT_ONBOARDING_ZH.md",
+    "title": "kitty-circle 项目上手文档（Android / 鸿蒙背景版）",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "README.md",
+    "title": "M&D / meow & doggie Server (Go + Caddy)",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "SECURITY.md",
+    "title": "Security Policy",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "cursor/DESIGN.md",
+    "title": "Design System Inspired by Cursor",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "deploy/examples/README.md",
+    "title": "部署与App签名占位配置",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/API_AND_DATA_FLOW.md",
+    "title": "M&D API与数据流",
+    "category": "05 架构与UML",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/API_CATALOG.md",
+    "title": "M&D V2 API速查表",
+    "category": "04 服务端与API",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/CLIENT_PARITY_CHECKLIST.md",
+    "title": "M&D Client Parity Checklist",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/CODE_LOGIC_AND_UML_REFERENCE.md",
+    "title": "M&D 全栈代码逻辑与UML参考",
+    "category": "05 架构与UML",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/CURRENT_BASELINE.md",
+    "title": "M&D 现行文档与源码基线",
+    "category": "00 导航与现行基线",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/DATA_DICTIONARY.md",
+    "title": "M&D V2 数据字典",
+    "category": "04 服务端与API",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/DOCUMENTATION_CATALOG.md",
+    "title": "M&D 全仓文档目录",
+    "category": "00 导航与现行基线",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/FRONTEND_SURFACE_MAP.md",
+    "title": "M&D 前端与多端页面地图",
+    "category": "05 架构与UML",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+    "title": "M&D 产品、源码与验收状态矩阵",
+    "category": "00 导航与现行基线",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/PRODUCT_FLOW_REFERENCE.md",
+    "title": "M&D 产品流程图阅读说明",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/PROJECT_STRUCTURE.md",
+    "title": "M&D 项目结构与源码入口",
+    "category": "05 架构与UML",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/README.md",
+    "title": "M&D 文档入口",
+    "category": "00 导航与现行基线",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/RUNBOOK.md",
+    "title": "M&D 运行、迁移与交付核对入口",
+    "category": "05 架构与UML",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/TECHNICAL_IMPROVEMENT_OUTLINE.md",
+    "title": "M&D Technical Improvement Outline",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/ai/CONTEXT.md",
+    "title": "当前项目快照",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/ai/DECISIONS.md",
+    "title": "重要决定与待确认项",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/ai/HOME_HANDOFF_2026_10_22.md",
+    "title": "家里 Codex 接手：服务器与 Android/iOS 公共 KMP",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/ai/README.md",
+    "title": "AI 工作跟踪与接手入口",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/ai/TASKS.md",
+    "title": "AI 任务状态表",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/ai/TASK_LOG.md",
+    "title": "AI 工作结果日志",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/bmad/PRODUCT_CLOSURE_AUDIT_2026_10_23.md",
+    "title": "M&D 产品、业务场景与编码实施闭环复审",
+    "category": "01 产品与UX",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/bmad/architecture.md",
+    "title": "M&D 系统架构与技术实施合同",
+    "category": "01 产品与UX",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/bmad/gate-check.md",
+    "title": "M&D 技术实施准入核对",
+    "category": "01 产品与UX",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/bmad/prd.md",
+    "title": "M&D 社区、领养与可信找猫 PRD",
+    "category": "01 产品与UX",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/bmad/research-report.md",
+    "title": "M&D 中国市场策略与产品判断",
+    "category": "01 产品与UX",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/bmad/ux-design.md",
+    "title": "M&D 社区、领养与可信找猫 UX 规格",
+    "category": "01 产品与UX",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/client/AGENT_HANDOFF.md",
+    "title": "Codex / Gemini 客户端协作交接",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md",
+    "title": "年龄与成年资格页面及接口（2026-10-25）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md",
+    "title": "全端公共页面实施进展（2026-10-24）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/AMAP_IMPLEMENTATION_2026_10_24.md",
+    "title": "高德原生与 Web 地图源码接入",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/AMAP_LOST_PET_ASSESSMENT_2026_10_24.md",
+    "title": "高德寻宠地图接入与成本评估",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/ANDROID_FEATURES_2026_10_22.md",
+    "title": "Android 手机与平板功能续作",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/ANDROID_PAGES_2026_10_23.md",
+    "title": "安卓手机与平板页面补齐",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/ANDROID_READ_STATES_2026_10_23.md",
+    "title": "Android 手机／平板读取状态补全 · 2026-10-23",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/ANDROID_REMAINING_2026_10_23.md",
+    "title": "Android 手机／平板与服务端闭环续作",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/COMPLETE_LANDING_2026_10_27.md",
+    "title": "全量落地任务：2026-10-27 执行恢复点",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/CURRENT_DELIVERY_STATUS_2026_10_23.md",
+    "title": "M&D 当前功能交付账本",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/DELIVERY_GUIDE_2026_10_25.md",
+    "title": "部署、打包与安装运行入口（2026-10-25）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/DEPENDENCY_BASELINE_2026_10_20.md",
+    "title": "KMP 客户端依赖升级基线",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+    "title": "默认主题、独立平板适配与验收",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/client/FEATURE_DELIVERY_MATRIX.md",
+    "title": "功能交付矩阵",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/client/FIGMA_ANDROID_WEB_2026_10_24.md",
+    "title": "Android／Web Figma 页面实施与验证边界",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/FIGMA_FLOW_CONTINUATION_2026_10_26.md",
+    "title": "发布来源流程与分享进入续作",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/FIGMA_PAGE_GAPS_2026_10_25.md",
+    "title": "Figma页面缺口核对与源码完善（2026-10-25）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/FIGMA_READING_PUBLICATIONS_2026_10_24.md",
+    "title": "Figma 独立页面续审与源码收口",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md",
+    "title": "监护邀请、关系核实与授权页面（2026-10-25）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/IMPLEMENTATION_PLAN.md",
+    "title": "客户端详细实施方案",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/client/MAINLAND_CITIES_AND_CAT_ASSETS_2026_10_26.md",
+    "title": "大陆城市兼容与猫咪配图",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/MOBILE_IMPLEMENTATION_2026_10_20.md",
+    "title": "Android / iOS 手机和平板实施记录",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/PAD_STATE_AND_UI_2026_10_23.md",
+    "title": "平板方向切换状态与UI组件续作",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/PLATFORM_REGISTRATION_2026_10_25.md",
+    "title": "开发者平台注册进度与接续（2026-10-25）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/PRIVATE_LEAD_FLOW_2026_10_26.md",
+    "title": "私密线索页面与目击者会话续作",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md",
+    "title": "官方登录与账号关联源码（2026-10-25）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/README.md",
+    "title": "M&D 客户端代码实施与完成标准",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/client/REMAINING_CODE_IMPLEMENTATION_2026_10_25.md",
+    "title": "剩余编码续作与实际边界（2026-10-25）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/SDK_OFFICIAL_ACCOUNT_CODE_2026_10_25.md",
+    "title": "SDK配置核对与公众号回调源码（2026-10-25）",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/SYNC_PAGES_ADMIN_2026_10_26.md",
+    "title": "远端同步、线索提交补页与后台管理设计",
+    "category": "03 客户端与交付",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/client/TASKS.md",
+    "title": "客户端代码任务拆分",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/client/UI_COMPONENTS.md",
+    "title": "Android UI 基础框架与组件维护规范",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/LEGAL_COMPLIANCE_REVIEW_2026_10_22.md",
+    "title": "M&D 法律与合规补充复审",
+    "category": "02 设计规范与合同",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/MND_CITY_SPECIES_AND_CONTRACT_TEMPLATES.md",
+    "title": "M&D 武汉／上海双城分物种准入、四方标准协议与运营 SOP 草案",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_CLIENT_INTERACTION_SPEC.md",
+    "title": "M&D 客户端交互交接索引",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_COLD_START_LOST_PETS_AND_AUTH_SPEC.md",
+    "title": "M&D 冷启动、走失互助与登录规则增补",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_DESIGN_MEMORY.md",
+    "title": "M&D Design Memory",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+    "title": "M&D 设计交接索引",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_FIGMA_STUDY_BRIEF.md",
+    "title": "M&D 新视觉与 Figma 学习稿",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+    "title": "M&D 全局未读与消息中心设计",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md",
+    "title": "M&D 法律复审对应设计增补",
+    "category": "02 设计规范与合同",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/MND_LOGIC_FLOW_CONTRACT.md",
+    "title": "M&D 六处操作与状态合同",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_MOBILE_AUTH_PLAN.md",
+    "title": "M&D 手机登录、注册与快捷登录规划",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md",
+    "title": "M&D 业务闭环与交互补全合同",
+    "category": "02 设计规范与合同",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/MND_PRODUCT_DESIGN_SPEC_AND_AUDIT.md",
+    "title": "M&D 2026-08 产品设计与 UX / 无障碍历史审计",
+    "category": "02 设计规范与合同",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/MND_SAFETY_AND_LIFECYCLE_SPEC.md",
+    "title": "M&D 安全、年龄与业务生命周期合同",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_STITCH_AI_RULES.md",
+    "title": "M&D Stitch AI Rules",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_TRUST_AND_DISCLOSURE_SPEC.md",
+    "title": "M&D 真实性、披露与预约规范",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/MND_UI_ALIGNMENT_GUIDE.md",
+    "title": "M&D UI Alignment Guide",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/PRODUCT_COMPLIANCE_FIGMA_AUDIT_2026_10_21.md",
+    "title": "M&D 产品、合规与 Figma 审查",
+    "category": "02 设计规范与合同",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/PROJECT_OVERVIEW_DECK_CONTENT.md",
+    "title": "M&D 项目概览幻灯片内容 (Figma Slides Deck)",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/SPRINT_PLANNING_BOARD.md",
+    "title": "M&D 敏捷看板与排期大纲 (FigJam Sprint Board)",
+    "category": "02 设计规范与合同",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/BUTTON_COMPARISON_BRIEF.md",
+    "title": "手机按钮方向 01 / 02",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md",
+    "title": "全流程跨端布局与状态契约",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/CROSS_PLATFORM_COVERAGE_AUDIT_2026_10_20.md",
+    "title": "新增平台适配缺项核对",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/CROSS_PLATFORM_FULL_COMPLETION_PLAN.md",
+    "title": "全量跨端补齐执行记录",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/CROSS_PLATFORM_FULL_MAPPING.md",
+    "title": "全量跨端逐项映射",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/CROSS_PLATFORM_FULL_REVIEW_2026_10_20.md",
+    "title": "全量跨端设计交接",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/CROSS_PLATFORM_LIGHT_PLAN.md",
+    "title": "M&D 浅色跨端设计计划",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/CROSS_PLATFORM_LIGHT_REVIEW_2026_10_20.md",
+    "title": "M&D 浅色跨端设计评审",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/DESIGN_CLOSURE_2026_10_21.md",
+    "title": "产品与合规设计完善交接",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/EXPRESSION_ASPECT_2026_10_23.md",
+    "title": "表情比例修正 · 2026-10-23",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/FIGMA_CANVAS_LAYOUT_2026_10_22.md",
+    "title": "Figma 画布排版整理 · 2026-10-22",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md",
+    "title": "Figma 设计台账与产品文档全量对齐核查（2026-10-24）",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/FRIENDLY_DIRECTION_BRIEF.md",
+    "title": "清爽亲切 · 手机关键页应用",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/FRIENDLY_MOBILE_ROLLOUT.md",
+    "title": "手机 V2 · Friendly 全量统一",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/GLOBAL_UNREAD_HANDOFF_2026_10_20.md",
+    "title": "全局未读设计交接",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/INTERACTION_AND_EXPRESSION_REFINEMENT.md",
+    "title": "M&D 手机互动图标与表情修订",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/LEGAL_DESIGN_HANDOFF_2026_10_22.md",
+    "title": "M&D 法律设计增补交接",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/LOGIC_AND_DESIGN_REVIEW_2026_10_21.md",
+    "title": "M&D 逻辑与设计完整性复审",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/LOGIC_FIX_HANDOFF_2026_10_21.md",
+    "title": "六处逻辑修订交接",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md",
+    "title": "M&D 手机端 Figma 本轮评审",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/MOBILE_V2_BRIEF.md",
+    "title": "M&D 手机主版本 V2 · 中国大陆使用场景",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/NAVIGATION_DOC_2026_10_23.md",
+    "title": "Figma导航与规范补全 · 2026-10-23",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/NIGHT_DESIGN_BRIEF.md",
+    "title": "M&D 四端黑夜版 · Design 创作清单",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/PAD_PREVIEW_2026_10_22.md",
+    "title": "平板横竖屏原型预览优化 · 2026-10-22",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/PET_FRIENDS_CIRCLE_BRIEF.md",
+    "title": "M&D 宠友圈 · 手机设计方案",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/PET_FRIENDS_CIRCLE_IMAGE_PROMPT.md",
+    "title": "宠友圈四屏视觉稿提示",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/PET_LOST_LINKAGE_BRIEF.md",
+    "title": "M&D 自有宠物走失联动 · 手机设计方案",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/PET_LOST_LINKAGE_IMAGE_PROMPT.md",
+    "title": "走失联动四屏视觉稿提示",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/README.md",
+    "title": "M&D Figma 学习稿交接",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/REMOTE_FIGMA_CHECK_2026_10_21.md",
+    "title": "远端 Figma 整体展示核对",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/SOCIAL_CHAT_DESIGN_PLAN.md",
+    "title": "M&D 晒宠、互动、私信与群聊设计计划",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/SOCIAL_CHAT_HANDOFF.md",
+    "title": "M&D 手机社交与聊天交接",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/WECHAT_STYLE_EXPRESSION_INTERACTION.md",
+    "title": "M&D 手机表情与贴纸底部交互",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/admin-2026-10-26/README.md",
+    "title": "M&D 业务后台管理设计",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/adoption-implementation-2026-10-27/README.md",
+    "title": "领养、试养、交接与接回：2026-10-27",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/appointment-implementation-2026-10-27/README.md",
+    "title": "预约状态设计读取：2026-10-27",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/assets/README.md",
+    "title": "学习稿示意素材",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/assets/auth-providers/README.md",
+    "title": "快捷登录矢量位置稿",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/assets/mnd-cat-stickers-prompt.md",
+    "title": "M&D 猫咪贴纸生成记录",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/assets/noto-emoji/NOTICE.md",
+    "title": "Noto Emoji artwork attribution",
+    "category": "06 设计审计与历史",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/audits/2026-10-16-mobile-readiness/MOBILE_READINESS_AUDIT.md",
+    "title": "M&D 普通手机版设计完整度审计",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/audits/2026-10-19-mobile-docs/MOBILE_DOC_COVERAGE_AUDIT.md",
+    "title": "M&D 手机端产品／设计文档覆盖复核",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/audits/2026-10-21-doc-design-consistency/REVIEW.md",
+    "title": "文档与新版设计一致性审查",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/operator-implementation-2026-10-27/README.md",
+    "title": "业务后台设计到代码：2026-10-27",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/ops-2026-10-25/README.md",
+    "title": "M&D 后台运维设计 · 2026-10-25",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/design/figma-study/publish-button-2026-10-26/README.md",
+    "title": "Web 导航发布按钮设计",
+    "category": "06 设计审计与历史",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/figma-sync/README.md",
+    "title": "M&D Figma文档与图谱同步",
+    "category": "00 导航与现行基线",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/server/ADOPTION_CLOSURE_2026_10_23.md",
+    "title": "产品闭环修订与领养源码跟进",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/ARCHITECTURE.md",
+    "title": "M&D Go 服务架构决策",
+    "category": "04 服务端与API",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/server/CLIENT_READINESS_2026_10_20.md",
+    "title": "Android / iOS 接入前服务端核对",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/LIFECYCLE_RETENTION_2026_10_23.md",
+    "title": "案件证据与数据清理续作",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/MOBILE_SERVER.md",
+    "title": "手机端对应的 Go 服务接口与运行交接",
+    "category": "04 服务端与API",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "docs/server/OPERATIONS_CONSOLE_2026_10_25.md",
+    "title": "M&D 技术运维控制台 · 2026-10-25",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/PRIVATE_LEAD_CONTRACT_2026_10_26.md",
+    "title": "私密线索处理与独立会话合同",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md",
+    "title": "M&D / meow & doggie 服务端完整性审计与待完善清单（2026-10-24，2026-10-25 复核更新）",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/SERVER_FIRST_2026_10_23.md",
+    "title": "服务端优先完善与作业交接",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md",
+    "title": "服务端与KMP共享源码实施记录",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/SOURCE_DECLARATIONS_2026_10_26.md",
+    "title": "独立来源声明合同与存储",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/UPLOAD_RECOVERY_2026_10_22.md",
+    "title": "上传落盘、进程恢复与过期回收续作",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/server/V2_RELEASE_RUNBOOK_2026_10_23.md",
+    "title": "M&D v2 部署、运营与恢复交接手册",
+    "category": "04 服务端与API",
+    "status": "带日期／历史证据，按原日期解释"
+  },
+  {
+    "path": "docs/uml/README.md",
+    "title": "M&D UML与业务图谱",
+    "category": "05 架构与UML",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "internal/platform/mobileapi/assets/v1/NOTICE.md",
+    "title": "Noto Emoji artwork attribution",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "internal/region/README.md",
+    "title": "中国大陆城市目录",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "kmp/androidApp/src/main/assets/fonts/NOTICE.md",
+    "title": "移动端字体来源",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/README.md",
+    "title": "Android 手机／平板原生宿主",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "kmp/clientUi/README.md",
+    "title": "M&D 公共页面与组件",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "kmp/clientUi/src/commonMain/composeResources/files/emoji/NOTICE.md",
+    "title": "Noto Emoji artwork attribution",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "kmp/ios/README.md",
+    "title": "iOS 入口",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "kmp/iosApp/README.md",
+    "title": "M&D iPhone／iPad Compose宿主",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "mobile/README.md",
+    "title": "M&D Mobile",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "web-client/README.md",
+    "title": "M&D Web 消费端",
+    "category": "03 客户端与交付",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "web/assets/stitch-remote/sources/11388975682457720262.md",
+    "title": "M&D Global DESIGN.md",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  },
+  {
+    "path": "web/assets/stitch-remote/sources/1187049162856747640.md",
+    "title": "M&D Global DESIGN.md",
+    "category": "07 AI跟踪与仓库说明",
+    "status": "现行入口或持续维护规范；正文历史段落按日期解释"
+  }
+]

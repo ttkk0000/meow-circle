@@ -1,55 +1,23 @@
 @startuml 08-adoption-exclusivity-contract-and-return-state
 !theme plain
-skinparam backgroundColor #FFFDF9
-skinparam defaultFontName "PingFang SC, Inter, sans-serif"
-skinparam roundcorner 8
-skinparam StateBorderColor #D8CFC4
-skinparam StateBackgroundColor #FFFFFF
-skinparam ArrowColor #5C534E
+skinparam defaultFontName "Noto Sans SC"
+skinparam shadowing false
+title 领养、试养、交接与安全接回状态
 
-title F07 Adoption Pet-Level Trial Exclusivity, Contract Revision & Bilateral Return State Machine
-
-state "Adoption Listing & Pet Cycle (mobile_adoption_listings)" as ListingSM {
-  [*] --> DraftListing : Owner creates listing\n(adoption_cycle = 1)
-  DraftListing --> PublishedOpen : Publish listing\n(Qualification + Care Eligibility verified)
-
-  state "PublishedOpen\n(Accepting Applications)" as PublishedOpen
-  state "TrialActive\n(Pet-Level Exclusive Lock:\nOnly 1 active trial per pet_id)" as TrialActive
-  state "AdoptedCompleted\n(Contract Signed & Handover Confirmed)" as AdoptedCompleted
-  state "ReturnedRelisted\n(adoption_cycle + 1:\nPrior applications archived)" as ReturnedRelisted
-
-  PublishedOpen --> TrialActive : Owner selects 1 applicant for Trial\n[SERIALIZABLE check: 0 other active trials for pet_id]\nOther pending applicants -> Waitlisted
-  TrialActive --> PublishedOpen : Trial cancelled before handover\n[Waitlisted applicants restored to Submitted]
-  TrialActive --> AdoptedCompleted : Both parties accept latest Contract Revision\n& confirm Trial Completion
-  AdoptedCompleted --> ReturnedRelisted : Bilateral Return Proposal accepted\n[increments adoption_cycle = cycle + 1]
-  ReturnedRelisted --> PublishedOpen : Owner re-opens listing for new cycle
-}
-
-state "Adoption Application & Contract Lifecycle (mobile_adoption_applications)" as AppSM {
-  [*] --> Submitted : Applicant submits with Reauth\n(bound to listing.adoption_cycle)
-  Submitted --> UnderReview : Owner opens review
-  Submitted --> Waitlisted : Another applicant enters TrialActive\nfor same pet_id
-  UnderReview --> Waitlisted : Another applicant enters TrialActive
-  Waitlisted --> UnderReview : Active trial cancelled
-
-  UnderReview --> SelectedForTrial : Owner selects applicant\n(Acquires pet_id trial lock)
-
-  state SelectedForTrial {
-    [*] --> ContractDrafting
-    ContractDrafting --> ContractRevisionPending : Owner/Applicant proposes\nContract Revision (rev_no++)
-    ContractRevisionPending --> ContractRevisionPending : Counter-revision proposed\n(invalidates prior unaccepted rev_no)
-    ContractRevisionPending --> ContractAccepted : Counterparty accepts exact\nlatest rev_no with Reauth
-  }
-
-  SelectedForTrial --> CompletedAdopted : Handover & trial period confirmed
-
-  state "Post-Adoption Bilateral Return Sub-State" as ReturnSM {
-    CompletedAdopted --> ReturnProposed : Either Owner or Adopter submits\nReturn Proposal (with reason & 72h expiry)
-    ReturnProposed --> CompletedAdopted : Proposer withdraws proposal\nOR 72h deadline expires (cmd/worker)\nOR counterparty declines
-    ReturnProposed --> ReturnedClosed : Counterparty accepts Return Proposal\n(triggers listing adoption_cycle++)
-  }
-
-  Submitted --> WithdrawnOrArchived : Applicant withdraws OR\nlisting enters new adoption_cycle
-}
-
+[*] --> submitted
+submitted --> approved : 发布者批准
+approved --> trial_proposed : 已有同版生效协议
+trial_proposed --> trial_active : 双方同版确认并锁宠物
+trial_proposed --> approved : 拒绝试养
+trial_active --> handover_pending : 交接确认尚未齐全
+approved --> handover_pending : 同版协议及交接核对
+handover_pending --> completed : 双方确认
+trial_active --> return_requested : 请求接回
+handover_pending --> return_requested : 请求接回
+return_requested --> return_agreed : 同版方案双确认为effective
+return_agreed --> returned : 双方实际交接
+note right of return_requested : 拒绝／撤回／过期不等于实际接回
+方案历史与领养记录状态分开
+note right of trial_active : 同pet_id与adoption_cycle排他；其它申请进入候补
+完整拒绝、撤回、补充等支路见rescue.go
 @enduml

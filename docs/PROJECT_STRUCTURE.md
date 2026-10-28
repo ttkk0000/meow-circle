@@ -1,260 +1,50 @@
-# Project Structure
+# M&D 项目结构与源码入口
 
-Last updated: 2026-10-25
+更新：2026-10-27。以[现行基线](CURRENT_BASELINE.md)、[产品交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)和[文档目录](DOCUMENTATION_CATALOG.md)为准；本文仅记录源码与执行条件，不表示运行通过。
 
-This document maps the real repository structure for M&D (`meow & doggie`). It is meant for
-engineers and future agents who need to understand where both the current **v2 modular monolith / multi-platform clients** and the legacy v1 surfaces live before editing.
+## 当前V2结构
 
-> **Architecture & UML Reference**: See [`docs/CODE_LOGIC_AND_UML_REFERENCE.md`](CODE_LOGIC_AND_UML_REFERENCE.md) and the standalone PlantUML diagrams in [`docs/uml/`](uml/README.md) (especially [`01-system-component-architecture.puml`](uml/01-system-component-architecture.puml), [`02-kmp-mvi-and-clientui-class-diagram.puml`](uml/02-kmp-mvi-and-clientui-class-diagram.puml), [`03-server-domain-and-service-class-diagram.puml`](uml/03-server-domain-and-service-class-diagram.puml), and [`04-database-er-schema.puml`](uml/04-database-er-schema.puml)).
+| 路径 | 职责 | 维护边界 |
+|---|---|---|
+| cmd/server/main.go | HTTP进程入口 | 组装服务、配置与退出处理 |
+| cmd/worker/main.go | 单个具名job的有限批次／显式循环 | 默认once=true，检查点与业务回执分开 |
+| internal/platform/api | 服务组装、静态站与v1兼容入口 | NewRouterWithError；生产配置失败应报错 |
+| internal/platform/mobileapi | V2 HTTP、浏览器会话、具名后台、地图代理 | Cookie／Origin／CSRF、权限、错误码与X-Request-ID |
+| internal/identity | 认证、会话、资格、年龄与监护 | 登录与互动资格分开 |
+| internal/mobile | 领域模型、Repository／Tx与各业务命令 | 无SQL、HTTP或SDK依赖；45种Kind |
+| internal/store/postgres | pgx与真实SQL存储 | 只读REPEATABLE READ、写SERIALIZABLE、版本CAS |
+| internal/platform/mobileauth | 外部认证、年龄、推送等适配器 | 未配置能力不可伪装成功 |
+| internal/platform/mobileworker | Worker HTTP客户端、检查点与租约 | 按命名作业权限请求，失败保留恢复 |
+| internal/region | 大陆城市版本化目录与兼容查询 | 城市目录不授予业务准入 |
+| migrations | 001–013 SQL及独立backfill | 依序迁移；008含10表动态SQL |
+| kmp/shared/.../client | 28份公共Kotlin文件 | MVI、API、DTO、草稿、原请求和恢复 |
+| kmp/clientUi | 41份公共Compose文件、48个FeaturePage | Android／iOS／Desktop共用；自适应与系统能力端口分开 |
+| kmp/androidApp/.../mobile | Android手机／平板宿主 | API26–37；系统相册、地图、登录与通知桥接 |
+| kmp/iosUi 与 kmp/iosApp/ComposeApp | Compose页面与Swift系统宿主 | 地图、官方认证、Keychain及系统能力桥接 |
+| kmp/desktopApp | Compose Desktop宿主 | 系统文件、钥匙串、浏览器能力与窗口 |
+| web-client | React DOM消费端及两个独立后台 | /app、/app/operator、/app/ops |
+| deploy 与 docs/client/DELIVERY_GUIDE_2026_10_25.md | 交付模板、脚本和手册 | 真实构建／签名／部署未执行 |
+| docs/api、docs/uml、docs/figma-sync | API、图谱源和Figma同步追踪 | 文档与源码／运行证据分别记账 |
 
-## 0. Current v2 Directory Additions (2026-10-25 Baseline)
+## 旧端与设计资料
 
-```text
-meow-circle/
-├── cmd/
-│   ├── server/                  # Main HTTP server (/api/v2: 241 paths / 271 operations / 123 schemas, /maps/amap/_AMapService/, /app/, public safety/share pages, legacy /api/v1)
-│   └── worker/                  # Standalone v2 background worker (push, nearby_alerts, content_updates, privacy_cleanup, provider_revocations, maintenance)
-├── internal/
-│   ├── identity/                # v2 3-identifier auth, OTP, OAuth/Provider create-vs-link, external age assurance, 15m guardian invites, adult claims, session rotation, eligibility & reauth grants
-│   ├── mobile/                  # v2 domain facade (44 aggregate kinds, adoption placement, appointment admission, lost-pet coarse GCJ-02/WGS-84 map, evidence retention, comments/reactions, outbox)
-│   ├── platform/
-│   │   ├── mobileapi/           # v2 HTTP handlers, browser Cookie/CSRF adapter, browser provider OAuth start/callback, Amap reverse proxy, guardian invite & adult claim routes, reading/publications, media privacy, worker job endpoints
-│   │   ├── mobileauth/          # SMS, Email OTP, WeChat, QQ, Apple Sign-In/revocation, and external Age Assurance HMAC gateway adapters
-│   │   └── mobileworker/        # Worker HTTP client and durable SHA-256 checkpoint state manager
-│   └── store/postgres/mobile.go # PostgreSQL SERIALIZABLE repository & schema verifier for 005..009
-├── migrations/
-│   ├── 001..004_*.sql           # Core users and legacy v1 tables
-│   ├── 005_mobile_auth_identities.sql
-│   ├── 006_identity_eligibility.sql
-│   ├── 007_mobile_modules.sql   # 32 core mobile_* aggregate tables
-│   ├── 008_mobile_policy_commands.sql # 10 policy/grant/contract/hold/operation/data-request tables
-│   └── 009_pet_discussions.sql  # 2 pet comment & comment reaction tables (total 44 mobile_* tables)
-├── kmp/
-│   ├── shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ # 16 files: MviStore base, MobileStore, MobileFeatureStore (42 FeaturePages), SensitiveActionStore, ProviderAuthStore, AgeAssuranceStore, GuardianInviteStore, LostMap, 74 DTO pairs
-│   ├── clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ # 34 common Compose UI files shared across Android, iOS, and Desktop (ConsumerApp, FeaturePages, PageComponents, StatusComponents, ClientUiPlatform)
-│   ├── androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/ # v2 Android phone & tablet host (API 26..37, MobileMviViewModel, AndroidClientPlatform, AndroidNativeMap AMap 3D SDK, AndroidProviderAuth, WXEntryActivity)
-│   ├── iosUi/                   # Compose Multiplatform for iOS UI host (IosClientPlatform, IosNativeMap, IosProviderAuth)
-│   ├── iosApp/ComposeApp/       # Thin iOS Swift host (AmapNativeMap.swift MAMapView, NativeProviderAuth.swift ASAuthorization/WXApi/TencentOAuth)
-│   └── desktopApp/              # Compose Desktop client (JVM 21, DesktopClientPlatform, DesktopStorage java-keyring 1.0.4 + AES-256-GCM, LostMapScreen browser handoff)
-├── web-client/                  # Standalone v2 React + TypeScript + Vite consumer web app (/app/* Cookie+CSRF, AmapView JS API 2.0) & isolated Operator Workbench (/app/operator credentials: 'omit')
-└── docs/uml/                    # 12 standalone PlantUML (.puml) architecture, class, ER, sequence, and state machine diagrams
-```
+web/为旧静态站、API v1兼容页面和Stitch镜像设计板；mobile/为旧Expo；KMP legacy Stitch组件仍保留兼容。它们不自动等于当前V2功能完成，也不能覆盖已批准Figma V2默认浅色。旧主题、存储键和命名按原兼容边界维护，不随文档清理重命名。
 
-> See [Code Logic & UML Reference](CODE_LOGIC_AND_UML_REFERENCE.md), [Server Completeness Audit (2026-10-24)](server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md), and [Client README](client/README.md) for current verification boundaries.
+## 存储选择与迁移
 
-## 1. High-Level Shape
+DATABASE_URL在非development环境必需；已配置PostgreSQL连接失败或Schema不完整时返回错误，不能假定回退内存。仅development且未配置数据库时使用内存；Redis不可用可回退直连PostgreSQL。V2内存使用另受MND_ALLOW_MEMORY_MOBILE条件约束。依据internal/platform/api/router.go的buildStore与相关配置。
 
-```text
-meow-circle/
-├── cmd/server/                  # Go process entry
-├── internal/                    # Go domain, API, auth, store, payment, audit
-├── migrations/                  # PostgreSQL schema migrations
-├── web/                         # Static Web app, WebUI prototype, design boards
-├── mobile/                      # Expo / React Native app
-├── kmp/                         # Kotlin Multiplatform SDK + Android Compose app
-├── docs/                        # Project, design, handoff, and implementation docs
-├── scripts/                     # Utility scripts
-├── Caddyfile                    # Caddy reverse proxy config
-├── Dockerfile                   # Production Go server image
-├── docker-compose.yml           # Local Postgres + Redis
-├── Makefile                     # Common local commands
-└── AGENTS.md                    # Agent memory for M&D design direction
-```
+Docker首次初始化挂载至013；已有数据库不会自动应用新增SQL。精确迁移名称见[基线](CURRENT_BASELINE.md)，不再沿用旧文档中不存在的005_mobile_auth_identities.sql或006_identity_eligibility.sql。
 
-The backend is intentionally framework-light: standard-library `net/http`,
-manual routing with `http.ServeMux`, plain Go interfaces for persistence, and
-static files served from `web/`.
+## 按任务进入
 
-## 2. Runtime Entry Points
+| 要改什么 | 先读 | 对应源码 |
+|---|---|---|
+| V2业务字段／接口 | API_CATALOG、OpenAPI与代码逻辑手册 | internal/mobile、mobileapi、shared／Web派生合同 |
+| 认证、年龄、监护 | 认证与安全合同 | internal/identity、资格模块和专业Store |
+| UI页面或布局 | Figma原稿、跨端合同与UI组件规范 | clientUi及各宿主、web-client |
+| 业务后台或运维 | 各自合同与设计交接 | web-client/src/operator、ops及具名服务端合同 |
+| 数据库或Worker | DATA_DICTIONARY、迁移与运行手册 | postgres、mobileworker、jobs |
+| 文档与图谱 | CURRENT_BASELINE、DOCUMENTATION_CATALOG | docs/uml与figma-sync |
 
-| Runtime | Entry | Main Responsibility |
-| --- | --- | --- |
-| Go server | `cmd/server/main.go` | Creates `http.Server`, sets timeouts and connection guard, installs `api.NewRouter()`, handles graceful shutdown. |
-| API router | `internal/platform/api/router.go` | Builds store, auth, payment, moderation, CORS, static file serving, and `/api/v1/*` routes. |
-| Static Web | `web/index.html` | Public feed/home, loading static assets and API scripts. |
-| WebUI prototype | `web/cute.html` | Independent M&D browser product prototype. |
-| Design boards | `web/pawpop.html`, `web/pawpop-mobile.html`, `web/pawpop-desktop.html` | Figma-ready source boards for the three UI sets. |
-| Expo app | `mobile/app/_layout.tsx` | Root Expo Router layout and auth provider. |
-| KMP Android | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt` | Android Compose host for `MeowApp`. |
-| KMP Desktop | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/Main.kt` | Compose Desktop client aligned to the Stitch V2 desktop direction. |
-| KMP shared SDK | `kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/MeowCircleSdk.kt` | Shared Kotlin HTTP/session client mirroring the Go API envelope. |
-
-## 3. Backend Layers
-
-| Layer | Path | Notes |
-| --- | --- | --- |
-| Domain | `internal/domain/models.go` | Core JSON/domain models: `User`, `Post`, `Comment`, `Listing`, `Media`, `Report`, `Order`, `Notification`, `Message`, `Conversation`, `AuditLog`. |
-| API | `internal/platform/api` | Route handlers, auth middleware, CORS, JSON envelope, file upload, search, messages, orders, reports, admin. |
-| Auth | `internal/platform/auth` | PBKDF2 password hashing, HS256 JWT, login rate limiting. |
-| Phone OTP | `internal/platform/phoneotp` | In-memory SMS code store for registration verification. |
-| Audit filter | `internal/platform/audit` | Keyword moderation before posts/listings/comments/messages are accepted. |
-| Payment | `internal/platform/payment` | Provider interface with Mock default and Alipay/WeChat/Stripe stubs enabled by env vars. |
-| Store interface | `internal/store/store.go` | The fat `Store` interface used by every API handler. |
-| Memory store | `internal/store/memory.go` | Default no-dependency development backend. |
-| PostgreSQL store | `internal/store/postgres` | `pgx/v5` implementation, split by table/capability. |
-| Redis cache | `internal/store/cache` | Read-through decorator for selected read-heavy endpoints. |
-
-### API Module Map
-
-| File | Owns |
-| --- | --- |
-| `internal/platform/api/router.go` | Router construction, CORS, auth helpers, static file serving, store/payment setup, core auth handlers. |
-| `internal/platform/api/feed.go` | Post feed/detail/create/update/delete, comments, likes, listings basics. |
-| `internal/platform/api/search.go` | Cross-post/listing search endpoint. |
-| `internal/platform/api/media.go` | Multipart upload, media metadata, upload file cleanup. |
-| `internal/platform/api/message.go` | Conversations and direct messages. |
-| `internal/platform/api/notification.go` | Notification list and read state. |
-| `internal/platform/api/order.go` | Order lifecycle and payment dispatch. |
-| `internal/platform/api/report.go` | User reports and admin moderation queues/actions. |
-| `internal/platform/api/audit.go` | Admin audit log listing. |
-| `internal/platform/api/profile.go` | Current user profile update and public profile lookup. |
-| `internal/platform/api/me_follow.go` | Follow/unfollow behavior and related current-user helpers. |
-| `internal/platform/api/api_test.go` | API-level test coverage. |
-
-### Store Module Map
-
-| File | Owns |
-| --- | --- |
-| `internal/store/store.go` | Store interface contract. |
-| `internal/store/memory.go` | In-memory implementation for local/dev tests. |
-| `internal/store/postgres/postgres.go` | pgx pool setup and shared helpers. |
-| `internal/store/postgres/users.go` | User persistence. |
-| `internal/store/postgres/posts.go` | Post persistence. |
-| `internal/store/postgres/comments.go` | Comment persistence. |
-| `internal/store/postgres/listings.go` | Listing persistence. |
-| `internal/store/postgres/media.go` | Media persistence. |
-| `internal/store/postgres/reports.go` | Report persistence. |
-| `internal/store/postgres/orders.go` | Order persistence. |
-| `internal/store/postgres/notifications.go` | Notification persistence. |
-| `internal/store/postgres/messages.go` | Message/conversation persistence. |
-| `internal/store/postgres/social.go` | Likes and follows. |
-| `internal/store/postgres/audit.go` | Audit log persistence. |
-| `internal/store/cache/cache.go` | Redis read-through cache decorator and cache eviction. |
-| `internal/store/postgres/integration_test.go` | Postgres and optional Redis integration tests. |
-
-### Store Selection
-
-`api.buildStore()` chooses persistence from environment variables:
-
-| Env | Store Kind |
-| --- | --- |
-| no `DATABASE_URL` | `memory` |
-| `DATABASE_URL` only | `postgres` |
-| `DATABASE_URL` + `REDIS_URL` | `postgres+redis` |
-
-If PostgreSQL is unavailable, the server falls back to memory. If Redis is
-unavailable, it falls back to direct PostgreSQL.
-
-## 4. Database And Migrations
-
-| File | Adds |
-| --- | --- |
-| `migrations/001_init.sql` | Users, posts, comments, listings, media, reports, orders, notifications, messages, audit logs. |
-| `migrations/002_social.sql` | Post likes and follows. |
-| `migrations/003_user_phone.sql` | Normalized user phone and unique index for non-empty phones. |
-| `migrations/004_notifications_actor_image.sql` | Notification actor metadata and image preview URL. |
-
-`docker-compose.yml` mounts all four migrations into the Postgres container's
-`docker-entrypoint-initdb.d` directory for first boot. `make migrate` applies the
-same migrations manually to an existing database.
-
-## 5. Web Directory Map
-
-| Area | Files | Purpose |
-| --- | --- | --- |
-| Base Web app | `index.html`, `app.js`, `theme.css`, `styles.css`, `shared.js` | Public feed/home, i18n/theme helpers, shared tokens. |
-| M&D bridge | `stitch-theme-bridge.css`, `tw-stitch.js`, `stitch-toast.css` | Maps existing Tailwind/static pages onto M&D tokens and toast behavior. |
-| Auth | `login.html`, `register.html`, `auth.js` | Login/register pages with return-to behavior. |
-| Content | `discover.html/js`, `compose.html/js`, `post.html/js` | Circles, post creation, post detail/comment/report. |
-| Marketplace | `market.html/js` | Listing browsing with M&D static fallback. |
-| Messages/profile | `messages.html/js`, `profile.html/js` | Demo-safe conversations and profile background customization. |
-| User workbench | `dashboard.html/js/css` | Logged-in creator/seller/admin-adjacent workspace. |
-| Platform admin | `admin.html/js/css` | `X-Admin-Key` protected moderation and audit tools. |
-| Architecture page | `architecture.html/js/css`, `architecture-data.json` | Visual system/API architecture reference page. |
-| WebUI prototype | `cute.html`, `cute-ui.css`, `cute-ui.js` | Independent browser product design and implementation target. |
-| Design boards | `pawpop.html`, `pawpop-mobile.html`, `pawpop-desktop.*`, `mnd-web-client-board.*`, `stitch-remote-gallery.html` | Current Stitch V2 overview, mobile, desktop, sync, and gallery boards. |
-| Stitch remote assets | `assets/stitch-remote/screens`, `assets/stitch-remote/sources` | Browser-visible full-size Stitch screenshots and HTML/SVG/Markdown sources. |
-
-## 6. Expo Mobile Map
-
-| Area | Files | Purpose |
-| --- | --- | --- |
-| App metadata | `mobile/app.json` | Visible app name, slug, icon/splash config. |
-| Router | `mobile/app` | Expo Router file routes: auth stack, tabs, nested messages/post routes. |
-| Auth | `mobile/src/auth.tsx` | `AuthProvider`, login/register/logout state. |
-| API client | `mobile/src/api.ts` | Typed fetch client, token storage, media URL resolution, API envelope unwrap. |
-| Theme | `mobile/src/theme.ts` | M&D mobile colors, radius, typography, spacing, elevations. |
-| Shared UI | `mobile/src/components.tsx` | Screen, Card, Button, Input, Txt, Pill, M&D loader. |
-| Stitch-era components | `mobile/src/stitch/*` | Reused components now visually aligned to M&D. Internal names may remain for compatibility. |
-
-The Expo app stores tokens under `meow.auth.token` / `meow.auth.user` through
-SecureStore, falling back to `localStorage` on Web.
-
-## 7. KMP Map
-
-| Area | Files | Purpose |
-| --- | --- | --- |
-| Shared SDK | `kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle` | Ktor client, session store, models, API envelope, humanized failures. |
-| Android app | `kmp/androidApp` | Compose Android app using the shared SDK. |
-| Android theme | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/theme` | M&D palette, typography, shapes, shadows. |
-| Android UI | `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/ui` | Splash, login, register, feed, compose, post detail. |
-| Desktop app | `kmp/desktopApp` | Compose Desktop app using the shared SDK and Stitch V2 desktop refs. |
-| Desktop theme | `kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/MndDesktopTheme.kt` | Honey, Mint, Night, and Neutral desktop tokens. |
-| iOS note | `kmp/ios/README.md` | Guidance for future SwiftUI/iOS integration around the shared SDK. |
-
-KMP versions are centralized in `kmp/gradle/libs.versions.toml`:
-
-- Kotlin `2.0.21`
-- Android Gradle Plugin `8.7.2`
-- Ktor `3.0.3`
-- Compose BOM `2024.10.01`
-- Compose Multiplatform `1.7.3`
-
-## 8. Infra And Commands
-
-| File / Command | Purpose |
-| --- | --- |
-| `Makefile` | `make run`, `make test`, `make up`, `make migrate`, mobile helpers, Docker helpers. |
-| `docker-compose.yml` | Local Postgres 16 and Redis 7. |
-| `Dockerfile` | Multi-stage Go build into distroless nonroot runtime. |
-| `Caddyfile` | Public `:80` Caddy reverse proxy to Go on `127.0.0.1:8080`. |
-| `SECURITY.md` | Security advisory routing. |
-| `.github/workflows` | CI workflows, if enabled in GitHub. |
-
-See `docs/RUNBOOK.md` for environment variables, local modes, deployment notes,
-and current machine-specific blockers.
-
-Useful local commands for static UI review:
-
-```bash
-cd web && python3 -m http.server 4173
-```
-
-Do not run Gradle or Go build/run/test commands on this machine. Ask before
-running any broad verification command.
-
-## 9. Naming And Legacy Boundaries
-
-The product is now M&D. Some internal names remain for compatibility:
-
-- Go module is still `kitty-circle`.
-- Old Web design references and stale Stitch export maps have been removed.
-- Some component/file names still include `Stitch`.
-- Existing auth storage keys remain `meow_token` / `meow_user` on Web and
-  `meow.auth.*` on mobile.
-
-Do not rename these casually. Rename only when route/package/API compatibility
-has been checked.
-
-## 10. Where To Start For Common Tasks
-
-| Task | Start Here |
-| --- | --- |
-| Add or change API route | `internal/platform/api/router.go`, then relevant API module file. |
-| Add a domain field | `internal/domain/models.go`, `internal/store/store.go`, memory store, Postgres store, migrations, clients. |
-| Change feed card shape/content | `internal/platform/api/feed.go`, `web/app.js`, `mobile/src/stitch/FeedTile.tsx`, KMP `FeedTileCard.kt`. |
-| Change auth behavior | `internal/platform/api/router.go`, `internal/platform/auth`, `web/auth.js`, `mobile/src/auth.tsx`, KMP `MeowCircleSdk.kt`. |
-| Change M&D visual tokens | `docs/design/MND_UI_ALIGNMENT_GUIDE.md`, then `web/stitch-theme-bridge.css`, `web/cute-ui.css`, `mobile/src/theme.ts`, KMP Android and Desktop theme files. |
-| Add new Web page | Add `.html` + `.js` + CSS if needed, route static file if pretty URL is needed, update `shared.js` i18n if visible copy is shared. |
-| Add mobile tab/screen | Add Expo route under `mobile/app`, extend API types if needed, reuse `mobile/src/components.tsx`. |
-| Add KMP screen | Add UI Composable under KMP Android or Desktop, add SDK method/model in `kmp/shared` if API access is needed. |
+本轮不运行上述入口。旧版详细目录与v1模块清单保存在Git历史；本页不再将过时路径、旧依赖版本或生产回退策略描述为现行事实。

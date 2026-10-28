@@ -1,79 +1,21 @@
 @startuml 05-auth-provider-and-account-linking-sequence
 !theme plain
-skinparam backgroundColor #FFFDF9
-skinparam defaultFontName "PingFang SC, Inter, sans-serif"
-skinparam roundcorner 8
-skinparam SequenceMessageAlign center
-skinparam ArrowColor #5C534E
+skinparam defaultFontName "Noto Sans SC"
+skinparam shadowing false
+title 显式登录、三方认证与绑定冲突边界
 
-title Unified Authentication, Official Provider Auth (WeChat/QQ/Apple) & Account Linking Sequence
-
-actor "User" as User
-participant "Client\n(MobileStore / ProviderAuthStore /\nWeb ProviderSignIn)" as Client
-participant "Native SDK / Browser Redirect\n(WXApi / TencentOAuth / ASAuth /\nBrowserProviderGateway)" as ProviderSdk
-participant "Go API\n(mobileapi.Handler /\nidentity.Service)" as Api
-participant "TencentApps & Apple Verifier\n(internal/platform/mobileauth)" as Verifier
-database "PostgreSQL\n(users / account_identities /\nuser_sessions / purpose_reauth_grants)" as Db
-
-== 1. Password / Phone OTP Explicit Sign-In (No Implicit SMS Auto-Registration) ==
-User -> Client : Enter Phone + OTP (or Username + Password)
-Client -> Api : POST /api/v2/auth/sign-in/phone (or /password)\n{phone, code, deviceName}
-Api -> Db : Verify auth_challenges (constant-time hash, attempts <= 5)\nLook up account_identities(provider='phone', subject_hash)
-alt Phone identity not registered
-  Db --> Api : ErrIdentityNotFound
-  Api --> Client : 404 {code: "account_not_found", message: "No implicit SMS signup; explicit registration required"}
-else Registered account found
-  Api -> Db : INSERT user_sessions (refresh_token_hash, expires_at)\nFetch user_qualification_status
-  Api --> Client : 200 AuthSessionResponse\n(Native: Bearer accessToken + refreshToken;\nWeb: Set-Cookie meow_v2_session + csrfToken)
-end
-
-== 2. Third-Party Provider Sign-In (Create vs Link Explicit Separation) ==
-User -> Client : Tap Sign In with WeChat / QQ / Apple
-alt Native Android / iOS
-  Client -> ProviderSdk : startSignIn(provider)\nInvoke WXEntryActivity / TencentOAuth / ASAuthorization
-  ProviderSdk --> Client : NativeProviderAuthResult(authorizationCode, idToken, state)
-  Client -> Api : POST /api/v2/auth/providers/{provider}/sign-in\n{authorizationCode, idToken, appVariant}
-else Web / Desktop Browser Redirect
-  Client -> Api : GET /api/v2/auth/providers/{provider}/browser/start?mode=sign_in&returnTo=/app/profile
-  Api --> ProviderSdk : 302 Redirect to Official OAuth2 Authorize URL\n(HMAC-signed state cookie)
-  ProviderSdk -> Api : GET /api/v2/auth/providers/{provider}/browser/callback?code=...&state=...
-end
-
-Api -> Verifier : VerifyProviderCredential(provider, code/idToken)
-Verifier --> Api : VerifiedExternalIdentity(provider, subjectID, unionID, displayName)
-Api -> Db : SELECT user_id FROM account_identities\nWHERE provider = $1 AND subject_hash = SHA256(subjectID)
-
-alt Existing linked user found
-  Db --> Api : user_id
-  Api -> Db : INSERT user_sessions
-  Api --> Client : 200 AuthSessionResponse (Signed In)
-else No existing user linked to this provider identity
-  Api -> Db : BEGIN SERIALIZABLE\nINSERT users + INSERT account_identities + INSERT user_sessions\nCOMMIT
-  Api --> Client : 200 AuthSessionResponse (Created new account with explicit provider sign-in)
-end
-
-== 3. Explicit Account Linking with Purpose Reauth & Conflict Detection (identity_in_use) ==
-User -> Client : Logged-in User taps "Bind WeChat / QQ / Apple" in AccountIdentities
-Client -> Api : POST /api/v2/auth/reauth\n{purpose: "account_identity_change", method: "password"|"sms", credential}
-Api -> Db : Verify credential & INSERT purpose_reauth_grants (10m TTL, single-use)
-Api --> Client : 200 {reauthToken, expiresAt}
-
-Client -> ProviderSdk : startLink(provider, reauthToken)
-ProviderSdk --> Client : Authorization Code / ID Token
-Client -> Api : POST /api/v2/account/identities/{provider}/link\nHeader: X-Reauth-Token: <reauthToken>\n{authorizationCode, idToken}
-
-Api -> Db : ConsumePurposeReauthGrant(userID, "account_identity_change", SHA256(reauthToken))
-Api -> Verifier : VerifyProviderCredential(provider, code/idToken)
-Verifier --> Api : VerifiedExternalIdentity(provider, subjectID)
-Api -> Db : Check account_identities(provider, SHA256(subjectID))
-
-alt Identity already bound to ANOTHER user_id
-  Db --> Api : Conflict (existingOwnerID != currentUserID)
-  Api --> Client : 409 Conflict\n{code: "identity_in_use", provider, conflictHint, recoveryOptions}
-  Client -> User : Navigate to AccountConflict Page\n(Never auto-merge accounts; offer switch account or unlink after reauth on other account)
-else Identity unbound
-  Api -> Db : INSERT account_identities(user_id, provider, subject_hash)
-  Api --> Client : 200 AccountIdentityView (Linked)
-end
+participant "用户" as user
+participant "客户端" as client
+participant "identity与HTTP" as api
+participant "官方提供方" as provider
+participant "users与mobile聚合" as db
+user -> client : 主动选择登录或绑定
+client -> api : password / phone / email / oauth-start
+api -> provider : 三方流程才请求官方授权与验证
+provider -> api : 返回已验证身份
+api -> db : 核对现有身份与显式create或link模式
+db -> api : 原身份归属或冲突结果
+api -> client : 返回会话或显式冲突；禁止静默合并
+client -> api : 读取eligibility，登录不自动授予互动资格
 
 @enduml
