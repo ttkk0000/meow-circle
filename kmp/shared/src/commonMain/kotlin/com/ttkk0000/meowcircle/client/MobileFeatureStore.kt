@@ -360,7 +360,12 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     }
                     FeaturePage.EntryEdit -> { val p = api.entry(route.id); if(current()) { mutable.update { it.copy(entry = p) }; capture(p.version) } }
                     FeaturePage.PetDiary -> { loadFeaturePage(more, ::current, { it.diary }, { s, p -> s.copy(diary = p) }) { cursor -> api.get("entries",mapOf("reference_id" to route.id.toString(),"space" to "diary","cursor" to cursor.toString()),authenticated = owner != null) } }
-                    FeaturePage.Friends -> { loadFeaturePage(more, ::current, { it.friends }, { s, p -> s.copy(friends = p) }) { api.friends(it) } }
+                    FeaturePage.Friends -> {
+                        if(route.id > 0) {
+                            val record = api.friendship(route.id)
+                            if(current()) mutable.update { it.copy(friends = PageState(items = listOf(record),loaded = true,readAt = clientReadTimestamp())) }
+                        } else loadFeaturePage(more, ::current, { it.friends }, { s, p -> s.copy(friends = p) }) { api.friends(it) }
+                    }
                     FeaturePage.Member -> { val p = api.member(route.id); if (current()) mutable.update { it.copy(member = p) }; if(owner != null) { val content = api.contentSubscriptions(); if(current()) mutable.update { it.copy(contentSubscriptions = content) } } }
                     FeaturePage.Content -> { val p = api.contentSubscriptions(); if(current()) mutable.update { it.copy(contentSubscriptions = p) } }
                     FeaturePage.GroupDirectory -> { loadFeaturePage(more, ::current, { it.directory }, { s, p -> s.copy(directory = p) }) { api.groupDirectory(it,field("q"),field("city")) } }

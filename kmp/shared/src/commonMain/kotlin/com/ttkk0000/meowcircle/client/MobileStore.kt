@@ -469,7 +469,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             "offers" -> FeatureRoute(FeaturePage.Offer, body.targetId)
             "reviews" -> FeatureRoute(FeaturePage.Review, body.targetId)
             "guardians" -> FeatureRoute(FeaturePage.Guardians, body.targetId)
-            "friendships" -> FeatureRoute(FeaturePage.Friends)
+            "friendships" -> FeatureRoute(FeaturePage.Friends, body.targetId)
             else -> null
         }
         if (feature != null) { features.open(feature); return true }

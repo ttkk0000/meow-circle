@@ -5,6 +5,8 @@
 当前工程边界：`kmp/shared/.../client`负责业务与数据，`kmp/clientUi`提供Android／iOS／Desktop公共Compose页面；`androidApp`、`iosUi`和`desktopApp`分别注入窗口、返回、Picker、地图、授权等平台能力。Web已使用独立`web-client` React DOM。共享页面不抵扣Android平板和iPad各自的系统适配与设备验收。详见下方架构表及[视觉与验收](DESIGN_AND_ACCEPTANCE.md)。
 
 ## 带日期的阶段记录
+
+2026-10-29：[提交、拉取及代码续作](REMOTE_CONTINUATION_2026_10_29.md)记录67decaa／f6b5169；后续补消息有效分类／待处理／显式已读、指定好友记录、后台未知任务内台账及独立人工核对、授权冲突重读和五布局既有节点。24只读脚本、35份语法读取及9份Go语法格式已记录，未构建／类型检查／测试／启动；后续源码以工作树及该交接指纹为准。
 2026-10-28：[设计与代码续作](CONTINUE_DESIGN_CODE_2026_10_28.md)新增五布局40份协作状态、共享Compose发布按钮、邀请详情与本人退出／邀请人撤销全页、限定事项的邀请列表、照护只读／不可用及Web试养／交接／接回／预约9类全页确认。[13旧＋8新状态具体源码](collaboration-page-source-map-2026-10-28.json)单独记录；公共UI／Web只读核对通过，Node18语法读取30份正常退出，旧Node24失败保留历史，Figma最终细化仍受审批额度阻塞，未运行验收。
 
 2026-10-28：[后台按角色先设计后编码](ADMIN_ROLE_WORKSPACES_2026_10_28.md)补9个人员工作区、角色／页面与字段权限、18份Figma新稿和年龄／授权／实际收支入口；旧邀请码闭环见[检查点](BUSINESS_COLLABORATION_2026_10_28.md)。均未运行验收。

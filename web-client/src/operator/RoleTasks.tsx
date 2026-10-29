@@ -113,7 +113,7 @@ export function useRoleTasks(session: OperatorSession) {
       writing.current ||
       readBusy.current ||
       old.flow !== "authority" ||
-      old.stage !== "edit"
+      !["edit","rejected"].includes(old.stage)
     )
       return;
     const query = lookupQuery(old.values),
@@ -131,7 +131,7 @@ export function useRoleTasks(session: OperatorSession) {
         seq === readSequence.current &&
         lookupQuery(current.current.values) === query
       )
-        setState((s) => ({ ...s, lookup: snapshot, lookupKey: query }));
+        setState((s) => ({ ...s, stage: "edit", lookup: snapshot, lookupKey: query, error: undefined, prepared: undefined }));
     } catch (error) {
       if (epoch === session.client.epoch) {
         setReadError(failText(error));
@@ -282,13 +282,16 @@ export function useRoleTasks(session: OperatorSession) {
         });
     } catch (error) {
       if (epoch === session.client.epoch) {
+        const changedAuthority = old.flow === "authority" && error instanceof OperatorError && error.status === 409 && !error.uncertain;
         setState({
           ...old,
           stage:
             error instanceof OperatorError && !error.uncertain
               ? "rejected"
               : "unknown",
-          error: failText(error),
+          lookup: changedAuthority ? undefined : old.lookup,
+          lookupKey: changedAuthority ? undefined : old.lookupKey,
+          error: changedAuthority ? "当前授权已变化。输入已保留，请重新读取当前授权版本，再核对提交。" : failText(error),
         });
         checkFailure(error);
       }
@@ -388,6 +391,9 @@ export function RoleTaskPage({
   const [ack, setAck] = useState(false),
     s = t.state.flow === flow ? t.state : initial(),
     v = s.values;
+  const [unknownAck,setUnknownAck] = useState(false);
+  const [showLedger,setShowLedger] = useState(false);
+  useEffect(() => { setUnknownAck(false); setShowLedger(false); },[flow,s.stage,s.prepared]);
   const fields =
     flow === "ageEvidence"
       ? ["actor_id", "evidence_ref", "valid_until"]
@@ -606,13 +612,21 @@ export function RoleTaskPage({
               <p>
                 原内容已冻结。年龄与授权没有独立操作回执；请通过可信处理记录人工核对，不能直接重发。财务可重新读取实际台账核对来源。
               </p>
-              <Check checked={ack} onChange={setAck}>
+              {s.prepared?.body.client_request_id ? <p>原请求编号：{String(s.prepared.body.client_request_id)}</p> : null}
+              {flow === "received" || flow === "refund" ? <>
+                <Button disabled={t.reading} onClick={() => { setShowLedger(true); void t.readRevenue(); }}>在原待办内读取实际台账核对</Button>
+                {showLedger ? <Panel title="核对台账，原待办继续保留">
+                  <RoleRevenuePage tasks={t} />
+                  <Button disabled={t.reading} onClick={() => setShowLedger(false)}>返回原未知登记</Button>
+                </Panel> : null}
+              </> : null}
+              <Check checked={unknownAck} onChange={setUnknownAck} disabled={t.reading}>
                 已人工核对原事项和处理记录，仅结束本机待办，不标记为成功
               </Check>
               <Button
-                disabled={!ack}
+                disabled={!unknownAck || t.reading}
                 onClick={() => {
-                  setAck(false);
+                  setUnknownAck(false);
                   t.reset();
                 }}
               >

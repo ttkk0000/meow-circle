@@ -447,6 +447,7 @@ func project(k Kind, r Record, actor int64) (Record, error) {
 		if e != nil {
 			return r, e
 		}
+		v.Category = notificationCategory(r, v)
 		v.PushReceipts = nil
 		if e = SetBody(&r, v); e != nil {
 			return r, e

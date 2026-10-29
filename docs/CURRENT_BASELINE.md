@@ -1,6 +1,6 @@
 # M&D 现行文档与源码基线
 
-更新：2026-10-29（Asia/Shanghai）。本地续作已提交为67decaa，正在合并origin/main的07452b5／35914a0设计与文档批次；未推送。本页取代更早入口数量，带日期交接保留当时结果。
+更新：2026-10-29（Asia/Shanghai）。本地续作已提交为67decaa，已在f6b5169合并origin/main的07452b5／35914a0；[拉取后代码续作](client/REMOTE_CONTINUATION_2026_10_29.md)随本记录所在提交保存，未推送。本页取代更早入口数量，带日期交接保留当时结果。
 
 [Figma 文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3) · [完整文档目录](DOCUMENTATION_CATALOG.md) · [功能状态与发布边界](PRODUCT_AND_DELIVERY_MATRIX.md) · [UML 图谱](uml/README.md) · [同步清单](figma-sync/README.md)。
 
@@ -17,7 +17,7 @@
 | shared / clientUi 公共 Kotlin 文件 | 29 / 43 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件；本批新增发布按钮与退出页面 |
 | FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |
 | Worker 接受的作业名 | 8 类 | [ValidJob](../internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |
-| Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；增量手机／Web16根已登记，平板／Desktop待回读；另有角色18稿、业务后台13稿、运维14稿 |
+| Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；增量五布局40根已合并此前保存回读证据，最终细化／全布局视觉仍待；另有角色18稿、业务后台13稿、运维14稿 |
 
 远端已提交的[设计与文档详细完善](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)已纳入本次合并：后台增加39任务状态及1评审索引，协作8状态完成手机／Web来源补录，消费者追踪748条。消息分类与待办等现有源码差距已明确列账，没有通过文档修订冒充业务接线完成。
 

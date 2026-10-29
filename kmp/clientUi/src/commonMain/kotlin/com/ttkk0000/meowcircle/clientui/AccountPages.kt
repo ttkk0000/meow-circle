@@ -24,7 +24,7 @@ import kotlinx.serialization.json.JsonPrimitive
         FeaturePage.Guardians -> if(route.kind=="protection") GuardianProtectionContent(store) else GuardiansContent(store,s,route)
         FeaturePage.Settings -> {
             val old = s.preference?.data ?: PreferenceBody()
-            listOf("direct" to ("私信提醒" to old.directMessages),"groups" to ("群聊提醒" to old.groups),"applications" to ("申请与预约" to old.applications),"interactions" to ("社区互动" to old.interactions)).forEach { (key,pair) -> CheckLine(pair.first,f.field(key,pair.second.toString()).toBoolean(),{ f.edit(key,it.toString()) },!s.busy && !s.loading) }
+            listOf("direct" to ("私信提醒" to old.directMessages),"groups" to ("群聊提醒" to old.groups),"applications" to ("关系、邀请与业务进度" to old.applications),"interactions" to ("社区评论与点赞" to old.interactions)).forEach { (key,pair) -> CheckLine(pair.first,f.field(key,pair.second.toString()).toBoolean(),{ f.edit(key,it.toString()) },!s.busy && !s.loading) }
             ChoiceField(f,s,"frequency","站内提醒频率",listOf("instant" to "即时","digest" to "汇总","off" to "关闭提醒"),old.frequency)
             CheckLine("允许系统推送", f.field("allow_push", old.pushPermission.toString()).toBoolean(), { f.edit("allow_push", it.toString()) }, !s.busy && !s.loading)
             Text("开启并保存后，已配置的设备通道会向推送供应商申请设备标识，向M&D登记；通知只显示通用提醒。关闭后停止设备推送，站内消息仍可查看。")

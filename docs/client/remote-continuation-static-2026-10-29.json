@@ -1,0 +1,219 @@
+{
+  "date": "2026-10-29",
+  "base_head": "f6b5169cbae769dfec9cc1972fec3745a41ad135",
+  "meaning": "只读源码、合同、资源和Go语法格式核对；不执行编译、类型检查、测试、应用或网络业务请求",
+  "scripts": [
+    {
+      "script": "scripts/check_admin_role_workspaces_static.py",
+      "exit_code": 0,
+      "output": "后台角色只读核对：9个人员岗位、2类非人工身份边界、按岗导航／任务与角色撤回、精确范围版本读取、18份设计截图；未类型检查、编译、测试或运行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_adoption_progress_static.py",
+      "exit_code": 0,
+      "output": "领养进度只读核对：25份设计上下文／原图、共用角色动作／协议内试养、双方交接与候补、完整接回核对及effective动作、试养私密照护与完成后30天窗口；3Go＋2KMP回归仅源码，未执行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_age_assurance_static.py",
+      "exit_code": 0,
+      "output": "年龄核验静态核对：3份最小DTO、原编号账本／并发恢复、服务端可信结果／有效期／替换校验、原生与Web分状态和原任务返回；未运行网关、类型检查或测试。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_android_feature_static.py",
+      "exit_code": 0,
+      "output": "Android 源码静态核对：48 个扩展页面有具体分派，方法引用、单 Store、路由、输入隐私、自适应与 24 张贴纸资源通过。未编译／测试／设备验证。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_android_finish_static.py",
+      "exit_code": 0,
+      "output": "Static integration passed: 34 guest page controls, local assets, int64 contracts, Android single-owner/selection and share wiring. No runtime or browser validation.",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_android_ui_static.py",
+      "exit_code": 0,
+      "output": "Static UI check passed: 10 shared primitives, metrics/theme wiring, ViewModel UI session and movable form/home composition. No compilation, runtime or device validation.",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_appointment_safety_static.py",
+      "exit_code": 0,
+      "output": "预约暂停只读核对：按暂停版本重新协商／双方具体核对与资格、拒绝撤回到期保持暂停、历史恢复限制、三端取消四状态与原请求恢复接线；4Go＋2KMP回归仅源码，未执行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_city_assets_static.py",
+      "exit_code": 0,
+      "output": "{\"static_only\": true, \"provinces\": 31, \"cities\": 694, \"selectable_regions\": 745, \"cat_assets_sha256\": {\"garfield-portrait\": \"1e2345e915655cd846933a28ea6ae6fb43a72397d7fee11646c56bfaae5b793f\", \"golden-portrait\": \"85996d5ab8d87f140185d429b2e4572d112e73f96fccc8a40080296423f531d6\"}}",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_client_ui_static.py",
+      "exit_code": 0,
+      "output": "公共UI只读核对：43份公共源码、48个功能分派、3套平台端口、128枚Noto原图、22枚原SVG、748条源码索引（740基线＋8协作增量）；未编译／类型检查／测试／逐屏运行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_delivery_static.py",
+      "exit_code": 0,
+      "output": "交付静态核对：13服务／8独立worker、13迁移与账本、Secret文件加载、Android APK/AAB签名、iOS Archive/IPA/设备入口、Desktop及手动App CI；未构建／迁移／打包／安装／启动。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_figma_reading_static.py",
+      "exit_code": 0,
+      "output": "阅读／发布只读核对：10类材料、4向指南原图／几何、公共正文和下载合同、评论原键恢复／图片限制、本人筛选与全部顺序迁移入口一致；未执行类型检查、编译、测试、迁移或应用。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_guardian_invites_static.py",
+      "exit_code": 0,
+      "output": "监护流程静态核对：5份最小DTO、短时单次邀请／原编号恢复、独立关系核实、监护人范围授权／撤回、公共原生与Web专用页面、具名运营角色；未运行核验、类型检查或测试。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_kmp_client_static.py",
+      "exit_code": 0,
+      "output": "Static source/configuration checks passed: 127 new Kotlin/Swift files, catalog aliases, API 26/37, iOS Compose wiring, request field contracts. No compilation/tests/device execution.",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_lead_flow_static.py",
+      "exit_code": 0,
+      "output": "私密线索只读核对：2个版本命令、实时父权限／关系／关闭规则、两端6状态接线、11份上下文与原SVG；7项Go回归仅源码，未执行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_lead_submission_static.py",
+      "exit_code": 0,
+      "output": "线索提交／后台设计只读核对：版本化原请求、旧入口兼容、同稿四状态、48根分派、真实结果门槛；13稿／400组件实例／126原型入口／13截图；6回归仅源码，未执行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_mobile_static.py",
+      "exit_code": 0,
+      "output": "Static only: 45 feature tables, 288 operations, 141 schemas, 128/24 assets; no dangling references or BOM",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_operations_static.py",
+      "exit_code": 0,
+      "output": "运维静态核对：14类页面、13路径／15操作／25schemas、环境与角色／回执／版本守卫、010迁移、10枚24px原SVG；未编译、类型检查、测试或启动。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_operator_pages_static.py",
+      "exit_code": 0,
+      "output": "业务后台只读核对：13类设计页面、双后台公共Shell、独立内存凭据／角色／版本／未知结果回读、最小队列与受限详情合同；未类型检查、编译、测试或运行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_page_gap_static.py",
+      "exit_code": 0,
+      "output": "页面缺口只读核对：13份设计上下文／截图、状态分类与缓存时间、三端帮助页、通知编号／账号／交互锁、媒体进度／原编号／排序／保存与748条索引（740基线＋8协作增量）；未执行类型检查、编译、测试或应用。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_provider_auth_static.py",
+      "exit_code": 0,
+      "output": "官方授权静态边界：原生SDK固定来源、原挑战回跳、用途／显式确认、HttpOnly适配及独立公众号安全回调／默认关闭／服务端Secret接线；仅源码核对，未执行SDK／类型检查／测试。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_publication_flow_static.py",
+      "exit_code": 0,
+      "output": "声明／分享只读核对：10份设计上下文，独立追加记录／原回执／私密范围／跨语言DTO接线，三端公共预览与来源状态、双端链接解析及Swift回调优先；未编译／测试／迁移／运行。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_remaining_code_static.py",
+      "exit_code": 0,
+      "output": "续作只读核对：8作业跨合同／部署一致、设备权限／撤回、会话加密回执、Desktop本机回跳、45表索引、私有存储及5份草案接线；未执行类型检查、编译、测试或应用。",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_server_shared_contract_static.py",
+      "exit_code": 0,
+      "output": "Static cross-language check: 88 DTO pairs match; private commands and recovery guards present. No type checking or tests executed.",
+      "error": ""
+    },
+    {
+      "script": "scripts/check_web_client_static.py",
+      "exit_code": 0,
+      "output": "Web只读检查：90份TS/TSX、407个本地引用、143份schema、22枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。",
+      "error": ""
+    }
+  ],
+  "go_format_read_only": [
+    {
+      "file": "internal/mobile/content_subscriptions.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    },
+    {
+      "file": "internal/mobile/inbox.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    },
+    {
+      "file": "internal/mobile/inbox_snapshot.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    },
+    {
+      "file": "internal/mobile/push.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    },
+    {
+      "file": "internal/mobile/push_policy.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    },
+    {
+      "file": "internal/mobile/service.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    },
+    {
+      "file": "internal/mobile/social.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    },
+    {
+      "file": "internal/mobile/notification_policy.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    },
+    {
+      "file": "internal/mobile/notification_alignment_test.go",
+      "exit_code": 0,
+      "lf_normalized_format_equal": true,
+      "error": ""
+    }
+  ],
+  "regressions_source_only": 2,
+  "runtime_verified": false,
+  "targeted_followups": [
+    {
+      "script": "scripts/check_admin_role_workspaces_static.py",
+      "exit_code": 0
+    },
+    {
+      "script": "scripts/check_operator_pages_static.py",
+      "exit_code": 0
+    }
+  ]
+}

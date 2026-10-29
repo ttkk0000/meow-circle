@@ -205,7 +205,11 @@ func (s *Service) Friend(ctx context.Context, actor int64, action string, in Fri
 			return e
 		}
 		if action == "request" || action == "accept" {
-			if e = s.notify(tx, in.UserID, actor, "interactions", Friendships, r.ID, "好友关系有更新"); e != nil {
+			message := "收到新的好友申请"
+			if action == "accept" {
+				message = "好友申请已被接受"
+			}
+			if e = s.notify(tx, in.UserID, actor, "applications", Friendships, r.ID, message); e != nil {
 				return e
 			}
 		}

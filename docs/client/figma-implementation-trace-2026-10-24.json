@@ -4255,16 +4255,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / caretaker,accepted,recipient",
+        "web_branch": "CollaborationInvitation / caretaker,accepted,recipient"
+      }
     },
     {
       "key": "caretakerDeclined",
@@ -4284,16 +4288,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / caretaker,declined",
+        "web_branch": "CollaborationInvitation / caretaker,declined"
+      }
     },
     {
       "key": "caretakerExpired",
@@ -4313,16 +4321,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / caretaker,expired (pending expiration is separately action-gated)",
+        "web_branch": "CollaborationInvitation / caretaker,expired (pending expiration is separately action-gated)"
+      }
     },
     {
       "key": "caretakerInvite",
@@ -4351,7 +4363,11 @@
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "SocialFeature / Collaborators(kind=care)",
+        "web_branch": "flow=invite,scope=caretaker"
+      }
     },
     {
       "key": "caretakerLeaveConfirm",
@@ -4359,24 +4375,34 @@
       "family": "adoption",
       "design_roots": {
         "phone": "910:357846",
-        "web": "915:386338"
+        "web": "915:386338",
+        "desktop": "916:379927",
+        "tabletP": "916:1127483",
+        "tabletL": "916:1128048"
       },
       "root_sources": {
         "phone": "collaboration-2026-10-29/state.json",
-        "web": "collaboration-2026-10-29/state.json"
+        "web": "collaboration-2026-10-29/state.json",
+        "desktop": "collaboration-2026-10-29/state.json",
+        "tabletP": "collaboration-2026-10-29/state.json",
+        "tabletL": "collaboration-2026-10-29/state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=leave",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "dedicated_state_source_not_runtime_verified",
       "note": "2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。本人退出与所有人撤销分开；确认绑定本次邀请版本，失败或未知不以本地状态冒充成功。 未播放原型、编译、测试执行或逐端视觉／运行验收。",
       "remote_screenshots_inspected": [
         "910:357846"
       ],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationConfirmationPage / caretaker,leave,recipient",
+        "web_branch": "InvitationActionTask / caretaker,leave,recipient"
+      }
     },
     {
       "key": "caretakerLeft",
@@ -4384,22 +4410,32 @@
       "family": "adoption",
       "design_roots": {
         "phone": "910:357867",
-        "web": "915:386431"
+        "web": "915:386431",
+        "desktop": "916:380024",
+        "tabletP": "916:1127549",
+        "tabletL": "916:1128147"
       },
       "root_sources": {
         "phone": "collaboration-2026-10-29/state.json",
-        "web": "collaboration-2026-10-29/state.json"
+        "web": "collaboration-2026-10-29/state.json",
+        "desktop": "collaboration-2026-10-29/state.json",
+        "tabletP": "collaboration-2026-10-29/state.json",
+        "tabletL": "collaboration-2026-10-29/state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "dedicated_state_source_not_runtime_verified",
       "note": "2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。邀请列表按本人角色与真实终态展示，原请求、邀请版本与服务端复核保持。 未播放原型、编译、测试执行或逐端视觉／运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationOutcomePage / matching POST record; InvitationDetailContent / current GET left",
+        "web_branch": "CollaborationInvitation / current GET left, not original request proof"
+      }
     },
     {
       "key": "caretakerPending",
@@ -4419,16 +4455,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/Records.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / caretaker,pending,owner",
+        "web_branch": "CollaborationInvitation / caretaker,pending,owner"
+      }
     },
     {
       "key": "caretakerReadOnly",
@@ -4436,11 +4476,17 @@
       "family": "adoption",
       "design_roots": {
         "phone": "910:357947",
-        "web": "915:386799"
+        "web": "915:386799",
+        "desktop": "916:380408",
+        "tabletP": "916:1127809",
+        "tabletL": "916:1128539"
       },
       "root_sources": {
         "phone": "collaboration-2026-10-29/state.json",
-        "web": "collaboration-2026-10-29/state.json"
+        "web": "collaboration-2026-10-29/state.json",
+        "desktop": "collaboration-2026-10-29/state.json",
+        "tabletP": "collaboration-2026-10-29/state.json",
+        "tabletL": "collaboration-2026-10-29/state.json"
       },
       "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
       "web_source": "web-client/src/features/CareCollaboration.tsx",
@@ -4453,7 +4499,11 @@
       "remote_screenshots_inspected": [
         "910:357947"
       ],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "CareFeature / kind=care,canPost=false",
+        "web_branch": "readable context,can_post=false"
+      }
     },
     {
       "key": "caretakerReceived",
@@ -4473,16 +4523,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / caretaker,pending,recipient",
+        "web_branch": "CollaborationInvitation / caretaker,pending,recipient"
+      }
     },
     {
       "key": "caretakerRevoke",
@@ -4502,16 +4556,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=revoke",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationConfirmationPage / caretaker,revoke,owner",
+        "web_branch": "InvitationActionTask / caretaker,revoke,owner"
+      }
     },
     {
       "key": "caretakerRevoked",
@@ -4531,16 +4589,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / caretaker,revoked",
+        "web_branch": "CollaborationInvitation / caretaker,revoked"
+      }
     },
     {
       "key": "caretakerUnavailable",
@@ -4548,11 +4610,17 @@
       "family": "adoption",
       "design_roots": {
         "phone": "910:357967",
-        "web": "915:386891"
+        "web": "915:386891",
+        "desktop": "916:380504",
+        "tabletP": "916:1127874",
+        "tabletL": "916:1128637"
       },
       "root_sources": {
         "phone": "collaboration-2026-10-29/state.json",
-        "web": "collaboration-2026-10-29/state.json"
+        "web": "collaboration-2026-10-29/state.json",
+        "desktop": "collaboration-2026-10-29/state.json",
+        "tabletP": "collaboration-2026-10-29/state.json",
+        "tabletL": "collaboration-2026-10-29/state.json"
       },
       "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
       "web_source": "web-client/src/features/CareCollaboration.tsx",
@@ -4563,7 +4631,11 @@
       "implementation_status": "dedicated_state_source_not_runtime_verified",
       "note": "2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。仅根据care-context与真实错误展示获授权近况、can_post=false只读或拒绝访问，不获得完整申请、协议及身份材料。 未播放原型、编译、测试执行或逐端视觉／运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "CareUnavailableContent / missing context or context read failure; loading hides private content",
+        "web_branch": "context error or context/list denied, including HTTP 410"
+      }
     },
     {
       "key": "caretakerWorkspace",
@@ -4571,11 +4643,17 @@
       "family": "adoption",
       "design_roots": {
         "phone": "910:357927",
-        "web": "915:386707"
+        "web": "915:386707",
+        "desktop": "916:380312",
+        "tabletP": "916:1127744",
+        "tabletL": "916:1128441"
       },
       "root_sources": {
         "phone": "collaboration-2026-10-29/state.json",
-        "web": "collaboration-2026-10-29/state.json"
+        "web": "collaboration-2026-10-29/state.json",
+        "desktop": "collaboration-2026-10-29/state.json",
+        "tabletP": "collaboration-2026-10-29/state.json",
+        "tabletL": "collaboration-2026-10-29/state.json"
       },
       "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
       "web_source": "web-client/src/features/CareCollaboration.tsx",
@@ -4586,7 +4664,11 @@
       "implementation_status": "dedicated_state_source_not_runtime_verified",
       "note": "2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。仅根据care-context与真实错误展示获授权近况、can_post=false只读或拒绝访问，不获得完整申请、协议及身份材料。 未播放原型、编译、测试执行或逐端视觉／运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "CareFeature / kind=care,canPost=true,care_stage!=compose",
+        "web_branch": "readable context,can_post=true"
+      }
     },
     {
       "key": "change",
@@ -17898,16 +17980,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / adoption_editor,accepted,recipient",
+        "web_branch": "CollaborationInvitation / adoption_editor,accepted,recipient"
+      }
     },
     {
       "key": "publisherCollabDeclined",
@@ -17927,16 +18013,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / adoption_editor,declined",
+        "web_branch": "CollaborationInvitation / adoption_editor,declined"
+      }
     },
     {
       "key": "publisherCollabReceived",
@@ -17956,16 +18046,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / adoption_editor,pending,recipient",
+        "web_branch": "CollaborationInvitation / adoption_editor,pending,recipient"
+      }
     },
     {
       "key": "publisherCollabRevoke",
@@ -17985,16 +18079,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=revoke",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationConfirmationPage / adoption_editor,revoke,owner",
+        "web_branch": "InvitationActionTask / adoption_editor,revoke,owner"
+      }
     },
     {
       "key": "publisherCollabRevoked",
@@ -18014,16 +18112,20 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "source_family_mapped_not_visually_verified",
       "note": "2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationDetailContent / adoption_editor,revoked",
+        "web_branch": "CollaborationInvitation / adoption_editor,revoked"
+      }
     },
     {
       "key": "publisherLeaveConfirm",
@@ -18031,22 +18133,32 @@
       "family": "adoption",
       "design_roots": {
         "phone": "910:357887",
-        "web": "915:386523"
+        "web": "915:386523",
+        "desktop": "916:380120",
+        "tabletP": "916:1127614",
+        "tabletL": "916:1128245"
       },
       "root_sources": {
         "phone": "collaboration-2026-10-29/state.json",
-        "web": "collaboration-2026-10-29/state.json"
+        "web": "collaboration-2026-10-29/state.json",
+        "desktop": "collaboration-2026-10-29/state.json",
+        "tabletP": "collaboration-2026-10-29/state.json",
+        "tabletL": "collaboration-2026-10-29/state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=leave",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "dedicated_state_source_not_runtime_verified",
       "note": "2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。本人退出与所有人撤销分开；确认绑定本次邀请版本，失败或未知不以本地状态冒充成功。 未播放原型、编译、测试执行或逐端视觉／运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationConfirmationPage / adoption_editor,leave,recipient",
+        "web_branch": "InvitationActionTask / adoption_editor,leave,recipient"
+      }
     },
     {
       "key": "publisherLeft",
@@ -18054,22 +18166,32 @@
       "family": "adoption",
       "design_roots": {
         "phone": "910:357908",
-        "web": "915:386616"
+        "web": "915:386616",
+        "desktop": "916:380217",
+        "tabletP": "916:1127680",
+        "tabletL": "916:1128344"
       },
       "root_sources": {
         "phone": "collaboration-2026-10-29/state.json",
-        "web": "collaboration-2026-10-29/state.json"
+        "web": "collaboration-2026-10-29/state.json",
+        "desktop": "collaboration-2026-10-29/state.json",
+        "tabletP": "collaboration-2026-10-29/state.json",
+        "tabletL": "collaboration-2026-10-29/state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "web_source": "web-client/src/features/ResourcePage.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
       "web_module_route": "/invitations/{invitationId}",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
       "implementation_status": "dedicated_state_source_not_runtime_verified",
       "note": "2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。邀请列表按本人角色与真实终态展示，原请求、邀请版本与服务端复核保持。 未播放原型、编译、测试执行或逐端视觉／运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "InvitationOutcomePage / matching POST record; InvitationDetailContent / current GET left",
+        "web_branch": "CollaborationInvitation / current GET left, not original request proof"
+      }
     },
     {
       "key": "publisherResponse",
@@ -18106,11 +18228,17 @@
       "family": "adoption",
       "design_roots": {
         "phone": "910:357987",
-        "web": "915:386983"
+        "web": "915:386983",
+        "desktop": "916:380600",
+        "tabletP": "916:1127939",
+        "tabletL": "916:1128735"
       },
       "root_sources": {
         "phone": "collaboration-2026-10-29/state.json",
-        "web": "collaboration-2026-10-29/state.json"
+        "web": "collaboration-2026-10-29/state.json",
+        "desktop": "collaboration-2026-10-29/state.json",
+        "tabletP": "collaboration-2026-10-29/state.json",
+        "tabletL": "collaboration-2026-10-29/state.json"
       },
       "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
       "web_source": "web-client/src/features/WorkflowEditor.tsx",
@@ -18121,7 +18249,11 @@
       "implementation_status": "dedicated_state_source_not_runtime_verified",
       "note": "2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。仅维护授权宠物介绍与照片；图中的任务入口不授予审批、健康核验或交接权限。 未播放原型、编译、测试执行或逐端视觉／运行验收。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "source_branches": {
+        "native_branch": "SocialFeature / Collaborators,non-owner pet,only bio/photos",
+        "web_branch": "flow=introduction,non-owner,limited fields and media"
+      }
     },
     {
       "key": "replyAuthor",

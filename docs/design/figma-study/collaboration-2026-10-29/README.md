@@ -17,14 +17,14 @@
 | caretakerUnavailable | 照护权限已失效或不可访问 | `910:357967` | `915:386891` |
 | publisherWorkspace | 获授权的宠物介绍与照片 | `910:357987` | `915:386983` |
 
-目前只登记上述实读的手机／Web共16个根节点。本轮尝试读取平板、Desktop页顶层对应分组时MCP加载超时，已停止该脚本；其余布局未逐状态核对，不能推算ID，也不能将超时写成远端缺稿。上轮已看过的手机只读态、退出确认两张原始PNG继续保留在[审查目录](../audits/2026-10-28-completeness/REVIEW.md)，本批没有新增截图、播放原型或全布局视觉复验。
+首次补录仅核对上述手机／Web16根；该批尝试读取平板、Desktop分组超时后停止，没有据此判断缺稿。2026-10-29合并续作后，已将[此前成功保存并回读的五布局40根证据](../collaboration-exit-2026-10-28/nodes-and-validation.json)补入state.json，已有16根一致，另24根使用原返回ID，没有推算或重复造稿。首次验证保留为previous_validation_checkpoint；本检查点未重新请求Figma。已查看的手机图片继续保留，最终入口细化、五布局截图和运行仍未完成。
 
 ## 实现入口与权限语义
 
 | 范围 | 公共 Compose／Web 源码 | 真实入口 |
 |---|---|---|
-| 邀请角色动作与终态 | `SocialPages.kt`／`ResourcePage.tsx`，列表为`Records.tsx` | `/invitations`、`/invitations/{invitationId}` |
-| 本人退出／所有人撤销确认 | `SocialPages.kt`的现有确认层／`WorkflowEditor.tsx` | `/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=leave`，撤销为`action=revoke` |
+| 邀请角色动作与终态 | 两端`InvitationPages`，列表在`SocialPages.kt`／`Records.tsx`接入 | `/invitations`、`/invitations/{invitationId}` |
+| 本人退出／所有人撤销确认 | 两端`InvitationPages`完整任务页，`WorkflowEditor.tsx`接入原提交 | `/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=leave`，撤销为`action=revoke` |
 | 获授权照护、只读与不可访问 | `CarePages.kt`／`CareCollaboration.tsx` | `/care-collaboration/{adoptionId}`；先读取`adoptions/{id}/care-context` |
 | 介绍与照片维护 | `SocialPages.kt`／`WorkflowEditor.tsx` | `/edit?flow=introduction&kind=pets&id={petId}` |
 

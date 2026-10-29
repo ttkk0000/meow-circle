@@ -34,9 +34,10 @@ import com.ttkk0000.meowcircle.client.*
             }
         }
         FeaturePage.Friends -> {
+            if(route.id > 0) FeatureButton("查看全部好友与申请",!s.busy) { f.open(FeatureRoute(FeaturePage.Friends)) }
             LaunchedEffect(actor) { if (actor != null && !s.peopleChoices.loaded) f.loadPeopleChoices() }
             Text("在动态、会话或群聊中打开宠友资料后，可向明确的对方发送好友申请。申请须由对方接受。")
-            s.friends.items.forEach { row ->
+            s.friends.items.filter { route.id == 0L || it.id == route.id }.forEach { row ->
                 val peer = if (row.data.requesterId == actor) row.data.recipientId else row.data.requesterId
                 val person = s.people[peer]
                 val name = person?.nickname?.ifBlank { person.username }?.ifBlank { "宠友" } ?: "宠友资料待核对"
@@ -55,7 +56,7 @@ import com.ttkk0000.meowcircle.client.*
                     } }
                 }
             }
-            PageFooter(s.friends, { f.reload() }, { f.reload(true) }, "还没有好友关系，申请须由对方接受。", enabled = !s.loading && !s.busy)
+            if(route.id == 0L) PageFooter(s.friends, { f.reload() }, { f.reload(true) }, "还没有好友关系，申请须由对方接受。", enabled = !s.loading && !s.busy)
         }
         FeaturePage.Member -> s.member?.let { member ->
             FeatureSection(member.nickname.ifBlank { member.username }) { Text(member.bio) }

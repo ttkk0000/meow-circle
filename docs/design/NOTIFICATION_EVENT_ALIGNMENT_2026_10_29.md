@@ -6,6 +6,8 @@
 
 ## 1. 现有数据与接口事实
 
+2026-10-29拉取后实施补充：[本批源码与静态边界](../client/REMOTE_CONTINUATION_2026_10_29.md)。好友／case-watch新事件及历史有效分类已统一为applications，汇总／待发推送同口径；待处理补当前好友申请与有效群主转让，原生关系目标定位具体ID。Web改为与原生相同的显式已读模式，打开原事项独立。下文“当前源码差距”保留本合同制定时的分析，不再代表这些项目仍未实现；未实施数据库迁移或重发，运行未验证。
+
 通知模型位于[models.go](../../internal/mobile/models.go)的Notification，包含category、text、target_kind、target_id、read、push_state，以及服务端送达相关字段；外层Record另有通知编号、owner_id和version。当前没有独立event_type、subcategory、target_version或reply_anchor字段。
 
 - category当前是字符串，没有统一的NotificationCategory枚举；notify内部也没有拒绝未知分类的校验。不能把任意字符串都理解为有完整设置、送达和UI支持的已批准分类。

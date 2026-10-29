@@ -39,3 +39,5 @@
 源码指纹、运行边界与交接见[本批交付](../../../client/CONTINUE_DESIGN_CODE_2026_10_28.md)。未编译、测试或启动应用；未提交推送；没有后台执行任务。
 
 2026-10-28后续代码已补邀请独立详情、本人退出／邀请人撤销全页、按事项与scope收敛的邀请列表、照护失权／410清理与完整核对页；[13个既有＋8个新增状态的具体分支](../../../client/collaboration-page-source-map-2026-10-28.json)优先于旧family归属。上述远端收尾依旧未执行。原`syntax-results.json`仅为上一源码检查点；最新源码和语法器内存失败见[后续指纹](../../../client/collaboration-pages-evidence-2026-10-28.json)／[失败记录](syntax-followup-incomplete.json)，不将非零退出算通过。
+
+2026-10-29后续检查点已改用现有Node18并正常退出，旧Node24失败保留历史；[拉取后的35份语法读取](../../../client/remote-continuation-syntax-2026-10-29.json)与[源码／边界](../../../client/REMOTE_CONTINUATION_2026_10_29.md)是当前恢复入口。40根与具体源码分支已纳入合并后的748条索引；远端最终细化和视觉余量仍按本页清单处理，没有重新造稿或绕过审批。

@@ -29,6 +29,15 @@ import com.ttkk0000.meowcircle.client.*
             TextButton({ store.features.open(FeatureRoute(FeaturePage.Settings)) }) { Text("提醒设置") }
         }
         LazyColumn(Modifier.weight(1f),verticalArrangement = Arrangement.spacedBy(8.dp),contentPadding = PaddingValues(bottom = 16.dp)) {
+            if((s.inbox?.pending?.get("friendships") ?: 0) > 0) item {
+                NavigationRow("待处理好友申请 ${s.inbox?.pending?.get("friendships")}","阅读通知后，申请仍需本人决定") { store.features.open(FeatureRoute(FeaturePage.Friends)) }
+            }
+            if((s.inbox?.pending?.get("group_transfers") ?: 0) > 0) item {
+                NavigationRow("待接收群主转让 ${s.inbox?.pending?.get("group_transfers")}","在当前群资料中核对角色与截止时间") { category = 0; unreadOnly = false; store.loadGroups() }
+                s.groups.items.filter { it.data.pendingTransferTo == s.user?.id && it.data.transferExpiresAt?.let(::futureTime) == true }.forEach { row ->
+                    NavigationRow("核对${row.data.name}的群主转让") { store.features.open(FeatureRoute(FeaturePage.Group,row.id)) }
+                }
+            }
             if(category == 0) {
                 item { TaskNotice("消息请求 ${s.inbox?.messageRequests ?: "—"}","接受后才能发送图片。待处理事项 ${s.inbox?.pending?.values?.sum() ?: "—"}，与未读分开计算。") }
                 items(s.conversations.items.filter { !unreadOnly || (s.inbox?.direct?.get(it.id.toString()) ?: 0) > 0 },key = { "direct-${it.id}" }) { row ->
@@ -42,7 +51,7 @@ import com.ttkk0000.meowcircle.client.*
                     MessageRow(row.data.name,"${row.data.members.size} 位成员${if(s.user?.id in row.data.muted) " · 免打扰" else ""}",s.inbox?.groups?.get(row.id.toString()),true) { store.open(MobileDestination.Chat(row.id,true)) }
                 }
                 item { PageFooter(s.groups,{ store.refreshHome() },{ store.refreshHome(true) }) }
-                item { NavigationRow("发现宠友群") { store.features.open(FeatureRoute(FeaturePage.GroupDirectory)) }; NavigationRow("好友与邀请") { store.features.open(FeatureRoute(FeaturePage.Invitations)) }; NavigationRow("创建群聊") { store.features.open(FeatureRoute(FeaturePage.GroupCreate)) }; NavigationRow("预约与安排") { store.features.open(FeatureRoute(FeaturePage.Appointments)) } }
+                item { NavigationRow("发现宠友群") { store.features.open(FeatureRoute(FeaturePage.GroupDirectory)) }; NavigationRow("好友与申请") { store.features.open(FeatureRoute(FeaturePage.Friends)) }; NavigationRow("邀请与协作") { store.features.open(FeatureRoute(FeaturePage.Invitations)) }; NavigationRow("创建群聊") { store.features.open(FeatureRoute(FeaturePage.GroupCreate)) }; NavigationRow("预约与安排") { store.features.open(FeatureRoute(FeaturePage.Appointments)) } }
             } else {
                 val rows = s.notifications.items.filter { (!unreadOnly || !it.data.read) && if(category == 1) it.data.category == "interactions" else it.data.category !in listOf("interactions","direct_messages","groups") }
                 items(rows,key = { "notice-${it.id}" }) { row ->

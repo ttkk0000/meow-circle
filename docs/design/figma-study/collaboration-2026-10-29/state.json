@@ -7,7 +7,10 @@
   "meaning": "登记远端已存在的协作退出与有限授权稿及当前源码入口；本轮没有重复造稿，不把源码归属或设计截图算作逐端运行验收。",
   "sections": {
     "phone": "910:357845",
-    "web": "915:386337"
+    "web": "915:386337",
+    "desktop": "916:379926",
+    "tabletP": "916:1127482",
+    "tabletL": "916:1128047"
   },
   "roots": {
     "phone/caretakerLeaveConfirm": "910:357846",
@@ -25,46 +28,78 @@
     "phone/caretakerUnavailable": "910:357967",
     "web/caretakerUnavailable": "915:386891",
     "phone/publisherWorkspace": "910:357987",
-    "web/publisherWorkspace": "915:386983"
+    "web/publisherWorkspace": "915:386983",
+    "desktop/caretakerLeaveConfirm": "916:379927",
+    "tabletP/caretakerLeaveConfirm": "916:1127483",
+    "tabletL/caretakerLeaveConfirm": "916:1128048",
+    "desktop/caretakerLeft": "916:380024",
+    "tabletP/caretakerLeft": "916:1127549",
+    "tabletL/caretakerLeft": "916:1128147",
+    "desktop/publisherLeaveConfirm": "916:380120",
+    "tabletP/publisherLeaveConfirm": "916:1127614",
+    "tabletL/publisherLeaveConfirm": "916:1128245",
+    "desktop/publisherLeft": "916:380217",
+    "tabletP/publisherLeft": "916:1127680",
+    "tabletL/publisherLeft": "916:1128344",
+    "desktop/caretakerWorkspace": "916:380312",
+    "tabletP/caretakerWorkspace": "916:1127744",
+    "tabletL/caretakerWorkspace": "916:1128441",
+    "desktop/caretakerReadOnly": "916:380408",
+    "tabletP/caretakerReadOnly": "916:1127809",
+    "tabletL/caretakerReadOnly": "916:1128539",
+    "desktop/caretakerUnavailable": "916:380504",
+    "tabletP/caretakerUnavailable": "916:1127874",
+    "tabletL/caretakerUnavailable": "916:1128637",
+    "desktop/publisherWorkspace": "916:380600",
+    "tabletP/publisherWorkspace": "916:1127939",
+    "tabletL/publisherWorkspace": "916:1128735"
   },
   "states": [
     {
       "key": "caretakerLeaveConfirm",
       "name": "退出本次照护协作 · 完整确认",
-      "native_source": "SocialPages.kt",
-      "web_source": "features/WorkflowEditor.tsx",
+      "native_source": "InvitationPages.kt",
+      "web_source": "features/InvitationPages.tsx",
       "web_route": "/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=leave",
       "implementation_note": "本人退出与所有人撤销分开；确认绑定本次邀请版本，失败或未知不以本地状态冒充成功。",
       "screenshots_inspected": [
         "910:357846"
-      ]
+      ],
+      "native_branch": "InvitationConfirmationPage / caretaker,leave,recipient",
+      "web_branch": "InvitationActionTask / caretaker,leave,recipient"
     },
     {
       "key": "caretakerLeft",
       "name": "已退出照护协作",
-      "native_source": "SocialPages.kt",
-      "web_source": "features/ResourcePage.tsx",
+      "native_source": "InvitationPages.kt",
+      "web_source": "features/InvitationPages.tsx",
       "web_route": "/invitations/{invitationId}",
       "implementation_note": "邀请列表按本人角色与真实终态展示，原请求、邀请版本与服务端复核保持。",
-      "screenshots_inspected": []
+      "screenshots_inspected": [],
+      "native_branch": "InvitationOutcomePage / matching POST record; InvitationDetailContent / current GET left",
+      "web_branch": "CollaborationInvitation / current GET left, not original request proof"
     },
     {
       "key": "publisherLeaveConfirm",
       "name": "退出本宠物介绍协作 · 完整确认",
-      "native_source": "SocialPages.kt",
-      "web_source": "features/WorkflowEditor.tsx",
+      "native_source": "InvitationPages.kt",
+      "web_source": "features/InvitationPages.tsx",
       "web_route": "/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=leave",
       "implementation_note": "本人退出与所有人撤销分开；确认绑定本次邀请版本，失败或未知不以本地状态冒充成功。",
-      "screenshots_inspected": []
+      "screenshots_inspected": [],
+      "native_branch": "InvitationConfirmationPage / adoption_editor,leave,recipient",
+      "web_branch": "InvitationActionTask / adoption_editor,leave,recipient"
     },
     {
       "key": "publisherLeft",
       "name": "已退出介绍协作",
-      "native_source": "SocialPages.kt",
-      "web_source": "features/ResourcePage.tsx",
+      "native_source": "InvitationPages.kt",
+      "web_source": "features/InvitationPages.tsx",
       "web_route": "/invitations/{invitationId}",
       "implementation_note": "邀请列表按本人角色与真实终态展示，原请求、邀请版本与服务端复核保持。",
-      "screenshots_inspected": []
+      "screenshots_inspected": [],
+      "native_branch": "InvitationOutcomePage / matching POST record; InvitationDetailContent / current GET left",
+      "web_branch": "CollaborationInvitation / current GET left, not original request proof"
     },
     {
       "key": "caretakerWorkspace",
@@ -73,7 +108,9 @@
       "web_source": "features/CareCollaboration.tsx",
       "web_route": "/care-collaboration/{adoptionId}",
       "implementation_note": "仅根据care-context与真实错误展示获授权近况、can_post=false只读或拒绝访问，不获得完整申请、协议及身份材料。",
-      "screenshots_inspected": []
+      "screenshots_inspected": [],
+      "native_branch": "CareFeature / kind=care,canPost=true,care_stage!=compose",
+      "web_branch": "readable context,can_post=true"
     },
     {
       "key": "caretakerReadOnly",
@@ -84,7 +121,9 @@
       "implementation_note": "仅根据care-context与真实错误展示获授权近况、can_post=false只读或拒绝访问，不获得完整申请、协议及身份材料。",
       "screenshots_inspected": [
         "910:357947"
-      ]
+      ],
+      "native_branch": "CareFeature / kind=care,canPost=false",
+      "web_branch": "readable context,can_post=false"
     },
     {
       "key": "caretakerUnavailable",
@@ -93,7 +132,9 @@
       "web_source": "features/CareCollaboration.tsx",
       "web_route": "/care-collaboration/{adoptionId}",
       "implementation_note": "仅根据care-context与真实错误展示获授权近况、can_post=false只读或拒绝访问，不获得完整申请、协议及身份材料。",
-      "screenshots_inspected": []
+      "screenshots_inspected": [],
+      "native_branch": "CareUnavailableContent / missing context or context read failure; loading hides private content",
+      "web_branch": "context error or context/list denied, including HTTP 410"
     },
     {
       "key": "publisherWorkspace",
@@ -102,7 +143,9 @@
       "web_source": "features/WorkflowEditor.tsx",
       "web_route": "/edit?flow=introduction&kind=pets&id={petId}",
       "implementation_note": "仅维护授权宠物介绍与照片；图中的任务入口不授予审批、健康核验或交接权限。",
-      "screenshots_inspected": []
+      "screenshots_inspected": [],
+      "native_branch": "SocialFeature / Collaborators,non-owner pet,only bio/photos",
+      "web_branch": "flow=introduction,non-owner,limited fields and media"
     }
   ],
   "supporting_sources": [
@@ -113,9 +156,31 @@
     "web-client/src/features/workflows.ts",
     "web-client/src/App.tsx",
     "internal/mobile/invitation_policy.go",
-    "internal/mobile/care_context.go"
+    "internal/mobile/care_context.go",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+    "web-client/src/features/InvitationPages.tsx"
   ],
   "validation": {
+    "known_states": 8,
+    "known_layouts": [
+      "phone",
+      "web",
+      "desktop",
+      "tabletP",
+      "tabletL"
+    ],
+    "known_roots": 40,
+    "pending_layouts": [],
+    "root_source": "docs/design/figma-study/collaboration-exit-2026-10-28/nodes-and-validation.json",
+    "root_source_sha256": "9c4880df1de62fd220ec7f47ff2d17a30dba2479072296fd462e25207aba4763",
+    "source_branch_map": "docs/client/collaboration-page-source-map-2026-10-28.json",
+    "meaning": "合并后复用此前成功保存并回读的40根证据，未重新写入或回读Figma；最终入口细化与五布局视觉复验仍未完成。",
+    "remote_read_this_checkpoint": false,
+    "prototype_playback": false,
+    "runtime_verified": false,
+    "build_test_executed": false
+  },
+  "previous_validation_checkpoint": {
     "known_states": 8,
     "known_layouts": [
       "phone",

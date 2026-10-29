@@ -67,6 +67,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             return@FeatureColumn
         }
         val missingRecord = when (route.page) {
+            FeaturePage.Friends -> route.id > 0 && s.friends.items.none { it.id == route.id }
             FeaturePage.Member -> s.member == null
             FeaturePage.ProfileEdit -> s.profile == null
             FeaturePage.EntryEdit -> s.entry == null

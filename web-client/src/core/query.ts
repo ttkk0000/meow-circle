@@ -65,8 +65,9 @@ export async function reload(path: string) {
   }
   return !abort.signal.aborted && !!record.state.data && !record.state.error;
 }
-export function invalidateQueries() {
-  for (const record of entries.values()) {
+export function invalidateQueries(prefix = "") {
+  for (const [path,record] of entries) {
+    if(!path.startsWith(prefix)) continue;
     record.abort?.abort();
     record.state = empty;
     notify(record);

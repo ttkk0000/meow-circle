@@ -94,7 +94,7 @@ func (s *Service) pushAllowed(tx Tx, r Record, n Notification) (bool, error) {
 	if e != nil {
 		return false, e
 	}
-	category := map[string]bool{"direct_messages": p.DirectMessages, "groups": p.Groups, "applications": p.Applications, "interactions": p.Interactions, "nearby": true}[n.Category]
+	category := map[string]bool{"direct_messages": p.DirectMessages, "groups": p.Groups, "applications": p.Applications, "interactions": p.Interactions, "nearby": true}[notificationCategory(r, n)]
 	if !p.PushPermission || p.Frequency == "off" || !category {
 		return false, nil
 	}

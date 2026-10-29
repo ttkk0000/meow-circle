@@ -16,7 +16,7 @@ data class PendingTaskLink(val kind: String, val id: Long, val owner: Long) {
         "pets" -> "宠物详情"; "entries" -> "社区动态"; "pet-comments" -> "领养交流"; "cases" -> "寻宠求助"
         "offers" -> "有偿信息"; "adoptions" -> "领养进度"; "appointments" -> "预约安排"; "groups" -> "群聊"
         "conversations" -> "私信"; "claims" -> "认领进度"; "reviews" -> "核实事项"
-        "invitations" -> "邀请与协作"; "leads" -> "私密线索"; else -> "原任务"
+        "invitations" -> "邀请与协作"; "leads" -> "私密线索"; "friendships" -> "好友申请"; else -> "原任务"
     }
 }
 

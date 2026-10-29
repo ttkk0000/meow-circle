@@ -683,26 +683,10 @@ function InboxPage({ params }: { params: URLSearchParams }) {
       )
       .reduce((a, [, b]) => a + b, 0n),
   };
-  async function openNotice(row: RecordData) {
+  function openNotice(row: RecordData) {
     setError("");
-    try {
-      if (!row.data.read) {
-        await api.request(`notifications/${row.id}/read`, {
-          method: "POST",
-          body: { version: row.version },
-        });
-        notices.refresh();
-        void reload("inbox-summary");
-      }
-      const to = resourceRoute(
-        String(row.data.target_kind),
-        row.data.target_id,
-      );
-      if (to) navigate(to);
-      else setError("原事项当前没有可打开的入口，请核对通知文本");
-    } catch (e) {
-      setError(explain(e));
-    }
+    if(row.owner_id === api.session.user?.id) navigate(`/notifications/${row.id}`);
+    else setError("请重新读取当前账号的通知");
   }
   return (
     <TaskPage title="消息">
@@ -727,6 +711,8 @@ function InboxPage({ params }: { params: URLSearchParams }) {
         仅看未读
       </Check>
       <InboxReadAll />
+      {(summary.data?.pending.friendships ?? 0n) > 0n ? <RowLink title={`待处理好友申请 ${summary.data?.pending.friendships}`} to="/friendships" /> : null}
+      {(summary.data?.pending.group_transfers ?? 0n) > 0n ? <RowLink title={`待接收群主转让 ${summary.data?.pending.group_transfers}`} to="/groups" /> : null}
       {error ? <Notice title={error} error /> : null}
       {tab === "chat" ? (
         <>

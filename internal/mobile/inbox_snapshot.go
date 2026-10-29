@@ -196,7 +196,8 @@ func (s *Service) PrepareInboxReadAll(ctx context.Context, actor int64, in Inbox
 				return result, e
 			}
 			// Push/onsite chat copies are consumed too, but do not count twice.
-			counted := n.Category != "direct_messages" && n.Category != "groups"
+			category := notificationCategory(row, n)
+			counted := category != "direct_messages" && category != "groups"
 			body.Notifications = append(body.Notifications, inboxNotificationPosition{row.ID, counted})
 			if counted {
 				body.Count++

@@ -138,6 +138,9 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 					if Has(group.Muted, actor) {
 						out.MutedGroups[p.ID] = count
 					}
+					if group.PendingTransferTo == actor && group.TransferExpiresAt != nil && group.TransferExpiresAt.After(s.Now()) {
+						out.Pending["group_transfers"]++
+					}
 					// 免打扰排除全局数仍是设计建议，保持现行提醒口径。
 					out.GlobalTotal += count
 					if first > 0 {
@@ -165,12 +168,13 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 			if e != nil {
 				return e
 			}
-			out.Notifications[v.Category]++
-			if v.Category != "direct_messages" && v.Category != "groups" {
+			category := notificationCategory(r, v)
+			out.Notifications[category]++
+			if category != "direct_messages" && category != "groups" {
 				out.GlobalTotal++
 			}
 		}
-		for _, kind := range []Kind{Adoptions, Appointments, Invitations, Claims, Reviews, Guardians} {
+		for _, kind := range []Kind{Adoptions, Appointments, Invitations, Claims, Reviews, Guardians, Friendships} {
 			rows, e := allRecords(tx, kind, Filter{ParticipantID: actor})
 			if e != nil {
 				return e
@@ -178,6 +182,19 @@ func (s *Service) Unread(ctx context.Context, actor int64) (out Unread, err erro
 			for _, row := range rows {
 				actionable := false
 				switch kind {
+				case Friendships:
+					friend, e := Decode[Friend](row)
+					if e != nil {
+						return e
+					}
+					actionable = row.State == "pending" && friend.RecipientID == actor
+					if actionable {
+						if e = s.active(tx, friend.RequesterID); invitationAccessEnded(e) {
+							actionable = false
+						} else if e != nil {
+							return e
+						}
+					}
 				case Adoptions:
 					a, e := Decode[Adoption](row)
 					if e != nil {

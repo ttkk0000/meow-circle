@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-29",
+  "base_head": "f6b5169cbae769dfec9cc1972fec3745a41ad135",
+  "local_saved_commit": "67decaa",
+  "fetched_remote_head": "35914a0",
+  "meaning": "source checkpoint after remote merge; no build, typecheck, tests or runtime execution",
+  "source_files": [
+    {
+      "path": "docs/client/figma-implementation-trace-2026-10-24.json",
+      "sha256": "d22e09c3a9a48e53beb9ebf2ff47639ede65dae653f7973a88c8efdd3c00520f",
+      "sha256_lf": "284a9616e80a2b271f2ce50fd31c7ca33d9424699955d9978e6d236d45f07a9b",
+      "bytes": 1136450
+    },
+    {
+      "path": "docs/design/figma-study/collaboration-2026-10-29/state.json",
+      "sha256": "c93e546f3b2c90d01de61243899c2e7c38ddd4d226d41da2d1ec7c69217e6393",
+      "sha256_lf": "0e39dafeeb1c92ab6e5ae1da489252f17f110d0ca6282d4ecad8847d5269c33e",
+      "bytes": 10217
+    },
+    {
+      "path": "docs/design/figma-study/collaboration-exit-2026-10-28/syntax-reader.cjs",
+      "sha256": "5e3efe294b39666f7f4d18c836584ca0137de3405616f935abc0e14fc9420e6f",
+      "sha256_lf": "727f6b6c10a7528517c7d1387cbf461671c54f131487bbf79a5384becc8a47cc",
+      "bytes": 8208
+    },
+    {
+      "path": "internal/mobile/content_subscriptions.go",
+      "sha256": "43b61088a652c52b4da7727c4a8d97ff100bd9fd9f251c902bb6f7a27b795745",
+      "sha256_lf": "dbacfbcc1850240b0059f43b02641e0b4c45296cde16630c1abd75e43fc9c38b",
+      "bytes": 5332
+    },
+    {
+      "path": "internal/mobile/inbox.go",
+      "sha256": "0fb622b42aa3068a0de750a02f398018f7f7b900b8aa510378c81d4641f1e1ed",
+      "sha256_lf": "4288e56bdffc9477db4fefb2dcdefc52b6124daa4adaf9fb55955d0f085c2800",
+      "bytes": 7249
+    },
+    {
+      "path": "internal/mobile/inbox_snapshot.go",
+      "sha256": "da5b627aa87ded245e6fedc829a6417937e0085903ff19dbb94539320ce8b889",
+      "sha256_lf": "96468085de2e0b586dde992446ad4f6dc4ed2f0ad02d7efbca57f51d228b6220",
+      "bytes": 10372
+    },
+    {
+      "path": "internal/mobile/notification_alignment_test.go",
+      "sha256": "f1050d554e4460a4deafeaa0c3c778ba44a925a8412d5e3a3cd64fd7fc90a3db",
+      "sha256_lf": "f1050d554e4460a4deafeaa0c3c778ba44a925a8412d5e3a3cd64fd7fc90a3db",
+      "bytes": 4815
+    },
+    {
+      "path": "internal/mobile/notification_policy.go",
+      "sha256": "aa3012e40d88a867571ab0595cc39530ec964d78aeddb4b7fdd163f46be078b9",
+      "sha256_lf": "aa3012e40d88a867571ab0595cc39530ec964d78aeddb4b7fdd163f46be078b9",
+      "bytes": 450
+    },
+    {
+      "path": "internal/mobile/push.go",
+      "sha256": "22ac4c4fd5ea17bfe0f2c98e17245e0a4ef418cf7046988a415a43e87206e6fb",
+      "sha256_lf": "829aca54b3e6de836782b41bd45a1484411800d1607161f27d77cfc5934978af",
+      "bytes": 10068
+    },
+    {
+      "path": "internal/mobile/push_policy.go",
+      "sha256": "a2a6da448a9c81d34eb9b2bea8d383f6dddc3c8d31076f41530e37bfcf5ab46d",
+      "sha256_lf": "a6d62985195b400ee55e21013c8edce049c3e9b751a2f4044ec5f43997401ccd",
+      "bytes": 3603
+    },
+    {
+      "path": "internal/mobile/service.go",
+      "sha256": "af913fac49afa1655616831afc7c9a71a99d26ee158f2783936ee8aaa4e816c0",
+      "sha256_lf": "f5a90930c0d9aea316d8012bc8c009501437cbc9dd90c68479d1c683a3b23bc6",
+      "bytes": 15834
+    },
+    {
+      "path": "internal/mobile/social.go",
+      "sha256": "0d59128bb7a9b8f40a3ad03d1d0a6b1f3c7d467de0bd162bcd7b18d070b5c320",
+      "sha256_lf": "f7f4fc8e7890a75e837011fa37a112661446327f7aba1439b80b662389bf07f8",
+      "bytes": 36987
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
+      "sha256": "2f71aae5bf1df1a577e220e5163db2352a3ea5b5a3f73747fbcc0e8a1028e575",
+      "sha256_lf": "9f10ba31479cf85b42b5bdc299b1c84e0cbdcce82d9f95e6538ca916036b7c2e",
+      "bytes": 30522
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256": "32541953f6d0a685b71de5f30f4ba58d947d134b2116817b4d378ff5578c0b44",
+      "sha256_lf": "9418241899919270b516112786b4ddb70d07da6fb2eb8a6856a2b83555732cd8",
+      "bytes": 25286
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InboxPages.kt",
+      "sha256": "f52838a18f96edef40c2af23685fcdc39971f26b69a8e1496dc913079fb4841e",
+      "sha256_lf": "0e2aca60428e950d079c9f2b592df5e172c24fa09cdc119f90e95ba5e46a2358",
+      "bytes": 5988
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "sha256": "ea738c48545017fa80c91a6e5136877800e173342f1bf0dc4bde8be47d49b91d",
+      "sha256_lf": "68ae0f542423c71e019492cc3501760f0f0703a3b306ab0870ec81a32997cf0d",
+      "bytes": 25745
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/StatusComponents.kt",
+      "sha256": "a7168c03769c7b93f2a8e5d5174d98b53d6ead7f56c380163fd1217ade27ee0e",
+      "sha256_lf": "620978c36dfd2e04d92d7f5d5a1d213b5fc79a3777968107c15fcd41d4e9c0ac",
+      "bytes": 3052
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "sha256": "60cc8260b235a729c2f8883bcbdd6aa5b13dbd642892280ef5ad97c38f9cf158",
+      "sha256_lf": "4b62a16e309881dda62e28feac4b348f952942aeb3e7d26804c66b2372a6ce53",
+      "bytes": 9016
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "12d2be57052eaacbfe4eff8b989683496b8c99d5e9a3677727a468c5459790cb",
+      "sha256_lf": "58e635bd8183501128ee9600536607f371c1a5cecb436b4adf0321dcd34072c6",
+      "bytes": 71438
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "6666db7fab6be32440cac46e97decc81e31d3b227dbcdb5b140ff5eab15c2a93",
+      "sha256_lf": "405ee7019070063e5763de8c0c4f96c0398e7fefa116079390d2f9c921b231f6",
+      "bytes": 98194
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/TaskLinks.kt",
+      "sha256": "1cd8131f14bf33a08d68153b7ea14f99e7e80b411894f9977b24fa67542273f7",
+      "sha256_lf": "7f5ea6c0f14e76b3604ae031ec7c8d32d51f7ff9a33f5de2c0e54c1e743af629",
+      "bytes": 2905
+    },
+    {
+      "path": "scripts/sync_figma_implementation_trace.py",
+      "sha256": "980a1448dc34bca8b30be2b16aaa63273a1f8d2282f1aa60673007e2d85d81a7",
+      "sha256_lf": "e6bfcd190a41a042104098604fd5ba59de43894419a5829e42698d6f77af1e01",
+      "bytes": 22833
+    },
+    {
+      "path": "web-client/src/App.tsx",
+      "sha256": "b571426dff95af5a5fb03bd0e02e63d935a464a69d21f7adad45f8c3397c771a",
+      "sha256_lf": "43fcfe0b725f15fe8546da96dedbc812743c88ecee7a8a870c396c7dc979fcdd",
+      "bytes": 28036
+    },
+    {
+      "path": "web-client/src/components/SchemaForm.tsx",
+      "sha256": "20d5b8e96f73b12333d12d4e27d068132df38aa04bac31b10aacbe8e4f3481be",
+      "sha256_lf": "97523c5b0891d200407e7a5ecd9a7a380dee37e1917322df71d667c54cbcd245",
+      "bytes": 19683
+    },
+    {
+      "path": "web-client/src/core/query.ts",
+      "sha256": "53cf7f5762be1a94b41d33e847ef519fb2a5f93b7eea22d18be881e095ba79d0",
+      "sha256_lf": "acbae6369194cda1cb04256a2a993cc293b40707eb31b601bca856f14e19d260",
+      "bytes": 3365
+    },
+    {
+      "path": "web-client/src/features/NotificationPage.tsx",
+      "sha256": "5fab71f512324a38950be4799183e65773e218a42a657c07628ad806a70014ca",
+      "sha256_lf": "6e04c357c6c1864856ace3328321eab6185511187f25dd0bb5bccabd3d1d95b3",
+      "bytes": 3519
+    },
+    {
+      "path": "web-client/src/operator/RoleTasks.tsx",
+      "sha256": "5f4b9d1c900341e519f033ca0106ad696df3df2ce5d2b31a7618b135ce5463f3",
+      "sha256_lf": "6a77e953f749541d61bcd82f3846098ae4359c658241374c556a07f197da571d",
+      "bytes": 24486
+    }
+  ],
+  "static_report": "remote-continuation-static-2026-10-29.json",
+  "syntax_report": "remote-continuation-syntax-2026-10-29.json",
+  "runtime_verified": false
+}

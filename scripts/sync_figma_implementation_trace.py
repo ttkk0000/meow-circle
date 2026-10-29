@@ -44,6 +44,8 @@ baseline_states = len(roots)
 collaboration_source = 'collaboration-2026-10-29/state.json'
 collaboration = json.loads((design / collaboration_source).read_text())
 collaboration_states = {row['key']: row for row in collaboration['states']}
+focused = json.loads((root / 'docs/client/collaboration-page-source-map-2026-10-28.json').read_text())
+focused_states = {row['key']: row for row in focused['existing_designs'] + focused['new_designs']}
 assert len(collaboration_states) == 8
 assert not set(collaboration_states).intersection(roots)
 for key, row in collaboration_states.items():
@@ -232,12 +234,18 @@ for key in sorted(roots):
         status='dedicated_state_source_not_runtime_verified'
         note='2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。'+state['implementation_note']+' 未播放原型、编译、测试执行或逐端视觉／运行验收。'
         representatives[key] = state.get('screenshots_inspected', [])
+    if key in focused_states:
+        state = focused_states[key]
+        a = Path(state['native_source']).name
+        w = state['web_source'].removeprefix('web-client/src/')
     rows.append({'key':key,'name':names.get(key,key),'family':group,'design_roots':roots[key],
                  'root_sources':provenance[key],'android_source':android+a if a else None,
                  'web_source':'web-client/src/'+w if w else None,'web_module_route':route,
                  'ios_source':android+a if a else None,'desktop_source':android+a if a else None,
                  'source_note':'Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。',
                  'implementation_status':status,'note':note,'remote_screenshots_inspected':representatives.get(key,[]),'runtime_verified':False})
+    if key in focused_states:
+        rows[-1]['source_branches'] = {branch: focused_states[key][branch] for branch in ('native_branch','web_branch')}
 
 result = {'date':'2026-10-24','updated':'2026-10-29','file_key':base['fileKey'],'task':'AI-20261024-ALL-FIGMA',
  'meaning':'此表是全量设计索引与源码归属追踪，不是全部页面完成、视觉对齐或运行通过的证明。',

@@ -4,6 +4,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.buildJsonObject
 
 suspend fun MobileApi.friends(cursor: Long = 0): MobilePage<FriendBody> = get("friendships",mapOf("cursor" to "$cursor"))
+suspend fun MobileApi.friendship(id: Long): MobileRecord<FriendBody> = get("friendships/$id")
 suspend fun MobileApi.friend(action: String,input: FriendInput): MobileRecord<FriendBody> = durablePost("friendships/$action",input,input.clientRequestId)
 
 suspend fun MobileApi.offers(cursor: Long = 0): MobilePage<OfferBody> = get("offers",mapOf("cursor" to "$cursor"))

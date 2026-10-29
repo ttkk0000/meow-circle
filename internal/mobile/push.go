@@ -264,7 +264,7 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 			if e != nil {
 				return e
 			}
-			category := map[string]bool{"direct_messages": p.DirectMessages, "groups": p.Groups, "applications": p.Applications, "interactions": p.Interactions, "nearby": true}[n.Category]
+			category := map[string]bool{"direct_messages": p.DirectMessages, "groups": p.Groups, "applications": p.Applications, "interactions": p.Interactions, "nearby": true}[notificationCategory(r, n)]
 			allowed = p.PushPermission && p.Frequency != "off" && category
 			if allowed && p.Frequency == "digest" && n.DeliverAfter == nil {
 				next := s.Now().Truncate(24 * time.Hour).Add(24 * time.Hour)

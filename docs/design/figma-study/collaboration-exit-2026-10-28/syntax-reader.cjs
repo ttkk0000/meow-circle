@@ -29,7 +29,11 @@ const files = [
 'kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/StatusComponents.kt',
 'kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt',
 'web-client/src/core/router.ts','web-client/src/components/PurposeCheck.tsx',
-'web-client/src/features/Recovery.tsx'];
+'web-client/src/features/Recovery.tsx',
+'kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InboxPages.kt',
+'kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt',
+'web-client/src/components/SchemaForm.tsx','web-client/src/features/NotificationPage.tsx',
+'web-client/src/operator/RoleTasks.tsx'];
 function issues(node) {
   const result = [];
   function visit(n) {
@@ -75,6 +79,7 @@ function issues(node) {
       if(file.endsWith('/ConsumerApp.kt'))cut('window-policy-and-shell','// 按当前窗口','@Composable\nfun ContextPane');
       if(file.endsWith('/ReadingPages.kt'))cut('new-title-branches','        FeaturePage.AdoptionWork ->','        FeaturePage.AppointmentEdit ->','fun staticRead() { return when(route.page) {\n','\nelse -> ""\n} }');
       if(file.endsWith('/MobileFeatureStore.kt')){
+        cut('friendship-detail-loading','                    FeaturePage.Friends ->','                    FeaturePage.Member ->','fun staticRead() { when(route.page) {\n','\n} }');
         cut('state-models','data class FeatureRoute','class MobileFeatureStore');
         cut('route-lifecycle','    fun open(','    private fun restricted()', 'class StaticRead {\n','\n}');
         cut('confirmation-and-outcome','    fun confirm(','    fun runCommand(', 'class StaticRead {\n','\n}');

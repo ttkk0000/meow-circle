@@ -172,7 +172,7 @@ func (s *Service) CaseWatchAlerts(ctx context.Context, caseID, after int64) (out
 				return e
 			}
 			notice := Record{OwnerID: row.OwnerID, Key: key, State: "unread"}
-			body := Notification{Category: "interactions", Text: "关注的寻宠求助有了新的进展", TargetKind: Cases, TargetID: caseID, PushState: "suppressed"}
+			body := Notification{Category: "applications", Text: "关注的寻宠求助有了新的进展", TargetKind: Cases, TargetID: caseID, PushState: "suppressed"}
 			if e = save(tx, Notifications, &notice, body, 0, "case.watch_updated"); e != nil {
 				return e
 			}
