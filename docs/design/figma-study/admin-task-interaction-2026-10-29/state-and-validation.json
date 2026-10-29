@@ -1,0 +1,3633 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261029-FIGMA-PERFECT",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "pageId": "888:1402",
+  "sectionId": "926:1157",
+  "indexId": "932:2803",
+  "roleSourceBaseline": "admin-roles-2026-10-28",
+  "productStates": 39,
+  "reviewIndexFrames": 1,
+  "confirmationComponent": {
+    "setId": "926:1167",
+    "variants": [
+      {
+        "id": "926:1158",
+        "name": "State=Default",
+        "props": {
+          "Label#926:2": {
+            "type": "TEXT",
+            "defaultValue": "我已核对本次对象、范围与真实证据"
+          },
+          "State": {
+            "type": "VARIANT",
+            "defaultValue": "Default",
+            "variantOptions": [
+              "Default",
+              "Checked"
+            ]
+          }
+        }
+      },
+      {
+        "id": "926:1161",
+        "name": "State=Checked",
+        "props": {
+          "Label#926:2": {
+            "type": "TEXT",
+            "defaultValue": "我已核对本次对象、范围与真实证据"
+          },
+          "State": {
+            "type": "VARIANT",
+            "defaultValue": "Default",
+            "variantOptions": [
+              "Default",
+              "Checked"
+            ]
+          }
+        }
+      }
+    ],
+    "source": "web-client/src/components/ui.tsx Check + existing Figma semantic variables/text styles/check icon",
+    "newVariables": 0
+  },
+  "frames": [
+    {
+      "id": "927:1225",
+      "key": "age-edit",
+      "title": "可信年龄区间 · 填写",
+      "role": "identity_verifier",
+      "index": 0,
+      "bodyHeight": 408,
+      "descendants": 82,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 填写 [age-edit]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": [
+        {
+          "source": "927:1231",
+          "destination": "888:1681"
+        },
+        {
+          "source": "927:1232",
+          "destination": "890:2444"
+        },
+        {
+          "source": "927:1233",
+          "destination": "930:3264"
+        },
+        {
+          "source": "927:1234",
+          "destination": "890:3254"
+        },
+        {
+          "source": "927:1306",
+          "destination": "927:1329"
+        },
+        {
+          "source": "927:1308",
+          "destination": "888:1681"
+        }
+      ]
+    },
+    {
+      "id": "927:1329",
+      "key": "age-review",
+      "title": "可信年龄区间 · 完整核对",
+      "role": "identity_verifier",
+      "index": 1,
+      "bodyHeight": 424,
+      "descendants": 78,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 完整核对 [age-review]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 31,
+      "navigationActions": [
+        {
+          "source": "927:1400",
+          "destination": "927:1427"
+        },
+        {
+          "source": "927:1406",
+          "destination": "927:1225"
+        }
+      ]
+    },
+    {
+      "id": "927:1427",
+      "key": "age-confirmed",
+      "title": "可信年龄区间 · 已明确核对",
+      "role": "identity_verifier",
+      "index": 2,
+      "bodyHeight": 424,
+      "descendants": 81,
+      "instances": 22,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 已明确核对 [age-confirmed]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 31,
+      "navigationActions": [
+        {
+          "source": "927:1498",
+          "destination": "927:1329"
+        },
+        {
+          "source": "927:1505",
+          "destination": "927:1528"
+        },
+        {
+          "source": "927:1507",
+          "destination": "927:1225"
+        }
+      ]
+    },
+    {
+      "id": "927:1528",
+      "key": "age-sending",
+      "title": "可信年龄区间 · 提交中",
+      "role": "identity_verifier",
+      "index": 3,
+      "bodyHeight": 361,
+      "descendants": 72,
+      "instances": 18,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 提交中 [age-sending]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 29,
+      "navigationActions": []
+    },
+    {
+      "id": "928:1307",
+      "key": "age-accepted",
+      "title": "可信年龄区间 · 已收到接受响应",
+      "role": "identity_verifier",
+      "index": 4,
+      "bodyHeight": 364,
+      "descendants": 70,
+      "instances": 18,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 已收到接受响应 [age-accepted]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 27,
+      "navigationActions": [
+        {
+          "source": "928:1313",
+          "destination": "888:1681"
+        },
+        {
+          "source": "928:1314",
+          "destination": "890:2444"
+        },
+        {
+          "source": "928:1315",
+          "destination": "930:3264"
+        },
+        {
+          "source": "928:1316",
+          "destination": "890:3254"
+        },
+        {
+          "source": "928:1376",
+          "destination": "888:1681"
+        }
+      ]
+    },
+    {
+      "id": "928:1397",
+      "key": "age-rejected",
+      "title": "可信年龄区间 · 明确失败",
+      "role": "identity_verifier",
+      "index": 5,
+      "bodyHeight": 364,
+      "descendants": 75,
+      "instances": 20,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 明确失败 [age-rejected]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": [
+        {
+          "source": "928:1403",
+          "destination": "888:1681"
+        },
+        {
+          "source": "928:1404",
+          "destination": "890:2444"
+        },
+        {
+          "source": "928:1405",
+          "destination": "930:3264"
+        },
+        {
+          "source": "928:1406",
+          "destination": "890:3254"
+        },
+        {
+          "source": "928:1469",
+          "destination": "927:1225"
+        },
+        {
+          "source": "928:1471",
+          "destination": "888:1681"
+        }
+      ]
+    },
+    {
+      "id": "928:1492",
+      "key": "age-unknown",
+      "title": "可信年龄区间 · 结果待核对",
+      "role": "identity_verifier",
+      "index": 6,
+      "bodyHeight": 421,
+      "descendants": 75,
+      "instances": 19,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 结果待核对 [age-unknown]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": [
+        {
+          "source": "928:1564",
+          "destination": "930:2349"
+        }
+      ]
+    },
+    {
+      "id": "928:1587",
+      "key": "authority-edit",
+      "title": "发布授权 · 填写",
+      "role": "authority_verifier",
+      "index": 7,
+      "bodyHeight": 502,
+      "descendants": 94,
+      "instances": 24,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 填写 [authority-edit]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 34,
+      "navigationActions": [
+        {
+          "source": "928:1593",
+          "destination": "888:1820"
+        },
+        {
+          "source": "928:1594",
+          "destination": "930:2759"
+        },
+        {
+          "source": "928:1596",
+          "destination": "890:3254"
+        },
+        {
+          "source": "928:1678",
+          "destination": "928:1701"
+        },
+        {
+          "source": "928:1680",
+          "destination": "888:1820"
+        }
+      ]
+    },
+    {
+      "id": "928:1701",
+      "key": "authority-review",
+      "title": "发布授权 · 完整核对",
+      "role": "authority_verifier",
+      "index": 8,
+      "bodyHeight": 568,
+      "descendants": 89,
+      "instances": 24,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 完整核对 [authority-review]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 37,
+      "navigationActions": [
+        {
+          "source": "928:1783",
+          "destination": "929:1508"
+        },
+        {
+          "source": "928:1789",
+          "destination": "928:1587"
+        }
+      ]
+    },
+    {
+      "id": "929:1508",
+      "key": "authority-confirmed",
+      "title": "发布授权 · 已明确核对",
+      "role": "authority_verifier",
+      "index": 9,
+      "bodyHeight": 568,
+      "descendants": 92,
+      "instances": 25,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 已明确核对 [authority-confirmed]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 37,
+      "navigationActions": [
+        {
+          "source": "929:1590",
+          "destination": "928:1701"
+        },
+        {
+          "source": "929:1597",
+          "destination": "929:1620"
+        },
+        {
+          "source": "929:1599",
+          "destination": "928:1587"
+        }
+      ]
+    },
+    {
+      "id": "929:1620",
+      "key": "authority-sending",
+      "title": "发布授权 · 提交中",
+      "role": "authority_verifier",
+      "index": 10,
+      "bodyHeight": 361,
+      "descendants": 72,
+      "instances": 18,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 提交中 [authority-sending]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 29,
+      "navigationActions": []
+    },
+    {
+      "id": "929:1712",
+      "key": "authority-accepted",
+      "title": "发布授权 · 已收到接受响应",
+      "role": "authority_verifier",
+      "index": 11,
+      "bodyHeight": 364,
+      "descendants": 70,
+      "instances": 18,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 已收到接受响应 [authority-accepted]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 27,
+      "navigationActions": [
+        {
+          "source": "929:1718",
+          "destination": "888:1820"
+        },
+        {
+          "source": "929:1719",
+          "destination": "930:2759"
+        },
+        {
+          "source": "929:1721",
+          "destination": "890:3254"
+        },
+        {
+          "source": "929:1781",
+          "destination": "888:1820"
+        }
+      ]
+    },
+    {
+      "id": "929:1802",
+      "key": "authority-rejected",
+      "title": "发布授权 · 明确失败",
+      "role": "authority_verifier",
+      "index": 12,
+      "bodyHeight": 364,
+      "descendants": 75,
+      "instances": 20,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 明确失败 [authority-rejected]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": [
+        {
+          "source": "929:1808",
+          "destination": "888:1820"
+        },
+        {
+          "source": "929:1809",
+          "destination": "930:2759"
+        },
+        {
+          "source": "929:1811",
+          "destination": "890:3254"
+        },
+        {
+          "source": "929:1874",
+          "destination": "930:2759"
+        },
+        {
+          "source": "929:1876",
+          "destination": "888:1820"
+        }
+      ]
+    },
+    {
+      "id": "929:1897",
+      "key": "authority-unknown",
+      "title": "发布授权 · 结果待核对",
+      "role": "authority_verifier",
+      "index": 13,
+      "bodyHeight": 421,
+      "descendants": 75,
+      "instances": 19,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 结果待核对 [authority-unknown]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": [
+        {
+          "source": "929:1969",
+          "destination": "930:2449"
+        }
+      ]
+    },
+    {
+      "id": "929:1992",
+      "key": "received-edit",
+      "title": "实际收款登记 · 填写",
+      "role": "finance",
+      "index": 14,
+      "bodyHeight": 502,
+      "descendants": 97,
+      "instances": 24,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际收款登记 · 填写 [received-edit]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 37,
+      "navigationActions": [
+        {
+          "source": "929:1998",
+          "destination": "888:1959"
+        },
+        {
+          "source": "929:2001",
+          "destination": "929:2750"
+        },
+        {
+          "source": "929:2002",
+          "destination": "890:3254"
+        },
+        {
+          "source": "929:2081",
+          "destination": "929:2109"
+        },
+        {
+          "source": "929:2083",
+          "destination": "888:1959"
+        }
+      ]
+    },
+    {
+      "id": "929:2109",
+      "key": "received-review",
+      "title": "实际收款登记 · 完整核对",
+      "role": "finance",
+      "index": 15,
+      "bodyHeight": 640,
+      "descendants": 101,
+      "instances": 27,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际收款登记 · 完整核对 [received-review]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 42,
+      "navigationActions": [
+        {
+          "source": "929:2198",
+          "destination": "929:2230"
+        },
+        {
+          "source": "929:2204",
+          "destination": "929:1992"
+        }
+      ]
+    },
+    {
+      "id": "929:2230",
+      "key": "received-confirmed",
+      "title": "实际收款登记 · 已明确核对",
+      "role": "finance",
+      "index": 16,
+      "bodyHeight": 640,
+      "descendants": 104,
+      "instances": 28,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际收款登记 · 已明确核对 [received-confirmed]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 42,
+      "navigationActions": [
+        {
+          "source": "929:2319",
+          "destination": "929:2109"
+        },
+        {
+          "source": "929:2326",
+          "destination": "929:2354"
+        },
+        {
+          "source": "929:2328",
+          "destination": "929:1992"
+        }
+      ]
+    },
+    {
+      "id": "929:2354",
+      "key": "received-sending",
+      "title": "实际收款登记 · 提交中",
+      "role": "finance",
+      "index": 17,
+      "bodyHeight": 361,
+      "descendants": 77,
+      "instances": 19,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际收款登记 · 提交中 [received-sending]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": []
+    },
+    {
+      "id": "929:2451",
+      "key": "received-accepted",
+      "title": "实际收款登记 · 已收到接受响应",
+      "role": "finance",
+      "index": 18,
+      "bodyHeight": 364,
+      "descendants": 77,
+      "instances": 20,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际收款登记 · 已收到接受响应 [received-accepted]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 29,
+      "navigationActions": [
+        {
+          "source": "929:2457",
+          "destination": "888:1959"
+        },
+        {
+          "source": "929:2459",
+          "destination": "929:1992"
+        },
+        {
+          "source": "929:2460",
+          "destination": "929:2750"
+        },
+        {
+          "source": "929:2461",
+          "destination": "890:3254"
+        },
+        {
+          "source": "929:2520",
+          "destination": "930:3158"
+        },
+        {
+          "source": "929:2522",
+          "destination": "888:1959"
+        }
+      ]
+    },
+    {
+      "id": "929:2548",
+      "key": "received-rejected",
+      "title": "实际收款登记 · 明确失败",
+      "role": "finance",
+      "index": 19,
+      "bodyHeight": 364,
+      "descendants": 80,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际收款登记 · 明确失败 [received-rejected]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 31,
+      "navigationActions": [
+        {
+          "source": "929:2554",
+          "destination": "888:1959"
+        },
+        {
+          "source": "929:2556",
+          "destination": "929:1992"
+        },
+        {
+          "source": "929:2557",
+          "destination": "929:2750"
+        },
+        {
+          "source": "929:2558",
+          "destination": "890:3254"
+        },
+        {
+          "source": "929:2620",
+          "destination": "929:1992"
+        },
+        {
+          "source": "929:2622",
+          "destination": "888:1959"
+        }
+      ]
+    },
+    {
+      "id": "929:2648",
+      "key": "received-unknown",
+      "title": "实际收款登记 · 结果待核对",
+      "role": "finance",
+      "index": 20,
+      "bodyHeight": 460,
+      "descendants": 82,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际收款登记 · 结果待核对 [received-unknown]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 32,
+      "navigationActions": [
+        {
+          "source": "929:2720",
+          "destination": "930:2549"
+        },
+        {
+          "source": "929:2724",
+          "destination": "930:3158"
+        }
+      ]
+    },
+    {
+      "id": "929:2750",
+      "key": "refund-edit",
+      "title": "实际退款登记 · 填写",
+      "role": "finance",
+      "index": 21,
+      "bodyHeight": 502,
+      "descendants": 101,
+      "instances": 25,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际退款登记 · 填写 [refund-edit]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 39,
+      "navigationActions": [
+        {
+          "source": "929:2756",
+          "destination": "888:1959"
+        },
+        {
+          "source": "929:2757",
+          "destination": "890:2924"
+        },
+        {
+          "source": "929:2758",
+          "destination": "929:1992"
+        },
+        {
+          "source": "929:2760",
+          "destination": "890:3254"
+        },
+        {
+          "source": "929:2843",
+          "destination": "929:2871"
+        },
+        {
+          "source": "929:2845",
+          "destination": "888:1959"
+        }
+      ]
+    },
+    {
+      "id": "929:2871",
+      "key": "refund-review",
+      "title": "实际退款登记 · 完整核对",
+      "role": "finance",
+      "index": 22,
+      "bodyHeight": 640,
+      "descendants": 104,
+      "instances": 28,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际退款登记 · 完整核对 [refund-review]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 44,
+      "navigationActions": [
+        {
+          "source": "929:2963",
+          "destination": "929:2995"
+        },
+        {
+          "source": "929:2969",
+          "destination": "929:2750"
+        }
+      ]
+    },
+    {
+      "id": "929:2995",
+      "key": "refund-confirmed",
+      "title": "实际退款登记 · 已明确核对",
+      "role": "finance",
+      "index": 23,
+      "bodyHeight": 640,
+      "descendants": 107,
+      "instances": 29,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际退款登记 · 已明确核对 [refund-confirmed]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 44,
+      "navigationActions": [
+        {
+          "source": "929:3087",
+          "destination": "929:2871"
+        },
+        {
+          "source": "929:3094",
+          "destination": "929:3122"
+        },
+        {
+          "source": "929:3096",
+          "destination": "929:2750"
+        }
+      ]
+    },
+    {
+      "id": "929:3122",
+      "key": "refund-sending",
+      "title": "实际退款登记 · 提交中",
+      "role": "finance",
+      "index": 24,
+      "bodyHeight": 361,
+      "descendants": 77,
+      "instances": 19,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际退款登记 · 提交中 [refund-sending]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": []
+    },
+    {
+      "id": "929:3219",
+      "key": "refund-accepted",
+      "title": "实际退款登记 · 已收到接受响应",
+      "role": "finance",
+      "index": 25,
+      "bodyHeight": 364,
+      "descendants": 77,
+      "instances": 20,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际退款登记 · 已收到接受响应 [refund-accepted]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 29,
+      "navigationActions": [
+        {
+          "source": "929:3225",
+          "destination": "888:1959"
+        },
+        {
+          "source": "929:3226",
+          "destination": "890:2924"
+        },
+        {
+          "source": "929:3227",
+          "destination": "929:1992"
+        },
+        {
+          "source": "929:3228",
+          "destination": "929:2750"
+        },
+        {
+          "source": "929:3229",
+          "destination": "890:3254"
+        },
+        {
+          "source": "929:3288",
+          "destination": "930:3158"
+        },
+        {
+          "source": "929:3290",
+          "destination": "888:1959"
+        }
+      ]
+    },
+    {
+      "id": "929:3316",
+      "key": "refund-rejected",
+      "title": "实际退款登记 · 明确失败",
+      "role": "finance",
+      "index": 26,
+      "bodyHeight": 364,
+      "descendants": 80,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际退款登记 · 明确失败 [refund-rejected]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 31,
+      "navigationActions": [
+        {
+          "source": "929:3322",
+          "destination": "888:1959"
+        },
+        {
+          "source": "929:3323",
+          "destination": "890:2924"
+        },
+        {
+          "source": "929:3324",
+          "destination": "929:1992"
+        },
+        {
+          "source": "929:3325",
+          "destination": "929:2750"
+        },
+        {
+          "source": "929:3326",
+          "destination": "890:3254"
+        },
+        {
+          "source": "929:3388",
+          "destination": "929:2750"
+        },
+        {
+          "source": "929:3390",
+          "destination": "888:1959"
+        }
+      ]
+    },
+    {
+      "id": "929:3416",
+      "key": "refund-unknown",
+      "title": "实际退款登记 · 结果待核对",
+      "role": "finance",
+      "index": 27,
+      "bodyHeight": 460,
+      "descendants": 82,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际退款登记 · 结果待核对 [refund-unknown]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 32,
+      "navigationActions": [
+        {
+          "source": "929:3488",
+          "destination": "930:2654"
+        },
+        {
+          "source": "929:3492",
+          "destination": "930:3158"
+        }
+      ]
+    },
+    {
+      "id": "930:2349",
+      "key": "age-unknown-done",
+      "title": "可信年龄区间 · 已人工核对原事项",
+      "role": "identity_verifier",
+      "index": 28,
+      "bodyHeight": 460,
+      "descendants": 80,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 已人工核对原事项 [age-unknown-done]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 31,
+      "navigationActions": [
+        {
+          "source": "930:2421",
+          "destination": "928:1492"
+        },
+        {
+          "source": "930:2428",
+          "destination": "888:1681"
+        }
+      ]
+    },
+    {
+      "id": "930:2449",
+      "key": "authority-unknown-done",
+      "title": "发布授权 · 已人工核对原事项",
+      "role": "authority_verifier",
+      "index": 29,
+      "bodyHeight": 460,
+      "descendants": 80,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 已人工核对原事项 [authority-unknown-done]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 31,
+      "navigationActions": [
+        {
+          "source": "930:2521",
+          "destination": "929:1897"
+        },
+        {
+          "source": "930:2528",
+          "destination": "888:1820"
+        }
+      ]
+    },
+    {
+      "id": "930:2549",
+      "key": "received-unknown-done",
+      "title": "实际收款登记 · 已人工核对原事项",
+      "role": "finance",
+      "index": 30,
+      "bodyHeight": 460,
+      "descendants": 85,
+      "instances": 22,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际收款登记 · 已人工核对原事项 [received-unknown-done]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 32,
+      "navigationActions": [
+        {
+          "source": "930:2621",
+          "destination": "929:2648"
+        },
+        {
+          "source": "930:2628",
+          "destination": "888:1959"
+        }
+      ]
+    },
+    {
+      "id": "930:2654",
+      "key": "refund-unknown-done",
+      "title": "实际退款登记 · 已人工核对原事项",
+      "role": "finance",
+      "index": 31,
+      "bodyHeight": 460,
+      "descendants": 85,
+      "instances": 22,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "实际退款登记 · 已人工核对原事项 [refund-unknown-done]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 32,
+      "navigationActions": [
+        {
+          "source": "930:2726",
+          "destination": "929:3416"
+        },
+        {
+          "source": "930:2733",
+          "destination": "888:1959"
+        }
+      ]
+    },
+    {
+      "id": "930:2759",
+      "key": "authority-not-read",
+      "title": "发布授权 · 尚未读取当前版本",
+      "role": "authority_verifier",
+      "index": 32,
+      "bodyHeight": 408,
+      "descendants": 85,
+      "instances": 22,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 尚未读取当前版本 [authority-not-read]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": [
+        {
+          "source": "930:2765",
+          "destination": "888:1820"
+        },
+        {
+          "source": "930:2768",
+          "destination": "890:3254"
+        },
+        {
+          "source": "930:2841",
+          "destination": "928:1587"
+        },
+        {
+          "source": "930:2843",
+          "destination": "930:2864"
+        }
+      ]
+    },
+    {
+      "id": "930:2864",
+      "key": "authority-city-fields",
+      "title": "城市规则授权 · 独立字段参考",
+      "role": "authority_verifier",
+      "index": 33,
+      "bodyHeight": 596,
+      "descendants": 99,
+      "instances": 25,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "城市规则授权 · 独立字段参考 [authority-city-fields]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 36,
+      "navigationActions": [
+        {
+          "source": "930:2870",
+          "destination": "888:1820"
+        },
+        {
+          "source": "930:2871",
+          "destination": "930:2759"
+        },
+        {
+          "source": "930:2873",
+          "destination": "890:3254"
+        },
+        {
+          "source": "930:2960",
+          "destination": "930:2759"
+        }
+      ]
+    },
+    {
+      "id": "930:2983",
+      "key": "authority-conflict",
+      "title": "发布授权 · 当前版本已变化",
+      "role": "authority_verifier",
+      "index": 34,
+      "bodyHeight": 364,
+      "descendants": 75,
+      "instances": 20,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "发布授权 · 当前版本已变化 [authority-conflict]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": [
+        {
+          "source": "930:2989",
+          "destination": "888:1820"
+        },
+        {
+          "source": "930:2990",
+          "destination": "930:2759"
+        },
+        {
+          "source": "930:2992",
+          "destination": "890:3254"
+        },
+        {
+          "source": "930:3055",
+          "destination": "930:2759"
+        },
+        {
+          "source": "930:3057",
+          "destination": "888:1820"
+        }
+      ]
+    },
+    {
+      "id": "930:3078",
+      "key": "role-lost",
+      "title": "岗位权限已变化 · 原任务停止",
+      "role": "无当前任务角色",
+      "index": 35,
+      "bodyHeight": 400,
+      "descendants": 60,
+      "instances": 16,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "岗位权限已变化 · 原任务停止 [role-lost]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 27,
+      "navigationActions": [
+        {
+          "source": "930:3088",
+          "destination": "890:3254"
+        },
+        {
+          "source": "930:3090",
+          "destination": "890:3254"
+        },
+        {
+          "source": "930:3150",
+          "destination": "890:3254"
+        }
+      ]
+    },
+    {
+      "id": "930:3158",
+      "key": "finance-ledger-check",
+      "title": "原财务任务 · 按来源核对台账",
+      "role": "finance",
+      "index": 36,
+      "bodyHeight": 472,
+      "descendants": 86,
+      "instances": 22,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "原财务任务 · 按来源核对台账 [finance-ledger-check]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 35,
+      "navigationActions": []
+    },
+    {
+      "id": "930:3264",
+      "key": "age-empty",
+      "title": "可信年龄区间 · 初始未选择",
+      "role": "identity_verifier",
+      "index": 37,
+      "bodyHeight": 408,
+      "descendants": 82,
+      "instances": 21,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 初始未选择 [age-empty]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 30,
+      "navigationActions": [
+        {
+          "source": "930:3270",
+          "destination": "888:1681"
+        },
+        {
+          "source": "930:3271",
+          "destination": "890:2444"
+        },
+        {
+          "source": "930:3273",
+          "destination": "890:3254"
+        },
+        {
+          "source": "930:3326",
+          "destination": "927:1225"
+        },
+        {
+          "source": "930:3343",
+          "destination": "930:3366"
+        },
+        {
+          "source": "930:3345",
+          "destination": "888:1681"
+        }
+      ]
+    },
+    {
+      "id": "930:3366",
+      "key": "age-field-error",
+      "title": "可信年龄区间 · 字段待修正",
+      "role": "identity_verifier",
+      "index": 38,
+      "bodyHeight": 408,
+      "descendants": 77,
+      "instances": 19,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "name": "可信年龄区间 · 字段待修正 [age-field-error]",
+      "width": 1440,
+      "height": 1000,
+      "textCount": 29,
+      "navigationActions": [
+        {
+          "source": "930:3372",
+          "destination": "888:1681"
+        },
+        {
+          "source": "930:3373",
+          "destination": "890:2444"
+        },
+        {
+          "source": "930:3374",
+          "destination": "930:3264"
+        },
+        {
+          "source": "930:3375",
+          "destination": "890:3254"
+        },
+        {
+          "source": "930:3428",
+          "destination": "927:1225"
+        },
+        {
+          "source": "930:3442",
+          "destination": "930:3264"
+        }
+      ]
+    }
+  ],
+  "bindings": [
+    {
+      "nodeId": "927:1306",
+      "target": "age-review"
+    },
+    {
+      "nodeId": "927:1308",
+      "target": "id:888:1681"
+    },
+    {
+      "nodeId": "927:1400",
+      "target": "age-confirmed"
+    },
+    {
+      "nodeId": "927:1404",
+      "target": null
+    },
+    {
+      "nodeId": "927:1406",
+      "target": "age-edit"
+    },
+    {
+      "nodeId": "927:1498",
+      "target": "age-review"
+    },
+    {
+      "nodeId": "927:1505",
+      "target": "age-sending"
+    },
+    {
+      "nodeId": "927:1507",
+      "target": "age-edit"
+    },
+    {
+      "nodeId": "928:1376",
+      "target": "id:888:1681"
+    },
+    {
+      "nodeId": "928:1469",
+      "target": "age-edit"
+    },
+    {
+      "nodeId": "928:1471",
+      "target": "id:888:1681"
+    },
+    {
+      "nodeId": "928:1564",
+      "target": "age-unknown-done"
+    },
+    {
+      "nodeId": "928:1678",
+      "target": "authority-review"
+    },
+    {
+      "nodeId": "928:1680",
+      "target": "id:888:1820"
+    },
+    {
+      "nodeId": "928:1783",
+      "target": "authority-confirmed"
+    },
+    {
+      "nodeId": "928:1787",
+      "target": null
+    },
+    {
+      "nodeId": "928:1789",
+      "target": "authority-edit"
+    },
+    {
+      "nodeId": "929:1590",
+      "target": "authority-review"
+    },
+    {
+      "nodeId": "929:1597",
+      "target": "authority-sending"
+    },
+    {
+      "nodeId": "929:1599",
+      "target": "authority-edit"
+    },
+    {
+      "nodeId": "929:1781",
+      "target": "id:888:1820"
+    },
+    {
+      "nodeId": "929:1874",
+      "target": "authority-not-read"
+    },
+    {
+      "nodeId": "929:1876",
+      "target": "id:888:1820"
+    },
+    {
+      "nodeId": "929:1969",
+      "target": "authority-unknown-done"
+    },
+    {
+      "nodeId": "929:2081",
+      "target": "received-review"
+    },
+    {
+      "nodeId": "929:2083",
+      "target": "id:888:1959"
+    },
+    {
+      "nodeId": "929:2198",
+      "target": "received-confirmed"
+    },
+    {
+      "nodeId": "929:2202",
+      "target": null
+    },
+    {
+      "nodeId": "929:2204",
+      "target": "received-edit"
+    },
+    {
+      "nodeId": "929:2319",
+      "target": "received-review"
+    },
+    {
+      "nodeId": "929:2326",
+      "target": "received-sending"
+    },
+    {
+      "nodeId": "929:2328",
+      "target": "received-edit"
+    },
+    {
+      "nodeId": "929:2520",
+      "target": "finance-ledger-check"
+    },
+    {
+      "nodeId": "929:2522",
+      "target": "id:888:1959"
+    },
+    {
+      "nodeId": "929:2620",
+      "target": "received-edit"
+    },
+    {
+      "nodeId": "929:2622",
+      "target": "id:888:1959"
+    },
+    {
+      "nodeId": "929:2720",
+      "target": "received-unknown-done"
+    },
+    {
+      "nodeId": "929:2724",
+      "target": "finance-ledger-check"
+    },
+    {
+      "nodeId": "929:2843",
+      "target": "refund-review"
+    },
+    {
+      "nodeId": "929:2845",
+      "target": "id:888:1959"
+    },
+    {
+      "nodeId": "929:2963",
+      "target": "refund-confirmed"
+    },
+    {
+      "nodeId": "929:2967",
+      "target": null
+    },
+    {
+      "nodeId": "929:2969",
+      "target": "refund-edit"
+    },
+    {
+      "nodeId": "929:3087",
+      "target": "refund-review"
+    },
+    {
+      "nodeId": "929:3094",
+      "target": "refund-sending"
+    },
+    {
+      "nodeId": "929:3096",
+      "target": "refund-edit"
+    },
+    {
+      "nodeId": "929:3288",
+      "target": "finance-ledger-check"
+    },
+    {
+      "nodeId": "929:3290",
+      "target": "id:888:1959"
+    },
+    {
+      "nodeId": "929:3388",
+      "target": "refund-edit"
+    },
+    {
+      "nodeId": "929:3390",
+      "target": "id:888:1959"
+    },
+    {
+      "nodeId": "929:3488",
+      "target": "refund-unknown-done"
+    },
+    {
+      "nodeId": "929:3492",
+      "target": "finance-ledger-check"
+    },
+    {
+      "nodeId": "930:2421",
+      "target": "age-unknown"
+    },
+    {
+      "nodeId": "930:2428",
+      "target": "id:888:1681"
+    },
+    {
+      "nodeId": "930:2521",
+      "target": "authority-unknown"
+    },
+    {
+      "nodeId": "930:2528",
+      "target": "id:888:1820"
+    },
+    {
+      "nodeId": "930:2621",
+      "target": "received-unknown"
+    },
+    {
+      "nodeId": "930:2628",
+      "target": "id:888:1959"
+    },
+    {
+      "nodeId": "930:2726",
+      "target": "refund-unknown"
+    },
+    {
+      "nodeId": "930:2733",
+      "target": "id:888:1959"
+    },
+    {
+      "nodeId": "930:2841",
+      "target": "authority-edit"
+    },
+    {
+      "nodeId": "930:2843",
+      "target": "authority-city-fields"
+    },
+    {
+      "nodeId": "930:2960",
+      "target": "authority-not-read"
+    },
+    {
+      "nodeId": "930:2962",
+      "target": "url:https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=21-2"
+    },
+    {
+      "nodeId": "930:3055",
+      "target": "authority-not-read"
+    },
+    {
+      "nodeId": "930:3057",
+      "target": "id:888:1820"
+    },
+    {
+      "nodeId": "930:3150",
+      "target": "id:890:3254"
+    },
+    {
+      "nodeId": "930:3238",
+      "target": "back"
+    },
+    {
+      "nodeId": "930:3326",
+      "target": "age-edit"
+    },
+    {
+      "nodeId": "930:3343",
+      "target": "age-field-error"
+    },
+    {
+      "nodeId": "930:3345",
+      "target": "id:888:1681"
+    },
+    {
+      "nodeId": "930:3428",
+      "target": "age-edit"
+    },
+    {
+      "nodeId": "930:3442",
+      "target": "age-empty"
+    }
+  ],
+  "wiring": {
+    "createdNodeIds": [
+      "932:2803",
+      "932:2804",
+      "932:2805",
+      "932:2806",
+      "932:2807",
+      "932:2808",
+      "932:2809",
+      "932:2810",
+      "932:2811",
+      "932:2812",
+      "932:2813",
+      "932:2814",
+      "932:2815",
+      "932:2816",
+      "932:2817",
+      "932:2818",
+      "932:2819",
+      "932:2820",
+      "932:2821",
+      "932:2822",
+      "932:2823",
+      "932:2824",
+      "932:2825",
+      "932:2826",
+      "932:2827",
+      "932:2828",
+      "932:2829",
+      "932:2849",
+      "932:2850",
+      "I932:2850;794:62",
+      "I932:2850;794:62;56:168",
+      "I932:2850;794:62;56:169",
+      "I932:2850;794:62;56:170",
+      "I932:2850;794:62;56:171",
+      "I932:2850;794:67",
+      "I932:2850;794:68",
+      "932:2858",
+      "932:2859",
+      "932:2860",
+      "932:2861",
+      "I932:2861;794:28",
+      "932:2863",
+      "I932:2863;794:28",
+      "932:2865",
+      "I932:2865;794:28",
+      "932:2867",
+      "I932:2867;794:28",
+      "932:2869",
+      "932:2870",
+      "I932:2870;794:28",
+      "932:2872",
+      "I932:2872;794:28",
+      "932:2874",
+      "I932:2874;794:28",
+      "932:2876",
+      "I932:2876;794:28",
+      "932:2878",
+      "932:2879",
+      "932:2880",
+      "932:2881",
+      "I932:2881;794:28",
+      "932:2883",
+      "I932:2883;794:28",
+      "932:2885",
+      "I932:2885;794:28",
+      "932:2887",
+      "I932:2887;794:28",
+      "932:2889",
+      "932:2890",
+      "I932:2890;794:28",
+      "932:2892",
+      "I932:2892;794:28",
+      "932:2894",
+      "I932:2894;794:28",
+      "932:2896",
+      "I932:2896;794:28",
+      "932:2898",
+      "932:2899",
+      "932:2900",
+      "932:2901",
+      "I932:2901;794:28",
+      "932:2903",
+      "I932:2903;794:28",
+      "932:2905",
+      "I932:2905;794:28",
+      "932:2907",
+      "I932:2907;794:28",
+      "932:2909",
+      "932:2910",
+      "I932:2910;794:28",
+      "932:2912",
+      "I932:2912;794:28",
+      "932:2914",
+      "I932:2914;794:28",
+      "932:2916",
+      "I932:2916;794:28",
+      "932:2918",
+      "932:2919",
+      "932:2920",
+      "932:2921",
+      "I932:2921;794:28",
+      "932:2923",
+      "I932:2923;794:28",
+      "932:2925",
+      "I932:2925;794:28",
+      "932:2927",
+      "I932:2927;794:28",
+      "932:2929",
+      "932:2930",
+      "I932:2930;794:28",
+      "932:2932",
+      "I932:2932;794:28",
+      "932:2934",
+      "I932:2934;794:28",
+      "932:2936",
+      "I932:2936;794:28",
+      "932:2938",
+      "932:2939",
+      "932:2940",
+      "932:2941",
+      "I932:2941;794:28",
+      "932:2943",
+      "I932:2943;794:28",
+      "932:2945",
+      "I932:2945;794:28",
+      "932:2947",
+      "932:2948",
+      "I932:2948;794:28",
+      "932:2950",
+      "I932:2950;794:28",
+      "932:2952",
+      "I932:2952;794:28",
+      "932:2954",
+      "I932:2954;794:28"
+    ],
+    "mutatedNodeIds": [
+      "927:1306",
+      "927:1308",
+      "927:1400",
+      "927:1406",
+      "927:1498",
+      "927:1505",
+      "927:1507",
+      "928:1376",
+      "928:1469",
+      "928:1471",
+      "928:1564",
+      "928:1678",
+      "928:1680",
+      "928:1783",
+      "928:1789",
+      "929:1590",
+      "929:1597",
+      "929:1599",
+      "929:1781",
+      "929:1874",
+      "929:1876",
+      "929:1969",
+      "929:2081",
+      "929:2083",
+      "929:2198",
+      "929:2204",
+      "929:2319",
+      "929:2326",
+      "929:2328",
+      "929:2520",
+      "929:2522",
+      "929:2620",
+      "929:2622",
+      "929:2720",
+      "929:2724",
+      "929:2843",
+      "929:2845",
+      "929:2963",
+      "929:2969",
+      "929:3087",
+      "929:3094",
+      "929:3096",
+      "929:3288",
+      "929:3290",
+      "929:3388",
+      "929:3390",
+      "929:3488",
+      "929:3492",
+      "930:2421",
+      "930:2428",
+      "930:2521",
+      "930:2528",
+      "930:2621",
+      "930:2628",
+      "930:2726",
+      "930:2733",
+      "930:2841",
+      "930:2843",
+      "930:2960",
+      "930:2962",
+      "930:3055",
+      "930:3057",
+      "930:3150",
+      "930:3238",
+      "930:3326",
+      "930:3343",
+      "930:3345",
+      "930:3428",
+      "930:3442",
+      "932:2861",
+      "932:2863",
+      "932:2865",
+      "932:2867",
+      "932:2870",
+      "932:2872",
+      "932:2874",
+      "932:2876",
+      "932:2881",
+      "932:2883",
+      "932:2885",
+      "932:2887",
+      "932:2890",
+      "932:2892",
+      "932:2894",
+      "932:2896",
+      "932:2901",
+      "932:2903",
+      "932:2905",
+      "932:2907",
+      "932:2910",
+      "932:2912",
+      "932:2914",
+      "932:2916",
+      "932:2921",
+      "932:2923",
+      "932:2925",
+      "932:2927",
+      "932:2930",
+      "932:2932",
+      "932:2934",
+      "932:2936",
+      "932:2941",
+      "932:2943",
+      "932:2945",
+      "932:2948",
+      "932:2950",
+      "932:2952",
+      "932:2954",
+      "927:1225",
+      "927:1231",
+      "927:1233",
+      "927:1234",
+      "927:1287",
+      "927:1329",
+      "927:1335",
+      "927:1336",
+      "927:1337",
+      "927:1338",
+      "927:1427",
+      "927:1433",
+      "927:1434",
+      "927:1435",
+      "927:1436",
+      "927:1528",
+      "927:1534",
+      "927:1535",
+      "927:1536",
+      "927:1537",
+      "928:1307",
+      "928:1313",
+      "928:1315",
+      "928:1316",
+      "928:1397",
+      "928:1403",
+      "928:1405",
+      "928:1406",
+      "928:1492",
+      "928:1498",
+      "928:1499",
+      "928:1500",
+      "928:1501",
+      "928:1587",
+      "928:1593",
+      "928:1594",
+      "928:1596",
+      "928:1701",
+      "928:1707",
+      "928:1708",
+      "928:1709",
+      "928:1710",
+      "929:1508",
+      "929:1514",
+      "929:1515",
+      "929:1516",
+      "929:1517",
+      "929:1620",
+      "929:1626",
+      "929:1627",
+      "929:1628",
+      "929:1629",
+      "929:1712",
+      "929:1718",
+      "929:1719",
+      "929:1721",
+      "929:1802",
+      "929:1808",
+      "929:1809",
+      "929:1811",
+      "929:1897",
+      "929:1903",
+      "929:1904",
+      "929:1905",
+      "929:1906",
+      "929:1992",
+      "929:1998",
+      "929:2000",
+      "929:2001",
+      "929:2002",
+      "929:2109",
+      "929:2115",
+      "929:2116",
+      "929:2117",
+      "929:2118",
+      "929:2119",
+      "929:2230",
+      "929:2236",
+      "929:2237",
+      "929:2238",
+      "929:2239",
+      "929:2240",
+      "929:2354",
+      "929:2360",
+      "929:2361",
+      "929:2362",
+      "929:2363",
+      "929:2364",
+      "929:2451",
+      "929:2457",
+      "929:2459",
+      "929:2460",
+      "929:2461",
+      "929:2548",
+      "929:2554",
+      "929:2556",
+      "929:2557",
+      "929:2558",
+      "929:2648",
+      "929:2654",
+      "929:2655",
+      "929:2656",
+      "929:2657",
+      "929:2658",
+      "929:2750",
+      "929:2756",
+      "929:2758",
+      "929:2759",
+      "929:2760",
+      "929:2871",
+      "929:2877",
+      "929:2878",
+      "929:2879",
+      "929:2880",
+      "929:2881",
+      "929:2995",
+      "929:3001",
+      "929:3002",
+      "929:3003",
+      "929:3004",
+      "929:3005",
+      "929:3122",
+      "929:3128",
+      "929:3129",
+      "929:3130",
+      "929:3131",
+      "929:3132",
+      "929:3219",
+      "929:3225",
+      "929:3227",
+      "929:3228",
+      "929:3229",
+      "929:3316",
+      "929:3322",
+      "929:3324",
+      "929:3325",
+      "929:3326",
+      "929:3416",
+      "929:3422",
+      "929:3423",
+      "929:3424",
+      "929:3425",
+      "929:3426",
+      "930:2349",
+      "930:2355",
+      "930:2356",
+      "930:2357",
+      "930:2358",
+      "930:2449",
+      "930:2455",
+      "930:2456",
+      "930:2457",
+      "930:2458",
+      "930:2549",
+      "930:2555",
+      "930:2556",
+      "930:2557",
+      "930:2558",
+      "930:2559",
+      "930:2654",
+      "930:2660",
+      "930:2661",
+      "930:2662",
+      "930:2663",
+      "930:2664",
+      "930:2759",
+      "930:2765",
+      "930:2766",
+      "930:2768",
+      "930:2864",
+      "930:2870",
+      "930:2871",
+      "930:2873",
+      "930:2983",
+      "930:2989",
+      "930:2990",
+      "930:2992",
+      "930:3078",
+      "930:3088",
+      "930:3158",
+      "930:3164",
+      "930:3166",
+      "930:3167",
+      "930:3168",
+      "930:3264",
+      "930:3270",
+      "930:3272",
+      "930:3273",
+      "930:3366",
+      "930:3372",
+      "930:3374",
+      "930:3375",
+      "889:1263",
+      "888:1702",
+      "889:1331",
+      "889:1332",
+      "888:1836",
+      "888:1837",
+      "888:1838",
+      "888:1840",
+      "888:1841",
+      "889:1400",
+      "889:1401",
+      "889:1402",
+      "888:1975",
+      "888:1976",
+      "888:1977",
+      "888:1979",
+      "888:1980",
+      "890:2474",
+      "890:2955",
+      "890:3118",
+      "890:3119",
+      "926:1157",
+      "926:1167"
+    ],
+    "index": {
+      "id": "932:2803",
+      "key": "adminTaskIndex",
+      "bodyHeight": 726
+    },
+    "productStates": 39,
+    "redirectedOldControls": 21,
+    "bindings": 112,
+    "sectionId": "926:1157"
+  },
+  "bootstrap": {
+    "createdNodeIds": [
+      "926:1157",
+      "926:1167",
+      "926:1158",
+      "926:1159",
+      "926:1160",
+      "926:1161",
+      "926:1162",
+      "926:1163",
+      "I926:1163;56:112",
+      "I926:1163;56:113",
+      "926:1166"
+    ],
+    "mutatedNodeIds": [
+      "889:1195",
+      "889:1196",
+      "889:1197",
+      "889:1198",
+      "889:1199",
+      "889:1188",
+      "890:2315",
+      "890:2316",
+      "890:2317",
+      "890:2318",
+      "890:2319",
+      "890:2308"
+    ],
+    "removed": [
+      {
+        "id": "889:1194",
+        "parent": "889:1188",
+        "y": 252,
+        "name": "Nav / workers",
+        "descendantIds": [
+          "I889:1194;296:3",
+          "I889:1194;296:3;56:173",
+          "I889:1194;296:3;56:174",
+          "I889:1194;296:3;56:175",
+          "I889:1194;296:7"
+        ]
+      },
+      {
+        "id": "890:2314",
+        "parent": "890:2308",
+        "y": 252,
+        "name": "Nav / workers",
+        "descendantIds": [
+          "I890:2314;296:3",
+          "I890:2314;296:3;56:173",
+          "I890:2314;296:3;56:174",
+          "I890:2314;296:3;56:175",
+          "I890:2314;296:7"
+        ]
+      }
+    ],
+    "sectionId": "926:1157",
+    "sectionPosition": {
+      "x": 4960,
+      "y": 0
+    },
+    "confirmationSet": "926:1167",
+    "confirmationVariants": [
+      {
+        "id": "926:1158",
+        "name": "State=Default",
+        "props": {
+          "Label#926:2": {
+            "type": "TEXT",
+            "defaultValue": "我已核对本次对象、范围与真实证据"
+          },
+          "State": {
+            "type": "VARIANT",
+            "defaultValue": "Default",
+            "variantOptions": [
+              "Default",
+              "Checked"
+            ]
+          }
+        }
+      },
+      {
+        "id": "926:1161",
+        "name": "State=Checked",
+        "props": {
+          "Label#926:2": {
+            "type": "TEXT",
+            "defaultValue": "我已核对本次对象、范围与真实证据"
+          },
+          "State": {
+            "type": "VARIANT",
+            "defaultValue": "Default",
+            "variantOptions": [
+              "Default",
+              "Checked"
+            ]
+          }
+        }
+      }
+    ],
+    "palette": "Mobile Light V2",
+    "newVariables": 0
+  },
+  "validation": {
+    "roots": 40,
+    "instances": 891,
+    "imageFills": 0,
+    "actions": 173,
+    "errors": [],
+    "result": [
+      {
+        "id": "927:1225",
+        "name": "可信年龄区间 · 填写 [age-edit]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 408,
+        "descendants": 82,
+        "instances": 21,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "927:1231",
+            "destination": "888:1681"
+          },
+          {
+            "source": "927:1232",
+            "destination": "890:2444"
+          },
+          {
+            "source": "927:1233",
+            "destination": "930:3264"
+          },
+          {
+            "source": "927:1234",
+            "destination": "890:3254"
+          },
+          {
+            "source": "927:1306",
+            "destination": "927:1329"
+          },
+          {
+            "source": "927:1308",
+            "destination": "888:1681"
+          }
+        ]
+      },
+      {
+        "id": "927:1329",
+        "name": "可信年龄区间 · 完整核对 [age-review]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 424,
+        "descendants": 78,
+        "instances": 21,
+        "textCount": 31,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "927:1400",
+            "destination": "927:1427"
+          },
+          {
+            "source": "927:1406",
+            "destination": "927:1225"
+          }
+        ]
+      },
+      {
+        "id": "927:1427",
+        "name": "可信年龄区间 · 已明确核对 [age-confirmed]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 424,
+        "descendants": 81,
+        "instances": 22,
+        "textCount": 31,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "927:1498",
+            "destination": "927:1329"
+          },
+          {
+            "source": "927:1505",
+            "destination": "927:1528"
+          },
+          {
+            "source": "927:1507",
+            "destination": "927:1225"
+          }
+        ]
+      },
+      {
+        "id": "927:1528",
+        "name": "可信年龄区间 · 提交中 [age-sending]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 361,
+        "descendants": 72,
+        "instances": 18,
+        "textCount": 29,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": []
+      },
+      {
+        "id": "928:1307",
+        "name": "可信年龄区间 · 已收到接受响应 [age-accepted]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 70,
+        "instances": 18,
+        "textCount": 27,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "928:1313",
+            "destination": "888:1681"
+          },
+          {
+            "source": "928:1314",
+            "destination": "890:2444"
+          },
+          {
+            "source": "928:1315",
+            "destination": "930:3264"
+          },
+          {
+            "source": "928:1316",
+            "destination": "890:3254"
+          },
+          {
+            "source": "928:1376",
+            "destination": "888:1681"
+          }
+        ]
+      },
+      {
+        "id": "928:1397",
+        "name": "可信年龄区间 · 明确失败 [age-rejected]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 75,
+        "instances": 20,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "928:1403",
+            "destination": "888:1681"
+          },
+          {
+            "source": "928:1404",
+            "destination": "890:2444"
+          },
+          {
+            "source": "928:1405",
+            "destination": "930:3264"
+          },
+          {
+            "source": "928:1406",
+            "destination": "890:3254"
+          },
+          {
+            "source": "928:1469",
+            "destination": "927:1225"
+          },
+          {
+            "source": "928:1471",
+            "destination": "888:1681"
+          }
+        ]
+      },
+      {
+        "id": "928:1492",
+        "name": "可信年龄区间 · 结果待核对 [age-unknown]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 421,
+        "descendants": 75,
+        "instances": 19,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "928:1564",
+            "destination": "930:2349"
+          }
+        ]
+      },
+      {
+        "id": "928:1587",
+        "name": "发布授权 · 填写 [authority-edit]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 502,
+        "descendants": 94,
+        "instances": 24,
+        "textCount": 34,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "928:1593",
+            "destination": "888:1820"
+          },
+          {
+            "source": "928:1594",
+            "destination": "930:2759"
+          },
+          {
+            "source": "928:1596",
+            "destination": "890:3254"
+          },
+          {
+            "source": "928:1678",
+            "destination": "928:1701"
+          },
+          {
+            "source": "928:1680",
+            "destination": "888:1820"
+          }
+        ]
+      },
+      {
+        "id": "928:1701",
+        "name": "发布授权 · 完整核对 [authority-review]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 568,
+        "descendants": 89,
+        "instances": 24,
+        "textCount": 37,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "928:1783",
+            "destination": "929:1508"
+          },
+          {
+            "source": "928:1789",
+            "destination": "928:1587"
+          }
+        ]
+      },
+      {
+        "id": "929:1508",
+        "name": "发布授权 · 已明确核对 [authority-confirmed]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 568,
+        "descendants": 92,
+        "instances": 25,
+        "textCount": 37,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:1590",
+            "destination": "928:1701"
+          },
+          {
+            "source": "929:1597",
+            "destination": "929:1620"
+          },
+          {
+            "source": "929:1599",
+            "destination": "928:1587"
+          }
+        ]
+      },
+      {
+        "id": "929:1620",
+        "name": "发布授权 · 提交中 [authority-sending]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 361,
+        "descendants": 72,
+        "instances": 18,
+        "textCount": 29,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": []
+      },
+      {
+        "id": "929:1712",
+        "name": "发布授权 · 已收到接受响应 [authority-accepted]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 70,
+        "instances": 18,
+        "textCount": 27,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:1718",
+            "destination": "888:1820"
+          },
+          {
+            "source": "929:1719",
+            "destination": "930:2759"
+          },
+          {
+            "source": "929:1721",
+            "destination": "890:3254"
+          },
+          {
+            "source": "929:1781",
+            "destination": "888:1820"
+          }
+        ]
+      },
+      {
+        "id": "929:1802",
+        "name": "发布授权 · 明确失败 [authority-rejected]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 75,
+        "instances": 20,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:1808",
+            "destination": "888:1820"
+          },
+          {
+            "source": "929:1809",
+            "destination": "930:2759"
+          },
+          {
+            "source": "929:1811",
+            "destination": "890:3254"
+          },
+          {
+            "source": "929:1874",
+            "destination": "930:2759"
+          },
+          {
+            "source": "929:1876",
+            "destination": "888:1820"
+          }
+        ]
+      },
+      {
+        "id": "929:1897",
+        "name": "发布授权 · 结果待核对 [authority-unknown]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 421,
+        "descendants": 75,
+        "instances": 19,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:1969",
+            "destination": "930:2449"
+          }
+        ]
+      },
+      {
+        "id": "929:1992",
+        "name": "实际收款登记 · 填写 [received-edit]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 502,
+        "descendants": 97,
+        "instances": 24,
+        "textCount": 37,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:1998",
+            "destination": "888:1959"
+          },
+          {
+            "source": "929:2001",
+            "destination": "929:2750"
+          },
+          {
+            "source": "929:2002",
+            "destination": "890:3254"
+          },
+          {
+            "source": "929:2081",
+            "destination": "929:2109"
+          },
+          {
+            "source": "929:2083",
+            "destination": "888:1959"
+          }
+        ]
+      },
+      {
+        "id": "929:2109",
+        "name": "实际收款登记 · 完整核对 [received-review]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 640,
+        "descendants": 101,
+        "instances": 27,
+        "textCount": 42,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:2198",
+            "destination": "929:2230"
+          },
+          {
+            "source": "929:2204",
+            "destination": "929:1992"
+          }
+        ]
+      },
+      {
+        "id": "929:2230",
+        "name": "实际收款登记 · 已明确核对 [received-confirmed]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 640,
+        "descendants": 104,
+        "instances": 28,
+        "textCount": 42,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:2319",
+            "destination": "929:2109"
+          },
+          {
+            "source": "929:2326",
+            "destination": "929:2354"
+          },
+          {
+            "source": "929:2328",
+            "destination": "929:1992"
+          }
+        ]
+      },
+      {
+        "id": "929:2354",
+        "name": "实际收款登记 · 提交中 [received-sending]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 361,
+        "descendants": 77,
+        "instances": 19,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": []
+      },
+      {
+        "id": "929:2451",
+        "name": "实际收款登记 · 已收到接受响应 [received-accepted]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 77,
+        "instances": 20,
+        "textCount": 29,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:2457",
+            "destination": "888:1959"
+          },
+          {
+            "source": "929:2459",
+            "destination": "929:1992"
+          },
+          {
+            "source": "929:2460",
+            "destination": "929:2750"
+          },
+          {
+            "source": "929:2461",
+            "destination": "890:3254"
+          },
+          {
+            "source": "929:2520",
+            "destination": "930:3158"
+          },
+          {
+            "source": "929:2522",
+            "destination": "888:1959"
+          }
+        ]
+      },
+      {
+        "id": "929:2548",
+        "name": "实际收款登记 · 明确失败 [received-rejected]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 80,
+        "instances": 21,
+        "textCount": 31,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:2554",
+            "destination": "888:1959"
+          },
+          {
+            "source": "929:2556",
+            "destination": "929:1992"
+          },
+          {
+            "source": "929:2557",
+            "destination": "929:2750"
+          },
+          {
+            "source": "929:2558",
+            "destination": "890:3254"
+          },
+          {
+            "source": "929:2620",
+            "destination": "929:1992"
+          },
+          {
+            "source": "929:2622",
+            "destination": "888:1959"
+          }
+        ]
+      },
+      {
+        "id": "929:2648",
+        "name": "实际收款登记 · 结果待核对 [received-unknown]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 460,
+        "descendants": 82,
+        "instances": 21,
+        "textCount": 32,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:2720",
+            "destination": "930:2549"
+          },
+          {
+            "source": "929:2724",
+            "destination": "930:3158"
+          }
+        ]
+      },
+      {
+        "id": "929:2750",
+        "name": "实际退款登记 · 填写 [refund-edit]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 502,
+        "descendants": 101,
+        "instances": 25,
+        "textCount": 39,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:2756",
+            "destination": "888:1959"
+          },
+          {
+            "source": "929:2757",
+            "destination": "890:2924"
+          },
+          {
+            "source": "929:2758",
+            "destination": "929:1992"
+          },
+          {
+            "source": "929:2760",
+            "destination": "890:3254"
+          },
+          {
+            "source": "929:2843",
+            "destination": "929:2871"
+          },
+          {
+            "source": "929:2845",
+            "destination": "888:1959"
+          }
+        ]
+      },
+      {
+        "id": "929:2871",
+        "name": "实际退款登记 · 完整核对 [refund-review]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 640,
+        "descendants": 104,
+        "instances": 28,
+        "textCount": 44,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:2963",
+            "destination": "929:2995"
+          },
+          {
+            "source": "929:2969",
+            "destination": "929:2750"
+          }
+        ]
+      },
+      {
+        "id": "929:2995",
+        "name": "实际退款登记 · 已明确核对 [refund-confirmed]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 640,
+        "descendants": 107,
+        "instances": 29,
+        "textCount": 44,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:3087",
+            "destination": "929:2871"
+          },
+          {
+            "source": "929:3094",
+            "destination": "929:3122"
+          },
+          {
+            "source": "929:3096",
+            "destination": "929:2750"
+          }
+        ]
+      },
+      {
+        "id": "929:3122",
+        "name": "实际退款登记 · 提交中 [refund-sending]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 361,
+        "descendants": 77,
+        "instances": 19,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": []
+      },
+      {
+        "id": "929:3219",
+        "name": "实际退款登记 · 已收到接受响应 [refund-accepted]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 77,
+        "instances": 20,
+        "textCount": 29,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:3225",
+            "destination": "888:1959"
+          },
+          {
+            "source": "929:3226",
+            "destination": "890:2924"
+          },
+          {
+            "source": "929:3227",
+            "destination": "929:1992"
+          },
+          {
+            "source": "929:3228",
+            "destination": "929:2750"
+          },
+          {
+            "source": "929:3229",
+            "destination": "890:3254"
+          },
+          {
+            "source": "929:3288",
+            "destination": "930:3158"
+          },
+          {
+            "source": "929:3290",
+            "destination": "888:1959"
+          }
+        ]
+      },
+      {
+        "id": "929:3316",
+        "name": "实际退款登记 · 明确失败 [refund-rejected]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 80,
+        "instances": 21,
+        "textCount": 31,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:3322",
+            "destination": "888:1959"
+          },
+          {
+            "source": "929:3323",
+            "destination": "890:2924"
+          },
+          {
+            "source": "929:3324",
+            "destination": "929:1992"
+          },
+          {
+            "source": "929:3325",
+            "destination": "929:2750"
+          },
+          {
+            "source": "929:3326",
+            "destination": "890:3254"
+          },
+          {
+            "source": "929:3388",
+            "destination": "929:2750"
+          },
+          {
+            "source": "929:3390",
+            "destination": "888:1959"
+          }
+        ]
+      },
+      {
+        "id": "929:3416",
+        "name": "实际退款登记 · 结果待核对 [refund-unknown]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 460,
+        "descendants": 82,
+        "instances": 21,
+        "textCount": 32,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "929:3488",
+            "destination": "930:2654"
+          },
+          {
+            "source": "929:3492",
+            "destination": "930:3158"
+          }
+        ]
+      },
+      {
+        "id": "930:2349",
+        "name": "可信年龄区间 · 已人工核对原事项 [age-unknown-done]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 460,
+        "descendants": 80,
+        "instances": 21,
+        "textCount": 31,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:2421",
+            "destination": "928:1492"
+          },
+          {
+            "source": "930:2428",
+            "destination": "888:1681"
+          }
+        ]
+      },
+      {
+        "id": "930:2449",
+        "name": "发布授权 · 已人工核对原事项 [authority-unknown-done]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 460,
+        "descendants": 80,
+        "instances": 21,
+        "textCount": 31,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:2521",
+            "destination": "929:1897"
+          },
+          {
+            "source": "930:2528",
+            "destination": "888:1820"
+          }
+        ]
+      },
+      {
+        "id": "930:2549",
+        "name": "实际收款登记 · 已人工核对原事项 [received-unknown-done]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 460,
+        "descendants": 85,
+        "instances": 22,
+        "textCount": 32,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:2621",
+            "destination": "929:2648"
+          },
+          {
+            "source": "930:2628",
+            "destination": "888:1959"
+          }
+        ]
+      },
+      {
+        "id": "930:2654",
+        "name": "实际退款登记 · 已人工核对原事项 [refund-unknown-done]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 460,
+        "descendants": 85,
+        "instances": 22,
+        "textCount": 32,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:2726",
+            "destination": "929:3416"
+          },
+          {
+            "source": "930:2733",
+            "destination": "888:1959"
+          }
+        ]
+      },
+      {
+        "id": "930:2759",
+        "name": "发布授权 · 尚未读取当前版本 [authority-not-read]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 408,
+        "descendants": 85,
+        "instances": 22,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:2765",
+            "destination": "888:1820"
+          },
+          {
+            "source": "930:2768",
+            "destination": "890:3254"
+          },
+          {
+            "source": "930:2841",
+            "destination": "928:1587"
+          },
+          {
+            "source": "930:2843",
+            "destination": "930:2864"
+          }
+        ]
+      },
+      {
+        "id": "930:2864",
+        "name": "城市规则授权 · 独立字段参考 [authority-city-fields]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 596,
+        "descendants": 99,
+        "instances": 25,
+        "textCount": 36,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:2870",
+            "destination": "888:1820"
+          },
+          {
+            "source": "930:2871",
+            "destination": "930:2759"
+          },
+          {
+            "source": "930:2873",
+            "destination": "890:3254"
+          },
+          {
+            "source": "930:2960",
+            "destination": "930:2759"
+          }
+        ]
+      },
+      {
+        "id": "930:2983",
+        "name": "发布授权 · 当前版本已变化 [authority-conflict]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 364,
+        "descendants": 75,
+        "instances": 20,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:2989",
+            "destination": "888:1820"
+          },
+          {
+            "source": "930:2990",
+            "destination": "930:2759"
+          },
+          {
+            "source": "930:2992",
+            "destination": "890:3254"
+          },
+          {
+            "source": "930:3055",
+            "destination": "930:2759"
+          },
+          {
+            "source": "930:3057",
+            "destination": "888:1820"
+          }
+        ]
+      },
+      {
+        "id": "930:3078",
+        "name": "岗位权限已变化 · 原任务停止 [role-lost]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 400,
+        "descendants": 60,
+        "instances": 16,
+        "textCount": 27,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:3088",
+            "destination": "890:3254"
+          },
+          {
+            "source": "930:3090",
+            "destination": "890:3254"
+          },
+          {
+            "source": "930:3150",
+            "destination": "890:3254"
+          }
+        ]
+      },
+      {
+        "id": "930:3158",
+        "name": "原财务任务 · 按来源核对台账 [finance-ledger-check]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 472,
+        "descendants": 86,
+        "instances": 22,
+        "textCount": 35,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": []
+      },
+      {
+        "id": "930:3264",
+        "name": "可信年龄区间 · 初始未选择 [age-empty]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 408,
+        "descendants": 82,
+        "instances": 21,
+        "textCount": 30,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:3270",
+            "destination": "888:1681"
+          },
+          {
+            "source": "930:3271",
+            "destination": "890:2444"
+          },
+          {
+            "source": "930:3273",
+            "destination": "890:3254"
+          },
+          {
+            "source": "930:3326",
+            "destination": "927:1225"
+          },
+          {
+            "source": "930:3343",
+            "destination": "930:3366"
+          },
+          {
+            "source": "930:3345",
+            "destination": "888:1681"
+          }
+        ]
+      },
+      {
+        "id": "930:3366",
+        "name": "可信年龄区间 · 字段待修正 [age-field-error]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 408,
+        "descendants": 77,
+        "instances": 19,
+        "textCount": 29,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "930:3372",
+            "destination": "888:1681"
+          },
+          {
+            "source": "930:3373",
+            "destination": "890:2444"
+          },
+          {
+            "source": "930:3374",
+            "destination": "930:3264"
+          },
+          {
+            "source": "930:3375",
+            "destination": "890:3254"
+          },
+          {
+            "source": "930:3428",
+            "destination": "927:1225"
+          },
+          {
+            "source": "930:3442",
+            "destination": "930:3264"
+          }
+        ]
+      },
+      {
+        "id": "932:2803",
+        "name": "后台关键任务 · 场景索引 [adminTaskIndex]",
+        "width": 1440,
+        "height": 1000,
+        "bodyHeight": 726,
+        "descendants": 138,
+        "instances": 50,
+        "textCount": 60,
+        "fonts": [
+          "Manrope",
+          "Noto Sans SC"
+        ],
+        "navigationActions": [
+          {
+            "source": "932:2813",
+            "destination": "890:3254"
+          },
+          {
+            "source": "932:2815",
+            "destination": "890:3254"
+          },
+          {
+            "source": "932:2861",
+            "destination": "927:1225"
+          },
+          {
+            "source": "932:2863",
+            "destination": "927:1329"
+          },
+          {
+            "source": "932:2865",
+            "destination": "927:1427"
+          },
+          {
+            "source": "932:2867",
+            "destination": "927:1528"
+          },
+          {
+            "source": "932:2870",
+            "destination": "928:1307"
+          },
+          {
+            "source": "932:2872",
+            "destination": "928:1397"
+          },
+          {
+            "source": "932:2874",
+            "destination": "928:1492"
+          },
+          {
+            "source": "932:2876",
+            "destination": "930:2349"
+          },
+          {
+            "source": "932:2881",
+            "destination": "928:1587"
+          },
+          {
+            "source": "932:2883",
+            "destination": "928:1701"
+          },
+          {
+            "source": "932:2885",
+            "destination": "929:1508"
+          },
+          {
+            "source": "932:2887",
+            "destination": "929:1620"
+          },
+          {
+            "source": "932:2890",
+            "destination": "929:1712"
+          },
+          {
+            "source": "932:2892",
+            "destination": "929:1802"
+          },
+          {
+            "source": "932:2894",
+            "destination": "929:1897"
+          },
+          {
+            "source": "932:2896",
+            "destination": "930:2449"
+          },
+          {
+            "source": "932:2901",
+            "destination": "929:1992"
+          },
+          {
+            "source": "932:2903",
+            "destination": "929:2109"
+          },
+          {
+            "source": "932:2905",
+            "destination": "929:2230"
+          },
+          {
+            "source": "932:2907",
+            "destination": "929:2354"
+          },
+          {
+            "source": "932:2910",
+            "destination": "929:2451"
+          },
+          {
+            "source": "932:2912",
+            "destination": "929:2548"
+          },
+          {
+            "source": "932:2914",
+            "destination": "929:2648"
+          },
+          {
+            "source": "932:2916",
+            "destination": "930:2549"
+          },
+          {
+            "source": "932:2921",
+            "destination": "929:2750"
+          },
+          {
+            "source": "932:2923",
+            "destination": "929:2871"
+          },
+          {
+            "source": "932:2925",
+            "destination": "929:2995"
+          },
+          {
+            "source": "932:2927",
+            "destination": "929:3122"
+          },
+          {
+            "source": "932:2930",
+            "destination": "929:3219"
+          },
+          {
+            "source": "932:2932",
+            "destination": "929:3316"
+          },
+          {
+            "source": "932:2934",
+            "destination": "929:3416"
+          },
+          {
+            "source": "932:2936",
+            "destination": "930:2654"
+          },
+          {
+            "source": "932:2941",
+            "destination": "930:3264"
+          },
+          {
+            "source": "932:2943",
+            "destination": "930:3366"
+          },
+          {
+            "source": "932:2945",
+            "destination": "930:2759"
+          },
+          {
+            "source": "932:2948",
+            "destination": "930:2983"
+          },
+          {
+            "source": "932:2950",
+            "destination": "930:2864"
+          },
+          {
+            "source": "932:2952",
+            "destination": "930:3158"
+          },
+          {
+            "source": "932:2954",
+            "destination": "930:3078"
+          }
+        ]
+      }
+    ],
+    "privacy": [
+      {
+        "id": "888:1542",
+        "nav": [
+          "本岗工作台",
+          "资料与注销",
+          "角色与会话"
+        ]
+      },
+      {
+        "id": "890:2284",
+        "nav": [
+          "本岗工作台",
+          "资料与注销",
+          "角色与会话"
+        ]
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "file": "composition.png",
+      "inspected": true,
+      "sha256": "4a99dbc6d6bd71dcdb07f21ccbd9ae6df0d6db9d8c0ea1ba895a731e03c6b502"
+    },
+    {
+      "file": "index.png",
+      "inspected": true,
+      "sha256": "fa1250b6c0af07f542ae960354ed7912011938329c56eea7203609bd02889dac"
+    },
+    {
+      "file": "refund-confirmed.png",
+      "inspected": true,
+      "sha256": "0c181c52484afcccb1c56841821008b10d1381ed5c74cadce5cc23b1a81abda3"
+    },
+    {
+      "file": "age-empty.png",
+      "inspected": true,
+      "sha256": "4660a2964a57f14682a0594868376a04e4b5be3d334df91e1df064031af8f3ce"
+    },
+    {
+      "file": "authority-conflict.png",
+      "inspected": true,
+      "sha256": "1a746864935a9d52624c3841eae0799274d5b706aec11c79f442daf68646e939"
+    },
+    {
+      "file": "unknown-done.png",
+      "inspected": true,
+      "sha256": "59da5cd30ee6789204615552a95a4296571d613b32ce449d181264f381415b3c"
+    },
+    {
+      "file": "privacy.png",
+      "inspected": true,
+      "sha256": "c89e8ad7926aa3a50d8581e7f9c03208226d23e003ee0703f3885980c8fc1594"
+    },
+    {
+      "file": "confirmation.png",
+      "inspected": true,
+      "sha256": "e5f0cccee0e6fe1f6e3755e503df980fd8b9fd585b7992037d0c1d475d401447"
+    },
+    {
+      "file": "ledger-frozen.png",
+      "inspected": true,
+      "sha256": "4361c85aba05f7236e00566d67a99406f41dcf533fb83f3e10ad6685eac90e3b"
+    }
+  ],
+  "runtimeVerified": false,
+  "prototypePlayed": false,
+  "notes": [
+    "只读/原生原型结构与截图核对；没有应用运行",
+    "原始18角色根ID和13业务/14运维稿保留；只调整21个旧入口目标及2个资料侧栏项",
+    "39任务状态与1评审索引不计入消费者748条追踪",
+    "财务原任务内台账快捷核对是设计增强，业务接线待后续实现核对"
+  ],
+  "postReviewFix": {
+    "frameId": "930:3158",
+    "removedSidebarActions": 5,
+    "remainingAction": {
+      "nodeId": "930:3238",
+      "type": "BACK"
+    },
+    "currentActions": 173,
+    "screenshot": "ledger-frozen.png",
+    "note": "原任务内读取核对不解除未知状态冻结；整组全景已重新截图并打开，原40根／891实例未变"
+  }
+}

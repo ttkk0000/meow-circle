@@ -1,0 +1,18 @@
+{
+  "mutatedNodeIds": [
+    "26:8"
+  ],
+  "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+  "sha256": "c18b1a861d38b48d7607f74a755c5a8a0f8cbb5f26bf39824c2bd9bf1cb58708",
+  "pages": [
+    {
+      "specNodeId": "26:8",
+      "markdown": "# M&D 产品、源码与验收状态矩阵\n\n更新：2026-10-29。[现行基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-2)为数量依据；需求ID沿用PRD和客户端任务，不另造编号。表中“已有源码”仅说明入口与合同存在，不表示全功能或逐端验收通过。\n\n| 业务范围 | 需求／合同 | 当前源码与最近变化 | 剩余验收／决定 |\n|---|---|---|---|\n| 统一账号、认证与资格 | FR-035；认证／安全合同 | identity、ProviderAuthStore、AgeAssuranceStore、GuardianInviteStore；服务端资格门禁 | 官方主体、真实SDK参数、回调与年龄核验供应商联调 |\n| 社区、发布与来源声明 | FR-001–010；来源声明合同 | entries、source_declarations；预览、独立追加声明、公开／私密范围 | 声明原回执、未知结果与媒体恢复逐端运行 |\n| 关注、好友与公开群 | FR-036、038 | social、group_directory；入群审核和群主转让 | 当前角色、屏蔽、退出及并发失权验证 |\n| 多宠物与协作者 | FR-037 | pets、co-manager语义、公共PetWorkspace | 单宠数据隔离与介绍／照护权限运行核对 |\n| 领养申请、候补与协议 | FR-011–017；安全生命周期 | adoption_placement、contracts、AdoptionPages；同宠试养排他与同版协议 | 双方角色、并发占用、旧周期及资格变更 |\n| 试养、交接、接回与私密照护 | FR-017、020、021 | 协议内试养、双确认、effective接回、照护阶段和完成后30天 | 期限、照片权限、失败／未知、真实数据库与设备 |\n| 预约与风险暂停 | FR-016、018、019、031、032 | appointments；effective／pending／history、安全暂停同版重提和双确认 | 暂停版本、提案过期、取消未知与历史恢复 |\n| 走失／拾获与私密线索 | FR-039 | cases、leads、lead_submission、lead_review；粗位置、私密照片与独立会话 | 父权限撤销、原回执、重复提交、两方交接 |\n| 出售／有偿转让及服务咨询 | FR-025、030–033 | offers、disputes、披露快照、总价与接待关系 | 业务准入和费用说明；支付介入仍待决定 |\n| 消息、未读与表情 | FR-040、041 | inbox_snapshot；十分钟确认快照、首条未读、24贴纸 | [消息事件对齐](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-24)：好友／订阅分类、待办覆盖、已读入口与目标版本差距；去重／多设备仍待运行；无已读撤销接口 |\n| 阅读、规则与出版 | FR-042 | reading、publication；独立详情与历史 | 版本生效、更新订阅和无障碍阅读 |\n| 安全、权利与数据生命周期 | FR-022–024、034、042 | rights、data_requests、保全与注销流程 | 清理与保全冲突、真实对象存储与人工处理责任 |\n| 业务后台 | 原13稿＋本批角色设计 | /app/operator、5个业务岗位工作台与白名单、年龄／授权／实际台账入口、角色撤回和未知结果核对 | [9岗位／18稿与源码](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/docs/client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；[本轮39任务状态与评审索引](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=932-2803)为设计细化，新增快捷核对与逐端运行待接线／验收 |\n| 技术运维 | 运维14稿 | /app/ops、环境隔离、任务遥测、交付模板与检查点 | 发布／重启执行器按用户决定占位；真实交付待授权 |\n| 城市与素材 | 城市／素材交接 | 745地区目录、同城匹配、共享选择器及用户猫咪配图 | 目录兼容不授予业务资格；配图不冒充真实业务宠物 |\n\n## 发布前仍需落实\n\n| 条件 | 状态 | 核对证据 |\n|---|---|---|\n| Android / iOS / Desktop / Web真实设备或浏览器验收 | 未完成 | 目标版本、角色、布局与可复现结果 |\n| 748条消费者状态逐项视觉与业务验收 | 未完成 | 对照实际页面、失败恢复、权限和原型来源 |\n| 数据库001–013升级与回滚 | 未执行 | 备份、迁移、Schema校验及恢复演练 |\n| 微信／QQ／Apple／高德／年龄核验等正式配置 | 未齐全／未联调 | 主体、权限、配置和真实回调，不记录密钥 |\n| 运营准入、协议与值守 | 部分草案／待业务决定 | 规则版本、责任人、响应窗口和异常处理 |\n| 支付、担保及赔付 | 未决定，不作为现有能力 | 独立业务决定与实施合同 |\n\n[PRD](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-328)记录需求；[UX](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-20)记录操作与失败路径；[客户端任务](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-400)记录实施拆分；[AI任务](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-306)仅记录工作交接。各表不能相互替代。\n\n---\n\n来源：`docs/PRODUCT_AND_DELIVERY_MATRIX.md`；SHA-256：`c18b1a861d38b48d7607f74a755c5a8a0f8cbb5f26bf39824c2bd9bf1cb58708`。2026-10-29阅读快照，源文件是维护输入；设计、源码、静态、运行及发布分别记账。\n\n分卷：[第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-8)",
+      "title": "Document",
+      "totalLines": 40,
+      "linesReturned": 40,
+      "offset": 0,
+      "hasMore": false
+    }
+  ]
+}

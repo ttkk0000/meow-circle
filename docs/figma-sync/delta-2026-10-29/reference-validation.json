@@ -1,0 +1,942 @@
+[
+  {
+    "id": "1:9",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 文档中心 · 导航"
+  },
+  {
+    "id": "21:2",
+    "type": "SPEC_BLOCK",
+    "name": "2026-10-28 后台角色工作区详细设计"
+  },
+  {
+    "id": "24:3",
+    "type": "SPEC_BLOCK",
+    "name": "2026-10-29 增量阅读目录"
+  },
+  {
+    "id": "26:10",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 设计交接索引"
+  },
+  {
+    "id": "26:12",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 客户端代码实施与完成标准"
+  },
+  {
+    "id": "26:14",
+    "type": "SPEC_BLOCK",
+    "name": "默认主题、独立平板适配与验收"
+  },
+  {
+    "id": "26:16",
+    "type": "SPEC_BLOCK",
+    "name": "客户端详细实施方案 · 1/2"
+  },
+  {
+    "id": "26:18",
+    "type": "SPEC_BLOCK",
+    "name": "客户端详细实施方案 · 2/2"
+  },
+  {
+    "id": "26:2",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 现行文档与源码基线"
+  },
+  {
+    "id": "26:20",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 社区、领养与可信找猫 UX 规格"
+  },
+  {
+    "id": "26:22",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 全局未读与消息中心设计"
+  },
+  {
+    "id": "26:24",
+    "type": "SPEC_BLOCK",
+    "name": "消息事件分类、未读与待办对齐核对"
+  },
+  {
+    "id": "26:26",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 后台按角色工作区详细设计"
+  },
+  {
+    "id": "26:28",
+    "type": "SPEC_BLOCK",
+    "name": "后台任务交互与失败恢复设计"
+  },
+  {
+    "id": "26:30",
+    "type": "SPEC_BLOCK",
+    "name": "协作退出与有限授权：既有 Figma 稿追踪补录"
+  },
+  {
+    "id": "26:32",
+    "type": "SPEC_BLOCK",
+    "name": "Figma设计与文档完善交付"
+  },
+  {
+    "id": "26:34",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 全仓文档目录 · 1/2"
+  },
+  {
+    "id": "26:36",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 全仓文档目录 · 2/2"
+  },
+  {
+    "id": "26:38",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Figma文档与图谱同步"
+  },
+  {
+    "id": "26:4",
+    "type": "SPEC_BLOCK",
+    "name": "M&D V2 API速查表 · 1/2"
+  },
+  {
+    "id": "26:6",
+    "type": "SPEC_BLOCK",
+    "name": "M&D V2 API速查表 · 2/2"
+  },
+  {
+    "id": "26:8",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 产品、源码与验收状态矩阵"
+  },
+  {
+    "id": "28:2",
+    "type": "SPEC_BLOCK",
+    "name": "M&D / meow & doggie Server (Go + Caddy)"
+  },
+  {
+    "id": "28:4",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 文档入口"
+  },
+  {
+    "id": "4:2",
+    "type": "FRAME",
+    "name": "01  产品全貌 · 来源归档"
+  },
+  {
+    "id": "6:206",
+    "type": "SPEC_BLOCK",
+    "name": "kitty-circle — `.cursor` index"
+  },
+  {
+    "id": "6:208",
+    "type": "SPEC_BLOCK",
+    "name": "Cursor User Rules — Karpathy coding + kitty-circle user-facing UX (Git-tracked)"
+  },
+  {
+    "id": "6:210",
+    "type": "SPEC_BLOCK",
+    "name": "kitty-circle UI and experience (user-facing)"
+  },
+  {
+    "id": "6:212",
+    "type": "SPEC_BLOCK",
+    "name": "Karpathy Guidelines"
+  },
+  {
+    "id": "6:214",
+    "type": "SPEC_BLOCK",
+    "name": "Impeccable Design Context — kitty-circle 喵友圈"
+  },
+  {
+    "id": "6:216",
+    "type": "SPEC_BLOCK",
+    "name": "当前证据"
+  },
+  {
+    "id": "6:218",
+    "type": "SPEC_BLOCK",
+    "name": "进度"
+  },
+  {
+    "id": "6:220",
+    "type": "SPEC_BLOCK",
+    "name": "手机设计闭环"
+  },
+  {
+    "id": "6:222",
+    "type": "SPEC_BLOCK",
+    "name": "Findings"
+  },
+  {
+    "id": "6:224",
+    "type": "SPEC_BLOCK",
+    "name": "Progress"
+  },
+  {
+    "id": "6:226",
+    "type": "SPEC_BLOCK",
+    "name": "Go server alignment with mobile design"
+  },
+  {
+    "id": "6:228",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Global DESIGN.md · 第1/3卷"
+  },
+  {
+    "id": "6:234",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Global DESIGN.md · 第1/2卷"
+  },
+  {
+    "id": "6:238",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Global DESIGN.md · 第1/3卷"
+  },
+  {
+    "id": "6:244",
+    "type": "SPEC_BLOCK",
+    "name": "Agent Memory: M&D / meow & doggie"
+  },
+  {
+    "id": "6:246",
+    "type": "SPEC_BLOCK",
+    "name": "Claude Project Instructions"
+  },
+  {
+    "id": "6:248",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Stitch Remote Design Contract"
+  },
+  {
+    "id": "6:250",
+    "type": "SPEC_BLOCK",
+    "name": "Gemini Project Instructions"
+  },
+  {
+    "id": "6:252",
+    "type": "SPEC_BLOCK",
+    "name": "kitty-circle 项目上手文档（Android / 鸿蒙背景版） · 第1/2卷"
+  },
+  {
+    "id": "6:258",
+    "type": "SPEC_BLOCK",
+    "name": "Security Policy"
+  },
+  {
+    "id": "6:260",
+    "type": "SPEC_BLOCK",
+    "name": "Design System Inspired by Cursor · 第1/2卷"
+  },
+  {
+    "id": "6:264",
+    "type": "SPEC_BLOCK",
+    "name": "部署与App签名占位配置"
+  },
+  {
+    "id": "6:266",
+    "type": "SPEC_BLOCK",
+    "name": "M&D API与数据流"
+  },
+  {
+    "id": "6:272",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Client Parity Checklist"
+  },
+  {
+    "id": "6:274",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 全栈代码逻辑与UML参考"
+  },
+  {
+    "id": "6:278",
+    "type": "SPEC_BLOCK",
+    "name": "M&D V2 数据字典"
+  },
+  {
+    "id": "6:284",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 前端与多端页面地图"
+  },
+  {
+    "id": "6:288",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 产品流程图阅读说明"
+  },
+  {
+    "id": "6:290",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 项目结构与源码入口"
+  },
+  {
+    "id": "6:294",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 运行、迁移与交付核对入口"
+  },
+  {
+    "id": "6:296",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Technical Improvement Outline"
+  },
+  {
+    "id": "6:298",
+    "type": "SPEC_BLOCK",
+    "name": "当前项目快照"
+  },
+  {
+    "id": "6:3",
+    "type": "RECTANGLE",
+    "name": "docs/design/audit-assets/2026-08-30-core-flow/01-feed.png"
+  },
+  {
+    "id": "6:300",
+    "type": "SPEC_BLOCK",
+    "name": "重要决定与待确认项"
+  },
+  {
+    "id": "6:302",
+    "type": "SPEC_BLOCK",
+    "name": "家里 Codex 接手：服务器与 Android/iOS 公共 KMP"
+  },
+  {
+    "id": "6:304",
+    "type": "SPEC_BLOCK",
+    "name": "AI 工作跟踪与接手入口"
+  },
+  {
+    "id": "6:306",
+    "type": "SPEC_BLOCK",
+    "name": "AI 任务状态表 · 第1/3卷"
+  },
+  {
+    "id": "6:312",
+    "type": "SPEC_BLOCK",
+    "name": "AI 工作结果日志 · 第1/5卷"
+  },
+  {
+    "id": "6:322",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 产品、业务场景与编码实施闭环复审"
+  },
+  {
+    "id": "6:324",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 系统架构与技术实施合同"
+  },
+  {
+    "id": "6:326",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 技术实施准入核对"
+  },
+  {
+    "id": "6:328",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 社区、领养与可信找猫 PRD · 第1/2卷"
+  },
+  {
+    "id": "6:332",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 中国市场策略与产品判断"
+  },
+  {
+    "id": "6:336",
+    "type": "SPEC_BLOCK",
+    "name": "Codex / Gemini 客户端协作交接"
+  },
+  {
+    "id": "6:338",
+    "type": "SPEC_BLOCK",
+    "name": "年龄与成年资格页面及接口（2026-10-25）"
+  },
+  {
+    "id": "6:340",
+    "type": "SPEC_BLOCK",
+    "name": "全端公共页面实施进展（2026-10-24）"
+  },
+  {
+    "id": "6:342",
+    "type": "SPEC_BLOCK",
+    "name": "高德原生与 Web 地图源码接入"
+  },
+  {
+    "id": "6:344",
+    "type": "SPEC_BLOCK",
+    "name": "高德寻宠地图接入与成本评估"
+  },
+  {
+    "id": "6:346",
+    "type": "SPEC_BLOCK",
+    "name": "Android 手机与平板功能续作"
+  },
+  {
+    "id": "6:348",
+    "type": "SPEC_BLOCK",
+    "name": "安卓手机与平板页面补齐"
+  },
+  {
+    "id": "6:350",
+    "type": "SPEC_BLOCK",
+    "name": "Android 手机／平板读取状态补全 · 2026-10-23"
+  },
+  {
+    "id": "6:352",
+    "type": "SPEC_BLOCK",
+    "name": "Android 手机／平板与服务端闭环续作"
+  },
+  {
+    "id": "6:354",
+    "type": "SPEC_BLOCK",
+    "name": "全量落地任务：2026-10-27 执行恢复点"
+  },
+  {
+    "id": "6:356",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 当前功能交付账本"
+  },
+  {
+    "id": "6:358",
+    "type": "SPEC_BLOCK",
+    "name": "部署、打包与安装运行入口（2026-10-25）"
+  },
+  {
+    "id": "6:360",
+    "type": "SPEC_BLOCK",
+    "name": "KMP 客户端依赖升级基线"
+  },
+  {
+    "id": "6:364",
+    "type": "SPEC_BLOCK",
+    "name": "功能交付矩阵"
+  },
+  {
+    "id": "6:366",
+    "type": "SPEC_BLOCK",
+    "name": "Android／Web Figma 页面实施与验证边界"
+  },
+  {
+    "id": "6:368",
+    "type": "SPEC_BLOCK",
+    "name": "发布来源流程与分享进入续作"
+  },
+  {
+    "id": "6:370",
+    "type": "SPEC_BLOCK",
+    "name": "Figma页面缺口核对与源码完善（2026-10-25）"
+  },
+  {
+    "id": "6:372",
+    "type": "SPEC_BLOCK",
+    "name": "Figma 独立页面续审与源码收口"
+  },
+  {
+    "id": "6:374",
+    "type": "SPEC_BLOCK",
+    "name": "监护邀请、关系核实与授权页面（2026-10-25）"
+  },
+  {
+    "id": "6:380",
+    "type": "SPEC_BLOCK",
+    "name": "大陆城市兼容与猫咪配图"
+  },
+  {
+    "id": "6:382",
+    "type": "SPEC_BLOCK",
+    "name": "Android / iOS 手机和平板实施记录"
+  },
+  {
+    "id": "6:384",
+    "type": "SPEC_BLOCK",
+    "name": "平板方向切换状态与UI组件续作"
+  },
+  {
+    "id": "6:386",
+    "type": "SPEC_BLOCK",
+    "name": "开发者平台注册进度与接续（2026-10-25）"
+  },
+  {
+    "id": "6:388",
+    "type": "SPEC_BLOCK",
+    "name": "私密线索页面与目击者会话续作"
+  },
+  {
+    "id": "6:390",
+    "type": "SPEC_BLOCK",
+    "name": "官方登录与账号关联源码（2026-10-25）"
+  },
+  {
+    "id": "6:394",
+    "type": "SPEC_BLOCK",
+    "name": "剩余编码续作与实际边界（2026-10-25）"
+  },
+  {
+    "id": "6:396",
+    "type": "SPEC_BLOCK",
+    "name": "SDK配置核对与公众号回调源码（2026-10-25）"
+  },
+  {
+    "id": "6:398",
+    "type": "SPEC_BLOCK",
+    "name": "远端同步、线索提交补页与后台管理设计"
+  },
+  {
+    "id": "6:400",
+    "type": "SPEC_BLOCK",
+    "name": "客户端代码任务拆分"
+  },
+  {
+    "id": "6:402",
+    "type": "SPEC_BLOCK",
+    "name": "Android UI 基础框架与组件维护规范"
+  },
+  {
+    "id": "6:404",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 法律与合规补充复审"
+  },
+  {
+    "id": "6:406",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 武汉／上海双城分物种准入、四方标准协议与运营 SOP 草案"
+  },
+  {
+    "id": "6:408",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 客户端交互交接索引"
+  },
+  {
+    "id": "6:410",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 冷启动、走失互助与登录规则增补"
+  },
+  {
+    "id": "6:412",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Design Memory · 第1/3卷"
+  },
+  {
+    "id": "6:420",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 新视觉与 Figma 学习稿"
+  },
+  {
+    "id": "6:424",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 法律复审对应设计增补"
+  },
+  {
+    "id": "6:426",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 六处操作与状态合同"
+  },
+  {
+    "id": "6:428",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 手机登录、注册与快捷登录规划"
+  },
+  {
+    "id": "6:430",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 业务闭环与交互补全合同"
+  },
+  {
+    "id": "6:432",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 2026-08 产品设计与 UX / 无障碍历史审计"
+  },
+  {
+    "id": "6:434",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 安全、年龄与业务生命周期合同"
+  },
+  {
+    "id": "6:436",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Stitch AI Rules"
+  },
+  {
+    "id": "6:438",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 真实性、披露与预约规范"
+  },
+  {
+    "id": "6:440",
+    "type": "SPEC_BLOCK",
+    "name": "M&D UI Alignment Guide"
+  },
+  {
+    "id": "6:442",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 产品、合规与 Figma 审查"
+  },
+  {
+    "id": "6:444",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 项目概览幻灯片内容 (Figma Slides Deck)"
+  },
+  {
+    "id": "6:446",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 敏捷看板与排期大纲 (FigJam Sprint Board)"
+  },
+  {
+    "id": "6:448",
+    "type": "SPEC_BLOCK",
+    "name": "手机按钮方向 01 / 02"
+  },
+  {
+    "id": "6:450",
+    "type": "SPEC_BLOCK",
+    "name": "全流程跨端布局与状态契约"
+  },
+  {
+    "id": "6:452",
+    "type": "SPEC_BLOCK",
+    "name": "新增平台适配缺项核对"
+  },
+  {
+    "id": "6:454",
+    "type": "SPEC_BLOCK",
+    "name": "全量跨端补齐执行记录"
+  },
+  {
+    "id": "6:456",
+    "type": "SPEC_BLOCK",
+    "name": "全量跨端逐项映射 · 第1/15卷"
+  },
+  {
+    "id": "6:486",
+    "type": "SPEC_BLOCK",
+    "name": "全量跨端设计交接"
+  },
+  {
+    "id": "6:488",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 浅色跨端设计计划"
+  },
+  {
+    "id": "6:490",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 浅色跨端设计评审"
+  },
+  {
+    "id": "6:492",
+    "type": "SPEC_BLOCK",
+    "name": "产品与合规设计完善交接"
+  },
+  {
+    "id": "6:494",
+    "type": "SPEC_BLOCK",
+    "name": "表情比例修正 · 2026-10-23"
+  },
+  {
+    "id": "6:496",
+    "type": "SPEC_BLOCK",
+    "name": "Figma 画布排版整理 · 2026-10-22"
+  },
+  {
+    "id": "6:498",
+    "type": "SPEC_BLOCK",
+    "name": "Figma 设计台账与产品文档全量对齐核查（2026-10-24）"
+  },
+  {
+    "id": "6:500",
+    "type": "SPEC_BLOCK",
+    "name": "清爽亲切 · 手机关键页应用"
+  },
+  {
+    "id": "6:502",
+    "type": "SPEC_BLOCK",
+    "name": "手机 V2 · Friendly 全量统一"
+  },
+  {
+    "id": "6:504",
+    "type": "SPEC_BLOCK",
+    "name": "全局未读设计交接"
+  },
+  {
+    "id": "6:506",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 手机互动图标与表情修订"
+  },
+  {
+    "id": "6:508",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 法律设计增补交接"
+  },
+  {
+    "id": "6:510",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 逻辑与设计完整性复审"
+  },
+  {
+    "id": "6:512",
+    "type": "SPEC_BLOCK",
+    "name": "六处逻辑修订交接"
+  },
+  {
+    "id": "6:514",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 手机端 Figma 本轮评审"
+  },
+  {
+    "id": "6:516",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 手机主版本 V2 · 中国大陆使用场景"
+  },
+  {
+    "id": "6:518",
+    "type": "SPEC_BLOCK",
+    "name": "Figma导航与规范补全 · 2026-10-23"
+  },
+  {
+    "id": "6:520",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 四端黑夜版 · Design 创作清单"
+  },
+  {
+    "id": "6:522",
+    "type": "SPEC_BLOCK",
+    "name": "平板横竖屏原型预览优化 · 2026-10-22"
+  },
+  {
+    "id": "6:524",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 宠友圈 · 手机设计方案"
+  },
+  {
+    "id": "6:526",
+    "type": "SPEC_BLOCK",
+    "name": "宠友圈四屏视觉稿提示"
+  },
+  {
+    "id": "6:528",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 自有宠物走失联动 · 手机设计方案"
+  },
+  {
+    "id": "6:530",
+    "type": "SPEC_BLOCK",
+    "name": "走失联动四屏视觉稿提示"
+  },
+  {
+    "id": "6:532",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Figma 学习稿交接"
+  },
+  {
+    "id": "6:534",
+    "type": "SPEC_BLOCK",
+    "name": "远端 Figma 整体展示核对"
+  },
+  {
+    "id": "6:536",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 晒宠、互动、私信与群聊设计计划"
+  },
+  {
+    "id": "6:538",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 手机社交与聊天交接"
+  },
+  {
+    "id": "6:540",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 手机表情与贴纸底部交互"
+  },
+  {
+    "id": "6:542",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 业务后台管理设计"
+  },
+  {
+    "id": "6:544",
+    "type": "SPEC_BLOCK",
+    "name": "领养、试养、交接与接回：2026-10-27"
+  },
+  {
+    "id": "6:546",
+    "type": "SPEC_BLOCK",
+    "name": "预约状态设计读取：2026-10-27"
+  },
+  {
+    "id": "6:548",
+    "type": "SPEC_BLOCK",
+    "name": "学习稿示意素材"
+  },
+  {
+    "id": "6:550",
+    "type": "SPEC_BLOCK",
+    "name": "快捷登录矢量位置稿"
+  },
+  {
+    "id": "6:552",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 猫咪贴纸生成记录"
+  },
+  {
+    "id": "6:554",
+    "type": "SPEC_BLOCK",
+    "name": "Noto Emoji artwork attribution"
+  },
+  {
+    "id": "6:556",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 普通手机版设计完整度审计"
+  },
+  {
+    "id": "6:558",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 手机端产品／设计文档覆盖复核"
+  },
+  {
+    "id": "6:560",
+    "type": "SPEC_BLOCK",
+    "name": "文档与新版设计一致性审查"
+  },
+  {
+    "id": "6:562",
+    "type": "SPEC_BLOCK",
+    "name": "业务后台设计到代码：2026-10-27"
+  },
+  {
+    "id": "6:564",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 后台运维设计 · 2026-10-25"
+  },
+  {
+    "id": "6:566",
+    "type": "SPEC_BLOCK",
+    "name": "Web 导航发布按钮设计"
+  },
+  {
+    "id": "6:570",
+    "type": "SPEC_BLOCK",
+    "name": "产品闭环修订与领养源码跟进"
+  },
+  {
+    "id": "6:572",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Go 服务架构决策"
+  },
+  {
+    "id": "6:574",
+    "type": "SPEC_BLOCK",
+    "name": "Android / iOS 接入前服务端核对"
+  },
+  {
+    "id": "6:576",
+    "type": "SPEC_BLOCK",
+    "name": "案件证据与数据清理续作"
+  },
+  {
+    "id": "6:578",
+    "type": "SPEC_BLOCK",
+    "name": "手机端对应的 Go 服务接口与运行交接"
+  },
+  {
+    "id": "6:580",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 技术运维控制台 · 2026-10-25"
+  },
+  {
+    "id": "6:582",
+    "type": "SPEC_BLOCK",
+    "name": "私密线索处理与独立会话合同"
+  },
+  {
+    "id": "6:584",
+    "type": "SPEC_BLOCK",
+    "name": "M&D / meow & doggie 服务端完整性审计与待完善清单（2026-10-24，2026-10-25 复核更新）"
+  },
+  {
+    "id": "6:586",
+    "type": "SPEC_BLOCK",
+    "name": "服务端优先完善与作业交接"
+  },
+  {
+    "id": "6:588",
+    "type": "SPEC_BLOCK",
+    "name": "服务端与KMP共享源码实施记录"
+  },
+  {
+    "id": "6:590",
+    "type": "SPEC_BLOCK",
+    "name": "独立来源声明合同与存储"
+  },
+  {
+    "id": "6:592",
+    "type": "SPEC_BLOCK",
+    "name": "上传落盘、进程恢复与过期回收续作"
+  },
+  {
+    "id": "6:594",
+    "type": "SPEC_BLOCK",
+    "name": "M&D v2 部署、运营与恢复交接手册"
+  },
+  {
+    "id": "6:596",
+    "type": "SPEC_BLOCK",
+    "name": "M&D UML与业务图谱"
+  },
+  {
+    "id": "6:598",
+    "type": "SPEC_BLOCK",
+    "name": "Noto Emoji artwork attribution"
+  },
+  {
+    "id": "6:600",
+    "type": "SPEC_BLOCK",
+    "name": "中国大陆城市目录"
+  },
+  {
+    "id": "6:602",
+    "type": "SPEC_BLOCK",
+    "name": "移动端字体来源"
+  },
+  {
+    "id": "6:604",
+    "type": "SPEC_BLOCK",
+    "name": "Android 手机／平板原生宿主"
+  },
+  {
+    "id": "6:606",
+    "type": "SPEC_BLOCK",
+    "name": "M&D 公共页面与组件"
+  },
+  {
+    "id": "6:608",
+    "type": "SPEC_BLOCK",
+    "name": "Noto Emoji artwork attribution"
+  },
+  {
+    "id": "6:610",
+    "type": "SPEC_BLOCK",
+    "name": "iOS 入口"
+  },
+  {
+    "id": "6:612",
+    "type": "SPEC_BLOCK",
+    "name": "M&D iPhone／iPad Compose宿主"
+  },
+  {
+    "id": "6:614",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Mobile"
+  },
+  {
+    "id": "6:616",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Web 消费端"
+  },
+  {
+    "id": "6:618",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Global DESIGN.md · 第1/2卷"
+  },
+  {
+    "id": "6:622",
+    "type": "SPEC_BLOCK",
+    "name": "M&D Global DESIGN.md · 第1/3卷"
+  }
+]

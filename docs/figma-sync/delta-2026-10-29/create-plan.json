@@ -1,0 +1,116 @@
+[
+  {
+    "path": "docs/CURRENT_BASELINE.md",
+    "title": "M&D 现行文档与源码基线",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/API_CATALOG.md",
+    "title": "M&D V2 API速查表",
+    "part": 1,
+    "parts": 2
+  },
+  {
+    "path": "docs/API_CATALOG.md",
+    "title": "M&D V2 API速查表",
+    "part": 2,
+    "parts": 2
+  },
+  {
+    "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+    "title": "M&D 产品、源码与验收状态矩阵",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+    "title": "M&D 设计交接索引",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/client/README.md",
+    "title": "M&D 客户端代码实施与完成标准",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+    "title": "默认主题、独立平板适配与验收",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/client/IMPLEMENTATION_PLAN.md",
+    "title": "客户端详细实施方案",
+    "part": 1,
+    "parts": 2
+  },
+  {
+    "path": "docs/client/IMPLEMENTATION_PLAN.md",
+    "title": "客户端详细实施方案",
+    "part": 2,
+    "parts": 2
+  },
+  {
+    "path": "docs/bmad/ux-design.md",
+    "title": "M&D 社区、领养与可信找猫 UX 规格",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+    "title": "M&D 全局未读与消息中心设计",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md",
+    "title": "消息事件分类、未读与待办对齐核对",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md",
+    "title": "M&D 后台按角色工作区详细设计",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md",
+    "title": "后台任务交互与失败恢复设计",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/design/figma-study/collaboration-2026-10-29/README.md",
+    "title": "协作退出与有限授权：既有 Figma 稿追踪补录",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md",
+    "title": "Figma设计与文档完善交付",
+    "part": 1,
+    "parts": 1
+  },
+  {
+    "path": "docs/DOCUMENTATION_CATALOG.md",
+    "title": "M&D 全仓文档目录",
+    "part": 1,
+    "parts": 2
+  },
+  {
+    "path": "docs/DOCUMENTATION_CATALOG.md",
+    "title": "M&D 全仓文档目录",
+    "part": 2,
+    "parts": 2
+  },
+  {
+    "path": "docs/figma-sync/README.md",
+    "title": "M&D Figma文档与图谱同步",
+    "part": 1,
+    "parts": 1
+  }
+]
