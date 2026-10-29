@@ -1,0 +1,639 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublishButton.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 724,
+          "text": ";"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 708,
+          "text": ";"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "window-policy-and-shell",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 38,
+          "text": "s"
+        },
+        {
+          "type": "ERROR",
+          "line": 55,
+          "text": "."
+        },
+        {
+          "type": "ERROR",
+          "line": 112,
+          "text": "->"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 28,
+          "text": "s"
+        },
+        {
+          "type": "ERROR",
+          "line": 45,
+          "text": "."
+        },
+        {
+          "type": "ERROR",
+          "line": 102,
+          "text": "->"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "new-title-branches",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InvitationStatus.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 100,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 221,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 269,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 323,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 512,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 539,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 552,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 580,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 632,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 658,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 687,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 703,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 903,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 938,
+          "text": ": Exception"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 97,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 217,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 265,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 302,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 474,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 501,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 514,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 542,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 594,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 620,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 649,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 665,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 865,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 900,
+          "text": ": Exception"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "state-models",
+          "errors": [],
+          "grammar_limitations": []
+        },
+        {
+          "label": "route-lifecycle",
+          "errors": [
+            {
+              "type": "ERROR",
+              "line": 28,
+              "text": "open"
+            }
+          ],
+          "grammar_limitations": [
+            {
+              "type": "ERROR",
+              "line": 28,
+              "text": "open"
+            }
+          ]
+        },
+        {
+          "label": "confirmation-and-outcome",
+          "errors": [],
+          "grammar_limitations": []
+        },
+        {
+          "label": "collaborator-loading",
+          "errors": [],
+          "grammar_limitations": []
+        },
+        {
+          "label": "invitation-detail-loading",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "web-client/src/core/invitation.ts",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/core/pages.ts",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/core/query.ts",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/ResourcePage.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/WorkflowEditor.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/CareCollaboration.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/App.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/InvitationPages.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/Records.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/components/PublishButton.tsx",
+      "errors": []
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/TaskLinks.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/SensitiveActionStore.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 79,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 98,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 133,
+          "text": ": OperationResultUnknown"
+        },
+        {
+          "type": "ERROR",
+          "line": 137,
+          "text": ":"
+        },
+        {
+          "type": "ERROR",
+          "line": 173,
+          "text": ": Exception"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 79,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 98,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 133,
+          "text": ": OperationResultUnknown"
+        },
+        {
+          "type": "ERROR",
+          "line": 137,
+          "text": ":"
+        },
+        {
+          "type": "ERROR",
+          "line": 159,
+          "text": ": Exception"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "matching-committed-receipt",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 131,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 153,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 206,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 220,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 492,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 569,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 811,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 900,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 1011,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 1118,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 1444,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 1487,
+          "text": ": Exception"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 131,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 153,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 206,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 220,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 491,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 568,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 810,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 899,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 1010,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 1117,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 1442,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 1485,
+          "text": ": Exception"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "notification-targets",
+          "errors": [],
+          "grammar_limitations": []
+        },
+        {
+          "label": "original-request-retry",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 279,
+          "text": ": MobileApiException"
+        },
+        {
+          "type": "ERROR",
+          "line": 280,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 300,
+          "text": ": MobileApiException"
+        },
+        {
+          "type": "ERROR",
+          "line": 301,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 418,
+          "text": "\"messages\"\n                else -> path.substringBefore('/')"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 279,
+          "text": ": MobileApiException"
+        },
+        {
+          "type": "ERROR",
+          "line": 280,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 300,
+          "text": ": MobileApiException"
+        },
+        {
+          "type": "ERROR",
+          "line": 301,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 416,
+          "text": "\"messages\"\n                else -> path.substringBefore('/')"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "receipt-id-and-unresolved-state",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/StatusComponents.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/core/router.ts",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/components/PurposeCheck.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/Recovery.tsx",
+      "errors": []
+    }
+  ],
+  "whole_file_pass": 24,
+  "isolated_processes": true,
+  "heap_limit_mb": 384,
+  "wasm_parallel_tasks": 1,
+  "wasm_tier_up": false,
+  "runtime_verified": false
+}

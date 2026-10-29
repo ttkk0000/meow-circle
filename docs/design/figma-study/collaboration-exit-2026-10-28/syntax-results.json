@@ -1,0 +1,321 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublishButton.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 724,
+          "text": ";"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 708,
+          "text": ";"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "window-policy-and-shell",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 38,
+          "text": "s"
+        },
+        {
+          "type": "ERROR",
+          "line": 55,
+          "text": "."
+        },
+        {
+          "type": "ERROR",
+          "line": 112,
+          "text": "->"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 28,
+          "text": "s"
+        },
+        {
+          "type": "ERROR",
+          "line": 45,
+          "text": "."
+        },
+        {
+          "type": "ERROR",
+          "line": 102,
+          "text": "->"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "new-title-branches",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InvitationStatus.kt",
+      "errors": []
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "errors": [
+        {
+          "type": "ERROR",
+          "line": 98,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 219,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 267,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 314,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 497,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 524,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 537,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 565,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 617,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 643,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 672,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 688,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 888,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 923,
+          "text": ": Exception"
+        }
+      ],
+      "baseline_errors": [
+        {
+          "type": "ERROR",
+          "line": 97,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 217,
+          "text": "open"
+        },
+        {
+          "type": "ERROR",
+          "line": 265,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 302,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 474,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 501,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 514,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 542,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 594,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 620,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 649,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 665,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 865,
+          "text": ": Exception"
+        },
+        {
+          "type": "ERROR",
+          "line": 900,
+          "text": ": Exception"
+        }
+      ],
+      "changed_fragments": [
+        {
+          "label": "state-models",
+          "errors": [],
+          "grammar_limitations": []
+        },
+        {
+          "label": "route-lifecycle",
+          "errors": [
+            {
+              "type": "ERROR",
+              "line": 28,
+              "text": "open"
+            }
+          ],
+          "grammar_limitations": [
+            {
+              "type": "ERROR",
+              "line": 28,
+              "text": "open"
+            }
+          ]
+        },
+        {
+          "label": "confirmation-and-outcome",
+          "errors": [],
+          "grammar_limitations": []
+        },
+        {
+          "label": "collaborator-loading",
+          "errors": [],
+          "grammar_limitations": []
+        }
+      ],
+      "whole_file_verified": false,
+      "baseline_same_error_signatures": true
+    },
+    {
+      "file": "web-client/src/core/invitation.ts",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/core/pages.ts",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/core/query.ts",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/ResourcePage.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/WorkflowEditor.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/features/CareCollaboration.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/App.tsx",
+      "errors": []
+    },
+    {
+      "file": "web-client/src/components/PublishButton.tsx",
+      "errors": []
+    }
+  ],
+  "whole_file_pass": 15,
+  "runtime_verified": false
+}

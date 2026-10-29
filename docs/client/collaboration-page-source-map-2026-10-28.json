@@ -1,0 +1,372 @@
+{
+  "date": "2026-10-28",
+  "base_head": "b269504ad0cd0e179d8108fe60b9073ab97e9c99",
+  "meaning": "Focused source branch review. No build, runtime, complete visual match, or whole 740-state completion is implied.",
+  "existing_designs": [
+    {
+      "key": "caretakerActive",
+      "design_roots": {
+        "phone": "240:368338",
+        "web": "311:379060",
+        "desktop": "311:379061",
+        "tabletP": "311:379062",
+        "tabletL": "311:379063"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / caretaker,accepted,recipient",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / caretaker,accepted,recipient",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerDeclined",
+      "design_roots": {
+        "phone": "240:368339",
+        "web": "311:379064",
+        "desktop": "311:379065",
+        "tabletP": "311:379066",
+        "tabletL": "311:379067"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / caretaker,declined",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / caretaker,declined",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerExpired",
+      "design_roots": {
+        "phone": "240:368342",
+        "web": "311:379076",
+        "desktop": "311:379077",
+        "tabletP": "311:379078",
+        "tabletL": "311:379079"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / caretaker,expired (pending expiration is separately action-gated)",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / caretaker,expired (pending expiration is separately action-gated)",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerInvite",
+      "design_roots": {
+        "phone": "240:368335",
+        "web": "311:379048",
+        "desktop": "311:379049",
+        "tabletP": "311:379050",
+        "tabletL": "311:379051"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "native_branch": "SocialFeature / Collaborators(kind=care)",
+      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "web_branch": "flow=invite,scope=caretaker",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerPending",
+      "design_roots": {
+        "phone": "240:368336",
+        "web": "311:379052",
+        "desktop": "311:379053",
+        "tabletP": "311:379054",
+        "tabletL": "311:379055"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / caretaker,pending,owner",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / caretaker,pending,owner",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerReceived",
+      "design_roots": {
+        "phone": "240:368337",
+        "web": "311:379056",
+        "desktop": "311:379057",
+        "tabletP": "311:379058",
+        "tabletL": "311:379059"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / caretaker,pending,recipient",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / caretaker,pending,recipient",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerRevoke",
+      "design_roots": {
+        "phone": "240:368340",
+        "web": "311:379068",
+        "desktop": "311:379069",
+        "tabletP": "311:379070",
+        "tabletL": "311:379071"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationConfirmationPage / caretaker,revoke,owner",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "InvitationActionTask / caretaker,revoke,owner",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerRevoked",
+      "design_roots": {
+        "phone": "240:368341",
+        "web": "311:379072",
+        "desktop": "311:379073",
+        "tabletP": "311:379074",
+        "tabletL": "311:379075"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / caretaker,revoked",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / caretaker,revoked",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "publisherCollabActive",
+      "design_roots": {
+        "phone": "245:370292",
+        "web": "311:379092",
+        "desktop": "311:379093",
+        "tabletP": "311:379094",
+        "tabletL": "311:379095"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / adoption_editor,accepted,recipient",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / adoption_editor,accepted,recipient",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "publisherCollabDeclined",
+      "design_roots": {
+        "phone": "245:370293",
+        "web": "311:379096",
+        "desktop": "311:379097",
+        "tabletP": "311:379098",
+        "tabletL": "311:379099"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / adoption_editor,declined",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / adoption_editor,declined",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "publisherCollabReceived",
+      "design_roots": {
+        "phone": "245:370291",
+        "web": "311:379088",
+        "desktop": "311:379089",
+        "tabletP": "311:379090",
+        "tabletL": "311:379091"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / adoption_editor,pending,recipient",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / adoption_editor,pending,recipient",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "publisherCollabRevoke",
+      "design_roots": {
+        "phone": "245:370294",
+        "web": "311:379100",
+        "desktop": "311:379101",
+        "tabletP": "311:379102",
+        "tabletL": "311:379103"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationConfirmationPage / adoption_editor,revoke,owner",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "InvitationActionTask / adoption_editor,revoke,owner",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "publisherCollabRevoked",
+      "design_roots": {
+        "phone": "245:370295",
+        "web": "311:379104",
+        "desktop": "311:379105",
+        "tabletP": "311:379106",
+        "tabletL": "311:379107"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationDetailContent / adoption_editor,revoked",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / adoption_editor,revoked",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    }
+  ],
+  "new_designs": [
+    {
+      "key": "caretakerLeaveConfirm",
+      "design_roots": {
+        "phone": "910:357846",
+        "web": "915:386338",
+        "desktop": "916:379927",
+        "tabletP": "916:1127483",
+        "tabletL": "916:1128048"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationConfirmationPage / caretaker,leave,recipient",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "InvitationActionTask / caretaker,leave,recipient",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerLeft",
+      "design_roots": {
+        "phone": "910:357867",
+        "web": "915:386431",
+        "desktop": "916:380024",
+        "tabletP": "916:1127549",
+        "tabletL": "916:1128147"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationOutcomePage / matching POST record; InvitationDetailContent / current GET left",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / current GET left, not original request proof",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "publisherLeaveConfirm",
+      "design_roots": {
+        "phone": "910:357887",
+        "web": "915:386523",
+        "desktop": "916:380120",
+        "tabletP": "916:1127614",
+        "tabletL": "916:1128245"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationConfirmationPage / adoption_editor,leave,recipient",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "InvitationActionTask / adoption_editor,leave,recipient",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "publisherLeft",
+      "design_roots": {
+        "phone": "910:357908",
+        "web": "915:386616",
+        "desktop": "916:380217",
+        "tabletP": "916:1127680",
+        "tabletL": "916:1128344"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "native_branch": "InvitationOutcomePage / matching POST record; InvitationDetailContent / current GET left",
+      "web_source": "web-client/src/features/InvitationPages.tsx",
+      "web_branch": "CollaborationInvitation / current GET left, not original request proof",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerWorkspace",
+      "design_roots": {
+        "phone": "910:357927",
+        "web": "915:386707",
+        "desktop": "916:380312",
+        "tabletP": "916:1127744",
+        "tabletL": "916:1128441"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "native_branch": "CareFeature / kind=care,canPost=true,care_stage!=compose",
+      "web_source": "web-client/src/features/CareCollaboration.tsx",
+      "web_branch": "readable context,can_post=true",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerReadOnly",
+      "design_roots": {
+        "phone": "910:357947",
+        "web": "915:386799",
+        "desktop": "916:380408",
+        "tabletP": "916:1127809",
+        "tabletL": "916:1128539"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "native_branch": "CareFeature / kind=care,canPost=false",
+      "web_source": "web-client/src/features/CareCollaboration.tsx",
+      "web_branch": "readable context,can_post=false",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "caretakerUnavailable",
+      "design_roots": {
+        "phone": "910:357967",
+        "web": "915:386891",
+        "desktop": "916:380504",
+        "tabletP": "916:1127874",
+        "tabletL": "916:1128637"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "native_branch": "CareUnavailableContent / missing context or context read failure; loading hides private content",
+      "web_source": "web-client/src/features/CareCollaboration.tsx",
+      "web_branch": "context error or context/list denied, including HTTP 410",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    },
+    {
+      "key": "publisherWorkspace",
+      "design_roots": {
+        "phone": "910:357987",
+        "web": "915:386983",
+        "desktop": "916:380600",
+        "tabletP": "916:1127939",
+        "tabletL": "916:1128735"
+      },
+      "native_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "native_branch": "SocialFeature / Collaborators,non-owner pet,only bio/photos",
+      "web_source": "web-client/src/features/WorkflowEditor.tsx",
+      "web_branch": "flow=introduction,non-owner,limited fields and media",
+      "source_branch_reviewed": true,
+      "visual_verified": false,
+      "runtime_verified": false
+    }
+  ],
+  "limitations": [
+    "Original 740-state index stays a dated source-family mapping; this map takes precedence only for the listed 13 existing states.",
+    "Eight new states are separately tracked; do not add 40 layouts to the 740 unique-state count.",
+    "Web left/ended view reads current record; original unknown command still requires recovery receipt.",
+    "Remote final refinements and cross-layout runtime/visual verification remain unfinished."
+  ]
+}

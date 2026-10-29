@@ -1,6 +1,6 @@
 # M&D 现行文档与源码基线
 
-更新：2026-10-28（Asia/Shanghai）。已包含邀请协作及后台角色批次，成果随本页所在Git提交保存，尚未推送。Git起点源码：`main@1fe5302e7eb21c5767b84505dea69f47481f8c5f`。本页取代各入口中更早的“当前数量”；带日期交接继续保留当时结果。
+更新：2026-10-28（Asia/Shanghai）。已拉取邀请协作及后台角色提交至 `main@b269504ad0cd0e179d8108fe60b9073ab97e9c99`；本轮设计与源码续作保留在未提交工作树，未推送。本页取代各入口中更早的“当前数量”；带日期交接继续保留当时结果。
 
 [Figma 文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3) · [完整文档目录](DOCUMENTATION_CATALOG.md) · [功能状态与发布边界](PRODUCT_AND_DELIVERY_MATRIX.md) · [UML 图谱](uml/README.md) · [同步清单](figma-sync/README.md)。
 
@@ -14,12 +14,14 @@
 | SQL 迁移 | 13 份，001–013 | [migrations](../migrations)，不含 backfill |
 | mobile 业务聚合表 | 45 张 | [Kind枚举](../internal/mobile/repository.go)；008通过SQL循环创建10张，不能只数CREATE TABLE字面量 |
 | 额外技术表 | mnd_ops_records、mnd_worker_checkpoints | 010 / 012，不计入45张mobile表 |
-| shared / clientUi 公共 Kotlin 文件 | 29 / 41 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件 |
+| shared / clientUi 公共 Kotlin 文件 | 29 / 43 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件；本批新增发布按钮与退出页面 |
 | FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |
 | Worker 接受的作业名 | 8 类 | [ValidJob](../internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |
 | Figma 消费者状态台账 | 740 个既有状态 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；另有业务后台13稿、运维14稿 |
 
-当前新增批次见[后台角色实现](client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；[source-baseline.json](figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。这些是源码统计，不是构建、联调或发布成功证据。
+当前新增批次见[设计与代码续作](client/CONTINUE_DESIGN_CODE_2026_10_28.md)、[后台角色实现](client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；五布局40份新增协作稿独立记账，最终细化受审批额度阻塞。[source-baseline.json](figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。这些是源码统计，不是构建、联调或发布成功证据。
+
+续作已补邀请详情／限定事项列表、退出／撤销全页、失权／410清理与Web试养／接回／预约完整核对；[本批13旧＋8新状态源码分支](client/collaboration-page-source-map-2026-10-28.json)单列，不升级740整体完成。最新Web90份TS/TSX／407本地引用；资源引用只读核对通过，最终语法器内存退出未计通过，未运行验收。
 
 ## 当前产品与平台口径
 

@@ -22,6 +22,9 @@
   --ink: #202329;
   --muted: #616771;
   --brand: #c84b3d;
+  --brand-pressed: #b13d30;
+  --button-focus: #626873;
+  --button-disabled: #eceef1;
   --quiet: #9e382a;
   --brand-soft: #fff1eb;
   --border: #e1e4e8;
@@ -160,9 +163,86 @@ small {
   background: var(--brand-soft);
   color: var(--quiet);
 }
-.nav-item.publish {
+.publish-button {
+  --publish-face-height: 40px;
+  --publish-pressed-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 104px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+}
+.publish-button__face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: var(--publish-face-height);
+  padding: 0 16px;
+  border-radius: 999px;
   background: var(--brand);
-  color: white;
+  color: var(--surface);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  white-space: nowrap;
+}
+.publish-button__icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  -webkit-mask: url("/app/assets/figma/circle-plus.svg") center / contain no-repeat;
+  mask: url("/app/assets/figma/circle-plus.svg") center / contain no-repeat;
+}
+.publish-button:hover:not(:disabled) .publish-button__face,
+.publish-button:active:not(:disabled) .publish-button__face {
+  background: var(--brand-pressed);
+}
+.publish-button:active:not(:disabled) {
+  transform: none;
+}
+.publish-button:active:not(:disabled) .publish-button__face {
+  height: var(--publish-pressed-height);
+}
+.publish-button:focus-visible {
+  outline: none;
+}
+.publish-button:focus-visible .publish-button__face {
+  outline: 2px solid var(--button-focus);
+}
+.publish-button:disabled {
+  opacity: 1;
+}
+.publish-button:disabled .publish-button__face {
+  background: var(--button-disabled);
+  color: var(--button-focus);
+}
+.publish-button--compact {
+  width: 56px;
+  height: 56px;
+}
+.publish-button--compact .publish-button__face {
+  gap: 4px;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 18px;
+}
+.publish-button--icon {
+  --publish-face-height: 36px;
+  --publish-pressed-height: 34px;
+  width: 48px;
+}
+.publish-button--icon .publish-button__face {
+  padding: 0 8px;
 }
 .shell-workspace {
   display: flex;
@@ -935,7 +1015,7 @@ dialog > header {
     align-items: flex-start;
     justify-content: space-around;
     background: var(--surface);
-    padding: 8px 4px max(12px, env(safe-area-inset-bottom));
+    padding: 8px 8px max(12px, env(safe-area-inset-bottom));
     min-height: 76px;
   }
   .bottom-nav .nav-item {
@@ -948,7 +1028,7 @@ dialog > header {
     min-width: 0;
     flex: 1;
     border-radius: 0;
-    padding: 0 4px;
+    padding: 0;
     background: transparent;
     min-height: 56px;
   }
@@ -958,6 +1038,11 @@ dialog > header {
     width: 20px;
     background: var(--quiet);
     margin-top: 2px;
+  }
+  .bottom-nav .publish-button {
+    flex: 1;
+    width: auto;
+    min-height: 56px;
   }
   .bottom-nav .badge {
     position: absolute;
@@ -1108,9 +1193,6 @@ dialog > header {
 }
 .feed-author {
   padding: 0 8px;
-}
-.feed-open .task-toolbar {
-  display: none;
 }
 @media (max-width: 1099px) {
   .module-menu {

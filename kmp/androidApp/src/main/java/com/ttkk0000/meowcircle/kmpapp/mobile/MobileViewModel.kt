@@ -96,13 +96,7 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
         if(linkLocked()) return
         if(link.owner != 0L && link.owner != store.state.value.user?.id) { dismissPendingLink(); return }
         baseRoute(link.kind,link.id)?.let { store.features.closeRoute(); store.open(it); dismissPendingLink(); return }
-        val feature = when(link.kind) {
-            "appointments" -> FeatureRoute(FeaturePage.Appointment,link.id)
-            "offers" -> FeatureRoute(FeaturePage.Offer,link.id)
-            "claims" -> FeatureRoute(FeaturePage.Claim,link.id)
-            "reviews" -> FeatureRoute(FeaturePage.Review,link.id)
-            else -> { dismissPendingLink(); return }
-        }
+        val feature = taskLinkFeature(TaskLinkTarget(link.kind,link.id)) ?: run { dismissPendingLink(); return }
         store.features.open(feature); dismissPendingLink()
     }
     private fun baseRoute(kind: String,id: Long): MobileDestination? = when {

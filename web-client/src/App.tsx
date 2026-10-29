@@ -34,7 +34,7 @@ import { Rules, ReadingPage, SettingsHome } from "./features/ReadingPages";
 import { Feed, PageEnd, Records, titles } from "./features/Records";
 import { ResourcePage, Member } from "./features/ResourcePage";
 import { CareCollaboration } from "./features/CareCollaboration";
-import { careReadOnlyReason, type CareContext } from "./core/care";
+import type { CareContext } from "./core/care";
 import { LeadInbox, LeadPage } from "./features/LeadPages";
 import { Chat } from "./features/chat";
 import { Recovery } from "./features/Recovery";
@@ -47,6 +47,7 @@ import {
 } from "./features/PermissionPages";
 import { NotificationPage } from "./features/NotificationPage";
 import { InboxReadAll } from "./components/InboxReadAll";
+import { PublishButton } from "./components/PublishButton";
 import { WorkflowEditor } from "./features/WorkflowEditor";
 import { workflows, workflowURL, type Context } from "./features/workflows";
 
@@ -181,6 +182,10 @@ export default function App() {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const module = moduleFor(path, u.searchParams);
+  const showPublishShortcut =
+    ["/", "/pets", "/mine", "/groups", "/notifications"].includes(path) ||
+    (path === "/messages" &&
+      ["interactions", "notices"].includes(u.searchParams.get("tab") ?? ""));
   const inbox = useQuery<Inbox>(session.authenticated ? "inbox-summary" : null);
   const task = ![
     "/",
@@ -228,20 +233,28 @@ export default function App() {
           M&amp;D
         </button>
         <nav aria-label="主导航">
-          {navigation.map(([to, label, icon]) => (
-            <button
-              type="button"
-              key={to}
-              className={`nav-item ${to === "/publish" ? "publish" : ""} ${to === "/" ? (path === "/" ? "selected" : "") : path.startsWith(to) ? "selected" : ""}`}
-              onClick={() => navigate(to)}
-            >
-              <Icon name={icon} />
-              {label}
-              {to === "/messages" ? (
-                <Badge count={inbox.data?.global_total} />
-              ) : null}
-            </button>
-          ))}
+          {navigation.map(([to, label, icon]) =>
+            to === "/publish" ? (
+              <PublishButton
+                key={to}
+                current={path === to}
+                onClick={() => navigate(to)}
+              />
+            ) : (
+              <button
+                type="button"
+                key={to}
+                className={`nav-item ${to === "/" ? (path === "/" ? "selected" : "") : path.startsWith(to) ? "selected" : ""}`}
+                onClick={() => navigate(to)}
+              >
+                <Icon name={icon} />
+                {label}
+                {to === "/messages" ? (
+                  <Badge count={inbox.data?.global_total} />
+                ) : null}
+              </button>
+            ),
+          )}
         </nav>
         <span className="brand-copy">meow &amp; doggie</span>
         <Button
@@ -270,6 +283,9 @@ export default function App() {
               </button>
             ) : null}
             <h2>{moduleTitles[module]}</h2>
+            {showPublishShortcut ? (
+              <PublishButton size="icon" onClick={() => navigate("/publish")} />
+            ) : null}
             <button
               type="button"
               className="toolbar-icon module-menu"
@@ -315,20 +331,29 @@ export default function App() {
       <nav className="bottom-nav" aria-label="手机主导航">
         {navigation
           .filter(([to]) => to !== "/cases")
-          .map(([to, label, icon]) => (
-            <button
-              type="button"
-              key={to}
-              className={`nav-item ${path === to ? "selected" : ""}`}
-              onClick={() => navigate(to)}
-            >
-              <Icon name={icon} />
-              {label}
-              {to === "/messages" ? (
-                <Badge count={inbox.data?.global_total} />
-              ) : null}
-            </button>
-          ))}
+          .map(([to, label, icon]) =>
+            to === "/publish" ? (
+              <PublishButton
+                key={to}
+                size="compact"
+                current={path === to}
+                onClick={() => navigate(to)}
+              />
+            ) : (
+              <button
+                type="button"
+                key={to}
+                className={`nav-item ${path === to ? "selected" : ""}`}
+                onClick={() => navigate(to)}
+              >
+                <Icon name={icon} />
+                {label}
+                {to === "/messages" ? (
+                  <Badge count={inbox.data?.global_total} />
+                ) : null}
+              </button>
+            ),
+          )}
       </nav>
       {login ? <AuthDialog onClose={() => setLogin(false)} /> : null}
       {menu ? (
@@ -546,30 +571,11 @@ function EditorRoute({ params }: { params: URLSearchParams }) {
   if (flow === "guardian") return <Guardians id={id} />;
   if (flow === "care" && care.data?.can_post && !care.error && !care.loading)
     return <WorkflowEditor flow={flow} context={{ kind, id, params }} />;
+  if (flow === "care" && carePath) return <CareCollaboration id={id} />;
   if (flow === "care")
     return (
       <TaskPage title="私密照护近况">
-        <QueryState
-          loading={care.loading}
-          error={care.error}
-          failure={care.failure}
-          readAt={care.readAt}
-          onRetry={() => {
-            if (carePath) void reload(carePath);
-          }}
-        >
-          {care.data && !care.loading ? (
-            <Notice title="当前仅可查阅">
-              {careReadOnlyReason(care.data)}
-              <RowLink
-                title="返回授权照护近况"
-                to={`/care-collaboration/${id}`}
-              />
-            </Notice>
-          ) : !carePath ? (
-            <Notice title="照护事项无效">请从获授权的照护事项进入。</Notice>
-          ) : null}
-        </QueryState>
+        <Notice title="照护事项无效">请从获授权的照护事项进入。</Notice>
       </TaskPage>
     );
   if (resource && (result.loading || !result.data))

@@ -21,6 +21,9 @@ val BrandFont: FontFamily @Composable get() = LocalBrandFont.current
 val PageHeadlineStyle: androidx.compose.ui.text.TextStyle @Composable get() = MaterialTheme.typography.headlineMedium.copy(fontSize = 28.sp,lineHeight = 40.sp,fontWeight = FontWeight.Bold)
 val ClientWarningSurface = Color(0xFFFFF5DE)
 val ClientSuccessSurface = Color(0xFFE8F4ED)
+val ClientPublishPressed = Color(0xFFB13D30)
+val ClientPublishDisabled = Color(0xFFECEEF1)
+val ClientFocusColor = Color(0xFF626873)
 
 @Composable fun MobileTheme(content: @Composable () -> Unit) {
     val brand = FontFamily(Font(Res.font.manrope, FontWeight.ExtraBold))

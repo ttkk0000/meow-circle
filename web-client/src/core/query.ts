@@ -47,7 +47,7 @@ export async function reload(path: string) {
   } catch (error) {
     if (!isAbort(error) && !abort.signal.aborted) {
       const denied =
-        error instanceof HttpError && [401, 403, 404].includes(error.status);
+        error instanceof HttpError && [401, 403, 404, 410].includes(error.status);
       record.state = {
         data: denied ? undefined : record.state.data,
         loading: false,
@@ -63,11 +63,25 @@ export async function reload(path: string) {
       notify(record);
     }
   }
+  return !abort.signal.aborted && !!record.state.data && !record.state.error;
 }
 export function invalidateQueries() {
   for (const record of entries.values()) {
     record.abort?.abort();
     record.state = empty;
+    notify(record);
+  }
+}
+// 清除已关闭的列表授权范围；保留明确拒绝，避免自动重复请求已失权的页面。
+export function discardQueryData(prefix: string) {
+  for (const [path, record] of entries) {
+    if (!path.startsWith(prefix) || record.state === empty) continue;
+    if (record.state.denied && !record.state.loading) continue;
+    record.abort?.abort();
+    record.abort = undefined;
+    record.state = record.state.denied
+      ? { ...record.state, data: undefined, loading: false, readAt: undefined }
+      : empty;
     notify(record);
   }
 }

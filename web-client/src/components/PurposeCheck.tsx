@@ -67,16 +67,24 @@ export function PurposeCheck({
   const [working, setWorking] = useState(false);
   const [error, setError] = useState("");
   const generation = useRef(0);
+  const grantCallback = useRef(onGrant);
+  grantCallback.current = onGrant;
+  const owner = api.session.user?.id ?? 0n;
   useEffect(() => {
     generation.current++;
+    setPassword("");
+    setCode("");
+    setPhone("");
+    setError("");
+    setWorking(false);
+    grantCallback.current("");
     return () => {
       generation.current++;
     };
-  }, [scope]);
+  }, [scope, owner]);
   const locked = busy || working;
   async function verify() {
     const current = generation.current;
-    const owner = api.session.user?.id ?? 0n;
     setWorking(true);
     setError("");
     onGrant("");
@@ -85,13 +93,16 @@ export function PurposeCheck({
         "auth/reauth",
         { method: "POST", owner, body: { scope, password, code } },
       );
-      if (current === generation.current) onGrant(result.reauth_token);
+      if (current === generation.current && api.session.user?.id === owner)
+        grantCallback.current(result.reauth_token);
     } catch (e) {
       if (current === generation.current) setError(explain(e));
     } finally {
-      setPassword("");
-      setCode("");
-      setWorking(false);
+      if (current === generation.current) {
+        setPassword("");
+        setCode("");
+        setWorking(false);
+      }
     }
   }
   return (

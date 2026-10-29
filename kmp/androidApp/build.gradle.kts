@@ -1,3 +1,4 @@
+import java.net.URI
 import java.util.Properties
 import java.security.MessageDigest
 import java.util.zip.ZipInputStream
@@ -37,7 +38,7 @@ val requireReleaseConfiguration = tasks.register("requireReleaseConfiguration") 
     doLast {
         check(releaseSigningReady) { "Release requires MND_ANDROID_KEYSTORE, KEY_ALIAS, STORE_PASSWORD and KEY_PASSWORD" }
         check(file(checkNotNull(releaseStore)).isFile) { "Release keystore is missing" }
-        val endpoint = java.net.URI(meowApiBaseUrl)
+        val endpoint = URI(meowApiBaseUrl)
         check(endpoint.scheme == "https" && !endpoint.host.isNullOrBlank() && !endpoint.host.endsWith(".invalid") && endpoint.host !in setOf("localhost", "127.0.0.1", "::1") && endpoint.userInfo == null && endpoint.rawQuery == null && (endpoint.path.isNullOrEmpty() || endpoint.path == "/") && endpoint.fragment == null) { "Release requires an HTTPS API endpoint without credentials" }
     }
 }
@@ -69,7 +70,7 @@ require(meowQqAppId == "00000000" || meowQqAppId.matches(Regex("[1-9][0-9]{4,19}
 abstract class PrepareOfficialQqSdk : DefaultTask() {
     @get:OutputFile abstract val output: RegularFileProperty
     @TaskAction fun prepare() {
-        val connection = java.net.URI("https://tangram-1251316161.file.myqcloud.com/files/20260414/143310b667ece8922594fbe866dabdef.zip").toURL().openConnection().apply {
+        val connection = URI("https://tangram-1251316161.file.myqcloud.com/files/20260414/143310b667ece8922594fbe866dabdef.zip").toURL().openConnection().apply {
             connectTimeout = 15000; readTimeout = 30000
         }
         val archive = connection.getInputStream().use { it.readNBytes(5 * 1024 * 1024 + 1) }
@@ -104,7 +105,7 @@ android {
         minSdk = 26
         targetSdk = 37
         manifestPlaceholders["allowCleartextTraffic"] = "false"
-        manifestPlaceholders["appLinkHost"] = java.net.URI(meowApiBaseUrl).host ?: "localhost"
+        manifestPlaceholders["appLinkHost"] = URI(meowApiBaseUrl).host ?: "localhost"
         manifestPlaceholders["amapApiKey"] = meowAmapKey
         buildConfigField("boolean", "AMAP_CONFIGURED", meowAmapKey.isNotEmpty().toString())
         buildConfigField("String", "WECHAT_APP_ID", "\"$meowWechatAppId\"")

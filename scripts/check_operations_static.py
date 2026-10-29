@@ -84,7 +84,7 @@ assert len(manifest["assets"]) == 10
 for asset in manifest["assets"]:
     path = root/asset["file"]
     data = path.read_bytes()
-    assert data and hashlib.sha256(data).hexdigest() == asset["sha256"], path
+    assert data and hashlib.sha256(data.replace(b'\r\n',b'\n')).hexdigest() == asset["sha256"], path
     svg = ET.fromstring(data)
     assert (svg.get("width"), svg.get("height"), svg.get("viewBox")) == ("24", "24", "0 0 24 24"), path
     assert (asset["width"], asset["height"]) == (24,24)

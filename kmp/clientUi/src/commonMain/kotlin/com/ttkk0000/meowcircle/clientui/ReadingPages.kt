@@ -17,7 +17,17 @@ private val dataReadingTypes=setOf("privacy","inventory","sdk","providers","rete
 fun featureTitle(s: FeatureState,actor: Long? = null): String {
     val route=s.route ?: return ""
     return when(route.page) {
-        FeaturePage.AdoptionWork -> if(route.kind == "care") "授权照护近况" else if(s.confirmation != null) s.confirmation.title else s.adoption?.let {adoptionProgressTitle(it,actor)} ?: route.page.title
+        FeaturePage.AdoptionWork -> {
+            if(route.kind == "care") { if(s.careContext == null && !s.loading && s.error != null) "照护授权不可用" else if(s.careContext?.canPost == false) "照护近况仅可查阅" else "授权照护近况" }
+            else s.confirmation?.title ?: s.adoption?.let {adoptionProgressTitle(it,actor)} ?: route.page.title
+        }
+        FeaturePage.Collaborators -> {
+            if(route.kind == "care") "邀请私密照护协作" else if(s.pet?.let { it.ownerId != actor } == true) "维护该宠物介绍" else route.page.title
+        }
+        FeaturePage.Invitations -> {
+            s.invitationOutcome?.let { if(it.data.scope == "caretaker") "已退出照护协作" else "已退出介绍协作" }
+                ?: s.confirmation?.takeIf { it.fullPage }?.title ?: s.invitation?.let { invitationTitle(it,actor) } ?: route.page.title
+        }
         FeaturePage.AppointmentEdit -> if(s.appointment?.state == "safety_hold") "安全核对与新安排" else route.page.title
         FeaturePage.Appointment -> when {
             s.forms[route]?.values?.get("appointment_stage") == "cancel" && s.unconfirmedResult -> "取消结果待确认"

@@ -34,7 +34,9 @@ suspend fun MobileApi.care(id: Long,input: CareInput): MobileRecord<CareBody> = 
 suspend fun MobileApi.createGroup(input: GroupInput): MobileRecord<GroupBody> = durablePost("groups",input,input.clientRequestId)
 suspend fun MobileApi.groupAction(id: Long,action: String,input: GroupAction): MobileRecord<GroupBody> = durablePost("groups/$id/$action",input,input.clientRequestId)
 suspend fun MobileApi.invite(input: InviteInput): MobileRecord<InvitationBody> = durablePost("invitations",input,input.clientRequestId)
-suspend fun MobileApi.invitations(cursor: Long = 0): MobilePage<InvitationBody> = get("invitations",mapOf("cursor" to "$cursor"))
+suspend fun MobileApi.invitations(cursor: Long = 0, referenceId: Long = 0): MobilePage<InvitationBody> =
+    get("invitations",mapOf("cursor" to "$cursor") + if(referenceId > 0) mapOf("reference_id" to "$referenceId") else emptyMap())
+suspend fun MobileApi.invitation(id: Long): MobileRecord<InvitationBody> = get("invitations/$id")
 suspend fun MobileApi.invitationAction(id: Long,action: String,input: VersionedAction): MobileRecord<InvitationBody> = receiptWrite("invitations/$id/$action",input,key = input.clientRequestId.ifBlank { newRequestKey() })
 suspend fun MobileApi.review(input: ReviewInput): MobileRecord<ReviewBody> {
     val command = if (input.clientRequestId.isEmpty()) input.copy(clientRequestId = newRequestKey()) else input

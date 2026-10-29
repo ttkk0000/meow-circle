@@ -143,6 +143,7 @@ function RecoveryCard({
     }
   }
   async function clear() {
+    if (draft.uncertain && receipt?.state !== "committed") return;
     setBusy(true);
     try {
       await clearDraft(draft);
@@ -153,7 +154,8 @@ function RecoveryCard({
       setBusy(false);
     }
   }
-  const to = receipt && resourceRoute(receipt.result_kind, receipt.result_id);
+  const committed = receipt?.state === "committed";
+  const to = committed && resourceRoute(receipt.result_kind, receipt.result_id);
   return (
     <Card title={draft.uncertain ? "原操作结果待核对" : "本机未提交草稿"}>
       <p className="caption muted">原编号 {draftCommandKey(draft)}</p>
@@ -172,7 +174,7 @@ function RecoveryCard({
               {to ? (
                 <Button onClick={() => navigate(to)}>查看真实结果记录</Button>
               ) : null}
-              {draft.original?.path === "source_declarations" ? (
+              {!committed ? <p>原操作仍待确认，请保留原编号与本机快照，稍后继续查询。</p> : draft.original?.path === "source_declarations" ? (
                 <Button onClick={() => navigate(draft.route)}>
                   回到原稿继续核对声明，保留正文与照片
                 </Button>

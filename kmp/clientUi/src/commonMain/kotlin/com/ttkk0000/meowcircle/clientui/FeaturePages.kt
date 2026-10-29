@@ -17,6 +17,16 @@ import com.ttkk0000.meowcircle.client.*
 fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
     val f = store.features
     val route = s.route ?: return
+    val sensitive by f.sensitive.state.collectAsState()
+    if(route.page == FeaturePage.DataRequests && sensitive.stage != SensitiveStage.Idle) {
+        SensitiveDialog(f,fullPage = true)
+        return
+    }
+    if(route.page == FeaturePage.Invitations && store.state.value.user != null) {
+        if(s.confirmation?.fullPage == true) { InvitationConfirmationPage(store,s); return }
+        val outcome = s.invitationOutcome
+        if(outcome != null && outcome.state == "left" && outcome.data.recipientId == store.state.value.user?.id) { InvitationOutcomePage(store,s,outcome); return }
+    }
     var replaceSaved by rememberSessionUiState("replaceSaved") { false }
     if(replaceSaved) MobileAlertDialog(onDismissRequest = { replaceSaved = false },title = { Text("读取本机已保存版本") },text = { Text("此账号所有表单的未保存输入将被放弃，读取本机已保存的表单和原附件。不会提交或重新上传。") },
         confirmButton = { TextButton({ replaceSaved = false; f.replaceWithSavedDrafts() }) { Text("放弃未保存输入并读取") } },dismissButton = { TextButton({ replaceSaved = false }) { Text("继续编辑") } })
@@ -51,11 +61,18 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
         if (s.unconfirmedResult) Text("此页保留了结果未知的操作，不能重复提交。可刷新核对实际记录；具备操作回执的请求请从待核对操作查询。",color = MaterialTheme.colorScheme.error)
         if (s.error != null) FeatureButton("重新读取", !s.busy) { f.reload() }
         if (s.pending.isNotEmpty() && route.page != FeaturePage.Recovery && !readingOnly) FeatureButton("核对原操作结果", !s.busy) { f.open(FeatureRoute(FeaturePage.Recovery)) }
+        if(route.page == FeaturePage.AdoptionWork && route.kind == "care" && (s.loading || s.readFailure != null && s.error != null)) {
+            if(s.loading) Text("正在核对当前照护权限，受限近况与编辑内容暂时收起。")
+            else CareUnavailableContent(store,s)
+            return@FeatureColumn
+        }
         val missingRecord = when (route.page) {
             FeaturePage.Member -> s.member == null
             FeaturePage.ProfileEdit -> s.profile == null
             FeaturePage.EntryEdit -> s.entry == null
-            FeaturePage.PetEdit, FeaturePage.Collaborators -> route.id > 0 && route.kind != "care" && s.pet == null
+            FeaturePage.Invitations -> route.id > 0 && s.invitation == null
+            FeaturePage.PetEdit -> route.id > 0 && s.pet == null
+            FeaturePage.Collaborators -> route.id > 0 && (if(route.kind == "care") s.adoption == null || s.careContext == null else s.pet == null)
             FeaturePage.Group -> s.group == null
             FeaturePage.Appointment, FeaturePage.AppointmentEdit -> route.id > 0 && s.appointment == null
             FeaturePage.CaseWork, FeaturePage.CaseEdit, FeaturePage.LeadInbox, FeaturePage.LeadSubmit -> route.id > 0 && s.case == null
@@ -70,6 +87,10 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             else -> false
         }
         if (missingRecord) {
+            if(route.page == FeaturePage.AdoptionWork && route.kind == "care" && !s.loading) {
+                CareUnavailableContent(store,s)
+                return@FeatureColumn
+            }
             if (s.loading) Text("正在读取当前记录…") else {
                 ReadFailureContent(s.readFailure, s.error ?: "记录可能已变化，或当前账号没有访问权限。", { f.reload() })
                 UnavailableTaskActions(store, s.readFailure)
@@ -92,16 +113,16 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
 
 @Composable fun FeatureDialogs(store: MobileStore, s: FeatureState) {
     val f = store.features
-    s.confirmation?.takeUnless { s.route?.page == FeaturePage.LeadSubmit || s.route?.page == FeaturePage.Appointment && f.field("appointment_stage") == "cancel" || s.route?.page == FeaturePage.AdoptionWork && s.route?.kind != "care" }?.let { pending ->
+    s.confirmation?.takeUnless { it.fullPage || s.route?.page == FeaturePage.LeadSubmit || s.route?.page == FeaturePage.Appointment && f.field("appointment_stage") == "cancel" || s.route?.page == FeaturePage.AdoptionWork && s.route?.kind != "care" }?.let { pending ->
         MobileAlertDialog(onDismissRequest = f::dismissConfirmation, title = { Text(pending.title) },
             text = { Column(Modifier.heightIn(max = 440.dp).verticalScroll(rememberScrollState())) { Text(pending.summary); s.error?.let { Text(it, color = MaterialTheme.colorScheme.error) } } },
             confirmButton = { TextButton(onClick = f::submitConfirmation, enabled = !s.busy && !s.conflict && !s.unconfirmedResult && s.pending.none { it.phase in listOf("sent", "result_unknown") }) { Text(if (s.busy) "正在提交" else "确认提交") } },
             dismissButton = { TextButton(onClick = f::dismissConfirmation, enabled = !s.busy) { Text("返回修改") } })
     }
-    SensitiveDialog(f)
+    if(s.route?.page != FeaturePage.DataRequests) SensitiveDialog(f)
 }
 
-@Composable private fun SensitiveDialog(f: MobileFeatureStore) {
+@Composable private fun SensitiveDialog(f: MobileFeatureStore, fullPage: Boolean = false) {
     val s by f.sensitive.state.collectAsState()
     val common by f.state.collectAsState()
     if (s.stage == SensitiveStage.Idle) return
@@ -110,14 +131,37 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
     var code by rememberSessionUiState("code", scope) { "" }
     var currentPhone by rememberSessionUiState("currentPhone", scope) { "" }
     var agreed by rememberSessionUiState("agreed", scope, s.intent) { false }
+    var step by rememberSessionUiState("dataStep", scope, s.intent) { "impact" }
     val busy = common.busy || s.stage in listOf(SensitiveStage.LoadingScope, SensitiveStage.Verifying, SensitiveStage.Submitting)
-    MobileAlertDialog(onDismissRequest = { if (!busy) f.sensitive.dismiss() }, title = { Text("核对本次操作") },
-        text = { Column(Modifier.heightIn(max = 520.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    val impact = fullPage && step == "impact" && s.scope != null && s.stage == SensitiveStage.Review
+    val dataType = (s.intent as? SensitiveIntent.DataRequest)?.input?.type ?: f.field("type","erase_fields")
+    val title = if(!fullPage) "核对本次操作" else when(s.stage) {
+        SensitiveStage.LoadingScope -> "正在核对请求范围"
+        SensitiveStage.Verifying -> "正在验证本次用途"
+        SensitiveStage.ReadyToSubmit -> { if(dataType == "close_account") "最终确认注销账号" else "最终确认删除范围" }
+        SensitiveStage.Submitting -> "请求正在提交"
+        SensitiveStage.ResultUnknown -> "请求结果待核对"
+        SensitiveStage.Complete -> "请求已受理"
+        SensitiveStage.Failed -> "本次请求尚未完成"
+        else -> if(impact) { if(dataType == "close_account") "核对注销影响" else "核对所选删除范围" } else dataTypeLabel(dataType)
+    }
+    fun closeReview() {
+        password = ""; code = ""; currentPhone = ""
+        val recovery = fullPage && s.stage in listOf(SensitiveStage.Complete,SensitiveStage.ResultUnknown)
+        f.sensitive.dismiss()
+        if(recovery) f.open(FeatureRoute(FeaturePage.Recovery)) else f.reload()
+    }
+    val ready = s.stage in listOf(SensitiveStage.Review,SensitiveStage.ReadyToSubmit) && !impact
+    val canSubmit = ready && agreed && !busy && (s.scope == null || s.stage == SensitiveStage.ReadyToSubmit)
+    val content: @Composable ColumnScope.() -> Unit = {
             Text(sensitiveSummary(s.intent))
+            if(fullPage) TaskNotice(if(dataType == "matters_assistance") "仅请求事项协助" else "只处理本次指定范围",
+                if(dataType == "matters_assistance") "协助请求不代替正式注销，不直接删除未选择资料，也不免除现有照护与交接责任。"
+                else "请求可先受理，未结事项与必要保全分别处理；用途验证不会自动提交，也不表示资料已经清除。")
             s.scope?.let { Text("用途：${purposeLabel(it.purpose)} · 版本 ${it.resourceVersion}\n本次验证仅适用于当前内容。验证成功后仍需主动确认提交。") }
-            if (s.scope != null && s.stage in listOf(SensitiveStage.Review, SensitiveStage.Failed)) {
-                OutlinedTextField(password, { password = it }, label = { Text("当前密码") }, visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(currentPhone, { currentPhone = it }, label = { Text("当前完整手机号（使用验证码时填写）") }, modifier = Modifier.fillMaxWidth())
+            if (!impact && s.scope != null && s.stage in listOf(SensitiveStage.Review, SensitiveStage.Failed)) {
+                OutlinedTextField(password, { password = it }, label = { Text("当前密码") }, visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),enabled = !busy)
+                OutlinedTextField(currentPhone, { currentPhone = it; code = "" }, label = { Text("当前完整手机号（使用验证码时填写）") }, modifier = Modifier.fillMaxWidth(),enabled = !busy)
                 OtpVerificationFields(
                     code = code,
                     onCodeChange = { code = it },
@@ -129,17 +173,36 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
                     canSend = currentPhone.isNotBlank(),
                     sendFirst = true,
                 ) { f.sendOTP(phone = currentPhone,purpose = "reauth") }
-                FeatureButton("验证本次用途", !busy && (password.isNotBlank() || code.isNotBlank())) { f.sensitive.verify(password, code); password = ""; code = "" }
+                FeatureButton("验证本次用途", !busy && (password.isNotBlank() || code.isNotBlank())) { agreed = false; f.sensitive.verify(password, code); password = ""; code = "" }
             }
-            if (s.stage == SensitiveStage.ReadyToSubmit || s.stage == SensitiveStage.Review && s.scope == null) CheckLine("我已核对上述对象、范围与内容", agreed, { agreed = it })
+            if (s.stage == SensitiveStage.ReadyToSubmit || s.stage == SensitiveStage.Review && s.scope == null) CheckLine("我已核对上述对象、范围与内容", agreed, { agreed = it },!busy)
             if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
             s.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
             if(s.errorCode == "identity_in_use") AccountConflictNotice()
-            if (s.stage == SensitiveStage.ResultUnknown) { Text("结果仍待核对，请保留原编号。暂未查到回执也不能据此重建请求。"); FeatureButton("核对原请求", true, f.sensitive::reconcile) }
+            if (s.stage == SensitiveStage.ResultUnknown) {
+                Text("结果仍待核对，请保留原编号。暂未查到回执也不能据此重建请求。")
+                if(s.intent != null) FeatureButton("核对原请求",!busy,f.sensitive::reconcile)
+                else FeatureButton("查看受限进度",!busy) { password = ""; code = ""; currentPhone = ""; f.sensitive.dismiss(); f.open(FeatureRoute(FeaturePage.Recovery)) }
+            }
             if (s.stage == SensitiveStage.Complete) Text("已提交。${s.resultId?.let { "记录 #$it" }.orEmpty()} 后续处理以服务端记录为准。")
-        } },
-        confirmButton = { if (s.stage in listOf(SensitiveStage.Review, SensitiveStage.ReadyToSubmit)) TextButton(onClick = { password = ""; code = ""; f.confirmSensitive(agreed) }, enabled = agreed && !busy && (s.scope == null || s.stage == SensitiveStage.ReadyToSubmit)) { Text("确认并提交") } },
-        dismissButton = { TextButton(onClick = { password = ""; code = ""; f.sensitive.dismiss(); f.reload() }, enabled = !busy) { Text(if (s.stage == SensitiveStage.Complete) "完成" else "关闭") } })
+    }
+    if(fullPage) Column(Modifier.fillMaxSize()) {
+        Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(MobileUi.pagePadding),verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Text(title,style = PageHeadlineStyle)
+            content()
+        }
+        Surface(color = MaterialTheme.colorScheme.surface) {
+            Column(Modifier.fillMaxWidth().padding(MobileUi.pagePadding),verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                if(impact) MndPrimaryButton("核对范围并继续用途验证",!busy,modifier = Modifier.fillMaxWidth()) { step = "verify" }
+                else if(ready) MndPrimaryButton(if(dataType == "close_account") "确认提交注销请求" else if(dataType == "matters_assistance") "仅提交事项协助请求" else "确认提交本次删除请求",
+                    canSubmit,loading = busy,modifier = Modifier.fillMaxWidth()) { password = ""; code = ""; f.confirmSensitive(agreed) }
+                MndSecondaryButton(if(s.stage in listOf(SensitiveStage.Complete,SensitiveStage.ResultUnknown)) "查看受限进度" else "返回修改范围",!busy,modifier = Modifier.fillMaxWidth()) { closeReview() }
+            }
+        }
+    } else MobileAlertDialog(onDismissRequest = { if (!busy) closeReview() }, title = { Text(title) },
+        text = { Column(Modifier.heightIn(max = 520.dp).verticalScroll(rememberScrollState()),verticalArrangement = Arrangement.spacedBy(12.dp),content = content) },
+        confirmButton = { if (ready) TextButton(onClick = { password = ""; code = ""; f.confirmSensitive(agreed) }, enabled = canSubmit) { Text("确认并提交") } },
+        dismissButton = { TextButton(onClick = { closeReview() }, enabled = !busy) { Text(if (s.stage == SensitiveStage.Complete) "完成" else "关闭") } })
 }
 private fun sensitiveSummary(intent: SensitiveIntent?): String = when (intent) {
     is SensitiveIntent.Account -> "账号安全：${mapOf("phone" to "更换手机号", "email" to "绑定邮箱", "password" to "更改密码", "unlink" to "解绑登录方式")[intent.action].orEmpty()}\n${intent.input.phone.ifBlank { intent.input.email }}${intent.input.identityId.takeIf { it > 0 }?.let { " · 登录方式 #$it" }.orEmpty()}\n成功后需要重新登录。"

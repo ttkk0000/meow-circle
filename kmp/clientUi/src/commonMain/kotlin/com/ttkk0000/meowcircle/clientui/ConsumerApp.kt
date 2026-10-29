@@ -28,14 +28,16 @@ import kotlinx.coroutines.launch
 import com.ttkk0000.meowcircle.client.*
 
 // 按当前窗口与输入占用选择布局；手机、平板始终共用同一个 Store。
-data class ClientWindowPolicy(val rail: Boolean, val master: Boolean, val contextPane: Boolean, val keyboard: Boolean = false)
+data class ClientWindowPolicy(val rail: Boolean, val master: Boolean, val contextPane: Boolean, val keyboard: Boolean = false,
+    val expandedRail: Boolean = false)
 
 fun clientWindowPolicy(width: Float, height: Float, fontScale: Float, keyboard: Boolean): ClientWindowPolicy {
     val scale = fontScale.coerceAtLeast(1f)
     val rail = width >= 680f
-    val readableWidth = (width - if (rail) 80f else 0f) / scale
+    val expandedRail = rail && width >= 1280f && width / scale >= 1000f
+    val readableWidth = (width - if (expandedRail) 176f else if (rail) 80f else 0f) / scale
     return ClientWindowPolicy(rail, width >= 980f && readableWidth >= 900f && height >= 480f && !keyboard,
-        width >= 1100f && readableWidth >= 1020f && height >= 600f && !keyboard, keyboard)
+        width >= 1100f && readableWidth >= 1020f && height >= 600f && !keyboard, keyboard, expandedRail)
 }
 
 @Composable
@@ -99,17 +101,29 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
     val showMaster = policy.master && features.route == null && state.tab in listOf(MobileTab.Adoption,MobileTab.Messages) && state.destination != MobileDestination.Home
     val showFeatureMaster = policy.master && features.route?.page in listOf(FeaturePage.Appointment,FeaturePage.Offer,FeaturePage.Claim,FeaturePage.Review)
     val showComposePreview = state.publicationConfirmation == null && policy.master && state.tab == MobileTab.Publish && features.route == null && state.destination == MobileDestination.Home
+    val showPublishShortcut = features.route?.page == FeaturePage.GroupDirectory ||
+        features.route == null && (state.destination == MobileDestination.Notifications ||
+            state.destination == MobileDestination.Home && state.tab in listOf(MobileTab.Community,MobileTab.Adoption,MobileTab.Profile))
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = { if (!policy.rail && !policy.keyboard && features.route == null && state.destination == MobileDestination.Home && state.tab != MobileTab.Publish) NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
-            MobileTab.entries.forEach { tab -> NavigationBarItem(selected = state.tab == tab, enabled = !navigationLocked,
+            MobileTab.entries.forEach { tab -> if (tab == MobileTab.Publish) {
+                MndPublishButton(PublishButtonSize.Compact, enabled = !navigationLocked, current = state.tab == tab,
+                    navigation = true, modifier = Modifier.weight(1f).heightIn(min = 56.dp)) { select(tab) }
+            } else NavigationBarItem(selected = state.tab == tab, enabled = !navigationLocked,
                 onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if (unread > 99) "99+" else unread.toString()) } }) { DesignIcon(tab.designIcon(),tab.label) } }, label = { Text(tab.label) }) }
         } }, contentWindowInsets = WindowInsets.safeDrawing,
     ) { padding ->
         Row(Modifier.fillMaxSize().padding(padding).imePadding()) {
-            if (policy.rail) NavigationRail(containerColor = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxHeight().verticalScroll(rememberScrollState())) {
+            if (policy.rail) NavigationRail(containerColor = MaterialTheme.colorScheme.surface, modifier = Modifier
+                .width(if (policy.expandedRail) 176.dp else 80.dp).fillMaxHeight().verticalScroll(rememberScrollState())) {
                 Text("M&D", Modifier.padding(vertical = 20.dp), fontFamily = BrandFont, fontWeight = FontWeight.ExtraBold)
-                MobileTab.entries.forEach { tab -> NavigationRailItem(selected = state.tab == tab, enabled = !navigationLocked,
+                MobileTab.entries.forEach { tab -> if (tab == MobileTab.Publish) {
+                    MndPublishButton(if (policy.expandedRail) PublishButtonSize.Sidebar else PublishButtonSize.Compact,
+                        enabled = !navigationLocked, current = state.tab == tab, navigation = true,
+                        modifier = Modifier.width(if (policy.expandedRail) 152.dp else 56.dp)
+                            .heightIn(min = if (policy.expandedRail) 48.dp else 56.dp)) { select(tab) }
+                } else NavigationRailItem(selected = state.tab == tab, enabled = !navigationLocked,
                     onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if(unread > 99) "99+" else "$unread") } }) { DesignIcon(tab.designIcon(),tab.label) } }, label = { Text(tab.label) }) }
             }
             if (policy.contextPane && !showMaster && !showFeatureMaster && !showComposePreview) ContextPane(store, state, features, Modifier.width(224.dp).fillMaxHeight(), enabled = !navigationLocked)
@@ -125,6 +139,8 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                         Text(if(features.route == null && state.publicationConfirmation != null) "发布前预览" else if(features.route?.page == FeaturePage.Adult) ageStageTitle(ageState.stage) else if(features.route!=null) featureTitle(features,state.user?.id) else if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                         if (features.route == null && state.destination == MobileDestination.Home && state.tab == MobileTab.Community) Text("meow & doggie", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
+                    if (showPublishShortcut) MndPublishButton(PublishButtonSize.Shortcut, enabled = !navigationLocked,
+                        modifier = Modifier.size(48.dp)) { select(MobileTab.Publish) }
                     if (state.user == null) TextButton(onClick = store::showLogin, enabled = !navigationLocked) { Text("登录") }
                     IconButton(onClick = { f.open(FeatureRoute(FeaturePage.Safety)) }, enabled = !navigationLocked) { Icon(Icons.Outlined.HelpOutline,"安全与隐私求助") }
                     IconButton(onClick = { if(features.route != null) f.reload() else if(state.destination == MobileDestination.Home) store.refreshHome() else store.reloadDetail(); store.refreshInbox() }, enabled = !navigationLocked) { Icon(Icons.Outlined.Refresh,"重新载入") }

@@ -27,7 +27,7 @@ store = read(shared+"MobileFeatureStore.kt")
 for guard in ["FeaturePage.LeadSubmit ->", "fun adoptLeadVersion()", "fun importLegacyLead()", "private fun adoptReadVersion", "form.copy(baseVersion=version)", "state.photos[old].orEmpty()", "!it.uploading"]: assert guard in store, guard
 root_ui = read(ui+"FeaturePages.kt")
 assert "FeaturePage.LeadInbox, FeaturePage.Lead, FeaturePage.LeadSubmit" in root_ui
-assert "takeUnless { s.route?.page == FeaturePage.LeadSubmit" in root_ui
+assert "takeUnless { it.fullPage || s.route?.page == FeaturePage.LeadSubmit" in root_ui
 assert 's.route?.page == FeaturePage.Appointment && f.field("appointment_stage") == "cancel"' in root_ui
 status = read(shared+"LeadStatus.kt")
 assert "leadSubmissionRecorded" in status and "lead.ownerId == actor" in status and "lead.version >= minimum" in status

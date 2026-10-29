@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, query, type Page, type RecordData } from "./api";
-import { reload, useQuery } from "./query";
+import { discardQueryData, reload, useQuery } from "./query";
 
 // 仅会话内保留列表翻页；账号epoch是缓存键的一部分，不落盘私密列表。
 const pageMemory = new Map<string, { cursor: bigint; rows: RecordData[] }>();
@@ -24,7 +24,8 @@ export function usePages(
     cursor: pageMemory.get(identity)?.cursor ?? 0n,
   });
   const cursor = page.identity === identity ? page.cursor : 0n;
-  const path = base + (base.endsWith("?") ? "" : "&") + "cursor=" + cursor;
+  const prefix = base + (base.endsWith("?") ? "" : "&");
+  const path = prefix + "cursor=" + cursor;
   const response = useQuery<Page | RecordData[]>(enabled ? path : null);
   const data = useMemo(
     () =>
@@ -39,9 +40,11 @@ export function usePages(
     rows: RecordData[];
   }>({ identity, rows: pageMemory.get(identity)?.rows ?? [] });
   useEffect(() => {
-    if (result.denied) {
+    if (!enabled || result.denied) {
       pageMemory.delete(identity);
       setCollected({ identity, rows: [] });
+      if (!enabled) setPage({ identity, cursor: 0n });
+      discardQueryData(prefix);
       return;
     }
     if (!result.data) return;
@@ -58,19 +61,20 @@ export function usePages(
         pageMemory.delete(pageMemory.keys().next().value!);
       return { identity, rows };
     });
-  }, [result.data, result.denied, identity, cursor]);
+  }, [enabled, result.data, result.denied, identity, cursor, prefix]);
   return {
     ...result,
     rows:
-      !result.denied && collected.identity === identity ? collected.rows : [],
-    retry: () => void reload(path),
+      enabled && !result.denied && collected.identity === identity ? collected.rows : [],
+    retry: () => { if (enabled) void reload(path); },
     more: () => {
-      if (result.data?.next_cursor && !result.loading)
+      if (enabled && result.data?.next_cursor && !result.loading)
         setPage({ identity, cursor: result.data.next_cursor });
     },
     refresh: () => {
+      if (!enabled) return;
       setPage({ identity, cursor: 0n });
-      void reload(base + (base.endsWith("?") ? "" : "&") + "cursor=0");
+      void reload(prefix + "cursor=0");
     },
     next: result.data?.next_cursor ?? 0n,
   };

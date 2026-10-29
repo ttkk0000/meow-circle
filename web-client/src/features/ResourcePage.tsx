@@ -32,7 +32,8 @@ import { ContentSubscription } from "../components/ContentSubscription";
 import { MediaGallery } from "../components/MediaGallery";
 import { CoarseMap } from "./MapPage";
 import { AppointmentDetail } from "./AppointmentPages";
-import { invitationActions } from "../core/invitation";
+import { invitationActions, invitationReview } from "../core/invitation";
+import { CollaborationInvitation } from "./InvitationPages";
 
 type ObjectValue = Record<string, unknown>;
 const objects = (value: unknown) =>
@@ -138,7 +139,7 @@ function actionOptions(
       add(
         "invitation-action",
         action,
-        action === "leave" ? "退出协作" : actionNames[action],
+        action === "leave" ? invitationReview(r, action).title : actionNames[action],
       ),
     );
   }
@@ -273,6 +274,8 @@ function ResourceBody({
   }
   if (kind === "appointments")
     return <AppointmentDetail row={r} actor={owner} />;
+  if (kind === "invitations" && ["caretaker", "adoption_editor"].includes(String(d.scope)))
+    return <CollaborationInvitation row={r} actor={owner} />;
   return (
     <TaskPage
       title={

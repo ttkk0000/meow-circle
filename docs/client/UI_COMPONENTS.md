@@ -1,6 +1,8 @@
 # Android UI 基础框架与组件维护规范
 
-> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-10-28 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／43份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
+2026-10-28共用 [MndPublishButton](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublishButton.kt)提供Sidebar／Compact／Shortcut三尺寸，保留至少48dp触控区、独立hover／pressed／focus／disabled和导航选中语义；ConsumerApp按可读窗口宽度选择展开侧栏或窄位。独立退出页组合既有TaskNotice和主次按钮，业务确认与真实回执保留在原Store。[本批设计来源、源码与静态边界](CONTINUE_DESIGN_CODE_2026_10_28.md)。
 
 2026-10-24现行入口已迁到独立 [clientUi](../../kmp/clientUi/README.md)：`ClientTheme`、`ClientMetrics`、`Components`、`PageComponents`、`FormLayout`、`TaskDialogs`、`LoadStates`、`StatusComponents`。Android／iOS／Desktop共用页面，平台端口各自实现；本页下方带2026-10-23／早期2026-10-24的说明是迁移前记录，其旧文件名应按[专项记录](ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)查现行源码。
 

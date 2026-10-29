@@ -150,9 +150,23 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
         work = scope.launch {
             try {
                 val result = when (intent) {
-                    is SensitiveIntent.DataRequest -> { val receipt = api.findDataRequest(intent.key(),intent.input.queryToken); "data_requests" to receipt.id }
-                    is SensitiveIntent.Rights -> { val receipt = api.findSafetyTicket(intent.key(),intent.token); "rights_cases" to receipt.id }
-                    else -> { val receipt = api.reconcileOperation(intent.key()); receipt.resultKind to receipt.resultId }
+                    is SensitiveIntent.DataRequest -> {
+                        val receipt = api.findDataRequest(intent.key(),intent.input.queryToken)
+                        check(receipt.id > 0 && receipt.type == intent.input.type) { "原请求回执尚待核对，请保留原编号" }
+                        "data_requests" to receipt.id
+                    }
+                    is SensitiveIntent.Rights -> {
+                        val receipt = api.findSafetyTicket(intent.key(),intent.token)
+                        check(receipt.id > 0 && receipt.type == intent.input.type) { "原事项回执尚待核对，请保留原编号" }
+                        "rights_cases" to receipt.id
+                    }
+                    else -> {
+                        val receipt = api.reconcileOperation(intent.key())
+                        check(receipt.clientRequestId == intent.key() && receipt.state == "committed") {
+                            "原请求仍未确认，请保留原编号继续核对"
+                        }
+                        receipt.resultKind to receipt.resultId
+                    }
                 }
                 if (revision == currentRevision) mutable.value = SensitiveActionState(SensitiveStage.Complete,clientRequestId = intent.key(),resultId = result.second,resultKind = result.first)
             } catch (e: CancellationException) { throw e }

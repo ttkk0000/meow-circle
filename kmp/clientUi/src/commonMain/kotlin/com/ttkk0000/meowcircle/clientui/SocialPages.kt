@@ -131,6 +131,8 @@ import com.ttkk0000.meowcircle.client.*
         }
         FeaturePage.Collaborators -> {
             Text(if (route.kind == "care") "照护协作者仅访问授权近况，不获得公开档案编辑和领养决定权限。" else "介绍协作者仅维护介绍与照片；领养决定仍由发布人处理。")
+            val canInvite = actor != null && !s.loading && s.error == null && (if(route.kind == "care") s.adoption?.data?.applicantId == actor && s.careContext?.canPost == true else s.pet?.ownerId == actor)
+            if(canInvite) {
             PeopleChoiceField(f,s,"选择协作者",listOfNotNull(f.field("invitee").toLongOrNull()),
                 { f.edit("invitee",it.firstOrNull()?.toString().orEmpty()) })
             FeaturePrimary("发出协作邀请",!s.busy && actor != null) {
@@ -145,27 +147,30 @@ import com.ttkk0000.meowcircle.client.*
                     }
                 }
             }
-            FeatureButton("查看／撤销邀请") { f.open(FeatureRoute(FeaturePage.Invitations)) }
+            }
+            FeatureButton(if(canInvite) "查看／撤销邀请" else "查看协作与退出",!s.busy) { f.open(FeatureRoute(FeaturePage.Invitations,kind = if(route.kind == "care") "caretaker" else "adoption_editor",peer = route.id)) }
             s.pet?.let { pet ->
                 FormField(f,s,"bio","领养介绍",pet.data.bio,5)
                 FeaturePhotos(store,s,pet.mediaIds)
-                FeatureButton("仅更新介绍与照片",!s.busy) {
+                FeatureButton("仅更新介绍与照片",!s.busy && !s.loading && s.error == null && !s.conflict && !s.unconfirmedResult) {
                     val input = IntroductionEdit(f.version(pet.version),f.field("bio",pet.data.bio),f.mediaIds(pet.mediaIds),newRequestKey())
                     f.confirm("更新领养介绍",input.bio) { f.api.introduction(pet.id,input); f.discardAndReload() }
                 }
             }
         }
         FeaturePage.Invitations -> {
-            s.invitations.items.forEach { row -> FeatureSection("${invitationScope(row.data.scope)} · ${stateLabel(row.state)}") {
-                Text(row.data.note)
-                Text("事项 #${row.data.targetId} · 接收人 #${row.data.recipientId}\n接受邀请截止 ${displayTime(row.data.expiresAt)}")
-                val actions = availableInvitationActions(row,actor)
-                actions.forEach { (action,label) -> FeatureButton(label,!s.busy && !s.loading) { val input = VersionedAction(row.version,clientRequestId = newRequestKey()); val note = if(action == "leave") "\n退出后不再拥有本次协作权限，原领养事项继续保留。" else ""; f.confirm(label,"${invitationScope(row.data.scope)} #${row.data.targetId}$note") { f.api.invitationAction(row.id,action,input); f.reload(); store.refreshHome() } } }
-                if (row.state == "accepted" && row.data.recipientId == actor && row.data.scope == "adoption_editor") FeatureButton("维护该宠物介绍") { f.open(FeatureRoute(FeaturePage.Collaborators,row.data.targetId)) }
-                if (row.state == "accepted" && row.data.recipientId == actor && row.data.scope == "caretaker") FeatureButton("查看授权照护近况") { f.open(FeatureRoute(FeaturePage.AdoptionWork,row.data.targetId,"care")) }
-                if (row.state == "accepted" && row.data.scope in listOf("group_member","group_request")) FeatureButton("进入群聊") { f.finishRoute(); store.open(MobileDestination.Chat(row.data.targetId,true)) }
-            } }
-            PageFooter(s.invitations, { f.reload() }, { f.reload(true) }, "暂无邀请", enabled = !s.loading && !s.busy)
+            if(route.id > 0) s.invitation?.let { InvitationDetailContent(store,s,it) }
+            else {
+                val visible = if(route.peer > 0) s.invitations.items.filter { it.data.targetId == route.peer && it.data.scope == route.kind } else s.invitations.items
+                if(route.peer > 0) TaskNotice("仅此事项的邀请与协作","事项 #${route.peer} · ${invitationScope(route.kind)}；仅显示当前账号可读取的邀请与授权。")
+                visible.forEach { row -> FeatureSection("${invitationScope(row.data.scope)} · ${stateLabel(row.state)}") {
+                    if(row.data.note.isNotBlank()) Text(row.data.note)
+                    Text("事项 #${row.data.targetId} · 邀请 #${row.id}")
+                    if(row.state == "pending") Text("接受邀请截止 ${displayTime(row.data.expiresAt)}")
+                    FeatureButton("查看邀请与当前协作",!s.busy && !s.loading) { f.open(FeatureRoute(FeaturePage.Invitations,row.id)) }
+                } }
+                PageFooter(s.invitations.copy(items = visible), { f.reload() }, { f.reload(true) }, "暂无邀请或授权", enabled = !s.loading && !s.busy)
+            }
         }
         FeaturePage.Content -> s.contentSubscriptions?.let { content ->
             FeatureSection("关注的作者") { content.data.followedUsers.forEach { id -> NavigationRow("宠友 #$id") { f.open(FeatureRoute(FeaturePage.Member,id)) } }; if(content.data.followedUsers.isEmpty()) Text("还没有关注的作者，可从动态的发布人资料发起关注。") }

@@ -1,0 +1,227 @@
+{
+  "date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261028-CONTINUE-DESIGN-CODE",
+  "base_head": "b269504ad0cd0e179d8108fe60b9073ab97e9c99",
+  "source_files": [
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublishButton.kt",
+      "sha256": "b11c3a0423959136cf264519aed8146921a285ff7ab41b62bbbb2c28643f38a9",
+      "bytes": 3764
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "sha256": "31baed2a0f95c273dc172de544980c505e553e70d736ad5d6308122412d7a4b7",
+      "bytes": 3332
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "sha256": "aff104cc51081b9c049d1a25fcd805b3c1b49129a7ab6ce5d4eaa7948100dcf0",
+      "bytes": 3378
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "sha256": "4fa2bfb98a0a5612a511ab8c2b34f56a00fb567e0fd9734f4756febb17e79f82",
+      "bytes": 63246
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "sha256": "a45011a2db68a3352f71fcaa37cde29f647d7e87a15bebcebfa533cff92198ac",
+      "bytes": 26510
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+      "sha256": "b46a3033c1331938c11702051495dfdade2d733f44ace717d4a24f868f73e9f9",
+      "bytes": 15483
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256": "430d8600ecca11eaf91a63eb448728aa3f65ac740d0d0f7fd1ebc825f014f9df",
+      "bytes": 20869
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "sha256": "977a74092f01a7cc0075aa5dc336dddae85a9ffa975794dd02dbbe4acf68d76e",
+      "bytes": 28864
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InvitationStatus.kt",
+      "sha256": "425f516e01a9a47ac3854e08d61d2a11d90297cc8e4554e6b0d2a202a9e6db4e",
+      "bytes": 2808
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "47d31c770522d67116209a2714b929be70ffb2c53a6ad0681771b1bc34518d82",
+      "bytes": 69856
+    },
+    {
+      "path": "web-client/src/core/invitation.ts",
+      "sha256": "344359cde44ecc3789b04001321ae76f2af8583c755a0eeb1705f32ddf95cdc2",
+      "bytes": 2827
+    },
+    {
+      "path": "web-client/src/core/pages.ts",
+      "sha256": "23e7863b7dea3c75396711c080bc4914d245e635f98ef969dc798cb1fef4d73b",
+      "bytes": 3165
+    },
+    {
+      "path": "web-client/src/core/query.ts",
+      "sha256": "e8e2ada85948820f0d3cb7fe5b3fa4f6d2cc30cde63597a1afea4d909f443b40",
+      "bytes": 3228
+    },
+    {
+      "path": "web-client/src/features/ResourcePage.tsx",
+      "sha256": "fa45f3b15b4b8a73b02beceb50d7431815b1531349cdc1a3bafcb5ac34c56e2c",
+      "bytes": 28459
+    },
+    {
+      "path": "web-client/src/features/WorkflowEditor.tsx",
+      "sha256": "b23432a548f0fbf44587c5bc738cd58fa561d3f2a951ba1e05ef96d62c960730",
+      "bytes": 67007
+    },
+    {
+      "path": "web-client/src/features/CareCollaboration.tsx",
+      "sha256": "aa8de9ca94754856c49b8572c163df66c87925ebfb91bafda17f12d400afc140",
+      "bytes": 2881
+    },
+    {
+      "path": "web-client/src/App.tsx",
+      "sha256": "759a557c38fdeef6423f054cc37eed03de722c6830c24f8124d1287d404175c5",
+      "bytes": 28691
+    },
+    {
+      "path": "web-client/src/components/PublishButton.tsx",
+      "sha256": "1d5433054e0bc1b089d81eadd7b06daa9bdae3f496e9811f1847290227356dd3",
+      "bytes": 717
+    },
+    {
+      "path": "web-client/src/styles.css",
+      "sha256": "d7f305f0b1bbd13f78aced8a38e944216feda5f129b8c34f966054a0ce8357a8",
+      "bytes": 28386
+    },
+    {
+      "path": "scripts/check_client_ui_static.py",
+      "sha256": "e8f5403034ce8baca7cb59d333c8d38e497265f253a3c7734e932e0cd299ba1f",
+      "bytes": 7361
+    },
+    {
+      "path": "scripts/check_web_client_static.py",
+      "sha256": "166811e5a654ba8ad99759ad53ebdd3bccb4c619a5fc91d654fb2e7a5b344990",
+      "bytes": 4741
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/publish-circle-plus.svg",
+      "sha256": "eb00d98cca4b369bf6412baf0cae10c96cdd8d965edf7fd20d5f1b7b7dc5c60c",
+      "bytes": 893
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/publish-circle-plus-disabled.svg",
+      "sha256": "390bfea0579e2bdc92aa0adaa7177fb24ed52812c13f23c30a23b8fa15ca7342",
+      "bytes": 893
+    }
+  ],
+  "checks": {
+    "client_ui": {
+      "chunk_id": "639719",
+      "wall_time_seconds": 1.1351014,
+      "exit_code": 0,
+      "original_token_count": 48,
+      "output": "公共UI只读核对：43份公共源码、48个功能分派、3套平台端口、128枚Noto原图、22枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。\r\n"
+    },
+    "web_client": {
+      "chunk_id": "8230a5",
+      "wall_time_seconds": 1.8383927,
+      "exit_code": 0,
+      "original_token_count": 41,
+      "output": "Web只读检查：89份TS/TSX、399个本地引用、143份schema、22枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。\r\n"
+    },
+    "syntax": {
+      "exit_code": 0,
+      "files": 18,
+      "whole_file_pass": 15,
+      "result": "../design/figma-study/collaboration-exit-2026-10-28/syntax-results.json",
+      "limitations": [
+        {
+          "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+          "baseline_same_error_signatures": true,
+          "fragments": [
+            {
+              "label": "window-policy-and-shell",
+              "errors": [],
+              "grammar_limitations": []
+            }
+          ]
+        },
+        {
+          "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+          "baseline_same_error_signatures": true,
+          "fragments": [
+            {
+              "label": "new-title-branches",
+              "errors": [],
+              "grammar_limitations": []
+            }
+          ]
+        },
+        {
+          "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+          "baseline_same_error_signatures": true,
+          "fragments": [
+            {
+              "label": "state-models",
+              "errors": [],
+              "grammar_limitations": []
+            },
+            {
+              "label": "route-lifecycle",
+              "errors": [
+                {
+                  "type": "ERROR",
+                  "line": 28,
+                  "text": "open"
+                }
+              ],
+              "grammar_limitations": [
+                {
+                  "type": "ERROR",
+                  "line": 28,
+                  "text": "open"
+                }
+              ]
+            },
+            {
+              "label": "confirmation-and-outcome",
+              "errors": [],
+              "grammar_limitations": []
+            },
+            {
+              "label": "collaborator-loading",
+              "errors": [],
+              "grammar_limitations": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "assets": {
+    "svg_new": 2,
+    "svg_modified": 0,
+    "line_endings": "SVG-only CRLF -> LF comparison; binary resources remain exact",
+    "noto_cross_copy_count": 128,
+    "normalized_mismatch_count": 0
+  },
+  "figma": {
+    "saved_new_roots": 40,
+    "visible_links_audited": 241,
+    "target_problems": 0,
+    "final_refinements_executed": false,
+    "status": "../design/figma-study/collaboration-exit-2026-10-28/completion-status.json"
+  },
+  "build_verified": false,
+  "typecheck_verified": false,
+  "test_executed": false,
+  "runtime_verified": false,
+  "commit_created": false,
+  "pushed": false
+}

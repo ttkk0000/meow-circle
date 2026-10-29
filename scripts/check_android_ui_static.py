@@ -53,7 +53,8 @@ assert not re.search(r"\b(?:MobileStore|MobileApi|LaunchedEffect|rememberSaveabl
 names = set(re.findall(r"fun\s+(Mnd\w+)\s*\(", components))
 assert names == {"MndForm", "MndSection", "MndPrimaryButton", "MndSecondaryButton", "MndTextField", "MndRichTextField", "MndChoiceGroup", "MndCheckLine", "MndScreenTitle", "MndActionCard"}
 all_ui = "\n".join(source.values())
-assert set(re.findall(r"\b(Mnd\w+)\s*\(", all_ui)) <= names | {"MndApplication"}
+assert 'fun MndPublishButton(' in source["PublishButton.kt"]
+assert set(re.findall(r"\b(Mnd\w+)\s*\(", all_ui)) <= names | {"MndApplication", "MndPublishButton"}
 metrics = source["ClientMetrics.kt"]
 for value in ("actionHeight = 48.dp", "cardRadius = 16.dp", "contentWidth = 820.dp", "stickerSize = 144.dp"):
     assert value in metrics, value

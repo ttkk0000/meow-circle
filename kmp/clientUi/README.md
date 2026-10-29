@@ -1,14 +1,15 @@
 # M&D 公共页面与组件
 
-> **2026-10-27 现行入口**：[源码与文档基线](../../docs/CURRENT_BASELINE.md) · [产品／交付状态](../../docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../../docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-10-28 现行入口**：[源码与文档基线](../../docs/CURRENT_BASELINE.md) · [产品／交付状态](../../docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../../docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／43份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
 
 此模块供 Android 手机／平板、iPhone／iPad 与 Compose Desktop 复用消费者页面。业务、权限、版本、幂等和草稿合同仍只在 `shared/client`；Web 使用自己的 React DOM，按同一设计及 v2 合同实现。
 
 - `ConsumerApp`：五主入口、详情、聊天与当前窗口布局。一个窗口仅有一个 `MobileStore`，改变布局不另建业务状态。
+- `PublishButton`：Figma侧栏／窄位／快捷三尺寸药丸与原白圈加号，至少48dp触控区及五状态；`InvitationPages`：本人退出的范围确认和真实回执结果。2026-10-28[续作与静态边界](../../docs/client/CONTINUE_DESIGN_CODE_2026_10_28.md)。
 - `ClientTheme`／`ClientMetrics`：Figma V2 默认浅色、Noto Sans SC／Manrope、16 卡片、48 操作、820 正文、144 表情区域。
 - `Components`：10 个无 Store 的 primitive。
 - `PageComponents`／`FormLayout`／`TaskDialogs`／`LoadStates`：持久任务操作、表单分组、主从列表、选择器、弹层和加载／失败／空／分页。
-- `SocialPages`／`CarePages`／`OfferPages`／`AccountPages`：42 个扩展功能入口，保持已有服务器资格、当前版本、范围确认与未知结果恢复逻辑。
+- `SocialPages`／`CarePages`／`OfferPages`／`AccountPages`及后续领域页：48 个FeaturePage扩展入口，保持已有服务器资格、当前版本、范围确认与未知结果恢复逻辑。
 - `GuardianPages`：短时邀请、独立本人领取、关系核实后范围确认、撤回和保护设置；不把手机号或领取动作当作监护关系。
 - `AgePages`：年龄范围、成年用途告知、通道／原请求状态及返回原任务核对；默认通道未配置不放行。
 - `ProviderAuthPages`：官方授权、主动账号选择／创建、用途验证与关联确认，登录与安全设置共用。

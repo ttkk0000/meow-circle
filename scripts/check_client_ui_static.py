@@ -69,13 +69,14 @@ for name in ["manrope", "noto_sans_sc"]:
 manifest = json.loads((root / "web-client/public/assets/figma/manifest.json").read_text())
 for item in manifest["assets"]:
     path = assets / "files/figma" / Path(item["file"]).name
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"], path
+    raw = path.read_bytes()
+    assert item["sha256"] in {hashlib.sha256(raw).hexdigest(), hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest()}, path
 catalog = json.loads((root / "internal/mobile/catalog.json").read_text())
 for item in catalog["emoji"]:
     assert re.fullmatch(r"/api/v2/expression-assets/v1/emoji_u[a-f0-9_]+\.svg", item["asset_url"])
     name = item["asset_url"].split("/")[-1]
     path = assets / "files/emoji" / name
-    assert path.read_bytes() == (root / "internal/platform/mobileapi/assets/v1" / name).read_bytes(), name
+    assert path.read_bytes().replace(b"\r\n", b"\n") == (root / "internal/platform/mobileapi/assets/v1" / name).read_bytes().replace(b"\r\n", b"\n"), name
     assert ET.parse(path).getroot().attrib.get("viewBox"), path
 assert 'EmojiPhoto(single,Modifier.size(72.dp))' in sources["ClientAssets.kt"]
 assert "Modifier.size(MobileUi.stickerSize)" in sources["ClientAssets.kt"]

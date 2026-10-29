@@ -17,7 +17,7 @@ care=read(ui+'CarePages.kt')
 assert 'AdoptionProgressPage(store,s,record)' in care
 assert 'f.confirm(label,returnPlanReview(plan,body))' in care
 assert 'FormField(f,s,"trialTerms"' not in care
-assert 'body.careStageAvailable(record.state)' in care
+assert 'actor == body.applicantId && s.careContext?.canPost == true' in care
 server=read('internal/mobile/rescue.go')
 for guard in ['trial_requires_contract_revision','func carePostingOpen','!carePostingOpen(p, a, s.Now())','a.CompletedAt == nil','a.CompletedAt.Add(30*24*time.Hour)','allowed := actor == a.ApplicantID','s.collaborator(tx, "caretaker", adoptionID, actor)']:
     assert guard in server,guard

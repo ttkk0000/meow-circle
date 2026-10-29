@@ -4,7 +4,8 @@ import {
   AppointmentVersionReview,
 } from "./AppointmentPages";
 import { canConfirmAppointment } from "../core/appointment";
-import { invitationActions } from "../core/invitation";
+import { invitationActions, invitationReview } from "../core/invitation";
+import { InvitationActionTask } from "./InvitationPages";
 import { careReadOnlyReason, type CareContext } from "../core/care";
 import {
   adoptionActionOptions,
@@ -908,7 +909,7 @@ export function WorkflowEditor({
       (!agreed && !(flow === "lead" && leadConfirmed)) ||
       busy ||
       (prepared.scope && !grant) ||
-      !latest.current
+      !latest.current || latest.current.uncertain || conflict || blocked.current
     )
       return;
     if (
@@ -990,11 +991,9 @@ export function WorkflowEditor({
     } catch (error) {
       if (!currentTask()) return;
       setCommandCode(error instanceof HttpError ? error.code : "");
-      if (
-        !sent ||
-        (error instanceof HttpError &&
-          [400, 401, 403, 404, 409, 422, 429].includes(error.status))
-      ) {
+      const knownFailure = !sent || (error instanceof HttpError &&
+        [400, 401, 403, 404, 409, 422, 429].includes(error.status));
+      if (knownFailure) {
         if (latest.current) {
           replace({ ...latest.current, uncertain: false, original: undefined });
           await persist().catch(() => {});
@@ -1009,7 +1008,7 @@ export function WorkflowEditor({
         setSourceRestricted(true);
       if (error instanceof HttpError && error.status === 409) setConflict(true);
       setError(
-        sent ? "原操作已发送，请先核对结果。" + explain(error) : explain(error),
+        sent && !knownFailure ? "原操作已发送，请先核对结果。" + explain(error) : explain(error),
       );
       if (flow === "lead") setLeadStage("failure");
       setPrepared(undefined);
@@ -1096,6 +1095,17 @@ export function WorkflowEditor({
         />
       </Card>
     ) : null;
+  if (flow === "invitation-action" && ["leave", "revoke"].includes(context.params.get("action") ?? "") &&
+      context.kind === "invitations" && context.record && draft && !restoring &&
+      ["caretaker", "adoption_editor"].includes(String(context.record.data.scope)))
+    return (
+      <InvitationActionTask row={context.record} action={context.params.get("action") as "leave" | "revoke"} baseVersion={draft.baseVersion} requestId={draft.requestId}
+        prepared={!!prepared} uncertain={!!draft.uncertain} busy={busy} error={error}
+        conflict={conflict || blocked.current || !invitationActions(currentRecord ?? context.record, owner).includes(context.params.get("action") ?? "")}
+        agreed={agreed} onAgree={setAgreed} onReview={() => void prepare()} onSubmit={() => void submit()}
+        onEdit={() => { if(!busy && !draft.uncertain) { setPrepared(undefined); setAgreed(false); setError(""); } }}
+        conflictActions={<>{conflictReview}{blocked.current ? <Notice title="此草稿已由其它页面更新">请返回本机草稿核对已保存版本；本页不会覆盖或提交。<RowLink title="查看本机草稿" to="/recovery" /></Notice> : null}</>} />
+    );
   if (
     flow === "appointment-action" &&
     context.params.get("action") === "cancel" &&
@@ -1311,6 +1321,58 @@ export function WorkflowEditor({
         }}
       />
     );
+  const preparedReview = prepared ? (
+    <>
+      <Facts value={prepared.body} />
+      {flow === "return-action" && context.record ? (
+        <ReturnActionReview row={context.record} revision={integer(prepared.body.revision)} />
+      ) : null}
+      {flow === "adoption-action" && context.record ? (
+        <AdoptionActionReview row={context.record} action={context.params.get("action") ?? ""} />
+      ) : null}
+      {flow === "appointment-action" && context.record && ["confirm", "restore"].includes(context.params.get("action") ?? "") ? (
+        <AppointmentVersionReview row={context.record}
+          revision={context.params.get("action") === "restore" ? integer(context.params.get("revision")) : undefined} />
+      ) : null}
+      {flow === "contract-accept" && Array.isArray(context.record?.data.contracts) ? (
+        <Facts value={(context.record!.data.contracts as Record<string, unknown>[])
+          .find(v => integer(v.number) === integer(prepared.body.revision))?.terms} />
+      ) : null}
+      {prepared.scope ? <PurposeCheck scope={prepared.scope} busy={busy} onGrant={setGrant} /> : null}
+      <Check checked={agreed} onChange={setAgreed} disabled={busy}>
+        我已核对对象、范围、版本与上述内容
+      </Check>
+      {error ? <Notice title={error} error /> : null}
+    </>
+  ) : null;
+  const reviewAction = context.params.get("action") ?? "";
+  const fullPageReview = flow === "data" || flow === "return-action" ||
+    flow === "adoption-action" && ["propose_trial", "confirm_trial", "confirm_handover"].includes(reviewAction) ||
+    flow === "appointment-action" && ["confirm", "restore"].includes(reviewAction);
+  if(prepared && fullPageReview && (context.record || flow === "data")) {
+    const returnReviewTitles: Record<string,string> = { accept: "核对并回应接回方案", decline: "拒绝本次接回提案", withdraw: "撤回本人接回提案", handover: "确认本人已完成接回交接" };
+    const reviewTitle = flow === "data" ? prepared.body.type === "close_account" ? "核对注销影响并最终确认" : prepared.body.type === "matters_assistance" ? "核对本次事项协助请求" : "核对所选删除范围并最终确认"
+      : flow === "return-action"
+      ? (returnReviewTitles[reviewAction] ?? workflow.title)
+      : flow === "adoption-action" ? reviewAction === "confirm_handover" ? "核对并确认实际交接" : "确认试养安排"
+      : reviewAction === "restore" ? "核对历史安排的新提案" : "核对本次预约安排";
+    return (
+      <TaskPage title={reviewTitle} subtitle={flow === "data" ? undefined : `关联记录 #${context.id} · 基准版本 ${draft?.baseVersion ?? context.record?.version ?? 0n}`}
+        scrollScope="confirmation"
+        actions={<>
+          <Button disabled={busy || !!draft?.uncertain} onClick={() => { setPrepared(undefined); setGrant(""); setAgreed(false); }}>返回核对内容</Button>
+          <Button kind="primary" disabled={busy || conflict || blocked.current || !!draft?.uncertain || !agreed || (!!prepared.scope && !grant)}
+            onClick={() => void submit()}>{busy ? "正在提交…" : reviewTitle}</Button>
+        </>}>
+        {flow === "data" ? <Notice title={prepared.body.type === "matters_assistance" ? "仅请求事项协助" : "只处理本次指定范围"}>
+          {prepared.body.type === "close_account" ? "注销请求提交后会退出当前账号；未结事项与必要保全分别处理，不能将请求已受理显示为资料已全部删除。"
+            : prepared.body.type === "matters_assistance" ? "事项协助不代替正式注销，不直接删除未选择资料，也不免除现有照护与交接责任。"
+            : "保留账号与未选择内容；仅处理本次字段及指定记录，必要保全与处理结果在受限进度中分别显示。"}
+        </Notice> : null}
+        {preparedReview}
+      </TaskPage>
+    );
+  }
   return (
     <TaskPage
       title={
@@ -1326,7 +1388,9 @@ export function WorkflowEditor({
             : flow === "appointment-change" &&
                 context.record?.state === "safety_hold"
               ? "安全核对与新安排"
-              : workflow.title
+              : flow === "invitation-action" && context.record
+                ? invitationReview(context.record, context.params.get("action") ?? "").title
+                : workflow.title
       }
       subtitle={
         context.id > 0n
@@ -1366,17 +1430,18 @@ export function WorkflowEditor({
           只保存本条线索的处理标记；保留原始描述和照片，不将求助改为已找回。提交仍按当前发布人角色与版本校验。
         </Notice>
       ) : null}
-      {flow === "invitation-action" ? (
-        <Notice
-          title={
-            context.params.get("action") === "leave"
-              ? "退出本次协作"
-              : "核对本次邀请"
-          }
-        >
-          {context.params.get("action") === "leave"
-            ? "退出后不再拥有本次介绍或照护协作权限，原领养事项继续保留。"
-            : "接受时按当前归属、资格和阶段复核；接受截止只限制尚未接受的邀请。"}
+      {flow === "introduction" && context.record && context.record.owner_id !== owner ? (
+        <>
+          <Notice title="本次仅限介绍与照片">
+            仅维护该宠物的领养介绍与照片；不能邀请其他协作者、修改宠物归属、读取私密申请或代替发布人决定领养。
+          </Notice>
+          <RowLink title="查看协作与退出" to={`/invitations?ref=${context.id}&scope=adoption_editor`} />
+        </>
+      ) : null}
+      {flow === "invitation-action" && context.record ? (
+        <Notice title={invitationReview(context.record, context.params.get("action") ?? "").title}>
+          {invitationReview(context.record, context.params.get("action") ?? "").detail}
+          <p>事项 #{String(context.record.data.target_id ?? "待核对")} · 邀请 #{String(context.record.id)} · 基准版本 {String(draft?.baseVersion ?? context.record.version)}</p>
         </Notice>
       ) : null}
       {flow === "lead-contact" ? (
@@ -1860,56 +1925,7 @@ export function WorkflowEditor({
             </Button>
           }
         >
-          <Facts value={prepared.body} />
-          {flow === "return-action" && context.record ? (
-            <ReturnActionReview
-              row={context.record}
-              revision={integer(prepared.body.revision)}
-            />
-          ) : null}
-          {flow === "adoption-action" && context.record ? (
-            <AdoptionActionReview
-              row={context.record}
-              action={context.params.get("action") ?? ""}
-            />
-          ) : null}
-          {flow === "appointment-action" &&
-          context.record &&
-          ["confirm", "restore"].includes(
-            context.params.get("action") ?? "",
-          ) ? (
-            <AppointmentVersionReview
-              row={context.record}
-              revision={
-                context.params.get("action") === "restore"
-                  ? integer(context.params.get("revision"))
-                  : undefined
-              }
-            />
-          ) : null}
-          {flow === "contract-accept" &&
-          Array.isArray(context.record?.data.contracts) ? (
-            <Facts
-              value={
-                (
-                  context.record!.data.contracts as Record<string, unknown>[]
-                ).find(
-                  (v) => integer(v.number) === integer(prepared.body.revision),
-                )?.terms
-              }
-            />
-          ) : null}
-          {prepared.scope ? (
-            <PurposeCheck
-              scope={prepared.scope}
-              busy={busy}
-              onGrant={setGrant}
-            />
-          ) : null}
-          <Check checked={agreed} onChange={setAgreed} disabled={busy}>
-            我已核对对象、范围、版本与上述内容
-          </Check>
-          {error ? <Notice title={error} error /> : null}
+          {preparedReview}
         </Modal>
       ) : null}
     </TaskPage>

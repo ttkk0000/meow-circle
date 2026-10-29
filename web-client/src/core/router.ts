@@ -84,6 +84,7 @@ export function resourceRoute(kind: string, id: unknown): string | null {
     "guardians",
     "friendships",
     "invitations",
+    "leads",
   ].includes(kind) &&
     /^\d+$/.test(String(id)) &&
     BigInt(String(id)) > 0n

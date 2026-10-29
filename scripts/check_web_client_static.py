@@ -37,8 +37,11 @@ names = set()
 android = root / 'kmp/androidApp/src/main/assets/figma'
 for item in manifest['assets']:
     file = root / item['file']
-    assert hashlib.sha256(file.read_bytes()).hexdigest() == item['sha256'], file
-    assert file.read_bytes() == (android / file.name).read_bytes(), ('两端原SVG不同', file)
+    raw = file.read_bytes()
+    canonical = raw.replace(b'\r\n', b'\n')
+    # Git text checkout may change line endings; vector content must still match exactly.
+    assert item['sha256'] in {hashlib.sha256(raw).hexdigest(), hashlib.sha256(canonical).hexdigest()}, file
+    assert canonical == (android / file.name).read_bytes().replace(b'\r\n', b'\n'), ('两端原SVG不同', file)
     svg = ET.parse(file).getroot()
     if item.get('intrinsic_viewBox'):
         assert svg.attrib.get('viewBox') == item['intrinsic_viewBox'] == '0 0 24 24', file
@@ -46,7 +49,7 @@ for item in manifest['assets']:
     else:
         assert svg.attrib.get('width') == '24' and svg.attrib.get('height') == '24', file
     common = root / 'kmp/clientUi/src/commonMain/composeResources/files/figma' / file.name
-    assert common.read_bytes() == file.read_bytes(), ('公共UI原SVG不同', common)
+    assert common.read_bytes().replace(b'\r\n', b'\n') == canonical, ('公共UI原SVG不同', common)
     names.add(item['name'])
 icons = set()
 for file in files:

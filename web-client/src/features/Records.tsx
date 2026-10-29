@@ -332,6 +332,15 @@ export function PageEnd({
 export function RecordCard({ kind, row }: { kind: string; row: RecordData }) {
   const to = resourceRoute(kind, row.id);
   const open = () => to && navigate(to);
+  if (kind === "invitations" && ["caretaker", "adoption_editor"].includes(String(row.data.scope)))
+    return (
+      <Card title={row.data.scope === "caretaker" ? "私密照护协作" : "领养介绍协作"}>
+        <p>{stateLabel(row.state)} · 事项 #{String(integer(row.data.target_id))}</p>
+        {row.data.note ? <p>{String(row.data.note)}</p> : null}
+        {row.state === "pending" ? <p className="caption muted">接受截止：{String(row.data.expires_at ?? "待核对")}</p> : null}
+        <RowLink title="查看邀请与当前协作" to={`/invitations/${row.id}`} />
+      </Card>
+    );
   if (kind === "group-directory")
     return (
       <Card title={String(row.data.name)}>
@@ -431,6 +440,9 @@ export function Records({
     reference_id: params.get("ref") ?? "",
   };
   const page = usePages(kind, filters);
+  const invitationScope = kind === "invitations" && integer(params.get("ref")) > 0n && ["caretaker", "adoption_editor"].includes(params.get("scope") ?? "")
+    ? params.get("scope") : null;
+  const rows = invitationScope ? page.rows.filter(row => row.data.scope === invitationScope) : page.rows;
   const create = (
     {
       pets: "pet",
@@ -489,6 +501,7 @@ export function Records({
           核对健康、来源、接待和费用披露；核实标记有明确项目与有效期，不保证全部事项。
         </Notice>
       ) : null}
+      {invitationScope ? <Notice title="仅此事项的邀请与协作">事项 #{params.get("ref") ?? "待核对"}；仅显示当前账号可读取的邀请与授权。</Notice> : null}
       {kind === "cases" ? <RowLink title="附近走失提醒" to="/nearby" /> : null}
       {["pets", "cases", "offers"].includes(kind) ? (
         <RowLink title="不提供定位也可以" to="/location-help" />
@@ -501,13 +514,14 @@ export function Records({
         onRetry={page.retry}
         keepContent={!!page.rows.length && !page.denied}
       >
-        {page.rows.map((row) => (
+        {rows.map((row) => (
           <RecordCard key={String(row.id)} kind={kind} row={row} />
         ))}
+        {invitationScope && page.data && !page.loading && !page.error && page.rows.length > 0 && !rows.length && page.next === 0n ? <Empty title="本事项暂无邀请或授权" /> : null}
         <PageEnd
           page={page}
           empty={
-            search || city || species ? (
+            invitationScope ? <Empty title="本事项暂无邀请或授权" /> : search || city || species ? (
               <>
                 <Empty title="这次还没有合适的结果">
                   <p>可以放宽区域或条件；不把其它城市内容偷偷当成本地结果。</p>

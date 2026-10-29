@@ -1,0 +1,215 @@
+{
+  "date": "2026-10-29",
+  "base_head": "b269504ad0cd0e179d8108fe60b9073ab97e9c99",
+  "checkpoint": "account requests and recovery before local commit and remote merge",
+  "source_files": [
+    {
+      "path": "kmp/androidApp/build.gradle.kts",
+      "sha256": "31d4efc4462ab9133a404ba8c35d10dacc595217ddeb1c876c72757bb1f727d0",
+      "bytes": 9786
+    },
+    {
+      "path": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt",
+      "sha256": "850252b34c494c4963176e1406f3f3755b88be344352a7f177a92dd7d7863dae",
+      "bytes": 8074
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/publish-circle-plus-disabled.svg",
+      "sha256": "390bfea0579e2bdc92aa0adaa7177fb24ed52812c13f23c30a23b8fa15ca7342",
+      "bytes": 893
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/publish-circle-plus.svg",
+      "sha256": "eb00d98cca4b369bf6412baf0cae10c96cdd8d965edf7fd20d5f1b7b7dc5c60c",
+      "bytes": 893
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "sha256": "332b382f0e42cb193c70e0e329ccd504dc32659de7143198e9c6aa7a88e65b22",
+      "bytes": 29658
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "sha256": "aff104cc51081b9c049d1a25fcd805b3c1b49129a7ab6ce5d4eaa7948100dcf0",
+      "bytes": 3378
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "sha256": "4fa2bfb98a0a5612a511ab8c2b34f56a00fb567e0fd9734f4756febb17e79f82",
+      "bytes": 63246
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256": "a815e37bb32b678176931d1fc0011f3fc8e5535a4cc215720a0f89adf343e2af",
+      "bytes": 25191
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "sha256": "d49993887d8dae619448720ba4e7739b9a5ccb2b221db40fdc55c1d6b45dcaf3",
+      "bytes": 8167
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublishButton.kt",
+      "sha256": "b11c3a0423959136cf264519aed8146921a285ff7ab41b62bbbb2c28643f38a9",
+      "bytes": 3764
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+      "sha256": "967eb7b915bbac40285a23f7fe619d481be9a98c340f73944a3e2f1e77e26a6e",
+      "bytes": 15622
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "sha256": "b8b65ea5e12a0315a55894b03a5643968bf6f313999c54743fe1f471c51b5087",
+      "bytes": 25550
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/StatusComponents.kt",
+      "sha256": "2a3693c2c6f8a29487c8d2fd9f2c9f257c1a2757401942d70bad7d0055d1d4de",
+      "bytes": 3019
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "sha256": "ff4afb6079b29758baee9850ea4166e269231e615f61a9e7014a0fb64a423d7c",
+      "bytes": 8921
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InvitationStatus.kt",
+      "sha256": "7d9e2633f766491bd0a19acccc40c4c629a2c0774a82437b11ea10254dceebb0",
+      "bytes": 2928
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256": "5456138c1e0d9a3bd2d88979589355de8e97634870fbe55af97ab4529259aa18",
+      "bytes": 43658
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "cfa2fa803b7ac743a055abf1c7451150d3ef18cc32d942a564064bc0a6d35369",
+      "bytes": 71114
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256": "6537aa10f5e9ee1ba7414a4009ecdf99201b7c9a70097ec4950576eb28afabe1",
+      "bytes": 98179
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/SensitiveActionStore.kt",
+      "sha256": "4b3f2c263b01224ec10a7f73a2c899e14e9dce4202a6bfe9d8a83223fbbb5489",
+      "bytes": 12795
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/TaskLinks.kt",
+      "sha256": "c5836dc2eda88f4184415dbffebd69cea717f03e5590e8a23fa4d5ca7e9d3f2b",
+      "bytes": 2823
+    },
+    {
+      "path": "scripts/check_adoption_progress_static.py",
+      "sha256": "b5cb33777546f8d02c04fb5b7b4c8add779cf59b579cf2c9242922ea617ad2d2",
+      "bytes": 3324
+    },
+    {
+      "path": "scripts/check_android_ui_static.py",
+      "sha256": "5314578a5710eaee6a6bdc127408e709b6fef27834c061ec499d5ea849c30173",
+      "bytes": 5291
+    },
+    {
+      "path": "scripts/check_client_ui_static.py",
+      "sha256": "e8f5403034ce8baca7cb59d333c8d38e497265f253a3c7734e932e0cd299ba1f",
+      "bytes": 7361
+    },
+    {
+      "path": "scripts/check_figma_reading_static.py",
+      "sha256": "32a69976e4174b09ced35808b28c904ec5575bd4c65feff75b5c0ed59359f732",
+      "bytes": 5651
+    },
+    {
+      "path": "scripts/check_lead_submission_static.py",
+      "sha256": "98f556bf9dbf27ce13af44465f9f38e763dfe61eb72e786ec83c54a046699ad3",
+      "bytes": 6450
+    },
+    {
+      "path": "scripts/check_operations_static.py",
+      "sha256": "71315e9652d1e8fe8284f666380a324c32eb0cdfb89e2eaee5b32f772f8d08a1",
+      "bytes": 6361
+    },
+    {
+      "path": "scripts/check_web_client_static.py",
+      "sha256": "166811e5a654ba8ad99759ad53ebdd3bccb4c619a5fc91d654fb2e7a5b344990",
+      "bytes": 4741
+    },
+    {
+      "path": "web-client/src/App.tsx",
+      "sha256": "b8127667794060f0ad4f4ee0f57fac68eb78e7b54cb648a5dc060cc10635b49d",
+      "bytes": 28110
+    },
+    {
+      "path": "web-client/src/components/PublishButton.tsx",
+      "sha256": "1d5433054e0bc1b089d81eadd7b06daa9bdae3f496e9811f1847290227356dd3",
+      "bytes": 717
+    },
+    {
+      "path": "web-client/src/components/PurposeCheck.tsx",
+      "sha256": "d0299d51a379b8228cf89c885ba17bac265386b5b61b03d6842bd76ea0a0b32c",
+      "bytes": 4269
+    },
+    {
+      "path": "web-client/src/core/invitation.ts",
+      "sha256": "a714a31037a2e63dd162109543db40900aef184a1a45f50ddea56b1b77b6e2c9",
+      "bytes": 2988
+    },
+    {
+      "path": "web-client/src/core/pages.ts",
+      "sha256": "23e7863b7dea3c75396711c080bc4914d245e635f98ef969dc798cb1fef4d73b",
+      "bytes": 3165
+    },
+    {
+      "path": "web-client/src/core/query.ts",
+      "sha256": "117af2f0b87d6c1f820b4ddde3cb44bd10f660f8da06e35e692e8304cd1e1fb2",
+      "bytes": 3312
+    },
+    {
+      "path": "web-client/src/core/router.ts",
+      "sha256": "8a6553d49587cb4586f870aaee8398505cb798cd416d15652d3f8a8e99eb48f6",
+      "bytes": 2692
+    },
+    {
+      "path": "web-client/src/features/CareCollaboration.tsx",
+      "sha256": "598fccaf0b8d52fe040f1ece6d31640e650b7cec04162323f00ceedec682e3f3",
+      "bytes": 3753
+    },
+    {
+      "path": "web-client/src/features/InvitationPages.tsx",
+      "sha256": "aa8c25c48a4cf5dcf5abe0f89ac0f833a8309172ecdf22d7ec934ffb1380994a",
+      "bytes": 5960
+    },
+    {
+      "path": "web-client/src/features/Records.tsx",
+      "sha256": "5aa51a0306caeff632053a68d638c455cb460e80cce324eaca47f73616c36ca2",
+      "bytes": 18813
+    },
+    {
+      "path": "web-client/src/features/Recovery.tsx",
+      "sha256": "ea83e0d9ca44a818c1b4ceafc1112db5e25d6e8fe2d4335542a4ca079bc1eb8f",
+      "bytes": 10675
+    },
+    {
+      "path": "web-client/src/features/ResourcePage.tsx",
+      "sha256": "05510942026aed1989b6986f2d5fd125f76265dd236624ce56c71c9caafce68a",
+      "bytes": 28035
+    },
+    {
+      "path": "web-client/src/features/WorkflowEditor.tsx",
+      "sha256": "a96c2f1d179ed609b1bb3969f9e842501764f0248564a00a96943a5e973efe61",
+      "bytes": 70580
+    },
+    {
+      "path": "web-client/src/styles.css",
+      "sha256": "d7f305f0b1bbd13f78aced8a38e944216feda5f129b8c34f966054a0ce8357a8",
+      "bytes": 28386
+    }
+  ],
+  "static_scripts": "code-completion-static-2026-10-29.json",
+  "syntax": "../design/figma-study/collaboration-exit-2026-10-28/syntax-node18-2026-10-29.json",
+  "runtime_verified": false
+}

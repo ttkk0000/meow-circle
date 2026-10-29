@@ -1,0 +1,169 @@
+{
+  "date": "2026-10-28",
+  "task": "AI-20261028-CONTINUE-DESIGN-CODE",
+  "checkpoint": "collaboration pages and full review pages followup",
+  "base_head": "b269504ad0cd0e179d8108fe60b9073ab97e9c99",
+  "source_files": [
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublishButton.kt",
+      "sha256": "b11c3a0423959136cf264519aed8146921a285ff7ab41b62bbbb2c28643f38a9",
+      "bytes": 3764
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt",
+      "sha256": "d49993887d8dae619448720ba4e7739b9a5ccb2b221db40fdc55c1d6b45dcaf3",
+      "bytes": 8167
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "sha256": "aff104cc51081b9c049d1a25fcd805b3c1b49129a7ab6ce5d4eaa7948100dcf0",
+      "bytes": 3378
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "sha256": "4fa2bfb98a0a5612a511ab8c2b34f56a00fb567e0fd9734f4756febb17e79f82",
+      "bytes": 63246
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "sha256": "b8b65ea5e12a0315a55894b03a5643968bf6f313999c54743fe1f471c51b5087",
+      "bytes": 25550
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt",
+      "sha256": "967eb7b915bbac40285a23f7fe619d481be9a98c340f73944a3e2f1e77e26a6e",
+      "bytes": 15622
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256": "2b1c58098d0a2d36cb165b20c6bb6fa0e8501eaaad07f655da26d1b4af9bb183",
+      "bytes": 21487
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt",
+      "sha256": "332b382f0e42cb193c70e0e329ccd504dc32659de7143198e9c6aa7a88e65b22",
+      "bytes": 29658
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InvitationStatus.kt",
+      "sha256": "7d9e2633f766491bd0a19acccc40c4c629a2c0774a82437b11ea10254dceebb0",
+      "bytes": 2928
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureApi.kt",
+      "sha256": "ff4afb6079b29758baee9850ea4166e269231e615f61a9e7014a0fb64a423d7c",
+      "bytes": 8921
+    },
+    {
+      "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256": "cfa2fa803b7ac743a055abf1c7451150d3ef18cc32d942a564064bc0a6d35369",
+      "bytes": 71114
+    },
+    {
+      "path": "web-client/src/core/invitation.ts",
+      "sha256": "a714a31037a2e63dd162109543db40900aef184a1a45f50ddea56b1b77b6e2c9",
+      "bytes": 2988
+    },
+    {
+      "path": "web-client/src/core/pages.ts",
+      "sha256": "23e7863b7dea3c75396711c080bc4914d245e635f98ef969dc798cb1fef4d73b",
+      "bytes": 3165
+    },
+    {
+      "path": "web-client/src/core/query.ts",
+      "sha256": "117af2f0b87d6c1f820b4ddde3cb44bd10f660f8da06e35e692e8304cd1e1fb2",
+      "bytes": 3312
+    },
+    {
+      "path": "web-client/src/features/ResourcePage.tsx",
+      "sha256": "05510942026aed1989b6986f2d5fd125f76265dd236624ce56c71c9caafce68a",
+      "bytes": 28035
+    },
+    {
+      "path": "web-client/src/features/WorkflowEditor.tsx",
+      "sha256": "f9cf55bb6433a6bc55a4264e2a5cb9fbbfb1b263289a69274f356d98d6e3a952",
+      "bytes": 69574
+    },
+    {
+      "path": "web-client/src/features/CareCollaboration.tsx",
+      "sha256": "598fccaf0b8d52fe040f1ece6d31640e650b7cec04162323f00ceedec682e3f3",
+      "bytes": 3753
+    },
+    {
+      "path": "web-client/src/App.tsx",
+      "sha256": "b8127667794060f0ad4f4ee0f57fac68eb78e7b54cb648a5dc060cc10635b49d",
+      "bytes": 28110
+    },
+    {
+      "path": "web-client/src/features/InvitationPages.tsx",
+      "sha256": "aa8c25c48a4cf5dcf5abe0f89ac0f833a8309172ecdf22d7ec934ffb1380994a",
+      "bytes": 5960
+    },
+    {
+      "path": "web-client/src/features/Records.tsx",
+      "sha256": "5aa51a0306caeff632053a68d638c455cb460e80cce324eaca47f73616c36ca2",
+      "bytes": 18813
+    },
+    {
+      "path": "web-client/src/components/PublishButton.tsx",
+      "sha256": "1d5433054e0bc1b089d81eadd7b06daa9bdae3f496e9811f1847290227356dd3",
+      "bytes": 717
+    },
+    {
+      "path": "web-client/src/styles.css",
+      "sha256": "d7f305f0b1bbd13f78aced8a38e944216feda5f129b8c34f966054a0ce8357a8",
+      "bytes": 28386
+    },
+    {
+      "path": "scripts/check_client_ui_static.py",
+      "sha256": "e8f5403034ce8baca7cb59d333c8d38e497265f253a3c7734e932e0cd299ba1f",
+      "bytes": 7361
+    },
+    {
+      "path": "scripts/check_web_client_static.py",
+      "sha256": "166811e5a654ba8ad99759ad53ebdd3bccb4c619a5fc91d654fb2e7a5b344990",
+      "bytes": 4741
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/publish-circle-plus.svg",
+      "sha256": "eb00d98cca4b369bf6412baf0cae10c96cdd8d965edf7fd20d5f1b7b7dc5c60c",
+      "bytes": 893
+    },
+    {
+      "path": "kmp/clientUi/src/commonMain/composeResources/files/figma/publish-circle-plus-disabled.svg",
+      "sha256": "390bfea0579e2bdc92aa0adaa7177fb24ed52812c13f23c30a23b8fa15ca7342",
+      "bytes": 893
+    }
+  ],
+  "checks": {
+    "source_resource_contract_check": {
+      "chunk_id": "715aef",
+      "wall_time_seconds": 2.4817798,
+      "exit_code": 0,
+      "original_token_count": 88,
+      "output": "公共UI只读核对：43份公共源码、48个功能分派、3套平台端口、128枚Noto原图、22枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。\r\nWeb只读检查：90份TS/TSX、407个本地引用、143份schema、22枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。\r\n"
+    },
+    "syntax": {
+      "verified": false,
+      "evidence": "../design/figma-study/collaboration-exit-2026-10-28/syntax-followup-incomplete.json",
+      "limitation": "Parser printed its report, then exited with Fatal process out of memory: Zone. This result is not counted as a successful syntax check."
+    }
+  },
+  "source_branch_map": "collaboration-page-source-map-2026-10-28.json",
+  "design_references_read_again": [
+    "docs/design/figma-study/adoption-implementation-2026-10-27/311-379012.png",
+    "docs/design/figma-study/adoption-implementation-2026-10-27/506-60826.png"
+  ],
+  "full_review_conditions": [
+    "adoption-action: propose_trial,confirm_trial,confirm_handover",
+    "return-action: accept,decline,withdraw,handover",
+    "appointment-action: confirm,restore"
+  ],
+  "api_contract_changes": 0,
+  "build_verified": false,
+  "typecheck_verified": false,
+  "test_executed": false,
+  "runtime_verified": false,
+  "commit_created": false,
+  "pushed": false
+}

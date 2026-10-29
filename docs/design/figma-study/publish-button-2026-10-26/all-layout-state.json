@@ -1,5 +1,9 @@
 {
-  "phase": "inventoried-and-components",
+  "phase": "complete",
+  "completed": "2026-10-27",
+  "activeComponentSets": {"web":"829:21","sidebar":"836:21","compact":"838:21","shortcut":"838:58"},
+  "finalAudit": {"total":3081,"counts":{"compact":1533,"shortcut":50,"sidebar":749,"web":749},"linked":3026,"failed":[]},
+  "validationFile": "all-layout-validation.json",
   "fileKey": "3OFOC3vu18Kx9sRPjummOC",
   "inventories": {
     "phone": {
@@ -3219,7 +3223,7 @@
       ]
     }
   },
-  "components": {
+  "initialComponents": {
     "sidebar": {
       "createdNodeIds": [
         "836:21",

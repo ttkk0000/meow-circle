@@ -5,7 +5,7 @@ data class TaskLinkTarget(val kind: String, val id: Long) {
 }
 data class PendingClientTaskLink(val target: TaskLinkTarget, val owner: Long)
 val publicTaskLinkKinds = setOf("pets", "entries", "cases", "offers")
-val taskLinkKinds = publicTaskLinkKinds + setOf("adoptions", "appointments", "claims", "reviews", "groups", "conversations")
+val taskLinkKinds = publicTaskLinkKinds + setOf("adoptions", "appointments", "claims", "reviews", "groups", "conversations", "invitations", "leads")
 
 /** 完整匹配原始链接，不解码路径，不接受查询、凭据、片段、写动作或非规范编号。 */
 fun parseTaskLink(raw: String, trustedBaseUrl: String): TaskLinkTarget? {
@@ -43,5 +43,7 @@ fun taskLinkFeature(target: TaskLinkTarget): FeatureRoute? = when (target.kind) 
     "appointments" -> FeatureRoute(FeaturePage.Appointment, target.id)
     "claims" -> FeatureRoute(FeaturePage.Claim, target.id)
     "reviews" -> FeatureRoute(FeaturePage.Review, target.id)
+    "invitations" -> FeatureRoute(FeaturePage.Invitations, target.id)
+    "leads" -> FeatureRoute(FeaturePage.Lead, target.id)
     else -> null
 }

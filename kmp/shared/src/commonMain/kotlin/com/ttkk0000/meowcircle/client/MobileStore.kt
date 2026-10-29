@@ -463,7 +463,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         if (body.targetId <= 0) return false
         val feature = when (body.targetKind) {
             "appointments" -> FeatureRoute(FeaturePage.Appointment, body.targetId)
-            "invitations" -> FeatureRoute(FeaturePage.Invitations)
+            "invitations" -> FeatureRoute(FeaturePage.Invitations, body.targetId)
+            "leads" -> FeatureRoute(FeaturePage.Lead, body.targetId)
             "claims" -> FeatureRoute(FeaturePage.Claim, body.targetId)
             "offers" -> FeatureRoute(FeaturePage.Offer, body.targetId)
             "reviews" -> FeatureRoute(FeaturePage.Review, body.targetId)
@@ -489,8 +490,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         try { val summary = api.inbox(); api.devicePush.updateBadge(summary.globalTotal); _state.update { it.copy(inbox = summary, inboxError = null, inboxFailure = null, inboxReadAt = clientReadTimestamp()) } }
         catch (e: CancellationException) { throw e }
         catch (e: Exception) { _state.update { it.copy(inboxError = e.mobileMessage(), inboxFailure = e.readFailure(),
-            inbox = if (e is MobileApiException && e.status in listOf(401,403,404)) null else it.inbox,
-            inboxReadAt = if (e is MobileApiException && e.status in listOf(401,403,404)) null else it.inboxReadAt) } }
+            inbox = if (e is MobileApiException && e.status in listOf(401,403,404,410)) null else it.inbox,
+            inboxReadAt = if (e is MobileApiException && e.status in listOf(401,403,404,410)) null else it.inboxReadAt) } }
     }
     fun prepareInboxReadAll() {
         if (_state.value.user == null) { showLogin(); return }
@@ -898,7 +899,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             } catch (e: CancellationException) { throw e }
             catch (e: Exception) {
                 if (epoch == accountEpoch) _state.update { put(it,
-                    get(it).failed(e.mobileMessage(), e is MobileApiException && e.status in listOf(401, 403, 404), e.readFailure())) }
+                    get(it).failed(e.mobileMessage(), e is MobileApiException && e.status in listOf(401, 403, 404, 410), e.readFailure())) }
                 return@task
             }
             // 附加统计失败不能将已成功读取的列表变成翻页失败。
@@ -1252,11 +1253,12 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             }
             else -> api.retryOriginal(key)
         }
+        check(receipt.clientRequestId == key) { "回执编号与原请求不一致，请保留原编号继续核对" }
         features.operationResolved(receipt)
         finishRecoveredReply(receipt)
         finishRecoveredPublication(receipt)
         finishRecoveredSource(receipt)
-        _state.update { it.copy(pendingOperations = pendingCommands(),notice = "已按原请求编号核对并重试，请查看原记录") }
+        _state.update { it.copy(pendingOperations = pendingCommands(),notice = if(receipt.state == "committed") "已按原请求编号核对并重试，请查看原记录" else "原请求仍在处理中，请保留原编号继续核对") }
     }
 
     private fun finishRecoveredReply(receipt: OperationReceipt) {

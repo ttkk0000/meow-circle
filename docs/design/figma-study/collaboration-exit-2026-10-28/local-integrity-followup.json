@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-28",
+  "files_in_scope": 57,
+  "utf8_no_bom_no_conflict_texts": 51,
+  "markdown_files": 11,
+  "local_links_checked": 503,
+  "json_files": 11,
+  "source_hashes": 26,
+  "original_untracked_preserved": 8,
+  "problems": [],
+  "runtime_verified": false,
+  "scope_note": "Checkpoint before this result file was created; source fingerprints and original untracked content checked against current working tree.",
+  "git_diff_check": {
+    "exit_code": 0,
+    "output": ""
+  }
+}

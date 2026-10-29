@@ -32,11 +32,12 @@ assert hashlib.sha256(photo).hexdigest() == guide['sha256']
 assert photo == (root / guide['android_file']).read_bytes()
 assert guide['design_slots']['phone']['dimensions'] == [358, 240]
 assert all(guide['design_slots'][name].get('height', guide['design_slots'][name].get('dimensions', [0, 0])[1]) == 360 for name in ['web', 'tabletP', 'tabletL'])
-for path in guide['callsites']:
-    assert 'first-cat.jpg' in (root / path).read_text(), path
+# The original guide export remains evidence; current reading pages use the approved family photo.
+assert 'src="/app/assets/cats/golden-portrait.jpg"' in (web / 'src/features/ReadingPages.tsx').read_text()
 native_reader = (client_ui / 'ReadingPages.kt').read_text()
+assert 'BundledGuideImage("files/cats/golden-portrait.jpg"' in native_reader
 assert 'maxWidth >= 600.dp' in native_reader and 'Modifier.height(360.dp)' in native_reader
-assert 'aspectRatio(358f/240f)' in native_reader and 'ContentScale.Crop' in native_reader
+assert 'aspectRatio(358f/240f)' in native_reader and 'ContentScale.Fit' in native_reader
 assert not re.search(r'kind\s*=\s*"[^"\n]*:', native_reader), '阅读类型不能破坏既有冒号分隔的恢复路由'
 css = (web / 'src/styles.css').read_text()
 assert re.search(r'\.reading-cover\s*\{[^}]*height:\s*360px', css)

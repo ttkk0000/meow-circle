@@ -365,9 +365,11 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun reconcileOperation(key: String): OperationReceipt {
         val owner = session?.user?.id ?: throw MobileApiException(401, "authentication required")
         val receipt = operation(key) // A 404 leaves result_unknown intact: the original request may still arrive.
+        check(receipt.clientRequestId == key) { "回执编号与原请求不一致，请保留原编号继续核对" }
         sessionMutex.withLock {
             if (session?.user?.id != owner) throw MobileApiException(401, "account changed")
-            persist(vault.copy(commands = vault.commands.map { if (it.owner == owner && it.id == key) it.copy(phase = receipt.state, receipt = receipt) else it }))
+            persist(vault.copy(commands = vault.commands.map { if (it.owner == owner && it.id == key)
+                it.copy(phase = if(receipt.state == "committed") "committed" else "result_unknown", receipt = receipt) else it }))
         }
         return receipt
     }

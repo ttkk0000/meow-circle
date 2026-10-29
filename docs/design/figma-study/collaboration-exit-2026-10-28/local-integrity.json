@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-28",
+  "files_in_scope": 50,
+  "utf8_no_bom_no_conflict_texts": 44,
+  "markdown_files": 11,
+  "local_links_checked": 490,
+  "json_files": 7,
+  "source_hashes": 23,
+  "original_untracked_preserved": 8,
+  "problems": [],
+  "runtime_verified": false,
+  "scope_note": "All modified/untracked text at this checkpoint; the integrity result file itself was created afterward.",
+  "git_diff_check": {
+    "exit_code": 0,
+    "output": ""
+  }
+}

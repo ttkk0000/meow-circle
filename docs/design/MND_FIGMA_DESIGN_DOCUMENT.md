@@ -20,7 +20,8 @@
 
 - [业务后台管理843:22](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=843-22)：工作台、举报／权利／资料／监护／准入、角色及确认／异常状态；[节点与截图](figma-study/admin-2026-10-26/nodes-and-validation.json)。
 - [技术运维793:22](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=793-22)：原独立14稿与组件展示保留，[交接](figma-study/ops-2026-10-25/README.md)。2026-10-22的9页目录为历史快照，现行文件另含本两页。
-- 2026-10-26 [Web顶部发布按钮评审](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=818-17528)／[交接](figma-study/publish-button-2026-10-26/README.md)：749个Web入口应用紧凑按钮与纯白加号，五状态组件及原有发布类型跳转已做结构与截图检查；业务源码尚未按本次设计改动。
+- 2026-10-28 [协作退出与有限工作区](figma-study/collaboration-exit-2026-10-28/README.md)：五布局新增40份可编辑稿，241条已有可见链接目标检查无发现；最终入口／标注细化和跨端截图受自动审批额度阻塞。[源码与静态交付](../client/CONTINUE_DESIGN_CODE_2026_10_28.md)另记，未运行验收。
+- 2026-10-27 [发布按钮全布局评审](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=818-17528)／[交接与代码状态](figma-study/publish-button-2026-10-26/README.md)：手机、Web、平板横竖屏与Desktop的3081个入口统一完整药丸／白圈加号，四类20状态与6张最终图已检查。2026-10-28共享Compose导航／快捷入口也已写源码，Web与原生运行验收均未完成。
 - 最新[法律设计补充评审入口662:398665](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=662-398665)与[交接／最终验证状态](figma-study/LEGAL_DESIGN_HANDOFF_2026_10_22.md)：45组五布局225稿、四个独立回调与角色样例板；[法律设计合同](MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md)区分事项协助、正式注销、通知／声明与合同版本。真实经营与接口仍另行验收。
 - 最新[平板横竖屏预览优化](figma-study/PAD_PREVIEW_2026_10_22.md)：88个Flow收敛为两个，704组同状态横竖屏稿可点右上角预览按钮互切；按钮仅作Figma演示，客户端不实现。直接使用文档中的Pad竖屏／横屏预览链接，设备转动后仍需手动切换。
 - 最新[画布排版整理](figma-study/FIGMA_CANVAS_LAYOUT_2026_10_22.md)：9页核对、7页紧凑排布，手机画布高度减少88.2%；节点、原稿尺寸及交互引用保留。当前位置以下方9页目录为准，旧17／18页记录保留为历史证据。

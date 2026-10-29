@@ -1,0 +1,5206 @@
+{
+  "date": "2026-10-28",
+  "file_key": "3OFOC3vu18Kx9sRPjummOC",
+  "runtime_verified": false,
+  "scope": "40 new design frames, visible prototype targets and editable structure",
+  "summary": {
+    "new_roots": 40,
+    "visible_links": 241,
+    "missing_cross_page_or_self_targets": 0,
+    "full_screen_images": 0,
+    "limitations": [
+      "检查已有可见链接的目标有效性，不证明所有必要控制均有原型动作。",
+      "仅手机3份新画面的高保真上下文和截图已查看；五布局最终截图尚未完成。"
+    ],
+    "evidence": "structural-audit.json"
+  },
+  "pages": {
+    "phone": {
+      "page": "56:25",
+      "rootCount": 8,
+      "counts": [
+        {
+          "id": "910:357846",
+          "name": "手机 / 退出本次照护协作 [caretakerLeaveConfirm]",
+          "visibleNodes": 21,
+          "texts": [
+            {
+              "id": "910:357848",
+              "text": "9:41",
+              "width": 60,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357849",
+              "text": "学习示意 · 非真实数据",
+              "width": 298,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357853",
+              "text": "退出本次照护协作",
+              "width": 326,
+              "height": 30,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357857",
+              "text": "确认退出照护协作？",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:357858",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 326,
+              "height": 60,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357859;56:185",
+              "text": "保留当前协作",
+              "width": 324,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357861;56:185",
+              "text": "确认退出照护协作",
+              "width": 324,
+              "height": 24,
+              "parentWidth": 358
+            }
+          ],
+          "instances": 3,
+          "flatImages": []
+        },
+        {
+          "id": "910:357867",
+          "name": "手机 / 已退出照护协作 [caretakerLeft]",
+          "visibleNodes": 20,
+          "texts": [
+            {
+              "id": "910:357869",
+              "text": "9:41",
+              "width": 60,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357870",
+              "text": "学习示意 · 非真实数据",
+              "width": 298,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357874",
+              "text": "已退出照护协作",
+              "width": 326,
+              "height": 30,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357877",
+              "text": "已退出照护协作",
+              "width": 358,
+              "height": 40,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357879",
+              "text": "仅结束本次协作权限",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:357880",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 326,
+              "height": 60,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357882;56:184",
+              "text": "返回消息",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            }
+          ],
+          "instances": 2,
+          "flatImages": []
+        },
+        {
+          "id": "910:357887",
+          "name": "手机 / 退出本次介绍协作 [publisherLeaveConfirm]",
+          "visibleNodes": 21,
+          "texts": [
+            {
+              "id": "910:357889",
+              "text": "9:41",
+              "width": 60,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357890",
+              "text": "学习示意 · 非真实数据",
+              "width": 298,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357894",
+              "text": "退出本次介绍协作",
+              "width": 326,
+              "height": 30,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357898",
+              "text": "确认退出介绍协作？",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:357899",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 326,
+              "height": 60,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357900;56:185",
+              "text": "保留当前协作",
+              "width": 324,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357902;56:185",
+              "text": "确认退出介绍协作",
+              "width": 324,
+              "height": 24,
+              "parentWidth": 358
+            }
+          ],
+          "instances": 3,
+          "flatImages": []
+        },
+        {
+          "id": "910:357908",
+          "name": "手机 / 已退出介绍协作 [publisherLeft]",
+          "visibleNodes": 19,
+          "texts": [
+            {
+              "id": "910:357910",
+              "text": "9:41",
+              "width": 60,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357911",
+              "text": "学习示意 · 非真实数据",
+              "width": 298,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357915",
+              "text": "已退出介绍协作",
+              "width": 326,
+              "height": 30,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357919",
+              "text": "本次介绍协作已结束",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:357920",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 326,
+              "height": 60,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357922;56:184",
+              "text": "返回消息",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            }
+          ],
+          "instances": 2,
+          "flatImages": []
+        },
+        {
+          "id": "910:357927",
+          "name": "手机 / 授权照护近况 [caretakerWorkspace]",
+          "visibleNodes": 25,
+          "texts": [
+            {
+              "id": "910:357929",
+              "text": "9:41",
+              "width": 60,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357930",
+              "text": "学习示意 · 非真实数据",
+              "width": 298,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357934",
+              "text": "授权照护近况",
+              "width": 326,
+              "height": 30,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357937",
+              "text": "授权照护近况",
+              "width": 358,
+              "height": 40,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357939",
+              "text": "本次有限授权",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:357940",
+              "text": "仅显示本次获授权的私密近况；申请材料、协议与完整宠物档案不会开放。",
+              "width": 326,
+              "height": 40,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:358007",
+              "text": "学习示例 · 今日照护近况",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:358008",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 326,
+              "height": 40,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:358039;56:185",
+              "text": "退出本次照护协作",
+              "width": 324,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357942;56:184",
+              "text": "记录私密照护近况",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            }
+          ],
+          "instances": 3,
+          "flatImages": []
+        },
+        {
+          "id": "910:357947",
+          "name": "手机 / 照护近况仅可查阅 [caretakerReadOnly]",
+          "visibleNodes": 23,
+          "texts": [
+            {
+              "id": "910:357949",
+              "text": "9:41",
+              "width": 60,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357950",
+              "text": "学习示意 · 非真实数据",
+              "width": 298,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357954",
+              "text": "照护近况仅可查阅",
+              "width": 326,
+              "height": 30,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357957",
+              "text": "照护近况仅可查阅",
+              "width": 358,
+              "height": 40,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357959",
+              "text": "当前不能新增近况",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:357960",
+              "text": "本次授权的历史近况仍可查阅。当前阶段或资格不允许新增，请重新读取后核对；不会自动提交。",
+              "width": 326,
+              "height": 40,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:358010",
+              "text": "学习示例 · 今日照护近况",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:358011",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 326,
+              "height": 40,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357962;56:184",
+              "text": "重新读取当前权限",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            }
+          ],
+          "instances": 2,
+          "flatImages": []
+        },
+        {
+          "id": "910:357967",
+          "name": "手机 / 照护授权不可用 [caretakerUnavailable]",
+          "visibleNodes": 20,
+          "texts": [
+            {
+              "id": "910:357969",
+              "text": "9:41",
+              "width": 60,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357970",
+              "text": "学习示意 · 非真实数据",
+              "width": 298,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357974",
+              "text": "照护授权不可用",
+              "width": 326,
+              "height": 30,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357977",
+              "text": "照护授权不可用",
+              "width": 358,
+              "height": 40,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357979",
+              "text": "不再显示受限资料",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:357980",
+              "text": "本次授权已结束或当前无法确认访问权限。此处不再显示私密近况、照片或旧编辑内容；已有记录由原照护双方管理。",
+              "width": 326,
+              "height": 40,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:357982;56:184",
+              "text": "返回消息",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            }
+          ],
+          "instances": 2,
+          "flatImages": []
+        },
+        {
+          "id": "910:357987",
+          "name": "手机 / 维护该宠物介绍 [publisherWorkspace]",
+          "visibleNodes": 32,
+          "texts": [
+            {
+              "id": "910:357989",
+              "text": "9:41",
+              "width": 60,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357990",
+              "text": "学习示意 · 非真实数据",
+              "width": 298,
+              "height": 20,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357994",
+              "text": "维护该宠物介绍",
+              "width": 326,
+              "height": 30,
+              "parentWidth": 390
+            },
+            {
+              "id": "910:357998",
+              "text": "本次仅限介绍与照片",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "910:357999",
+              "text": "你可以维护小满的领养介绍与照片；不能邀请其他协作者、修改宠物归属、读取私密申请或代替发布人决定领养。",
+              "width": 326,
+              "height": 40,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:358012;56:189",
+              "text": "领养介绍",
+              "width": 358,
+              "height": 22,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:358012;56:191",
+              "text": "介绍小满的性格、生活习惯与需要照护的事项。",
+              "width": 332,
+              "height": 52,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:358016;56:216",
+              "text": "维护介绍照片",
+              "width": 330,
+              "height": 26,
+              "parentWidth": 330
+            },
+            {
+              "id": "I910:358016;56:217",
+              "text": "仅限这只宠物，使用有权使用的素材",
+              "width": 330,
+              "height": 20,
+              "parentWidth": 330
+            },
+            {
+              "id": "I910:358042;56:185",
+              "text": "退出本次介绍协作",
+              "width": 324,
+              "height": 24,
+              "parentWidth": 358
+            },
+            {
+              "id": "I910:358001;56:184",
+              "text": "保存介绍与照片",
+              "width": 326,
+              "height": 24,
+              "parentWidth": 358
+            }
+          ],
+          "instances": 6,
+          "flatImages": []
+        }
+      ],
+      "visibleLinks": 13,
+      "problems": [],
+      "buttonColors": [
+        {
+          "name": "button/primary",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:150"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:151"
+            }
+          }
+        },
+        {
+          "name": "button/pressed",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:153"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:154"
+            }
+          }
+        },
+        {
+          "name": "button/onPrimary",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:56:3"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:56:3"
+            }
+          }
+        },
+        {
+          "name": "button/secondary",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:157"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:56:3"
+            }
+          }
+        },
+        {
+          "name": "button/onSecondary",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:159"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:151"
+            }
+          }
+        },
+        {
+          "name": "button/border",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:161"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:56:17"
+            }
+          }
+        },
+        {
+          "name": "button/quiet",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:159"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:163"
+            }
+          }
+        },
+        {
+          "name": "button/disabled",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:165"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:165"
+            }
+          }
+        },
+        {
+          "name": "button/onDisabled",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:167"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:167"
+            }
+          }
+        },
+        {
+          "name": "button/focus",
+          "values": {
+            "70:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:167"
+            },
+            "70:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:70:167"
+            }
+          }
+        }
+      ],
+      "donorPhotoReactions": [
+        {
+          "action": {
+            "type": "NODE",
+            "destinationId": "142:2871",
+            "navigation": "NAVIGATE",
+            "transition": null,
+            "resetVideoPosition": false,
+            "resetScrollPosition": true
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "142:2871",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ],
+          "trigger": {
+            "type": "ON_CLICK"
+          }
+        }
+      ]
+    },
+    "web": {
+      "page": "403:2",
+      "rootCount": 8,
+      "counts": [
+        {
+          "id": "915:386338",
+          "name": "Web / 退出本次照护协作 [caretakerLeaveConfirm]",
+          "visibleNodes": 75,
+          "texts": [
+            {
+              "id": "915:386340",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I915:386341;296:7",
+              "text": "社区",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386342;296:7",
+              "text": "领养",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386343;829:26",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386344;296:7",
+              "text": "互助",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386345;296:7",
+              "text": "消息",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386346;296:7",
+              "text": "我的",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "915:386347",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "915:386350",
+              "text": "领养与照护",
+              "width": 208,
+              "height": 30,
+              "parentWidth": 256
+            },
+            {
+              "id": "I915:386351;296:7",
+              "text": "领养",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "I915:386352;296:7",
+              "text": "申请进度",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "915:386356",
+              "text": "学习示意 · 非真实数据",
+              "width": 208,
+              "height": 20,
+              "parentWidth": 256
+            },
+            {
+              "id": "915:386361",
+              "text": "退出本次照护协作",
+              "width": 1100,
+              "height": 30,
+              "parentWidth": 1184
+            },
+            {
+              "id": "915:386365",
+              "text": "确认退出照护协作？",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:386366",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386367;56:185",
+              "text": "保留当前协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386370;56:185",
+              "text": "确认退出照护协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "915:386431",
+          "name": "Web / 已退出照护协作 [caretakerLeft]",
+          "visibleNodes": 74,
+          "texts": [
+            {
+              "id": "915:386433",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I915:386434;296:7",
+              "text": "社区",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386435;296:7",
+              "text": "领养",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386436;829:26",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386437;296:7",
+              "text": "互助",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386438;296:7",
+              "text": "消息",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386439;296:7",
+              "text": "我的",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "915:386440",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "915:386443",
+              "text": "领养与照护",
+              "width": 208,
+              "height": 30,
+              "parentWidth": 256
+            },
+            {
+              "id": "I915:386444;296:7",
+              "text": "领养",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "I915:386445;296:7",
+              "text": "申请进度",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "915:386449",
+              "text": "学习示意 · 非真实数据",
+              "width": 208,
+              "height": 20,
+              "parentWidth": 256
+            },
+            {
+              "id": "915:386454",
+              "text": "已退出照护协作",
+              "width": 1100,
+              "height": 30,
+              "parentWidth": 1184
+            },
+            {
+              "id": "915:386457",
+              "text": "已退出照护协作",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "915:386459",
+              "text": "仅结束本次协作权限",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:386460",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386463;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 20,
+          "flatImages": []
+        },
+        {
+          "id": "915:386523",
+          "name": "Web / 退出本次介绍协作 [publisherLeaveConfirm]",
+          "visibleNodes": 75,
+          "texts": [
+            {
+              "id": "915:386525",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I915:386526;296:7",
+              "text": "社区",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386527;296:7",
+              "text": "领养",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386528;829:26",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386529;296:7",
+              "text": "互助",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386530;296:7",
+              "text": "消息",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386531;296:7",
+              "text": "我的",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "915:386532",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "915:386535",
+              "text": "领养与照护",
+              "width": 208,
+              "height": 30,
+              "parentWidth": 256
+            },
+            {
+              "id": "I915:386536;296:7",
+              "text": "领养",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "I915:386537;296:7",
+              "text": "申请进度",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "915:386541",
+              "text": "学习示意 · 非真实数据",
+              "width": 208,
+              "height": 20,
+              "parentWidth": 256
+            },
+            {
+              "id": "915:386546",
+              "text": "退出本次介绍协作",
+              "width": 1100,
+              "height": 30,
+              "parentWidth": 1184
+            },
+            {
+              "id": "915:386550",
+              "text": "确认退出介绍协作？",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:386551",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386552;56:185",
+              "text": "保留当前协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386555;56:185",
+              "text": "确认退出介绍协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "915:386616",
+          "name": "Web / 已退出介绍协作 [publisherLeft]",
+          "visibleNodes": 73,
+          "texts": [
+            {
+              "id": "915:386618",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I915:386619;296:7",
+              "text": "社区",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386620;296:7",
+              "text": "领养",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386621;829:26",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386622;296:7",
+              "text": "互助",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386623;296:7",
+              "text": "消息",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386624;296:7",
+              "text": "我的",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "915:386625",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "915:386628",
+              "text": "领养与照护",
+              "width": 208,
+              "height": 30,
+              "parentWidth": 256
+            },
+            {
+              "id": "I915:386629;296:7",
+              "text": "领养",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "I915:386630;296:7",
+              "text": "申请进度",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "915:386634",
+              "text": "学习示意 · 非真实数据",
+              "width": 208,
+              "height": 20,
+              "parentWidth": 256
+            },
+            {
+              "id": "915:386639",
+              "text": "已退出介绍协作",
+              "width": 1100,
+              "height": 30,
+              "parentWidth": 1184
+            },
+            {
+              "id": "915:386643",
+              "text": "本次介绍协作已结束",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:386644",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386647;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 20,
+          "flatImages": []
+        },
+        {
+          "id": "915:386707",
+          "name": "Web / 授权照护近况 [caretakerWorkspace]",
+          "visibleNodes": 79,
+          "texts": [
+            {
+              "id": "915:386709",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I915:386710;296:7",
+              "text": "社区",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386711;296:7",
+              "text": "领养",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386712;829:26",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386713;296:7",
+              "text": "互助",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386714;296:7",
+              "text": "消息",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386715;296:7",
+              "text": "我的",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "915:386716",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "915:386719",
+              "text": "领养与照护",
+              "width": 208,
+              "height": 30,
+              "parentWidth": 256
+            },
+            {
+              "id": "I915:386720;296:7",
+              "text": "领养",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "I915:386721;296:7",
+              "text": "申请进度",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "915:386725",
+              "text": "学习示意 · 非真实数据",
+              "width": 208,
+              "height": 20,
+              "parentWidth": 256
+            },
+            {
+              "id": "915:386730",
+              "text": "授权照护近况",
+              "width": 1100,
+              "height": 30,
+              "parentWidth": 1184
+            },
+            {
+              "id": "915:386733",
+              "text": "授权照护近况",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "915:386735",
+              "text": "本次有限授权",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:386736",
+              "text": "仅显示本次获授权的私密近况；申请材料、协议与完整宠物档案不会开放。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:387075",
+              "text": "学习示例 · 今日照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:387076",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:387107;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386739;56:184",
+              "text": "记录私密照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "915:386799",
+          "name": "Web / 照护近况仅可查阅 [caretakerReadOnly]",
+          "visibleNodes": 79,
+          "texts": [
+            {
+              "id": "915:386801",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I915:386802;296:7",
+              "text": "社区",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386803;296:7",
+              "text": "领养",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386804;829:26",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386805;296:7",
+              "text": "互助",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386806;296:7",
+              "text": "消息",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386807;296:7",
+              "text": "我的",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "915:386808",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "915:386811",
+              "text": "领养与照护",
+              "width": 208,
+              "height": 30,
+              "parentWidth": 256
+            },
+            {
+              "id": "I915:386812;296:7",
+              "text": "领养",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "I915:386813;296:7",
+              "text": "申请进度",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "915:386817",
+              "text": "学习示意 · 非真实数据",
+              "width": 208,
+              "height": 20,
+              "parentWidth": 256
+            },
+            {
+              "id": "915:386822",
+              "text": "照护近况仅可查阅",
+              "width": 1100,
+              "height": 30,
+              "parentWidth": 1184
+            },
+            {
+              "id": "915:386825",
+              "text": "照护近况仅可查阅",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "915:386827",
+              "text": "当前不能新增近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:386828",
+              "text": "本次授权的历史近况仍可查阅。当前阶段或资格不允许新增，请重新读取后核对；不会自动提交。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:387078",
+              "text": "学习示例 · 今日照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:387079",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:387113;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386831;56:184",
+              "text": "重新读取当前权限",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "915:386891",
+          "name": "Web / 照护授权不可用 [caretakerUnavailable]",
+          "visibleNodes": 74,
+          "texts": [
+            {
+              "id": "915:386893",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I915:386894;296:7",
+              "text": "社区",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386895;296:7",
+              "text": "领养",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386896;829:26",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386897;296:7",
+              "text": "互助",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386898;296:7",
+              "text": "消息",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386899;296:7",
+              "text": "我的",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "915:386900",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "915:386903",
+              "text": "领养与照护",
+              "width": 208,
+              "height": 30,
+              "parentWidth": 256
+            },
+            {
+              "id": "I915:386904;296:7",
+              "text": "领养",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "I915:386905;296:7",
+              "text": "申请进度",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "915:386909",
+              "text": "学习示意 · 非真实数据",
+              "width": 208,
+              "height": 20,
+              "parentWidth": 256
+            },
+            {
+              "id": "915:386914",
+              "text": "照护授权不可用",
+              "width": 1100,
+              "height": 30,
+              "parentWidth": 1184
+            },
+            {
+              "id": "915:386917",
+              "text": "照护授权不可用",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "915:386919",
+              "text": "不再显示受限资料",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:386920",
+              "text": "本次授权已结束或当前无法确认访问权限。此处不再显示私密近况、照片或旧编辑内容；已有记录由原照护双方管理。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:386923;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 20,
+          "flatImages": []
+        },
+        {
+          "id": "915:386983",
+          "name": "Web / 维护该宠物介绍 [publisherWorkspace]",
+          "visibleNodes": 86,
+          "texts": [
+            {
+              "id": "915:386985",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I915:386986;296:7",
+              "text": "社区",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386987;296:7",
+              "text": "领养",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386988;829:26",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386989;296:7",
+              "text": "互助",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386990;296:7",
+              "text": "消息",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "I915:386991;296:7",
+              "text": "我的",
+              "width": 36,
+              "height": 22,
+              "parentWidth": 104
+            },
+            {
+              "id": "915:386992",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "915:386995",
+              "text": "领养与照护",
+              "width": 208,
+              "height": 30,
+              "parentWidth": 256
+            },
+            {
+              "id": "I915:386996;296:7",
+              "text": "领养",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "I915:386997;296:7",
+              "text": "申请进度",
+              "width": 140,
+              "height": 22,
+              "parentWidth": 208
+            },
+            {
+              "id": "915:387001",
+              "text": "学习示意 · 非真实数据",
+              "width": 208,
+              "height": 20,
+              "parentWidth": 256
+            },
+            {
+              "id": "915:387006",
+              "text": "维护该宠物介绍",
+              "width": 1100,
+              "height": 30,
+              "parentWidth": 1184
+            },
+            {
+              "id": "915:387010",
+              "text": "本次仅限介绍与照片",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "915:387011",
+              "text": "你可以维护小满的领养介绍与照片；不能邀请其他协作者、修改宠物归属、读取私密申请或代替发布人决定领养。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:387080;56:189",
+              "text": "领养介绍",
+              "width": 788,
+              "height": 22,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:387080;56:191",
+              "text": "介绍小满的性格、生活习惯与需要照护的事项。",
+              "width": 762,
+              "height": 26,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:387084;56:216",
+              "text": "维护介绍照片",
+              "width": 760,
+              "height": 26,
+              "parentWidth": 760
+            },
+            {
+              "id": "I915:387084;56:217",
+              "text": "仅限这只宠物，使用有权使用的素材",
+              "width": 760,
+              "height": 20,
+              "parentWidth": 760
+            },
+            {
+              "id": "I915:387110;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I915:387014;56:184",
+              "text": "保存介绍与照片",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 24,
+          "flatImages": []
+        }
+      ],
+      "visibleLinks": 53,
+      "problems": [],
+      "buttonColors": [],
+      "donorPhotoReactions": []
+    },
+    "desktop": {
+      "page": "403:4",
+      "rootCount": 8,
+      "counts": [
+        {
+          "id": "916:379927",
+          "name": "Desktop / 退出本次照护协作 [caretakerLeaveConfirm]",
+          "visibleNodes": 79,
+          "texts": [
+            {
+              "id": "916:379929",
+              "text": "M&D · meow & doggie",
+              "width": 1400,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:379931",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:379932",
+              "text": "领养与照护",
+              "width": 1000,
+              "height": 30,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:379933",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I916:379936;296:7",
+              "text": "社区",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:379937;296:7",
+              "text": "领养",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:379938;836:28",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:379939;296:7",
+              "text": "互助",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:379940;296:7",
+              "text": "消息",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:379941;296:7",
+              "text": "我的",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "916:379943",
+              "text": "领养与照护",
+              "width": 184,
+              "height": 30,
+              "parentWidth": 232
+            },
+            {
+              "id": "I916:379944;296:7",
+              "text": "领养",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "I916:379945;296:7",
+              "text": "申请进度",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "916:379949",
+              "text": "学习示意 · 非真实数据",
+              "width": 184,
+              "height": 20,
+              "parentWidth": 232
+            },
+            {
+              "id": "916:379954",
+              "text": "退出本次照护协作",
+              "width": 940,
+              "height": 30,
+              "parentWidth": 1024
+            },
+            {
+              "id": "916:379958",
+              "text": "确认退出照护协作？",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:379959",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:379960;56:185",
+              "text": "保留当前协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:379963;56:185",
+              "text": "确认退出照护协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "916:380024",
+          "name": "Desktop / 已退出照护协作 [caretakerLeft]",
+          "visibleNodes": 78,
+          "texts": [
+            {
+              "id": "916:380026",
+              "text": "M&D · meow & doggie",
+              "width": 1400,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380028",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380029",
+              "text": "领养与照护",
+              "width": 1000,
+              "height": 30,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380030",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I916:380033;296:7",
+              "text": "社区",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380034;296:7",
+              "text": "领养",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380035;836:28",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380036;296:7",
+              "text": "互助",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380037;296:7",
+              "text": "消息",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380038;296:7",
+              "text": "我的",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "916:380040",
+              "text": "领养与照护",
+              "width": 184,
+              "height": 30,
+              "parentWidth": 232
+            },
+            {
+              "id": "I916:380041;296:7",
+              "text": "领养",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "I916:380042;296:7",
+              "text": "申请进度",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "916:380046",
+              "text": "学习示意 · 非真实数据",
+              "width": 184,
+              "height": 20,
+              "parentWidth": 232
+            },
+            {
+              "id": "916:380051",
+              "text": "已退出照护协作",
+              "width": 940,
+              "height": 30,
+              "parentWidth": 1024
+            },
+            {
+              "id": "916:380054",
+              "text": "已退出照护协作",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "916:380056",
+              "text": "仅结束本次协作权限",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380057",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380060;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 20,
+          "flatImages": []
+        },
+        {
+          "id": "916:380120",
+          "name": "Desktop / 退出本次介绍协作 [publisherLeaveConfirm]",
+          "visibleNodes": 79,
+          "texts": [
+            {
+              "id": "916:380122",
+              "text": "M&D · meow & doggie",
+              "width": 1400,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380124",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380125",
+              "text": "领养与照护",
+              "width": 1000,
+              "height": 30,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380126",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I916:380129;296:7",
+              "text": "社区",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380130;296:7",
+              "text": "领养",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380131;836:28",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380132;296:7",
+              "text": "互助",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380133;296:7",
+              "text": "消息",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380134;296:7",
+              "text": "我的",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "916:380136",
+              "text": "领养与照护",
+              "width": 184,
+              "height": 30,
+              "parentWidth": 232
+            },
+            {
+              "id": "I916:380137;296:7",
+              "text": "领养",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "I916:380138;296:7",
+              "text": "申请进度",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "916:380142",
+              "text": "学习示意 · 非真实数据",
+              "width": 184,
+              "height": 20,
+              "parentWidth": 232
+            },
+            {
+              "id": "916:380147",
+              "text": "退出本次介绍协作",
+              "width": 940,
+              "height": 30,
+              "parentWidth": 1024
+            },
+            {
+              "id": "916:380151",
+              "text": "确认退出介绍协作？",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380152",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380153;56:185",
+              "text": "保留当前协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380156;56:185",
+              "text": "确认退出介绍协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "916:380217",
+          "name": "Desktop / 已退出介绍协作 [publisherLeft]",
+          "visibleNodes": 77,
+          "texts": [
+            {
+              "id": "916:380219",
+              "text": "M&D · meow & doggie",
+              "width": 1400,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380221",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380222",
+              "text": "领养与照护",
+              "width": 1000,
+              "height": 30,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380223",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I916:380226;296:7",
+              "text": "社区",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380227;296:7",
+              "text": "领养",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380228;836:28",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380229;296:7",
+              "text": "互助",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380230;296:7",
+              "text": "消息",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380231;296:7",
+              "text": "我的",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "916:380233",
+              "text": "领养与照护",
+              "width": 184,
+              "height": 30,
+              "parentWidth": 232
+            },
+            {
+              "id": "I916:380234;296:7",
+              "text": "领养",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "I916:380235;296:7",
+              "text": "申请进度",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "916:380239",
+              "text": "学习示意 · 非真实数据",
+              "width": 184,
+              "height": 20,
+              "parentWidth": 232
+            },
+            {
+              "id": "916:380244",
+              "text": "已退出介绍协作",
+              "width": 940,
+              "height": 30,
+              "parentWidth": 1024
+            },
+            {
+              "id": "916:380248",
+              "text": "本次介绍协作已结束",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380249",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380252;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 20,
+          "flatImages": []
+        },
+        {
+          "id": "916:380312",
+          "name": "Desktop / 授权照护近况 [caretakerWorkspace]",
+          "visibleNodes": 83,
+          "texts": [
+            {
+              "id": "916:380314",
+              "text": "M&D · meow & doggie",
+              "width": 1400,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380316",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380317",
+              "text": "领养与照护",
+              "width": 1000,
+              "height": 30,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380318",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I916:380321;296:7",
+              "text": "社区",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380322;296:7",
+              "text": "领养",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380323;836:28",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380324;296:7",
+              "text": "互助",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380325;296:7",
+              "text": "消息",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380326;296:7",
+              "text": "我的",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "916:380328",
+              "text": "领养与照护",
+              "width": 184,
+              "height": 30,
+              "parentWidth": 232
+            },
+            {
+              "id": "I916:380329;296:7",
+              "text": "领养",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "I916:380330;296:7",
+              "text": "申请进度",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "916:380334",
+              "text": "学习示意 · 非真实数据",
+              "width": 184,
+              "height": 20,
+              "parentWidth": 232
+            },
+            {
+              "id": "916:380339",
+              "text": "授权照护近况",
+              "width": 940,
+              "height": 30,
+              "parentWidth": 1024
+            },
+            {
+              "id": "916:380342",
+              "text": "授权照护近况",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "916:380344",
+              "text": "本次有限授权",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380345",
+              "text": "仅显示本次获授权的私密近况；申请材料、协议与完整宠物档案不会开放。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380696",
+              "text": "学习示例 · 今日照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380697",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380728;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380348;56:184",
+              "text": "记录私密照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "916:380408",
+          "name": "Desktop / 照护近况仅可查阅 [caretakerReadOnly]",
+          "visibleNodes": 83,
+          "texts": [
+            {
+              "id": "916:380410",
+              "text": "M&D · meow & doggie",
+              "width": 1400,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380412",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380413",
+              "text": "领养与照护",
+              "width": 1000,
+              "height": 30,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380414",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I916:380417;296:7",
+              "text": "社区",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380418;296:7",
+              "text": "领养",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380419;836:28",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380420;296:7",
+              "text": "互助",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380421;296:7",
+              "text": "消息",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380422;296:7",
+              "text": "我的",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "916:380424",
+              "text": "领养与照护",
+              "width": 184,
+              "height": 30,
+              "parentWidth": 232
+            },
+            {
+              "id": "I916:380425;296:7",
+              "text": "领养",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "I916:380426;296:7",
+              "text": "申请进度",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "916:380430",
+              "text": "学习示意 · 非真实数据",
+              "width": 184,
+              "height": 20,
+              "parentWidth": 232
+            },
+            {
+              "id": "916:380435",
+              "text": "照护近况仅可查阅",
+              "width": 940,
+              "height": 30,
+              "parentWidth": 1024
+            },
+            {
+              "id": "916:380438",
+              "text": "照护近况仅可查阅",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "916:380440",
+              "text": "当前不能新增近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380441",
+              "text": "本次授权的历史近况仍可查阅。当前阶段或资格不允许新增，请重新读取后核对；不会自动提交。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380699",
+              "text": "学习示例 · 今日照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380700",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380734;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380444;56:184",
+              "text": "重新读取当前权限",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "916:380504",
+          "name": "Desktop / 照护授权不可用 [caretakerUnavailable]",
+          "visibleNodes": 78,
+          "texts": [
+            {
+              "id": "916:380506",
+              "text": "M&D · meow & doggie",
+              "width": 1400,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380508",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380509",
+              "text": "领养与照护",
+              "width": 1000,
+              "height": 30,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380510",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I916:380513;296:7",
+              "text": "社区",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380514;296:7",
+              "text": "领养",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380515;836:28",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380516;296:7",
+              "text": "互助",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380517;296:7",
+              "text": "消息",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380518;296:7",
+              "text": "我的",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "916:380520",
+              "text": "领养与照护",
+              "width": 184,
+              "height": 30,
+              "parentWidth": 232
+            },
+            {
+              "id": "I916:380521;296:7",
+              "text": "领养",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "I916:380522;296:7",
+              "text": "申请进度",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "916:380526",
+              "text": "学习示意 · 非真实数据",
+              "width": 184,
+              "height": 20,
+              "parentWidth": 232
+            },
+            {
+              "id": "916:380531",
+              "text": "照护授权不可用",
+              "width": 940,
+              "height": 30,
+              "parentWidth": 1024
+            },
+            {
+              "id": "916:380534",
+              "text": "照护授权不可用",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "916:380536",
+              "text": "不再显示受限资料",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380537",
+              "text": "本次授权已结束或当前无法确认访问权限。此处不再显示私密近况、照片或旧编辑内容；已有记录由原照护双方管理。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380540;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 20,
+          "flatImages": []
+        },
+        {
+          "id": "916:380600",
+          "name": "Desktop / 维护该宠物介绍 [publisherWorkspace]",
+          "visibleNodes": 90,
+          "texts": [
+            {
+              "id": "916:380602",
+              "text": "M&D · meow & doggie",
+              "width": 1400,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380604",
+              "text": "M&D",
+              "width": 160,
+              "height": 32,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380605",
+              "text": "领养与照护",
+              "width": 1000,
+              "height": 30,
+              "parentWidth": 1440
+            },
+            {
+              "id": "916:380606",
+              "text": "meow & doggie",
+              "width": 200,
+              "height": 20,
+              "parentWidth": 1440
+            },
+            {
+              "id": "I916:380609;296:7",
+              "text": "社区",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380610;296:7",
+              "text": "领养",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380611;836:28",
+              "text": "发布",
+              "width": 28,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380612;296:7",
+              "text": "互助",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380613;296:7",
+              "text": "消息",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "I916:380614;296:7",
+              "text": "我的",
+              "width": 84,
+              "height": 22,
+              "parentWidth": 152
+            },
+            {
+              "id": "916:380616",
+              "text": "领养与照护",
+              "width": 184,
+              "height": 30,
+              "parentWidth": 232
+            },
+            {
+              "id": "I916:380617;296:7",
+              "text": "领养",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "I916:380618;296:7",
+              "text": "申请进度",
+              "width": 116,
+              "height": 22,
+              "parentWidth": 184
+            },
+            {
+              "id": "916:380622",
+              "text": "学习示意 · 非真实数据",
+              "width": 184,
+              "height": 20,
+              "parentWidth": 232
+            },
+            {
+              "id": "916:380627",
+              "text": "维护该宠物介绍",
+              "width": 940,
+              "height": 30,
+              "parentWidth": 1024
+            },
+            {
+              "id": "916:380631",
+              "text": "本次仅限介绍与照片",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:380632",
+              "text": "你可以维护小满的领养介绍与照片；不能邀请其他协作者、修改宠物归属、读取私密申请或代替发布人决定领养。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380701;56:189",
+              "text": "领养介绍",
+              "width": 788,
+              "height": 22,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380701;56:191",
+              "text": "介绍小满的性格、生活习惯与需要照护的事项。",
+              "width": 762,
+              "height": 26,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380705;56:216",
+              "text": "维护介绍照片",
+              "width": 760,
+              "height": 26,
+              "parentWidth": 760
+            },
+            {
+              "id": "I916:380705;56:217",
+              "text": "仅限这只宠物，使用有权使用的素材",
+              "width": 760,
+              "height": 20,
+              "parentWidth": 760
+            },
+            {
+              "id": "I916:380731;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:380635;56:184",
+              "text": "保存介绍与照片",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 24,
+          "flatImages": []
+        }
+      ],
+      "visibleLinks": 53,
+      "problems": [],
+      "buttonColors": [],
+      "donorPhotoReactions": []
+    },
+    "tablet": {
+      "page": "403:3",
+      "rootCount": 16,
+      "counts": [
+        {
+          "id": "916:1127483",
+          "name": "平板竖屏 / 退出本次照护协作 [caretakerLeaveConfirm]",
+          "visibleNodes": 66,
+          "texts": [
+            {
+              "id": "916:1127485",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127486",
+              "text": "领养与照护",
+              "width": 322,
+              "height": 30,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127487",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 834
+            },
+            {
+              "id": "I916:1127488;56:185",
+              "text": "预览 · 横屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1127491;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127492;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127495;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127496;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127497;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127498;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1127503",
+              "text": "退出本次照护协作",
+              "width": 670,
+              "height": 30,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127507",
+              "text": "确认退出照护协作？",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1127508",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 690,
+              "height": 40,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127509;56:185",
+              "text": "保留当前协作",
+              "width": 688,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127512;56:185",
+              "text": "确认退出照护协作",
+              "width": 688,
+              "height": 24,
+              "parentWidth": 722
+            }
+          ],
+          "instances": 15,
+          "flatImages": []
+        },
+        {
+          "id": "916:1127549",
+          "name": "平板竖屏 / 已退出照护协作 [caretakerLeft]",
+          "visibleNodes": 65,
+          "texts": [
+            {
+              "id": "916:1127551",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127552",
+              "text": "领养与照护",
+              "width": 322,
+              "height": 30,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127553",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 834
+            },
+            {
+              "id": "I916:1127554;56:185",
+              "text": "预览 · 横屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1127557;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127558;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127561;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127562;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127563;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127564;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1127569",
+              "text": "已退出照护协作",
+              "width": 670,
+              "height": 30,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127572",
+              "text": "已退出照护协作",
+              "width": 722,
+              "height": 40,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127574",
+              "text": "仅结束本次协作权限",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1127575",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 690,
+              "height": 40,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127578;56:184",
+              "text": "返回消息",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            }
+          ],
+          "instances": 14,
+          "flatImages": []
+        },
+        {
+          "id": "916:1127614",
+          "name": "平板竖屏 / 退出本次介绍协作 [publisherLeaveConfirm]",
+          "visibleNodes": 66,
+          "texts": [
+            {
+              "id": "916:1127616",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127617",
+              "text": "领养与照护",
+              "width": 322,
+              "height": 30,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127618",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 834
+            },
+            {
+              "id": "I916:1127619;56:185",
+              "text": "预览 · 横屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1127622;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127623;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127626;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127627;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127628;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127629;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1127634",
+              "text": "退出本次介绍协作",
+              "width": 670,
+              "height": 30,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127638",
+              "text": "确认退出介绍协作？",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1127639",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 690,
+              "height": 40,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127640;56:185",
+              "text": "保留当前协作",
+              "width": 688,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127643;56:185",
+              "text": "确认退出介绍协作",
+              "width": 688,
+              "height": 24,
+              "parentWidth": 722
+            }
+          ],
+          "instances": 15,
+          "flatImages": []
+        },
+        {
+          "id": "916:1127680",
+          "name": "平板竖屏 / 已退出介绍协作 [publisherLeft]",
+          "visibleNodes": 64,
+          "texts": [
+            {
+              "id": "916:1127682",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127683",
+              "text": "领养与照护",
+              "width": 322,
+              "height": 30,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127684",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 834
+            },
+            {
+              "id": "I916:1127685;56:185",
+              "text": "预览 · 横屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1127688;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127689;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127692;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127693;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127694;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127695;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1127700",
+              "text": "已退出介绍协作",
+              "width": 670,
+              "height": 30,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127704",
+              "text": "本次介绍协作已结束",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1127705",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 690,
+              "height": 40,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127708;56:184",
+              "text": "返回消息",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            }
+          ],
+          "instances": 14,
+          "flatImages": []
+        },
+        {
+          "id": "916:1127744",
+          "name": "平板竖屏 / 授权照护近况 [caretakerWorkspace]",
+          "visibleNodes": 70,
+          "texts": [
+            {
+              "id": "916:1127746",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127747",
+              "text": "领养与照护",
+              "width": 322,
+              "height": 30,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127748",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 834
+            },
+            {
+              "id": "I916:1127749;56:185",
+              "text": "预览 · 横屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1127752;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127753;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127756;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127757;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127758;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127759;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1127764",
+              "text": "授权照护近况",
+              "width": 670,
+              "height": 30,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127767",
+              "text": "授权照护近况",
+              "width": 722,
+              "height": 40,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127769",
+              "text": "本次有限授权",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1127770",
+              "text": "仅显示本次获授权的私密近况；申请材料、协议与完整宠物档案不会开放。",
+              "width": 690,
+              "height": 20,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1128004",
+              "text": "学习示例 · 今日照护近况",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1128005",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 690,
+              "height": 20,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1128036;56:185",
+              "text": "查看协作与退出",
+              "width": 688,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127773;56:184",
+              "text": "记录私密照护近况",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            }
+          ],
+          "instances": 15,
+          "flatImages": []
+        },
+        {
+          "id": "916:1127809",
+          "name": "平板竖屏 / 照护近况仅可查阅 [caretakerReadOnly]",
+          "visibleNodes": 70,
+          "texts": [
+            {
+              "id": "916:1127811",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127812",
+              "text": "领养与照护",
+              "width": 322,
+              "height": 30,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127813",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 834
+            },
+            {
+              "id": "I916:1127814;56:185",
+              "text": "预览 · 横屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1127817;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127818;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127821;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127822;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127823;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127824;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1127829",
+              "text": "照护近况仅可查阅",
+              "width": 670,
+              "height": 30,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127832",
+              "text": "照护近况仅可查阅",
+              "width": 722,
+              "height": 40,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127834",
+              "text": "当前不能新增近况",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1127835",
+              "text": "本次授权的历史近况仍可查阅。当前阶段或资格不允许新增，请重新读取后核对；不会自动提交。",
+              "width": 690,
+              "height": 20,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1128007",
+              "text": "学习示例 · 今日照护近况",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1128008",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 690,
+              "height": 20,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1128042;56:185",
+              "text": "查看协作与退出",
+              "width": 688,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127838;56:184",
+              "text": "重新读取当前权限",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            }
+          ],
+          "instances": 15,
+          "flatImages": []
+        },
+        {
+          "id": "916:1127874",
+          "name": "平板竖屏 / 照护授权不可用 [caretakerUnavailable]",
+          "visibleNodes": 65,
+          "texts": [
+            {
+              "id": "916:1127876",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127877",
+              "text": "领养与照护",
+              "width": 322,
+              "height": 30,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127878",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 834
+            },
+            {
+              "id": "I916:1127879;56:185",
+              "text": "预览 · 横屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1127882;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127883;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127886;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127887;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127888;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127889;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1127894",
+              "text": "照护授权不可用",
+              "width": 670,
+              "height": 30,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127897",
+              "text": "照护授权不可用",
+              "width": 722,
+              "height": 40,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127899",
+              "text": "不再显示受限资料",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1127900",
+              "text": "本次授权已结束或当前无法确认访问权限。此处不再显示私密近况、照片或旧编辑内容；已有记录由原照护双方管理。",
+              "width": 690,
+              "height": 20,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127903;56:184",
+              "text": "返回消息",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            }
+          ],
+          "instances": 14,
+          "flatImages": []
+        },
+        {
+          "id": "916:1127939",
+          "name": "平板竖屏 / 维护该宠物介绍 [publisherWorkspace]",
+          "visibleNodes": 77,
+          "texts": [
+            {
+              "id": "916:1127941",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127942",
+              "text": "领养与照护",
+              "width": 322,
+              "height": 30,
+              "parentWidth": 834
+            },
+            {
+              "id": "916:1127943",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 834
+            },
+            {
+              "id": "I916:1127944;56:185",
+              "text": "预览 · 横屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1127947;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127948;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127951;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127952;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127953;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1127954;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1127959",
+              "text": "维护该宠物介绍",
+              "width": 670,
+              "height": 30,
+              "parentWidth": 754
+            },
+            {
+              "id": "916:1127963",
+              "text": "本次仅限介绍与照片",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "916:1127964",
+              "text": "你可以维护小满的领养介绍与照片；不能邀请其他协作者、修改宠物归属、读取私密申请或代替发布人决定领养。",
+              "width": 690,
+              "height": 20,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1128009;56:189",
+              "text": "领养介绍",
+              "width": 722,
+              "height": 22,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1128009;56:191",
+              "text": "介绍小满的性格、生活习惯与需要照护的事项。",
+              "width": 696,
+              "height": 26,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1128013;56:216",
+              "text": "维护介绍照片",
+              "width": 694,
+              "height": 26,
+              "parentWidth": 694
+            },
+            {
+              "id": "I916:1128013;56:217",
+              "text": "仅限这只宠物，使用有权使用的素材",
+              "width": 694,
+              "height": 20,
+              "parentWidth": 694
+            },
+            {
+              "id": "I916:1128039;56:185",
+              "text": "查看协作与退出",
+              "width": 688,
+              "height": 24,
+              "parentWidth": 722
+            },
+            {
+              "id": "I916:1127967;56:184",
+              "text": "保存介绍与照片",
+              "width": 690,
+              "height": 24,
+              "parentWidth": 722
+            }
+          ],
+          "instances": 18,
+          "flatImages": []
+        },
+        {
+          "id": "916:1128048",
+          "name": "平板横屏 / 退出本次照护协作 [caretakerLeaveConfirm]",
+          "visibleNodes": 81,
+          "texts": [
+            {
+              "id": "916:1128050",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128051",
+              "text": "领养与照护",
+              "width": 682,
+              "height": 30,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128052",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 1194
+            },
+            {
+              "id": "I916:1128053;56:185",
+              "text": "预览 · 竖屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1128056;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128057;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128060;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128061;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128062;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128063;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1128065",
+              "text": "领养与照护",
+              "width": 176,
+              "height": 30,
+              "parentWidth": 224
+            },
+            {
+              "id": "I916:1128066;296:7",
+              "text": "领养",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "I916:1128067;296:7",
+              "text": "申请进度",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "916:1128071",
+              "text": "学习示意 · 非真实数据",
+              "width": 176,
+              "height": 20,
+              "parentWidth": 224
+            },
+            {
+              "id": "916:1128076",
+              "text": "退出本次照护协作",
+              "width": 806,
+              "height": 30,
+              "parentWidth": 890
+            },
+            {
+              "id": "916:1128080",
+              "text": "确认退出照护协作？",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128081",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128082;56:185",
+              "text": "保留当前协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128085;56:185",
+              "text": "确认退出照护协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 22,
+          "flatImages": []
+        },
+        {
+          "id": "916:1128147",
+          "name": "平板横屏 / 已退出照护协作 [caretakerLeft]",
+          "visibleNodes": 80,
+          "texts": [
+            {
+              "id": "916:1128149",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128150",
+              "text": "领养与照护",
+              "width": 682,
+              "height": 30,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128151",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 1194
+            },
+            {
+              "id": "I916:1128152;56:185",
+              "text": "预览 · 竖屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1128155;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128156;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128159;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128160;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128161;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128162;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1128164",
+              "text": "领养与照护",
+              "width": 176,
+              "height": 30,
+              "parentWidth": 224
+            },
+            {
+              "id": "I916:1128165;296:7",
+              "text": "领养",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "I916:1128166;296:7",
+              "text": "申请进度",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "916:1128170",
+              "text": "学习示意 · 非真实数据",
+              "width": 176,
+              "height": 20,
+              "parentWidth": 224
+            },
+            {
+              "id": "916:1128175",
+              "text": "已退出照护协作",
+              "width": 806,
+              "height": 30,
+              "parentWidth": 890
+            },
+            {
+              "id": "916:1128178",
+              "text": "已退出照护协作",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "916:1128180",
+              "text": "仅结束本次协作权限",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128181",
+              "text": "退出后，你将不能再通过本次授权查看或记录私密照护近况。已有记录保留，原领养、试养和交接事项继续；退出协作不代表完成交接或接回。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128184;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "916:1128245",
+          "name": "平板横屏 / 退出本次介绍协作 [publisherLeaveConfirm]",
+          "visibleNodes": 81,
+          "texts": [
+            {
+              "id": "916:1128247",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128248",
+              "text": "领养与照护",
+              "width": 682,
+              "height": 30,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128249",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 1194
+            },
+            {
+              "id": "I916:1128250;56:185",
+              "text": "预览 · 竖屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1128253;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128254;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128257;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128258;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128259;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128260;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1128262",
+              "text": "领养与照护",
+              "width": 176,
+              "height": 30,
+              "parentWidth": 224
+            },
+            {
+              "id": "I916:1128263;296:7",
+              "text": "领养",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "I916:1128264;296:7",
+              "text": "申请进度",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "916:1128268",
+              "text": "学习示意 · 非真实数据",
+              "width": 176,
+              "height": 20,
+              "parentWidth": 224
+            },
+            {
+              "id": "916:1128273",
+              "text": "退出本次介绍协作",
+              "width": 806,
+              "height": 30,
+              "parentWidth": 890
+            },
+            {
+              "id": "916:1128277",
+              "text": "确认退出介绍协作？",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128278",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128279;56:185",
+              "text": "保留当前协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128282;56:185",
+              "text": "确认退出介绍协作",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 22,
+          "flatImages": []
+        },
+        {
+          "id": "916:1128344",
+          "name": "平板横屏 / 已退出介绍协作 [publisherLeft]",
+          "visibleNodes": 79,
+          "texts": [
+            {
+              "id": "916:1128346",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128347",
+              "text": "领养与照护",
+              "width": 682,
+              "height": 30,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128348",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 1194
+            },
+            {
+              "id": "I916:1128349;56:185",
+              "text": "预览 · 竖屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1128352;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128353;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128356;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128357;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128358;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128359;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1128361",
+              "text": "领养与照护",
+              "width": 176,
+              "height": 30,
+              "parentWidth": 224
+            },
+            {
+              "id": "I916:1128362;296:7",
+              "text": "领养",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "I916:1128363;296:7",
+              "text": "申请进度",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "916:1128367",
+              "text": "学习示意 · 非真实数据",
+              "width": 176,
+              "height": 20,
+              "parentWidth": 224
+            },
+            {
+              "id": "916:1128372",
+              "text": "已退出介绍协作",
+              "width": 806,
+              "height": 30,
+              "parentWidth": 890
+            },
+            {
+              "id": "916:1128376",
+              "text": "本次介绍协作已结束",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128377",
+              "text": "退出后，你将不能再通过本次授权维护该宠物的介绍与照片。已有记录和原领养事项保留，宠物归属不变；公开资料仍按原可见范围展示。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128380;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "916:1128441",
+          "name": "平板横屏 / 授权照护近况 [caretakerWorkspace]",
+          "visibleNodes": 85,
+          "texts": [
+            {
+              "id": "916:1128443",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128444",
+              "text": "领养与照护",
+              "width": 682,
+              "height": 30,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128445",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 1194
+            },
+            {
+              "id": "I916:1128446;56:185",
+              "text": "预览 · 竖屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1128449;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128450;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128453;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128454;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128455;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128456;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1128458",
+              "text": "领养与照护",
+              "width": 176,
+              "height": 30,
+              "parentWidth": 224
+            },
+            {
+              "id": "I916:1128459;296:7",
+              "text": "领养",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "I916:1128460;296:7",
+              "text": "申请进度",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "916:1128464",
+              "text": "学习示意 · 非真实数据",
+              "width": 176,
+              "height": 20,
+              "parentWidth": 224
+            },
+            {
+              "id": "916:1128469",
+              "text": "授权照护近况",
+              "width": 806,
+              "height": 30,
+              "parentWidth": 890
+            },
+            {
+              "id": "916:1128472",
+              "text": "授权照护近况",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "916:1128474",
+              "text": "本次有限授权",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128475",
+              "text": "仅显示本次获授权的私密近况；申请材料、协议与完整宠物档案不会开放。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128833",
+              "text": "学习示例 · 今日照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128834",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128865;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128478;56:184",
+              "text": "记录私密照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 22,
+          "flatImages": []
+        },
+        {
+          "id": "916:1128539",
+          "name": "平板横屏 / 照护近况仅可查阅 [caretakerReadOnly]",
+          "visibleNodes": 85,
+          "texts": [
+            {
+              "id": "916:1128541",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128542",
+              "text": "领养与照护",
+              "width": 682,
+              "height": 30,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128543",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 1194
+            },
+            {
+              "id": "I916:1128544;56:185",
+              "text": "预览 · 竖屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1128547;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128548;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128551;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128552;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128553;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128554;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1128556",
+              "text": "领养与照护",
+              "width": 176,
+              "height": 30,
+              "parentWidth": 224
+            },
+            {
+              "id": "I916:1128557;296:7",
+              "text": "领养",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "I916:1128558;296:7",
+              "text": "申请进度",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "916:1128562",
+              "text": "学习示意 · 非真实数据",
+              "width": 176,
+              "height": 20,
+              "parentWidth": 224
+            },
+            {
+              "id": "916:1128567",
+              "text": "照护近况仅可查阅",
+              "width": 806,
+              "height": 30,
+              "parentWidth": 890
+            },
+            {
+              "id": "916:1128570",
+              "text": "照护近况仅可查阅",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "916:1128572",
+              "text": "当前不能新增近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128573",
+              "text": "本次授权的历史近况仍可查阅。当前阶段或资格不允许新增，请重新读取后核对；不会自动提交。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128836",
+              "text": "学习示例 · 今日照护近况",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128837",
+              "text": "食欲正常，开始主动玩逗猫棒。本示例仅限获授权照护成员查阅。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128871;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128576;56:184",
+              "text": "重新读取当前权限",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 22,
+          "flatImages": []
+        },
+        {
+          "id": "916:1128637",
+          "name": "平板横屏 / 照护授权不可用 [caretakerUnavailable]",
+          "visibleNodes": 80,
+          "texts": [
+            {
+              "id": "916:1128639",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128640",
+              "text": "领养与照护",
+              "width": 682,
+              "height": 30,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128641",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 1194
+            },
+            {
+              "id": "I916:1128642;56:185",
+              "text": "预览 · 竖屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1128645;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128646;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128649;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128650;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128651;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128652;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1128654",
+              "text": "领养与照护",
+              "width": 176,
+              "height": 30,
+              "parentWidth": 224
+            },
+            {
+              "id": "I916:1128655;296:7",
+              "text": "领养",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "I916:1128656;296:7",
+              "text": "申请进度",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "916:1128660",
+              "text": "学习示意 · 非真实数据",
+              "width": 176,
+              "height": 20,
+              "parentWidth": 224
+            },
+            {
+              "id": "916:1128665",
+              "text": "照护授权不可用",
+              "width": 806,
+              "height": 30,
+              "parentWidth": 890
+            },
+            {
+              "id": "916:1128668",
+              "text": "照护授权不可用",
+              "width": 788,
+              "height": 40,
+              "parentWidth": 820
+            },
+            {
+              "id": "916:1128670",
+              "text": "不再显示受限资料",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128671",
+              "text": "本次授权已结束或当前无法确认访问权限。此处不再显示私密近况、照片或旧编辑内容；已有记录由原照护双方管理。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128674;56:184",
+              "text": "返回消息",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 21,
+          "flatImages": []
+        },
+        {
+          "id": "916:1128735",
+          "name": "平板横屏 / 维护该宠物介绍 [publisherWorkspace]",
+          "visibleNodes": 92,
+          "texts": [
+            {
+              "id": "916:1128737",
+              "text": "M&D",
+              "width": 94,
+              "height": 32,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128738",
+              "text": "领养与照护",
+              "width": 682,
+              "height": 30,
+              "parentWidth": 1194
+            },
+            {
+              "id": "916:1128739",
+              "text": "meow & doggie",
+              "width": 170,
+              "height": 20,
+              "parentWidth": 1194
+            },
+            {
+              "id": "I916:1128740;56:185",
+              "text": "预览 · 竖屏",
+              "width": 110,
+              "height": 24,
+              "parentWidth": 144
+            },
+            {
+              "id": "I916:1128743;56:226",
+              "text": "社区",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128744;56:226",
+              "text": "领养",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128747;838:28",
+              "text": "发布",
+              "width": 24,
+              "height": 18,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128748;56:226",
+              "text": "互助",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128749;56:226",
+              "text": "消息",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "I916:1128750;56:226",
+              "text": "我的",
+              "width": 56,
+              "height": 20,
+              "parentWidth": 56
+            },
+            {
+              "id": "916:1128752",
+              "text": "领养与照护",
+              "width": 176,
+              "height": 30,
+              "parentWidth": 224
+            },
+            {
+              "id": "I916:1128753;296:7",
+              "text": "领养",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "I916:1128754;296:7",
+              "text": "申请进度",
+              "width": 108,
+              "height": 22,
+              "parentWidth": 176
+            },
+            {
+              "id": "916:1128758",
+              "text": "学习示意 · 非真实数据",
+              "width": 176,
+              "height": 20,
+              "parentWidth": 224
+            },
+            {
+              "id": "916:1128763",
+              "text": "维护该宠物介绍",
+              "width": 806,
+              "height": 30,
+              "parentWidth": 890
+            },
+            {
+              "id": "916:1128767",
+              "text": "本次仅限介绍与照片",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "916:1128768",
+              "text": "你可以维护小满的领养介绍与照片；不能邀请其他协作者、修改宠物归属、读取私密申请或代替发布人决定领养。",
+              "width": 756,
+              "height": 20,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128838;56:189",
+              "text": "领养介绍",
+              "width": 788,
+              "height": 22,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128838;56:191",
+              "text": "介绍小满的性格、生活习惯与需要照护的事项。",
+              "width": 762,
+              "height": 26,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128842;56:216",
+              "text": "维护介绍照片",
+              "width": 760,
+              "height": 26,
+              "parentWidth": 760
+            },
+            {
+              "id": "I916:1128842;56:217",
+              "text": "仅限这只宠物，使用有权使用的素材",
+              "width": 760,
+              "height": 20,
+              "parentWidth": 760
+            },
+            {
+              "id": "I916:1128868;56:185",
+              "text": "查看协作与退出",
+              "width": 754,
+              "height": 24,
+              "parentWidth": 788
+            },
+            {
+              "id": "I916:1128771;56:184",
+              "text": "保存介绍与照片",
+              "width": 756,
+              "height": 24,
+              "parentWidth": 788
+            }
+          ],
+          "instances": 25,
+          "flatImages": []
+        }
+      ],
+      "visibleLinks": 122,
+      "problems": [],
+      "buttonColors": [],
+      "donorPhotoReactions": []
+    }
+  },
+  "final_refinements": {
+    "status": "not_executed",
+    "reason": "automatic_approval_review_usage_limit",
+    "pending": [
+      "手机工作区与只读页统一查看协作与退出入口。",
+      "五布局介绍照片行显式连接到各自circlePhotoChoose页面，检查必要动作完整性。",
+      "五布局退出确认／结果画面补充明确示例事项、邀请和版本。",
+      "读取按钮别名最终色值后评估次按钮对齐；不根据别名猜值。",
+      "复核全部40稿并查看五布局最终截图。"
+    ],
+    "restart_rule": "恢复后先读取现有Section和根ID，禁止整批重建或绕过自动审批。"
+  }
+}

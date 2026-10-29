@@ -16,18 +16,29 @@ import { stateLabel, workflowURL } from "./workflows";
 export function CareCollaboration({ id }: { id: bigint }) {
   const path = `adoptions/${id}/care-context`;
   const context = useQuery<CareContext>(path);
+  const readable = !!context.data && !context.loading && !context.error;
   const page = usePages(
     "care_updates",
     { reference_id: id },
-    !!context.data && !context.error,
+    readable,
   );
-  const refresh = () => {
-    void reload(path);
-    page.refresh();
+  const refresh = async () => {
+    if(await reload(path)) void reload(`care_updates?reference_id=${id}&cursor=0`);
   };
+  const unavailable = !!context.error || context.denied || page.denied;
+  if(unavailable) return (
+    <TaskPage title="照护授权不可用" actions={<RowLink title="返回消息" to="/messages" />}>
+      <Notice title="不再显示受限资料">
+        本次授权已结束或当前无法确认访问权限。此处不再显示私密近况、照片或旧编辑内容；已有记录由原照护双方管理。
+      </Notice>
+      <QueryState loading={context.loading} error={context.error ?? page.error} failure={context.failure ?? page.failure}
+        onRetry={refresh} />
+      <RowLink title="查看协作与退出" to={`/invitations?ref=${id}&scope=caretaker`} />
+    </TaskPage>
+  );
   return (
     <TaskPage
-      title="授权照护近况"
+      title={readable && !context.data!.can_post ? "照护近况仅可查阅" : "授权照护近况"}
       actions={
         <Button onClick={refresh} disabled={context.loading || page.loading}>
           重新读取
@@ -57,6 +68,7 @@ export function CareCollaboration({ id }: { id: bigint }) {
                 {careReadOnlyReason(context.data)}
               </Notice>
             )}
+            <RowLink title="查看协作与退出" to={`/invitations?ref=${id}&scope=caretaker`} />
             <QueryState
               loading={page.loading}
               error={page.error}

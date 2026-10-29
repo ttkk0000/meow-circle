@@ -4,11 +4,21 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import com.ttkk0000.meowcircle.client.*
 
+@Composable fun CareUnavailableContent(store: MobileStore, state: FeatureState) {
+    val f = store.features
+    TaskNotice("不再显示受限资料","本次授权已结束或当前无法确认访问权限。此处不再显示私密近况、照片或旧编辑内容；已有记录由原照护双方管理。")
+    ReadFailureContent(state.readFailure,state.error ?: "请重新读取当前照护权限。",{ f.reload() },enabled = !state.busy)
+    UnavailableTaskActions(store,state.readFailure)
+    FeatureButton("查看协作与退出",!state.busy) { f.open(FeatureRoute(FeaturePage.Invitations,kind = "caretaker",peer = state.route?.id ?: 0)) }
+    FeatureButton("返回消息",!state.busy) { f.closeRoute(); store.select(MobileTab.Messages) }
+}
+
 @Composable fun CareFeature(store: MobileStore, s: FeatureState, route: FeatureRoute) {
     val f = store.features; val actor = store.state.value.user?.id
     if(route.page in setOf(FeaturePage.Appointment,FeaturePage.AppointmentEdit,FeaturePage.ContractEdit,FeaturePage.ReturnEdit)) AdultRequirement(store,route,s.appointment?.version ?: s.adoption?.version ?: 0)
     if(route.page == FeaturePage.AdoptionWork && route.kind == "care") {
         Text("仅当前授权事项的私密照护近况；协议、申请材料与公开档案不在此权限中。")
+        FeatureButton("查看协作与退出",!s.busy && !s.loading) { f.open(FeatureRoute(FeaturePage.Invitations,kind = "caretaker",peer = route.id)) }
         s.care.items.forEach { update -> FeatureSection(if(update.data.needsHelp) "需要协助" else "照护近况") { Text(update.data.text); update.mediaIds.forEach { MobilePhoto(store,it,actor,"授权照护照片") } } }
         PageFooter(s.care, { f.reload() }, { f.reload(true) }, "暂无私密照护近况", enabled = !s.loading && !s.busy)
         val context = s.careContext
@@ -16,10 +26,15 @@ import com.ttkk0000.meowcircle.client.*
             if(context != null) Text(when(context.reason) { "interaction_required" -> "当前互动资格未满足，已授权的历史近况仍可查阅。"; "care_recipient_required" -> "由接收照护方或其授权协作者补充近况。"; else -> "当前阶段已结束近况提交，历史记录仍可查阅。" })
             return
         }
+        if(f.field("care_stage") != "compose") {
+            FeaturePrimary("记录私密照护近况",!s.busy && !s.loading && s.error == null && !s.unconfirmedResult) { f.edit("care_stage","compose") }
+            return
+        }
+        FeatureButton("返回照护近况列表",!s.busy && !s.unconfirmedResult) { f.edit("care_stage","") }
         FormField(f,s,"careText","补充照护近况",lines = 5)
         CheckLine("需要协助",f.field("needsHelp","false").toBoolean(),{ f.edit("needsHelp",it.toString()) },!s.busy)
         FeaturePhotos(store,s,private = true)
-        FeatureButton("提交私密近况",!s.busy && !s.loading && s.error == null && f.field("careText").isNotBlank()) { val input = CareInput(f.field("careText"),f.field("needsHelp","false").toBoolean(),newRequestKey(),f.mediaIds()); f.confirm("提交授权事项的照护近况",input.text) { f.api.care(route.id,input); f.discardAndReload() } }
+        FeatureButton("提交私密近况",!s.busy && !s.loading && s.error == null && !s.unconfirmedResult && !s.conflict && f.field("careText").isNotBlank()) { val input = CareInput(f.field("careText"),f.field("needsHelp","false").toBoolean(),newRequestKey(),f.mediaIds()); f.confirm("提交授权事项的照护近况",input.text) { f.api.care(route.id,input); f.discardAndReload() } }
         return
     }
     if(route.page == FeaturePage.AdoptionWork && s.confirmation != null) {
