@@ -1,6 +1,6 @@
 # M&D 现行文档与源码基线
 
-更新：2026-10-28（Asia/Shanghai）。已拉取邀请协作及后台角色提交至 `main@b269504ad0cd0e179d8108fe60b9073ab97e9c99`；本轮设计与源码续作保留在未提交工作树，未推送。本页取代各入口中更早的“当前数量”；带日期交接继续保留当时结果。
+更新：2026-10-29（Asia/Shanghai）。本地续作已提交为67decaa，正在合并origin/main的07452b5／35914a0设计与文档批次；未推送。本页取代更早入口数量，带日期交接保留当时结果。
 
 [Figma 文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3) · [完整文档目录](DOCUMENTATION_CATALOG.md) · [功能状态与发布边界](PRODUCT_AND_DELIVERY_MATRIX.md) · [UML 图谱](uml/README.md) · [同步清单](figma-sync/README.md)。
 
@@ -17,11 +17,13 @@
 | shared / clientUi 公共 Kotlin 文件 | 29 / 43 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件；本批新增发布按钮与退出页面 |
 | FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |
 | Worker 接受的作业名 | 8 类 | [ValidJob](../internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |
-| Figma 消费者状态台账 | 740 个既有状态 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；另有业务后台13稿、运维14稿 |
+| Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；增量手机／Web16根已登记，平板／Desktop待回读；另有角色18稿、业务后台13稿、运维14稿 |
+
+远端已提交的[设计与文档详细完善](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)已纳入本次合并：后台增加39任务状态及1评审索引，协作8状态完成手机／Web来源补录，消费者追踪748条。消息分类与待办等现有源码差距已明确列账，没有通过文档修订冒充业务接线完成。
 
 当前新增批次见[设计与代码续作](client/CONTINUE_DESIGN_CODE_2026_10_28.md)、[后台角色实现](client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；五布局40份新增协作稿独立记账，最终细化受审批额度阻塞。[source-baseline.json](figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。这些是源码统计，不是构建、联调或发布成功证据。
 
-续作已补邀请详情／限定事项列表、退出／撤销全页、失权／410清理与Web试养／接回／预约完整核对；[本批13旧＋8新状态源码分支](client/collaboration-page-source-map-2026-10-28.json)单列，不升级740整体完成。最新Web90份TS/TSX／407本地引用；资源引用只读核对通过，最终语法器内存退出未计通过，未运行验收。
+续作已补邀请详情／限定事项列表、退出／撤销全页、失权／410清理与Web试养／接回／预约完整核对；[本批13旧＋8新状态源码分支](client/collaboration-page-source-map-2026-10-28.json)单列，不将748条索引视为整体完成。最新Web90份TS/TSX／407本地引用；资源引用只读核对通过，Node18语法读取30份正常退出（24完整无诊断＋6基线对照／片段），Node24失败仍留历史，未运行验收。
 
 ## 当前产品与平台口径
 
@@ -64,6 +66,6 @@ Docker初始化挂载已包含013；已有数据库不会因新增挂载自动�
 
 1. 文档与设计：本地合同、表格、图谱和Figma阅读副本分别记账；文档同步不改变需求批准状态。
 2. 源码与静态：页面和合同源码已分批写入。最近源码批次见[10月27日恢复点](client/COMPLETE_LANDING_2026_10_27.md)及[城市素材交接](client/MAINLAND_CITIES_AND_CAT_ASSETS_2026_10_26.md)。
-3. 运行与发布：740状态没有全量逐端运行／视觉验收；SDK正式参数、签名、真实环境、数据库、权限／并发／网络恢复、无障碍与运营值守仍需验证。完整搜索接收端及运维发布／重启执行器保持用户指定占位。
+3. 运行与发布：当前748条消费者状态追踪没有全量逐端运行／视觉验收；SDK正式参数、签名、真实环境、数据库、权限／并发／网络恢复、无障碍与运营值守仍需验证。完整搜索接收端及运维发布／重启执行器保持用户指定占位。
 
 本轮按仓库规则不运行编译、构建、test、lint或应用。历史静态通过、测试源码存在、设计截图均不升级为本轮运行证据。

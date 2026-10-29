@@ -1,28 +1,28 @@
 # 客户端详细实施方案
 
-> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-10-29 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前数量统一查现行基线；本次核对模块、宿主、公共页面与浏览器适配源码，只修订文档，没有新增构建或运行结果。
 
-2026-10-24工程增补：全端实施使用独立 `kmp/clientUi` 复用消费者Compose页面，业务shared保持纯逻辑；Android、iOS、Desktop分别提供系统／窗口适配，Web为React DOM。此工程选择已记[决定](../ai/DECISIONS.md)，本文件旧“各自Compose UI”／“苹果后置”条目不覆盖最新范围。源码和未验收项见[专项进展](ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)。
+当前工程方案：`shared/.../client`承载纯Kotlin业务与数据，独立`clientUi`承载三端公共Compose页面；Android、iOS、Desktop各自注入`ClientUiPlatform`并拥有宿主生命周期、真实窗口和系统能力桥接。Web已经是独立React DOM工程。公共UI选择与[决定](../ai/DECISIONS.md)一致，逐端功能、平台和运行验收仍需完成。
 
-> **2026-10-24 最新进度**：服务端 `/api/v2`（230 Paths / 259 Operations / 112 Schemas，001–009 迁移）、`kmp/shared/.../client`、`kmp/androidApp/.../mobile` 以及独立 `web-client/`（React + TypeScript + Vite，支持 Cookie/CSRF 认证、无损 ID、公开阅读/法规目录与 740 布局追踪）已完成源码落地与静态对齐（详见[2026-10-24客户端说明](FIGMA_ANDROID_WEB_2026_10_24.md)与[服务端完整性审计](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。iOS（`kmp/iosUi`）与 Desktop（`kmp/desktopApp`）保持首批基础实现，待 Android 与 Web 运行验收后同步扩展。
+> **2026-10-24 历史批次**：服务端 `/api/v2`（230 Paths / 259 Operations / 112 Schemas，001–009 迁移）、`kmp/shared/.../client`、`kmp/androidApp/.../mobile` 以及独立 `web-client/`（React + TypeScript + Vite，支持 Cookie/CSRF 认证、无损 ID、公开阅读/法规目录与 740 布局追踪）已完成源码落地与静态对齐（详见[2026-10-24客户端说明](FIGMA_ANDROID_WEB_2026_10_24.md)与[服务端完整性审计](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)）。该批次之后iOS和Desktop已接入公共`ConsumerApp`；当前平台接线见第2节，不能用当时阶段范围推断仍只有首批基础页。
 
-2026-10-23闭环实施顺序：[现行合同](../design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)→[当前交付账本](CURRENT_DELIVERY_STATUS_2026_10_23.md)→服务端F07/B10/B12→公共KMP→Android手机／平板。苹果UI后置；最小游客安全网页不等待完整Web。部署与运营按[v2手册](../server/V2_RELEASE_RUNBOOK_2026_10_23.md)，本轮新增规则和修正记录见[领养实施](../server/ADOPTION_CLOSURE_2026_10_23.md)。
+2026-10-23当时闭环实施顺序：[现行合同](../design/MND_PRODUCT_CLOSURE_CONTRACT_2026_10_23.md)→[当前交付账本](CURRENT_DELIVERY_STATUS_2026_10_23.md)→服务端F07/B10/B12→公共KMP→Android手机／平板。苹果UI后置；最小游客安全网页不等待完整Web。部署与运营按[v2手册](../server/V2_RELEASE_RUNBOOK_2026_10_23.md)，本轮新增规则和修正记录见[领养实施](../server/ADOPTION_CLOSURE_2026_10_23.md)。
 
 2026-10-22实施更新：[本轮服务端/公共KMP源码与静态证据](../server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)。S1基础及S2–S4主要服务命令已进入源码，原“B04尚缺”等为实施前发现。阶段出口仍要求真实配置、调度、UI接线和运行/设备证据，不因本轮源码变更改为上线通过。
 
-更新：2026-10-22。本文是从当前代码走到可交付客户端的方案，不是代码完成报告。功能条目见[交付矩阵](FEATURE_DELIVERY_MATRIX.md)，具体任务见[任务拆分](TASKS.md)。
+建立：2026-10-22；当前方案修订：2026-10-29。本文定义现有源码的维护与交付要求，不是功能完成报告。功能条目见[交付矩阵](FEATURE_DELIVERY_MATRIX.md)，具体任务见[任务拆分](TASKS.md)。
 
-本次已核对最新45组法律设计、225布局及当前源码／OpenAPI，补充[系统架构与数据／API合同](../bmad/architecture.md)、[逐项追溯](../bmad/implementation-trace-2026-10-22.json)及[实施准入核对](../bmad/gate-check.md)。后续以本文第12–13节的S0–S7为执行顺序，原C/F/A/I/W/D/B/V编号保留并扩B05–B12。现状是方案可用于补齐服务端，完整写流程／上线准入仍未通过；不重新创建已存在的移动端骨架。
+2026-10-22规划输入曾核对45组法律设计、225布局及当时源码／OpenAPI，并形成[系统架构与数据／API合同](../bmad/architecture.md)、[逐项追溯](../bmad/implementation-trace-2026-10-22.json)及[实施准入核对](../bmad/gate-check.md)。后续以本文第12–13节的S0–S7为执行顺序，原C/F/A/I/W/D/B/V编号保留并扩B05–B12。现状是方案可用于补齐服务端，完整写流程／上线准入仍未通过；不重新创建已存在的移动端骨架。
 
-移动端代码已有授权。本文历史“源码基线”保留最初读取事实；后续身份／资格／操作回执已有源码，真实配置及运行仍未验收，不再将B04整体称为尚缺。Android API 37／最低26及依赖钉定继续遵守[依赖基线](DEPENDENCY_BASELINE_2026_10_20.md)，不重建骨架或升级依赖。
+移动端代码已有授权。初始读取事实见带日期实施交接；当前身份／资格／操作回执已有源码，真实配置及运行仍未验收，不再将B04整体称为尚缺。Android API 37／最低26及依赖钉定继续遵守[依赖基线](DEPENDENCY_BASELINE_2026_10_20.md)，不重建骨架或升级依赖。
 
 ## 1. 明确决定
 
-1. Android 与 iOS 共用 KMP 业务、数据、会话、校验及可移植状态逻辑。
-2. Android 页面放 `androidApp`，iOS 页面放独立 `iosUi`。不把整套业务 UI 搬进 `shared/commonMain`。
+1. Android、iOS与Desktop共用KMP业务、数据、会话、校验及可移植状态逻辑。
+2. 业务Composable、默认主题与自适应页面放独立`clientUi`；`shared/commonMain`保持业务与数据职责。`androidApp`、`iosUi`、`desktopApp`提供宿主与平台桥接，不各自复制整套业务页面。
 3. Android 使用 Jetpack Compose；iOS 使用 Compose Multiplatform for iOS。iOS 现有 SwiftUI 页面是迁移来源，目标主 UI 不继续由 SwiftUI 实现。
 4. Android 平板和 iPad 分别适配，并使用各自窗口、输入、返回、焦点和系统能力。
-5. Desktop 延续 Compose Desktop 并复用共享逻辑；Web 使用独立 React / TypeScript 客户端，复用协议，不强行依赖 KMP JS / Wasm。
+5. Desktop延续Compose Desktop并复用`shared`与`clientUi`；Web使用现有独立React／TypeScript客户端，复用HTTP契约与用例语义，不依赖KMP JS／Wasm。
 6. 所有新页面默认呈现当前 Figma 浅色样式。本期没有主题选择器，也不跟随系统自动进入黑夜模式。
 7. Honey / Mint / Night / Neutral 保留历史参考与后续扩展能力，不删除历史偏好，也不把旧偏好自动套到新页面。
 8. 最初先做文档；随后用户已授权移动端编码与最高可兼容稳定版本升级。运行、测试、安装、提交和发布仍须分别按当次授权处理。
@@ -31,74 +31,71 @@
 
 ## 2. 当前源码基线与缺口
 
-以下为 2026-10-20 源码读取结果，不是构建证明。旧项目结构文档的部分日期和能力已落后，以实际文件与本表为准。
+下表按2026-10-29实际源码核对；初始模块与迁移前事实继续保留在[2026-10-20实施记录](MOBILE_IMPLEMENTATION_2026_10_20.md)。模块、接口和页面源码存在不表示已构建或全量验收。
 
-2026-10-22补充：下表保留初始旧入口基线，不能据“尚无iosUi”重新创建模块。当前已有shared/client、Android mobile、iosUi和ComposeApp；MndMobileUI导出及Xcode描述已指向iosUi。完整功能、B04、生产数据清理和各平台运行尚未完成，详见架构第1节与移动实施记录。
-
-| 位置 | 已有事实 | 本轮目标缺口 |
+| 位置 | 当前已有事实 | 继续核对的范围 |
 |---|---|---|
-| `kmp/settings.gradle.kts` | 包含 shared、androidApp、desktopApp | 尚无 iosUi 模块 |
-| `kmp/shared/build.gradle.kts` | common、Android、desktop JVM、iOS arm64 / simulator arm64；Ktor 分平台引擎 | 共享仍偏 SDK，没有 v2 领域、仓储及完整功能 Store |
-| `shared/.../MeowCircleSdk.kt` | 调用 `/api/v1`，解析 `code/message/data`，401 清会话 | v2 为 `ok/data/error` 和轮换令牌；不能直接沿用解包与鉴权 |
-| `shared/.../SessionStore.kt` | Settings 保存 token、用户、主题、旧 AppMode | 没有可撤销 v2 token pair、安全秘密存储、账号隔离缓存及刷新协调 |
-| `androidApp/.../MeowAppViewModel.kt` | Android ViewModel / MVI，启动、旧模式、主题与页面开关 | 生命周期和 Android 类型不能直接搬入 commonMain；启动也不能用缓存用户替代有效登录 |
-| `androidApp/.../MeowApp.kt` | 旧社区／领养／交易模式和已有页面 | 需迁移为当前任务导航、游客浏览、完整 v2 状态与平板布局 |
-| `kmp/iosApp` | SwiftUI 宿主、原生 Store、NavigationStack、旧主题 | 要迁移至 Compose iOS 业务 UI，保留原文件直到替代验证，不全盘删除 |
-| `shared/iosMain/.../IosSdkBridge.kt` | 把 suspend / Result 转成 Swift 回调 | Compose iOS 可在 Kotlin 中直接用共享逻辑；不必再复制一整套 Swift 业务 Store |
-| `kmp/desktopApp/.../Main.kt` | Compose Desktop 设计工作区与样例内容 | 已依赖 shared，但当前主要是静态示例，不能据此声称真实业务已接入 |
-| `web/` | HTML / JS、v1、`meow_token` / `meow_user`、部分演示回退 | 需要独立 v2 应用、类型、浏览器认证、真实状态和路由迁移 |
-| `mobile/` | Expo 历史客户端 | 暂停新增功能；保留旧行为与资料供迁移，不与 KMP 争夺新手机实现入口 |
-| `internal/platform/mobileapi` 等 | v2 服务端源码及141个路径的 OpenAPI 快照 | 未编译／联调；通用 Envelope 与 Record 的 data 仍需细化响应类型 |
+| `kmp/settings.gradle.kts` | 已包含shared、clientUi、iosUi、androidApp、desktopApp | 依赖解析及逐端编译尚未验证，不重复创建模块 |
+| `kmp/shared/.../client` | v2 MobileApi、MviStore、MobileStore／MobileFeatureStore及专用认证、监护、年龄、用途与恢复模型 | 精确权限、并发、原请求恢复、持久化和真实环境验收 |
+| `kmp/clientUi` | 现行基线列41份公共UI文件；ConsumerApp、ClientFeaturePages、默认主题和ClientUiPlatform | 740消费者状态没有逐端全量视觉／业务验收，不能按文件数判功能完成 |
+| `androidApp/.../mobile` | AndroidMobileApp接ConsumerApp；AndroidClientPlatform提供系统与窗口能力 | 折叠安全区域、预测性返回、IME、权限和进程恢复逐端验收 |
+| `kmp/iosUi`、`iosApp/ComposeApp` | IosMobileApp接ConsumerApp，IosClient管理共享API与Scene Store，Swift薄宿主承载MndMobileUI | Xcode／Native兼容、Scene、安全区、键盘、SDK、签名与设备验收 |
+| `kmp/desktopApp/.../Main.kt` | 已创建MobileApi／MobileStore并接ConsumerApp，DesktopClientPlatform提供系统能力 | 各发布OS的窗口、输入法、秘密存储与包分发分别验收 |
+| `web-client/` | React／TypeScript／Vite消费者页面及独立业务后台、技术运维入口；core负责HTTP、无损wire、会话、草稿与查询 | 浏览器Cookie／CSRF、跨标签会话、私密媒体、路由及无障碍运行验收 |
+| `internal/platform/mobileapi/browser*.go` | `/api/web/v2/`的Cookie／CSRF与刷新源码、独立SPA静态挂载已存在 | 真实密钥、HTTPS／Origin、Cookie、轮换竞态与托管产物验收 |
+| `web/`、`mobile/`、旧MeowApp／SwiftUI | 遗留v1客户端、Stitch参考与兼容资源保留 | 不混用旧theme／Envelope／存储键或演示回退，不把旧页当新版验收 |
+| `internal/platform/mobileapi`、现行OpenAPI | 服务端路径／操作／schema与DTO数量见现行基线，001–013迁移源码存在 | 未编译、未迁移和未联调，按实际接口逐项验证 |
 
 ### 2.1 本地版本记录
 
 历史初读版本为Gradle wrapper8.10.2，Kotlin2.0.21，AGP8.7.2，Compose Multiplatform1.7.3，Android Compose BOM2024.10.01，Ktor3.0.3，coroutines1.9.0，serialization1.7.3，JVM17；Android当时minSdk26 / compileSdk35 / targetSdk35，iOS最低17。该组合已被[依赖基线](DEPENDENCY_BASELINE_2026_10_20.md)及现有配置取代，不能按此历史记录回退；本次不再升级依赖或宣称当前组合已验证。
 
-这些是仓库事实，不是推荐长期冻结的生产组合。新增 Compose iOS 前先锁定一组经官方兼容表与实际 macOS 构建验证的版本；不在实施任务中各自升级 Kotlin、CMP、AGP 或 Android BOM。Compose Compiler 插件与 Kotlin 插件需要一致，CMP 与 Jetpack Compose 的发行号也不是任意互换的；官方[兼容说明](https://kotlinlang.org/docs/multiplatform/compose-compatibility-and-versioning.html)应在任务 C01 复核。当前旧组合不能推断为新 iOS UI 已兼容。
+这些是仓库事实，不是推荐长期冻结的生产组合。现有Compose iOS工程按依赖基线维护；兼容性仍需获授权后在macOS／Xcode验证，不在实施任务中各自升级 Kotlin、CMP、AGP 或 Android BOM。Compose Compiler 插件与 Kotlin 插件需要一致，CMP 与 Jetpack Compose 的发行号也不是任意互换的；官方[兼容说明](https://kotlinlang.org/docs/multiplatform/compose-compatibility-and-versioning.html)应在任务 C01 复核。当前旧组合不能推断为新 iOS UI 已兼容。
 
 本规划不擅自提高或降低最低系统、改签名、包名或供应商应用 ID。兼容性选择落入 C01 的版本表后由一个负责人统一修改 Gradle 文件。
 
 ## 3. 目录与依赖边界
 
-先保留一个共享 Gradle 模块，按包分功能；有真实编译或团队边界收益时再物理拆模块，避免一开始创建大量空工程。
+维护现有`shared`业务模块与独立`clientUi`页面模块，不按早期规划再次搬成`core/data/domain/features`目录或新建平行客户端。当前主要入口如下：
 
 ```text
 kmp/
-  shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/
-    core/          # ID、时间、错误、分页、会话与能力模型
-    data/v2/       # DTO、HTTP、响应解码、Mapper、Repository 实现
-    domain/        # 业务模型、用例、Repository / 平台端口
-    features/      # 各功能 State / Intent / Store，纯 Kotlin
-    legacy/        # 分阶段迁移旧 v1 SDK；不要第一步全仓搬文件
-  shared/src/androidMain/    # Android 端口与引擎
-  shared/src/iosMain/        # iOS 端口与引擎；旧 Swift 桥接过渡
-  shared/src/desktopMain/    # Desktop 端口与引擎
-  androidApp/               # Android Compose、导航、Android 平板
-  iosUi/                    # 已建，仅 iOS 目标；Compose iPhone / iPad完整业务待补
-  iosApp/                   # Xcode 宿主、SDK 回调、系统生命周期和原生控件
-  desktopApp/               # Compose Desktop、桌面导航与工作区
-web-client/                 # 规划新增 React / TypeScript / Vite 源码
-  src/api/                  # v2 浏览器 transport、类型、Mapper
-  src/features/             # 页面和浏览器状态适配
-  src/design/               # 默认主题、组件、响应式布局
-  src/platform/             # 浏览器存储、上传、权限与生命周期
-web/                        # 旧站与设计资产；过渡期间保留
+  shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/
+                            # v2 DTO/API、MVI Store、身份／用途／草稿／业务恢复
+  shared/src/androidMain/    # Android引擎与平台数据端口
+  shared/src/iosMain/        # iOS引擎与平台数据端口；旧Swift桥接保留
+  shared/src/desktopMain/    # Desktop引擎与平台数据端口
+  clientUi/src/commonMain/   # ConsumerApp、业务页面、主题、组件与平台UI端口
+  clientUi/src/androidMain/  # Android的公共UI actual实现
+  clientUi/src/iosMain/      # iOS的公共UI actual实现
+  clientUi/src/desktopMain/  # Desktop的公共UI actual实现
+  androidApp/               # Activity、AndroidClientPlatform、系统与折叠窗口桥接
+  iosUi/                    # IosClient、IosMobileApp、UIKit／系统能力桥接
+  iosApp/ComposeApp/         # Swift薄宿主、Scene、原生SDK配置与生命周期
+  desktopApp/               # JVM窗口与DesktopClientPlatform
+web-client/
+  src/core/                 # v2 transport、wire、query、session、drafts与业务适配
+  src/components/           # Web默认主题组件与表单／媒体／工作区
+  src/features/             # 消费者React DOM页面
+  src/operator/             # 业务后台，具名岗位与独立会话
+  src/operations/           # 技术运维，精确环境与capabilities
+web/                        # 旧站、公开安全入口与设计资产
 ```
 
 ### 3.1 依赖规则
 
 | 消费方 | 可以依赖 | 不能依赖 |
 |---|---|---|
-| domain / core | Kotlin 标准库、必要的协程／序列化／时间抽象 | Activity、Context、UIViewController、Compose、DOM、平台导航栈 |
-| features | domain 用例、StateFlow、可注入调度器与平台端口接口 | 具体 ViewModel 生命周期、Toast、SnackbarHostState、NavController |
-| data/v2 | Ktor、DTO、Mapper、Repository 接口、安全存储端口 | 各端业务 Composable、SwiftUI 页面、Web 页面 |
-| 各端 UI | shared 的 State / Intent / 用例、该平台能力 | 另一个平台 UI 模块或另一个平台 Store 的内部可变状态 |
-| iosUi | shared、CMP UI，模块内部的 commonMain / iosMain | androidApp、Android-only 库和 Swift 业务页面 |
-| Web | HTTP 契约、生成／手写类型、同一语义 Token 和用例 | JVM / Kotlin Native 二进制、复制服务端业务实现 |
+| `shared/.../client` | Kotlin、协程、序列化、Ktor、纯业务模型与平台数据端口 | Activity、UIViewController、Compose UI、DOM、平台导航栈 |
+| `clientUi` | shared的State／Intent／API语义、公共Compose组件与ClientUiPlatform接口 | 具体Activity、UIKit控制器、宿主内部可变状态 |
+| `androidApp/.../mobile` | shared、clientUi、Android系统与SDK适配 | iOS／Desktop UI模块的内部实现 |
+| `iosUi` | shared、clientUi、CMP／UIKit桥接与iOS SDK | androidApp、Android-only库、第二套Swift业务Store |
+| `desktopApp` | shared、clientUi、JVM窗口及系统桥接 | Android／iOS宿主内部实现 |
+| Web | HTTP契约、TypeScript wire与业务适配、DOM及同一语义Token／用例 | JVM／Kotlin Native二进制、复制服务端授权判断 |
 
-`iosUi/commonMain` 只在该 iOS UI 模块的 arm64 / simulator 目标间复用，不表示跨 Android、Desktop 共用业务 UI。UIKit interop 和 `MainViewController()` 留在 `iosUi/iosMain`。
+`iosUi/commonMain`提供iOS壳和端口入口，公共业务UI来自`clientUi/commonMain`；`IosClient.makeViewController()`及UIKit interop留在`iosUi/iosMain`。AndroidMobileApp、IosMobileApp和Desktop Main均接`ConsumerApp`。平台回调只返回能力结果或触发共享Store意图，不另建业务真相源。
 
-允许各端使用相同的品牌素材、颜色角色名和文案键；本期不新增“共享所有 Composable”的 UI 模块。不得在一套大页面里堆 `isIOS/isTablet/isDesktop` 分支代替平台边界。
+公共页面可以共享窗口布局策略；系统API、生命周期与安全区域由宿主隔离。不在一套页面内不断追加平台判断代替`ClientUiPlatform`；有真实平台差异时扩展小端口并分别验收。
 
 ## 4. 共享逻辑如何落地
 
@@ -163,7 +160,7 @@ web/                        # 旧站与设计资产；过渡期间保留
 | 包装 | v2 使用 `ok/data/error`，HTTP 状态参与判断；不能按旧 `code == 0` 处理 |
 | 响应类型 | 当前 OpenAPI 多处仍为通用 Envelope。先为实际用例补响应样例／精确 DTO；生成器产出 `Any` 不能算类型完成 |
 | 错误 | 当前 `error` 是文本，稳定业务错误码不足；按 HTTP 分类与已知状态处理，不能匹配英文句子决定权限／流程 |
-| ID | Kotlin `Long`；Web 领域中为字符串。当前 wire int64 数字需在 `JSON.parse` 前采用无损解析或先协同改成字符串契约；事后 `String(number)` 无法恢复精度 |
+| ID | Kotlin使用`Long`；Web wire层用`parseWire`在进入Number前识别大整数为`bigint`，URL和显示时再规范转文本。请求与原操作持久化用同一`encodeWire`；禁止经`JSON.parse`／Number中转后再转字符串 |
 | 分页 | cursor / limit / next_cursor，0 表示结束；空 items 但游标推进时继续；防止游标不动的死循环，取消时停止 |
 | 时间 | 存储与 wire 时间按契约解析，展示转当地时区；预约显示时区，时间比较使用同一时基，不能按显示文本比较 |
 | 金额 | 保留整数分与币种；不以浮点元累计费用，声明、必付项和总额分别展示 |
@@ -191,9 +188,9 @@ access / refresh 成对轮换。一个进程使用会话级单次刷新协调，
 
 保留现有 `androidApp`，先在应用入口注入共享依赖。现有 Android MVI 可作生命周期外壳，业务恢复、校验、请求和状态迁到 shared；不要同时保留两套相互更新的业务 State。
 
-每个功能按 `route / screen / components / adaptive` 组织。Route 收集状态并连接系统能力，Screen 只画 UI、发 Intent；网络不写在 Composable 里。主导航保留社区／领养／发布／消息／我的，互助为上下文入口，新用户不先选旧模式。
+公共功能页面和组件维护在`clientUi`，Android入口只收集宿主状态并连接系统能力；页面通过共享Store发起业务意图，不在Composable组合过程中直接发网络请求。主导航保留社区／领养／发布／消息／我的，互助为上下文入口，新用户不先选旧模式。
 
-Android 平板布局仍在 Android 模块内：基于当前窗口宽高及折叠状态决定单页／主从／三栏，使用兼容版本的自适应库或明确的本地布局策略。不得依据设备型号、屏幕英寸或单个 `isTablet` 判定。
+Android平板由AndroidClientPlatform／AndroidAdaptiveWindow提供可用窗口和折叠安全区域，`clientUi/ConsumerApp.kt`的公共窗口策略决定导航轨、主从与上下文栏。实际条件含宽高、字号与IME，见[视觉与验收](DESIGN_AND_ACCEPTANCE.md)；不得依据设备型号、屏幕英寸或单个`isTablet`判定。
 
 照片选择、权限、推送、微信／QQ 回调、分享与返回在 Android 适配器完成；清楚区分系统返回、预测性返回适配、面板关闭与页面退出。进程恢复保存安全的目的地 ID、筛选和草稿引用，不序列化整个凭据或媒体流。
 
@@ -201,25 +198,25 @@ Android 平板布局仍在 Android 模块内：基于当前窗口宽高及折叠
 
 ### 7.1 新 UI 模块与薄宿主
 
-现已新增 `:iosUi`，包含iOS arm64、simulator arm64并依赖shared；静态framework名为 `MndMobileUI`。后续补完整功能与验证，保留现有名称、bundle ID及模块接线，不再重新创建另一套宿主。
+现有`:iosUi`包含iOS arm64／simulator arm64，依赖shared与clientUi；静态framework名为`MndMobileUI`。继续核对平台系统能力与完整功能状态，保留现有名称、bundle ID及模块接线，不创建另一套宿主。
 
-`MainViewController()` 返回承载 Compose 的 UIViewController。SwiftUI 可以保留一个 `UIViewControllerRepresentable` 作为应用根，或使用 UIKit 宿主；两者都不再承载第二套业务导航与 Store。这种接法由官方 [Compose / SwiftUI 集成](https://kotlinlang.org/docs/multiplatform/compose-swiftui-integration.html)支持。
+当前`IosClient.makeViewController()`返回承载Compose的UIViewController，调用IosMobileApp→ConsumerApp。`iosApp/ComposeApp`保留SwiftUI的UIViewControllerRepresentable薄宿主，不承载第二套业务导航与Store；源码文件名仍为`MainViewController.kt`。
 
-`iosUi` 负责 iPhone / iPad 页面、Compose 导航和独立适配；`iosApp` 负责 Scene、窗口／安全区、原生 SDK 配置、应用链接与权限说明。只在必须调用系统控件时桥接 UIKit / Swift，例如 Apple 登录、Picker 或选定地图供应商控件。
+`clientUi`负责公共页面与Compose业务导航；`iosUi`通过IosClient／IosClientPlatform负责Scene内Store、系统窗口与返回、Picker、日期、地图、授权及推送桥接；`iosApp`负责Swift宿主、Scene、原生SDK配置、应用链接与权限声明。系统能力通过真实UIKit／Swift接口接入。
 
 当前Xcode源描述的预构建任务已指向 `:iosUi:embedAndSignAppleFrameworkForXcode`，framework路径为iosUi产物。后续核对资源、字体、导出符号和实际macOS/Xcode兼容；源描述已接线仍不证明宿主已构建或设备通过。
 
 ### 7.2 旧 SwiftUI 迁移顺序
 
 1. 保留现有 `MndIOS/Features`、`Architecture` 和旧 Bridge，写明仅旧入口使用。
-2. 创建可以承载默认主题和游客首页的 Compose 根，验证 UIKit / SwiftUI 宿主的生命周期、字体和 insets。
+2. 维护已接入ConsumerApp的Compose根；后续获授权验证UIKit／SwiftUI宿主的生命周期、字体和Insets，不重建平行根。
 3. 一个入口绑定一个业务 Store。Compose 页面接入后，其旧 Swift Store 不再同时订阅或发同类请求。
 4. 按功能替换 SwiftUI 页面并核对原导航／任务返回；替代路径完成验证后，单独清理无调用旧代码。
 5. 不在首次迁移直接删除整个 `iosApp`，也不把 `IosSdkBridge` 继续扩充成新业务的必经回调中转站。
 
 ### 7.3 iPad 独立工作
 
-根据当前 Scene 内容区域和 Compose 约束测量布局，处理窗口缩放、分屏、Stage Manager、安全区、悬浮键盘和外接键盘。iPad 与 Android 平板可以共享布局参数模型，但不共享实际 Composable 或系统 API。
+根据当前 Scene 内容区域和 Compose 约束测量布局，处理窗口缩放、分屏、Stage Manager、安全区、悬浮键盘和外接键盘。iPad与Android平板共享clientUi业务Composable与窗口策略，分别接入平台约束和系统API并独立验收。
 
 选中对象、草稿和会话身份跨旋转保留；单页返回列表后仍定位原项目。手势返回不能与侧边面板、输入框和照片排序拖动冲突。多窗口如后续开放，凭据由进程级会话管理，窗口路由与编辑草稿隔离，不能两个 Scene 同时静默覆盖同一草稿。
 
@@ -229,19 +226,19 @@ iOS 构建、签名、Apple SDK 和设备验证必须在 macOS / Xcode 环境完
 
 ### 8.1 工程与托管
 
-建议在 `web-client/` 新建 React + TypeScript + Vite 项目，先不覆盖 `web/`。旧站、设计板、全尺寸图和兼容链接继续保留。构建产物目录及 Go 挂载点由 W01 明确；本次不新增实际安装或构建操作。
+维护现有`web-client/` React + TypeScript + Vite项目，继续保留`web/`旧站、设计板与兼容资源。`browser_static.go`已有`/app/` SPA挂载，缺产物明确503，API和缺失静态资源不落SPA fallback。本次不安装依赖或生成构建产物。
 
-React 负责页面组合与浏览器生命周期，服务端缓存采用单一查询层，临时 UI 状态留在功能组件；不要同时建立多套 Redux / Zustand / Context 服务端缓存。具体路由／查询库在 W01 锁定后由一人维护依赖。
+React负责页面组合与浏览器生命周期，现有`core/router.ts`与`core/query.ts`管理路由和读取状态，临时UI状态留在功能组件；维护现有查询与会话边界，不另建平行缓存或更换路由依赖。
 
 Go 继续提供业务 API 与静态托管，不另建同业务 Node 服务。Vite 可与现有后端集成，见[官方后端集成说明](https://vite.dev/guide/backend-integration.html)。路径需区分新客户端、旧站和 `/api/*`；刷新任意新客户端深链接要返回正确入口，API 404 不能被 SPA fallback 吞掉。
 
 ### 8.2 浏览器认证与媒体
 
-当前 v2 是 Bearer + body refresh，并没有 HttpOnly Cookie 方案。推荐在同一 Go 进程增加浏览器 Cookie 适配层，复用 Identity 服务：Secure / HttpOnly 的会话 Cookie、明确的 Path / SameSite、服务端刷新与注销、写请求 Origin / CSRF 校验。拟议路径如 `/api/web/v2/*` 只是规划，需 B01 实现并同步契约，不能让 Web 作者当成已存在。
+原生v2仍使用Bearer与body refresh；浏览器已有`browser.go`的`/api/web/v2/`适配层，提供封装会话Cookie、HttpOnly／SameSite与安全传输配置、刷新／注销及Origin／CSRF校验；Web core/api.ts通过该适配层访问受限资源。Cookie与密钥、实际HTTPS／Origin及轮换竞态仍未运行验收，不能把源码存在写成生产认证通过。
 
 适配器不能把 ops/admin 凭据暴露给浏览器，不能根据客户端传来的 actor ID 代替认证。需要跨标签页的会话失效通知与刷新协调；多副本部署也必须核对轮换竞态，不能把进程内锁当分布式保证。
 
-在 Cookie 适配完成前，原型联调可仅保存在内存并明确刷新后需登录；不把长期 refresh token 放 localStorage 作为默认生产方案，也不把旧 Web token 静默升级成 v2 会话。
+浏览器会话按现有session／CSRF接口恢复；不把长期refresh token另存localStorage，也不把旧Web token静默升级成v2会话。Cookie／配置不可用时展示实际受限状态，不切回旧v1认证。
 
 `<img>` 无法随意设置 Bearer header。受限媒体须通过同源 Cookie 适配获取，或受控鉴权 fetch / Blob URL 显示；退出、失权和卸载时撤销 Blob URL。不得把 Bearer 写入图片 URL、分享链接、日志或缓存键。
 
@@ -249,13 +246,13 @@ Go 继续提供业务 API 与静态托管，不另建同业务 Node 服务。Vit
 
 Web 使用真实 URL 表达公开宠物／动态／案例，筛选及返回目标保留白名单；登录后重新校验资源，不自动提交。内容撤回、404、权限改变和离线分别呈现。
 
-公开分享的 HTML 标题／摘要／预览图需要服务端可读的受限公共元数据输出，SPA 的浏览器内改标题不能保证分享平台读取成功。此项属于 B02 / W03 的明确任务，不宣称 Vite SPA 自带 SSR / SEO。私密内容不输出公开预览元数据。
+`public_web.go`已有受公开ACL约束的服务端分享HTML，输出允许公开的标题、摘要与预览图，并链接回App、Web及安全反馈。分享平台抓取、撤回／失权、缓存与真实链接续接仍需运行验收；Vite SPA本身不被当作SSR／SEO能力，私密内容不输出公开元数据。
 
 桌面浏览器、平板浏览器和移动网页属于同一 Web 工程的响应式布局，不调用 Android / iOS UI。优先完成 390、744／834、1194、1440 的窗口与键盘布局，细则见验收文档。
 
 ## 9. Desktop 实施
 
-继续使用 `kmp/desktopApp`，将现有静态工作区逐步连接 shared Repository / Store。`Main.kt` 最终只保留应用与窗口入口，各功能抽到对应目录，不把所有业务继续堆进同一文件。
+继续使用`kmp/desktopApp`：当前`Main.kt`已创建MobileApi／MobileStore并注入DesktopClientPlatform，接入公共ConsumerApp。公共业务页面维护在clientUi，桌面窗口、文件、系统凭据和浏览器授权维护在desktopApp，不恢复旧静态工作区作为主入口。
 
 桌面有常驻导航、列表／详情、会话／上下文及发布预览；布局看窗口可用宽度，缩窗时优先收起第三栏，保留返回与当前对象。快捷键需要菜单或可发现提示，输入框与中文输入法中不得拦截普通文字键；Enter / Shift+Enter 行为可配置但要一致。
 
@@ -291,10 +288,10 @@ Web 使用真实 URL 表达公开宠物／动态／案例，筛选及返回目�
 |---|---|
 | 真实服务尚未验收 | v2 服务端未编译／迁移／供应商联调；客户端可以写适配与独立样例，但不能标联调完成 |
 | 具体响应类型 | OpenAPI 许多成功响应只引用通用 Envelope；C03 补精确响应样例和 Decoder 测试计划，缺项回报服务端负责人 |
-| Web int64 | wire 为 int64 数字；W01 选择无损解析并覆盖大 ID，或由 B01 先更新兼容契约 |
-| 浏览器 Cookie / CSRF | 当前没有规划中的 Web 适配层；B01 完成前不能宣称持久认证完成 |
+| Web int64验收 | wire仍为int64数字；core/wire.ts已有进入Number前的bigint解析与请求编码。大ID、路由及原请求持久化全链条需运行验证 |
+| 浏览器Cookie／CSRF验收 | browser.go及Web core/api.ts已有适配源码；真实HTTPS／Origin、Cookie、密钥、并发刷新与跨标签失效未验收 |
 | Web／Desktop 三方渠道 | capabilities 描述供应商配置，不足以证明移动应用凭据支持浏览器／桌面 OAuth；先交付真实支持的手机号／密码，未授权渠道不冒用移动 App ID |
-| 游客安全／隐私报告 | 手机需求保留免注册通道；当前 resource 写分支先检查 actor，`POST reviews` 需认证。B02 单独补限流与最小字段的游客报告合同；不能假装提交成功或借用 v1 绕开 |
+| 游客安全／隐私报告验收 | `web/safety.html`／`safety.js`及`/api/v2/safety/*`已有独立免账号通道，按安全会话而非普通reviews写接口处理；限流、凭据恢复、证据、人工响应与清理仍需真实验证 |
 | 系统推送 | APNs / Android 实际通道、设备注册与回执需服务端端口和供应商配置；站内通知先交付，系统推送单列阻塞 |
 | 地图与定位 | 来源、地图供应商、坐标精度与真数据未联调；列表与手动城市可先做，不能把设计图当可导航地图 |
 | 注销与材料保留 | 只能显示实际服务端处理阶段，不能把匿名化／queued 写成已物理清除全部数据 |
@@ -322,11 +319,11 @@ Web 工程与各端样式可以在契约冻结后并行写；上述依赖是功�
 
 任何工程命令、测试、设备启动、提交、推送和发布按用户当次授权执行。本文没有默认授予这些权限，也不要求因无构建授权而停止已经授权的文档和源码工作。
 
-## 13. 第一批如何执行及如何估算
+## 13. 当前续作与估算
 
-第一批先完成C03及B04/B05/B12的一条命令合同，不领取全部页面。准备当前／目标请求响应、允许与拒绝动作、HTTP＋稳定错误码、身份／用途／版本绑定、同键重试与结果查询、事务及作业责任、迁移和兼容方案、客户端恢复与权限变化场景；消费者与ops示例分别列出。S0先确认人员和实际环境，不能用文档中的角色名当已分派。
+先从现行交付矩阵选一个仍缺源码或验收证据的切片，核对既有C03／B04／B05／B12合同与实际调用，不重做已有身份、幂等、浏览器或UI骨架。记录当前请求响应、允许与拒绝动作、错误分类、身份／用途／版本绑定、同键重试与结果查询、事务与作业责任、迁移兼容及权限变化恢复；消费者与ops示例分别列出。真实人员与环境须独立确认，不能用角色名当已分派。
 
-建议以“当前手机资格＋单次用途授权＋社区发布operation”为首条贯通切片；验证码、草稿与媒体仍按各自真实能力开放，B06来源规则和B12去重未完成前不放开发布。服务端先交精确合同和命令，共享层接入后Android/iOS一起画真实状态，Android平板／iPad在同一功能内核对转屏、分屏、焦点与恢复。其后的隐私、案件和领养按阶段出口推进，不用Figma示例回执填真实State。
+“当前手机资格＋单次用途授权＋社区发布operation”保留为贯通验收候选；先读已有实现与恢复合同，验证码、草稿、媒体和发布仍受服务端真实能力与资格控制。若后续获得运行授权，应在同一功能内分别核对Android手机／平板、iPhone／iPad与Desktop的公共页面和平台桥接，以及Web的独立DOM与会话；Figma示例回执不填入真实State。
 
 每个任务的完成证据必须列出源码／DTO与路由、数据库唯一性／事务与权限、正常与负例场景、未知结果和回退、五布局对应状态、运行及平台证据。只有源码与静态证据时标“源码已写／静态通过”，不整项勾完成；没有实际运行授权时保留清晰的待执行列表。
 

@@ -1,7 +1,23 @@
 # M&D 全仓文档目录
 
-更新：2026-10-27。覆盖仓库已跟踪Markdown及本轮新增文档；未归属skills目录未纳入。目录逐项记录用途与历史范围，不以文件存在认定内容对应功能已运行。当前事实先读[源码基线](CURRENT_BASELINE.md)，功能与未完成项读[交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)，Figma副本见[同步入口](figma-sync/README.md)。
+更新：2026-10-29。原175份Markdown目录为10月27日同步基线，下列增量补录10月28–29日设计／源码交接；覆盖仓库已跟踪Markdown及本轮新增文档；未归属skills目录未纳入。目录逐项记录用途与历史范围，不以文件存在认定内容对应功能已运行。当前事实先读[源码基线](CURRENT_BASELINE.md)，功能与未完成项读[交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)，Figma副本见[同步入口](figma-sync/README.md)。
 
+
+## 2026-10-28–29 当前增量
+
+| 文档 | 说明 |
+|---|---|
+| [后台按角色工作区详细设计](design/ADMIN_ROLE_WORKSPACES_2026_10_28.md) | 角色与权限现行规范，10月29日交互补充另记 |
+| [后台角色源码与验证交付](client/ADMIN_ROLE_WORKSPACES_2026_10_28.md) | 带日期源码／静态交付，未运行 |
+| [邀请协作源码检查点](client/BUSINESS_COLLABORATION_2026_10_28.md) | 带日期源码／静态交付，未运行 |
+| [后台18稿原始交接](design/figma-study/admin-roles-2026-10-28/README.md) | 10月28日基线，后续修订单独记账 |
+| [后台任务交互合同](design/ADMIN_TASK_INTERACTION_2026_10_29.md) | 字段／确认／三结果及失权，设计与接线分层 |
+| [消息事件分类与待办对齐](design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md) | 当前实现差距与目标合同，业务源码未改 |
+| [协作退出与有限授权补录](design/figma-study/collaboration-2026-10-29/README.md) | 8状态手机／Web16根已记，其余布局待回读 |
+| [后台任务稿与验证证据](design/figma-study/admin-task-interaction-2026-10-29/README.md) | 39任务状态＋1评审索引，非运行验收 |
+| [Figma与文档详细完善交付](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md) | 本轮结果与剩余接线／运行边界 |
+| [Figma文档中心增量同步](figma-sync/delta-2026-10-29/README.md) | 实际写入／分页回读单列，旧manifest保留 |
+| [10月28日完整性复审](design/figma-study/audits/2026-10-28-completeness/REVIEW.md) | 原6项发现及当轮截图，后续修订不改旧结论 |
 
 ## 00 导航与现行基线
 

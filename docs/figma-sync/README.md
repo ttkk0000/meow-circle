@@ -1,6 +1,8 @@
 # M&D Figma文档与图谱同步
 
-同步日期：2026-10-27（Asia/Shanghai）。本轮用户明确授权完善本地文档并同步至Figma。
+当前增量：2026-10-29（Asia/Shanghai）。[最新文档中心入口](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3)与[独立增量来源／分页回读记录](delta-2026-10-29/README.md)维护本轮现行正文；实际写入结果以该增量manifest与validation为准。10月27日旧全文快照及评论保留，动态AI三文件本次不重新冻结，避免摘要循环。
+
+历史全文同步日期：2026-10-27（Asia/Shanghai）。当轮用户明确授权完善本地文档并同步至Figma。
 
 - [打开Figma产品与工程文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=1-9)：原生Specs全文与表格，按8个页面分类，长文按段分卷。
 - [打开FigJam UML图谱](https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=18-2707)：组件、类关系、真实数据库表、时序和状态图。

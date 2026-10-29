@@ -1,0 +1,149 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "design_date": "2026-10-28",
+  "fileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "task": "AI-20261029-FIGMA-COMPLETENESS",
+  "meaning": "登记远端已存在的协作退出与有限授权稿及当前源码入口；本轮没有重复造稿，不把源码归属或设计截图算作逐端运行验收。",
+  "sections": {
+    "phone": "910:357845",
+    "web": "915:386337"
+  },
+  "roots": {
+    "phone/caretakerLeaveConfirm": "910:357846",
+    "web/caretakerLeaveConfirm": "915:386338",
+    "phone/caretakerLeft": "910:357867",
+    "web/caretakerLeft": "915:386431",
+    "phone/publisherLeaveConfirm": "910:357887",
+    "web/publisherLeaveConfirm": "915:386523",
+    "phone/publisherLeft": "910:357908",
+    "web/publisherLeft": "915:386616",
+    "phone/caretakerWorkspace": "910:357927",
+    "web/caretakerWorkspace": "915:386707",
+    "phone/caretakerReadOnly": "910:357947",
+    "web/caretakerReadOnly": "915:386799",
+    "phone/caretakerUnavailable": "910:357967",
+    "web/caretakerUnavailable": "915:386891",
+    "phone/publisherWorkspace": "910:357987",
+    "web/publisherWorkspace": "915:386983"
+  },
+  "states": [
+    {
+      "key": "caretakerLeaveConfirm",
+      "name": "退出本次照护协作 · 完整确认",
+      "native_source": "SocialPages.kt",
+      "web_source": "features/WorkflowEditor.tsx",
+      "web_route": "/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=leave",
+      "implementation_note": "本人退出与所有人撤销分开；确认绑定本次邀请版本，失败或未知不以本地状态冒充成功。",
+      "screenshots_inspected": [
+        "910:357846"
+      ]
+    },
+    {
+      "key": "caretakerLeft",
+      "name": "已退出照护协作",
+      "native_source": "SocialPages.kt",
+      "web_source": "features/ResourcePage.tsx",
+      "web_route": "/invitations/{invitationId}",
+      "implementation_note": "邀请列表按本人角色与真实终态展示，原请求、邀请版本与服务端复核保持。",
+      "screenshots_inspected": []
+    },
+    {
+      "key": "publisherLeaveConfirm",
+      "name": "退出本宠物介绍协作 · 完整确认",
+      "native_source": "SocialPages.kt",
+      "web_source": "features/WorkflowEditor.tsx",
+      "web_route": "/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=leave",
+      "implementation_note": "本人退出与所有人撤销分开；确认绑定本次邀请版本，失败或未知不以本地状态冒充成功。",
+      "screenshots_inspected": []
+    },
+    {
+      "key": "publisherLeft",
+      "name": "已退出介绍协作",
+      "native_source": "SocialPages.kt",
+      "web_source": "features/ResourcePage.tsx",
+      "web_route": "/invitations/{invitationId}",
+      "implementation_note": "邀请列表按本人角色与真实终态展示，原请求、邀请版本与服务端复核保持。",
+      "screenshots_inspected": []
+    },
+    {
+      "key": "caretakerWorkspace",
+      "name": "获授权的私密照护近况",
+      "native_source": "CarePages.kt",
+      "web_source": "features/CareCollaboration.tsx",
+      "web_route": "/care-collaboration/{adoptionId}",
+      "implementation_note": "仅根据care-context与真实错误展示获授权近况、can_post=false只读或拒绝访问，不获得完整申请、协议及身份材料。",
+      "screenshots_inspected": []
+    },
+    {
+      "key": "caretakerReadOnly",
+      "name": "照护近况仅可查阅",
+      "native_source": "CarePages.kt",
+      "web_source": "features/CareCollaboration.tsx",
+      "web_route": "/care-collaboration/{adoptionId}",
+      "implementation_note": "仅根据care-context与真实错误展示获授权近况、can_post=false只读或拒绝访问，不获得完整申请、协议及身份材料。",
+      "screenshots_inspected": [
+        "910:357947"
+      ]
+    },
+    {
+      "key": "caretakerUnavailable",
+      "name": "照护权限已失效或不可访问",
+      "native_source": "CarePages.kt",
+      "web_source": "features/CareCollaboration.tsx",
+      "web_route": "/care-collaboration/{adoptionId}",
+      "implementation_note": "仅根据care-context与真实错误展示获授权近况、can_post=false只读或拒绝访问，不获得完整申请、协议及身份材料。",
+      "screenshots_inspected": []
+    },
+    {
+      "key": "publisherWorkspace",
+      "name": "获授权的宠物介绍与照片",
+      "native_source": "SocialPages.kt",
+      "web_source": "features/WorkflowEditor.tsx",
+      "web_route": "/edit?flow=introduction&kind=pets&id={petId}",
+      "implementation_note": "仅维护授权宠物介绍与照片；图中的任务入口不授予审批、健康核验或交接权限。",
+      "screenshots_inspected": []
+    }
+  ],
+  "supporting_sources": [
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/InvitationStatus.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+    "web-client/src/core/invitation.ts",
+    "web-client/src/core/care.ts",
+    "web-client/src/features/workflows.ts",
+    "web-client/src/App.tsx",
+    "internal/mobile/invitation_policy.go",
+    "internal/mobile/care_context.go"
+  ],
+  "validation": {
+    "known_states": 8,
+    "known_layouts": [
+      "phone",
+      "web"
+    ],
+    "known_roots": 16,
+    "pending_layouts": [
+      "desktop",
+      "tabletP",
+      "tabletL"
+    ],
+    "root_source": "docs/design/figma-study/audits/2026-10-28-completeness/evidence.json",
+    "screenshots_source_date": "2026-10-28",
+    "screenshots_source_note": "只引用上轮已保存并查看的两张手机稿；没有声称本轮新增截图或逐端视觉复验。",
+    "remote_read_attempt": "2026-10-29对平板/桌面页顶层分组的只读MCP加载超时，停止脚本；不据此判断画板不存在。",
+    "prototype_playback": false,
+    "runtime_verified": false,
+    "build_test_executed": false,
+    "root_source_sha256": "719ef1ba43bc158ac520f97e770802166ad5c2e4a8fd6280a00dff56da1b13be",
+    "static_checks": {
+      "trace_generation_and_default_check": "passed",
+      "check_client_ui_static": "passed",
+      "check_page_gap_static": "passed",
+      "python_ast_files": 3,
+      "baseline_root_and_provenance_preserved": 740,
+      "new_state_keys": 8,
+      "all_runtime_verified_false": true,
+      "git_diff_check": "passed"
+    }
+  }
+}

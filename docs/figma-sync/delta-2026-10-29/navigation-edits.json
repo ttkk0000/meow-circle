@@ -1,0 +1,50 @@
+[
+  {
+    "oldText": "更新：2026-10-27（Asia/Shanghai）。品牌 M&D / meow & doggie，猫咪优先。本文档中心汇集本地产品、设计、工程与历史交接，原设计稿继续单独维护。",
+    "newText": "更新：2026-10-29（Asia/Shanghai）。品牌 M&D / meow & doggie，猫咪优先。当前请先读[10月29日增量目录：18份来源／21卷全文](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3)；10月27日189份来源的历史快照与评论继续保留，原设计稿单独维护。"
+  },
+  {
+    "oldText": "| 产品做什么、如何验收 | [PRD 2.2](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-328) · [UX 2.2](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-334) | FR-001–042、主流程、失败与恢复 |",
+    "newText": "| 产品做什么、如何验收 | [PRD 2.2](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-328) · [UX 2.2](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-20) | FR-001–042、主流程、失败与恢复 |"
+  },
+  {
+    "oldText": "| 当前做到哪、还有什么没完成 | [现行基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-276) · [功能状态表](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-286) | 源码、设计、运行与发布分别记账 |",
+    "newText": "| 当前做到哪、还有什么没完成 | [现行基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-2) · [功能状态表](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-8) | 源码、设计、运行与发布分别记账 |"
+  },
+  {
+    "oldText": "| API与数据表 | [285项API操作速查](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-268) · [45张表的数据字典](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-278) | 路径、方法、实际聚合表与公共字段 |",
+    "newText": "| API与数据表 | [288项API操作速查](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-4) · [45张表的数据字典](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-278) | 路径、方法、实际聚合表与公共字段 |"
+  },
+  {
+    "oldText": "| 所有文档与历史资料 | [完整文档目录](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-280) · [同步交接](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-568) | 175份Markdown及UML源，长文可按分卷跳转 |",
+    "newText": "| 所有文档与历史资料 | [完整文档目录](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34) · [同步交接](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-38) | 当前18份增量与10/27的175份Markdown及UML源，均可按分卷跳转 |"
+  },
+  {
+    "oldText": "| 00 导航与现行基线 | [现行基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-276) |",
+    "newText": "| 00 导航与现行基线 | [现行基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-2) |"
+  },
+  {
+    "oldText": "| 02 设计规范与合同 | [设计索引](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-418) |",
+    "newText": "| 02 设计规范与合同 | [设计索引](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-10) |"
+  },
+  {
+    "oldText": "| 03 客户端与交付 | [客户端入口](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-392) |",
+    "newText": "| 03 客户端与交付 | [客户端入口](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-12) |"
+  },
+  {
+    "oldText": "| 07 AI跟踪与仓库说明 | [当前快照](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-298) |",
+    "newText": "| 07 AI跟踪与仓库说明 | [10/27 AI快照，动态事实回仓库核对](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-298) |"
+  },
+  {
+    "oldText": "## 同步与阅读说明",
+    "newText": "## 2026-10-27历史同步与阅读说明"
+  },
+  {
+    "oldText": "本次同步189份文本来源（175份Markdown、12份PlantUML、2份历史Mermaid），共226个正文分卷，另有本导航。每卷保留正文、表格、代码、来源摘要和分卷链接；49张配图保存在本文件，原图片位置可点击进入。原生GFM会规范化软换行与表格分隔线，已按内容逐卷分页回读核对。",
+    "newText": "2026-10-27历史批次同步189份文本来源（175份Markdown、12份PlantUML、2份历史Mermaid），共226个正文分卷，另有本导航。每卷保留正文、表格、代码、来源摘要和分卷链接；49张配图保存在本文件，原图片位置可点击进入。原生GFM会规范化软换行与表格分隔线，已按内容逐卷分页回读核对。"
+  },
+  {
+    "oldText": "[打开原消费者与后台设计文件](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC)。本轮完成的是文档整理、静态检查与Figma同步；全量740状态、真实设备／SDK／数据库／发布仍未验收。按仓库规则未运行编译、构建、test、lint或应用；本轮本地文档未提交／推送。",
+    "newText": "[打开原消费者与后台设计文件](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC)。10月27日批次的API285操作与740消费者状态属于当时快照。10月29日当前API为288操作，消费者追踪为748项（740基线＋8项协作补录）；最新入口指向本批增量全文。设计、源码、静态与实际运行分别记账，真实设备／SDK／数据库／全量状态／发布仍未验收。本批未运行编译、构建、test、lint、类型检查或应用；未提交／推送。"
+  }
+]

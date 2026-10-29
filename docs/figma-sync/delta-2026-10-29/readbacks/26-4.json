@@ -1,0 +1,18 @@
+{
+  "mutatedNodeIds": [
+    "26:4"
+  ],
+  "path": "docs/API_CATALOG.md",
+  "sha256": "0200b7a82393216a0419dca43e9f2ebce1bc506a2153f5994adadf4ee3aeacab",
+  "pages": [
+    {
+      "specNodeId": "26:4",
+      "markdown": "# M&D V2 API速查表\n\n更新：2026-10-28。从[OpenAPI](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/docs/api/mobile-v2.openapi.json)静态提取255路径／288操作；这里只提供入口速查，认证、请求、响应、错误、版本与幂等约束仍以完整OpenAPI和领域源码为准。路径存在不等于运行可用。\n\n---\n\n来源：`docs/API_CATALOG.md`；SHA-256：`0200b7a82393216a0419dca43e9f2ebce1bc506a2153f5994adadf4ee3aeacab`。2026-10-29阅读快照，源文件是维护输入；设计、源码、静态、运行及发布分别记账。\n\n分卷：[第1/2卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-4) · [第2/2卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-6)",
+      "title": "Document",
+      "totalLines": 9,
+      "linesReturned": 9,
+      "offset": 0,
+      "hasMore": false
+    }
+  ]
+}

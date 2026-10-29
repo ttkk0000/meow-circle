@@ -1,0 +1,237 @@
+{
+  "roots": [
+    {
+      "id": "26:2",
+      "name": "M&D 现行文档与源码基线",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 1440,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:4",
+      "name": "M&D V2 API速查表 · 1/2",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 2720,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:6",
+      "name": "M&D V2 API速查表 · 2/2",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 4000,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:8",
+      "name": "M&D 产品、源码与验收状态矩阵",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 5280,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:10",
+      "name": "M&D 设计交接索引",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 6560,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:12",
+      "name": "M&D 客户端代码实施与完成标准",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 7840,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:14",
+      "name": "默认主题、独立平板适配与验收",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 9120,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:16",
+      "name": "客户端详细实施方案 · 1/2",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 10400,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:18",
+      "name": "客户端详细实施方案 · 2/2",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 11680,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:20",
+      "name": "M&D 社区、领养与可信找猫 UX 规格",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 12960,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:22",
+      "name": "M&D 全局未读与消息中心设计",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 14240,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:24",
+      "name": "消息事件分类、未读与待办对齐核对",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 15520,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:26",
+      "name": "M&D 后台按角色工作区详细设计",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 16800,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:28",
+      "name": "后台任务交互与失败恢复设计",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 18080,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:30",
+      "name": "协作退出与有限授权：既有 Figma 稿追踪补录",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 19360,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:32",
+      "name": "Figma设计与文档完善交付",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 20640,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:34",
+      "name": "M&D 全仓文档目录 · 1/2",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 21920,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:36",
+      "name": "M&D 全仓文档目录 · 2/2",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 23200,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "26:38",
+      "name": "M&D Figma文档与图谱同步",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 24480,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "28:2",
+      "name": "M&D / meow & doggie Server (Go + Caddy)",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 25760,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "id": "28:4",
+      "name": "M&D 文档入口",
+      "type": "SPEC_BLOCK",
+      "specBlockType": "DOCUMENT",
+      "parentId": "24:2",
+      "x": 27040,
+      "y": 120,
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "missing": [],
+  "overlap": []
+}

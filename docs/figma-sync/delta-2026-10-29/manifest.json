@@ -1,0 +1,1246 @@
+{
+  "version": 1,
+  "date": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "sessionId": "21c29e78-e561-44d0-8b39-fa85975167ca",
+  "fileKey": "JiFXEy785BcGEvaFBSswJ3",
+  "pageId": "24:2",
+  "navigationId": "24:3",
+  "status": "complete_native_fulltext_readback",
+  "oldManifestPreserved": "docs/figma-sync/manifest.json",
+  "files": [
+    {
+      "path": "docs/CURRENT_BASELINE.md",
+      "sha256": "6b40025b182b930ecc9284ef4289a269c628847e79587a76447be8653d20e3af",
+      "title": "M&D 现行文档与源码基线",
+      "volumes": [
+        {
+          "path": "docs/CURRENT_BASELINE.md",
+          "sha256": "6b40025b182b930ecc9284ef4289a269c628847e79587a76447be8653d20e3af",
+          "nodeId": "26:2",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-2",
+          "content_sha256": "7796f05e3ab1537cb5390c63d904d34a8d20d9946aefd7e37b1d971e3048286a",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-2.json",
+          "pages": 1,
+          "lines": 75,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "6d9a0bdb5f3f745f1bf7390d417e3e03c325f6305b9bea38fef4efbec95f41a7"
+        }
+      ]
+    },
+    {
+      "path": "docs/API_CATALOG.md",
+      "sha256": "0200b7a82393216a0419dca43e9f2ebce1bc506a2153f5994adadf4ee3aeacab",
+      "title": "M&D V2 API速查表",
+      "volumes": [
+        {
+          "path": "docs/API_CATALOG.md",
+          "sha256": "0200b7a82393216a0419dca43e9f2ebce1bc506a2153f5994adadf4ee3aeacab",
+          "nodeId": "26:4",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 2,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-4",
+          "content_sha256": "37e576c15afd91785ef013fe4380aae9a038b77f667ee72a37e9c3a62eafd962",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-4.json",
+          "pages": 1,
+          "lines": 9,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "9d1bc5a96038923fc074d6e07dd065f5f0b297b8d97aa3137b3a4cb3a9138dcf"
+        },
+        {
+          "path": "docs/API_CATALOG.md",
+          "sha256": "0200b7a82393216a0419dca43e9f2ebce1bc506a2153f5994adadf4ee3aeacab",
+          "nodeId": "26:6",
+          "pageId": "24:2",
+          "part": 2,
+          "parts": 2,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-6",
+          "content_sha256": "5960cfdbe75251d3904a78327601d7c5e6fb2d8f3dc3f69a34b19500ff2b1382",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-6.json",
+          "pages": 3,
+          "lines": 298,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "276248da8b6eb3b6eb881357fdc92aaa54f8ff6bf37693107bd706b86a38f11c"
+        }
+      ]
+    },
+    {
+      "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+      "sha256": "c18b1a861d38b48d7607f74a755c5a8a0f8cbb5f26bf39824c2bd9bf1cb58708",
+      "title": "M&D 产品、源码与验收状态矩阵",
+      "volumes": [
+        {
+          "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+          "sha256": "c18b1a861d38b48d7607f74a755c5a8a0f8cbb5f26bf39824c2bd9bf1cb58708",
+          "nodeId": "26:8",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-8",
+          "content_sha256": "d14168219f1cd2ef78c0331fe65bb279652aeefae11f162b1399fd076b3a000a",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-8.json",
+          "pages": 1,
+          "lines": 40,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "22d6ac5d285388438d5fc39b170e551202f301b7c83b4822600a3817217632a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+      "sha256": "eadbffa218f27a12a9a40047c0cc00efb1aeb3c330d39e7c154173e043d933a1",
+      "title": "M&D 设计交接索引",
+      "volumes": [
+        {
+          "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+          "sha256": "eadbffa218f27a12a9a40047c0cc00efb1aeb3c330d39e7c154173e043d933a1",
+          "nodeId": "26:10",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-10",
+          "content_sha256": "332aa48cef79ca68dbcfba07e688dfae244c784b511c7a461049df7f60f2b955",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-10.json",
+          "pages": 1,
+          "lines": 79,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "1b00701eea6990717117ef03651660006da4f2e062aa9b79372a04717eb2bf22"
+        }
+      ]
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "96d0f6d2bb42525248452f5d587cfd93212c02a15cbad5a43a1a0811cabafcc7",
+      "title": "M&D 客户端代码实施与完成标准",
+      "volumes": [
+        {
+          "path": "docs/client/README.md",
+          "sha256": "96d0f6d2bb42525248452f5d587cfd93212c02a15cbad5a43a1a0811cabafcc7",
+          "nodeId": "26:12",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-12",
+          "content_sha256": "bffcd6c0c9ff37a6b7ba3c2cd613271e6e0e45bd6de6fc67886b8cec763e4a99",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-12.json",
+          "pages": 1,
+          "lines": 103,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "676be3adaab65cd1ba242edffe22b657ad3ad0a57a892aee31ed2715161a0444"
+        }
+      ]
+    },
+    {
+      "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+      "sha256": "70a520f997831c9c74fadedbe8086a448ac503fc3af3a8ef5819a7d2414abcf4",
+      "title": "默认主题、独立平板适配与验收",
+      "volumes": [
+        {
+          "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+          "sha256": "70a520f997831c9c74fadedbe8086a448ac503fc3af3a8ef5819a7d2414abcf4",
+          "nodeId": "26:14",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-14",
+          "content_sha256": "6422519a7d2843af584759b772dd74e98bfa24f3ca25a2d10725783e244aa21d",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-14.json",
+          "pages": 2,
+          "lines": 168,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "d90aab624c2111277a42ee3d641b965ea10d5cac7610b6e7cf292d2a70114a34"
+        }
+      ]
+    },
+    {
+      "path": "docs/client/IMPLEMENTATION_PLAN.md",
+      "sha256": "e245d55796a0a8195b30c1884f9d41b20463d2db1a82e019715a4105dceb9a33",
+      "title": "客户端详细实施方案",
+      "volumes": [
+        {
+          "path": "docs/client/IMPLEMENTATION_PLAN.md",
+          "sha256": "e245d55796a0a8195b30c1884f9d41b20463d2db1a82e019715a4105dceb9a33",
+          "nodeId": "26:16",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 2,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-16",
+          "content_sha256": "ba9825f5ed06065169a837e4793e28c75f34de1ea17f9b1ab38250577a7daffa",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-16.json",
+          "pages": 3,
+          "lines": 259,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "c80c9004c9d2c68c4a6345cc713d165039d0c75e17ccf5d2c24ac38ef7bc8d93"
+        },
+        {
+          "path": "docs/client/IMPLEMENTATION_PLAN.md",
+          "sha256": "e245d55796a0a8195b30c1884f9d41b20463d2db1a82e019715a4105dceb9a33",
+          "nodeId": "26:18",
+          "pageId": "24:2",
+          "part": 2,
+          "parts": 2,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-18",
+          "content_sha256": "7fb3ecae06a255a5600559a2f32132ac84cfd013331cc4e76a65c77487cacbb3",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-18.json",
+          "pages": 1,
+          "lines": 84,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "0e33ad8591fa66832746d6086fc5fb334e17dbe180a26f4b9d7d5ad24966b717"
+        }
+      ]
+    },
+    {
+      "path": "docs/bmad/ux-design.md",
+      "sha256": "d61f7f6e61f4ee7960463255fb9729a6c831172de4ddee860ceee4c9dbc55b43",
+      "title": "M&D 社区、领养与可信找猫 UX 规格",
+      "volumes": [
+        {
+          "path": "docs/bmad/ux-design.md",
+          "sha256": "d61f7f6e61f4ee7960463255fb9729a6c831172de4ddee860ceee4c9dbc55b43",
+          "nodeId": "26:20",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-20",
+          "content_sha256": "7d4728478f033522a1a24f66fdc648f9b03ab46186d0a707cb59604123f39a9a",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-20.json",
+          "pages": 3,
+          "lines": 243,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "fbf85fcba0b401a8b3ff0e8584d57b0dea59a33927422f1f6ac89bf64a3ea593"
+        }
+      ]
+    },
+    {
+      "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+      "sha256": "a0635c21aa6fde01fae371d8e43b4154f9845c2e32703db2b460bb08f170ef15",
+      "title": "M&D 全局未读与消息中心设计",
+      "volumes": [
+        {
+          "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+          "sha256": "a0635c21aa6fde01fae371d8e43b4154f9845c2e32703db2b460bb08f170ef15",
+          "nodeId": "26:22",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-22",
+          "content_sha256": "b9e1afe3021fb8f9080ebb72e9fb09f382a2670ce4c7ea3d657160831ec4c65b",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-22.json",
+          "pages": 1,
+          "lines": 54,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "7ad8f2b78d0750083f18aa2e2a4e1aa9dca1d9a5f5114f58b28bd091b4bab0ec"
+        }
+      ]
+    },
+    {
+      "path": "docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md",
+      "sha256": "36c3707986f6b7c63bd1ac2f38740b4b1b3bf75e899b2f7dedf45a048727d8c7",
+      "title": "消息事件分类、未读与待办对齐核对",
+      "volumes": [
+        {
+          "path": "docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md",
+          "sha256": "36c3707986f6b7c63bd1ac2f38740b4b1b3bf75e899b2f7dedf45a048727d8c7",
+          "nodeId": "26:24",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-24",
+          "content_sha256": "63395e4ab4996b90ce9922a1d7a67682615a5cb47cffa28d6ac402df1b0a5f60",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-24.json",
+          "pages": 2,
+          "lines": 125,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "9e79c0eff8bf9a75787b3b5d68b4d6c5e5bb2a9ceabf157df703f015f0201053"
+        }
+      ]
+    },
+    {
+      "path": "docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md",
+      "sha256": "f239680c95096107cde6af7cbbde626c3c4fc81795f537f631fbef6c5a2bf43d",
+      "title": "M&D 后台按角色工作区详细设计",
+      "volumes": [
+        {
+          "path": "docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md",
+          "sha256": "f239680c95096107cde6af7cbbde626c3c4fc81795f537f631fbef6c5a2bf43d",
+          "nodeId": "26:26",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-26",
+          "content_sha256": "3ed7d08f05a13931dac13cf265c6c904062204c0014f8e5ceeac419cc4a393f6",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-26.json",
+          "pages": 1,
+          "lines": 108,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "d8cc8bcb0f91e8fc401a9e7d54baf7e81af5c1e728681988d006ebc9f571a487"
+        }
+      ]
+    },
+    {
+      "path": "docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md",
+      "sha256": "0f437e8d71f12e051fe3369d787f516c8303ee54da5c02e9b110dc531adc7053",
+      "title": "后台关键任务表单与结果交互补充",
+      "volumes": [
+        {
+          "path": "docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md",
+          "sha256": "0f437e8d71f12e051fe3369d787f516c8303ee54da5c02e9b110dc531adc7053",
+          "nodeId": "26:28",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-28",
+          "content_sha256": "397317aaa9301507464b62ce9bbda93b8828760b3cbb3381ae81cab7d9fa747c",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-28.json",
+          "pages": 1,
+          "lines": 73,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "587af9f17f1042d9556b1e66ae90a9236e47fa0d9ffc360d08a88cb9fa0423b7"
+        }
+      ]
+    },
+    {
+      "path": "docs/design/figma-study/collaboration-2026-10-29/README.md",
+      "sha256": "970601e5e88ac2b928c3513c3cfaa68a11189443a882c22a577ad16b4fc346d4",
+      "title": "协作退出与有限授权：既有 Figma 稿追踪补录",
+      "volumes": [
+        {
+          "path": "docs/design/figma-study/collaboration-2026-10-29/README.md",
+          "sha256": "970601e5e88ac2b928c3513c3cfaa68a11189443a882c22a577ad16b4fc346d4",
+          "nodeId": "26:30",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-30",
+          "content_sha256": "cf2dc9affc48ab3790911d6aa61b7f0cac066b40732ef0d6bf487c06e73608d3",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-30.json",
+          "pages": 1,
+          "lines": 47,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "914832ecf4443cfcbfe9a31891df26ee06f317eeb9e689469107468f415b0770"
+        }
+      ]
+    },
+    {
+      "path": "docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md",
+      "sha256": "a560198d7a413dac6be5761926f8067324b71bca966ff9027524a81097c1ec8f",
+      "title": "Figma与文档详细完善交付",
+      "volumes": [
+        {
+          "path": "docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md",
+          "sha256": "a560198d7a413dac6be5761926f8067324b71bca966ff9027524a81097c1ec8f",
+          "nodeId": "26:32",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-32",
+          "content_sha256": "68328517a3276692c09e098766807ab98f49e0d3360d080df901c24627f851f7",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-32.json",
+          "pages": 1,
+          "lines": 64,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "730077c584fb66fe273e59d49a6ab2dd2d49c179edb5e510594c618daf25a84c"
+        }
+      ]
+    },
+    {
+      "path": "docs/DOCUMENTATION_CATALOG.md",
+      "sha256": "7a96b3f786e97d4b446bc1669784c7a3a8082f6bd4ac223faaead7cdbc4fd288",
+      "title": "M&D 全仓文档目录",
+      "volumes": [
+        {
+          "path": "docs/DOCUMENTATION_CATALOG.md",
+          "sha256": "7a96b3f786e97d4b446bc1669784c7a3a8082f6bd4ac223faaead7cdbc4fd288",
+          "nodeId": "26:34",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 2,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34",
+          "content_sha256": "4d8abb1811b87094017f679c916e0ceb6b0c64a88e4365b5cca133cc5f5a3533",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-34.json",
+          "pages": 2,
+          "lines": 151,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "81ebf56494456b440017a13c0e717f9b41d9d472c25ced862f3b99182682f4c1"
+        },
+        {
+          "path": "docs/DOCUMENTATION_CATALOG.md",
+          "sha256": "7a96b3f786e97d4b446bc1669784c7a3a8082f6bd4ac223faaead7cdbc4fd288",
+          "nodeId": "26:36",
+          "pageId": "24:2",
+          "part": 2,
+          "parts": 2,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-36",
+          "content_sha256": "1b6d0f1b95d987830e92dbcbea49ca53a1d294e54378bb76c7fd56e0bb147851",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-36.json",
+          "pages": 1,
+          "lines": 105,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "5ec1dd90aa7a7fd7751f1a736a4ad1cd36cf8098bc6f48c1c5cea8c9ebe681ff"
+        }
+      ]
+    },
+    {
+      "path": "docs/figma-sync/README.md",
+      "sha256": "4c81fe3e88729eebbd2bd7f74c781b0c0f8f2f188380819053c460aa9ba97f45",
+      "title": "M&D Figma文档与图谱同步",
+      "volumes": [
+        {
+          "path": "docs/figma-sync/README.md",
+          "sha256": "4c81fe3e88729eebbd2bd7f74c781b0c0f8f2f188380819053c460aa9ba97f45",
+          "nodeId": "26:38",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-38",
+          "content_sha256": "848b7f141b4e436d7e5a0a97b41e4bd03dedb31bf6854d5cac34b0c9ca0da924",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-38.json",
+          "pages": 1,
+          "lines": 51,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "691ef1c92920774f64b5d0fce84df176c836f66b52a65749a44ac9127828cc74"
+        }
+      ]
+    },
+    {
+      "path": "README.md",
+      "sha256": "e336d744f776c763f175480fa125349b9b991dcd725be4d77e1dd2f541473bb5",
+      "title": "M&D / meow & doggie Server (Go + Caddy)",
+      "volumes": [
+        {
+          "path": "README.md",
+          "sha256": "e336d744f776c763f175480fa125349b9b991dcd725be4d77e1dd2f541473bb5",
+          "nodeId": "28:2",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=28-2",
+          "content_sha256": "d4086211cb9982b51e19a82b083a22681610e2f33aa7b4a37fb2db00e13fdf9e",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/28-2.json",
+          "pages": 3,
+          "lines": 342,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "3a81039203a5572a64495660af37ddabb3ca1a7d9f0ba38a980d29cf6989013a"
+        }
+      ]
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "f2673f06037990fa4c63a584242d715c13af73924461f530eeece7da130ee5be",
+      "title": "M&D 文档入口",
+      "volumes": [
+        {
+          "path": "docs/README.md",
+          "sha256": "f2673f06037990fa4c63a584242d715c13af73924461f530eeece7da130ee5be",
+          "nodeId": "28:4",
+          "pageId": "24:2",
+          "part": 1,
+          "parts": 1,
+          "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=28-4",
+          "content_sha256": "02bc0b8b934ff2271277062f46bff639bc24f8cd3b4c6eee90cfa14ccffc9072",
+          "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/28-4.json",
+          "pages": 1,
+          "lines": 112,
+          "paginationComplete": true,
+          "normalizedContentMatches": true,
+          "sourceShaMatches": true,
+          "actualMarkdownSha256": "ed544fc38c88fc84179f132099deff95f3a72a484f16148af5962320d5d2f7d5"
+        }
+      ]
+    }
+  ],
+  "plannedFiles": 18,
+  "plannedVolumes": 21,
+  "nodes": {
+    "docs/CURRENT_BASELINE.md": [
+      {
+        "path": "docs/CURRENT_BASELINE.md",
+        "title": "M&D 现行文档与源码基线",
+        "part": 1,
+        "parts": 1,
+        "index": 0,
+        "nodeId": "26:2",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-2"
+      }
+    ],
+    "docs/API_CATALOG.md": [
+      {
+        "path": "docs/API_CATALOG.md",
+        "title": "M&D V2 API速查表",
+        "part": 1,
+        "parts": 2,
+        "index": 1,
+        "nodeId": "26:4",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-4"
+      },
+      {
+        "path": "docs/API_CATALOG.md",
+        "title": "M&D V2 API速查表",
+        "part": 2,
+        "parts": 2,
+        "index": 2,
+        "nodeId": "26:6",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-6"
+      }
+    ],
+    "docs/PRODUCT_AND_DELIVERY_MATRIX.md": [
+      {
+        "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+        "title": "M&D 产品、源码与验收状态矩阵",
+        "part": 1,
+        "parts": 1,
+        "index": 3,
+        "nodeId": "26:8",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-8"
+      }
+    ],
+    "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md": [
+      {
+        "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+        "title": "M&D 设计交接索引",
+        "part": 1,
+        "parts": 1,
+        "index": 4,
+        "nodeId": "26:10",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-10"
+      }
+    ],
+    "docs/client/README.md": [
+      {
+        "path": "docs/client/README.md",
+        "title": "M&D 客户端代码实施与完成标准",
+        "part": 1,
+        "parts": 1,
+        "index": 5,
+        "nodeId": "26:12",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-12"
+      }
+    ],
+    "docs/client/DESIGN_AND_ACCEPTANCE.md": [
+      {
+        "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+        "title": "默认主题、独立平板适配与验收",
+        "part": 1,
+        "parts": 1,
+        "index": 6,
+        "nodeId": "26:14",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-14"
+      }
+    ],
+    "docs/client/IMPLEMENTATION_PLAN.md": [
+      {
+        "path": "docs/client/IMPLEMENTATION_PLAN.md",
+        "title": "客户端详细实施方案",
+        "part": 1,
+        "parts": 2,
+        "index": 7,
+        "nodeId": "26:16",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-16"
+      },
+      {
+        "path": "docs/client/IMPLEMENTATION_PLAN.md",
+        "title": "客户端详细实施方案",
+        "part": 2,
+        "parts": 2,
+        "index": 8,
+        "nodeId": "26:18",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-18"
+      }
+    ],
+    "docs/bmad/ux-design.md": [
+      {
+        "path": "docs/bmad/ux-design.md",
+        "title": "M&D 社区、领养与可信找猫 UX 规格",
+        "part": 1,
+        "parts": 1,
+        "index": 9,
+        "nodeId": "26:20",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-20"
+      }
+    ],
+    "docs/design/MND_GLOBAL_UNREAD_SPEC.md": [
+      {
+        "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+        "title": "M&D 全局未读与消息中心设计",
+        "part": 1,
+        "parts": 1,
+        "index": 10,
+        "nodeId": "26:22",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-22"
+      }
+    ],
+    "docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md": [
+      {
+        "path": "docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md",
+        "title": "消息事件分类、未读与待办对齐核对",
+        "part": 1,
+        "parts": 1,
+        "index": 11,
+        "nodeId": "26:24",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-24"
+      }
+    ],
+    "docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md": [
+      {
+        "path": "docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md",
+        "title": "M&D 后台按角色工作区详细设计",
+        "part": 1,
+        "parts": 1,
+        "index": 12,
+        "nodeId": "26:26",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-26"
+      }
+    ],
+    "docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md": [
+      {
+        "path": "docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md",
+        "title": "后台任务交互与失败恢复设计",
+        "part": 1,
+        "parts": 1,
+        "index": 13,
+        "nodeId": "26:28",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-28"
+      }
+    ],
+    "docs/design/figma-study/collaboration-2026-10-29/README.md": [
+      {
+        "path": "docs/design/figma-study/collaboration-2026-10-29/README.md",
+        "title": "协作退出与有限授权：既有 Figma 稿追踪补录",
+        "part": 1,
+        "parts": 1,
+        "index": 14,
+        "nodeId": "26:30",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-30"
+      }
+    ],
+    "docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md": [
+      {
+        "path": "docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md",
+        "title": "Figma设计与文档完善交付",
+        "part": 1,
+        "parts": 1,
+        "index": 15,
+        "nodeId": "26:32",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-32"
+      }
+    ],
+    "docs/DOCUMENTATION_CATALOG.md": [
+      {
+        "path": "docs/DOCUMENTATION_CATALOG.md",
+        "title": "M&D 全仓文档目录",
+        "part": 1,
+        "parts": 2,
+        "index": 16,
+        "nodeId": "26:34",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34"
+      },
+      {
+        "path": "docs/DOCUMENTATION_CATALOG.md",
+        "title": "M&D 全仓文档目录",
+        "part": 2,
+        "parts": 2,
+        "index": 17,
+        "nodeId": "26:36",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-36"
+      }
+    ],
+    "docs/figma-sync/README.md": [
+      {
+        "path": "docs/figma-sync/README.md",
+        "title": "M&D Figma文档与图谱同步",
+        "part": 1,
+        "parts": 1,
+        "index": 18,
+        "nodeId": "26:38",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-38"
+      }
+    ],
+    "README.md": [
+      {
+        "path": "README.md",
+        "title": "M&D / meow & doggie Server (Go + Caddy)",
+        "part": 1,
+        "parts": 1,
+        "index": 19,
+        "nodeId": "28:2",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=28-2"
+      }
+    ],
+    "docs/README.md": [
+      {
+        "path": "docs/README.md",
+        "title": "M&D 文档入口",
+        "part": 1,
+        "parts": 1,
+        "index": 20,
+        "nodeId": "28:4",
+        "pageId": "24:2",
+        "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=28-4"
+      }
+    ]
+  },
+  "sourceFreezeBatch1": [
+    {
+      "path": "docs/client/README.md",
+      "sha256": "96d0f6d2bb42525248452f5d587cfd93212c02a15cbad5a43a1a0811cabafcc7"
+    },
+    {
+      "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+      "sha256": "70a520f997831c9c74fadedbe8086a448ac503fc3af3a8ef5819a7d2414abcf4"
+    },
+    {
+      "path": "docs/client/IMPLEMENTATION_PLAN.md",
+      "sha256": "e245d55796a0a8195b30c1884f9d41b20463d2db1a82e019715a4105dceb9a33"
+    },
+    {
+      "path": "docs/bmad/ux-design.md",
+      "sha256": "d61f7f6e61f4ee7960463255fb9729a6c831172de4ddee860ceee4c9dbc55b43"
+    },
+    {
+      "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+      "sha256": "a0635c21aa6fde01fae371d8e43b4154f9845c2e32703db2b460bb08f170ef15"
+    },
+    {
+      "path": "docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md",
+      "sha256": "64b30ae809acacf43b790cda25d164793d5664e36a951c7b0008c73f59217566"
+    }
+  ],
+  "volumes": [
+    {
+      "path": "README.md",
+      "sha256": "e336d744f776c763f175480fa125349b9b991dcd725be4d77e1dd2f541473bb5",
+      "nodeId": "28:2",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=28-2",
+      "content_sha256": "d4086211cb9982b51e19a82b083a22681610e2f33aa7b4a37fb2db00e13fdf9e",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/28-2.json",
+      "pages": 3,
+      "lines": 342,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "3a81039203a5572a64495660af37ddabb3ca1a7d9f0ba38a980d29cf6989013a"
+    },
+    {
+      "path": "docs/API_CATALOG.md",
+      "sha256": "0200b7a82393216a0419dca43e9f2ebce1bc506a2153f5994adadf4ee3aeacab",
+      "nodeId": "26:4",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 2,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-4",
+      "content_sha256": "37e576c15afd91785ef013fe4380aae9a038b77f667ee72a37e9c3a62eafd962",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-4.json",
+      "pages": 1,
+      "lines": 9,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "9d1bc5a96038923fc074d6e07dd065f5f0b297b8d97aa3137b3a4cb3a9138dcf"
+    },
+    {
+      "path": "docs/API_CATALOG.md",
+      "sha256": "0200b7a82393216a0419dca43e9f2ebce1bc506a2153f5994adadf4ee3aeacab",
+      "nodeId": "26:6",
+      "pageId": "24:2",
+      "part": 2,
+      "parts": 2,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-6",
+      "content_sha256": "5960cfdbe75251d3904a78327601d7c5e6fb2d8f3dc3f69a34b19500ff2b1382",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-6.json",
+      "pages": 3,
+      "lines": 298,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "276248da8b6eb3b6eb881357fdc92aaa54f8ff6bf37693107bd706b86a38f11c"
+    },
+    {
+      "path": "docs/CURRENT_BASELINE.md",
+      "sha256": "6b40025b182b930ecc9284ef4289a269c628847e79587a76447be8653d20e3af",
+      "nodeId": "26:2",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-2",
+      "content_sha256": "7796f05e3ab1537cb5390c63d904d34a8d20d9946aefd7e37b1d971e3048286a",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-2.json",
+      "pages": 1,
+      "lines": 75,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "6d9a0bdb5f3f745f1bf7390d417e3e03c325f6305b9bea38fef4efbec95f41a7"
+    },
+    {
+      "path": "docs/DOCUMENTATION_CATALOG.md",
+      "sha256": "7a96b3f786e97d4b446bc1669784c7a3a8082f6bd4ac223faaead7cdbc4fd288",
+      "nodeId": "26:34",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 2,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34",
+      "content_sha256": "4d8abb1811b87094017f679c916e0ceb6b0c64a88e4365b5cca133cc5f5a3533",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-34.json",
+      "pages": 2,
+      "lines": 151,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "81ebf56494456b440017a13c0e717f9b41d9d472c25ced862f3b99182682f4c1"
+    },
+    {
+      "path": "docs/DOCUMENTATION_CATALOG.md",
+      "sha256": "7a96b3f786e97d4b446bc1669784c7a3a8082f6bd4ac223faaead7cdbc4fd288",
+      "nodeId": "26:36",
+      "pageId": "24:2",
+      "part": 2,
+      "parts": 2,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-36",
+      "content_sha256": "1b6d0f1b95d987830e92dbcbea49ca53a1d294e54378bb76c7fd56e0bb147851",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-36.json",
+      "pages": 1,
+      "lines": 105,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "5ec1dd90aa7a7fd7751f1a736a4ad1cd36cf8098bc6f48c1c5cea8c9ebe681ff"
+    },
+    {
+      "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+      "sha256": "c18b1a861d38b48d7607f74a755c5a8a0f8cbb5f26bf39824c2bd9bf1cb58708",
+      "nodeId": "26:8",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-8",
+      "content_sha256": "d14168219f1cd2ef78c0331fe65bb279652aeefae11f162b1399fd076b3a000a",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-8.json",
+      "pages": 1,
+      "lines": 40,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "22d6ac5d285388438d5fc39b170e551202f301b7c83b4822600a3817217632a1"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "f2673f06037990fa4c63a584242d715c13af73924461f530eeece7da130ee5be",
+      "nodeId": "28:4",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=28-4",
+      "content_sha256": "02bc0b8b934ff2271277062f46bff639bc24f8cd3b4c6eee90cfa14ccffc9072",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/28-4.json",
+      "pages": 1,
+      "lines": 112,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "ed544fc38c88fc84179f132099deff95f3a72a484f16148af5962320d5d2f7d5"
+    },
+    {
+      "path": "docs/bmad/ux-design.md",
+      "sha256": "d61f7f6e61f4ee7960463255fb9729a6c831172de4ddee860ceee4c9dbc55b43",
+      "nodeId": "26:20",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-20",
+      "content_sha256": "7d4728478f033522a1a24f66fdc648f9b03ab46186d0a707cb59604123f39a9a",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-20.json",
+      "pages": 3,
+      "lines": 243,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "fbf85fcba0b401a8b3ff0e8584d57b0dea59a33927422f1f6ac89bf64a3ea593"
+    },
+    {
+      "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+      "sha256": "70a520f997831c9c74fadedbe8086a448ac503fc3af3a8ef5819a7d2414abcf4",
+      "nodeId": "26:14",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-14",
+      "content_sha256": "6422519a7d2843af584759b772dd74e98bfa24f3ca25a2d10725783e244aa21d",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-14.json",
+      "pages": 2,
+      "lines": 168,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "d90aab624c2111277a42ee3d641b965ea10d5cac7610b6e7cf292d2a70114a34"
+    },
+    {
+      "path": "docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md",
+      "sha256": "a560198d7a413dac6be5761926f8067324b71bca966ff9027524a81097c1ec8f",
+      "nodeId": "26:32",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-32",
+      "content_sha256": "68328517a3276692c09e098766807ab98f49e0d3360d080df901c24627f851f7",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-32.json",
+      "pages": 1,
+      "lines": 64,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "730077c584fb66fe273e59d49a6ab2dd2d49c179edb5e510594c618daf25a84c"
+    },
+    {
+      "path": "docs/client/IMPLEMENTATION_PLAN.md",
+      "sha256": "e245d55796a0a8195b30c1884f9d41b20463d2db1a82e019715a4105dceb9a33",
+      "nodeId": "26:16",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 2,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-16",
+      "content_sha256": "ba9825f5ed06065169a837e4793e28c75f34de1ea17f9b1ab38250577a7daffa",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-16.json",
+      "pages": 3,
+      "lines": 259,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "c80c9004c9d2c68c4a6345cc713d165039d0c75e17ccf5d2c24ac38ef7bc8d93"
+    },
+    {
+      "path": "docs/client/IMPLEMENTATION_PLAN.md",
+      "sha256": "e245d55796a0a8195b30c1884f9d41b20463d2db1a82e019715a4105dceb9a33",
+      "nodeId": "26:18",
+      "pageId": "24:2",
+      "part": 2,
+      "parts": 2,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-18",
+      "content_sha256": "7fb3ecae06a255a5600559a2f32132ac84cfd013331cc4e76a65c77487cacbb3",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-18.json",
+      "pages": 1,
+      "lines": 84,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "0e33ad8591fa66832746d6086fc5fb334e17dbe180a26f4b9d7d5ad24966b717"
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "96d0f6d2bb42525248452f5d587cfd93212c02a15cbad5a43a1a0811cabafcc7",
+      "nodeId": "26:12",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-12",
+      "content_sha256": "bffcd6c0c9ff37a6b7ba3c2cd613271e6e0e45bd6de6fc67886b8cec763e4a99",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-12.json",
+      "pages": 1,
+      "lines": 103,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "676be3adaab65cd1ba242edffe22b657ad3ad0a57a892aee31ed2715161a0444"
+    },
+    {
+      "path": "docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md",
+      "sha256": "f239680c95096107cde6af7cbbde626c3c4fc81795f537f631fbef6c5a2bf43d",
+      "nodeId": "26:26",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-26",
+      "content_sha256": "3ed7d08f05a13931dac13cf265c6c904062204c0014f8e5ceeac419cc4a393f6",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-26.json",
+      "pages": 1,
+      "lines": 108,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "d8cc8bcb0f91e8fc401a9e7d54baf7e81af5c1e728681988d006ebc9f571a487"
+    },
+    {
+      "path": "docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md",
+      "sha256": "0f437e8d71f12e051fe3369d787f516c8303ee54da5c02e9b110dc531adc7053",
+      "nodeId": "26:28",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-28",
+      "content_sha256": "397317aaa9301507464b62ce9bbda93b8828760b3cbb3381ae81cab7d9fa747c",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-28.json",
+      "pages": 1,
+      "lines": 73,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "587af9f17f1042d9556b1e66ae90a9236e47fa0d9ffc360d08a88cb9fa0423b7"
+    },
+    {
+      "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+      "sha256": "eadbffa218f27a12a9a40047c0cc00efb1aeb3c330d39e7c154173e043d933a1",
+      "nodeId": "26:10",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-10",
+      "content_sha256": "332aa48cef79ca68dbcfba07e688dfae244c784b511c7a461049df7f60f2b955",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-10.json",
+      "pages": 1,
+      "lines": 79,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "1b00701eea6990717117ef03651660006da4f2e062aa9b79372a04717eb2bf22"
+    },
+    {
+      "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+      "sha256": "a0635c21aa6fde01fae371d8e43b4154f9845c2e32703db2b460bb08f170ef15",
+      "nodeId": "26:22",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-22",
+      "content_sha256": "b9e1afe3021fb8f9080ebb72e9fb09f382a2670ce4c7ea3d657160831ec4c65b",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-22.json",
+      "pages": 1,
+      "lines": 54,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "7ad8f2b78d0750083f18aa2e2a4e1aa9dca1d9a5f5114f58b28bd091b4bab0ec"
+    },
+    {
+      "path": "docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md",
+      "sha256": "36c3707986f6b7c63bd1ac2f38740b4b1b3bf75e899b2f7dedf45a048727d8c7",
+      "nodeId": "26:24",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-24",
+      "content_sha256": "63395e4ab4996b90ce9922a1d7a67682615a5cb47cffa28d6ac402df1b0a5f60",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-24.json",
+      "pages": 2,
+      "lines": 125,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "9e79c0eff8bf9a75787b3b5d68b4d6c5e5bb2a9ceabf157df703f015f0201053"
+    },
+    {
+      "path": "docs/design/figma-study/collaboration-2026-10-29/README.md",
+      "sha256": "970601e5e88ac2b928c3513c3cfaa68a11189443a882c22a577ad16b4fc346d4",
+      "nodeId": "26:30",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-30",
+      "content_sha256": "cf2dc9affc48ab3790911d6aa61b7f0cac066b40732ef0d6bf487c06e73608d3",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-30.json",
+      "pages": 1,
+      "lines": 47,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "914832ecf4443cfcbfe9a31891df26ee06f317eeb9e689469107468f415b0770"
+    },
+    {
+      "path": "docs/figma-sync/README.md",
+      "sha256": "4c81fe3e88729eebbd2bd7f74c781b0c0f8f2f188380819053c460aa9ba97f45",
+      "nodeId": "26:38",
+      "pageId": "24:2",
+      "part": 1,
+      "parts": 1,
+      "url": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-38",
+      "content_sha256": "848b7f141b4e436d7e5a0a97b41e4bd03dedb31bf6854d5cac34b0c9ca0da924",
+      "readbackFile": "docs/figma-sync/delta-2026-10-29/readbacks/26-38.json",
+      "pages": 1,
+      "lines": 51,
+      "paginationComplete": true,
+      "normalizedContentMatches": true,
+      "sourceShaMatches": true,
+      "actualMarkdownSha256": "691ef1c92920774f64b5d0fce84df176c836f66b52a65749a44ac9127828cc74"
+    }
+  ],
+  "syncedFiles": 18,
+  "syncedVolumes": 21,
+  "sourceFreeze": [
+    {
+      "path": "docs/CURRENT_BASELINE.md",
+      "sha256": "6b40025b182b930ecc9284ef4289a269c628847e79587a76447be8653d20e3af",
+      "title": "M&D 现行文档与源码基线"
+    },
+    {
+      "path": "docs/API_CATALOG.md",
+      "sha256": "0200b7a82393216a0419dca43e9f2ebce1bc506a2153f5994adadf4ee3aeacab",
+      "title": "M&D V2 API速查表"
+    },
+    {
+      "path": "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+      "sha256": "c18b1a861d38b48d7607f74a755c5a8a0f8cbb5f26bf39824c2bd9bf1cb58708",
+      "title": "M&D 产品、源码与验收状态矩阵"
+    },
+    {
+      "path": "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+      "sha256": "eadbffa218f27a12a9a40047c0cc00efb1aeb3c330d39e7c154173e043d933a1",
+      "title": "M&D 设计交接索引"
+    },
+    {
+      "path": "docs/client/README.md",
+      "sha256": "96d0f6d2bb42525248452f5d587cfd93212c02a15cbad5a43a1a0811cabafcc7",
+      "title": "M&D 客户端代码实施与完成标准"
+    },
+    {
+      "path": "docs/client/DESIGN_AND_ACCEPTANCE.md",
+      "sha256": "70a520f997831c9c74fadedbe8086a448ac503fc3af3a8ef5819a7d2414abcf4",
+      "title": "默认主题、独立平板适配与验收"
+    },
+    {
+      "path": "docs/client/IMPLEMENTATION_PLAN.md",
+      "sha256": "e245d55796a0a8195b30c1884f9d41b20463d2db1a82e019715a4105dceb9a33",
+      "title": "客户端详细实施方案"
+    },
+    {
+      "path": "docs/bmad/ux-design.md",
+      "sha256": "d61f7f6e61f4ee7960463255fb9729a6c831172de4ddee860ceee4c9dbc55b43",
+      "title": "M&D 社区、领养与可信找猫 UX 规格"
+    },
+    {
+      "path": "docs/design/MND_GLOBAL_UNREAD_SPEC.md",
+      "sha256": "a0635c21aa6fde01fae371d8e43b4154f9845c2e32703db2b460bb08f170ef15",
+      "title": "M&D 全局未读与消息中心设计"
+    },
+    {
+      "path": "docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md",
+      "sha256": "36c3707986f6b7c63bd1ac2f38740b4b1b3bf75e899b2f7dedf45a048727d8c7",
+      "title": "消息事件分类、未读与待办对齐核对"
+    },
+    {
+      "path": "docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md",
+      "sha256": "f239680c95096107cde6af7cbbde626c3c4fc81795f537f631fbef6c5a2bf43d",
+      "title": "M&D 后台按角色工作区详细设计"
+    },
+    {
+      "path": "docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md",
+      "sha256": "0f437e8d71f12e051fe3369d787f516c8303ee54da5c02e9b110dc531adc7053",
+      "title": "后台关键任务表单与结果交互补充"
+    },
+    {
+      "path": "docs/design/figma-study/collaboration-2026-10-29/README.md",
+      "sha256": "970601e5e88ac2b928c3513c3cfaa68a11189443a882c22a577ad16b4fc346d4",
+      "title": "协作退出与有限授权：既有 Figma 稿追踪补录"
+    },
+    {
+      "path": "docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md",
+      "sha256": "a560198d7a413dac6be5761926f8067324b71bca966ff9027524a81097c1ec8f",
+      "title": "Figma与文档详细完善交付"
+    },
+    {
+      "path": "docs/DOCUMENTATION_CATALOG.md",
+      "sha256": "7a96b3f786e97d4b446bc1669784c7a3a8082f6bd4ac223faaead7cdbc4fd288",
+      "title": "M&D 全仓文档目录"
+    },
+    {
+      "path": "docs/figma-sync/README.md",
+      "sha256": "4c81fe3e88729eebbd2bd7f74c781b0c0f8f2f188380819053c460aa9ba97f45",
+      "title": "M&D Figma文档与图谱同步"
+    },
+    {
+      "path": "README.md",
+      "sha256": "e336d744f776c763f175480fa125349b9b991dcd725be4d77e1dd2f541473bb5",
+      "title": "M&D / meow & doggie Server (Go + Caddy)"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "f2673f06037990fa4c63a584242d715c13af73924461f530eeece7da130ee5be",
+      "title": "M&D 文档入口"
+    }
+  ],
+  "reopenedSources": [],
+  "sourceHead": "b269504ad0cd0e179d8108fe60b9073ab97e9c99",
+  "sourceFiles": 18,
+  "nativeTextVolumes": 21,
+  "navigationUrl": "https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3",
+  "mainNavigationId": "1:9",
+  "mainNavigationEditMethod": "editContent",
+  "mainNavigationEditCount": 12,
+  "oldManifestSha256": "6ac4b154956266b4e0cde5797d5a4120fe984b55357fc2fad076637a0a5f0d0a",
+  "oldManifestUnchanged": true,
+  "oldSpecsWholeReplacement": false,
+  "syncedDynamicAiFiles": false,
+  "localCommitCreated": false,
+  "pushed": false,
+  "limitations": [
+    "Figma阅读快照不表示运行、联调或发布验收",
+    "动态AI CONTEXT/TASKS/TASK_LOG未重新冻结；旧副本按10月27日解释",
+    "未发布证据附件保留仓库相对路径文字，不提供虚构GitHub链接",
+    "旧189份来源与226卷及评论保留；正文新副本有独立节点",
+    "188个文档中心目标已逐个回读存在，原设计文件外链沿用本批设计证据，不额外重验所有设计页"
+  ]
+}

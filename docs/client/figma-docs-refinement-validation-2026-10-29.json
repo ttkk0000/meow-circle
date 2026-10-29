@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "status": "passed",
+  "scope": "本轮所有修改与新增文档、来源／回读／设计清单和脚本的非编译验证",
+  "textFiles": 81,
+  "jsonFiles": 48,
+  "pythonAstFiles": 5,
+  "localMarkdownLinks": 906,
+  "consumerStates": 748,
+  "backendFrames": 40,
+  "backendActions": 173,
+  "backendImageFills": 0,
+  "backendScreenshots": 9,
+  "sourceShaMatches": 18,
+  "nativeSpecVolumes": 21,
+  "oldManifestUnchanged": true,
+  "businessSourceChanged": false,
+  "errors": [],
+  "gitDiffCheck": "passed",
+  "compileBuildTestLintTypecheckApp": "not_run_per_user_and_repository_rules",
+  "runtimeVerified": false,
+  "scriptsFromSubtask": {
+    "traceGenerator": "一致性通过",
+    "check_client_ui_static.py": "只读通过",
+    "check_page_gap_static.py": "只读通过"
+  }
+}

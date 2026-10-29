@@ -29,7 +29,6 @@
       "navigation": [
         "本岗工作台",
         "资料与注销",
-        "保全与清理",
         "角色与会话"
       ]
     },
@@ -283,5 +282,20 @@
       "file": "18.png",
       "sha256": "0ca8e932bc0be48cb03fc4e84b982f83015d128b6a9891717ccc238bedf44dc3"
     }
-  ]
+  ],
+  "amendments_2026_10_29": {
+    "privacyNavigationAligned": true,
+    "removedNavigationInstanceIds": [
+      "889:1194",
+      "890:2314"
+    ],
+    "newInteractionSection": "926:1157",
+    "newInteractionIndex": "932:2803",
+    "source": "docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md",
+    "baselineValidationDate": "2026-10-28",
+    "note": "原18稿数量与2026-10-28验证／截图保留为当日基线；现行侧栏及新交互证据另记，不将旧496实例计数冒充修订后重跑",
+    "currentRoleSourceSha256": "f239680c95096107cde6af7cbbde626c3c4fc81795f537f631fbef6c5a2bf43d",
+    "currentSourceReadingNode": "26:26",
+    "currentSourceReadingStatus": "see delta-2026-10-29 manifest"
+  }
 }

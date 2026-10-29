@@ -1,0 +1,942 @@
+{
+  "date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "task": "AI-20261028-FIGMA-REVIEW",
+  "head": "b269504ad0cd0e179d8108fe60b9073ab97e9c99",
+  "figmaSessionId": "21c29e78-e561-44d0-8b39-fa85975167ca",
+  "designFileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "documentFileKey": "JiFXEy785BcGEvaFBSswJ3",
+  "designPages": [
+    "No nodeId was provided. Listing the top-level pages of the document. Call get_metadata again with one of the page ids below (or any node id underneath) to get the XML metadata for that subtree.\n\nTop-level pages of the document:\n- 395:2: 00 项目总览\n- 56:25: 01 手机 · 原稿与交互\n- 403:2: 02 Web · 原稿与交互\n- 403:3: 03 平板 · 原稿与交互\n- 403:4: 04 桌面 · 原稿与交互\n- 403:5: 05 功能索引 · 跨端原稿链接\n- 14:2: 06 规范与组件\n- 30:2: 07 早期概念原型（非现行）\n- 0:1: 08 历史归档\n- 793:21: 09 后台运维 · 设计与交互\n- 843:21: 10 后台管理 · 业务与核验\n- 888:1402: 11 后台角色 · 工作区与权限"
+  ],
+  "sampledPageStructure": [
+    {
+      "id": "888:1402",
+      "name": "11 后台角色 · 工作区与权限",
+      "children": [
+        {
+          "id": "888:1403",
+          "name": "01 / moderator / 内容与权利工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "888:1542",
+          "name": "02 / privacy / 资料保护工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "888:1681",
+          "name": "03 / identity_verifier / 身份与监护工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "888:1820",
+          "name": "04 / authority_verifier / 发布授权工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "888:1959",
+          "name": "05 / finance / 实际收支工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "888:2098",
+          "name": "06 / ops_viewer / 运维观察工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "888:2237",
+          "name": "07 / ops_oncall / 值班处置工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "888:2376",
+          "name": "08 / ops_release / 发布准备工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "888:2515",
+          "name": "09 / ops_admin / 环境审计工作台",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:2119",
+          "name": "10 / 举报与权利 · 核对当前事项",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:2284",
+          "name": "11 / 资料保护 · 保全与分类处理",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:2444",
+          "name": "12 / 监护关系 · 核验证据",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:2604",
+          "name": "13 / 可信年龄区间 · 登记任务",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:2764",
+          "name": "14 / 发布授权 · 对象与范围",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:2924",
+          "name": "15 / 实际收款 · 事实登记",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:3089",
+          "name": "16 / 实际退款 · 原收款核对",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:3254",
+          "name": "17 / 多角色 · 切换本岗工作区",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "id": "890:3419",
+          "name": "18 / 访问受限 · 无人员工作区",
+          "type": "FRAME",
+          "width": 1440,
+          "height": 1000
+        }
+      ]
+    },
+    {
+      "id": "56:25",
+      "name": "01 手机 · 原稿与交互",
+      "children": [
+        {
+          "id": "425:1839840",
+          "name": "M&D / 手机总览 / 原稿索引",
+          "type": "FRAME",
+          "width": 1536,
+          "height": 21042
+        },
+        {
+          "id": "541:527",
+          "name": "01 · 社区 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 4764
+        },
+        {
+          "id": "541:531",
+          "name": "02 · 发布与素材 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 2884
+        },
+        {
+          "id": "541:535",
+          "name": "03 · 领养与照护 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 9464
+        },
+        {
+          "id": "541:539",
+          "name": "04 · 核实与处理 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 4764
+        },
+        {
+          "id": "541:543",
+          "name": "05 · 宠物空间 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 7584
+        },
+        {
+          "id": "541:547",
+          "name": "06 · 走失与拾获 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 11344
+        },
+        {
+          "id": "541:551",
+          "name": "07 · 消息 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 3824
+        },
+        {
+          "id": "541:555",
+          "name": "08 · 预约安排 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 3824
+        },
+        {
+          "id": "541:559",
+          "name": "09 · 账号与登录 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 9464
+        },
+        {
+          "id": "542:527",
+          "name": "10 · 设置与通知 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 2884
+        },
+        {
+          "id": "542:531",
+          "name": "11 · 好物与到访 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 1944
+        },
+        {
+          "id": "542:535",
+          "name": "12 · 内容与恢复 · 手机",
+          "type": "SECTION",
+          "width": 1880,
+          "height": 1004
+        },
+        {
+          "id": "542:539",
+          "name": "13 · 群聊与管理 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 5704
+        },
+        {
+          "id": "542:543",
+          "name": "14 · 宠友圈 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 7584
+        },
+        {
+          "id": "542:547",
+          "name": "15 · 附近提醒 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 4764
+        },
+        {
+          "id": "542:551",
+          "name": "16 · 宠友圈日常 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:555",
+          "name": "17 · 宠物日记 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:559",
+          "name": "18 · 圈子评论 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:563",
+          "name": "19 · 圈子回复 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:567",
+          "name": "20 · 圈子作者回复 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:571",
+          "name": "21 · 日记评论 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:575",
+          "name": "22 · 领养交流 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:579",
+          "name": "23 · 私信 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:583",
+          "name": "24 · 群聊 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:587",
+          "name": "25 · 线索会话 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:591",
+          "name": "26 · 回复奶糖 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:595",
+          "name": "27 · 回复作者 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:599",
+          "name": "28 · 社区评论 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:603",
+          "name": "29 · 社区回复 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:607",
+          "name": "30 · 已接收私信 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:611",
+          "name": "31 · 群主会话 · 手机",
+          "type": "SECTION",
+          "width": 2334,
+          "height": 1004
+        },
+        {
+          "id": "542:615",
+          "name": "32 · 连续编辑与常用 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 1944
+        },
+        {
+          "id": "542:616",
+          "name": "33 · 手机补充与响应式 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 1944
+        },
+        {
+          "id": "542:617",
+          "name": "34 · 手机补充与响应式 · 手机",
+          "type": "SECTION",
+          "width": 480,
+          "height": 854
+        },
+        {
+          "id": "542:618",
+          "name": "35 · 手机补充与响应式 · 手机",
+          "type": "SECTION",
+          "width": 832,
+          "height": 854
+        },
+        {
+          "id": "542:619",
+          "name": "36 · 安全、账号与流程修订 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 2884
+        },
+        {
+          "id": "542:623",
+          "name": "37 · 安全、账号与流程修订 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 2884
+        },
+        {
+          "id": "542:627",
+          "name": "38 · 安全、账号与流程修订 · 手机",
+          "type": "SECTION",
+          "width": 972,
+          "height": 1004
+        },
+        {
+          "id": "542:631",
+          "name": "39 · 安全、账号与流程修订 · 手机",
+          "type": "SECTION",
+          "width": 972,
+          "height": 1004
+        },
+        {
+          "id": "542:638",
+          "name": "41 · 安全、账号与流程修订 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 1944
+        },
+        {
+          "id": "542:642",
+          "name": "42 · 安全、账号与流程修订 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 5704
+        },
+        {
+          "id": "542:646",
+          "name": "43 · 安全、账号与流程修订 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 7584
+        },
+        {
+          "id": "542:650",
+          "name": "44 · 全局未读与消息中心 · 手机",
+          "type": "SECTION",
+          "width": 2788,
+          "height": 1944
+        },
+        {
+          "id": "632:357493",
+          "name": "2026-10-22 · 法律复审设计补齐",
+          "type": "SECTION",
+          "width": 2676,
+          "height": 8472
+        },
+        {
+          "id": "733:530",
+          "name": "申请领养 / 选择与校验",
+          "type": "SECTION",
+          "width": 1500,
+          "height": 480
+        },
+        {
+          "id": "910:357845",
+          "name": "协作退出与有限授权 · 2026-10-28 · phone",
+          "type": "SECTION",
+          "width": 1426,
+          "height": 2852
+        }
+      ]
+    },
+    {
+      "id": "403:2",
+      "name": "02 Web · 原稿与交互",
+      "children": [
+        {
+          "id": "425:1839880",
+          "name": "M&D / Web总览 / 原稿索引",
+          "type": "FRAME",
+          "width": 1536,
+          "height": 20856
+        },
+        {
+          "id": "541:524",
+          "name": "01 · 社区 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 7736
+        },
+        {
+          "id": "541:528",
+          "name": "02 · 发布与素材 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 4448
+        },
+        {
+          "id": "541:532",
+          "name": "03 · 领养与照护 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 16504
+        },
+        {
+          "id": "541:536",
+          "name": "04 · 核实与处理 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 8832
+        },
+        {
+          "id": "541:540",
+          "name": "05 · 宠物空间 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 13216
+        },
+        {
+          "id": "541:544",
+          "name": "06 · 走失与拾获 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 19792
+        },
+        {
+          "id": "541:548",
+          "name": "07 · 消息 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 6640
+        },
+        {
+          "id": "541:552",
+          "name": "08 · 预约安排 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 6640
+        },
+        {
+          "id": "541:556",
+          "name": "09 · 账号与登录 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 16348
+        },
+        {
+          "id": "542:524",
+          "name": "10 · 设置与通知 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 5544
+        },
+        {
+          "id": "542:528",
+          "name": "11 · 好物与到访 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 3352
+        },
+        {
+          "id": "542:532",
+          "name": "12 · 内容与恢复 · Web",
+          "type": "SECTION",
+          "width": 5126,
+          "height": 2256
+        },
+        {
+          "id": "542:536",
+          "name": "13 · 群聊与管理 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 9928
+        },
+        {
+          "id": "542:540",
+          "name": "14 · 宠友圈 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 13216
+        },
+        {
+          "id": "542:544",
+          "name": "15 · 附近提醒 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 8832
+        },
+        {
+          "id": "542:548",
+          "name": "16 · 宠友圈日常 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:552",
+          "name": "17 · 宠物日记 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:556",
+          "name": "18 · 圈子评论 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:560",
+          "name": "19 · 圈子回复 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:564",
+          "name": "20 · 圈子作者回复 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:568",
+          "name": "21 · 日记评论 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:572",
+          "name": "22 · 领养交流 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:576",
+          "name": "23 · 私信 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:580",
+          "name": "24 · 群聊 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:584",
+          "name": "25 · 线索会话 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:588",
+          "name": "26 · 回复奶糖 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:592",
+          "name": "27 · 回复作者 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:596",
+          "name": "28 · 社区评论 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:600",
+          "name": "29 · 社区回复 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:604",
+          "name": "30 · 已接收私信 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:608",
+          "name": "31 · 群主会话 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:612",
+          "name": "32 · 连续编辑与常用 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 3352
+        },
+        {
+          "id": "542:620",
+          "name": "36 · 安全、账号与流程修订 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 4448
+        },
+        {
+          "id": "542:624",
+          "name": "37 · 安全、账号与流程修订 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 5544
+        },
+        {
+          "id": "542:628",
+          "name": "38 · 安全、账号与流程修订 · Web",
+          "type": "SECTION",
+          "width": 3104,
+          "height": 1160
+        },
+        {
+          "id": "542:632",
+          "name": "39 · 安全、账号与流程修订 · Web",
+          "type": "SECTION",
+          "width": 3104,
+          "height": 1160
+        },
+        {
+          "id": "542:635",
+          "name": "40 · 安全、账号与流程修订 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:639",
+          "name": "41 · 安全、账号与流程修订 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 2256
+        },
+        {
+          "id": "542:643",
+          "name": "42 · 安全、账号与流程修订 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 9928
+        },
+        {
+          "id": "542:647",
+          "name": "43 · 安全、账号与流程修订 · Web",
+          "type": "SECTION",
+          "width": 6176,
+          "height": 13216
+        },
+        {
+          "id": "632:735010",
+          "name": "2026-10-22 · 法律复审设计补齐",
+          "type": "SECTION",
+          "width": 3040,
+          "height": 25920
+        },
+        {
+          "id": "915:386337",
+          "name": "协作退出与有限授权 · 2026-10-28 · web",
+          "type": "SECTION",
+          "width": 4576,
+          "height": 3320
+        }
+      ]
+    }
+  ],
+  "collaboration": {
+    "phoneSection": "910:357845",
+    "webSection": "915:386337",
+    "states": [
+      {
+        "key": "caretakerLeaveConfirm",
+        "phone": "910:357846",
+        "web": "915:386338"
+      },
+      {
+        "key": "caretakerLeft",
+        "phone": "910:357867",
+        "web": "915:386431"
+      },
+      {
+        "key": "publisherLeaveConfirm",
+        "phone": "910:357887",
+        "web": "915:386523"
+      },
+      {
+        "key": "publisherLeft",
+        "phone": "910:357908",
+        "web": "915:386616"
+      },
+      {
+        "key": "caretakerWorkspace",
+        "phone": "910:357927",
+        "web": "915:386707"
+      },
+      {
+        "key": "caretakerReadOnly",
+        "phone": "910:357947",
+        "web": "915:386799"
+      },
+      {
+        "key": "caretakerUnavailable",
+        "phone": "910:357967",
+        "web": "915:386891"
+      },
+      {
+        "key": "publisherWorkspace",
+        "phone": "910:357987",
+        "web": "915:386983"
+      }
+    ],
+    "note": "本轮远端只读发现；原本地docs/scripts无这些新分组ID，不能据740旧追踪断言远端缺稿。其余布局未在本轮逐状态核验。"
+  },
+  "screenshots": [
+    {
+      "file": "01-authority.png",
+      "nodeId": "890:2764",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "f908fa34f23c7226f28c32fb711208d5acd07ead6e58b626373c7eb35b509e4d"
+    },
+    {
+      "file": "02-refund.png",
+      "nodeId": "890:3089",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "1f2bbd1b6e317522ee2eb0186f50349d7613f3f5e0c936ba5df9c2b5e1943ea0"
+    },
+    {
+      "file": "03-restricted.png",
+      "nodeId": "890:3419",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "996d0f1044c8014100ddc7bd493c2cf3df5741fa6658a70758fb9b7d1658c83b"
+    },
+    {
+      "file": "04-privacy.png",
+      "nodeId": "888:1542",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "eba29a19f49ab8e3ae6fb45b601101c2ee0cfdf0c65bd257780ab68e5a282753"
+    },
+    {
+      "file": "05-system-inbox.png",
+      "nodeId": "106:1408",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "d9a7fbede333270c047761b04dd2fb32469ecfce8d2f95d43673d06273bf2402"
+    },
+    {
+      "file": "06-interaction-inbox.png",
+      "nodeId": "106:1407",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "431f96e3f2d4cb8f5cfa66be5f6c8b023db786603e3de7c101583d2c64841912"
+    },
+    {
+      "file": "07-unread-notifications.png",
+      "nodeId": "356:246",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "0b8ea441b724dacdf9bbad1875c0d08eb9ec5fc24fa6aa7c84c70b00273ff22d"
+    },
+    {
+      "file": "08-care-readonly.png",
+      "nodeId": "910:357947",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "8f25fa43a7b019573990a56bac4e7bf2c7feb05a138366e1919e1cad1418062b"
+    },
+    {
+      "file": "09-care-leave.png",
+      "nodeId": "910:357846",
+      "downloaded": true,
+      "inspected": true,
+      "source": "本轮Figma MCP get_screenshot原始PNG",
+      "sha256": "aff304b1e78adcf452d0e255029ba204ed2576101eace613a988a68f7145940e"
+    }
+  ],
+  "privacyNavigation": {
+    "frame": "888:1542",
+    "textNode": "I889:1194;296:7",
+    "label": "保全与清理",
+    "specHasSeparateNav": false,
+    "codeHasSeparateRoute": false
+  },
+  "nativeSpecReadback": false,
+  "limitations": [
+    "只读远端设计；没有修改业务源码或Figma",
+    "仅抽样视觉与节点检查，未播放原型",
+    "未回读文档中心Specs全文；全文增量结论基于本地来源摘要与现有同步清单",
+    "未编译、构建、test、lint、类型检查、启动、迁移、部署或提交推送"
+  ],
+  "sourceManifestComparison": {
+    "snapshotDate": "2026-10-27",
+    "sources": 189,
+    "changedPaths": [
+      "README.md",
+      "docs/API_CATALOG.md",
+      "docs/CURRENT_BASELINE.md",
+      "docs/DOCUMENTATION_CATALOG.md",
+      "docs/PRODUCT_AND_DELIVERY_MATRIX.md",
+      "docs/README.md",
+      "docs/ai/CONTEXT.md",
+      "docs/ai/TASKS.md",
+      "docs/ai/TASK_LOG.md",
+      "docs/client/README.md",
+      "docs/design/MND_FIGMA_DESIGN_DOCUMENT.md",
+      "docs/figma-sync/README.md"
+    ],
+    "scope": "只比较本地来源与旧manifest，不代表远端Specs全文已重读"
+  }
+}

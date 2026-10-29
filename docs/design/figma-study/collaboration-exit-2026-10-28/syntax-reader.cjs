@@ -101,4 +101,3 @@ function issues(node) {
   }
   process.stdout.write(JSON.stringify(report[0]));
 })().catch(e=>{process.stderr.write(String(e.stack||e));process.exitCode=1;});
-
