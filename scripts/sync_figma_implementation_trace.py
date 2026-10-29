@@ -39,6 +39,18 @@ for filename in ['design-closure-2026-10-21-state.json', 'logic-fix-2026-10-21-s
     data = json.loads((design / filename).read_text())
     merge(data.get('effectiveCoreRoots', data.get('roots', {})), filename)
 
+# 追加已存在的远端协作稿；旧740状态保留，不用推算节点补齐未核对布局。
+baseline_states = len(roots)
+collaboration_source = 'collaboration-2026-10-29/state.json'
+collaboration = json.loads((design / collaboration_source).read_text())
+collaboration_states = {row['key']: row for row in collaboration['states']}
+assert len(collaboration_states) == 8
+assert not set(collaboration_states).intersection(roots)
+for key, row in collaboration_states.items():
+    families[key] = 'adoption'
+    names[key] = row['name']
+merge(collaboration['roots'], collaboration_source)
+
 android = 'kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/'
 entries = {
  'community': ('ConsumerApp.kt', 'features/Records.tsx', '/'),
@@ -201,6 +213,25 @@ for key in sorted(roots):
         a,w,route='CarePages.kt','features/ReturnPages.tsx','/adoptions/{id}'
         status='dedicated_state_source_not_runtime_verified'
         note='2026-10-27回读手机6状态及R2回应Web／横平板；公共完整方案检查、同版角色／确认截止、未知结果原请求、保留草稿后主动采用版本；Web修正effective交接入口，接受方案不等于实际交接完成。未编译、类型检查、测试执行或逐端视觉／运行验收。'
+    if key.startswith(('caretaker','publisherCollab')) or key in ('adoptionCaretakerInvite','adoptionCaretakerPending','adoptionCaretakers','adoptionCaretakersEmpty'):
+        a,w,route='SocialPages.kt','features/ResourcePage.tsx','/invitations/{invitationId}'
+        if key in ('adoptionCaretakers','adoptionCaretakersEmpty'):
+            w,route='features/WorkflowEditor.tsx','/edit?flow=introduction&kind=pets&id={petId}'
+        elif key == 'adoptionCaretakerInvite':
+            w,route='features/WorkflowEditor.tsx','/edit?flow=invite&kind=pets&id={petId}&scope=adoption_editor'
+        elif key == 'caretakerInvite':
+            w,route='features/WorkflowEditor.tsx','/edit?flow=invite&kind=adoptions&id={adoptionId}&scope=caretaker'
+        elif key in ('adoptionCaretakerPending','caretakerPending'):
+            w,route='features/Records.tsx','/invitations'
+        elif key in ('caretakerRevoke','publisherCollabRevoke'):
+            w,route='features/WorkflowEditor.tsx','/edit?flow=invitation-action&kind=invitations&id={invitationId}&action=revoke'
+        note='2026-10-29按当前邀请与协作实际入口更正源码／路由归属；介绍对象为pet_id，照护对象为adoption_id，邀请决定绑定invitation_id。接受截止不等于已接受授权终止日；角色与资源有效性由服务端复核。未编译、测试执行、逐端视觉或运行验收。'
+    if key in collaboration_states:
+        state = collaboration_states[key]
+        a,w,route=state['native_source'],state['web_source'],state['web_route']
+        status='dedicated_state_source_not_runtime_verified'
+        note='2026-10-29纳入远端2026-10-28既有协作退出与有限授权稿，保留原740状态；仅核对稳定节点与现行源码归属。'+state['implementation_note']+' 未播放原型、编译、测试执行或逐端视觉／运行验收。'
+        representatives[key] = state.get('screenshots_inspected', [])
     rows.append({'key':key,'name':names.get(key,key),'family':group,'design_roots':roots[key],
                  'root_sources':provenance[key],'android_source':android+a if a else None,
                  'web_source':'web-client/src/'+w if w else None,'web_module_route':route,
@@ -208,10 +239,10 @@ for key in sorted(roots):
                  'source_note':'Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。',
                  'implementation_status':status,'note':note,'remote_screenshots_inspected':representatives.get(key,[]),'runtime_verified':False})
 
-result = {'date':'2026-10-24','file_key':base['fileKey'],'task':'AI-20261024-ALL-FIGMA',
+result = {'date':'2026-10-24','updated':'2026-10-29','file_key':base['fileKey'],'task':'AI-20261024-ALL-FIGMA',
  'meaning':'此表是全量设计索引与源码归属追踪，不是全部页面完成、视觉对齐或运行通过的证明。',
- 'precedence':['baseline','mobile completion','design closure','logic fix effective roots','legal design'],
- 'counts':{'states':len(rows),'contract_gaps':sum(r['implementation_status']=='contract_gap' for r in rows),'runtime_verified':0},'states':rows}
+ 'precedence':['baseline','mobile completion','design closure','logic fix effective roots','legal design','collaboration 2026-10-28 existing remote roots'],
+ 'counts':{'states':len(rows),'baseline_states':baseline_states,'incremental_states':len(collaboration_states),'contract_gaps':sum(r['implementation_status']=='contract_gap' for r in rows),'runtime_verified':0},'states':rows}
 path = root / 'docs/client/figma-implementation-trace-2026-10-24.json'
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--write',action='store_true');args=parser.parse_args()
 source=json.dumps(result,ensure_ascii=False,indent=2)+'\n'

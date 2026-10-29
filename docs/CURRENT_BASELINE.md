@@ -1,6 +1,6 @@
 # M&D 现行文档与源码基线
 
-更新：2026-10-28（Asia/Shanghai）。已包含邀请协作及后台角色批次，成果随本页所在Git提交保存，尚未推送。Git起点源码：`main@1fe5302e7eb21c5767b84505dea69f47481f8c5f`。本页取代各入口中更早的“当前数量”；带日期交接继续保留当时结果。
+更新：2026-10-29（Asia/Shanghai）。已包含邀请协作及后台角色批次，成果随本页所在Git提交保存，尚未推送。Git起点源码：`main@1fe5302e7eb21c5767b84505dea69f47481f8c5f`。本页取代各入口中更早的“当前数量”；带日期交接继续保留当时结果。
 
 [Figma 文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3) · [完整文档目录](DOCUMENTATION_CATALOG.md) · [功能状态与发布边界](PRODUCT_AND_DELIVERY_MATRIX.md) · [UML 图谱](uml/README.md) · [同步清单](figma-sync/README.md)。
 
@@ -17,7 +17,9 @@
 | shared / clientUi 公共 Kotlin 文件 | 29 / 41 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件 |
 | FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |
 | Worker 接受的作业名 | 8 类 | [ValidJob](../internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |
-| Figma 消费者状态台账 | 740 个既有状态 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；另有业务后台13稿、运维14稿 |
+| Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；增量手机／Web16根已登记，平板／Desktop待回读；另有角色18稿、业务后台13稿、运维14稿 |
+
+本轮[设计与文档详细完善](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)仍未提交：后台增加39任务状态及1评审索引，协作8状态完成手机／Web来源补录，消费者追踪748条。消息分类与待办等现有源码差距已明确列账，没有通过文档修订冒充业务接线完成。
 
 当前新增批次见[后台角色实现](client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；[source-baseline.json](figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。这些是源码统计，不是构建、联调或发布成功证据。
 
@@ -62,6 +64,6 @@ Docker初始化挂载已包含013；已有数据库不会因新增挂载自动�
 
 1. 文档与设计：本地合同、表格、图谱和Figma阅读副本分别记账；文档同步不改变需求批准状态。
 2. 源码与静态：页面和合同源码已分批写入。最近源码批次见[10月27日恢复点](client/COMPLETE_LANDING_2026_10_27.md)及[城市素材交接](client/MAINLAND_CITIES_AND_CAT_ASSETS_2026_10_26.md)。
-3. 运行与发布：740状态没有全量逐端运行／视觉验收；SDK正式参数、签名、真实环境、数据库、权限／并发／网络恢复、无障碍与运营值守仍需验证。完整搜索接收端及运维发布／重启执行器保持用户指定占位。
+3. 运行与发布：当前748条消费者状态追踪没有全量逐端运行／视觉验收；SDK正式参数、签名、真实环境、数据库、权限／并发／网络恢复、无障碍与运营值守仍需验证。完整搜索接收端及运维发布／重启执行器保持用户指定占位。
 
 本轮按仓库规则不运行编译、构建、test、lint或应用。历史静态通过、测试源码存在、设计截图均不升级为本轮运行证据。

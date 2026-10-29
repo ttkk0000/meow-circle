@@ -1,6 +1,10 @@
 # M&D 客户端代码实施与完成标准
 
-> **2026-10-28 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-10-29 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
+当前工程边界：`kmp/shared/.../client`负责业务与数据，`kmp/clientUi`提供Android／iOS／Desktop公共Compose页面；`androidApp`、`iosUi`和`desktopApp`分别注入窗口、返回、Picker、地图、授权等平台能力。Web已使用独立`web-client` React DOM。共享页面不抵扣Android平板和iPad各自的系统适配与设备验收。详见下方架构表及[视觉与验收](DESIGN_AND_ACCEPTANCE.md)。
+
+## 带日期的阶段记录
 
 2026-10-28：[后台按角色先设计后编码](ADMIN_ROLE_WORKSPACES_2026_10_28.md)补9个人员工作区、角色／页面与字段权限、18份Figma新稿和年龄／授权／实际收支入口；旧邀请码闭环见[检查点](BUSINESS_COLLABORATION_2026_10_28.md)。均未运行验收。
 
@@ -30,9 +34,9 @@
 
 2026-10-24历史批次：Android手机／平板的Figma对齐、公共页面（含独立公开阅读与法规制度库 `AndroidReadingContent.kt` / `AndroidPublicationsContent.kt`）、宠物评论与反应、群目录及新Web消费端（`web-client/`，含 `ReadingPages.tsx` / `Publications.tsx`）见[本批说明](FIGMA_ANDROID_WEB_2026_10_24.md)、[740状态追踪](figma-implementation-trace-2026-10-24.json)及[Web接入](../../web-client/README.md)。服务端与产品同步状态见[PRD v2.1](../bmad/prd.md)、[UX v2.1](../bmad/ux-design.md)、[Figma产品对齐核查](../design/figma-study/FIGMA_PRODUCT_ALIGNMENT_CHECK_2026_10_24.md)与[服务端完整性审计（2026-10-24）](../server/SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)（OpenAPI 扩至 `230` Paths / `259` Operations / `112` Schemas / `44` 张 `mobile_*` 表）。保留2026-10-23的日期／人员选择、分页、方向状态、深链、领养闭环与服务端作业。本批新增源码／静态结果另记，不把映射、历史证据或页面入口当作全量视觉／运行通过；此历史批次的iOS／Desktop未迁移结论已由上方公共UI续作替代，运行仍未验收。
 
-2026-10-23最新：已接入[Android UI框架／10个基础组件与维护规范](UI_COMPONENTS.md)，主题与尺寸集中；[平板状态续作](PAD_STATE_AND_UI_2026_10_23.md)补主从列表／双列表单的可移动内容、日期与人员筛选、流程内输入状态和同意绑定。58份客户端源码与30扩展分派等静态通过，横竖屏／焦点／IME／设备仍未运行验收。只改Android入口，未迁移苹果或旧Web／Desktop。
+2026-10-23历史批次：已接入[Android UI框架／10个基础组件与维护规范](UI_COMPONENTS.md)，主题与尺寸集中；[平板状态续作](PAD_STATE_AND_UI_2026_10_23.md)补主从列表／双列表单的可移动内容、日期与人员筛选、流程内输入状态和同意绑定。58份客户端源码与30扩展分派等静态通过，横竖屏／焦点／IME／设备仍未运行验收。只改Android入口，未迁移苹果或旧Web／Desktop。
 
-2026-10-23最新续作：[Android手机／平板及服务器闭环补实](ANDROID_REMAINING_2026_10_23.md)已写人员／受众选择、文字区域／城市提醒、深链待查看、快照全部已读、公开分享与免注册安全网页，并复核领养边界。214路径／104schemas、55对DTO、55客户端文件／30分派等静态通过，运行未验收；下文“人员／区域／最小网页待写”是前批快照，当前事实查[交付账本](CURRENT_DELIVERY_STATUS_2026_10_23.md)。
+2026-10-23历史续作：[Android手机／平板及服务器闭环补实](ANDROID_REMAINING_2026_10_23.md)已写人员／受众选择、文字区域／城市提醒、深链待查看、快照全部已读、公开分享与免注册安全网页，并复核领养边界。214路径／104schemas、55对DTO、55客户端文件／30分派等静态通过，运行未验收；下文“人员／区域／最小网页待写”是前批快照，当前事实查[交付账本](CURRENT_DELIVERY_STATUS_2026_10_23.md)。
 
 2026-10-23闭环整改已接续：[设计／文档与领养源码跟进](../server/ADOPTION_CLOSURE_2026_10_23.md)、[当前交付账本](CURRENT_DELIVERY_STATUS_2026_10_23.md)。规范冲突已纠正，Figma五布局10处接回说明保存回读／2图核对；服务端先补独占／候补、申请周期和接回退出，shared／Android接新状态。仅源码／静态，人员与区域选择、HTTPS／游客网页、真实配置与运行仍按账本继续，苹果UI后置。
 
@@ -40,17 +44,17 @@
 
 2026-10-23续作：[Android手机／平板读取状态](ANDROID_READ_STATES_2026_10_23.md)补刷新保留、分页原游标重试、空／末页、照片与贴纸比例；仅源码／静态检查，苹果UI后置，运行未验收。
 
-2026-10-23最新优先级：**先安卓手机／平板页面，苹果页面本阶段后置**。[页面补齐与接线](ANDROID_PAGES_2026_10_23.md)继续五主入口／30扩展页，补日期／真实记录选择、分项进度、平板大字／键盘和原方法回执恢复；本批源码／静态通过，正式渠道和手机／平板运行未验收。下文“回执头待后续接入”等为此前快照。
+2026-10-23当时优先级：**先安卓手机／平板页面，苹果页面本阶段后置**。[页面补齐与接线](ANDROID_PAGES_2026_10_23.md)继续五主入口／30扩展页，补日期／真实记录选择、分项进度、平板大字／键盘和原方法回执恢复；本批源码／静态通过，正式渠道和手机／平板运行未验收。下文“回执头待后续接入”等为此前快照。
 
 2026-10-23服务端优先：[作业／回执／会话续作](../server/SERVER_FIRST_2026_10_23.md)已写源码和静态核对；本轮不扩客户端，新可选回执头仍需后续公共Transport持久化原键／载荷接入，运行未验收。
 
 2026-10-22源码更新：[服务端/共享层实施记录](../server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)。本轮已实现身份资格、用途授权、幂等恢复及主要法律/业务合同源码，新增008迁移与精确公共KMP DTO/API；端侧UI与实际运行仍待验收。下文“只完善规划”和“B04缺失”均为上一批次的历史状态，不能再据其恢复旧自动建号或本地验证。
 
-2026-10-22最新技术规划：[系统架构与数据／API合同](../bmad/architecture.md)、[实施准入核对](../bmad/gate-check.md)、[逐项追溯](../bmad/implementation-trace-2026-10-22.json)。实施方案已按最新设计改为S0–S7、任务扩B05–B12，优先补服务端准入、用途、幂等、资料清理及安全运营，再接真实业务切片；本轮只完善规划，没有新增业务代码或运行验收。
+2026-10-22技术规划批次：[系统架构与数据／API合同](../bmad/architecture.md)、[实施准入核对](../bmad/gate-check.md)、[逐项追溯](../bmad/implementation-trace-2026-10-22.json)。实施方案已按最新设计改为S0–S7、任务扩B05–B12，优先补服务端准入、用途、幂等、资料清理及安全运营，再接真实业务切片；本轮只完善规划，没有新增业务代码或运行验收。
 
 更新：2026-10-20。状态：Android / iOS 第一批共享逻辑、独立 Compose 手机 / 平板入口与依赖升级源码已写；完整功能尚未完成、未验收。当前事实见[实施记录](MOBILE_IMPLEMENTATION_2026_10_20.md)、[依赖基线](DEPENDENCY_BASELINE_2026_10_20.md)和[服务端接入核对](../server/CLIENT_READINESS_2026_10_20.md)。B04 认证合同缺失期间，对外提交保持阻塞。
 
-本次用户决定：Android / iOS 基于 KMP 共用逻辑，各自使用 Compose UI 绘制页面，各自完成平板适配；Web、桌面采用下述工程方案。当前统一使用设计稿默认浅色主题，旧多主题保留参考与扩展位置，暂不开放切换。用户已授权移动端代码；Android 面向 Android 17 / API 37、最低 API 26。编码授权不包含构建或设备运行。
+当前实施采用下方架构表：KMP共享业务与公共Compose页面，各端保留宿主和系统能力桥接；Android平板与iPad分别验收。统一使用Figma默认浅色，旧多主题保留参考与扩展位置，暂不开放切换。Android面向API 37、最低API 26；依赖以钉定基线为准。源码授权不包含自行构建或设备运行。
 
 历史基线覆盖与本轮增补分别记录；当前入口见[安全修订交接](../design/figma-study/DESIGN_CLOSURE_2026_10_21.md)。2026-10-20历史覆盖：[完整跨端交接](../design/figma-study/CROSS_PLATFORM_FULL_REVIEW_2026_10_20.md) · [逐项映射](../design/figma-study/CROSS_PLATFORM_FULL_MAPPING.md) · [自适应契约](../design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md)。569 个产品／交互状态各有 Web、Desktop、平板横竖屏对应稿，另补 32 张窄窗样例；布局与静态内容回读通过。复杂表情内部动作仍参考手机源原型，未完成跨端全量交互或设备验收。设计覆盖和本目录的客户端实施完成度分别记录，不能把画板状态当作代码已完成。
 
@@ -71,12 +75,12 @@
 
 | 客户端 | 业务与数据逻辑 | UI 与自适应 |
 |---|---|---|
-| Android 手机 / 平板 | `kmp/shared` | 现有 `kmp/androidApp` 中的 Jetpack Compose，独立 Android 平板布局 |
-| iPhone / iPad | 同一个 `kmp/shared` | 已新增 `kmp/iosUi`，使用 Compose Multiplatform for iOS；`iosApp/ComposeApp` 为薄宿主，独立 iPad 布局；旧 SwiftUI 留档 |
-| Desktop | 复用 `kmp/shared` | 延续 `kmp/desktopApp` / Compose Desktop，独立桌面工作区 |
-| Web / 移动网页 / 平板网页 | 独立 TypeScript，复用同一 HTTP 契约与用例规则 | 建议新增 `web-client`，React + TypeScript + Vite，适配浏览器与公开分享 |
+| Android 手机 / 平板 | `kmp/shared/.../client` | `kmp/clientUi`公共Compose页面；`androidApp/.../mobile`提供Activity生命周期、折叠安全区域、返回、Picker、地图与SDK桥接 |
+| iPhone / iPad | 同一个 `kmp/shared/.../client` | 同一个`kmp/clientUi`公共Compose页面；`iosUi`提供Scene内窗口与UIKit能力，`iosApp/ComposeApp`为Swift薄宿主；旧SwiftUI业务页留档 |
+| Desktop | 同一个 `kmp/shared/.../client` | `desktopApp/Main.kt`接公共`ConsumerApp`，平台提供窗口、输入、文件、凭据与浏览器桥接 |
+| Web / 移动网页 / 平板网页 | 独立TypeScript，复用同一HTTP契约与用例规则 | 已有`web-client` React + TypeScript + Vite，独立DOM响应式布局、消费者与双后台入口；Cookie／CSRF源码与实际运行分别验收 |
 
-KMP 共享不包括业务 Composable、Android Activity、UIKit 控件、导航栈对象和窗口布局。iOS 的 Compose 是 Kotlin UI，不是 SwiftUI；SwiftUI / UIKit 仅作宿主及系统控件桥接。各端保持相同任务、权限、状态与默认视觉，不要求页面代码共用。
+`shared`业务模块不依赖Compose、Activity、UIKit或DOM；业务Composable位于独立`clientUi`模块并由三端复用。`ClientUiPlatform`隔离窗口、返回、日期、照片、地图和系统授权能力，宿主管理生命周期与会话所有权。iOS的Compose页面由Kotlin实现，SwiftUI／UIKit用于宿主及系统控件桥接。公共页面的布局策略仍需按各端真实窗口、Insets、字号与IME逐端验收。
 
 ## 依据与当前状态
 

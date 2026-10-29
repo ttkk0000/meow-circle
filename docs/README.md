@@ -1,6 +1,8 @@
 # M&D 文档入口
 
-> **2026-10-28 现行入口**：[源码与文档基线](CURRENT_BASELINE.md) · [产品／交付状态](PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-10-29 现行入口**：[源码与文档基线](CURRENT_BASELINE.md) · [产品／交付状态](PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
+2026-10-29：[设计与文档完善交付](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)补后台39任务状态与1评审索引、协作8状态来源、消息事件实施差距，并更正公共clientUi／平台宿主事实。当前消费者追踪748条，运行未验收；[文档中心本轮增量](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3)和[来源回读记录](figma-sync/delta-2026-10-29/README.md)独立维护。下文带日期阶段记录按原时点解释。
 
 2026-10-25 全栈代码逻辑总览与 PlantUML 架构图谱收口：新增[全栈代码逻辑与 PlantUML 架构总览手册](CODE_LOGIC_AND_UML_REFERENCE.md)与[独立 PlantUML (`.puml`) 图谱目录](uml/README.md)（共 12 份 `.puml` 架构图、类图、ER 图、时序图与状态机图），并将全仓库文档统一对齐至 **2026-10-25 最新源码基线**：OpenAPI `241` Paths / `271` Operations / `123` Server Schemas（Web 派生 `125` Schemas）、`74` 对跨语言 DTO、PostgreSQL `001`–`009` 迁移与 `44` 张 `mobile_*` 领域表、`kmp/shared` 泛型 `MviStore` 体系、`kmp/clientUi` `34` 个三端共享 Compose 文件与 `42` 个 `FeaturePage` 二级业务页、[全量 Figma 四端实现交接](client/ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)、[高德地图四端与代理交接](client/AMAP_IMPLEMENTATION_2026_10_24.md)、[三方官方认证与冲突恢复](client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)、[外部年龄核验网关](client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)及[监护人 15 分钟邀请与成年关系申诉](client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)。
 

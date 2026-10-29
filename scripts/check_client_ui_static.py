@@ -86,8 +86,10 @@ for guard in ['credentials: "omit"', '"X-Operator-Token": this.token', 'epoch !=
 assert not re.search(r"\b(localStorage|sessionStorage|indexedDB)\b", operator)
 assert "Token" not in (root / "internal/platform/mobileapi/ops_context.go").read_text().split("type OperatorContext struct", 1)[1]
 trace = json.loads((root / "docs/client/figma-implementation-trace-2026-10-24.json").read_text())
-assert len(trace["states"]) == 740 and trace["counts"]["runtime_verified"] == 0
+assert trace["counts"]["baseline_states"] == 740 and trace["counts"]["incremental_states"] == 8
+assert len(trace["states"]) == trace["counts"]["states"] == trace["counts"]["baseline_states"] + trace["counts"]["incremental_states"]
+assert trace["counts"]["runtime_verified"] == 0 and all(row["runtime_verified"] is False for row in trace["states"])
 for row in trace["states"]:
     for key in ["android_source", "ios_source", "desktop_source", "web_source"]:
         if row[key]: assert (root / row[key]).is_file(), (row["key"], key)
-print(f"公共UI只读核对：{len(sources)}份公共源码、{len(pages)}个功能分派、3套平台端口、{len(catalog['emoji'])}枚Noto原图、{len(manifest['assets'])}枚原SVG、740条源码索引；未编译／类型检查／测试／逐屏运行。")
+print(f"公共UI只读核对：{len(sources)}份公共源码、{len(pages)}个功能分派、3套平台端口、{len(catalog['emoji'])}枚Noto原图、{len(manifest['assets'])}枚原SVG、{len(trace['states'])}条源码索引（740基线＋8协作增量）；未编译／类型检查／测试／逐屏运行。")

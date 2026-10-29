@@ -74,8 +74,10 @@ copies = [root / folder / asset for folder in ["web-client/public/assets/figma",
 assert len({hashlib.sha256(path.read_bytes()).hexdigest() for path in copies}) == 1
 assert ET.parse(copies[0]).getroot().attrib["width"] == "24"
 trace = json.loads(read("docs/client/figma-implementation-trace-2026-10-24.json"))
-assert len(trace["states"]) == 740 and trace["counts"]["runtime_verified"] == 0
+assert trace["counts"]["baseline_states"] == 740 and trace["counts"]["incremental_states"] == 8
+assert len(trace["states"]) == trace["counts"]["states"] == trace["counts"]["baseline_states"] + trace["counts"]["incremental_states"]
+assert trace["counts"]["runtime_verified"] == 0
 assert all(row["runtime_verified"] is False for row in trace["states"])
 assert all((root / row["web_source"]).is_file() for row in trace["states"])
 ast.parse(Path(__file__).read_text())
-print(f"页面缺口只读核对：{len(contexts)}份设计上下文／截图、状态分类与缓存时间、三端帮助页、通知编号／账号／交互锁、媒体进度／原编号／排序／保存与740条索引；未执行类型检查、编译、测试或应用。")
+print(f"页面缺口只读核对：{len(contexts)}份设计上下文／截图、状态分类与缓存时间、三端帮助页、通知编号／账号／交互锁、媒体进度／原编号／排序／保存与{len(trace['states'])}条索引（740基线＋8协作增量）；未执行类型检查、编译、测试或应用。")

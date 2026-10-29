@@ -1,6 +1,8 @@
 # M&D 设计交接索引
 
-> **2026-10-28 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-10-29 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+
+2026-10-29：[后台关键任务39状态与评审索引](figma-study/admin-task-interaction-2026-10-29/README.md)／[交互合同](ADMIN_TASK_INTERACTION_2026_10_29.md)已细化表单、确认、失败／未知与撤权；[协作退出8状态补录](figma-study/collaboration-2026-10-29/README.md)纳入748条追踪。当前消息分类／待办／已读差距见[事件对齐表](NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md)，不把设计统一当业务源码已修改。
 
 2026-10-28：[后台按角色详细设计18稿](figma-study/admin-roles-2026-10-28/README.md)与[原生权限规范](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=21-2)先完成并核对，再接[源码实现](../client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)。9个人员岗位、worker与附加证据能力分别处理；未运行验收。
 
@@ -23,7 +25,7 @@
 - 2026-10-26 [Web顶部发布按钮评审](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=818-17528)／[交接](figma-study/publish-button-2026-10-26/README.md)：749个Web入口应用紧凑按钮与纯白加号，五状态组件及原有发布类型跳转已做结构与截图检查；业务源码尚未按本次设计改动。
 - 最新[法律设计补充评审入口662:398665](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=662-398665)与[交接／最终验证状态](figma-study/LEGAL_DESIGN_HANDOFF_2026_10_22.md)：45组五布局225稿、四个独立回调与角色样例板；[法律设计合同](MND_LEGAL_DESIGN_SUPPLEMENT_2026_10_22.md)区分事项协助、正式注销、通知／声明与合同版本。真实经营与接口仍另行验收。
 - 最新[平板横竖屏预览优化](figma-study/PAD_PREVIEW_2026_10_22.md)：88个Flow收敛为两个，704组同状态横竖屏稿可点右上角预览按钮互切；按钮仅作Figma演示，客户端不实现。直接使用文档中的Pad竖屏／横屏预览链接，设备转动后仍需手动切换。
-- 最新[画布排版整理](figma-study/FIGMA_CANVAS_LAYOUT_2026_10_22.md)：9页核对、7页紧凑排布，手机画布高度减少88.2%；节点、原稿尺寸及交互引用保留。当前位置以下方9页目录为准，旧17／18页记录保留为历史证据。
+- 最新[画布排版整理](figma-study/FIGMA_CANVAS_LAYOUT_2026_10_22.md)：9页核对、7页紧凑排布，手机画布高度减少88.2%；节点、原稿尺寸及交互引用保留。当前页位置以下方12页目录为准，旧17／18页记录保留为历史证据。
 - 最新[六处操作逻辑修订入口513:1860930](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=513-1860930)与[交接及静态条件结果](figma-study/LOGIC_FIX_HANDOFF_2026_10_21.md)：覆盖短信、成年核对、安全取消、接回双边版本、原工单追加和删除最终确认。本轮84组五布局，其中12组覆盖上轮同ID原稿；来源优先级见本轮账本。
 - [项目总览395:3](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=395-3)。
 - 设备索引：[手机425:1839840](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=425-1839840)、[Web425:1839880](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=425-1839880)、[平板425:1839920](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=425-1839920)、[Desktop425:1839960](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC/MND?node-id=425-1839960)。
@@ -33,7 +35,7 @@
 
 ## 当前页面位置
 
-2026-10-22远端回读为9页；原稿按设备归档，功能页保留跨端原稿链接。画板链接与页面ID分别核对；不能因旧页面消失推断旧画板丢失。
+2026-10-29按本轮MCP回读维护为12页；原稿按设备归档，功能页保留跨端原稿链接。2026-10-22的9页目录是历史基线，后续业务后台、技术运维及角色页已并入下表。画板链接与页面ID分别核对，不能因旧页面消失推断旧画板丢失。
 
 | 页面 | 当前ID | 用途 |
 |---|---|---|
@@ -44,7 +46,11 @@
 | 04 桌面 · 原稿与交互 | 403:4 | 桌面索引、原稿及交互，含新增法律设计分组 |
 | 05 功能索引 · 跨端原稿链接 | 403:5 | 功能／说明分组、跨端链接、各轮修订及法律补充评审入口 |
 | 06 规范与组件 | 14:2 | 语义变量、字体、原生组件 |
-| 07 可点击原型／08 历史归档 | 30:2／0:1 | 阶段演示／历史资料 |
+| 07 早期概念原型（非现行） | 30:2 | 早期阶段演示，不是现行起点 |
+| 08 历史归档 | 0:1 | 历史资料 |
+| 09 后台运维 · 设计与交互 | 793:21 | 原14稿，环境与capabilities边界 |
+| 10 后台管理 · 业务与核验 | 843:21 | 原13稿，业务事项与异常状态 |
+| 11 后台角色 · 工作区与权限 | 888:1402 | 9岗位／原18稿及本轮39任务状态＋1评审索引；入口932:2803 |
 
 ## 内容与实施合同
 

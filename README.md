@@ -1,12 +1,14 @@
 # M&D / meow & doggie Server (Go + Caddy)
 
-> **2026-10-28 现行入口**：[源码与文档基线](docs/CURRENT_BASELINE.md) · [产品／交付状态](docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-10-29 现行入口**：[源码与文档基线](docs/CURRENT_BASELINE.md) · [产品／交付状态](docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
 
-AI 或换电脑继续开发，先读[2026-10-22家里接手入口](docs/ai/HOME_HANDOFF_2026_10_22.md)、[项目内 AI 工作跟踪](docs/ai/README.md)、[当前快照](docs/ai/CONTEXT.md)和[任务状态](docs/ai/TASKS.md)。本批包含此前未提交的设计、合规、服务端及移动端源码；远端同步以Git回执为准，家里核对提交后继续，旧`ebfc469`不包含这些成果。
+AI 或换电脑继续开发，先读[现行基线](docs/CURRENT_BASELINE.md)、[项目内 AI 工作跟踪](docs/ai/README.md)、[当前快照](docs/ai/CONTEXT.md)和[任务状态](docs/ai/TASKS.md)，核对实际工作树与未提交成果。10月22日[换机入口](docs/ai/HOME_HANDOFF_2026_10_22.md)保留历史证据；Git提交／推送和Figma同步分别记账。
 
 M&D = meow & doggie。项目为猫猫优先、doggie 友好的社区服务端与多端客户端。
 
-客户端实施入口：[架构与代码完成标准](docs/client/README.md)、[任务拆分](docs/client/TASKS.md)、[Codex / Gemini交接](docs/client/AGENT_HANDOFF.md)。Android / iOS 共用KMP逻辑，各自Compose UI与独立平板适配；Desktop延续Compose Desktop，Web规划独立TypeScript客户端。当前仅使用设计默认主题，旧多主题保留参考和扩展位置。[2026-10-22服务端／公共KMP批次](docs/server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)已补身份资格、用途授权、操作核对与恢复等源码；完整功能、真实配置、UI接入和运行验收尚未完成。
+客户端实施入口：[架构与代码完成标准](docs/client/README.md)、[任务拆分](docs/client/TASKS.md)、[Codex / Gemini交接](docs/client/AGENT_HANDOFF.md)。Android / iOS / Desktop共用KMP业务与clientUi Compose页面，各宿主负责窗口、输入和系统桥接；Web已有独立React／TypeScript DOM客户端。当前仅使用设计默认主题，旧多主题保留参考和扩展位置。[2026-10-22服务端／公共KMP批次](docs/server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)已补身份资格、用途授权、操作核对与恢复等源码；完整功能、真实配置、UI接入和运行验收尚未完成。
+
+2026-10-29：[Figma与文档详细完善](docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)补后台任务交互、协作追踪与消息事件差距；[文档中心当前增量](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3)与旧全文快照分开。消费者748条状态仍未全量运行验收。
 
 当前产品方案（2026-10-15）以交流与领养为主，补充可信找猫：允许个人、商家和已披露代理发布售猫/有偿转让信息，重点解决身份冒用、虚假地点、隐瞒关系、换猫和隐藏费用。家庭饲养不作为可信前提。首轮信息与预约、不代收款是规划假设，完整新方案尚未在客户端交付，首批源码与当前缺口见客户端实施交接。
 
