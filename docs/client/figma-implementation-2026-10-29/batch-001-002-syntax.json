@@ -1,0 +1,101 @@
+{
+  "reader": "existing read-only tree-sitter; Node18 isolated per file 384MB",
+  "type_checked": false,
+  "runtime_verified": false,
+  "files": [
+    {
+      "file": "web-client/src/App.tsx",
+      "exit_code": 0,
+      "syntax": {
+        "file": "web-client/src/App.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/components/ui.tsx",
+      "exit_code": 0,
+      "syntax": {
+        "file": "web-client/src/components/ui.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/CareCollaboration.tsx",
+      "exit_code": 0,
+      "syntax": {
+        "file": "web-client/src/features/CareCollaboration.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/InvitationPages.tsx",
+      "exit_code": 0,
+      "syntax": {
+        "file": "web-client/src/features/InvitationPages.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/operator/RoleTasks.tsx",
+      "exit_code": 0,
+      "syntax": {
+        "file": "web-client/src/operator/RoleTasks.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "exit_code": 0,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 744,
+            "text": ";"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 724,
+            "text": ";"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "window-policy-and-shell",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+      "exit_code": 0,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "exit_code": 0,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt",
+      "exit_code": 0,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt",
+        "errors": []
+      }
+    }
+  ]
+}

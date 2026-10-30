@@ -22,26 +22,7 @@ import kotlinx.serialization.json.JsonPrimitive
         FeaturePage.Age -> AgeRangeContent(store,s)
         FeaturePage.Adult -> AgeAssuranceContent(store,route)
         FeaturePage.Guardians -> if(route.kind=="protection") GuardianProtectionContent(store) else GuardiansContent(store,s,route)
-        FeaturePage.Settings -> {
-            val old = s.preference?.data ?: PreferenceBody()
-            listOf("direct" to ("私信提醒" to old.directMessages),"groups" to ("群聊提醒" to old.groups),"applications" to ("关系、邀请与业务进度" to old.applications),"interactions" to ("社区评论与点赞" to old.interactions)).forEach { (key,pair) -> CheckLine(pair.first,f.field(key,pair.second.toString()).toBoolean(),{ f.edit(key,it.toString()) },!s.busy && !s.loading) }
-            ChoiceField(f,s,"frequency","站内提醒频率",listOf("instant" to "即时","digest" to "汇总","off" to "关闭提醒"),old.frequency)
-            CheckLine("允许系统推送", f.field("allow_push", old.pushPermission.toString()).toBoolean(), { f.edit("allow_push", it.toString()) }, !s.busy && !s.loading)
-            Text("开启并保存后，已配置的设备通道会向推送供应商申请设备标识，向M&D登记；通知只显示通用提醒。关闭后停止设备推送，站内消息仍可查看。")
-            NotificationPermission { permitted ->
-                if (!permitted) Text("本机系统通知尚未允许；账号的推送偏好与各设备系统权限分别管理。")
-                FeaturePrimary("保存通知设置",!s.busy && !s.loading && s.error == null) {
-                    val input = old.copy(directMessages = f.field("direct",old.directMessages.toString()).toBoolean(),groups = f.field("groups",old.groups.toString()).toBoolean(),applications = f.field("applications",old.applications.toString()).toBoolean(),interactions = f.field("interactions",old.interactions.toString()).toBoolean(),frequency = f.field("frequency",old.frequency),pushPermission = f.field("allow_push", old.pushPermission.toString()).toBoolean())
-                    val version = f.version(s.preference?.version ?: 0)
-                    f.confirm("保存通知偏好","频率：${when(input.frequency) { "off" -> "关闭"; "digest" -> "汇总"; else -> "即时" }}\n关闭系统权限仍可查看站内消息。") { f.api.savePreferences(version,input); f.discardAndReload() }
-                }
-            }
-            val push by f.api.devicePush.status.collectAsState()
-            Text("${push.message}。站内未读以服务端为准。")
-            FeatureButton("重新核对设备通道", !s.busy) { f.api.devicePush.refresh() }
-            FeatureButton("系统通知权限说明") { f.open(FeatureRoute(FeaturePage.NotificationHelp)) }
-            FeatureButton("附近提醒") { f.open(FeatureRoute(FeaturePage.Nearby)) }
-        }
+        FeaturePage.Settings -> NotificationSettingsContent(store,s)
         FeaturePage.Map -> MapFeature(store,s,route)
         FeaturePage.Nearby -> {
             FeatureButton("不提供定位也可以") { f.open(FeatureRoute(FeaturePage.LocationHelp)) }
@@ -136,7 +117,7 @@ import kotlinx.serialization.json.JsonPrimitive
     var phone by rememberSessionUiState("security.phone") { "" }; var email by rememberSessionUiState("security.email") { "" }
     var code by rememberSessionUiState("security.code") { "" }; var newPassword by rememberSessionUiState("security.newPassword") { "" }
     FeatureSection("验证当前手机号") {
-        OutlinedTextField(phone,{ phone = it },label = { Text("完整当前手机号") })
+        MndOutlinedField(phone,{ phone = it },label = { Text("完整当前手机号") })
         OtpVerificationFields(
             code = code,
             onCodeChange = { code = it },
@@ -150,9 +131,9 @@ import kotlinx.serialization.json.JsonPrimitive
     FeatureSection("安全变更") {
         ChoiceField(f,s,"change","变更类型",listOf("phone" to "换绑手机号","email" to "绑定／更换邮箱","password" to "设置／更改密码"),"phone")
         val change = f.field("change","phone")
-        if (change == "phone") OutlinedTextField(phone,{ phone = it },label = { Text("新手机号") })
-        if (change == "email") OutlinedTextField(email,{ email = it },label = { Text("新邮箱") })
-        if (change == "password") OutlinedTextField(newPassword,{ newPassword = it },label = { Text("新密码（至少10字节）") },visualTransformation = PasswordVisualTransformation())
+        if (change == "phone") MndOutlinedField(phone,{ phone = it },label = { Text("新手机号") })
+        if (change == "email") MndOutlinedField(email,{ email = it },label = { Text("新邮箱") })
+        if (change == "password") MndOutlinedField(newPassword,{ newPassword = it },label = { Text("新密码（至少10字节）") },visualTransformation = PasswordVisualTransformation())
         if (change != "password") {
             OtpVerificationFields(
                 code = code,
@@ -200,9 +181,9 @@ import kotlinx.serialization.json.JsonPrimitive
     if (type in listOf("supplement","counterstatement")) { FormField(f,s,"related","原事项编号",route.id.takeIf { it > 0 }?.toString().orEmpty(),numeric = true); FormField(f,s,"version","原事项当前版本",numeric = true); Text("补充须使用原受限入口；声明须指向原通知链，不能新建无关联事项代替。") }
     if (type in listOf("rights_notice","counterstatement")) {
         FormField(f,s,"legalName","真实姓名或主体名称"); FormField(f,s,"rightType","主张的具体权利"); FormField(f,s,"statement","当次声明",lines = 4)
-        OutlinedTextField(contact,{ contact = it; verifiedContact = null },label = { Text("用于此次通知的联系邮箱") })
+        MndOutlinedField(contact,{ contact = it; verifiedContact = null },label = { Text("用于此次通知的联系邮箱") })
         FeatureButton("发送联系邮箱验证码",!s.busy && contact.isNotBlank()) { val address = contact.trim(); verifiedContact = null; code = ""; f.runCommand { val receipt = f.api.requestSafetyContactOTP(f.safetyToken(),address); f.notify("验证码已发送，有效至 ${receipt.expiresAt}") } }
-        OutlinedTextField(code,{ code = it },label = { Text("邮箱验证码") })
+        MndOutlinedField(code,{ code = it },label = { Text("邮箱验证码") })
         FeatureButton("验证此次联系方式",!s.busy && code.isNotBlank()) { val proof = code; val address = contact.trim(); code = ""; f.runCommand { f.api.verifySafetyContact(f.safetyToken(),address,proof); verifiedContact = if(contact.trim() == address) address else null; f.notify("本次联系方式已验证，仍需核对并主动提交") } }
     }
     FormField(f,s,"evidence","材料来源与证明事项",lines = 4)

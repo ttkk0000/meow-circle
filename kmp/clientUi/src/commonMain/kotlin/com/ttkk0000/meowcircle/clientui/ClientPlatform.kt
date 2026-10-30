@@ -23,7 +23,7 @@ interface ClientUiPlatform {
         fallback: String, dateOnly: Boolean, optional: Boolean)
     @Composable fun Map(points: List<LostMapPoint>, selectedId: String, center: LostMapPoint, pickable: Boolean,
         onPick: (LostMapPoint) -> Unit, onSelect: (String) -> Unit)
-    @Composable fun NotificationPermission(content: @Composable (Boolean) -> Unit)
+    @Composable fun NotificationPermission(showControls: Boolean = true, content: @Composable (Boolean) -> Unit)
     fun decodeImage(bytes: ByteArray): ImageBitmap?
     fun openLink(url: String): Boolean
     fun openNotificationSettings(): Boolean = false
@@ -41,7 +41,7 @@ fun isPublicHttps(value: String): Boolean = Regex("^https://[^/@\\s]+(?:/[^\\s]*
     LocalClientPlatform.current.DateField(f, s, key, label, fallback, dateOnly, optional)
 @Composable fun NativeLostMap(points: List<LostMapPoint>, selectedId: String = "", center: LostMapPoint = mapCityCenter(""), pickable: Boolean = false,
     onPick: (LostMapPoint) -> Unit = {}, onSelect: (String) -> Unit = {}) = LocalClientPlatform.current.Map(points, selectedId, center, pickable, onPick, onSelect)
-@Composable fun NotificationPermission(content: @Composable (Boolean) -> Unit) = LocalClientPlatform.current.NotificationPermission(content)
+@Composable fun NotificationPermission(showControls: Boolean = true, content: @Composable (Boolean) -> Unit) = LocalClientPlatform.current.NotificationPermission(showControls, content)
 
 expect fun dateTime(value: String): String?
 expect fun displayTime(value: String): String

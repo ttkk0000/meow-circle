@@ -1,6 +1,7 @@
 import { usePages } from "../core/pages";
 import { useQuery, reload } from "../core/query";
 import { careReadOnlyReason, type CareContext } from "../core/care";
+import { navigate } from "../core/router";
 import {
   Button,
   Card,
@@ -27,7 +28,7 @@ export function CareCollaboration({ id }: { id: bigint }) {
   };
   const unavailable = !!context.error || context.denied || page.denied;
   if(unavailable) return (
-    <TaskPage title="照护授权不可用" actions={<RowLink title="返回消息" to="/messages" />}>
+    <TaskPage title="照护授权不可用" backTo="/messages" actions={<RowLink title="返回消息" to="/messages" />}>
       <Notice title="不再显示受限资料">
         本次授权已结束或当前无法确认访问权限。此处不再显示私密近况、照片或旧编辑内容；已有记录由原照护双方管理。
       </Notice>
@@ -40,9 +41,15 @@ export function CareCollaboration({ id }: { id: bigint }) {
     <TaskPage
       title={readable && !context.data!.can_post ? "照护近况仅可查阅" : "授权照护近况"}
       actions={
-        <Button onClick={refresh} disabled={context.loading || page.loading}>
-          重新读取
-        </Button>
+        readable && context.data!.can_post ? (
+          <Button kind="primary" onClick={() => navigate(workflowURL("care", "adoptions", id))} disabled={page.loading}>
+            记录私密照护近况
+          </Button>
+        ) : (
+          <Button onClick={refresh} disabled={context.loading || page.loading}>
+            重新读取当前权限
+          </Button>
+        )
       }
     >
       <Notice title="本次照护的有限协作">
@@ -58,16 +65,11 @@ export function CareCollaboration({ id }: { id: bigint }) {
         {context.data ? (
           <>
             <p>当前阶段：{stateLabel(context.data.state)}</p>
-            {context.data.can_post ? (
-              <RowLink
-                title="记录私密照护近况"
-                to={workflowURL("care", "adoptions", id)}
-              />
-            ) : (
+            {!context.data.can_post ? (
               <Notice title="当前仅可查阅">
                 {careReadOnlyReason(context.data)}
               </Notice>
-            )}
+            ) : null}
             <RowLink title="查看协作与退出" to={`/invitations?ref=${id}&scope=caretaker`} />
             <QueryState
               loading={page.loading}

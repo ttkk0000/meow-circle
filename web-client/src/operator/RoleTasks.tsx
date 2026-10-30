@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Button, Check, Field } from "../components/ui";
 import { DataTable, OpsNotice, Panel } from "../operations/ui";
 import { id as validID, integer, key, money } from "../core/wire";
@@ -14,10 +14,14 @@ type TaskState = {
   stage: "edit" | "review" | "sending" | "unknown" | "accepted" | "rejected";
   prepared?: { path: string; body: Row };
   error?: string;
+  fieldErrors?: Record<string, string>;
   result?: Row;
   lookup?: Snapshot;
   lookupKey?: string;
 };
+class TaskFieldError extends Error {
+  constructor(readonly field: string, message: string) { super(message); }
+}
 const initial = (): TaskState => ({ values: {}, stage: "edit" });
 const taskRole = (flow: RoleTask) =>
   flow === "ageEvidence"
@@ -101,6 +105,7 @@ export function useRoleTasks(session: OperatorSession) {
       values: { ...old.values, [name]: value },
       stage: "edit",
       error: undefined,
+      fieldErrors: undefined,
       prepared: undefined,
       result: undefined,
       ...(natural ? { lookup: undefined, lookupKey: undefined } : {}),
@@ -159,11 +164,12 @@ export function useRoleTasks(session: OperatorSession) {
     const text = (name: string, max: number) => {
       const value = (v[name] ?? "").trim();
       if (!value || Array.from(value).length > max)
-        throw Error("请核对必要说明和字数限制。");
+        throw new TaskFieldError(name, "请核对必要说明和字数限制。");
       return value;
     };
     const id = (name: string) => {
-      return validID(v[name]);
+      try { return validID(v[name]); }
+      catch (error) { throw new TaskFieldError(name, failText(error)); }
     };
     const instant = (name: string, future: boolean, maxDays = Infinity) => {
       const ms = Date.parse(v[name] ?? "");
@@ -173,7 +179,7 @@ export function useRoleTasks(session: OperatorSession) {
           ? ms <= Date.now() || ms > Date.now() + maxDays * 86400000
           : ms > Date.now())
       )
-        throw Error("请核对实际时间或有效期限。");
+        throw new TaskFieldError(name, "请核对实际时间或有效期限。");
       return new Date(ms).toISOString();
     };
     try {
@@ -181,7 +187,7 @@ export function useRoleTasks(session: OperatorSession) {
       if (flow === "ageEvidence") {
         const band = v.age_band ?? "";
         if (!["under14", "14_17", "adult"].includes(band))
-          throw Error("请选择有效的年龄区间。");
+          throw new TaskFieldError("age_band", "请选择已核实的年龄区间。");
         path = "age-evidence";
         body = {
           actor_id: id("actor_id"),
@@ -194,11 +200,10 @@ export function useRoleTasks(session: OperatorSession) {
           throw Error("请先按当前对象与范围读取授权记录，再核对所读版本。");
         const scope = v.scope || "disposition",
           species = v.species || "cat";
-        if (
-          !["care", "disposition", "city_rule"].includes(scope) ||
-          !["cat", "dog"].includes(species)
-        )
-          throw Error("请选择有效的授权类型和物种。");
+        if (!["care", "disposition", "city_rule"].includes(scope))
+          throw new TaskFieldError("scope", "请选择有效的授权类型。");
+        if (!["cat", "dog"].includes(species))
+          throw new TaskFieldError("species", "请选择有效的物种。");
         const city = scope === "city_rule" ? text("city", 120) : "";
         const actions =
           scope === "city_rule"
@@ -211,7 +216,7 @@ export function useRoleTasks(session: OperatorSession) {
               (a) => !["adoption", "commercial", "offline"].includes(a),
             ))
         )
-          throw Error("城市规则须明确允许的领养、有偿或线下动作。");
+          throw new TaskFieldError("actions", "城市规则须明确允许的领养、有偿或线下动作。");
         path = "authority";
         body = {
           version: integer(old.lookup.record?.version),
@@ -228,7 +233,7 @@ export function useRoleTasks(session: OperatorSession) {
       } else {
         const amount = id("amount_cents");
         if (amount > 100000000n)
-          throw Error("请核对实际金额，单笔不得超过100000000分。");
+          throw new TaskFieldError("amount_cents", "请核对实际金额，单笔不得超过100000000分。");
         path = "revenue";
         body = {
           client_request_id: key(),
@@ -250,9 +255,11 @@ export function useRoleTasks(session: OperatorSession) {
         stage: "review",
         prepared: { path, body },
         error: undefined,
+        fieldErrors: undefined,
       });
     } catch (error) {
-      setState({ ...old, flow, error: failText(error) });
+      setState({ ...old, flow, stage: "edit", prepared: undefined, error: failText(error),
+        fieldErrors: error instanceof TaskFieldError ? { [error.field]: error.message } : undefined });
     }
   }
   async function submit() {
@@ -393,6 +400,9 @@ export function RoleTaskPage({
     v = s.values;
   const [unknownAck,setUnknownAck] = useState(false);
   const [showLedger,setShowLedger] = useState(false);
+  const fieldPrefix = useId();
+  const ageField = useRef<HTMLSelectElement>(null);
+  useEffect(() => { if (s.fieldErrors?.age_band) ageField.current?.focus(); }, [s.fieldErrors]);
   useEffect(() => { setUnknownAck(false); setShowLedger(false); },[flow,s.stage,s.prepared]);
   const fields =
     flow === "ageEvidence"
@@ -425,6 +435,10 @@ export function RoleTaskPage({
     <label className="field" key={name}>
       <span>{label}</span>
       <select
+        id={`${fieldPrefix}-${name}`}
+        ref={name === "age_band" ? ageField : undefined}
+        aria-invalid={s.fieldErrors?.[name] ? true : undefined}
+        aria-describedby={s.fieldErrors?.[name] ? `${fieldPrefix}-${name}-error` : undefined}
         disabled={frozen || t.reading}
         value={v[name] ?? fallback}
         onChange={(e) => t.edit(flow, name, e.target.value)}
@@ -435,6 +449,7 @@ export function RoleTaskPage({
           </option>
         ))}
       </select>
+      {s.fieldErrors?.[name] ? <small className="field-error" id={`${fieldPrefix}-${name}-error`}>{s.fieldErrors[name]}</small> : null}
     </label>
   );
   return (
@@ -502,6 +517,7 @@ export function RoleTaskPage({
               label={labels[name]}
               value={v[name] ?? ""}
               disabled={frozen || t.reading}
+              error={s.fieldErrors?.[name]}
               onChange={(value) => t.edit(flow, name, value)}
               hint={
                 name.endsWith("until") || name === "occurred_at"

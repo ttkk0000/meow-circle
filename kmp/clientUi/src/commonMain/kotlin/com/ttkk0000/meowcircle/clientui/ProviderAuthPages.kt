@@ -70,7 +70,7 @@ import com.ttkk0000.meowcircle.client.*
                 TaskNotice("验证你已有的 M&D 账号","关联后继续使用原有宠物、日记和聊天，不按昵称或头像自动合并。")
                 SegmentedTextBar(listOf("password" to "密码","email" to "邮箱验证码","phone" to "已绑定手机"),channel,{ channel = it; password = ""; code = "" })
                 FormTextField(identifier,{ identifier = it },if(channel == "phone") "已绑定手机号" else if(channel == "email") "邮箱" else "账号名／邮箱／手机号")
-                if(channel == "password") OutlinedTextField(password,{ password = it },Modifier.fillMaxWidth(),label = { Text("原账号密码") },visualTransformation = PasswordVisualTransformation(),singleLine = true)
+                if(channel == "password") MndOutlinedField(password,{ password = it },Modifier.fillMaxWidth(),label = { Text("原账号密码") },visualTransformation = PasswordVisualTransformation(),singleLine = true)
                 else OtpVerificationFields(code,{ code = it },work.otpWait,sendLabel = "发送本次验证码",enabled = !work.busy,canSend = identifier.isNotBlank()) {
                     store.features.sendOTP(email = if(channel == "email") identifier else "",phone = if(channel == "phone") identifier else "",purpose = if(channel == "email") "email_login" else "login")
                 }
@@ -81,7 +81,7 @@ import com.ttkk0000.meowcircle.client.*
             }
             ProviderAuthStage.LinkReview -> {
                 Text("将$name关联到 ${state.account?.let { it.nickname.ifBlank { it.username } }.orEmpty()}。请验证本次指定用途，再主动确认。")
-                OutlinedTextField(password,{ password = it },Modifier.fillMaxWidth(),label = { Text("当前账号密码（可用短信验证码替代）") },visualTransformation = PasswordVisualTransformation(),singleLine = true)
+                MndOutlinedField(password,{ password = it },Modifier.fillMaxWidth(),label = { Text("当前账号密码（可用短信验证码替代）") },visualTransformation = PasswordVisualTransformation(),singleLine = true)
                 FormTextField(phone,{ phone = it },"当前完整手机号（仅用于本次验证）")
                 OtpVerificationFields(code,{ code = it },work.otpWait,sendLabel = "发送本次验证码",enabled = !work.busy,canSend = phone.isNotBlank()) { store.features.sendOTP(phone = phone,purpose = "reauth") }
                 FeaturePrimary("验证本次关联用途",password.isNotBlank() || code.isNotBlank()) { flow.verifyLink(password,code); password = ""; code = "" }
@@ -124,7 +124,7 @@ import com.ttkk0000.meowcircle.client.*
 }
 
 @Composable private fun FormTextField(value: String, onChange: (String) -> Unit, label: String) =
-    OutlinedTextField(value,onChange,Modifier.fillMaxWidth(),label = { Text(label) },singleLine = true)
+    MndOutlinedField(value,onChange,Modifier.fillMaxWidth(),label = { Text(label) },singleLine = true)
 
 /** 登录与安全设置共用官方授权入口和本次隐私确认。 */
 @Composable fun ProviderEntry(store: MobileStore, available: List<String>, busy: Boolean, scope: String? = null) {

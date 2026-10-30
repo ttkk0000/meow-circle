@@ -73,6 +73,14 @@ export function invalidateQueries(prefix = "") {
     notify(record);
   }
 }
+/** Replace a currently owned query after an authoritative write receipt. */
+export function replaceQueryData<T>(path: string, data: T) {
+  const record = entry(path);
+  record.abort?.abort();
+  record.abort = undefined;
+  record.state = { data, loading: false, readAt: Date.now() };
+  notify(record);
+}
 // 清除已关闭的列表授权范围；保留明确拒绝，避免自动重复请求已失权的页面。
 export function discardQueryData(prefix: string) {
   for (const [path, record] of entries) {

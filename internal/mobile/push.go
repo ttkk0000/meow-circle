@@ -189,6 +189,18 @@ func (s *Service) PushWork(ctx context.Context, id int64) (out []PushWork, err e
 		if !allowed {
 			return Denied("push_permission_withdrawn")
 		}
+		digest := false
+		if n.DeliverAfter != nil && n.Category != "nearby" {
+			pref, e := tx.ByKey(Preferences, fmt.Sprint(r.OwnerID))
+			if e != nil {
+				return e
+			}
+			p, e := Decode[Preference](pref)
+			if e != nil {
+				return e
+			}
+			digest = p.Frequency == "digest"
+		}
 		rows, e := allRecords(tx, PushDevices, Filter{OwnerID: r.OwnerID, State: "enabled"})
 		if e != nil {
 			return e
@@ -198,7 +210,15 @@ func (s *Service) PushWork(ctx context.Context, id int64) (out []PushWork, err e
 			if e != nil {
 				return e
 			}
-			out = append(out, PushWork{id, r.Version, PushPayload{id, v.Platform, v.Token, "M&D有新的动态，请打开应用查看", fmt.Sprintf("push:%d:%d", id, device.ID)}})
+			payload := PushPayload{id, v.Platform, v.Token, "M&D有新的动态，请打开应用查看", fmt.Sprintf("push:%d:%d", id, device.ID)}
+			if digest {
+				// Share provider acceptance for this recipient/cutoff/device. Each
+				// underlying notification keeps its own permission, receipt and unread state.
+				payload.NotificationID = 0 // Clients safely open the inbox for a digest.
+				payload.Text = "M&D有新的消息与进度，请打开消息中心查看"
+				payload.IdempotencyKey = fmt.Sprintf("push:digest:%d:%d:%d", r.OwnerID, n.DeliverAfter.Unix(), device.ID)
+			}
+			out = append(out, PushWork{id, r.Version, payload})
 		}
 		return nil
 	})
@@ -267,7 +287,7 @@ func (s *Service) DispatchPush(ctx context.Context, operator string, id int64) e
 			category := map[string]bool{"direct_messages": p.DirectMessages, "groups": p.Groups, "applications": p.Applications, "interactions": p.Interactions, "nearby": true}[notificationCategory(r, n)]
 			allowed = p.PushPermission && p.Frequency != "off" && category
 			if allowed && p.Frequency == "digest" && n.DeliverAfter == nil {
-				next := s.Now().Truncate(24 * time.Hour).Add(24 * time.Hour)
+				next := nextNotificationDigest(s.Now())
 				n.DeliverAfter = &next
 				if e = SetBody(&r, n); e != nil {
 					return e

@@ -25,7 +25,8 @@ import com.ttkk0000.meowcircle.client.PageState
 
 /** 同一个列表只显示当前请求对应的动作；翻页失败沿原游标重试。 */
 @Composable fun <T> PageFooter(page: PageState<T>, retry: () -> Unit, more: () -> Unit,
-    emptyText: String = "暂时没有可显示的内容", refreshVisible: Boolean = false, enabled: Boolean = true) {
+    emptyText: String = "暂时没有可显示的内容", refreshVisible: Boolean = false, enabled: Boolean = true,
+    emptyActions: @Composable ColumnScope.() -> Unit = {}, failureActions: @Composable ColumnScope.() -> Unit = {}) {
     if (refreshVisible && page.refreshing) return
     val error = page.error
     Column(Modifier.fillMaxWidth().padding(vertical = MobileUi.contentGap), horizontalAlignment = Alignment.CenterHorizontally,
@@ -46,9 +47,10 @@ import com.ttkk0000.meowcircle.client.PageState
                     verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
                     Text(title, color = MaterialTheme.colorScheme.error)
                     ReadFailureContent(page.failure, error, if (page.appending) more else retry, page.readAt, enabled)
+                    if (!page.loaded) failureActions()
                 }
             }
-            page.empty -> EmptyResults(title = emptyText, detail = "当前条件下没有可显示的记录。可以调整筛选或稍后重新读取；不会混入其它范围的内容。")
+            page.empty -> EmptyResults(title = emptyText, detail = "当前条件下没有可显示的记录。可以调整筛选或稍后重新读取；不会混入其它范围的内容。", actions = emptyActions)
             page.exhausted -> Text("没有更多了", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             page.canLoadMore -> MndSecondaryButton("加载下一页", enabled, modifier = Modifier, onClick = more)
             !page.loaded -> MndSecondaryButton("加载内容", enabled, modifier = Modifier, onClick = retry)

@@ -1,0 +1,282 @@
+{
+  "task": "AI-20261029-FIGMA-CODE-AUDIT",
+  "date": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "head": "a6b365364dda4d9cf83b31f4dc252b26a048a7e5",
+  "scope": "full source-index integrity plus focused design/source audit; not a full rendered screen-by-screen acceptance",
+  "conclusion": "not_all_figma_implemented_and_accepted",
+  "figma_file_key": "3OFOC3vu18Kx9sRPjummOC",
+  "live_figma_page_count": 12,
+  "fresh_high_fidelity_nodes": [
+    "915:386983",
+    "930:3366"
+  ],
+  "trace_file": "docs/client/figma-implementation-trace-2026-10-24.json",
+  "trace_sha256_lf": "284a9616e80a2b271f2ce50fd31c7ca33d9424699955d9978e6d236d45f07a9b",
+  "consumer_states": 748,
+  "design_root_references": 3772,
+  "status_counts": {
+    "source_family_mapped_not_visually_verified": 670,
+    "dedicated_state_source_not_runtime_verified": 65,
+    "external_configuration_and_runtime_required": 10,
+    "dedicated_operator_source_not_runtime_verified": 3
+  },
+  "runtime_verified_count": 0,
+  "missing_source_paths": [],
+  "source_paths_by_platform": {
+    "android_source": 24,
+    "ios_source": 24,
+    "desktop_source": 24,
+    "web_source": 28
+  },
+  "source_not_applicable": {
+    "android_source": [
+      "opsCase",
+      "opsEmergency",
+      "opsReadiness"
+    ],
+    "ios_source": [
+      "opsCase",
+      "opsEmergency",
+      "opsReadiness"
+    ],
+    "desktop_source": [
+      "opsCase",
+      "opsEmergency",
+      "opsReadiness"
+    ],
+    "web_source": []
+  },
+  "non_consumer_designs": {
+    "role_homes_and_tasks": 18,
+    "business_admin": 13,
+    "operations": 14,
+    "role_task_states": 39,
+    "review_index_frames_excluded": 1
+  },
+  "current_ui_source_files": {
+    "common_kotlin": 43,
+    "web_typescript_tsx": 90
+  },
+  "external_configuration_state_labels": [
+    "adultPassed",
+    "adultPending",
+    "adultProvider",
+    "authCallbackExpired",
+    "authProvider_apple",
+    "authProvider_qq",
+    "authProvider_wechat",
+    "guardianProtection",
+    "nearbyPermissionDenied",
+    "notificationPermission"
+  ],
+  "screenshots": [
+    {
+      "file": "docs/client/figma-code-audit-2026-10-29/publisher-workspace.png",
+      "node": "915:386983",
+      "width": 1024,
+      "height": 712,
+      "sha256": "a6bdf0938beaf25ec12b990733322700104ca7e5394e43e96217b5503b7b205b",
+      "inspected": true,
+      "source": "fresh Figma get_design_context including screenshot"
+    },
+    {
+      "file": "docs/client/figma-code-audit-2026-10-29/age-field-error.png",
+      "node": "930:3366",
+      "width": 1024,
+      "height": 712,
+      "sha256": "fb051cbd9eb7f34d192456d0e6e25c9cdfddc5fe9a52d7ff4b2ba1f9e8213a7b",
+      "inspected": true,
+      "source": "fresh Figma get_design_context including screenshot"
+    }
+  ],
+  "findings": [
+    {
+      "id": "FC01",
+      "priority": "P2",
+      "title": "协作退出结果与不可用页的顶部返回未按新稿落到消息",
+      "design_nodes": [
+        "910:357867",
+        "915:386431",
+        "910:357967",
+        "915:386891"
+      ],
+      "sources": [
+        {
+          "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+          "line": 137
+        },
+        {
+          "path": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+          "line": 209
+        },
+        {
+          "path": "web-client/src/App.tsx",
+          "line": 280
+        },
+        {
+          "path": "web-client/src/core/router.ts",
+          "line": 54
+        }
+      ],
+      "observed": "原生顶部调用f.back，退出结果仅清invitationOutcome；Web顶部固定调用history back，无本状态的消息目标。底部返回消息的部分代码存在。",
+      "expected": "结果／不可用页顶部返回与底部保持同布局消息目标；其他页面保留原返回。",
+      "limits": "源码导航差异，不据此声称越权或私密材料泄露。"
+    },
+    {
+      "id": "FC02",
+      "priority": "P2",
+      "title": "原生介绍协作保存仍是滚动正文内的次按钮",
+      "design_nodes": [
+        "910:357987",
+        "916:380600",
+        "916:1127939",
+        "916:1128735"
+      ],
+      "sources": [
+        {
+          "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt",
+          "line": 156
+        },
+        {
+          "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+          "line": 229
+        },
+        {
+          "path": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+          "line": 29
+        }
+      ],
+      "observed": "FeatureButton直接渲染MndSecondaryButton，不向TaskColumn注册持久操作；只有TaskPrimary/TaskSecondary使用该注册机制。",
+      "expected": "授权介绍页底部固定主按钮，正文保留协作管理及照片入口；保留真实版本／照片／提交核对。",
+      "limits": "保存逻辑已有；差距是布局、主次层级与固定操作区，非整个功能不存在。"
+    },
+    {
+      "id": "FC03",
+      "priority": "P2",
+      "title": "Web可新增照护页的固定底栏仍放重新读取",
+      "design_nodes": [
+        "915:386707"
+      ],
+      "sources": [
+        {
+          "path": "web-client/src/features/CareCollaboration.tsx",
+          "line": 42
+        },
+        {
+          "path": "web-client/src/features/CareCollaboration.tsx",
+          "line": 61
+        }
+      ],
+      "observed": "TaskPage.actions无条件放refresh，can_post=true的记录入口在滚动正文RowLink中。",
+      "expected": "可新增时固定主操作为记录私密照护近况；只读时使用重新读取当前权限。",
+      "limits": "新增入口及权限判断已有；尚未按设计区分固定操作区。"
+    },
+    {
+      "id": "FC04",
+      "priority": "P2",
+      "title": "后台年龄字段错误只显示全局消息，没有设计字段错误态",
+      "design_nodes": [
+        "930:3366"
+      ],
+      "sources": [
+        {
+          "path": "web-client/src/operator/RoleTasks.tsx",
+          "line": 183
+        },
+        {
+          "path": "web-client/src/operator/RoleTasks.tsx",
+          "line": 425
+        },
+        {
+          "path": "web-client/src/operator/RoleTasks.tsx",
+          "line": 531
+        }
+      ],
+      "observed": "未选年龄会抛出校验错误并展示OpsNotice；年龄select没有按错误设置class、aria-invalid或错误文本关联。",
+      "expected": "可信年龄区间显示字段错误边框和对应错误关联，仍不默认成年；保留错误摘要和服务器校验。",
+      "limits": "前置校验已有，不表示空年龄能提交或已绕过资格。"
+    }
+  ],
+  "unchanged_completed_sources_verified": [
+    "消息好友／case-watch分类与偏好兼容",
+    "好友／群主转让待处理及指定关系入口",
+    "Web显式标为已读",
+    "后台未知登记内台账核对与独立人工确认",
+    "授权409后重新读取版本"
+  ],
+  "verification_boundaries": {
+    "source_and_design_review": true,
+    "build_or_typecheck_run": false,
+    "tests_or_lint_run": false,
+    "browser_app_or_device_launched": false,
+    "remote_figma_mutated": false,
+    "business_code_mutated": false,
+    "committed": false,
+    "pushed": false,
+    "all_3772_design_references_rendered_again": false
+  },
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt": "9f10ba31479cf85b42b5bdc299b1c84e0cbdcce82d9f95e6538ca916036b7c2e",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AdoptionPages.kt": "b4b095f3f6bb38871087f0f4bcbec40c3272c287a57702883e7c5178749fd0e7",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AgePages.kt": "7789005626e0c3654e0f888d4bfc9a155cfe6799942f7e452039c3d5515ac953",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AppointmentPages.kt": "e7eabfcff5095984cdbf9f8a603c7425cec9ceef7bb67641eaefa6b7c5d6ab99",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "deb55fa96431e5964c5c19da2416f25c055308f5d5cbe4846306ea3795d091c1",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CarePages.kt": "3b7b821767ed1adff2a01486aaba4afe77b68ec529f72bf3e81ef55879ba050c",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ComposeControls.kt": "bfc663f0042287a545fe18af4de14b8d1f4d19c62690185226b6e2b1ae0bba77",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt": "972f7ca449fea4115fe7cd3bd7bce41db464a8058ffb592564cce4d6abcadeb4",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ContentSubscriptions.kt": "2116e61cbd859829e185ef1d0eacad3e400bd45493f4a7fa3c1ac2a0de8bab69",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt": "9418241899919270b516112786b4ddb70d07da6fb2eb8a6856a2b83555732cd8",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/GuardianPages.kt": "e8afc890b72da9c1a060f6f425f8bbd778c69a37e41d5d3fdbf3f8bcdaa3c850",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InboxPages.kt": "0e2aca60428e950d079c9f2b592df5e172c24fa09cdc119f90e95ba5e46a2358",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InvitationPages.kt": "d49993887d8dae619448720ba4e7739b9a5ccb2b221db40fdc55c1d6b45dcaf3",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadPages.kt": "ad4e653e5bfe8ca33269efc6d0e5423f20733ad998ded835e228c47c2e3bc8d7",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LeadSubmissionPages.kt": "cd2c6ab8f5c0328daf30e66a6a50a45356f58b87bb1c37262c82321e4f888754",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/MapPage.kt": "baed93ea4c54c42a38b788f61a9265259b5ade795af8a337e1645c3219f827ea",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/MediaGallery.kt": "5e7552736cb2770d4c8a85217fdc8e9ede721094ad120ff42bb8119789d3b0a2",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/OfferPages.kt": "a36fb5687d6ca458a6f4210127dc491e86093cd142682ca69c8866cc0457c902",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt": "82b018767e69ec0662513923d7027c1b7c66928ff79a86dd4ead487797dce53a",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "34652ade88a07433170eecad906746af93d81edcc7fc60327ed9b204c9de9a0a",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationPages.kt": "1493a8d889176b0ae78b171986b5af1864cda7a90e67b7dd5cee2c2dde688ea1",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublicationsPage.kt": "753061ba349d3c4af38cbdc0f4742d653ec7c800a28518ace46d89f8398cc61c",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt": "17990a3fd32b00bab3dd98bfe7f65c1ba0ae02f3e8e47868608bfc0a3d802111",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt": "58206bd9ad75402947947e1d74ef4a551f0aec33e2906dd42714f0afc4e6cc4f",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SocialPages.kt": "68ae0f542423c71e019492cc3501760f0f0703a3b306ab0870ec81a32997cf0d",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "58e635bd8183501128ee9600536607f371c1a5cecb436b4adf0321dcd34072c6",
+    "web-client/src/App.tsx": "43fcfe0b725f15fe8546da96dedbc812743c88ecee7a8a870c396c7dc979fcdd",
+    "web-client/src/components/Attachments.tsx": "fedf2d9b72a4d3bd346392b7e0b7f19cb6705c402ee89df7088006cec53474af",
+    "web-client/src/components/ContentFields.tsx": "44c287426e1daf8bb219bcb84fb4b5e124a67127001c60e2a4ce5427b90d37c0",
+    "web-client/src/components/MediaGallery.tsx": "1221c2773acee54475ac882649e78de33122397d9368f3825d4c967ad3347083",
+    "web-client/src/components/ui.tsx": "9a3ac02b3b0519ed2ce1319569bc6f21bde15396315b9a61312d5dca18ac1316",
+    "web-client/src/core/router.ts": "6ead2603ea9a395d777876b8af849e8935be7949b35ef710413e7f328a322279",
+    "web-client/src/features/Account.tsx": "d350bca77fdb56e571f146dd2aec1dd9daad3d6b79f1d0a88397670444d3a6bc",
+    "web-client/src/features/AdoptionPages.tsx": "d78e12406aee8846e357436751f8e4aec054cb929b7a2ef434ed01399e37eb9c",
+    "web-client/src/features/AgePages.tsx": "16f42f0a6f2d8880f74afbd415cb291f887b7e6b252b76e1ed92b584462be185",
+    "web-client/src/features/AppointmentPages.tsx": "93960f150d0c2f174ac454a022ce9df705bc2db67fa3d01796f3b42715c3566d",
+    "web-client/src/features/AuthDialog.tsx": "131b3a7023c891c1ecdcb90ffa5c427206b3b17037679dcb49ae95c2e72d3d08",
+    "web-client/src/features/CareCollaboration.tsx": "b9c69da5fc609885daf047b3bc1dfe9fda8d80f643b68fb84e8b9e0eae076134",
+    "web-client/src/features/ContentPage.tsx": "d3d986950e6643f7ddcc1f3b053d4461e169d0b04b251e196aa6876270bd257d",
+    "web-client/src/features/GuardianPages.tsx": "5af19c71cea7a8f54e76159f511264949b4be90286d6f97360578a8eba8cd269",
+    "web-client/src/features/InvitationPages.tsx": "aa8c25c48a4cf5dcf5abe0f89ac0f833a8309172ecdf22d7ec934ffb1380994a",
+    "web-client/src/features/LeadPages.tsx": "a59c2d5973da88d10c92d7dd2fd748f05d33617f864127f19f1ae5738bbc9f3c",
+    "web-client/src/features/LeadSubmissionPages.tsx": "19b774217b7741eb11ff3dbf52836991da423a0059fcca9e5d0cfb89b0be19c6",
+    "web-client/src/features/MapPage.tsx": "7227f8939aa454469f124d165004d8709904120b9435eacbf6061733456b5c76",
+    "web-client/src/features/PermissionPages.tsx": "58f6003db6a660e19c56ad972bce39a238a0dc4fc5bd79f7f8c628ebaf3cdb3d",
+    "web-client/src/features/ProviderSignIn.tsx": "67c1b20da4ebf59cfa3e3113bf551317a5078b2bbe8c924af88621da169cb766",
+    "web-client/src/features/PublicationPreview.tsx": "a134e50b3a9ed6efba4a19d21e35c6e86d5e05043c3f80627749098baf263352",
+    "web-client/src/features/Publications.tsx": "3a6050c97bc0ba1ba1a651542289087e2666d14eb98ff5c2f2204dbb23917aa4",
+    "web-client/src/features/ReadingPages.tsx": "e5cb56190af31cd975e1bf94d5c1fd465bbcde8e895d3494d1957c38fba52d0f",
+    "web-client/src/features/Records.tsx": "a07b28db51262b6f014c13a8e811bd5dba4553cc225105a055370f1735532474",
+    "web-client/src/features/Recovery.tsx": "434dc06e1ab8d87ee6c94212c67d9872460ec7b74815bfb664752c537f59f76a",
+    "web-client/src/features/ResourcePage.tsx": "bab3a58ca6e4891d282a2c86448a08a356a1d7c058cb78c1424e08156fd3d10c",
+    "web-client/src/features/ReturnPages.tsx": "9ae06cf04fcbe77ddda3e247340912fee1e07b38b98625ad7c62e7e66a789deb",
+    "web-client/src/features/WorkflowEditor.tsx": "4f675a331c6aba378e256e1200e694563d2b128a471805cd4c337054b0fbe990",
+    "web-client/src/features/chat.tsx": "cef9f8d82f0a4667113c646cd97decfc1b19291676b90870f793c74502f2906c",
+    "web-client/src/operator/OperatorApp.tsx": "cc8da458ab01ed5fc916cb665c71fb9a99492ab95e8f7703aaffcff6e26e8992",
+    "web-client/src/operator/RoleTasks.tsx": "6a77e953f749541d61bcd82f3846098ae4359c658241374c556a07f197da571d"
+  },
+  "completed_at": "2026-10-29 14:34 UTC+08:00",
+  "main_five_layout_root_references": 3740,
+  "additional_narrow_root_references": 32,
+  "distinct_mapped_source_files": 52
+}

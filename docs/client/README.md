@@ -1,13 +1,15 @@
 # M&D 客户端代码实施与完成标准
 
-> **2026-10-29 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／43份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-10-29 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／44份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
 
 当前工程边界：`kmp/shared/.../client`负责业务与数据，`kmp/clientUi`提供Android／iOS／Desktop公共Compose页面；`androidApp`、`iosUi`和`desktopApp`分别注入窗口、返回、Picker、地图、授权等平台能力。Web已使用独立`web-client` React DOM。共享页面不抵扣Android平板和iPad各自的系统适配与设备验收。详见下方架构表及[视觉与验收](DESIGN_AND_ACCEPTANCE.md)。
 
 ## 带日期的阶段记录
 
+2026-10-29：[全量按批实施记录](FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)记录FC01–FC04、共用控件及通知14状态，含19:00汇总与原请求恢复；本批源码／只读静态，未运行验收，任务继续。
+
 2026-10-29：[提交、拉取及代码续作](REMOTE_CONTINUATION_2026_10_29.md)记录67decaa／f6b5169；后续补消息有效分类／待处理／显式已读、指定好友记录、后台未知任务内台账及独立人工核对、授权冲突重读和五布局既有节点。24只读脚本、35份语法读取及9份Go语法格式已记录，未构建／类型检查／测试／启动；后续源码以工作树及该交接指纹为准。
-2026-10-28：[设计与代码续作](CONTINUE_DESIGN_CODE_2026_10_28.md)新增五布局40份协作状态、共享Compose发布按钮、邀请详情与本人退出／邀请人撤销全页、限定事项的邀请列表、照护只读／不可用及Web试养／交接／接回／预约9类全页确认。[13旧＋8新状态具体源码](collaboration-page-source-map-2026-10-28.json)单独记录；公共UI／Web只读核对通过，Node18语法读取30份正常退出，旧Node24失败保留历史，Figma最终细化仍受审批额度阻塞，未运行验收。
+2026-10-28：[设计与代码续作](CONTINUE_DESIGN_CODE_2026_10_28.md)新增五布局40份协作状态、共享Compose发布按钮、邀请详情与本人退出／邀请人撤销全页、限定事项的邀请列表、照护只读／不可用及Web试养／交接／接回／预约9类全页确认。[13旧＋8新状态具体源码](collaboration-page-source-map-2026-10-28.json)单独记录；公共UI／Web只读核对通过，Node18语法读取30份正常退出，旧Node24失败保留历史。2026-10-29[拉取后代码与35份语法读取](REMOTE_CONTINUATION_2026_10_29.md)、[Figma40稿最终细化／96动作／五布局截图](../design/figma-study/collaboration-refinement-2026-10-29/README.md)分别记录最新结果；原审批额度问题已恢复，真实运行仍未验收。
 
 2026-10-28：[后台按角色先设计后编码](ADMIN_ROLE_WORKSPACES_2026_10_28.md)补9个人员工作区、角色／页面与字段权限、18份Figma新稿和年龄／授权／实际收支入口；旧邀请码闭环见[检查点](BUSINESS_COLLABORATION_2026_10_28.md)。均未运行验收。
 

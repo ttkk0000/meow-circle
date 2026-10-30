@@ -30,7 +30,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
     var replaceSaved by rememberSessionUiState("replaceSaved") { false }
     if(replaceSaved) MobileAlertDialog(onDismissRequest = { replaceSaved = false },title = { Text("读取本机已保存版本") },text = { Text("此账号所有表单的未保存输入将被放弃，读取本机已保存的表单和原附件。不会提交或重新上传。") },
         confirmButton = { TextButton({ replaceSaved = false; f.replaceWithSavedDrafts() }) { Text("放弃未保存输入并读取") } },dismissButton = { TextButton({ replaceSaved = false }) { Text("继续编辑") } })
-    FeatureColumn(spacing = if(route.page in listOf(FeaturePage.Lead,FeaturePage.LeadInbox,FeaturePage.LeadSubmit)) 16 else 14) {
+    FeatureColumn(spacing = 16) {
         val readingOnly=route.page in listOf(FeaturePage.Rules,FeaturePage.Reading,FeaturePage.SettingsHome,FeaturePage.NotificationHelp,FeaturePage.LocationHelp,FeaturePage.PhotoHelp)
         MviStatusBanner(
             loading = s.loading || s.busy,
@@ -59,7 +59,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             FeatureButton("放弃此表单修改并重新载入", !s.busy) { f.discardAndReload() }
         }
         if (s.unconfirmedResult) Text("此页保留了结果未知的操作，不能重复提交。可刷新核对实际记录；具备操作回执的请求请从待核对操作查询。",color = MaterialTheme.colorScheme.error)
-        if (s.error != null) FeatureButton("重新读取", !s.busy) { f.reload() }
+        if (s.error != null && s.readFailure == null) FeatureButton("重新读取", !s.busy) { f.reload() }
         if (s.pending.isNotEmpty() && route.page != FeaturePage.Recovery && !readingOnly) FeatureButton("核对原操作结果", !s.busy) { f.open(FeatureRoute(FeaturePage.Recovery)) }
         if(route.page == FeaturePage.AdoptionWork && route.kind == "care" && (s.loading || s.readFailure != null && s.error != null)) {
             if(s.loading) Text("正在核对当前照护权限，受限近况与编辑内容暂时收起。")
@@ -99,7 +99,13 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             }
             return@FeatureColumn
         }
-        if (s.readFailure != null && s.error != null) ReadFailureContent(s.readFailure, s.error, { f.reload() })
+        if (s.readFailure != null && s.error != null) {
+            ReadFailureContent(s.readFailure, s.error, { f.reload() })
+            if (s.readFailure in listOf(ClientReadFailure.SignIn, ClientReadFailure.Forbidden, ClientReadFailure.Unavailable)) {
+                UnavailableTaskActions(store,s.readFailure)
+                return@FeatureColumn
+            }
+        }
         when (route.page) {
             FeaturePage.EntryEdit, FeaturePage.Friends, FeaturePage.Member, FeaturePage.ProfileEdit, FeaturePage.PetEdit, FeaturePage.PetDiary,
             FeaturePage.Collaborators, FeaturePage.Invitations, FeaturePage.GroupCreate, FeaturePage.Group, FeaturePage.GroupDirectory, FeaturePage.GroupPreview, FeaturePage.Content -> SocialFeature(store, s, route)
@@ -161,8 +167,8 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
                 else "请求可先受理，未结事项与必要保全分别处理；用途验证不会自动提交，也不表示资料已经清除。")
             s.scope?.let { Text("用途：${purposeLabel(it.purpose)} · 版本 ${it.resourceVersion}\n本次验证仅适用于当前内容。验证成功后仍需主动确认提交。") }
             if (!impact && s.scope != null && s.stage in listOf(SensitiveStage.Review, SensitiveStage.Failed)) {
-                OutlinedTextField(password, { password = it }, label = { Text("当前密码") }, visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),enabled = !busy)
-                OutlinedTextField(currentPhone, { currentPhone = it; code = "" }, label = { Text("当前完整手机号（使用验证码时填写）") }, modifier = Modifier.fillMaxWidth(),enabled = !busy)
+                MndOutlinedField(password, { password = it }, label = { Text("当前密码") }, visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),enabled = !busy)
+                MndOutlinedField(currentPhone, { currentPhone = it; code = "" }, label = { Text("当前完整手机号（使用验证码时填写）") }, modifier = Modifier.fillMaxWidth(),enabled = !busy)
                 OtpVerificationFields(
                     code = code,
                     onCodeChange = { code = it },

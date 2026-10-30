@@ -1,0 +1,1679 @@
+[
+  {
+    "id": "240:368343",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationSettings]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "私信消息",
+      "宠友群消息",
+      "申请与照护进度",
+      "附近走失提醒",
+      "独立管理范围和授权",
+      "提醒频率",
+      "即时通知",
+      "系统通知权限",
+      "前往查看",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:374852",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374860",
+        "name": "Preference / 私信消息",
+        "text": [
+          "私信消息"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368344",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368344",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374865",
+        "name": "Preference / 宠友群消息",
+        "text": [
+          "宠友群消息"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "241:368280",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "241:368280",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374870",
+        "name": "Preference / 申请与照护进度",
+        "text": [
+          "申请与照护进度"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "241:368281",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "241:368281",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374875",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围和授权"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374883",
+        "name": "Instance / row",
+        "text": [
+          "提醒频率",
+          "即时通知"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368348",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368348",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374891",
+        "name": "Instance / row",
+        "text": [
+          "系统通知权限",
+          "前往查看"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368352",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368352",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368344",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationMuted]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "私信消息",
+      "宠友群消息",
+      "申请与照护进度",
+      "附近走失提醒",
+      "独立管理范围和授权",
+      "提醒频率",
+      "即时通知",
+      "系统通知权限",
+      "前往查看",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:374908",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374921",
+        "name": "Preference / 宠友群消息",
+        "text": [
+          "宠友群消息"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368345",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368345",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374926",
+        "name": "Preference / 申请与照护进度",
+        "text": [
+          "申请与照护进度"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368346",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368346",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374931",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围和授权"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374939",
+        "name": "Instance / row",
+        "text": [
+          "提醒频率",
+          "即时通知"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368348",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368348",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374947",
+        "name": "Instance / row",
+        "text": [
+          "系统通知权限",
+          "前往查看"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368352",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368352",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368345",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationGroupMuted]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "私信消息",
+      "宠友群消息",
+      "申请与照护进度",
+      "附近走失提醒",
+      "独立管理范围和授权",
+      "提醒频率",
+      "即时通知",
+      "系统通知权限",
+      "前往查看",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:374964",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374972",
+        "name": "Preference / 私信消息",
+        "text": [
+          "私信消息"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "241:368280",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "241:368280",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374982",
+        "name": "Preference / 申请与照护进度",
+        "text": [
+          "申请与照护进度"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368347",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368347",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374987",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围和授权"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:374995",
+        "name": "Instance / row",
+        "text": [
+          "提醒频率",
+          "即时通知"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368348",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368348",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375003",
+        "name": "Instance / row",
+        "text": [
+          "系统通知权限",
+          "前往查看"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368352",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368352",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368346",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationProgressMuted]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "私信消息",
+      "宠友群消息",
+      "申请与照护进度",
+      "附近走失提醒",
+      "独立管理范围和授权",
+      "提醒频率",
+      "即时通知",
+      "系统通知权限",
+      "前往查看",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:375020",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375028",
+        "name": "Preference / 私信消息",
+        "text": [
+          "私信消息"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "241:368281",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "241:368281",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375033",
+        "name": "Preference / 宠友群消息",
+        "text": [
+          "宠友群消息"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368347",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368347",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375043",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围和授权"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375051",
+        "name": "Instance / row",
+        "text": [
+          "提醒频率",
+          "即时通知"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368348",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368348",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375059",
+        "name": "Instance / row",
+        "text": [
+          "系统通知权限",
+          "前往查看"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368352",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368352",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368347",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationAllMuted]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "私信消息",
+      "宠友群消息",
+      "申请与照护进度",
+      "附近走失提醒",
+      "独立管理范围和授权",
+      "提醒频率",
+      "即时通知",
+      "系统通知权限",
+      "前往查看",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:375076",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375084",
+        "name": "Preference / 私信消息",
+        "text": [
+          "私信消息"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "241:368279",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "241:368279",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375099",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围和授权"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375107",
+        "name": "Instance / row",
+        "text": [
+          "提醒频率",
+          "即时通知"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368348",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368348",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375115",
+        "name": "Instance / row",
+        "text": [
+          "系统通知权限",
+          "前往查看"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368352",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368352",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368348",
+    "name": "手机 / Mobile completion / 提醒频率 [notificationFrequency]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "提醒频率",
+      "即时通知",
+      "按各类别开关接收",
+      "每日汇总",
+      "每天 19:00 汇总非紧急动态",
+      "重要进度",
+      "安全、账号与需及时确认的状态会在应用内保留。"
+    ],
+    "actions": [
+      {
+        "id": "242:375132",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375140",
+        "name": "Instance / row",
+        "text": [
+          "即时通知",
+          "按各类别开关接收"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368349",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368349",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375148",
+        "name": "Instance / row",
+        "text": [
+          "每日汇总",
+          "每天 19:00 汇总非紧急动态"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368350",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368350",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368349",
+    "name": "手机 / Mobile completion / 已使用即时通知 [notificationFrequencySaved]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "已使用即时通知",
+      "已使用即时通知",
+      "当前状态",
+      "新的非紧急动态将按已开启的类别推送。",
+      "返回通知设置"
+    ],
+    "actions": [
+      {
+        "id": "242:375165",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368350",
+    "name": "手机 / Mobile completion / 已改为每日汇总 [notificationSummarySaved]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "已改为每日汇总",
+      "已改为每日汇总",
+      "当前状态",
+      "非紧急动态每天 19:00 汇总；你随时可以在应用内查看。",
+      "返回通知设置"
+    ],
+    "actions": [
+      {
+        "id": "242:375186",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375199",
+        "name": "Instance / secondary",
+        "text": [
+          "返回通知设置"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368351",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368351",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368351",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationSettingsSummary]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "提醒频率",
+      "每日汇总 · 19:00",
+      "附近走失提醒",
+      "独立管理范围与频率",
+      "系统通知权限",
+      "已开启",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:375207",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375223",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围与频率"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375231",
+        "name": "Instance / row",
+        "text": [
+          "系统通知权限",
+          "已开启"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368352",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368352",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368352",
+    "name": "手机 / Mobile completion / 系统通知未开启 [notificationPermission]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "系统通知未开启",
+      "可以继续使用 M&D",
+      "你仍能在消息页查看进度。需要接收推送时，可前往系统设置开启。",
+      "稍后再说",
+      "了解开启方式"
+    ],
+    "actions": [
+      {
+        "id": "242:375248",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375263",
+        "name": "Instance / secondary",
+        "text": [
+          "了解开启方式"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "240:368353",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "240:368353",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "240:368353",
+    "name": "手机 / Mobile completion / 开启系统通知 [notificationPermissionHelp]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "开启系统通知",
+      "开启系统通知",
+      "当前状态",
+      "在手机设置中找到 M&D，进入通知设置并允许通知。返回后，M&D 会重新读取权限状态。",
+      "返回应用"
+    ],
+    "actions": [
+      {
+        "id": "242:375271",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "241:368279",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationPrivateOnly]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "私信消息",
+      "宠友群消息",
+      "申请与照护进度",
+      "附近走失提醒",
+      "独立管理范围和授权",
+      "提醒频率",
+      "即时通知",
+      "系统通知权限",
+      "前往查看",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:375749",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375762",
+        "name": "Preference / 宠友群消息",
+        "text": [
+          "宠友群消息"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "241:368281",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "241:368281",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375767",
+        "name": "Preference / 申请与照护进度",
+        "text": [
+          "申请与照护进度"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "241:368280",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "241:368280",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375772",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围和授权"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "241:368280",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationNoGroup]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "私信消息",
+      "宠友群消息",
+      "申请与照护进度",
+      "附近走失提醒",
+      "独立管理范围和授权",
+      "提醒频率",
+      "即时通知",
+      "系统通知权限",
+      "前往查看",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:375805",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375828",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围和授权"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  },
+  {
+    "id": "241:368281",
+    "name": "手机 / Mobile completion / 通知偏好 [notificationNoProgress]",
+    "text": [
+      "9:41",
+      "学习示意 · 非真实数据",
+      "通知偏好",
+      "私信消息",
+      "宠友群消息",
+      "申请与照护进度",
+      "附近走失提醒",
+      "独立管理范围和授权",
+      "提醒频率",
+      "即时通知",
+      "系统通知权限",
+      "前往查看",
+      "完成"
+    ],
+    "actions": [
+      {
+        "id": "242:375861",
+        "name": "Back",
+        "text": [],
+        "reactions": [
+          {
+            "action": {
+              "type": "BACK"
+            },
+            "actions": [
+              {
+                "type": "BACK"
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      },
+      {
+        "id": "242:375884",
+        "name": "Instance / row",
+        "text": [
+          "附近走失提醒",
+          "独立管理范围和授权"
+        ],
+        "reactions": [
+          {
+            "action": {
+              "type": "NODE",
+              "destinationId": "142:2980",
+              "navigation": "NAVIGATE",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            },
+            "actions": [
+              {
+                "type": "NODE",
+                "destinationId": "142:2980",
+                "navigation": "NAVIGATE",
+                "transition": null,
+                "resetVideoPosition": false,
+                "resetScrollPosition": true
+              }
+            ],
+            "trigger": {
+              "type": "ON_CLICK"
+            }
+          }
+        ]
+      }
+    ],
+    "switches": []
+  }
+]

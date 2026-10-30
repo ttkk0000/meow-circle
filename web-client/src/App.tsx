@@ -1,6 +1,6 @@
 import { Publications } from "./features/Publications";
 import { ExpressionSettings } from "./features/chat";
-import { Component, useEffect, useState, type ReactNode } from "react";
+import { Component, useCallback, useEffect, useState, type ReactNode } from "react";
 import {
   api,
   explain,
@@ -9,7 +9,7 @@ import {
   type RecordData,
 } from "./core/api";
 import { useSession, signInEvent } from "./core/session";
-import { back, navigate, resourceRoute, useRoute } from "./core/router";
+import { back, navigate, resourceRoute, returnTo, useRoute } from "./core/router";
 import { useQuery, reload, invalidateQueries } from "./core/query";
 import { integer } from "./core/wire";
 import { usePages } from "./core/pages";
@@ -25,6 +25,7 @@ import {
   QueryState,
   RowLink,
   TaskPage,
+  TaskBackContext,
 } from "./components/ui";
 import { AuthDialog } from "./features/AuthDialog";
 import { Mine, Security, type Profile } from "./features/Account";
@@ -172,6 +173,14 @@ export default function App() {
   const u = new URL(route, "https://mnd.invalid");
   const path = u.pathname;
   const session = useSession();
+  const [taskBack, setTaskBack] = useState<{ route: string; owner: bigint; to: string | (() => void) }>();
+  const owner = session.user?.id ?? 0n;
+  const registerTaskBack = useCallback((to: string | (() => void)) => {
+    const target = { route, owner, to };
+    setTaskBack(target);
+    return () => setTaskBack(current => current === target ? undefined : current);
+  }, [route, owner]);
+  const taskBackTo = taskBack?.route === route && taskBack.owner === owner ? taskBack.to : undefined;
   const [login, setLogin] = useState(false);
   useEffect(() => {
     const show = () => setLogin(true);
@@ -270,14 +279,15 @@ export default function App() {
         <aside className="module-nav" aria-label="模块导航">
           <ModuleNav name={module} current={route} onSelect={() => {}} />
         </aside>
+        <TaskBackContext.Provider value={registerTaskBack}>
         <main id="task-main" className="task-workspace" tabIndex={-1}>
           <div className="task-toolbar">
             {path !== "/" ? (
               <button
                 type="button"
                 className="toolbar-icon"
-                aria-label="返回当前任务上一步"
-                onClick={back}
+                aria-label={taskBackTo === "/messages" ? "返回消息" : "返回当前任务上一步"}
+                onClick={typeof taskBackTo === "function" ? taskBackTo : taskBackTo ? () => returnTo(taskBackTo) : back}
               >
                 <Icon name="chevron-left" />
               </button>
@@ -327,6 +337,7 @@ export default function App() {
             <p className="loading">正在恢复浏览器会话…</p>
           )}
         </main>
+        </TaskBackContext.Provider>
       </div>
       <nav className="bottom-nav" aria-label="手机主导航">
         {navigation
@@ -639,18 +650,25 @@ function SettingsEditor({ nearby }: { nearby: boolean }) {
   const result = useQuery<Page>(path);
   if (!result.data)
     return (
+      <TaskPage title={nearby ? "附近走失提醒" : "通知偏好"}>
       <QueryState
         loading={result.loading}
         error={result.error}
         failure={result.failure}
         readAt={result.readAt}
+        onRetry={() => void reload(path)}
       />
+      </TaskPage>
     );
-  const record = result.data.items[0];
+  const record = result.data.items.find(row => row.owner_id === api.session.user?.id);
+  if (result.data.items.length && !record) return <TaskPage title="当前设置不可确认"><Notice title="请重新核对当前账号" error><Button onClick={() => void reload(path)}>重新读取当前设置</Button></Notice></TaskPage>;
   return (
     <WorkflowEditor
       flow={nearby ? "nearby" : "settings"}
       context={{ kind: path, id: 0n, record, params: new URLSearchParams() }}
+      readBlocked={result.loading || !!result.error}
+      readNotice={result.loading ? <p role="status">正在读取当前设置，原输入保留…</p>
+        : result.error ? <Notice title="当前设置尚未读到最新状态" error>{result.error}<Button onClick={() => void reload(path)}>重新读取当前设置</Button></Notice> : undefined}
     />
   );
 }

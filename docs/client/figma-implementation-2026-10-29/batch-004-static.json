@@ -1,0 +1,19 @@
+{
+  "checks": [
+    {
+      "file": "scripts/check_client_ui_static.py",
+      "sha256_lf": "e87603c073fc20f4f2aa55e421c98e6ac393e2920f9783bf375eae4eed1f4ff7",
+      "exit_code": 0,
+      "stdout": "公共UI只读核对：44份公共源码、48个功能分派、3套平台端口、128枚Noto原图、22枚原SVG、748条源码索引（740基线＋8协作增量）；未编译／类型检查／测试／逐屏运行。\n",
+      "stderr": ""
+    },
+    {
+      "file": "scripts/check_web_client_static.py",
+      "sha256_lf": "674da15da34432915a8d44f26bfc3ba3cd4d971b59553060b0e3353217a98fdd",
+      "exit_code": 0,
+      "stdout": "Web只读检查：91份TS/TSX、412个本地引用、143份schema、22枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。\n",
+      "stderr": ""
+    }
+  ],
+  "runtime_verified": false
+}

@@ -109,7 +109,7 @@ internal class IosClientPlatform : ClientUiPlatform {
     @Composable override fun Map(points: List<LostMapPoint>, selectedId: String, center: LostMapPoint, pickable: Boolean,
         onPick: (LostMapPoint) -> Unit, onSelect: (String) -> Unit) = IosNativeLostMap(points, selectedId, center, pickable, onPick, onSelect)
 
-    @Composable override fun NotificationPermission(content: @Composable (Boolean) -> Unit) {
+    @Composable override fun NotificationPermission(showControls: Boolean, content: @Composable (Boolean) -> Unit) {
         val center = remember { UNUserNotificationCenter.currentNotificationCenter() }
         var allowed by remember { mutableStateOf(false) }
         var known by remember { mutableStateOf(false) }
@@ -129,7 +129,7 @@ internal class IosClientPlatform : ClientUiPlatform {
         if (!known) Text("正在读取系统通知设置…")
         else {
             content(allowed)
-            if (!allowed) {
+            if (showControls && !allowed) {
                 Text("系统通知尚未允许，站内消息仍可读取。")
                 TextButton({ requesting = true
                     center.requestAuthorizationWithOptions(UNAuthorizationOptionAlert or UNAuthorizationOptionBadge or UNAuthorizationOptionSound) { _, _ ->

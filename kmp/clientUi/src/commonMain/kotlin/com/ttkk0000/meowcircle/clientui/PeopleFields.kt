@@ -42,7 +42,7 @@ import com.ttkk0000.meowcircle.client.*
         }
         FeatureButton(if (expanded) "收起好友列表" else "从我的好友中选择", editable && actor != null) { expanded = !expanded }
         if (expanded) {
-            OutlinedTextField(query, { query = it }, modifier = Modifier.fillMaxWidth(), singleLine = true,
+            MndOutlinedField(query, { query = it }, modifier = Modifier.fillMaxWidth(), singleLine = true,
                 label = { Text("按昵称筛选已加载好友") }, enabled = editable)
             Column(Modifier.fillMaxWidth().heightIn(max = 360.dp).verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)) {

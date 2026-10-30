@@ -17,6 +17,7 @@ private val dataReadingTypes=setOf("privacy","inventory","sdk","providers","rete
 fun featureTitle(s: FeatureState,actor: Long? = null): String {
     val route=s.route ?: return ""
     return when(route.page) {
+        FeaturePage.Settings -> notificationSettingsTitle(s)
         FeaturePage.AdoptionWork -> {
             if(route.kind == "care") { if(s.careContext == null && !s.loading && s.error != null) "照护授权不可用" else if(s.careContext?.canPost == false) "照护近况仅可查阅" else "授权照护近况" }
             else s.confirmation?.title ?: s.adoption?.let {adoptionProgressTitle(it,actor)} ?: route.page.title

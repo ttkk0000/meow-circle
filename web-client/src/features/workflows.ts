@@ -400,6 +400,7 @@ export const workflows: Record<string, Workflow> = {
     schema: "SettingsInput",
     path: () => "preferences",
     method: "PUT",
+    replayable: true,
     omit: ["expressions", "draft", "key"],
     initial: (c) => ({ preference: c.record?.data ?? {} }),
   },

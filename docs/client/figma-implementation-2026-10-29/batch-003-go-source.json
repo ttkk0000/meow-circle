@@ -1,0 +1,40 @@
+{
+  "meaning": "gofmt stdin syntax/format only; no compilation, lint or test execution; CRLF normalized for comparison",
+  "files": [
+    {
+      "file": "internal/mobile/notification_schedule.go",
+      "exit_code": 0,
+      "format_equal_lf": true,
+      "stderr": "",
+      "sha256_lf": "e3d4d7135c625cc3f92bdce19b8c4d8cebd3457b8955eabc7fd1f231b1af8ef8"
+    },
+    {
+      "file": "internal/mobile/notification_schedule_test.go",
+      "exit_code": 0,
+      "format_equal_lf": true,
+      "stderr": "",
+      "sha256_lf": "46f0b5be8c48b10bad0ee8b25911fadc65f3f7e680a9dae4dc072e09fa46b729"
+    },
+    {
+      "file": "internal/mobile/notification_digest_delivery_test.go",
+      "exit_code": 0,
+      "format_equal_lf": true,
+      "stderr": "",
+      "sha256_lf": "a2cee75e183fbfeeb93406934ef399ab39dafc9351f8a58a9cb0f06e648901f8"
+    },
+    {
+      "file": "internal/mobile/service.go",
+      "exit_code": 0,
+      "format_equal_lf": true,
+      "stderr": "",
+      "sha256_lf": "6f2a7d4b6b96193a190b02e48858c8b4cef196dc99167efa2bb9b1b85c686f6f"
+    },
+    {
+      "file": "internal/mobile/push.go",
+      "exit_code": 0,
+      "format_equal_lf": true,
+      "stderr": "",
+      "sha256_lf": "e3f37b15d8596a37bfcaa31704eb72ddb1a147ac44aa1f2685156d34365c3005"
+    }
+  ]
+}

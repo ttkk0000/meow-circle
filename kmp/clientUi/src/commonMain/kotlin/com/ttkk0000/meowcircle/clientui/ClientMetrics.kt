@@ -7,7 +7,7 @@ object MobileUi {
     val pagePadding = 16.dp
     val dialogPadding = 24.dp
     val sectionGap = 16.dp
-    val formGap = 14.dp
+    val formGap = 16.dp
     val contentGap = 12.dp
     val compactGap = 8.dp
     val actionHeight = 48.dp

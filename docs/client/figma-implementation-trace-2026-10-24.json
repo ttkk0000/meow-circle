@@ -15764,16 +15764,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：false/false/false；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationFrequency",
@@ -15793,16 +15799,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：frequency view; choose instant/digest/off; preserve unsaved category draft；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationFrequencySaved",
@@ -15822,16 +15834,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：matching owned active receipt, increasing version, exact submitted fields, frequency=instant；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationGroupMuted",
@@ -15851,16 +15869,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：false/false/true；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationMuted",
@@ -15880,16 +15904,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：false/true/true；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationNoGroup",
@@ -15909,16 +15939,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：true/false/true；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationNoProgress",
@@ -15938,16 +15974,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：true/true/false；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationPermission",
@@ -15967,16 +16009,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
       "implementation_status": "external_configuration_and_runtime_required",
-      "note": "保留真实不可用／等待状态；不能以本地变量模拟供应商、核验或系统权限。",
+      "note": "源代码条件：real account preference and device/browser permission are distinct；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationPermissionHelp",
@@ -15996,18 +16044,24 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
-      "web_source": "web-client/src/features/PermissionPages.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-help",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
       "implementation_status": "dedicated_state_source_not_runtime_verified",
-      "note": "2026-10-25已回读对应稿并补具体状态／操作接线；运行、平台ABI及逐像素验收仍未完成。定位替代／照片选择说明不以系统权限或供应商配置作为阅读门槛。",
+      "note": "源代码条件：explicit system controls only; refresh on resume/focus; refusal retains inbox；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [
         "240:368353"
       ],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationPrivateOnly",
@@ -16027,16 +16081,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：true/false/false；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationProgressMuted",
@@ -16056,16 +16116,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：false/true/false；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationSettings",
@@ -16089,16 +16155,22 @@
         "webN": "cross-platform-full-state.json",
         "tabletN": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：direct/groups/applications=true/true/true；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationSettingsSummary",
@@ -16118,16 +16190,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：return from digest receipt; categories remain editable through existing controls；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "notificationSummarySaved",
@@ -16147,16 +16225,22 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "web_source": "web-client/src/features/Account.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "web_source": "web-client/src/features/NotificationPreferences.tsx",
       "web_module_route": "/notification-settings",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
-      "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "source_note": "批次003专用通知页面；原生三端共用NotificationPages，Web专用组件由WorkflowEditor保持原草稿／版本／幂等恢复。真实权限、逐布局呈现及运行未验收。",
+      "implementation_status": "dedicated_state_source_not_runtime_verified",
+      "note": "源代码条件：same receipt guards, frequency=digest；来源见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。原有互动类别／关闭提醒保留，不把设计例子写成成功数据。",
       "remote_screenshots_inspected": [],
-      "runtime_verified": false
+      "runtime_verified": false,
+      "dedicated_source_references": [
+        "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "web-client/src/features/NotificationPreferences.tsx",
+        "web-client/src/features/WorkflowEditor.tsx",
+        "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+      ]
     },
     {
       "key": "offline",

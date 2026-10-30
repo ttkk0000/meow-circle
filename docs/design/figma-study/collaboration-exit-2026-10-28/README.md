@@ -1,6 +1,6 @@
 # 协作范围、本人退出与有限工作区
 
-2026-10-28，任务 `AI-20261028-CONTINUE-DESIGN-CODE`。原设计文件 [M&D Figma V2](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC)，新画面已保存40份，最终细化尚未全部完成。
+2026-10-28，任务 `AI-20261028-CONTINUE-DESIGN-CODE`。原设计文件 [M&D Figma V2](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC)，新画面已保存40份。2026-10-29已完成[最终细化、96动作独立回读与五布局完整截图](../collaboration-refinement-2026-10-29/README.md)；下方保留本批初始证据及当时阻塞，不将其当当前待办。
 
 ## 入口
 
@@ -20,15 +20,17 @@
 
 [完整节点清单](nodes-and-validation.json)列出根ID、创建／改动ID、源稿与构建参数。[结构回读](structural-audit.json)覆盖40新稿与241条已有可见链接：未发现目标缺失、跨页、自循环或整屏图片。此项不证明每个必要控制都有动作，也不等于播放原型。
 
-手机 `910:357927`（照护）、`910:357987`（介绍）、`910:357846`（退出确认）的高保真上下文和截图已查看；未完成五布局最终截图。发布组件 `836:21`、`838:21`、`838:58`另已读取上下文和截图，接到共享Compose，见[本批源码交付](../../../client/CONTINUE_DESIGN_CODE_2026_10_28.md)。
+初次检查时，手机 `910:357927`（照护）、`910:357987`（介绍）、`910:357846`（退出确认）的高保真上下文和截图已查看，五布局最终截图当时未完成，现已由[后续细化任务](../collaboration-refinement-2026-10-29/README.md)补齐。发布组件 `836:21`、`838:21`、`838:58`另已读取上下文和截图，接到共享Compose，见[本批源码交付](../../../client/CONTINUE_DESIGN_CODE_2026_10_28.md)。
 
 [builder.js](builder.js)是本批最近成功的Figma MCP构造模板，需注入清单中的plan／states，不是Node应用。手机早批与后续跨端有差异，真实画布与返回节点清单优先。禁止重新整批生成已有Section。
 
-## 审批阻塞与恢复
+## 历史审批阻塞与恢复
+
+2026-10-29恢复结果：以下五项已通过正常Figma工具完成，另补照片选择返回、结果页顶部返回与平板同状态方向切换。原Section及40根均保留，未绕过审批。当前结果与截图见[本轮收尾](../collaboration-refinement-2026-10-29/README.md)。
 
 40稿保存及结构回读之后，手机、Web、Desktop和平板的最终修订，以及按钮颜色别名读取，均因自动审批审核额度耗尽而未执行。这是审核服务失败，不是不安全裁定；没有绕过自动审批。具体状态见[completion-status.json](completion-status.json)。
 
-恢复后按当前画布依次完成：
+当时登记的五项恢复清单（现已完成）：
 
 1. 手机照护／介绍工作区的次入口统一为“查看协作与退出”，指回原接受邀请页；只读照护补同入口。原页careActive `240:368338`、introActive `245:370292`。
 2. 五布局publisherWorkspace的“维护介绍照片”明确接同布局circlePhotoChoose：手机 `142:2871`、Web `311:380380`、Desktop `311:380381`、平板竖 `311:380382`、平板横 `311:380383`。检查必要动作完整性，不能只核对已有链接。
@@ -38,6 +40,6 @@
 
 源码指纹、运行边界与交接见[本批交付](../../../client/CONTINUE_DESIGN_CODE_2026_10_28.md)。未编译、测试或启动应用；未提交推送；没有后台执行任务。
 
-2026-10-28后续代码已补邀请独立详情、本人退出／邀请人撤销全页、按事项与scope收敛的邀请列表、照护失权／410清理与完整核对页；[13个既有＋8个新增状态的具体分支](../../../client/collaboration-page-source-map-2026-10-28.json)优先于旧family归属。上述远端收尾依旧未执行。原`syntax-results.json`仅为上一源码检查点；最新源码和语法器内存失败见[后续指纹](../../../client/collaboration-pages-evidence-2026-10-28.json)／[失败记录](syntax-followup-incomplete.json)，不将非零退出算通过。
+2026-10-28后续代码已补邀请独立详情、本人退出／邀请人撤销全页、按事项与scope收敛的邀请列表、照护失权／410清理与完整核对页；[13个既有＋8个新增状态的具体分支](../../../client/collaboration-page-source-map-2026-10-28.json)优先于旧family归属。该代码检查点当时尚未执行远端收尾，后由2026-10-29设计任务完成。原`syntax-results.json`仅为上一源码检查点；当时源码和语法器内存失败见[后续指纹](../../../client/collaboration-pages-evidence-2026-10-28.json)／[失败记录](syntax-followup-incomplete.json)，不将非零退出算通过。
 
-2026-10-29后续检查点已改用现有Node18并正常退出，旧Node24失败保留历史；[拉取后的35份语法读取](../../../client/remote-continuation-syntax-2026-10-29.json)与[源码／边界](../../../client/REMOTE_CONTINUATION_2026_10_29.md)是当前恢复入口。40根与具体源码分支已纳入合并后的748条索引；远端最终细化和视觉余量仍按本页清单处理，没有重新造稿或绕过审批。
+2026-10-29后续检查点已改用现有Node18并正常退出，旧Node24失败保留历史；[拉取后的35份语法读取](../../../client/remote-continuation-syntax-2026-10-29.json)与[源码／边界](../../../client/REMOTE_CONTINUATION_2026_10_29.md)是当前源码恢复入口。40根与具体源码分支已纳入合并后的748条索引；[远端最终细化与五布局截图](../collaboration-refinement-2026-10-29/README.md)已完成，没有重新造稿或绕过审批。全量748状态的逐端视觉及真实运行仍未完成。

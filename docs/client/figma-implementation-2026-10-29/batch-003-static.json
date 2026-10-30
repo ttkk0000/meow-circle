@@ -1,0 +1,45 @@
+{
+  "meaning": "read-only source checks; no builds, type checking, tests, lint or runtime",
+  "results": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "d128c2",
+        "wall_time_seconds": 1.1985544,
+        "exit_code": 0,
+        "original_token_count": 55,
+        "output": "公共UI只读核对：44份公共源码、48个功能分派、3套平台端口、128枚Noto原图、22枚原SVG、748条源码索引（740基线＋8协作增量）；未编译／类型检查／测试／逐屏运行。\r\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "5ce3f4",
+        "wall_time_seconds": 1.8001079,
+        "exit_code": 0,
+        "original_token_count": 41,
+        "output": "Web只读检查：91份TS/TSX、412个本地引用、143份schema、22枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。\r\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "61e4d9",
+        "wall_time_seconds": 0.7145918,
+        "exit_code": 0,
+        "original_token_count": 33,
+        "output": "Static cross-language check: 88 DTO pairs match; private commands and recovery guards present. No type checking or tests executed.\r\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "303749",
+        "wall_time_seconds": 0.7696439,
+        "exit_code": 0,
+        "original_token_count": 27,
+        "output": "Static only: 45 feature tables, 288 operations, 141 schemas, 128/24 assets; no dangling references or BOM\r\n"
+      }
+    }
+  ]
+}

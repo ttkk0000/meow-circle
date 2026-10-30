@@ -1,0 +1,10 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"createdNodeIds\":[],\"mutatedNodeIds\":[\"915:386452\",\"915:386637\",\"915:386912\"],\"actions\":[{\"kind\":\"terminalBack\",\"id\":\"915:386452\",\"to\":\"311:379700\",\"root\":\"915:386431\",\"reactions\":[{\"action\":{\"type\":\"NODE\",\"destinationId\":\"311:379700\",\"navigation\":\"NAVIGATE\",\"transition\":null,\"resetVideoPosition\":false,\"resetScrollPosition\":true},\"actions\":[{\"type\":\"NODE\",\"destinationId\":\"311:379700\",\"navigation\":\"NAVIGATE\",\"transition\":null,\"resetVideoPosition\":false,\"resetScrollPosition\":true}],\"trigger\":{\"type\":\"ON_CLICK\"}}]},{\"kind\":\"terminalBack\",\"id\":\"915:386637\",\"to\":\"311:379700\",\"root\":\"915:386616\",\"reactions\":[{\"action\":{\"type\":\"NODE\",\"destinationId\":\"311:379700\",\"navigation\":\"NAVIGATE\",\"transition\":null,\"resetVideoPosition\":false,\"resetScrollPosition\":true},\"actions\":[{\"type\":\"NODE\",\"destinationId\":\"311:379700\",\"navigation\":\"NAVIGATE\",\"transition\":null,\"resetVideoPosition\":false,\"resetScrollPosition\":true}],\"trigger\":{\"type\":\"ON_CLICK\"}}]},{\"kind\":\"terminalBack\",\"id\":\"915:386912\",\"to\":\"311:379700\",\"root\":\"915:386891\",\"reactions\":[{\"action\":{\"type\":\"NODE\",\"destinationId\":\"311:379700\",\"navigation\":\"NAVIGATE\",\"transition\":null,\"resetVideoPosition\":false,\"resetScrollPosition\":true},\"actions\":[{\"type\":\"NODE\",\"destinationId\":\"311:379700\",\"navigation\":\"NAVIGATE\",\"transition\":null,\"resetVideoPosition\":false,\"resetScrollPosition\":true}],\"trigger\":{\"type\":\"ON_CLICK\"}}]}]}"
+    }
+  ],
+  "structuredContent": null,
+  "isError": false
+}

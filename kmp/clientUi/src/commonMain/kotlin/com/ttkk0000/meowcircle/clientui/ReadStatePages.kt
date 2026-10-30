@@ -33,17 +33,17 @@ import com.ttkk0000.meowcircle.client.*
     }
 }
 
-@Composable fun UnavailableTaskActions(store: MobileStore, failure: ClientReadFailure?) {
+@Composable fun UnavailableTaskActions(store: MobileStore, failure: ClientReadFailure?, includeHome: Boolean = true) {
     if (failure == null || failure in listOf(ClientReadFailure.Connection, ClientReadFailure.Service, ClientReadFailure.Busy)) {
         FeatureButton("查看草稿与待核对操作") { store.features.open(FeatureRoute(FeaturePage.Recovery)) }
-        TaskPrimary("回到社区") { store.features.closeRoute(); store.select(MobileTab.Community) }
+        if (includeHome) TaskPrimary("回到社区") { store.features.closeRoute(); store.select(MobileTab.Community) }
         return
     }
     if (failure == ClientReadFailure.SignIn) FeatureButton("重新登录", !store.state.value.busy) { store.showLogin() }
     FeatureButton("查看已有沟通") { store.features.closeRoute(); store.select(MobileTab.Messages) }
     FeatureButton("报告问题或申请复核") { store.features.open(FeatureRoute(FeaturePage.Safety)) }
     FeatureButton("找找其他领养信息") { store.features.closeRoute(); store.select(MobileTab.Adoption) }
-    TaskPrimary("回到社区") { store.features.closeRoute(); store.select(MobileTab.Community) }
+    if (includeHome) TaskPrimary("回到社区") { store.features.closeRoute(); store.select(MobileTab.Community) }
 }
 
 @Composable fun EmptyResults(title: String = "这次还没有合适的结果", detail: String = "可以放宽区域或条件；不把其他城市内容偷偷当成本地结果。", actions: @Composable ColumnScope.() -> Unit = {}) {

@@ -1,0 +1,10 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "[{\"layout\":\"tabletP\",\"kind\":\"photo\",\"id\":\"317:326394\",\"actions\":[]},{\"layout\":\"tabletP\",\"kind\":\"photo\",\"id\":\"317:326404\",\"actions\":[]},{\"layout\":\"tabletP\",\"kind\":\"caretakerLeft\"},{\"layout\":\"tabletP\",\"kind\":\"publisherLeft\"},{\"layout\":\"tabletP\",\"kind\":\"caretakerUnavailable\"},{\"layout\":\"tabletL\",\"kind\":\"photo\",\"id\":\"317:326492\",\"actions\":[]},{\"layout\":\"tabletL\",\"kind\":\"photo\",\"id\":\"317:326502\",\"actions\":[]},{\"layout\":\"tabletL\",\"kind\":\"caretakerLeft\"},{\"layout\":\"tabletL\",\"kind\":\"publisherLeft\"},{\"layout\":\"tabletL\",\"kind\":\"caretakerUnavailable\"}]"
+    }
+  ],
+  "structuredContent": null,
+  "isError": false
+}

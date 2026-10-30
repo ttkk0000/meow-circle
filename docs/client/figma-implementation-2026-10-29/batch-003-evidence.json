@@ -1,0 +1,61 @@
+{
+  "id": "003",
+  "updated": "2026-10-29T17:54:06+08:00",
+  "status": "source_written_static_reviewed",
+  "states": [
+    "notificationSettings",
+    "notificationMuted",
+    "notificationGroupMuted",
+    "notificationProgressMuted",
+    "notificationAllMuted",
+    "notificationPrivateOnly",
+    "notificationNoGroup",
+    "notificationNoProgress",
+    "notificationFrequency",
+    "notificationFrequencySaved",
+    "notificationSummarySaved",
+    "notificationSettingsSummary",
+    "notificationPermission",
+    "notificationPermissionHelp"
+  ],
+  "fresh_contexts": [
+    "240:368343",
+    "240:368350",
+    "311:380132"
+  ],
+  "design_text_action_readback": "notification-design-states.json",
+  "static_report": "batch-003-static.json",
+  "syntax_reports": [
+    "batch-003-syntax.json",
+    "batch-003-syntax-followup.json"
+  ],
+  "go_source_report": "batch-003-go-source.json",
+  "test_source_functions": 2,
+  "tests_executed": false,
+  "runtime_verified": false,
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt": "2d3a898a113501ac0969fbad0abd09fa9ccf4f2e3b1fe60575af4c82de8b4221",
+    "web-client/src/features/NotificationPreferences.tsx": "6455833ca231c2272931490af9a72b1c7402c7bd870c396c2056122d203656ff",
+    "internal/mobile/notification_schedule.go": "e3d4d7135c625cc3f92bdce19b8c4d8cebd3457b8955eabc7fd1f231b1af8ef8",
+    "internal/mobile/notification_schedule_test.go": "46f0b5be8c48b10bad0ee8b25911fadc65f3f7e680a9dae4dc072e09fa46b729",
+    "internal/mobile/notification_digest_delivery_test.go": "a2cee75e183fbfeeb93406934ef399ab39dafc9351f8a58a9cb0f06e648901f8",
+    "internal/mobile/service.go": "6f2a7d4b6b96193a190b02e48858c8b4cef196dc99167efa2bb9b1b85c686f6f",
+    "internal/mobile/push.go": "e3f37b15d8596a37bfcaa31704eb72ddb1a147ac44aa1f2685156d34365c3005",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt": "0670d199f09120f423f9317046ea710747f1790c03f2ef5636995fd595acc58c",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "27b5e696fb69bee73b7c67f48604e10b243bceacb7191c26da4e41ac46c241aa",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt": "4c86fd59aac709517c95a5a2c63e3a0b6f285ace98783fcf720eec873db4ac51",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt": "49cdc9ad7f20d2430cdcb444e8b474dbdc45e7665f7f4bcc530fbe0da3236a3c",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientPlatform.kt": "224654a239812f3e90c89e2de968102d68659721fd316c0d43882f2a9b865e5d",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidClientPlatform.kt": "3bce6d7aacc29746d40ff409b9b2c29a1f576967c3471b62dc7ed20898a98aa9",
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidNotificationPermission.kt": "937dfe7fd74aba922dc6257bea9d750e82961505e22d742cb097ae6c487b7447",
+    "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosClientPlatform.kt": "a7ec86fcb8fffba24e30049c4775ebdb95fb0ae6afc93f86bc3f3a3acfa71b18",
+    "kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/DesktopClientPlatform.kt": "a1b7ebdb93eb10559be233ec18cc18a46bcf6cb6d9a408728f2d0abaf91a2777",
+    "web-client/src/App.tsx": "280efe35ea207ac626af86d104b89edb5562da39b1bfceef05e50640e921e605",
+    "web-client/src/components/ui.tsx": "cb0f9e20041edb0c626649e1684d9c330e899a3dadec6a5d036c9331301c1665",
+    "web-client/src/core/query.ts": "fece076a7c55b38a24f8cff941e5d11a21ca9284291470cea45bd861691bd115",
+    "web-client/src/features/WorkflowEditor.tsx": "fc830f5a23566902125c423c75f1699f38f58ed83f0a5b8a4c95f9d54541bbf0",
+    "web-client/src/features/workflows.ts": "21324797277314959a6aed10ccfd11d83b701c0b80213451d4e0aa589f338a28",
+    "web-client/src/components/RetrySubmission.tsx": "f05a16a8fe824285fceec50eb8021f0ba9cd5f5eb9c2351175e4c7493831a772",
+    "web-client/src/styles.css": "fec3df7ac5b69559d1445c482467da04293503018468df970654d127a25f31f6"
+  }
+}

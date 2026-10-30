@@ -20,14 +20,15 @@ export function CollaborationInvitation({ row, actor }: { row: RecordData; actor
     : row.state === "expired" ? "邀请已过期"
     : row.state === "revoked" ? `${scope}授权已结束` : `${scope}邀请`;
   if (!allowed) return (
-    <TaskPage title="当前协作不可用">
+    <TaskPage title="当前协作不可用" backTo="/messages">
       <Notice title="不再显示受限资料">请用收到邀请或发出邀请的账号重新核对。</Notice>
       <RowLink title="返回消息" to="/messages" />
     </TaskPage>
   );
   const active = row.state === "accepted";
   return (
-    <TaskPage title={title} subtitle={`邀请 #${row.id} · 事项 #${integer(row.data.target_id)} · 当前版本 ${row.version}`}>
+    <TaskPage title={title} backTo={row.state === "left" && recipient ? "/messages" : undefined}
+      subtitle={`邀请 #${row.id} · 事项 #${integer(row.data.target_id)} · 当前版本 ${row.version}`}>
       <Notice title={active ? "本次有限授权" : row.state === "left" || row.state === "revoked" ? "仅结束本次协作权限" : "邀请范围"}>
         {invitationReview(row, row.state === "revoked" ? "revoke" : row.state === "left" && recipient ? "leave" : "accept").detail}
       </Notice>

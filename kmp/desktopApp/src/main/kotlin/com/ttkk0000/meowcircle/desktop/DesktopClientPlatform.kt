@@ -137,8 +137,8 @@ internal class DesktopClientPlatform(private val owner: Frame, private val endpo
             error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         }
     }
-    @Composable override fun NotificationPermission(content: @Composable (Boolean) -> Unit) {
-        Text("桌面当前通过站内收件箱接收消息。系统推送通道尚未开放。")
+    @Composable override fun NotificationPermission(showControls: Boolean, content: @Composable (Boolean) -> Unit) {
+        if (showControls) Text("桌面当前通过站内收件箱接收消息。系统推送通道尚未开放。")
         content(false)
     }
     override fun decodeImage(bytes: ByteArray): ImageBitmap? = runCatching { SkiaImage.makeFromEncoded(bytes).toComposeImageBitmap() }.getOrNull()

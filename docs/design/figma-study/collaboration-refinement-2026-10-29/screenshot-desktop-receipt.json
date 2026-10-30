@@ -1,0 +1,13 @@
+{
+  "width": 4656,
+  "height": 3400,
+  "format": "png",
+  "original_width": 4576,
+  "original_height": 3320,
+  "layout": "desktop",
+  "path": "desktop-final.png",
+  "sha256": "4d431f27803fbc9f0cbc4ff1c6328eb65fd1e51cbc2edbb6af71517650c10ea4",
+  "bytes": 377472,
+  "transport": "native-inline after URL export could not be downloaded as PNG",
+  "visually_inspected": true
+}

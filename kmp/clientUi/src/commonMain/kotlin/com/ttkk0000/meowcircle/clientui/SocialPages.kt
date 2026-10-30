@@ -153,7 +153,7 @@ import com.ttkk0000.meowcircle.client.*
             s.pet?.let { pet ->
                 FormField(f,s,"bio","领养介绍",pet.data.bio,5)
                 FeaturePhotos(store,s,pet.mediaIds)
-                FeatureButton("仅更新介绍与照片",!s.busy && !s.loading && s.error == null && !s.conflict && !s.unconfirmedResult) {
+                FeaturePrimary("保存介绍与照片",!s.busy && !s.loading && s.error == null && !s.conflict && !s.unconfirmedResult) {
                     val input = IntroductionEdit(f.version(pet.version),f.field("bio",pet.data.bio),f.mediaIds(pet.mediaIds),newRequestKey())
                     f.confirm("更新领养介绍",input.bio) { f.api.introduction(pet.id,input); f.discardAndReload() }
                 }

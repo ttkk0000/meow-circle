@@ -22,7 +22,7 @@ import com.ttkk0000.meowcircle.client.*
     if (opened && enabled) AlertDialog(onDismissRequest = { opened = false }, title = { Text("选择大陆城市") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(query, { query = it; province = "" }, Modifier.fillMaxWidth(),
+                MndOutlinedField(query, { query = it; province = "" }, Modifier.fillMaxWidth(),
                     label = { Text("搜索城市、拼音或区划代码") }, singleLine = true)
                 Box {
                     TextButton({ provinceMenu = true }) { Text(mainlandProvinces.firstOrNull { it.code == province }?.name ?: "全部省份") }

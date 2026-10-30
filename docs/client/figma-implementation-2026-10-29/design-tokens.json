@@ -1,0 +1,369 @@
+{
+  "consumer": "910:357987",
+  "rows": [
+    {
+      "id": "VariableID:14:36",
+      "name": "color/background",
+      "resolved": {
+        "value": {
+          "r": 0.9686274528503418,
+          "g": 0.9725490212440491,
+          "b": 0.9803921580314636,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:37",
+      "name": "color/surface",
+      "resolved": {
+        "value": {
+          "r": 1,
+          "g": 0.9960784316062927,
+          "b": 0.9882352948188782,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:38",
+      "name": "color/subtle",
+      "resolved": {
+        "value": {
+          "r": 0.9411764740943909,
+          "g": 0.9490196108818054,
+          "b": 0.9607843160629272,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:39",
+      "name": "color/ink",
+      "resolved": {
+        "value": {
+          "r": 0.125490203499794,
+          "g": 0.13725490868091583,
+          "b": 0.16078431904315948,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:40",
+      "name": "color/muted",
+      "resolved": {
+        "value": {
+          "r": 0.3803921639919281,
+          "g": 0.40392157435417175,
+          "b": 0.4431372582912445,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:41",
+      "name": "color/brand",
+      "resolved": {
+        "value": {
+          "r": 0.6196078658103943,
+          "g": 0.21960784494876862,
+          "b": 0.16470588743686676,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:42",
+      "name": "color/onBrand",
+      "resolved": {
+        "value": {
+          "r": 1,
+          "g": 0.9960784316062927,
+          "b": 0.9882352948188782,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:43",
+      "name": "color/brandSoft",
+      "resolved": {
+        "value": {
+          "r": 1,
+          "g": 0.9450980424880981,
+          "b": 0.9215686321258545,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:44",
+      "name": "color/success",
+      "resolved": {
+        "value": {
+          "r": 0.09019608050584793,
+          "g": 0.42352941632270813,
+          "b": 0.2862745225429535,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:45",
+      "name": "color/successSoft",
+      "resolved": {
+        "value": {
+          "r": 0.9098039269447327,
+          "g": 0.95686274766922,
+          "b": 0.929411768913269,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:46",
+      "name": "color/warning",
+      "resolved": {
+        "value": {
+          "r": 0.5254902243614197,
+          "g": 0.3294117748737335,
+          "b": 0.03921568766236305,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:47",
+      "name": "color/warningSoft",
+      "resolved": {
+        "value": {
+          "r": 1,
+          "g": 0.9607843160629272,
+          "b": 0.8705882430076599,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:48",
+      "name": "color/danger",
+      "resolved": {
+        "value": {
+          "r": 0.7058823704719543,
+          "g": 0.13725490868091583,
+          "b": 0.19607843458652496,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:49",
+      "name": "color/dangerSoft",
+      "resolved": {
+        "value": {
+          "r": 0.9921568632125854,
+          "g": 0.9333333373069763,
+          "b": 0.9411764740943909,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:50",
+      "name": "color/border",
+      "resolved": {
+        "value": {
+          "r": 0.8784313797950745,
+          "g": 0.8901960849761963,
+          "b": 0.9098039269447327,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:14:51",
+      "name": "color/controlBorder",
+      "resolved": {
+        "value": {
+          "r": 0.5137255191802979,
+          "g": 0.5411764979362488,
+          "b": 0.5803921818733215,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:56:19",
+      "name": "color/accent",
+      "resolved": {
+        "value": {
+          "r": 0.7843137383460999,
+          "g": 0.29411765933036804,
+          "b": 0.239215686917305,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:56:21",
+      "name": "color/onAccent",
+      "resolved": {
+        "value": {
+          "r": 1,
+          "g": 0.9960784316062927,
+          "b": 0.9882352948188782,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:149",
+      "name": "button/primary",
+      "resolved": {
+        "value": {
+          "r": 0.7843137383460999,
+          "g": 0.29411765933036804,
+          "b": 0.239215686917305,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:152",
+      "name": "button/pressed",
+      "resolved": {
+        "value": {
+          "r": 0.6941176652908325,
+          "g": 0.239215686917305,
+          "b": 0.1882352977991104,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:155",
+      "name": "button/onPrimary",
+      "resolved": {
+        "value": {
+          "r": 1,
+          "g": 0.9960784316062927,
+          "b": 0.9882352948188782,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:156",
+      "name": "button/secondary",
+      "resolved": {
+        "value": {
+          "r": 1,
+          "g": 0.9450980424880981,
+          "b": 0.9215686321258545,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:158",
+      "name": "button/onSecondary",
+      "resolved": {
+        "value": {
+          "r": 0.6196078658103943,
+          "g": 0.21960784494876862,
+          "b": 0.16470588743686676,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:160",
+      "name": "button/border",
+      "resolved": {
+        "value": {
+          "r": 0.7215686440467834,
+          "g": 0.37254902720451355,
+          "b": 0.3137255012989044,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:162",
+      "name": "button/quiet",
+      "resolved": {
+        "value": {
+          "r": 0.6196078658103943,
+          "g": 0.21960784494876862,
+          "b": 0.16470588743686676,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:164",
+      "name": "button/disabled",
+      "resolved": {
+        "value": {
+          "r": 0.9254902005195618,
+          "g": 0.9333333373069763,
+          "b": 0.9450980424880981,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:166",
+      "name": "button/onDisabled",
+      "resolved": {
+        "value": {
+          "r": 0.3843137323856354,
+          "g": 0.40784314274787903,
+          "b": 0.45098039507865906,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    },
+    {
+      "id": "VariableID:70:168",
+      "name": "button/focus",
+      "resolved": {
+        "value": {
+          "r": 0.3843137323856354,
+          "g": 0.40784314274787903,
+          "b": 0.45098039507865906,
+          "a": 1
+        },
+        "resolvedType": "COLOR"
+      }
+    }
+  ]
+}

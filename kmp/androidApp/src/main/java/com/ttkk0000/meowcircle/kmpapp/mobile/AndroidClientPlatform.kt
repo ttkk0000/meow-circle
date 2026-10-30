@@ -37,7 +37,7 @@ internal class AndroidClientPlatform(private val context: Context) : ClientUiPla
         com.ttkk0000.meowcircle.kmpapp.mobile.DateTimeField(store, state, key, label, fallback, dateOnly, optional)
     @Composable override fun Map(points: List<LostMapPoint>, selectedId: String, center: LostMapPoint, pickable: Boolean, onPick: (LostMapPoint) -> Unit, onSelect: (String) -> Unit) =
         com.ttkk0000.meowcircle.kmpapp.mobile.NativeLostMap(points, selectedId, center, pickable, onPick, onSelect)
-    @Composable override fun NotificationPermission(content: @Composable (Boolean) -> Unit) = AndroidNotificationPermission(content)
+    @Composable override fun NotificationPermission(showControls: Boolean, content: @Composable (Boolean) -> Unit) = AndroidNotificationPermission(showControls, content)
     override fun decodeImage(bytes: ByteArray): ImageBitmap? {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)

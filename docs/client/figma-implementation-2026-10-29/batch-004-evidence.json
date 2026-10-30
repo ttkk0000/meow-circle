@@ -1,0 +1,54 @@
+{
+  "id": "004",
+  "updated": "2026-10-29T18:25:25+08:00",
+  "status": "partial_shared_source_written_static_reviewed_stopped_by_user",
+  "figma_file": "3OFOC3vu18Kx9sRPjummOC",
+  "fresh_design_contexts_with_images_observed": [
+    "56:81",
+    "56:82",
+    "56:84"
+  ],
+  "text_action_readback_nodes": [
+    "56:81",
+    "56:82",
+    "56:83",
+    "56:84"
+  ],
+  "scope": [
+    "shared initial read failure fixed actions",
+    "adoption filter empty results",
+    "protected data removal after denied reads",
+    "shared spacing and empty-state typography"
+  ],
+  "design_boundary": "56:84 is optional location permission / manual city, not account authorization. Existing city input retained; no new location flow in this batch.",
+  "static_report": "batch-004-static.json",
+  "syntax_report": "batch-004-syntax.json",
+  "syntax_files_without_diagnostics": 8,
+  "files_with_matching_preexisting_parser_diagnostics": [
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt": "31a3e0b98658a0f12493bdc7fb6b31b98d04077d43ca2d090e110f923b248833",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt": "0a26d2f4e9f26bf08d177f9106b3cdb95274527464dc47a416621a51e1d2ae01",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt": "8d90868b2dcd65406f422083dd3aaa16f7cd46beacf58738b5fa3020f438eea9",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/LoadStates.kt": "ac4eb25ebf839e168a520785c85c9f56e9de7516313bc1f200e4a49cfbd2b870",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt": "46ed52df7d7cac775bcbd59c078f7948eccc648991dcd07779f1d287b0958fd8",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientMetrics.kt": "fc6f4abbaf88bab604ef913dfe13d0ec51a140705621e97e5de8bafca7c135ac",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "e6521e75729203e70c124a03e0cd0ce15f47036159d2def87477a407f7e84075",
+    "web-client/src/components/ui.tsx": "9ca8297125598db267823b180bfe2675f3fa7d815e8904688d060eb917c37be6",
+    "web-client/src/features/Records.tsx": "31359277e426f4b7b62e1108ff6ae9dda32fbcf76d3ee430466c1e1f04f70ded",
+    "web-client/src/features/WorkflowEditor.tsx": "9f396cd847c4b5274f9f5b33c0bb10c6a0b55504855b2406216ccb2aac8cbfb6",
+    "web-client/src/styles.css": "80b2bfe8ed19166e42641c2ab2dd293227098e2d09864b7f4266c1e681771d82"
+  },
+  "remaining": [
+    "quiet recovery/clear action parity and FeatureColumn default spacing review",
+    "account and remaining consumer/backend state review",
+    "all platform rendered visual and runtime acceptance"
+  ],
+  "whole_state_complete": false,
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "user_direction": "Stop development, commit and push existing results. No further feature implementation."
+}

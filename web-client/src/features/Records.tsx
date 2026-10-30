@@ -1,6 +1,6 @@
 import { CityField } from "../components/CityField";
 import { CatPlaceholder } from "../components/CatPlaceholder";
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { api, explain, query, type RecordData, type User } from "../core/api";
 import { usePages, titleOf } from "../core/pages";
 import { reload, useQuery } from "../core/query";
@@ -429,6 +429,7 @@ export function Records({
   const [search, setSearch] = useState(word);
   const [city, setCity] = useState(params.get("city") ?? "");
   const [species, setSpecies] = useState(params.get("species") ?? "");
+  const filterForm = useRef<HTMLFormElement>(null);
   const filters = {
     q: search,
     city,
@@ -443,6 +444,11 @@ export function Records({
   const invitationScope = kind === "invitations" && integer(params.get("ref")) > 0n && ["caretaker", "adoption_editor"].includes(params.get("scope") ?? "")
     ? params.get("scope") : null;
   const rows = invitationScope ? page.rows.filter(row => row.data.scope === invitationScope) : page.rows;
+  const noAdoptionResults = kind === "pets" && !params.get("owner") && !!page.data && !page.loading && !page.error && !rows.length && page.next === 0n && !!(search || city || species);
+  function clearFilters() {
+    setWord(""); setSearch(""); setCity(""); setSpecies("");
+    replaceFilters({ q: "", city: "", species: "" });
+  }
   const create = (
     {
       pets: "pet",
@@ -455,7 +461,7 @@ export function Records({
     <TaskPage
       title={titles[kind] ?? "事项记录"}
       actions={
-        create ? (
+        noAdoptionResults ? <Button kind="primary" onClick={clearFilters}>回到领养列表</Button> : create ? (
           <Button kind="primary" onClick={() => navigate(workflowURL(create))}>
             {kind === "cases"
               ? "发布走失／拾获求助"
@@ -471,6 +477,7 @@ export function Records({
       {["pets", "cases", "offers", "group-directory"].includes(kind) ? (
         <>
           <form
+            ref={filterForm}
             className="search-row"
             onSubmit={(e) => {
               e.preventDefault();
@@ -526,14 +533,12 @@ export function Records({
                 <Empty title="这次还没有合适的结果">
                   <p>可以放宽区域或条件；不把其它城市内容偷偷当成本地结果。</p>
                 </Empty>
+                <Button onClick={() => {
+                  filterForm.current?.scrollIntoView({ block: "start" });
+                  filterForm.current?.querySelector<HTMLInputElement>("input")?.focus();
+                }}>调整筛选</Button>
                 <Button
-                  onClick={() => {
-                    setWord("");
-                    setSearch("");
-                    setCity("");
-                    setSpecies("");
-                    replaceFilters({ q: "", city: "", species: "" });
-                  }}
+                  onClick={clearFilters}
                 >
                   清空条件
                 </Button>

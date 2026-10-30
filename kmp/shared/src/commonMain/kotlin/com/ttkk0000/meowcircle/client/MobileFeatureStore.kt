@@ -46,6 +46,8 @@ data class FeatureState(
     val adoption: MobileRecord<AdoptionBody>? = null, val offer: MobileRecord<OfferBody>? = null,
     val review: MobileRecord<ReviewBody>? = null, val verifications: List<VerificationSummary> = emptyList(),
     val preference: MobileRecord<PreferenceBody>? = null, val subscription: MobileRecord<SubscriptionBody>? = null,
+    val notificationView: NotificationSettingsView = NotificationSettingsView.Preferences,
+    val notificationResult: MobileRecord<PreferenceBody>? = null,
     val expressions: MobileRecord<ExpressionBody>? = null, val catalog: ExpressionCatalog = ExpressionCatalog(),
     val petChoices: PageState<PetBody> = PageState(), val petChoiceLoading: Boolean = false, val petChoiceError: String? = null,
     val dataChoices: PageState<JsonObject> = PageState(), val dataChoiceKind: String = "", val dataChoiceAssistance: Boolean = false,
@@ -197,6 +199,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         mutable.value.route?.takeIf { it != route }?.let(history::add)
         revision++; loading?.cancel(); dismissConfirmation()
         mutable.update { it.copy(route = route, loading = false, error = null, readFailure = null, notice = null, conflict = false,
+            notificationView = NotificationSettingsView.Preferences, notificationResult = null,
             readingDocument = null,groupPreview = null, mapCases = PageState(), diary = PageState(), entry = null, member = null, pet = null, group = null, appointment = null, case = null, lead = null, claim = null, adoption = null,
             offer = null, review = null, verifications = emptyList(), claims = PageState(), leads = PageState(), care = PageState(), careContext = null, invitationOutcome = null, invitation = null,
             unconfirmedResult = route in uncertainRoutes) }
@@ -208,6 +211,15 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         if (mutable.value.busy) return true
         if (mutable.value.invitationOutcome != null) { mutable.update { it.copy(invitationOutcome = null) }; return true }
         if (mutable.value.confirmation != null) { dismissConfirmation(); return true }
+        if (mutable.value.route?.page == FeaturePage.Settings && mutable.value.notificationView != NotificationSettingsView.Preferences) {
+            val state = mutable.value
+            setNotificationView(when (state.notificationView) {
+                NotificationSettingsView.PermissionHelp -> NotificationSettingsView.Permission
+                NotificationSettingsView.Saved -> if (state.notificationResult?.data?.frequency == "digest") NotificationSettingsView.Summary else NotificationSettingsView.Preferences
+                else -> NotificationSettingsView.Preferences
+            })
+            return true
+        }
         val previous = history.removeLastOrNull()
         revision++; loading?.cancel(); mutable.update { it.copy(route = previous, loading = false, error = null, readFailure = null, notice = null,readingDocument = null,groupPreview = null,mapCases = PageState(),diary = PageState(),entry = null,member = null,pet = null,group = null,appointment = null,case = null,claim = null,adoption = null,careContext = null,care = PageState(),offer = null,review = null,invitation = null,unconfirmedResult = previous in uncertainRoutes) }
         if (previous != null) reload()
@@ -246,6 +258,22 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         reload()
     }
     fun notify(message: String) { mutable.update { it.copy(notice = message) }; sendEffect(FeatureStoreEffect.Notice(message)) }
+    fun setNotificationView(view: NotificationSettingsView) {
+        if (mutable.value.route?.page != FeaturePage.Settings || mutable.value.busy || mutable.value.confirmation != null || view == NotificationSettingsView.Saved) return
+        mutable.update { it.copy(notificationView = view) }
+    }
+    /** Called only after the versioned preference write returns a matching record. */
+    fun notificationPreferencesSaved(record: MobileRecord<PreferenceBody>, expected: PreferenceBody, previousVersion: Long) {
+        val route = mutable.value.route ?: return
+        check(route.page == FeaturePage.Settings && record.id > 0 && record.ownerId == owner && record.state == "active" &&
+            record.version > previousVersion && (mutable.value.preference?.id?.let { it == record.id } != false) &&
+            record.data.copy(content = null) == expected.copy(content = null)) {
+            "通知偏好回执与本次设置不一致，请保留原请求并核对"
+        }
+        clearForm(route)
+        mutable.update { it.copy(preference = record, notificationResult = record, notificationView = NotificationSettingsView.Saved, conflict = false) }
+        capture(record.version)
+    }
     fun prepareSensitive(intent: SensitiveIntent) {
         if (!canEditDraft() || mutable.value.route in uncertainRoutes) { notify("请先核对原事项结果，不能另建相同操作"); return }
         sensitive.prepare(intent)
@@ -343,7 +371,9 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         val currentRevision = ++revision
         val currentEpoch = epoch
         loading?.cancel()
-        mutable.update { it.copy(loading = true, error = null, readFailure = null,commandErrorCode = null) }
+        mutable.update { it.copy(loading = true, error = null, readFailure = null,commandErrorCode = null,
+            notificationResult = if(route.page == FeaturePage.Settings) null else it.notificationResult,
+            notificationView = if(route.page == FeaturePage.Settings && it.notificationView == NotificationSettingsView.Saved) NotificationSettingsView.Preferences else it.notificationView) }
         loading = scope.launch {
             fun current() = revision == currentRevision && epoch == currentEpoch
             try {
@@ -483,6 +513,13 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                     // 权限被撤销时立即清除受保护的数据。
                     entry = if (denied(e)) null else it.entry, pet = if (denied(e)) null else it.pet,
                     profile = if (denied(e)) null else it.profile, member = if (denied(e)) null else it.member,
+                    preference = if (denied(e)) null else it.preference,
+                    subscription = if (denied(e)) null else it.subscription,
+                    expressions = if (denied(e)) null else it.expressions,
+                    methods = if (denied(e)) null else it.methods,
+                    eligibility = if (denied(e)) null else it.eligibility,
+                    guardians = if (denied(e)) emptyList() else it.guardians,
+                    notificationResult = if (denied(e)) null else it.notificationResult,
                     case = if (denied(e)) null else it.case, lead = if (denied(e)) null else it.lead, appointment = if (denied(e)) null else it.appointment,
                     offer = if (denied(e)) null else it.offer, review = if (denied(e)) null else it.review,
                     verifications = if (denied(e)) emptyList() else it.verifications,

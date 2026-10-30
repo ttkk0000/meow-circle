@@ -1,0 +1,258 @@
+{
+  "type_checked": false,
+  "runtime_verified": false,
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+      "exit_code": 0,
+      "sha256_lf": "2d3a898a113501ac0969fbad0abd09fa9ccf4f2e3b1fe60575af4c82de8b4221",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/NotificationPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "exit_code": 0,
+      "sha256_lf": "27b5e696fb69bee73b7c67f48604e10b243bceacb7191c26da4e41ac46c241aa",
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 102,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 233,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 297,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 351,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 545,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 572,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 585,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 613,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 665,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 691,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 720,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 736,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 936,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 971,
+            "text": ": Exception"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 100,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 221,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 269,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 323,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 517,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 544,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 557,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 585,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 637,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 663,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 692,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 708,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 908,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 943,
+            "text": ": Exception"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "friendship-detail-loading",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "state-models",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "route-lifecycle",
+            "errors": [
+              {
+                "type": "ERROR",
+                "line": 38,
+                "text": "open"
+              }
+            ],
+            "grammar_limitations": [
+              {
+                "type": "ERROR",
+                "line": 38,
+                "text": "open"
+              }
+            ]
+          },
+          {
+            "label": "confirmation-and-outcome",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "collaborator-loading",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "invitation-detail-loading",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    },
+    {
+      "file": "web-client/src/App.tsx",
+      "exit_code": 0,
+      "sha256_lf": "280efe35ea207ac626af86d104b89edb5562da39b1bfceef05e50640e921e605",
+      "syntax": {
+        "file": "web-client/src/App.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/NotificationPreferences.tsx",
+      "exit_code": 0,
+      "sha256_lf": "6455833ca231c2272931490af9a72b1c7402c7bd870c396c2056122d203656ff",
+      "syntax": {
+        "file": "web-client/src/features/NotificationPreferences.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/WorkflowEditor.tsx",
+      "exit_code": 0,
+      "sha256_lf": "fc830f5a23566902125c423c75f1699f38f58ed83f0a5b8a4c95f9d54541bbf0",
+      "syntax": {
+        "file": "web-client/src/features/WorkflowEditor.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/components/RetrySubmission.tsx",
+      "exit_code": 0,
+      "sha256_lf": "f05a16a8fe824285fceec50eb8021f0ba9cd5f5eb9c2351175e4c7493831a772",
+      "syntax": {
+        "file": "web-client/src/components/RetrySubmission.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/workflows.ts",
+      "exit_code": 0,
+      "sha256_lf": "21324797277314959a6aed10ccfd11d83b701c0b80213451d4e0aa589f338a28",
+      "syntax": {
+        "file": "web-client/src/features/workflows.ts",
+        "errors": []
+      }
+    }
+  ]
+}

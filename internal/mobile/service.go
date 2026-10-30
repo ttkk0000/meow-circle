@@ -228,7 +228,7 @@ func (s *Service) notify(tx Tx, recipient, actor int64, category string, k Kind,
 		if enabled && p.PushPermission && p.Frequency != "off" {
 			push = "queued"
 			if p.Frequency == "digest" {
-				next := s.Now().Truncate(24 * time.Hour).Add(24 * time.Hour)
+				next := nextNotificationDigest(s.Now())
 				deliverAfter = &next
 			}
 		}

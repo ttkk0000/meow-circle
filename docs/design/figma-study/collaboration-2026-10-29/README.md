@@ -17,7 +17,7 @@
 | caretakerUnavailable | 照护权限已失效或不可访问 | `910:357967` | `915:386891` |
 | publisherWorkspace | 获授权的宠物介绍与照片 | `910:357987` | `915:386983` |
 
-首次补录仅核对上述手机／Web16根；该批尝试读取平板、Desktop分组超时后停止，没有据此判断缺稿。2026-10-29合并续作后，已将[此前成功保存并回读的五布局40根证据](../collaboration-exit-2026-10-28/nodes-and-validation.json)补入state.json，已有16根一致，另24根使用原返回ID，没有推算或重复造稿。首次验证保留为previous_validation_checkpoint；本检查点未重新请求Figma。已查看的手机图片继续保留，最终入口细化、五布局截图和运行仍未完成。
+首次补录仅核对上述手机／Web16根；该批尝试读取平板、Desktop分组超时后停止，没有据此判断缺稿。2026-10-29合并续作后，已将[此前成功保存并回读的五布局40根证据](../collaboration-exit-2026-10-28/nodes-and-validation.json)补入state.json，已有16根一致，另24根使用原返回ID，没有推算或重复造稿。首次验证保留为previous_validation_checkpoint；该补录检查点未重新请求Figma。随后[独立设计细化任务](../collaboration-refinement-2026-10-29/README.md)已实际完成40稿入口／标注、照片与结果返回、平板同状态切换，96动作独立回读通过，五布局完整截图已看。两批证据分开，运行仍未完成。
 
 ## 实现入口与权限语义
 

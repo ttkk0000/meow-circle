@@ -27,6 +27,11 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
 
 /** 表单正文独立滚动，主操作保持可达；不会创建第二个业务 Store。 */
 @Composable fun TaskColumn(spacing: Int = 16,content: @Composable ColumnScope.() -> Unit) {
+    TaskActionHost { modifier -> MndForm(modifier,gap = spacing.dp,content = content) }
+}
+
+/** Also hosts persistent recovery actions for independently scrolling lists. */
+@Composable fun TaskActionHost(content: @Composable (Modifier) -> Unit) {
     val actions = remember { mutableStateListOf<Pair<Any,TaskAction>>() }
     val register = remember { { key: Any,value: TaskAction? ->
         val index = actions.indexOfFirst { it.first == key }
@@ -36,7 +41,7 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     } }
     Column(Modifier.fillMaxSize()) {
         CompositionLocalProvider(LocalPrimaryAction provides register) {
-            MndForm(Modifier.weight(1f),gap = spacing.dp,content = content)
+            content(Modifier.weight(1f).fillMaxWidth())
         }
         if(actions.isNotEmpty()) Surface(color = MaterialTheme.colorScheme.surface) {
             Column(Modifier.fillMaxWidth().heightIn(max = 168.dp).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp,vertical = 12.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -95,7 +100,7 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     NavigationRow(title,detail,compact = false,onClick = onClick)
 }
 @Composable fun NavigationRow(title: String,detail: String = "",compact: Boolean,onClick: () -> Unit) {
-    Row(Modifier.fillMaxWidth().clickable(enabled = LocalTaskNavigationEnabled.current,onClick = onClick).heightIn(min = 64.dp).padding(vertical = if(compact) 0.dp else 12.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(if(compact) 8.dp else 12.dp)) {
+    Row(Modifier.fillMaxWidth().clickable(enabled = LocalTaskNavigationEnabled.current,onClick = onClick).heightIn(min = 64.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Column(Modifier.weight(1f),verticalArrangement = Arrangement.spacedBy(4.dp)) { Text(title,style = MaterialTheme.typography.bodyLarge); if(detail.isNotBlank()) Text(detail,color = MaterialTheme.colorScheme.onSurfaceVariant,style = MaterialTheme.typography.bodySmall) }
         DesignIcon("chevron-right",null)
     }
@@ -132,13 +137,14 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
         }
     }
 }
-@Composable fun <T> RecordList(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,emptyText: String = "暂时没有可显示的内容",header: @Composable () -> Unit = {},row: @Composable (MobileRecord<T>) -> Unit) {
+@Composable fun <T> RecordList(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,emptyText: String = "暂时没有可显示的内容",header: @Composable () -> Unit = {},
+    emptyActions: @Composable ColumnScope.() -> Unit = {}, failureActions: @Composable ColumnScope.() -> Unit = {}, row: @Composable (MobileRecord<T>) -> Unit) {
     Column(Modifier.fillMaxSize()) {
     PageRefresh(page)
     LazyColumn(Modifier.weight(1f),contentPadding = PaddingValues(MobileUi.pagePadding),verticalArrangement = Arrangement.spacedBy(MobileUi.sectionGap)) {
         item { Text(title,style = MaterialTheme.typography.titleLarge,fontWeight = FontWeight.Bold) };item { header() }
         items(page.items,key = { it.id }) { row(it) }
-        item { PageFooter(page,retry,more,emptyText,refreshVisible = true) }
+        item { PageFooter(page,retry,more,emptyText,refreshVisible = true,emptyActions = emptyActions,failureActions = failureActions) }
     }
     }
 }
@@ -277,7 +283,7 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
         )
     }
     val codeField: @Composable () -> Unit = {
-        OutlinedTextField(
+        MndOutlinedField(
             value = code,
             onValueChange = onCodeChange,
             modifier = Modifier.fillMaxWidth(),

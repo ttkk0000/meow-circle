@@ -14,6 +14,7 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -66,7 +67,7 @@ fun ConsumerApp(store: MobileStore, pendingLink: PendingTaskLink? = null, openPe
             providerAuth.stage != ProviderAuthStage.Idle -> store.providerAuth.dismiss()
             state.auth.visible -> store.cancelLogin()
             sensitive.stage != SensitiveStage.Idle -> store.features.sensitive.dismiss()
-            features.route != null -> store.features.back()
+            features.route != null -> backFromFeature(store)
             state.publicationConfirmation != null -> store.dismissPublication()
             else -> store.back()
         }
@@ -81,6 +82,26 @@ fun ConsumerApp(store: MobileStore, pendingLink: PendingTaskLink? = null, openPe
             MobileShell(store, state, features, policy, navigationLocked, pendingLink, openPendingLink, dismissPendingLink)
         }
     } } }
+}
+
+private fun backFromFeature(store: MobileStore): Boolean {
+    val f = store.features
+    val state = f.state.value
+    val route = state.route ?: return false
+    if (state.busy) return true
+    if (state.confirmation != null) return f.back()
+    val invitation = state.invitationOutcome ?: state.invitation
+    val left = route.page == FeaturePage.Invitations && invitation != null && invitation.state == "left" &&
+        invitation.data.recipientId == store.state.value.user?.id &&
+        invitation.data.scope in listOf("caretaker", "adoption_editor")
+    val unavailableCare = route.page == FeaturePage.AdoptionWork && route.kind == "care" && !state.loading &&
+        (state.careContext == null || state.adoption == null || state.readFailure != null && state.error != null)
+    if (left || unavailableCare) {
+        if (left) f.finishRoute() else f.closeRoute()
+        store.select(MobileTab.Messages)
+        return true
+    }
+    return f.back()
 }
 
 @Composable
@@ -134,7 +155,7 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                     if (pendingLink != null) dismissPendingLink else store::dismissTaskLink)
                 PendingNotificationBanner(store, state, !navigationLocked && store.canOpenNotification())
                 Row(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                    if (state.publicationConfirmation != null || features.route != null || state.destination != MobileDestination.Home) IconButton(onClick = { if (!f.back()) { if (state.publicationConfirmation != null) store.dismissPublication() else store.back() } }, enabled = !state.busy && !features.busy) { Icon(Icons.Outlined.ArrowBack, "返回") }
+                    if (state.publicationConfirmation != null || features.route != null || state.destination != MobileDestination.Home) IconButton(onClick = { if (!backFromFeature(store)) { if (state.publicationConfirmation != null) store.dismissPublication() else store.back() } }, enabled = !state.busy && !features.busy) { Icon(Icons.Outlined.ArrowBack, "返回") }
                     Column(Modifier.weight(1f).padding(vertical = 12.dp)) {
                         Text(if(features.route == null && state.publicationConfirmation != null) "发布前预览" else if(features.route?.page == FeaturePage.Adult) ageStageTitle(ageState.stage) else if(features.route!=null) featureTitle(features,state.user?.id) else if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                         if (features.route == null && state.destination == MobileDestination.Home && state.tab == MobileTab.Community) Text("meow & doggie", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -260,24 +281,44 @@ fun ContextPane(store: MobileStore, state: MobileState, features: FeatureState, 
 
 @Composable
 private fun HomeContent(store: MobileStore, s: MobileState) {
+    TaskActionHost { modifier -> Box(modifier) {
     when (s.tab) {
         MobileTab.Community -> Feed(store, s)
-        MobileTab.Adoption -> Records(s.pets, "先了解，再决定", { store.refreshHome() }, { store.refreshHome(true) },
-            emptyText = "当前暂无待领养宠物", header = { AdoptionFilters(store,s);Text("领养不是免费买宠。具体条件、健康未知和必要费用都应分别说明。", color = MaterialTheme.colorScheme.onSurfaceVariant) }) { row ->
-            PetCard(store, s, row) { store.open(MobileDestination.Pet(row.id)) }
+        MobileTab.Adoption -> {
+            val filterFocus = remember { androidx.compose.ui.focus.FocusRequester() }
+            val filtered = s.petKeyword.isNotBlank() || s.petCity.isNotBlank() || s.petSpecies.isNotBlank()
+            Records(s.pets, "先了解，再决定", { store.refreshHome() }, { store.refreshHome(true) },
+                emptyText = if (filtered) "这次还没有合适的结果" else "当前暂无待领养宠物",
+                header = { AdoptionFilters(store,s,filterFocus); Text("领养不是免费买宠。具体条件、健康未知和必要费用都应分别说明。", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                emptyActions = { if(filtered) {
+                    FeatureButton("调整筛选") { filterFocus.requestFocus() }
+                    FeatureButton("清空条件") { store.filterPets("", "", "") }
+                } },
+                failureActions = { UnavailableTaskActions(store,s.pets.failure,includeHome = false) }) { row ->
+                PetCard(store, s, row) { store.open(MobileDestination.Pet(row.id)) }
+            }
         }
         MobileTab.Publish -> PublishScreen(store, s)
         MobileTab.Messages -> if (s.user == null) SignInPrompt(store) else InboxScreen(store, s)
         MobileTab.Profile -> if (s.user == null) SignInPrompt(store) else ProfileScreen(store, s)
     }
+    if (s.tab == MobileTab.Adoption && s.pets.empty && (s.petKeyword.isNotBlank() || s.petCity.isNotBlank() || s.petSpecies.isNotBlank()))
+        TaskPrimary("回到领养列表") { store.filterPets("", "", "") }
+    val initialReadFailed = when (s.tab) {
+        MobileTab.Community -> !s.entries.loaded && s.entries.error != null
+        MobileTab.Adoption -> !s.pets.loaded && s.pets.error != null
+        else -> false
+    }
+    if (initialReadFailed) TaskPrimary("回到社区") { store.select(MobileTab.Community) }
+    } }
 }
 
-@Composable private fun AdoptionFilters(store: MobileStore,s: MobileState) {
-    var keyword by remember(s.petKeyword) { mutableStateOf(s.petKeyword) }
-    var city by remember(s.petCity) { mutableStateOf(s.petCity) }
-    var species by remember(s.petSpecies) { mutableStateOf(s.petSpecies) }
+@Composable private fun AdoptionFilters(store: MobileStore,s: MobileState, focus: androidx.compose.ui.focus.FocusRequester) {
+    var keyword by remember(s.petKeyword,s.petCity,s.petSpecies) { mutableStateOf(s.petKeyword) }
+    var city by remember(s.petKeyword,s.petCity,s.petSpecies) { mutableStateOf(s.petCity) }
+    var species by remember(s.petKeyword,s.petCity,s.petSpecies) { mutableStateOf(s.petSpecies) }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        OutlinedTextField(keyword,{ keyword = it },Modifier.fillMaxWidth(),label = { Text("搜索名字、品种或介绍") })
+        MndOutlinedField(keyword,{ keyword = it },Modifier.fillMaxWidth().focusRequester(focus),label = { Text("搜索名字、品种或介绍") })
         CityField(city,{ city = it })
         ChoiceChipBar(listOf("" to "全部","cat" to "猫咪","dog" to "狗狗"),species,{ species = it })
         FeatureButton("按当前条件筛选",!s.pets.loading) { store.filterPets(keyword.trim(),city.trim(),species) }
@@ -296,7 +337,7 @@ private fun Feed(store: MobileStore, s: MobileState) {
         item(span = { GridItemSpan(maxLineSpan) }) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 var query by rememberSessionUiState("feed.query") { s.feedKeyword }
-                OutlinedTextField(query,{ query = it },Modifier.fillMaxWidth(),label = { Text("搜索宠友日常与互助") },trailingIcon = { IconButton({ store.filterFeed(s.feedSpace,query) }) { Icon(Icons.Outlined.Search,"搜索") } },singleLine = true)
+                MndOutlinedField(query,{ query = it },Modifier.fillMaxWidth(),label = { Text("搜索宠友日常与互助") },trailingIcon = { IconButton({ store.filterFeed(s.feedSpace,query) }) { Icon(Icons.Outlined.Search,"搜索") } },singleLine = true)
                 ChoiceChipBar(listOf("community" to "推荐","following" to "关注","circle" to "宠友圈","local" to "同城"),s.feedSpace,{ store.filterFeed(it) },scrollable = true)
                 if(s.feedSpace == "local") CityField(s.feedCity,{ store.filterFeed("local",city = it) },"同城范围")
                 NavigationRow("晒晒今天的小可爱…","照片、日记与宠友分享") { store.select(MobileTab.Publish) }
@@ -322,7 +363,7 @@ private fun Feed(store: MobileStore, s: MobileState) {
                     FeatureButton("看看养宠指南") { store.features.open(FeatureRoute(FeaturePage.Reading, kind = "care-first-cat")) }
                     MndPrimaryButton("晒晒我的宠物") { store.select(MobileTab.Publish) }
                 }
-            } else PageFooter(s.entries, { store.refreshHome() }, { store.refreshHome(true) })
+            } else PageFooter(s.entries, { store.refreshHome() }, { store.refreshHome(true) },failureActions = { UnavailableTaskActions(store,s.entries.failure,includeHome = false) })
         }
     }
     }
@@ -436,7 +477,7 @@ private fun PetDetail(store: MobileStore, s: MobileState) {
             if (s.applying) {
                 SectionTitle("介绍一下你的照护计划")
                 Text("说明居住环境、照护时间和已有宠物。提交前可返回修改。")
-                OutlinedTextField(s.applicationText, store::editApplication, Modifier.fillMaxWidth(), label = { Text("领养申请摘要") }, minLines = 5, enabled = !s.busy)
+                MndOutlinedField(s.applicationText, store::editApplication, Modifier.fillMaxWidth(), label = { Text("领养申请摘要") }, minLines = 5, enabled = !s.busy)
                 Button(onClick = store::submitApplication, enabled = !s.busy && s.applicationText.isNotBlank(), modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("确认并提交申请") }
             } else Button(onClick = store::beginApplication, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("申请领养") }
             OutlinedButton(onClick = store::contactPetOwner, enabled = !s.busy, modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text("联系发布人") }
@@ -530,7 +571,7 @@ private fun ApplicationDetail(store: MobileStore, s: MobileState) {
         if (record.data.note.isNotBlank()) Text("最新说明：${record.data.note}")
         Text("交接由双方分别主动确认；同意申请不会自动转移宠物档案。", color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (s.conflict) OutlinedButton(onClick = { store.dismissConfirmation(); store.reloadDetail() }) { Text("重新载入当前进度") }
-        OutlinedTextField(s.actionNote, store::editActionNote, Modifier.fillMaxWidth(), label = { Text("补充说明") }, minLines = 3, enabled = !s.busy)
+        MndOutlinedField(s.actionNote, store::editActionNote, Modifier.fillMaxWidth(), label = { Text("补充说明") }, minLines = 3, enabled = !s.busy)
         store.adoptionActions().forEach { (action, label) ->
             OutlinedButton(onClick = { store.requestAdoptionAction(action, label) }, enabled = !s.busy && !s.conflict,
                 modifier = Modifier.fillMaxWidth().heightIn(min = MobileUi.actionHeight)) { Text(label) }
@@ -716,7 +757,7 @@ private fun ProfileScreen(store: MobileStore, s: MobileState) {
 @Composable private fun ErrorPanel(error: String, retry: () -> Unit) { Column(Modifier.fillMaxWidth().padding(24.dp), verticalArrangement = Arrangement.spacedBy(MobileUi.sectionGap)) {
     Text(error); OutlinedButton(onClick = retry) { Text("重新载入") }
 } }
-@Composable private fun <T> Records(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,emptyText: String = "暂时没有可显示的内容",header: @Composable () -> Unit = {},row: @Composable (MobileRecord<T>) -> Unit) { RecordList(page,title,retry,more,emptyText,header,row) }
+@Composable private fun <T> Records(page: PageState<T>,title: String,retry: () -> Unit,more: () -> Unit,emptyText: String = "暂时没有可显示的内容",header: @Composable () -> Unit = {},emptyActions: @Composable ColumnScope.() -> Unit = {},failureActions: @Composable ColumnScope.() -> Unit = {},row: @Composable (MobileRecord<T>) -> Unit) { RecordList(page,title,retry,more,emptyText,header,emptyActions,failureActions,row) }
 private fun MobileTab.designIcon(): String = when(this) {
     MobileTab.Community -> "house"; MobileTab.Adoption -> "heart-handshake"; MobileTab.Publish -> "circle-plus"; MobileTab.Messages -> "message-circle"; MobileTab.Profile -> "user-round"
 }

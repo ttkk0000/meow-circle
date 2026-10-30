@@ -120,6 +120,14 @@ data class InviteInput(val scope: String, @SerialName("target_id") val targetId:
 data class PreferenceBody(@SerialName("direct_messages") val directMessages: Boolean = true, val groups: Boolean = true,
     val applications: Boolean = true, val interactions: Boolean = true, val frequency: String = "instant",
     @SerialName("push_permission") val pushPermission: Boolean = false, val content: ContentSubscriptions? = null)
+
+enum class NotificationSettingsView { Preferences, Frequency, Summary, Permission, PermissionHelp, Saved }
+fun notificationFrequencyLabel(frequency: String): String = when (frequency) {
+    "instant" -> "即时通知"
+    "digest" -> "每日汇总 · 19:00"
+    "off" -> "关闭非紧急提醒"
+    else -> "当前频率待核对"
+}
 @Serializable
 data class ExpressionBody(val favorites: List<String> = emptyList(), val recent: List<String> = emptyList())
 @Serializable

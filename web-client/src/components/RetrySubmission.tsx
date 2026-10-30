@@ -79,10 +79,9 @@ export function RetrySubmission({
     setBusy(true);
     setError("");
     try {
-      const headers =
-        draft.access?.type === "safety"
-          ? { "X-Safety-Token": draft.access.token }
-          : undefined;
+      const headers: Record<string, string> = {};
+      if (draft.access?.type === "safety") headers["X-Safety-Token"] = draft.access.token;
+      if (original.path === "preferences") headers["Idempotency-Key"] = draftCommandKey(draft);
       await api.request(original.path, {
         method: original.method,
         body: { ...body, ...(scope ? { reauth_token: grant } : {}) },

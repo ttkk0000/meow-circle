@@ -1,0 +1,13 @@
+{
+  "width": 4656,
+  "height": 3400,
+  "format": "png",
+  "original_width": 4576,
+  "original_height": 3320,
+  "layout": "web",
+  "path": "web-final.png",
+  "sha256": "7c7f28047f7cc398a7d92496b4b068bdc4141653ba77f424c2c6ea1219df7a8f",
+  "bytes": 356077,
+  "transport": "native-inline after URL export could not be downloaded as PNG",
+  "visually_inspected": true
+}

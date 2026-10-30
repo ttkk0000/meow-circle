@@ -34,7 +34,7 @@ import com.ttkk0000.meowcircle.client.*
                 NavigationRow("核对本人成年资格","不会将儿童账号的年龄改成成人"){f.open(FeatureRoute(FeaturePage.Adult,kind="account"))}
                 NavigationRow("验证当前手机号","监护关系仍需分别核对"){f.open(FeatureRoute(FeaturePage.Security))}
             } else {
-                OutlinedTextField(code,{code=it},Modifier.fillMaxWidth(),label={Text("短时单次邀请口令")},visualTransformation=PasswordVisualTransformation(),singleLine=true,enabled=!state.busy)
+                MndOutlinedField(code,{code=it},Modifier.fillMaxWidth(),label={Text("短时单次邀请口令")},visualTransformation=PasswordVisualTransformation(),singleLine=true,enabled=!state.busy)
                 FeatureButton("领取并等待关系核对",agreed && Regex("^[A-Za-z0-9_-]{43}$").matches(code) && !state.busy){val token=code;code="";flow.claim(token,agreed)}
             }
         }

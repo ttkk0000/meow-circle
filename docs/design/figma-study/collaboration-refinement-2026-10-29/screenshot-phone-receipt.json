@@ -1,0 +1,13 @@
+{
+  "width": 1506,
+  "height": 2932,
+  "format": "png",
+  "original_width": 1426,
+  "original_height": 2852,
+  "layout": "phone",
+  "path": "phone-final.png",
+  "sha256": "d1f1a345ebc0ab818884e132abd21f4467d634a3d73e05d7a77cfe469e2c8637",
+  "bytes": 242072,
+  "transport": "native-inline after URL export could not be downloaded as PNG",
+  "visually_inspected": true
+}

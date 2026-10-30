@@ -1,0 +1,128 @@
+{
+  "reader": "existing read-only tree-sitter; Node18 isolated per file 384MB",
+  "type_checked": false,
+  "runtime_verified": false,
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt",
+      "exit_code": 0,
+      "sha256_lf": "4291d1a248f44e03a113c9f2108690a94b6bdffda347eb89d24744198cbad879",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+      "exit_code": 0,
+      "sha256_lf": "2b2ab8fea8c3907183a67b82ad7222179cce6bcbf3204ee417e807b4549b0d2a",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientTheme.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
+      "exit_code": 0,
+      "sha256_lf": "9d8c2d8d3a2213de1670cd215a43a4f46622ae7e73362e472fedc83f28f0ec2a",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "exit_code": 0,
+      "sha256_lf": "289a810252f848c776ad4b3d8c602604ff77f474ccc0dd8a997bed596c12360c",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CityField.kt",
+      "exit_code": 0,
+      "sha256_lf": "26597c0a0321c2e744c5af0a876d1100885b803e0591c50987de64eb93e5500d",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/CityField.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+      "exit_code": 0,
+      "sha256_lf": "34d4d27abd8e2906411fcdb84f124becb480f5283f96400860b646dd1a9e4018",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 744,
+            "text": ";"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 724,
+            "text": ";"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "window-policy-and-shell",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "exit_code": 0,
+      "sha256_lf": "be7482fb6144cca5fda150f73cfb5042b4bfb417bec22aa6dc1d86f1818d9fa3",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/GuardianPages.kt",
+      "exit_code": 0,
+      "sha256_lf": "e2fe7f95f9c186ead3c31a22ae3762a34986e6b97f13085733b84be558318ac9",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/GuardianPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+      "exit_code": 0,
+      "sha256_lf": "1e4add2ad3f1da029aa3c5dfa1d3fc23cbddf8e7da512a24dd607d84cc75c2d1",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PeopleFields.kt",
+      "exit_code": 0,
+      "sha256_lf": "5459eeb95020ff1c7bf7483113628f92b9dc07acf2b2f304a69c8983b16536bf",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PeopleFields.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+      "exit_code": 0,
+      "sha256_lf": "39370be59ecc54dd2f4ce275d6e7953888d4850ff7a16104c27fec2dc895f5f8",
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+        "errors": []
+      }
+    }
+  ]
+}

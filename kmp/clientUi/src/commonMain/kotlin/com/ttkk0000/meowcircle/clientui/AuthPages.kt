@@ -41,9 +41,9 @@ import com.ttkk0000.meowcircle.client.*
                     Text(when(mode) { "email" -> "邮箱验证码登录"; "phone" -> "已绑定手机登录"; "register" -> "邮箱注册"; else -> "邮箱恢复" },style = MaterialTheme.typography.titleMedium)
                     TextButton({ changeMode("password") }, enabled = !busy) { Text("密码登录") }
                 }
-                OutlinedTextField(identifier,{ identifier = it },Modifier.fillMaxWidth(),label = { Text(when(mode) { "password" -> "账号名 / 邮箱 / 手机号"; "phone" -> "已绑定手机号"; else -> "邮箱" }) },singleLine = true,enabled = !busy)
-                if(mode == "register") OutlinedTextField(username,{ username = it },Modifier.fillMaxWidth(),label = { Text("唯一账号名") },singleLine = true,enabled = !busy)
-                if(mode in listOf("password","register","recover")) OutlinedTextField(password,{ password = it },Modifier.fillMaxWidth(),label = { Text(if(mode == "recover") "新密码（至少10字节）" else "密码") },visualTransformation = PasswordVisualTransformation(),singleLine = true,enabled = !busy)
+                MndOutlinedField(identifier,{ identifier = it },Modifier.fillMaxWidth(),label = { Text(when(mode) { "password" -> "账号名 / 邮箱 / 手机号"; "phone" -> "已绑定手机号"; else -> "邮箱" }) },singleLine = true,enabled = !busy)
+                if(mode == "register") MndOutlinedField(username,{ username = it },Modifier.fillMaxWidth(),label = { Text("唯一账号名") },singleLine = true,enabled = !busy)
+                if(mode in listOf("password","register","recover")) MndOutlinedField(password,{ password = it },Modifier.fillMaxWidth(),label = { Text(if(mode == "recover") "新密码（至少10字节）" else "密码") },visualTransformation = PasswordVisualTransformation(),singleLine = true,enabled = !busy)
                 if(mode != "password") {
                     val channel = if(mode == "phone") s.capabilities.sms else s.capabilities.email
                     OtpVerificationFields(

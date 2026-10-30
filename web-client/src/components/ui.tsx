@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { api } from "../core/api";
 import { badge, integer } from "../core/wire";
 import { navigate } from "../core/router";
@@ -7,6 +7,8 @@ import { readStateCopy, type ReadFailure } from "../core/readState";
 
 const scrollMemory = new Map<string, number>();
 let scrollEpoch = -1;
+export const TaskBackContext = createContext<(target: string | (() => void)) => () => void>(() => () => {});
+const TaskFallbackContext = createContext<(() => () => void) | null>(null);
 
 export function Icon({
   name,
@@ -114,12 +116,17 @@ export function ReadFailureCard({
   error,
   readAt,
   onRetry,
+  persistHome = true,
 }: {
   failure?: ReadFailure;
   error: string;
   readAt?: number;
   onRetry?: () => void;
+  persistHome?: boolean;
 }) {
+  const registerFallback = useContext(TaskFallbackContext);
+  const persistent = persistHome && !!registerFallback;
+  useEffect(() => persistent ? registerFallback!() : undefined, [persistent, registerFallback]);
   const copy = readStateCopy[failure];
   const unavailable = ["signin", "forbidden", "unavailable"].includes(failure);
   return (
@@ -142,9 +149,9 @@ export function ReadFailureCard({
           <Button kind="quiet" onClick={() => navigate("/recovery")}>
             查看草稿与待核对操作
           </Button>
-          <Button kind="primary" onClick={() => navigate("/")}>
+          {!persistent ? <Button kind="primary" onClick={() => navigate("/")}>
             回到社区
-          </Button>
+          </Button> : null}
         </>
       ) : null}
       {unavailable ? (
@@ -162,9 +169,9 @@ export function ReadFailureCard({
           <Button kind="quiet" onClick={() => navigate("/pets")}>
             找找其他领养信息
           </Button>
-          <Button kind="primary" onClick={() => navigate("/")}>
+          {!persistent ? <Button kind="primary" onClick={() => navigate("/")}>
             回到社区
-          </Button>
+          </Button> : null}
         </>
       ) : null}
     </section>
@@ -212,14 +219,29 @@ export function TaskPage({
   actions,
   subtitle,
   scrollScope = "task",
+  backTo,
+  onBack,
 }: {
   title: string;
   children: ReactNode;
   actions?: ReactNode;
   subtitle?: string;
   scrollScope?: string;
+  backTo?: string;
+  onBack?: () => void;
 }) {
   const session = useSession();
+  const registerBack = useContext(TaskBackContext);
+  const backHandler = useRef(onBack);
+  backHandler.current = onBack;
+  const customBack = !!onBack;
+  const [fallbacks, setFallbacks] = useState(0);
+  const registerFallback = useCallback(() => {
+    setFallbacks(count => count + 1);
+    return () => setFallbacks(count => Math.max(0, count - 1));
+  }, []);
+  useEffect(() => backTo || customBack ? registerBack(backTo ?? (() => backHandler.current?.())) : undefined,
+    [backTo, customBack, registerBack]);
   const scroller = useRef<HTMLDivElement>(null);
   const scrollKey = `${session.user?.id ?? 0n}|${location.pathname}${location.search}|${scrollScope}`;
   useEffect(() => {
@@ -268,12 +290,12 @@ export function TaskPage({
         <div className="task-content">
           {title ? <h1>{title}</h1> : null}
           {subtitle ? <p className="muted">{subtitle}</p> : null}
-          {children}
+          <TaskFallbackContext.Provider value={registerFallback}>{children}</TaskFallbackContext.Provider>
         </div>
       </div>
-      {actions ? (
+      {fallbacks > 0 || actions ? (
         <footer className="task-actions">
-          <div>{actions}</div>
+          <div>{fallbacks > 0 ? <Button kind="primary" onClick={() => navigate("/")}>回到社区</Button> : actions}</div>
         </footer>
       ) : null}
     </section>
@@ -289,6 +311,7 @@ export function Field({
   hint,
   autoComplete,
   maxLength,
+  error,
 }: {
   label: string;
   value: string;
@@ -299,15 +322,18 @@ export function Field({
   hint?: string;
   autoComplete?: string;
   maxLength?: number;
+  error?: string;
 }) {
   const id = useId();
+  const describedBy = [hint ? `${id}-hint` : "", error ? `${id}-error` : ""].filter(Boolean).join(" ") || undefined;
   return (
     <label className="field" htmlFor={id}>
       <span>{label}</span>
       {multiline ? (
         <textarea
           id={id}
-          aria-describedby={hint ? `${id}-hint` : undefined}
+          aria-describedby={describedBy}
+          aria-invalid={error ? true : undefined}
           rows={4}
           maxLength={maxLength}
           value={value}
@@ -318,7 +344,8 @@ export function Field({
         <input
           id={id}
           maxLength={maxLength}
-          aria-describedby={hint ? `${id}-hint` : undefined}
+          aria-describedby={describedBy}
+          aria-invalid={error ? true : undefined}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -329,6 +356,7 @@ export function Field({
         />
       )}{" "}
       {hint ? <small id={`${id}-hint`}>{hint}</small> : null}
+      {error ? <small className="field-error" id={`${id}-error`}>{error}</small> : null}
     </label>
   );
 }
@@ -426,7 +454,7 @@ export function Modal({
           关闭
         </Button>
       </header>
-      <div className="dialog-content">{children}</div>
+      <TaskFallbackContext.Provider value={null}><div className="dialog-content">{children}</div></TaskFallbackContext.Provider>
       <footer className="dialog-actions">{actions}</footer>
     </dialog>
   );
@@ -509,6 +537,7 @@ export function QueryState({
           failure={failure}
           readAt={readAt}
           onRetry={onRetry}
+          persistHome={!keepContent}
         />
       ) : null}
       {!error || keepContent ? children : null}

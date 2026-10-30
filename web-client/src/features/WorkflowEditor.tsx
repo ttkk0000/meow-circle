@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   AppointmentCancelTask,
   AppointmentVersionReview,
@@ -30,7 +30,8 @@ import {
 } from "../core/drafts";
 import { encodeWire, integer, key, parseWire } from "../core/wire";
 import { navigate } from "../core/router";
-import { invalidateQueries } from "../core/query";
+import { invalidateQueries, replaceQueryData } from "../core/query";
+import { NotificationPreferences, preferenceValues, validPreference, preferenceReceipt, type NotificationView } from "./NotificationPreferences";
 import { useSession } from "../core/session";
 import { preparePhoto, movePhoto } from "../core/photos";
 import {
@@ -127,9 +128,13 @@ function contractValue(value: unknown, raw: Schema): unknown {
 export function WorkflowEditor({
   flow,
   context,
+  readBlocked = false,
+  readNotice,
 }: {
   flow: string;
   context: Context;
+  readBlocked?: boolean;
+  readNotice?: ReactNode;
 }) {
   const workflow = workflows[flow];
   const session = useSession();
@@ -143,6 +148,8 @@ export function WorkflowEditor({
   const [error, setError] = useState("");
   const [commandCode, setCommandCode] = useState("");
   const [notice, setNotice] = useState("");
+  const [notificationView, setNotificationView] = useState<NotificationView>("preferences");
+  const [notificationResult, setNotificationResult] = useState<RecordData>();
   const [busy, setBusy] = useState(false);
   const [restoring, setRestoring] = useState(true);
   const [prepared, setPrepared] = useState<Prepared>();
@@ -211,6 +218,8 @@ export function WorkflowEditor({
     setLeadStage("form");
     setSourceReview(false);
     setSourceResult(undefined);
+    setNotificationView("preferences");
+    setNotificationResult(undefined);
     setError("");
     void readDraft(owner, route)
       .then(async (saved) => {
@@ -459,6 +468,7 @@ export function WorkflowEditor({
       !current ||
       !workflow ||
       busy ||
+      readBlocked ||
       blocked.current ||
       conflict ||
       current.uncertain
@@ -476,8 +486,11 @@ export function WorkflowEditor({
     try {
       if (current.photos.some((p) => !p.mediaId) || uploading.size)
         throw new Error("请先完成原照片上传，失败照片可按原编号重试");
+      const values = flow === "settings" ? { ...current.values, preference: preferenceValues(current.values.preference) } : current.values;
+      if (flow === "settings" && !validPreference(values.preference as Record<string, unknown>))
+        throw Error("当前通知偏好无法识别，请保留输入并重新读取当前设置。");
       const body = contractValue(
-        current.values,
+        values,
         schemas[workflow.schema],
       ) as Record<string, unknown>;
       const properties = schemas[workflow.schema]?.properties ?? {};
@@ -908,6 +921,7 @@ export function WorkflowEditor({
       !prepared ||
       (!agreed && !(flow === "lead" && leadConfirmed)) ||
       busy ||
+      readBlocked ||
       (prepared.scope && !grant) ||
       !latest.current || latest.current.uncertain || conflict || blocked.current
     )
@@ -950,6 +964,7 @@ export function WorkflowEditor({
       if (!currentTask()) return;
       sent = true;
       const headers: Record<string, string> = {};
+      if (flow === "settings") headers["Idempotency-Key"] = latest.current!.requestId;
       if (flow === "safety")
         headers["X-Safety-Token"] = latest.current!.access!.token;
       const result = await api.request<RecordData | { id?: bigint }>(
@@ -957,6 +972,8 @@ export function WorkflowEditor({
         { method: prepared.method, body, headers, owner },
       );
       if (!currentTask()) return;
+      const settingsResult = flow === "settings" ? preferenceReceipt(result, prepared.body.preference as Record<string, unknown>, owner,
+        latest.current!.baseVersion, context.record?.id) : undefined;
       const current = latest.current!;
       if (current.access) {
         const recovery = newDraft(0n, `capability:${current.requestId}`);
@@ -969,6 +986,14 @@ export function WorkflowEditor({
       replace(cleared);
       revision.current = cleared.revision;
       setPrepared(undefined);
+      if (settingsResult) {
+        replace({ ...cleared, baseVersion: settingsResult.version, values: { preference: settingsResult.data } });
+        setAgreed(false);
+        setNotificationResult(settingsResult);
+        setNotificationView("saved");
+        replaceQueryData("preferences", { items: [settingsResult], next_cursor: 0n });
+        return;
+      }
       invalidateQueries();
       if (flow === "data" && body.type === "close_account") {
         api.endSession();
@@ -1345,6 +1370,28 @@ export function WorkflowEditor({
       {error ? <Notice title={error} error /> : null}
     </>
   ) : null;
+  if (flow === "settings") {
+    const locked = busy || readBlocked || restoring || !draft || !!prepared || !!draft?.uncertain || blocked.current || conflict;
+    const changePreferences = (change: Record<string, unknown>) => update(old => ({ ...old,
+      values: { ...old.values, preference: { ...preferenceValues(old.values.preference), ...change } }, requestId: key() }));
+    return <>
+      <NotificationPreferences value={preferenceValues(draft?.values.preference)} view={notificationView} result={notificationResult}
+        disabled={locked} busy={busy} onChange={changePreferences}
+        onView={view => { if (!busy) setNotificationView(view); }}
+        onSave={frequency => { if (locked) return; if (frequency) changePreferences({ frequency }); void prepare(); }}>
+        {restoring ? <p role="status">正在恢复本机通知偏好…</p> : null}
+        {readNotice}
+        {conflictReview}
+        {error ? <Notice title={error} error /> : null}
+        {blocked.current ? <Notice title="本机草稿发生变化">请到恢复中心核对已保存版本，本页不会覆盖另一个页面的输入。<RowLink title="查看本机草稿" to="/recovery" /></Notice> : null}
+        {draft?.uncertain ? <Notice title="原操作结果待核对">保留原内容、版本与请求编号，不重复提交。<RowLink title="核对原操作" to="/recovery" /></Notice> : null}
+      </NotificationPreferences>
+      {prepared ? <Modal title="核对通知偏好" busy={busy} onClose={() => { setPrepared(undefined); setAgreed(false); }}
+        actions={<Button kind="primary" disabled={busy || readBlocked || !agreed || !!draft?.uncertain || conflict || blocked.current} onClick={() => void submit()}>确认保存</Button>}>
+        {preparedReview}
+      </Modal> : null}
+    </>;
+  }
   const reviewAction = context.params.get("action") ?? "";
   const fullPageReview = flow === "data" || flow === "return-action" ||
     flow === "adoption-action" && ["propose_trial", "confirm_trial", "confirm_handover"].includes(reviewAction) ||
@@ -1402,6 +1449,7 @@ export function WorkflowEditor({
           kind="primary"
           disabled={
             busy ||
+            readBlocked ||
             restoring ||
             !draft ||
             !!draft.uncertain ||
@@ -1417,6 +1465,7 @@ export function WorkflowEditor({
         </Button>
       }
     >
+      {readNotice}
       {flow === "lead-assessment" ? (
         <Notice
           title={

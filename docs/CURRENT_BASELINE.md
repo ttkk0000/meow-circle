@@ -6,6 +6,8 @@
 
 ## 源码事实
 
+当前未提交批次：[严格按Figma分批实施](client/FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)已记录三批，包含通知14状态、91份Web源码与44份公共UI。源码／静态层完成项不等于全量视觉或运行通过。
+
 | 维度 | 当前值 | 读取依据 |
 |---|---|---|
 | OpenAPI Paths / Operations | 255 / 288 | [OpenAPI](api/mobile-v2.openapi.json)，Operations 仅计 HTTP 方法 |
@@ -14,14 +16,14 @@
 | SQL 迁移 | 13 份，001–013 | [migrations](../migrations)，不含 backfill |
 | mobile 业务聚合表 | 45 张 | [Kind枚举](../internal/mobile/repository.go)；008通过SQL循环创建10张，不能只数CREATE TABLE字面量 |
 | 额外技术表 | mnd_ops_records、mnd_worker_checkpoints | 010 / 012，不计入45张mobile表 |
-| shared / clientUi 公共 Kotlin 文件 | 29 / 43 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件；本批新增发布按钮与退出页面 |
+| shared / clientUi 公共 Kotlin 文件 | 29 / 44 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件；本批新增发布按钮、退出与通知专用页面 |
 | FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |
 | Worker 接受的作业名 | 8 类 | [ValidJob](../internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |
-| Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；增量五布局40根已合并此前保存回读证据，最终细化／全布局视觉仍待；另有角色18稿、业务后台13稿、运维14稿 |
+| Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；增量五布局40根已完成[最终细化、96动作回读与五布局截图](design/figma-study/collaboration-refinement-2026-10-29/README.md)，全量748状态逐端视觉／运行仍待；另有角色18稿、业务后台13稿、运维14稿 |
 
 远端已提交的[设计与文档详细完善](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)已纳入本次合并：后台增加39任务状态及1评审索引，协作8状态完成手机／Web来源补录，消费者追踪748条。消息分类与待办等现有源码差距已明确列账，没有通过文档修订冒充业务接线完成。
 
-当前新增批次见[设计与代码续作](client/CONTINUE_DESIGN_CODE_2026_10_28.md)、[后台角色实现](client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；五布局40份新增协作稿独立记账，最终细化受审批额度阻塞。[source-baseline.json](figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。这些是源码统计，不是构建、联调或发布成功证据。
+当前新增批次见[设计与代码续作](client/CONTINUE_DESIGN_CODE_2026_10_28.md)、[后台角色实现](client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；五布局40份协作稿独立记账，2026-10-29已通过正常工具完成原五项收尾，审批额度问题保留为历史。本轮还补10照片返回、15结果返回与16平板同状态切换，96动作独立回读通过，五张完整稿图已查看，未新增消费者状态或业务源码。[source-baseline.json](figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。这些事实不是构建、联调或发布成功证据。
 
 续作已补邀请详情／限定事项列表、退出／撤销全页、失权／410清理与Web试养／接回／预约完整核对；[本批13旧＋8新状态源码分支](client/collaboration-page-source-map-2026-10-28.json)单列，不将748条索引视为整体完成。最新Web90份TS/TSX／407本地引用；资源引用只读核对通过，Node18语法读取30份正常退出（24完整无诊断＋6基线对照／片段），Node24失败仍留历史，未运行验收。
 

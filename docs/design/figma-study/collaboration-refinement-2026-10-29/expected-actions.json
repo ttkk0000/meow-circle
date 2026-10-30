@@ -1,0 +1,846 @@
+[
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357846",
+    "id": "910:357861",
+    "kind": "required",
+    "action": "NODE",
+    "target": "910:357867"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357846",
+    "id": "910:357859",
+    "kind": "required",
+    "action": "NODE",
+    "target": "240:368338"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357867",
+    "id": "910:357882",
+    "kind": "required",
+    "action": "NODE",
+    "target": "56:61"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357887",
+    "id": "910:357902",
+    "kind": "required",
+    "action": "NODE",
+    "target": "910:357908"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357887",
+    "id": "910:357900",
+    "kind": "required",
+    "action": "NODE",
+    "target": "245:370292"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357908",
+    "id": "910:357922",
+    "kind": "required",
+    "action": "NODE",
+    "target": "56:61"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357927",
+    "id": "910:358039",
+    "kind": "required",
+    "action": "NODE",
+    "target": "240:368338"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357947",
+    "id": "938:357889",
+    "kind": "required",
+    "action": "NODE",
+    "target": "240:368338"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357967",
+    "id": "910:357982",
+    "kind": "required",
+    "action": "NODE",
+    "target": "56:61"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357987",
+    "id": "910:358042",
+    "kind": "required",
+    "action": "NODE",
+    "target": "245:370292"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357987",
+    "id": "910:358016",
+    "kind": "required",
+    "action": "NODE",
+    "target": "142:2871"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386338",
+    "id": "915:386370",
+    "kind": "required",
+    "action": "NODE",
+    "target": "915:386431"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386338",
+    "id": "915:386367",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379060"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386431",
+    "id": "915:386463",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379700"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386523",
+    "id": "915:386555",
+    "kind": "required",
+    "action": "NODE",
+    "target": "915:386616"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386523",
+    "id": "915:386552",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379092"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386616",
+    "id": "915:386647",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379700"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386707",
+    "id": "915:387107",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379060"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386799",
+    "id": "915:387113",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379060"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386891",
+    "id": "915:386923",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379700"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386983",
+    "id": "915:387110",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379092"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386983",
+    "id": "915:387084",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:380380"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:379927",
+    "id": "916:379963",
+    "kind": "required",
+    "action": "NODE",
+    "target": "916:380024"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:379927",
+    "id": "916:379960",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379061"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380024",
+    "id": "916:380060",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379701"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380120",
+    "id": "916:380156",
+    "kind": "required",
+    "action": "NODE",
+    "target": "916:380217"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380120",
+    "id": "916:380153",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379093"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380217",
+    "id": "916:380252",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379701"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380312",
+    "id": "916:380728",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379061"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380408",
+    "id": "916:380734",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379061"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380504",
+    "id": "916:380540",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379701"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380600",
+    "id": "916:380731",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379093"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380600",
+    "id": "916:380705",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:380381"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127483",
+    "id": "916:1127512",
+    "kind": "required",
+    "action": "NODE",
+    "target": "916:1127549"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127483",
+    "id": "916:1127509",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379062"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127549",
+    "id": "916:1127578",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379702"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127614",
+    "id": "916:1127643",
+    "kind": "required",
+    "action": "NODE",
+    "target": "916:1127680"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127614",
+    "id": "916:1127640",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379094"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127680",
+    "id": "916:1127708",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379702"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127744",
+    "id": "916:1128036",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379062"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127809",
+    "id": "916:1128042",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379062"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127874",
+    "id": "916:1127903",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379702"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127939",
+    "id": "916:1128039",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379094"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127939",
+    "id": "916:1128013",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:380382"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128048",
+    "id": "916:1128085",
+    "kind": "required",
+    "action": "NODE",
+    "target": "916:1128147"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128048",
+    "id": "916:1128082",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379063"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128147",
+    "id": "916:1128184",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379703"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128245",
+    "id": "916:1128282",
+    "kind": "required",
+    "action": "NODE",
+    "target": "916:1128344"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128245",
+    "id": "916:1128279",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379095"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128344",
+    "id": "916:1128380",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379703"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128441",
+    "id": "916:1128865",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379063"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128539",
+    "id": "916:1128871",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379063"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128637",
+    "id": "916:1128674",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379703"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128735",
+    "id": "916:1128868",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:379095"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128735",
+    "id": "916:1128842",
+    "kind": "required",
+    "action": "NODE",
+    "target": "311:380383"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "id": "144:4354",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "id": "144:4351",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "id": "317:326223",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "id": "317:326233",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "id": "317:326323",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "id": "317:326333",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "id": "317:326394",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "id": "317:326404",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "id": "317:326492",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "id": "317:326502",
+    "kind": "photoReturn",
+    "action": "BACK"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357867",
+    "id": "910:357872",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "56:61"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357908",
+    "id": "910:357913",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "56:61"
+  },
+  {
+    "page": "56:25",
+    "layout": "phone",
+    "root": "910:357967",
+    "id": "910:357972",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "56:61"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386431",
+    "id": "915:386452",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379700"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386616",
+    "id": "915:386637",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379700"
+  },
+  {
+    "page": "403:2",
+    "layout": "web",
+    "root": "915:386891",
+    "id": "915:386912",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379700"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380024",
+    "id": "916:380049",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379701"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380217",
+    "id": "916:380242",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379701"
+  },
+  {
+    "page": "403:4",
+    "layout": "desktop",
+    "root": "916:380504",
+    "id": "916:380529",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379701"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127549",
+    "id": "916:1127567",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379702"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127680",
+    "id": "916:1127698",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379702"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127874",
+    "id": "916:1127892",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379702"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127483",
+    "id": "916:1127488",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1128048"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127549",
+    "id": "916:1127554",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1128147"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127614",
+    "id": "916:1127619",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1128245"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127680",
+    "id": "916:1127685",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1128344"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127744",
+    "id": "916:1127749",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1128441"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127809",
+    "id": "916:1127814",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1128539"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127874",
+    "id": "916:1127879",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1128637"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletP",
+    "root": "916:1127939",
+    "id": "916:1127944",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1128735"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128147",
+    "id": "916:1128173",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379703"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128344",
+    "id": "916:1128370",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379703"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128637",
+    "id": "916:1128663",
+    "kind": "terminalBack",
+    "action": "NODE",
+    "target": "311:379703"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128048",
+    "id": "916:1128053",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1127483"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128147",
+    "id": "916:1128152",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1127549"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128245",
+    "id": "916:1128250",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1127614"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128344",
+    "id": "916:1128349",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1127680"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128441",
+    "id": "916:1128446",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1127744"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128539",
+    "id": "916:1128544",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1127809"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128637",
+    "id": "916:1128642",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1127874"
+  },
+  {
+    "page": "403:3",
+    "layout": "tabletL",
+    "root": "916:1128735",
+    "id": "916:1128740",
+    "kind": "rotation",
+    "action": "NODE",
+    "target": "916:1127939"
+  }
+]
