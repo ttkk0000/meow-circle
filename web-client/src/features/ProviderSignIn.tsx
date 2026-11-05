@@ -1,27 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import { api, explain, HttpError, type User } from "../core/api";
-import { useSession } from "../core/session";
-import {
-  providerConfiguration,
-  providerPopup,
-  type ProviderCallback,
-} from "../core/provider";
-import {
-  Button,
-  Card,
-  Check,
-  Choices,
-  Field,
-  Icon,
-  Modal,
-  Notice,
-  RowLink,
-  PrivateImage,
-} from "../components/ui";
-import { LegalLinks, termsURL, privacyURL } from "../components/AuthPolicies";
-import { integer } from "../core/wire";
-import { AccountConflict } from "../components/AccountConflict";
-import type { Capabilities } from "./AuthDialog";
+import {useEffect, useRef, useState} from "react";
+import {api, explain, HttpError, type User} from "../core/api";
+import {useSession} from "../core/session";
+import {type ProviderCallback, providerConfiguration, providerPopup, ProviderPopupError,} from "../core/provider";
+import {Button, Card, Check, Field, Icon, Modal, Notice, PrivateImage, RowLink,} from "../components/ui";
+import {LegalLinks, privacyURL, termsURL} from "../components/AuthPolicies";
+import {integer} from "../core/wire";
+import {AccountConflictTask} from "../components/AccountConflict";
+import {AuthRecovery} from "./AuthRecovery";
+import type {Capabilities} from "./AuthDialog";
+import {AuthInformation, FirstAccountContent} from "./AuthInformation";
+import {navigate} from "../core/router";
 
 type Stage =
   | "consent"
@@ -31,6 +19,7 @@ type Stage =
   | "create-review"
   | "cancelled"
   | "expired"
+  | "unavailable"
   | "conflict"
   | "existing"
   | "link-review"
@@ -38,7 +27,7 @@ type Stage =
   | "unknown"
   | "failed";
 interface ProviderResult {
-  login?: { user: User };
+  login?: { user: User; created?: boolean };
   needs_account_choice: boolean;
   resolution_token: string;
 }
@@ -79,24 +68,30 @@ export function ProviderSignIn({
   onBack,
   onClose,
   capabilities,
+  onManageAccount,
+  onAuthenticated,
 }: {
   provider: string;
   onBack: () => void;
   onClose: () => void;
   capabilities?: Capabilities;
+  onManageAccount?: () => void;
+  onAuthenticated?: (created: boolean) => void;
 }) {
   const configuration = providerConfiguration(provider);
   const session = useSession();
   const [stage, setStage] = useState<Stage>("consent");
+  const [information, setInformation] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [agreed, setAgreed] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
+  const [sent, setSent] = useState<{ address: string; purpose: string }>();
   const [phone, setPhone] = useState("");
-  const [channel, setChannel] = useState("password");
+  const [channel, setChannel] = useState("phone");
+  const [recoveryHelp, setRecoveryHelp] = useState(false);
   const [until, setUntil] = useState(0);
   const [now, setNow] = useState(Date.now());
   const mounted = useRef(true);
@@ -108,7 +103,7 @@ export function ProviderSignIn({
   const challenge = useRef("");
   const generation = useRef(0);
   const cancelPopup = useRef<(() => void) | undefined>(undefined);
-  const name = provider === "wechat" ? "微信" : "QQ";
+  const name = provider === "wechat" ? "微信" : provider === "apple" ? "Apple" : "QQ";
   function clear() {
     generation.current++;
     resolution.current = "";
@@ -116,6 +111,10 @@ export function ProviderSignIn({
     challenge.current = "";
     cancelPopup.current?.();
     cancelPopup.current = undefined;
+  }
+  function completed(created: boolean) {
+    clear();
+    if (onAuthenticated) onAuthenticated(created); else onClose();
   }
   useEffect(() => {
     mounted.current = true;
@@ -186,13 +185,13 @@ export function ProviderSignIn({
       if (mounted.current) setBusy(false);
     }
   }
-  function close() {
-    if (busy && stage !== "authorizing") return;
+  function leave(after: () => void) {
+    if (working.current && stage !== "authorizing") return;
     const original = challenge.current;
     clear();
     setPassword("");
     setCode("");
-    onBack();
+    after();
     if (original)
       void api
         .request("auth/oauth-finish", {
@@ -200,6 +199,11 @@ export function ProviderSignIn({
           body: { state: original, credential: {}, cancelled: true },
         })
         .catch(() => {});
+  }
+  function close() { leave(onBack); }
+  function accountChoice() {
+    if (working.current) return;
+    proof.current = ""; setPassword(""); setCode(""); setPhone(""); setSent(undefined); setError(""); setStage("choice");
   }
   function start() {
     if (
@@ -216,6 +220,7 @@ export function ProviderSignIn({
       "popup,width=520,height=720",
     );
     if (!popup) {
+      setStage("unavailable");
       setError("浏览器阻止了授权窗口，请允许本次弹窗后重试");
       return;
     }
@@ -272,8 +277,7 @@ export function ProviderSignIn({
           setStage("cancelled");
           setError("已取消本次官方授权，没有创建或关联账号");
         } else if (value.login) {
-          clear();
-          onClose();
+          completed(value.login.created === true);
         } else if (value.needs_account_choice && value.resolution_token) {
           resolution.current = value.resolution_token;
           setStage("choice");
@@ -285,7 +289,7 @@ export function ProviderSignIn({
         popup.close();
         if (mounted.current && attempt === generation.current)
           setStage(
-            failure instanceof HttpError && failure.status === 401
+            failure instanceof ProviderPopupError ? failure.kind : failure instanceof HttpError && failure.status === 401
               ? "expired"
               : "failed",
           );
@@ -295,35 +299,67 @@ export function ProviderSignIn({
   }
   async function sendCode(reauth = false) {
     const email = !reauth && channel === "email";
+    const address = (reauth ? phone : identifier).trim();
+    const purpose = reauth ? "reauth" : email ? "email_login" : "login";
     const result = await api.request<{ retry_after_seconds: bigint }>(
       email ? "auth/email-otp" : "auth/otp",
       {
         method: "POST",
         body: email
-          ? { email: identifier.trim(), purpose: "email_login" }
+          ? { email: address, purpose }
           : {
-              phone: reauth ? phone.trim() : identifier.trim(),
-              purpose: reauth ? "reauth" : "login",
+              phone: address,
+              purpose,
             },
       },
     );
+    if (!mounted.current) return;
+    setSent({ address, purpose }); setCode("");
     setUntil(
       Date.now() + Math.max(1, Number(result.retry_after_seconds)) * 1000,
     );
   }
   const waiting = Math.max(0, Math.ceil((until - now) / 1000));
+  const existingOtpReady = !!code.trim() && sent?.address === identifier.trim() && sent.purpose === (channel === "email" ? "email_login" : "login");
+  const linkOtpReady = !!code.trim() && sent?.address === phone.trim() && sent.purpose === "reauth";
   const available =
     !!configuration &&
     !!capabilities?.providers?.includes(provider) &&
     typeof BroadcastChannel !== "undefined";
+  if (information) return <AuthInformation page="providers" onBack={() => setInformation(false)} onPage={() => {}}
+    onExit={close} onManage={() => {
+      clear();
+      if (onManageAccount) onManageAccount();
+      else { if (api.session.authenticated) onClose(); else onBack(); navigate("/security"); }
+    }} />;
+  const unavailable = stage === "unavailable" || stage === "consent" &&
+    (!configuration || typeof BroadcastChannel === "undefined" || !!capabilities && !capabilities.providers.includes(provider));
+  if ((session.user?.id ?? 0n) !== owner.current) return null;
+  if (recoveryHelp) return <AuthRecovery key={api.epoch} onBack={() => setRecoveryHelp(false)} onClose={() => leave(onClose)}
+    onSupplement={route => { leave(onClose); navigate(route); }} />;
+  if (stage === "conflict") return <AccountConflictTask busy={busy} hasAccount={session.authenticated} onReturn={() => leave(onClose)}
+    onOther={close} onRecovery={() => { clear(); setRecoveryHelp(true); }} />;
+  if (unavailable || stage === "cancelled" || stage === "expired") {
+    const title = unavailable ? "暂时无法使用这种方式" : stage === "cancelled" ? "已取消授权" : "授权已失效";
+    return <Modal title={title} task busy={busy} onClose={close}
+      actions={<Button kind="primary" disabled={busy} onClick={close}>{unavailable ? "选择其他方式" : stage === "cancelled" ? "返回登录" : "重新登录"}</Button>}>
+      <div className="auth-task-content">
+        <h1>{title}</h1>
+        <Notice title="可以继续">{unavailable ? "检查对应应用是否可用，也可以改用已绑定手机号或其他方式。"
+          : stage === "cancelled" ? "本次授权已取消，没有创建或关联账号。刚才正在看的页面和可保留的草稿仍在。"
+            : "请重新发起授权。这次不会自动创建账号，原任务和可保留的草稿仍在。"}</Notice>
+        <Button kind="quiet" disabled={busy} onClick={() => leave(onClose)}>返回刚才的页面</Button>
+      </div>
+    </Modal>;
+  }
   const createAction = (
     <Button
       kind="primary"
       disabled={!agreed || !termsURL || !privacyURL || busy}
       onClick={() =>
         void run(async () => {
-          await ownLogin(() =>
-            api.request("auth/oauth-resolve", {
+          const result = await ownLogin(() =>
+            api.request<{ created?: boolean }>("auth/oauth-resolve", {
               method: "POST",
               body: {
                 token: resolution.current,
@@ -332,8 +368,7 @@ export function ProviderSignIn({
               },
             }),
           );
-          clear();
-          onClose();
+          completed(result?.created === true);
         }, true)
       }
     >
@@ -346,7 +381,7 @@ export function ProviderSignIn({
       disabled={
         busy ||
         !identifier.trim() ||
-        (channel === "password" ? !password || !capabilities?.password : !code)
+        (channel === "password" ? !password || !capabilities?.password : !existingOtpReady || !(channel === "email" ? capabilities?.email : capabilities?.sms))
       }
       onClick={() =>
         void run(async () => {
@@ -384,11 +419,11 @@ export function ProviderSignIn({
   const verifyAction = (
     <Button
       kind="primary"
-      disabled={busy || (!password && !code)}
+      disabled={busy || (!password && !linkOtpReady)}
       onClick={() =>
         void run(async () => {
           const secret = password;
-          const otp = code;
+          const otp = linkOtpReady ? code : "";
           setPassword("");
           setCode("");
           const scope = await api.request("auth/oauth-link-scope", {
@@ -402,7 +437,6 @@ export function ProviderSignIn({
           setPassword("");
           setCode("");
           proof.current = result.reauth_token;
-          setConfirmed(false);
           setStage("link-ready");
         })
       }
@@ -413,13 +447,14 @@ export function ProviderSignIn({
   const linkAction = (
     <Button
       kind="primary"
-      disabled={busy || !confirmed || !proof.current}
+      disabled={busy || !proof.current || !session.authenticated || !session.user}
       onClick={() =>
         void run(async () => {
           const reauth = proof.current;
+          if (!reauth || owner.current !== (api.session.user?.id ?? 0n)) return;
           proof.current = "";
-          await ownLogin(() =>
-            api.request("auth/oauth-resolve", {
+          const result = await ownLogin(() =>
+            api.request<{ created?: boolean }>("auth/oauth-resolve", {
               method: "POST",
               body: {
                 token: resolution.current,
@@ -428,8 +463,7 @@ export function ProviderSignIn({
               },
             }),
           );
-          clear();
-          onClose();
+          completed(result?.created === true);
         }, true)
       }
     >
@@ -450,40 +484,44 @@ export function ProviderSignIn({
           ? verifyAction
           : stage === "link-ready"
             ? linkAction
-            : ["consent", "failed", "unknown", "cancelled", "expired"].includes(
+            : ["consent", "failed", "unknown"].includes(
                   stage,
                 )
               ? authorizeAction
               : null;
   return (
     <Modal
+      task
       title={
         stage === "choice"
           ? "继续使用原账号"
           : stage === "create-review"
-            ? "继续创建新账号"
+            ? "欢迎使用 M&D"
             : stage === "existing"
-              ? "验证原账号"
-              : stage.startsWith("link")
-                ? `确认关联${name}`
+              ? "关联已有账号"
+              : stage === "link-ready"
+                ? "确认账号关联"
+              : stage === "link-review"
+                ? "验证本次关联用途"
                 : `${name}官方授权`
       }
       busy={busy && stage !== "authorizing"}
-      onClose={close}
+      onClose={["existing", "link-review", "link-ready"].includes(stage) ? accountChoice : close}
       actions={
         <>
           {primary}
-          <Button
-            kind="quiet"
+          {!["existing", "link-ready"].includes(stage) ? <Button
+            kind={stage === "choice" ? "secondary" : "quiet"}
             disabled={busy && stage !== "authorizing"}
             onClick={close}
           >
             {stage === "authorizing" ? "取消本次授权" : "返回登录方式"}
-          </Button>
+          </Button> : null}
         </>
       }
     >
-      {["consent", "failed", "unknown", "cancelled", "expired"].includes(
+      <div className="auth-task-content">
+      {["consent", "failed", "unknown"].includes(
         stage,
       ) ? (
         <>
@@ -491,23 +529,19 @@ export function ProviderSignIn({
             title={
               stage === "unknown"
                 ? "本次处理结果待核对"
-                : stage === "cancelled"
-                  ? "已取消授权"
-                  : stage === "expired"
-                    ? "本次授权已过期"
-                    : available
+                : available
                       ? "仅本次官方授权"
                       : "暂时无法使用这种方式"
             }
           >
             {stage === "unknown"
               ? "不会自动重发创建或关联。重新官方授权用于核对已关联账号；新身份仍需主动选择。"
-              : stage === "cancelled" || stage === "expired"
-                ? "原页面和可保留的草稿仍在，可以重新授权或选择其他登录方式。"
-                : "将在官方站点完成授权，回到本应用后再由服务端核验；不会依据昵称、头像或返回邮箱自动合并账号。"}
+              : "将在官方站点完成授权，回到本应用后再由服务端核验；不会依据昵称、头像或返回邮箱自动合并账号。"}
           </Notice>
           <Icon name={`provider-${provider}`} />
           {stage === "consent" ? (
+            <>
+            <RowLink title="第三方登录信息" detail="查看 SDK 与提供方范围" disabled={busy} onClick={() => setInformation(true)} />
             <p className="caption">
               <a
                 href={
@@ -521,8 +555,9 @@ export function ProviderSignIn({
                 阅读{name}隐私说明
               </a>
             </p>
+            </>
           ) : null}
-          {["cancelled", "expired", "failed"].includes(stage) ? (
+          {stage === "failed" ? (
             <Button
               kind="quiet"
               onClick={() => {
@@ -551,7 +586,7 @@ export function ProviderSignIn({
             相同昵称、头像和第三方返回邮箱不作为合并依据。
           </Notice>
           <RowLink
-            title="已有 M&amp;D 账号，去关联"
+            title={"已有 M&D 账号，去关联"}
             detail="先验证原账号，再确认本次用途"
             onClick={() =>
               setStage(api.session.authenticated ? "link-review" : "existing")
@@ -570,7 +605,8 @@ export function ProviderSignIn({
         </>
       ) : null}
       {stage === "create-review" ? (
-        <Card title="继续创建新账号">
+        <>
+          <FirstAccountContent method={name} />
           <LegalLinks />
           <Check
             checked={agreed}
@@ -580,41 +616,32 @@ export function ProviderSignIn({
             我已阅读当前协议，主动创建新账号
           </Check>
           <p className="caption muted">新账号不会自动取得交流或成年人资格。</p>
-        </Card>
+          <Button disabled={busy} onClick={() => setStage(api.session.authenticated ? "link-review" : "existing")}>我有账号，去关联</Button>
+        </>
       ) : null}
       {stage === "existing" ? (
         <>
-          <Choices
-            label="验证原账号"
-            value={channel}
-            disabled={busy}
-            onChange={(value) => {
-              setChannel(value);
-              setPassword("");
-              setCode("");
-            }}
-            choices={[
-              ["password", "密码"],
-              ["email", "邮箱验证码"],
-              ["phone", "已绑定手机"],
-            ]}
-          />
+          <h1>把资料留在原来的账号</h1>
+          <Notice title={"验证你已有的M&D账号"}>关联后继续使用原有宠物、日记和聊天，不按昵称或头像自动合并。</Notice>
           <Field
             label={
               channel === "phone"
-                ? "已绑定手机号"
+                ? "原账号手机号"
                 : channel === "email"
-                  ? "邮箱"
+                  ? "原账号邮箱"
                   : "账号名、邮箱或手机号"
             }
             value={identifier}
-            onChange={setIdentifier}
+            type={channel === "phone" ? "tel" : channel === "email" ? "email" : "text"}
+            autoComplete={channel === "phone" ? "tel" : channel === "email" ? "email" : "username"}
+            onChange={value => { setIdentifier(value); setCode(""); setSent(undefined); }}
             disabled={busy}
           />
           {channel === "password" ? (
             <Field
               label="原账号密码"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={setPassword}
               disabled={busy}
@@ -622,12 +649,13 @@ export function ProviderSignIn({
           ) : (
             <>
               <Field
-                label="本次验证码"
+                label="验证码"
+                autoComplete="one-time-code"
                 value={code}
                 onChange={setCode}
                 disabled={busy}
               />
-              <Button
+              <Button kind="quiet"
                 disabled={
                   busy ||
                   !identifier ||
@@ -642,6 +670,11 @@ export function ProviderSignIn({
               </Button>
             </>
           )}
+          {[["password", "使用原账号密码验证"], ["phone", "使用已绑定手机验证"], ["email", "使用原账号邮箱验证"]].filter(([method]) => method !== channel).map(([method, label]) =>
+            <Button key={method} kind="quiet" disabled={busy || !(method === "password" ? capabilities?.password : method === "phone" ? capabilities?.sms : capabilities?.email)}
+              onClick={() => { setChannel(method); setPassword(""); setCode(""); setSent(undefined); setError(""); }}>{label}</Button>)}
+          {!(channel === "password" ? capabilities?.password : channel === "phone" ? capabilities?.sms : capabilities?.email)
+            ? <Notice title="当前方式尚未由服务启用">请选择其他已关联的登录方式，不会自动创建或接管账号。</Notice> : null}
         </>
       ) : null}
       {stage === "link-review" ? (
@@ -660,7 +693,7 @@ export function ProviderSignIn({
           <Field
             label="当前完整手机号"
             value={phone}
-            onChange={setPhone}
+            onChange={value => { setPhone(value); setCode(""); setSent(undefined); }}
             disabled={busy}
           />
           <Field
@@ -680,7 +713,7 @@ export function ProviderSignIn({
       {stage === "link-ready" ? (
         <>
           <Card>
-            <div className="profile-identity">
+            <div className="profile-identity security-identity">
               <PrivateImage
                 id={
                   integer(
@@ -690,27 +723,23 @@ export function ProviderSignIn({
                   ) || undefined
                 }
                 alt="当前账号头像"
-                className="avatar"
+                className="security-avatar"
               />
               <div>
-                <h2>{session.user?.nickname || session.user?.username}</h2>
+                <strong>{session.user?.nickname || session.user?.username}</strong>
                 <p className="caption muted">{session.user?.username}</p>
               </div>
             </div>
           </Card>
-          <Card title="将关联的方式">{name}</Card>
+          <Card><dl className="auth-facts"><div><dt>将关联的方式</dt><dd>{name}</dd></div></dl></Card>
           <Notice title="只关联登录方式">
-            {name} → {session.user?.username}
-            。不会合并其他账号的数据，也不改变交流资格。
+            不会覆盖原有宠物、日记、群和历史消息，也不改变交流资格。
           </Notice>
-          <Check checked={confirmed} onChange={setConfirmed} disabled={busy}>
-            我确认本次关联对象
-          </Check>
+          <Button kind="quiet" disabled={busy} onClick={accountChoice}>取消关联</Button>
 
           {!proof.current && !busy ? (
             <Button
               onClick={() => {
-                setConfirmed(false);
                 setStage("link-review");
                 setError("");
               }}
@@ -721,8 +750,8 @@ export function ProviderSignIn({
         </>
       ) : null}
       {busy ? <p role="status">正在核对本次授权，请保留当前任务…</p> : null}
-      {stage === "conflict" ? <AccountConflict /> : null}
       {error ? <Notice title={error} error /> : null}
+      </div>
     </Modal>
   );
 }

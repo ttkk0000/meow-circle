@@ -47,6 +47,7 @@ data class FeatureState(
     val review: MobileRecord<ReviewBody>? = null, val verifications: List<VerificationSummary> = emptyList(),
     val preference: MobileRecord<PreferenceBody>? = null, val subscription: MobileRecord<SubscriptionBody>? = null,
     val notificationView: NotificationSettingsView = NotificationSettingsView.Preferences,
+    val securityView: SecurityView = SecurityView.Accounts,
     val notificationResult: MobileRecord<PreferenceBody>? = null,
     val expressions: MobileRecord<ExpressionBody>? = null, val catalog: ExpressionCatalog = ExpressionCatalog(),
     val petChoices: PageState<PetBody> = PageState(), val petChoiceLoading: Boolean = false, val petChoiceError: String? = null,
@@ -56,7 +57,8 @@ data class FeatureState(
     val peopleUnavailable: Set<Long> = emptySet(), val peopleErrors: Set<Long> = emptySet(),
     val methods: IdentityMethods? = null, val eligibility: Eligibility? = null, val guardians: List<MobileRecord<GuardianBody>> = emptyList(),
     val restricted: List<RestrictedReference> = emptyList(), val lookupRequestId: String? = null, val dataStatus: DataRequestStatus? = null, val rightsStatus: RightsReceipt? = null,
-    val pending: List<CommandRecovery> = emptyList(), val otpWait: Int = 0,
+    val pending: List<CommandRecovery> = emptyList(), val otpWait: Int = 0, val otpDelivery: OtpDelivery? = null,
+    val commandFailure: ClientReadFailure? = null,
     val photos: Map<FeatureRoute,List<PhotoAttachment>> = emptyMap(),
     val unconfirmedResult: Boolean = false,
     val draftRestoring: Boolean = false, val draftReady: Boolean = true, val draftError: String? = null,
@@ -200,6 +202,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         revision++; loading?.cancel(); dismissConfirmation()
         mutable.update { it.copy(route = route, loading = false, error = null, readFailure = null, notice = null, conflict = false,
             notificationView = NotificationSettingsView.Preferences, notificationResult = null,
+            securityView = SecurityView.Accounts,
             readingDocument = null,groupPreview = null, mapCases = PageState(), diary = PageState(), entry = null, member = null, pet = null, group = null, appointment = null, case = null, lead = null, claim = null, adoption = null,
             offer = null, review = null, verifications = emptyList(), claims = PageState(), leads = PageState(), care = PageState(), careContext = null, invitationOutcome = null, invitation = null,
             unconfirmedResult = route in uncertainRoutes) }
@@ -211,6 +214,11 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         if (mutable.value.busy) return true
         if (mutable.value.invitationOutcome != null) { mutable.update { it.copy(invitationOutcome = null) }; return true }
         if (mutable.value.confirmation != null) { dismissConfirmation(); return true }
+        if (mutable.value.route?.page == FeaturePage.Security && mutable.value.securityView != SecurityView.Accounts) {
+            mutable.update { it.copy(securityView = if (it.securityView == SecurityView.PhoneCode) SecurityView.Phone else SecurityView.Accounts,
+                error = if (it.readFailure == null) null else it.error, commandErrorCode = null, commandFailure = null) }
+            return true
+        }
         if (mutable.value.route?.page == FeaturePage.Settings && mutable.value.notificationView != NotificationSettingsView.Preferences) {
             val state = mutable.value
             setNotificationView(when (state.notificationView) {
@@ -261,6 +269,21 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     fun setNotificationView(view: NotificationSettingsView) {
         if (mutable.value.route?.page != FeaturePage.Settings || mutable.value.busy || mutable.value.confirmation != null || view == NotificationSettingsView.Saved) return
         mutable.update { it.copy(notificationView = view) }
+    }
+    fun setSecurityView(view: SecurityView) {
+        val state = mutable.value
+        if (state.route?.page != FeaturePage.Security || state.busy || state.confirmation != null || sensitive.state.value.stage != SensitiveStage.Idle || view in listOf(SecurityView.PhoneSaved, SecurityView.PhoneCode)) return
+        if (view != SecurityView.Accounts && (state.loading || state.readFailure != null || state.error != null)) return
+        mutable.update { it.copy(securityView = view, error = if (it.readFailure == null) null else it.error, commandErrorCode = null, commandFailure = null, notice = null) }
+    }
+    fun currentPhoneCodeSent() {
+        check(mutable.value.route?.page == FeaturePage.Security && mutable.value.securityView == SecurityView.Phone)
+        mutable.update { it.copy(securityView = SecurityView.PhoneCode) }
+    }
+    fun currentPhoneVerified(eligibility: Eligibility) {
+        check(mutable.value.route?.page == FeaturePage.Security && owner != null && owner == api.user.value?.id &&
+            eligibility.contractVersion == 1 && eligibility.phoneVerified) { "当前手机号验证状态尚未确认，请重新读取资格" }
+        mutable.update { it.copy(eligibility = eligibility, securityView = SecurityView.PhoneSaved) }
     }
     /** Called only after the versioned preference write returns a matching record. */
     fun notificationPreferencesSaved(record: MobileRecord<PreferenceBody>, expected: PreferenceBody, previousVersion: Long) {
@@ -343,7 +366,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
     fun runCommand(action: suspend () -> Unit) {
         if (mutable.value.busy) return
         val originalEpoch = epoch
-        mutable.update { it.copy(busy = true, error = null, notice = null,commandErrorCode = null) }
+        mutable.update { it.copy(busy = true, error = null, notice = null,commandErrorCode = null,commandFailure = null) }
         commandJob = scope.launch {
             var actionStarted = false
             try { if (pendingAction != null) persistDrafts(); actionStarted = true; action(); if (epoch == originalEpoch) mutable.update { it.copy(notice = it.notice ?: "操作已完成，请以当前记录为准") } }
@@ -360,7 +383,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
                         care = if(careDenied) it.care.failed(e.mobileMessage(),clear = true,failure = e.readFailure()) else it.care,
                         confirmation = if(careDenied) null else it.confirmation,
                         conflict = e is MobileApiException && e.status == 409, unconfirmedResult = unknown || it.unconfirmedResult,commandErrorCode = (e as? MobileApiException)?.code,
-                        pending = api.recoverableCommands()) }
+                        commandFailure = e.readFailure(), pending = api.recoverableCommands()) }
                 }
             } finally { if (epoch == originalEpoch) { mutable.update { it.copy(busy = false, pending = api.recoverableCommands()) }; scheduleDraftSave() } }
         }
@@ -372,6 +395,7 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         val currentEpoch = epoch
         loading?.cancel()
         mutable.update { it.copy(loading = true, error = null, readFailure = null,commandErrorCode = null,
+            securityView = if(route.page == FeaturePage.Security && it.securityView == SecurityView.PhoneSaved) SecurityView.Accounts else it.securityView,
             notificationResult = if(route.page == FeaturePage.Settings) null else it.notificationResult,
             notificationView = if(route.page == FeaturePage.Settings && it.notificationView == NotificationSettingsView.Saved) NotificationSettingsView.Preferences else it.notificationView) }
         loading = scope.launch {
@@ -779,13 +803,35 @@ class MobileFeatureStore(val api: MobileApi, parentScope: CoroutineScope, privat
         }
     }
     private fun <T> page(old: PageState<T>, result: MobilePage<T>, more: Boolean): PageState<T> = old.completed(result, more)
-    fun sendOTP(email: String = "", phone: String = "", purpose: String) {
-        if (mutable.value.otpWait > 0) return
+    fun clearCommandFeedback() {
+        if (!mutable.value.busy) mutable.update { it.copy(error = null, commandErrorCode = null, commandFailure = null, notice = null) }
+    }
+    fun sendOTP(email: String = "", phone: String = "", purpose: String, onSent: () -> Unit = {}) {
+        if (mutable.value.busy || mutable.value.otpWait > 0) return
+        val expectedEpoch = epoch
         runCommand {
+            countdown?.cancel()
+            mutable.update { it.copy(otpDelivery = null) }
             val receipt = if (email.isNotBlank()) api.requestEmailOTP(email.trim(), purpose) else api.requestPhoneOTP(phone.trim(), purpose)
-            mutable.update { it.copy(otpWait = receipt.retryAfterSeconds.coerceAtLeast(1), notice = "验证码已发送，有效期至 ${receipt.expiresAt}") }
+            currentCoroutineContext().ensureActive()
+            if (epoch != expectedEpoch) return@runCommand
+            val deadline = runCatching { kotlin.time.Instant.parse(receipt.expiresAt).toEpochMilliseconds() }.getOrNull()
+            if (receipt.id <= 0 || deadline == null || deadline <= 0) throw MobileApiException(503, "OTP receipt unavailable")
+            val delivery = OtpDelivery(newRequestKey(), deadline, deadline <= kotlin.time.Clock.System.now().toEpochMilliseconds())
+            mutable.update { it.copy(otpWait = receipt.retryAfterSeconds.coerceAtLeast(1), otpDelivery = delivery, notice = "验证码已发送，有效期至 ${receipt.expiresAt}") }
+            onSent()
             countdown?.cancel(); countdown = scope.launch {
-                while (mutable.value.otpWait > 0) { delay(1000); mutable.update { it.copy(otpWait = (it.otpWait - 1).coerceAtLeast(0)) } }
+                while (true) {
+                    val current = mutable.value
+                    val active = current.otpDelivery?.takeIf { it.key == delivery.key } ?: break
+                    if (current.otpWait <= 0 && active.expired) break
+                    delay(1000)
+                    mutable.update { old ->
+                        val live = old.otpDelivery ?: return@update old
+                        if (live.key != delivery.key) old else old.copy(otpWait = (old.otpWait - 1).coerceAtLeast(0),
+                            otpDelivery = live.copy(expired = live.expired || kotlin.time.Clock.System.now().toEpochMilliseconds() >= live.expiresAtMillis))
+                    }
+                }
             }
         }
     }

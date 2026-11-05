@@ -122,6 +122,7 @@ data class PreferenceBody(@SerialName("direct_messages") val directMessages: Boo
     @SerialName("push_permission") val pushPermission: Boolean = false, val content: ContentSubscriptions? = null)
 
 enum class NotificationSettingsView { Preferences, Frequency, Summary, Permission, PermissionHelp, Saved }
+enum class SecurityView { Accounts, Phone, PhoneCode, PhoneSaved, PhoneChange, EmailChange, PasswordChange, Methods, Eligibility }
 fun notificationFrequencyLabel(frequency: String): String = when (frequency) {
     "instant" -> "即时通知"
     "digest" -> "每日汇总 · 19:00"

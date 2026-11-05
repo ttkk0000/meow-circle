@@ -31,12 +31,18 @@ interface MobileSecretStorage {
 class MobileApiException(val status: Int, message: String, val code: String = "", val requestId: String = "") : Exception(message)
 class MobileStorageException : Exception("Secure storage unavailable")
 
+// Presentation only: never persisted and never used to grant account access.
+enum class SessionEndKind { Expired, SignedOut, SecurityChange, AccountRequest }
+data class SessionEnd(val kind: SessionEndKind, val action: String = "", val maskedAddress: String = "")
+data class RememberedIdentity(val user: MobileUser, val method: String = "")
+
 fun Throwable.mobileMessage(): String = when (this) {
 	 is OperationResultUnknown -> "提交结果待核对，输入已保留；请先核对原操作，勿重复提交"
     is MobileStorageException -> "设备安全存储暂不可用，请解锁设备后重试"
     is LocalDraftException -> reason
     is MobileApiException -> when (code) {
         "identity_in_use" -> "此登录标识已有绑定；保留原账号资料和聊天，不会自动合并，也不会透露其他账号信息"
+        "last_login_method" -> "请先关联并验证另一种登录方式，再解除当前关联"
         "provider_pending" -> "上一次官方授权尚未返回，请先在官方页面完成或取消；也可使用其他登录方式"
         "phone_verification_required" -> "请先验证当前绑定手机号，已保留输入"
         "age_verification_required" -> "请先完成年龄资格核验，已保留输入"
@@ -84,6 +90,11 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     // 缓存身份只用于恢复私有输入；交流资格仍须重新从服务端读取。
     private val _user = MutableStateFlow<MobileUser?>(session?.user)
     val user = _user.asStateFlow()
+    var sessionEnd: SessionEnd? = null
+        private set
+    var rememberedIdentity: RememberedIdentity? = null
+        private set
+    fun acknowledgeSessionEnd() { sessionEnd = null }
     private val devicePushDelegate = lazy { DevicePushCoordinator(this, device) }
     val devicePush: DevicePushCoordinator get() = devicePushDelegate.value
     private var revision = 0L
@@ -104,8 +115,14 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         vault = next
     }
 
-    private fun save(value: LoginSession?, refresh: Boolean = false) {
+    private fun save(value: LoginSession?, refresh: Boolean = false, end: SessionEnd = SessionEnd(SessionEndKind.Expired), method: String = "") {
+        val hadSession = session != null
         persist(vault.copy(session = value))
+        if (value != null) rememberedIdentity = RememberedIdentity(value.user,
+            method.ifBlank { rememberedIdentity?.takeIf { it.user.id == value.user.id }?.method.orEmpty() })
+        else if (end.kind == SessionEndKind.AccountRequest) rememberedIdentity = null
+        if (value != null) sessionEnd = null
+        else if (hadSession) sessionEnd = end
         if (!refresh) accountGeneration++
         session = value
         revision++
@@ -116,7 +133,8 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         ensureStorage()
         if (session == null) return null
         return try {
-            profile().also { _user.value = it.user }
+            profile().also { rememberedIdentity = RememberedIdentity(it.user,
+                rememberedIdentity?.takeIf { known -> known.user.id == it.user.id }?.method.orEmpty()); _user.value = it.user }
         } catch (e: MobileApiException) {
             if (e.status == 401) null else throw e
         }
@@ -239,7 +257,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun beginAgeAssurance(input: AgeAssuranceInput): AgeAssuranceStatus = post("auth/age-assurance",input)
     suspend fun queryAgeAssurance(id: Long): AgeAssuranceStatus = post("auth/age-assurance/$id/query",kotlinx.serialization.json.JsonObject(emptyMap()))
     suspend fun phoneLogin(input: PhoneLoginInput): LoginSession = sessionMutex.withLock {
-        ensureStorage();post<LoginSession,PhoneLoginInput>("auth/phone",input.copy(device = device),false).also { save(it) }
+        ensureStorage();post<LoginSession,PhoneLoginInput>("auth/phone",input.copy(device = device),false).also { save(it, method = "手机号") }
     }
     suspend fun recoverPhone(input: PhoneRecoveryInput): JsonElement = post("auth/recover",input,false)
     suspend fun startProvider(input: ProviderStart): ProviderChallenge = post("auth/oauth-start",input,session != null)
@@ -248,7 +266,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         val result = post<ProviderResult,ProviderFinish>("auth/oauth-finish",input,session != null)
         if (result.login != null) sessionMutex.withLock {
             if (accountGeneration != epoch) throw MobileApiException(401,"session changed")
-            save(result.login)
+            save(result.login, method = "快捷登录")
         }
         return result
     }
@@ -256,7 +274,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun resolveProvider(input: ProviderResolve): LoginSession {
         val epoch = accountGeneration
         val result = post<LoginSession,ProviderResolve>("auth/oauth-resolve",input.copy(device = device),!input.create)
-        sessionMutex.withLock { if (accountGeneration != epoch) throw MobileApiException(401,"session changed");save(result) }
+        sessionMutex.withLock { if (accountGeneration != epoch) throw MobileApiException(401,"session changed");save(result, method = "快捷登录") }
         return result
     }
     fun limitedRequestAccess(): List<RestrictedAccess> = vault.limitedAccess.toList()
@@ -293,7 +311,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
             val result = post<MobileRecord<DataRequestBody>,DataRequestInput>("data-requests",input)
             sessionMutex.withLock {
                 persist(vault.copy(limitedAccess = vault.limitedAccess.map { if (it.type == "data_request" && it.clientRequestId == input.clientRequestId) it.copy(id = result.id) else it }))
-                if (input.type == "close_account" && accountGeneration == generation) save(null)
+                if (input.type == "close_account" && accountGeneration == generation) save(null, end = SessionEnd(SessionEndKind.AccountRequest))
             }
             return result
         } catch (e: CancellationException) { throw e }
@@ -305,7 +323,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     suspend fun requestEmailOTP(email: String, purpose: String): OTPReceipt = post("auth/email-otp", EmailOTPInput(email,purpose), purpose == "email_bind")
     suspend fun emailLogin(input: EmailAuthInput, register: Boolean = false): LoginSession = sessionMutex.withLock {
         ensureStorage()
-        post<LoginSession,EmailAuthInput>(if (register) "auth/register" else "auth/email", input.copy(device = device), false).also { save(it) }
+        post<LoginSession,EmailAuthInput>(if (register) "auth/register" else "auth/email", input.copy(device = device), false).also { save(it, method = "邮箱") }
     }
     suspend fun recoverEmail(input: EmailAuthInput): JsonElement = post("auth/email-recover",input, false)
     suspend fun reauthenticate(input: ReauthInput): PurposeGrant = post("auth/reauth", input)
@@ -327,7 +345,10 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
             post<JsonElement,AccountInput>("auth/account/$action",input)
             withContext(NonCancellable) { sessionMutex.withLock {
                 persist(vault.copy(commands = vault.commands.map { if (it.owner == owner && it.id == input.clientRequestId) it.copy(phase = "committed") else it }))
-                if (accountGeneration == generation && session?.user?.id == owner) save(null)
+                if (accountGeneration == generation && session?.user?.id == owner) {
+                    val masked = if (action == "phone" && input.phone.length >= 7) input.phone.take(3) + " **** " + input.phone.takeLast(4) else ""
+                    save(null, end = SessionEnd(SessionEndKind.SecurityChange, action, masked))
+                }
             } }
         } catch (e: Exception) {
             val known = e is MobileApiException && e.status in listOf(400,401,403,404,409,429)
@@ -455,15 +476,29 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         post<LoginSession, PasswordLoginInput>("auth/password", PasswordLoginInput(
             username = if (phoneIdentifier || identifier.contains('@')) "" else identifier, phone = if (phoneIdentifier) identifier else "",
             email = if (identifier.contains('@')) identifier else "",
-            password = password, device = device), false).also { save(it) }
+            password = password, device = device), false).also { save(it, method = "密码") }
     }
     suspend fun logout(all: Boolean = false) {
+        val owner = session?.user?.id
+        val generation = accountGeneration
         // Do not erase a failed server revocation and present it as successful logout.
         post<JsonElement, LogoutInput>("auth/logout", LogoutInput(all))
-        sessionMutex.withLock { save(null) }
+        sessionMutex.withLock {
+            if (generation == accountGeneration && session?.user?.id == owner)
+                save(null, end = SessionEnd(SessionEndKind.SignedOut))
+        }
     }
     suspend fun forgetExpiredSession() = sessionMutex.withLock { save(null) }
     suspend fun profile(): MobileProfile = get("profile")
+    suspend fun refreshProfileIdentity(): MobileProfile {
+        val profile = profile()
+        sessionMutex.withLock {
+            val current = session ?: throw MobileApiException(401,"account changed")
+            if (current.user.id != profile.user.id) throw MobileApiException(401,"account changed")
+            save(current.copy(user = profile.user))
+        }
+        return profile
+    }
     suspend fun editProfile(input: ProfileEdit): MobileProfile {
         val profile = patch<MobileProfile,ProfileEdit>("profile",input)
         sessionMutex.withLock {

@@ -1,6 +1,6 @@
 # M&D 当前功能交付账本
 
-> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-11-05 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
 2026-10-25 全量多端闭环与代码逻辑/UML 收口：新增 [`kmp/clientUi`](../../kmp/clientUi/README.md)（`34` 个三端共享 Compose UI 文件，统一承载 `42` 个 `FeaturePage` 二级业务页，供 Android、iOS、Desktop 共用）、`kmp/shared` 泛型 `MviStore` 基类与四大专业子 Store（`SensitiveActionStore`、`ProviderAuthStore`、`AgeAssuranceStore`、`GuardianInviteStore`）、[全量 Figma 四端实现交接](ALL_FIGMA_IMPLEMENTATION_2026_10_24.md)、[高德地图四端与代理交接](AMAP_IMPLEMENTATION_2026_10_24.md)、[官方三方认证与冲突恢复](PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)、[外部年龄核验网关](AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)、[监护人 15 分钟邀请与成年关系申诉](GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)，以及[全栈代码逻辑与 PlantUML 架构总览手册](../CODE_LOGIC_AND_UML_REFERENCE.md)与[`docs/uml/`（12 张 `.puml` 图）](../uml/README.md)。当前 OpenAPI 为 `241` Paths / `271` Operations / `123` Server Schemas（Web 派生 `125` Schemas，`74` 对跨语言 DTO），PostgreSQL 迁移覆盖 `001`–`009`（`44` 张 `mobile_*` 表），12 个 Python 静态检查脚本全部通过。
 

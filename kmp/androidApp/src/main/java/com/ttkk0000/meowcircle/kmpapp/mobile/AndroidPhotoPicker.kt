@@ -22,7 +22,8 @@ internal fun PhotoPickerButton(store: MobileStore, remaining: Int, enabled: Bool
 }
 
 @Composable
-internal fun PhotoPickerButton(remaining: Int, enabled: Boolean, onPhotos: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit) {
+internal fun PhotoPickerButton(remaining: Int, enabled: Boolean, onPhotos: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit,
+    content: (@Composable (Boolean, () -> Unit) -> Unit)? = null) {
     val resolver = LocalContext.current.contentResolver
     val scope = rememberCoroutineScope()
     var preparing by remember { mutableStateOf(false) }
@@ -82,7 +83,10 @@ internal fun PhotoPickerButton(remaining: Int, enabled: Boolean, onPhotos: (List
             finally { preparing = false }
         }
     }
-    OutlinedButton(onClick = { launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }, enabled = enabled && remaining > 0 && !preparing) {
+    val canPick = enabled && remaining > 0 && !preparing
+    val launchPicker = { if (canPick) launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
+    if (content != null) content(canPick, launchPicker)
+    else OutlinedButton(onClick = launchPicker, enabled = canPick) {
         Text(if (preparing) "正在准备照片" else "添加照片（还可选 $remaining 张）")
     }
 }

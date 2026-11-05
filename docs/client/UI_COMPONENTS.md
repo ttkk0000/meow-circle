@@ -1,6 +1,6 @@
 # Android UI 基础框架与组件维护规范
 
-> **2026-10-28 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／43份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-11-05 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
 2026-10-28共用 [MndPublishButton](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PublishButton.kt)提供Sidebar／Compact／Shortcut三尺寸，保留至少48dp触控区、独立hover／pressed／focus／disabled和导航选中语义；ConsumerApp按可读窗口宽度选择展开侧栏或窄位。独立退出页组合既有TaskNotice和主次按钮，业务确认与真实回执保留在原Store。[本批设计来源、源码与静态边界](CONTINUE_DESIGN_CODE_2026_10_28.md)。
 

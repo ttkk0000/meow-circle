@@ -1203,7 +1203,7 @@ func (s *Service) Account(ctx context.Context, actor int64, action string, in Ac
 				}
 			}
 			if !usable {
-				return mobile.Invalid("retain another login method")
+				return mobile.Denied("last_login_method")
 			}
 			link.State = "revoked"
 			if e = tx.Save(mobile.Identities, &link); e != nil {

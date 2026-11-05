@@ -1,9 +1,19 @@
-import { createContext, useCallback, useContext, useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { api } from "../core/api";
-import { badge, integer } from "../core/wire";
-import { navigate } from "../core/router";
-import { useSession, requestSignIn } from "../core/session";
-import { readStateCopy, type ReadFailure } from "../core/readState";
+import {
+  createContext,
+  type InputHTMLAttributes,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState
+} from "react";
+import {api} from "../core/api";
+import {badge, integer} from "../core/wire";
+import {navigate} from "../core/router";
+import {requestSignIn, useSession} from "../core/session";
+import {type ReadFailure, readStateCopy} from "../core/readState";
 
 const scrollMemory = new Map<string, number>();
 let scrollEpoch = -1;
@@ -311,7 +321,9 @@ export function Field({
   hint,
   autoComplete,
   maxLength,
+  placeholder,
   error,
+  inputMode,
 }: {
   label: string;
   value: string;
@@ -322,7 +334,9 @@ export function Field({
   hint?: string;
   autoComplete?: string;
   maxLength?: number;
+  placeholder?: string;
   error?: string;
+  inputMode?: InputHTMLAttributes<HTMLInputElement>["inputMode"];
 }) {
   const id = useId();
   const describedBy = [hint ? `${id}-hint` : "", error ? `${id}-error` : ""].filter(Boolean).join(" ") || undefined;
@@ -335,7 +349,9 @@ export function Field({
           aria-describedby={describedBy}
           aria-invalid={error ? true : undefined}
           rows={4}
+          inputMode={inputMode}
           maxLength={maxLength}
+          placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
@@ -344,9 +360,11 @@ export function Field({
         <input
           id={id}
           maxLength={maxLength}
+          placeholder={placeholder}
           aria-describedby={describedBy}
           aria-invalid={error ? true : undefined}
           type={type}
+          inputMode={inputMode}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
@@ -423,12 +441,14 @@ export function Modal({
   actions,
   onClose,
   busy = false,
+  task = false,
 }: {
   title: string;
   children: ReactNode;
   actions: ReactNode;
   onClose: () => void;
   busy?: boolean;
+  task?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -442,6 +462,7 @@ export function Modal({
   return (
     <dialog
       ref={ref}
+      className={task ? "task-dialog" : undefined}
       aria-labelledby={titleId}
       onCancel={(event) => {
         event.preventDefault();
@@ -449,10 +470,11 @@ export function Modal({
       }}
     >
       <header>
+        {task ? <button type="button" className="toolbar-icon" aria-label="返回" onClick={onClose} disabled={busy}><Icon name="chevron-left" /></button> : null}
         <h2 id={titleId}>{title}</h2>
-        <Button kind="quiet" onClick={onClose} disabled={busy}>
+        {!task ? <Button kind="quiet" onClick={onClose} disabled={busy}>
           关闭
-        </Button>
+        </Button> : null}
       </header>
       <TaskFallbackContext.Provider value={null}><div className="dialog-content">{children}</div></TaskFallbackContext.Provider>
       <footer className="dialog-actions">{actions}</footer>

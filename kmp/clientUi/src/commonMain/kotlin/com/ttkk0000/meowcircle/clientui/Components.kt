@@ -56,6 +56,20 @@ import androidx.compose.ui.unit.dp
     MndActionButton(label, enabled, loading, modifier, secondary = true, onClick = onClick)
 }
 
+@Composable fun MndQuietButton(label: String, enabled: Boolean = true,
+    modifier: Modifier = Modifier.fillMaxWidth(), onClick: () -> Unit) {
+    val interactions = remember { MutableInteractionSource() }
+    val focused by interactions.collectIsFocusedAsState()
+    val shape = RoundedCornerShape(24.dp)
+    TextButton(onClick, modifier.heightIn(min = MobileUi.actionHeight)
+        .then(if (focused && enabled) Modifier.border(2.dp, ClientFocusColor, shape) else Modifier),
+        enabled = enabled, shape = shape, interactionSource = interactions,
+        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.secondary,
+            disabledContentColor = ClientFocusColor), contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)) {
+        Text(label, Modifier.fillMaxWidth(), style = MaterialTheme.typography.labelMedium)
+    }
+}
+
 @Composable private fun MndActionButton(label: String, enabled: Boolean, loading: Boolean,
     modifier: Modifier, secondary: Boolean, onClick: () -> Unit) {
     val interactions = remember { MutableInteractionSource() }
@@ -95,6 +109,7 @@ import androidx.compose.ui.unit.dp
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     isError: Boolean = false, supportingText: (@Composable () -> Unit)? = null,
+    placeholder: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null) {
     val interactions = remember { MutableInteractionSource() }
     val focused by interactions.collectIsFocusedAsState()
@@ -104,7 +119,14 @@ import androidx.compose.ui.unit.dp
         textStyle = MaterialTheme.typography.bodyLarge.copy(color = if (enabled) MaterialTheme.colorScheme.onSurface else ClientFocusColor),
         keyboardOptions = keyboardOptions, visualTransformation = visualTransformation,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.secondary), interactionSource = interactions,
-        decorationBox = { inner -> FieldDecoration(label, enabled, focused, isError, supportingText, trailingIcon, inner) })
+        decorationBox = { inner -> FieldDecoration(label, enabled, focused, isError, supportingText, trailingIcon) {
+            Box {
+                if (value.isEmpty() && placeholder != null) CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
+                    ProvideTextStyle(MaterialTheme.typography.bodyLarge) { placeholder() }
+                }
+                inner()
+            }
+        } })
 }
 
 @Composable private fun FieldDecoration(label: @Composable () -> Unit, enabled: Boolean,

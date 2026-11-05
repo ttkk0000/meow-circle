@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { api, explain } from "../core/api";
-import { Button, Field, Notice } from "./ui";
-import { integer } from "../core/wire";
+import {useEffect, useRef, useState} from "react";
+import {api, explain} from "../core/api";
+import {Button, Field, Notice} from "./ui";
+import {integer} from "../core/wire";
 
 export function OTPButton({
   path,
@@ -56,10 +56,12 @@ export function PurposeCheck({
   scope,
   busy,
   onGrant,
+  confirmation = "checkbox",
 }: {
   scope: Record<string, unknown>;
   busy: boolean;
   onGrant: (token: string) => void;
+  confirmation?: "checkbox" | "explicit";
 }) {
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
@@ -108,7 +110,7 @@ export function PurposeCheck({
   return (
     <section className="stack">
       <Notice title="仅验证当前对象、范围与版本">
-        验证后仍需你勾选并主动提交；修改内容会使此次核对失效。
+        {confirmation === "explicit" ? "验证后仍需主动核对并确认提交；修改内容会使此次核对失效。" : "验证后仍需你勾选并主动提交；修改内容会使此次核对失效。"}
       </Notice>
       <Field
         label="用当前密码验证"

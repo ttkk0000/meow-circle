@@ -45,11 +45,11 @@ private object AssetBytes {
 }
 
 /** 仅使用Figma下载原SVG，根尺寸24×24；没有重绘或替换图案。 */
-@Composable fun DesignIcon(name: String, description: String?, modifier: Modifier = Modifier) {
+@Composable fun DesignIcon(name: String, description: String?, modifier: Modifier = Modifier, colorFilter: androidx.compose.ui.graphics.ColorFilter? = null) {
     val bytes = bundledBytes("files/figma/$name.svg")
     Box(modifier.size(24.dp)) {
         if (bytes != null) AsyncImage(bytes, description, imageLoader = LocalDesignImageLoader.current,
-            modifier = Modifier.matchParentSize(), contentScale = ContentScale.Fit)
+            modifier = Modifier.matchParentSize(), contentScale = ContentScale.Fit, colorFilter = colorFilter)
     }
 }
 

@@ -41,17 +41,21 @@ internal class DesktopClientPlatform(private val owner: Frame, private val endpo
         val callback = remember { { latest() } }
         DisposableEffect(enabled) { if (enabled) backActions.add(callback); onDispose { backActions.remove(callback) } }
     }
-    @Composable override fun PhotoPicker(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit) {
+    @Composable override fun PhotoPicker(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit,
+        content: (@Composable (Boolean, () -> Unit) -> Unit)?) {
         val scope = rememberCoroutineScope()
         val selected by rememberUpdatedState(onSelected)
         val failed by rememberUpdatedState(onError)
         var opened by remember { mutableStateOf(false) }
         var preparing by remember { mutableStateOf(false) }
-        OutlinedButton({ opened = true }, enabled = enabled && remaining > 0 && !opened && !preparing) {
+        val canPick = enabled && remaining > 0 && !opened && !preparing
+        val launchPicker = { if (canPick) opened = true }
+        if (content != null) content(canPick, launchPicker)
+        else OutlinedButton(launchPicker, enabled = canPick) {
             Text(if (preparing) "正在读取照片" else "添加照片（还可选 $remaining 张）")
         }
         if (opened) DisposableEffect(Unit) {
-            val picker = FileDialog(owner, "选择JPEG或PNG照片", FileDialog.LOAD).apply { isMultipleMode = true }
+            val picker = FileDialog(owner, "选择JPEG或PNG照片", FileDialog.LOAD).apply { isMultipleMode = remaining > 1 }
             SwingUtilities.invokeLater {
                 picker.isVisible = true
                 val files = picker.files.toList()

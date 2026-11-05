@@ -1,6 +1,6 @@
 # M&D 公共页面与组件
 
-> **2026-10-28 现行入口**：[源码与文档基线](../../docs/CURRENT_BASELINE.md) · [产品／交付状态](../../docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../../docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／43份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-11-05 现行入口**：[源码与文档基线](../../docs/CURRENT_BASELINE.md) · [产品／交付状态](../../docs/PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../../docs/DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
 此模块供 Android 手机／平板、iPhone／iPad 与 Compose Desktop 复用消费者页面。业务、权限、版本、幂等和草稿合同仍只在 `shared/client`；Web 使用自己的 React DOM，按同一设计及 v2 合同实现。
 

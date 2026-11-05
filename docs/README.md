@@ -1,6 +1,6 @@
 # M&D 文档入口
 
-> **2026-10-29 现行入口**：[源码与文档基线](CURRENT_BASELINE.md) · [产品／交付状态](PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-11-05 现行入口**：[源码与文档基线](CURRENT_BASELINE.md) · [产品／交付状态](PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
 2026-10-29：[设计与文档完善交付](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)补后台39任务状态与1评审索引、协作8状态来源、消息事件实施差距，并更正公共clientUi／平台宿主事实。当前消费者追踪748条，运行未验收；[文档中心本轮增量](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3)和[来源回读记录](figma-sync/delta-2026-10-29/README.md)独立维护。下文带日期阶段记录按原时点解释。
 
@@ -18,7 +18,7 @@
 
 2026-10-20设计新补充：[全局未读／99+规范](design/MND_GLOBAL_UNREAD_SPEC.md) · [Figma与接入交接](design/figma-study/GLOBAL_UNREAD_HANDOFF_2026_10_20.md)。8张手机状态、边界板及四端入口已设计；完整跨端新状态和真实未读实现待接入。
 
-AI 接手或换电脑续做：先读[2026-10-22家里接手入口](ai/HOME_HANDOFF_2026_10_22.md)、[本批服务器／公共KMP记录](server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)、[工作跟踪入口](ai/README.md)、[当前快照](ai/CONTEXT.md)、[任务状态](ai/TASKS.md)，按需查[重要决定](ai/DECISIONS.md)与[结果日志](ai/TASK_LOG.md)。当前进度以此汇总及其引用的最新交接为准，下文早期阶段记录保留原时间范围。
+AI 接手或换电脑续做：先读[现行基线](CURRENT_BASELINE.md)、[工作跟踪入口](ai/README.md)、[当前快照](ai/CONTEXT.md)、[任务状态](ai/TASKS.md)，按需查[重要决定](ai/DECISIONS.md)与[结果日志](ai/TASK_LOG.md)。[2026-10-22家里接手入口](ai/HOME_HANDOFF_2026_10_22.md)和[当时服务器／公共KMP记录](server/SERVER_SHARED_IMPLEMENTATION_2026_10_22.md)保留历史证据；当前进度以最新交接及工作树为准。
 
 当前移动端代码进展（2026-10-20）：[第一批实施与未完成项](client/MOBILE_IMPLEMENTATION_2026_10_20.md) · [最高稳定依赖基线与兼容边界](client/DEPENDENCY_BASELINE_2026_10_20.md) · [服务端接入核对](server/CLIENT_READINESS_2026_10_20.md)。Android API 37 / 最低 26；Android / iOS 独立 Compose 手机与平板结构已写，完整功能仍未完成；B04 认证合同缺失期间对外提交受阻。下文较早阶段的“未修改客户端”记录不代表当前源码状态。
 

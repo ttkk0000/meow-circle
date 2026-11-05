@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.ttkk0000.meowcircle.client.*
 import kotlinx.serialization.json.JsonPrimitive
@@ -40,7 +39,7 @@ import kotlinx.serialization.json.JsonPrimitive
                 }
             }
         }
-        FeaturePage.Security -> SecurityFeature(store,s)
+        FeaturePage.Security -> SecurityContent(store,s)
         FeaturePage.Recovery -> {
             val pendingCommands = (s.pending + store.state.value.pendingOperations).distinctBy { it.clientRequestId }
             if (pendingCommands.isEmpty()) Text("没有当前账号的待核对操作")
@@ -103,68 +102,6 @@ import kotlinx.serialization.json.JsonPrimitive
         }
         else -> Unit
     }
-}
-
-@Composable private fun SecurityFeature(store: MobileStore,s: FeatureState) {
-    val f = store.features; val methods = s.methods ?: return
-    val eligible = s.eligibility
-    FeatureSection("登录方式与交流资格") {
-        NavigationRow("年龄与使用范围","核对年龄、监护与成年业务") { f.open(FeatureRoute(FeaturePage.Age)) }
-        Text("手机号：${methods.phone.ifBlank { "未绑定" }}\n密码：${if(methods.passwordSet) "已设置" else "未设置"}\n手机验证：${if(eligible?.phoneVerified == true) "已验证" else "未验证"}\n交流资格：${if(eligible?.interaction == true) "可交流" else "尚未满足条件"}")
-        eligible?.reasons?.forEach { Text(MobileApiException(403,"eligibility required",it).mobileMessage()) }
-        Text("年龄信息来自核实服务；此处不会将自行勾选成年作为验证。")
-    }
-    var phone by rememberSessionUiState("security.phone") { "" }; var email by rememberSessionUiState("security.email") { "" }
-    var code by rememberSessionUiState("security.code") { "" }; var newPassword by rememberSessionUiState("security.newPassword") { "" }
-    FeatureSection("验证当前手机号") {
-        MndOutlinedField(phone,{ phone = it },label = { Text("完整当前手机号") })
-        OtpVerificationFields(
-            code = code,
-            onCodeChange = { code = it },
-            otpWait = s.otpWait,
-            sendLabel = "发送当前手机号验证码",
-            enabled = !s.busy,
-            canSend = methods.smsAvailable && phone.isNotBlank(),
-        ) { f.sendOTP(phone = phone,purpose = "verify_phone") }
-        FeatureButton("验证当前手机号",!s.busy && code.isNotBlank()) { val proof = code; code = ""; f.runCommand { f.api.verifyCurrentPhone(proof); store.refreshEligibility(); f.reload() } }
-    }
-    FeatureSection("安全变更") {
-        ChoiceField(f,s,"change","变更类型",listOf("phone" to "换绑手机号","email" to "绑定／更换邮箱","password" to "设置／更改密码"),"phone")
-        val change = f.field("change","phone")
-        if (change == "phone") MndOutlinedField(phone,{ phone = it },label = { Text("新手机号") })
-        if (change == "email") MndOutlinedField(email,{ email = it },label = { Text("新邮箱") })
-        if (change == "password") MndOutlinedField(newPassword,{ newPassword = it },label = { Text("新密码（至少10字节）") },visualTransformation = PasswordVisualTransformation())
-        if (change != "password") {
-            OtpVerificationFields(
-                code = code,
-                onCodeChange = { code = it },
-                otpWait = s.otpWait,
-                sendLabel = "发送新联系方式验证码",
-                codeLabel = "新联系方式验证码",
-                enabled = !s.busy,
-                canSend = if (change == "phone") methods.smsAvailable && phone.isNotBlank() else store.state.value.capabilities.email && email.isNotBlank(),
-            ) { f.sendOTP(email = if(change == "email") email else "",phone = if(change == "phone") phone else "",purpose = if(change == "email") "email_bind" else "bind_phone") }
-        }
-        FeatureButton("核对安全变更",!s.busy && !s.loading) {
-            if (change == "password" && newPassword.encodeToByteArray().size !in 10..128 || change != "password" && code.isBlank()) f.notify("请检查新密码或验证码") else {
-                val input = AccountInput(s.profile?.version ?: 0,newRequestKey(),phone = if(change == "phone") phone else "",email = if(change == "email") email else "",password = if(change == "password") newPassword else "",code = if(change != "password") code else "")
-                f.prepareSensitive(SensitiveIntent.Account(change,input)); code = ""; newPassword = ""
-            }
-        }
-    }
-    FeatureSection("已关联的方式") {
-        methods.linked.forEach { identity ->
-            Text(identity.provider)
-            FeatureButton("解绑此方式",!s.busy) { f.prepareSensitive(SensitiveIntent.Account("unlink",AccountInput(s.profile?.version ?: 0,newRequestKey(),identityId = identity.id))) }
-        }
-        ProviderEntry(store,methods.availableProviders,s.busy)
-        Text("关联需要本次用途验证与主动确认；解绑最后一种登录方式会由服务端阻止。")
-    }
-    NavigationRow("监护授权与管理","邀请、独立关系核对、明确授权和撤回") { f.open(FeatureRoute(FeaturePage.Guardians)) }
-    NavigationRow("未成年人保护设置","陌生人联系、屏蔽与资料求助") { f.open(FeatureRoute(FeaturePage.Guardians,kind="protection")) }
-    FeatureButton("申请账号相关事项核实") { f.open(FeatureRoute(FeaturePage.Review)); f.edit("type","verification"); f.edit("check","account") }
-    FeatureButton("资料删除、注销与协助") { f.open(FeatureRoute(FeaturePage.DataRequests)) }
-    FeatureButton("退出全部会话",!s.busy) { f.confirm("退出全部会话","全部设备将需要重新登录。") { store.logoutAll(); f.finishRoute() } }
 }
 
 @Composable private fun SafetyFeature(store: MobileStore,s: FeatureState,route: FeatureRoute) {

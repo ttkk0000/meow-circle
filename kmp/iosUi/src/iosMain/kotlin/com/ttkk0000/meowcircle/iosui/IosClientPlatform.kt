@@ -62,8 +62,9 @@ internal class IosClientPlatform : ClientUiPlatform {
         }
     }
 
-    @Composable override fun PhotoPicker(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit) =
-        IosSelectPhotos(remaining, enabled, onSelected, onError)
+    @Composable override fun PhotoPicker(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit,
+        content: (@Composable (Boolean, () -> Unit) -> Unit)?) =
+        IosSelectPhotos(remaining, enabled, onSelected, onError, content)
 
     @Composable override fun DateField(store: MobileFeatureStore, state: FeatureState, key: String, label: String,
         fallback: String, dateOnly: Boolean, optional: Boolean) {

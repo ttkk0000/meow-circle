@@ -23,9 +23,9 @@ val LocalDialogRegion = staticCompositionLocalOf { DialogRegion() }
     }
 }
 /** 登录等独立任务在手机占用当前安全区域，平板保持可读的居中正文宽度。 */
-@Composable fun MobileTaskDialog(onDismissRequest: () -> Unit,title: String? = null,content: @Composable ColumnScope.() -> Unit) {
+@Composable fun MobileTaskDialog(onDismissRequest: () -> Unit,title: String? = null,navigationEnabled: Boolean = true,content: @Composable ColumnScope.() -> Unit) {
     val area = LocalDialogRegion.current
-    Dialog(onDismissRequest,properties = DialogProperties(usePlatformDefaultWidth = false)) {
+    Dialog({ if(navigationEnabled) onDismissRequest() },properties = DialogProperties(usePlatformDefaultWidth = false)) {
         BoxWithConstraints(Modifier.fillMaxSize().absolutePadding(area.left,area.top,area.right,area.bottom).safeDrawingPadding().imePadding(),contentAlignment = Alignment.Center) {
             val compact = maxWidth < 600.dp
             Surface(color = MaterialTheme.colorScheme.background,shape = if(compact) androidx.compose.ui.graphics.RectangleShape else MaterialTheme.shapes.large,
@@ -33,7 +33,7 @@ val LocalDialogRegion = staticCompositionLocalOf { DialogRegion() }
                 Column {
                     if(title != null) Surface(color = MaterialTheme.colorScheme.surface) {
                         Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).padding(4.dp),verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(onDismissRequest,Modifier.size(48.dp)) { DesignIcon("chevron-left","返回") }
+                            IconButton(onDismissRequest,Modifier.size(48.dp),enabled = navigationEnabled) { DesignIcon("chevron-left","返回") }
                             Text(title,Modifier.weight(1f),style = MaterialTheme.typography.titleLarge)
                         }
                     }

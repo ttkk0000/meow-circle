@@ -31,8 +31,9 @@ internal class AndroidClientPlatform(private val context: Context) : ClientUiPla
     override val policies get() = ClientPolicyLinks(context.getString(R.string.mnd_terms_url), context.getString(R.string.mnd_privacy_url))
     @Composable override fun Window(content: @Composable BoxWithConstraintsScope.() -> Unit) = AndroidAdaptiveWindow(content)
     @Composable override fun BackHandler(enabled: Boolean, onBack: () -> Unit) = androidx.activity.compose.BackHandler(enabled, onBack)
-    @Composable override fun PhotoPicker(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit) =
-        com.ttkk0000.meowcircle.kmpapp.mobile.PhotoPickerButton(remaining, enabled, onSelected, onError)
+    @Composable override fun PhotoPicker(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit,
+        content: (@Composable (Boolean, () -> Unit) -> Unit)?) =
+        com.ttkk0000.meowcircle.kmpapp.mobile.PhotoPickerButton(remaining, enabled, onSelected, onError, content)
     @Composable override fun DateField(store: MobileFeatureStore, state: FeatureState, key: String, label: String, fallback: String, dateOnly: Boolean, optional: Boolean) =
         com.ttkk0000.meowcircle.kmpapp.mobile.DateTimeField(store, state, key, label, fallback, dateOnly, optional)
     @Composable override fun Map(points: List<LostMapPoint>, selectedId: String, center: LostMapPoint, pickable: Boolean, onPick: (LostMapPoint) -> Unit, onSelect: (String) -> Unit) =

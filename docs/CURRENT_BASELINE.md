@@ -1,12 +1,14 @@
 # M&D 现行文档与源码基线
 
-更新：2026-10-29（Asia/Shanghai）。本地续作已提交为67decaa，已在f6b5169合并origin/main的07452b5／35914a0；[拉取后代码续作](client/REMOTE_CONTINUATION_2026_10_29.md)随本记录所在提交保存，未推送。本页取代更早入口数量，带日期交接保留当时结果。
+更新：2026-11-05（Asia/Shanghai）。本轮fetch及ff-only同步核对：main与origin/main均为48a3cfd，无新增提交；继续全部设计实现的批次005–020仍在未提交工作树。本轮仅核对文档，未恢复业务开发；任务未全部完成。本页取代更早入口数量，带日期交接保留当时结果，详见[本轮文档核对](DOCUMENTATION_REVIEW_2026_11_05.md)。
 
 [Figma 文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3) · [完整文档目录](DOCUMENTATION_CATALOG.md) · [功能状态与发布边界](PRODUCT_AND_DELIVERY_MATRIX.md) · [UML 图谱](uml/README.md) · [同步清单](figma-sync/README.md)。
 
 ## 源码事实
 
-当前未提交批次：[严格按Figma分批实施](client/FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)已记录三批，包含通知14状态、91份Web源码与44份公共UI。源码／静态层完成项不等于全量视觉或运行通过。
+2026-11-05远端设计对账补充：Figma已有10月30日通知事件／评论定位评审及文档增量，宣称145／147 schemas和90对DTO；当前工作树实际仍为下表141／143、88对，缺该批4份来源文档及4个通知schema。详见[核对与来源](design/figma-study/audits/2026-11-05-remote-check/REVIEW.md)；本地数量不按远端正文直接抬升，原未提交认证成果保留，通知批次待找回对账。
+
+当前进度：[严格按Figma分批实施](client/FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)已记二十批；最新旧号／新号及手机号补充验证。33shared／53公共UI、100Web／457本地引用通过；019四语法通过，020初五完整后最终五份受内存门槛保护待读，旧015–017待读由018补齐。未类型／编译／测试／运行／全量视觉，任务未完成。
 
 | 维度 | 当前值 | 读取依据 |
 |---|---|---|
@@ -16,16 +18,17 @@
 | SQL 迁移 | 13 份，001–013 | [migrations](../migrations)，不含 backfill |
 | mobile 业务聚合表 | 45 张 | [Kind枚举](../internal/mobile/repository.go)；008通过SQL循环创建10张，不能只数CREATE TABLE字面量 |
 | 额外技术表 | mnd_ops_records、mnd_worker_checkpoints | 010 / 012，不计入45张mobile表 |
-| shared / clientUi 公共 Kotlin 文件 | 29 / 44 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件；本批新增发布按钮、退出与通知专用页面 |
+| shared / clientUi 公共 Kotlin 文件 | 33 / 53 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件；新增账号／安全与协议说明专用页面 |
+| Web TypeScript / TSX 文件 | 100 | web-client/src 递归统计.ts及.tsx；457本地引用为批次020历史静态记录，本轮未重跑该脚本 |
 | FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |
 | Worker 接受的作业名 | 8 类 | [ValidJob](../internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |
 | Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；增量五布局40根已完成[最终细化、96动作回读与五布局截图](design/figma-study/collaboration-refinement-2026-10-29/README.md)，全量748状态逐端视觉／运行仍待；另有角色18稿、业务后台13稿、运维14稿 |
 
-远端已提交的[设计与文档详细完善](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)已纳入本次合并：后台增加39任务状态及1评审索引，协作8状态完成手机／Web来源补录，消费者追踪748条。消息分类与待办等现有源码差距已明确列账，没有通过文档修订冒充业务接线完成。
+2026-10-29的[设计与文档详细完善](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md)记录后台增加39任务状态及1评审索引、协作8状态手机／Web来源补录，消费者追踪748条。该批次列出的消息分类／待办及后台未知结果等差距，后续源码与静态交付见[拉取后代码续作](client/REMOTE_CONTINUATION_2026_10_29.md)；全量逐端运行仍未验收，不能继续把当时“业务源码未改”当作当前结论。
 
 当前新增批次见[设计与代码续作](client/CONTINUE_DESIGN_CODE_2026_10_28.md)、[后台角色实现](client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；五布局40份协作稿独立记账，2026-10-29已通过正常工具完成原五项收尾，审批额度问题保留为历史。本轮还补10照片返回、15结果返回与16平板同状态切换，96动作独立回读通过，五张完整稿图已查看，未新增消费者状态或业务源码。[source-baseline.json](figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。这些事实不是构建、联调或发布成功证据。
 
-续作已补邀请详情／限定事项列表、退出／撤销全页、失权／410清理与Web试养／接回／预约完整核对；[本批13旧＋8新状态源码分支](client/collaboration-page-source-map-2026-10-28.json)单列，不将748条索引视为整体完成。最新Web90份TS/TSX／407本地引用；资源引用只读核对通过，Node18语法读取30份正常退出（24完整无诊断＋6基线对照／片段），Node24失败仍留历史，未运行验收。
+2026-10-28–29续作已补邀请详情／限定事项列表、退出／撤销全页、失权／410清理与Web试养／接回／预约完整核对；[本批13旧＋8新状态源码分支](client/collaboration-page-source-map-2026-10-28.json)单列，不将748条索引视为整体完成。当时Web90份TS/TSX／407本地引用及Node18语法读取30份（24完整无诊断＋6基线对照／片段）为历史检查点，当前文件数量与最新批次020的待读边界以上表及分批进度为准；Node24失败仍留历史，未运行验收。
 
 ## 当前产品与平台口径
 
@@ -67,7 +70,7 @@ Docker初始化挂载已包含013；已有数据库不会因新增挂载自动�
 ## 验证层次与剩余工作
 
 1. 文档与设计：本地合同、表格、图谱和Figma阅读副本分别记账；文档同步不改变需求批准状态。
-2. 源码与静态：页面和合同源码已分批写入。最近源码批次见[10月27日恢复点](client/COMPLETE_LANDING_2026_10_27.md)及[城市素材交接](client/MAINLAND_CITIES_AND_CAT_ASSETS_2026_10_26.md)。
+2. 源码与静态：页面和合同源码已分批写入。最新见[批次001–020进度及恢复点](client/FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)；[10月27日恢复点](client/COMPLETE_LANDING_2026_10_27.md)与[城市素材交接](client/MAINLAND_CITIES_AND_CAT_ASSETS_2026_10_26.md)保留对应历史批次。
 3. 运行与发布：当前748条消费者状态追踪没有全量逐端运行／视觉验收；SDK正式参数、签名、真实环境、数据库、权限／并发／网络恢复、无障碍与运营值守仍需验证。完整搜索接收端及运维发布／重启执行器保持用户指定占位。
 
 本轮按仓库规则不运行编译、构建、test、lint或应用。历史静态通过、测试源码存在、设计截图均不升级为本轮运行证据。

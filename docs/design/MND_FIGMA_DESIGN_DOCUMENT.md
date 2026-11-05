@@ -1,8 +1,10 @@
 # M&D 设计交接索引
 
-> **2026-10-29 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／44份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-11-05 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
-2026-10-29本轮：[协作40稿最终细化](figma-study/collaboration-refinement-2026-10-29/README.md)完成五布局工作区／照片入口、20处示例事项邀请版本、退出结果返回及平板同状态切换；96动作独立回读无失败，五张完整稿图已看。原审批额度问题已恢复；未新增消费者状态、改业务源码或运行工程。
+2026-11-05：[远端与本地核对](figma-study/audits/2026-11-05-remote-check/REVIEW.md)实读原设计12页、3772消费者根和96协作动作，未发现节点／动作差异。另发现[10月30日评论四状态评审板958:371820](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-371820)与[文档增量35:19](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-19)：该批通知新合同及4份来源文档未在当前仓库，远端矩阵保留过期句子，待恢复源码对账。四张额外评审稿独立计数，原748台账不变；本轮未写远端或业务源码。
+
+2026-10-29历史批次：[协作40稿最终细化](figma-study/collaboration-refinement-2026-10-29/README.md)完成五布局工作区／照片入口、20处示例事项邀请版本、退出结果返回及平板同状态切换；96动作独立回读无失败，五张完整稿图已看。原审批额度问题已恢复；未新增消费者状态、改业务源码或运行工程。
 
 2026-10-29：[后台关键任务39状态与评审索引](figma-study/admin-task-interaction-2026-10-29/README.md)／[交互合同](ADMIN_TASK_INTERACTION_2026_10_29.md)已细化表单、确认、失败／未知与撤权；[协作退出8状态补录](figma-study/collaboration-2026-10-29/README.md)纳入748条追踪。当前消息分类／待办／已读差距见[事件对齐表](NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md)，不把设计统一当业务源码已修改。
 

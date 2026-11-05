@@ -1,6 +1,6 @@
 # M&D 全仓文档目录
 
-更新：2026-10-29。原175份Markdown目录为10月27日同步基线，下列增量补录10月28–29日设计／源码交接；覆盖仓库已跟踪Markdown及本轮新增文档；未归属skills目录未纳入。目录逐项记录用途与历史范围，不以文件存在认定内容对应功能已运行。当前事实先读[源码基线](CURRENT_BASELINE.md)，功能与未完成项读[交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)，Figma副本见[同步入口](figma-sync/README.md)。
+更新：2026-11-05。原175份Markdown目录为10月27日同步基线；本轮补齐10月28–30日遗漏的源码／设计交接和文档中心导航证据，并收录文档及Figma两份核对报告。197份已跟踪Markdown中，skills工具文档1份不纳入本目录；其余196份及本轮新增两份报告，共198份已覆盖。目录逐项记录用途与历史范围，不以文件存在认定内容对应功能已运行。当前事实先读[源码基线](CURRENT_BASELINE.md)，功能与未完成项读[交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)，Figma副本见[同步入口](figma-sync/README.md)。
 
 
 ## 2026-10-28–29 当前增量
@@ -18,6 +18,25 @@
 | [Figma与文档详细完善交付](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md) | 本轮结果与剩余接线／运行边界 |
 | [Figma文档中心增量同步](figma-sync/delta-2026-10-29/README.md) | 实际写入／分页回读单列，旧manifest保留 |
 | [10月28日完整性复审](design/figma-study/audits/2026-10-28-completeness/REVIEW.md) | 原6项发现及当轮截图，后续修订不改旧结论 |
+
+## 2026-11-05 补录与核对
+
+下列10份既有文档为目录漏项，本轮仅补入口；日期与结论仍按原交接解释。新增核对报告单列，不修改历史Figma同步清单。
+
+| 文档 | 说明 |
+|---|---|
+| [本轮拉取与文档核对](DOCUMENTATION_REVIEW_2026_11_05.md) | 2026-11-05本地Git／文档静态核对、修订与剩余项 |
+| [Figma远端与本地交接核对](design/figma-study/audits/2026-11-05-remote-check/REVIEW.md) | 3772设计根／96动作实读；发现10月30日通知批次未完整在本地、远端矩阵旧句与入口漏记 |
+| [设计与代码续作](client/CONTINUE_DESIGN_CODE_2026_10_28.md) | 10月28日协作与发布入口源码交接 |
+| [Figma对应代码完整性复核](client/FIGMA_CODE_COMPLETENESS_AUDIT_2026_10_29.md) | FC01–FC04原审查证据；修订结果见后续批次001 |
+| [全量代码分批实施与恢复点](client/FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md) | 批次001–020；005–020未提交、020最终五份语法待读 |
+| [拉取后代码续作](client/REMOTE_CONTINUATION_2026_10_29.md) | 消息、后台未知结果及协作来源的后续源码／静态记录 |
+| [协作退出与有限授权40稿交接](design/figma-study/collaboration-exit-2026-10-28/README.md) | 10月28日设计基线及当时未完成项 |
+| [协作40稿最终细化](design/figma-study/collaboration-refinement-2026-10-29/README.md) | 96动作独立回读、五布局截图与后续设计收尾 |
+| [文档中心原导航读取](figma-sync/delta-2026-10-29/navigation-content.md) | 10月29日增量同步前的导航来源证据 |
+| [文档中心预期导航](figma-sync/delta-2026-10-29/navigation-expected.md) | 10月29日增量同步核对文本 |
+| [文档中心导航回读](figma-sync/delta-2026-10-29/navigation-after.md) | 10月29日导航正文回读证据 |
+| [文档中心目录回读](figma-sync/delta-2026-10-29/navigation-directory-after.md) | 10月29日目录正文回读证据 |
 
 ## 00 导航与现行基线
 

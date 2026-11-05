@@ -1,6 +1,6 @@
 # 手机端对应的 Go 服务接口与运行交接
 
-> **2026-10-27 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前253路径／285操作／139服务端schemas、141Web schemas、87对DTO、45张mobile表／13迁移、28份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-11-05 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
 更新：2026-10-25。当前服务端全量代码逻辑与 UML 图谱见[全栈代码逻辑与 PlantUML 手册](../CODE_LOGIC_AND_UML_REFERENCE.md)与[`docs/uml/`](../uml/README.md)；分项交接见[服务端优先完善与作业交接](SERVER_FIRST_2026_10_23.md)、[证据保全／数据清理](LIFECYCLE_RETENTION_2026_10_23.md)、[领养送养闭环与安全保留](ADOPTION_CLOSURE_2026_10_23.md)、[服务端完整性审计与待完善清单（2026-10-24）](SERVER_AUDIT_AND_REMAINING_GAPS_2026_10_24.md)、[三方官方认证](../client/PROVIDER_AUTH_IMPLEMENTATION_2026_10_25.md)、[外部年龄核验网关](../client/AGE_ASSURANCE_IMPLEMENTATION_2026_10_25.md)、[监护人 15 分钟邀请与成年关系申诉](../client/GUARDIAN_PAGES_IMPLEMENTATION_2026_10_25.md)。设计依据：[手机评审入口](../design/figma-study/MOBILE_FIGMA_REVIEW_2026_10_19.md)；机器合同：[OpenAPI 3.1（241 Paths / 271 Operations / 123 Schemas）](../api/mobile-v2.openapi.json)。全部运行结果待验收。
 

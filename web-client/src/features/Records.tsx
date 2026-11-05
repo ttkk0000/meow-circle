@@ -1,12 +1,12 @@
-import { CityField } from "../components/CityField";
-import { CatPlaceholder } from "../components/CatPlaceholder";
-import { useRef, useState, type ReactNode } from "react";
-import { api, explain, query, type RecordData, type User } from "../core/api";
-import { usePages, titleOf } from "../core/pages";
-import { reload, useQuery } from "../core/query";
-import { navigate, resourceRoute, replaceFilters } from "../core/router";
-import { integer, money } from "../core/wire";
-import { useSession } from "../core/session";
+import {CityField} from "../components/CityField";
+import {CatPlaceholder} from "../components/CatPlaceholder";
+import {type ReactNode, useRef, useState} from "react";
+import {api, explain, type RecordData, type User} from "../core/api";
+import {titleOf, usePages} from "../core/pages";
+import {reload, useQuery} from "../core/query";
+import {navigate, replaceFilters, resourceRoute} from "../core/router";
+import {integer, money} from "../core/wire";
+import {useSession} from "../core/session";
 import {
   Button,
   Card,
@@ -20,7 +20,7 @@ import {
   RowLink,
   TaskPage,
 } from "../components/ui";
-import { stateLabel, workflowURL } from "./workflows";
+import {stateLabel, workflowURL} from "./workflows";
 
 export const titles: Record<string, string> = {
   "group-directory": "发现宠友群",
@@ -538,6 +538,7 @@ export function Records({
                   filterForm.current?.querySelector<HTMLInputElement>("input")?.focus();
                 }}>调整筛选</Button>
                 <Button
+                  kind="quiet"
                   onClick={clearFilters}
                 >
                   清空条件

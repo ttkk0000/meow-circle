@@ -456,6 +456,8 @@ small {
 }
 .button.quiet {
   background: transparent;
+  font-size: 14px;
+  line-height: 22px;
   border-color: transparent;
   color: var(--quiet);
 }
@@ -1383,12 +1385,56 @@ dialog > header {
 @media (max-width: 600px) { .amap-canvas { height: 300px; } }
 
 /* 登录入口与任务表单复用页面骨架，窄窗自然换行。 */
+.task-dialog[open] { display:flex; flex-direction:column; height:min(900px, 94dvh); width:min(820px, calc(100vw - 48px)); }
+.task-dialog > header { flex:none; min-height:56px; padding:4px; justify-content:flex-start; }
+.task-dialog > header h2 { margin:0; font-size:20px; line-height:30px; }
+.task-dialog .dialog-content { flex:1; min-height:0; max-height:none; background:var(--canvas); padding:16px; }
+.task-dialog .dialog-actions { flex:none; padding:16px; }
+.task-dialog .dialog-actions > .button { width:100%; }
+.auth-task-content { display:flex; flex-direction:column; gap:16px; min-width:0; }
+.auth-task-content h1 { margin:0; font-size:28px; line-height:40px; }
+.auth-task-content > .button.quiet { justify-content:flex-start; text-align:left; }
+.auth-task-content > .field-error { color:var(--danger); }
+.auth-facts { display:flex; flex-direction:column; gap:12px; margin:0; }
+.auth-facts > div { display:grid; grid-template-columns:80px minmax(0,1fr); gap:8px; align-items:start; }
+.auth-facts dt { font-size:12px; line-height:20px; color:var(--muted); overflow-wrap:anywhere; }
+.auth-facts dd { margin:0; min-width:0; font-size:16px; line-height:26px; overflow-wrap:anywhere; }
+.auth-brand { display:flex; flex-direction:column; gap:4px; }
+.auth-brand strong { font-family:Manrope,sans-serif; font-size:24px; line-height:32px; font-weight:800; }
+.security-identity { gap:12px; align-items:flex-start; }
+.security-identity p { margin:4px 0 0; }
+.security-identity strong { display:block; line-height:24px; }
+.security-avatar { width:56px; height:56px; border-radius:16px; object-fit:cover; flex:none; }
+.auth-profile .list-row { min-height:56px; }
+.auth-return-task .list-row { min-height:56px; }
+.auth-profile .security-identity > div { flex:1; min-width:0; overflow-wrap:anywhere; }
+.security-facts { display:grid; gap:12px; }
+.security-facts > div { display:grid; gap:6px; }
+.security-facts span { font-size:14px; font-weight:500; line-height:22px; color:var(--muted); }
+.security-facts p { margin:0; }
+@media (max-width:599px) {
+  .task-dialog[open] { width:100%; max-width:none; height:100dvh; max-height:100dvh; margin:0; border-radius:0; }
+  .task-dialog > header { padding-top:max(4px, env(safe-area-inset-top)); }
+  .task-dialog .dialog-actions { padding-bottom:max(16px, env(safe-area-inset-bottom)); }
+}
 .auth-mode-heading, .auth-method-links { display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
 .auth-mode-heading h2 { margin:0; }
 .provider-methods { border-top:1px solid var(--border); padding-top:16px; display:grid; gap:12px; }
 .provider-methods > div { display:flex; gap:12px; }
 .provider-methods .button { flex:1; display:flex; align-items:center; justify-content:center; gap:8px; }
 .provider-methods .icon { flex:none; }
+.auth-known .provider-methods { border-top:0; padding-top:0; }
+.auth-known .provider-methods .button { border-radius:24px; font-size:14px; line-height:22px; }
+.auth-known .provider-methods .icon { width:20px; height:20px; }
+.auth-known .apple-provider .button { background:#000; color:#fff; }
+.auth-known .apple-provider .icon { filter:invert(1); }
+.auth-phone-error > .button.primary { width:100%; }
+.auth-otp { position:relative; width:100%; max-width:358px; height:56px; }
+.auth-otp > input { position:absolute; inset:0; width:100%; height:100%; opacity:0; z-index:1; cursor:text; }
+.auth-otp-cells { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; height:100%; }
+.auth-otp-cells > span { display:flex; align-items:center; justify-content:center; border:1px solid var(--control); border-radius:8px; background:var(--surface); font-size:16px; line-height:24px; font-weight:700; }
+.auth-otp:focus-within .current { outline:2px solid var(--button-focus); outline-offset:-2px; }
+.auth-otp:has(input:disabled) { opacity:.55; }
 .workflow-sections { display:grid; gap:16px; min-width:0; }
 .workflow-sections > .stack:empty { display:none; }
 .workflow-sections .card { display:grid; gap:16px; }

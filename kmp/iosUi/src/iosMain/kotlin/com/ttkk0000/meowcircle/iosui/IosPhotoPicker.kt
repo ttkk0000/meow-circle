@@ -19,7 +19,8 @@ import kotlin.coroutines.resume
 import kotlin.math.min
 
 @Composable
-internal fun IosSelectPhotos(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit) {
+internal fun IosSelectPhotos(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit,
+    content: (@Composable (Boolean, () -> Unit) -> Unit)? = null) {
     val controller = LocalUIViewController.current
     val scope = rememberCoroutineScope()
     var preparing by remember { mutableStateOf(false) }
@@ -66,14 +67,19 @@ internal fun IosSelectPhotos(remaining: Int, enabled: Boolean, onSelected: (List
             }
         }
     }
-    OutlinedButton(onClick = {
-        val configuration = PHPickerConfiguration().apply {
-            selectionLimit = remaining.toLong()
-            filter = PHPickerFilter.imagesFilter
+    val canPick = enabled && remaining > 0 && !preparing
+    val launchPicker: () -> Unit = {
+        if (canPick) {
+            val configuration = PHPickerConfiguration().apply {
+                selectionLimit = remaining.toLong()
+                filter = PHPickerFilter.imagesFilter
+            }
+            val picker = PHPickerViewController(configuration).apply { this.delegate = delegate }
+            controller.presentViewController(picker, animated = true, completion = null)
         }
-        val picker = PHPickerViewController(configuration).apply { this.delegate = delegate }
-        controller.presentViewController(picker, animated = true, completion = null)
-    }, enabled = enabled && remaining > 0 && !preparing) {
+    }
+    if (content != null) content(canPick, launchPicker)
+    else OutlinedButton(onClick = launchPicker, enabled = canPick) {
         Text(if (preparing) "正在准备照片" else "添加照片（还可选 $remaining 张）")
     }
 }

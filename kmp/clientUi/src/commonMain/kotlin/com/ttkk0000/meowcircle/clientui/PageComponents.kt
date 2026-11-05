@@ -100,7 +100,10 @@ val LocalTaskNavigationEnabled = staticCompositionLocalOf { true }
     NavigationRow(title,detail,compact = false,onClick = onClick)
 }
 @Composable fun NavigationRow(title: String,detail: String = "",compact: Boolean,onClick: () -> Unit) {
-    Row(Modifier.fillMaxWidth().clickable(enabled = LocalTaskNavigationEnabled.current,onClick = onClick).heightIn(min = 64.dp),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    NavigationRow(enabled = true, title = title, detail = detail, onClick = onClick)
+}
+@Composable fun NavigationRow(enabled: Boolean, title: String, detail: String = "", minHeight: androidx.compose.ui.unit.Dp = 64.dp, onClick: () -> Unit) {
+    Row(Modifier.fillMaxWidth().clickable(enabled = enabled && LocalTaskNavigationEnabled.current,onClick = onClick).heightIn(min = minHeight),verticalAlignment = Alignment.CenterVertically,horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Column(Modifier.weight(1f),verticalArrangement = Arrangement.spacedBy(4.dp)) { Text(title,style = MaterialTheme.typography.bodyLarge); if(detail.isNotBlank()) Text(detail,color = MaterialTheme.colorScheme.onSurfaceVariant,style = MaterialTheme.typography.bodySmall) }
         DesignIcon("chevron-right",null)
     }

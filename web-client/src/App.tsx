@@ -1,18 +1,12 @@
-import { Publications } from "./features/Publications";
-import { ExpressionSettings } from "./features/chat";
-import { Component, useCallback, useEffect, useState, type ReactNode } from "react";
-import {
-  api,
-  explain,
-  type Inbox,
-  type Page,
-  type RecordData,
-} from "./core/api";
-import { useSession, signInEvent } from "./core/session";
-import { back, navigate, resourceRoute, returnTo, useRoute } from "./core/router";
-import { useQuery, reload, invalidateQueries } from "./core/query";
-import { integer } from "./core/wire";
-import { usePages } from "./core/pages";
+import {Publications} from "./features/Publications";
+import {Chat, ExpressionSettings} from "./features/chat";
+import {Component, type ReactNode, useCallback, useEffect, useState} from "react";
+import {api, explain, type Inbox, type Page, type RecordData,} from "./core/api";
+import {signInEvent, useSession} from "./core/session";
+import {back, navigate, resourceRoute, returnTo, useRoute} from "./core/router";
+import {invalidateQueries, reload, useQuery} from "./core/query";
+import {integer} from "./core/wire";
+import {usePages} from "./core/pages";
 import {
   Badge,
   Button,
@@ -24,33 +18,28 @@ import {
   Notice,
   QueryState,
   RowLink,
-  TaskPage,
   TaskBackContext,
+  TaskPage,
 } from "./components/ui";
-import { AuthDialog } from "./features/AuthDialog";
-import { Mine, Security, type Profile } from "./features/Account";
-import { AgeRange, AgeAssurance } from "./features/AgePages";
-import { Guardians, GuardianProtection } from "./features/GuardianPages";
-import { Rules, ReadingPage, SettingsHome } from "./features/ReadingPages";
-import { Feed, PageEnd, Records, titles } from "./features/Records";
-import { ResourcePage, Member } from "./features/ResourcePage";
-import { CareCollaboration } from "./features/CareCollaboration";
-import type { CareContext } from "./core/care";
-import { LeadInbox, LeadPage } from "./features/LeadPages";
-import { Chat } from "./features/chat";
-import { Recovery } from "./features/Recovery";
-import { MapPage } from "./features/MapPage";
-import { ContentPage } from "./features/ContentPage";
-import {
-  LocationHelp,
-  NotificationHelp,
-  PhotoChoiceHelp,
-} from "./features/PermissionPages";
-import { NotificationPage } from "./features/NotificationPage";
-import { InboxReadAll } from "./components/InboxReadAll";
-import { PublishButton } from "./components/PublishButton";
-import { WorkflowEditor } from "./features/WorkflowEditor";
-import { workflows, workflowURL, type Context } from "./features/workflows";
+import {AuthDialog} from "./features/AuthDialog";
+import {Mine, type Profile, Security} from "./features/Account";
+import {AgeAssurance, AgeRange} from "./features/AgePages";
+import {GuardianProtection, Guardians} from "./features/GuardianPages";
+import {ReadingPage, Rules, SettingsHome} from "./features/ReadingPages";
+import {Feed, PageEnd, Records} from "./features/Records";
+import {Member, ResourcePage} from "./features/ResourcePage";
+import {CareCollaboration} from "./features/CareCollaboration";
+import type {CareContext} from "./core/care";
+import {LeadInbox, LeadPage} from "./features/LeadPages";
+import {Recovery} from "./features/Recovery";
+import {MapPage} from "./features/MapPage";
+import {ContentPage} from "./features/ContentPage";
+import {LocationHelp, NotificationHelp, PhotoChoiceHelp,} from "./features/PermissionPages";
+import {NotificationPage} from "./features/NotificationPage";
+import {InboxReadAll} from "./components/InboxReadAll";
+import {PublishButton} from "./components/PublishButton";
+import {WorkflowEditor} from "./features/WorkflowEditor";
+import {type Context, workflows, workflowURL} from "./features/workflows";
 
 const navigation = [
   ["/", "社区", "house"],
@@ -182,6 +171,9 @@ export default function App() {
   }, [route, owner]);
   const taskBackTo = taskBack?.route === route && taskBack.owner === owner ? taskBack.to : undefined;
   const [login, setLogin] = useState(false);
+  useEffect(() => {
+    if (api.sessionEnd && api.sessionEnd.kind !== "account_request") setLogin(true);
+  }, [session]);
   useEffect(() => {
     const show = () => setLogin(true);
     window.addEventListener(signInEvent, show);
@@ -366,7 +358,7 @@ export default function App() {
             ),
           )}
       </nav>
-      {login ? <AuthDialog onClose={() => setLogin(false)} /> : null}
+      {login ? <AuthDialog sessionEnd={api.sessionEnd} onClose={() => { api.acknowledgeSessionEnd(); setLogin(false); }} /> : null}
       {menu ? (
         <Modal
           title={moduleTitles[module]}

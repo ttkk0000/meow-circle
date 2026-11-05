@@ -19,7 +19,7 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
     val route = s.route ?: return
     val sensitive by f.sensitive.state.collectAsState()
     if(route.page == FeaturePage.DataRequests && sensitive.stage != SensitiveStage.Idle) {
-        SensitiveDialog(f,fullPage = true)
+        SensitiveDialog(store,fullPage = true)
         return
     }
     if(route.page == FeaturePage.Invitations && store.state.value.user != null) {
@@ -126,10 +126,11 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
             confirmButton = { TextButton(onClick = f::submitConfirmation, enabled = !s.busy && !s.conflict && !s.unconfirmedResult && s.pending.none { it.phase in listOf("sent", "result_unknown") }) { Text(if (s.busy) "正在提交" else "确认提交") } },
             dismissButton = { TextButton(onClick = f::dismissConfirmation, enabled = !s.busy) { Text("返回修改") } })
     }
-    if(s.route?.page != FeaturePage.DataRequests) SensitiveDialog(f)
+    if(s.route?.page != FeaturePage.DataRequests) SensitiveDialog(store)
 }
 
-@Composable private fun SensitiveDialog(f: MobileFeatureStore, fullPage: Boolean = false) {
+@Composable private fun SensitiveDialog(store: MobileStore, fullPage: Boolean = false) {
+    val f = store.features
     val s by f.sensitive.state.collectAsState()
     val common by f.state.collectAsState()
     if (s.stage == SensitiveStage.Idle) return
@@ -140,6 +141,35 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
     var agreed by rememberSessionUiState("agreed", scope, s.intent) { false }
     var step by rememberSessionUiState("dataStep", scope, s.intent) { "impact" }
     val busy = common.busy || s.stage in listOf(SensitiveStage.LoadingScope, SensitiveStage.Verifying, SensitiveStage.Submitting)
+    if (s.stage == SensitiveStage.Failed && s.errorCode == "last_login_method" && (s.intent as? SensitiveIntent.Account)?.action == "unlink") {
+        AuthLastMethodTask(busy,
+            onReturn = { f.sensitive.dismiss(); f.setSecurityView(SecurityView.Accounts); f.reload() },
+            onAdd = { f.sensitive.dismiss(); f.setSecurityView(SecurityView.Methods); f.reload() })
+        return
+    }
+    if (s.stage == SensitiveStage.Failed && s.errorCode == "identity_in_use") {
+        AuthConflictTask(busy, store.state.value.user != null,
+            onReturn = { f.sensitive.dismiss(); f.reload() },
+            onOther = { f.sensitive.dismiss(); store.showLogin() },
+            onRecovery = { f.sensitive.dismiss(); store.openAuthRecovery() })
+        return
+    }
+    val accountIntent = s.intent as? SensitiveIntent.Account
+    if (s.stage in listOf(SensitiveStage.ReadyToSubmit, SensitiveStage.Submitting) && accountIntent != null) {
+        val cancel = { password = ""; code = ""; currentPhone = ""; f.sensitive.dismiss(); f.reload() }
+        if (accountIntent.action == "unlink") {
+            AuthUnbindTask(common.methods, accountIntent.input.identityId, busy, cancel) { f.confirmSensitive(true) }
+            return
+        }
+        val user = common.profile?.user
+        if (accountIntent.action in listOf("phone", "email") && user != null) {
+            val phone = accountIntent.action == "phone"
+            AuthBindTask(store, user, if (phone) "手机号" else "邮箱", if (phone) accountIntent.input.phone else accountIntent.input.email,
+                replacing = if (phone) !common.methods?.phone.isNullOrBlank() else common.methods?.linked?.any { it.provider == "email" } == true,
+                busy = busy, onCancel = cancel, onConfirm = { f.confirmSensitive(true) })
+            return
+        }
+    }
     val impact = fullPage && step == "impact" && s.scope != null && s.stage == SensitiveStage.Review
     val dataType = (s.intent as? SensitiveIntent.DataRequest)?.input?.type ?: f.field("type","erase_fields")
     val title = if(!fullPage) "核对本次操作" else when(s.stage) {
@@ -230,7 +260,7 @@ private fun purposeLabel(value: String) = when {
 }
 fun dataTypeLabel(v: String) = mapOf("erase_fields" to "删除指定资料／内容", "close_account" to "注销账号", "matters_assistance" to "未结事项协助")[v] ?: v
 fun rightsTypeLabel(v: String) = mapOf("safety" to "安全求助", "privacy" to "隐私报告", "data_assistance" to "资料事项协助", "rights_notice" to "正式权利通知", "counterstatement" to "对原通知提交声明", "supplement" to "补充原事项")[v] ?: v
-@Composable fun FeatureColumn(spacing: Int = 14,content: @Composable ColumnScope.() -> Unit) { TaskColumn(spacing,content) }
+@Composable fun FeatureColumn(spacing: Int = 16,content: @Composable ColumnScope.() -> Unit) { TaskColumn(spacing,content) }
 @Composable fun FeatureSection(title: String,content: @Composable ColumnScope.() -> Unit) { MndSection(title,content = content) }
 @Composable fun FeatureButton(label: String, enabled: Boolean = true, onClick: () -> Unit) {
     MndSecondaryButton(label, enabled, onClick = onClick)

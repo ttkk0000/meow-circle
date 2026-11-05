@@ -1,6 +1,6 @@
 {
   "date": "2026-10-24",
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "file_key": "3OFOC3vu18Kx9sRPjummOC",
   "task": "AI-20261024-ALL-FIGMA",
   "meaning": "此表是全量设计索引与源码归属追踪，不是全部页面完成、视觉对齐或运行通过的证明。",
@@ -2320,14 +2320,14 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "web_source": "web-client/src/features/Account.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -2378,15 +2378,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt",
+      "web_source": "web-client/src/features/AuthBinding.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_static_grammar_reviewed_runtime_unverified",
+      "note": "批次019：真实方式事实与关联／解除专用确认页；用途验证后明确点击、原版本／编号／服务端最后方式保护保留。仅静态／语法，未运行视觉。",
+      "remote_screenshots_inspected": [
+        "238:371747",
+        "311:379992"
+      ],
       "runtime_verified": false
     },
     {
@@ -2413,8 +2416,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "external_configuration_and_runtime_required",
-      "note": "保留真实不可用／等待状态；不能以本地变量模拟供应商、核验或系统权限。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [
         "238:371729"
       ],
@@ -2438,15 +2441,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
+      "web_source": "web-client/src/features/AuthPhone.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_path_asset_reviewed_final_grammar_runtime_unverified",
+      "note": "批次020：真实当前号验证／新号填写与交流前手机号验证，回执地址用途绑定；不替代后续变更用途验证或最终确认。最终5语法低内存待读，未类型／运行视觉。",
+      "remote_screenshots_inspected": [
+        "238:371750",
+        "311:380004"
+      ],
       "runtime_verified": false
     },
     {
@@ -2467,15 +2473,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "web_source": "web-client/src/features/AuthCodePages.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_static_grammar_reviewed_runtime_unverified",
+      "note": "批次018：短信延迟／真实回执过期专用页，地址用途与倒计时绑定，重发明确操作并清旧码；静态／语法已读，未类型／运行／视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371723",
+        "311:379896"
+      ],
       "runtime_verified": false
     },
     {
@@ -2496,15 +2505,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "web_source": "web-client/src/features/AuthCodePages.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_path_asset_reviewed_grammar_runtime_unverified",
+      "note": "批次017：实际号码格式错误／真实发送回执后的重发、单真实输入与六格展示已写；不代替资格或服务验证。语法低内存待读，未编译／测试／运行／视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371722",
+        "311:379892"
+      ],
       "runtime_verified": false
     },
     {
@@ -2525,15 +2537,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
+      "web_source": "web-client/src/components/AccountConflict.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_path_asset_reviewed_grammar_runtime_unverified",
+      "note": "批次016：真实identity_in_use冲突／服务端last_login_method专用页及返回、添加与恢复帮助已写。13语法及片段低于内存门槛跳过，未编译／测试／运行／视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371739",
+        "311:379960"
+      ],
       "runtime_verified": false
     },
     {
@@ -2705,8 +2720,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次010：邮箱／官方方式显式创建确认；真实owner及created回执驱动成功页。旧手机号自动建号示例按现行合同保持关闭。未运行或逐端视觉验收。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -2763,9 +2778,12 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "批次012：实际原任务专用返回页与明确继续；评审示例不作用户数据，未编译或运行／逐端视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371768",
+        "311:380076"
+      ],
       "runtime_verified": false
     },
     {
@@ -2786,15 +2804,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt",
+      "web_source": "web-client/src/features/AuthKnown.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_path_asset_reviewed_grammar_partially_pending",
+      "note": "批次015：仅进程内服务确认的旧身份／方式展示与真实再验证，不持久记忆、不凭旧头像取私密图；两处最终样式／图标语法因低内存待读，未编译／运行／视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371720",
+        "311:379884"
+      ],
       "runtime_verified": false
     },
     {
@@ -2848,15 +2869,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
+      "web_source": "web-client/src/components/AccountConflict.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_path_asset_reviewed_grammar_runtime_unverified",
+      "note": "批次016：真实identity_in_use冲突／服务端last_login_method专用页及返回、添加与恢复帮助已写。13语法及片段低于内存门槛跳过，未编译／测试／运行／视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371749",
+        "311:380000"
+      ],
       "runtime_verified": false
     },
     {
@@ -2883,10 +2907,11 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "批次013：原账号验证／真实账号关联确认布局已写，继续原用途凭证／显式确认；路径资源通过，629MiB低于1024MiB门槛跳过语法，未编译或运行／视觉验收。 批次014内存恢复后已补语法读取，均无诊断；不计运行验收。",
       "remote_screenshots_inspected": [
-        "238:371738"
+        "238:371738",
+        "311:379956"
       ],
       "runtime_verified": false
     },
@@ -2914,10 +2939,11 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "批次013：原账号验证／真实账号关联确认布局已写，继续原用途凭证／显式确认；路径资源通过，629MiB低于1024MiB门槛跳过语法，未编译或运行／视觉验收。 批次014内存恢复后已补语法读取，均无诊断；不计运行验收。",
       "remote_screenshots_inspected": [
-        "238:371737"
+        "238:371737",
+        "311:379952"
       ],
       "runtime_verified": false
     },
@@ -2945,8 +2971,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -2968,14 +2994,14 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "web_source": "web-client/src/features/Account.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3032,8 +3058,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3055,15 +3081,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "web_source": "web-client/src/features/AuthPhone.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_path_asset_reviewed_final_grammar_runtime_unverified",
+      "note": "批次020：真实当前号验证／新号填写与交流前手机号验证，回执地址用途绑定；不替代后续变更用途验证或最终确认。最终5语法低内存待读，未类型／运行视觉。",
+      "remote_screenshots_inspected": [
+        "238:371751",
+        "311:380008"
+      ],
       "runtime_verified": false
     },
     {
@@ -3090,8 +3119,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3119,8 +3148,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3148,8 +3177,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3177,8 +3206,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3206,8 +3235,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3229,15 +3258,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "web_source": "web-client/src/features/AuthCodePages.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_path_asset_reviewed_grammar_runtime_unverified",
+      "note": "批次017：实际号码格式错误／真实发送回执后的重发、单真实输入与六格展示已写；不代替资格或服务验证。语法低内存待读，未编译／测试／运行／视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371721",
+        "311:379888"
+      ],
       "runtime_verified": false
     },
     {
@@ -3258,15 +3290,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
+      "web_source": "web-client/src/features/AuthPhone.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_path_asset_reviewed_final_grammar_runtime_unverified",
+      "note": "批次020：真实当前号验证／新号填写与交流前手机号验证，回执地址用途绑定；不替代后续变更用途验证或最终确认。最终5语法低内存待读，未类型／运行视觉。",
+      "remote_screenshots_inspected": [
+        "238:371745",
+        "311:379984"
+      ],
       "runtime_verified": false
     },
     {
@@ -3287,14 +3322,14 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "web_source": "web-client/src/features/AuthInformation.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3316,15 +3351,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthProfilePages.kt",
+      "web_source": "web-client/src/features/AuthProfile.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthProfilePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthProfilePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次011：专用可选昵称／头像、明确保存／跳过、原任务返回与当前资料核对；资格仍由服务端核验。未编译或运行／逐端视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371736",
+        "311:379948"
+      ],
       "runtime_verified": false
     },
     {
@@ -3351,8 +3389,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [
         "238:371728"
       ],
@@ -3382,8 +3420,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [
         "238:371727"
       ],
@@ -3502,8 +3540,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3525,15 +3563,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthRecoveryPages.kt",
+      "web_source": "web-client/src/features/AuthRecovery.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthRecoveryPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthRecoveryPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "批次014：专用恢复协助／真实回执／原请求核对及受限补充源码已写；复用匿名协助，不直接恢复权限或合并账号。未编译或运行／逐端视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371753",
+        "311:380016"
+      ],
       "runtime_verified": false
     },
     {
@@ -3554,15 +3595,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthRecoveryPages.kt",
+      "web_source": "web-client/src/features/AuthRecovery.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthRecoveryPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthRecoveryPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "批次014：专用恢复协助／真实回执／原请求核对及受限补充源码已写；复用匿名协助，不直接恢复权限或合并账号。未编译或运行／逐端视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371754",
+        "311:380020"
+      ],
       "runtime_verified": false
     },
     {
@@ -3589,9 +3633,11 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "design_read_contract_gap_not_implemented",
+      "note": "authKnown was read but is not implemented: there is no verified remembered-identity/method contract for the illustrated pre-auth card. authRestricted was read but is not implemented: identity active() currently returns unauthorized for every non-active account, with no typed partial restriction/review summary. Eligibility phone/age reasons must not be represented as moderation sanctions.",
+      "remote_screenshots_inspected": [
+        "238:371744"
+      ],
       "runtime_verified": false
     },
     {
@@ -3699,14 +3745,14 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "web_source": "web-client/src/features/AuthInformation.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3734,8 +3780,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3757,15 +3803,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "web_source": "web-client/src/features/AuthCodePages.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_static_grammar_reviewed_runtime_unverified",
+      "note": "批次018：短信延迟／真实回执过期专用页，地址用途与倒计时绑定，重发明确操作并清旧码；静态／语法已读，未类型／运行／视觉验收。",
+      "remote_screenshots_inspected": [
+        "238:371724",
+        "311:379900"
+      ],
       "runtime_verified": false
     },
     {
@@ -3792,8 +3841,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次010：邮箱／官方方式显式创建确认；真实owner及created回执驱动成功页。旧手机号自动建号示例按现行合同保持关闭。未运行或逐端视觉验收。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3815,14 +3864,14 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "web_source": "web-client/src/features/AuthInformation.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3844,14 +3893,14 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "web_source": "web-client/src/features/AuthInformation.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -3873,15 +3922,18 @@
         "tabletP": "cross-platform-full-state.json",
         "tabletL": "cross-platform-full-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt",
+      "web_source": "web-client/src/features/AuthBinding.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
-      "remote_screenshots_inspected": [],
+      "implementation_status": "dedicated_source_static_grammar_reviewed_runtime_unverified",
+      "note": "批次019：真实方式事实与关联／解除专用确认页；用途验证后明确点击、原版本／编号／服务端最后方式保护保留。仅静态／语法，未运行视觉。",
+      "remote_screenshots_inspected": [
+        "238:371748",
+        "311:379996"
+      ],
       "runtime_verified": false
     },
     {
@@ -8245,14 +8297,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "web_source": "web-client/src/features/Account.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -8280,8 +8332,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -8338,8 +8390,8 @@
       "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -17461,14 +17513,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "web_source": "web-client/src/features/Account.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -17490,14 +17542,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "web_source": "web-client/src/features/Account.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },
@@ -17519,14 +17571,14 @@
         "tabletP": "logic-fix-2026-10-21-state.json",
         "tabletL": "logic-fix-2026-10-21-state.json"
       },
-      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "web_source": "web-client/src/features/AuthDialog.tsx",
+      "android_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "web_source": "web-client/src/features/Account.tsx",
       "web_module_route": "/security",
-      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
-      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "ios_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "desktop_source": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
       "source_note": "Android／iOS／Desktop消费者复用clientUi页面；这是源码归属，不代表对应状态已逐一视觉验收。",
-      "implementation_status": "source_family_mapped_not_visually_verified",
-      "note": "使用真实数据／错误／角色／版本驱动状态；本条没有运行或逐像素验收。",
+      "implementation_status": "dedicated_source_static_reviewed_runtime_unverified",
+      "note": "2026-10-30批次005–009的具体源码／静态与差异已审查；逐端视觉、类型及运行未验收，见FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md。",
       "remote_screenshots_inspected": [],
       "runtime_verified": false
     },

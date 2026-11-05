@@ -44,6 +44,9 @@ export interface ProviderCallback {
   code: string;
   cancelled: boolean;
 }
+export class ProviderPopupError extends Error {
+  constructor(readonly kind: "expired" | "unavailable", message: string) { super(message); }
+}
 const validState = (value: string) => /^[a-zA-Z0-9_-]{32,200}$/.test(value);
 
 /** 只有同源回跳页进入此入口；先移除URL凭据，再加载任何业务页面。 */
@@ -106,7 +109,7 @@ export function providerPopup(
       if (!finished) {
         finished = true;
         cleanup();
-        reject(new Error("官方授权等待超时，请重新发起；没有自动创建账号"));
+        reject(new ProviderPopupError("expired", "官方授权等待超时，请重新发起；没有自动创建账号"));
       }
     }, 5 * 60_000);
     const url = new URL(
@@ -131,7 +134,7 @@ export function providerPopup(
     } catch {
       finished = true;
       cleanup();
-      reject(new Error("无法打开官方授权页面，请返回重试"));
+      reject(new ProviderPopupError("unavailable", "无法打开官方授权页面，请返回重试"));
     }
   });
   return {

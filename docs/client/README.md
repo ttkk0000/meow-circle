@@ -1,10 +1,12 @@
 # M&D 客户端代码实施与完成标准
 
-> **2026-10-29 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／141服务端schemas、143Web schemas、88对DTO、45张mobile表／13迁移、29份shared／44份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。
+> **2026-11-05 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
 当前工程边界：`kmp/shared/.../client`负责业务与数据，`kmp/clientUi`提供Android／iOS／Desktop公共Compose页面；`androidApp`、`iosUi`和`desktopApp`分别注入窗口、返回、Picker、地图、授权等平台能力。Web已使用独立`web-client` React DOM。共享页面不抵扣Android平板和iPad各自的系统适配与设备验收。详见下方架构表及[视觉与验收](DESIGN_AND_ACCEPTANCE.md)。
 
 ## 带日期的阶段记录
+
+2026-10-30：[批次005–020](FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)认证／账号安全、关联解除与旧号／新号／手机号补充验证；33shared／53公共UI／100Web／457引用通过。019四语法通过，020初五完整后最终五份低内存待读，旧待读由018补齐。未类型／编译／测试／启动／运行视觉；本轮执行标记释放，继续认证删除／会话／返回及全量余项。
 
 2026-10-29：[全量按批实施记录](FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)记录FC01–FC04、共用控件及通知14状态，含19:00汇总与原请求恢复；本批源码／只读静态，未运行验收，任务继续。
 

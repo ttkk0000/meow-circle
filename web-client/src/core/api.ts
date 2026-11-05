@@ -1,6 +1,6 @@
-import { encodeWire, parseWire } from "./wire";
-import { routeAllowed } from "./routes";
-import { uploadWithProgress } from "./upload";
+import {encodeWire, parseWire} from "./wire";
+import {routeAllowed} from "./routes";
+import {uploadWithProgress} from "./upload";
 
 export interface User {
   id: bigint;
@@ -46,6 +46,13 @@ export interface Session {
   user: User | null;
   csrf: string;
 }
+export interface RememberedIdentity { user: User; method: string; }
+// In-memory presentation metadata; it cannot authorize or replay an operation.
+export interface SessionEnd {
+  kind: "expired" | "signed_out" | "security_change" | "account_request";
+  action?: string;
+  maskedAddress?: string;
+}
 export class HttpError extends Error {
   constructor(
     readonly status: number,
@@ -75,6 +82,7 @@ const messages: Record<string, string> = {
   phone_verification_required: "请先验证当前绑定的手机号",
   adult_required: "此操作需要有效的成年人资格",
   guardian_consent_required: "请先核对有效的监护范围",
+  last_login_method: "请先关联并验证另一种登录方式，再解除当前关联",
   contact_restricted:
     "此联系入口受保护设置限制，未发送消息；可使用好友确认、屏蔽或私密求助入口",
   purpose_grant_required: "请重新验证此次操作用途",
@@ -122,6 +130,9 @@ function normalizeRecords(value: unknown): void {
 }
 
 class BrowserAPI {
+  sessionEnd?: SessionEnd;
+  rememberedIdentity?: RememberedIdentity;
+  acknowledgeSessionEnd() { this.sessionEnd = undefined; }
   session: Session = {
     authenticated: false,
     refreshable: false,
@@ -139,36 +150,43 @@ class BrowserAPI {
   constructor() {
     this.channel?.addEventListener("message", (event) => {
       if (event.data === "changed")
-        void this.openSession().catch(() => this.invalidate());
+        void this.openSession().catch(e => { if (!isAbort(e)) this.invalidate(); });
     });
   }
-  private accept(next: Session) {
+  private accept(next: Session, end: SessionEnd = { kind: "expired" }) {
     if (!next.authenticated && next.refreshable && this.session.user)
       next = { ...next, user: this.session.user };
+    if (next.authenticated && next.user) this.rememberedIdentity = { user: next.user,
+      method: this.rememberedIdentity?.user.id === next.user.id ? this.rememberedIdentity.method : "" };
+    else if (end.kind === "account_request") this.rememberedIdentity = undefined;
+    if (next.user || next.authenticated || next.refreshable) this.sessionEnd = undefined;
+    else if (this.session.user || this.session.authenticated) this.sessionEnd = end;
     if (this.session.user?.id !== next.user?.id) this.epoch++;
     this.session = next;
     this.onSession?.();
   }
-  invalidate() {
+  invalidate(end: SessionEnd = { kind: "expired" }) {
     this.accept({
       authenticated: false,
       refreshable: false,
       user: null,
       csrf: "",
-    });
+    }, end);
   }
   endSession() {
-    this.invalidate();
+    this.invalidate({ kind: "account_request" });
     this.channel?.postMessage("changed");
   }
   async openSession(): Promise<Session> {
     if (this.opening) return this.opening;
+    const epoch = this.epoch;
     const run = async () => {
       const response = await fetch("/api/web/v2/session", {
         credentials: "same-origin",
         cache: "no-store",
       });
       const envelope = parseWire<Envelope<Session>>(await response.text());
+      if (epoch !== this.epoch) throw new DOMException("账号已变化", "AbortError");
       if (!response.ok || !envelope.ok)
         throw new HttpError(
           response.status,
@@ -190,6 +208,7 @@ class BrowserAPI {
       if (session.authenticated) return;
       if (!session.refreshable)
         throw new HttpError(401, "authentication_required");
+      const epoch = this.epoch;
       const response = await fetch("/api/web/v2/auth/refresh", {
         method: "POST",
         credentials: "same-origin",
@@ -200,6 +219,7 @@ class BrowserAPI {
         },
         body: "{}",
       });
+      if (epoch !== this.epoch) throw new DOMException("账号已变化", "AbortError");
       if (!response.ok) {
         this.invalidate();
         throw new HttpError(response.status, "authentication_required");
@@ -287,6 +307,8 @@ class BrowserAPI {
         throw new DOMException("账号已变化", "AbortError");
       return this.request<T>(path, options, false);
     }
+    if (response.status === 401 && this.session.user &&
+      (!path.startsWith("auth/") || path.startsWith("auth/age-assurance"))) this.invalidate();
     if (options.blob && response.ok) return (await response.blob()) as T;
     const envelope = parseWire<Envelope<T>>(await response.text());
     if (!response.ok || !envelope.ok)
@@ -295,13 +317,26 @@ class BrowserAPI {
         envelope.error_code ?? "",
         envelope.error,
       );
+    if (epoch !== this.epoch)
+      throw new DOMException("账号已变化", "AbortError");
     if (
       /^auth\/(password|email|register|phone|oauth-finish|oauth-resolve|logout|account\/[^/]+)$/.test(
         path,
       ) &&
       !path.endsWith("/scope")
     ) {
-      await this.openSession();
+      const action = path.startsWith("auth/account/") ? path.split("/")[2] : undefined;
+      if (path === "auth/logout" || action) {
+        const body = options.body as { phone?: unknown } | undefined;
+        const phone = action === "phone" && typeof body?.phone === "string" ? body.phone.trim() : "";
+        // The browser adapter clears this session cookie on these successful responses.
+        this.invalidate({ kind: action ? "security_change" : "signed_out", action,
+          maskedAddress: phone.length >= 7 ? `${phone.slice(0, 3)} **** ${phone.slice(-4)}` : undefined });
+      } else {
+        await this.openSession();
+        if (this.session.authenticated && this.session.user) this.rememberedIdentity = { user: this.session.user,
+          method: path === "auth/password" ? "密码" : path === "auth/phone" ? "手机号" : path === "auth/email" || path === "auth/register" ? "邮箱" : "快捷登录" };
+      }
       this.channel?.postMessage("changed");
     }
     normalizeRecords(envelope.data);

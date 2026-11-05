@@ -292,7 +292,7 @@ private fun HomeContent(store: MobileStore, s: MobileState) {
                 header = { AdoptionFilters(store,s,filterFocus); Text("领养不是免费买宠。具体条件、健康未知和必要费用都应分别说明。", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 emptyActions = { if(filtered) {
                     FeatureButton("调整筛选") { filterFocus.requestFocus() }
-                    FeatureButton("清空条件") { store.filterPets("", "", "") }
+                    MndQuietButton("清空条件") { store.filterPets("", "", "") }
                 } },
                 failureActions = { UnavailableTaskActions(store,s.pets.failure,includeHome = false) }) { row ->
                 PetCard(store, s, row) { store.open(MobileDestination.Pet(row.id)) }

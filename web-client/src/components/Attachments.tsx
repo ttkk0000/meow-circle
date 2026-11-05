@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import type { PhotoDraft } from "../core/drafts";
-import { Button, PrivateImage, Modal } from "./ui";
-import { PhotoChoiceHelpContent } from "../features/PermissionPages";
-import { explain } from "../core/api";
+import {useEffect, useRef, useState} from "react";
+import type {PhotoDraft} from "../core/drafts";
+import {Button, Modal, PrivateImage} from "./ui";
+import {PhotoChoiceHelpContent} from "../features/PermissionPages";
+import {explain} from "../core/api";
 
-export function PhotoPreview({ photo }: { photo: PhotoDraft }) {
+export function PhotoPreview({ photo, className = "media" }: { photo: PhotoDraft; className?: string }) {
   const [source, setSource] = useState("");
   useEffect(() => {
     if (!photo.blob) {
@@ -16,11 +16,11 @@ export function PhotoPreview({ photo }: { photo: PhotoDraft }) {
     return () => URL.revokeObjectURL(url);
   }, [photo.blob]);
   return source ? (
-    <img className="media" src={source} alt={photo.name} />
+    <img className={className} src={source} alt={photo.name} />
   ) : photo.scope === "safety" ? (
     <p className="muted">已上传私密材料</p>
   ) : (
-    <PrivateImage id={photo.mediaId} alt={photo.name} />
+    <PrivateImage id={photo.mediaId} alt={photo.name} className={className} />
   );
 }
 export function Attachments({

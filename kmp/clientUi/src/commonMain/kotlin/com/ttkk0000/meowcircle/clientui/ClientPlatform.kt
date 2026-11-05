@@ -18,7 +18,8 @@ interface ClientUiPlatform {
     suspend fun authorizeProvider(provider: String, challenge: ProviderChallenge): ProviderCredential? = throw MobileApiException(503, "official provider SDK unavailable")
     @Composable fun Window(content: @Composable BoxWithConstraintsScope.() -> Unit)
     @Composable fun BackHandler(enabled: Boolean, onBack: () -> Unit)
-    @Composable fun PhotoPicker(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit)
+    @Composable fun PhotoPicker(remaining: Int, enabled: Boolean, onSelected: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit,
+        content: (@Composable (Boolean, () -> Unit) -> Unit)? = null)
     @Composable fun DateField(store: MobileFeatureStore, state: FeatureState, key: String, label: String,
         fallback: String, dateOnly: Boolean, optional: Boolean)
     @Composable fun Map(points: List<LostMapPoint>, selectedId: String, center: LostMapPoint, pickable: Boolean,

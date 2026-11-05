@@ -39,7 +39,9 @@ data class PageState<T>(val items: List<MobileRecord<T>> = emptyList(), val next
     }
 }
 
-data class AuthForm(val visible: Boolean = false, val username: String = "", val password: String = "", val error: String? = null,val errorCode: String = "")
+data class AuthCompletion(val owner: Long, val created: Boolean, val profile: Boolean = false, val reviewReturn: Boolean = false)
+data class AuthForm(val visible: Boolean = false, val username: String = "", val password: String = "", val error: String? = null,val errorCode: String = "",val failure: ClientReadFailure? = null,
+    val completion: AuthCompletion? = null, val recovery: Boolean = false)
 
 data class AdoptionCommand(val record: MobileRecord<AdoptionBody>, val action: String, val label: String, val note: String)
 data class PendingNotification(val id: Long, val owner: Long)
@@ -93,6 +95,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     private val localWorkspaces: LocalWorkspaceDrafts? = null, private val localReplies: LocalWorkspaceDrafts? = null) :
     MviStore<MobileState, MobileStoreIntent, MobileStoreEffect>(MobileState(replyDraftReady = localReplies == null)) {
     val features = MobileFeatureStore(api, scope, localWorkspaces)
+    val profileSetup = AuthProfileStore(api, scope, ::optionalProfileSaved)
+    val authRecovery = AuthRecoveryStore(api, scope)
     private var providerGuest: Pair<MobileDestination,String>? = null
     val providerAuth = ProviderAuthStore(api, scope) { session ->
         val original = providerGuest; providerGuest = null
@@ -181,7 +185,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         detailRevision++
         _state.update { old ->
             MobileState(restoring = old.restoring, user = user, tab = old.tab,
-                destination = old.destination, auth = if (user != null) AuthForm() else old.auth,
+                destination = old.destination, auth = if (user != null) AuthForm() else if (previousOwner != null && api.sessionEnd?.kind in setOf(SessionEndKind.Expired, SessionEndKind.SecurityChange, SessionEndKind.SignedOut)) AuthForm(visible = true) else old.auth,
                 pendingNotification = old.pendingNotification?.takeIf { user != null && (it.owner == 0L || it.owner == user.id) },
                 pendingTaskLink = old.pendingTaskLink?.takeIf { it.owner == 0L || it.owner == user?.id },
                 capabilities = old.capabilities, capabilityError = old.capabilityError, emoji = old.emoji, stickers = old.stickers)
@@ -214,7 +218,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         job.start()
     }
 
-    private fun refreshCapabilities() = task("capabilities") {
+    fun refreshCapabilities() = task("capabilities") {
+        _state.update { it.copy(capabilityError = null) }
         try { val capabilities = api.capabilities(); _state.update { it.copy(capabilities = capabilities, capabilityError = null) } }
         catch (e: CancellationException) { throw e }
         catch (e: Exception) { _state.update { it.copy(capabilityError = e.mobileMessage()) } }
@@ -262,9 +267,15 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         return true
     }
 
-    fun showLogin() { _state.update { it.copy(auth = it.auth.copy(visible = true, error = null,errorCode = "")) }; refreshCapabilities() }
-    fun cancelLogin() { if (_state.value.busy) return; resumeApply = null; _state.update { it.copy(auth = AuthForm()) } }
-    fun editAuth(form: AuthForm) { _state.update { it.copy(auth = form.copy(error = null,errorCode = "")) } }
+    fun showLogin() { features.clearCommandFeedback(); _state.update { it.copy(auth = it.auth.copy(visible = true, error = null,errorCode = "",failure = null)) }; refreshCapabilities() }
+    fun cancelLogin() {
+        if (_state.value.auth.recovery) { closeAuthRecovery(); return }
+        if (_state.value.busy || profileSetup.state.value.blocked || features.sensitive.state.value.stage == SensitiveStage.Submitting) return
+        if (_state.value.auth.completion?.profile == true) { closeOptionalProfile(); return }
+        if (_state.value.auth.completion?.reviewReturn == true) { reviewAuthReturn(false); return }
+        api.acknowledgeSessionEnd(); resumeApply = null; _state.update { it.copy(auth = AuthForm()) }
+    }
+    fun editAuth(form: AuthForm) { _state.update { it.copy(auth = form.copy(error = null,errorCode = "",failure = null)) } }
     fun clearNotice() { _state.update { it.copy(notice = null) } }
     fun rememberExpression(id: String) = task("expression-$id") {
         if (_state.value.user == null) return@task
@@ -777,12 +788,69 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             if (replyReady) _state.update { it.copy(guestReplySuggestion = guestReply) }
             else pendingGuestReply = originalDestination to guestReply
         }
-        _state.update { it.copy(auth = AuthForm(), notice = "登录成功，请确认后继续原任务") }
+        _state.update { it.copy(auth = AuthForm(visible = true, completion = AuthCompletion(session.user.id, session.created, session.created)), notice = "登录成功，请确认后继续原任务") }
+        if (session.created) profileSetup.begin(session.user.id)
+        reloadDetail(); refreshHome()
+    }
+
+    fun openOptionalProfile() {
+        val current = _state.value; val completion = current.auth.completion ?: return
+        if (!completion.created || current.busy || profileSetup.state.value.blocked || api.user.value?.id != completion.owner) return
+        profileSetup.begin(completion.owner)
+        _state.update { it.copy(auth = it.auth.copy(completion = completion.copy(profile = true))) }
+    }
+    fun closeOptionalProfile() {
+        val current = _state.value; val completion = current.auth.completion ?: return
+        if (current.busy || profileSetup.state.value.blocked || api.user.value?.id != completion.owner) return
+        profileSetup.dismiss()
+        _state.update { it.copy(auth = it.auth.copy(completion = completion.copy(profile = false))) }
+    }
+    private fun optionalProfileSaved(profile: MobileProfile) {
+        val completion = _state.value.auth.completion ?: return
+        if (completion.owner != profile.user.id || api.user.value?.id != completion.owner) return
+        _state.update { it.copy(user = profile.user, profile = profile,
+            auth = it.auth.copy(completion = completion.copy(profile = false))) }
+    }
+
+    fun openAuthRecovery() {
+        if (_state.value.busy || features.state.value.busy || providerAuth.state.value.busy) return
+        authRecovery.begin()
+        _state.update { it.copy(auth = it.auth.copy(visible = true, recovery = true, error = null)) }
+    }
+    fun closeAuthRecovery() {
+        if (authRecovery.state.value.busy) return
+        authRecovery.dismiss()
+        _state.update { it.copy(auth = it.auth.copy(recovery = false)) }
+    }
+    fun exitAuthRecovery() {
+        if (authRecovery.state.value.busy) return
+        closeAuthRecovery(); cancelLogin()
+    }
+    fun supplementAuthRecovery() {
+        val receipt = authRecovery.state.value.receipt ?: return
+        val reference = authRecovery.reference() ?: return
+        if (authRecovery.state.value.busy) return
+        features.useSafetyAccess(reference)
+        exitAuthRecovery()
+        features.open(FeatureRoute(FeaturePage.Safety, receipt.id))
+        features.edit("type", "supplement"); features.edit("version", receipt.version.toString())
+    }
+    fun authReturnTarget(): AuthReturnTask = authReturnTask(_state.value, features.state.value.route, resumeApply != null)
+    fun reviewAuthReturn(visible: Boolean) {
+        val current = _state.value; val completion = current.auth.completion ?: return
+        if (current.busy || profileSetup.state.value.blocked || completion.profile || api.user.value?.id != completion.owner || current.user?.id != completion.owner) return
+        _state.update { it.copy(auth = it.auth.copy(completion = completion.copy(reviewReturn = visible))) }
+    }
+
+    fun finishLogin() {
+        val current = _state.value
+        val completion = current.auth.completion ?: return
+        if (current.busy || profileSetup.state.value.blocked || current.user?.id != completion.owner || api.user.value?.id != completion.owner) return
+        _state.update { it.copy(auth = AuthForm()) }
         resumeApply?.let { id ->
             resumeApply = null
             if (_state.value.destination == MobileDestination.Pet(id)) _state.update { it.copy(applying = true) }
         }
-        reloadDetail(); refreshHome()
     }
 
     fun login() {
@@ -808,27 +876,32 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             try {
                 finishAuthentication(login(),guestReply,originalDestination)
             } catch (e: CancellationException) { throw e }
-            catch (e: Exception) { _state.update { it.copy(auth = it.auth.copy(error = e.mobileMessage(),errorCode = (e as? MobileApiException)?.code.orEmpty())) } }
+            catch (e: Exception) { _state.update { it.copy(auth = it.auth.copy(error = e.mobileMessage(),errorCode = (e as? MobileApiException)?.code.orEmpty(),failure = e.readFailure())) } }
             finally { _state.update { it.copy(busy = false) } }
         }
     }
 
-    fun logout() = command {
-        val owner = _state.value.user?.id
+    fun logout() = command { logoutCurrent() }
+    private suspend fun logoutCurrent() {
         api.logout()
-        if (_state.value.user != null) accountChanged(null)
-        var notice = "已退出登录"
-        if (owner != null) try { withContext(NonCancellable) { localDrafts?.clear(owner); localWorkspaces?.clear(owner); localReplies?.clear(owner) } }
-        catch (_: Exception) { notice = "已退出登录，本地私有草稿暂未清理，请解锁设备后重试" }
-        _state.update { it.copy(tab = MobileTab.Community, destination = MobileDestination.Home, notice = notice) }
-        refreshHome()
+        if (api.user.value == null && _state.value.user != null) accountChanged(null)
+        // Saved drafts remain in owner-scoped secure storage; the guest UI cannot read them.
+        if (_state.value.user == null) {
+            _state.update { it.copy(tab = MobileTab.Community, destination = MobileDestination.Home, notice = "已退出登录") }
+            refreshHome()
+        }
     }
 
     suspend fun logoutAll() {
-        val owner = _state.value.user?.id
         api.logout(true)
-        withContext(NonCancellable) { if (owner != null) { localDrafts?.clear(owner); localWorkspaces?.clear(owner); localReplies?.clear(owner) } }
-        if (_state.value.user != null) accountChanged(null)
+        if (api.user.value == null && _state.value.user != null) accountChanged(null)
+    }
+    fun signOutAllDevices() = command {
+        logoutAll()
+        if (_state.value.user == null) {
+            _state.update { it.copy(tab = MobileTab.Community, destination = MobileDestination.Home, notice = "已退出全部会话") }
+            refreshHome()
+        }
     }
 
     private fun command(block: suspend () -> Unit) {
@@ -1488,7 +1561,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         }
     }
     suspend fun media(id: Long): ByteArray = api.media(id)
-    override fun close() { providerAuth.close(); features.close(); super.close(); if (ownsApi) api.close() }
+    override fun close() { authRecovery.close(); profileSetup.close(); providerAuth.close(); features.close(); super.close(); if (ownsApi) api.close() }
     private fun newKey(): String = Random.nextBytes(16).joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
 }
 

@@ -35,14 +35,14 @@ import com.ttkk0000.meowcircle.client.*
 
 @Composable fun UnavailableTaskActions(store: MobileStore, failure: ClientReadFailure?, includeHome: Boolean = true) {
     if (failure == null || failure in listOf(ClientReadFailure.Connection, ClientReadFailure.Service, ClientReadFailure.Busy)) {
-        FeatureButton("查看草稿与待核对操作") { store.features.open(FeatureRoute(FeaturePage.Recovery)) }
+        MndQuietButton("查看草稿与待核对操作") { store.features.open(FeatureRoute(FeaturePage.Recovery)) }
         if (includeHome) TaskPrimary("回到社区") { store.features.closeRoute(); store.select(MobileTab.Community) }
         return
     }
     if (failure == ClientReadFailure.SignIn) FeatureButton("重新登录", !store.state.value.busy) { store.showLogin() }
     FeatureButton("查看已有沟通") { store.features.closeRoute(); store.select(MobileTab.Messages) }
     FeatureButton("报告问题或申请复核") { store.features.open(FeatureRoute(FeaturePage.Safety)) }
-    FeatureButton("找找其他领养信息") { store.features.closeRoute(); store.select(MobileTab.Adoption) }
+    MndQuietButton("找找其他领养信息") { store.features.closeRoute(); store.select(MobileTab.Adoption) }
     if (includeHome) TaskPrimary("回到社区") { store.features.closeRoute(); store.select(MobileTab.Community) }
 }
 
