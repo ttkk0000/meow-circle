@@ -127,7 +127,7 @@ func (s *Service) NearbyAlerts(ctx context.Context, caseID, after int64) (out Al
 				return e
 			}
 			notice = Record{OwnerID: subscription.OwnerID, Key: key, State: "unread"}
-			body := Notification{Category: "nearby", Text: "附近有新的寻宠或发现信息", TargetKind: Cases, TargetID: caseID, CaseIDs: []int64{caseID}, PushState: push, DeliverAfter: deliver}
+			body := Notification{Category: "nearby", EventType: "nearby.alert_created", TargetVersion: &r.Version, Text: "附近有新的寻宠或发现信息", TargetKind: Cases, TargetID: caseID, CaseIDs: []int64{caseID}, PushState: push, DeliverAfter: deliver}
 			if e = save(tx, Notifications, &notice, body, 0, "nearby.alert_created"); e != nil {
 				return e
 			}

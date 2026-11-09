@@ -112,7 +112,7 @@ func (s *Service) ReactComment(ctx context.Context, actor int64, kind Kind, id i
 			parentKind = Pets
 		}
 		if liked {
-			return s.notify(tx, comment.OwnerID, actor, "interactions", parentKind, comment.RefID, "你的评论收到点赞")
+			return s.notify(tx, comment.OwnerID, actor, "interactions", "comment.liked", parentKind, comment.RefID, "你的评论收到点赞", NotificationReplyAnchor{Kind: kind, ID: comment.ID, Version: comment.Version})
 		}
 		return nil
 	})

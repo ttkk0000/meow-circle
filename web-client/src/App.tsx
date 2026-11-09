@@ -27,7 +27,8 @@ import {AgeAssurance, AgeRange} from "./features/AgePages";
 import {GuardianProtection, Guardians} from "./features/GuardianPages";
 import {ReadingPage, Rules, SettingsHome} from "./features/ReadingPages";
 import {Feed, PageEnd, Records} from "./features/Records";
-import {Member, ResourcePage} from "./features/ResourcePage";
+import {Member, NotificationCommentPage, ResourcePage} from "./features/ResourcePage";
+import {notificationReplyAnchor} from "./core/notification";
 import {CareCollaboration} from "./features/CareCollaboration";
 import type {CareContext} from "./core/care";
 import {LeadInbox, LeadPage} from "./features/LeadPages";
@@ -519,6 +520,8 @@ function RouteContent({
       />
     );
   if (pieces.length === 2 && id > 0n && resourceRoute(kind, id)) {
+    const anchor = notificationReplyAnchor(kind,params);
+    if (anchor) return <NotificationCommentPage key={`${kind}:${id}:${anchor.id}:${anchor.version}`} kind={kind as "entries" | "pets"} id={id} anchor={anchor} />;
     if (kind === "users") return <Member id={id} />;
     if (
       (kind === "groups" || kind === "conversations") &&

@@ -157,7 +157,7 @@ func (s *Service) DecideReview(ctx context.Context, id int64, in ReviewDecision)
 			return e
 		}
 		out = r
-		if e = s.notify(tx, r.OwnerID, 0, "applications", Reviews, r.ID, "申请审核进度已更新"); e != nil {
+		if e = s.notify(tx, r.OwnerID, 0, "applications", "review.updated", Reviews, r.ID, "申请审核进度已更新"); e != nil {
 			return e
 		}
 		return audit(tx, OperatorID(ctx), "review.decided", Reviews, r.ID)

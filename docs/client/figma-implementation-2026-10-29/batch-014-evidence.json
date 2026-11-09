@@ -1,0 +1,70 @@
+{
+  "id": "014",
+  "updated": "2026-10-30",
+  "status": "source_written_static_reviewed_runtime_pending",
+  "high_fidelity_design_nodes": [
+    "238:371753",
+    "238:371754",
+    "311:380016",
+    "311:380020"
+  ],
+  "scope": [
+    "dedicated account-access assistance form and actual receipt",
+    "restricted original-request lookup and supplement",
+    "provider grammar follow-up after normal memory recovery"
+  ],
+  "source_hashes_lf": {
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthRecoveryStore.kt": "1b74add4121ef392b416afff135f279ed36424eb38a4f5ce76d0767aa28bab3e",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "ed4473a782d4f5b7c893b206ea14e51fad9bbd26acaa8692db43697ab2d8b7dc",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthRecoveryPages.kt": "803d2d681dbb6b447607f22653e4cccda4331d49446e7b579bc18cf625362fea",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "ffd3d8462f985918db549db9d7b232c436b9ff8d05389c11371275be0a6c99ab",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt": "6f06f243d4ef720b891e4cc6d3a9fa6840024a32925058041ca5dffbbb6e38e2",
+    "web-client/src/features/AuthRecovery.tsx": "fa3c2a889f3f5f603c7b10490d5fd4d1b587d487e74cf11d2fed382f472eb3e0",
+    "web-client/src/features/AuthDialog.tsx": "f0f53343b2e079fac51fd1bb99fec86a91c60be861d4aaa93744136148760a29",
+    "web-client/src/components/ui.tsx": "56c26f049d7d21f09da520c12d21972137155fe1e93f9584a9ae31c48f6a3dcd",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "b8d0fdb60089ac71f169c942208bc0252479c272bd32e69a80ec8c330e17c15c",
+    "web-client/src/features/ProviderSignIn.tsx": "022cfe539f22cb31be0f924c6a69548882901b42095e404b2162ecb6498007af"
+  },
+  "static_report": "batch-014-checks.json",
+  "syntax_reports": [
+    "batch-014-syntax.json",
+    "batch-014-syntax-followup.json",
+    "batch-014-syntax-final.json",
+    "batch-013-syntax-followup.json",
+    "batch-013-syntax-final.json",
+    "batch-014-fragments.json"
+  ],
+  "syntax_counts": {
+    "files": 10,
+    "whole_files_without_diagnostics": 9,
+    "same_baseline_diagnostic_signatures": 1,
+    "clean_changed_fragments": 3
+  },
+  "static_counts": {
+    "shared_sources": 32,
+    "public_ui": 48,
+    "web_sources": 95,
+    "web_imports": 435
+  },
+  "states": [
+    "authRecovery",
+    "authRecoveryPending"
+  ],
+  "notes": [
+    "Four phone/Web high-fidelity context and images were inspected. Initial transport errors for the entry contexts were retried once successfully. The form uses original-account/contact/explanation fixed labels and placeholders, existing 16px spacing/radius, and fixed 48px submit. Actual receipt/status facts and the 56px supplement row replace prototype receipt values.",
+    "The existing anonymous safety assistance contract carries a clearly titled account-access assistance message. No new recovery grant, identity ownership, account merge, password reset, confirmed-contact flag or local eligibility flag is manufactured. Operator review and actual account recovery remain separate from receiving a ticket.",
+    "The shared AuthRecoveryStore owns native request/owner state and keeps input/token in memory. Native secure restricted references and Web private capability records retain only the original request/query capability before submission; account/contact/explanation are not placed in ordinary routes, logs or durable draft values.",
+    "Unknown results disable resend/editing and use the original request lookup. A missing/old lookup does not prove failure. Actual success clears input; the receipt keeps the restricted token and exact server version for the existing supplementary-material flow. Leaving or changing accounts cannot promote a late response to a new owner.",
+    "Existing Compose and Web field primitives gained optional placeholders; prior callers retain their default behavior. Native field argument texts were read to confirm existing optional arguments use names and the trailing icon remains last.",
+    "Normal headroom returned to 1332–1458MiB during recovery reads. The two provider files skipped in 013 were then read: native clean; one JSX M&D title and the new recovery placeholder were changed to expression strings and reread cleanly. Initial skip/diagnostic reports remain. Ten final grammar reads comprise nine clean whole files and MobileStore with the same HEAD diagnostic signatures; three changed fragments are clean. No type checker, build, test, browser, device or business endpoint was executed."
+  ],
+  "remaining": [
+    "known-identity presentation and typed partial restrictions",
+    "remaining auth/consumer/backend states",
+    "actual recovery operations and all platform runtime/visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

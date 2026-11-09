@@ -1,0 +1,70 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256_lf": "439c429d836b98fc2d63234c45606a25a8a39af38caa32a2b7cea66491542f37",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "profile-read-and-save",
+            "errors": []
+          }
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "071dd1f3ff5aaba6b813e6ea4dba3819dcb038a1957b2e5fa23ac14c331ea1b3",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "completion-owner-model",
+            "errors": []
+          },
+          {
+            "label": "completion-and-optional-profile",
+            "errors": []
+          },
+          {
+            "label": "login-dismiss-guard",
+            "errors": []
+          }
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "file": "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPhotoPicker.kt",
+      "sha256_lf": "7ee073080849367b0a27ea1964b858faca8e3d0b9bf525016752b090d1b4b4b5",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "custom-picker-trigger",
+            "errors": []
+          }
+        ],
+        "errors": [
+          {
+            "type": "ERROR",
+            "text": ": Exception"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "text": ": Exception"
+          }
+        ],
+        "baseline_same_error_signatures": true
+      },
+      "stderr": ""
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

@@ -1,0 +1,66 @@
+{
+  "id": "006",
+  "updated": "2026-10-30",
+  "status": "source_written_static_paths_reviewed_syntax_pending",
+  "high_fidelity_design_nodes": [
+    "238:371726",
+    "238:371746",
+    "460:17343",
+    "460:17368"
+  ],
+  "scope": [
+    "dedicated auth failure presentation",
+    "account/methods and eligibility views",
+    "current-phone request/code/verified flow",
+    "separate phone/email/password security changes",
+    "durable Web unknown-result guard"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "1a736d6affc72fb4aedfccecdea8a2616261cd8c0753282b3048106759a6833b",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt": "f147c519687fa2b676570548e73ace7962264721a08dec01daed74962ec358b6",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt": "3cf21fe3d512e0e6af480c735ed69c147c222c7137a31a9fe8b9c6c8255bdd47",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt": "4854412ceebf4adbfbc0d6713df9ebaf0da7b0c457164ff26972f13dffd661ec",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "44cd01d38c0b1f61c1edbadd3e18f0ecf12a2216482cd357049739c0167f5f6c",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "bfb22bfc2e5eba9337d6e23d3971473d27886fb4e69b076255355e8564284621",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt": "a3be4896e82903d1cc6240dbf93fc1292249c50c8e0a3d811079dffb86072b54",
+    "web-client/src/features/AuthDialog.tsx": "8676d7564a36992bfc4605d50fa76dfd7f2885558d483ddee7601abcf8b5c1fd",
+    "web-client/src/features/Account.tsx": "4a2e7f344909b3d53025ab26a9beb1e8b7df5845c4ff34cbd3635a502bbf3f4f",
+    "web-client/src/styles.css": "af8b7e0c7f19eeaad4739f0bbcd9ab17e555316556f7097d4bb2f2f86db921ff"
+  },
+  "static_report": "batch-006-checks.json",
+  "syntax_report": "batch-006-syntax.json",
+  "static_counts": {
+    "public_ui": 45,
+    "web_sources": 91,
+    "web_imports": 413
+  },
+  "syntax_boundary": "All 9 grammar reads skipped before starting Node, with 552 MiB memory headroom. No final grammar or type-check success claim. An earlier 633-MiB skipped attempt remains batch-005-syntax-batch006.json.",
+  "notes": [
+    "An actual phone OTP receipt advances to code view; only a fresh eligibility contract v1 with phone_verified true advances to verified result. An already-verified current number does not trigger another OTP.",
+    "Current-number verification fields and change-target fields use separate transient keys. Binding still uses the original sensitive scope/grant/confirmation and original operation recovery.",
+    "Web lists account-change uncertain drafts before enabling/preparing another change. Matching successful response clears that saved draft; unknown results retain the original key and remain non-replayable.",
+    "Logout runs in MobileStore-owned command scope so clearing the feature owner does not prematurely finish or cancel client cleanup. Existing private-draft clearing policy is retained.",
+    "Network failure is distinguished from HTTP failure. Specific expired presentation is conditional on explicit server code; generic invalid/expired credentials do not falsely prove a distinct expiry reason.",
+    "Batch-005-checks.json was briefly overwritten by the later 45-file check; its observed prior 44-file receipt was restored with an explicit historical note, and current checks retained here."
+  ],
+  "states": [
+    "authAccounts",
+    "phoneGate",
+    "phoneCode",
+    "phoneChange",
+    "emailBinding",
+    "authNetworkError",
+    "authRateLimited"
+  ],
+  "remaining": [
+    "final grammar review when memory permits",
+    "session expiration and definitive sensitive-change result pages",
+    "dedicated logout presentation",
+    "remaining consumer and backend states",
+    "platform runtime and visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

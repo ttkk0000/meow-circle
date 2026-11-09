@@ -1,0 +1,57 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256_lf": "d139c3e19de0a4a1c578bb9afd4e4ef4d06245a7f5eb9975cfcde4fa076a4c47",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "session-save",
+            "errors": []
+          },
+          {
+            "label": "logout",
+            "errors": []
+          }
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "c504a972c534e39aba0dcd2d9f20a77b32a4dd1b368b7aa0411f818255b59bec",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "account-change",
+            "errors": []
+          },
+          {
+            "label": "logout",
+            "errors": []
+          }
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256_lf": "bfb22bfc2e5eba9337d6e23d3971473d27886fb4e69b076255355e8564284621",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "security-views",
+            "errors": []
+          }
+        ]
+      },
+      "stderr": ""
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

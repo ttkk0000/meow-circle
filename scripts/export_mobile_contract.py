@@ -318,6 +318,19 @@ for path, method in receipt_routes:
         "schema":{"type":"string","minLength":8,"maxLength":100,"pattern":"^[A-Za-z0-9_-]+$"},
         "description":"Optional operation receipt key. Retain the exact payload for retries; a body client_request_id must match."})
 
+# Typed notification responses expose only the public view, never delivery internals.
+dto("NotificationView")
+schemas["NotificationRecord"] = {"type": "object", "properties": {
+    **schemas["Record"]["properties"], "data": ref("NotificationView")}}
+schemas["NotificationPage"] = {"type": "object", "properties": {
+    "items": {"type": "array", "items": ref("NotificationRecord")},
+    "next_cursor": {"type": "integer", "format": "int64"}}}
+for path, method, result_name in (("/notifications", "get", "NotificationPage"),
+    ("/notifications/{id}", "get", "NotificationRecord"),
+    ("/notifications/{id}/read", "post", "NotificationRecord")):
+    paths["/api/v2"+path][method]["responses"]["200"]["content"]["application/json"]["schema"] = {
+        "allOf": [ref("Envelope"), {"type": "object", "properties": {"data": ref(result_name)}}]}
+
 # Recursively add named field DTOs and reject dangling references. No service,
 # persistence/session challenge or encrypted provider credential DTO is exported.
 while True:

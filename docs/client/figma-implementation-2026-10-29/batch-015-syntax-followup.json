@@ -1,0 +1,19 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+      "sha256_lf": "fd3180aa72d2bf967514923ef8b6b93215784dad7bd8b91c0a5260d0d1dffa67",
+      "status": "not_read_low_memory",
+      "headroom_mb": 623
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt",
+      "sha256_lf": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff",
+      "status": "not_read_low_memory",
+      "headroom_mb": 623
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

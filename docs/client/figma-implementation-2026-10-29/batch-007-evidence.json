@@ -1,0 +1,74 @@
+{
+  "id": "007",
+  "updated": "2026-10-30",
+  "status": "source_written_static_reviewed_runtime_pending",
+  "high_fidelity_design_nodes": [
+    "238:371730",
+    "238:371752",
+    "238:371756",
+    "238:371755"
+  ],
+  "scope": [
+    "session expiry result",
+    "definitive account-change result",
+    "logout confirmation and completion",
+    "owner-scoped saved drafts on explicit logout",
+    "stale session response guards"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "d7d75ee31069c8562a06bda0debcd9f189ce9fac77e7988a99f5b6a39d53934d",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt": "839504c00b8533c07dfed14f61cd063bd8cb043e164e4ce81852dba702367c0f",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt": "3cf21fe3d512e0e6af480c735ed69c147c222c7137a31a9fe8b9c6c8255bdd47",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt": "4854412ceebf4adbfbc0d6713df9ebaf0da7b0c457164ff26972f13dffd661ec",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt": "a3be4896e82903d1cc6240dbf93fc1292249c50c8e0a3d811079dffb86072b54",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": "d139c3e19de0a4a1c578bb9afd4e4ef4d06245a7f5eb9975cfcde4fa076a4c47",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "db426e5aec07ce76e1460eb861e4446ecb5b54d5ecbeb2d042671ae0b1281119",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "bfb22bfc2e5eba9337d6e23d3971473d27886fb4e69b076255355e8564284621",
+    "web-client/src/App.tsx": "059ca1bcd56d64030ba386099c40f407a2b5b40f141f312c4ca6e6e1852b5aec",
+    "web-client/src/core/api.ts": "904c52957ee236ed8e7266d9b031fa7fbfbe2fb483166690e665bd8050e91d8e",
+    "web-client/src/features/AuthDialog.tsx": "aec651b2821bee0abdfcc3a3d3a2477293b9f371cb11db044b5cbf6c7cfcbce6",
+    "web-client/src/features/Account.tsx": "6abfca1a642e5f93e89dab30d00d0159164dccb8e8a372ec66cefb0f1e547106",
+    "web-client/src/styles.css": "af8b7e0c7f19eeaad4739f0bbcd9ab17e555316556f7097d4bb2f2f86db921ff"
+  },
+  "static_report": "batch-007-checks.json",
+  "syntax_reports": [
+    "batch-007-syntax.json",
+    "batch-007-syntax-followup.json",
+    "batch-007-fragments.json"
+  ],
+  "syntax_counts": {
+    "files": 12,
+    "whole_files_without_diagnostics": 8,
+    "same_baseline_diagnostic_signatures": 4,
+    "changed_session_security_fragments_without_diagnostics": 5
+  },
+  "static_counts": {
+    "public_ui": 45,
+    "web_sources": 91,
+    "web_imports": 413
+  },
+  "notes": [
+    "Session-end reason/action and masked phone are in-memory presentation metadata only. No raw target, credential, token or grant is persisted by this metadata.",
+    "Security-change/logout results require a successful server response. Browser invalidation follows the adapter's confirmed cookie-clearing contract (internal/platform/mobileapi/browser.go); expiry and close-account request remain distinct.",
+    "The existing service ends sessions after a security change, so the phone result primary action explicitly says log in and return to settings. This contract-driven difference from the Figma return-only label is recorded rather than pretending the old session is valid.",
+    "Explicit logout now retains saved owner-scoped native drafts as required by authLogoutConfirm. Account-change/close-request cleanup remains separate. Guest and other owners cannot load the prior owner's saved drafts.",
+    "Native logout cannot clear a new owner/generation; browser session and refresh responses cannot restore an old owner after an epoch change. Failed credentials are not classified as session expiry.",
+    "Memory recovered to more than 7 GiB during the grammar reads. Batch 006's historical low-memory skips remain unchanged; current grammar coverage is recorded here.",
+    "ReadingPages, MobileApi, MobileStore and MobileFeatureStore retain the same pre-existing grammar diagnostic signatures as HEAD; they are not marked wholly verified. Five changed method fragments are clean. The final cancelLogin guard was read again in the followup; earlier fragment bodies are unchanged."
+  ],
+  "states": [
+    "authSessionExpired",
+    "authPhoneChanged",
+    "authLoggedOut",
+    "authLogoutConfirm"
+  ],
+  "remaining": [
+    "remaining auth/provider states",
+    "all remaining consumer/backend state review and implementation",
+    "type and platform runtime/visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

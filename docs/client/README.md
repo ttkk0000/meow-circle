@@ -1,5 +1,7 @@
 # M&D 客户端代码实施与完成标准
 
+2026-11-06：[通知事件与精确评论定位续作](NOTIFICATION_ALIGNMENT_2026_11_06.md)补Go事件／事务版本／公开锚点合同及shared／Compose／Web四状态，145／147 schemas、90DTO与静态语法证据已记；未编译／测试／运行。
+
 > **2026-11-05 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
 当前工程边界：`kmp/shared/.../client`负责业务与数据，`kmp/clientUi`提供Android／iOS／Desktop公共Compose页面；`androidApp`、`iosUi`和`desktopApp`分别注入窗口、返回、Picker、地图、授权等平台能力。Web已使用独立`web-client` React DOM。共享页面不抵扣Android平板和iPad各自的系统适配与设备验收。详见下方架构表及[视觉与验收](DESIGN_AND_ACCEPTANCE.md)。

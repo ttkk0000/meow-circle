@@ -1,0 +1,29 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "8305989831223e8455a44f44fd7d7510c4fb12497e8a67c2237418517e34c1f5",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "completion-owner-model",
+            "errors": []
+          },
+          {
+            "label": "completion-and-optional-profile",
+            "errors": []
+          },
+          {
+            "label": "login-dismiss-guard",
+            "errors": []
+          }
+        ]
+      },
+      "stderr": ""
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

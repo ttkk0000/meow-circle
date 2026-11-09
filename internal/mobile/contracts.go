@@ -190,7 +190,11 @@ func (s *Service) Contract(ctx context.Context, actor, id int64, action string, 
 			return e
 		}
 		out = r
-		return nil
+		other := a.PublisherID
+		if actor == other {
+			other = a.ApplicantID
+		}
+		return s.notify(tx, other, actor, "applications", "contract."+action, Adoptions, r.ID, "领养协议进度已更新，请核对当前版本")
 	})
 	return
 }
@@ -392,7 +396,7 @@ func (s *Service) Return(ctx context.Context, actor, id int64, action string, in
 		if actor == other {
 			other = a.ApplicantID
 		}
-		return s.notify(tx, other, actor, "applications", Adoptions, r.ID, "安全接回进度已更新")
+		return s.notify(tx, other, actor, "applications", "return.updated", Adoptions, r.ID, "安全接回进度已更新")
 	})
 	return
 }

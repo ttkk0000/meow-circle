@@ -1,0 +1,237 @@
+{
+  "updated": "2026-10-30",
+  "base_head": "48a3cfdf51c97546153d230bea379c9a880f2d30",
+  "files": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": {
+      "batch": "018",
+      "sha256_lf": "516de0274ae176c4abce367dda986c7a728964cada7a05f67669d01c9977fa98"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt": {
+      "batch": "014",
+      "sha256_lf": "6f06f243d4ef720b891e4cc6d3a9fa6840024a32925058041ca5dffbbb6e38e2"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt": {
+      "batch": "005",
+      "sha256_lf": "a0fbcb5a5a2e32423ac7217be3870c2cfdbe23e59babed4dc2a1d779f36966e0"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt": {
+      "batch": "019",
+      "sha256_lf": "01228fe23c1cf9fddafb5f6fdfc6cbf6b6d8fbf4a3976d1499772ab244ed097d"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt": {
+      "batch": "005",
+      "sha256_lf": "c802d597a98f6149ebc61bd9c8d149a95443dd1002c248ce861c004d7e747f11"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/TaskDialogs.kt": {
+      "batch": "005",
+      "sha256_lf": "3faaabbb3424b6898472ef729a1372b6f0d46654abec93d7f5f42b3f985fb746"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": {
+      "batch": "018",
+      "sha256_lf": "c440ba3fe304a5746d5fbe40594270a2c408d892c8f8566d11234edc94c7bc65"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": {
+      "batch": "016",
+      "sha256_lf": "c20cbe8087c72233371e1078ed3eb14175b9927ab5e6fbd23fbdbdea988c77d4"
+    },
+    "web-client/src/features/AuthDialog.tsx": {
+      "batch": "018",
+      "sha256_lf": "f467680f9e9428f715bc218ae1933785ffa64f96609bbc5b47be829bdc032c70"
+    },
+    "web-client/src/components/ui.tsx": {
+      "batch": "020",
+      "sha256_lf": "d719ca3c64e3220358eb9ea65fe90626d5d7c41764743c16aa9c244bea0a0a39"
+    },
+    "web-client/src/features/Records.tsx": {
+      "batch": "005",
+      "sha256_lf": "ccd70ec30adf47ddc51cc4c0a6a6a0e950b94c387c318ed90a5176ca88a3b28d"
+    },
+    "web-client/src/styles.css": {
+      "batch": "017",
+      "sha256_lf": "46843a66ccd73d8a4f454c3e14c18797b254a411c723fe4a6115e413a4fda47f"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt": {
+      "batch": "020",
+      "sha256_lf": "df80eeb987dbd416e574b3bcee2819858fec00ca7aea818f5f45a0829719fda1"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt": {
+      "batch": "007",
+      "sha256_lf": "3cf21fe3d512e0e6af480c735ed69c147c222c7137a31a9fe8b9c6c8255bdd47"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt": {
+      "batch": "007",
+      "sha256_lf": "4854412ceebf4adbfbc0d6713df9ebaf0da7b0c457164ff26972f13dffd661ec"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/FeatureModels.kt": {
+      "batch": "007",
+      "sha256_lf": "a3be4896e82903d1cc6240dbf93fc1292249c50c8e0a3d811079dffb86072b54"
+    },
+    "web-client/src/features/Account.tsx": {
+      "batch": "020",
+      "sha256_lf": "af2547b7068238d03f72c04fead744ccd44faf7a90e9b2e7d7e576c4086113c3"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": {
+      "batch": "016",
+      "sha256_lf": "278c5427de480ce57149b7bf9df7740f3fc4567b9e2bf8a15d554f18145ba7d0"
+    },
+    "web-client/src/App.tsx": {
+      "batch": "007",
+      "sha256_lf": "059ca1bcd56d64030ba386099c40f407a2b5b40f141f312c4ca6e6e1852b5aec"
+    },
+    "web-client/src/core/api.ts": {
+      "batch": "016",
+      "sha256_lf": "39c3ce6a6f0a12075a86e519ed7537e208e59583edcf4f9465c1ff61819d62b1"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": {
+      "batch": "017",
+      "sha256_lf": "b89fcd9f82aaaa0acb7f5e9826a245a5d1e9148e4268b7be60a594f9777aca58"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ProviderAuthStore.kt": {
+      "batch": "008",
+      "sha256_lf": "5ea4b2db50d2878d1264243e435b75578fdb994938c41545077b3ced5d424e5e"
+    },
+    "web-client/src/features/ProviderSignIn.tsx": {
+      "batch": "018",
+      "sha256_lf": "72257690dbf7116eb88ce26cd205272968e593d64ec7dc95df827d78cc9a8435"
+    },
+    "web-client/src/core/provider.ts": {
+      "batch": "008",
+      "sha256_lf": "f6a1af16ed02abb5bba2fa8803949fce02b9f5b3ae7250d321a3d9932799a3ab"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt": {
+      "batch": "010",
+      "sha256_lf": "ad67b30b7b04d56fbfe54dc6362a52703d233cff24be1fbb91a6bc21d0872f75"
+    },
+    "web-client/src/features/AuthInformation.tsx": {
+      "batch": "010",
+      "sha256_lf": "6eaefe7f96fcd8bbb08d108cafb91255e36a95baf13ddbc84980efada32ee0d8"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthProfileStore.kt": {
+      "batch": "011",
+      "sha256_lf": "b19b79e28a96d67c2ee75d6d7e2d1cfb494b0038be22ecc8e01b13f15350b742"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthProfilePages.kt": {
+      "batch": "011",
+      "sha256_lf": "669ff0744ff1f0f32f19475d7edbdeceb9fc7f4a8f6b9d5487818c8bb2bc5ad7"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientPlatform.kt": {
+      "batch": "011",
+      "sha256_lf": "df6a842ee40905d007c1a88f923cbc267ffec08018ddc324a7990bc441bbbad8"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/PageComponents.kt": {
+      "batch": "011",
+      "sha256_lf": "d2574ce7ae8dc009c5aa018faf80fe0d9ac2c82231c6f9b1bd343062084ae36d"
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidClientPlatform.kt": {
+      "batch": "011",
+      "sha256_lf": "c3ac216e8d216e45e69230b3dfda745c7c31d7ac62a05950386cda3170997837"
+    },
+    "kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidPhotoPicker.kt": {
+      "batch": "011",
+      "sha256_lf": "7ee073080849367b0a27ea1964b858faca8e3d0b9bf525016752b090d1b4b4b5"
+    },
+    "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosClientPlatform.kt": {
+      "batch": "011",
+      "sha256_lf": "81dbd93a20aa42669ccd2ca26048f50d570ce9d634e5fc11945dda8a7535db7c"
+    },
+    "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosPhotoPicker.kt": {
+      "batch": "011",
+      "sha256_lf": "93f0826d56d764f7406f55c6aafa513f85515a245f054d277a6ad0f540219db0"
+    },
+    "kmp/desktopApp/src/main/kotlin/com/ttkk0000/meowcircle/desktop/DesktopClientPlatform.kt": {
+      "batch": "011",
+      "sha256_lf": "b85ccfb61673c06f9e08ed88c25aa00abbfd8fd8c0606ac5772572c57ed58446"
+    },
+    "web-client/src/features/AuthProfile.tsx": {
+      "batch": "011",
+      "sha256_lf": "51b6a8415484cf848a98d98972580e9b9205730114322bddff6573009de7029a"
+    },
+    "web-client/src/components/Attachments.tsx": {
+      "batch": "011",
+      "sha256_lf": "01007b554ba609598c4b6b5eb83d74573197afa6feda3ff3a95380f4c88a868a"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthReturnTask.kt": {
+      "batch": "012",
+      "sha256_lf": "858f08ba167f38c08c9a337cc4caaed1e9d8a2733fd749168db7a67531c6e9b4"
+    },
+    "web-client/src/features/AuthReturnTask.tsx": {
+      "batch": "012",
+      "sha256_lf": "c19e8fdf53ed76a5b8a6ebb5f2dcb85b45e4977377f8be9b2f06a89b4ca496e4"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthRecoveryStore.kt": {
+      "batch": "014",
+      "sha256_lf": "1b74add4121ef392b416afff135f279ed36424eb38a4f5ce76d0767aa28bab3e"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthRecoveryPages.kt": {
+      "batch": "014",
+      "sha256_lf": "803d2d681dbb6b447607f22653e4cccda4331d49446e7b579bc18cf625362fea"
+    },
+    "web-client/src/features/AuthRecovery.tsx": {
+      "batch": "014",
+      "sha256_lf": "fa3c2a889f3f5f603c7b10490d5fd4d1b587d487e74cf11d2fed382f472eb3e0"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt": {
+      "batch": "018",
+      "sha256_lf": "cf902aae5911925aaa9811400ffc17565111a4a1cd241a81e4ce7e3dd8f8b737"
+    },
+    "web-client/src/features/AuthKnown.tsx": {
+      "batch": "015",
+      "sha256_lf": "7ca4fa7ce5df5fcfce0277880ddc1d243df01ee040be5794d6efa8830c02724b"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt": {
+      "batch": "017",
+      "sha256_lf": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt": {
+      "batch": "017",
+      "sha256_lf": "9bec4131836535939d6a730279426df396efe8a56b42d821847e84560db37c5b"
+    },
+    "web-client/src/components/AccountConflict.tsx": {
+      "batch": "016",
+      "sha256_lf": "42b4816d5b419e9eb40f2ccaaaba0f6aa4891b20b97283d95b819dae179d7255"
+    },
+    "internal/identity/service.go": {
+      "batch": "016",
+      "sha256_lf": "9b320a57aa44d6e8293ffe2a00d845dd99ac8e47f9a545d61a206aea083b9358"
+    },
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthInput.kt": {
+      "batch": "018",
+      "sha256_lf": "59e7fa1cab32920a76a020dae1c7a2d27a89e073e8f900337560a4164038a15b"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt": {
+      "batch": "018",
+      "sha256_lf": "d924308f4d16bcf5747cb0e197d3f81c17929b41265b9109e2ba8fd423583cc0"
+    },
+    "web-client/src/features/AuthCodePages.tsx": {
+      "batch": "018",
+      "sha256_lf": "bee61dbb090f20ab4972be5ebd1ffe73c3ef25c9974cda77ec52d014f8f04193"
+    },
+    "web-client/src/core/authInput.ts": {
+      "batch": "018",
+      "sha256_lf": "c10c932ce9972ff7675a5cd311f81e56a080c5328c1fc67fc94f65ce42d79860"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt": {
+      "batch": "019",
+      "sha256_lf": "f9d81ba8b205b5bd4be97a3ebd123e05646bdefee3b3c4389b8367b370937b19"
+    },
+    "web-client/src/features/AuthBinding.tsx": {
+      "batch": "019",
+      "sha256_lf": "2f220a3c8bdcad11ad55d016cf7fd867670b319fd46890958c1a42f5b1b8cc8e"
+    },
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt": {
+      "batch": "020",
+      "sha256_lf": "4c2cffd3a7d474d2e64560b6266dd3d5408af5ecd356439afa0509ae9b255126"
+    },
+    "web-client/src/features/AuthPhone.tsx": {
+      "batch": "020",
+      "sha256_lf": "cd2a1c250fc2498bb9faf637f5aedaf6a1739649e9212ad1c5d5be901f33267f"
+    },
+    "web-client/src/components/PurposeCheck.tsx": {
+      "batch": "020",
+      "sha256_lf": "73dbbc0374d4f59895ae5b6bd7794013b3f01b22760318fe93d0e949a76d8889"
+    }
+  },
+  "meaning": "Current source fingerprints only. Per-batch grammar/static limitations remain in original receipts; no type/runtime or whole-state completion.",
+  "runtime_verified": false,
+  "whole_state_complete": false
+}

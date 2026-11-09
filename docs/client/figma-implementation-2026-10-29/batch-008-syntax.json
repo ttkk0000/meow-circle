@@ -1,0 +1,59 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+      "sha256_lf": "d49a9a7889d679fd2242a3136ac5de94f5c653e683f833eb5acda99b6cafd9dc",
+      "exit_code": 0,
+      "headroom_mb": 7357,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ProviderAuthStore.kt",
+      "sha256_lf": "5ea4b2db50d2878d1264243e435b75578fdb994938c41545077b3ced5d424e5e",
+      "exit_code": 1,
+      "headroom_mb": 7331,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ProviderAuthStore.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 7,
+            "text": "fun interface ProviderLauncher"
+          }
+        ]
+      }
+    },
+    {
+      "file": "web-client/src/features/ProviderSignIn.tsx",
+      "sha256_lf": "b2d9dd8f0c8a8945a9f8f56db93f3ba3f2fb579cb7b526bcf4ea8951fd3ba368",
+      "exit_code": 1,
+      "headroom_mb": 7284,
+      "syntax": {
+        "file": "web-client/src/features/ProviderSignIn.tsx",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 576,
+            "text": "&D 账号，去关联"
+          }
+        ]
+      }
+    },
+    {
+      "file": "web-client/src/core/provider.ts",
+      "sha256_lf": "f6a1af16ed02abb5bba2fa8803949fce02b9f5b3ae7250d321a3d9932799a3ab",
+      "exit_code": 0,
+      "headroom_mb": 7284,
+      "syntax": {
+        "file": "web-client/src/core/provider.ts",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

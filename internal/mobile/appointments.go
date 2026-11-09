@@ -101,7 +101,7 @@ func (s *Service) CreateAppointment(ctx context.Context, actor int64, in Appoint
 			return e
 		}
 		out = r
-		return s.notify(tx, in.PeerID, actor, "applications", Appointments, r.ID, "请确认预约时间、接待人与全部费用")
+		return s.notify(tx, in.PeerID, actor, "applications", "appointment.created", Appointments, r.ID, "请确认预约时间、接待人与全部费用")
 	})
 	return
 }
@@ -335,7 +335,7 @@ func (s *Service) Appointment(ctx context.Context, actor, id int64, action strin
 		if other == actor {
 			other = a.PeerID
 		}
-		return s.notify(tx, other, actor, "applications", Appointments, r.ID, "预约安排已更新，请查看版本记录")
+		return s.notify(tx, other, actor, "applications", "appointment.updated", Appointments, r.ID, "预约安排已更新，请查看版本记录")
 	})
 	return
 }

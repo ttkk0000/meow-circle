@@ -44,7 +44,7 @@ func (s *Service) transferGroupRequests(tx Tx, groupID, owner int64) error {
 				return e
 			}
 			if v.ExpiresAt.After(s.Now()) {
-				if e = s.notify(tx, owner, row.OwnerID, "applications", Invitations, row.ID, "群主变更后待审核的入群申请"); e != nil {
+				if e = s.notify(tx, owner, row.OwnerID, "applications", "group.join.reassigned", Invitations, row.ID, "群主变更后待审核的入群申请"); e != nil {
 					return e
 				}
 			}
@@ -218,7 +218,7 @@ func (s *Service) RequestGroupJoin(ctx context.Context, actor, id int64, in Grou
 			return e
 		}
 		out = r
-		return s.notify(tx, group.OwnerID, actor, "applications", Invitations, r.ID, "收到新的入群申请")
+		return s.notify(tx, group.OwnerID, actor, "applications", "group.join.requested", Invitations, r.ID, "收到新的入群申请")
 	})
 	return
 }

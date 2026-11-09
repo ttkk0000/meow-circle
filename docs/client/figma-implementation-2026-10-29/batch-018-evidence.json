@@ -1,0 +1,70 @@
+{
+  "id": "018",
+  "updated": "2026-10-30",
+  "status": "source_written_static_and_grammar_reviewed_runtime_unverified",
+  "high_fidelity_design_nodes": [
+    "238:371724",
+    "311:379900",
+    "238:371723",
+    "311:379896"
+  ],
+  "scope": [
+    "SMS delivery help task",
+    "actual receipt-bound OTP expiry task",
+    "auth transient ownership and owner-transition render guards",
+    "recover pending015–017 grammar reads"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "516de0274ae176c4abce367dda986c7a728964cada7a05f67669d01c9977fa98",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "c440ba3fe304a5746d5fbe40594270a2c408d892c8f8566d11234edc94c7bc65",
+    "web-client/src/features/AuthDialog.tsx": "f467680f9e9428f715bc218ae1933785ffa64f96609bbc5b47be829bdc032c70",
+    "web-client/src/features/ProviderSignIn.tsx": "72257690dbf7116eb88ce26cd205272968e593d64ec7dc95df827d78cc9a8435",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt": "cf902aae5911925aaa9811400ffc17565111a4a1cd241a81e4ce7e3dd8f8b737",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthInput.kt": "59e7fa1cab32920a76a020dae1c7a2d27a89e073e8f900337560a4164038a15b",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt": "d924308f4d16bcf5747cb0e197d3f81c17929b41265b9109e2ba8fd423583cc0",
+    "web-client/src/features/AuthCodePages.tsx": "bee61dbb090f20ab4972be5ebd1ffe73c3ef25c9974cda77ec52d014f8f04193",
+    "web-client/src/core/authInput.ts": "c10c932ce9972ff7675a5cd311f81e56a080c5328c1fc67fc94f65ce42d79860"
+  },
+  "static_report": "batch-018-checks.json",
+  "syntax_reports": [
+    "batch-018-syntax.json",
+    "batch-018-fragments.json"
+  ],
+  "syntax_counts": {
+    "current_files_read": 19,
+    "whole_clean": 16,
+    "same_head_diagnostics": 3,
+    "fragment_files": 3,
+    "fragments_clean": 7,
+    "prior_pending_files_recovered": 18
+  },
+  "grammar_pending_source_hashes": {},
+  "static_counts": {
+    "shared_sources": 33,
+    "public_ui": 51,
+    "web_sources": 98,
+    "web_imports": 446
+  },
+  "states": [
+    "authSmsDelayed",
+    "authCodeExpired"
+  ],
+  "notes": [
+    "Four phone/Web contexts and screenshots inspected. Delivery help retains the actual phone and purpose, offers return-to-input and existing recovery assistance, and sends no verification or replacement request on navigation.",
+    "Expiry uses a validated positive actual OTP receipt ID and parsed expires_at. Native binds its transient form to a unique delivery metadata key; Web binds address/mode and the actual receipt deadline. Local delivery keys are presentation metadata, never credentials. Expiry is sticky for that receipt and is not inferred from generic wrong-code responses.",
+    "Retry is an explicit action, respects actual retry_after_seconds, clears the previous code, and awaits a fresh actual receipt before verification is enabled. The native countdown and Web interval terminate when both cooldown and this delivery expire; old delivery callbacks cannot alter a replacement receipt. RFC3339 fractional seconds are normalized to browser milliseconds without removing timezone.",
+    "Known-provider transient fields now use the actual retained auth scope. Web root/provider render guards hide old-owner controls during a foreign transition while allowing their expected login transition to finish. No persistent remembered identity or private avatar fetch was added.",
+    "Path/asset checks pass. Normal memory headroom allowed19 isolated current grammar reads:16 whole clean and3 unchanged HEAD diagnostic signatures; MobileApi/MobileStore/MobileFeatureStore changed fragment reads are clean. The earlier18 pending files and015 final provider/icon reads are covered. One fragment-reader boundary was corrected from a nonexistent marker before successful reads; this is not an application result.",
+    "No build, type checker, tests, app/browser/device launch or visual/runtime acceptance performed. Server generic wrong/expired/locked-code behavior is unchanged. Partial restriction policy and remaining auth/consumer/backend states remain open."
+  ],
+  "remaining": [
+    "binding/unbinding/change-phone task fidelity",
+    "remaining auth/consumer/backend states",
+    "typed partial-restriction contract",
+    "all runtime and visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

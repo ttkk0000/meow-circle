@@ -1,0 +1,37 @@
+{
+  "files": [
+    {
+      "file": "web-client/src/features/AuthInformation.tsx",
+      "sha256_lf": "715f4a5ea9d2e01f6919903ebf92c6f636115bae6238e770f8730eeed0b133cf",
+      "exit_code": 0,
+      "headroom_mb": 7129,
+      "syntax": {
+        "file": "web-client/src/features/AuthInformation.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/ProviderSignIn.tsx",
+      "sha256_lf": "bab8207ee92afaf14c0133a0599025f0a4582c5508b3cf4144266d3f9b80bb6f",
+      "exit_code": 0,
+      "headroom_mb": 7147,
+      "syntax": {
+        "file": "web-client/src/features/ProviderSignIn.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "0b323105c5dc848b7feaa7472028c54d6d3bc11f804a1bdcc2f5da2e52cd32c3",
+      "exit_code": 0,
+      "headroom_mb": 7154,
+      "syntax": {
+        "file": "web-client/src/features/AuthDialog.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

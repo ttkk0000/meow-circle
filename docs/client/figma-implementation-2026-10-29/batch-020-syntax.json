@@ -1,0 +1,57 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
+      "sha256_lf": "bc83fa12fd02304d8262510087d192e6c20ef0fd6b4dc4db4fbc9a809b5c5fa1",
+      "exit_code": 0,
+      "headroom_mb": 1431,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "sha256_lf": "5a26d7f007446645263d741d8403a2d611ee05fb7b52e2d7ab2f57d4d9b3e8f7",
+      "exit_code": 0,
+      "headroom_mb": 1422,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthPhone.tsx",
+      "sha256_lf": "e18162d53c72e6fbe50d4ed81bd4df692e376dac4925e65ed537b256836751d2",
+      "exit_code": 0,
+      "headroom_mb": 1431,
+      "syntax": {
+        "file": "web-client/src/features/AuthPhone.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/Account.tsx",
+      "sha256_lf": "21d4a6eff4cbfd7d4a104a6d593ca070b71b6634c75494abd2da4febf5bbab1a",
+      "exit_code": 0,
+      "headroom_mb": 1536,
+      "syntax": {
+        "file": "web-client/src/features/Account.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/components/ui.tsx",
+      "sha256_lf": "d719ca3c64e3220358eb9ea65fe90626d5d7c41764743c16aa9c244bea0a0a39",
+      "exit_code": 0,
+      "headroom_mb": 1502,
+      "syntax": {
+        "file": "web-client/src/components/ui.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

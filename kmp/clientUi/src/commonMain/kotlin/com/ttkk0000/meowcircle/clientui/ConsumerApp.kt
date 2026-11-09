@@ -387,6 +387,7 @@ fun PetCard(store: MobileStore, s: MobileState, row: MobileRecord<PetBody>, open
 
 @Composable
 private fun DetailContent(store: MobileStore, s: MobileState) {
+    s.destination.notificationReplyAnchor()?.let { NotificationCommentContent(store,s,it); return }
     if (s.detailLoading) { Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }; return }
     s.detailError?.let { error ->
         CompositionLocalProvider(LocalUiScope provides "${LocalUiScope.current}:read-failure") { TaskColumn {
@@ -529,9 +530,37 @@ private fun EntryDetail(store: MobileStore, s: MobileState) {
     }
 }
 
+@Composable private fun NotificationCommentContent(store: MobileStore,s: MobileState,anchor: NotificationReplyAnchor) {
+    Column(Modifier.fillMaxSize()) {
+        LazyColumn(Modifier.weight(1f).fillMaxWidth(),contentPadding=PaddingValues(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            when {
+                s.detailLoading -> item { TaskNotice("正在读取评论","正在核对当前内容与可见权限。") }
+                s.detailError != null -> item {
+                    TaskNotice(if(s.notificationCommentUnavailable) "这条评论当前不可查看" else "暂时无法读取评论",
+                        if(s.notificationCommentUnavailable) "评论可能已删除或权限已变化，你可返回消息中心核销通知。" else "请重新读取；不会改变已读状态或代你回复。")
+                    MndQuietButton("重新读取评论",!s.busy) {store.reloadDetail()}
+                }
+                else -> s.notificationComment?.let {row ->
+                    item { TaskNotice(if(row.version!=anchor.version) "评论已更新" else "通知提到的评论",
+                        if(row.version!=anchor.version) "以下为当前可见内容，通知记录的是当时进度。" else "已定位到这条评论；查看不会标为已读或代你回复。") }
+                    item { CommentItem(store,s,anchor.kind,row) }
+                    commentItems(store,s,anchor.kind,showTitle=false)
+                }
+            }
+            item { MndQuietButton("返回消息中心",!s.busy) {store.select(MobileTab.Messages)} }
+        }
+        if(!s.detailLoading && s.detailError==null && s.notificationComment!=null) ReplyEditor(store,s,"说点什么…",compact=true)
+    }
+}
+
 private fun androidx.compose.foundation.lazy.LazyListScope.commentItems(store: MobileStore,s: MobileState,kind: String,showTitle: Boolean = true) {
     if(showTitle) item { SectionTitle(if(kind=="pet_comments") "领养交流" else "评论") }
-    items(s.comments.items,key={it.id}) {row ->
+    items(s.comments.items.filter {it.id != s.notificationComment?.id},key={it.id}) {row -> CommentItem(store,s,kind,row) }
+    if(kind=="pet_comments") item {TaskNotice("评论不能替代医疗资料","想了解具体情况可站内联系，不公开证件和家庭地址。")}
+    item {PageFooter(s.comments,{store.loadComments()},{store.loadComments(true)},"还没有评论")}
+}
+
+@Composable private fun CommentItem(store: MobileStore,s: MobileState,kind: String,row: MobileRecord<CommentBody>) {
         MemberSection(store,row.ownerId,compact=true) {
             if(row.data.replyTo>0) Text("回复评论 #${row.data.replyTo}",style=MaterialTheme.typography.bodySmall)
             Text(row.data.text)
@@ -549,14 +578,11 @@ private fun androidx.compose.foundation.lazy.LazyListScope.commentItems(store: M
                     IconButton({menu=true},enabled=!s.busy) {DesignIcon("comment-more","评论操作")}
                     DropdownMenu(menu,{menu=false}) {
                         DropdownMenuItem(text={Text("举报此评论")},onClick={menu=false;store.features.open(FeatureRoute(FeaturePage.Review,kind=kind,peer=row.id));store.features.edit("type","report")})
-                        if(row.ownerId==s.user?.id) DropdownMenuItem(text={Text("删除此评论")},onClick={menu=false;store.features.confirm("删除评论",row.data.text.ifBlank {"贴纸评论"}) {store.api.removeResource(kind,row.id,row.version);store.loadComments()}})
+                        if(row.ownerId==s.user?.id) DropdownMenuItem(text={Text("删除此评论")},onClick={menu=false;store.features.confirm("删除评论",row.data.text.ifBlank {"贴纸评论"}) {store.api.removeResource(kind,row.id,row.version);if(row.id==s.notificationComment?.id) store.reloadDetail() else store.loadComments()}})
                     }
                 }
             }
         }
-    }
-    if(kind=="pet_comments") item {TaskNotice("评论不能替代医疗资料","想了解具体情况可站内联系，不公开证件和家庭地址。")}
-    item {PageFooter(s.comments,{store.loadComments()},{store.loadComments(true)},"还没有评论")}
 }
 
 @Composable
@@ -667,7 +693,7 @@ private fun ReplyEditor(store: MobileStore, s: MobileState, label: String, compa
                 onSaveOrder = store::retryReplySave,
             )
             if (compact) Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.spacedBy(8.dp),verticalAlignment = Alignment.Bottom) {
-                MndRichTextField(editor,{ if(store.editReply(it.text)) editor = it },"发送消息…",Modifier.weight(1f),enabled = !s.busy,maxLines = 5,compact = true)
+                MndRichTextField(editor,{ if(store.editReply(it.text)) editor = it },label,Modifier.weight(1f),enabled = !s.busy,maxLines = 5,compact = true)
                 IconButton(onClick = { emojiOpen = !emojiOpen },enabled = !s.busy && editor.composition == null,modifier = Modifier.size(48.dp)) { DesignIcon("smile","表情、贴纸与照片") }
                 Button(onClick = store::sendReply,enabled = !s.busy && editor.composition == null && (s.reply.isNotBlank() || s.replySticker.isNotBlank() || s.replyPhotos.isNotEmpty()) && s.replyPhotos.all { it.mediaId != null },
                     modifier = Modifier.widthIn(min = 64.dp).heightIn(min = MobileUi.actionHeight),contentPadding = PaddingValues(horizontal = 16.dp),shape = MaterialTheme.shapes.medium,
@@ -762,7 +788,7 @@ private fun MobileTab.designIcon(): String = when(this) {
     MobileTab.Community -> "house"; MobileTab.Adoption -> "heart-handshake"; MobileTab.Publish -> "circle-plus"; MobileTab.Messages -> "message-circle"; MobileTab.Profile -> "user-round"
 }
 private fun title(s: MobileState): String = when (val d = s.destination) {
-    MobileDestination.Home -> s.tab.label; is MobileDestination.Pet -> if(d.discussion) "${s.pet?.data?.name ?: "宠物"}的领养交流" else "宠物详情"; is MobileDestination.Entry -> "社区动态"
+    MobileDestination.Home -> s.tab.label; is MobileDestination.Pet -> if(d.replyAnchor!=null) "查看原评论" else if(d.discussion) "${s.pet?.data?.name ?: "宠物"}的领养交流" else "宠物详情"; is MobileDestination.Entry -> if(d.replyAnchor!=null) "查看原评论" else "社区动态"
     is MobileDestination.Application, MobileDestination.Applications -> "领养申请"; is MobileDestination.Chat -> "消息"
     is MobileDestination.Case, MobileDestination.Help -> "走失互助"; MobileDestination.Notifications -> "通知"
 }

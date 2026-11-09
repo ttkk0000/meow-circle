@@ -1,0 +1,53 @@
+{
+  "id": "008",
+  "updated": "2026-10-30",
+  "status": "source_written_static_reviewed_runtime_pending",
+  "high_fidelity_design_nodes": [
+    "238:371728",
+    "238:371727",
+    "238:371729",
+    "460:17333"
+  ],
+  "scope": [
+    "provider cancelled/unavailable/expired task results",
+    "provider popup timeout reason",
+    "owner-memory OTP address and purpose matching for linking",
+    "account-choice contract review"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "d49a9a7889d679fd2242a3136ac5de94f5c653e683f833eb5acda99b6cafd9dc",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/ProviderAuthStore.kt": "5ea4b2db50d2878d1264243e435b75578fdb994938c41545077b3ced5d424e5e",
+    "web-client/src/features/ProviderSignIn.tsx": "5837bb4ec2625472375960b878d1c6ce137496d64cd65dc558cb9aed588552d2",
+    "web-client/src/core/provider.ts": "f6a1af16ed02abb5bba2fa8803949fce02b9f5b3ae7250d321a3d9932799a3ab"
+  },
+  "static_report": "batch-008-checks.json",
+  "syntax_reports": [
+    "batch-008-syntax.json",
+    "batch-008-syntax-followup.json"
+  ],
+  "notes": [
+    "Three modified files have final whole-file grammar reads without diagnostics. The unmodified ProviderAuthStore is byte-equivalent after LF normalization to HEAD and retains a grammar limitation at fun interface; its exit 1 is retained, not relabelled a full pass.",
+    "The first Web ProviderSignIn read found a JSX attribute error; the attribute was corrected to an explicit JS string expression and read cleanly again. Initial failure remains in the report.",
+    "Cancel/unavailable/expiry use dedicated task titles, 28/40 headlines, notice, quiet return to original task and fixed return-to-login action. They do not directly rerun authorization. Unknown create/link results keep the separate no-replay flow.",
+    "Popup expiry is only assigned from the actual timer or denied official challenge. Missing provider setup/blocked popup cannot display a working provider. Apple is labelled correctly when reached on Web but remains unavailable without an implemented Web configuration.",
+    "OTP fields are bound to actual send receipt/address/purpose in current owner memory. Changing channel/address clears the binding and code. Password remains a separate verification option. No authorization, resolution or grant is persisted or bypassed.",
+    "accountChoice is only a partial contract review: the Figma email example does not prove a new email-resolution server contract. Existing provider resolution can explicitly choose original/new account, while email login/register remain explicit separate paths. No fake email-verification or automatic account merge was added."
+  ],
+  "states": [
+    "authProviderCancelled",
+    "authProviderUnavailable",
+    "authCallbackExpired"
+  ],
+  "partial_states": [
+    "accountChoice"
+  ],
+  "remaining": [
+    "official authorization disclosure and remaining auth states",
+    "remaining consumer/backend families",
+    "type/platform runtime and visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

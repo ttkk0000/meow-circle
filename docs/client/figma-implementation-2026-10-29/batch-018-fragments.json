@@ -1,0 +1,65 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256_lf": "278c5427de480ce57149b7bf9df7740f3fc4567b9e2bf8a15d554f18145ba7d0",
+      "exit_code": 0,
+      "stderr": "",
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "profile-read-and-save",
+            "errors": []
+          },
+          {
+            "label": "identity-save-and-restore",
+            "errors": []
+          }
+        ]
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "c20cbe8087c72233371e1078ed3eb14175b9927ab5e6fbd23fbdbdea988c77d4",
+      "exit_code": 0,
+      "stderr": "",
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "completion-owner-model",
+            "errors": []
+          },
+          {
+            "label": "completion-and-optional-profile",
+            "errors": []
+          },
+          {
+            "label": "login-dismiss-guard",
+            "errors": []
+          }
+        ]
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256_lf": "c440ba3fe304a5746d5fbe40594270a2c408d892c8f8566d11234edc94c7bc65",
+      "exit_code": 0,
+      "stderr": "",
+      "fragment_syntax": {
+        "fragments": [
+          {
+            "label": "feature-state-model",
+            "errors": []
+          },
+          {
+            "label": "otp-delivery-and-countdown",
+            "errors": []
+          }
+        ]
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

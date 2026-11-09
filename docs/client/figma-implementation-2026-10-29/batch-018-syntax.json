@@ -1,0 +1,585 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "sha256_lf": "d924308f4d16bcf5747cb0e197d3f81c17929b41265b9109e2ba8fd423583cc0",
+      "exit_code": 0,
+      "headroom_mb": 1581,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
+      "sha256_lf": "9bec4131836535939d6a730279426df396efe8a56b42d821847e84560db37c5b",
+      "exit_code": 0,
+      "headroom_mb": 1589,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt",
+      "sha256_lf": "cf902aae5911925aaa9811400ffc17565111a4a1cd241a81e4ce7e3dd8f8b737",
+      "exit_code": 0,
+      "headroom_mb": 1583,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "sha256_lf": "516de0274ae176c4abce367dda986c7a728964cada7a05f67669d01c9977fa98",
+      "exit_code": 0,
+      "headroom_mb": 1588,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt",
+      "sha256_lf": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff",
+      "exit_code": 0,
+      "headroom_mb": 1591,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256_lf": "02824c2fd6f5e1611222761c852df9c341a862e3d3cf69762be12f0300de7a1f",
+      "exit_code": 0,
+      "headroom_mb": 1593,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+      "sha256_lf": "b89fcd9f82aaaa0acb7f5e9826a245a5d1e9148e4268b7be60a594f9777aca58",
+      "exit_code": 0,
+      "headroom_mb": 1600,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "sha256_lf": "84f082528abf98ebd33f461243204f525bb630642451a0b896b874a9ac216fdc",
+      "exit_code": 0,
+      "headroom_mb": 1588,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthInput.kt",
+      "sha256_lf": "59e7fa1cab32920a76a020dae1c7a2d27a89e073e8f900337560a4164038a15b",
+      "exit_code": 0,
+      "headroom_mb": 1591,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthInput.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256_lf": "278c5427de480ce57149b7bf9df7740f3fc4567b9e2bf8a15d554f18145ba7d0",
+      "exit_code": 0,
+      "headroom_mb": 1587,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 297,
+            "text": ": MobileApiException"
+          },
+          {
+            "type": "ERROR",
+            "line": 298,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 318,
+            "text": ": MobileApiException"
+          },
+          {
+            "type": "ERROR",
+            "line": 319,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 439,
+            "text": "\"messages\"\n                else -> path.substringBefore('/')"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 279,
+            "text": ": MobileApiException"
+          },
+          {
+            "type": "ERROR",
+            "line": 280,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 300,
+            "text": ": MobileApiException"
+          },
+          {
+            "type": "ERROR",
+            "line": 301,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 418,
+            "text": "\"messages\"\n                else -> path.substringBefore('/')"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "receipt-id-and-unresolved-state",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "c20cbe8087c72233371e1078ed3eb14175b9927ab5e6fbd23fbdbdea988c77d4",
+      "exit_code": 0,
+      "headroom_mb": 1585,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 135,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 157,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 210,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 225,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 503,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 580,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 879,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 973,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1084,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1191,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1517,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1560,
+            "text": ": Exception"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 131,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 153,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 206,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 220,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 492,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 569,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 811,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 900,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1011,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1118,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1444,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1487,
+            "text": ": Exception"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "notification-targets",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "original-request-retry",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    },
+    {
+      "file": "web-client/src/components/AccountConflict.tsx",
+      "sha256_lf": "42b4816d5b419e9eb40f2ccaaaba0f6aa4891b20b97283d95b819dae179d7255",
+      "exit_code": 0,
+      "headroom_mb": 1556,
+      "syntax": {
+        "file": "web-client/src/components/AccountConflict.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/core/api.ts",
+      "sha256_lf": "39c3ce6a6f0a12075a86e519ed7537e208e59583edcf4f9465c1ff61819d62b1",
+      "exit_code": 0,
+      "headroom_mb": 1566,
+      "syntax": {
+        "file": "web-client/src/core/api.ts",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/core/authInput.ts",
+      "sha256_lf": "c10c932ce9972ff7675a5cd311f81e56a080c5328c1fc67fc94f65ce42d79860",
+      "exit_code": 0,
+      "headroom_mb": 1560,
+      "syntax": {
+        "file": "web-client/src/core/authInput.ts",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/Account.tsx",
+      "sha256_lf": "759e91b08bb9becf502feac4df8589f518255ead4ef2fd7d712c6e10e0219585",
+      "exit_code": 0,
+      "headroom_mb": 1545,
+      "syntax": {
+        "file": "web-client/src/features/Account.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthCodePages.tsx",
+      "sha256_lf": "bee61dbb090f20ab4972be5ebd1ffe73c3ef25c9974cda77ec52d014f8f04193",
+      "exit_code": 0,
+      "headroom_mb": 1537,
+      "syntax": {
+        "file": "web-client/src/features/AuthCodePages.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "f467680f9e9428f715bc218ae1933785ffa64f96609bbc5b47be829bdc032c70",
+      "exit_code": 0,
+      "headroom_mb": 1527,
+      "syntax": {
+        "file": "web-client/src/features/AuthDialog.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/ProviderSignIn.tsx",
+      "sha256_lf": "72257690dbf7116eb88ce26cd205272968e593d64ec7dc95df827d78cc9a8435",
+      "exit_code": 0,
+      "headroom_mb": 1501,
+      "syntax": {
+        "file": "web-client/src/features/ProviderSignIn.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256_lf": "c440ba3fe304a5746d5fbe40594270a2c408d892c8f8566d11234edc94c7bc65",
+      "exit_code": 0,
+      "headroom_mb": 1528,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 104,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 241,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 320,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 374,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 578,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 605,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 618,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 646,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 698,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 724,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 753,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 769,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 991,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1026,
+            "text": ": Exception"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 102,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 233,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 297,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 351,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 554,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 581,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 594,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 622,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 674,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 700,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 729,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 745,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 945,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 980,
+            "text": ": Exception"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "friendship-detail-loading",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "state-models",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "route-lifecycle",
+            "errors": [
+              {
+                "type": "ERROR",
+                "line": 44,
+                "text": "open"
+              }
+            ],
+            "grammar_limitations": [
+              {
+                "type": "ERROR",
+                "line": 44,
+                "text": "open"
+              }
+            ]
+          },
+          {
+            "label": "confirmation-and-outcome",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "collaborator-loading",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "invitation-detail-loading",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

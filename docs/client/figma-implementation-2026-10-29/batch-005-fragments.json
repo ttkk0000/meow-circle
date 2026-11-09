@@ -1,0 +1,71 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256_lf": "1d98949183ead5847c5fdba90ebd1b8a5281158e966974a5bfe9482eb7f80b56",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "problems": [],
+        "top": [
+          {
+            "type": "class_declaration",
+            "start": {
+              "row": 0,
+              "column": 0
+            },
+            "end": {
+              "row": 19,
+              "column": 1
+            }
+          }
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "175c7c41bffe36f30b90b8fbdde174bb22e4c8fad4a26258a75618a6016a8c6e",
+      "exit_code": 0,
+      "fragment_syntax": {
+        "problems": [
+          {
+            "type": "ERROR",
+            "start": {
+              "row": 5,
+              "column": 16
+            },
+            "end": {
+              "row": 5,
+              "column": 27
+            },
+            "text": ": Exception"
+          }
+        ],
+        "top": [
+          {
+            "type": "class_declaration",
+            "start": {
+              "row": 0,
+              "column": 0
+            },
+            "end": {
+              "row": 9,
+              "column": 1
+            }
+          }
+        ],
+        "baseline_same_error_signatures": true,
+        "baseline_problems": [
+          {
+            "type": "ERROR",
+            "text": ": Exception"
+          }
+        ]
+      },
+      "stderr": ""
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

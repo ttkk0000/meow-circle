@@ -1,0 +1,413 @@
+{
+  "task": "AI-20261105-FIGMA-CHECK",
+  "date": "2026-11-05",
+  "timezone": "Asia/Shanghai",
+  "mode": "read_only_remote_and_local_static",
+  "branch": "main",
+  "head": "48a3cfd",
+  "sessionId": "d7cd206a-c74d-4004-a26f-160dfcdf1e7e",
+  "designFileKey": "3OFOC3vu18Kx9sRPjummOC",
+  "documentFileKey": "JiFXEy785BcGEvaFBSswJ3",
+  "designPageInventory": [
+    "No nodeId was provided. Listing the top-level pages of the document. Call get_metadata again with one of the page ids below (or any node id underneath) to get the XML metadata for that subtree.\n\nTop-level pages of the document:\n- 395:2: 00 项目总览\n- 56:25: 01 手机 · 原稿与交互\n- 403:2: 02 Web · 原稿与交互\n- 403:3: 03 平板 · 原稿与交互\n- 403:4: 04 桌面 · 原稿与交互\n- 403:5: 05 功能索引 · 跨端原稿链接\n- 14:2: 06 规范与组件\n- 30:2: 07 早期概念原型（非现行）\n- 0:1: 08 历史归档\n- 793:21: 09 后台运维 · 设计与交互\n- 843:21: 10 后台管理 · 业务与核验\n- 888:1402: 11 后台角色 · 工作区与权限"
+  ],
+  "documentPageInventory": [
+    "No nodeId was provided. Listing the top-level pages of the document. Call get_metadata again with one of the page ids below (or any node id underneath) to get the XML metadata for that subtree.\n\nTop-level pages of the document:\n- 0:1: 00 导航与现行基线\n- 1:2: 01 产品与UX\n- 1:3: 02 设计规范与合同\n- 1:4: 03 客户端与交付\n- 1:5: 04 服务端与API\n- 1:6: 05 架构与UML\n- 1:7: 06 设计审计与历史\n- 1:8: 07 AI跟踪与仓库说明\n- 3:2: 08 产品流程图 · 来源归档\n- 6:2: 09 文档配图 · 历史截图\n- 24:2: 10 2026-10-29增量 · 当前规范与闭环\n- 35:2: 2026-10-30 通知与源码对齐"
+  ],
+  "referenceAudits": [
+    {
+      "page": {
+        "id": "56:25",
+        "name": "01 手机 · 原稿与交互"
+      },
+      "expectedNodes": 748,
+      "found": 748,
+      "missing": [],
+      "wrongPage": [],
+      "zeroSize": [],
+      "types": {
+        "FRAME": 748
+      },
+      "checkedActions": 16,
+      "actionFailures": [],
+      "mutatedNodeIds": []
+    },
+    {
+      "page": {
+        "id": "403:2",
+        "name": "02 Web · 原稿与交互"
+      },
+      "expectedNodes": 764,
+      "found": 764,
+      "missing": [],
+      "wrongPage": [],
+      "zeroSize": [],
+      "types": {
+        "FRAME": 764
+      },
+      "checkedActions": 16,
+      "actionFailures": [],
+      "mutatedNodeIds": []
+    },
+    {
+      "page": {
+        "id": "403:3",
+        "name": "03 平板 · 原稿与交互"
+      },
+      "expectedNodes": 1512,
+      "found": 1512,
+      "missing": [],
+      "wrongPage": [],
+      "zeroSize": [],
+      "types": {
+        "FRAME": 1512
+      },
+      "checkedActions": 48,
+      "actionFailures": [],
+      "mutatedNodeIds": []
+    },
+    {
+      "page": {
+        "id": "403:4",
+        "name": "04 桌面 · 原稿与交互"
+      },
+      "expectedNodes": 748,
+      "found": 748,
+      "missing": [],
+      "wrongPage": [],
+      "zeroSize": [],
+      "types": {
+        "FRAME": 748
+      },
+      "checkedActions": 16,
+      "actionFailures": [],
+      "mutatedNodeIds": []
+    }
+  ],
+  "collaborationStructureAudits": [
+    {
+      "page": "56:25",
+      "rootsChecked": 8,
+      "texts": 69,
+      "fonts": [
+        "Noto Sans SC"
+      ],
+      "unexpectedFonts": [],
+      "textOutsideParent": [],
+      "wholeScreenImages": [],
+      "missing": [],
+      "anchor": {
+        "board": {
+          "id": "958:371820",
+          "name": "通知评论精确定位 / 四状态 · 2026-10-30",
+          "type": "SECTION"
+        },
+        "frames": [
+          {
+            "id": "958:371822",
+            "name": "NOTIFY-ANCHOR / 可见 [visible]",
+            "type": "FRAME",
+            "parent": "958:371820",
+            "width": 390,
+            "height": 844
+          },
+          {
+            "id": "958:374615",
+            "name": "NOTIFY-ANCHOR / 已更新 [updated]",
+            "type": "FRAME",
+            "parent": "958:371820",
+            "width": 390,
+            "height": 844
+          },
+          {
+            "id": "958:377408",
+            "name": "NOTIFY-ANCHOR / 不可查看 [unavailable]",
+            "type": "FRAME",
+            "parent": "958:371820",
+            "width": 390,
+            "height": 844
+          },
+          {
+            "id": "958:380184",
+            "name": "NOTIFY-ANCHOR / 读取失败 [failed]",
+            "type": "FRAME",
+            "parent": "958:371820",
+            "width": 390,
+            "height": 844
+          }
+        ]
+      },
+      "mutatedNodeIds": []
+    },
+    {
+      "page": "403:2",
+      "rootsChecked": 8,
+      "texts": 149,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "unexpectedFonts": [],
+      "textOutsideParent": [],
+      "wholeScreenImages": [],
+      "missing": [],
+      "anchor": null,
+      "mutatedNodeIds": []
+    },
+    {
+      "page": "403:3",
+      "rootsChecked": 16,
+      "texts": 298,
+      "fonts": [
+        "Manrope",
+        "Noto Sans SC"
+      ],
+      "unexpectedFonts": [],
+      "textOutsideParent": [],
+      "wholeScreenImages": [],
+      "missing": [],
+      "anchor": null,
+      "mutatedNodeIds": []
+    },
+    {
+      "page": "403:4",
+      "rootsChecked": 8,
+      "texts": 165,
+      "fonts": [
+        "Noto Sans SC",
+        "Manrope"
+      ],
+      "unexpectedFonts": [],
+      "textOutsideParent": [],
+      "wholeScreenImages": [],
+      "missing": [],
+      "anchor": null,
+      "mutatedNodeIds": []
+    }
+  ],
+  "newDocumentReadbacks": [
+    {
+      "documents": [
+        {
+          "id": "35:3",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 73,
+          "first": "# M&D 现行文档与源码基线\n\n更新：2026-10-30（Asia/Shanghai）。本轮核对源码为 `main@35914a0e94159d31e32705478133c3c281cac94a`，与本地最近一次fetch取得的 `origin/main` 一致；已包含邀请协作、后台角色及10月29日设计／文档成果。10月29–30日文档与源码续作尚未提交，最新通知／回复定位见[10月30日交付](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-7)。Git同步结果见[AI记录](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-312)，不沿用旧批次的“尚未推送”判断。本页取代各入口中更早的“当前数量”；带日期交接继续保留当时结果。\n\n[Figma 文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3) · [完整文档目录](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34) · [功能状态与发布边界](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-15) · [UML 图谱](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-596) · [同步清单](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-38)。\n\n## 源码事实\n\n| 维度 | 当前值 | 读取依据 |\n|---|---|---|\n| OpenAPI Paths / Operations | 255 / 288 | OpenAPI（仓库附件：`docs/api/mobile-v2.openapi.json`，本轮未发布），Operations 仅计 HTTP 方法 |\n| 服务端 / Web schemas | 145 / 147 | OpenAPI components.schemas / Web派生（仓库附件：`web-client/src/core/schemas.json`，本轮未发布） |\n| DTO 映射 | 90 对 | 映射脚本（仓库附件：`scripts/check_server_shared_contract_static.py`，本轮未发布）的 mapping 去重键；不是全部数据类数量 |\n| SQL 迁移 | 13 份，001–013 | migrations（仓库附件：`migrations`，本轮未发布），不含 backfill |\n| mobile 业务聚合表 | 45 张 | [Kind枚举](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/internal/mobile/repository.go)；008通过SQL循环创建10张，不能只数CREATE TABLE字面量 |\n| 额外技术表 | mnd_ops_records、mnd_worker_checkpoints | 010 / 012，不计入45张mobile表 |\n| shared / clientUi 公共 Kotlin 文件 | 29 / 41 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件 |\n| FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |\n| Worker 接受的作业名 | 8 类 | [ValidJob](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |\n| Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | 实现追踪（仓库附件：`docs/client/figma-implementation-trace-2026-10-24.json`，本轮未发布）；协作8状态五布局40根已实读登记；另有角色18稿、业务后台13稿、运维14稿 |\n\n10月29日[设计与文档详细完善](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-32)已包含在本次HEAD：后台增加39任务状态及1评审索引，协作8状态完成手机／Web来源补录，消费者追踪748条。消息分类、好友／群主转让待办与显式已读接线已在后续[本批源码](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-9)落实；仍需类型、接口与逐端运行验收。\n\n当前新增批次见[后台角色实现](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/docs/client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；[source-baseline.json](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/docs/figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。Figma的10月29日增量（仓库附件：`docs/figma-sync/delta-2026-10-29/README.md`，本轮未发布）也仅代表当次冻结正文，本轮文档审核未写入远端。这些是源码统计，不是构建、联调或发布成功证据。\n\n## 当前产品与平台口径\n\n- 品牌为 M&D / meow & doggie；社区与领养为主，猫咪优先，doggie友好，允许的其他伴侣小宠按物种规则开放。出售／有偿转让明确标注性质；不把信息与预约写成支付担保或平台成交。\n- 武汉／上海是已确认冷启动试点。大陆城市目录兼容是技术覆盖，31省级、694城市、共745地区项不等于全国业务已开放；行为、物种和城市仍由版本化准入规则决定，未知规则关闭。\n- Android / iOS / Desktop 当前共享KMP逻辑及 clientUi Compose 页面，iOS保留Swift宿主与系统能力桥接；Web使用独立React DOM。手机和平板按窗口适配，不由设备名称授予权限。\n- 当前Figma V2默认浅色用于新客户端；旧Stitch四主题仅在未迁移范围与历史参考保留。原Figma设计文件不被本轮文档中心取代。\n- 登录与互动资格分开，服务端eligibility是权威；年龄未知不可放行。禁止短信隐式注册；三方登录、绑定、冲突恢复分开。微信绑定作为替代发帖门槛仍是未确认建议。\n- 全部已读快照有效期10分钟，用于确认快照已知范围；**没有“成功后撤销已读”的接口**。新消息保持未读，已读通知不表示同意业务动作。\n\n## 迁移顺序\n\n| 顺序 | 文件 | 说明 |\n|---|---|---|\n| 001 | [001_init.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/001_init.sql) | 按SQL源码读取；未执行 |\n| 002 | [002_social.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/002_social.sql) | 按SQL源码读取；未执行 |\n| 003 | [003_user_phone.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/003_user_phone.sql) | 按SQL源码读取；未执行 |\n| 004 | [004_notifications_actor_image.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/004_notifications_actor_image.sql) | 按SQL源码读取；未执行 |\n| 005 | [005_adoption.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/005_adoption.sql) | 按SQL源码读取；未执行 |\n| 006 | [006_listing_category.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/006_listing_category.sql) | 按SQL源码读取；未执行 |\n| 007 | [007_mobile_modules.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/007_mobile_modules.sql) | mobile核心聚合表 |\n| 008 | [008_mobile_policy_commands.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/008_mobile_policy_commands.sql) | 策略、资格与幂等聚合表 |\n| 009 | [009_pet_discussions.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/009_pet_discussions.sql) | 按SQL源码读取；未执行 |\n| 010 | [010_operations_console.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/010_operations_console.sql) | 按SQL源码读取；未执行 |\n| 011 | [011_mobile_query_indexes.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/011_mobile_query_indexes.sql) | 按SQL源码读取；未执行 |\n| 012 | [012_worker_checkpoints.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/012_worker_checkpoints.sql) | 按SQL源码读取；未执行 |\n| 013 | [013_source_declarations.sql](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/migrations/013_source_declarations.sql) | 独立来源声明 |\n\nDocker初始化挂载已包含013；已有数据库不会因新增挂载自动升级。[交付手册](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-358)中的执行步骤需获得运行授权后再做，本文不执行迁移。\n\n用途级reauth为5分钟单次授权，监护邀请15分钟，全部已读确认快照10分钟；时限按当前identity与inbox_snapshot源码，不能互换。\n\n## 事务与数据口径\n\n`internal/store/postgres/mobile.go`使用pgx：只读事务REPEATABLE READ，写事务SERIALIZABLE。资源共用Record封套，真实列为id、owner_id、participants、record_key、reference_id、media_ids、public、state、version、created_at、updated_at、data。业务结构位于JSONB data；引用ID和数组关系有领域约束，不能把逻辑关系全部画成数据库外键。\n\n资格、监护、幂等、消息快照分别存放于mobile_qualifications、mobile_guardians、mobile_operations、mobile_receipts等聚合。旧UML中的account_identities、user_sessions、mobile_command_ledger、mobile_inbox_snapshots不属于当前V2真实表；已在本轮图谱中纠正。\n\n## 验证层次与剩余工作\n\n1. 文档与设计：本地合同、表格、图谱和Figma阅读副本分别记账；文档同步不改变需求批准状态。\n2. 源码与静态：页面和合同源码已分批写入。最近源码批次见[10月27日恢复点](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-354)及[城市素材交接](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-380)。\n3. 运行与发布：当前748条消费者状态追踪没有全量逐端运行／视觉验收；SDK正式参数、签名、真实环境、数据库、权限／并发／网络恢复、无障碍与运营值守仍需验证。完整搜索接收端及运维发布／重启执行器保持用户指定占位。\n\n本轮按仓库规则不运行编译、构建、test、lint或应用。历史静态通过、测试源码存在、设计截图均不升级为本轮运行证据。\n\n---\n\n来源：`docs/CURRENT_BASELINE.md`；SHA-256：`a7b88e58daf7d9571b300f58f70311191b3c414e21a9b1f5c6af4c9b273f6a33`。2026-10-30阅读快照，源码／设计与运行验收分别记账；仓库附件未提交推送，不伪造线上文件链接。",
+          "firstLines": 73,
+          "firstHasMore": false,
+          "tail": null
+        },
+        {
+          "id": "35:19",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 18,
+          "first": "# 2026-10-30 通知与源码对齐增量\n\n8份当前来源／8卷原生Specs。旧10月27日、10月29日快照和评论保留；本增量只覆盖下列来源，不代表全仓文档自动同步或全量应用验收。\n\n| 来源 | 阅读入口 |\n|---|---|\n| `docs/CURRENT_BASELINE.md` | [M&D 现行文档与源码基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-3) |\n| `docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md` | [消息事件分类、未读与待办对齐核对](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-5) |\n| `docs/client/NOTIFICATION_COMPLETION_2026_10_30.md` | [通知事件、回复定位与交付核对](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-7) |\n| `docs/client/DESIGN_CODE_ALIGNMENT_2026_10_29.md` | [消息、后台任务与跨端设计接线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-9) |\n| `docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md` | [后台关键任务表单与结果交互补充](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-11) |\n| `docs/design/figma-study/notification-anchor-2026-10-30/README.md` | [通知评论精确定位设计证据](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-13) |\n| `docs/PRODUCT_AND_DELIVERY_MATRIX.md` | [M&D 产品、源码与验收状态矩阵](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-15) |\n| `docs/client/README.md` | [M&D 客户端代码实施与完成标准](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-17) |\n\n[原生四状态评论定位稿](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-371820) · [文档中心总导航](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=1-9) · [10月29日历史增量](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3)。\n\n公开通知已补事件、目标版本、精确回复锚点与当前权限复核；新合同145服务端／147Web schema、90对DTO，255路径／288操作不变。748条消费者状态仍未逐端运行验收。未编译／构建／test／lint／类型检查／启动／迁移／注册／部署／提交推送。",
+          "firstLines": 18,
+          "firstHasMore": false,
+          "tail": null
+        }
+      ],
+      "mutatedNodeIds": []
+    },
+    {
+      "documents": [
+        {
+          "id": "35:5",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 115,
+          "first": "# 消息事件分类、未读与待办对齐核对\n\n更新：2026-10-30（Asia/Shanghai）；10月29日建立。适用当前V2消费者消息中心。本批源码基线：main / 35914a0＋当前工作树。最初b269504只读审查保留在Git历史；本页已按后续设计／源码接线更新。验证与文件指纹见[10月30日续作](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-7)，[10月29日批次](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-9)保留当时边界，运行及迁移未验收。\n\n设计依据：[全局未读专项合同](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-22)、[当前通知与待办稿356:246](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=356-246)。现有稿把好友与邀请放在“通知”；本轮已将UX-16与专项设计统一为关系通知，本批服务端好友与关注求助进展已统一为applications，并对可可靠识别的旧通知提供兼容读取。下文将尚存的源码差距具体到事件、分类、偏好、计数和目标，避免只改Tab文案。\n\n## 1. 现有数据与接口事实\n\n通知模型位于models.go（仓库附件：`internal/mobile/models.go`，本轮未发布）的Notification，包含category、text、target_kind、target_id、read、push_state，以及服务端送达相关字段；外层Record另有通知编号、owner_id和version。10月30日已增加event_type、target_version及reply_anchor(kind／id／version)。新生产者显式提供事件，目标版本在同一事务读取，具体评论锚点校验父归属和接收人当前权限；旧通知三字段仍可缺省，不从文案推断。subcategory仍未作为独立底层枚举。\n\n- category当前是字符串，没有统一的NotificationCategory枚举；新notify只接受四种已有偏好映射的分类；nearby由独立作业产生。历史未知分类继续安全兜底读取。不能把任意字符串都理解为有完整设置、送达和UI支持的已批准分类。\n- notify（仓库附件：`internal/mobile/service.go`，本轮未发布）与pushAllowed（仓库附件：`internal/mobile/push_policy.go`，本轮未发布）使用direct_messages、groups、applications、interactions映射提醒偏好；nearby另由订阅规则控制。未知分类仍可能有站内记录，但常规推送偏好映射不会自动开启。\n- KMP NotificationBody与InboxSummary（仓库附件：`kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt`，本轮未发布）保留category和按分类汇总；[Web合同](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/web-client/src/core/api.ts)把notifications视为字符串键计数字典。\n- OpenAPI（仓库附件：`docs/api/mobile-v2.openapi.json`，本轮未发布）已有GET notifications、GET notifications/{id}、POST notifications/{id}/read与inbox-summary，本轮公开NotificationView和NotificationReplyAnchor，并为列表、详情及显式已读响应提供NotificationRecord／NotificationPage精确schema。供应商回执、调度和内部保全字段不导出；没有新增DDL。\n- 通知外层version是通知本身的版本，绝不是好友、邀请、群或预约的当前业务版本。打开事项后必须重新读取目标；接收通知不授予业务权限，通知载荷不能直接触发accept、revoke、leave或确认预约。\n\n## 2. 底层分类与三个Tab\n\n| 底层category | 当前源码用途 | UI归属 | 提醒偏好／计数约束 |\n|---|---|---|---|\n| direct_messages | 私信消息的站内／推送副本 | 聊天；不作为独立通知卡重复展示 | 由会话未读位点计数，副本不再加入global_total |\n| groups | 非静音群消息的站内／推送副本 | 聊天；不作为独立通知卡重复展示 | 由群消息位点计数；免打扰政策另见第6节 |",
+          "firstLines": 22,
+          "firstHasMore": true,
+          "tail": "| 协议进度／通知已读 | 原请求只生成一次进度通知，阅读不接受协议或消费用途验证 |\n| 切账号／未知目标／失权 | 不显示前账号内容，不执行通知载荷动作，不保留永久无法核销角标 |\n\n本批已写上述源码及回归用例，执行非编译静态核对；未编译、构建、Gradle、Go build/run/test、test、lint、类型检查、应用启动或真实消息／迁移。表内运行验收均尚未执行。\n\n---\n\n来源：`docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md`；SHA-256：`10b784b74de6e10ba91c27f5cfcc280a4f3782d24094b7a2921134a8846a3c17`。2026-10-30阅读快照，源码／设计与运行验收分别记账；仓库附件未提交推送，不伪造线上文件链接。"
+        },
+        {
+          "id": "35:7",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 39,
+          "first": "# 通知事件、回复定位与交付核对\n\n日期：2026-10-30（Asia/Shanghai）。任务AI-20261030-COMPLETE。用户要求“继续完成所有的不要停”；延续[10月29日设计与源码接线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-9)，保留main／35914a0上全部在途成果，本批未提交或推送。\n\n## 本批落实\n\n| 范围 | 当前行为 | 源码依据 |\n|---|---|---|\n| 新通知事件 | 生产者显式传event_type；notify在同一事务读取目标当前version，写target_version；附近与关注求助作业也记录事件和版本 | `internal/mobile/service.go`及各通知生产者 |\n| 具体评论 | 评论／回复与评论点赞记录reply_anchor的kind、id、version；父事项目标仍保留。回复他人评论通知原评论作者，同一接收人不重复，本人不自发通知 | `social.go`、`comment_reactions.go` |\n| 当前权限 | 生成带锚点通知前校验评论所属父事项和接收人权限；待发送推送再次检查评论与父事项。评论删除／失权后不新发该提醒 | `service.go`、`push_policy.go` |\n| 公开合同 | NotificationView、NotificationReplyAnchor、NotificationRecord、NotificationPage；列表、详情、显式已读采用精确响应。供应商回执／调度与保全字段不进入公开投影 | `models.go`、OpenAPI及静态派生脚本 |\n| 旧通知 | 无法证明的历史event_type、target_version、reply_anchor继续缺省；分类兼容、编号、通知version、已读和送达事实保留，不回填伪造事件或重排推送 | `notification_policy.go`、公共投影 |\n| 公共Compose | 白名单锚点打开动态或宠物交流，按编号单独GET并核对referenceId／state；通知评论置于页面顶部，普通分页去重。加载／更新／失权／连接失败、重读和返回消息中心均有入口，返回栈保留锚点，回复草稿仍按原目的地保存 | `Models.kt`、`WorkspaceApi.kt`、`MobileStore.kt`、`ConsumerApp.kt`、`InboxPages.kt` |\n| Web | 白名单目标生成comment／comment_version参数；按编号GET并校验父事项，独立显示通知评论，移入焦点并定位一次。普通列表去重、网络失败重读、失权收起及消息返回沿用现有架构 | `core/router.ts`、`App.tsx`、`NotificationPage.tsx`、`ResourcePage.tsx` |\n| 协议进度 | 补领养协议propose／accept／decline通知，给另一方，沿用原command幂等事务；查看或标已读不接受协议、不消费用途验证 | `contracts.go` |\n| 设计 | 现有浅色评论页／Notice／按钮／评论实例构成可见、已更新、不可查看、读取失败四状态原生评审稿 | [设计与最终回读](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-13) |\n\n通知自身version只用于标已读。target_version和reply_anchor.version均为事件发生时事实，不替代当前GET，不作为业务提交版本。客户端不执行载荷中任意动作或外链。\n\n## 非编译验证与回归源码\n",
+          "firstLines": 22,
+          "firstHasMore": true,
+          "tail": "\n748条消费者状态仍未全量逐端运行、视觉或无障碍验收。正式SDK信息、签名、数据库迁移、真实供应商与值守、权限并发／弱网／恢复均需真实环境证据；现有静态结果不能替代。完整搜索接收端、运维发布／重启执行器保持用户指定占位，平台注册仍暂停。\n\n按项目AGENTS，未运行编译、构建、Gradle、Go build/run/test、test、lint、类型检查、应用／浏览器启动；未迁移、注册、部署、提交或推送。设计评审稿是独立四状态参考，没有将其伪登记成已逐端验收的消费者状态。\n\n---\n\n来源：`docs/client/NOTIFICATION_COMPLETION_2026_10_30.md`；SHA-256：`e3ae13fa9216c69d576f3db9eec05053e94324033f2f06641e08c523e2ec13f5`。2026-10-30阅读快照，源码／设计与运行验收分别记账；仓库附件未提交推送，不伪造线上文件链接。"
+        },
+        {
+          "id": "35:13",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 18,
+          "first": "# 通知评论精确定位设计证据\n\n2026-10-30（Asia/Shanghai）。[打开原生四状态评审板958:371820](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-371820)。沿用现有评论稿106:1393、Notice356:346、评论实例108:2970与按钮356:352，保留Noto Sans SC、默认浅色变量、原组件及可编辑文字；原稿未改，旧Stitch镜像未迁移。\n\n| 状态 | 原生根 | 对应源码行为 |\n|---|---|---|\n| 可见 | [958:371822](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-371822) | 按编号读取当前评论，展示明确目标 |\n| 已更新 | [958:374615](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-374615) | 当前评论version不同于事件版本，显示当前内容 |\n| 不可查看 | [958:377408](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-377408) | 删除／失权收起正文；可重读或返回消息核销通知 |\n| 读取失败 | [958:380184](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-380184) | 连接／服务失败单独提示，重读不重发回复或改已读 |\n\n[原评论稿截图](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=106-1393)和[四状态最终整板](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-371820)均已实际查看。写入回执（仓库附件：`docs/design/figma-study/notification-anchor-2026-10-30/write.json`，本轮未发布）与独立回读（仓库附件：`docs/design/figma-study/notification-anchor-2026-10-30/readback.json`，本轮未发布）保存节点、文字、尺寸和边界；4根均为390×844且在评审板内，没有覆盖原稿。第一次按钮属性名错误、第二次回执超工具输出限制均未提交画布；已改用实际Label属性和精简子树回执后成功保存，再独立读取与截图确认。\n\n这四根是语义与组件评审参考，未绑定新的原型业务写入；不扩充原748消费者台账为已运行状态，也不冒充五布局全量视觉验收。Android／iOS／Desktop复用公共Compose，Web独立DOM，各窗口仍按现行自适应合同实施。代码与验证边界见[本轮交付](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-7)。\n\n---\n\n来源：`docs/design/figma-study/notification-anchor-2026-10-30/README.md`；SHA-256：`28acbedbd995f787a5ba4f82e9aa6f60f5ed95d0747b8ae5d091203e246a1f01`。2026-10-30阅读快照，源码／设计与运行验收分别记账；仓库附件未提交推送，不伪造线上文件链接。",
+          "firstLines": 18,
+          "firstHasMore": false,
+          "tail": null
+        }
+      ],
+      "mutatedNodeIds": []
+    },
+    {
+      "documents": [
+        {
+          "id": "35:9",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 44,
+          "first": "# 消息、后台任务与跨端设计接线\n\n日期：2026-10-29（Asia/Shanghai）。任务AI-20261029-DESIGN-CODE；执行者Codex。用户要求“继续完成设计和代码，要仔细完善不要漏”。起点main／35914a0，保留前轮35份文档改动；本批未提交或推送。\n\n后续2026-10-30已补独立事件、目标版本、回复锚点及协议通知，见[续作](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-7)。下文保留10月29日当批事实与指纹，不当作后续源码重验结果。\n\n## 已落实的设计与源码\n\n| 范围 | 本批实际行为 | 主要入口 |\n|---|---|---|\n| 好友与关注求助进度 | 新通知归applications；好友申请／接受使用不同文案；评论／点赞仍是interactions | `social.go`、`content_subscriptions.go` |\n| 历史通知兼容 | 列表／详情投影、汇总及待发送推送共用notificationCategory；只识别旧好友或可靠case-watch键；不重建ID、重置已读、增加全局数或重排已送达推送 | `notification_policy.go`、`service.go`、`inbox.go`、`push.go`、`push_policy.go` |\n| 待办 | Friendships按pending接收人统计；group_transfers核对当前成员、群主、期限及状态；邀请重核当前资源归属／阶段／拉黑；过期和旧主人授权不占有效待办 | `inbox.go`及原邀请策略 |\n| 群主转让 | 发起／撤回通知接收人，接受／拒绝通知原群主；原command事务幂等；拒绝／撤回只要求有效账号和当前角色／版本，不要求互动资格 | `social.go` |\n| 显式已读 | KMP与Web均由单独按钮标记；Web站内与系统通知共用本人通知详情；原事项重新读取权限和版本，查看不触发业务同意 | `InboxPages.kt`、`NotificationPage.tsx`、`App.tsx` |\n| 精确事项 | KMP好友／邀请通知按targetId读取单条关系，超出第一页仍可定位；群关系通知进入当前群管理；保留回全部目录入口 | `MobileStore.kt`、`MobileFeatureStore.kt`、`SocialPages.kt` |\n| 消息展示与设置 | 关系／业务／审核分组、各类真实待办入口，设置说明关系邀请与业务进度归同一开关 | 公共Inbox／Account页面、Web SchemaForm与Inbox |\n| 后台字段核对 | 年龄不默认成年；字段错误关联ARIA和对应输入；时间必须含时区；授权自然键改变仍清除旧版本回读 | `RoleTasks.tsx`、公共`Field` |\n| 后台确认与撤权 | 提交确认与未知结果人工核对分别绑定阶段和冻结内容；权限代次变化丢弃晚到响应，不恢复已清理材料 | `RoleTasks.tsx` |\n| 原任务内台账 | 接受／未知财务任务可在原冻结上下文读取台账；仅显示原主体／预约的已读范围，返回保留请求／结果；来源相同或空列表均不自动判定原写入成功／失败 | `RoleTasks.tsx` |\n| Figma | 协作增量补齐五布局40根；5个通知说明节点明确显式已读；原设计结构及4个整稿样本核对 | 设计证据（仓库附件：`docs/design/figma-study/design-code-2026-10-29/README.md`，本轮未发布） |\n",
+          "firstLines": 22,
+          "firstHasMore": true,
+          "tail": "4. 五布局结构、Figma截图与语法读取不能抵扣真实设备、焦点／读屏、并发撤权、弱网、原请求恢复、数据库和供应商联调。完整搜索接收端及运维发布／重启执行器继续保留用户指定占位；此前暂停的平台注册未恢复。\n5. 本轮设计源文件有上述实际修改；Figma文档中心未同步本轮正文。旧manifest、Specs及历史报告不改成新的运行或同步证据。\n\n按项目AGENTS，未运行编译、构建、Gradle、Go build／run／test、test、lint、类型检查、应用／浏览器启动；未迁移、注册、部署、提交或推送。\n\n---\n\n来源：`docs/client/DESIGN_CODE_ALIGNMENT_2026_10_29.md`；SHA-256：`56a31836ddba11761950756948234704616e163bc241b2ba82ae743e8a114a67`。2026-10-30阅读快照，源码／设计与运行验收分别记账；仓库附件未提交推送，不伪造线上文件链接。"
+        },
+        {
+          "id": "35:11",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 71,
+          "first": "# 后台关键任务表单与结果交互补充\n\n2026-10-29（Asia/Shanghai）。任务AI-20261029-FIGMA-PERFECT。继承[后台角色权限与字段规范](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-26)，本次细化操作流程，不新增人员角色、业务权限、支付执行器或视觉主题。\n\n[打开Figma本轮分组](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=926-1157)。精确状态键、节点、动作与截图随[本轮交付](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-32)维护；原18稿、业务13稿、运维14稿继续保留。新增任务稿独立于消费者748条状态追踪。\n\n## 1. 依据与实现边界\n\n核对来源为web-client/src/operator/RoleTasks.tsx、roleWorkspaces.ts、useOperator.ts、OperatorApp.tsx和现行Go合同。四类任务的edit／review／sending／accepted／rejected／unknown阶段已有源码；本次绘制可编辑Figma状态稿，不把画板分支当作已运行的网络结果。\n\n沿用216px侧栏、80px页头、1440×1000参考稿、默认浅色语义变量、Noto Sans SC／Manrope、8px后台面板和既有Ops按钮／Notice／Summary／跨端Field组件。仅补一组与源码Check对应的确认控件，两种状态为Default／Checked，复用当前字体、颜色和check图标，不另造Token。\n\n## 2. 四种任务的字段与条件\n\n| 任务／岗位 | 表单字段 | 核对前置与限额 | 接受响应的含义 |\n|---|---|---|---|\n| 可信年龄／identity_verifier | 用户编号、under14／14_17／adult、可信证据引用、含时区截止 | 初始区间为空；不默认成年；引用最多120字，截止未来且366天内 | 接受区间证据，不代替本人授权或监护人同意 |\n| 发布授权／authority_verifier | scope、物种、用户／宠物、证据引用、截止；city_rule另含规范城市、规则版本、允许动作 | 先按自然键读取当前授权；无记录用版本0，已有记录沿用已读版本；改对象／范围使回读失效 | 仅证明该登记被接受，不代表全链条可发布 |\n| 实际收款／finance | 参与方、预约编号、双方确认版本、整数分金额、实际发生时间、真实来源引用、具名负责人 | CNY；源码表单单笔最多100000000分，时间不在未来；服务端合同仍为最终校验 | 登记已经发生的事实，不执行收款 |\n| 实际退款／finance | 收款字段＋original_id | 同一主体和预约，原实际收款须存在，累计退款不超原收款；不能用报价／到访替代 | 登记真实退款事实，不触发资金转账 |\n\n图中编号、证据、请求与时间均为固定学习示例。界面不展示真实证件、生日、原始年龄材料、密钥或客户账单；示例有值不表示生产表单自动填入这些值。城市规则示例与用户／宠物授权分开，不能混用自然键或保留旧对象的版本。",
+          "firstLines": 22,
+          "firstHasMore": true,
+          "tail": "- 检查按钮／输入／摘要可见、文本字体与边界、字段无裁切；原稿与组件主定义在画布上不重叠。\n- 后续逐端实际验证焦点／键盘、错误播报、撤权并发、弱网、关闭恢复、原请求核对和数据库；本轮只记录Figma结构／截图与非编译静态证据。\n\n未运行编译、构建、Gradle、Go build/run/test、test、lint、类型检查或应用；未执行迁移、支付、部署、注册、提交或推送。\n\n---\n\n来源：`docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md`；SHA-256：`cf4783a2814196ed68c0f8b69fa5a11cb3610bf1dab5c938dc4c99fe60d60c3d`。2026-10-30阅读快照，源码／设计与运行验收分别记账；仓库附件未提交推送，不伪造线上文件链接。"
+        },
+        {
+          "id": "35:15",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 40,
+          "first": "# M&D 产品、源码与验收状态矩阵\n\n最新续作：[通知事件、精确评论与源码交付（2026-10-30）](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-7)，包含设计与非编译验证边界。\n\n更新：2026-10-29。[现行基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-3)为数量依据；需求ID沿用PRD和客户端任务，不另造编号。表中“已有源码”仅说明入口与合同存在，不表示全功能或逐端验收通过。\n\n| 业务范围 | 需求／合同 | 当前源码与最近变化 | 剩余验收／决定 |\n|---|---|---|---|\n| 统一账号、认证与资格 | FR-035；认证／安全合同 | identity、ProviderAuthStore、AgeAssuranceStore、GuardianInviteStore；服务端资格门禁 | 官方主体、真实SDK参数、回调与年龄核验供应商联调 |\n| 社区、发布与来源声明 | FR-001–010；来源声明合同 | entries、source_declarations；预览、独立追加声明、公开／私密范围 | 声明原回执、未知结果与媒体恢复逐端运行 |\n| 关注、好友与公开群 | FR-036、038 | social、group_directory；入群审核和群主转让 | 当前角色、屏蔽、退出及并发失权验证 |\n| 多宠物与协作者 | FR-037 | pets、co-manager语义、公共PetWorkspace | 单宠数据隔离与介绍／照护权限运行核对 |\n| 领养申请、候补与协议 | FR-011–017；安全生命周期 | adoption_placement、contracts、AdoptionPages；同宠试养排他与同版协议 | 双方角色、并发占用、旧周期及资格变更 |\n| 试养、交接、接回与私密照护 | FR-017、020、021 | 协议内试养、双确认、effective接回、照护阶段和完成后30天 | 期限、照片权限、失败／未知、真实数据库与设备 |\n| 预约与风险暂停 | FR-016、018、019、031、032 | appointments；effective／pending／history、安全暂停同版重提和双确认 | 暂停版本、提案过期、取消未知与历史恢复 |\n| 走失／拾获与私密线索 | FR-039 | cases、leads、lead_submission、lead_review；粗位置、私密照片与独立会话 | 父权限撤销、原回执、重复提交、两方交接 |\n| 出售／有偿转让及服务咨询 | FR-025、030–033 | offers、disputes、披露快照、总价与接待关系 | 业务准入和费用说明；支付介入仍待决定 |\n| 消息、未读与表情 | FR-040、041 | inbox_snapshot；十分钟确认快照、首条未读、24贴纸 | [消息事件对齐](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-5)：好友／订阅分类、好友／转让待办与显式已读本批已接；目标版本／回复锚点仍未提供，去重／多设备待运行；无已读撤销接口 |\n| 阅读、规则与出版 | FR-042 | reading、publication；独立详情与历史 | 版本生效、更新订阅和无障碍阅读 |\n| 安全、权利与数据生命周期 | FR-022–024、034、042 | rights、data_requests、保全与注销流程 | 清理与保全冲突、真实对象存储与人工处理责任 |\n| 业务后台 | 原13稿＋本批角色设计 | /app/operator、5个业务岗位工作台与白名单、年龄／授权／实际台账入口、角色撤回和未知结果核对 | [9岗位／18稿与源码](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/docs/client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；[本轮39任务状态与评审索引](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/docs/design/figma-study/admin-task-interaction-2026-10-29/README.md)为设计细化；本批已接原任务台账快捷核对、字段错误及分阶段确认，逐端运行待验收 |\n| 技术运维 | 运维14稿 | /app/ops、环境隔离、任务遥测、交付模板与检查点 | 发布／重启执行器按用户决定占位；真实交付待授权 |",
+          "firstLines": 22,
+          "firstHasMore": true,
+          "tail": "| 运营准入、协议与值守 | 部分草案／待业务决定 | 规则版本、责任人、响应窗口和异常处理 |\n| 支付、担保及赔付 | 未决定，不作为现有能力 | 独立业务决定与实施合同 |\n\n[PRD](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-328)记录需求；[UX](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-20)记录操作与失败路径；[客户端任务](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-400)记录实施拆分；[AI任务](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-306)仅记录工作交接。各表不能相互替代。\n\n---\n\n来源：`docs/PRODUCT_AND_DELIVERY_MATRIX.md`；SHA-256：`31c1615833a13e8d08042539c119ebb0051c6d37fab2ad2ee9d4785c6bc199a7`。2026-10-30阅读快照，源码／设计与运行验收分别记账；仓库附件未提交推送，不伪造线上文件链接。"
+        },
+        {
+          "id": "35:17",
+          "type": "SPEC_BLOCK",
+          "specBlockType": "DOCUMENT",
+          "title": "Document",
+          "totalLines": 105,
+          "first": "# M&D 客户端代码实施与完成标准\n\n最新续作：[通知事件、精确评论与源码交付（2026-10-30）](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-7)，包含设计与非编译验证边界。\n\n> **2026-10-30 现行入口**：[源码与文档基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-3) · [产品／交付状态](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-15) · [全部文档目录](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前255路径／288操作／145服务端schemas、147Web schemas、90对DTO、45张mobile表／13迁移、29份shared／41份公共UI文件、48个FeaturePage；这些是源码口径。本文带日期的旧数量和“待实施”结论仅适用于当时批次，运行／全量验收未完成。\n\n当前工程边界：`kmp/shared/.../client`负责业务与数据，`kmp/clientUi`提供Android／iOS／Desktop公共Compose页面；`androidApp`、`iosUi`和`desktopApp`分别注入窗口、返回、Picker、地图、授权等平台能力。Web已使用独立`web-client` React DOM。共享页面不抵扣Android平板和iPad各自的系统适配与设备验收。详见下方架构表及[视觉与验收](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-14)。\n\n## 带日期的阶段记录\n\n2026-10-29：[设计与文档完善](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-32)增加后台39任务状态＋1评审索引，以及8项协作状态的手机／Web来源；当前消费者追踪（仓库附件：`docs/client/figma-implementation-trace-2026-10-24.json`，本轮未发布）为748条；后续已补齐协作五布局40根，消息分类／待办／显式已读及后台同任务台账已接源码，见[本批交付](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-9)。设计与源码均不计运行通过。\n\n2026-10-28：[后台按角色先设计后编码](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/docs/client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)补9个人员工作区、角色／页面与字段权限、18份Figma新稿和年龄／授权／实际收支入口；旧邀请码闭环见[检查点](https://github.com/ttkk0000/meow-circle/blob/35914a0e94159d31e32705478133c3c281cac94a/docs/client/BUSINESS_COLLABORATION_2026_10_28.md)。均未运行验收。\n\n2026-10-27：[全量落地任务本轮恢复点](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-354)补业务后台13页／双后台公共框架、预约暂停与取消状态、领养／协议内试养／交接／接回和私密照护；58份设计上下文与22项只读检查。源码和静态层已记录，740状态及各端运行验收没有升级为完成。\n\n2026-10-26：[远端同步与线索提交补页](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-398)补照片／完整检查／失败／收到四状态及版本化原请求，修正公共主入口遗漏；[业务后台管理13稿](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-542)已建于Figma，保留原技术运维。38公共UI／48分派，未编译或运行验收。\n\n2026-10-26：[私密线索与目击者会话续作](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-388)补充列表／空态、详情、两类真实处理结果和线索独立会话，服务端持续核对父权限与关闭状态；37公共UI／47扩展分派，源码和静态验证不等于运行验收。\n\n2026-10-26：[发布来源与分享进入续作](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-368)补齐7个来源状态、完整预览、独立声明与原请求恢复、iOS分享接入；36公共UI／45扩展分派，45表／13迁移，源码与静态边界见专项记录。\n",
+          "firstLines": 22,
+          "firstHasMore": true,
+          "tail": "\n最初文档阶段未改客户端；随后授权的第一批源码与升级交付见实施记录。未运行编译，遵循全局不自行编译规则；应用测试、设备、SDK、数据库迁移均未验证。\n\n历史文档阶段检查：6份新文档及7份相关入口／记忆，共13个文本文件通过UTF-8无BOM检查，113个本地文档链接有效，相关已跟踪差异空白检查通过。后续代码与配置的静态检查另见当前实施记录，不能用历史文档检查抵扣。\n\n---\n\n来源：`docs/client/README.md`；SHA-256：`1c6f0e9153e82ce189d40cd19b4c06facdb976555ecebc634b146e369d13668d`。2026-10-30阅读快照，源码／设计与运行验收分别记账；仓库附件未提交推送，不伪造线上文件链接。"
+        }
+      ],
+      "mutatedNodeIds": []
+    }
+  ],
+  "olderDocumentReadbacks": {
+    "specsEnabled": true,
+    "documents": [
+      {
+        "id": "1:9",
+        "specNodeId": "1:9",
+        "markdown": "# M&D 产品与工程文档中心\n\n更新：2026-10-30（Asia/Shanghai）。品牌 M&D / meow & doggie，猫咪优先。当前请先读[10月30日通知与源码对齐：8份来源／8卷全文](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-19)；[10月29日18份来源／21卷增量](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3)及10月27日历史快照与评论继续保留。本次只同步选定8份来源，原设计稿单独维护。\n\n## 建议阅读顺序\n\n| **要看什么** | **直接入口** | **内容** |\n|---|---|---|\n| 产品做什么、如何验收 | [PRD 2.2](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-328) · [UX 2.2](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-20) | FR-001–042、主流程、失败与恢复 |\n| 当前做到哪、还有什么没完成 | [现行基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-3) · [功能状态表](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-15) | 源码、设计、运行与发布分别记账 |\n| API与数据表 | [288项API操作速查](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-4) · [45张表的数据字典](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-278) | 路径、方法、实际聚合表与公共字段 |\n| 架构、类图、时序与状态 | [打开FigJam图谱目录](https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=18-2707) · [代码逻辑手册](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-274) | 12张可编辑图，ER分五个业务区 |\n| 所有文档与历史资料 | [完整文档目录](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34) · [同步交接](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-38) | 当前18份增量与10/27的175份Markdown及UML源，均可按分卷跳转 |\n\n## 分类目录\n\n| **分类** | **查看入口** |\n|---|---|\n| 00 导航与现行基线 | [现行基线](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-3) |\n| 01 产品与UX | [PRD](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-328) |\n| 02 设计规范与合同 | [设计索引](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-10) |\n| 03 客户端与交付 | [客户端入口](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-17) |\n| 04 服务端与API | [服务端合同](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-578) |\n| 05 架构与UML | [UML源索引](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-596) |\n| 06 设计审计与历史 | [设计与源码状态核查](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-498) |\n| 07 AI跟踪与仓库说明 | [10/27 AI快照，动态事实回仓库核对](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-298) |\n| 08 产品流程图归档 | [从产品全貌开始](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=4-2)，7张原生矢量流程，保留来源日期 |\n| 09 文档配图归档 | [从历史截图开始](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-3)，49张图片，正文内有对应链接 |\n\n## 2026-10-27历史同步与阅读说明\n\n2026-10-27历史批次同步189份文本来源（175份Markdown、12份PlantUML、2份历史Mermaid），共226个正文分卷，另有本导航。每卷保留正文、表格、代码、来源摘要和分卷链接；49张配图保存在本文件，原图片位置可点击进入。原生GFM会规范化软换行与表格分隔线，已按内容逐卷分页回读核对。\n\n图谱是选定主路径与关系。图03的IdentityService与MobileService是包内Service的图示别名；45张mobile表是真实Kind映射，users在五个分区重复出现为同一表的阅读锚点。复杂支路与所有字段仍以源合同、代码和数据字典为准。\n\n用途reauth5分钟、监护邀请15分钟、全部已读确认快照10分钟；成功后的已读撤销不是现有合同。目录兼容不等于全国业务开放。历史交接按原日期与验证层次解读。\n\n[打开原消费者与后台设计文件](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC)。10月27日批次的API285操作与740消费者状态属于当时快照。10月30日API仍为288操作，消费者追踪仍为748项（740基线＋8项协作补录）；公共合同145服务端／147Web schema、90对DTO。通知事件、版本与精确评论定位见10月30日增量；其余来源按各快照日期解读。设计、源码、静态与实际运行分别记账，真实设备／SDK／数据库／全量状态／发布仍未验收。本批未运行编译、构建、test、lint、类型检查或应用；未提交／推送。",
+        "title": "Document",
+        "totalLines": 38,
+        "linesReturned": 38,
+        "offset": 0,
+        "hasMore": false
+      },
+      {
+        "id": "24:3",
+        "specNodeId": "24:3",
+        "markdown": "# M&D 2026-10-29增量阅读目录\n\n本批新增18份来源、21个原生Specs分卷，覆盖当前基线、API、产品状态、设计索引、客户端方案、消息分类、角色交互与协作追踪。源文件为维护输入，Figma为2026-10-29阅读快照；每卷正文末尾保留来源SHA-256与分卷跳转。\n\n[返回文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=1-9) · [原消费者与后台设计](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC) · [FigJam UML图谱](https://www.figma.com/board/t6ongKuaGHleURYNfsLA6e?node-id=18-2707)\n\n## 当前阅读顺序\n\n先读现行基线与产品状态，再看本批交付、设计索引、消息分类和后台交互说明。客户端实施与验收文档按公共clientUi／平台桥接边界阅读；协作追踪包含既有740基线加8项补录，不表示748项运行验收通过。\n\n| 文档 | 仓库来源 | 全文入口 |\n|---|---|---|\n| M&D 现行文档与源码基线 | `docs/CURRENT_BASELINE.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-2) |\n| M&D V2 API速查表 | `docs/API_CATALOG.md` | [第1/2卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-4) · [第2/2卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-6) |\n| M&D 产品、源码与验收状态矩阵 | `docs/PRODUCT_AND_DELIVERY_MATRIX.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-8) |\n| M&D 设计交接索引 | `docs/design/MND_FIGMA_DESIGN_DOCUMENT.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-10) |\n| M&D 客户端代码实施与完成标准 | `docs/client/README.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-12) |\n| 默认主题、独立平板适配与验收 | `docs/client/DESIGN_AND_ACCEPTANCE.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-14) |\n| 客户端详细实施方案 | `docs/client/IMPLEMENTATION_PLAN.md` | [第1/2卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-16) · [第2/2卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-18) |\n| M&D 社区、领养与可信找猫 UX 规格 | `docs/bmad/ux-design.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-20) |\n| M&D 全局未读与消息中心设计 | `docs/design/MND_GLOBAL_UNREAD_SPEC.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-22) |\n| 消息事件分类、未读与待办对齐核对 | `docs/design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-24) |\n| M&D 后台按角色工作区详细设计 | `docs/design/ADMIN_ROLE_WORKSPACES_2026_10_28.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-26) |\n| 后台关键任务表单与结果交互补充 | `docs/design/ADMIN_TASK_INTERACTION_2026_10_29.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-28) |\n| 协作退出与有限授权：既有 Figma 稿追踪补录 | `docs/design/figma-study/collaboration-2026-10-29/README.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-30) |\n| Figma与文档详细完善交付 | `docs/client/FIGMA_DOCS_REFINEMENT_2026_10_29.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-32) |\n| M&D 全仓文档目录 | `docs/DOCUMENTATION_CATALOG.md` | [第1/2卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34) · [第2/2卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-36) |\n| M&D Figma文档与图谱同步 | `docs/figma-sync/README.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-38) |\n| M&D / meow & doggie Server (Go + Caddy) | `README.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=28-2) |\n| M&D 文档入口 | `docs/README.md` | [第1/1卷](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=28-4) |\n\n## 快照、评论与未同步附件\n\n- 2026-10-27旧189份文本来源与226分卷原样保留，旧manifest没有改写；旧文档中的评论继续留在原节点。本批另建阅读副本，不把旧快照伪装成全部重验。\n- 本批18份来源覆盖现行入口与专项规范。AI CONTEXT／TASKS／TASK_LOG是动态工作记录，本批没有再次冻结同步；旧中心的AI副本仍按原日期解释，当前执行事实回仓库核对。\n- 同步正文中的相对文档链接优先指向本批新Spec，其次旧Spec或原设计节点；与b269504内容一致的已提交源码使用该固定版本GitHub链接。未发布的新JSON／证据附件保留仓库相对路径文字，不伪造现成GitHub文件。\n- 全文分页回读与内容核对、设计结构／截图、源码静态、真实接口／设备／发布分别记账。编译、构建、test、lint、类型检查、应用、迁移、发布和Git提交／推送本批均未执行。",
+        "title": "Document",
+        "totalLines": 37,
+        "linesReturned": 37,
+        "offset": 0,
+        "hasMore": false
+      },
+      {
+        "id": "26:2",
+        "specNodeId": "26:2",
+        "markdown": "# M&D 现行文档与源码基线\n\n更新：2026-10-29（Asia/Shanghai）。已包含邀请协作及后台角色批次，成果随本页所在Git提交保存，尚未推送。Git起点源码：`main@1fe5302e7eb21c5767b84505dea69f47481f8c5f`。本页取代各入口中更早的“当前数量”；带日期交接继续保留当时结果。\n\n[Figma 文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3) · [完整文档目录](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-34) · [功能状态与发布边界](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-8) · [UML 图谱](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=6-596) · [同步清单](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-38)。\n\n## 源码事实\n\n| 维度 | 当前值 | 读取依据 |\n|---|---|---|\n| OpenAPI Paths / Operations | 255 / 288 | [OpenAPI](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/docs/api/mobile-v2.openapi.json)，Operations 仅计 HTTP 方法 |\n| 服务端 / Web schemas | 141 / 143 | OpenAPI components.schemas / [Web派生](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/web-client/src/core/schemas.json) |\n| DTO 映射 | 88 对 | [映射脚本](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/scripts/check_server_shared_contract_static.py)的 mapping 去重键；不是全部数据类数量 |\n| SQL 迁移 | 13 份，001–013 | migrations（仓库证据：`migrations`；本轮未发布），不含 backfill |\n| mobile 业务聚合表 | 45 张 | [Kind枚举](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/internal/mobile/repository.go)；008通过SQL循环创建10张，不能只数CREATE TABLE字面量 |\n| 额外技术表 | mnd_ops_records、mnd_worker_checkpoints | 010 / 012，不计入45张mobile表 |\n| shared / clientUi 公共 Kotlin 文件 | 29 / 41 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件 |\n| FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |\n| Worker 接受的作业名 | 8 类 | [ValidJob](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |\n| Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | 实现追踪（仓库证据：`docs/client/figma-implementation-trace-2026-10-24.json`；本轮未发布）；增量手机／Web16根已登记，平板／Desktop待回读；另有角色18稿、业务后台13稿、运维14稿 |\n\n本轮[设计与文档详细完善](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=26-32)仍未提交：后台增加39任务状态及1评审索引，协作8状态完成手机／Web来源补录，消费者追踪748条。消息分类与待办等现有源码差距已明确列账，没有通过文档修订冒充业务接线完成。\n\n当前新增批次见[后台角色实现](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/docs/client/ADMIN_ROLE_WORKSPACES_2026_10_28.md)；[source-baseline.json](https://github.com/ttkk0000/meow-circle/blob/b269504ad0cd0e179d8108fe60b9073ab97e9c99/docs/figma-sync/source-baseline.json)保留2026-10-27文档同步时的源码快照。这些是源码统计，不是构建、联调或发布成功证据。\n\n## 当前产品与平台口径\n\n- 品牌为 M&D / meow & doggie；社区与领养为主，猫咪优先，doggie友好，允许的其他伴侣小宠按物种规则开放。出售／有偿转让明确标注性质；不把信息与预约写成支付担保或平台成交。\n- 武汉／上海是已确认冷启动试点。大陆城市目录兼容是技术覆盖，31省级、694城市、共745地区项不等于全国业务已开放；行为、物种和城市仍由版本化准入规则决定，未知规则关闭。\n- Android / iOS / Desktop 当前共享KMP逻辑及 clientUi Compose 页面，iOS保留Swift宿主与系统能力桥接；Web使用独立React DOM。手机和平板按窗口适配，不由设备名称授予权限。\n- 当前Figma V2默认浅色用于新客户端；旧Stitch四主题仅在未迁移范围与历史参考保留。原Figma设计文件不被本轮文档中心取代。\n- 登录与互动资格分开，服务端eligibility是权威；年龄未知不可放行。禁止短信隐式注册；三方登录、绑定、冲突恢复分开。微信绑定作为替代发帖门槛仍是未确认建议。\n- 全部已读快照有效期10分钟，用于确认快照已知范围；**没有“成功后撤销已读”的接口**。新消息保持未读，已读通知不表示同意业务动作。\n\n## 迁移顺序\n\n| 顺序 | 文件 | 说明 |\n|---|---|---|",
+        "title": "Document",
+        "totalLines": 75,
+        "linesReturned": 38,
+        "offset": 0,
+        "hasMore": true
+      }
+    ],
+    "mutatedNodeIds": []
+  },
+  "localGapEvidence": "{\r\n  \"local_counts\": {\r\n    \"server_schemas\": 141,\r\n    \"web_schemas\": 143,\r\n    \"dto_mappings\": 88\r\n  },\r\n  \"missing_remote_cited_paths\": [\r\n    \"docs/client/NOTIFICATION_COMPLETION_2026_10_30.md\",\r\n    \"docs/client/DESIGN_CODE_ALIGNMENT_2026_10_29.md\",\r\n    \"docs/design/figma-study/notification-anchor-2026-10-30/README.md\",\r\n    \"docs/design/figma-study/design-code-2026-10-29/README.md\"\r\n  ],\r\n  \"notification_schemas\": {\r\n    \"NotificationView\": false,\r\n    \"NotificationReplyAnchor\": false,\r\n    \"NotificationRecord\": false,\r\n    \"NotificationPage\": false\r\n  },\r\n  \"notification_model\": \"\\n\\tPushReceipts []PushAcceptance `json:\\\"push_receipts,omitempty\\\"`\\n\\tDeliverAfter *time.Time       `json:\\\"deliver_after,omitempty\\\"`\\n\\tCaseIDs      []int64          `json:\\\"case_ids,omitempty\\\"`\\n\\tCategory     string           `json:\\\"category\\\"`\\n\\tText         string           `json:\\\"text\\\"`\\n\\tTargetKind   Kind             `json:\\\"target_kind\\\"`\\n\\tTargetID     int64            `json:\\\"target_id\\\"`\\n\\tRead         bool             `json:\\\"read\\\"`\\n\\tPushState    string           `json:\\\"push_state\\\"` // queued, suppressed, accepted, delivered\"\r\n}\r\nREMOTE_DOC_BASE_IS_ANCESTOR_EXIT=0\r\n",
+  "screenshots": [
+    {
+      "layout": "phone",
+      "nodeId": "910:357846",
+      "inspected": true,
+      "width": 390,
+      "height": 844,
+      "original_width": 390,
+      "original_height": 844,
+      "format": "png"
+    },
+    {
+      "layout": "web",
+      "nodeId": "915:386338",
+      "inspected": true,
+      "width": 1440,
+      "height": 1000,
+      "original_width": 1440,
+      "original_height": 1000,
+      "format": "png"
+    },
+    {
+      "layout": "desktop",
+      "nodeId": "916:379927",
+      "inspected": true,
+      "width": 1440,
+      "height": 1000,
+      "original_width": 1440,
+      "original_height": 1000,
+      "format": "png"
+    },
+    {
+      "layout": "tabletP",
+      "nodeId": "916:1127483",
+      "inspected": true,
+      "width": 834,
+      "height": 1194,
+      "original_width": 834,
+      "original_height": 1194,
+      "format": "png"
+    },
+    {
+      "layout": "tabletL",
+      "nodeId": "916:1128048",
+      "inspected": true,
+      "width": 1194,
+      "height": 834,
+      "original_width": 1194,
+      "original_height": 834,
+      "format": "png"
+    }
+  ],
+  "anchorScreenshot": {
+    "nodeId": "958:371820",
+    "inspected": true,
+    "inlineResultUsed": true
+  },
+  "boundaries": {
+    "remote_modified": false,
+    "source_modified": false,
+    "tests_run": false,
+    "build_run": false,
+    "prototype_played": false,
+    "all748_visual_verified": false,
+    "document_fulltext_scope": "35:3,35:13,35:19,1:9,24:3; six other 10/30 sources read head/tail;26:2 head only"
+  },
+  "recoverable_read_errors": [
+    "One transport failure retried successfully",
+    "One 49801-byte result rejected before return; retried as bounded separate reads"
+  ],
+  "createdNodeIds": [],
+  "mutatedNodeIds": []
+}

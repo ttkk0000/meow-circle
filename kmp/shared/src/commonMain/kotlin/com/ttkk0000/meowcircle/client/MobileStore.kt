@@ -12,8 +12,8 @@ enum class MobileTab(val label: String) { Community("社区"), Adoption("领养"
 
 sealed interface MobileDestination {
     data object Home : MobileDestination
-    data class Pet(val id: Long,val discussion: Boolean = false) : MobileDestination
-    data class Entry(val id: Long) : MobileDestination
+    data class Pet(val id: Long,val discussion: Boolean = false,val replyAnchor: NotificationReplyAnchor? = null) : MobileDestination
+    data class Entry(val id: Long,val replyAnchor: NotificationReplyAnchor? = null) : MobileDestination
     data class Chat(val id: Long, val group: Boolean = false) : MobileDestination
     data class Case(val id: Long) : MobileDestination
     data object Help : MobileDestination
@@ -45,6 +45,18 @@ data class AuthForm(val visible: Boolean = false, val username: String = "", val
 
 data class AdoptionCommand(val record: MobileRecord<AdoptionBody>, val action: String, val label: String, val note: String)
 data class PendingNotification(val id: Long, val owner: Long)
+
+fun MobileDestination.notificationReplyAnchor(): NotificationReplyAnchor? = when(this) {
+    is MobileDestination.Entry -> replyAnchor
+    is MobileDestination.Pet -> replyAnchor
+    else -> null
+}
+private fun MobileDestination.replyDraftDestination(): MobileDestination = when(this) {
+    is MobileDestination.Entry -> copy(replyAnchor=null)
+    is MobileDestination.Pet -> copy(replyAnchor=null)
+    else -> this
+}
+
 fun canonicalNotificationId(raw: String): Long? = raw.takeIf { it.length in 1..19 }?.toLongOrNull()?.takeIf { it > 0 && it.toString() == raw }
 
 data class MobileState(
@@ -77,6 +89,7 @@ data class MobileState(
     val detailFailure: ClientReadFailure? = null,
     val pendingNotification: PendingNotification? = null, val notificationLoading: Boolean = false,
     val notificationError: String? = null,
+    val notificationComment: MobileRecord<CommentBody>? = null, val notificationCommentUnavailable: Boolean = false,
     val expressionState: MobileRecord<ExpressionBody>? = null,
     val busy: Boolean = false, val notice: String? = null, val conflict: Boolean = false,
     val applying: Boolean = false, val applicationText: String = "", val actionNote: String = "",
@@ -230,7 +243,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         pendingGuestReply = null
         history.clear()
         detailRevision++
-        _state.update { it.copy(tab = tab, destination = MobileDestination.Home, detailError = null, detailFailure = null, applying = false, confirmation = null,guestReplySuggestion = null) }
+        _state.update { it.copy(tab = tab, destination = MobileDestination.Home, detailError = null, detailFailure = null, notificationComment=null, notificationCommentUnavailable=false, applying = false, confirmation = null,guestReplySuggestion = null) }
         if (tab in listOf(MobileTab.Publish, MobileTab.Messages, MobileTab.Profile) && _state.value.user == null) showLogin()
         refreshHome()
     }
@@ -241,10 +254,10 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         history.add(_state.value.destination)
         jobs.remove("comments")?.cancel(); jobs.remove("messages")?.cancel()
         detailRevision++
-        replyKey = replyKeys.getOrPut(destination) { newKey() }
-        _state.update { it.copy(destination = destination, pet = null, petChecks = emptyList(), entry = null, case = null, application = null,
-            conversation = null, chatLead = null, chatCase = null, group = null, comments = PageState(), commentMetrics = emptyMap(), messages = PageState(), reply = replyDrafts[destination].orEmpty(),
-            replyTo = richReplies[destination]?.first ?: 0, replySticker = richReplies[destination]?.second.orEmpty(), replyPhotos = replyPhotos[destination].orEmpty(), actionNote = "",
+        replyKey = replyKeys.getOrPut(destination.replyDraftDestination()) { newKey() }
+        _state.update { it.copy(destination = destination, notificationComment=null, notificationCommentUnavailable=false, pet = null, petChecks = emptyList(), entry = null, case = null, application = null,
+            conversation = null, chatLead = null, chatCase = null, group = null, comments = PageState(), commentMetrics = emptyMap(), messages = PageState(), reply = replyDrafts[(destination).replyDraftDestination()].orEmpty(),
+            replyTo = richReplies[(destination).replyDraftDestination()]?.first ?: 0, replySticker = richReplies[(destination).replyDraftDestination()]?.second.orEmpty(), replyPhotos = replyPhotos[(destination).replyDraftDestination()].orEmpty(), actionNote = "",
             applying = false, applicationText = "", detailError = null, detailFailure = null, conflict = false, confirmation = null,guestReplySuggestion = null) }
         reloadDetail()
     }
@@ -260,9 +273,9 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         detailRevision++
         val previous = history.removeLastOrNull() ?: MobileDestination.Home
         pendingGuestReply = null
-        replyKey = replyKeys.getOrPut(previous) { newKey() }
-        _state.update { it.copy(destination = previous,guestReplySuggestion = null,comments = PageState(),commentMetrics = emptyMap(),
-            detailError = null, detailFailure = null, confirmation = null, applying = false, reply = replyDrafts[previous].orEmpty(), replyTo = richReplies[previous]?.first ?: 0, replySticker = richReplies[previous]?.second.orEmpty(), replyPhotos = replyPhotos[previous].orEmpty()) }
+        replyKey = replyKeys.getOrPut(previous.replyDraftDestination()) { newKey() }
+        _state.update { it.copy(destination = previous,notificationComment=null,notificationCommentUnavailable=false,guestReplySuggestion = null,comments = PageState(),commentMetrics = emptyMap(),
+            detailError = null, detailFailure = null, confirmation = null, applying = false, reply = replyDrafts[(previous).replyDraftDestination()].orEmpty(), replyTo = richReplies[(previous).replyDraftDestination()]?.first ?: 0, replySticker = richReplies[(previous).replyDraftDestination()]?.second.orEmpty(), replyPhotos = replyPhotos[(previous).replyDraftDestination()].orEmpty()) }
         reloadDetail()
         return true
     }
@@ -485,8 +498,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         }
         if (feature != null) { features.open(feature); return true }
         val target = when (body.targetKind) {
-            "entries" -> MobileDestination.Entry(body.targetId)
-            "pets" -> MobileDestination.Pet(body.targetId)
+            "entries" -> MobileDestination.Entry(body.targetId,body.replyAnchor?.takeIf { it.kind=="entry_comments" && it.id>0 && it.version>0 })
+            "pets" -> body.replyAnchor?.takeIf {it.kind=="pet_comments" && it.id>0 && it.version>0}?.let {MobileDestination.Pet(body.targetId,true,it)} ?: MobileDestination.Pet(body.targetId)
             "adoptions" -> MobileDestination.Application(body.targetId)
             "cases" -> MobileDestination.Case(body.targetId)
             "conversations" -> MobileDestination.Chat(body.targetId)
@@ -588,7 +601,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         if (!replyReady) { pickerFailed("本机消息草稿尚未恢复，请先重试读取"); return false }
         if (sending || _state.value.busy) return false
         val destination = _state.value.destination
-        if (destination in uncertainReplies) { pickerFailed("原消息结果待核对，请先查询原编号，当前内容不能重复发送"); return false }
+        if (destination.replyDraftDestination() in uncertainReplies) { pickerFailed("原消息结果待核对，请先查询原编号，当前内容不能重复发送"); return false }
         val path = when (destination) { is MobileDestination.Chat -> "${if (destination.group) "groups" else "conversations"}/${destination.id}/messages"; is MobileDestination.Entry -> "entries/${destination.id}/comments"; is MobileDestination.Pet -> if(destination.discussion) "pets/${destination.id}/comments" else return false; else -> return false }
         if (api.recoverableCommands().any { it.command == path && it.phase in listOf("sent", "result_unknown") }) {
             pickerFailed("原消息结果待核对，输入已保留，请先到待核对操作查看原请求"); return false
@@ -597,36 +610,36 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     }
     fun replyTo(id: Long) {
         if (!canEditReply()) return
-        richReplies[_state.value.destination] = id to _state.value.replySticker
-        replyKey = newKey(); replyKeys[_state.value.destination] = replyKey; _state.update { it.copy(replyTo = id) }
+        richReplies[(_state.value.destination).replyDraftDestination()] = id to _state.value.replySticker
+        replyKey = newKey(); replyKeys[(_state.value.destination).replyDraftDestination()] = replyKey; _state.update { it.copy(replyTo = id) }
         scheduleReplySave()
     }
     fun selectSticker(id: String) {
         if (!canEditReply() || id.isNotBlank() && _state.value.stickers.none { it.id == id }) return
-        richReplies[_state.value.destination] = _state.value.replyTo to id
-        replyKey = newKey(); replyKeys[_state.value.destination] = replyKey; _state.update { it.copy(replySticker = id) }
+        richReplies[(_state.value.destination).replyDraftDestination()] = _state.value.replyTo to id
+        replyKey = newKey(); replyKeys[(_state.value.destination).replyDraftDestination()] = replyKey; _state.update { it.copy(replySticker = id) }
         scheduleReplySave()
     }
     fun addReplyPhotos(selected: List<SelectedPhoto>) {
         val s = _state.value; val chat = s.destination as? MobileDestination.Chat ?: return
         if (!canEditReply() || !requireInteractionContract() || !chat.group && s.conversation?.state != "accepted") return
-        replyKey = newKey(); replyKeys[chat] = replyKey
+        replyKey = newKey(); replyKeys[(chat).replyDraftDestination()] = replyKey
         selected.take((9 - s.replyPhotos.size).coerceAtLeast(0)).forEach { photo ->
             val key = newKey(); replyPhotoBytes[key] = photo
-            replyPhotos[chat] = replyPhotos[chat].orEmpty() + PhotoAttachment(key, photo.name, mime = photo.mime)
-            _state.update { it.copy(replyPhotos = replyPhotos[chat].orEmpty()) }; retryReplyPhoto(key)
+            replyPhotos[(chat).replyDraftDestination()] = replyPhotos[(chat).replyDraftDestination()].orEmpty() + PhotoAttachment(key, photo.name, mime = photo.mime)
+            _state.update { it.copy(replyPhotos = replyPhotos[(chat).replyDraftDestination()].orEmpty()) }; retryReplyPhoto(key)
         }
     }
     fun retryReplyPhoto(key: String) {
         if (!canEditReply()) return
         val chat = _state.value.destination as? MobileDestination.Chat ?: return
-        val item = replyPhotos[chat].orEmpty().firstOrNull { it.key == key } ?: return
+        val item = replyPhotos[(chat).replyDraftDestination()].orEmpty().firstOrNull { it.key == key } ?: return
         if (item.uploading || item.mediaId != null) return
         val epoch = accountEpoch
         fun update(change: (PhotoAttachment) -> PhotoAttachment) {
             if (epoch != accountEpoch) return
-            replyPhotos[chat] = replyPhotos[chat].orEmpty().map { if (it.key == key) change(it) else it }
-            if (_state.value.destination == chat) _state.update { it.copy(replyPhotos = replyPhotos[chat].orEmpty()) }
+            replyPhotos[(chat).replyDraftDestination()] = replyPhotos[(chat).replyDraftDestination()].orEmpty().map { if (it.key == key) change(it) else it }
+            if (_state.value.destination == chat) _state.update { it.copy(replyPhotos = replyPhotos[(chat).replyDraftDestination()].orEmpty()) }
         }
         update { it.copy(uploading = true,error = null,uploadPercent = null) }
         task("reply-photo-$key") {
@@ -645,20 +658,20 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         if (!canEditReply() || _state.value.busy) return
         val destination = _state.value.destination
         jobs.remove("reply-photo-$key")?.cancel(); replyPhotoBytes.remove(key)
-        replyPhotos[destination] = replyPhotos[destination].orEmpty().filterNot { it.key == key }
-        replyKey = newKey(); replyKeys[destination] = replyKey; _state.update { it.copy(replyPhotos = replyPhotos[destination].orEmpty()) }
+        replyPhotos[(destination).replyDraftDestination()] = replyPhotos[(destination).replyDraftDestination()].orEmpty().filterNot { it.key == key }
+        replyKey = newKey(); replyKeys[(destination).replyDraftDestination()] = replyKey; _state.update { it.copy(replyPhotos = replyPhotos[(destination).replyDraftDestination()].orEmpty()) }
         scheduleReplySave()
     }
     fun moveReplyPhoto(key: String, offset: Int) {
         if (!canEditReply() || _state.value.busy) return
         val destination = _state.value.destination
-        val photos = replyPhotos[destination].orEmpty().toMutableList()
+        val photos = replyPhotos[(destination).replyDraftDestination()].orEmpty().toMutableList()
         val index = photos.indexOfFirst { it.key == key }
         val target = index + offset
         if (index < 0 || target !in photos.indices || index == target) return
         photos.add(target, photos.removeAt(index))
-        replyPhotos[destination] = photos
-        replyKey = newKey(); replyKeys[destination] = replyKey
+        replyPhotos[(destination).replyDraftDestination()] = photos
+        replyKey = newKey(); replyKeys[(destination).replyDraftDestination()] = replyKey
         _state.update { it.copy(replyPhotos = photos) }
         scheduleReplySave()
     }
@@ -668,8 +681,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         if (_state.value.busy || !canEditReply() || !withinLimit(text, 2000)) return false
         if (text == _state.value.reply) return true
         replyKey = newKey()
-        replyKeys[_state.value.destination] = replyKey
-        replyDrafts[_state.value.destination] = text
+        replyKeys[(_state.value.destination).replyDraftDestination()] = replyKey
+        replyDrafts[(_state.value.destination).replyDraftDestination()] = text
         _state.update { it.copy(reply = text) }
         scheduleReplySave()
         return true
@@ -695,7 +708,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     private fun pendingCommands(): List<CommandRecovery> {
         val pending = api.recoverableCommands().toMutableList()
         uncertainReplies.forEach { destination ->
-            val key = replyKeys[destination] ?: return@forEach
+            val key = replyKeys[(destination).replyDraftDestination()] ?: return@forEach
             if (pending.none { it.clientRequestId == key }) pending.add(CommandRecovery(key,replyPath(destination),"result_unknown",replayable = true))
         }
         val key = localPublicationKey ?: return pending
@@ -983,6 +996,8 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     fun reloadDetail(more: Boolean = false) {
         val s = _state.value
         val destination = s.destination
+        val anchor = destination.notificationReplyAnchor()
+        if(anchor != null) { loadNotificationComment(destination,anchor); return }
         val revision = detailRevision
         fun current() = revision == detailRevision && destination == _state.value.destination
         when (destination) {
@@ -1024,6 +1039,28 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         }
     }
 
+    private fun loadNotificationComment(destination: MobileDestination, anchor: NotificationReplyAnchor) {
+        val parent = when(destination) {is MobileDestination.Entry -> destination.id;is MobileDestination.Pet -> destination.id;else -> return}
+        val expectedKind=if(destination is MobileDestination.Pet) "pet_comments" else "entry_comments"
+        val epoch=accountEpoch;val revision=detailRevision
+        fun current()=epoch==accountEpoch && revision==detailRevision && destination==_state.value.destination
+        _state.update {it.copy(detailLoading=true,detailError=null,detailFailure=null,notificationComment=null,notificationCommentUnavailable=false,comments=PageState())}
+        task("notification-comment") {
+            try {
+                if(anchor.kind!=expectedKind || anchor.id<=0 || anchor.version<=0) throw MobileApiException(404,"评论当前不可查看")
+                val row=api.discussionComment(anchor.id,destination is MobileDestination.Pet)
+                if(row.id!=anchor.id || row.referenceId!=parent || row.state!="published") throw MobileApiException(404,"评论当前不可查看")
+                if(current()) {
+                    _state.update {it.copy(notificationComment=row,detailLoading=false)}
+                    loadComments()
+                }
+            } catch(e: CancellationException) {throw e} catch(e: Exception) {
+                if(current()) _state.update {it.copy(notificationComment=null,comments=PageState(),detailError=e.mobileMessage(),detailFailure=e.readFailure(),
+                    notificationCommentUnavailable=e is MobileApiException && e.status in listOf(401,403,404,410))}
+            } finally {if(current()) _state.update {it.copy(detailLoading=false)}}
+        }
+    }
+
     fun loadNotifications(more: Boolean = false) {
         if (_state.value.user == null) return
         loadPage("notifications",more,{ it.notifications },{ s,p -> s.copy(notifications = p) },{ api.notifications(it) })
@@ -1034,10 +1071,16 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         val pet=destination is MobileDestination.Pet
         if(pet && !(destination as MobileDestination.Pet).discussion) return
         val epoch=accountEpoch
-        loadPage("comments", more, { it.comments }, { s, p -> s.copy(comments = p) }, { cursor ->
+        loadPage("comments", more, { it.comments }, { s, p ->
+            if(destination != s.destination) s
+            else if(destination.notificationReplyAnchor()!=null && p.failure in listOf(ClientReadFailure.SignIn,ClientReadFailure.Forbidden,ClientReadFailure.Unavailable))
+                s.copy(comments=p,notificationComment=null,notificationCommentUnavailable=true,detailError=p.error,detailFailure=p.failure)
+            else s.copy(comments=p)
+        }, { cursor ->
             val page=api.discussionComments(id,pet,cursor)
             try {
-                val metrics=api.commentMetrics(if(pet) "pet_comments" else "entry_comments",page.items.map {it.id})
+                val ids=(page.items.map {it.id}+listOfNotNull(_state.value.notificationComment?.id)).distinct()
+                val metrics=ids.chunked(50).flatMap {api.commentMetrics(if(pet) "pet_comments" else "entry_comments",it)}
                 if(epoch==accountEpoch && destination==_state.value.destination) _state.update {it.copy(commentMetrics = it.commentMetrics+metrics.associateBy(CommentMetrics::commentId))}
             } catch(e: CancellationException) {throw e} catch(_: Exception) { /* 评论正文仍可阅读，计数未返回不虚构点赞状态。 */ }
             page
@@ -1141,7 +1184,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             sending = true
             var sendAttempted = false
             try {
-                uncertainReplies.add(s.destination)
+                uncertainReplies.add(s.destination.replyDraftDestination())
                 persistReplies()
                 sendAttempted = true
                 when (val destination = s.destination) {
@@ -1151,14 +1194,14 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                     else -> return@command
                 }
                 replyKey = newKey()
-                uncertainReplies.remove(s.destination)
-                replyDrafts.remove(s.destination)
-                replyKeys.remove(s.destination)
-                richReplies.remove(s.destination); replyPhotos.remove(s.destination)
+                uncertainReplies.remove(s.destination.replyDraftDestination())
+                replyDrafts.remove(s.destination.replyDraftDestination())
+                replyKeys.remove(s.destination.replyDraftDestination())
+                richReplies.remove(s.destination.replyDraftDestination()); replyPhotos.remove(s.destination.replyDraftDestination())
                 _state.update { it.copy(reply = "",replyTo = 0,replySticker = "",replyPhotos = emptyList()) }
                 persistReplies()
             } catch (e: Exception) {
-                if (!sendAttempted || e is MobileApiException && e.status in listOf(400,401,403,404,409,422,429)) uncertainReplies.remove(s.destination)
+                if (!sendAttempted || e is MobileApiException && e.status in listOf(400,401,403,404,409,422,429)) uncertainReplies.remove(s.destination.replyDraftDestination())
                 throw e
             } finally { sending = false; scheduleReplySave() }
         }
@@ -1314,12 +1357,12 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
             known?.phase == "committed" -> known.receipt ?: api.reconcileOperation(key)
             known == null && originalReply != null -> {
                 // 用户主动选择原编号重试；草稿已锁定，正文、贴纸、照片顺序与原请求一致。
-                val rich = richReplies[originalReply] ?: (0L to "")
-                val content = MessageBody(replyDrafts[originalReply].orEmpty().trim(),rich.second)
+                val rich = richReplies[(originalReply).replyDraftDestination()] ?: (0L to "")
+                val content = MessageBody(replyDrafts[(originalReply).replyDraftDestination()].orEmpty().trim(),rich.second)
                 when (originalReply) {
                     is MobileDestination.Entry -> api.richComment(originalReply.id,content,key,rich.first)
                     is MobileDestination.Pet -> api.richPetComment(originalReply.id,content,key,rich.first)
-                    is MobileDestination.Chat -> api.richMessage(originalReply.id,originalReply.group,content,replyPhotos[originalReply].orEmpty().mapNotNull { it.mediaId },key)
+                    is MobileDestination.Chat -> api.richMessage(originalReply.id,originalReply.group,content,replyPhotos[(originalReply).replyDraftDestination()].orEmpty().mapNotNull { it.mediaId },key)
                     else -> error("原消息草稿不可读")
                 }
                 api.commandStatus(key)?.receipt ?: throw OperationResultUnknown(key)
@@ -1337,10 +1380,10 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     private fun finishRecoveredReply(receipt: OperationReceipt) {
         if (receipt.state != "committed" || receipt.resultKind !in listOf("messages", "group_messages", "entry_comments", "pet_comments")) return
         val destination = replyKeys.entries.firstOrNull { it.value == receipt.clientRequestId }?.key ?: return
-        uncertainReplies.remove(destination)
+        uncertainReplies.remove(destination.replyDraftDestination())
         replyDrafts.remove(destination); replyKeys.remove(destination); richReplies.remove(destination); replyPhotos.remove(destination)
         scheduleReplySave()
-        if (_state.value.destination == destination) {
+        if (_state.value.destination.replyDraftDestination() == destination.replyDraftDestination()) {
             replyKey = newKey()
             _state.update { it.copy(reply = "", replyTo = 0, replySticker = "", replyPhotos = emptyList()) }
             reloadDetail()
@@ -1486,13 +1529,13 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
         return when(parts[0]) { "pet" -> MobileDestination.Pet(id,true); "entry" -> MobileDestination.Entry(id); "chat" -> MobileDestination.Chat(id); "group" -> MobileDestination.Chat(id,true); else -> error("未知消息草稿") }
     }
     private fun replyWorkspace(): List<WorkspaceDraft> = (replyDrafts.keys + richReplies.keys + replyPhotos.keys + uncertainReplies).mapNotNull { destination ->
-        val text = replyDrafts[destination].orEmpty(); val rich = richReplies[destination] ?: (0L to "")
-        val photos = replyPhotos[destination].orEmpty()
-        if (text.isEmpty() && rich.first == 0L && rich.second.isEmpty() && photos.isEmpty() && destination !in uncertainReplies) return@mapNotNull null
+        val text = replyDrafts[(destination).replyDraftDestination()].orEmpty(); val rich = richReplies[(destination).replyDraftDestination()] ?: (0L to "")
+        val photos = replyPhotos[(destination).replyDraftDestination()].orEmpty()
+        if (text.isEmpty() && rich.first == 0L && rich.second.isEmpty() && photos.isEmpty() && destination.replyDraftDestination() !in uncertainReplies) return@mapNotNull null
         val key = when(destination) { is MobileDestination.Pet -> "pet:${destination.id}"; is MobileDestination.Entry -> "entry:${destination.id}"; is MobileDestination.Chat -> "${if(destination.group) "group" else "chat"}:${destination.id}"; else -> return@mapNotNull null }
         WorkspaceDraft(key,mapOf("text" to text,"replyTo" to rich.first.toString(),"sticker" to rich.second),
-            photos = photos.map { WorkspacePhoto(it.key,it.name,it.mime,it.mediaId) },uncertain = destination in uncertainReplies,
-            requests = listOf(replyKeys.getOrPut(destination) { newKey() }))
+            photos = photos.map { WorkspacePhoto(it.key,it.name,it.mime,it.mediaId) },uncertain = destination.replyDraftDestination() in uncertainReplies,
+            requests = listOf(replyKeys.getOrPut(destination.replyDraftDestination()) { newKey() }))
     }
     private suspend fun persistReplies() {
         val storage = localReplies ?: return
@@ -1543,17 +1586,17 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
                 drafts.forEach { (destination,draft) ->
                     val key = draft.requests.singleOrNull() ?: newKey()
                     if (api.commandStatus(key)?.phase == "committed") return@forEach
-                    replyDrafts[destination] = draft.values["text"].orEmpty()
-                    richReplies[destination] = (draft.values["replyTo"]?.toLongOrNull() ?: 0L) to draft.values["sticker"].orEmpty()
-                    replyKeys[destination] = key
-                    if (draft.uncertain) uncertainReplies.add(destination)
-                    replyPhotos[destination] = draft.photos.map { p -> PhotoAttachment(p.key,p.name,p.mediaId,error = if(p.mediaId == null) "原文件已保留，请按原编号重试上传" else null,mime = p.mime) }
+                    replyDrafts[(destination).replyDraftDestination()] = draft.values["text"].orEmpty()
+                    richReplies[(destination).replyDraftDestination()] = (draft.values["replyTo"]?.toLongOrNull() ?: 0L) to draft.values["sticker"].orEmpty()
+                    replyKeys[(destination).replyDraftDestination()] = key
+                    if (draft.uncertain) uncertainReplies.add(destination.replyDraftDestination())
+                    replyPhotos[(destination).replyDraftDestination()] = draft.photos.map { p -> PhotoAttachment(p.key,p.name,p.mediaId,error = if(p.mediaId == null) "原文件已保留，请按原编号重试上传" else null,mime = p.mime) }
                 }
                 replyRevision = saved?.revision ?: 0L; replyReady = true
                 val destination = _state.value.destination
-                replyKey = replyKeys.getOrPut(destination) { newKey() }
-                _state.update { it.copy(reply = replyDrafts[destination].orEmpty(),replyTo = richReplies[destination]?.first ?: 0L,replySticker = richReplies[destination]?.second.orEmpty(),
-                    replyPhotos = replyPhotos[destination].orEmpty(),replyDraftRestoring = false,replyDraftReady = true,savedReplyDestinations = replyWorkspace().map { d -> replyRoute(d.key) },pendingOperations = pendingCommands()) }
+                replyKey = replyKeys.getOrPut(destination.replyDraftDestination()) { newKey() }
+                _state.update { it.copy(reply = replyDrafts[(destination).replyDraftDestination()].orEmpty(),replyTo = richReplies[(destination).replyDraftDestination()]?.first ?: 0L,replySticker = richReplies[(destination).replyDraftDestination()]?.second.orEmpty(),
+                    replyPhotos = replyPhotos[(destination).replyDraftDestination()].orEmpty(),replyDraftRestoring = false,replyDraftReady = true,savedReplyDestinations = replyWorkspace().map { d -> replyRoute(d.key) },pendingOperations = pendingCommands()) }
                 pendingGuestReply?.takeIf { it.first == destination }?.let { (_,text) -> _state.update { it.copy(guestReplySuggestion = text) } }
                 pendingGuestReply = null
             } catch (e: CancellationException) { throw e }

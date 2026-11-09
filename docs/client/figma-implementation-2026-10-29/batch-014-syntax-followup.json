@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "file": "web-client/src/features/AuthRecovery.tsx",
+      "sha256_lf": "fa3c2a889f3f5f603c7b10490d5fd4d1b587d487e74cf11d2fed382f472eb3e0",
+      "exit_code": 0,
+      "headroom_mb": 1369,
+      "syntax": {
+        "file": "web-client/src/features/AuthRecovery.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

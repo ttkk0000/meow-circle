@@ -146,7 +146,7 @@ func (s *Service) Claim(ctx context.Context, actor, caseID int64, in ClaimInput)
 			return e
 		}
 		out = r
-		return s.notify(tx, p.OwnerID, actor, "applications", Claims, r.ID, "收到认领材料，请核验")
+		return s.notify(tx, p.OwnerID, actor, "applications", "claim.created", Claims, r.ID, "收到认领材料，请核验")
 	})
 	return
 }
@@ -294,7 +294,7 @@ func (s *Service) ClaimAction(ctx context.Context, actor, id int64, action strin
 			if actor == other {
 				other = r.OwnerID
 			}
-			return s.notify(tx, other, actor, "applications", Claims, r.ID, "认领进度已更新")
+			return s.notify(tx, other, actor, "applications", "claim.updated", Claims, r.ID, "认领进度已更新")
 		}
 		return nil
 	})
@@ -463,7 +463,7 @@ func (s *Service) ApplyAdoption(ctx context.Context, actor int64, in AdoptionInp
 			return e
 		}
 		out = r
-		return s.notify(tx, pet.OwnerID, actor, "applications", Adoptions, r.ID, "收到领养申请")
+		return s.notify(tx, pet.OwnerID, actor, "applications", "adoption.created", Adoptions, r.ID, "收到领养申请")
 	})
 	return
 }
@@ -710,7 +710,7 @@ func (s *Service) Adoption(ctx context.Context, actor, id int64, action string, 
 		if actor == other {
 			other = a.ApplicantID
 		}
-		return s.notify(tx, other, actor, "applications", Adoptions, r.ID, "领养进度已更新")
+		return s.notify(tx, other, actor, "applications", "adoption.updated", Adoptions, r.ID, "领养进度已更新")
 	})
 	return
 }
@@ -770,7 +770,7 @@ func (s *Service) Care(ctx context.Context, actor, adoptionID int64, in CareInpu
 			return e
 		}
 		out = r
-		return s.notify(tx, a.PublisherID, actor, "applications", Adoptions, adoptionID, "照护近况已更新")
+		return s.notify(tx, a.PublisherID, actor, "applications", "adoption.care_updated", Adoptions, adoptionID, "照护近况已更新")
 	})
 	return
 }

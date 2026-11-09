@@ -86,7 +86,12 @@ data class CaseBody(val type: String, val title: String, val species: String, va
 @Serializable
 data class NotificationBody(val category: String, val text: String, val read: Boolean,
     @SerialName("target_kind") val targetKind: String, @SerialName("target_id") val targetId: Long,
-    @SerialName("push_state") val pushState: String = "suppressed")
+    @SerialName("event_type") val eventType: String = "",
+    @SerialName("target_version") val targetVersion: Long? = null,
+    @SerialName("reply_anchor") val replyAnchor: NotificationReplyAnchor? = null)
+
+@Serializable
+data class NotificationReplyAnchor(val kind: String, val id: Long, val version: Long)
 
 @Serializable
 data class InboxSummary(val direct: Map<String, Int> = emptyMap(), val groups: Map<String, Int> = emptyMap(),

@@ -209,9 +209,24 @@ func save(tx Tx, k Kind, r *Record, body any, actor int64, topic string) error {
 	}
 	return emit(tx, k, *r, actor, topic)
 }
-func (s *Service) notify(tx Tx, recipient, actor int64, category string, k Kind, id int64, message string) error {
+func (s *Service) notify(tx Tx, recipient, actor int64, category, event string, k Kind, id int64, message string, anchors ...NotificationReplyAnchor) error {
 	if recipient <= 0 || recipient == actor {
 		return nil
+	}
+	if event == "" || !HasString([]string{"direct_messages", "groups", "applications", "interactions"}, category) || len(anchors) > 1 {
+		return Invalid("invalid notification event")
+	}
+	target, err := tx.Get(k, id)
+	if err != nil {
+		return err
+	}
+	var anchor *NotificationReplyAnchor
+	if len(anchors) == 1 {
+		anchor = &anchors[0]
+		allowed, e := s.notificationAnchorReadable(tx, recipient, k, id, anchor)
+		if e != nil || !allowed {
+			return e
+		}
 	}
 	push := "suppressed" // Device delivery is a separate outbox consumer, never a fake success.
 	var deliverAfter *time.Time
@@ -234,7 +249,7 @@ func (s *Service) notify(tx Tx, recipient, actor int64, category string, k Kind,
 		}
 	}
 	n := Record{OwnerID: recipient, State: "unread"}
-	return save(tx, Notifications, &n, Notification{Category: category, Text: message, TargetKind: k, TargetID: id, PushState: push, DeliverAfter: deliverAfter}, actor, "notification.created")
+	return save(tx, Notifications, &n, Notification{Category: category, Text: message, TargetKind: k, TargetID: id, EventType: event, TargetVersion: &target.Version, ReplyAnchor: anchor, PushState: push, DeliverAfter: deliverAfter}, actor, "notification.created")
 }
 func publicKind(k Kind) bool {
 	switch k {
@@ -447,9 +462,9 @@ func project(k Kind, r Record, actor int64) (Record, error) {
 		if e != nil {
 			return r, e
 		}
-		v.Category = notificationCategory(r, v)
-		v.PushReceipts = nil
-		if e = SetBody(&r, v); e != nil {
+		if e = SetBody(&r, NotificationView{Category: notificationCategory(r, v), Text: v.Text,
+			TargetKind: v.TargetKind, TargetID: v.TargetID, Read: v.Read,
+			EventType: v.EventType, TargetVersion: v.TargetVersion, ReplyAnchor: v.ReplyAnchor}); e != nil {
 			return r, e
 		}
 	}

@@ -2696,6 +2696,102 @@
       }
     }
   },
+  "NotificationView": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "category": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      },
+      "target_kind": {
+        "type": "string"
+      },
+      "target_id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "read": {
+        "type": "boolean"
+      },
+      "event_type": {
+        "type": "string"
+      },
+      "target_version": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reply_anchor": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/NotificationReplyAnchor"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "NotificationRecord": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "owner_id": {
+        "type": "integer"
+      },
+      "version": {
+        "type": "integer"
+      },
+      "reference_id": {
+        "type": "integer"
+      },
+      "state": {
+        "type": "string"
+      },
+      "data": {
+        "$ref": "#/components/schemas/NotificationView"
+      },
+      "media_ids": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "created_at": {
+        "type": "string"
+      },
+      "updated_at": {
+        "type": "string"
+      }
+    }
+  },
+  "NotificationPage": {
+    "type": "object",
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/NotificationRecord"
+        }
+      },
+      "next_cursor": {
+        "type": "integer",
+        "format": "int64"
+      }
+    }
+  },
   "AppointmentTerms": {
     "type": "object",
     "additionalProperties": false,
@@ -3149,6 +3245,23 @@
       },
       "created": {
         "type": "boolean"
+      }
+    }
+  },
+  "NotificationReplyAnchor": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "version": {
+        "type": "integer",
+        "format": "int64"
       }
     }
   },

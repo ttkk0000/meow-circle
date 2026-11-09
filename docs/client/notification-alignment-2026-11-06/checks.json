@@ -1,0 +1,179 @@
+{
+  "task": "AI-20261106-NOTIFICATION-ALIGN",
+  "time": "2026-11-06T13:59:31.722642+08:00",
+  "mode": "static_only",
+  "type_checked": false,
+  "compiled": false,
+  "tests_executed": false,
+  "runtime_verified": false,
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\ttkk0\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/export_mobile_contract.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Static contract: 255 paths, 145 DTO schemas\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\ttkk0\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/sync_web_contract.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Web合同派生：147份schema、245个消费者操作；只读检查\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\ttkk0\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/check_server_shared_contract_static.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Static cross-language check: 90 DTO pairs match; private commands and recovery guards present. No type checking or tests executed.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\ttkk0\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/check_client_ui_static.py"
+      ],
+      "exit_code": 0,
+      "stdout": "公共UI只读核对：53份公共源码、48个功能分派、3套平台端口、128枚Noto原图、22枚原SVG、748条源码索引（740基线＋8协作增量）；未编译／类型检查／测试／逐屏运行。\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\ttkk0\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/check_web_client_static.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Web只读检查：101份TS/TSX、461个本地引用、147份schema、22枚原SVG、字体／贴纸与依赖锁一致；未执行类型检查、测试或应用。\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-c",
+        "core.safecrlf=false",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "git": {
+    "branch": "main",
+    "head": "a300a01ac38e3183d9202e7910f62f850ea128f9",
+    "origin_main": "48a3cfdf51c97546153d230bea379c9a880f2d30",
+    "ahead_behind": "1\t0",
+    "fetch_and_fast_forward": "Previously completed in this task; ff-only returned Already up to date; no new fetch in this recorder."
+  },
+  "go_syntax_format": {
+    "files": [
+      "internal/mobile/adoption_placement.go",
+      "internal/mobile/appointments.go",
+      "internal/mobile/comment_reactions.go",
+      "internal/mobile/content_subscriptions.go",
+      "internal/mobile/contracts.go",
+      "internal/mobile/group_directory.go",
+      "internal/mobile/lead_submission.go",
+      "internal/mobile/models.go",
+      "internal/mobile/nearby.go",
+      "internal/mobile/notification_anchor_test.go",
+      "internal/mobile/notification_digest_delivery_test.go",
+      "internal/mobile/notification_policy.go",
+      "internal/mobile/push_policy.go",
+      "internal/mobile/rescue.go",
+      "internal/mobile/server_first_test.go",
+      "internal/mobile/service.go",
+      "internal/mobile/social.go",
+      "internal/mobile/trust.go"
+    ],
+    "count": 18,
+    "status": "parsed_and_formatted_only"
+  },
+  "contract_regeneration_unchanged": true,
+  "existing_untracked": {
+    "count": 127,
+    "changed_or_missing": [],
+    "status": "preserved"
+  },
+  "encoding_issues": [],
+  "local_link_issues": [],
+  "python_ast_files": [
+    "docs/client/notification-alignment-2026-11-06/read-syntax.py",
+    "docs/client/notification-alignment-2026-11-06/record-static.py",
+    "scripts/check_server_shared_contract_static.py",
+    "scripts/export_mobile_contract.py"
+  ],
+  "source_sha256_lf": {
+    "docs/api/mobile-v2.openapi.json": "a193cd3adca7572e93a484fc76acffac7f76601b319135c8669ad40ed3b2bb11",
+    "docs/client/notification-alignment-2026-11-06/existing-untracked.json": "387cb46a907d42cf285d31e2f3ba3c955b75e3515f130470d1283d3478749e2b",
+    "docs/client/notification-alignment-2026-11-06/figma-read.json": "f6ac4bda5628bec9f97739a2d5ed4a88bcb9d9cb232ba4e8122e9fa247a2bb78",
+    "docs/client/notification-alignment-2026-11-06/fragments.json": "e601470023b91ba2589c5a91e6c3deaf84f11432715b25cacec86a5f8c408e4a",
+    "docs/client/notification-alignment-2026-11-06/git-recovery.json": "1f7cb719935efc47ff7314f4fc939e03eea4dd262151db83d93cfff5777f47c2",
+    "docs/client/notification-alignment-2026-11-06/read-fragments.cjs": "289b1a95c8bfd142e8d8bfff2a991c65d81f25f886027f122bf86a2b1741b736",
+    "docs/client/notification-alignment-2026-11-06/read-syntax.py": "0ea6b7af73b5f31b27c8f87cf2daecd0a97fc1da27a4c5b663d88c7b0de25c5e",
+    "docs/client/notification-alignment-2026-11-06/record-static.py": "00075ca0120799c8ddeb86d3fbccb83aa808162c543972db11c1959a7acae806",
+    "docs/client/notification-alignment-2026-11-06/syntax.json": "3be7b215b138d1e3a8902bd00341781487dbb0416dd2f7f9a0e6b558d0270e33",
+    "internal/mobile/adoption_placement.go": "4b2c430c37faa6f25a2c42cd58b05ca568a47d123412126664ded8f85f6700b3",
+    "internal/mobile/appointments.go": "ba6e6516bede5ea166ff76db6689bcb8006aef7af42adad8e1497ef49a41b4b5",
+    "internal/mobile/comment_reactions.go": "53ab51212efc6314efc59fb5ffab7eaf5182a34e4004ac7a0b60c5214935b1bf",
+    "internal/mobile/content_subscriptions.go": "69abcdb152fcea09996b296bdeb4427671d3960c9bccb8a74edc7ae7b8fa14df",
+    "internal/mobile/contracts.go": "02eda151a863c1f7da2aaefbfffd4f5ca890b84ae9bc660ff77cef78108439bf",
+    "internal/mobile/group_directory.go": "198bfe9c44de07d8b7b7af21b29ca5736383baa99921fbeccd55f60bf559741e",
+    "internal/mobile/lead_submission.go": "1693a75f4921871f2b7370f0feff6236e925f506d24d8bc3f886cbc92632acd4",
+    "internal/mobile/models.go": "6e04feb79c366125ed31db347dab1cfbe2eac5759bbc5d54052a0e1ebbe27e2e",
+    "internal/mobile/nearby.go": "4b7d1d1deeb3d5e9e1d269e1987ee63bc9dd1c9c594cb22ddcc035801f1cf4dd",
+    "internal/mobile/notification_anchor_test.go": "1d7d9138eb3f6180b3f4764c839cd209f0976ccb40ffc892c022a9feb774931e",
+    "internal/mobile/notification_digest_delivery_test.go": "a9eb624805c605bf6cd6ce07629936a6951d9c2c991c2fde6d75e3fd127b5143",
+    "internal/mobile/notification_policy.go": "58b383bf172af117b868326b1e420afc15c00dba6f3e44c4267774a1b2d1b6e8",
+    "internal/mobile/push_policy.go": "afc6806f80673da62b02e1956e2cb91534cb7a4d9896db0eb72ff78f38f3f909",
+    "internal/mobile/rescue.go": "a1329749a50a6a05a8e216fe913d907c3023388c9241d8849164f470fbdc83f8",
+    "internal/mobile/server_first_test.go": "9cb83c5a0d771fc3b834af1e993211ca73b616370116937e21370dd0d7699705",
+    "internal/mobile/service.go": "1f13d03a916f2ab334278a0903107aeda66b00f35dbd5486e4665a68f8ca1011",
+    "internal/mobile/social.go": "3f3ed19cf4ebb0a68f0557a78b6334f7a94e7eaa6eb610b2520f54c6de75d508",
+    "internal/mobile/trust.go": "73ca14b1e939cc8d556efb775d6529f5fd186f71b972dbcdd2ed17bf871c1f45",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt": "a54eb1404593f32f419a64bc4dc7d9dc4965ba268a0690842238d38d7b7d0ebb",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "6dece0fb73b68138ed253aae549ce06106e9181aed5e6fa13df0e1ee8dd8409a",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/Models.kt": "8636766fb5b19b3a14fca6bd9d5bc5dbe9869a19f6e0921cc1d2377c6e95845f",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/WorkspaceApi.kt": "c88cb3df387ece93d3cc517192f1210298d1b329a09a01d23c07739ba538cf44",
+    "scripts/check_server_shared_contract_static.py": "8c1dc1b63bd5ed1854bc2ffc444e365ba87f95d315f126eccf64ced1c43f9e47",
+    "scripts/export_mobile_contract.py": "3c88e6b2a7da511f26a8f03ca2b32d6e51d611e6b81ae1f926f9c0fdb307c2dd",
+    "web-client/src/App.tsx": "5470473bd082f733f722772b075b5a8c6c2cbc7960b225edc88043f0c58f2b53",
+    "web-client/src/core/contract.ts": "f89968162c7d096947492612ffdd2f2d3f051ee598f585e8c9458efd2f2083ac",
+    "web-client/src/core/notification.ts": "90d9c4bbee72b8e982ad349736c4097077250467f468ce138146b7f3898908da",
+    "web-client/src/core/schemas.json": "b8403ce81f300ca27eb8bd0159432afe1ea3038f3c13c8c7d0f4eb404371dce5",
+    "web-client/src/features/NotificationPage.tsx": "a5691047e6504009f732a321d11cf0516c5f1528aa4edcd199abc5b6e7e93541",
+    "web-client/src/features/ResourcePage.tsx": "552f7e75ee5cf1a90a00292cd3c7c5cddea4cf636847351fe5488e2e7fdf5150"
+  },
+  "syntax_evidence": {
+    "syntax.json": "42cf9e7406ceaafb5b4794d87498ff99ba55d0e5bf9ba8e0e7494f90032bdee0",
+    "fragments.json": "5bbedc25f24af6340faa92c3ee58162f7e1a7b58a67e559cb0ffacb58e2a5dce"
+  },
+  "passed": true,
+  "tracking_closeout": {
+    "time": "2026-11-06T14:02:18.282944+08:00",
+    "encoding_or_link_issues": [],
+    "source_fingerprint_differences": [],
+    "original_untracked_changed_or_missing": [],
+    "diff_check_exit_code": 0,
+    "execution_marker": "released",
+    "untracked_files": 139,
+    "modified_tracked_files": 39
+  }
+}

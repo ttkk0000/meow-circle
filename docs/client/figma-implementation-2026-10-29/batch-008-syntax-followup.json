@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "file": "web-client/src/features/ProviderSignIn.tsx",
+      "sha256_lf": "5837bb4ec2625472375960b878d1c6ce137496d64cd65dc558cb9aed588552d2",
+      "exit_code": 0,
+      "headroom_mb": 7392,
+      "syntax": {
+        "file": "web-client/src/features/ProviderSignIn.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

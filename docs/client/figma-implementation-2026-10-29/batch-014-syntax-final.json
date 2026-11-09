@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthRecoveryStore.kt",
+      "sha256_lf": "1b74add4121ef392b416afff135f279ed36424eb38a4f5ce76d0767aa28bab3e",
+      "exit_code": 0,
+      "headroom_mb": 1381,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthRecoveryStore.kt",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

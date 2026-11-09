@@ -66,7 +66,7 @@ func (s *Service) privateLead(tx Tx, actor, caseID, version int64, key, text str
 	if e = save(tx, Leads, &row, Lead{Text: text}, actor, "lead.submitted"); e != nil {
 		return Record{}, e
 	}
-	if e = s.notify(tx, parent.OwnerID, actor, "applications", Cases, caseID, "收到一条私密寻宠线索"); e != nil {
+	if e = s.notify(tx, parent.OwnerID, actor, "applications", "case.lead_received", Cases, caseID, "收到一条私密寻宠线索"); e != nil {
 		return Record{}, e
 	}
 	return row, nil

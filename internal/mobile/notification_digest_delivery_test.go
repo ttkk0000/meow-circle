@@ -19,8 +19,10 @@ func TestDailyDigestSharesProviderAcceptanceWithoutClearingUnread(t *testing.T) 
 	if _, err := s.RegisterPushDevice(ctx, 1, mobile.PushDeviceInput{Platform: "android", Token: "synthetic-digest-device-token", Permission: "granted", Enabled: true}); err != nil {
 		t.Fatal(err)
 	}
-	first := serverRecord(t, repo, mobile.Notifications, mobile.Record{OwnerID: 1, State: "unread"}, mobile.Notification{Category: "interactions", PushState: "queued", DeliverAfter: &cutoff})
-	second := serverRecord(t, repo, mobile.Notifications, mobile.Record{OwnerID: 1, State: "unread"}, mobile.Notification{Category: "direct_messages", PushState: "queued", DeliverAfter: &cutoff})
+	target := serverRecord(t, repo, mobile.Entries, mobile.Record{OwnerID: 1, State: "published", Public: true}, mobile.Entry{Text: "digest target", Audience: mobile.Audience{Mode: "public"}})
+	chat := serverRecord(t, repo, mobile.Conversations, mobile.Record{OwnerID: 1, Participants: []int64{1, 2}, State: "accepted"}, mobile.Conversation{RequesterID: 1, RecipientID: 2})
+	first := serverRecord(t, repo, mobile.Notifications, mobile.Record{OwnerID: 1, State: "unread"}, mobile.Notification{Category: "interactions", TargetKind: mobile.Entries, TargetID: target.ID, PushState: "queued", DeliverAfter: &cutoff})
+	second := serverRecord(t, repo, mobile.Notifications, mobile.Record{OwnerID: 1, State: "unread"}, mobile.Notification{Category: "direct_messages", TargetKind: mobile.Conversations, TargetID: chat.ID, PushState: "queued", DeliverAfter: &cutoff})
 	p := &fixturePush{}
 	s.Push = p
 	for _, row := range []mobile.Record{first, second} {

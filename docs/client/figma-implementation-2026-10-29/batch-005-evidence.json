@@ -1,0 +1,75 @@
+{
+  "id": "005",
+  "updated": "2026-10-30",
+  "status": "source_written_static_reviewed",
+  "scope": "quiet actions and shared spacing; stepwise email/phone login and explicit registration; atomic password recovery UI",
+  "high_fidelity_design_nodes": [
+    "460:17318",
+    "460:17323",
+    "238:371740",
+    "238:371742"
+  ],
+  "text_action_design_nodes": [
+    "460:17328",
+    "460:17333",
+    "460:17373",
+    "238:371723",
+    "238:371724",
+    "238:371725",
+    "238:371726",
+    "238:371741",
+    "238:371742",
+    "238:371743",
+    "238:371730"
+  ],
+  "states": [
+    "emailStart",
+    "emailCode",
+    "authPassword",
+    "authPasswordRecovery",
+    "authPasswordReset",
+    "authPasswordDone"
+  ],
+  "partial_contract_states": [
+    "emailError",
+    "authCodeExpired",
+    "authCodeResent",
+    "authSmsDelayed",
+    "authRateLimited",
+    "authNetworkError",
+    "accountRecovery"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "84bcc6a947da09cfa29a3b2335606dcdcd2fcb2d2c598bcca021e675f3b4024e",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/Components.kt": "24740704072a06842b904d4e12c9258d7573de5a49ca9ef66a2afe5cc6ed35b1",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt": "a0fbcb5a5a2e32423ac7217be3870c2cfdbe23e59babed4dc2a1d779f36966e0",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt": "b53093f6f4a9fb682d4164dd2bfffb566f03a23e39beed8aacc6e4fe6c6ab3c4",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadStatePages.kt": "c802d597a98f6149ebc61bd9c8d149a95443dd1002c248ce861c004d7e747f11",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/TaskDialogs.kt": "3faaabbb3424b6898472ef729a1372b6f0d46654abec93d7f5f42b3f985fb746",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt": "1d98949183ead5847c5fdba90ebd1b8a5281158e966974a5bfe9482eb7f80b56",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "175c7c41bffe36f30b90b8fbdde174bb22e4c8fad4a26258a75618a6016a8c6e",
+    "web-client/src/features/AuthDialog.tsx": "01bed1da1ff777cf02a34a87b20afda25c56e54fbef2daaaf01ea792de631537",
+    "web-client/src/components/ui.tsx": "615c768fdc036b967cd6c24ee4aa76b80394ad0ca139dcc735854a15ac9d718b",
+    "web-client/src/features/Records.tsx": "ccd70ec30adf47ddc51cc4c0a6a6a0e950b94c387c318ed90a5176ca88a3b28d",
+    "web-client/src/styles.css": "0a821a4cf4f65e231a80ad6fa543dafa5047216c96f0dfe37516b71fc6aa301b"
+  },
+  "static_report": "batch-005-checks.json",
+  "syntax_reports": [
+    "batch-005-syntax.json",
+    "batch-005-syntax-followup.json",
+    "batch-005-fragments.json"
+  ],
+  "syntax_boundary": "8 final complete files without diagnostics; 3 files compared with existing grammar diagnostics. The two modified shared methods additionally read as fragments, one with the identical preexisting catch diagnostic.",
+  "repair_history": "AuthPages nested conditional when branches were braced after initial grammar read failed. Final AuthPages and AuthDialog rereads are clean. Recovery help navigation uses existing workflowURL(safety), not a nonexistent route.",
+  "auth_boundary": "OTP receipt alone does not log in or create an account. Recovery code and new password are verified together by existing recover endpoints; entering the password form is not a successful verification claim. Secrets remain transient. Provider/eligibility policy unchanged.",
+  "remaining": [
+    "dedicated authentication error and session-expiration presentation",
+    "security method and sensitive-change pages",
+    "remaining consumer/backend state review",
+    "all platform runtime and visual acceptance"
+  ],
+  "whole_state_complete": false,
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false
+}

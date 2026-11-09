@@ -99,7 +99,7 @@ func (s *Service) reserveAdoption(tx Tx, actor int64, r Record, a Adoption, stat
 		if e = save(tx, Adoptions, &row, other, actor, "adoption.waitlisted"); e != nil {
 			return e
 		}
-		if e = s.notify(tx, other.ApplicantID, actor, "applications", Adoptions, row.ID, "当前已有领养安排，你的申请进入候补"); e != nil {
+		if e = s.notify(tx, other.ApplicantID, actor, "applications", "adoption.waitlisted", Adoptions, row.ID, "当前已有领养安排，你的申请进入候补"); e != nil {
 			return e
 		}
 	}
@@ -124,7 +124,7 @@ func (s *Service) closeOtherAdoptions(tx Tx, actor int64, current Record, notice
 		if e = save(tx, Adoptions, &row, a, actor, "adoption.closed_other_placement"); e != nil {
 			return e
 		}
-		if e = s.notify(tx, a.ApplicantID, actor, "applications", Adoptions, row.ID, notice); e != nil {
+		if e = s.notify(tx, a.ApplicantID, actor, "applications", "adoption.placement_updated", Adoptions, row.ID, notice); e != nil {
 			return e
 		}
 	}

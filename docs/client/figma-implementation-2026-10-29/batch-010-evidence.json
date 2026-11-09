@@ -1,0 +1,60 @@
+{
+  "id": "010",
+  "updated": "2026-10-30",
+  "status": "source_written_static_reviewed_runtime_pending",
+  "high_fidelity_design_nodes": [
+    "238:371735",
+    "238:371734",
+    "238:371736"
+  ],
+  "scope": [
+    "explicit new-account review",
+    "real login completion",
+    "optional profile editor entry"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "3c8a662178522e5bc345cdcd80e27c02f07c388deb409787434e66f625bc72d1",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt": "ad67b30b7b04d56fbfe54dc6362a52703d233cff24be1fbb91a6bc21d0872f75",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "89a89b636b3b5ca854bc612505e80f93d13074f91f187031fa9cdeb226176253",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "5106171e87155d203d86a9e0052da366c83235333e9e499bc6406bb4c56cd530",
+    "web-client/src/features/AuthDialog.tsx": "9f211aa71ef5d964f13482d6bdbc45cf3c817ffda420a9acff8ecfb9964eb928",
+    "web-client/src/features/AuthInformation.tsx": "6eaefe7f96fcd8bbb08d108cafb91255e36a95baf13ddbc84980efada32ee0d8",
+    "web-client/src/features/ProviderSignIn.tsx": "aa37afa313ae353d3a7244b733cf7133d8649aec517b3310aaea517702479258",
+    "web-client/src/styles.css": "853850b9d7b1f0500a3c55fc7b960e997d5414b8b47a811f9fa8252ca3a333b0"
+  },
+  "static_report": "batch-010-checks.json",
+  "syntax_reports": [
+    "batch-010-syntax.json",
+    "batch-010-fragments.json"
+  ],
+  "static_counts": {
+    "public_ui": 46,
+    "web_sources": 92,
+    "web_imports": 418
+  },
+  "notes": [
+    "Email registration now requires a separate branded first-account review after local form preparation, before any create request. The original code/password are verified by the server only on final create. Official provider creation reuses this review without bypassing agreement or account-choice verification.",
+    "The old Figma phone-create example is adapted to the approved current email/provider create contracts. SMS remains login-only for an existing binding; no legacy SMS auto-signup is restored.",
+    "Success uses actual session owner and the existing server created flag. Native LoginSession.created already exists; the Web adapter strips tokens but retains created. Neither client infers a new account from nickname, avatar or a local verification flag.",
+    "Successful login keeps an explicit result page. Returning to the pending application happens after the user continues; no write or publication is automatically submitted. The actual dynamic avatar/name are used.",
+    "Only a confirmed created account gets the optional profile-editor entry. The existing versioned profile editor remains in use; the dedicated authProfileOptional nickname/avatar/skip screen is still partial, and is not marked completed.",
+    "Seven syntax reads completed: six whole files without diagnostics; MobileStore has the same pre-existing grammar signatures as HEAD, with four account/logout/completion/model fragments read cleanly. This is not a type check or runtime result."
+  ],
+  "states": [
+    "authFirst",
+    "authSuccess"
+  ],
+  "partial_states": [
+    "authProfileOptional"
+  ],
+  "remaining": [
+    "dedicated optional profile layout and return path",
+    "known/restricted/intent/link/recovery auth states",
+    "remaining consumer/backend families",
+    "platform runtime and visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

@@ -13,6 +13,7 @@ data class IntroductionEdit(val version: Long, val bio: String, @SerialName("med
 data class PublicMember(val id: Long, val username: String = "", val nickname: String = "", val bio: String = "", @SerialName("avatar_url") val avatarUrl: String = "")
 
 suspend fun MobileApi.member(id: Long): PublicMember = get("users/$id")
+suspend fun MobileApi.discussionComment(id: Long, pet: Boolean): MobileRecord<CommentBody> = get("${if(pet) "pet_comments" else "entry_comments"}/$id")
 suspend fun MobileApi.adoptionPets(cursor: Long,keyword: String,city: String,species: String): MobilePage<PetBody> = get("pets",mapOf("cursor" to "$cursor","q" to keyword,"city" to city,"species" to species,"adoption" to "true"))
 suspend fun MobileApi.editPet(id: Long, input: PetInput): MobileRecord<PetBody> = durablePatch("pets/$id", input,input.clientRequestId)
 suspend fun MobileApi.editEntry(id: Long, input: EntryInput): MobileRecord<EntryBody> = durablePatch("entries/$id", input,input.clientRequestId)

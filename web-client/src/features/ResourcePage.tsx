@@ -1,39 +1,25 @@
-import { useState } from "react";
-import {
-  adoptionActionOptions,
-  adoptionProgressTitle,
-  careStageAvailable,
-  returnActionAllowed,
-} from "../core/adoption";
-import { AdoptionProgress } from "./AdoptionPages";
-import { ReturnProgress } from "./ReturnPages";
-import { api, explain, type RecordData, type User } from "../core/api";
-import { useSession } from "../core/session";
-import { useQuery, reload } from "../core/query";
-import { navigate, resourceRoute } from "../core/router";
-import { integer, key, money } from "../core/wire";
-import { titleOf, usePages } from "../core/pages";
-import { Facts, labelFor } from "../components/SchemaForm";
-import {
-  Button,
-  Card,
-  Empty,
-  Icon,
-  Notice,
-  PrivateImage,
-  QueryState,
-  RowLink,
-  TaskPage,
-} from "../components/ui";
-import { actionNames, stateLabel, workflowURL } from "./workflows";
-import { Author, PageEnd, RecordCard, titles } from "./Records";
-import { Composer, RichText } from "./chat";
-import { ContentSubscription } from "../components/ContentSubscription";
-import { MediaGallery } from "../components/MediaGallery";
-import { CoarseMap } from "./MapPage";
-import { AppointmentDetail } from "./AppointmentPages";
-import { invitationActions, invitationReview } from "../core/invitation";
-import { CollaborationInvitation } from "./InvitationPages";
+import {useEffect, useState} from "react";
+import {adoptionActionOptions, adoptionProgressTitle, careStageAvailable, returnActionAllowed,} from "../core/adoption";
+import {AdoptionProgress} from "./AdoptionPages";
+import {ReturnProgress} from "./ReturnPages";
+import {api, explain, type RecordData, type User} from "../core/api";
+import {useSession} from "../core/session";
+import {reload, useQuery} from "../core/query";
+import {navigate} from "../core/router";
+import {integer, key, money} from "../core/wire";
+import {titleOf, usePages} from "../core/pages";
+import {Facts, labelFor} from "../components/SchemaForm";
+import {Button, Card, Icon, Notice, QueryState, RowLink, TaskPage,} from "../components/ui";
+import {actionNames, stateLabel, workflowURL} from "./workflows";
+import {Author, PageEnd, titles} from "./Records";
+import {Composer, RichText} from "./chat";
+import {ContentSubscription} from "../components/ContentSubscription";
+import {MediaGallery} from "../components/MediaGallery";
+import {CoarseMap} from "./MapPage";
+import {AppointmentDetail} from "./AppointmentPages";
+import {invitationActions, invitationReview} from "../core/invitation";
+import {CollaborationInvitation} from "./InvitationPages";
+import type {ReplyAnchor} from "../core/notification";
 
 type ObjectValue = Record<string, unknown>;
 const objects = (value: unknown) =>
@@ -147,6 +133,36 @@ function actionOptions(
     add("state-action", "close");
   return list;
 }
+export function NotificationCommentPage({kind,id,anchor}: {kind: "entries" | "pets";id: bigint;anchor: ReplyAnchor}) {
+  const path = `${anchor.kind}/${anchor.id}`;
+  const result = useQuery<RecordData>(path);
+  const [reply,setReply] = useState<bigint>();
+  const [readStarted,setReadStarted] = useState(false), [revoked,setRevoked] = useState(false);
+  useEffect(() => {setReadStarted(true);void reload(path);},[path]);
+  const row = result.data;
+  const matches = !!row && row.id === anchor.id && row.reference_id === id && row.state === "published" &&
+    anchor.kind === (kind === "pets" ? "pet_comments" : "entry_comments");
+  const visible = readStarted && matches && !result.loading && !result.error && !revoked;
+  const unavailable = revoked || result.denied || (!!row && !matches);
+  return <TaskPage title="查看原评论" actions={
+    <Composer kind={kind} id={id} reply={reply} onReplyChange={setReply} canSend={visible} compact allowMedia={false}
+      onSent={() => {setReply(0n);void reload(path);}} />
+  }>
+    {!readStarted || result.loading || (!row && !result.error) ? <Notice title="正在读取评论">正在核对当前内容与可见权限。</Notice> :
+      !visible ? <Notice title={unavailable ? "这条评论当前不可查看" : "暂时无法读取评论"}>
+        <p>{unavailable ? "评论可能已删除或权限已变化，你可返回消息中心核销通知。" : "请重新读取；不会改变已读状态或代你回复。"}</p>
+        <Button kind="quiet" onClick={() => {setRevoked(false);void reload(path);}}>重新读取评论</Button>
+      </Notice> : <>
+        <Notice title={row!.version === anchor.version ? "通知提到的评论" : "评论已更新"}>
+          {row!.version === anchor.version ? "已定位到这条评论；查看不会标为已读或代你回复。" : "以下为当前可见内容，通知记录的是当时进度。"}
+        </Notice>
+        <CommentBatch kind={anchor.kind} rows={[row!]} onReply={setReply} />
+        <Comments entry={id} kind={anchor.kind} showTitle={false} reply={reply ?? 0n} onReply={setReply} exclude={anchor.id} onUnavailable={() => setRevoked(true)} />
+      </>}
+    <Button kind="quiet" onClick={() => navigate("/messages")}>返回消息中心</Button>
+  </TaskPage>;
+}
+
 export function ResourcePage({
   kind,
   id,
@@ -728,14 +744,20 @@ function Comments({
   entry,
   reply,
   onReply,
+  exclude,
+  onUnavailable,
 }: {
   entry: bigint;
   kind?: "entry_comments" | "pet_comments";
   showTitle?: boolean;
   reply: bigint;
   onReply: (id: bigint) => void;
+  exclude?: bigint;
+  onUnavailable?: () => void;
 }) {
   const page = usePages(kind, { reference_id: entry });
+  useEffect(() => {if(page.denied) onUnavailable?.();},[page.denied,onUnavailable]);
+  const rows = page.rows.filter(row => row.id !== exclude);
   return (
     <section className="stack" aria-label="评论">
       {showTitle ? (
@@ -750,12 +772,12 @@ function Comments({
         keepContent={!!page.rows.length && !page.denied}
       >
         {Array.from(
-          { length: Math.ceil(page.rows.length / 50) },
+          { length: Math.ceil(rows.length / 50) },
           (_, index) => (
             <CommentBatch
               key={index}
               kind={kind}
-              rows={page.rows.slice(index * 50, index * 50 + 50)}
+              rows={rows.slice(index * 50, index * 50 + 50)}
               onReply={onReply}
             />
           ),

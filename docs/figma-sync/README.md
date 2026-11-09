@@ -1,5 +1,7 @@
 # M&D Figma文档与图谱同步
 
+2026-11-06本地源码续作：[交付与对账](../client/NOTIFICATION_ALIGNMENT_2026_11_06.md)已重新实现通知合同／评论四状态并保存本轮远端只读证据；原10月30日来源未恢复。35:15旧句和35:3／35:17旧计数仍待后续同步，本轮未修改远端，旧manifest继续保留。
+
 2026-11-05只读核对补录：远端已有[10月30日通知与源码对齐35:19](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-19)，页面35:2内含8份来源Spec与1份目录，总导航1:9已指向它。本地缺少该批4份来源文档及通知新合同，远端交付表还有旧句冲突，详见[核对报告](../design/figma-study/audits/2026-11-05-remote-check/REVIEW.md)。这是本轮读取事实，不代表已恢复原源码或取得10月30日写入／全文验证回执；旧manifest继续保留，11月5日本地文档未同步到远端。
 
 本地已保存完整同步回执的增量：2026-10-29（Asia/Shanghai）。[当时文档中心入口](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=24-3)与[独立增量来源／分页回读记录](delta-2026-10-29/README.md)保留该批正文；实际写入结果以该增量manifest与validation为准。10月27日旧全文快照及评论保留，动态AI三文件该批不重新冻结，避免摘要循环。

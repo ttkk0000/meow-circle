@@ -1,0 +1,56 @@
+{
+  "id": "013",
+  "updated": "2026-10-30",
+  "status": "source_written_path_asset_reviewed_grammar_pending",
+  "high_fidelity_design_nodes": [
+    "238:371737",
+    "238:371738",
+    "311:379952",
+    "311:379956"
+  ],
+  "scope": [
+    "existing-account verification layout",
+    "dedicated provider-link confirmation",
+    "cancel/back clears scoped proof"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "b8d0fdb60089ac71f169c942208bc0252479c272bd32e69a80ec8c330e17c15c",
+    "web-client/src/features/ProviderSignIn.tsx": "04157fc7e1959e58f3c2d73a679d1a2c137dc2a20ca6b7a3ff5d1db84b937b5f"
+  },
+  "static_report": "batch-013-checks.json",
+  "syntax_reports": [
+    "batch-013-syntax.json"
+  ],
+  "syntax_counts": {
+    "files_read": 0,
+    "skipped_low_memory": 2,
+    "headroom_mb": 629,
+    "minimum_headroom_mb": 1024
+  },
+  "static_counts": {
+    "shared_sources": 31,
+    "public_ui": 47,
+    "web_sources": 94,
+    "web_imports": 430
+  },
+  "states": [
+    "authLinkExisting",
+    "authLinkConfirm"
+  ],
+  "notes": [
+    "Both phone and Web high-fidelity context/screenshots were inspected. Existing-account verification now starts with the illustrated phone channel and uses a 28/40 heading, explanation, fixed-label fields, quiet method switches and fixed primary action. Server capabilities govern which methods are usable; password/email alternatives remain available only when actually enabled.",
+    "Confirmation uses the actual current account avatar and identity, 56px/radius16 image, 12px card spacing, the real provider method in a fact row, notice, quiet cancel and explicit fixed confirm. The prototype phone number/provider example is not hardcoded. Identity caption uses the actual username because MobileUser/User do not supply a verified masked phone here.",
+    "The extra local confirmation checkbox was replaced by the explicit Confirm link button shown in the design. This calls the same shared confirmation method with true only on the user gesture; original account login, current purpose-scope reauthentication and server resolution remain separate, with no automatic linking.",
+    "Back/cancel from the account-link pages returns to account choice and clears the short-lived proof. It does not log out the already verified account. A current-owner guard is checked again before Web proof consumption. Unknown create/link results still close automatic retries and require official readback.",
+    "Both path/asset scripts pass. Grammar reads were skipped at 629MiB headroom, below the existing 1024MiB floor; the floor was not reduced, no parser was started and no retry was attempted. Existing earlier grammar results cannot be promoted to this revision. No compilation, type checking, tests or runtime/visual acceptance was performed."
+  ],
+  "remaining": [
+    "grammar reads after normal memory recovery",
+    "recovery entry/receipt and known/restricted contract gaps",
+    "remaining consumer/backend states and platform acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

@@ -1,0 +1,37 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthProfilePages.kt",
+      "sha256_lf": "669ff0744ff1f0f32f19475d7edbdeceb9fc7f4a8f6b9d5487818c8bb2bc5ad7",
+      "exit_code": 0,
+      "headroom_mb": 3564,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthProfilePages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthProfile.tsx",
+      "sha256_lf": "51b6a8415484cf848a98d98972580e9b9205730114322bddff6573009de7029a",
+      "exit_code": 0,
+      "headroom_mb": 3488,
+      "syntax": {
+        "file": "web-client/src/features/AuthProfile.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosPhotoPicker.kt",
+      "sha256_lf": "93f0826d56d764f7406f55c6aafa513f85515a245f054d277a6ad0f540219db0",
+      "exit_code": 0,
+      "headroom_mb": 3619,
+      "syntax": {
+        "file": "kmp/iosUi/src/iosMain/kotlin/com/ttkk0000/meowcircle/iosui/IosPhotoPicker.kt",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

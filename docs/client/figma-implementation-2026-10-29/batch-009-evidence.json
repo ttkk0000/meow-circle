@@ -1,0 +1,61 @@
+{
+  "id": "009",
+  "updated": "2026-10-30",
+  "status": "source_written_static_reviewed_runtime_pending",
+  "high_fidelity_design_nodes": [
+    "238:371765",
+    "238:371766",
+    "243:369071",
+    "238:371767"
+  ],
+  "scope": [
+    "agreement entry",
+    "terms and privacy read-only summaries",
+    "provider information",
+    "consent task navigation"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt": "b246688b45fc518d2d9f035ae93a9c5db52401032a7da91c2eae48ac7c4291d6",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "fb56806f075896f0e4d50f8301d02a0f5d0f4a50b60f74b69e78b5e633aebe0c",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "a9229da0c3939715d5d3bcdc9242953fc30c2549f03bfaad200728f9e3c034aa",
+    "web-client/src/features/AuthInformation.tsx": "715f4a5ea9d2e01f6919903ebf92c6f636115bae6238e770f8730eeed0b133cf",
+    "web-client/src/features/AuthDialog.tsx": "0b323105c5dc848b7feaa7472028c54d6d3bc11f804a1bdcc2f5da2e52cd32c3",
+    "web-client/src/features/ProviderSignIn.tsx": "bab8207ee92afaf14c0133a0599025f0a4582c5508b3cf4144266d3f9b80bb6f",
+    "web-client/src/styles.css": "63678530f2c43ab77c84d8990af4a3bd1eecb96ac0278943942ca558f86a130d"
+  },
+  "static_report": "batch-009-checks.json",
+  "syntax_reports": [
+    "batch-009-syntax.json",
+    "batch-009-syntax-followup.json",
+    "batch-009-syntax-final.json",
+    "batch-009-syntax-final-followup.json"
+  ],
+  "static_counts": {
+    "public_ui": 46,
+    "web_sources": 92,
+    "web_imports": 418
+  },
+  "notes": [
+    "Four information pages use Figma task header/fixed footer and fact rows with 80px labels, 8px gap, 12/20 label and 16/26 body. They are summaries, not invented legal text; configured official full documents remain separate links.",
+    "Reading, back navigation and external privacy links cannot accept agreements, request codes, register or initialize a provider. Only the explicit authorization action starts the existing SDK flow.",
+    "Entry/detail history returns within the information task; fixed return-to-login exits the summary. Managing methods keeps the security route and selects password login for a guest instead of leaving registration selected.",
+    "Source scans of current Android manifest and iOS declarations found no contact-reading permission. Existing platform constraints and provider availability remain unchanged.",
+    "Six final grammar reads are clean. Initial JSX URL-attribute diagnostics were corrected to an explicit string expression; the local open helper was renamed openPolicy after a grammar diagnostic. Initial reports are preserved, and no compiler or runtime was run.",
+    "Reviewed source ownership from batches 005-009 is synchronized into the 748-state canonical trace. No state count, design root, backend count or runtime flag is promoted."
+  ],
+  "states": [
+    "authTerms",
+    "authTermsDetails",
+    "authPrivacyDetails",
+    "authSDKInfo"
+  ],
+  "remaining": [
+    "first/known/success and optional profile auth states",
+    "remaining consumer/backend families",
+    "platform runtime and visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

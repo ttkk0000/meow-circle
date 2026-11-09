@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "sha256_lf": "84bcc6a947da09cfa29a3b2335606dcdcd2fcb2d2c598bcca021e675f3b4024e",
+      "exit_code": 0,
+      "headroom_mb": 1789,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "01bed1da1ff777cf02a34a87b20afda25c56e54fbef2daaaf01ea792de631537",
+      "exit_code": 0,
+      "headroom_mb": 1776,
+      "syntax": {
+        "file": "web-client/src/features/AuthDialog.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

@@ -1,0 +1,67 @@
+{
+  "id": "015",
+  "updated": "2026-10-30",
+  "status": "source_written_path_asset_reviewed_grammar_partially_pending",
+  "high_fidelity_design_nodes": [
+    "238:371720",
+    "311:379884"
+  ],
+  "scope": [
+    "known-account welcome page",
+    "server-confirmed in-process identity/method metadata",
+    "consent/real provider flow and phone fallback"
+  ],
+  "source_hashes_lf": {
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": "6f6b97bf53c6d0aa1ade0c413edb83d583625f8f9f0dbe0dc1f54cd21e5326a4",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt": "73953c92b456046328937c999b9b05a8759b64fe13a7f1031e1bebab4cb29aa1",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "81464ff05df0c92614bc1938e9aa448ee0bae9093702fc4b9a94cb3b63bc0b25",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "193c786ece407b5490e3d70a9df8f994bf659673857fcdc4e4a826e7db79acc9",
+    "web-client/src/core/api.ts": "4e26a6f3e067c50a75c192f5754b63b970bdd720421ba8fd5cca18da8ae3f9ab",
+    "web-client/src/features/AuthKnown.tsx": "7ca4fa7ce5df5fcfce0277880ddc1d243df01ee040be5794d6efa8830c02724b",
+    "web-client/src/features/AuthDialog.tsx": "a1dd79e79b7030e22c5c97279465d3b22aad1827002e74436e03bc8113cb9ad4",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff",
+    "web-client/src/styles.css": "edc5542be894b99bf54eddb9404cd381da8e4d55d8e779403d8cb838ef9ba7f7"
+  },
+  "static_report": "batch-015-checks-final.json",
+  "syntax_reports": [
+    "batch-015-syntax.json",
+    "batch-015-syntax-followup.json"
+  ],
+  "syntax_counts": {
+    "current_whole_files_without_diagnostics": 5,
+    "same_baseline_diagnostic_signatures": 1,
+    "current_grammar_pending": 2,
+    "headroom_at_skip_mb": 623,
+    "minimum_headroom_mb": 1024
+  },
+  "grammar_pending_source_hashes": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "193c786ece407b5490e3d70a9df8f994bf659673857fcdc4e4a826e7db79acc9"
+  },
+  "static_counts": {
+    "shared_sources": 32,
+    "public_ui": 49,
+    "web_sources": 96,
+    "web_imports": 439
+  },
+  "states": [
+    "authKnown"
+  ],
+  "notes": [
+    "The previously recorded missing remembered-identity source is now supplied by actual successful server login/verified session/profile responses, only in the current API instance's memory. It is not serialized into the vault, localStorage, routes or drafts. Failed cached restoration creates no remembered identity. No restart persistence is claimed.",
+    "The phone screenshot from batch012 and current Web context/image were inspected. Dedicated native/Web welcome pages show the actual previous nickname and known method, 56px/radius16 identity slot, notice, agreement/official policy links, provider actions, phone fallback and other real login methods.",
+    "Signing out supplies no permission to fetch the former account's private avatar, so the existing neutral image placeholder is used with no media id. No illustrative cat is presented as a user identity. Successful account-closure session endings clear the memory; ordinary logout/expiry can retain this presentation metadata.",
+    "Remembered data never selects or authenticates the previous owner. Every provider/phone/password/email action reuses actual server verification; a different returned identity remains a different account. No nickname-based merging or local qualification was added. Created-account review and original-task return remain unchanged.",
+    "Known provider controls use 12px gaps, 20px original marks and 14/22 labels. Native iOS Apple is a separate black/white action using a display color filter on the unchanged SVG. Web Apple leads through the existing actual-unavailable check while its Web configuration is absent; no functioning Web Apple SDK is claimed. Other native platforms retain their existing supported provider choices.",
+    "The first seven grammar reads were clean except the same baseline MobileApi diagnostics. Final provider/layout and optional icon-color-filter edits were guarded at 623MiB, below 1024MiB, so two current files remain unread. One provider heading/size adjustment followed the skip; its current hash is recorded separately instead of reusing the old hash as validation. Five current whole files and one baseline comparison are valid; earlier provider clean output does not validate this latest revision. Path/asset scripts pass; no build/type checker/test/app/browser/device was run."
+  ],
+  "remaining": [
+    "final ProviderAuthPages/ClientAssets grammar reads after normal headroom",
+    "typed partial restriction contract and remaining auth/consumer/backend families",
+    "runtime/visual/platform acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

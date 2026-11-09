@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt",
+      "sha256_lf": "4c2cffd3a7d474d2e64560b6266dd3d5408af5ecd356439afa0509ae9b255126",
+      "status": "not_read_low_memory",
+      "headroom_mb": 907
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt",
+      "sha256_lf": "df80eeb987dbd416e574b3bcee2819858fec00ca7aea818f5f45a0829719fda1",
+      "status": "not_read_low_memory",
+      "headroom_mb": 907
+    },
+    {
+      "file": "web-client/src/features/AuthPhone.tsx",
+      "sha256_lf": "cd2a1c250fc2498bb9faf637f5aedaf6a1739649e9212ad1c5d5be901f33267f",
+      "status": "not_read_low_memory",
+      "headroom_mb": 907
+    },
+    {
+      "file": "web-client/src/features/Account.tsx",
+      "sha256_lf": "d25a087842c31c305f741d18e91440b48c0090b179227a3a74a3a06804261b6b",
+      "status": "not_read_low_memory",
+      "headroom_mb": 907
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

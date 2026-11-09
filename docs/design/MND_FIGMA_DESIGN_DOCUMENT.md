@@ -1,5 +1,7 @@
 # M&D 设计交接索引
 
+2026-11-06：[通知代码续作](../client/NOTIFICATION_ALIGNMENT_2026_11_06.md)按958:371820四状态重新实现，原10月30日源码未找回；当前合同145／147 schemas、90DTO与静态证据已核。远端旧句／旧计数保留待后续同步，原748台账未扩张。
+
 > **2026-11-05 现行入口**：[源码与文档基线](../CURRENT_BASELINE.md) · [产品／交付状态](../PRODUCT_AND_DELIVERY_MATRIX.md) · [全部文档目录](../DOCUMENTATION_CATALOG.md) · [Figma文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3)。当前源码数量与未完成项统一查现行基线；本文带日期的数量及“待实施”结论按原批次解释，源码／静态记录不等于构建、运行或全量验收通过。
 
 2026-11-05：[远端与本地核对](figma-study/audits/2026-11-05-remote-check/REVIEW.md)实读原设计12页、3772消费者根和96协作动作，未发现节点／动作差异。另发现[10月30日评论四状态评审板958:371820](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=958-371820)与[文档增量35:19](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-19)：该批通知新合同及4份来源文档未在当前仓库，远端矩阵保留过期句子，待恢复源码对账。四张额外评审稿独立计数，原748台账不变；本轮未写远端或业务源码。

@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "sha256_lf": "1a736d6affc72fb4aedfccecdea8a2616261cd8c0753282b3048106759a6833b",
+      "status": "not_read_low_memory",
+      "headroom_mb": 633
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "f0315c6e7de8e32e6d37103f8651d7a6017cbb25d580828448daff91f46cd649",
+      "status": "not_read_low_memory",
+      "headroom_mb": 634
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileFeatureStore.kt",
+      "sha256_lf": "cd76dad0b2a51862be87bc6890920b32b89cd2d0610e9e62604d9da8a027e169",
+      "status": "not_read_low_memory",
+      "headroom_mb": 633
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "8676d7564a36992bfc4605d50fa76dfd7f2885558d483ddee7601abcf8b5c1fd",
+      "status": "not_read_low_memory",
+      "headroom_mb": 633
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

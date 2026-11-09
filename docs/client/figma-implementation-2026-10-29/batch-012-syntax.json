@@ -1,0 +1,194 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthReturnTask.kt",
+      "sha256_lf": "858f08ba167f38c08c9a337cc4caaed1e9d8a2733fd749168db7a67531c6e9b4",
+      "exit_code": 0,
+      "headroom_mb": 3651,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthReturnTask.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "8305989831223e8455a44f44fd7d7510c4fb12497e8a67c2237418517e34c1f5",
+      "exit_code": 0,
+      "headroom_mb": 3645,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 134,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 156,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 209,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 224,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 501,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 578,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 854,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 948,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1059,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1166,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1492,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1535,
+            "text": ": Exception"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 131,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 153,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 206,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 220,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 492,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 569,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 811,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 900,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1011,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1118,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1444,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1487,
+            "text": ": Exception"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "notification-targets",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "original-request-retry",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "sha256_lf": "edd4a33ccca0a95ff9d11cfe9a85b411da22c7ffb22f7b839511fdc31e6c84c4",
+      "exit_code": 0,
+      "headroom_mb": 3666,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "ea3160f324227d5b610fe4fe44c68ccd2fa7bd18bed5d2731e38d4853c8a1e49",
+      "exit_code": 0,
+      "headroom_mb": 3667,
+      "syntax": {
+        "file": "web-client/src/features/AuthDialog.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthReturnTask.tsx",
+      "sha256_lf": "c19e8fdf53ed76a5b8a6ebb5f2dcb85b45e4977377f8be9b2f06a89b4ca496e4",
+      "exit_code": 0,
+      "headroom_mb": 3641,
+      "syntax": {
+        "file": "web-client/src/features/AuthReturnTask.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

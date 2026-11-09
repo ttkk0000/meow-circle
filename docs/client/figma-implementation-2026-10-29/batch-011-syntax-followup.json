@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthProfileStore.kt",
+      "sha256_lf": "b19b79e28a96d67c2ee75d6d7e2d1cfb494b0038be22ecc8e01b13f15350b742",
+      "exit_code": 0,
+      "headroom_mb": 6740,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthProfileStore.kt",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

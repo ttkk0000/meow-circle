@@ -191,7 +191,8 @@ func pushNotice(t *testing.T, s *mobile.Service, repo mobile.Repository) mobile.
 	if _, e := s.RegisterPushDevice(context.Background(), 1, mobile.PushDeviceInput{Platform: "android", Token: "synthetic-device-token-123", Permission: "granted", Enabled: true}); e != nil {
 		t.Fatal(e)
 	}
-	return serverRecord(t, repo, mobile.Notifications, mobile.Record{OwnerID: 1, State: "unread"}, mobile.Notification{Category: "interactions", PushState: "queued"})
+	target := serverRecord(t, repo, mobile.Entries, mobile.Record{OwnerID: 1, State: "published", Public: true}, mobile.Entry{Text: "push target", Audience: mobile.Audience{Mode: "public"}})
+	return serverRecord(t, repo, mobile.Notifications, mobile.Record{OwnerID: 1, State: "unread"}, mobile.Notification{Category: "interactions", TargetKind: mobile.Entries, TargetID: target.ID, PushState: "queued"})
 }
 
 func TestPushAcceptanceReplayDoesNotSendTwice(t *testing.T) {

@@ -209,7 +209,7 @@ func (s *Service) Friend(ctx context.Context, actor int64, action string, in Fri
 			if action == "accept" {
 				message = "好友申请已被接受"
 			}
-			if e = s.notify(tx, in.UserID, actor, "applications", Friendships, r.ID, message); e != nil {
+			if e = s.notify(tx, in.UserID, actor, "applications", "friend."+action, Friendships, r.ID, message); e != nil {
 				return e
 			}
 		}
@@ -422,6 +422,7 @@ func (s *Service) commentOn(ctx context.Context, actor int64, parentKind, commen
 		if !errors.Is(e, ErrNotFound) {
 			return e
 		}
+		var replyOwner int64
 		if in.ReplyTo > 0 {
 			reply, e := tx.Get(commentKind, in.ReplyTo)
 			if e != nil {
@@ -434,13 +435,25 @@ func (s *Service) commentOn(ctx context.Context, actor int64, parentKind, commen
 			if reply.RefID != entry || !replyVisible {
 				return Invalid("reply belongs to another entry")
 			}
+			replyOwner = reply.OwnerID
 		}
 		r := Record{OwnerID: actor, RefID: entry, Key: key, State: "published"}
 		if e = save(tx, commentKind, &r, Comment{in.Content, in.ReplyTo}, actor, command+"ed"); e != nil {
 			return e
 		}
 		out = r
-		return s.notify(tx, p.OwnerID, actor, "interactions", parentKind, entry, message)
+		anchor := NotificationReplyAnchor{Kind: commentKind, ID: r.ID, Version: r.Version}
+		event := command + "ed"
+		if in.ReplyTo > 0 {
+			event = command + ".replied"
+		}
+		if e = s.notify(tx, p.OwnerID, actor, "interactions", event, parentKind, entry, message, anchor); e != nil {
+			return e
+		}
+		if replyOwner > 0 && replyOwner != p.OwnerID {
+			return s.notify(tx, replyOwner, actor, "interactions", event, parentKind, entry, "有人回复了你的评论", anchor)
+		}
+		return nil
 	})
 	return
 }
@@ -484,7 +497,7 @@ func (s *Service) React(ctx context.Context, actor, entry int64, liked bool) (ou
 		}
 		out = r
 		if liked {
-			return s.notify(tx, p.OwnerID, actor, "interactions", Entries, entry, "动态收到点赞")
+			return s.notify(tx, p.OwnerID, actor, "interactions", "entry.liked", Entries, entry, "动态收到点赞")
 		}
 		return nil
 	})
@@ -612,6 +625,7 @@ func (s *Service) Group(ctx context.Context, actor, id int64, action string, in 
 			return ErrForbidden
 		}
 		isOwner := actor == r.OwnerID
+		previousOwner, transferRecipient := r.OwnerID, g.PendingTransferTo
 		switch action {
 		case "directory":
 			if !isOwner {
@@ -702,7 +716,16 @@ func (s *Service) Group(ctx context.Context, actor, id int64, action string, in 
 			return e
 		}
 		out = r
-		return nil
+		recipient := int64(0)
+		switch action {
+		case "transfer":
+			recipient = in.UserID
+		case "accept_transfer", "decline_transfer":
+			recipient = previousOwner
+		case "revoke_transfer":
+			recipient = transferRecipient
+		}
+		return s.notify(tx, recipient, actor, "applications", "group."+action, Groups, r.ID, "群主转让进度已更新，请核对当前安排")
 	})
 	return
 }
@@ -819,7 +842,7 @@ func (s *Service) Invite(ctx context.Context, actor int64, in InviteInput) (out 
 			return e
 		}
 		out = r
-		return s.notify(tx, in.UserID, actor, "applications", Invitations, r.ID, "收到新邀请")
+		return s.notify(tx, in.UserID, actor, "applications", "invitation.created", Invitations, r.ID, "收到新邀请")
 	})
 	return
 }
@@ -887,7 +910,7 @@ func (s *Service) Invitation(ctx context.Context, actor, id, version int64, acti
 					if e = save(tx, Groups, &gRecord, g, actor, "group.member_joined"); e != nil {
 						return e
 					}
-					if e = s.notify(tx, r.OwnerID, actor, "applications", Groups, gRecord.ID, "入群申请已被接受"); e != nil {
+					if e = s.notify(tx, r.OwnerID, actor, "applications", "group.join.accepted", Groups, gRecord.ID, "入群申请已被接受"); e != nil {
 						return e
 					}
 				}
@@ -1181,7 +1204,7 @@ func (s *Service) Message(ctx context.Context, actor, parentID int64, group bool
 					continue
 				}
 			}
-			if e = s.notify(tx, recipient, actor, category, parent, parentID, "收到新消息"); e != nil {
+			if e = s.notify(tx, recipient, actor, category, "message.created", parent, parentID, "收到新消息"); e != nil {
 				return e
 			}
 		}

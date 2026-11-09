@@ -1,0 +1,104 @@
+{
+  "headroom_mb": 3998,
+  "exit_code": 0,
+  "syntax": {
+    "fragments": [
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "destination-state-and-canonical-drafts",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "account-scope-cleanup",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "navigation-and-parent-drafts",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "notification-route-whitelist",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "reply-draft-and-unknown-command-guards",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "focused-comment-read-and-pagination",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "send-reply-and-canonical-cleanup",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "original-command-and-draft-recovery",
+        "errors": []
+      },
+      {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "label": "workspace-persistence-and-restore",
+        "errors": [
+          {
+            "type": "ERROR",
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "text": ": Exception"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "text": ": Exception"
+          }
+        ],
+        "baseline_same_error_signatures": true
+      },
+      {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+        "label": "four-state-comment-and-reused-comment-card",
+        "errors": []
+      },
+      {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+        "label": "existing-reply-editor-with-specific-label",
+        "errors": []
+      },
+      {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt",
+        "label": "destination-title",
+        "errors": [
+          {
+            "type": "ERROR",
+            "text": ";"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "text": ";"
+          }
+        ],
+        "baseline_same_error_signatures": true
+      }
+    ],
+    "type_checked": false,
+    "tests_executed": false,
+    "runtime_verified": false
+  },
+  "stderr": ""
+}

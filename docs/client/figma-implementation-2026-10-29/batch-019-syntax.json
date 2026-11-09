@@ -1,0 +1,47 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt",
+      "sha256_lf": "f9d81ba8b205b5bd4be97a3ebd123e05646bdefee3b3c4389b8367b370937b19",
+      "exit_code": 0,
+      "headroom_mb": 2009,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+      "sha256_lf": "01228fe23c1cf9fddafb5f6fdfc6cbf6b6d8fbf4a3976d1499772ab244ed097d",
+      "exit_code": 0,
+      "headroom_mb": 2000,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthBinding.tsx",
+      "sha256_lf": "2f220a3c8bdcad11ad55d016cf7fd867670b319fd46890958c1a42f5b1b8cc8e",
+      "exit_code": 0,
+      "headroom_mb": 2004,
+      "syntax": {
+        "file": "web-client/src/features/AuthBinding.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/Account.tsx",
+      "sha256_lf": "687b4047bed7fcac6bce6503f91794ce1f5a6da6c0854d4c48ad6f1253f4aabb",
+      "exit_code": 0,
+      "headroom_mb": 2007,
+      "syntax": {
+        "file": "web-client/src/features/Account.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

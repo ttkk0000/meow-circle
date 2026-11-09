@@ -1,0 +1,214 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "sha256_lf": "3c8a662178522e5bc345cdcd80e27c02f07c388deb409787434e66f625bc72d1",
+      "exit_code": 0,
+      "headroom_mb": 8004,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "sha256_lf": "ad67b30b7b04d56fbfe54dc6362a52703d233cff24be1fbb91a6bc21d0872f75",
+      "exit_code": 0,
+      "headroom_mb": 7991,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+      "sha256_lf": "89a89b636b3b5ca854bc612505e80f93d13074f91f187031fa9cdeb226176253",
+      "exit_code": 0,
+      "headroom_mb": 7976,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+      "sha256_lf": "5106171e87155d203d86a9e0052da366c83235333e9e499bc6406bb4c56cd530",
+      "exit_code": 0,
+      "headroom_mb": 7978,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 133,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 155,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 208,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 223,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 495,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 572,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 821,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 915,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1026,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1133,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1459,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1502,
+            "text": ": Exception"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 131,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 153,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 206,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 220,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 492,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 569,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 811,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 900,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1011,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1118,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 1444,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 1487,
+            "text": ": Exception"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "notification-targets",
+            "errors": [],
+            "grammar_limitations": []
+          },
+          {
+            "label": "original-request-retry",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "9f211aa71ef5d964f13482d6bdbc45cf3c817ffda420a9acff8ecfb9964eb928",
+      "exit_code": 0,
+      "headroom_mb": 7981,
+      "syntax": {
+        "file": "web-client/src/features/AuthDialog.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthInformation.tsx",
+      "sha256_lf": "6eaefe7f96fcd8bbb08d108cafb91255e36a95baf13ddbc84980efada32ee0d8",
+      "exit_code": 0,
+      "headroom_mb": 7978,
+      "syntax": {
+        "file": "web-client/src/features/AuthInformation.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/ProviderSignIn.tsx",
+      "sha256_lf": "aa37afa313ae353d3a7244b733cf7133d8649aec517b3310aaea517702479258",
+      "exit_code": 0,
+      "headroom_mb": 7976,
+      "syntax": {
+        "file": "web-client/src/features/ProviderSignIn.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

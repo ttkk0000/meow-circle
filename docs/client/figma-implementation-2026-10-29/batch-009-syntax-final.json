@@ -1,0 +1,38 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "sha256_lf": "05d7d66002c2ecd3904183e9b196bcb613e8ee265106e52cd54dc15aca7a11e4",
+      "exit_code": 1,
+      "headroom_mb": 7511,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 43,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 44,
+            "text": "open"
+          },
+          {
+            "type": "ERROR",
+            "line": 45,
+            "text": "open"
+          },
+          {
+            "type": "val",
+            "line": 51,
+            "text": ""
+          }
+        ]
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

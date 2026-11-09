@@ -1,0 +1,73 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "sha256_lf": "fa05e04d90dee92f1257693b276678fe8721221f0cbf0242d3b3f2bca4db59fb",
+      "exit_code": 0,
+      "headroom_mb": 7073,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "sha256_lf": "fb56806f075896f0e4d50f8301d02a0f5d0f4a50b60f74b69e78b5e633aebe0c",
+      "exit_code": 0,
+      "headroom_mb": 7074,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+      "sha256_lf": "a9229da0c3939715d5d3bcdc9242953fc30c2549f03bfaad200728f9e3c034aa",
+      "exit_code": 0,
+      "headroom_mb": 7077,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthInformation.tsx",
+      "sha256_lf": "de447ffc426f5a8e6c4dfd60ec78d436d6f8482a806bb724ca2cc4586b113721",
+      "exit_code": 1,
+      "headroom_mb": 7066,
+      "syntax": {
+        "file": "web-client/src/features/AuthInformation.tsx",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 31,
+            "text": "&t=weixin_agreement&s=privacy"
+          }
+        ]
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "e4b09fe65710891a4618de836f6582147ea3ee2bff063f96248228db0c0b0078",
+      "exit_code": 0,
+      "headroom_mb": 7079,
+      "syntax": {
+        "file": "web-client/src/features/AuthDialog.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/ProviderSignIn.tsx",
+      "sha256_lf": "e0e8fee0020477a9e7a26ae92bc0112f1658345275d7260cf2ad8bbfea1d39cd",
+      "exit_code": 0,
+      "headroom_mb": 7084,
+      "syntax": {
+        "file": "web-client/src/features/ProviderSignIn.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

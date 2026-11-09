@@ -1,0 +1,74 @@
+{
+  "id": "016",
+  "updated": "2026-10-30",
+  "status": "source_written_path_asset_reviewed_grammar_pending",
+  "high_fidelity_design_nodes": [
+    "238:371739",
+    "311:379960",
+    "238:371749",
+    "311:380000"
+  ],
+  "scope": [
+    "dedicated bound-identity conflict page",
+    "server-confirmed last-login-method guard page",
+    "known-denial local request cleanup"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt": "b9383e78954038cf193c75323c750f465b50be720cdb95115fcd1ce16702bf1a",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "359f0e7db082775e759945743142124d4188000bf01397fe3b934eb28abee2f6",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt": "02824c2fd6f5e1611222761c852df9c341a862e3d3cf69762be12f0300de7a1f",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "5c6ce965b09c0de65ac83529edc9b78d641e00d213d6d4a7eeec17c8d1c35707",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt": "84f082528abf98ebd33f461243204f525bb630642451a0b896b874a9ac216fdc",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "c20cbe8087c72233371e1078ed3eb14175b9927ab5e6fbd23fbdbdea988c77d4",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": "278c5427de480ce57149b7bf9df7740f3fc4567b9e2bf8a15d554f18145ba7d0",
+    "web-client/src/features/AuthDialog.tsx": "c36e05a778a817152afa23df06321f815acdbbd3b111ca7935e3f95bd895e41c",
+    "web-client/src/features/ProviderSignIn.tsx": "e30d0b9c2d6628fb5ab652d371b2c125d169ac3ff2d25d25abd2f7ea17c01f1b",
+    "web-client/src/features/Account.tsx": "759e91b08bb9becf502feac4df8589f518255ead4ef2fd7d712c6e10e0219585",
+    "web-client/src/components/AccountConflict.tsx": "42b4816d5b419e9eb40f2ccaaaba0f6aa4891b20b97283d95b819dae179d7255",
+    "web-client/src/core/api.ts": "39c3ce6a6f0a12075a86e519ed7537e208e59583edcf4f9465c1ff61819d62b1",
+    "internal/identity/service.go": "9b320a57aa44d6e8293ffe2a00d845dd99ac8e47f9a545d61a206aea083b9358"
+  },
+  "static_report": "batch-016-checks.json",
+  "syntax_reports": [
+    "batch-016-syntax.json",
+    "batch-016-fragments.json"
+  ],
+  "syntax_counts": {
+    "files_read": 0,
+    "skipped_low_memory": 13,
+    "changed_fragment_files_skipped": 1,
+    "headroom_mb_range": [
+      1000,
+      1001
+    ],
+    "minimum_headroom_mb": 1024
+  },
+  "static_counts": {
+    "shared_sources": 32,
+    "public_ui": 50,
+    "web_sources": 96,
+    "web_imports": 441
+  },
+  "states": [
+    "authConflict",
+    "authLastMethod"
+  ],
+  "notes": [
+    "Four phone/Web high-fidelity contexts/images were inspected. Conflict pages use the approved warning panel, 28/40 title, secondary return, quiet recovery help and fixed other-login action. Only the actual identity_in_use response/provider stage triggers this page; no other account identity is disclosed.",
+    "Native root login, provider and sensitive account flows and Web equivalents share the dedicated guard content. Recovery opens the actual assistance flow, and the root native auth task is made visible when recovery is entered from an already logged-in provider/sensitive flow. Returning does not alter the current account; other-login still requires real verification.",
+    "The server's existing atomic last-usable-method check is preserved. Its generic Invalid retain-another-method error becomes the named RuleError last_login_method (HTTP403 under the existing handler) so clients can render the dedicated design. No local method count or provider availability guess decides this state. The API error schema already carries a free-form error_code; no new route/DTO/qualification policy was added.",
+    "The last-method page closes the denied sensitive attempt and offers actual account settings/available-method entry. Phone/email association entries were added alongside existing provider controls. Each still requires original-account scope verification and its existing new-identifier challenge.",
+    "After explicit identity_in_use/last_login_method denial, Web deletes only its exact submitted draft revision before leaving the uncertain state. A local version/storage failure keeps the original reconciliation guard. Genuine unknown outcomes remain closed and are never cleaned as a denial.",
+    "Both path/asset scripts and diff whitespace read pass. Thirteen grammar files and the MobileStore fragment read were skipped at 1000–1001MiB, below the unchanged 1024MiB floor; no grammar parser was started. The server change is one reviewed return expression with the existing atomic predicate unchanged, without Go execution/compilation/tests. Prior batch015 final icon/provider grammar gaps remain represented here."
+  ],
+  "remaining": [
+    "current 13-file grammar and changed-fragment reads after normal headroom",
+    "remaining auth/consumer/backend states and typed partial restrictions",
+    "all platform compilation/runtime/visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

@@ -1,0 +1,95 @@
+{
+  "id": "017",
+  "updated": "2026-10-30",
+  "status": "source_written_path_asset_reviewed_grammar_pending",
+  "high_fidelity_design_nodes": [
+    "238:371721",
+    "311:379888",
+    "238:371722",
+    "311:379892"
+  ],
+  "scope": [
+    "phone-format field error task",
+    "actual OTP resend task and six-cell real input",
+    "seven native callback argument corrections"
+  ],
+  "source_hashes_lf": {
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthInput.kt": "da4826c86a006196eef53f416c133143ff1e7a3bdb52dbbbf036467fc56971d4",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt": "8847fb91f9156069f3d527303c6685b80b584edbeb30328be30566dce50ddf0a",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "70d1b11377c78c694856e387930ad1a17f071e8b36de8b2436d1f7e60ac02c36",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt": "9bec4131836535939d6a730279426df396efe8a56b42d821847e84560db37c5b",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt": "adb8964afc80b0885875fe5525e2758df74dbdd085442477defaa8ec399231b8",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "b89fcd9f82aaaa0acb7f5e9826a245a5d1e9148e4268b7be60a594f9777aca58",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff",
+    "web-client/src/features/AuthCodePages.tsx": "277886fa54a775e0741a021aab393aa063ed3fa1f12967a0c0c4f821a44ce179",
+    "web-client/src/features/AuthDialog.tsx": "2763d91742e5b12b7804b15a4186f82a7c993c94c734085cd33a24aca0a108b2",
+    "web-client/src/core/authInput.ts": "0587034eb9ae226739e1890071dbf319a8fe3864c7ce2016af6033058aa65d55",
+    "web-client/src/styles.css": "46843a66ccd73d8a4f454c3e14c18797b254a411c723fe4a6115e413a4fda47f"
+  },
+  "static_report": "batch-017-checks.json",
+  "syntax_reports": [
+    "batch-017-syntax.json"
+  ],
+  "grammar_pending_source_hashes": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt": "8847fb91f9156069f3d527303c6685b80b584edbeb30328be30566dce50ddf0a",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt": "9bec4131836535939d6a730279426df396efe8a56b42d821847e84560db37c5b",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt": "adb8964afc80b0885875fe5525e2758df74dbdd085442477defaa8ec399231b8",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "70d1b11377c78c694856e387930ad1a17f071e8b36de8b2436d1f7e60ac02c36",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt": "02824c2fd6f5e1611222761c852df9c341a862e3d3cf69762be12f0300de7a1f",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt": "b89fcd9f82aaaa0acb7f5e9826a245a5d1e9148e4268b7be60a594f9777aca58",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt": "84f082528abf98ebd33f461243204f525bb630642451a0b896b874a9ac216fdc",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthInput.kt": "da4826c86a006196eef53f416c133143ff1e7a3bdb52dbbbf036467fc56971d4",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": "278c5427de480ce57149b7bf9df7740f3fc4567b9e2bf8a15d554f18145ba7d0",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "c20cbe8087c72233371e1078ed3eb14175b9927ab5e6fbd23fbdbdea988c77d4",
+    "web-client/src/components/AccountConflict.tsx": "42b4816d5b419e9eb40f2ccaaaba0f6aa4891b20b97283d95b819dae179d7255",
+    "web-client/src/core/api.ts": "39c3ce6a6f0a12075a86e519ed7537e208e59583edcf4f9465c1ff61819d62b1",
+    "web-client/src/core/authInput.ts": "0587034eb9ae226739e1890071dbf319a8fe3864c7ce2016af6033058aa65d55",
+    "web-client/src/features/Account.tsx": "759e91b08bb9becf502feac4df8589f518255ead4ef2fd7d712c6e10e0219585",
+    "web-client/src/features/AuthCodePages.tsx": "277886fa54a775e0741a021aab393aa063ed3fa1f12967a0c0c4f821a44ce179",
+    "web-client/src/features/AuthDialog.tsx": "2763d91742e5b12b7804b15a4186f82a7c993c94c734085cd33a24aca0a108b2",
+    "web-client/src/features/ProviderSignIn.tsx": "e30d0b9c2d6628fb5ab652d371b2c125d169ac3ff2d25d25abd2f7ea17c01f1b"
+  },
+  "source_changed_after_skip": [
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt"
+  ],
+  "syntax_counts": {
+    "files_read": 0,
+    "current_batch_skipped_low_memory": 10,
+    "pending_files_including_016": 18,
+    "headroom_mb": 864,
+    "minimum_headroom_mb": 1024
+  },
+  "static_counts": {
+    "shared_sources": 33,
+    "public_ui": 51,
+    "web_sources": 98,
+    "web_imports": 446
+  },
+  "contract_read_hashes_lf": {
+    "internal/platform/phoneotp/phoneotp.go": "fea69395711a1606facf376e2adb071c812f4a6fa2231682d3447b163d5469d7",
+    "internal/identity/email.go": "060146980a91de486811d2d32790352e4c4857c44ae79ad2aee05d068676e638",
+    "internal/identity/service.go": "9b320a57aa44d6e8293ffe2a00d845dd99ac8e47f9a545d61a206aea083b9358"
+  },
+  "states": [
+    "authPhoneError",
+    "authCodeResent"
+  ],
+  "notes": [
+    "Four phone/Web high-fidelity contexts/screenshots were inspected. The phone-error page uses the actual entry value, error border/caption, policy controls where configured, corrected-field resend and a quiet method switch. The label remains Already-bound phone, matching the current no-SMS-auto-signup contract rather than imposing the prototype's Mainland-only example on the existing server normalization.",
+    "Shared/Web format helpers mirror the existing server's ASCII-digit normalization and 10–15 digit predicate; codes match the server's actual six numeric characters. This is formatting only, never ownership, phone verification or eligibility. Failed formatting sends no request.",
+    "Six visual cells use one real editable field for keyboard/paste/accessibility. Native keeps the input node rendered with transparent text rather than hiding its semantics with a zero-alpha layer; decorative cells are excluded from screen-reader duplication. Web has one labeled numeric/one-time-code input, with focus and paste normalization. No sixth-character or keyboard callback auto-submits.",
+    "A resend state is entered only after a successful send receipt for the same address/mode. It clears the previous code, shows the real masked address and latest-code notice, and still requires explicit server verification. Reset/registration keep their original purpose and password checks; changing an address/method never reuses an unrelated receipt.",
+    "Source call-contract review found seven native callbacks passed positionally into Modifier/loading slots in batches013–016. They now use named onClick in AuthGuardPages/AuthKnownPages/ProviderAuthPages/AuthPages. This is a source correction, not a claim that earlier grammar reads established type correctness. A read of current button call text found no remaining bare callback/reference in those optional positions.",
+    "Both path/asset scripts and diff whitespace pass. Ten grammar reads were skipped at 864MiB under the unchanged 1024MiB floor; the union with unresolved016 files is eighteen, plus its skipped MobileStore fragment read. The native OTP transparent-text adjustment happened after the skip; current hashes are recorded separately. No parser retry, type checker, build, test, browser or device operation was performed. Native OS autofill/accessibility and rendered geometry remain runtime-unverified."
+  ],
+  "remaining": [
+    "18 current grammar files and MobileStore changed fragments after normal headroom",
+    "SMS delayed/expired and remaining auth/consumer/backend states",
+    "typed partial restriction contract and all platform runtime/visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

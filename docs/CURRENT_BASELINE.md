@@ -1,25 +1,25 @@
 # M&D 现行文档与源码基线
 
-更新：2026-11-05（Asia/Shanghai）。本轮fetch及ff-only同步核对：main与origin/main均为48a3cfd，无新增提交；继续全部设计实现的批次005–020仍在未提交工作树。本轮仅核对文档，未恢复业务开发；任务未全部完成。本页取代更早入口数量，带日期交接保留当时结果，详见[本轮文档核对](DOCUMENTATION_REVIEW_2026_11_05.md)。
+更新：2026-11-06（Asia/Shanghai）。main／a300a01；本次fetch无远端新提交，本地领先origin/main一个提交，ff-only确认最新。通知合同与精确评论定位已重新编写并完成静态核对，改动仍在工作树，详见[本轮源码交付](client/NOTIFICATION_ALIGNMENT_2026_11_06.md)。未编译／测试／启动，全量任务仍未完成。
 
 [Figma 文档中心](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3) · [完整文档目录](DOCUMENTATION_CATALOG.md) · [功能状态与发布边界](PRODUCT_AND_DELIVERY_MATRIX.md) · [UML 图谱](uml/README.md) · [同步清单](figma-sync/README.md)。
 
 ## 源码事实
 
-2026-11-05远端设计对账补充：Figma已有10月30日通知事件／评论定位评审及文档增量，宣称145／147 schemas和90对DTO；当前工作树实际仍为下表141／143、88对，缺该批4份来源文档及4个通知schema。详见[核对与来源](design/figma-study/audits/2026-11-05-remote-check/REVIEW.md)；本地数量不按远端正文直接抬升，原未提交认证成果保留，通知批次待找回对账。
+2026-11-06通知批次对账：原10月30日源码未能从Git恢复；按Figma已确认的事件／目标版本／评论锚点合同重新实现。当前实际145／147 schemas、90对DTO由本地派生与字段核对取得，四个通知schema已补。旧4份来源文档仍缺失，未伪造恢复；远端矩阵旧句仍待后续同步，见[交付与证据](client/NOTIFICATION_ALIGNMENT_2026_11_06.md)。
 
-当前进度：[严格按Figma分批实施](client/FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)已记二十批；最新旧号／新号及手机号补充验证。33shared／53公共UI、100Web／457本地引用通过；019四语法通过，020初五完整后最终五份受内存门槛保护待读，旧015–017待读由018补齐。未类型／编译／测试／运行／全量视觉，任务未完成。
+认证历史进度：[严格按Figma分批实施](client/FIGMA_IMPLEMENTATION_PROGRESS_2026_10_29.md)已记二十批；最新旧号／新号及手机号补充验证。33shared／53公共UI、100Web／457本地引用通过；019四语法通过，020初五完整后最终五份受内存门槛保护待读，旧015–017待读由018补齐。未类型／编译／测试／运行／全量视觉，任务未完成。
 
 | 维度 | 当前值 | 读取依据 |
 |---|---|---|
 | OpenAPI Paths / Operations | 255 / 288 | [OpenAPI](api/mobile-v2.openapi.json)，Operations 仅计 HTTP 方法 |
-| 服务端 / Web schemas | 141 / 143 | OpenAPI components.schemas / [Web派生](../web-client/src/core/schemas.json) |
-| DTO 映射 | 88 对 | [映射脚本](../scripts/check_server_shared_contract_static.py)的 mapping 去重键；不是全部数据类数量 |
+| 服务端 / Web schemas | 145 / 147 | OpenAPI components.schemas / [Web派生](../web-client/src/core/schemas.json) |
+| DTO 映射 | 90 对 | [映射脚本](../scripts/check_server_shared_contract_static.py)的 mapping 去重键；不是全部数据类数量 |
 | SQL 迁移 | 13 份，001–013 | [migrations](../migrations)，不含 backfill |
 | mobile 业务聚合表 | 45 张 | [Kind枚举](../internal/mobile/repository.go)；008通过SQL循环创建10张，不能只数CREATE TABLE字面量 |
 | 额外技术表 | mnd_ops_records、mnd_worker_checkpoints | 010 / 012，不计入45张mobile表 |
 | shared / clientUi 公共 Kotlin 文件 | 33 / 53 | 各模块 client / clientui 目录直接子文件，包含城市目录派生文件；新增账号／安全与协议说明专用页面 |
-| Web TypeScript / TSX 文件 | 100 | web-client/src 递归统计.ts及.tsx；457本地引用为批次020历史静态记录，本轮未重跑该脚本 |
+| Web TypeScript / TSX 文件 | 101 | web-client/src 递归统计.ts及.tsx；本轮只读脚本核对461本地引用，批次020的100／457保留为历史 |
 | FeaturePage | 48 个 | MobileFeatureStore.kt枚举；不能当独立Figma状态数量 |
 | Worker 接受的作业名 | 8 类 | [ValidJob](../internal/mobile/jobs.go)；不等于真实调度、外部接收端已上线 |
 | Figma 消费者状态台账 | 748条＝740既有＋8协作增量 | [实现追踪](client/figma-implementation-trace-2026-10-24.json)；增量五布局40根已完成[最终细化、96动作回读与五布局截图](design/figma-study/collaboration-refinement-2026-10-29/README.md)，全量748状态逐端视觉／运行仍待；另有角色18稿、业务后台13稿、运维14稿 |

@@ -1,0 +1,56 @@
+{
+  "id": "019",
+  "updated": "2026-10-30",
+  "status": "source_written_static_and_grammar_reviewed_runtime_unverified",
+  "high_fidelity_design_nodes": [
+    "238:371747",
+    "311:379992",
+    "238:371748",
+    "311:379996"
+  ],
+  "scope": [
+    "dedicated binding confirmation after purpose verification",
+    "dedicated unlink confirmation with actual associated methods"
+  ],
+  "states": [
+    "authBindConfirm",
+    "authUnbindConfirm"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthBindingPages.kt": "f9d81ba8b205b5bd4be97a3ebd123e05646bdefee3b3c4389b8367b370937b19",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt": "01228fe23c1cf9fddafb5f6fdfc6cbf6b6d8fbf4a3976d1499772ab244ed097d",
+    "web-client/src/features/AuthBinding.tsx": "2f220a3c8bdcad11ad55d016cf7fd867670b319fd46890958c1a42f5b1b8cc8e",
+    "web-client/src/features/Account.tsx": "687b4047bed7fcac6bce6503f91794ce1f5a6da6c0854d4c48ad6f1253f4aabb"
+  },
+  "contract_read_hashes_lf": {
+    "internal/identity/service.go": "9b320a57aa44d6e8293ffe2a00d845dd99ac8e47f9a545d61a206aea083b9358",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/IdentityModels.kt": "4d1deea74b6e5b3d21d00b72cd01edad60b84f89bcafbd78da95160b1c0fed20",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/SensitiveActionStore.kt": "5902bcde927c65bced36552c6aee84b3737ecd5f997b98749332f90daa11f088"
+  },
+  "static_report": "batch-019-checks.json",
+  "syntax_reports": [
+    "batch-019-syntax.json"
+  ],
+  "static_counts": {
+    "shared_sources": 33,
+    "public_ui": 52,
+    "web_sources": 99,
+    "web_imports": 450
+  },
+  "notes": [
+    "Four phone/Web high-fidelity contexts and screenshots inspected. Confirmation pages use actual account identity (dynamic avatar or existing neutral placeholder), method facts, notice, cancel/keep action and persistent explicit footer. No Figma sample identity/phone or ephemeral asset is embedded.",
+    "Native ReadyToSubmit and Web actual reauthentication grant select the dedicated confirmation; completing verification never submits. Explicit footer confirmation uses the same scoped grant, version, client request ID and server endpoint. Cancelling drops the current review without changing a binding. Replacement is labeled update rather than falsely describing an additional association.",
+    "Unlink facts come from actual auth/methods: password_set, masked phone and active linked identities, excluding the selected identity. A missing selected identity blocks confirmation; no local verified flag or eligibility is invented. Server last-usable-method predicate remains authoritative and the016 named last_login_method denial still routes to its own guard task.",
+    "Confirmed mutations retain existing durable unknown-result guards and account logout behavior. Failed/unknown requests do not become locally successful. Four whole grammar reads and both path/asset scripts pass; button signatures and footer secondary style were read at actual callsites. No type checking, compilation, tests, app/browser/device launch or runtime/visual acceptance."
+  ],
+  "remaining": [
+    "change-phone/current-phone flow fidelity",
+    "remaining auth/consumer/backend states",
+    "typed partial-restriction contract",
+    "runtime and visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

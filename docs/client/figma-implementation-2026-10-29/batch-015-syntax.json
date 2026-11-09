@@ -1,0 +1,139 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+      "sha256_lf": "6f6b97bf53c6d0aa1ade0c413edb83d583625f8f9f0dbe0dc1f54cd21e5326a4",
+      "exit_code": 0,
+      "headroom_mb": 3634,
+      "syntax": {
+        "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt",
+        "errors": [
+          {
+            "type": "ERROR",
+            "line": 296,
+            "text": ": MobileApiException"
+          },
+          {
+            "type": "ERROR",
+            "line": 297,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 317,
+            "text": ": MobileApiException"
+          },
+          {
+            "type": "ERROR",
+            "line": 318,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 438,
+            "text": "\"messages\"\n                else -> path.substringBefore('/')"
+          }
+        ],
+        "baseline_errors": [
+          {
+            "type": "ERROR",
+            "line": 279,
+            "text": ": MobileApiException"
+          },
+          {
+            "type": "ERROR",
+            "line": 280,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 300,
+            "text": ": MobileApiException"
+          },
+          {
+            "type": "ERROR",
+            "line": 301,
+            "text": ": Exception"
+          },
+          {
+            "type": "ERROR",
+            "line": 418,
+            "text": "\"messages\"\n                else -> path.substringBefore('/')"
+          }
+        ],
+        "changed_fragments": [
+          {
+            "label": "receipt-id-and-unresolved-state",
+            "errors": [],
+            "grammar_limitations": []
+          }
+        ],
+        "whole_file_verified": false,
+        "baseline_same_error_signatures": true
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt",
+      "sha256_lf": "73953c92b456046328937c999b9b05a8759b64fe13a7f1031e1bebab4cb29aa1",
+      "exit_code": 0,
+      "headroom_mb": 3497,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "sha256_lf": "81464ff05df0c92614bc1938e9aa448ee0bae9093702fc4b9a94cb3b63bc0b25",
+      "exit_code": 0,
+      "headroom_mb": 3496,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+      "sha256_lf": "b77f87fb77762667a7d14819ae006875d13c850b1834349acac6378ef173c936",
+      "exit_code": 0,
+      "headroom_mb": 3486,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/core/api.ts",
+      "sha256_lf": "4e26a6f3e067c50a75c192f5754b63b970bdd720421ba8fd5cca18da8ae3f9ab",
+      "exit_code": 0,
+      "headroom_mb": 3640,
+      "syntax": {
+        "file": "web-client/src/core/api.ts",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthKnown.tsx",
+      "sha256_lf": "7ca4fa7ce5df5fcfce0277880ddc1d243df01ee040be5794d6efa8830c02724b",
+      "exit_code": 0,
+      "headroom_mb": 3632,
+      "syntax": {
+        "file": "web-client/src/features/AuthKnown.tsx",
+        "errors": []
+      }
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "a1dd79e79b7030e22c5c97279465d3b22aad1827002e74436e03bc8113cb9ad4",
+      "exit_code": 0,
+      "headroom_mb": 3631,
+      "syntax": {
+        "file": "web-client/src/features/AuthDialog.tsx",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

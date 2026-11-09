@@ -1,0 +1,67 @@
+{
+  "files": [
+    {
+      "file": "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthInput.kt",
+      "sha256_lf": "da4826c86a006196eef53f416c133143ff1e7a3bdb52dbbbf036467fc56971d4",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthCodePages.kt",
+      "sha256_lf": "7c9096395859b50c31dfcaeb4acf82dae8d6714caa4db5d9e5ea613376347a79",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt",
+      "sha256_lf": "70d1b11377c78c694856e387930ad1a17f071e8b36de8b2436d1f7e60ac02c36",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthGuardPages.kt",
+      "sha256_lf": "9bec4131836535939d6a730279426df396efe8a56b42d821847e84560db37c5b",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthKnownPages.kt",
+      "sha256_lf": "adb8964afc80b0885875fe5525e2758df74dbdd085442477defaa8ec399231b8",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ProviderAuthPages.kt",
+      "sha256_lf": "b89fcd9f82aaaa0acb7f5e9826a245a5d1e9148e4268b7be60a594f9777aca58",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ClientAssets.kt",
+      "sha256_lf": "86b6bdfcae55092881919825173a88d41df310e96223e2fec489e1b92f83beff",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "web-client/src/features/AuthCodePages.tsx",
+      "sha256_lf": "277886fa54a775e0741a021aab393aa063ed3fa1f12967a0c0c4f821a44ce179",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "web-client/src/features/AuthDialog.tsx",
+      "sha256_lf": "2763d91742e5b12b7804b15a4186f82a7c993c94c734085cd33a24aca0a108b2",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    },
+    {
+      "file": "web-client/src/core/authInput.ts",
+      "sha256_lf": "0587034eb9ae226739e1890071dbf319a8fe3864c7ce2016af6033058aa65d55",
+      "status": "not_read_low_memory",
+      "headroom_mb": 864
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

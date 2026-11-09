@@ -215,15 +215,36 @@ type Draft struct {
 }
 
 type Notification struct {
-	PushReceipts []PushAcceptance `json:"push_receipts,omitempty"`
-	DeliverAfter *time.Time       `json:"deliver_after,omitempty"`
-	CaseIDs      []int64          `json:"case_ids,omitempty"`
-	Category     string           `json:"category"`
-	Text         string           `json:"text"`
-	TargetKind   Kind             `json:"target_kind"`
-	TargetID     int64            `json:"target_id"`
-	Read         bool             `json:"read"`
-	PushState    string           `json:"push_state"` // queued, suppressed, accepted, delivered
+	EventType     string                   `json:"event_type,omitempty"`
+	TargetVersion *int64                   `json:"target_version,omitempty"`
+	ReplyAnchor   *NotificationReplyAnchor `json:"reply_anchor,omitempty"`
+	PushReceipts  []PushAcceptance         `json:"push_receipts,omitempty"`
+	DeliverAfter  *time.Time               `json:"deliver_after,omitempty"`
+	CaseIDs       []int64                  `json:"case_ids,omitempty"`
+	Category      string                   `json:"category"`
+	Text          string                   `json:"text"`
+	TargetKind    Kind                     `json:"target_kind"`
+	TargetID      int64                    `json:"target_id"`
+	Read          bool                     `json:"read"`
+	PushState     string                   `json:"push_state"` // queued, suppressed, accepted, delivered
+}
+
+type NotificationReplyAnchor struct {
+	Kind    Kind  `json:"kind"`
+	ID      int64 `json:"id"`
+	Version int64 `json:"version"`
+}
+
+// NotificationView excludes delivery schedules, provider receipts and internal case lists.
+type NotificationView struct {
+	Category      string                   `json:"category"`
+	Text          string                   `json:"text"`
+	TargetKind    Kind                     `json:"target_kind"`
+	TargetID      int64                    `json:"target_id"`
+	Read          bool                     `json:"read"`
+	EventType     string                   `json:"event_type,omitempty"`
+	TargetVersion *int64                   `json:"target_version,omitempty"`
+	ReplyAnchor   *NotificationReplyAnchor `json:"reply_anchor,omitempty"`
 }
 
 type MediaFile struct {

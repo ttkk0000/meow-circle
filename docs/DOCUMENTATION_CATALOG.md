@@ -1,7 +1,13 @@
 # M&D 全仓文档目录
 
-更新：2026-11-05。原175份Markdown目录为10月27日同步基线；本轮补齐10月28–30日遗漏的源码／设计交接和文档中心导航证据，并收录文档及Figma两份核对报告。197份已跟踪Markdown中，skills工具文档1份不纳入本目录；其余196份及本轮新增两份报告，共198份已覆盖。目录逐项记录用途与历史范围，不以文件存在认定内容对应功能已运行。当前事实先读[源码基线](CURRENT_BASELINE.md)，功能与未完成项读[交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)，Figma副本见[同步入口](figma-sync/README.md)。
+更新：2026-11-06。10月27日同步基线与11月5日目录核对保留为历史；本轮增加[通知源码交付](client/NOTIFICATION_ALIGNMENT_2026_11_06.md)及关联静态证据入口。目录逐项记录用途与历史范围，不以文件存在认定功能已运行。当前事实先读[源码基线](CURRENT_BASELINE.md)，功能与未完成项读[交付矩阵](PRODUCT_AND_DELIVERY_MATRIX.md)，Figma副本见[同步入口](figma-sync/README.md)。
 
+
+## 2026-11-06 当前源码续作
+
+| 文档 | 说明 |
+|---|---|
+| [通知事件与精确评论定位续作](client/NOTIFICATION_ALIGNMENT_2026_11_06.md) | 重新实现来源、Go／shared／Compose／Web、145／147 schemas与90DTO静态证据；未编译／运行 |
 
 ## 2026-10-28–29 当前增量
 
@@ -12,7 +18,7 @@
 | [邀请协作源码检查点](client/BUSINESS_COLLABORATION_2026_10_28.md) | 带日期源码／静态交付，未运行 |
 | [后台18稿原始交接](design/figma-study/admin-roles-2026-10-28/README.md) | 10月28日基线，后续修订单独记账 |
 | [后台任务交互合同](design/ADMIN_TASK_INTERACTION_2026_10_29.md) | 字段／确认／三结果及失权，设计与接线分层 |
-| [消息事件分类与待办对齐](design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md) | 当前实现差距与目标合同，业务源码未改 |
+| [消息事件分类与待办对齐](design/NOTIFICATION_EVENT_ALIGNMENT_2026_10_29.md) | 10月29日原始差距与目标合同；后续源码交付在正文现行入口 |
 | [协作退出与有限授权补录](design/figma-study/collaboration-2026-10-29/README.md) | 8状态手机／Web16根已记，其余布局待回读 |
 | [后台任务稿与验证证据](design/figma-study/admin-task-interaction-2026-10-29/README.md) | 39任务状态＋1评审索引，非运行验收 |
 | [Figma与文档详细完善交付](client/FIGMA_DOCS_REFINEMENT_2026_10_29.md) | 本轮结果与剩余接线／运行边界 |

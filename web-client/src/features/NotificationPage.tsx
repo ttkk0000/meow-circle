@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Button, Notice, QueryState, TaskPage } from "../components/ui";
-import { api, explain, type RecordData } from "../core/api";
-import { useQuery, reload, invalidateQueries } from "../core/query";
-import { useSession } from "../core/session";
-import { navigate, resourceRoute } from "../core/router";
+import {useState} from "react";
+import {Button, Notice, QueryState, TaskPage} from "../components/ui";
+import {api, explain, type RecordData} from "../core/api";
+import {invalidateQueries, reload, useQuery} from "../core/query";
+import {useSession} from "../core/session";
+import {navigate} from "../core/router";
+import {notificationRoute} from "../core/notification";
 
 /** 通知链接只接受编号；目标与权限都从当前账号的服务器记录重新核对。 */
 export function NotificationPage({ id }: { id: bigint }) {
@@ -16,7 +17,7 @@ export function NotificationPage({ id }: { id: bigint }) {
   const owned =
     !!record && record.id === id && record.owner_id === session.user?.id;
   const target = owned
-    ? resourceRoute(String(record.data.target_kind), record.data.target_id)
+    ? notificationRoute(record.data)
     : undefined;
   async function markRead() {
     if(!owned || !record || record.data.read || busy || result.loading || result.error) return;

@@ -1,0 +1,86 @@
+{
+  "id": "020",
+  "updated": "2026-10-30",
+  "status": "source_written_path_asset_reviewed_final_grammar_pending",
+  "high_fidelity_design_nodes": [
+    "238:371750",
+    "311:380004",
+    "238:371751",
+    "311:380008",
+    "238:371745",
+    "311:379984"
+  ],
+  "scope": [
+    "current-phone proof before new-phone entry",
+    "receipt-bound new-phone input",
+    "phone supplement task",
+    "owner/epoch and eligibility-cache handoff guards"
+  ],
+  "states": [
+    "authChangePhone",
+    "authNewPhone",
+    "authPhoneSupplement"
+  ],
+  "source_hashes_lf": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt": "4c2cffd3a7d474d2e64560b6266dd3d5408af5ecd356439afa0509ae9b255126",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt": "df80eeb987dbd416e574b3bcee2819858fec00ca7aea818f5f45a0829719fda1",
+    "web-client/src/features/AuthPhone.tsx": "cd2a1c250fc2498bb9faf637f5aedaf6a1739649e9212ad1c5d5be901f33267f",
+    "web-client/src/features/Account.tsx": "af2547b7068238d03f72c04fead744ccd44faf7a90e9b2e7d7e576c4086113c3",
+    "web-client/src/components/ui.tsx": "d719ca3c64e3220358eb9ea65fe90626d5d7c41764743c16aa9c244bea0a0a39",
+    "web-client/src/components/PurposeCheck.tsx": "73dbbc0374d4f59895ae5b6bd7794013b3f01b22760318fe93d0e949a76d8889"
+  },
+  "contract_read_hashes_lf": {
+    "internal/identity/email.go": "060146980a91de486811d2d32790352e4c4857c44ae79ad2aee05d068676e638",
+    "internal/identity/service.go": "9b320a57aa44d6e8293ffe2a00d845dd99ac8e47f9a545d61a206aea083b9358",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt": "278c5427de480ce57149b7bf9df7740f3fc4567b9e2bf8a15d554f18145ba7d0",
+    "web-client/src/core/query.ts": "fece076a7c55b38a24f8cff941e5d11a21ca9284291470cea45bd861691bd115"
+  },
+  "static_report": "batch-020-checks-final.json",
+  "syntax_reports": [
+    "batch-020-syntax.json",
+    "batch-020-syntax-final.json",
+    "batch-020-syntax-followup.json"
+  ],
+  "grammar_pending_source_hashes": {
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPhonePages.kt": "4c2cffd3a7d474d2e64560b6266dd3d5408af5ecd356439afa0509ae9b255126",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/SecurityPages.kt": "df80eeb987dbd416e574b3bcee2819858fec00ca7aea818f5f45a0829719fda1",
+    "web-client/src/features/AuthPhone.tsx": "cd2a1c250fc2498bb9faf637f5aedaf6a1739649e9212ad1c5d5be901f33267f",
+    "web-client/src/features/Account.tsx": "af2547b7068238d03f72c04fead744ccd44faf7a90e9b2e7d7e576c4086113c3",
+    "web-client/src/components/PurposeCheck.tsx": "73dbbc0374d4f59895ae5b6bd7794013b3f01b22760318fe93d0e949a76d8889"
+  },
+  "syntax_counts": {
+    "initial_whole_clean": 5,
+    "current_whole_clean": 1,
+    "final_pending": 5,
+    "minimum_headroom_mb": 1024,
+    "final_skip_headroom_mb": [
+      907,
+      746
+    ]
+  },
+  "static_counts": {
+    "shared_sources": 33,
+    "public_ui": 53,
+    "web_sources": 100,
+    "web_imports": 457
+  },
+  "notes": [
+    "Six phone/Web high-fidelity contexts and screenshots inspected. Current-phone change step uses actual masked current phone, actual full-phone field required by the existing server, current-purpose code, notice, recovery assistance and explicit continue. New-phone step has a real phone/code form and the account change remains separately verified and explicitly confirmed.",
+    "Current verification calls the existing verify_phone send purpose and auth/verify-phone, then reads actual eligibility and requires contract_version=1 plus phone_verified. Only that real response advances the step. A UI step flag is not a mutation grant; later account scope, exact target, version, reauthentication and final confirm remain mandatory. No new auth endpoint, local eligibility flag, autosignup or policy was added.",
+    "Phone supplement carries the Figma purpose notice, actual phone/code fields, skip and persistent verify/return action. Already server-verified users retain their no-repeat path. Actual code verification enters the existing confirmed-return stage and never posts the original task.",
+    "Current/new-phone receipts bind owner, address and purpose, require actual positive receipt ID/deadline, reject expired receipt for continuation, respect retry delay and stop timers after expiry/cooldown. Native new email form also uses the actual receipt key. A new message alone never becomes verification or eligibility.",
+    "Web updates the query cache from the actual eligibility response rather than forcing a loading reload that would unmount the change form and lose its completed current-phone step. AccountChange is keyed/gated by owner, clears old render on epoch change, guards late prepare/draft work, and suppresses an old operation's navigation after another epoch. Original unknown-result records remain intact.",
+    "Shared Field accepts optional native inputMode through its actual React attribute type. PurposeCheck keeps its original checkbox copy by default; binding/unbinding explicitly describes the final confirmation button instead. Original assets/tokens/components are reused, with no temporary asset URLs or fake example phone.",
+    "Final path/asset reads pass33shared/53UI/100Web/457 local imports and diff whitespace. The first five grammar reads were clean; four were then adjusted. Final/followup reads were skipped at907/746MiB under the unchanged1024MiB floor. ui.tsx remains current-clean, five current files are explicitly pending (including the newly adjusted PurposeCheck). Account.tsx received a final late-navigation guard after the skip; current hashes are separate. No type checker, compiler, build, tests, application/browser/device launch or runtime/visual acceptance."
+  ],
+  "remaining": [
+    "five current grammar files after normal headroom",
+    "remaining auth and consumer/backend state fidelity",
+    "typed partial-restriction contract",
+    "runtime/visual/platform acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}

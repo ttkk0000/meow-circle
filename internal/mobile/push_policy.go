@@ -99,7 +99,7 @@ func (s *Service) pushAllowed(tx Tx, r Record, n Notification) (bool, error) {
 		return false, nil
 	}
 	if n.Category != "nearby" {
-		return true, nil
+		return s.notificationTargetReadable(tx, r.OwnerID, n)
 	}
 	subscription, e := tx.ByKey(Subscriptions, fmt.Sprint(r.OwnerID))
 	if e == ErrNotFound {

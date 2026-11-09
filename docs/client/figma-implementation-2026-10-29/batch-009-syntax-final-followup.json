@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+      "sha256_lf": "b246688b45fc518d2d9f035ae93a9c5db52401032a7da91c2eae48ac7c4291d6",
+      "exit_code": 0,
+      "headroom_mb": 7500,
+      "syntax": {
+        "file": "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthInformation.kt",
+        "errors": []
+      }
+    }
+  ],
+  "type_checked": false,
+  "tests_executed": false,
+  "runtime_verified": false
+}

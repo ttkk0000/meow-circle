@@ -1,0 +1,61 @@
+{
+  "id": "012",
+  "updated": "2026-10-30",
+  "status": "source_written_static_reviewed_runtime_pending",
+  "high_fidelity_design_nodes": [
+    "238:371768",
+    "311:380076",
+    "238:371720",
+    "238:371744"
+  ],
+  "scope": [
+    "actual-task continuation page",
+    "Web auth owner/epoch change cleanup",
+    "known/restricted contract gap review"
+  ],
+  "source_hashes_lf": {
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/AuthReturnTask.kt": "858f08ba167f38c08c9a337cc4caaed1e9d8a2733fd749168db7a67531c6e9b4",
+    "kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt": "8305989831223e8455a44f44fd7d7510c4fb12497e8a67c2237418517e34c1f5",
+    "kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AuthPages.kt": "edd4a33ccca0a95ff9d11cfe9a85b411da22c7ffb22f7b839511fdc31e6c84c4",
+    "web-client/src/features/AuthDialog.tsx": "ea3160f324227d5b610fe4fe44c68ccd2fa7bd18bed5d2731e38d4853c8a1e49",
+    "web-client/src/features/AuthReturnTask.tsx": "c19e8fdf53ed76a5b8a6ebb5f2dcb85b45e4977377f8be9b2f06a89b4ca496e4",
+    "web-client/src/styles.css": "91ce84e51fc36dbffadf08b35a3ee955e52f7b5bf9a0baa14438df97b4d6af1b"
+  },
+  "static_report": "batch-012-checks.json",
+  "syntax_reports": [
+    "batch-012-syntax.json",
+    "batch-012-fragments.json"
+  ],
+  "syntax_counts": {
+    "files": 5,
+    "whole_files_without_diagnostics": 4,
+    "same_baseline_diagnostic_signatures": 1,
+    "clean_changed_fragments": 3
+  },
+  "static_counts": {
+    "shared_sources": 31,
+    "public_ui": 47,
+    "web_sources": 94,
+    "web_imports": 430
+  },
+  "states": [
+    "authIntentReview"
+  ],
+  "notes": [
+    "Phone and Web intent review use existing 56px rows, 16px spacing and persistent 48px primary action. The product displays its actual suspended task, never the five illustrative prototype tasks or a review-board destination.",
+    "Adoption application, circle editor, direct/group conversation, lost-pet task and nearby alerts derive labels from current typed native state or the actual Web route. Continue only closes auth/restores the original application form; it does not send, publish, approve or subscribe.",
+    "Back from intent review returns to the actual login result. Current owner checks remain enforced; profile and return-review phases stay mutually exclusive. Web route changes dismiss the old login task without restoring an obsolete history entry.",
+    "Web auth observes session epoch, clears previous identifiers, nickname, credentials, consent and completion on unrelated transitions, and ignores old OTP callbacks by generation. Expected password/email and provider login transitions retain their actual completion flow.",
+    "authKnown was read but is not implemented: there is no verified remembered-identity/method contract for the illustrated pre-auth card. authRestricted was read but is not implemented: identity active() currently returns unauthorized for every non-active account, with no typed partial restriction/review summary. Eligibility phone/age reasons must not be represented as moderation sanctions.",
+    "Five grammar reads: four whole files clean, MobileStore retains the same HEAD diagnostic signatures; three changed fragments are clean. No type checking, compilation, tests, browser or device operation was performed."
+  ],
+  "remaining": [
+    "known/restricted typed presentation contracts",
+    "provider linking and account recovery",
+    "remaining consumer/backend states and all platform runtime/visual acceptance"
+  ],
+  "runtime_verified": false,
+  "type_checked": false,
+  "tests_executed": false,
+  "whole_state_complete": false
+}
