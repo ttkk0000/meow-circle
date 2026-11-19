@@ -18,8 +18,14 @@ fun ClientFeatureContent(store: MobileStore, s: FeatureState) {
     val f = store.features
     val route = s.route ?: return
     val sensitive by f.sensitive.state.collectAsState()
+    val deleteScope = accountDeletionScope(sensitive.clientRequestId)
+    val rememberedClose by rememberSessionUiState("closeAccount.active", deleteScope) { false }
     if(route.page == FeaturePage.DataRequests && sensitive.stage != SensitiveStage.Idle) {
-        SensitiveDialog(store,fullPage = true)
+        if (isAccountDeletionSensitive(sensitive, s, store.state.value.user?.id, store.api.sessionEnd, rememberedClose)) {
+            AccountDeletionSensitivePage(store, sensitive, s)
+        } else {
+            SensitiveDialog(store, fullPage = true)
+        }
         return
     }
     if(route.page == FeaturePage.Invitations && store.state.value.user != null) {

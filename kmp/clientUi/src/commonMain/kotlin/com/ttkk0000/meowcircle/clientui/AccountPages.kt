@@ -61,23 +61,80 @@ import kotlinx.serialization.json.JsonPrimitive
             RestrictedResults(f,s)
         }
         FeaturePage.DataRequests -> {
-            if (actor == null) { Text("登录后可发起资料请求。既有受限进度仍可在本设备查询。"); RestrictedResults(f,s); return }
-            ChoiceField(f,s,"type","请求类型",listOf("erase_fields" to "删除指定资料／内容","close_account" to "注销账号","matters_assistance" to "未结事项协助"),"erase_fields")
-            if (f.field("type","erase_fields") == "erase_fields") {
-                listOf("bio" to "个人介绍","avatar" to "头像","nickname" to "昵称").forEach { (key,label) -> CheckLine(label,f.field("delete_$key","false").toBoolean(),{ f.edit("delete_$key",it.toString()) },!s.busy) }
-                SelectionFields(f,s)
-            } else if (f.field("type") == "matters_assistance") SelectionFields(f,s)
-            FormField(f,s,"note","说明与希望获得的协助",lines = 5)
+            var viewingDeleteStatus by rememberSessionUiState("closeAccount.viewingStatus", DATA_REQUEST_UI_SCOPE, s.route) { s.route?.kind == "status" }
+            var lastLookupRef by rememberSessionUiState<RestrictedReference?>("closeAccount.lastLookup", DATA_REQUEST_UI_SCOPE) { null }
+            var lastLookupIsCloseAccount by rememberSessionUiState("closeAccount.lastLookupIsDelete", DATA_REQUEST_UI_SCOPE) { false }
+            val startLookup: (RestrictedReference) -> Unit = { access ->
+                lastLookupRef = access
+                lastLookupIsCloseAccount = (s.dataStatus?.let { it.id == access.id && it.type == "close_account" } == true) ||
+                    (store.api.sessionEnd?.kind == SessionEndKind.AccountRequest && access.type == "data_request")
+                viewingDeleteStatus = access.type == "data_request"
+            }
+            val lookupRef = lastLookupRef?.takeIf { it.type == "data_request" }
+                ?: s.restricted.firstOrNull { route.kind == "status" && it.type == "data_request" && it.id == route.id }
+            val currentDeleteStatus = accountDeletionStatus(s, lookupRef)
+            val knownDeleteContext = lastLookupIsCloseAccount || store.api.sessionEnd?.kind == SessionEndKind.AccountRequest || route.kind == "status"
+            val showDataStatus = lookupRef == null || (!s.busy && s.error == null && s.lookupRequestId == lookupRef.clientRequestId)
+            if (currentDeleteStatus != null && viewingDeleteStatus) {
+                AccountDeletionStatusRouter(store, f, s, currentDeleteStatus) { viewingDeleteStatus = false }
+                return
+            }
+            if (s.busy && viewingDeleteStatus && knownDeleteContext) {
+                Text("正在读取最新注销处理结果", style = PageHeadlineStyle)
+                LinearProgressIndicator(Modifier.fillMaxWidth())
+                TaskNotice("正在核对回执", "正在使用本设备受限查询凭证向服务端确认最新状态，不会重复创建申请。")
+                return
+            }
+            if (s.error != null && viewingDeleteStatus && lookupRef != null && knownDeleteContext) {
+                AccountDeletionLookupFailureCard(f, s, lookupRef) { viewingDeleteStatus = false }
+                return
+            }
+            if (actor == null) {
+                Text("登录后可发起资料请求。既有受限进度仍可在本设备查询。")
+                RestrictedResults(f, s, startLookup, showDataStatus)
+                FeaturePrimary("返回公开浏览", !s.busy) {
+                    store.api.acknowledgeSessionEnd()
+                    f.closeRoute()
+                    store.select(MobileTab.Community)
+                }
+                return
+            }
+            val defaultType = if (route.kind == "close_account") "close_account" else "erase_fields"
+            ChoiceField(f, s, "type", "请求类型", listOf("erase_fields" to "删除指定资料／内容", "close_account" to "注销账号", "matters_assistance" to "未结事项协助"), defaultType)
+            val currentType = f.field("type", defaultType)
+            if (currentType == "erase_fields") {
+                listOf("bio" to "个人介绍", "avatar" to "头像", "nickname" to "昵称").forEach { (key, label) -> CheckLine(label, f.field("delete_$key", "false").toBoolean(), { f.edit("delete_$key", it.toString()) }, !s.busy) }
+                SelectionFields(f, s)
+            } else if (currentType == "matters_assistance") {
+                SelectionFields(f, s)
+            } else {
+                TaskNotice(
+                    "账号注销独立确认",
+                    "选择注销账号后会先核对影响与未完成事项，再完成本次用途验证并由你主动确认提交；受理后会立即退出当前账号，后续仅凭本设备受限凭证查询进度。",
+                )
+                val unconfirmedDeleteRef = s.restricted.firstOrNull { it.type == "data_request" && it.id == 0L }
+                if (unconfirmedDeleteRef != null || s.unconfirmedResult) {
+                    TaskNotice(
+                        "存在待核对的原请求",
+                        "请先从下方本设备受限进度或待核对操作查询原回执，确认结果前不要重复创建新的注销申请。",
+                        warning = true,
+                    )
+                }
+            }
+            FormField(f, s, "note", if (currentType == "close_account") "补充说明（选填）" else "说明与希望获得的协助", lines = if (currentType == "close_account") 3 else 5)
             Text("普通删除、注销与未结事项协助分开处理。分类保全、处理失败或需补充均在进度中显示，不提前显示资料已清除。")
-            FeaturePrimary("核对请求范围",!s.busy) {
-                val type = f.field("type","erase_fields"); val fields = listOf("bio","avatar","nickname").filter { f.field("delete_$it","false").toBoolean() }
+            FeaturePrimary(if (currentType == "close_account") "查看注销影响" else "核对请求范围", !s.busy && !s.unconfirmedResult) {
+                val type = f.field("type", defaultType); val fields = listOf("bio", "avatar", "nickname").filter { f.field("delete_$it", "false").toBoolean() }
                 val selections = selectedData(f)
                 val selected = if (type == "close_account") emptyList() else selections
                 if (type == "erase_fields" && fields.isEmpty() && selected.isEmpty()) f.notify("请选择要删除的资料字段或具体记录")
                 else if (selected.size > 200 || selected.any { it.kind !in selectionKinds(type == "matters_assistance").map { option -> option.first } }) f.notify("所选记录不适用于本次请求，请移除后重新核对")
-                else f.prepareSensitive(SensitiveIntent.DataRequest(DataRequestInput(type,newRequestKey(),"",if(type == "erase_fields") fields else emptyList(),selected,f.field("note"))))
+                else {
+                    if (type == "close_account") viewingDeleteStatus = true
+                    f.prepareSensitive(SensitiveIntent.DataRequest(DataRequestInput(type, newRequestKey(), "", if (type == "erase_fields") fields else emptyList(), selected, f.field("note"))))
+                }
             }
-            RestrictedResults(f,s)
+            RestrictedResults(f, s, startLookup, showDataStatus)
         }
         FeaturePage.Safety -> SafetyFeature(store,s,route)
         FeaturePage.Reviews -> {
@@ -164,22 +221,25 @@ import kotlinx.serialization.json.JsonPrimitive
     }
 }
 
-@Composable private fun RestrictedResults(f: MobileFeatureStore,s: FeatureState) {
+@Composable private fun RestrictedResults(
+    f: MobileFeatureStore,
+    s: FeatureState,
+    onLookupStart: (RestrictedReference) -> Unit = {},
+    showDataStatus: Boolean = true,
+) {
     FeatureSection("本设备受限进度") {
         Text("凭证保存在本机安全存储，不显示或复制到普通表单。")
-        s.restricted.filter { it.type in listOf("data_request","safety_ticket") }.forEach { access -> FeatureButton(if(access.type == "data_request") "查询资料请求 #${access.id.takeIf { it > 0 } ?: "待核对"}" else "查询安全事项 #${access.id.takeIf { it > 0 } ?: "待核对"}",!s.busy) { f.lookup(access) } }
-        s.dataStatus?.let { status ->
-            val progress = status.progress()
-            Text("请求 #${status.id} · ${dataTypeLabel(status.type)}")
-            Text(progress.message, color = if (progress.reviewRequired) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)
-            if (status.progressVersion == 1 && progress.phase != DataRequestPhase.NeedsReconciliation) {
-                Text("已处理 ${status.erased} · 待处理 ${status.pending} · 保全 ${status.held}")
-                if (status.physicalPending > 0) Text("附件物理清理待确认 ${status.physicalPending}")
-                if (status.providerPending > 0) Text("外部账号授权待处理 ${status.providerPending}")
-                if (status.restrictedCopies > 0) Text("仍有 ${status.restrictedCopies} 份受限副本保留")
-                if (status.pendingFields.isNotEmpty()) Text("待处理资料：${status.pendingFields.joinToString { field -> mapOf("bio" to "个人介绍", "avatar" to "头像", "nickname" to "昵称")[field] ?: "其他资料" }}")
+        s.restricted.filter { it.type in listOf("data_request", "safety_ticket") }.forEach { access ->
+            FeatureButton(if (access.type == "data_request") "查询资料请求 #${access.id.takeIf { it > 0 } ?: "待核对"}" else "查询安全事项 #${access.id.takeIf { it > 0 } ?: "待核对"}", !s.busy) {
+                onLookupStart(access)
+                f.lookup(access)
             }
-            progress.nextReviewAt?.let { Text("下次复核 ${displayTime(it)}") }
+        }
+        s.dataStatus?.takeIf { showDataStatus }?.let { status ->
+            DataRequestProgressDetails(status)
+            if (s.route?.page == FeaturePage.Recovery && status.type == "close_account") {
+                FeatureButton("查看注销结果详情", !s.busy) { f.open(FeatureRoute(FeaturePage.DataRequests, id = status.id, kind = "status")) }
+            }
         }
         s.rightsStatus?.let { result ->
             Text("事项 #${result.id} · ${rightsTypeLabel(result.type)}\n${stateLabel(result.state)} · 版本 ${result.version}\n复核日期 ${displayTime(result.reviewDue)}")

@@ -50,11 +50,53 @@ fun ConsumerApp(store: MobileStore, pendingLink: PendingTaskLink? = null, openPe
     val session = uiSession ?: remember { ClientUiSessionState() }
     val owner = state.user?.id ?: 0L
     remember(session, owner) { session.useOwner(owner) }
+    val deleteScope = accountDeletionScope(sensitive.clientRequestId)
+    val rememberedClose by remember(session, owner, deleteScope) { session.field(deleteScope, "closeAccount.active", null) { false } }
+    var deleteStep by remember(session, owner, deleteScope, sensitive.intent) { session.field(deleteScope, "dataStep", sensitive.intent) { "impact" } }
+    var deleteAttempt by remember(session, owner, deleteScope, sensitive.intent) { session.field(deleteScope, "closeAccount.attempt", sensitive.intent) { "" } }
+    var viewingDeleteStatus by remember(session, owner, features.route) { session.field(DATA_REQUEST_UI_SCOPE, "closeAccount.viewingStatus", features.route) { features.route?.kind == "status" } }
+    val lastLookupIsCloseAccount by remember(session, owner) { session.field(DATA_REQUEST_UI_SCOPE, "closeAccount.lastLookupIsDelete", null) { false } }
+    val deleteLookupRef by remember(session, owner) {
+        session.field<RestrictedReference?>(DATA_REQUEST_UI_SCOPE, "closeAccount.lastLookup", null) { null }
+    }
+    val deleteSensitiveActive = features.route?.page == FeaturePage.DataRequests && sensitive.stage != SensitiveStage.Idle &&
+        isAccountDeletionSensitive(sensitive, features, state.user?.id, store.api.sessionEnd, rememberedClose)
+    val deleteSensitiveBusy = deleteSensitiveActive && sensitive.stage in listOf(SensitiveStage.LoadingScope, SensitiveStage.Verifying, SensitiveStage.Submitting)
+    fun handleAccountDeletionBack(): Boolean {
+        if (deleteSensitiveActive) {
+            if (deleteSensitiveBusy) return true
+            val canRetryOriginal = sensitive.stage == SensitiveStage.Failed && sensitive.scope != null && sensitive.intent != null
+            when {
+                sensitive.stage == SensitiveStage.Review && deleteStep == "matters" -> deleteStep = "impact"
+                sensitive.stage == SensitiveStage.Review && deleteStep == "verify" -> deleteStep = "impact"
+                canRetryOriginal && deleteAttempt == "retry_matters" -> { deleteAttempt = "retry_impact"; deleteStep = "impact" }
+                canRetryOriginal && deleteAttempt in listOf("verify_submitted", "retry_verify") -> { deleteAttempt = "retry_impact"; deleteStep = "impact" }
+                canRetryOriginal && deleteAttempt == "retry_impact" -> { deleteAttempt = "submit"; deleteStep = "impact" }
+                sensitive.stage == SensitiveStage.Complete -> {
+                    store.api.acknowledgeSessionEnd()
+                    store.features.sensitive.dismiss()
+                }
+                else -> store.features.sensitive.dismiss()
+            }
+            return true
+        }
+        if (features.route?.page == FeaturePage.DataRequests && sensitive.stage == SensitiveStage.Idle &&
+            viewingDeleteStatus && features.route?.kind != "status" &&
+            (accountDeletionStatus(features, deleteLookupRef) != null ||
+                (features.error != null && deleteLookupRef?.type == "data_request" &&
+                    (lastLookupIsCloseAccount || store.api.sessionEnd?.kind == SessionEndKind.AccountRequest)))
+        ) {
+            viewingDeleteStatus = false
+            return true
+        }
+        return false
+    }
     SideEffect {
         session.retainTransientScopes(buildSet {
             features.route?.let { add(featureUiScope(it)) }
             if(features.route?.page == FeaturePage.Adult) add("transient:age")
             if(features.route?.page == FeaturePage.Guardians) add("transient:guardian")
+            if(features.route?.page == FeaturePage.DataRequests) add(DATA_REQUEST_UI_SCOPE)
             if (state.auth.visible) add("transient:auth")
             if (providerAuth.stage != ProviderAuthStage.Idle) add("transient:provider:${providerAuth.flow}")
             if (sensitive.stage != SensitiveStage.Idle) add("transient:sensitive:${sensitive.clientRequestId}")
@@ -63,15 +105,28 @@ fun ConsumerApp(store: MobileStore, pendingLink: PendingTaskLink? = null, openPe
     }
     platform.BackHandler(providerAuth.stage != ProviderAuthStage.Idle || state.auth.visible || state.publicationConfirmation != null || features.route != null || sensitive.stage != SensitiveStage.Idle || state.destination != MobileDestination.Home || state.applying || state.confirmation != null) {
         when {
-            features.busy || providerAuth.busy && providerAuth.stage != ProviderAuthStage.Authorizing -> Unit
+            features.busy || deleteSensitiveBusy || providerAuth.busy && providerAuth.stage != ProviderAuthStage.Authorizing -> Unit
             providerAuth.stage != ProviderAuthStage.Idle -> store.providerAuth.dismiss()
             state.auth.visible -> store.cancelLogin()
+            handleAccountDeletionBack() -> Unit
             sensitive.stage != SensitiveStage.Idle -> store.features.sensitive.dismiss()
             features.route != null -> backFromFeature(store)
             state.publicationConfirmation != null -> store.dismissPublication()
             else -> store.back()
         }
     }
+    val currentFeatureTitle = featureTitle(
+        s = features,
+        actor = state.user?.id,
+        sensitive = sensitive,
+        sessionEnd = store.api.sessionEnd,
+        deleteStep = deleteStep,
+        deleteAttempt = deleteAttempt,
+        rememberedCloseAccount = rememberedClose,
+        viewingDeleteStatus = viewingDeleteStatus,
+        isDeleteLookupContext = lastLookupIsCloseAccount,
+        deleteLookupRef = deleteLookupRef,
+    )
     CompositionLocalProvider(LocalUiSession provides session, LocalClientPlatform provides platform) { key(owner) { MobileTheme {
         PlatformWindow {
             val density = androidx.compose.ui.platform.LocalDensity.current
@@ -79,7 +134,7 @@ fun ConsumerApp(store: MobileStore, pendingLink: PendingTaskLink? = null, openPe
             val policy = clientWindowPolicy(maxWidth.value, maxHeight.value, density.fontScale, keyboard)
             val navigationLocked = state.busy || features.busy || providerAuth.stage != ProviderAuthStage.Idle || state.auth.visible || state.publicationConfirmation != null ||
                 state.confirmation != null || features.confirmation != null || sensitive.stage != SensitiveStage.Idle
-            MobileShell(store, state, features, policy, navigationLocked, pendingLink, openPendingLink, dismissPendingLink)
+            MobileShell(store, state, features, policy, navigationLocked, pendingLink, openPendingLink, dismissPendingLink, currentFeatureTitle, ::handleAccountDeletionBack, deleteSensitiveBusy)
         }
     } } }
 }
@@ -106,7 +161,10 @@ private fun backFromFeature(store: MobileStore): Boolean {
 
 @Composable
 private fun MobileShell(store: MobileStore, state: MobileState, features: FeatureState, policy: ClientWindowPolicy, navigationLocked: Boolean,
-    pendingLink: PendingTaskLink?, openPendingLink: () -> Unit, dismissPendingLink: () -> Unit) {
+    pendingLink: PendingTaskLink?, openPendingLink: () -> Unit, dismissPendingLink: () -> Unit,
+    currentFeatureTitle: String = featureTitle(features, state.user?.id),
+    onAccountDeletionBack: () -> Boolean = { false },
+    deleteSensitiveBusy: Boolean = false) {
     val f = store.features
     val ageState by f.age.state.collectAsState()
     val providerAuth by store.providerAuth.state.collectAsState()
@@ -147,7 +205,7 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                 } else NavigationRailItem(selected = state.tab == tab, enabled = !navigationLocked,
                     onClick = { select(tab) }, icon = { BadgedBox(badge = { if (tab == MobileTab.Messages && unread != null && unread > 0) Badge { Text(if(unread > 99) "99+" else "$unread") } }) { DesignIcon(tab.designIcon(),tab.label) } }, label = { Text(tab.label) }) }
             }
-            if (policy.contextPane && !showMaster && !showFeatureMaster && !showComposePreview) ContextPane(store, state, features, Modifier.width(224.dp).fillMaxHeight(), enabled = !navigationLocked)
+            if (policy.contextPane && !showMaster && !showFeatureMaster && !showComposePreview) ContextPane(store, state, features, Modifier.width(224.dp).fillMaxHeight(), enabled = !navigationLocked, currentFeatureTitle = currentFeatureTitle)
             Column(Modifier.weight(1f).fillMaxHeight()) {
                 val sharedLink = state.pendingTaskLink?.let { PendingTaskLink(it.target.kind,it.target.id,it.owner) }
                 PendingLinkBanner(pendingLink ?: sharedLink, !navigationLocked && store.canOpenNotification(),
@@ -155,9 +213,9 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                     if (pendingLink != null) dismissPendingLink else store::dismissTaskLink)
                 PendingNotificationBanner(store, state, !navigationLocked && store.canOpenNotification())
                 Row(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                    if (state.publicationConfirmation != null || features.route != null || state.destination != MobileDestination.Home) IconButton(onClick = { if (!backFromFeature(store)) { if (state.publicationConfirmation != null) store.dismissPublication() else store.back() } }, enabled = !state.busy && !features.busy) { Icon(Icons.Outlined.ArrowBack, "返回") }
+                    if (state.publicationConfirmation != null || features.route != null || state.destination != MobileDestination.Home) IconButton(onClick = { if (!onAccountDeletionBack() && !backFromFeature(store)) { if (state.publicationConfirmation != null) store.dismissPublication() else store.back() } }, enabled = !state.busy && !features.busy && !deleteSensitiveBusy) { Icon(Icons.Outlined.ArrowBack, "返回") }
                     Column(Modifier.weight(1f).padding(vertical = 12.dp)) {
-                        Text(if(features.route == null && state.publicationConfirmation != null) "发布前预览" else if(features.route?.page == FeaturePage.Adult) ageStageTitle(ageState.stage) else if(features.route!=null) featureTitle(features,state.user?.id) else if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                        Text(if(features.route == null && state.publicationConfirmation != null) "发布前预览" else if(features.route?.page == FeaturePage.Adult) ageStageTitle(ageState.stage) else if(features.route!=null) currentFeatureTitle else if(state.destination == MobileDestination.Home && state.tab == MobileTab.Community) "M&D" else title(state), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                         if (features.route == null && state.destination == MobileDestination.Home && state.tab == MobileTab.Community) Text("meow & doggie", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     if (showPublishShortcut) MndPublishButton(PublishButtonSize.Shortcut, enabled = !navigationLocked,
@@ -217,11 +275,11 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
 }
 
 @Composable
-fun ContextPane(store: MobileStore, state: MobileState, features: FeatureState, modifier: Modifier, enabled: Boolean = true) {
+fun ContextPane(store: MobileStore, state: MobileState, features: FeatureState, modifier: Modifier, enabled: Boolean = true, currentFeatureTitle: String = featureTitle(features, state.user?.id)) {
     CompositionLocalProvider(LocalTaskNavigationEnabled provides enabled) {
     val f = store.features
     Column(modifier.background(MaterialTheme.colorScheme.surfaceVariant).padding(20.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(if(features.route != null) featureTitle(features,state.user?.id) else state.tab.label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        Text(if(features.route != null) currentFeatureTitle else state.tab.label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         when(state.tab) {
             MobileTab.Community -> {
                 NavigationRow("推荐日常") { f.closeRoute(); store.select(MobileTab.Community); store.filterFeed("community") }

@@ -14,7 +14,18 @@ import com.ttkk0000.meowcircle.client.*
 
 fun readingStatus(status: String) = when(status) { "published" -> "已发布文本";"archived" -> "历史只读文本";"proposed" -> "正在公示，未默认同意";"reference" -> "内容说明";else -> "草案预览，尚未正式生效" }
 private val dataReadingTypes=setOf("privacy","inventory","sdk","providers","retention")
-fun featureTitle(s: FeatureState,actor: Long? = null): String {
+fun featureTitle(
+    s: FeatureState,
+    actor: Long? = null,
+    sensitive: SensitiveActionState? = null,
+    sessionEnd: SessionEnd? = null,
+    deleteStep: String = "impact",
+    deleteAttempt: String = "",
+    rememberedCloseAccount: Boolean = false,
+    viewingDeleteStatus: Boolean = false,
+    isDeleteLookupContext: Boolean = false,
+    deleteLookupRef: RestrictedReference? = null,
+): String {
     val route=s.route ?: return ""
     return when(route.page) {
         FeaturePage.Settings -> notificationSettingsTitle(s)
@@ -60,6 +71,19 @@ fun featureTitle(s: FeatureState,actor: Long? = null): String {
             guardian.state=="verified_pending_consent" -> "监护人授权确认"
             else -> "监护授权与管理"
         }} ?: "监护授权与管理"
+        FeaturePage.DataRequests -> {
+            val status = accountDeletionStatus(s, deleteLookupRef?.takeIf { it.type == "data_request" })
+            when {
+                sensitive != null && sensitive.stage != SensitiveStage.Idle &&
+                    isAccountDeletionSensitive(sensitive, s, actor, sessionEnd, rememberedCloseAccount) ->
+                    accountDeletionSensitiveTitle(sensitive, deleteStep, deleteAttempt)
+                viewingDeleteStatus && status != null -> accountDeletionStatusTitle(status)
+                viewingDeleteStatus && s.error != null &&
+                    (isDeleteLookupContext || sessionEnd?.kind == SessionEndKind.AccountRequest || route.kind == "status") ->
+                    "注销暂未完成"
+                else -> route.page.title
+            }
+        }
         else -> route.page.title
     }
 }
