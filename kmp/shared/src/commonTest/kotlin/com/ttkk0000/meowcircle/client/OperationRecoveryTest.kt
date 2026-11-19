@@ -4,6 +4,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.*
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.*
 
@@ -79,5 +81,251 @@ class OperationRecoveryTest {
         }))
         try { assertFailsWith<MobileApiException> { api.reconcileOperation("still-unknown") };assertEquals("result_unknown",api.recoverableCommands().single().phase) }
         finally { api.close() }
+    }
+
+    private fun authSessionJson(userId: Long, token: String): String =
+        """{"ok":true,"data":{"user":{"id":$userId,"username":"cat$userId","nickname":"猫友$userId"},"token":"$token","refresh_token":"refresh-$token","expires_at":"2026-11-20T00:00:00Z"}}"""
+
+    private fun scopeJson(userId: Long): String =
+        """{"ok":true,"data":{"purpose":"data_request.submit","resource_type":"accounts","resource_id":$userId,"resource_version":0,"scope_hash":"scope-hash","role":"owner"}}"""
+
+    private fun grantJson(): String = """{"ok":true,"data":{"reauth_token":"grant-proof"}}"""
+
+    private fun dataStatusJson(id: Long, type: String, state: String): String =
+        """{"ok":true,"data":{"id":$id,"version":1,"type":"$type","state":"$state","pending":1,"held":0,"external_state":"pending_inventory","progress_version":1}}"""
+
+    @Test
+    fun closeAccountUnknownReconcileWritesReceiptIdAndEndsOriginalSession() = runTest {
+        val vault = Vault()
+        val key = "close_req_unknown_01"
+        val queryToken = "capability_token_0123456789abcdef0123456789abcdef"
+        var writes = 0
+        var lookups = 0
+        val engine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/api/v2/auth/password" -> respond(authSessionJson(7, "sess-1"), headers = headers)
+                "/api/v2/data-requests/scope" -> respond(scopeJson(7), headers = headers)
+                "/api/v2/auth/reauth" -> respond(grantJson(), headers = headers)
+                "/api/v2/data-requests" -> {
+                    writes++
+                    respond("""{"ok":false,"error":"unavailable"}""", HttpStatusCode.ServiceUnavailable, headers)
+                }
+                "/api/v2/data-requests/requests/$key" -> {
+                    lookups++
+                    assertEquals(queryToken, request.headers["X-Request-Access"])
+                    assertNull(request.headers[HttpHeaders.Authorization])
+                    respond(dataStatusJson(42L, "close_account", "processing"), headers = headers)
+                }
+                else -> error("unexpected path ${request.url.encodedPath}")
+            }
+        }
+        val api = MobileApi("https://example.test", vault, "test", HttpClient(engine))
+        val store = SensitiveActionStore(api, backgroundScope)
+        try {
+            api.password("cat7", "unused")
+            val input = DataRequestInput("close_account", key, queryToken)
+            store.prepare(SensitiveIntent.DataRequest(input))
+            store.state.first { it.stage == SensitiveStage.Review }
+            store.verify(password = "unused")
+            store.state.first { it.stage == SensitiveStage.ReadyToSubmit }
+            store.confirm(true)
+            val unknown = store.state.first { it.stage == SensitiveStage.ResultUnknown }
+            assertEquals(key, unknown.clientRequestId)
+            assertEquals(7L, api.user.value?.id)
+            assertEquals(0L, api.limitedRequestAccess().single { it.clientRequestId == key }.id)
+
+            store.reconcile()
+            val done = store.state.first { it.stage == SensitiveStage.Complete }
+            assertEquals(1, writes)
+            assertEquals(1, lookups)
+            assertEquals(42L, done.resultId)
+            assertEquals("data_requests", done.resultKind)
+            assertEquals(key, done.clientRequestId)
+            assertEquals(42L, api.limitedRequestAccess().single { it.clientRequestId == key }.id)
+            assertNull(api.user.value)
+            assertEquals(SessionEndKind.AccountRequest, api.sessionEnd?.kind)
+            assertNull(api.rememberedIdentity)
+        } finally {
+            store.close()
+            api.close()
+        }
+    }
+
+    @Test
+    fun concurrentSameUserLoginOrSwitchOrStaleCallbackDoesNotClearNewSessionOrCredentials() = runTest {
+        val vault = Vault()
+        val key = "close_req_concurrent_01"
+        val queryToken = "capability_token_abcdef0123456789abcdef0123456789"
+        var loginCount = 0
+        val engine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/api/v2/auth/password" -> {
+                    loginCount++
+                    if (loginCount <= 2) respond(authSessionJson(7, "sess-7-$loginCount"), headers = headers)
+                    else respond(authSessionJson(8, "sess-8"), headers = headers)
+                }
+                "/api/v2/data-requests/scope" -> respond(scopeJson(7), headers = headers)
+                "/api/v2/auth/reauth" -> respond(grantJson(), headers = headers)
+                "/api/v2/data-requests" -> respond("""{"ok":false,"error":"timeout"}""", HttpStatusCode.RequestTimeout, headers)
+                "/api/v2/data-requests/requests/$key" -> respond(dataStatusJson(55L, "close_account", "processing"), headers = headers)
+                else -> error("unexpected path ${request.url.encodedPath}")
+            }
+        }
+        val api = MobileApi("https://example.test", vault, "test", HttpClient(engine))
+        val store = SensitiveActionStore(api, backgroundScope)
+        try {
+            api.password("cat7", "unused")
+            val input = DataRequestInput("close_account", key, queryToken)
+            store.prepare(SensitiveIntent.DataRequest(input))
+            store.state.first { it.stage == SensitiveStage.Review }
+            store.verify(password = "unused")
+            store.state.first { it.stage == SensitiveStage.ReadyToSubmit }
+            store.confirm(true)
+            store.state.first { it.stage == SensitiveStage.ResultUnknown }
+
+            // Concurrent login for the same user creates a newer session generation before reconcile.
+            api.password("cat7", "unused")
+            store.reconcile()
+            val done = store.state.first { it.stage == SensitiveStage.Complete }
+            assertEquals(55L, done.resultId)
+            assertEquals(7L, api.user.value?.id)
+            assertNull(api.sessionEnd)
+            assertNotNull(api.rememberedIdentity)
+            assertTrue(vault.value.orEmpty().contains("sess-7-2"))
+            assertEquals(55L, api.limitedRequestAccess().single { it.clientRequestId == key }.id)
+
+            // Account switch also never clears the new user's session or credentials on direct stale reconcile.
+            api.password("cat8", "unused")
+            val switched = api.reconcileDataRequest(input, expectedOwner = 7L, expectedGeneration = 1L)
+            assertFalse(switched.endedOriginalSession)
+            assertEquals(8L, api.user.value?.id)
+            assertNull(api.sessionEnd)
+            assertTrue(vault.value.orEmpty().contains("sess-8"))
+        } finally {
+            store.close()
+            api.close()
+        }
+    }
+
+    @Test
+    fun staleInFlightReconcileCallbackAfterAccountSwitchPreservesNewAccountSession() = runTest {
+        val vault = Vault()
+        val key = "close_req_inflight_01"
+        val queryToken = "capability_token_fedcba9876543210fedcba9876543210"
+        val started = CompletableDeferred<Unit>()
+        val gate = CompletableDeferred<Unit>()
+        var loginCount = 0
+        val engine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/api/v2/auth/password" -> {
+                    loginCount++
+                    if (loginCount == 1) respond(authSessionJson(7, "sess-7"), headers = headers)
+                    else respond(authSessionJson(8, "sess-8"), headers = headers)
+                }
+                "/api/v2/data-requests/scope" -> respond(scopeJson(7), headers = headers)
+                "/api/v2/auth/reauth" -> respond(grantJson(), headers = headers)
+                "/api/v2/data-requests" -> respond("""{"ok":false,"error":"unavailable"}""", HttpStatusCode.ServiceUnavailable, headers)
+                "/api/v2/data-requests/requests/$key" -> {
+                    if (!started.isCompleted) started.complete(Unit)
+                    gate.await()
+                    respond(dataStatusJson(66L, "close_account", "processing"), headers = headers)
+                }
+                else -> error("unexpected path ${request.url.encodedPath}")
+            }
+        }
+        val api = MobileApi("https://example.test", vault, "test", HttpClient(engine))
+        val store = SensitiveActionStore(api, backgroundScope)
+        try {
+            api.password("cat7", "unused")
+            val input = DataRequestInput("close_account", key, queryToken)
+            store.prepare(SensitiveIntent.DataRequest(input))
+            store.state.first { it.stage == SensitiveStage.Review }
+            store.verify(password = "unused")
+            store.state.first { it.stage == SensitiveStage.ReadyToSubmit }
+            store.confirm(true)
+            store.state.first { it.stage == SensitiveStage.ResultUnknown }
+
+            store.reconcile()
+            started.await()
+            api.password("cat8", "unused")
+            gate.complete(Unit)
+            store.state.first { it.stage == SensitiveStage.Idle }
+            assertEquals(8L, api.user.value?.id)
+            assertNull(api.sessionEnd)
+            assertTrue(vault.value.orEmpty().contains("sess-8"))
+        } finally {
+            if (!gate.isCompleted) gate.complete(Unit)
+            store.close()
+            api.close()
+        }
+    }
+
+    @Test
+    fun wrongTypeAndNotFoundKeepUnknownStateAndEraseOrAssistanceKeepSession() = runTest {
+        val vault = Vault()
+        val eraseKey = "erase_req_unknown_01"
+        val assistKey = "assist_req_unknown_01"
+        val eraseToken = "capability_erase_0123456789abcdef0123456789abcdef"
+        val assistToken = "capability_assist_0123456789abcdef0123456789abcdef"
+        var eraseLookups = 0
+        val engine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/api/v2/auth/password" -> respond(authSessionJson(7, "sess-keep"), headers = headers)
+                "/api/v2/data-requests/scope" -> respond(scopeJson(7), headers = headers)
+                "/api/v2/auth/reauth" -> respond(grantJson(), headers = headers)
+                "/api/v2/data-requests" -> respond("""{"ok":false,"error":"unavailable"}""", HttpStatusCode.ServiceUnavailable, headers)
+                "/api/v2/data-requests/requests/$eraseKey" -> when (++eraseLookups) {
+                    1 -> respond("""{"ok":false,"error":"not found","error_code":"not_found"}""", HttpStatusCode.NotFound, headers)
+                    2 -> respond(dataStatusJson(77L, "close_account", "processing"), headers = headers)
+                    else -> respond(dataStatusJson(88L, "erase_fields", "processing"), headers = headers)
+                }
+                "/api/v2/data-requests/requests/$assistKey" -> respond(dataStatusJson(99L, "matters_assistance", "needs_assistance"), headers = headers)
+                else -> error("unexpected path ${request.url.encodedPath}")
+            }
+        }
+        val api = MobileApi("https://example.test", vault, "test", HttpClient(engine))
+        val store = SensitiveActionStore(api, backgroundScope)
+        try {
+            api.password("cat7", "unused")
+            val eraseInput = DataRequestInput("erase_fields", eraseKey, eraseToken, fields = listOf("bio"))
+            store.prepare(SensitiveIntent.DataRequest(eraseInput))
+            store.state.first { it.stage == SensitiveStage.Review }
+            store.verify(password = "unused")
+            store.state.first { it.stage == SensitiveStage.ReadyToSubmit }
+            store.confirm(true)
+            store.state.first { it.stage == SensitiveStage.ResultUnknown }
+
+            store.reconcile()
+            store.state.first { it.stage == SensitiveStage.ResultUnknown && it.error != null }
+            assertEquals(0L, api.limitedRequestAccess().single { it.clientRequestId == eraseKey }.id)
+            assertEquals(7L, api.user.value?.id)
+
+            store.reconcile()
+            store.state.first { it.stage == SensitiveStage.ResultUnknown && it.error == "原请求回执尚待核对，请保留原编号" }
+            assertEquals(0L, api.limitedRequestAccess().single { it.clientRequestId == eraseKey }.id)
+            assertEquals(7L, api.user.value?.id)
+
+            store.reconcile()
+            val eraseDone = store.state.first { it.stage == SensitiveStage.Complete }
+            assertEquals(88L, eraseDone.resultId)
+            assertEquals(88L, api.limitedRequestAccess().single { it.clientRequestId == eraseKey }.id)
+            assertEquals(7L, api.user.value?.id)
+            assertNull(api.sessionEnd)
+
+            val assistInput = DataRequestInput("matters_assistance", assistKey, assistToken, note = "need help")
+            store.prepare(SensitiveIntent.DataRequest(assistInput))
+            store.state.first { it.stage == SensitiveStage.Review }
+            store.confirm(true)
+            store.state.first { it.stage == SensitiveStage.ResultUnknown }
+            store.reconcile()
+            val assistDone = store.state.first { it.stage == SensitiveStage.Complete }
+            assertEquals(99L, assistDone.resultId)
+            assertEquals(99L, api.limitedRequestAccess().single { it.clientRequestId == assistKey }.id)
+            assertEquals(7L, api.user.value?.id)
+            assertNull(api.sessionEnd)
+        } finally {
+            store.close()
+            api.close()
+        }
     }
 }

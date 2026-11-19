@@ -21,9 +21,13 @@ data class SensitiveActionState(val stage: SensitiveStage = SensitiveStage.Idle,
 class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineScope) :
     MviStore<SensitiveActionState, SensitiveStoreIntent, SensitiveStoreEffect>(SensitiveActionState(), parentScope) {
     private var work: Job? = null
+    private var reconcileJob: Job? = null
     private var grant: String? = null // memory only, never included in state or persisted by this owner
     private var revision = 0L
     private var owner = api.user.value?.id
+    private var generation = api.currentAccountGeneration()
+    private var submittedOwner: Long? = null
+    private var submittedGeneration: Long? = null
     private var expectedSignOut = false
 
     override fun accept(intent: SensitiveStoreIntent) {
@@ -40,6 +44,7 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
         scope.launch { api.user.collect { user ->
             if (owner != user?.id) {
                 owner = user?.id
+                generation = api.currentAccountGeneration()
                 if (user == null && expectedSignOut) {
                     expectedSignOut = false
                     grant = null
@@ -52,8 +57,14 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
                 }
                 expectedSignOut = false
                 // API submission methods reconcile their own sent records when cancellation occurs.
-                work?.cancel(); revision++; grant = null
+                work?.cancel(); reconcileJob = null; revision++; grant = null
+                submittedOwner = null; submittedGeneration = null
                 mutable.value = SensitiveActionState()
+            } else if (user != null) {
+                generation = api.currentAccountGeneration()
+                if (mutable.value.stage != SensitiveStage.Submitting) {
+                    expectedSignOut = false
+                }
             }
         } }
     }
@@ -61,7 +72,9 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
     fun prepare(intent: SensitiveIntent) {
         if (mutable.value.stage in listOf(SensitiveStage.Submitting,SensitiveStage.ResultUnknown)) return
         expectedSignOut = false
-        work?.cancel(); grant = null
+        work?.cancel(); reconcileJob = null; grant = null
+        submittedOwner = null; submittedGeneration = null
+        generation = api.currentAccountGeneration()
         val currentRevision = ++revision
         mutable.value = SensitiveActionState(SensitiveStage.LoadingScope)
         work = scope.launch {
@@ -111,8 +124,12 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
         }
         val proof = grant.orEmpty()
         grant = null
+        reconcileJob = null
         val currentRevision = revision
-        val submittedOwner = owner
+        val confirmOwner = owner
+        val confirmGeneration = api.currentAccountGeneration()
+        submittedOwner = confirmOwner
+        submittedGeneration = confirmGeneration
         expectedSignOut = intent is SensitiveIntent.Account || (intent is SensitiveIntent.DataRequest && intent.input.type == "close_account")
         mutable.value = current.copy(stage = SensitiveStage.Submitting,error = null)
         work = scope.launch {
@@ -125,19 +142,38 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
                     is SensitiveIntent.Rights -> "rights_cases" to api.submitSafetyTicket(intent.token,intent.input.copy(reauthToken = proof,confirmed = true),intent.authenticated).id
                 }
                 if (revision == currentRevision) {
+                    submittedOwner = null
+                    submittedGeneration = null
+                    if (api.user.value != null) expectedSignOut = false
                     // Drop credentials and private form data after confirmed success.
                     mutable.value = SensitiveActionState(SensitiveStage.Complete,clientRequestId = intent.key(),resultId = result.second,resultKind = result.first)
                     sendEffect(SensitiveStoreEffect.Completed(intent.key(),result.first,result.second))
                 }
-            } catch (e: CancellationException) { throw e }
+            } catch (e: CancellationException) {
+                expectedSignOut = false
+                throw e
+            }
             catch (e: OperationResultUnknown) {
                 expectedSignOut = false
-                if (revision == currentRevision) mutable.value = if (owner == submittedOwner) current.copy(stage = SensitiveStage.ResultUnknown,error = e.mobileMessage())
-                    else SensitiveActionState(SensitiveStage.ResultUnknown,error = e.mobileMessage(),clientRequestId = intent.key())
+                if (revision == currentRevision) {
+                    if (owner == confirmOwner) {
+                        submittedOwner = confirmOwner
+                        submittedGeneration = confirmGeneration
+                        mutable.value = current.copy(stage = SensitiveStage.ResultUnknown,error = e.mobileMessage())
+                    } else {
+                        submittedOwner = null
+                        submittedGeneration = null
+                        mutable.value = SensitiveActionState(SensitiveStage.ResultUnknown,error = e.mobileMessage(),clientRequestId = intent.key())
+                    }
+                }
             } catch (e: Exception) {
                 expectedSignOut = false
-                if (revision == currentRevision) mutable.value = if (owner == submittedOwner) current.copy(stage = SensitiveStage.Failed,error = e.mobileMessage(),errorCode = (e as? MobileApiException)?.code.orEmpty())
-                    else SensitiveActionState(SensitiveStage.Failed,error = e.mobileMessage(),clientRequestId = intent.key(),errorCode = (e as? MobileApiException)?.code.orEmpty())
+                if (revision == currentRevision) {
+                    submittedOwner = null
+                    submittedGeneration = null
+                    mutable.value = if (owner == confirmOwner) current.copy(stage = SensitiveStage.Failed,error = e.mobileMessage(),errorCode = (e as? MobileApiException)?.code.orEmpty())
+                        else SensitiveActionState(SensitiveStage.Failed,error = e.mobileMessage(),clientRequestId = intent.key(),errorCode = (e as? MobileApiException)?.code.orEmpty())
+                }
             }
         }
     }
@@ -146,14 +182,38 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
         val current = mutable.value
         val intent = current.intent ?: return
         if (current.stage != SensitiveStage.ResultUnknown) return
+        if (reconcileJob?.isActive == true) return
         val currentRevision = revision
-        work = scope.launch {
+        val targetOwner = submittedOwner ?: owner
+        val targetGeneration = submittedGeneration ?: generation
+        work?.cancel()
+        mutable.value = current.copy(error = null)
+        val job = scope.launch {
+            var transitioned = false
             try {
                 val result = when (intent) {
                     is SensitiveIntent.DataRequest -> {
-                        val receipt = api.findDataRequest(intent.key(),intent.input.queryToken)
-                        check(receipt.id > 0 && receipt.type == intent.input.type) { "原请求回执尚待核对，请保留原编号" }
-                        "data_requests" to receipt.id
+                        val resolution = api.reconcileDataRequest(
+                            input = intent.input,
+                            expectedOwner = targetOwner,
+                            expectedGeneration = targetGeneration,
+                            canEndSession = { revision == currentRevision },
+                            onBeforeEndSession = { receipt ->
+                                if (revision == currentRevision) {
+                                    expectedSignOut = true
+                                    transitioned = true
+                                    submittedOwner = null
+                                    submittedGeneration = null
+                                    mutable.value = SensitiveActionState(
+                                        SensitiveStage.Complete,
+                                        clientRequestId = intent.key(),
+                                        resultId = receipt.id,
+                                        resultKind = "data_requests",
+                                    )
+                                }
+                            },
+                        )
+                        "data_requests" to resolution.status.id
                     }
                     is SensitiveIntent.Rights -> {
                         val receipt = api.findSafetyTicket(intent.key(),intent.token)
@@ -168,20 +228,33 @@ class SensitiveActionStore(private val api: MobileApi, parentScope: CoroutineSco
                         receipt.resultKind to receipt.resultId
                     }
                 }
-                if (revision == currentRevision) mutable.value = SensitiveActionState(SensitiveStage.Complete,clientRequestId = intent.key(),resultId = result.second,resultKind = result.first)
-            } catch (e: CancellationException) { throw e }
+                if (revision == currentRevision && !transitioned) {
+                    submittedOwner = null
+                    submittedGeneration = null
+                    if (api.user.value != null) expectedSignOut = false
+                    mutable.value = SensitiveActionState(SensitiveStage.Complete,clientRequestId = intent.key(),resultId = result.second,resultKind = result.first)
+                }
+            } catch (e: CancellationException) {
+                if (!transitioned) expectedSignOut = false
+                throw e
+            }
             catch (e: Exception) {
+                expectedSignOut = false
                 // 404, timeout and temporary service errors retain the original key and unknown result.
                 if (revision == currentRevision) mutable.value = current.copy(error = if (e is MobileApiException && e.status == 404) "暂未查到原请求，结果仍待核对" else e.mobileMessage())
             }
         }
+        work = job
+        reconcileJob = job
     }
 
     fun dismiss() {
         if (mutable.value.stage == SensitiveStage.Submitting) return
-        work?.cancel(); revision++; grant = null; expectedSignOut = false; mutable.value = SensitiveActionState()
+        work?.cancel(); reconcileJob = null; revision++; grant = null; expectedSignOut = false
+        submittedOwner = null; submittedGeneration = null
+        mutable.value = SensitiveActionState()
     }
-    override fun close() { grant = null; work?.cancel(); super.close() }
+    override fun close() { grant = null; work?.cancel(); reconcileJob = null; super.close() }
 
     private suspend fun normalize(intent: SensitiveIntent): SensitiveIntent = when (intent) {
         is SensitiveIntent.Account -> intent.copy(input = intent.input.copy(clientRequestId = intent.input.clientRequestId.ifEmpty(::newRequestKey),reauthToken = ""))

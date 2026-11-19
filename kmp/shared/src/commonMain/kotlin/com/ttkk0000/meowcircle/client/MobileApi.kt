@@ -12,6 +12,8 @@ import io.ktor.http.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
@@ -72,6 +74,40 @@ fun Throwable.mobileMessage(): String = when (this) {
     else -> "暂时无法连接，请检查网络后重试"
 }
 
+private data class PendingDataRequest(
+    val key: String,
+    val type: String,
+    val queryToken: String,
+    val ownerId: Long,
+    val generation: Long,
+)
+
+internal data class DataRequestResolution(
+    val status: DataRequestStatus,
+    val endedOriginalSession: Boolean,
+)
+
+internal fun isConfirmedDataRequestReceipt(expectedType: String, receipt: DataRequestStatus): Boolean {
+    if (receipt.id <= 0 || receipt.type != expectedType) return false
+    val validState = when (expectedType) {
+        "matters_assistance" -> receipt.state in setOf("needs_assistance", "completed")
+        "close_account", "erase_fields" -> receipt.state in setOf("processing", "partially_held", "completed")
+        else -> false
+    }
+    if (!validState) return false
+    val validCounts = listOf(
+        receipt.pending,
+        receipt.held,
+        receipt.erased,
+        receipt.physicalPending,
+        receipt.providerPending,
+        receipt.restrictedCopies,
+    ).all { it >= 0 }
+    if (!validCounts) return false
+    if (receipt.progressVersion != 0 && receipt.progress().phase == DataRequestPhase.NeedsReconciliation) return false
+    return true
+}
+
 private fun mobileJson() = Json { ignoreUnknownKeys = true; encodeDefaults = true; explicitNulls = false }
 
 class MobileApi internal constructor(baseUrl: String, private val secrets: MobileSecretStorage, private val device: String,
@@ -99,6 +135,8 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
     val devicePush: DevicePushCoordinator get() = devicePushDelegate.value
     private var revision = 0L
     private var accountGeneration = 0L
+    private val pendingDataRequests = mutableMapOf<String, PendingDataRequest>()
+    internal fun currentAccountGeneration(): Long = accountGeneration
 
     init { require(root.startsWith("https://") || root.startsWith("http://")) { "Invalid API URL" } }
 
@@ -298,25 +336,116 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         catch (_: Exception) { throw OperationResultUnknown(input.clientRequestId) }
     }
     internal suspend fun submitDataRequestSecure(input: DataRequestInput): MobileRecord<DataRequestBody> {
-        val generation = accountGeneration
-        sessionMutex.withLock {
+        val (owner, generation) = sessionMutex.withLock {
+            val currentOwner = session?.user?.id ?: throw MobileApiException(401, "authentication required")
+            val currentGeneration = accountGeneration
             val old = vault.limitedAccess.firstOrNull { it.type == "data_request" && it.clientRequestId == input.clientRequestId }
             if (old != null && old.token != input.queryToken) throw MobileApiException(409,"query capability changed","idempotency_conflict")
+            val pending = pendingDataRequests[input.clientRequestId]
+            if (pending != null && (pending.type != input.type || pending.queryToken != input.queryToken)) {
+                throw MobileApiException(409, "query capability changed", "idempotency_conflict")
+            }
             if (old == null) {
                 if (vault.limitedAccess.size >= 32) throw MobileStorageException()
                 persist(vault.copy(limitedAccess = vault.limitedAccess + RestrictedAccess("data_request",input.clientRequestId,input.queryToken)))
             }
+            pendingDataRequests[input.clientRequestId] = PendingDataRequest(
+                key = input.clientRequestId,
+                type = input.type,
+                queryToken = input.queryToken,
+                ownerId = currentOwner,
+                generation = currentGeneration,
+            )
+            currentOwner to currentGeneration
         }
         try {
             val result = post<MobileRecord<DataRequestBody>,DataRequestInput>("data-requests",input)
-            sessionMutex.withLock {
-                persist(vault.copy(limitedAccess = vault.limitedAccess.map { if (it.type == "data_request" && it.clientRequestId == input.clientRequestId) it.copy(id = result.id) else it }))
-                if (input.type == "close_account" && accountGeneration == generation) save(null, end = SessionEnd(SessionEndKind.AccountRequest))
+            withContext(NonCancellable) {
+                sessionMutex.withLock {
+                    pendingDataRequests.remove(input.clientRequestId)
+                    persist(vault.copy(limitedAccess = vault.limitedAccess.map {
+                        if (it.type == "data_request" && it.clientRequestId == input.clientRequestId && it.token == input.queryToken) {
+                            it.copy(id = result.id)
+                        } else it
+                    }))
+                    if (input.type == "close_account" && accountGeneration == generation && session?.user?.id == owner) {
+                        save(null, end = SessionEnd(SessionEndKind.AccountRequest))
+                    }
+                }
             }
             return result
         } catch (e: CancellationException) { throw e }
-        catch (e: MobileApiException) { if (e.status < 500 && e.status != 408) throw e; throw OperationResultUnknown(input.clientRequestId) }
+        catch (e: MobileApiException) {
+            if (e.status < 500 && e.status != 408) {
+                withContext(NonCancellable) {
+                    sessionMutex.withLock {
+                        val current = pendingDataRequests[input.clientRequestId]
+                        if (current != null && current.generation == generation && current.ownerId == owner) {
+                            pendingDataRequests.remove(input.clientRequestId)
+                        }
+                    }
+                }
+                throw e
+            }
+            throw OperationResultUnknown(input.clientRequestId)
+        }
         catch (_: Exception) { throw OperationResultUnknown(input.clientRequestId) }
+    }
+
+    internal suspend fun reconcileDataRequest(
+        input: DataRequestInput,
+        expectedOwner: Long? = null,
+        expectedGeneration: Long? = null,
+        canEndSession: () -> Boolean = { true },
+        onBeforeEndSession: (DataRequestStatus) -> Unit = {},
+    ): DataRequestResolution {
+        require(input.clientRequestId.isNotBlank() && input.queryToken.isNotBlank())
+        val receipt = findDataRequest(input.clientRequestId, input.queryToken)
+        check(isConfirmedDataRequestReceipt(input.type, receipt)) { "原请求回执尚待核对，请保留原编号" }
+        currentCoroutineContext().ensureActive()
+        return withContext(NonCancellable) {
+            sessionMutex.withLock {
+                val access = vault.limitedAccess.firstOrNull {
+                    it.type == "data_request" && it.clientRequestId == input.clientRequestId
+                }
+                check(access != null && access.token == input.queryToken) {
+                    "原受限查询凭证不一致，请保留原编号核对"
+                }
+                check(access.id == 0L || access.id == receipt.id) {
+                    "原请求回执编号冲突，请保留原编号核对"
+                }
+                val pending = pendingDataRequests[input.clientRequestId]
+                if (pending != null) {
+                    check(pending.type == input.type && pending.queryToken == input.queryToken) {
+                        "原请求类型或受限凭证不一致，请保留原编号核对"
+                    }
+                }
+                if (access.id == 0L) {
+                    persist(vault.copy(limitedAccess = vault.limitedAccess.map {
+                        if (it.type == "data_request" && it.clientRequestId == input.clientRequestId && it.token == input.queryToken) {
+                            it.copy(id = receipt.id)
+                        } else it
+                    }))
+                }
+                val currentOwner = session?.user?.id
+                val sameSession = pending != null &&
+                    pending.generation == accountGeneration &&
+                    currentOwner != null &&
+                    pending.ownerId == currentOwner &&
+                    (expectedGeneration == null || expectedGeneration == accountGeneration) &&
+                    (expectedOwner == null || expectedOwner == currentOwner) &&
+                    canEndSession()
+                if (pending != null && (sameSession || input.type != "close_account" || accountGeneration != pending.generation || currentOwner != pending.ownerId)) {
+                    pendingDataRequests.remove(input.clientRequestId)
+                }
+                val endOriginal = input.type == "close_account" && sameSession
+                if (endOriginal) {
+                    onBeforeEndSession(receipt)
+                    save(null, end = SessionEnd(SessionEndKind.AccountRequest))
+                }
+                DataRequestResolution(receipt, endOriginal)
+            }
+        }
     }
     suspend fun requestPhoneOTP(phone: String, purpose: String): OTPReceipt = post("auth/otp", PhoneOTPInput(phone, purpose), purpose != "login" && purpose != "recover")
     suspend fun verifyCurrentPhone(code: String): JsonElement = post("auth/verify-phone", buildJsonObject { put("code", code) })

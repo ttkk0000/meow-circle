@@ -181,7 +181,7 @@ class MobileStore(val api: MobileApi, private val ownsApi: Boolean = true, priva
     private fun accountChanged(user: MobileUser?) {
         if(providerAuth.state.value.stage !in setOf(ProviderAuthStage.Checking,ProviderAuthStage.Verifying,ProviderAuthStage.Creating,ProviderAuthStage.Linking)) providerGuest = null
         val previousOwner = _state.value.user?.id
-        val sensitiveSignOut = user == null && previousOwner != null && features.sensitive.state.value.stage == SensitiveStage.Submitting
+        val sensitiveSignOut = user == null && previousOwner != null && (features.sensitive.state.value.stage == SensitiveStage.Submitting || api.sessionEnd?.kind == SessionEndKind.AccountRequest)
         accountEpoch++
         jobs.filterKeys { it != "restore" && it != "capabilities" }.values.forEach { it.cancel() }
         jobs.keys.removeAll { it != "restore" && it != "capabilities" }
