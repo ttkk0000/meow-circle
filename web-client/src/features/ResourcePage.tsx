@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {adoptionActionOptions, adoptionProgressTitle, careStageAvailable, returnActionAllowed,} from "../core/adoption";
 import {AdoptionProgress} from "./AdoptionPages";
 import {ReturnProgress} from "./ReturnPages";
-import {api, explain, type RecordData, type User} from "../core/api";
+import {api, explain, HttpError, type RecordData, type User} from "../core/api";
 import {useSession} from "../core/session";
-import {reload, useQuery} from "../core/query";
+import {invalidateQueries, reload, useQuery} from "../core/query";
 import {navigate} from "../core/router";
 import {integer, key, money} from "../core/wire";
 import {titleOf, usePages} from "../core/pages";
@@ -133,34 +133,163 @@ function actionOptions(
     add("state-action", "close");
   return list;
 }
-export function NotificationCommentPage({kind,id,anchor}: {kind: "entries" | "pets";id: bigint;anchor: ReplyAnchor}) {
+function isAccessRevoked(error: unknown) {
+  return (
+    error instanceof HttpError &&
+    ([401, 404, 410].includes(error.status) ||
+      (error.status === 403 && (!error.code || error.code === "forbidden")))
+  );
+}
+export function NotificationCommentPage({
+  kind,
+  id,
+  anchor,
+}: {
+  kind: "entries" | "pets";
+  id: bigint;
+  anchor: ReplyAnchor;
+}) {
+  const expectedKind = kind === "pets" ? "pet_comments" : "entry_comments";
+  const anchorValid =
+    anchor.kind === expectedKind &&
+    anchor.id > 0n &&
+    anchor.version > 0n &&
+    id > 0n;
   const path = `${anchor.kind}/${anchor.id}`;
-  const result = useQuery<RecordData>(path);
-  const [reply,setReply] = useState<bigint>();
-  const [readStarted,setReadStarted] = useState(false), [revoked,setRevoked] = useState(false);
-  useEffect(() => {setReadStarted(true);void reload(path);},[path]);
+  const listPrefix = `${anchor.kind}?reference_id=${id}&`;
+  const metricsPath = `comment-metrics?kind=${anchor.kind}&ids=${anchor.id}`;
+  const scopeKey = `${kind}:${id}:${anchor.kind}:${anchor.id}:${anchor.version}`;
+  const result = useQuery<RecordData>(anchorValid ? path : null);
+  const [reply, setReply] = useState<bigint>();
+  const [checkedScope, setCheckedScope] = useState("");
+  const [revoked, setRevoked] = useState(false);
+  const activeRef = useRef(true);
+  const readSeq = useRef(0);
+  useEffect(() => {
+    activeRef.current = true;
+    return () => {
+      activeRef.current = false;
+    };
+  }, []);
+  const reread = useCallback(
+    (clearReply = false) => {
+      const seq = ++readSeq.current;
+      setRevoked(false);
+      if (clearReply) setReply(undefined);
+      if (!anchorValid) {
+        setCheckedScope(scopeKey);
+        return;
+      }
+      setCheckedScope("");
+      invalidateQueries(listPrefix);
+      invalidateQueries(metricsPath);
+      void reload(path).finally(() => {
+        if (activeRef.current && readSeq.current === seq)
+          setCheckedScope(scopeKey);
+      });
+    },
+    [anchorValid, listPrefix, metricsPath, path, scopeKey],
+  );
+  useEffect(() => {
+    reread(true);
+  }, [reread]);
+  useEffect(() => {
+    if (result.loading) setRevoked(false);
+  }, [result.loading]);
+  const markRevoked = useCallback(() => {
+    setRevoked(true);
+    setReply(undefined);
+    invalidateQueries(listPrefix);
+  }, [listPrefix]);
   const row = result.data;
-  const matches = !!row && row.id === anchor.id && row.reference_id === id && row.state === "published" &&
-    anchor.kind === (kind === "pets" ? "pet_comments" : "entry_comments");
-  const visible = readStarted && matches && !result.loading && !result.error && !revoked;
-  const unavailable = revoked || result.denied || (!!row && !matches);
-  return <TaskPage title="查看原评论" actions={
-    <Composer kind={kind} id={id} reply={reply} onReplyChange={setReply} canSend={visible} compact allowMedia={false}
-      onSent={() => {setReply(0n);void reload(path);}} />
-  }>
-    {!readStarted || result.loading || (!row && !result.error) ? <Notice title="正在读取评论">正在核对当前内容与可见权限。</Notice> :
-      !visible ? <Notice title={unavailable ? "这条评论当前不可查看" : "暂时无法读取评论"}>
-        <p>{unavailable ? "评论可能已删除或权限已变化，你可返回消息中心核销通知。" : "请重新读取；不会改变已读状态或代你回复。"}</p>
-        <Button kind="quiet" onClick={() => {setRevoked(false);void reload(path);}}>重新读取评论</Button>
-      </Notice> : <>
-        <Notice title={row!.version === anchor.version ? "通知提到的评论" : "评论已更新"}>
-          {row!.version === anchor.version ? "已定位到这条评论；查看不会标为已读或代你回复。" : "以下为当前可见内容，通知记录的是当时进度。"}
+  const matches =
+    anchorValid &&
+    !!row &&
+    row.id === anchor.id &&
+    row.reference_id === id &&
+    row.state === "published";
+  const reading =
+    anchorValid &&
+    (checkedScope !== scopeKey ||
+      result.loading ||
+      (!revoked && !row && !result.error));
+  const visible =
+    !reading && matches && !result.error && !result.denied && !revoked;
+  const unavailable =
+    !anchorValid ||
+    revoked ||
+    !!result.denied ||
+    (!result.error && !!row && !matches);
+  return (
+    <TaskPage
+      title="查看原评论"
+      actions={
+        visible ? (
+          <Composer
+            kind={kind}
+            id={id}
+            reply={reply}
+            onReplyChange={setReply}
+            canSend={visible}
+            compact
+            allowMedia={false}
+            onSent={() => {
+              setReply(0n);
+              reread(false);
+            }}
+            onUnavailable={() => reread(true)}
+          />
+        ) : undefined
+      }
+    >
+      {reading ? (
+        <Notice title="正在读取评论">正在核对当前内容与可见权限。</Notice>
+      ) : !visible ? (
+        <Notice
+          title={unavailable ? "这条评论当前不可查看" : "暂时无法读取评论"}
+        >
+          {unavailable
+            ? "评论可能已删除或权限已变化。返回消息中心后，可单独标为已读。"
+            : "请重新读取；不会改变已读状态或代你回复。"}
         </Notice>
-        <CommentBatch kind={anchor.kind} rows={[row!]} onReply={setReply} />
-        <Comments entry={id} kind={anchor.kind} showTitle={false} reply={reply ?? 0n} onReply={setReply} exclude={anchor.id} onUnavailable={() => setRevoked(true)} />
-      </>}
-    <Button kind="quiet" onClick={() => navigate("/messages")}>返回消息中心</Button>
-  </TaskPage>;
+      ) : (
+        <>
+          <Notice
+            title={
+              row!.version === anchor.version ? "通知提到的评论" : "评论已更新"
+            }
+          >
+            {row!.version === anchor.version
+              ? "已定位到这条评论；查看不会标为已读或代你回复。"
+              : "以下为当前可见内容，通知记录的是当时进度。"}
+          </Notice>
+          <CommentBatch
+            kind={anchor.kind}
+            rows={[row!]}
+            onReply={setReply}
+            onUnavailable={markRevoked}
+          />
+          <Comments
+            entry={id}
+            kind={anchor.kind}
+            showTitle={false}
+            reply={reply ?? 0n}
+            onReply={setReply}
+            exclude={anchor.id}
+            onUnavailable={markRevoked}
+          />
+        </>
+      )}
+      <Button kind="quiet" onClick={() => navigate("/messages")}>
+        返回消息中心
+      </Button>
+      {!reading && !visible ? (
+        <Button kind="quiet" onClick={() => reread(false)}>
+          重新读取评论
+        </Button>
+      ) : null}
+    </TaskPage>
+  );
 }
 
 export function ResourcePage({
@@ -643,16 +772,21 @@ function CommentBatch({
   kind,
   rows,
   onReply,
+  onUnavailable,
 }: {
   kind: "entry_comments" | "pet_comments";
   rows: RecordData[];
   onReply: (id: bigint) => void;
+  onUnavailable?: () => void;
 }) {
   const owner = useSession().user?.id ?? 0n;
   const path = `comment-metrics?kind=${kind}&ids=${rows.map((row) => row.id).join(",")}`;
   const metrics = useQuery<
     Array<{ comment_id: bigint; likes: bigint; viewer_liked: boolean }>
   >(rows.length ? path : null);
+  useEffect(() => {
+    if (metrics.denied) onUnavailable?.();
+  }, [metrics.denied, onUnavailable]);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   async function like(id: bigint, liked: boolean) {
@@ -668,6 +802,10 @@ function CommentBatch({
       });
       await reload(path);
     } catch (e) {
+      if (onUnavailable && isAccessRevoked(e)) {
+        onUnavailable();
+        return;
+      }
       setError(explain(e));
     } finally {
       setBusy(false);

@@ -256,6 +256,7 @@ export function Composer({
   reply,
   onReplyChange,
   onSent,
+  onUnavailable,
   canSend = true,
   allowMedia = true,
   compact = false,
@@ -265,6 +266,7 @@ export function Composer({
   reply?: bigint;
   onReplyChange?: (id: bigint) => void;
   onSent: () => void;
+  onUnavailable?: () => void;
   canSend?: boolean;
   allowMedia?: boolean;
   compact?: boolean;
@@ -588,6 +590,12 @@ export function Composer({
         await persist().catch(() => {});
       }
       setError(explain(e));
+      if (
+        e instanceof HttpError &&
+        ([401, 404, 410].includes(e.status) ||
+          (e.status === 403 && (!e.code || e.code === "forbidden")))
+      )
+        onUnavailable?.();
     } finally {
       setBusy(false);
     }
@@ -675,7 +683,13 @@ export function Composer({
           }
           ref={textarea}
           rows={1}
-          placeholder={compact ? "发送消息…" : undefined}
+          placeholder={
+            compact
+              ? ["entries", "pets"].includes(kind)
+                ? "说点什么…"
+                : "发送消息…"
+              : undefined
+          }
           maxLength={2000}
           value={String(draft?.values.text ?? "")}
           disabled={disabled}
