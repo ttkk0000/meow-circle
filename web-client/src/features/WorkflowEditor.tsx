@@ -22,12 +22,21 @@ import {
 import { api, explain, HttpError, type RecordData } from "../core/api";
 import {
   clearDraft,
+  listCapabilities,
   newDraft,
   readDraft,
   saveDraft,
   type Draft,
   type PhotoDraft,
 } from "../core/drafts";
+import {
+  AccountDeletionWorkflow,
+  handoffDeletionAcceptance,
+  isAccountDeletionDraft,
+  statusFromSubmittedRecord,
+  type AccountDeletionFailureKind,
+  type AccountDeletionStep,
+} from "./AccountDeletionPages";
 import { encodeWire, integer, key, parseWire } from "../core/wire";
 import { navigate } from "../core/router";
 import { invalidateQueries, replaceQueryData } from "../core/query";
@@ -198,11 +207,24 @@ export function WorkflowEditor({
     context.params.get("action") !== "restore"
   )
     formOmit.push("restore_version");
+  const [deleteStep, setDeleteStep] = useState<AccountDeletionStep>("impact");
+  const [deleteFailure, setDeleteFailure] =
+    useState<AccountDeletionFailureKind>();
+  const [deleteFinalConfirmed, setDeleteFinalConfirmed] = useState(false);
+  const [existingDeletionCap, setExistingDeletionCap] = useState("");
   const initial = () => {
     if (!workflow) return {};
     const defaults = schemaDefault(workflow.schema);
     for (const key of formOmit) delete defaults[key];
-    return { ...defaults, ...workflow.initial?.(context) };
+    const requestedType = context.params.get("type") ?? "";
+    const typeOverride =
+      flow === "data" &&
+      ["erase_fields", "close_account", "matters_assistance"].includes(
+        requestedType,
+      )
+        ? { type: requestedType }
+        : {};
+    return { ...defaults, ...workflow.initial?.(context), ...typeOverride };
   };
   useEffect(() => {
     let active = true;
@@ -220,6 +242,10 @@ export function WorkflowEditor({
     setSourceResult(undefined);
     setNotificationView("preferences");
     setNotificationResult(undefined);
+    setDeleteStep("impact");
+    setDeleteFailure(undefined);
+    setDeleteFinalConfirmed(false);
+    setExistingDeletionCap("");
     setError("");
     void readDraft(owner, route)
       .then(async (saved) => {
@@ -290,6 +316,24 @@ export function WorkflowEditor({
         latest.current = restored;
         revision.current = restored.revision;
         setDraft(restored);
+        if (flow === "data" && restored.uncertain && isAccountDeletionDraft(restored)) {
+          setDeleteFailure("result_unknown");
+          setDeleteStep("failure");
+        }
+        if (flow === "data") {
+          void listCapabilities()
+            .then((items) => {
+              if (!active) return;
+              const match = items.find(
+                (item) =>
+                  item.access?.type === "data" &&
+                  item.access.requestId &&
+                  (isAccountDeletionDraft(item) || item.uncertain),
+              );
+              setExistingDeletionCap(match?.access?.requestId ?? "");
+            })
+            .catch(() => {});
+        }
         setRestoring(false);
       })
       .catch((error) => {
@@ -483,6 +527,8 @@ export function WorkflowEditor({
     setError("");
     setGrant("");
     setAgreed(false);
+    setDeleteFailure(undefined);
+    setDeleteFinalConfirmed(false);
     try {
       if (current.photos.some((p) => !p.mediaId) || uploading.size)
         throw new Error("请先完成原照片上传，失败照片可按原编号重试");
@@ -633,6 +679,17 @@ export function WorkflowEditor({
       if (["appointment", "appointment-change"].includes(flow) && body.terms)
         delete (body.terms as Record<string, unknown>).snapshot;
       if (flow === "data") {
+        const requestType = String(body.type ?? "");
+        if (
+          !["erase_fields", "close_account", "matters_assistance"].includes(
+            requestType,
+          )
+        )
+          throw new Error("请选择要办理的资料删除、正式注销或未结事项协助类型");
+        if (requestType === "close_account") {
+          body.fields = [];
+          body.selections = [];
+        }
         const access = await ensureAccess();
         body.query_token = access.token;
       }
@@ -792,6 +849,10 @@ export function WorkflowEditor({
             : "POST"),
         scope,
       });
+      if (flow === "data" && body.type === "close_account") {
+        setDeleteFailure(undefined);
+        setDeleteStep("impact");
+      }
     } catch (error) {
       if (epoch === api.epoch && latest.current?.key === current.key) {
         if (
@@ -807,6 +868,13 @@ export function WorkflowEditor({
         if (epoch !== api.epoch || latest.current?.key !== current.key) return;
         setError(explain(error));
         if (flow === "lead") setLeadStage("failure");
+        if (
+          flow === "data" &&
+          latest.current?.values.type === "close_account"
+        ) {
+          setDeleteFailure("scope_failed");
+          setDeleteStep("failure");
+        }
         if (
           workflow.preview &&
           error instanceof HttpError &&
@@ -917,9 +985,12 @@ export function WorkflowEditor({
     }
   }
   async function submit(leadConfirmed = false) {
+    const isCloseAccount =
+      flow === "data" && prepared?.body.type === "close_account";
     if (
       !prepared ||
       (!agreed && !(flow === "lead" && leadConfirmed)) ||
+      (isCloseAccount && !deleteFinalConfirmed) ||
       busy ||
       readBlocked ||
       (prepared.scope && !grant) ||
@@ -937,6 +1008,10 @@ export function WorkflowEditor({
     }
     setBusy(true);
     setError("");
+    if (isCloseAccount) {
+      setDeleteFailure(undefined);
+      setDeleteStep("submitting");
+    }
     const proof = grant;
     setGrant("");
     const epoch = api.epoch;
@@ -950,18 +1025,32 @@ export function WorkflowEditor({
         ...(prepared.scope ? { reauth_token: proof } : {}),
       };
       const sensitive = !!workflow.scope;
+      const snapshotOriginal = {
+        path: prepared.path,
+        method: prepared.method,
+        body: encodeWire(sensitive ? safeSnapshot(body) : body),
+        replayable: !!workflow.replayable && !sensitive,
+      };
       replace({
         ...latest.current,
         uncertain: true,
-        original: {
-          path: prepared.path,
-          method: prepared.method,
-          body: encodeWire(sensitive ? safeSnapshot(body) : body),
-          replayable: !!workflow.replayable && !sensitive,
-        },
+        original: snapshotOriginal,
       });
       await persist();
       if (!currentTask()) return;
+      if (isCloseAccount && latest.current.access) {
+        const capRoute = `capability:${latest.current.requestId}`;
+        const existingCap = await readDraft(0n, capRoute);
+        const capBase = existingCap ?? newDraft(0n, capRoute);
+        await saveDraft({
+          ...capBase,
+          values: { type: "close_account" },
+          uncertain: true,
+          original: snapshotOriginal,
+          access: latest.current.access,
+        });
+        if (!currentTask()) return;
+      }
       sent = true;
       const headers: Record<string, string> = {};
       if (flow === "settings") headers["Idempotency-Key"] = latest.current!.requestId;
@@ -976,9 +1065,19 @@ export function WorkflowEditor({
         latest.current!.baseVersion, context.record?.id) : undefined;
       const current = latest.current!;
       if (current.access) {
-        const recovery = newDraft(0n, `capability:${current.requestId}`);
-        recovery.access = { ...current.access, id: result?.id };
-        await saveDraft(recovery);
+        const capRoute = `capability:${current.requestId}`;
+        const existingCap = await readDraft(0n, capRoute);
+        const recovery = existingCap ?? newDraft(0n, capRoute);
+        await saveDraft({
+          ...recovery,
+          values:
+            flow === "data"
+              ? { type: String(body.type ?? "close_account") }
+              : recovery.values,
+          uncertain: false,
+          original: undefined,
+          access: { ...current.access, id: result?.id },
+        });
         if (!currentTask()) return;
       }
       const cleared = await clearDraft(current);
@@ -996,8 +1095,15 @@ export function WorkflowEditor({
       }
       invalidateQueries();
       if (flow === "data" && body.type === "close_account") {
+        handoffDeletionAcceptance(
+          current.requestId,
+          statusFromSubmittedRecord(result),
+        );
         api.endSession();
-        navigate("/recovery");
+        navigate(
+          `/recovery?view=close-account&request=${encodeURIComponent(current.requestId)}`,
+          true,
+        );
       } else if (flow === "care") navigate(`/care-collaboration/${context.id}`);
       else if (workflow.after && (result?.id ?? context.id) > 0n)
         navigate(
@@ -1020,8 +1126,23 @@ export function WorkflowEditor({
         [400, 401, 403, 404, 409, 422, 429].includes(error.status));
       if (knownFailure) {
         if (latest.current) {
+          const rejectedRequestId = latest.current.requestId;
           replace({ ...latest.current, uncertain: false, original: undefined });
           await persist().catch(() => {});
+          if (
+            isCloseAccount &&
+            (!sent ||
+              (error instanceof HttpError &&
+                [400, 403, 404, 409, 422, 429].includes(error.status)))
+          ) {
+            const capRoute = `capability:${rejectedRequestId}`;
+            const existingCap = await readDraft(0n, capRoute).catch(
+              () => undefined,
+            );
+            if (existingCap && existingCap.uncertain) {
+              await clearDraft(existingCap).catch(() => {});
+            }
+          }
         }
       }
       if (!currentTask()) return;
@@ -1036,7 +1157,13 @@ export function WorkflowEditor({
         sent && !knownFailure ? "原操作已发送，请先核对结果。" + explain(error) : explain(error),
       );
       if (flow === "lead") setLeadStage("failure");
-      setPrepared(undefined);
+      if (isCloseAccount) {
+        setDeleteFinalConfirmed(false);
+        setDeleteFailure(sent && !knownFailure ? "result_unknown" : "rejected");
+        setDeleteStep("failure");
+      } else {
+        setPrepared(undefined);
+      }
     } finally {
       if (currentTask()) setBusy(false);
     }
@@ -1392,6 +1519,115 @@ export function WorkflowEditor({
       </Modal> : null}
     </>;
   }
+  if (
+    flow === "data" &&
+    draft &&
+    !restoring &&
+    (prepared?.body.type === "close_account" ||
+      (isAccountDeletionDraft(draft) &&
+        (deleteStep === "failure" || draft.uncertain)))
+  ) {
+    return (
+      <AccountDeletionWorkflow
+        owner={owner}
+        draft={draft}
+        scope={prepared?.scope}
+        note={String(prepared?.body.note ?? draft.values.note ?? "")}
+        step={draft.uncertain ? "failure" : deleteStep}
+        busy={busy}
+        error={error}
+        errorCode={commandCode}
+        failureKind={draft.uncertain ? "result_unknown" : deleteFailure}
+        conflict={conflict}
+        blocked={blocked.current}
+        impactAgreed={agreed}
+        grant={grant}
+        finalConfirmed={deleteFinalConfirmed}
+        onStepChange={(next) => {
+          setError("");
+          setDeleteStep(next);
+        }}
+        onImpactAgree={setAgreed}
+        onGrant={setGrant}
+        onFinalConfirm={setDeleteFinalConfirmed}
+        onBackToForm={() => {
+          if (busy || draft.uncertain) return;
+          setPrepared(undefined);
+          setDeleteStep("impact");
+          setDeleteFailure(undefined);
+          setGrant("");
+          setAgreed(false);
+          setDeleteFinalConfirmed(false);
+          setError("");
+        }}
+        onSwitchType={(nextType) => {
+          if (busy || draft.uncertain) return;
+          setPrepared(undefined);
+          setDeleteStep("impact");
+          setDeleteFailure(undefined);
+          setGrant("");
+          setAgreed(false);
+          setDeleteFinalConfirmed(false);
+          setError("");
+          update((old) => ({
+            ...old,
+            values: {
+              ...old.values,
+              type: nextType,
+              ...(nextType === "matters_assistance" ? { fields: [] } : {}),
+            },
+            requestId: key(),
+          }));
+        }}
+        onRetryPrepare={() => void prepare()}
+        onSubmit={() => void submit()}
+        onReconciled={async (status, outcome) => {
+          const current = latest.current;
+          if (!current) return;
+          const capRoute = `capability:${current.requestId}`;
+          const existingCap = await readDraft(0n, capRoute);
+          if (outcome === "accepted") {
+            const capBase =
+              existingCap ??
+              newDraft(0n, capRoute, { type: "close_account" });
+            const access = current.access ?? existingCap?.access;
+            if (access) {
+              await saveDraft({
+                ...capBase,
+                values: { type: "close_account" },
+                uncertain: false,
+                original: undefined,
+                access: { ...access, id: integer(status.id) || access.id },
+              });
+            }
+            const cleared = await clearDraft(current);
+            replace(cleared);
+            revision.current = cleared.revision;
+            setPrepared(undefined);
+            handoffDeletionAcceptance(current.requestId, status);
+            invalidateQueries();
+            api.endSession();
+            navigate(
+              `/recovery?view=close-account&request=${encodeURIComponent(current.requestId)}`,
+              true,
+            );
+          } else {
+            replace({ ...current, uncertain: false, original: undefined });
+            await persist().catch(() => {});
+            if (existingCap && existingCap.uncertain) {
+              await saveDraft({
+                ...existingCap,
+                uncertain: false,
+                original: undefined,
+              }).catch(() => {});
+            }
+            setError("");
+            setDeleteFailure(undefined);
+          }
+        }}
+      />
+    );
+  }
   const reviewAction = context.params.get("action") ?? "";
   const fullPageReview = flow === "data" || flow === "return-action" ||
     flow === "adoption-action" && ["propose_trial", "confirm_trial", "confirm_handover"].includes(reviewAction) ||
@@ -1461,7 +1697,9 @@ export function WorkflowEditor({
             workflow.preview ? setSourceReview(true) : void prepare()
           }
         >
-          核对本次内容
+          {flow === "data" && draft?.values.type === "close_account"
+            ? "查看注销影响"
+            : "核对本次内容"}
         </Button>
       }
     >
@@ -1635,6 +1873,30 @@ export function WorkflowEditor({
       ) : null}
       {draft && flow === "data" ? (
         <>
+          {existingDeletionCap ? (
+            <Notice title="当前浏览器已有待核对的注销受限查询凭证" warning>
+              原请求编号 `{existingDeletionCap}` 已保存在本机受限查询列表中。建议先核对原申请处理进度，避免重复发起正式注销。
+              <Button
+                onClick={() =>
+                  navigate(
+                    `/recovery?view=close-account&request=${encodeURIComponent(existingDeletionCap)}`,
+                  )
+                }
+              >
+                查看本机注销申请进度
+              </Button>
+            </Notice>
+          ) : null}
+          {draft.values.type === "close_account" ? (
+            <Card title="正式注销账号办理说明">
+              <p className="caption muted">
+                正式注销会分五步核对：先查看宠物与日记、未完成事项和必要历史影响，再通过现有绑定手机／密码／已关联第三方方式完成一次性用途验证并勾选最终确认；服务端受理后将立即退出当前会话，并转入本机受限进度页分别展示处理中、最终完成、必要保全或受限副本。
+              </p>
+              <Notice title="只想删除资料或寻求未结事项协助？">
+                若仅需清除头像、昵称、个人介绍或指定内容，请在上方改选「删除部分资料」；若需协调未结领养、预约或争议而不注销账号，请改选「申请未结事项协助」。
+              </Notice>
+            </Card>
+          ) : null}
           {draft.values.type === "erase_fields" ? (
             <Card title="需要处理的个人资料字段">
               {[

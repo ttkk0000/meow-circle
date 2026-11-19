@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, explain, HttpError } from "../core/api";
+import type { DTODataRequestStatus } from "../core/contract";
 import {
   clearDraft,
   listCapabilities,
@@ -10,9 +11,16 @@ import {
   type Draft,
   draftCommandKey,
 } from "../core/drafts";
+import { invalidateQueries } from "../core/query";
 import { useSession } from "../core/session";
-import { navigate, resourceRoute } from "../core/router";
+import { navigate, resourceRoute, useRoute } from "../core/router";
 import { Button, Card, Empty, Notice, TaskPage } from "../components/ui";
+import {
+  AccountDeletionResultPage,
+  analyzeDataRequestProgress,
+  DataRequestProgressBlock,
+  isAccountDeletionDraft,
+} from "./AccountDeletionPages";
 import { stateLabel, workflowURL } from "./workflows";
 import { RetrySubmission } from "../components/RetrySubmission";
 
@@ -23,7 +31,7 @@ interface Receipt {
   result_version: bigint;
   state: string;
 }
-interface LimitedStatus {
+interface LimitedStatus extends DTODataRequestStatus {
   id: bigint;
   version: bigint;
   state: string;
@@ -35,6 +43,13 @@ interface LimitedStatus {
 }
 export function Recovery() {
   const owner = useSession().user?.id ?? 0n;
+  const route = useRoute();
+  const queryIndex = route.indexOf("?");
+  const params = new URLSearchParams(
+    queryIndex >= 0 ? route.slice(queryIndex) : "",
+  );
+  const view = params.get("view") ?? "";
+  const requestParam = params.get("request") ?? "";
   const [rows, setRows] = useState<Draft[]>([]);
   const [capabilities, setCapabilities] = useState<Draft[]>([]);
   const [error, setError] = useState("");
@@ -51,17 +66,27 @@ export function Recovery() {
     ])
       .then(([drafts, capabilities]) => {
         if (active) {
-          setRows(
-            drafts.filter(
-              (d): d is Draft =>
-                !!d &&
-                (!!d.original ||
-                  d.uncertain ||
-                  !!d.photos.length ||
-                  !!Object.keys(d.values).length),
+          const activeRows = drafts.filter(
+            (d): d is Draft =>
+              !!d &&
+              (!!d.original ||
+                d.uncertain ||
+                !!d.photos.length ||
+                !!Object.keys(d.values).length),
+          );
+          const rowRequestIds = new Set(
+            activeRows
+              .map((item) => item.access?.requestId || item.requestId)
+              .filter(Boolean),
+          );
+          setRows(activeRows);
+          setCapabilities(
+            capabilities.filter(
+              (item) =>
+                !item.access?.requestId ||
+                !rowRequestIds.has(item.access.requestId),
             ),
           );
-          setCapabilities(capabilities);
         }
       })
       .catch((e) => {
@@ -71,6 +96,17 @@ export function Recovery() {
       active = false;
     };
   }, [owner, version]);
+  if (view === "close-account" && requestParam) {
+    return (
+      <AccountDeletionResultPage
+        requestId={requestParam}
+        onBackToAll={() => {
+          setVersion((v) => v + 1);
+          navigate("/recovery");
+        }}
+      />
+    );
+  }
   return (
     <TaskPage
       title="本机草稿与待核对事项"
@@ -89,7 +125,11 @@ export function Recovery() {
       ) : null}
       {rows.map((draft) =>
         draft.access ? (
-          <LimitedCard key={draft.key} draft={draft} />
+          <LimitedCard
+            key={draft.key}
+            draft={draft}
+            onChange={() => setVersion((v) => v + 1)}
+          />
         ) : (
           <RecoveryCard
             key={draft.key}
@@ -99,7 +139,11 @@ export function Recovery() {
         ),
       )}
       {capabilities.map((draft) => (
-        <LimitedCard key={draft.key} draft={draft} />
+        <LimitedCard
+          key={draft.key}
+          draft={draft}
+          onChange={() => setVersion((v) => v + 1)}
+        />
       ))}
     </TaskPage>
   );
@@ -218,13 +262,22 @@ function RecoveryCard({
     </Card>
   );
 }
-function LimitedCard({ draft }: { draft: Draft }) {
+function LimitedCard({
+  draft,
+  onChange,
+}: {
+  draft: Draft;
+  onChange?: () => void;
+}) {
   const access = draft.access!;
   const [status, setStatus] = useState<LimitedStatus>();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [backup, setBackup] = useState(false);
   const [missing, setMissing] = useState(false);
+  const isCloseAccount =
+    access.type === "data" &&
+    (status?.type === "close_account" || isAccountDeletionDraft(draft));
   async function check() {
     setBusy(true);
     setError("");
@@ -247,8 +300,31 @@ function LimitedCard({ draft }: { draft: Draft }) {
       const route = `capability:${access.requestId}`;
       const old = await readDraft(0n, route);
       const saved = old ?? newDraft(0n, route);
-      await saveDraft({ ...saved, access: { ...access, id: result.id } });
+      await saveDraft({
+        ...saved,
+        values: result.type
+          ? { ...saved.values, type: result.type }
+          : saved.values,
+        uncertain: false,
+        original: undefined,
+        access: { ...access, id: result.id },
+      });
       setBackup(true);
+      if (
+        !draft.route.startsWith("capability:") &&
+        (draft.uncertain || draft.original) &&
+        result.type === "close_account"
+      ) {
+        await clearDraft(draft);
+        invalidateQueries();
+        api.endSession();
+        onChange?.();
+        navigate(
+          `/recovery?view=close-account&request=${encodeURIComponent(access.requestId)}`,
+          true,
+        );
+        return;
+      }
     } catch (e) {
       if (e instanceof HttpError && e.status === 404) setMissing(true);
       setError(explain(e));
@@ -261,33 +337,59 @@ function LimitedCard({ draft }: { draft: Draft }) {
       title={
         access.type === "safety"
           ? "安全与隐私事项的受限查询"
-          : "资料事项的受限查询"
+          : isCloseAccount
+            ? "账号注销的受限查询"
+            : "资料事项的受限查询"
       }
     >
       <p className="caption muted">
         原编号 {access.requestId} · 只查询当前事项
       </p>
-      <Button onClick={() => void check()} disabled={busy}>
-        凭原受限能力查询进度
-      </Button>
+      <div className="auth-method-links">
+        <Button onClick={() => void check()} disabled={busy}>
+          凭原受限能力查询进度
+        </Button>
+        {isCloseAccount ? (
+          <Button
+            kind="primary"
+            disabled={busy}
+            onClick={() =>
+              navigate(
+                `/recovery?view=close-account&request=${encodeURIComponent(access.requestId)}`,
+              )
+            }
+          >
+            查看注销处理进度与结果页
+          </Button>
+        ) : null}
+      </div>
       {error ? <Notice title={error} error /> : null}
       {missing && draft.original ? (
         <RetrySubmission draft={draft} onDone={() => void check()} />
       ) : null}
       {status ? (
         <>
-          <p>
-            {stateLabel(status.state)} · #{String(status.id)} · 版本{" "}
-            {String(status.version)}
-          </p>
-          {status.review_due ? <p>复核日期 {status.review_due}</p> : null}
-          {status.pending !== undefined ? (
-            <p>
-              待处理 {String(status.pending)} 项 · 保全{" "}
-              {String(status.held ?? 0n)} 项 · 外部处理{" "}
-              {stateLabel(String(status.external_state ?? ""))}
-            </p>
-          ) : null}
+          {access.type === "data" ? (
+            <DataRequestProgressBlock
+              summary={analyzeDataRequestProgress(status)}
+              requestId={access.requestId}
+            />
+          ) : (
+            <>
+              <p>
+                {stateLabel(status.state)} · #{String(status.id)} · 版本{" "}
+                {String(status.version)}
+              </p>
+              {status.review_due ? <p>复核日期 {status.review_due}</p> : null}
+              {status.pending !== undefined ? (
+                <p>
+                  待处理 {String(status.pending)} 项 · 保全{" "}
+                  {String(status.held ?? 0n)} 项 · 外部处理{" "}
+                  {stateLabel(String(status.external_state ?? ""))}
+                </p>
+              ) : null}
+            </>
+          )}
           {access.type === "safety" && backup ? (
             <Button
               onClick={() =>
