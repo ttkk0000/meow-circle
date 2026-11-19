@@ -11,6 +11,7 @@ export interface OperationsContext {
   id: string;
   go: (view: View, id?: string) => void;
   href: (view: View, id?: string) => string;
+  connect: () => void;
 }
 export const Operations = createContext<OperationsContext | null>(null);
 export function useOps() {
@@ -49,6 +50,7 @@ export function OpsLink({
           event.button === 0
         ) {
           event.preventDefault();
+          if (ops.session.forbidden) ops.session.clearForbidden();
           navigate(pagePath(view, id, ops.demo));
         }
       }}

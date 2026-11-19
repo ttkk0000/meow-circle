@@ -387,18 +387,29 @@ export function Access({
 export function SystemState({
   forbidden = false,
   onConnect,
+  returnToReleases = false,
 }: {
   forbidden?: boolean;
   onConnect: () => void;
+  returnToReleases?: boolean;
 }) {
   const { demo, session } = useOps();
+  const connected = !demo && !!session.context;
   return (
     <Panel
-      title={forbidden ? "需要访问授权" : "等待接入环境"}
+      title={
+        forbidden
+          ? "需要访问授权"
+          : connected
+            ? "未连接状态说明"
+            : "等待接入环境"
+      }
       description={
         forbidden
           ? "这里不通过前端按钮状态推断服务端权限。"
-          : "不会把空值显示为健康或成功。"
+          : connected
+            ? `当前已连接 ${session.context!.environment}（账号 ${session.context!.id}）；本页仅展示未连接状态结构。`
+            : "不会把空值显示为健康或成功。"
       }
       className="ops-system-state"
     >
@@ -415,8 +426,10 @@ export function SystemState({
             <Summary label="请求范围">
               {demo
                 ? "staging / 发布管理（示例）"
-                : (session.context?.environment ??
-                  "当前环境 / 以服务端授权为准")}
+                : session.deniedScope ||
+                  (session.context?.environment
+                    ? `${session.context.environment} / 以服务端授权为准`
+                    : "当前环境 / 以服务端授权为准")}
             </Summary>
             <Summary label="请求标识">
               {session.requestID || "状态说明示例；实际拒绝以请求标识为准"}
@@ -443,10 +456,17 @@ export function SystemState({
         )}
         <div className="ops-actions">
           {forbidden ? (
-            <OpsLink view="access" button>
-              查看角色与权限
-            </OpsLink>
-          ) : demo ? (
+            <>
+              {!demo && !session.context ? (
+                <Button kind="primary" onClick={onConnect}>
+                  切换账号重新连接
+                </Button>
+              ) : null}
+              <OpsLink view="access" button>
+                查看角色与权限
+              </OpsLink>
+            </>
+          ) : demo || connected ? (
             <OpsLink view="access" button>
               查看环境配置
             </OpsLink>
@@ -455,6 +475,11 @@ export function SystemState({
               连接环境
             </Button>
           )}
+          {returnToReleases ? (
+            <OpsLink view="releases" button>
+              返回版本与发布
+            </OpsLink>
+          ) : null}
           <OpsLink view="overview" button>
             返回运维总览
           </OpsLink>

@@ -57,7 +57,17 @@ function CommandModal({
       setError(message(e));
       if (e instanceof OpsError && e.status >= 400 && e.status < 500) {
         setPending(undefined);
-        if (e.status === 401 || e.status === 403) session.report(e);
+        if (e.status === 401 || e.status === 403)
+          session.report(
+            e,
+            `${session.context?.environment ?? "当前环境"} / ${title}`,
+          );
+      } else if (
+        e instanceof OpsError &&
+        e.code === "environment_unconfigured"
+      ) {
+        setPending(undefined);
+        session.report(e);
       }
     } finally {
       if (active.current && epoch === session.client.epoch) setBusy(false);
@@ -104,12 +114,20 @@ function CommandModal({
     </Modal>
   );
 }
+const sha256Pattern = /^[a-f0-9]{64}$/;
+const evidencePattern = /^[a-zA-Z0-9][a-zA-Z0-9_./:#-]{2,159}$/;
+const runeCount = (value: string) => Array.from(value).length;
+const hasControlChar = (value: string) =>
+  value.includes("\0") || value.includes("\r");
+
 export function CreateRelease({
   onClose,
   record,
+  onSaved,
 }: {
   onClose: () => void;
   record?: Document<Release>;
+  onSaved?: (row: Document<Release>) => void;
 }) {
   const { go } = useOps(),
     [version, setVersion] = useState(record?.data.version ?? ""),
@@ -117,12 +135,39 @@ export function CreateRelease({
     [backup, setBackup] = useState(record?.data.backup_ref ?? ""),
     [approval, setApproval] = useState(record?.data.approval_ref ?? ""),
     [reason, setReason] = useState(record?.data.reason ?? "");
-  const valid =
-    !!version.trim() &&
-    version.length <= 80 &&
-    !!reason.trim() &&
-    reason.length <= 500 &&
-    (!hash || /^[a-f0-9]{64}$/.test(hash));
+  const trimmedVersion = version.trim(),
+    versionError =
+      record && !trimmedVersion
+        ? "请填写候选版本"
+        : trimmedVersion && (runeCount(trimmedVersion) > 80 || hasControlChar(version))
+          ? "候选版本最多 80 字，且不能包含控制字符"
+          : "",
+    hashError =
+      hash && !sha256Pattern.test(hash)
+        ? "构件摘要须为 64 位小写十六进制 SHA-256"
+        : "",
+    backupError =
+      backup && !evidencePattern.test(backup)
+        ? "备份证据引用须为 3–160 位字母或数字开头的编号（支持 _ . / : # -，不含空格）"
+        : "",
+    approvalError =
+      approval && !evidencePattern.test(approval)
+        ? "审批引用须为 3–160 位字母或数字开头的编号（支持 _ . / : # -，不含空格）"
+        : "",
+    reasonError =
+      record && !reason.trim()
+        ? "请填写变更原因"
+        : reason && (runeCount(reason) > 500 || hasControlChar(reason))
+          ? "变更原因最多 500 字，且不能包含回车控制符"
+          : "",
+    valid =
+      !!trimmedVersion &&
+      !versionError &&
+      !!reason.trim() &&
+      !reasonError &&
+      !hashError &&
+      !backupError &&
+      !approvalError;
   return (
     <CommandModal
       title={record ? "补齐发布资料" : "登记发布准备"}
@@ -131,11 +176,12 @@ export function CreateRelease({
       onClose={onClose}
       onSaved={(row) => {
         onClose();
+        onSaved?.(row as Document<Release>);
         go("release", row.id);
       }}
       buildInput={() => {
         const release = {
-          version: version.trim(),
+          version: trimmedVersion,
           artifact_sha256: hash,
           backup_ref: backup,
           approval_ref: approval,
@@ -149,12 +195,14 @@ export function CreateRelease({
             label="候选版本（必填，最多80字）"
             value={version}
             onChange={setVersion}
+            error={versionError}
             disabled={disabled}
           />
           <Field
             label="不可变构件 SHA-256（可稍后补齐）"
             value={hash}
             onChange={setHash}
+            error={hashError}
             disabled={disabled}
             hint="64位小写十六进制，仅记录摘要，不代表构件已验证。"
           />
@@ -162,6 +210,7 @@ export function CreateRelease({
             label="备份与恢复证据引用"
             value={backup}
             onChange={setBackup}
+            error={backupError}
             disabled={disabled}
             hint="使用工单或证据编号，例如 BACKUP-001，不填写签名下载链接。"
           />
@@ -169,12 +218,15 @@ export function CreateRelease({
             label="外部审批引用"
             value={approval}
             onChange={setApproval}
+            error={approvalError}
             disabled={disabled}
+            hint="使用审批编号，例如 APPROVAL-001（3–160位字母/数字及 _./:#-）。"
           />
           <Field
             label="变更原因（必填，最多500字）"
             value={reason}
             onChange={setReason}
+            error={reasonError}
             multiline
             disabled={disabled}
           />

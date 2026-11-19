@@ -10,6 +10,7 @@ export function useOperations(demo: boolean) {
   const [error, setError] = useState("");
   const [requestID, setRequestID] = useState("");
   const [forbidden, setForbidden] = useState(false);
+  const [deniedScope, setDeniedScope] = useState("");
   const [busy, setBusy] = useState(false);
   const sequence = useRef(0);
   const disconnect = useCallback(() => {
@@ -21,8 +22,12 @@ export function useOperations(demo: boolean) {
     setError("");
     setRequestID("");
     setForbidden(false);
+    setDeniedScope("");
     setBusy(false);
   }, [client]);
+  const clearForbidden = useCallback(() => {
+    setForbidden(false);
+  }, []);
   useEffect(() => {
     disconnect();
     return () => {
@@ -31,18 +36,29 @@ export function useOperations(demo: boolean) {
     };
   }, [demo, disconnect, client]);
   const report = useCallback(
-    (failure: unknown) => {
+    (failure: unknown, scope?: string) => {
       setError(message(failure));
       setRequestID(failure instanceof OpsError ? failure.requestID : "");
       if (
         failure instanceof OpsError &&
-        (failure.status === 401 || failure.status === 403)
+        (failure.status === 401 ||
+          failure.status === 403 ||
+          failure.code === "environment_unconfigured")
       ) {
+        const activeEnv = contextRef.current?.environment;
         client.disconnect();
         setContext(undefined);
         contextRef.current = undefined;
         setSnapshot(undefined);
-        setForbidden(failure.status === 403);
+        if (failure.status === 403) {
+          setForbidden(true);
+          setDeniedScope(
+            scope || (activeEnv ? `${activeEnv} / 以服务端授权为准` : ""),
+          );
+        } else {
+          setForbidden(false);
+          setDeniedScope("");
+        }
       }
     },
     [client],
@@ -157,6 +173,8 @@ export function useOperations(demo: boolean) {
     error,
     requestID,
     forbidden,
+    deniedScope,
+    clearForbidden,
     connect,
     disconnect,
     refresh,

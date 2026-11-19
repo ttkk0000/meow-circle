@@ -47,7 +47,12 @@ export default function OpsApp() {
     params = new URLSearchParams(route.split("?")[1]);
   const demo = params.get("mode") === "demo";
   const selectedID = params.get("id") ?? "",
-    id = /^[a-zA-Z0-9_-]{1,80}$/.test(selectedID) ? selectedID : "";
+    validatedID = /^[a-zA-Z0-9_-]{1,80}$/.test(selectedID) ? selectedID : "",
+    id =
+      validatedID ||
+      (demo && !selectedID && (params.get("view") === "release" || params.get("view") === "confirm")
+        ? "REL-DEMO-004"
+        : "");
   const session = useOperations(demo),
     [connection, setConnection] = useState(false),
     [token, setToken] = useState("");
@@ -69,13 +74,16 @@ export default function OpsApp() {
     : [...sections];
   const active = sectionFor(view),
     data = demo ? demoSnapshot : session.snapshot;
-  const go = (next: View, nextID?: string) =>
+  const openConnect = () => setConnection(true);
+  const go = (next: View, nextID?: string) => {
+    if (session.forbidden && next !== "forbidden") session.clearForbidden();
     navigate(pagePath(next, nextID, demo));
+  };
   const href = (next: View, nextID?: string) =>
     "/app" + pagePath(next, nextID, demo);
   useEffect(() => {
-    document.title = `${titles[view]} · M&D 技术运维`;
-  }, [view, id]);
+    document.title = `${titles[currentView]} · M&D 技术运维`;
+  }, [currentView, id]);
   useEffect(() => {
     if (session.forbidden && view !== "forbidden") go("forbidden");
   }, [session.forbidden, view]);
@@ -101,7 +109,16 @@ export default function OpsApp() {
         : titles[currentView];
   return (
     <Operations.Provider
-      value={{ session, demo, data, view: currentView, id, go, href }}
+      value={{
+        session,
+        demo,
+        data,
+        view: currentView,
+        id,
+        go,
+        href,
+        connect: openConnect,
+      }}
     >
       <>
         <WorkspaceShell
@@ -157,7 +174,7 @@ export default function OpsApp() {
                         "alerts",
                         "audit",
                         "access",
-                      ].includes(view)
+                      ].includes(currentView)
                     }
                     value={profile?.role ?? ""}
                     onChange={(event) => {

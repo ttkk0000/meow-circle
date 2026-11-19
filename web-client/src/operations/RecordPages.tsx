@@ -87,45 +87,93 @@ export function Workers() {
   );
 }
 export function Releases() {
-  const { data, demo, session } = useOps(),
+  const { data, demo, session, connect } = useOps(),
     [create, setCreate] = useState(false),
+    connected = demo || !!session.context,
+    canWrite = !demo && !!session.context?.capabilities.release_write,
     rows = data?.releases.items ?? [];
   return (
     <>
       <div className="ops-page-actions">
-        {demo || session.context?.capabilities.release_write ? (
+        {demo || canWrite ? (
           <Button
             kind="primary"
-            disabled={demo || !session.context?.capabilities.release_write}
+            disabled={demo || !canWrite}
             onClick={() => setCreate(true)}
           >
             登记发布准备
           </Button>
         ) : null}
       </div>
-      <EnvironmentNotice title="发布执行后端尚未接入">
-        可以登记候选构件与核对证据，当前没有部署、重启或回滚的执行能力。
+      <EnvironmentNotice
+        title={
+          !connected
+            ? "尚未连接真实环境"
+            : session.error && !demo
+              ? "读取发布记录未完成（发布执行保持关闭）"
+              : "发布执行后端尚未接入"
+        }
+      >
+        {!connected
+          ? "连接具名运维账号并确认目标环境后，才会读取发布准备记录；当前未接入发布或重启执行器。"
+          : session.error && !demo
+            ? "服务端响应失败或尚未确认；不能将失败或未知状态显示为可发布或已成功。"
+            : demo
+              ? "本页为设计示例，不发送运维请求；可以查看核对结构，无法发起部署或重启。"
+              : canWrite
+                ? "可以登记候选构件与核对证据；当前没有部署、重启或回滚的执行能力。"
+                : "当前账号仅可查看发布准备与前置核对结果（写入需 ops_release）；当前没有部署、重启或回滚的执行能力。"}
       </EnvironmentNotice>
       <div className="ops-metrics">
         <Metric
           label="当前环境版本"
-          value={demo ? "—" : session.context?.version || "—"}
-          hint="来自服务端版本配置，不推断部署成功"
+          value={
+            demo
+              ? "—"
+              : session.context
+                ? session.context.version || "未配置"
+                : "—"
+          }
+          hint={
+            demo
+              ? "设计示例，不代表线上版本"
+              : session.context
+                ? "来自服务端版本配置，不推断部署成功"
+                : "未连接环境，等待回读版本身份"
+          }
         />
         <Metric
           label="候选版本"
           value={rows[0]?.data.version ?? "—"}
-          hint="当前已读列表中的最新准备记录"
+          hint={
+            !connected
+              ? "未连接环境，尚未读取候选版本"
+              : demo
+                ? "演示候选 · 构件摘要未回读"
+                : "当前已读列表中的最新准备记录"
+          }
         />
         <Metric
           label="被阻止记录"
           value={data ? rows.filter((r) => r.state === "blocked").length : "—"}
-          hint="填写引用不等于外部验证通过"
+          hint={
+            !connected
+              ? "未连接环境，不把空值显示为可发布"
+              : "当前已读列表中被阻止记录数；填写引用不等于外部验证通过"
+          }
         />
         <Metric
           label="发布执行权限"
           value="未接入"
-          hint="网页没有服务器命令与部署执行器"
+          hint={
+            !connected
+              ? "未连接环境，且网页没有部署执行器"
+              : demo
+                ? "只读设计示例；权限与审批须由服务端决定"
+                : canWrite
+                  ? "可登记与补齐资料；网页没有部署或重启执行器"
+                  : "当前角色仅只读；网页没有部署或重启执行器"
+          }
         />
       </div>
       <DataTable
@@ -151,13 +199,36 @@ export function Releases() {
         }))}
         more={useMore("releases")}
         loading={session.busy}
-        empty="尚无发布准备记录"
+        empty={
+          !connected
+            ? "尚未连接真实环境"
+            : session.error
+              ? "发布准备记录读取失败"
+              : "尚无发布准备记录"
+        }
+        emptyDescription={
+          !connected
+            ? "连接具名运维账号并授权当前环境后，才会读取发布准备记录。"
+            : session.error
+              ? "请核对上方错误信息与请求标识后重新读取；不能将读取失败当成无记录或已就绪。"
+              : "当前环境尚无已登记的发布准备记录；没有可执行的发布任务。"
+        }
       />
+      {!connected ? (
+        <div className="ops-actions">
+          <Button kind="primary" onClick={connect}>
+            连接真实环境
+          </Button>
+          <OpsLink view="disconnected" button>
+            查看未连接说明
+          </OpsLink>
+        </div>
+      ) : null}
       <p className="ops-caption">
         准备构件 → 核对环境与恢复证据 → 外部审批与验证 →
         执行后端。当前执行后端缺失，所有发布保持关闭。
       </p>
-      {create && session.context ? (
+      {create && canWrite && session.context ? (
         <CreateRelease
           key={session.context.id}
           onClose={() => setCreate(false)}

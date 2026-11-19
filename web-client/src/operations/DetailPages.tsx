@@ -3,7 +3,7 @@ import { Button, Field, Modal } from "../components/ui";
 import { OpsLink, useOps } from "./context";
 import { CreateRelease, IncidentAction } from "./ActionForms";
 import { isCancelled, message, OpsError } from "./client";
-import { EnvironmentNotice } from "./OverviewPages";
+import { EnvironmentNotice, SystemState } from "./OverviewPages";
 import {
   formatTime,
   jobNames,
@@ -65,7 +65,10 @@ function useDocument<T>(kind: Resource) {
         if (active && epoch === session.client.epoch && !isCancelled(e)) {
           setError(message(e));
           if (e instanceof OpsError && (e.status === 401 || e.status === 403))
-            session.report(e);
+            session.report(
+              e,
+              `${session.context?.environment ?? "当前环境"} / ${kind === "releases" ? "发布核对" : "事件处理"}`,
+            );
         }
       })
       .finally(() => {
@@ -84,27 +87,49 @@ function useDocument<T>(kind: Resource) {
       setRemote(undefined);
       setRevision((value) => value + 1);
     },
+    apply: (row: Document<T>) => {
+      setRemote({ id: row.id, epoch: session.client.epoch, record: row });
+    },
   };
 }
 function MissingDetail({
   kind,
   error,
   loading,
+  onRetry,
 }: {
   kind: "releases" | "alerts";
   error: string;
   loading: boolean;
+  onRetry?: () => void;
 }) {
   return (
-    <Panel title={loading ? "正在读取记录" : "请先选择记录"}>
+    <Panel
+      title={
+        loading
+          ? "正在读取记录"
+          : error
+            ? kind === "releases"
+              ? "发布记录读取失败"
+              : "记录读取失败"
+            : "请先选择记录"
+      }
+    >
       <EmptyState
         title={
           error || (loading ? "正在核对权限与记录版本" : "当前没有可展示的详情")
         }
       >
-        <OpsLink view={kind} button>
-          返回列表选择
-        </OpsLink>
+        <div className="ops-actions">
+          {error && onRetry ? (
+            <Button kind="primary" disabled={loading} onClick={onRetry}>
+              重新读取
+            </Button>
+          ) : null}
+          <OpsLink view={kind} button>
+            返回列表选择
+          </OpsLink>
+        </div>
       </EmptyState>
     </Panel>
   );
@@ -116,13 +141,18 @@ function usePreflight(record?: Document<Release>, revision = 0) {
       epoch: number;
       value: Preflight;
     }>(),
-    [error, setError] = useState("");
+    [error, setError] = useState(""),
+    [loading, setLoading] = useState(false);
   useEffect(() => {
     let active = true;
     setState(undefined);
     setError("");
-    if (!record || demo || !session.context) return;
+    if (!record || demo || !session.context) {
+      setLoading(false);
+      return;
+    }
     const epoch = session.client.epoch;
+    setLoading(true);
     void session.client
       .request<Preflight>(`releases/${record.id}/preflight`)
       .then((value) => {
@@ -133,8 +163,14 @@ function usePreflight(record?: Document<Release>, revision = 0) {
         if (active && epoch === session.client.epoch && !isCancelled(e)) {
           setError(message(e));
           if (e instanceof OpsError && (e.status === 401 || e.status === 403))
-            session.report(e);
+            session.report(
+              e,
+              `${session.context?.environment ?? "当前环境"} / 发布前置核对`,
+            );
         }
+      })
+      .finally(() => {
+        if (active) setLoading(false);
       });
     return () => {
       active = false;
@@ -180,23 +216,46 @@ function usePreflight(record?: Document<Release>, revision = 0) {
         ? state?.value
         : undefined),
     error,
+    loading,
   };
+}
+function latestRelease(
+  record: Document<Release>,
+  preflight?: Preflight,
+): Document<Release> {
+  if (
+    preflight &&
+    preflight.release.id === record.id &&
+    BigInt(preflight.release.version) >= BigInt(record.version)
+  ) {
+    return preflight.release;
+  }
+  return record;
 }
 export function ReleaseDetail() {
   const [editing, setEditing] = useState(false);
-  const { demo, id, session } = useOps(),
+  const { demo, session, connect } = useOps(),
     detail = useDocument<Release>("releases"),
-    { preflight, error } = usePreflight(detail.record, detail.revision),
+    { preflight, error, loading: preflightLoading } = usePreflight(
+      detail.record,
+      detail.revision,
+    ),
     record = detail.record;
+  if (!demo && !session.context)
+    return <SystemState onConnect={connect} returnToReleases />;
   if (!record)
     return (
       <MissingDetail
         kind="releases"
         error={detail.error}
         loading={detail.loading}
+        onRetry={detail.reload}
       />
     );
-  const r = record.data;
+  const activeRecord = latestRelease(record, preflight),
+    r = activeRecord.data,
+    canWrite = !demo && !!session.context?.capabilities.release_write,
+    canEdit = canWrite && activeRecord.state === "blocked";
   return (
     <>
       <div className="ops-page-actions">
@@ -204,36 +263,78 @@ export function ReleaseDetail() {
           返回发布记录
         </OpsLink>
       </div>
-      <EnvironmentNotice title="当前发布被前置条件阻止">
-        当前记录 {id}。没有发布执行器；填写摘要或证据引用不代表通过外部核验。
+      <EnvironmentNotice
+        title={
+          error
+            ? "前置核对读取失败（发布保持阻止）"
+            : preflightLoading
+              ? "正在读取服务端前置核对（发布保持阻止）"
+              : activeRecord.state === "blocked"
+                ? "当前发布被前置条件阻止"
+                : `当前发布状态：${stateLabel(activeRecord.state)}（未接入执行器）`
+        }
+      >
+        {error
+          ? `当前记录 ${activeRecord.id} 未能读取服务端前置核对结论，不推算为可发布或已成功；请重新读取核对。`
+          : `当前记录 ${activeRecord.id}（记录版本 v${activeRecord.version}）。没有发布或重启执行器；填写摘要或证据引用不代表通过外部核验。`}
       </EnvironmentNotice>
       <div className="ops-columns">
-        <Panel title="发布对象" description="候选版本和目标必须保持一致">
+        <Panel
+          title="发布对象"
+          description="环境、版本、构件摘要、备份恢复与审批证据分别展示与核对"
+        >
           <dl>
-            <Summary label="候选版本 / 来源">
-              {r.version} / {r.creator}
+            <Summary label="目标环境">
+              {demo
+                ? "staging · 占位 / mnd.example.invalid"
+                : `${session.context?.environment || "未配置"} / ${session.context?.origin || "域名未配置"}`}
             </Summary>
-            <Summary label="目标环境 / 构件摘要">
-              {demo ? "staging · 占位" : session.context?.environment} /{" "}
-              <span className="ops-wrap">{r.artifact_sha256 || "未提供"}</span>
+            <Summary label="候选版本与记录状态">
+              {r.version} · 登记人 {r.creator} · 记录 v{activeRecord.version} ·{" "}
+              <Status state={activeRecord.state} />
+            </Summary>
+            <Summary label="构件摘要（SHA-256）">
+              <code className="ops-wrap">{r.artifact_sha256 || "未提供"}</code>
+            </Summary>
+            <Summary label="备份恢复证据">
+              <span className="ops-wrap">{r.backup_ref || "未提供"}</span>
+            </Summary>
+            <Summary label="外部审批证据">
+              <span className="ops-wrap">{r.approval_ref || "未提供"}</span>
+            </Summary>
+            <Summary label="变更原因">
+              <span className="ops-wrap">{r.reason || "未提供"}</span>
             </Summary>
           </dl>
         </Panel>
-        <Panel title="执行门槛" description="不可用状态说明缺项">
-          <ol className="ops-checklist">
-            {(preflight?.checks ?? []).map((check, i) => (
-              <li key={check.id}>
-                <strong>
-                  {String(i + 1).padStart(2, "0")} {check.label}
-                </strong>
-                <small>{check.detail}</small>
-              </li>
-            ))}
-          </ol>
+        <Panel
+          title="执行门槛"
+          description="不可用、未读取或失败状态均明确阻止，不能只禁用按钮"
+        >
+          {preflightLoading && !preflight ? (
+            <p className="ops-caption" role="status">
+              正在读取服务端前置核对与执行门槛…
+            </p>
+          ) : null}
+          {preflight?.checks.length ? (
+            <ol className="ops-checklist">
+              {preflight.checks.map((check, i) => (
+                <li key={check.id}>
+                  <strong>
+                    {String(i + 1).padStart(2, "0")} {check.label}{" "}
+                    <Status state={check.state} />
+                  </strong>
+                  <small>{check.detail}</small>
+                </li>
+              ))}
+            </ol>
+          ) : null}
           {error ? (
             <OpsNotice title="核对结果未读取" error>
-              {error}
-              <Button onClick={detail.reload}>重新读取</Button>
+              <p>{error}</p>
+              <Button disabled={detail.loading} onClick={detail.reload}>
+                重新读取
+              </Button>
             </OpsNotice>
           ) : null}
         </Panel>
@@ -243,7 +344,18 @@ export function ReleaseDetail() {
         columns={["核对项", "证据来源", "当前结果", "放行状态", "下一步"]}
         dense
         hideFilters
-        empty="正在等待服务端前置核对"
+        empty={
+          error
+            ? "前置核对读取失败"
+            : preflightLoading
+              ? "正在等待服务端前置核对"
+              : "暂无服务端前置核对项"
+        }
+        emptyDescription={
+          error
+            ? "未能读取服务端核对结论，不推算为可发布或已验证；请点击上方重新读取。"
+            : "等待服务端返回四项前置核对结果；缺失、仅引用待验证及执行器未接入均保持阻止。"
+        }
         rows={(preflight?.checks ?? []).map((check) => ({
           key: check.id,
           state: check.state,
@@ -260,54 +372,99 @@ export function ReleaseDetail() {
             check.detail,
             <Status state={check.state} />,
             check.id === "environment" ? (
-              <OpsLink view="access">查看环境信息 →</OpsLink>
+              <OpsLink view="access">查看环境与权限 →</OpsLink>
             ) : check.id === "artifact" ? (
-              <OpsLink view="migrations">查看迁移账本 →</OpsLink>
+              check.state === "missing" && canEdit ? (
+                <Button kind="quiet" onClick={() => setEditing(true)}>
+                  补齐不可变构件摘要 →
+                </Button>
+              ) : (
+                <OpsLink view="migrations">查看迁移账本 →</OpsLink>
+              )
+            ) : check.id === "recovery" ? (
+              check.state === "missing" && canEdit ? (
+                <Button kind="quiet" onClick={() => setEditing(true)}>
+                  补齐恢复证据与审批 →
+                </Button>
+              ) : check.state === "missing" ? (
+                demo ? (
+                  "补齐恢复证据与审批"
+                ) : (
+                  "需 ops_release 角色补齐引用"
+                )
+              ) : (
+                "等待外部备份／审批核验接入"
+              )
             ) : (
-              "等待外部接入"
+              "执行器未接入（保持禁用）"
             ),
           ],
         }))}
       />
       <div className="ops-actions ops-actions-split">
         <div className="ops-actions">
-          <OpsLink view="confirm" id={record.id} button>
+          <OpsLink view="confirm" id={activeRecord.id} button>
             查看发布确认
           </OpsLink>
-          {demo || session.context?.capabilities.release_write ? (
+          {demo || canWrite ? (
             <Button
-              disabled={demo || !session.context?.capabilities.release_write}
+              disabled={demo || !canEdit}
               onClick={() => setEditing(true)}
             >
               补齐发布资料
             </Button>
           ) : null}
         </div>
-        {demo || session.context?.capabilities.release_write ? (
-          <Button disabled>执行发布</Button>
-        ) : null}
+        {demo || canWrite ? <Button disabled>执行发布</Button> : null}
       </div>
-      {editing && session.context?.capabilities.release_write ? (
+      {!demo && !canWrite ? (
+        <p className="ops-caption">
+          当前账号无发布资料写入权限（需 ops_release）；网页没有发布或重启执行器，仅可查看核对详情。
+        </p>
+      ) : null}
+      {editing && canEdit && session.context ? (
         <CreateRelease
-          key={`${record.id}:${record.version}:${session.context.id}`}
-          record={record}
+          key={`${activeRecord.id}:${activeRecord.version}:${session.context.id}`}
+          record={activeRecord}
           onClose={() => setEditing(false)}
+          onSaved={(row) => detail.apply(row)}
         />
       ) : null}
     </>
   );
 }
 export function ConfirmRelease() {
-  const { demo, session } = useOps(),
-    { record, error, loading } = useDocument<Release>("releases"),
-    { preflight, error: preflightError } = usePreflight(record),
+  const { demo, session, connect } = useOps(),
+    detail = useDocument<Release>("releases"),
+    record = detail.record,
+    { preflight, error: preflightError, loading: preflightLoading } =
+      usePreflight(record, detail.revision),
     [reason, setReason] = useState(""),
     [target, setTarget] = useState("");
+  if (!demo && !session.context)
+    return <SystemState onConnect={connect} returnToReleases />;
   if (!record)
-    return <MissingDetail kind="releases" error={error} loading={loading} />;
-  const environment = demo
-    ? "staging"
-    : (session.context?.environment ?? "未配置");
+    return (
+      <MissingDetail
+        kind="releases"
+        error={detail.error}
+        loading={detail.loading}
+        onRetry={detail.reload}
+      />
+    );
+  const activeRecord = latestRelease(record, preflight),
+    environment = demo
+      ? "staging"
+      : (session.context?.environment ?? "未配置"),
+    canWrite = !demo && !!session.context?.capabilities.release_write,
+    targetError =
+      target && target.trim() !== environment
+        ? `输入与当前固定环境 ${environment} 不一致；且即使一致也不授予执行权限。`
+        : "",
+    unmetChecks =
+      preflight?.checks
+        .filter((c) => c.state !== "verified")
+        .map((c) => `${c.label}（${stateLabel(c.state)}）`) ?? [];
   return (
     <Panel
       title="确认发布申请"
@@ -315,7 +472,13 @@ export function ConfirmRelease() {
       className="ops-confirm"
     >
       <div className="ops-confirm-status">
-        <Status state="blocked" />
+        {preflightError ? (
+          <Status state="failed">核对读取失败</Status>
+        ) : preflightLoading && !preflight ? (
+          <Status state="unknown">正在核对</Status>
+        ) : (
+          <Status state={activeRecord.state} />
+        )}
       </div>
       <dl className="ops-columns">
         <Summary label="目标环境">
@@ -324,44 +487,74 @@ export function ConfirmRelease() {
             ? "mnd.example.invalid"
             : session.context?.origin || "域名未配置"}
         </Summary>
-        <Summary label="候选版本与构件">
-          {record.data.version} /{" "}
+        <Summary label="候选版本">
+          {activeRecord.data.version} · {activeRecord.id}
+        </Summary>
+        <Summary label="构件摘要（SHA-256）">
+          <code className="ops-wrap">
+            {activeRecord.data.artifact_sha256 || "摘要未提供"}
+          </code>
+        </Summary>
+        <Summary label="备份与恢复证据">
           <span className="ops-wrap">
-            {record.data.artifact_sha256 || "摘要未提供"}
+            {activeRecord.data.backup_ref || "备份未提供"}
           </span>
         </Summary>
-        <Summary label="审批与恢复证据">
-          {record.data.backup_ref || "备份未提供"} /{" "}
-          {record.data.approval_ref || "审批未提供"}
+        <Summary label="外部审批证据">
+          <span className="ops-wrap">
+            {activeRecord.data.approval_ref || "审批未提供"}
+          </span>
         </Summary>
         <Summary label="影响范围">API 与 worker / 范围待外部核对</Summary>
       </dl>
+      {!demo && !canWrite ? (
+        <p className="ops-caption">
+          当前账号无发布准备写入权限（需 ops_release），且发布执行器尚未接入；本页仅用于只读核对。
+        </p>
+      ) : null}
       <div className="ops-form">
         <Field
           label="操作原因（仅本页核对）"
           multiline
           value={reason}
           onChange={setReason}
+          disabled={!demo && !canWrite}
+          placeholder="填写本次变更目的、风险与观察计划；不要输入密码或Token。"
           hint="本页输入不持久化、不提交；不要输入密码或Token。"
         />
         <Field
           label={`确认目标环境：${environment}`}
           value={target}
           onChange={setTarget}
+          disabled={!demo && !canWrite}
+          placeholder={`输入 ${environment} 以核对目标环境`}
+          error={targetError}
           hint="输入环境名仅用于人工核对，不会授予执行权限。"
         />
       </div>
-      <OpsNotice title="执行条件尚未满足">
-        {preflightError ||
-          (preflight?.checks
-            .filter((c) => c.state !== "verified")
-            .map((c) => c.label)
-            .join("、") ??
-            "前置核对结果未读取")}
-        。发布执行器与外部证据验证未接入，确认按钮保持关闭。
-      </OpsNotice>
+      {preflightError ? (
+        <OpsNotice title="前置核对读取失败" error>
+          <p>
+            {preflightError}。未能确认服务端前置核对结论，发布执行保持阻止。
+          </p>
+          <Button disabled={detail.loading} onClick={detail.reload}>
+            重新读取
+          </Button>
+        </OpsNotice>
+      ) : preflightLoading && !preflight ? (
+        <OpsNotice title="正在读取服务端前置核对">
+          正在核对环境、构件与恢复证据状态；发布执行器与外部证据验证未接入，确认按钮保持关闭。
+        </OpsNotice>
+      ) : (
+        <OpsNotice title="执行条件尚未满足">
+          {unmetChecks.length
+            ? `未满足条件：${unmetChecks.join("、")}`
+            : "服务端未开放发布执行能力"}
+          。发布执行器与外部证据验证未接入，确认按钮保持关闭。
+        </OpsNotice>
+      )}
       <div className="ops-actions ops-actions-split">
-        <OpsLink view="release" id={record.id} button>
+        <OpsLink view="release" id={activeRecord.id} button>
           返回补齐核对
         </OpsLink>
         <Button kind="primary" disabled>

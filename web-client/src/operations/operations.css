@@ -783,6 +783,14 @@
   font-size: 12px;
   line-height: 20px;
 }
+.ops-workspace .field input[aria-invalid="true"],
+.ops-workspace .field textarea[aria-invalid="true"],
+.ops-workspace .field select[aria-invalid="true"] {
+  border-color: var(--ops-danger);
+}
+.ops-workspace .field > small.field-error {
+  color: var(--ops-danger);
+}
 .ops-wrap {
   overflow-wrap: anywhere;
   word-break: break-word;
