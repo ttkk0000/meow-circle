@@ -54,7 +54,7 @@ export default function OperatorApp() {
   const session = useOperator(),
     [connection, setConnection] = useState(false),
     [token, setToken] = useState("");
-  const roleTasks = useRoleTasks(session);
+  const roleTasks = useRoleTasks(session, view);
   const [selectedRole, setSelectedRole] = useState<BusinessRole>();
   const [switchTo, setSwitchTo] = useState<BusinessRole>();
   useEffect(() => {
@@ -62,13 +62,19 @@ export default function OperatorApp() {
     setSwitchTo(undefined);
   }, [session.context?.id]);
   const workspaces = assignedWorkspaces(session.context?.roles ?? []);
+  const hasSwitchTarget =
+    !!switchTo && workspaces.some((w) => w.role === switchTo);
+  useEffect(() => {
+    if (switchTo && !hasSwitchTarget) setSwitchTo(undefined);
+  }, [switchTo, hasSwitchTarget]);
   const workspace = workspaceFor(
     workspaces.some((w) => w.role === selectedRole)
       ? selectedRole
       : workspaces[0]?.role,
   );
   const go = (next: View, nextID?: string) => {
-    if (roleTasks.locked && next !== view) return;
+    if (roleTasks.locked && next !== view && next !== roleTasks.state.flow)
+      return;
     navigate(pagePath(next, nextID));
   };
   const connect = () => {
@@ -197,6 +203,7 @@ export default function OperatorApp() {
                   label: "技术运维",
                   icon: "sliders-horizontal",
                   href: "/app/ops",
+                  ...(roleTasks.locked ? { onSelect: () => {} } : {}),
                 },
               ]
             : []),
@@ -280,7 +287,39 @@ export default function OperatorApp() {
             </Button>
           </OpsNotice>
         ) : null}
-        {roleTasks.lostReference ? (
+        {roleTasks.locked &&
+        roleTasks.state.flow === "ageEvidence" &&
+        current !== "ageEvidence" &&
+        current !== "forbidden" &&
+        current !== "disconnected" ? (
+          <OpsNotice title="当前可信年龄区间登记仍待处理">
+            <p>
+              原登记处于核对、提交中或结果待核对阶段，请先返回原任务处理或结束本机待核对。
+            </p>
+            <div className="ops-actions">
+              <Button kind="primary" onClick={() => go("ageEvidence")}>
+                返回原年龄区间登记
+              </Button>
+            </div>
+          </OpsNotice>
+        ) : null}
+        {roleTasks.roleLost?.flow === "ageEvidence" ? (
+          <OpsNotice title="岗位权限已变化 · 原任务停止" error>
+            <p>
+              {roleTasks.roleLost.uncertain
+                ? `提交中或结果待核对期间岗位权限已变化，原可信年龄区间登记已停止，私密材料与未提交信息已清除。最小恢复引用：${roleTasks.lostReference ?? "请按原证据核对"}。请由获授权人员核对可信处理记录，不能据此认定成功或失败。`
+                : "当前会话已无 identity_verifier 岗位权限，原可信年龄区间登记已停止，私密材料与未提交信息已清除。请查看本人角色或重新连接合法身份。"}
+            </p>
+            <div className="ops-actions">
+              <Button onClick={() => go("access")}>查看角色与会话</Button>
+            </div>
+          </OpsNotice>
+        ) : null}
+        {roleTasks.lostReference &&
+        !(
+          roleTasks.roleLost?.flow === "ageEvidence" &&
+          roleTasks.roleLost.uncertain
+        ) ? (
           <OpsNotice title="原登记仍需核对">
             恢复引用：{roleTasks.lostReference}
             。身份或岗位范围已变化，原材料已清除；请由有权限的人员核对，不能据此认定成功或失败。
@@ -289,7 +328,12 @@ export default function OperatorApp() {
         {current === "dashboard" ? (
           <Dashboard session={session} workspace={workspace?.role} go={go} />
         ) : isRoleTask(current) ? (
-          <RoleTaskPage key={current} flow={current} tasks={roleTasks} />
+          <RoleTaskPage
+            key={current}
+            flow={current}
+            tasks={roleTasks}
+            go={go}
+          />
         ) : current === "revenue" ? (
           <RoleRevenuePage tasks={roleTasks} />
         ) : current === "reviews" ? (

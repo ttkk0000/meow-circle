@@ -97,6 +97,7 @@ export function useOperator() {
         setForbidden(true);
         setQueues(emptyQueues());
         setDetail(undefined);
+        setDrafts({});
       }
       setError(failure instanceof Error ? failure.message : "操作未完成。");
     } finally {
@@ -392,6 +393,29 @@ export function useOperator() {
     remember(undefined);
     clearDetail();
   }
+  function revokeAccess() {
+    client.cancel();
+    selection.current++;
+    reads.current = 0;
+    queueReads.current.clear();
+    writing.current = false;
+    setBusy(false);
+    setForbidden(true);
+    setQueues(emptyQueues());
+    setDetail(undefined);
+    setDrafts({});
+    if (preparedRef.current?.phase === "unknown") {
+      setLostResult({
+        kind: preparedRef.current.kind,
+        id: preparedRef.current.id,
+        version: preparedRef.current.version,
+      });
+    }
+    remember(undefined);
+    void perform(async () => {
+      await readContext();
+    });
+  }
   return {
     client,
     context,
@@ -405,6 +429,7 @@ export function useOperator() {
     forbidden,
     connect,
     disconnect,
+    revokeAccess,
     refresh: () =>
       perform(async () => {
         await readContext();

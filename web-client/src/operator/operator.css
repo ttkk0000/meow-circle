@@ -68,3 +68,11 @@
     min-width: 0;
   }
 }
+.operator-workspace .field input[aria-invalid="true"],
+.operator-workspace .field textarea[aria-invalid="true"],
+.operator-workspace .field select[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.operator-workspace .field > small.field-error {
+  color: var(--danger);
+}
