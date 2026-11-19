@@ -24,7 +24,10 @@ internal fun PhotoPickerButton(store: MobileStore, remaining: Int, enabled: Bool
 @Composable
 internal fun PhotoPickerButton(remaining: Int, enabled: Boolean, onPhotos: (List<SelectedPhoto>) -> Unit, onError: (String) -> Unit,
     content: (@Composable (Boolean, () -> Unit) -> Unit)? = null) {
-    val resolver = LocalContext.current.contentResolver
+    val resolver = LocalContext.current.applicationContext.contentResolver
+    val currentRemaining by rememberUpdatedState(remaining)
+    val currentOnPhotos by rememberUpdatedState(onPhotos)
+    val currentOnError by rememberUpdatedState(onError)
     val scope = rememberCoroutineScope()
     var preparing by remember { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(9)) { uris ->
@@ -32,7 +35,7 @@ internal fun PhotoPickerButton(remaining: Int, enabled: Boolean, onPhotos: (List
             preparing = true
             try {
                 val photos = withContext(Dispatchers.IO) {
-                    uris.take(remaining).mapIndexed { index, uri ->
+                    uris.take(currentRemaining.coerceAtLeast(0)).mapIndexed { index, uri ->
                         val mime = resolver.getType(uri)
                         require(mime in listOf("image/jpeg", "image/png", "image/heic", "image/heif", "image/webp"))
                         val bytes = resolver.openInputStream(uri)?.use { input ->
@@ -77,14 +80,19 @@ internal fun PhotoPickerButton(remaining: Int, enabled: Boolean, onPhotos: (List
                         SelectedPhoto("照片 ${index + 1}", if (png) "image/png" else "image/jpeg", normalizedBytes)
                     }
                 }
-                onPhotos(photos)
+                currentOnPhotos(photos)
             } catch (e: CancellationException) { throw e }
-            catch (_: Exception) { onError("请选择可读取且不超过 10 MiB 的 JPEG 或 PNG 照片") }
+            catch (_: Exception) { currentOnError("请选择可读取且不超过 10 MiB 的 JPEG 或 PNG 照片") }
             finally { preparing = false }
         }
     }
     val canPick = enabled && remaining > 0 && !preparing
-    val launchPicker = { if (canPick) launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
+    val launchPicker: () -> Unit = {
+        if (canPick) {
+            runCatching { launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
+                .onFailure { currentOnError("无法打开系统照片选择器，请检查系统相册或文件权限") }
+        }
+    }
     if (content != null) content(canPick, launchPicker)
     else OutlinedButton(onClick = launchPicker, enabled = canPick) {
         Text(if (preparing) "正在准备照片" else "添加照片（还可选 $remaining 张）")

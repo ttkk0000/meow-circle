@@ -15,7 +15,7 @@ import com.ttkk0000.meowcircle.clientui.*
 
 @Composable internal fun AndroidNotificationPermission(showControls: Boolean, content: @Composable (Boolean) -> Unit) {
     val context = LocalContext.current
-    fun allowed(): Boolean = context.getSystemService(NotificationManager::class.java).areNotificationsEnabled()
+    fun allowed(): Boolean = context.getSystemService(NotificationManager::class.java)?.areNotificationsEnabled() == true
     var permitted by remember { mutableStateOf(allowed()) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { permitted = allowed() }
     androidx.lifecycle.compose.LifecycleResumeEffect(Unit) { permitted = allowed(); onPauseOrDispose {} }
@@ -24,7 +24,9 @@ import com.ttkk0000.meowcircle.clientui.*
     if(Build.VERSION.SDK_INT >= 33 && context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
         FeatureButton("申请系统通知权限") { launcher.launch(Manifest.permission.POST_NOTIFICATIONS) }
     }
-    FeatureButton("打开系统通知设置") { context.startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE,context.packageName)) }
+    FeatureButton("打开系统通知设置") {
+        context.startExternalActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName))
+    }
     }
     content(permitted)
 }

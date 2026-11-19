@@ -26,6 +26,7 @@ import java.time.ZonedDateTime
     dateOnly: Boolean = false, optional: Boolean = false,
 ) {
     val context = LocalContext.current
+    val dialogContext = context.findActivity() ?: context
     val value = f.field(key, fallback)
     val initial = runCatching {
         if (dateOnly) LocalDate.parse(value).atStartOfDay(ZoneId.systemDefault())
@@ -50,8 +51,8 @@ import java.time.ZonedDateTime
         if (optional && value.isNotBlank()) TextButton({ f.edit(key, "") }, enabled = enabled,
             modifier = Modifier.align(Alignment.End)) { Text("清除日期") }
     }
-    if (dateOpen) DisposableEffect(s.route, key) {
-        val dialog = DatePickerDialog(context, { _, year, month, day ->
+    if (dateOpen && enabled) DisposableEffect(s.route, key) {
+        val dialog = DatePickerDialog(dialogContext, { _, year, month, day ->
             val selected = LocalDate.of(year, month + 1, day)
             dateOpen = false
             if (dateOnly) f.edit(key, selected.toString()) else pendingDay = selected
@@ -64,11 +65,11 @@ import java.time.ZonedDateTime
         dialog.show()
         onDispose { dialog.setOnDismissListener(null); dialog.dismiss() }
     }
-    pendingDay?.let { day -> DisposableEffect(s.route, key, day) {
-        val dialog = object : TimePickerDialog(context, { _, hour, minute ->
+    if (enabled) pendingDay?.let { day -> DisposableEffect(s.route, key, day) {
+        val dialog = object : TimePickerDialog(dialogContext, { _, hour, minute ->
             f.edit(key, day.atTime(hour, minute).atZone(ZoneId.systemDefault()).toOffsetDateTime().toString())
             pendingDay = null
-        }, pendingHour, pendingMinute, DateFormat.is24HourFormat(context)) {
+        }, pendingHour, pendingMinute, DateFormat.is24HourFormat(dialogContext)) {
             override fun onTimeChanged(view: android.widget.TimePicker, hourOfDay: Int, minute: Int) {
                 super.onTimeChanged(view, hourOfDay, minute)
                 // Constructor callbacks must not touch captured state before attachment.

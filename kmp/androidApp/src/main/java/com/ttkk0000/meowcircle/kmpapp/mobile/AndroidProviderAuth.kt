@@ -68,6 +68,13 @@ internal object AndroidProviderAuth {
         operation.activity?.get()?.finish()
         operation.continuation?.let { if(it.isActive) it.resumeWithException(MobileApiException(503,"official provider authorization failed")) }
     }
+    /** 宿主 Activity 被系统返回关闭时仅取消仍在等待的会话，保留已退出的 QQ 防串号槽位。 */
+    fun cancelFromHost(provider: String, state: String) {
+        val operation = synchronized(lock) {
+            pending[state]?.takeIf { it.provider == provider && it.continuation?.isActive == true }?.also { pending.remove(state) }
+        } ?: return
+        operation.continuation?.let { if(it.isActive) it.resume(null) }
+    }
 }
 
 /** 仅在用户同意本次官方授权后启动。SDK回跳以进程中的原state为依据。 */
@@ -114,5 +121,9 @@ class OfficialProviderActivity : ComponentActivity() {
         super.onActivityResult(requestCode,resultCode,data)
         qqListener?.let { Tencent.onActivityResultData(requestCode,resultCode,data,it) }
     }
-    override fun onDestroy() { qqListener = null; super.onDestroy() }
+    override fun onDestroy() {
+        qqListener = null
+        if (isFinishing) AndroidProviderAuth.cancelFromHost(provider, state)
+        super.onDestroy()
+    }
 }

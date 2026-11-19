@@ -18,12 +18,16 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.catch
 
-private tailrec fun Context.activity(): Activity? = when (this) { is Activity -> this; is ContextWrapper -> baseContext.activity(); else -> null }
+internal tailrec fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
+}
 
 /** 分隔铰链的两侧不跨越排版；先将任务放在较大的完整区域，再按该区域宽高选择栏数。 */
 @Composable internal fun AndroidAdaptiveWindow(content: @Composable BoxWithConstraintsScope.() -> Unit) {
     val context = LocalContext.current
-    val activity = context.activity()
+    val activity = context.findActivity()
     val folds = remember(activity) {
         if (activity == null) flowOf(emptyList()) else WindowInfoTracker.getOrCreate(activity).windowLayoutInfo(activity).map { info ->
             info.displayFeatures.filterIsInstance<FoldingFeature>().filter { it.isSeparating || it.occlusionType == FoldingFeature.OcclusionType.FULL }
@@ -33,21 +37,29 @@ private tailrec fun Context.activity(): Activity? = when (this) { is Activity ->
     val density = LocalDensity.current
     BoxWithConstraints(Modifier.fillMaxSize()) {
         var left = 0.dp; var right = 0.dp; var top = 0.dp; var bottom = 0.dp
-        features.forEach { fold -> with(density) {
-            if (fold.orientation == FoldingFeature.Orientation.VERTICAL) {
-                val start = fold.bounds.left.toDp().coerceIn(0.dp,maxWidth); val end = fold.bounds.right.toDp().coerceIn(0.dp,maxWidth)
-                if (start >= left && end <= maxWidth - right) {
-                    if (start - left >= maxWidth - right - end) right = maxWidth - start else left = end
-                }
-            } else {
-                val start = fold.bounds.top.toDp().coerceIn(0.dp,maxHeight); val end = fold.bounds.bottom.toDp().coerceIn(0.dp,maxHeight)
-                if (start >= top && end <= maxHeight - bottom) {
-                    if (start - top >= maxHeight - bottom - end) bottom = maxHeight - start else top = end
+        features.forEach { fold ->
+            if (fold.bounds.right < fold.bounds.left || fold.bounds.bottom < fold.bounds.top) return@forEach
+            with(density) {
+                if (fold.orientation == FoldingFeature.Orientation.VERTICAL) {
+                    val start = fold.bounds.left.toDp().coerceIn(0.dp,maxWidth); val end = fold.bounds.right.toDp().coerceIn(0.dp,maxWidth)
+                    if (start >= left && end <= maxWidth - right) {
+                        if (start - left >= maxWidth - right - end) right = maxWidth - start else left = end
+                    }
+                } else {
+                    val start = fold.bounds.top.toDp().coerceIn(0.dp,maxHeight); val end = fold.bounds.bottom.toDp().coerceIn(0.dp,maxHeight)
+                    if (start >= top && end <= maxHeight - bottom) {
+                        if (start - top >= maxHeight - bottom - end) bottom = maxHeight - start else top = end
+                    }
                 }
             }
-        } }
+        }
         CompositionLocalProvider(LocalDialogRegion provides DialogRegion(left,top,right,bottom)) {
-            BoxWithConstraints(Modifier.fillMaxSize().absolutePadding(left,top,right,bottom),content = content)
+            BoxWithConstraints(
+                Modifier.fillMaxSize()
+                    .absolutePadding(left,top,right,bottom)
+                    .consumeWindowInsets(PaddingValues.Absolute(left = left,top = top,right = right,bottom = bottom)),
+                content = content,
+            )
         }
     }
 }

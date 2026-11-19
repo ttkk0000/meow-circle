@@ -40,8 +40,8 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
                 val feature = features.route
                 val destination = when (val d = state.destination) {
                     MobileDestination.Home -> "home:0"
-                    is MobileDestination.Pet -> "${if(d.discussion) "pet-comments" else "pets"}:${d.id}"
-                    is MobileDestination.Entry -> "entries:${d.id}"
+                    is MobileDestination.Pet -> "${if(d.discussion) "pet-comments" else "pets"}:${d.id}${encodeAnchor(d.replyAnchor)}"
+                    is MobileDestination.Entry -> "entries:${d.id}${encodeAnchor(d.replyAnchor)}"
                     is MobileDestination.Application -> "adoptions:${d.id}"
                     is MobileDestination.Case -> "cases:${d.id}"
                     is MobileDestination.Chat -> "${if(d.group) "groups" else "conversations"}:${d.id}"
@@ -68,12 +68,30 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
             MobileHostIntent.DismissPendingLink -> dismissPendingLink()
         }
     }
+    private fun encodeAnchor(anchor: NotificationReplyAnchor?): String =
+        anchor?.takeIf { it.id > 0 && it.version > 0 && it.kind in listOf("entry_comments", "pet_comments") }
+            ?.let { ":${it.kind}:${it.id}:${it.version}" }
+            .orEmpty()
+    private fun decodeAnchor(parts: List<String>, startIndex: Int): NotificationReplyAnchor? {
+        if (parts.size != startIndex + 3) return null
+        val kind = parts[startIndex].takeIf { it in listOf("entry_comments", "pet_comments") } ?: return null
+        val id = parts[startIndex + 1].toLongOrNull()?.takeIf { it > 0 } ?: return null
+        val version = parts[startIndex + 2].toLongOrNull()?.takeIf { it > 0 } ?: return null
+        return NotificationReplyAnchor(kind, id, version)
+    }
     private fun restoreRoute(raw: String) {
         runCatching {
             val parts = raw.split('|'); if(parts.size != 3) return
             store.select(MobileTab.valueOf(parts[0]))
-            val base = parts[1].split(':'); val id = base.getOrNull(1)?.toLongOrNull() ?: 0
-            baseRoute(base.first(),id)?.let(store::open)
+            val base = parts[1].split(':'); val kind = base.first(); val id = base.getOrNull(1)?.toLongOrNull() ?: 0
+            val anchor = decodeAnchor(base, 2)
+            val restoredDestination = when (kind) {
+                "pets" -> id.takeIf { it > 0 }?.let { MobileDestination.Pet(it, replyAnchor = anchor) }
+                "pet-comments" -> id.takeIf { it > 0 }?.let { MobileDestination.Pet(it, true, anchor) }
+                "entries" -> id.takeIf { it > 0 }?.let { MobileDestination.Entry(it, anchor) }
+                else -> baseRoute(kind, id)
+            }
+            restoredDestination?.let(store::open)
             val feature = parts[2].split(':')
             if(feature.size == 4) store.features.open(FeatureRoute(FeaturePage.valueOf(feature[0]),feature[1].toLong(),feature[2],feature[3].toLong()))
         }
