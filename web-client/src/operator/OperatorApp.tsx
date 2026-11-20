@@ -288,27 +288,54 @@ export default function OperatorApp() {
           </OpsNotice>
         ) : null}
         {roleTasks.locked &&
-        roleTasks.state.flow === "ageEvidence" &&
-        current !== "ageEvidence" &&
+        (roleTasks.state.flow === "ageEvidence" ||
+          roleTasks.state.flow === "authority") &&
+        current !== roleTasks.state.flow &&
         current !== "forbidden" &&
         current !== "disconnected" ? (
-          <OpsNotice title="当前可信年龄区间登记仍待处理">
+          <OpsNotice
+            title={
+              roleTasks.state.flow === "authority"
+                ? "当前发布授权登记仍待处理"
+                : "当前可信年龄区间登记仍待处理"
+            }
+          >
             <p>
               原登记处于核对、提交中或结果待核对阶段，请先返回原任务处理或结束本机待核对。
             </p>
             <div className="ops-actions">
-              <Button kind="primary" onClick={() => go("ageEvidence")}>
-                返回原年龄区间登记
+              <Button
+                kind="primary"
+                onClick={() => go(roleTasks.state.flow!)}
+              >
+                {roleTasks.state.flow === "authority"
+                  ? "返回原发布授权登记"
+                  : "返回原年龄区间登记"}
               </Button>
             </div>
           </OpsNotice>
         ) : null}
-        {roleTasks.roleLost?.flow === "ageEvidence" ? (
+        {roleTasks.roleLost?.flow === "ageEvidence" ||
+        roleTasks.roleLost?.flow === "authority" ? (
           <OpsNotice title="岗位权限已变化 · 原任务停止" error>
             <p>
               {roleTasks.roleLost.uncertain
-                ? `提交中或结果待核对期间岗位权限已变化，原可信年龄区间登记已停止，私密材料与未提交信息已清除。最小恢复引用：${roleTasks.lostReference ?? "请按原证据核对"}。请由获授权人员核对可信处理记录，不能据此认定成功或失败。`
-                : "当前会话已无 identity_verifier 岗位权限，原可信年龄区间登记已停止，私密材料与未提交信息已清除。请查看本人角色或重新连接合法身份。"}
+                ? `提交中或结果待核对期间岗位权限已变化，原${
+                    roleTasks.roleLost.flow === "authority"
+                      ? "发布授权"
+                      : "可信年龄区间"
+                  }登记已停止，私密材料与未提交信息已清除。最小恢复引用：${
+                    roleTasks.lostReference ?? "请按原证据核对"
+                  }。请由获授权人员核对可信处理记录，不能据此认定成功或失败。`
+                : `当前会话已无 ${
+                    roleTasks.roleLost.flow === "authority"
+                      ? "authority_verifier"
+                      : "identity_verifier"
+                  } 岗位权限，原${
+                    roleTasks.roleLost.flow === "authority"
+                      ? "发布授权"
+                      : "可信年龄区间"
+                  }登记已停止，私密材料与未提交信息已清除。请查看本人角色或重新连接合法身份。`}
             </p>
             <div className="ops-actions">
               <Button onClick={() => go("access")}>查看角色与会话</Button>
@@ -317,7 +344,8 @@ export default function OperatorApp() {
         ) : null}
         {roleTasks.lostReference &&
         !(
-          roleTasks.roleLost?.flow === "ageEvidence" &&
+          (roleTasks.roleLost?.flow === "ageEvidence" ||
+            roleTasks.roleLost?.flow === "authority") &&
           roleTasks.roleLost.uncertain
         ) ? (
           <OpsNotice title="原登记仍需核对">

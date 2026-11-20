@@ -73,6 +73,61 @@
 .operator-workspace .field select[aria-invalid="true"] {
   border-color: var(--danger);
 }
-.operator-workspace .field > small.field-error {
+.operator-workspace .field > small.field-error,
+.operator-workspace .operator-authority-actions > small.field-error {
   color: var(--danger);
+  font-size: 12px;
+  line-height: 20px;
+}
+.operator-workspace .city-field {
+  padding: 12px 16px;
+  border-radius: var(--ops-radius);
+  border-color: var(--ops-border);
+  background: var(--surface);
+}
+.operator-workspace .city-field > button,
+.operator-workspace .city-results button {
+  padding: 8px 12px;
+  border: 1px solid var(--ops-border);
+  border-radius: var(--ops-radius);
+  background: var(--surface);
+}
+.operator-workspace .city-results button[aria-pressed="true"] {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+}
+.operator-workspace .operator-city-wrap[data-invalid="true"] .city-field {
+  border-color: var(--danger);
+}
+.operator-workspace .operator-authority-actions {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border: 1px solid var(--ops-border);
+  border-radius: var(--ops-radius);
+  background: var(--surface);
+  display: grid;
+  gap: 10px;
+}
+.operator-workspace .operator-authority-actions[data-invalid="true"] {
+  border-color: var(--danger);
+}
+.operator-workspace .operator-authority-actions legend {
+  padding: 0 4px;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+}
+.operator-workspace .operator-authority-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+.operator-workspace .operator-authority-checks .check {
+  margin-top: 0;
+}
+.operator-workspace .operator-authority-lookup,
+.operator-workspace .operator-authority-unknown-check {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
 }

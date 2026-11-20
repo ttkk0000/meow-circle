@@ -1,5 +1,63 @@
 # AI 工作结果日志
 
+## 2026-11-20 两项交付合并前核对（UTC+08:00）
+
+- Codex 核对 `main / d2e0d3c` 上 Android 平板通知／消息和 Web 发布授权的已交付源码及回填。将新的消息主从栏、输入时布局保持和选中高亮限制在 Android 宿主，iOS／Desktop 沿用原分栏策略，共享会话定位继续按实际消息编号。
+- 重跑公共 UI、KMP、Android 功能、Web、后台角色和业务页面共六项只读检查，均通过。原 Android UI 组件白名单仍列入后续验收。未运行编译，遵循全局不自行编译规则。测试、浏览器和设备未验证。
+
+## AI-20261120-WEB-OP-AUTHORITY / 2026-11-20T09:42:00+08:00
+
+- 记录 ID / 日期时间（含时区）：`AI-20261120-WEB-OP-AUTHORITY` / 2026-11-20T09:42:00+08:00
+- 任务与执行者：B11／W02｜Web 业务后台发布授权（`authority-*` 11 态与 `role-lost` 合同对齐及只读静态验收） / Antigravity（Gemini）
+- 来源：本轮实际操作
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:\GolandProjects\kitty-circle`，分支 `main`，HEAD `d2e0d3c`；完整保留并行 `AI-20261120-A04-INBOX-ANCHOR`、`AI-20261120-FIGMA-QUEUE` 等工作树改动，未提交、未推送。
+- 本次授权范围：仅修改 `web-client/src/operator/{RoleTasks.tsx,OperatorApp.tsx,operator.css}` 中发布授权与共同撤权／锁退分支、`docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md` 的「2026-11-20 批次」Web 发布授权子项及自身 AI 跟踪；保留 `ageEvidence`、`received`、`refund`、服务端、KMP、消费端、技术运维及其余项只读；禁止编译、构建、安装、测试、应用启动、真实授权提交、提交推送与写 Figma（远端 Figma MCP 限流 `429`，以本地节点索引与导出的 `composition.png`/`authority-conflict.png`/`index.png` 为设计对照，未写远端）。
+- 实际完成与主要文件（仓库相对路径）：
+  - `web-client/src/operator/RoleTasks.tsx`（L14–L26, L49–L230, L244–L538, L618–L699, L734–L1011, L1051–L2021）：对齐 `GET`/`POST /api/v2/ops/authority` 合同并补全全部 11 个 `authority-*` 稳定状态与 `role-lost`——修复初始 `flow === undefined` 时首点读取失效、自然键变化失效与 `readSequence` 防串序；按 `care`/`disposition` 与 `city_rule` 分离必填与零值范围，接入 `CityField`＋`mainlandCity` 城市归一、`actions` 复选集合、1–120 runes 摘要/版本号及严格含时区未来 RFC3339 截止时间并聚焦首个错误字段；强化 `prepare`/`submit` 双重快照校验与 `409` 清空旧快照／`prepared` 强制同对象重读重确认；新增 `writing.current`＋`submitSequence` 防重、仅合法非空对象回执进入 `authority-accepted`、明确拒绝清 `prepared` 保留输入、`checkAuthorityUnknown()` 原对象只读核对＋`unknownAck`/`unknownClosed`；以及中途 `401`/`403`/切岗/切号/切工作区立即作废回调并清理材料进入 `role-lost`。
+  - `web-client/src/operator/OperatorApp.tsx`（L290–L355）：将顶栏待处理锁定返回横幅及 `role-lost` 失权横幅（含 `lostReference` 与底部提示去重）扩展覆盖 `authority` 流程，保持 `ageEvidence` 原有行为。
+  - `web-client/src/operator/operator.css`（L76–L133）：补充 `.operator-workspace` 内 `.field-error`、8px 圆角 `.city-field` 候选项、`.operator-city-wrap[data-invalid="true"]`、`.operator-authority-actions`/`.operator-authority-checks`、`.operator-authority-lookup` 与 `.operator-authority-unknown-check` 样式。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`（第 5 节 Web 业务后台）：回填并勾选 `2026-11-20 批次` Web 发布授权子项及 11 态＋`role-lost` 逐态触发与源码索引表；`39 个任务态` 父项与浏览器／真实岗位运行框维持未勾选。
+- 验证：
+  - 静态与语法检查：`python -X utf8 scripts/check_admin_role_workspaces_static.py`、`scripts/check_operator_pages_static.py`、`scripts/check_web_client_static.py`、`scripts/check_page_gap_static.py`、`rolldown` TSX AST 解析（`RoleTasks.tsx`、`OperatorApp.tsx`）、`postcss.parse`（`operator.css`）及 `git -c core.safecrlf=false diff --check`、CRLF／LF／UTF-8 无 BOM 检查与文档相对链接校验通过。
+  - 构建／测试／运行：未运行编译、`tsc`、打包、单测、浏览器或真实授权提交，无后台任务。
+- 未完成与阻塞：39 态父项其余未验收项目、浏览器端全 11 态视觉与键盘焦点交互、以及真实 `authority_verifier` 岗位环境下的 `409`/网络超时/撤权联调待后续授权验收。
+- 最后完成的一步与下一步：完成发布授权分支源码整改、11 态与合同回填、AI 跟踪更新、静态复核及编码关卡 `review`；下一步等待后续统一运行时授权开展真实业务后台浏览器验收。
+- 关联任务 / 决定 / 证据：[Web 业务后台发布授权](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md#web-业务后台--b11w02)、[节点索引](../design/figma-study/admin-task-interaction-2026-10-29/README.md)、`internal/mobile/authority.go`、`authority_read.go`、`internal/platform/mobileapi/handler.go`。
+- 执行状态：已完成（源码实现与只读静态审查；目标端视觉与真实岗位运行待验收），执行标记已释放，无后台任务。
+
+## AI-20261120-A04-INBOX-ANCHOR / 2026-11-20T09:37:00+08:00
+
+- 记录 ID / 日期时间（含时区）：`AI-20261120-A04-INBOX-ANCHOR` / 2026-11-20T09:37:00+08:00
+- 任务与执行者：续做 A04｜Android 平板消息主从栏与通知锚点（通知防重与重建边界、宽窗消息主从栏与窄分屏／键盘选中返回、真实首条未读单次索引滚动） / Antigravity（Gemini）
+- 来源：本轮实际操作
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:\GolandProjects\kitty-circle`，分支 `main`，HEAD `d2e0d3c`；保留并行 `AI-20261120-WEB-OP-AUTHORITY`、`AI-20261120-FIGMA-QUEUE` 等工作树改动，未提交、未推送。
+- 本次授权范围：仅修改 Android `MainActivity.kt`、通知相关 `MobileViewModel.kt`、共享 Compose `ConsumerApp.kt`／`InboxPages.kt` 对应分支、`docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md` 的「2026-11-20 批次」A04 子项及本任务 AI 跟踪；公共层保持 iOS／Desktop 与非消息入口行为；禁止编译、构建、安装、测试、设备／应用启动、提交推送及写 Figma（本轮远端 Figma MCP 配额达上限，对照本地既有台账 `CROSS_PLATFORM_FULL_MAPPING.md`、`cross-platform-full-coverage.json`、`cross-platform-full-state.json`、`CROSS_PLATFORM_ADAPTIVE_CONTRACT.md`、`pad-preview-2026-10-22-messages-before.json` 与 `FIGMA_GAP_TASK_PLAN_2026_11_19.md` 中既有 `403:3`／`311:379703`／`311:379707`／`325:61505` 证据）。
+- 实际完成与主要文件（仓库相对路径）：
+  - `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt`（L34–L37, L44–L49）：`onCreate` 仅在 `savedInstanceState == null` 调用 `appViewModel.consumeNotification(intent)` 与 `openLink(intent?.data)`，消除系统重建（旋转、分屏拖拽、折叠展开、进程恢复）重复入队；`onNewIntent` 刷新 `setIntent(intent)` 并消费新通知与深链；保留 `onResume()` 的 `refreshInbox()` 角标更新与 `appViewModel.uiSession` 注入。
+  - `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt`（L26, L40–L50, L65–L76, L155–L199）：新增 `consumeNotification(intent)`，拦截 `FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY`，拒绝无通知 extra 的 `Intent.ACTION_MAIN` 误调 `queueInboxNotification()`，仅对有效 `ACTION_OPEN_INBOX`（或伴随有效 `canonicalNotificationId` extra 的 `ACTION_MAIN`）入队并剥离 extra/重置 `OPEN_INBOX` action 防复用重入（畸形非空白 ID 拒绝入队）；同时在 `SavedStateHandle["pendingNotification"]` 仅以 `${id}:${owner}`（属主校验）持久化未操作待办通知，避免进程恢复丢单或已取消／已打开横幅回弹；真通知载荷仍经 `PendingNotificationBanner` -> `openPendingNotification()` 打开原目标。
+  - `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt`（L31–L54, L192–L196, L264–L266, L683–L843）：`ClientWindowPolicy` 新增带默认值的 `masterWidthReady`（保留 `policy.master`/`policy.contextPane` 的 `!keyboard` 语义与全部静态边界阈值，保持 `Adoption`、iOS 与 Desktop 非消息行为不变）；`MobileShell` 对登录态 `Messages` 的 `Home`（`311:379703`）、`Chat`（`311:379707`）与 `Notifications` 维持左 300dp 主栏＋右详情区（`Home` 展示 `MessagesMasterPlaceholder` 并保留通知／全部已读／邀请／建群／设置快捷入口），键盘弹出不卸载左栏；窄分屏 `tabletN`（`325:61505`）退回单栏，会话／草稿／列表位置由 `SaveableStateProvider` 与 `movableContentOf` 保留，`ArrowBack`／系统返回触发 `store.back()`；`ChatScreen` 使用 `key(s.user?.id ?: 0L, chat.id, chat.group)`、显式 `ChatScrollRequest`（含 `onDispose` 清理）及每会话可保存状态 `initialUnreadAnchored`，在 `s.destination == chat && chatReady && !s.messages.loading && s.messages.loaded` 后按 `(if (leadContext) 1 else 0) + itemIndex` 单次滚至真实 `firstUnread` 条目（及加载完成后将「读取较早历史」滚至 `0`），错误或切换会话时作废旧请求。
+  - `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InboxPages.kt`（L14–L29, L61–L76）：新增 `InboxSelectionSurface`，在宽窗主栏按 `s.destination` 高亮已选私信／群聊及 `Notifications` 总览入口，窄分屏／手机首页保持透明无高亮。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`（L312）：回填并勾选 `A04 · Android 平板消息主从栏与通知锚点（2026-11-20 批次）` 源码与静态复核子项，保持「主从栏」「分栏表单」「平板全量」及视觉／真机框未勾，不影响其他并发派工项。
+- 验证：
+  - 静态检查：`python -X utf8 scripts/check_client_ui_static.py`、`scripts/check_kmp_client_static.py`、`scripts/check_android_feature_static.py`、`scripts/check_mobile_static.py`、`git -c core.safecrlf=false diff --check` 与 4 份 Kotlin UTF-8 无 BOM／CRLF／无行尾空白核对均通过；`scripts/check_android_ui_static.py` 仍在未改动的 `Components.kt#L54`（`MndQuietButton` 白名单）预失败（其中 `MainActivity.kt`/`MobileViewModel.kt`/`ConsumerApp.kt` 断言均通过）。
+  - 构建／测试／设备：未运行编译，遵循全局不自行编译规则；未运行 Gradle、单测、模拟器或真机视觉交互验收。
+- 未完成与阻塞：平板全量、Android／iPadOS／Desktop 真实设备横竖屏／分屏／IME 键盘与通知推送通道运行验收待后续统一授权验证。
+- 最后完成的一步与下一步：完成 4 份源码修复、静态核对、2026-11-20 A04 派工子项与 AI 跟踪同步及编码关卡 `review`；待获运行授权后于真实平板与折叠设备逐项完成 A04 视觉与运行签收。
+- 关联任务 / 决定 / 证据：[派工清单 A04](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md#android-平板与折叠--a04)、Figma `403:3`／`311:379703`／`311:379707`／`325:61505`、`CROSS_PLATFORM_ADAPTIVE_CONTRACT.md`。
+- 执行状态：已完成（源码修复与只读静态审查完成；平板全量与视觉／设备运行待验收），执行标记已释放，无后台任务。
+
+## AI-20261120-FIGMA-QUEUE / 2026-11-20（UTC+08:00）
+
+- Codex 根据用户要求，在 `main / d2e0d3c` 的[分端派工清单](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md#后续待派队列--2026-11-20)排定后续任务。保留上轮两项派发记录、七项签收及 Web 发布授权等并发源码改动。
+- 按实际领取单元汇总 48 项。30 项源码／静态按两项一批排列成 15 批，18 项记录合同、环境、授权或产品决定的前置。已签收与已派发状态沿用原记录。首批建议 Web 会话与原任务返回、iPhone 官方授权与回跳。
+- 核对批次、逐端小计、待派勾选和文档差异。仅整理清单，执行标记释放。未发送新任务，未运行编译，遵循全局不自行编译规则。
+
+## 2026-11-20 第二批双任务派发（UTC+08:00）
+
+- Codex 按用户要求先提交上一轮注销回执修复与七项进度共九个文件，再推送 `d2e0d3c` 至 `origin/main`。推送返回成功，本地 HEAD 与远端跟踪引用一致。GitHub 提示四项必需状态检查尚待完成。
+- 以 `main / d2e0d3c` 为基线，在 Antigravity `kitty-circle` 的两个 Gemini 4 Hydrogen Extra 会话发送 `AI-20261120-A04-INBOX-ANCHOR`（Android Tablet Inbox And Notification Anchor）及 `AI-20261120-WEB-OP-AUTHORITY`（Web 业务后台发布授权任务），确认各自显示任务正文和执行中的停止按钮。两项分别负责 Android 消息链路、Web 运营发布授权源码，完成后回填各自的[分端派工项](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md)。
+- 新派工子项待交付。暂存差异空白核对及派工文档只读核对完成，未运行编译、构建、测试或设备。新派工记录保留在工作树，Codex 派发执行标记释放。
+
 ## AI-20261119-DELETE-RECOVERY-FIX / 2026-11-19（UTC+08:00）
 
 - Codex 按用户要求修复七项静态复核中的两个注销返修。工作树 `main / b0e49ab`，保留原未提交 AI 跟踪和派工清单。

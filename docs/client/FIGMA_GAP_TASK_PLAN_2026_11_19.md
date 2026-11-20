@@ -2,6 +2,131 @@
 
 盘点日期 2026-11-19（UTC+08:00）。源码起点 `main / f9a2dab`，工作树起点干净。优先级和分工是本次派工建议，负责人留空，由派工人填写。任务 ID 沿用[客户端原表](TASKS.md)，同一 ID 下以本文的任务标题和端区分领取范围。
 
+## 后续待派队列 · 2026-11-20
+
+**共 48 项尚未派发。30 项可按源码／静态批次排队，计划 15 批、每批 2 项。另 18 项等合同、授权或运行环境就绪后再派。**
+
+按下列任务包计数。11 月 19 日已完成源码／静态签收的 7 项和 11 月 20 日已派的 Android 平板消息、Web 发布授权 2 项都已归入各自记录。第 3–5 节的父项、Figma 状态数和同一共享页面的多端映射用于核对覆盖。
+
+| 客户端／工作线 | 源码／静态待派 | 条件待派 | 合计 |
+|---|---:|---:|---:|
+| 共享 Compose／KMP | 7 | 1 | 8 |
+| Android 手机 | 2 | 1 | 3 |
+| Android 平板／折叠 | 1 | 1 | 2 |
+| iPhone | 2 | 1 | 3 |
+| iPad | 1 | 1 | 2 |
+| 原生 Desktop | 2 | 1 | 3 |
+| Web 消费端 | 10 | 2 | 12 |
+| Web 业务后台 | 3 | 1 | 4 |
+| Web 技术运维 | 1 | 2 | 3 |
+| 公共后端／产品／渠道／环境 | 1 | 6 | 7 |
+| Figma 文档中心 | 0 | 1 | 1 |
+| **合计** | **30** | **18** | **48** |
+
+### 双任务派发顺序
+
+批次里的两项分别领取。当前两项交付或移交后从第 1 批开始；下一批发送前核对工作树、前置项和文件归属。碰到仍在使用的共享 Store、路由、`WorkflowEditor` 或 `RoleTasks`，让对应任务等占用释放，先派同批可开始项或顺延。每次最多两项。
+
+发出后，在清单任务行下记录负责人、会话、基线和日期，状态改为「已派、待交付」。完成后补入口、触发条件、源码位置和静态证据，再勾任务。条件项按各自实际交付与验收证据勾选。重复状态沿用第 3–5 节的证据链接。
+
+**第 1 批**
+
+- [ ] **Web 消费端｜W01／W03 · 会话结束与原任务返回。** `AuthReturnTask.tsx`、`App.tsx` 及 Web 会话接线。核对过期／主动退出／服务端明确撤回、换号、无权或已删除的原目标、深链和不安全返回参数。只使用现有合同能证明的原因。
+- [ ] **iPhone｜I01／I03 · 登录、官方授权与回跳。** `iosUi` 和 `iosApp/ComposeApp`。核对 Apple／微信／QQ 的成功、取消、不可用回跳、冷启 Universal Link、Keychain 恢复和换号隔离。保留现有渠道配置边界。
+
+**第 2 批**
+
+- [ ] **共享 Compose／KMP｜F00／F01／C05／C06 · 登录方式、会话状态与原任务。** `kmp/shared` 及公共 Compose 的认证／回跳分支。对照 `auth` 的已有实现和批次 020，补显式建号、验证恢复、换绑／解除、可证实的会话结束及原操作失效。账号暂时受限交下方条件项。
+- [ ] **Web 技术运维｜B11／V03 · 运维 14 稿余项和四岗守卫。** `web-client/src/operations`。逐条核对服务依赖、Worker、迁移、告警／事件、审计和环境权限。回填已签收的发布五路径证据，补缺的加载／失权／未连接，核对跨环境隔离及演示入口。
+
+**第 3 批**
+
+- [ ] **Android 手机｜A01／A03 · 账号、宿主回跳和返回。** `kmp/androidApp` 的手机宿主、官方回调和安全返回。核对通知之外的冷启深链、登录回目标、验证码输入／IME、系统返回、重建及换号。触及 A04 在用文件前先复核文件归属。
+- [ ] **Web 消费端｜F05／F11／F12／W02 · 消息、表情和未读。** `chat.tsx`、`NotificationPage.tsx`／`NotificationPreferences.tsx` 等。核对导航、待处理／显式已读、99+、快照失败、新到消息、评论四态已有证据、发送失败原编号及表情与 IME 选区。
+
+**第 4 批**
+
+- [ ] **Android 平板／折叠｜A04 · 其余主从栏、分栏表单与系统弹窗。** 领取前核对 A04 消息子项交付和文件归属。核对非消息主从导航、`tabletN` 单列、可用宽高／IME、折痕与弹窗 Insets、忙时返回、选图重建和草稿保持。落点 `androidApp` 和共享 `FormLayout`／`TaskDialogs` 等适用分支。
+- [ ] **Web 消费端｜F10／B06／W03 · 发布预览、媒体与来源。** `WorkflowEditor.tsx`／`PublicationPreview.tsx`／`Publications.tsx` 的发布分支。对照排序、取消、不支持的图片、进度／重试、返回保草稿、换图后声明失效、原编号查回执；对照来源和 AI 声明的独立状态。
+
+**第 5 批**
+
+- [ ] **共享 Compose／KMP｜F05／F11／F12 · 原生消息、表情与通知。** 领取前核对 A04 消息子项交付，以其已回填的源码为基线。覆盖 `messages`／`expressions`／`settings-notifications` 的公共 UI 与原会话恢复，保留首条未读和评论定位、显式已读、字素、常用／收藏、待处理和偏好。
+- [ ] **Web 业务后台｜B11／W02 · 实际收款登记。** 待发布授权子项交付后领取。`RoleTasks.tsx` 的 `received-*`，核对现场记录、凭证及明确确认、发送锁、原请求查台账和人工核对，记录仍按现在的业务合同展示。
+
+**第 6 批**
+
+- [ ] **Android 手机｜A02／A03 · 照片、通知及地图宿主。** `kmp/androidApp/.../mobile` 对应 Picker／权限／推送／地图端口。核对取消／不可读／失权、评论与会话深链、手选城市回列表、公开粗点与私密线索。
+- [ ] **Web 消费端｜F02／W02 · 社区、内容详情和公开分享。** `ContentPage.tsx`／`ResourcePage.tsx` 的公开阅读与社区分支。核对加载、空、保留合规旧数据刷新、分页重试、评论／互动许可、失权清缓存以及公开分享的游客访问。
+
+**第 7 批**
+
+- [ ] **iPad｜I04 · 分屏、Scene 隔离与业务窗口。** `iosUi`／`iosApp` 的窗口与 Scene 接线。按 `tabletP`／`tabletL`／`tabletN` 核对多窗口会话与私密草稿隔离、选中项、横竖切换、预约／发布／试养任务保持及键盘返回。
+- [ ] **Web 业务后台｜B11／W02 · 实际退款登记。** 收款子项交付后领取。`RoleTasks.tsx` 的 `refund-*`，核对原收款及退款来源、金额范围、版本、拒绝、回执与原事项人工对账。继续区分台账登记与实际资金动作。
+
+**第 8 批**
+
+- [ ] **iPhone｜I02／I03 · 照片、推送、定位与输入。** `iosUi` 系统桥接及 Swift 薄宿主。核对 Picker 取消、私密照片返回、APNs 获拒及站内入口、定位拒绝列表回退，记录 Safe Area、键盘、VoiceOver 和回跳在源码中的接线。
+- [ ] **Web 消费端｜F07／F08／W02 · 领养协作、照护与预约。** `AdoptionPages.tsx`／`CareCollaboration.tsx`／`AppointmentPages.tsx` 等。覆盖旧周期、候补、补材料、协议／试养／交接／接回、受限照护、角色变化、风险暂停和同版确认。
+
+**第 9 批**
+
+- [ ] **原生 Desktop｜D01／D02 · 桌面任务工作区。** 桌面宿主和公共 Compose 的桌面布局分支。核对消息主从、发布预览、预约版本对照、试养及照护在宽窄窗口切换时保留对象、焦点与原回执。
+- [ ] **Web 消费端｜F13／B02／B08／B09 · 信任、安全求助与资料权利。** Web 的核实、举报／申诉、监护邀请、游客安全、侵权通知／声明及资料三路径。核对权限、受限票据、原案追加、过期与失败。前批注销五态及回执只引用已签收证据。
+
+**第 10 批**
+
+- [ ] **原生 Desktop｜D03 · 原生系统桥接与关闭恢复。** `DesktopClientPlatform.kt`、`DesktopProviderAuth.kt`、`DesktopStorage.kt` 等。核对凭据、浏览器回跳、Picker／拖放、快捷键、中文 IME、打开同源地图、关闭窗口的草稿和未决请求状态。
+- [ ] **Web 业务后台｜B11／W02 · 原 13 稿、岗位 18 稿的业务侧与 3 条运营参考。** `web-client/src/operator`，对照业务五岗的入口、字段隔离、权限丢失与任务恢复。技术四岗引用运维包证据，年龄／授权／收退款任务引用各自专项。
+
+**第 11 批**
+
+- [ ] **共享 Compose／KMP｜F02–F04／F06 · 社区、好友圈、群与宠物日记。** 共享 UI 及对应状态入口。对照 `community`／`global-states`／`circle-friends`／`groups`／`pet-diary`，重点是分角色、分宠物、按当前权限及受众恢复。
+- [ ] **Web 消费端｜F03／F04／F06／W02 · 好友、圈子、群与宠物空间。** Web 独立 DOM 对照好友申请／拒绝、群目录及成员变更、宠物档案／日记／受众。核对换对象、拉黑、失权后的列表返回和草稿／附件隔离。
+
+**第 12 批**
+
+- [ ] **共享 Compose／KMP｜F07／F08／B10 · 领养、照护与预约。** `AdoptionPages.kt`／`CarePages.kt`／`AppointmentPages.kt` 等。以独占与候补、有效周期、试养接回、私密照护和暂停后双确认对照状态，复用真实受限与回执。
+- [ ] **Web 消费端｜F09／F14／W02 · 走失拾获、附近与有偿到访。** `MapPage.tsx`／`LeadPages.tsx`／`LeadSubmissionPages.tsx` 等。核对文字区域／地图回退、案件关闭、私密线索及独立证人会话，以及武汉／上海规则版本、费用明细、接待披露和无支付合同的到访。
+
+**第 13 批**
+
+- [ ] **共享 Compose／KMP｜F09／F14／B03／B07 · 走失拾获、附近与有偿到访。** 原生共享地图／线索／Offer 页面与现行合同。核对文字区域／列表回退、公开粗点、案件关闭、关联会话，以及城市／物种准入、费用披露和到访。
+- [ ] **Web 消费端｜F13／W02 · 指南、制度、隐私与出版历史。** `ReadingPages.tsx`。对照 `rules` 九态，补版本／生效日、草案与正式资料、失效及更新订阅、公开入口与原位返回。
+
+**第 14 批**
+
+- [ ] **共享 Compose／KMP｜F10／B06 · 发布、媒体上传与来源声明。** `PublicationPages.kt`／公共发布与草稿链路。覆盖九图、排序、失败重试、预览返回、素材变化令声明失效、受众确认、同键回执。
+- [ ] **公共后端／合同｜B01–B12／V01 · 已有回执和权限合同对账。** 只读核对 `internal/identity`／`internal/mobile`、OpenAPI、KMP／Web 的会话结束、注销保全、通知版本、评论可见性、幂等及清理。交付「已支持／需决定／缺执行证据」和对应入口，供明确问题再单独修复。
+
+**第 15 批**
+
+- [ ] **共享 Compose／KMP｜F13／B02／B05／B08／B09 · 安全、监护、资料权利与制度。** `SecurityPages.kt`／`GuardianPages.kt`／`ReadingPages.kt` 等。核对游客无注册求助、受限范围、票据与旧回执、监护撤权、侵权声明与原案追加。已签收的注销代码只回填证据。
+- [ ] **Web 消费端｜W04／V02 · 宽窄窗、输入与可访问性源码复核。** 以 `webN` 16 例做源码交叉核对，覆盖固定操作、失权后焦点、IME、Blob 生命周期、草稿隔离和深链接刷新。已单独领取的业务逻辑引用其证据，实际浏览器表现交条件项。
+
+### 满足前置后再派
+
+先由对应负责人核实前置，满足后按每批最多两项补入队列。待产品决定的占位项按评审结论转入开发或关闭。各端分别记录源码、派工状态和实际运行结果。
+
+- [ ] **产品／公共后端｜F01／B04／B05 · 账号暂时受限的服务端合同。** 产品确认可读／可写、复核与申诉入口、是否保留会话及原因披露范围后，派服务端定义按动作强制校验和错误码。
+- [ ] **共享 Compose／KMP｜F01／B04／B05 · 原生暂时受限状态。** 服务端合同及 DTO 就绪后，补仍可操作、等待复核、恢复和申诉接线。
+- [ ] **Web 消费端｜F01／W02 · Web 暂时受限状态。** 使用同一服务端合同，补浏览器受限范围、复核、失效回退及刷新。
+- [ ] **公共后端／渠道｜B03／B04／B05 · 正式认证与年龄核验联调。** 提供可测试配置和回调、明确联调授权后，用专用账号核对邮箱／短信、微信／QQ／Apple、年龄渠道成功／取消／拒绝／过期。
+- [ ] **公共后端／渠道｜B03／V03 · 正式地图与推送联调。** 正式地图与推送的测试配置、设备和分端授权到位后，核对授权、回退、去重与真实送达。
+- [ ] **Android 手机｜V02 · 运行验收。** 授权的构建产物、设备及运行范围可用后，逐条验 `phone` 的认证、消息、发布、领养及其余页面，附 TalkBack／大字和失败恢复证据。
+- [ ] **Android 平板／折叠｜V02 · 运行验收。** 授权及平板／折叠设备就绪后，分别验 `tabletP`／`tabletL`／`tabletN`、折痕、横竖屏、分屏、IME 和外接键盘。
+- [ ] **iPhone｜V02 · 运行验收。** 具备获授权的 macOS／Xcode 环境或构建产物及设备后，逐条验 `phone` 与 iOS 宿主行为、VoiceOver 和大字号。
+- [ ] **iPad｜V02 · 运行验收。** 具备获授权的 iPad 环境后，单独验 `tabletP`／`tabletL`／`tabletN`、多 Scene、选择器和键盘。
+- [ ] **原生 Desktop｜V02 · 运行验收。** 收到可用桌面产物和运行授权后，按 `desktop` 验工作区、系统回跳、关闭恢复、键盘／IME 和可访问性。
+- [ ] **Web 消费端｜V02 · 浏览器运行验收。** 浏览器运行与可用 v2 测试环境就绪后，验 `web`／`webN`、指针与触屏、跨标签、深链接、权限与失败恢复。
+- [ ] **Web 业务后台｜V02／V03 · 角色与任务联调验收。** 仅在测试环境、测试岗位和联调授权就绪后，验证 13 稿、18 稿业务侧、39 态、撤岗与原请求恢复。
+- [ ] **Web 技术运维｜V03 · 运维环境与角色验收。** 测试环境与具名岗位就绪后，验 14 稿及技术四岗跨环境隔离、不可用和审计。
+- [ ] **公共后端／环境｜V01／V03 · 数据库、异步作业与发布前核对。** 测试数据库与执行授权确认后，核对迁移／回滚、并发幂等、媒体失权、队列消费、性能和隐私证据。正式发布需单独授权。
+- [ ] **公共后端｜B03／V03 · 完整搜索接收端。** 当前占位。用户确定搜索范围、数据接收与环境后才进入实施。
+- [ ] **Web 技术运维／后台服务｜B11／V03 · 发布与重启执行器。** 当前占位。明确是否接入，以及审批、环境作用域和执行授权后才排开发。
+- [ ] **产品／公共后端｜F14／B07／B10 · 消费者支付、担保与赔付。** 保留为待决定能力。确认是否做、业务边界及准入后安排；运营收款／退款登记独立。
+- [ ] **Figma 文档中心｜文档中心 35:15 对账。** 取得 Figma 写入授权后，根据现行通知版本／回复锚点源码修订旧句，保留历史评论及验收差异。
+
 ## 七项派工复核 · 2026-11-19
 
 本轮核对 `main / b0e49ab` 的七个派工提交，并在同一工作树修复 Web 与 KMP 的注销回执恢复问题。**7 项源码／静态均已签收，运行验收待完成。** 下表的签收范围以对应子任务为准。跨端注销、Android 平板全量、后台 39 态与运维 14 稿等父项继续待验收。
@@ -51,7 +176,7 @@
 
 [原逐状态索引（含对应源码和设计节点）](figma-implementation-trace-2026-10-24.json) · [Figma 跨端索引](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=403-5) · [文档中心 10 月 30 日增量](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-19)。3 个 `operator-reference` 由 Web 后台负责，原生记「不适用」。协作增量 8 状态已在 748 内；评论四状态评审、独立后台、历史页及组件页按各自来源记账。文档中心 35:15 仍留「目标版本／回复锚点仍未提供」旧句，当前源码以 11 月 6 日实现为准。
 
-**领取与签收。** 从第 3–5 节复制一项派给一个 AI，在该项后填负责人、状态和证据链接。状态用「未领／进行中／待验收／受阻／完成」，可完成的范围仍继续推进。若一个包过大，按台账 `family + state key + 客户端` 拆分；原任务 ID 保留。功能包的 `[x]` 表示该项写明的交付完成且证据已挂上。缺运行授权时，界面源码与静态可以分别签收，运行框保留空白；同一画板即使由多个平台复用，平台证据仍各填一次。
+**领取与签收。** 按页首队列每批最多派两项，一项由一个 AI 领取。第 3–5 节提供功能和分端验收明细。任务行后填负责人、状态和证据链接，使用「未领／已派／进行中／待验收／受阻／完成」。若一个包过大，按台账 `family + state key + 客户端` 拆分并同步调整总数，保留原任务 ID。功能包的 `[x]` 表示该项写明的交付完成且证据已挂上。缺运行授权时，界面源码与静态可以分别签收，运行框保留空白。同一画板由多个平台复用时，平台证据各填一次。
 
 ```text
 任务 ID / 本文标题 / 客户端和布局：
@@ -184,6 +309,25 @@
 
 ### Android 平板与折叠 · A04
 
+- [x] **A04 · Android 平板消息主从栏与通知锚点（2026-11-20 批次）。** 核对普通启动、系统重建与带通知载荷的启动／新 Intent，避免重复入队或意外跳到消息页。对照 `tabletL` `311:379703`／`311:379707` 和 `tabletN` `325:61505`，补齐宽窗消息列表与详情保留、窄窗单栏、键盘出现和窗口切换时的选中项与返回路径；定位首条未读须等原会话和目标条目加载，并按真实条目索引滚动。限 Android `MainActivity.kt`、通知相关 `MobileViewModel.kt` 和共享 Compose `ConsumerApp.kt`／`InboxPages.kt` 的对应分支。完成后回填源码定位、状态触发与只读核对，再勾此项。平板全量以及视觉／设备验收继续待验收。
+  - 任务 ID / 执行者 / HEAD / 层级：`AI-20261120-A04-INBOX-ANCHOR` / Antigravity（Gemini） / `main` @ `d2e0d3c` / 源码修复与只读静态核对完成（未运行 Gradle、编译、测试、设备或模拟器，平板全量与视觉／真机验收继续 `[ ]`）
+  - 入口与触发条件 → 源码定位与实际行为：
+    1. **通知启动／重建／新 Intent 安全入队与原目标打开**（[`MainActivity.kt#L34-L37,L44-L49`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/MainActivity.kt#L34-L37)、[`MobileViewModel.kt#L40-L50,L69-L75,L155-L182,L191-L199`](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt#L40-L50)）：
+       - 普通桌面冷启／再点图标（`Intent.ACTION_MAIN` 无 `mnd_notification_id`/`notification_id`）及历史最近任务重开（`Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY`）：`consumeNotification()` 直接返回 `false`，不再误调用 `queueInboxNotification()` 或意外引导跳转消息页；`onResume()` 仅刷新推送通道与 `refreshInbox()` 角标计数。
+       - 系统重建（`onCreate(savedInstanceState != null)` 含旋转、分屏拖拽、折叠展开、进程回收恢复）：跳过 `consumeNotification(intent)` 与 `openLink(intent?.data)`，不重复消费通知载荷；已查看或点击「暂不查看」清除 `pendingNotification` 时同步清理 `SavedStateHandle["pendingNotification"]`；未处理的有效通知按 `${id}:${owner}`（经 `api.user.value?.id` 属主校验）跨进程恢复横幅而不重读旧 Intent。
+       - 真实通知载荷（`onCreate(savedInstanceState == null)` 或 `onNewIntent` 携带 `com.ttkk0000.meowcircle.OPEN_INBOX` 伴随经 `canonicalNotificationId()` 校验的正整数 `mnd_notification_id`/`notification_id` 或 `AndroidDevicePush` 无编号纯 `OPEN_INBOX`，以及后台通知合并在 `ACTION_MAIN` 上的有效通知编号 extra；对非空白畸形 ID 拒绝入队）：消费后立即清除两个 extra 并在 `ACTION_OPEN_INBOX` 置空 `action` 防复用重入，随后由 `PendingNotificationBanner` -> `store.openPendingNotification()` 向服务端拉取通知按白名单打开原目标（`Entry`/`Pet`+`replyAnchor`/`Chat`/`Application`/`Case`/Feature）。
+    2. **宽窗消息主从栏、窄窗单栏、软键盘与窗口切换选中/返回保持**（[`ConsumerApp.kt#L31-L54,L192-L196,L250-L272,L683-L702`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt#L31-L54)、[`InboxPages.kt#L14-L29,L61-L76`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/InboxPages.kt#L14-L29)）：
+       - `ClientWindowPolicy` 新增向后兼容字段 `masterWidthReady`（默认 `= master`），`clientWindowPolicy()` 仅在 `policy.master` 与 `policy.contextPane` 保留 `!keyboard`，为消息路径保留宽窗几何条件 `masterWindow = width >= 980f && readableWidth >= 900f && height >= 480f`；`MobileShell` 对 `Messages` 登录态下的 `Home`（`tabletL` `311:379703`）、`Chat`（`311:379707`）和 `Notifications` 均保持左 300dp 主栏（`home(state)` `movableContentOf`）＋右详情区（`Home` 展示 `MessagesMasterPlaceholder` 并提供通知总览／全部已读／邀请／建群／提醒设置入口），弹出软键盘（`WindowInsets.ime`）时不卸载左栏。
+       - `InboxPages.kt` 新增 `InboxSelectionSurface`，按 `s.destination` 高亮当前私信（`direct`）、群聊（`group`）及 `Notifications` 选中项；在 `tabletN`（744dp，`325:61505`）与 `tabletP`（834dp）或大字体使 `readableWidth < 900f` 时自动退回单栏，选中项、列表分类/仅未读、`SaveableStateProvider` 滚动与草稿均保留，`ArrowBack`／系统返回触发 `store.back()` 回到原会话或 `InboxScreen`。
+       - `Adoption` 沿用 `policy.master && ... && state.destination != MobileDestination.Home`，iOS／Desktop 与非消息页行为及公共接口签名保持不变。
+    3. **首条未读等待原会话与目标条目就绪、按真实索引单次定位与防串会**（[`ConsumerApp.kt#L704-L843`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt#L704-L843)）：
+       - `ChatScreen` 外层以 `key(s.user?.id ?: 0L, chat.id, chat.group)` 隔离账号与会话，移除点击后立即执行的 `uiScope.launch { scrollToItem(if(leadContext) 1 else 0) }` 竞态，改为显式 `ChatScrollRequest(chatId, group, kind, seq)`（`remember`＋`DisposableEffect.onDispose` 清空）与每会话独立可保存标记 `initialUnreadAnchored`（`rememberSaveable(s.user?.id, chat.id, chat.group)`）。
+       - `LaunchedEffect` 严格等待 `s.destination == chat && chatReady && !s.messages.loading && s.messages.loaded`（其中 `chatReady` 校验 `!s.detailLoading` 且 `s.conversation`/`s.group` 与 `chat.id`/`chat.group` 一致），再按 `(if (leadContext) 1 else 0) + itemIndex`（`itemIndex = s.messages.items.indexOfFirst { it.id == targetId }`）单次 `listState.scrollToItem(...)` 并消费请求／置位；`「读取较早历史」` 同样等待加载完成后单次滚至顶部 `0`；请求失败、切走会话或销毁均立即作废待定位请求，旧回调无法作用于已切换会话或覆盖用户后续阅读位置。
+  - 只读静态验证：改动后重跑 `python -X utf8 scripts/check_client_ui_static.py`（54 公共 UI / 48 分派 / 3 端端口 / 748 索引）、`scripts/check_kmp_client_static.py`（142 份源码与配置）、`scripts/check_android_feature_static.py`（48 扩展分派 / 自适应边界 / `enabled = !navigationLocked` / 资源与格式）、`scripts/check_mobile_static.py`（45 表 / 288 接口 / 145 schema）与 `git -c core.safecrlf=false diff --check` 均通过（退出 0）；4 份目标 Kotlin 均 UTF-8 无 BOM、CRLF 无孤立 LF、无行尾空白、零未用 `launch` 导入；`scripts/check_android_ui_static.py` 仍在未改动的 `Components.kt#L54`（`MndQuietButton` 白名单）预失败（`ConsumerApp.kt`／`MainActivity.kt`／`MobileViewModel.kt` 项通过）。**未运行编译、Gradle、类型检查、单测或真机／模拟器，遵循全局不自行编译规则。**
+  - [x] 源码／状态接线对照完成
+  - [x] 静态审查完成
+  - [ ] 平板全量、跨布局视觉／键鼠与真机／设备运行验收通过
+
 - [ ] **主从栏（P1，F02–F06／F12）。** 社区详情、群和私信、通知锚点、宠物切换；横竖屏、窄分屏、折叠／展开保持选中对象、已读锚点、滚动及返回目标。
 - [ ] **分栏表单（P1，F01／F07–F10／F13／F14）。** 认证／注销、发布预览、预约对照、试养照片及线索受限表单在折痕、软键盘和窗口变化下不遮操作；不重建请求、不丢草稿或清空校验。区分横竖稿中的返回和同状态切换。
 - [ ] **平板全量（V02）。** 分别登记 `tabletP`、`tabletL`、`tabletN`；验证折痕、外接键盘焦点、大字体和名单／日期选择器，有折叠方案时登记对应设备。[Android 自适应窗口](../../kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAdaptiveWindow.kt) · [布局契约](../design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md)
@@ -236,6 +380,39 @@
 ## 5. 后台、技术依赖与分派顺序
 
 ### Web 业务后台 · B11／W02
+
+- [x] **B11／W02 · Web 业务后台发布授权（2026-11-20 批次）。** 对照 11 个 `authority-*` 稳定键和现有读取／提交合同，核对未读取、普通／城市字段、版本冲突、明确确认、发送中、已受理、明确拒绝、原事项核对与中途撤权。版本变化须重新读取并确认，结果未知保留原编号和人工核对入口。限 `web-client/src/operator` 内发布授权相关分支。完成后回填 11 态源码定位和只读核对，再勾此项。真实岗位与浏览器、39 态父项继续待验收。[Figma 节点索引](../design/figma-study/admin-task-interaction-2026-10-29/README.md)
+  - 任务 ID / 本文标题 / 客户端和布局：`B11／W02` / Web 业务后台发布授权 / Web 业务后台（`/app/operator?view=authority`，桌面及窄屏响应式布局）
+  - 负责人 / 状态 / 分支和 HEAD / 最近更新时间：Antigravity（Gemini） / 待验收（源码实现与只读静态审查完成；目标端视觉交互与真实后台运行待验收） / `main` @ `d2e0d3c` / 2026-11-20（UTC+08:00）
+  - 范围：`/app/operator?view=authority` `authority` 11 个稳定键（`authority-not-read`、`authority-edit`、`authority-city-fields`、`authority-review`、`authority-confirmed`、`authority-sending`、`authority-accepted`、`authority-rejected`、`authority-conflict`、`authority-unknown`、`authority-unknown-done`）与岗位撤权 `role-lost`（本轮远端 Figma MCP 返回 `429` 限流，对照本地 [节点索引](../design/figma-study/admin-task-interaction-2026-10-29/README.md) 及已导出 `composition.png`／`authority-conflict.png`／`index.png` 等核对，未写远端）
+  - 允许写入的文件：`web-client/src/operator/RoleTasks.tsx`、`web-client/src/operator/OperatorApp.tsx`、`web-client/src/operator/operator.css`、本 `2026-11-20 批次` 子项及自身 AI 跟踪（完整保留工作树内并行任务及 `ageEvidence`／`received`／`refund`／服务端／KMP／技术运维代码）
+  - 证据与已修缺口（对齐 `internal/mobile/authority.go`、`authority_read.go`、`internal/platform/mobileapi/handler.go`、`ops_auth.go`）：
+    1. **未读取不得确认或提交**：修复初始 `state.flow === undefined` 时首点「读取当前授权版本」静默失效；任意自然键改动即清空 `lookup`/`lookupKey`/`conflictVersion`/`unknownChecked` 并递进 `readSequence`；`prepare("authority")` 与 `submit(true)` 双重校验当前自然键已有真实快照与版本。
+    2. **普通／城市授权字段与范围隔离**：`care`/`disposition` 要求规范正整数 `actor_id` 与 `pet_id` 且清零城市字段；`city_rule` 接入 `CityField`＋`mainlandCity` 城市查重归一、`rule_version`（1–120 runes）与 `actions`（`adoption`/`commercial`/`offline` 非空子集）多选框且清零对象 ID；两者共用非空 `evidence_ref`（1–120 runes）与严格含时区未来 RFC3339 `valid_until`，校验失败高亮并聚焦首个错项。
+    3. **409 冲突重读与防重提交**：`409` 立即清旧 `lookup`/`prepared`/`result`、置 `conflictVersion = true`，禁止沿用旧版本并提供同对象「重新读取当前授权」；`writing.current` ＋ `submitSequence` 防止重复提交，`locked`/`reading` 锁定导航、切岗、技术运维入口与 `OperatorApp.tsx` 待处理返回横幅。
+    4. **已受理／拒绝／未知／中途撤权**：仅 `POST /api/v2/ops/authority` 返回非空合法对象才进入 `authority-accepted` 并明示受理不等同端内放行；明确拒绝清 `prepared` 保留可修改输入；结果未知冻结原请求并在原事项提供只读 `checkAuthorityUnknown()` 人工核对与 `unknownAck`＋`reset(true)` 本地关闭守卫；`401`/`403`/换岗／切号／工作区切换或回调失权立即作废旧回调并清空旧材料（仅在 `sending`/`unknown` 失权保留最小非敏感引用）切换至 `role-lost`。
+  - 逐态回填：
+
+    | 状态键 | Figma 节点 | 路由与角色 | 触发条件与行为 | 源码行 |
+    |---|---|---|---|---|
+    | `authority-not-read` | [930:2759](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=930-2759) | `/app/operator?view=authority` · `authority_verifier` | 初始进入未读、或修改 `scope`/`species`/`actor_id`/`pet_id`/`city` 后自然键与已读 `lookupKey` 不匹配；禁用「核对本次内容」且 `prepare`/`submit` 拦截写入，提供主按钮「读取当前授权版本」 | `RoleTasks.tsx` [L125-L194](../../web-client/src/operator/RoleTasks.tsx#L125-L194)、[L343-L476](../../web-client/src/operator/RoleTasks.tsx#L343-L476)、[L618-L699](../../web-client/src/operator/RoleTasks.tsx#L618-L699)、[L1051-L1090](../../web-client/src/operator/RoleTasks.tsx#L1051-L1090)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1541-L1568](../../web-client/src/operator/RoleTasks.tsx#L1541-L1568)、[L1797-L1820](../../web-client/src/operator/RoleTasks.tsx#L1797-L1820) |
+    | `authority-edit` | [928:1587](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=928-1587) | `/app/operator?view=authority` · `authority_verifier` | `scope` 为 `care` 或 `disposition` 且已读当前版本（或未读编辑输入中），支持正整数 `actor_id`/`pet_id`、`evidence_ref` 与含时区未来 RFC3339 `valid_until` 编辑、多字段错误高亮聚焦及 `renderAuthoritySnapshot` 展示当前基线版本 | `RoleTasks.tsx` [L64-L168](../../web-client/src/operator/RoleTasks.tsx#L64-L168)、[L343-L476](../../web-client/src/operator/RoleTasks.tsx#L343-L476)、[L618-L699](../../web-client/src/operator/RoleTasks.tsx#L618-L699)、[L1051-L1090](../../web-client/src/operator/RoleTasks.tsx#L1051-L1090)、[L1191-L1227](../../web-client/src/operator/RoleTasks.tsx#L1191-L1227)、[L1414-L1436](../../web-client/src/operator/RoleTasks.tsx#L1414-L1436)、[L1513-L1568](../../web-client/src/operator/RoleTasks.tsx#L1513-L1568)、[L1797-L1820](../../web-client/src/operator/RoleTasks.tsx#L1797-L1820)；`operator.css` [L76-L133](../../web-client/src/operator/operator.css#L76-L133) |
+    | `authority-city-fields` | [930:2864](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=930-2864) | `/app/operator?view=authority` · `authority_verifier` | `scope === "city_rule"` 时切换城市规则专用字段：屏蔽且清零 `actor_id`/`pet_id`，启用 `CityField`＋`mainlandCity` 城市归一、`rule_version`（1–120 runes）与 `actions`（`adoption`/`commercial`/`offline`）多选校验及聚焦 | `RoleTasks.tsx` [L49-L63](../../web-client/src/operator/RoleTasks.tsx#L49-L63)、[L125-L205](../../web-client/src/operator/RoleTasks.tsx#L125-L205)、[L618-L699](../../web-client/src/operator/RoleTasks.tsx#L618-L699)、[L1051-L1090](../../web-client/src/operator/RoleTasks.tsx#L1051-L1090)、[L1191-L1227](../../web-client/src/operator/RoleTasks.tsx#L1191-L1227)、[L1439-L1539](../../web-client/src/operator/RoleTasks.tsx#L1439-L1539)；`operator.css` [L76-L133](../../web-client/src/operator/operator.css#L76-L133) |
+    | `authority-review` | [928:1701](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=928-1701) | `/app/operator?view=authority` · `authority_verifier` | 点击「核对本次内容」校验自然键一致且全部字段合法后进入 `stage === "review"`（`ack === false`）；冻结摘要对照本次改动与预期基线版本，未勾选前「确认登记」禁用且 `submit(false)` 拦截写入 | `RoleTasks.tsx` [L618-L699](../../web-client/src/operator/RoleTasks.tsx#L618-L699)、[L734-L919](../../web-client/src/operator/RoleTasks.tsx#L734-L919)、[L1140-L1190](../../web-client/src/operator/RoleTasks.tsx#L1140-L1190)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1695-L1727](../../web-client/src/operator/RoleTasks.tsx#L1695-L1727) |
+    | `authority-confirmed` | [929:1508](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=929-1508) | `/app/operator?view=authority` · `authority_verifier` | 在 `authority-review` 显式勾选确认框（`ack === true`）；启用危险提交按钮「确认登记」以触发 `submit(true)`，取消勾选退回 `authority-review`，点击「返回修改」保留当前输入回到编辑态 | `RoleTasks.tsx` [L734-L919](../../web-client/src/operator/RoleTasks.tsx#L734-L919)、[L977-L1011](../../web-client/src/operator/RoleTasks.tsx#L977-L1011)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1695-L1727](../../web-client/src/operator/RoleTasks.tsx#L1695-L1727) |
+    | `authority-sending` | [929:1620](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=929-1620) | `/app/operator?view=authority` · `authority_verifier` | `submit(true)` 再次校验快照版本后以 `writing.current`＋`submitSequence` 防重请求 `POST /api/v2/ops/authority`；冻结展示提交摘要且隐藏重发／返回，锁定导航、切岗、技术运维入口与 `OperatorApp.tsx` 待处理返回横幅 | `RoleTasks.tsx` [L244-L257](../../web-client/src/operator/RoleTasks.tsx#L244-L257)、[L734-L919](../../web-client/src/operator/RoleTasks.tsx#L734-L919)、[L1140-L1190](../../web-client/src/operator/RoleTasks.tsx#L1140-L1190)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1834-L1847](../../web-client/src/operator/RoleTasks.tsx#L1834-L1847)；`OperatorApp.tsx` [L290-L355](../../web-client/src/operator/OperatorApp.tsx#L290-L355) |
+    | `authority-accepted` | [929:1712](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=929-1712) | `/app/operator?view=authority` · `authority_verifier` | 仅在同 `epoch` 且同授权岗位有效时收到非空合法 `POST /api/v2/ops/authority` 响应对象才进入；如实展示真实回执编号／新版本与范围摘要，明确声明仅代表变更已登记而不等同端内全部条件已放行 | `RoleTasks.tsx` [L779-L818](../../web-client/src/operator/RoleTasks.tsx#L779-L818)、[L1140-L1190](../../web-client/src/operator/RoleTasks.tsx#L1140-L1190)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1878-L1911](../../web-client/src/operator/RoleTasks.tsx#L1878-L1911) |
+    | `authority-rejected` | [929:1802](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=929-1802) | `/app/operator?view=authority` · `authority_verifier` | 收到非 `401`／`403`／`409` 且非 `uncertain` 的确定业务拒绝；立即清除旧 `prepared`、保留当前输入与失败说明，禁止自动重发，可「返回修改」或改后重新读取／核对 | `RoleTasks.tsx` [L884-L896](../../web-client/src/operator/RoleTasks.tsx#L884-L896)、[L977-L1011](../../web-client/src/operator/RoleTasks.tsx#L977-L1011)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1638-L1660](../../web-client/src/operator/RoleTasks.tsx#L1638-L1660)、[L1797-L1820](../../web-client/src/operator/RoleTasks.tsx#L1797-L1820) |
+    | `authority-conflict` | [930:2983](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=930-2983) | `/app/operator?view=authority` · `authority_verifier` | `POST` 返回 HTTP `409`（`!uncertain`）；设 `conflictVersion = true` 并清除旧 `lookup`、`lookupKey`、`prepared` 与 `result`，保留仍被允许的输入与原目标四项摘要，禁止沿用旧版本重发，首推同对象「重新读取当前授权」并需重新勾选确认 | `RoleTasks.tsx` [L864-L883](../../web-client/src/operator/RoleTasks.tsx#L864-L883)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1585-L1637](../../web-client/src/operator/RoleTasks.tsx#L1585-L1637) |
+    | `authority-unknown` | [929:1897](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=929-1897) | `/app/operator?view=authority` · `authority_verifier` | 网络中断／超时／`uncertain` 保留冻结对象、`prepared.body`、预期版本与原输入进入 `stage === "unknown"`（`unknownAck === false`）；禁用重发与切岗，提供同自然键只读 `checkAuthorityUnknown()` 人工核对（提示版本或记录变化不等同本次写入必定成功） | `RoleTasks.tsx` [L195-L205](../../web-client/src/operator/RoleTasks.tsx#L195-L205)、[L477-L538](../../web-client/src/operator/RoleTasks.tsx#L477-L538)、[L897-L903](../../web-client/src/operator/RoleTasks.tsx#L897-L903)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1965-L2021](../../web-client/src/operator/RoleTasks.tsx#L1965-L2021) |
+    | `authority-unknown-done` | [930:2449](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=930-2449) | `/app/operator?view=authority` · `authority_verifier` | 在 `authority-unknown` 勾选确认人工核对（`unknownAck === true`）后解锁「仅结束本机待核对」；取消勾选退回 `authority-unknown`，调用 `reset(true)` 后展示 `unknownClosed` 横幅明示仅清除本机待办而非服务端已受理 | `RoleTasks.tsx` [L977-L1011](../../web-client/src/operator/RoleTasks.tsx#L977-L1011)、[L1274-L1335](../../web-client/src/operator/RoleTasks.tsx#L1274-L1335)、[L1382-L1393](../../web-client/src/operator/RoleTasks.tsx#L1382-L1393)、[L1965-L2021](../../web-client/src/operator/RoleTasks.tsx#L1965-L2021) |
+    | `role-lost` | [930:3078](https://www.figma.com/design/3OFOC3vu18Kx9sRPjummOC?node-id=930-3078) | `/app/operator?view=authority` → `forbidden`/`access` · 权限变更后无该岗 | ① 读取／提交收到 `401`／`403`、或 `refresh()` 后丧失 `authority_verifier`、或发生切号／切工作区时，以 `readSequence`/`submitSequence`＋`epoch`＋`permitted()` 阻止旧回调写回；② 立即清除表单材料、旧快照与 `prepared`，调 `revokeAccess()` 并仅在 `sending`/`unknown` 失权时保留最小非敏感引用，展示「岗位权限已变化 · 原任务停止」横幅 | `RoleTasks.tsx` [L216-L230](../../web-client/src/operator/RoleTasks.tsx#L216-L230)、[L259-L333](../../web-client/src/operator/RoleTasks.tsx#L259-L333)、[L801-L818](../../web-client/src/operator/RoleTasks.tsx#L801-L818)、[L851-L863](../../web-client/src/operator/RoleTasks.tsx#L851-L863)；`OperatorApp.tsx` [L290-L355](../../web-client/src/operator/OperatorApp.tsx#L290-L355) |
+
+  - [x] 源码／状态接线对照完成
+  - [x] 只读静态与语法检查通过（`check_admin_role_workspaces_static.py`、`check_operator_pages_static.py`、`check_web_client_static.py`、`check_page_gap_static.py`、`rolldown` TSX `parseAst`、`postcss.parse` 与 `git diff --check`；未运行编译、`tsc`、构建、测试或真实授权提交）
+  - [ ] 目标端视觉／键鼠或系统交互验收通过
+  - [ ] 真实业务与失败恢复验收通过
+  - 依赖／未验证项／下一步：整个「39 个任务态」父项（含真实收款、实际退款）与浏览器全态渲染、键盘焦点及真实 `authority_verifier` 岗位／`409`／网络未知／撤权运行联调继续留待后续授权验收。
 
 - [ ] **业务原 13 稿。** 工作台、举报／申诉、事项核实详情、权利列表／详情、资料注销、监护、发布准入、角色会话、提交确认、结果未知、受限／未连接逐页签收。测试分页、权限白名单与私密字段、队列退出后恢复及动作审计。
 - [ ] **岗位 18 稿。** 业务五岗 `moderator`、`privacy`、`identity_verifier`、`authority_verifier`、`finance` 与技术四岗各按授权验导航、跨角色拒绝与作用域；多角色切换后草稿／材料清理；`role-lost` 验当前任务中途撤权。技术四岗实际运行由下一节负责人回填。
@@ -305,6 +482,6 @@
 - [ ] **数据库与发布前环境。** 有权限的负责人验证 001–013 迁移、回滚、真实权限变更、并发幂等、媒体失权清理和作业消费。完整搜索接收端、运维执行器、正式发布与支付相关决定单列阻塞，不代填完成。[交付手册](DELIVERY_GUIDE_2026_10_25.md)
 - [ ] **文档中心对账。** 如获 Figma 写入授权，局部修订 35:15 的旧句并保留原评论，挂现行实际代码和验收状态。它独立于功能实现。[需更新的快照](https://www.figma.com/design/JiFXEy785BcGEvaFBSswJ3?node-id=35-15)
 
-推荐顺序为 **并行做明确缺口 → 按功能完成双前端状态 → 分端拿证据 → 合并核对**。第一轮可发给四个负责人：合同与注销／会话、公共 Compose、Web 消费端、业务后台；技术运维和分端验收可独立准备已存在的路径。共享 Store／路由入口、OpenAPI／DTO、公共样式和后台会话逻辑各指定一人合并，避免同一个文件由多个任务同时改。原始台账保留设计键与历史证据，各 AI 回填自己任务的实际交付和剩余项。
+派发顺序见[页首待派队列](#后续待派队列--2026-11-20)。共享 Store／路由入口、OpenAPI／DTO、公共样式和后台会话逻辑各指定一人合并。各 AI 回填自己任务的实际交付和剩余项，原始台账保留设计键与历史证据。
 
 **本轮验收边界。** Figma 节点结构与三处原稿截图、代表性源码及台账已静态核对。未运行编译，遵循全局不自行编译规则。测试、设备／浏览器运行、供应商及数据库均未验证。

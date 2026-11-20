@@ -10,9 +10,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ttkk0000.meowcircle.client.*
 
+@Composable private fun InboxSelectionSurface(selected: Boolean, content: @Composable () -> Unit) {
+    if (!selected) {
+        content()
+        return
+    }
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Box(Modifier.padding(horizontal = 8.dp)) { content() }
+    }
+}
+
 @Composable fun InboxScreen(store: MobileStore,s: MobileState) {
     var category by rememberSaveable(s.user?.id) { mutableStateOf(0) }
     var unreadOnly by rememberSaveable(s.user?.id) { mutableStateOf(false) }
+    val androidHost = LocalClientPlatform.current.kind == ClientPlatformKind.Android
+    val selectedChat = (s.destination as? MobileDestination.Chat)?.takeIf { androidHost }
+    val selectedDirect = selectedChat?.takeIf { !it.group }?.id
+    val selectedGroup = selectedChat?.takeIf { it.group }?.id
     LaunchedEffect(category,s.user?.id) { if(category != 0) store.loadNotifications() }
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
         ChoiceChipBar(
@@ -44,14 +62,25 @@ import com.ttkk0000.meowcircle.client.*
                     val peer = if(row.data.requesterId == s.user?.id) row.data.recipientId else row.data.requesterId
                     LaunchedEffect(peer,s.user?.id) { store.ensureMember(peer) }
                     val member = s.members[peer]
-                    MessageRow(member?.nickname?.ifBlank { member.username } ?: "宠友 #$peer",if(row.state == "pending") "待接受的消息请求" else "日常交流",s.inbox?.direct?.get(row.id.toString()),store = store,avatar = member?.avatarUrl?.let(::avatarMediaId)) { store.open(MobileDestination.Chat(row.id)) }
+                    InboxSelectionSurface(selectedDirect == row.id) {
+                        MessageRow(member?.nickname?.ifBlank { member.username } ?: "宠友 #$peer",if(row.state == "pending") "待接受的消息请求" else "日常交流",s.inbox?.direct?.get(row.id.toString()),store = store,avatar = member?.avatarUrl?.let(::avatarMediaId)) { store.open(MobileDestination.Chat(row.id)) }
+                    }
                 }
                 item { PageFooter(s.conversations,{ store.refreshHome() },{ store.refreshHome(true) }) }
                 items(s.groups.items.filter { !unreadOnly || (s.inbox?.groups?.get(it.id.toString()) ?: 0) > 0 },key = { "group-${it.id}" }) { row ->
-                    MessageRow(row.data.name,"${row.data.members.size} 位成员${if(s.user?.id in row.data.muted) " · 免打扰" else ""}",s.inbox?.groups?.get(row.id.toString()),true) { store.open(MobileDestination.Chat(row.id,true)) }
+                    InboxSelectionSurface(selectedGroup == row.id) {
+                        MessageRow(row.data.name,"${row.data.members.size} 位成员${if(s.user?.id in row.data.muted) " · 免打扰" else ""}",s.inbox?.groups?.get(row.id.toString()),true) { store.open(MobileDestination.Chat(row.id,true)) }
+                    }
                 }
                 item { PageFooter(s.groups,{ store.refreshHome() },{ store.refreshHome(true) }) }
-                item { NavigationRow("发现宠友群") { store.features.open(FeatureRoute(FeaturePage.GroupDirectory)) }; NavigationRow("好友与申请") { store.features.open(FeatureRoute(FeaturePage.Friends)) }; NavigationRow("邀请与协作") { store.features.open(FeatureRoute(FeaturePage.Invitations)) }; NavigationRow("创建群聊") { store.features.open(FeatureRoute(FeaturePage.GroupCreate)) }; NavigationRow("预约与安排") { store.features.open(FeatureRoute(FeaturePage.Appointments)) } }
+                item {
+                    if (androidHost) {
+                        InboxSelectionSurface(s.destination == MobileDestination.Notifications) {
+                            NavigationRow("互动与通知总览", "互动、申请与系统提醒") { store.open(MobileDestination.Notifications) }
+                        }
+                    }
+                    NavigationRow("发现宠友群") { store.features.open(FeatureRoute(FeaturePage.GroupDirectory)) }; NavigationRow("好友与申请") { store.features.open(FeatureRoute(FeaturePage.Friends)) }; NavigationRow("邀请与协作") { store.features.open(FeatureRoute(FeaturePage.Invitations)) }; NavigationRow("创建群聊") { store.features.open(FeatureRoute(FeaturePage.GroupCreate)) }; NavigationRow("预约与安排") { store.features.open(FeatureRoute(FeaturePage.Appointments)) }
+                }
             } else {
                 val rows = s.notifications.items.filter { (!unreadOnly || !it.data.read) && if(category == 1) it.data.category == "interactions" else it.data.category !in listOf("interactions","direct_messages","groups") }
                 items(rows,key = { "notice-${it.id}" }) { row ->

@@ -25,20 +25,32 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import kotlinx.coroutines.launch
 import com.ttkk0000.meowcircle.client.*
 
 // 按当前窗口与输入占用选择布局；手机、平板始终共用同一个 Store。
-data class ClientWindowPolicy(val rail: Boolean, val master: Boolean, val contextPane: Boolean, val keyboard: Boolean = false,
-    val expandedRail: Boolean = false)
+data class ClientWindowPolicy(
+    val rail: Boolean,
+    val master: Boolean,
+    val contextPane: Boolean,
+    val keyboard: Boolean = false,
+    val expandedRail: Boolean = false,
+    val masterWidthReady: Boolean = master,
+)
 
 fun clientWindowPolicy(width: Float, height: Float, fontScale: Float, keyboard: Boolean): ClientWindowPolicy {
     val scale = fontScale.coerceAtLeast(1f)
     val rail = width >= 680f
     val expandedRail = rail && width >= 1280f && width / scale >= 1000f
     val readableWidth = (width - if (expandedRail) 176f else if (rail) 80f else 0f) / scale
-    return ClientWindowPolicy(rail, width >= 980f && readableWidth >= 900f && height >= 480f && !keyboard,
-        width >= 1100f && readableWidth >= 1020f && height >= 600f && !keyboard, keyboard, expandedRail)
+    val masterWindow = width >= 980f && readableWidth >= 900f && height >= 480f
+    return ClientWindowPolicy(
+        rail,
+        masterWindow && !keyboard,
+        width >= 1100f && readableWidth >= 1020f && height >= 600f && !keyboard,
+        keyboard,
+        expandedRail,
+        masterWindow,
+    )
 }
 
 @Composable
@@ -177,7 +189,13 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
     } }
     fun select(tab: MobileTab) { if (!navigationLocked) { f.closeRoute(); store.select(tab) } }
     val unread = state.inbox?.globalTotal
-    val showMaster = policy.master && features.route == null && state.tab in listOf(MobileTab.Adoption,MobileTab.Messages) && state.destination != MobileDestination.Home
+    val androidHost = LocalClientPlatform.current.kind == ClientPlatformKind.Android
+    val showMessagesMaster = androidHost && policy.masterWidthReady && features.route == null && state.publicationConfirmation == null &&
+        state.tab == MobileTab.Messages && state.user != null &&
+        (state.destination == MobileDestination.Home || state.destination is MobileDestination.Chat || state.destination == MobileDestination.Notifications)
+    val showMaster = showMessagesMaster ||
+        (policy.master && features.route == null && state.destination != MobileDestination.Home &&
+            (state.tab == MobileTab.Adoption || (!androidHost && state.tab == MobileTab.Messages)))
     val showFeatureMaster = policy.master && features.route?.page in listOf(FeaturePage.Appointment,FeaturePage.Offer,FeaturePage.Claim,FeaturePage.Review)
     val showComposePreview = state.publicationConfirmation == null && policy.master && state.tab == MobileTab.Publish && features.route == null && state.destination == MobileDestination.Home
     val showPublishShortcut = features.route?.page == FeaturePage.GroupDirectory ||
@@ -245,8 +263,9 @@ private fun MobileShell(store: MobileStore, state: MobileState, features: Featur
                             val key = features.route?.let { "feature-${it.page}-${it.id}-${it.kind}-${it.peer}" } ?: if(state.destination == MobileDestination.Home) "home-${state.tab}" else "detail-${state.destination}"
                             if (features.route == null && state.publicationConfirmation != null) {
                                 CompositionLocalProvider(LocalUiScope provides "transient:publication:${state.publicationConfirmation.clientRequestId}") { PublicationPreviewPage(store,state) }
-                            } else if(features.route == null && state.destination == MobileDestination.Home) home(state)
-                            else saved.SaveableStateProvider("${state.user?.id ?: 0}-$key") {
+                            } else if(features.route == null && state.destination == MobileDestination.Home) {
+                                if (showMessagesMaster) MessagesMasterPlaceholder(store, state, enabled = !navigationLocked) else home(state)
+                            } else saved.SaveableStateProvider("${state.user?.id ?: 0}-$key") {
                                 CompositionLocalProvider(LocalUiScope provides (features.route?.let(::featureUiScope) ?: "screen:$key")) {
                                     if(features.route != null) ClientFeatureContent(store,features) else DetailContent(store,state)
                                 }
@@ -664,60 +683,164 @@ private fun ApplicationDetail(store: MobileStore, s: MobileState) {
 }
 
 @Composable
+private fun MessagesMasterPlaceholder(store: MobileStore, state: MobileState, enabled: Boolean) {
+    CompositionLocalProvider(LocalTaskNavigationEnabled provides enabled) {
+        TaskColumn {
+            SectionTitle("消息与通知")
+            HonestStateCard(
+                "从左侧选择会话或通知",
+                "宽屏下保留消息列表，方便切换聊天与通知；收窄为分屏或旋转后仍保留当前会话与输入草稿。",
+            )
+            NavigationRow("互动与通知总览", "互动、申请与系统提醒") { store.open(MobileDestination.Notifications) }
+            FeatureButton(
+                "全部消息与通知标为已读",
+                enabled && !state.busy && !state.inboxReadAll.preparing && !state.inboxReadAll.submitting,
+            ) { store.prepareInboxReadAll() }
+            NavigationRow("协作与群邀请") { store.features.open(FeatureRoute(FeaturePage.Invitations)) }
+            NavigationRow("创建群聊") { store.features.open(FeatureRoute(FeaturePage.GroupCreate)) }
+            NavigationRow("提醒设置") { store.features.open(FeatureRoute(FeaturePage.Settings)) }
+        }
+    }
+}
+
+private enum class ChatScrollKind { FirstUnread, Beginning }
+private data class ChatScrollRequest(val chatId: Long, val group: Boolean, val kind: ChatScrollKind, val seq: Int)
+
+@Composable
 private fun ChatScreen(store: MobileStore, s: MobileState, chat: MobileDestination.Chat) {
-    val conversation = s.conversation
-    val leadContext = conversation?.data?.contextKind == "lead"
-    val contextWritable = !leadContext || (s.chatLead != null && s.chatCase?.state in listOf("active","matched"))
-    val listState = androidx.compose.foundation.lazy.rememberLazyListState()
-    val uiScope = rememberCoroutineScope()
-    val firstUnread = (if(chat.group) s.inbox?.groupFirstUnread else s.inbox?.directFirstUnread)?.get(chat.id.toString())
-    Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
-        if(chat.group) {
-            Text("${s.group?.data?.name.orEmpty()} · ${s.group?.data?.members?.size ?: 0} 位成员",style = MaterialTheme.typography.bodySmall,color = MaterialTheme.colorScheme.onSurfaceVariant)
-            if(!s.group?.data?.notice.isNullOrBlank()) TaskNotice("群公告",s.group!!.data.notice)
-            TextButton({ store.features.open(FeatureRoute(FeaturePage.Group,chat.id)) }) { Text("群公告、成员与管理") }
+    key(s.user?.id ?: 0L, chat.id, chat.group) {
+        val conversation = s.conversation?.takeIf { !chat.group && it.id == chat.id }
+        val group = s.group?.takeIf { chat.group && it.id == chat.id }
+        val chatReady = !s.detailLoading && if (chat.group) group != null else conversation != null
+        val leadContext = !chat.group && conversation?.data?.contextKind == "lead"
+        val contextWritable = !leadContext || (s.chatLead != null && s.chatCase?.state in listOf("active","matched"))
+        val listState = androidx.compose.foundation.lazy.rememberLazyListState()
+        val firstUnread = (if (chat.group) s.inbox?.groupFirstUnread else s.inbox?.directFirstUnread)?.get(chat.id.toString())
+        var scrollSeq by remember(chat.id, chat.group) { mutableStateOf(0) }
+        var pendingScroll by remember(chat.id, chat.group) { mutableStateOf<ChatScrollRequest?>(null) }
+        var initialUnreadAnchored by androidx.compose.runtime.saveable.rememberSaveable(s.user?.id, chat.id, chat.group) { mutableStateOf(false) }
+
+        DisposableEffect(chat.id, chat.group) {
+            onDispose { pendingScroll = null }
         }
-        if (conversation?.state == "pending") {
-            Text("对方接受前，发起人仅可发送一条文字。", Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            if (conversation.data.recipientId == s.user?.id) Row(horizontalArrangement = Arrangement.spacedBy(MobileUi.contentGap)) {
-                Button(onClick = { store.answerMessageRequest("accept") }, enabled = !s.busy && contextWritable) { Text("接受消息请求") }
-                OutlinedButton(onClick = { store.answerMessageRequest("decline") }, enabled = !s.busy) { Text("拒绝") }
+
+        LaunchedEffect(
+            chat.id,
+            chat.group,
+            s.destination,
+            chatReady,
+            s.messages.loading,
+            s.messages.loaded,
+            s.messages.appending,
+            s.messages.error,
+            s.messages.items,
+            firstUnread,
+            leadContext,
+            pendingScroll,
+            initialUnreadAnchored,
+        ) {
+            if (s.destination != chat || !chatReady || s.messages.loading) return@LaunchedEffect
+            val request = pendingScroll
+            if (request != null) {
+                if (request.chatId != chat.id || request.group != chat.group || s.messages.error != null) {
+                    pendingScroll = null
+                    return@LaunchedEffect
+                }
+                if (!s.messages.loaded) return@LaunchedEffect
+                when (request.kind) {
+                    ChatScrollKind.FirstUnread -> {
+                        val targetId = firstUnread
+                        if (targetId == null) {
+                            pendingScroll = null
+                            initialUnreadAnchored = true
+                            return@LaunchedEffect
+                        }
+                        val itemIndex = s.messages.items.indexOfFirst { it.id == targetId }
+                        if (itemIndex >= 0) {
+                            listState.scrollToItem((if (leadContext) 1 else 0) + itemIndex)
+                            initialUnreadAnchored = true
+                        }
+                        pendingScroll = null
+                    }
+                    ChatScrollKind.Beginning -> {
+                        listState.scrollToItem(0)
+                        pendingScroll = null
+                        initialUnreadAnchored = true
+                    }
+                }
+                return@LaunchedEffect
             }
-        }
-        Row(Modifier.fillMaxWidth()) {
-            if(firstUnread != null) TextButton({ store.loadMessages(); uiScope.launch { listState.scrollToItem(if(leadContext) 1 else 0) } },enabled = !s.messages.loading) { Text("定位首条未读") }
-            TextButton({ store.loadMessages(fromBeginning = true); uiScope.launch { listState.scrollToItem(0) } },enabled = !s.messages.loading) { Text("读取较早历史") }
-        }
-        PageRefresh(s.messages)
-        LazyColumn(Modifier.weight(1f),state = listState, verticalArrangement = Arrangement.spacedBy(MobileUi.contentGap), contentPadding = PaddingValues(vertical = 16.dp)) {
-            if (leadContext) item(key = "lead-context") {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    s.chatCase?.let { LeadCaseContext(store,it) }
-                    TaskNotice("私密线索 #${conversation?.data?.contextId} · 目击者会话",if (contextWritable) "保持站内联系，不先付费换线索。" else "本次求助已停止新联系，当前仅查看私密历史。")
+            if (!initialUnreadAnchored && s.messages.loaded && !s.messages.appending && s.messages.error == null) {
+                val targetId = firstUnread
+                if (targetId == null) {
+                    initialUnreadAnchored = true
+                } else {
+                    val itemIndex = s.messages.items.indexOfFirst { it.id == targetId }
+                    if (itemIndex >= 0) {
+                        listState.scrollToItem((if (leadContext) 1 else 0) + itemIndex)
+                    }
+                    initialUnreadAnchored = true
                 }
             }
-            items(s.messages.items, key = { it.id }) { row ->
-                if(row.id == firstUnread) Text("以下为未读消息",color = MaterialTheme.colorScheme.primary,style = MaterialTheme.typography.labelMedium)
-                BoxWithConstraints(Modifier.fillMaxWidth()) {
-                    val bubbleWidth = minOf(560.dp, maxWidth * (300f / 358f))
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = if (row.ownerId == s.user?.id) Arrangement.End else Arrangement.Start) {
-                        Surface(shape = MaterialTheme.shapes.medium, color = if (row.ownerId == s.user?.id) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
-                            modifier = Modifier.widthIn(max = bubbleWidth)) {
-                            Column(Modifier.padding(horizontal = 16.dp,vertical = 12.dp),verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
-                                if(chat.group && row.ownerId != s.user?.id) Text(s.members[row.ownerId]?.nickname?.ifBlank { "群成员" } ?: "群成员",style = MaterialTheme.typography.labelSmall,color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                if(row.data.text.isNotBlank()) CompositionLocalProvider(LocalContentColor provides if(row.ownerId == s.user?.id) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface) { RichContentText(row.data.text,s.emoji) }
-                                if(row.data.stickerId.isNotBlank()) StickerPhoto(row.data.stickerId,row.data.stickerId)
-                                row.mediaIds.forEach { MobilePhoto(store,it,s.user?.id,"消息照片",Modifier.fillMaxWidth().aspectRatio(1.25f)) }
+        }
+
+        Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
+            if(chat.group) {
+                Text("${group?.data?.name.orEmpty()} · ${group?.data?.members?.size ?: 0} 位成员",style = MaterialTheme.typography.bodySmall,color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if(!group?.data?.notice.isNullOrBlank()) TaskNotice("群公告",group!!.data.notice)
+                TextButton({ store.features.open(FeatureRoute(FeaturePage.Group,chat.id)) }) { Text("群公告、成员与管理") }
+            }
+            if (conversation?.state == "pending") {
+                Text("对方接受前，发起人仅可发送一条文字。", Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (conversation.data.recipientId == s.user?.id) Row(horizontalArrangement = Arrangement.spacedBy(MobileUi.contentGap)) {
+                    Button(onClick = { store.answerMessageRequest("accept") }, enabled = !s.busy && contextWritable) { Text("接受消息请求") }
+                    OutlinedButton(onClick = { store.answerMessageRequest("decline") }, enabled = !s.busy) { Text("拒绝") }
+                }
+            }
+            Row(Modifier.fillMaxWidth()) {
+                if(firstUnread != null) TextButton({
+                    scrollSeq += 1
+                    pendingScroll = ChatScrollRequest(chat.id, chat.group, ChatScrollKind.FirstUnread, scrollSeq)
+                    store.loadMessages()
+                },enabled = !s.messages.loading && !s.detailLoading && chatReady) { Text("定位首条未读") }
+                TextButton({
+                    scrollSeq += 1
+                    pendingScroll = ChatScrollRequest(chat.id, chat.group, ChatScrollKind.Beginning, scrollSeq)
+                    initialUnreadAnchored = true
+                    store.loadMessages(fromBeginning = true)
+                },enabled = !s.messages.loading && !s.detailLoading && chatReady) { Text("读取较早历史") }
+            }
+            PageRefresh(s.messages)
+            LazyColumn(Modifier.weight(1f),state = listState, verticalArrangement = Arrangement.spacedBy(MobileUi.contentGap), contentPadding = PaddingValues(vertical = 16.dp)) {
+                if (leadContext) item(key = "lead-context") {
+                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                        s.chatCase?.let { LeadCaseContext(store,it) }
+                        TaskNotice("私密线索 #${conversation?.data?.contextId} · 目击者会话",if (contextWritable) "保持站内联系，不先付费换线索。" else "本次求助已停止新联系，当前仅查看私密历史。")
+                    }
+                }
+                items(s.messages.items, key = { it.id }) { row ->
+                    if(row.id == firstUnread) Text("以下为未读消息",color = MaterialTheme.colorScheme.primary,style = MaterialTheme.typography.labelMedium)
+                    BoxWithConstraints(Modifier.fillMaxWidth()) {
+                        val bubbleWidth = minOf(560.dp, maxWidth * (300f / 358f))
+                        Row(Modifier.fillMaxWidth(), horizontalArrangement = if (row.ownerId == s.user?.id) Arrangement.End else Arrangement.Start) {
+                            Surface(shape = MaterialTheme.shapes.medium, color = if (row.ownerId == s.user?.id) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
+                                modifier = Modifier.widthIn(max = bubbleWidth)) {
+                                Column(Modifier.padding(horizontal = 16.dp,vertical = 12.dp),verticalArrangement = Arrangement.spacedBy(MobileUi.compactGap)) {
+                                    if(chat.group && row.ownerId != s.user?.id) Text(s.members[row.ownerId]?.nickname?.ifBlank { "群成员" } ?: "群成员",style = MaterialTheme.typography.labelSmall,color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    if(row.data.text.isNotBlank()) CompositionLocalProvider(LocalContentColor provides if(row.ownerId == s.user?.id) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface) { RichContentText(row.data.text,s.emoji) }
+                                    if(row.data.stickerId.isNotBlank()) StickerPhoto(row.data.stickerId,row.data.stickerId)
+                                    row.mediaIds.forEach { MobilePhoto(store,it,s.user?.id,"消息照片",Modifier.fillMaxWidth().aspectRatio(1.25f)) }
+                                }
                             }
                         }
                     }
                 }
+                item { PageFooter(s.messages, { store.loadMessages() }, { store.loadMessages(true) }, "暂无消息", refreshVisible = true) }
             }
-            item { PageFooter(s.messages, { store.loadMessages() }, { store.loadMessages(true) }, "暂无消息", refreshVisible = true) }
+            if (s.messages.items.isNotEmpty()) TextButton(onClick = store::markChatRead, enabled = !s.busy) { Text("将已载入消息标为已读") }
+            val canSend = contextWritable && ((chat.group && group?.let { it.state == "active" && s.user?.id in it.data.members } == true) || conversation?.state == "accepted" || conversation?.let { it.state == "pending" && it.data.requesterId == s.user?.id && s.messages.loaded && s.messages.items.isEmpty() } == true)
+            if (canSend) ReplyEditor(store, s, "消息",compact = leadContext) else Text("当前会话暂不可发送", Modifier.padding(MobileUi.pagePadding))
         }
-        if (s.messages.items.isNotEmpty()) TextButton(onClick = store::markChatRead, enabled = !s.busy) { Text("将已载入消息标为已读") }
-        val canSend = contextWritable && ((chat.group && s.group?.let { it.state == "active" && s.user?.id in it.data.members } == true) || conversation?.state == "accepted" || conversation?.let { it.state == "pending" && it.data.requesterId == s.user?.id && s.messages.loaded && s.messages.items.isEmpty() } == true)
-        if (canSend) ReplyEditor(store, s, "消息",compact = leadContext) else Text("当前会话暂不可发送", Modifier.padding(MobileUi.pagePadding))
     }
 }
 

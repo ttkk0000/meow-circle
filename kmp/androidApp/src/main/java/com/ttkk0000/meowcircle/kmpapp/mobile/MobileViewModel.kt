@@ -1,5 +1,6 @@
 package com.ttkk0000.meowcircle.kmpapp.mobile
 
+import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -22,18 +23,30 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
     val uiSession = AndroidUiSessionState()
     private val queuedLink = MutableStateFlow<PendingTaskLink?>(null)
     val pendingLink = queuedLink.asStateFlow()
+    private data class SavedUiSnapshot(val owner: Long, val base: String, val feature: String, val pendingNotification: String?)
     init {
         bindStore(store,{ current,mobile -> current.copy(mobile = mobile) },{ MobileHostEffect.StoreEffect(it) })
         bindStore(store.features,{ current,features -> current.copy(features = features) },{ MobileHostEffect.FeatureEffect(it) })
         bindStore(store.features.sensitive,{ current,sensitive -> current.copy(sensitive = sensitive) },{ MobileHostEffect.SensitiveEffect(it) })
         bindState(queuedLink) { current,link -> current.copy(pendingLink = link) }
         // 系统状态只保存资源路由，不保存密码、验证码、材料或临时证明。
-        val route = saved.get<String>("mobileRoute")
-        if (saved.get<Long>("routeOwner") == (api.user.value?.id ?: 0L) && route != null) restoreRoute(route)
-        saved.get<String>("pendingTaskLink")?.split(':')?.takeIf { it.size == 3 }?.let { parts ->
+        val route = saved.get<String>(STATE_MOBILE_ROUTE)
+        if (saved.get<Long>(STATE_ROUTE_OWNER) == (api.user.value?.id ?: 0L) && route != null) restoreRoute(route)
+        saved.get<String>(STATE_PENDING_TASK_LINK)?.split(':')?.takeIf { it.size == 3 }?.let { parts ->
             val owner = parts[2].toLongOrNull(); val id = parts[1].toLongOrNull()
             if(owner != null && id != null && id > 0 && id.toString() == parts[1] && (owner == 0L && parts[0] in publicTaskLinkKinds || owner > 0L && owner == api.user.value?.id) && parts[0] in linkKinds)
                 queuedLink.value = PendingTaskLink(parts[0],id,owner)
+        }
+        saved.get<String>(STATE_PENDING_NOTIFICATION)?.split(':')?.takeIf { it.size == 2 }?.let { parts ->
+            val id = parts[0].toLongOrNull()
+            val owner = parts[1].toLongOrNull()
+            val currentUser = api.user.value?.id
+            if (id != null && owner != null && currentUser != null && (owner == 0L || owner == currentUser)) {
+                if (id == 0L) store.queueInboxNotification()
+                else if (id > 0L) store.queueNotification(id.toString())
+            } else {
+                saved.remove<String>(STATE_PENDING_NOTIFICATION)
+            }
         }
         viewModelScope.launch {
             combine(store.state,store.features.state) { state,features ->
@@ -49,12 +62,19 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
                     MobileDestination.Applications -> "applications:0"
                     MobileDestination.Notifications -> "notifications:0"
                 }
-                Triple(state.user?.id ?: 0L,state.tab.name + "|" + destination,feature?.let { "${it.page.name}:${it.id}:${it.kind}:${it.peer}" }.orEmpty())
-            }.collect { (owner,base,feature) ->
-                val serialized = "$base|$feature"
-                saved["routeOwner"] = owner; saved["mobileRoute"] = serialized
-                reduce { it.copy(routeOwner = owner,serializedRoute = serialized) }
-                if(queuedLink.value?.owner?.let { it != 0L && it != owner } == true) dismissPendingLink()
+                SavedUiSnapshot(
+                    owner = state.user?.id ?: 0L,
+                    base = state.tab.name + "|" + destination,
+                    feature = feature?.let { "${it.page.name}:${it.id}:${it.kind}:${it.peer}" }.orEmpty(),
+                    pendingNotification = state.pendingNotification?.let { "${it.id}:${it.owner}" },
+                )
+            }.collect { snapshot ->
+                val serialized = "${snapshot.base}|${snapshot.feature}"
+                saved[STATE_ROUTE_OWNER] = snapshot.owner; saved[STATE_MOBILE_ROUTE] = serialized
+                if (snapshot.pendingNotification != null) saved[STATE_PENDING_NOTIFICATION] = snapshot.pendingNotification
+                else saved.remove<String>(STATE_PENDING_NOTIFICATION)
+                reduce { it.copy(routeOwner = snapshot.owner,serializedRoute = serialized) }
+                if(queuedLink.value?.owner?.let { it != 0L && it != snapshot.owner } == true) dismissPendingLink()
             }
         }
     }
@@ -132,6 +152,34 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
         kind == "conversations" -> MobileDestination.Chat(id)
         else -> null
     }
+    fun consumeNotification(intent: Intent?): Boolean {
+        if (intent == null) return false
+        if ((intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) return false
+        val raw = intent.getStringExtra(EXTRA_MND_NOTIFICATION_ID) ?: intent.getStringExtra(EXTRA_NOTIFICATION_ID)
+        return when (intent.action) {
+            ACTION_OPEN_INBOX -> {
+                intent.removeExtra(EXTRA_MND_NOTIFICATION_ID)
+                intent.removeExtra(EXTRA_NOTIFICATION_ID)
+                intent.action = null
+                val id = raw?.takeIf { it.isNotBlank() }?.let(::canonicalNotificationId)
+                when {
+                    id != null -> store.queueNotification(id.toString())
+                    raw.isNullOrBlank() -> {
+                        store.queueInboxNotification()
+                        true
+                    }
+                    else -> false
+                }
+            }
+            Intent.ACTION_MAIN -> {
+                val id = raw?.takeIf { it.isNotBlank() }?.let(::canonicalNotificationId) ?: return false
+                intent.removeExtra(EXTRA_MND_NOTIFICATION_ID)
+                intent.removeExtra(EXTRA_NOTIFICATION_ID)
+                store.queueNotification(id.toString())
+            }
+            else -> false
+        }
+    }
     override fun onCleared() { uiSession.clear(); store.close(); super.onCleared() }
     class Factory(private val api: MobileApi, private val drafts: LocalComposeDrafts, private val workspaces: LocalWorkspaceDrafts, private val replies: LocalWorkspaceDrafts) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
@@ -139,5 +187,14 @@ class MobileViewModel(api: MobileApi, drafts: LocalComposeDrafts, workspaces: Lo
             require(modelClass.isAssignableFrom(MobileViewModel::class.java))
             return MobileViewModel(api,drafts,workspaces,replies,extras.createSavedStateHandle()) as T
         }
+    }
+    companion object {
+        const val ACTION_OPEN_INBOX = "com.ttkk0000.meowcircle.OPEN_INBOX"
+        private const val EXTRA_MND_NOTIFICATION_ID = "mnd_notification_id"
+        private const val EXTRA_NOTIFICATION_ID = "notification_id"
+        private const val STATE_MOBILE_ROUTE = "mobileRoute"
+        private const val STATE_ROUTE_OWNER = "routeOwner"
+        private const val STATE_PENDING_TASK_LINK = "pendingTaskLink"
+        private const val STATE_PENDING_NOTIFICATION = "pendingNotification"
     }
 }
