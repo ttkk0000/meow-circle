@@ -11,7 +11,6 @@ import {
   type Draft,
   draftCommandKey,
 } from "../core/drafts";
-import { invalidateQueries } from "../core/query";
 import { useSession } from "../core/session";
 import { navigate, resourceRoute, useRoute } from "../core/router";
 import { Button, Card, Empty, Notice, TaskPage } from "../components/ui";
@@ -99,6 +98,7 @@ export function Recovery() {
   if (view === "close-account" && requestParam) {
     return (
       <AccountDeletionResultPage
+        key={requestParam}
         requestId={requestParam}
         onBackToAll={() => {
           setVersion((v) => v + 1);
@@ -128,7 +128,6 @@ export function Recovery() {
           <LimitedCard
             key={draft.key}
             draft={draft}
-            onChange={() => setVersion((v) => v + 1)}
           />
         ) : (
           <RecoveryCard
@@ -142,7 +141,6 @@ export function Recovery() {
         <LimitedCard
           key={draft.key}
           draft={draft}
-          onChange={() => setVersion((v) => v + 1)}
         />
       ))}
     </TaskPage>
@@ -262,13 +260,7 @@ function RecoveryCard({
     </Card>
   );
 }
-function LimitedCard({
-  draft,
-  onChange,
-}: {
-  draft: Draft;
-  onChange?: () => void;
-}) {
+function LimitedCard({ draft }: { draft: Draft }) {
   const access = draft.access!;
   const [status, setStatus] = useState<LimitedStatus>();
   const [busy, setBusy] = useState(false);
@@ -278,6 +270,7 @@ function LimitedCard({
   const isCloseAccount =
     access.type === "data" &&
     (status?.type === "close_account" || isAccountDeletionDraft(draft));
+  const deletionResultRoute = `/recovery?view=close-account&request=${encodeURIComponent(access.requestId)}`;
   async function check() {
     setBusy(true);
     setError("");
@@ -297,6 +290,7 @@ function LimitedCard({
         },
       });
       setStatus(result);
+      if (!safety && result.type === "close_account") return;
       const route = `capability:${access.requestId}`;
       const old = await readDraft(0n, route);
       const saved = old ?? newDraft(0n, route);
@@ -310,21 +304,6 @@ function LimitedCard({
         access: { ...access, id: result.id },
       });
       setBackup(true);
-      if (
-        !draft.route.startsWith("capability:") &&
-        (draft.uncertain || draft.original) &&
-        result.type === "close_account"
-      ) {
-        await clearDraft(draft);
-        invalidateQueries();
-        api.endSession();
-        onChange?.();
-        navigate(
-          `/recovery?view=close-account&request=${encodeURIComponent(access.requestId)}`,
-          true,
-        );
-        return;
-      }
     } catch (e) {
       if (e instanceof HttpError && e.status === 404) setMissing(true);
       setError(explain(e));
@@ -346,25 +325,18 @@ function LimitedCard({
         原编号 {access.requestId} · 只查询当前事项
       </p>
       <div className="auth-method-links">
-        <Button onClick={() => void check()} disabled={busy}>
-          凭原受限能力查询进度
-        </Button>
         {isCloseAccount ? (
-          <Button
-            kind="primary"
-            disabled={busy}
-            onClick={() =>
-              navigate(
-                `/recovery?view=close-account&request=${encodeURIComponent(access.requestId)}`,
-              )
-            }
-          >
+          <Button kind="primary" onClick={() => navigate(deletionResultRoute)}>
             查看注销处理进度与结果页
           </Button>
-        ) : null}
+        ) : (
+          <Button onClick={() => void check()} disabled={busy}>
+            凭原受限能力查询进度
+          </Button>
+        )}
       </div>
       {error ? <Notice title={error} error /> : null}
-      {missing && draft.original ? (
+      {missing && draft.original && !isCloseAccount ? (
         <RetrySubmission draft={draft} onDone={() => void check()} />
       ) : null}
       {status ? (

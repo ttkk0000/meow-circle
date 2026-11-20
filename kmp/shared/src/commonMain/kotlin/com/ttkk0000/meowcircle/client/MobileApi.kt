@@ -153,7 +153,13 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         vault = next
     }
 
-    private fun save(value: LoginSession?, refresh: Boolean = false, end: SessionEnd = SessionEnd(SessionEndKind.Expired), method: String = "") {
+    private fun save(
+        value: LoginSession?,
+        refresh: Boolean = false,
+        end: SessionEnd = SessionEnd(SessionEndKind.Expired),
+        method: String = "",
+        beforePublish: () -> Unit = {},
+    ) {
         val hadSession = session != null
         persist(vault.copy(session = value))
         if (value != null) rememberedIdentity = RememberedIdentity(value.user,
@@ -164,6 +170,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         if (!refresh) accountGeneration++
         session = value
         revision++
+        beforePublish()
         _user.value = value?.user
     }
 
@@ -336,7 +343,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
         catch (_: Exception) { throw OperationResultUnknown(input.clientRequestId) }
     }
     internal suspend fun submitDataRequestSecure(input: DataRequestInput): MobileRecord<DataRequestBody> {
-        val (owner, generation) = sessionMutex.withLock {
+        val submission = sessionMutex.withLock {
             val currentOwner = session?.user?.id ?: throw MobileApiException(401, "authentication required")
             val currentGeneration = accountGeneration
             val old = vault.limitedAccess.firstOrNull { it.type == "data_request" && it.clientRequestId == input.clientRequestId }
@@ -349,27 +356,28 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
                 if (vault.limitedAccess.size >= 32) throw MobileStorageException()
                 persist(vault.copy(limitedAccess = vault.limitedAccess + RestrictedAccess("data_request",input.clientRequestId,input.queryToken)))
             }
-            pendingDataRequests[input.clientRequestId] = PendingDataRequest(
+            PendingDataRequest(
                 key = input.clientRequestId,
                 type = input.type,
                 queryToken = input.queryToken,
                 ownerId = currentOwner,
                 generation = currentGeneration,
-            )
-            currentOwner to currentGeneration
+            ).also { pendingDataRequests[input.clientRequestId] = it }
         }
         try {
             val result = post<MobileRecord<DataRequestBody>,DataRequestInput>("data-requests",input)
             withContext(NonCancellable) {
                 sessionMutex.withLock {
-                    pendingDataRequests.remove(input.clientRequestId)
                     persist(vault.copy(limitedAccess = vault.limitedAccess.map {
                         if (it.type == "data_request" && it.clientRequestId == input.clientRequestId && it.token == input.queryToken) {
                             it.copy(id = result.id)
                         } else it
                     }))
-                    if (input.type == "close_account" && accountGeneration == generation && session?.user?.id == owner) {
+                    if (input.type == "close_account" && accountGeneration == submission.generation && session?.user?.id == submission.ownerId) {
                         save(null, end = SessionEnd(SessionEndKind.AccountRequest))
+                    }
+                    if (pendingDataRequests[input.clientRequestId] === submission) {
+                        pendingDataRequests.remove(input.clientRequestId)
                     }
                 }
             }
@@ -379,8 +387,7 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
             if (e.status < 500 && e.status != 408) {
                 withContext(NonCancellable) {
                     sessionMutex.withLock {
-                        val current = pendingDataRequests[input.clientRequestId]
-                        if (current != null && current.generation == generation && current.ownerId == owner) {
+                        if (pendingDataRequests[input.clientRequestId] === submission) {
                             pendingDataRequests.remove(input.clientRequestId)
                         }
                     }
@@ -435,13 +442,13 @@ class MobileApi internal constructor(baseUrl: String, private val secrets: Mobil
                     (expectedGeneration == null || expectedGeneration == accountGeneration) &&
                     (expectedOwner == null || expectedOwner == currentOwner) &&
                     canEndSession()
-                if (pending != null && (sameSession || input.type != "close_account" || accountGeneration != pending.generation || currentOwner != pending.ownerId)) {
-                    pendingDataRequests.remove(input.clientRequestId)
-                }
                 val endOriginal = input.type == "close_account" && sameSession
                 if (endOriginal) {
-                    onBeforeEndSession(receipt)
-                    save(null, end = SessionEnd(SessionEndKind.AccountRequest))
+                    // Publish the receipt before the user flow signals sign-out, after storage succeeds.
+                    save(null, end = SessionEnd(SessionEndKind.AccountRequest), beforePublish = { onBeforeEndSession(receipt) })
+                }
+                if (pending != null && (sameSession || input.type != "close_account" || accountGeneration != pending.generation || currentOwner != pending.ownerId)) {
+                    pendingDataRequests.remove(input.clientRequestId)
                 }
                 DataRequestResolution(receipt, endOriginal)
             }

@@ -12,8 +12,15 @@ import kotlin.test.*
 /** Regression source only; no Gradle or test execution is implied. */
 class OperationRecoveryTest {
     private class Vault(var value: String? = null) : MobileSecretStorage {
+        var writesUntilFailure: Int? = null
         override fun read() = value
-        override fun write(value: String?) { this.value = value }
+        override fun write(value: String?) {
+            writesUntilFailure?.let { remaining ->
+                writesUntilFailure = if (remaining == 0) null else remaining - 1
+                check(remaining > 0) { "injected vault write failure" }
+            }
+            this.value = value
+        }
     }
     private val headers = headersOf(HttpHeaders.ContentType,"application/json")
 
@@ -148,6 +155,58 @@ class OperationRecoveryTest {
         } finally {
             store.close()
             api.close()
+        }
+    }
+
+    @Test
+    fun closeAccountKeepsOriginalSessionBindingUntilReceiptAndSignOutAreSaved() = runTest {
+        for (successfulWritesAfterSubmit in 0..1) {
+            val vault = Vault()
+            val key = "close_vault_failure_$successfulWritesAfterSubmit"
+            val queryToken = "capability_token_0123456789abcdef0123456789abcdef"
+            var submissions = 0
+            val engine = MockEngine { request ->
+                when (request.url.encodedPath) {
+                    "/api/v2/auth/password" -> respond(authSessionJson(7, "sess-1"), headers = headers)
+                    "/api/v2/data-requests" -> {
+                        submissions++
+                        vault.writesUntilFailure = successfulWritesAfterSubmit
+                        respond("""{"ok":true,"data":{"id":42,"owner_id":7,"version":1,"state":"processing","data":{"type":"close_account","fields":[],"items":[],"holds":[],"external_state":"pending_inventory"}}}""", headers = headers)
+                    }
+                    "/api/v2/data-requests/requests/$key" -> respond(dataStatusJson(42, "close_account", "processing"), headers = headers)
+                    else -> error("unexpected path ${request.url.encodedPath}")
+                }
+            }
+            val api = MobileApi("https://example.test", vault, "test", HttpClient(engine))
+            try {
+                api.password("cat7", "unused")
+                val input = DataRequestInput("close_account", key, queryToken)
+                assertFailsWith<OperationResultUnknown> { api.submitDataRequestSecure(input) }
+                assertEquals(if (successfulWritesAfterSubmit == 0) 0L else 42L, api.limitedRequestAccess().single().id)
+                assertEquals(7L, api.user.value?.id)
+
+                // Fail the sign-out write after a possible receipt write on the first lookup.
+                vault.writesUntilFailure = 1 - successfulWritesAfterSubmit
+                var published = false
+                assertFailsWith<MobileStorageException> {
+                    api.reconcileDataRequest(input, onBeforeEndSession = { published = true })
+                }
+                assertFalse(published)
+                assertEquals(7L, api.user.value?.id)
+                assertEquals(42L, api.limitedRequestAccess().single().id)
+
+                val resolved = api.reconcileDataRequest(input, onBeforeEndSession = {
+                    assertEquals(7L, api.user.value?.id)
+                    published = true
+                })
+                assertTrue(resolved.endedOriginalSession)
+                assertTrue(published)
+                assertNull(api.user.value)
+                assertEquals(SessionEndKind.AccountRequest, api.sessionEnd?.kind)
+                assertEquals(1, submissions)
+            } finally {
+                api.close()
+            }
         }
     }
 

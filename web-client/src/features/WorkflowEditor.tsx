@@ -24,6 +24,7 @@ import {
   clearDraft,
   listCapabilities,
   newDraft,
+  ownerKey,
   readDraft,
   saveDraft,
   type Draft,
@@ -31,8 +32,13 @@ import {
 } from "../core/drafts";
 import {
   AccountDeletionWorkflow,
+  confirmedDeletionReceipt,
+  deletionCapabilityDraft,
+  endOriginalDeletionSession,
   handoffDeletionAcceptance,
   isAccountDeletionDraft,
+  readDeletionReceipt,
+  rememberDeletionSession,
   statusFromSubmittedRecord,
   type AccountDeletionFailureKind,
   type AccountDeletionStep,
@@ -344,6 +350,7 @@ export function WorkflowEditor({
       });
     return () => {
       active = false;
+      latest.current = undefined;
     };
   }, [owner, route]);
   function update(change: (old: Draft) => Draft) {
@@ -1017,10 +1024,13 @@ export function WorkflowEditor({
     const epoch = api.epoch;
     const taskKey = latest.current.key;
     const currentTask = () =>
-      epoch === api.epoch && latest.current?.key === taskKey;
+      epoch === api.epoch && latest.current?.key === taskKey &&
+      (!isCloseAccount || route === location.pathname.slice(4) + location.search);
     let sent = false;
+    let existingDeletionRequest = false;
+    let prewrittenDeletionCap: Draft | undefined;
     try {
-      const body = {
+      const body: Record<string, unknown> = {
         ...prepared.body,
         ...(prepared.scope ? { reauth_token: proof } : {}),
       };
@@ -1038,18 +1048,23 @@ export function WorkflowEditor({
       });
       await persist();
       if (!currentTask()) return;
-      if (isCloseAccount && latest.current.access) {
-        const capRoute = `capability:${latest.current.requestId}`;
+      if (isCloseAccount) {
+        const { access, requestId } = latest.current;
+        if (owner <= 0n || api.session.user?.id !== owner || access?.type !== "data" ||
+            !access.token || body.query_token !== access.token ||
+            access.requestId !== requestId || body.client_request_id !== requestId) {
+          throw new Error("原注销请求和本机受限凭证不一致，请重新核对。");
+        }
+        const capRoute = `capability:${requestId}`;
         const existingCap = await readDraft(0n, capRoute);
-        const capBase = existingCap ?? newDraft(0n, capRoute);
-        await saveDraft({
-          ...capBase,
-          values: { type: "close_account" },
-          uncertain: true,
-          original: snapshotOriginal,
-          access: latest.current.access,
-        });
         if (!currentTask()) return;
+        if (existingCap?.access) {
+          existingDeletionRequest = true;
+          throw new Error("该原请求已有受限记录，请先核对结果。");
+        }
+        prewrittenDeletionCap = await saveDraft(deletionCapabilityDraft(access, true, existingCap));
+        if (!currentTask()) return;
+        rememberDeletionSession(requestId);
       }
       sent = true;
       const headers: Record<string, string> = {};
@@ -1064,11 +1079,24 @@ export function WorkflowEditor({
       const settingsResult = flow === "settings" ? preferenceReceipt(result, prepared.body.preference as Record<string, unknown>, owner,
         latest.current!.baseVersion, context.record?.id) : undefined;
       const current = latest.current!;
+      const deletionStatus = isCloseAccount ? statusFromSubmittedRecord(result) : undefined;
+      if (deletionStatus && (!current.access || !result || !("data" in result) ||
+          result.owner_id !== owner || result.data?.type !== "close_account" || !result.state ||
+          !confirmedDeletionReceipt(deletionStatus, current.access))) {
+        throw new Error("注销受理回执未能核实，请查询原请求。");
+      }
       if (current.access) {
         const capRoute = `capability:${current.requestId}`;
         const existingCap = await readDraft(0n, capRoute);
+        if (!currentTask()) return;
         const recovery = existingCap ?? newDraft(0n, capRoute);
-        await saveDraft({
+        const access = { ...current.access, id: result?.id };
+        if (isCloseAccount && (existingCap?.access?.type !== "data" ||
+            existingCap.access.token !== access.token || existingCap.access.requestId !== access.requestId ||
+            (existingCap.access.id && existingCap.access.id !== access.id))) {
+          throw new Error("本机受限回执已变化，请查询原请求。");
+        }
+        await saveDraft(isCloseAccount ? deletionCapabilityDraft(access, false, recovery) : {
           ...recovery,
           values:
             flow === "data"
@@ -1076,7 +1104,7 @@ export function WorkflowEditor({
               : recovery.values,
           uncertain: false,
           original: undefined,
-          access: { ...current.access, id: result?.id },
+          access,
         });
         if (!currentTask()) return;
       }
@@ -1094,12 +1122,10 @@ export function WorkflowEditor({
         return;
       }
       invalidateQueries();
-      if (flow === "data" && body.type === "close_account") {
-        handoffDeletionAcceptance(
-          current.requestId,
-          statusFromSubmittedRecord(result),
-        );
-        api.endSession();
+      if (deletionStatus) {
+        if (endOriginalDeletionSession(current.requestId, owner)) {
+          handoffDeletionAcceptance(current.requestId, deletionStatus);
+        }
         navigate(
           `/recovery?view=close-account&request=${encodeURIComponent(current.requestId)}`,
           true,
@@ -1122,28 +1148,13 @@ export function WorkflowEditor({
     } catch (error) {
       if (!currentTask()) return;
       setCommandCode(error instanceof HttpError ? error.code : "");
-      const knownFailure = !sent || (error instanceof HttpError &&
-        [400, 401, 403, 404, 409, 422, 429].includes(error.status));
-      if (knownFailure) {
-        if (latest.current) {
-          const rejectedRequestId = latest.current.requestId;
-          replace({ ...latest.current, uncertain: false, original: undefined });
-          await persist().catch(() => {});
-          if (
-            isCloseAccount &&
-            (!sent ||
-              (error instanceof HttpError &&
-                [400, 403, 404, 409, 422, 429].includes(error.status)))
-          ) {
-            const capRoute = `capability:${rejectedRequestId}`;
-            const existingCap = await readDraft(0n, capRoute).catch(
-              () => undefined,
-            );
-            if (existingCap && existingCap.uncertain) {
-              await clearDraft(existingCap).catch(() => {});
-            }
-          }
-        }
+      const knownFailure = !existingDeletionRequest && (!sent || (error instanceof HttpError &&
+        [400, 401, 403, 404, 409, 422, 429].includes(error.status) && !(isCloseAccount && error.status === 401)));
+      if (knownFailure && latest.current) {
+        replace({ ...latest.current, uncertain: false, original: undefined });
+        await persist().catch(() => {});
+        if (currentTask() && prewrittenDeletionCap)
+          await clearDraft(prewrittenDeletionCap).catch(() => {});
       }
       if (!currentTask()) return;
       if (
@@ -1159,7 +1170,7 @@ export function WorkflowEditor({
       if (flow === "lead") setLeadStage("failure");
       if (isCloseAccount) {
         setDeleteFinalConfirmed(false);
-        setDeleteFailure(sent && !knownFailure ? "result_unknown" : "rejected");
+        setDeleteFailure(knownFailure ? "rejected" : "result_unknown");
         setDeleteStep("failure");
       } else {
         setPrepared(undefined);
@@ -1533,7 +1544,7 @@ export function WorkflowEditor({
         draft={draft}
         scope={prepared?.scope}
         note={String(prepared?.body.note ?? draft.values.note ?? "")}
-        step={draft.uncertain ? "failure" : deleteStep}
+        step={draft.uncertain && !(busy && deleteStep === "submitting") ? "failure" : deleteStep}
         busy={busy}
         error={error}
         errorCode={commandCode}
@@ -1581,49 +1592,28 @@ export function WorkflowEditor({
         }}
         onRetryPrepare={() => void prepare()}
         onSubmit={() => void submit()}
-        onReconciled={async (status, outcome) => {
+        onReconcile={async () => {
           const current = latest.current;
-          if (!current) return;
-          const capRoute = `capability:${current.requestId}`;
-          const existingCap = await readDraft(0n, capRoute);
-          if (outcome === "accepted") {
-            const capBase =
-              existingCap ??
-              newDraft(0n, capRoute, { type: "close_account" });
-            const access = current.access ?? existingCap?.access;
-            if (access) {
-              await saveDraft({
-                ...capBase,
-                values: { type: "close_account" },
-                uncertain: false,
-                original: undefined,
-                access: { ...access, id: integer(status.id) || access.id },
-              });
-            }
-            const cleared = await clearDraft(current);
-            replace(cleared);
-            revision.current = cleared.revision;
-            setPrepared(undefined);
-            handoffDeletionAcceptance(current.requestId, status);
-            invalidateQueries();
-            api.endSession();
-            navigate(
-              `/recovery?view=close-account&request=${encodeURIComponent(current.requestId)}`,
-              true,
-            );
-          } else {
-            replace({ ...current, uncertain: false, original: undefined });
-            await persist().catch(() => {});
-            if (existingCap && existingCap.uncertain) {
-              await saveDraft({
-                ...existingCap,
-                uncertain: false,
-                original: undefined,
-              }).catch(() => {});
-            }
-            setError("");
-            setDeleteFailure(undefined);
+          if (!current?.uncertain || current.requestId !== draft.requestId ||
+              owner <= 0n || current.ownerKey !== ownerKey(owner) || api.session.user?.id !== owner) return;
+          const epoch = api.epoch;
+          const isCurrent = () => epoch === api.epoch && latest.current === current &&
+            route === location.pathname.slice(4) + location.search;
+          const result = await readDeletionReceipt(current.requestId, current, isCurrent);
+          if (!result || !isCurrent()) return;
+          if (!result.confirmed) throw new Error("注销受理回执未能核实，请保留原编号继续核对。");
+          const cleared = await clearDraft(current);
+          if (!isCurrent()) return;
+          replace(cleared);
+          revision.current = cleared.revision;
+          setPrepared(undefined);
+          if (endOriginalDeletionSession(current.requestId, owner)) {
+            handoffDeletionAcceptance(current.requestId, result.status);
           }
+          navigate(
+            `/recovery?view=close-account&request=${encodeURIComponent(current.requestId)}`,
+            true,
+          );
         }}
       />
     );

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { api, explain, HttpError, type RecordData } from "../core/api";
 import {
   otpExpiryMillis,
@@ -8,7 +8,9 @@ import {
 import type { DTODataRequestStatus } from "../core/contract";
 import {
   clearDraft,
+  listDrafts,
   newDraft,
+  ownerKey,
   readDraft,
   saveDraft,
   type Draft,
@@ -22,7 +24,6 @@ import {
 import { invalidateQueries, reload, useQuery } from "../core/query";
 import { navigate } from "../core/router";
 import { integer, key, parseWire } from "../core/wire";
-import { RetrySubmission } from "../components/RetrySubmission";
 import {
   Button,
   Card,
@@ -242,6 +243,73 @@ export function isAccountDeletionDraft(draft: Draft | undefined): boolean {
     }
   }
   return false;
+}
+
+type DeletionAccess = NonNullable<Draft["access"]>;
+
+// Only the live submitting tab can identify its original session.
+let pendingDeletionSession: { requestId: string; epoch: number; session: typeof api.session } | undefined;
+
+export function rememberDeletionSession(requestId: string) {
+  pendingDeletionSession = { requestId, epoch: api.epoch, session: api.session };
+}
+
+export function endOriginalDeletionSession(requestId: string, owner: bigint): boolean {
+  const pending = pendingDeletionSession;
+  if (owner <= 0n || pending?.requestId !== requestId || pending.epoch !== api.epoch ||
+      pending.session !== api.session || api.session.user?.id !== owner) return false;
+  pendingDeletionSession = undefined;
+  invalidateQueries();
+  api.endSession();
+  return true;
+}
+
+function matchesDeletionAccess(access: Draft["access"], requestId: string): access is DeletionAccess {
+  return access?.type === "data" && !!access.token && access.requestId === requestId;
+}
+
+export function deletionCapabilityDraft(access: DeletionAccess, uncertain: boolean, previous?: Draft): Draft {
+  return {
+    ...newDraft(0n, `capability:${access.requestId}`, { type: "close_account" }),
+    revision: previous?.revision ?? 0,
+    requestId: access.requestId,
+    uncertain,
+    access,
+  };
+}
+
+export function confirmedDeletionReceipt(status: DTODataRequestStatus, access: DeletionAccess): boolean {
+  const id = integer(status.id);
+  return id > 0n && (!access.id || id === access.id) && status.type === "close_account" &&
+    ["processing", "partially_held", "completed"].includes(status.state ?? "");
+}
+
+export async function readDeletionReceipt(requestId: string, draft: Draft | undefined, isCurrent: () => boolean) {
+  let capability = await readDraft(0n, `capability:${requestId}`);
+  if (!isCurrent()) return;
+  const ownerAccess = draft?.access;
+  const capAccess = capability?.access;
+  const access = matchesDeletionAccess(ownerAccess, requestId) ? ownerAccess : capAccess;
+  if (!matchesDeletionAccess(access, requestId)) throw new Error("本机缺少该编号的受限查询凭证，请保留原请求待核对。");
+  if (capAccess && (!matchesDeletionAccess(capAccess, requestId) || capAccess.token !== access.token ||
+      (capAccess.id && access.id && capAccess.id !== access.id))) {
+    throw new Error("本机保存的受限凭证或回执编号不一致，请保留原请求待核对。");
+  }
+  const boundAccess = { ...access, id: capAccess?.id || access.id };
+  if (capability?.original && isAccountDeletionDraft(capability)) {
+    capability = await saveDraft(deletionCapabilityDraft(boundAccess, capability.uncertain, capability));
+    if (!isCurrent()) return;
+  }
+  const status = await api.request<DTODataRequestStatus>(`data-requests/requests/${requestId}`, {
+    headers: { "X-Request-Access": boundAccess.token },
+  });
+  if (!isCurrent()) return;
+  const confirmed = confirmedDeletionReceipt(status, boundAccess);
+  if (confirmed && (!capability || capability.uncertain || capability.access?.id !== integer(status.id))) {
+    capability = await saveDraft(deletionCapabilityDraft({ ...boundAccess, id: integer(status.id) }, false, capability));
+    if (!isCurrent()) return;
+  }
+  return { status, confirmed, capability };
 }
 
 function formatPendingFields(fields: string[]): string {
@@ -467,7 +535,7 @@ export function AccountDeletionWorkflow({
   onSwitchType,
   onRetryPrepare,
   onSubmit,
-  onReconciled,
+  onReconcile,
 }: {
   owner: bigint;
   draft: Draft;
@@ -491,10 +559,7 @@ export function AccountDeletionWorkflow({
   onSwitchType: (nextType: "erase_fields" | "matters_assistance") => void;
   onRetryPrepare: () => void;
   onSubmit: () => void;
-  onReconciled: (
-    status: DTODataRequestStatus,
-    outcome: "accepted" | "not_found",
-  ) => Promise<void>;
+  onReconcile: () => Promise<void>;
 }) {
   const methods = useQuery<VerificationMethods>(
     "auth/methods",
@@ -819,32 +884,10 @@ export function AccountDeletionWorkflow({
     setLookupNotFound(false);
     setLookupCapInvalid(false);
     try {
-      const capDraft = await readDraft(0n, `capability:${draft.requestId}`);
-      const access = draft.access ?? capDraft?.access;
-      if (!access?.token) {
-        setLookupCapInvalid(true);
-        setLookupError(
-          "本机缺少当前申请的受限查询凭证（X-Request-Access），无法在盲发风险下自动重交，请到恢复中心核对。",
-        );
-        return;
-      }
-      const path = access.id
-        ? `data-requests/${String(access.id)}`
-        : `data-requests/requests/${access.requestId}`;
-      const status = await api.request<DTODataRequestStatus>(path, {
-        headers: { "X-Request-Access": access.token },
-      });
-      if (status.type && status.type !== "close_account") {
-        setLookupError(
-          `原请求编号 #${String(status.id ?? "")} 的事项类型为 ${stateLabel(status.type)}，并非正式注销，不会执行退出或覆盖。`,
-        );
-        return;
-      }
-      await onReconciled(status, "accepted");
+      await onReconcile();
     } catch (e) {
       if (e instanceof HttpError && e.status === 404) {
         setLookupNotFound(true);
-        await onReconciled({}, "not_found");
       } else if (e instanceof HttpError && e.status === 403) {
         setLookupCapInvalid(true);
         setLookupError(
@@ -1294,7 +1337,7 @@ export function AccountDeletionWorkflow({
               {busy ? "正在重新加载…" : "重新加载注销影响"}
             </Button>
           </>
-        ) : effectiveFailure === "result_unknown" && !lookupNotFound ? (
+        ) : effectiveFailure === "result_unknown" ? (
           <>
             <Button
               disabled={busy || lookupBusy}
@@ -1329,11 +1372,7 @@ export function AccountDeletionWorkflow({
                   onStepChange("verify");
                 }}
               >
-                {lookupNotFound
-                  ? "按原编号重新验证并确认提交"
-                  : reauthExpired
-                    ? "重新验证本人操作"
-                    : "返回验证步骤重试"}
+                {reauthExpired ? "重新验证本人操作" : "返回验证步骤重试"}
               </Button>
             ) : (
               <Button kind="primary" disabled={busy} onClick={onRetryPrepare}>
@@ -1383,7 +1422,7 @@ export function AccountDeletionWorkflow({
             <dt>当前状态</dt>
             <dd>
               {lookupNotFound
-                ? "已核实服务端未收到原请求（404），可按原编号重新验证后提交"
+                ? "本次未查到受理记录，原请求仍待核对"
                 : effectiveFailure === "result_unknown"
                   ? "提交结果待核对（已锁定盲重发）"
                   : effectiveFailure === "scope_failed"
@@ -1400,13 +1439,13 @@ export function AccountDeletionWorkflow({
       {error ? <Notice title={error} error /> : null}
       {lookupError ? <Notice title={lookupError} error /> : null}
       {lookupNotFound ? (
-        <Notice title="已确认服务端未生成原注销单" success>
-          按原请求编号 `{draft.requestId}` 查询返回 404，确认此前请求未被服务端记录。你现在可以点击「按原编号重新验证并确认提交」安全继续。
+        <Notice title="本次查询未找到受理记录" warning>
+          已保留原请求编号 `{draft.requestId}`。请继续使用同一编号查询受理状态。
         </Notice>
       ) : null}
       {lookupCapInvalid ? (
         <Notice title="本机受限查询凭证不可用" warning>
-          请前往「本机草稿与待核对事项」核对其他记录，或在确认账号仍处于登录状态时返回重新准备请求。
+          请保留原请求编号，前往「本机草稿与待核对事项」核对本机记录。
           <RowLink title="前往本机恢复中心" to="/recovery" />
         </Notice>
       ) : null}
@@ -1432,61 +1471,41 @@ export function AccountDeletionResultPage({
   const [confirmRevoke, setConfirmRevoke] = useState(false);
   const [revoking, setRevoking] = useState(false);
   const [revoked, setRevoked] = useState(false);
+  const mounted = useRef(false);
+  useLayoutEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; };
+  }, []);
 
-  async function queryStatus(targetCap?: Draft, silentIfHandoff = false) {
-    const activeCap = targetCap ?? capabilityDraft;
-    const access = activeCap?.access ?? ownerDraft?.access;
-    if (!access?.token) {
-      setError("当前浏览器未找到该注销申请的受限查询凭证（X-Request-Access）。");
-      return;
-    }
+  async function queryStatus(targetOwner = ownerDraft, isLoadCurrent = () => true) {
+    const epoch = api.epoch;
+    const owner = api.session.user?.id ?? 0n;
+    const isCurrent = () => mounted.current && epoch === api.epoch && isLoadCurrent();
+    const original = targetOwner?.ownerKey === ownerKey(owner) && owner > 0n &&
+      targetOwner.requestId === requestId && isAccountDeletionDraft(targetOwner) &&
+      matchesDeletionAccess(targetOwner.access, requestId) ? targetOwner : undefined;
     setBusy(true);
-    if (!silentIfHandoff) setError("");
+    setError("");
     setHttpStatus(0);
     try {
-      const path = access.id
-        ? `data-requests/${String(access.id)}`
-        : `data-requests/requests/${access.requestId}`;
-      const result = await api.request<DTODataRequestStatus>(path, {
-        headers: { "X-Request-Access": access.token },
-      });
-      setStatus(result);
-      setError("");
-      const capRoute = `capability:${access.requestId}`;
-      const existing = await readDraft(0n, capRoute);
-      const base =
-        existing ??
-        newDraft(0n, capRoute, {
-          type: String(result.type ?? "close_account"),
-        });
-      const updated = await saveDraft({
-        ...base,
-        values: {
-          ...base.values,
-          type: String(result.type ?? base.values?.type ?? "close_account"),
-        },
-        uncertain: false,
-        original: undefined,
-        access: { ...access, id: integer(result.id) || access.id },
-      });
-      setCapabilityDraft(updated);
-      if (
-        ownerDraft &&
-        (ownerDraft.uncertain || ownerDraft.original) &&
-        result.type === "close_account"
-      ) {
-        const cleared = await clearDraft(ownerDraft);
+      const result = await readDeletionReceipt(requestId, original, isCurrent);
+      if (!result || !isCurrent()) return;
+      setStatus(result.status);
+      setCapabilityDraft(result.capability);
+      if (result.confirmed && original?.uncertain) {
+        const cleared = await clearDraft(original);
+        if (!isCurrent()) return;
         setOwnerDraft(cleared);
-        invalidateQueries();
-        if (api.session.authenticated || api.session.user) {
-          api.endSession();
+        if (endOriginalDeletionSession(requestId, owner)) {
+          handoffDeletionAcceptance(requestId, result.status);
         }
       }
     } catch (e) {
+      if (!isCurrent()) return;
       if (e instanceof HttpError) setHttpStatus(e.status);
       setError(explain(e));
     } finally {
-      setBusy(false);
+      if (isCurrent()) setBusy(false);
     }
   }
 
@@ -1503,24 +1522,28 @@ export function AccountDeletionResultPage({
       setStatus(handoff.status);
     }
     const owner = api.session.user?.id ?? 0n;
+    const epoch = api.epoch;
+    const isCurrent = () => active && mounted.current && epoch === api.epoch;
     void Promise.all([
       readDraft(0n, `capability:${requestId}`),
-      owner > 0n ? readDraft(owner, "data::0") : Promise.resolve(undefined),
+      owner > 0n ? listDrafts(owner).then((drafts) => {
+        const original = drafts.find((draft) => draft.uncertain && draft.requestId === requestId);
+        return original ? readDraft(owner, original.route) : undefined;
+      }) : Promise.resolve(undefined),
     ])
       .then(async ([cap, currentOwnerDraft]) => {
-        if (!active) return;
+        if (!isCurrent()) return;
         const matchedOwnerDraft =
-          currentOwnerDraft &&
-          (currentOwnerDraft.requestId === requestId ||
-            currentOwnerDraft.access?.requestId === requestId)
+          currentOwnerDraft?.requestId === requestId &&
+          isAccountDeletionDraft(currentOwnerDraft) &&
+          matchesDeletionAccess(currentOwnerDraft.access, requestId)
             ? currentOwnerDraft
             : undefined;
         setCapabilityDraft(cap);
         setOwnerDraft(matchedOwnerDraft);
         setLoadingDraft(false);
-        const sourceDraft = cap?.access ? cap : matchedOwnerDraft;
-        if (sourceDraft?.access) {
-          await queryStatus(sourceDraft, Boolean(handoff));
+        if (cap?.access || matchedOwnerDraft?.access) {
+          await queryStatus(matchedOwnerDraft, isCurrent);
         } else if (!handoff) {
           setError(
             "此浏览器未保存原编号对应的受限查询凭证；受限凭证仅保存在发起请求的浏览器中，不会通过网址传输。",
@@ -1528,7 +1551,7 @@ export function AccountDeletionResultPage({
         }
       })
       .catch((e) => {
-        if (!active) return;
+        if (!isCurrent()) return;
         setLoadingDraft(false);
         if (!handoff) setError(explain(e));
       });
@@ -1550,7 +1573,7 @@ export function AccountDeletionResultPage({
       });
       const capRoute = `capability:${access.requestId}`;
       const existing = await readDraft(0n, capRoute);
-      if (existing) {
+      if (existing?.access?.token === access.token) {
         const cleared = await clearDraft(existing);
         setCapabilityDraft(cleared);
       }
@@ -1564,9 +1587,11 @@ export function AccountDeletionResultPage({
   }
 
   async function clearInvalidLocalCapability() {
+    const access = capabilityDraft?.access;
+    if (!matchesDeletionAccess(access, requestId)) return;
     const capRoute = `capability:${requestId}`;
     const existing = await readDraft(0n, capRoute);
-    if (existing) {
+    if (existing?.access?.token === access.token) {
       const cleared = await clearDraft(existing);
       setCapabilityDraft(cleared);
     }
@@ -1587,8 +1612,9 @@ export function AccountDeletionResultPage({
 
   const wrongType =
     status?.type && status.type !== "close_account" ? status.type : "";
-  const summary =
-    status && !wrongType ? analyzeDataRequestProgress(status) : undefined;
+  const resultAccess = capabilityDraft?.access ?? ownerDraft?.access;
+  const summary = status && matchesDeletionAccess(resultAccess, requestId) &&
+    confirmedDeletionReceipt(status, resultAccess) ? analyzeDataRequestProgress(status) : undefined;
 
   if (
     summary &&
@@ -1626,7 +1652,7 @@ export function AccountDeletionResultPage({
           warning={summary.phase === "held"}
           success={summary.phase !== "held" && acceptedFromSubmit}
         >
-          当前设备及所有已登录会话已退出，推送通知已停用。服务端正按注销清单分批处理个人资料字段、关联记录、物理文件与第三方授权撤回；仅当待处理与必要保全全部归零后才会进入「注销已完成」。
+          申请所对应的账号会话已由服务端撤销，推送通知已停用。服务端正按注销清单分批处理个人资料字段、关联记录、物理文件与第三方授权撤回；仅当待处理与必要保全全部归零后才会进入「注销已完成」。
         </Notice>
         <Card title="当前受限查询进度">
           <DataRequestProgressBlock summary={summary} requestId={requestId} />
@@ -1742,11 +1768,6 @@ export function AccountDeletionResultPage({
     );
   }
 
-  const recoveryDraftForRetry =
-    httpStatus === 404 &&
-    api.session.authenticated &&
-    (ownerDraft?.original ? ownerDraft : capabilityDraft?.original ? capabilityDraft : undefined);
-
   return (
     <TaskPage
       title="注销暂未完成"
@@ -1795,17 +1816,16 @@ export function AccountDeletionResultPage({
         </>
       ) : httpStatus === 404 ? (
         <Notice title="服务端未找到原编号的注销记录（404）" warning>
-          按原请求编号 `{requestId}` 查询返回 404，说明此前提交可能因网络中断未到达服务端，不能当作已受理或已完成注销。
-          {!api.session.authenticated
-            ? "如你仍需注销账号，请重新登录后进入「资料删除、正式注销与事项协助」重新验证并提交。"
-            : ""}
+          本次查询暂未找到原编号 `{requestId}` 的受理记录。结果仍待核对，请保留原编号并重新查询。
         </Notice>
       ) : httpStatus === 403 ? (
         <Notice title="受限查询凭证已过期或已被撤销（403）" error>
-          当前浏览器保存的 `X-Request-Access` 凭证已无法读取该单（可能已超过 180 天有效期或已主动撤销）。客户端不会猜测注销已完成；你可手动清理此条失效本机记录。
-          <Button disabled={busy} onClick={() => void clearInvalidLocalCapability()}>
-            清理此条失效本机凭证
-          </Button>
+          当前浏览器保存的 `X-Request-Access` 凭证已无法读取该单。需要继续核对时，请保留原请求编号。
+          {capabilityDraft?.access && !capabilityDraft.uncertain ? (
+            <Button disabled={busy} onClick={() => void clearInvalidLocalCapability()}>
+              清理此条失效本机凭证
+            </Button>
+          ) : null}
         </Notice>
       ) : (
         <Notice title="你的申请核对编号仍保留在本浏览器" warning>
@@ -1813,14 +1833,6 @@ export function AccountDeletionResultPage({
         </Notice>
       )}
       {error ? <Notice title={error} error /> : null}
-      {recoveryDraftForRetry ? (
-        <Card title="已确认服务端未收到原请求 · 可按原内容重新验证提交">
-          <RetrySubmission
-            draft={recoveryDraftForRetry}
-            onDone={() => void queryStatus()}
-          />
-        </Card>
-      ) : null}
     </TaskPage>
   );
 }

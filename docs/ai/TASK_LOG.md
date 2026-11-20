@@ -1,5 +1,193 @@
 # AI 工作结果日志
 
+## AI-20261119-DELETE-RECOVERY-FIX / 2026-11-19（UTC+08:00）
+
+- Codex 按用户要求修复七项静态复核中的两个注销返修。工作树 `main / b0e49ab`，保留原未提交 AI 跟踪和派工清单。
+- Web 的 `AccountDeletionPages.tsx`、`WorkflowEditor.tsx`、`Recovery.tsx` 以原请求、受限凭证与正向回执核对。404 继续锁定重交。持久化受限记录和清理草稿后，只在本页仍能确认原提交会话时本地退出。匿名凭证副本仅保留必要字段，查询旧记录时清除匿名说明快照。
+- KMP `MobileApi.kt` 将恢复关联保留到回执和原会话清除均落盘，并在存储成功后、会话流通知退出前交付回执。`OperationRecoveryTest.kt` 新增两种落盘故障及再次核对恢复用例源码。
+- 5 项只读脚本通过。3 份 Web TSX 与新增 Kotlin 回归用例语法读取通过，`MobileApi.kt` 的解析器诊断与 HEAD 一致。未运行编译，遵循全局不自行编译规则；单测、浏览器、联调及设备未验证。初轮 Android UI 组件白名单断言仍列在派工复核中。
+- [派工清单](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md#七项派工复核--2026-11-19)已勾选 7 项源码／静态，分端运行和跨端父项继续待验收。源码和跟踪更新留在工作树。执行标记释放。
+
+## AI-20261119-SEVEN-TASKS-REVIEW / 2026-11-19（UTC+08:00）
+
+- Codex 按用户要求检查已派 7 项并更新进度。唯一工作树 main／b0e49ab，本地 origin/main 同指该提交；三份已有 AI 文档修改及未跟踪派工清单保留。七项提交分别为 `3ce4b43`、`f3a03e5`、`307f41f`、`83f0e87`、`76dc261`、`661491b`、`b0e49ab`。
+- [派工复核](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md#七项派工复核--2026-11-19)签收 Web 评论锚点、原生 Compose 注销、Web 后台年龄登记、Web 运维发布核对和 Android 平板／折叠宿主的源码与静态；Web 注销五态和 KMP 原回执恢复记源码已提交、待修。详列 Web 异步回执对新会话的影响、404 提前清除待核对、退出后受限记录含原说明，以及 KMP 安全存储失败前清除恢复关联。
+- 实际重跑 10 项只读检查，9 项通过。Android UI 在第 54 行组件名称白名单断言中止，脚本与对应组件均无本批提交差异。七个源码提交及工作树的差异空白核对通过。未运行编译，遵循全局不自行编译规则；测试、浏览器、真实联调和设备未验证。
+- 只更新派工清单、快照、任务表与日志，源码保持七个已提交版本。下一步处理两项注销返修，再按端验收；父项继续未勾。未提交或推送本次文档，执行标记释放。
+
+## AI-20261119-WEB-DELETE-STATES / 2026-11-19T15:28:00+08:00
+
+- 记录 ID / 日期时间（含时区）：`AI-20261119-WEB-DELETE-STATES` / 2026-11-19T15:28:00+08:00
+- 任务与执行者：领取并完成 P0 子任务「F01／F13／B08 · Web 消费端账号注销五态」源码实现、局部状态接线、派工清单回填与只读静态／TSX 语法审查 / Antigravity (Gemini)
+- 来源：本轮实际操作
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:\GolandProjects\kitty-circle`，分支 `main`，HEAD `661491b`（会话期间由并发提交从 `f9a2dab`／`f3a03e5` 推进至 `661491b`）；完整保留同仓其他并发未提交成果，未提交、未推送。
+- 本次授权范围：仅修改 `web-client/src/features/AccountDeletionPages.tsx`（新增）、`web-client/src/features/WorkflowEditor.tsx`、`web-client/src/features/Recovery.tsx`、`docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`（「账号注销五态」下新增 Web 子项）及自身三份 AI 跟踪；`Account.tsx`、Go 后端、KMP、Web 全局会话协议、Figma 及其他业务只读；禁止实际发起注销，不运行编译、构建、安装、测试、启动、迁移、提交或推送。
+- 实际完成与主要文件（仓库相对路径）：
+  - Figma 与入口核对：只读核对 Figma Web 节点 `311:380032`（`authDeleteImpact`）、`311:380040`（`authDeleteVerify`）、`311:380044`（`authDeleteProcessing`）、`311:380048`（`authDeleteStatus`）、`311:380052`（`authDeleteFailure`）及 `Account.tsx#L77-L80,L184`（`workflowURL("data")` 入口完备，无需改动）。
+  - `web-client/src/features/AccountDeletionPages.tsx`（L1–L1826，新增）：实现 `analyzeDataRequestProgress`（L176–L231）、`DataRequestProgressBlock`（L260–L322）、`AccountDeletionMatters`（L324–L445，按 `adoptions`/`appointments`/`reviews`/`cases`/`pets` 调用 `usePages` 只读核对真实记录且不自动结案）、`AccountDeletionWorkflow`（L447–L1415，含态 1 影响说明与三路径切换 L872–L968、态 2 手机 `reauth` OTP／当前密码／已配置微信 QQ `Scope` OAuth 用途验证与二次勾选确认 L970–L1254、态 5 范围失败／明确拒绝／`ResultUnknown` 只读查原请求回执禁盲重发 L815–L859, L1256–L1414）及 `AccountDeletionResultPage`（L1417–L1826，驱动 `/recovery?view=close-account&request={requestId}` 下的态 3 处理中与必要保全 L1593–L1653、态 4 已完成与受限副本保留及二次确认 `POST data-requests/{id}/revoke-access` L1540–L1564, L1655–L1743、态 5 受限查询 `404`/`403`/网络失败与未知协议版本 L1745–L1825）。
+  - `web-client/src/features/WorkflowEditor.tsx`（L22–L40, L210–L231, L315–L335, L525–L531, L679–L695, L839–L870, L987–L1150, L1522–L1630, L1700–L1703, L1874–L1901）：支持 `?type=` 初始预选，预检 `listCapabilities()` 提示本机已有注销受限查询凭证；`close_account` 在 `prepare()` 清空 `fields`/`selections` 并在范围请求失败时转入态 5 `scope_failed`；`submit()` 发送前先将不含机密字段的 `(0n, capability:{requestId})` 写入 IndexedDB，`200 OK` 后更新 `id`、清理原账号草稿、写入内存 `handoffDeletionAcceptance`、调用 `api.endSession()` 并替换跳转 `/recovery?view=close-account&request={requestId}`；失败时保留 `prepared` 与原 `requestId` 进入态 5（`rejected` 或 `result_unknown`）；保留 `erase_fields` 与 `matters_assistance` 原流程。
+  - `web-client/src/features/Recovery.tsx`（L1–L148, L265–L416）：接入 `useRoute()` 解析 `?view=close-account&request={requestId}` 渲染 `AccountDeletionResultPage`；按 `access.requestId` 去重 `rows` 与 `capabilities`；在 `LimitedCard` 识别 `账号注销的受限查询`、复用 `DataRequestProgressBlock` 展示进度，并在对未确认的原账号 `close_account` 草稿查到 `200 OK` 时自动清理原草稿、调用 `api.endSession()` 并跳注销结果页。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`（L86–L114）：在「F01／F13／B08 · 账号注销五态」下新增 Web 消费端子项，记录五态触发条件、源码行号、只读合同阻塞、静态检查结果与未验证项，保留父项 `[ ]` 与原生／KMP 子项。
+- 验证：
+  - 静态检查：`python -X utf8 scripts/check_web_client_static.py`（102 份 TS/TSX、478 个本地引用、147 份 schema、22 枚原 SVG）、`python -X utf8 scripts/check_page_gap_static.py`、`syntax-reader.cjs` 隔离进程 tree-sitter TSX 语法核对（`AccountDeletionPages.tsx`、`WorkflowEditor.tsx`、`Recovery.tsx` 均 `errors: []`）及 `git -c core.safecrlf=false diff --check` 全部通过。
+  - 构建／测试：未运行编译，遵循全局不自行编译规则；未运行 `tsc`、Vite 构建或前端测试。
+  - 设备／运行：未启动浏览器或本地服务，未实际发起注销；Web 五态视觉与浏览器交互运行留待后续验收。
+- 未完成与阻塞：2 项只读合同边界已记入派工子项（① 后端 `auth/reauth` 与邮箱 OTP 未开放 `reauth` 用途且 Web 端排除 `apple` OAuth，态 2 已如实披露；② `DataRequestStatus` 仅返回聚合保全计数与复核时间，未下发逐条 `DataHold` 法务依据与处理器明细，态 3／态 4 仅展示真实字段）。
+- 最后完成的一步与下一步：完成派工清单 Web 子项回填、三份 AI 跟踪同步、执行标记释放与编码关卡 `review` 登记；下一步由后续任务完成跨端五态浏览器／真机视觉与联调验收。
+- 关联任务 / 决定 / 证据：[派工清单账号注销五态章节](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md)、Figma Web `311:380032`／`311:380040`／`311:380044`／`311:380048`／`311:380052`。
+- 执行状态：已完成（Web 消费端五态源码实现与只读静态／TSX 语法核对完成；跨端父项及视觉／浏览器运行待验收），执行标记已释放，无后台任务。
+
+## AI-20261119-A04-ANDROID-PAD-HOST / 2026-11-19T15:05:00+08:00
+
+- 记录 ID / 日期时间（含时区）：`AI-20261119-A04-ANDROID-PAD-HOST` / 2026-11-19T15:05:00+08:00
+- 任务与执行者：领取并完成「A04 · Android 平板／折叠屏宿主适配」（`kmp/androidApp/.../mobile` 宿主层源码核对、三条代表路径与折痕／Insets／有效尺寸／返回分发修复、派工回填与只读静态审查） / Antigravity (Gemini)
+- 来源：本轮实际操作
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:\GolandProjects\kitty-circle`，分支 `main`，HEAD `f3a03e5`；完整保留同仓其他并发未提交成果（`kmp/shared/*`、`kmp/clientUi/*`、`web-client/*`、`docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`、`docs/ai/*`），未提交、未推送。
+- 本次授权范围：仅修改 `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/*.kt`、`docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`（第 4 节「Android 平板与折叠 · A04」下新增宿主子项）及自身三份 AI 跟踪；父包 `MainActivity.kt`、`AndroidManifest.xml`、`kmp/clientUi`、`kmp/shared`、其他端、Gradle 与远端 Figma 严格只读；只做源码或只读静态核对，禁止编译、Gradle、安装、测试、启动设备、提交或推送。
+- 实际完成与主要文件（仓库相对路径）：
+  - Figma 与台账对照：对照 Figma 平板页 `403:3`（`fileKey = 3OFOC3vu18Kx9sRPjummOC`）及 `docs/design/figma-study/cross-platform-full-coverage.json`（`tabletP` 748、`tabletL` 748、`tabletN` 16）与 `docs/design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md`，核对三条代表路径（① 消息主从栏与未读锚点：`311:379702`/`311:379703`/`311:379707`/`325:61505`；② 发布／预约分栏表单与软键盘：`311:378834`/`311:378835`/`311:378839`/`325:61495`、`311:379783`/`311:379787`/`311:379838`/`325:61507`；③ 横竖屏和折叠／分屏任务保持：`311:379507`/`311:379511`/`311:379619`/`325:61509` 及宿主生命周期）及折痕、Insets、有效窗口尺寸、返回分发四项维度。
+  - `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidAdaptiveWindow.kt`（L1–L65）：抽出包内共用 `internal tailrec fun Context.findActivity(): Activity?`（L21–L25）；在 `collectFoldingFeature` 补充 `fold.bounds.right < fold.bounds.left || fold.bounds.bottom < fold.bounds.top` 逆序守卫（L41）；在 `avoidSeparatingFold` 的 `.absolutePadding(left = left, top = top, right = right, bottom = bottom)` 后串联 `.consumeWindowInsets(PaddingValues.Absolute(left = left, top = top, right = right, bottom = bottom))`（L58–L62），消除折痕裁剪排除半屏（如水平折痕 `bottom > 0` 仅保留上半屏）后下游 `Scaffold(contentWindowInsets = WindowInsets.safeDrawing)` 与 `Row(...imePadding())` 重复扣除被裁半屏内状态栏／导航栏／软键盘高度导致的表单可视高度二次坍缩。
+  - `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidProviderAuth.kt`（L1–L129）：新增 `cancelFromHost(provider, state)`（L72–L77），仅当 `it.continuation?.isActive == true` 时移除 `pending[state]` 并 `resume(null)`，而在协程已先行取消（`continuation == null`）时保留 QQ 未决 SSO 并发占位守护（L39–L43）；在 `OfficialProviderActivity.onDestroy()`（L124–L128）中对 `isFinishing == true`（如用户在透明授权桥接 Activity 按系统返回键或被系统销毁结束）调用 `AndroidProviderAuth.cancelFromHost(provider, state)`，修复 `authorizeProvider` 永久挂起与后续 QQ 授权报 `409 provider_pending`，同时保留 `!isFinishing` 配置变更旋转后的 `attach()` 重连。
+  - `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidClientPlatform.kt`（L1–L66）与 `AndroidNotificationPermission.kt`（L1–L32）：新增 `internal fun Context.startExternalActivity(intent: Intent): Boolean`（L16–L21），优先使用存活宿主 `Activity` 直接启动外链与系统通知设置（不强加 `FLAG_ACTIVITY_NEW_TASK` 拆散平板分屏任务栈），仅在无存活 `Activity` 时回退 `FLAG_ACTIVITY_NEW_TASK`；`authorizeProvider` 增加 `findActivity()?.takeUnless { it.isFinishing || it.isDestroyed }` 守卫（L32–L33）；`decodeImage` 增加 `bytes.isEmpty()`、`bounds.outWidth <= 0 || bounds.outHeight <= 0` 与 `runCatching` 防护（L47–L59）；`openLink` 增加空白／空白字符过滤与 `runCatching { Uri.parse(url) }`（L60–L65）；`AndroidNotificationPermission.kt` 增加 `getSystemService(NotificationManager::class.java)?.areNotificationsEnabled() == true` 空安全（L18）。
+  - `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/AndroidDateFields.kt`（L1–L83）与 `AndroidPhotoPicker.kt`（L1–L100）：`DateTimeField` 改用 `context.findActivity() ?: context` 构造原生弹窗（L29），并为 `DatePickerDialog`／`TimePickerDialog` 展示及回调落盘增加 `enabled` 守卫（L54–L82），防止表单进入 `busy`/`confirmation`/`unconfirmedResult` 时弹窗滞留或越权改写 `f.edit(...)`；`PhotoPickerButton` 改用 `LocalContext.current.applicationContext.contentResolver`（L27）、以 `rememberUpdatedState` 持有 `remaining`/`onPhotos`/`onError`（L28–L30, L38, L83, L85），并为 `launcher.launch(...)` 增加 `runCatching` 错误回调（L90–L95）。
+  - `kmp/androidApp/src/main/java/com/ttkk0000/meowcircle/kmpapp/mobile/MobileViewModel.kt`（L1–L143）：新增 `encodeAnchor`/`decodeAnchor`（L71–L81），扩展 `SavedStateHandle["mobileRoute"]` 序列化（L43–L44）与 `restoreRoute`（L82–L98）支持 `entry:{id}[:{kind}:{commentId}:{targetVersion}]` 与 `pet:{id}[:{kind}:{commentId}:{targetVersion}]`（仅接受 `entry_comments`/`pet_comments` 且 `id > 0`、`version >= 0`，兼容旧两段式路由），确保进程回收重建后精确评论锚点与未读回跳上下文不退化为普通详情页。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`（L135–L160）：在第 4 节「Android 平板与折叠 · A04」下回填本宿主子项，详列 Figma 节点引用、触发条件、7 份宿主文件源码行号、三条代表路径与 5 项只读跨层缺口（`MainActivity.kt`、`ConsumerApp.kt`、`TaskDialogs.kt`、`FormLayout.kt`、相册转码协程作用域），勾选源码与静态框，保留父项与视觉／真机框 `[ ]`。
+- 验证：
+  - 静态检查：`python -X utf8 scripts/check_kmp_client_static.py`（142 Kotlin/Swift 文件）、`scripts/check_client_ui_static.py`（54 公共 UI / 48 分派 / 3 平台端口 / 748 追踪）、`scripts/check_android_feature_static.py`（48 页 / 单 Store / 自适应窗口 / Manifest / 24 贴纸）、`scripts/check_mobile_static.py`（45 表 / 288 接口 / 145 schema）均退出 0；`check_android_ui_static.py` 中 Android 宿主检查（L11–L48）与 Manifest 检查（L63–L67）全部满足，仅在未授权只读文件 `kmp/clientUi/.../Components.kt:54` 预存 `MndQuietButton` 白名单断言处退出 1；7 份 Kotlin 文件保持 CRLF（`bare_lf=0`）与 UTF-8 无 BOM，文档保持 LF 与 UTF-8 无 BOM；`git diff --check` 无空白或冲突错误。
+  - 构建／测试：未运行编译，遵循全局不自行编译规则；未运行 Gradle、Kotlin 编译或单测。
+  - 设备／运行：未安装应用、未启动模拟器或真机设备；平板 748 全量页面、视觉交互与真实折叠屏／平板设备表现保持待验收。
+- 未完成与阻塞：5 项跨层／邻接只读问题（`MainActivity.kt#L35,L48-L53` 常规启动与旋转误触发 `queueInboxNotification()`；`ConsumerApp.kt#L35-L42,L133-L138,L180,L270,L688-L700` 有效内容尺寸未先扣 `safeDrawing`/`ime`、断点阈值差异、`Messages` 横屏 `Home` 隐藏主栏、未读锚点滚动竞态与 `MobileAlertDialog` `busy` 点击外部可关闭；`TaskDialogs.kt#L22,L29` 独立 Dialog 窗口未 `consumeWindowInsets`；`FormLayout.kt#L8-L19` 在 `tabletN` 632dp 仍走双列；`PhotoPickerButton` 转码协程未跨 Activity 重建提升至 ViewModel）已记录具体入口与行号，待获授权修改 `MainActivity.kt` 与 `kmp/clientUi` 时接手。
+- 最后完成的一步与下一步：完成派工清单回填、三份 AI 跟踪同步、执行标记释放与编码关卡 `review` 登记；下一步由后续任务跟进 `MainActivity.kt` 与 `kmp/clientUi` 跨层缺口及平板真机／折叠屏运行验收。
+- 关联任务 / 决定 / 证据：[派工清单 Android 平板与折叠章节](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md#android-平板与折叠--a04)、[跨端自适应合同](../design/figma-study/CROSS_PLATFORM_ADAPTIVE_CONTRACT.md)、[客户端 10-20 实施说明](../client/MOBILE_IMPLEMENTATION_2026_10_20.md)、Figma `403:3`。
+- 执行状态：已完成（Android mobile 宿主源码修复与只读静态审查完成；跨层缺口已记，平板全量、视觉与真机设备待验收），执行标记已释放，无后台任务。
+
+## AI-20261119-WEB-OPS-RELEASE / 2026-11-19T14:55:00+08:00
+
+- 记录 ID / 日期时间（含时区）：`AI-20261119-WEB-OPS-RELEASE` / 2026-11-19T14:55:00+08:00
+- 任务与执行者：领取并完成「B11／V03 · 技术运维发布核对与不可用状态」（`/app/ops` 五条发布与不可用路径）源码核对、差异补齐、派工回填与只读静态审查 / Antigravity (Gemini)
+- 来源：本轮实际操作
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:\GolandProjects\kitty-circle`，分支 `main`，HEAD `f3a03e5`（会话起始为 `f9a2dab`，外部推进至 `f3a03e5`）；起点与过程完整保留同仓其他并发／历史未提交成果，未提交、未推送。
+- 本次授权范围：仅修改 `web-client/src/operations` 内 `/app/ops` 发布相关页面、派工清单「Web 技术运维」执行能力下子项及自身三份 AI 跟踪；`operator`、Go、Figma 及其余页面只读；不接入或触发发布、重启或真实服务操作；不运行编译、构建、安装、测试、启动、部署、迁移、提交或推送。
+- 实际完成与主要文件（仓库相对路径）：
+  - `web-client/src/operations/context.tsx`（L6–L15, L52–L55）：在 `OperationsContext` 暴露 `connect()` 打开连接弹窗；`OpsLink` 点击离开受限页时调用 `clearForbidden()`，保持已清空的零受限会话边界。
+  - `web-client/src/operations/useOperations.ts`（L10–L65, L173–L179）：`report(failure, scope?)` 在 `403` 清空上下文前保留 `deniedScope`，对 `503 environment_unconfigured` 同步清零过时 `context`/`snapshot`，并提供 `clearForbidden()`。
+  - `web-client/src/operations/OpsApp.tsx`（L49–L55, L78–L89, L103, L110–L122, L166–L178）：在 `mode=demo` 未提供 `id` 时对 `release`/`confirm` 默认预览 `REL-DEMO-004`；将 `connect` 注入 `Operations.Provider`；同步 `document.title` 与 `currentView`；允许通过 `go()`/`OpsLink` 离开 `forbidden` 页而不被重定向死锁。
+  - `web-client/src/operations/OverviewPages.tsx`（L387–L490）：增强 `SystemState`（`793:33` / `793:34`）展示真实 `deniedScope` 与 `requestID`、在 `forbidden` 未连接时提供「切换账号重新连接」、在已连接状态预览 `disconnected` 时明示当前连接状态，并支持从发布详情/确认未连接回落返回版本与发布列表。
+  - `web-client/src/operations/RecordPages.tsx`（L89–L239）：仅修改 `Releases`（`793:25`），区分未连接态（隐藏伪可写表述，展示「尚未连接真实环境」与「连接真实环境／查看未连接说明」按钮）、读取失败与真实空列表；指标提示区分未连接／只读／写权限与当前已读范围，并将弹窗挂载收紧至 `canWrite`。
+  - `web-client/src/operations/DetailPages.tsx`（L6, L68–L71, L86–L566）：仅修改 `useDocument`、`MissingDetail`、`usePreflight`、`latestRelease`、`ReleaseDetail`（`793:30`）与 `ConfirmRelease`（`793:35`）。未连接直达转 `SystemState`；读详情失败在 `MissingDetail` 显式报错并提供「重新读取」；`usePreflight` 增 `loading` 并由 `latestRelease` 优先采用同记录更高版本 `preflight.release`；`ReleaseDetail` 与 `ConfirmRelease` 分项独立展示目标环境与域名、候选版本与状态、SHA-256、备份恢复、审批证据与变更原因／影响范围；编辑保存经 `detail.apply(row)` 即时更新；`ConfirmRelease` 动态渲染状态标签（失败／读取中／阻止），非 `release_write` 禁用本地输入框，核对目标环境不一致显示字段错误，「执行发布」「确认并提交」均保持禁用占位且无提交调用。
+  - `web-client/src/operations/ActionForms.tsx`（L58–L71, L117–L239）：`CommandModal` 补充 `403` 范围传递与 `environment_unconfigured` 会话清理；`CreateRelease` 对齐 Go `digest`、`evidenceID`、rune 长度与控制字符校验并提供逐字段错误提示，支持 `onSaved` 回调。
+  - `web-client/src/operations/operations.css`（L786–L793）：补全 `.ops-workspace .field` `aria-invalid="true"` 边框与 `small.field-error` 红色样式优先级。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`：仅在「Web 技术运维 · B11／V03」执行能力项下回填本子项并逐节点列源码行与静态证据，父项与整套 14 稿／真实运行保留 `[ ]` 待签收。
+- 验证：
+  - 静态检查：`python -X utf8 scripts/check_operations_static.py`、`scripts/check_web_client_static.py`、`scripts/check_admin_role_workspaces_static.py`、`scripts/check_operator_pages_static.py` 全部退出 0；`@babel/parser` 对 7 份 TS/TSX 与 `postcss.parse` 对 `operations.css` 解析全部通过；8 份源码保持 CRLF／UTF-8 无 BOM；`git diff --check` 无空白或冲突标记。
+  - 构建／测试：未运行 `tsc` 类型检查、`vite` 构建、Go 编译／测试或端到端测试（遵循全局不自行编译规则与本任务禁止范围）。
+  - 设备／运行：未启动应用或浏览器，未触发任何发布、重启或真实服务操作，真实环境与 14 稿逐屏交互待验收。
+- 未完成与阻塞：真实 Go `/api/ops/v1`、PostgreSQL 010 迁移、浏览器焦点与 401/403/409/503 恢复及整套 14 稿联调仍待后续授权运行验收；部署与重启执行器按设计及产品边界保持未接入占位。
+- 最后完成的一步与下一步：完成派工清单回填、AI 跟踪释放与编码关卡 `review` 核验；下一步在获准运行阶段联合服务端真实 `MND_OPS_ENVIRONMENT` 与四岗具名凭据完成五条路径及 14 稿实测签收。
+- 关联任务 / 决定 / 证据：[派工清单子项](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md#web-技术运维--b11v03)、[运维控制台交接](../server/OPERATIONS_CONSOLE_2026_10_25.md)、[运维 OpenAPI](../api/operations-v1.openapi.json)、Figma `793:25`/`793:30`/`793:33`/`793:34`/`793:35`。
+- 执行状态：已完成（源码补齐与只读静态审查；整套 14 稿及运行待验收），执行标记已释放，无后台任务。
+
+## AI-20261119-KMP-DELETE-RECONCILE / 2026-11-19T14:44:00+08:00
+
+- 记录 ID / 日期时间（含时区）：`AI-20261119-KMP-DELETE-RECONCILE` / 2026-11-19T14:44:00+08:00
+- 任务与执行者：领取并完成独立任务「B08／C05 · KMP 注销结果未知后恢复原会话与受限回执」（对应派工清单第 3 节「账号注销五态」原生子项第 2 个阻塞） / Antigravity (Gemini)
+- 来源：本轮实际操作
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:\GolandProjects\kitty-circle`，分支 `main`，HEAD `f9a2dab`；起点与结束均完整保留同仓既有未提交／未跟踪并发改动（`kmp/clientUi/*`、`web-client/*`、`docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`、`docs/ai/*`），未提交、未推送。
+- 本次授权范围：仅修改 `kmp/shared` 公共客户端（`MobileApi.kt`、`SensitiveActionStore.kt`、`MobileStore.kt`、`OperationRecoveryTest.kt`）、回填 `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`「账号注销五态」下本 KMP 恢复子项及自身 AI 跟踪；Compose（`kmp/clientUi`）、Web、Go 与 Figma 只读；禁止实际发起注销、禁止重发写入、禁止编译／构建／安装／测试／启动／迁移／提交／推送。
+- 实际完成与主要文件（仓库相对路径）：
+  - 源码合同复核结论：`kmp/shared` 中实为 `FeatureApi.submitDataRequest()` → `MobileApi.submitDataRequestSecure()`（无 `createDataRequest` 命名）与只读 `FeatureApi.findDataRequest(key, token)`（`GET /api/v2/data-requests/requests/{key}` ＋ `X-Request-Access`）。确认原阻塞属实：`SensitiveActionStore.reconcile()`（原 `SensitiveActionStore.kt#L153-L157,L171`）在 `ResultUnknown` 确认受理后仅把自身状态置为 `Complete`，未将服务端返回的 `receipt.id` 回写到 `vault.limitedAccess` 的 `RestrictedAccess`，亦未在原会话代次确认后以 `SessionEnd(SessionEndKind.AccountRequest)` 结束原会话；同时核明 `SensitiveActionStore.init`（L43-L56）在 `expectedSignOut` 为 `false` 或处于 `ResultUnknown` 时收到 `api.user.collect(null)` 会重置状态回 `Idle` 并丢弃结果页，`MobileStore.accountChanged()`（L184）亦仅在 `Submitting` 阶段清本地草稿。
+  - `kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileApi.kt`（L77–L111, L138–L139, L338–L448）：新增 `PendingDataRequest`、`DataRequestResolution` 与 `isConfirmedDataRequestReceipt()`。`submitDataRequestSecure()` 在 `sessionMutex.withLock` 要求有效登录、校验 `vault.limitedAccess` / `pendingDataRequests` 一致性并记录提交时刻 `ownerId` 与 `accountGeneration`（已知非 `408` `4xx` 拒收清除同代次待核对项，`OperationResultUnknown` 保留，成功路径补 `NonCancellable` 与 `owner` 校验）。新增 `reconcileDataRequest()`，严格只调用 `findDataRequest()`，核验 `receipt.id > 0`、`receipt.type == input.type`、各类型有效状态（`close_account`/`erase_fields` 仅 `processing`/`partially_held`/`completed`，`matters_assistance` 仅 `needs_assistance`/`completed`）、非负计数及 `progressVersion != 0` 时的非 `NeedsReconciliation` 相位；随后在 `sessionMutex.withLock` 校验本机 `vault.limitedAccess` 存在同 `clientRequestId` 与 `queryToken` 且 `id == 0L || id == receipt.id` 并回写 `receipt.id`；仅当 `input.type == "close_account"`、存在 `pendingDataRequests` 记录且当前 `session?.user?.id` 与 `accountGeneration` 仍等于原提交代次且调用方 `canEndSession()` 为真时，先执行 `onBeforeEndSession(receipt)` 再调用 `save(null, end = SessionEnd(SessionEndKind.AccountRequest))` 结束原会话；`erase_fields` 与 `matters_assistance` 仅回写 `id` 并保持原会话。
+  - `kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/SensitiveActionStore.kt`（L24–L256）：`confirm()` 捕获 `confirmOwner` 与 `confirmGeneration`（`api.currentAccountGeneration()`）并在 `OperationResultUnknown` 时仅于同账号 `OperationResultUnknown` 保留；`reconcile()` 增加 `reconcileJob` 防并发重查并改调 `api.reconcileDataRequest()`，仅在即将结束原会话前设置 `expectedSignOut = true` 并先切至 `SensitiveStage.Complete(resultId = receipt.id)`，确保 `api.user.collect(null)` 保留结果页面；`init` 对 `user != null && stage != Submitting` 清理 `expectedSignOut` 防止 `StateFlow` 状态融合残留；`Rights` 与 `reconcileOperation` 保持原行为。
+  - `kmp/shared/src/commonMain/kotlin/com/ttkk0000/meowcircle/client/MobileStore.kt`（L184）：扩展 `sensitiveSignOut` 为 `(features.sensitive.state.value.stage == SensitiveStage.Submitting || api.sessionEnd?.kind == SessionEndKind.AccountRequest)`，保障经对账确认退出时同步清理退出前账号本地草稿、工作区与待回复缓存。
+  - `kmp/shared/src/commonTest/kotlin/com/ttkk0000/meowcircle/client/OperationRecoveryTest.kt`（L98–L331）：新增 4 个纯静态回归测试源码（`closeAccountUnknownReconcileWritesReceiptIdAndEndsOriginalSession`、`concurrentSameUserLoginOrSwitchOrStaleCallbackDoesNotClearNewSessionOrCredentials`、`staleInFlightReconcileCallbackAfterAccountSwitchPreservesNewAccountSession`、`wrongTypeAndNotFoundKeepUnknownStateAndEraseOrAssistanceKeepSession`；仅源码，未编译或运行）。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`：在「F01／F13／B08 · 账号注销五态」下追加并勾选 `[x]`「KMP 公共客户端（`kmp/shared`）恢复子项」，未改动并行 Compose 子项或跨端父项 `[ ]`。
+- 验证：
+  - 静态检查：`scripts/check_kmp_client_static.py`（142 Kotlin/Swift 文件、定界符、无 BOM、合同字段）、`scripts/check_server_shared_contract_static.py`（90 对 DTO）、`scripts/check_client_ui_static.py`（54 公共 UI / 48 分派）、`scripts/check_mobile_static.py`（45 表 / 288 接口 / 145 schema）均退出 0；4 份改动 Kotlin 文件 UTF-8 无 BOM 且保持原行尾（3 份纯 CRLF、`MobileStore.kt` 原纯 LF）；`git diff --check -- kmp/shared` 无报错；文档本地链接、UTF-8 无 BOM 与 CRLF／diff 空白复核通过。
+  - 构建／测试／设备：未运行 Gradle 编译、Kotlin 类型检查、Ktor 单测或实机启动（遵循全局及本任务禁止编译／测试规则）。
+- 未完成与剩余风险（不猜测，均来自只读合同复核）：
+  1. 跨进程重启后会话代次不可求证：`DataRequestStatus` 未返回 `owner_id`、`client_request_id` 与 `session_epoch`（[`data_requests.go#L53-L69`](../../internal/mobile/data_requests.go#L53-L69)），本机 `RestrictedAccess` 亦无所属账户与代次字段；若进程重启丢失内存 `pendingDataRequests` 与 `SensitiveActionStore.intent`，现有合同无法证明新进程当前会话仍属原注销代次，当前保守策略为仅回写 `id` 而不自动退出会话。
+  2. 注销未知期间并发 `401` 退回 `Recovery`：服务端受理 `close_account` 时已递增 `Accounts.session_epoch`（[`data_requests.go#L203`](../../internal/mobile/data_requests.go#L203)）；若未知期间其他并发已认证请求触发 `401` 刷新失败，`MobileApi.checked()` 会按 `Expired` 先行退登并清空 `SensitiveActionStore`，此后依赖本机保留的 `RestrictedAccess` 由用户在受限 `Recovery` 手查（`MobileFeatureStore.lookup()` 本次保持原行为未改）。
+  3. 本批所有 Kotlin 编译与 `OperationRecoveryTest` 单测仅停留在静态检查层，需在授权测试阶段跑通 `commonTest` 与端侧五态联调，同时推进并行原生阻塞 1、3 及 Web／Compose 跨端验收。
+- 最后完成的一步与下一步：完成派工清单 KMP 恢复子项、三份 AI 跟踪、全文静态一致性校验与编码关卡 `review` 登记；下一步在获批测试／构建环境中执行 `kmp/shared` 单元测试并联合 Compose／Web 端完成「账号注销五态」端到端验收。
+- 关联任务 / 决定 / 证据：[派工清单 KMP 恢复子项](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md)、只读服务端 [`data_requests.go`](../../internal/mobile/data_requests.go)／[`erasure.go`](../../internal/mobile/erasure.go)／[`policy.go`](../../internal/platform/mobileapi/policy.go)、只读原生五态 [`AccountDeletionPages.kt`](../../kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountDeletionPages.kt)。
+- 执行状态：已完成（`kmp/shared` 源码修复、回归用例源码、派工清单子项与静态核对；编译、单测、跨重启合同求证与实机待验收），执行标记已释放，无后台任务。
+
+## AI-20261119-DISPATCH-STATIC-REVIEW / 2026-11-19（UTC+08:00）
+
+- Codex 依规则关卡静态核对 main／f9a2dab 工作树的已派三单完整差异，保留并行会话改动。只修复复核中确认的原生注销、Web 评论定位和后台年龄登记问题。
+- Compose 注销状态组件移除调用方不提供且组件不使用的 `ColumnScope` 接收者，验证错误使用安全空值读取。受限查询按当前请求键／记录 ID 选择结果，读取或失败时不沿用旧结果，标题和返回行为使用同一关联条件。
+- Web 通知评论重新读取时同步清除该锚点的点赞计数缓存，避免已恢复访问的评论继续被过期的拒绝结果收起。后台同一身份保有 `identity_verifier` 时保留原登记，刷新中被取消的原提交进入结果未知，撤岗继续走既有清理。
+- 源码、调用关系和差异仅静态核对。未运行编译，遵循全局不自行编译规则。类型检查、测试、浏览器、设备和正式数据均未验证。未提交、未推送；本次审查执行标记释放，四个 Antigravity 任务继续按各自会话和派工清单登记。
+
+## AI-20261119-NATIVE-DELETE-STATES / 2026-11-19T14:20:00+08:00
+
+- 记录 ID / 日期时间（含时区）：`AI-20261119-NATIVE-DELETE-STATES` / 2026-11-19T14:20:00+08:00
+- 任务与执行者：领取并完成 P0 子任务「F01／F13／B08 · 原生共享 Compose 账号注销五态」 / Antigravity (Gemini)
+- 来源：本轮实际操作
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:\GolandProjects\kitty-circle`，分支 `main`，HEAD `f9a2dab`；起点及过程保留同仓并发会话改动（`web-client/src/{features,operator}/*`、`docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`、`docs/ai/*`），未提交、未推送。
+- 本次授权范围：仅编写 `kmp/clientUi` 共享 Compose 账号注销五态 UI 与接线、局部回填派工清单原生子项及自身 AI 跟踪；不改 `kmp/shared`、Go API、Web、宿主、Figma；不编译、构建、安装、测试、启动或提交推送。
+- 实际完成与主要文件（仓库相对路径）：
+  - `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountDeletionPages.kt`（新增 804 行）：实现 `DATA_REQUEST_UI_SCOPE`、`isAccountDeletionSensitive`（L27）、`accountDeletionSensitiveTitle`（L50）、`accountDeletionStatusTitle`（L73）、`DataRequestProgressDetails`（L94）、`AccountDeletionSensitivePage`（L116）、`AccountDeletionStatusRouter`（L668）与 `AccountDeletionLookupFailureCard`（L780）。完整覆盖态 1 `authDeleteImpact` ＋ `matters` 真实未结事项子视图（L187–L294）、态 2 `authDeleteVerify` 用途验证与二次勾选确认提交（L296–L489）、态 3 `authDeleteProcessing` 受理退出与处理中/必要保全分项计数（L491–L531,L641–L660,L722–L759）、态 4 `authDeleteStatus` 完成/受限副本保留结果（L668–L720）、态 5 `authDeleteFailure` `ResultUnknown` 对账/`Failed` 保留原申请重试及受限查询失败恢复（L533–L636,L761–L804）。
+  - `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/FeaturePages.kt`：`ClientFeatureContent`（L17–L30）将 `FeaturePage.DataRequests` 账号注销敏感流转至 `AccountDeletionSensitivePage`，其余保留 `SensitiveDialog(store, fullPage = true)` 与 `rememberPrivateEditor`。
+  - `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/AccountPages.kt`：`FeaturePage.DataRequests`（L63–L133）按真实 `dataStatus` 与受限上下文分派结果/加载/失败恢复卡，保留 `erase_fields`/`matters_assistance` 并对未核对重复申请警示禁用；`RestrictedResults`（L221–L248）支持回调并在 `Recovery` 页遇 `close_account` 回执提供「查看注销结果详情」。
+  - `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ReadingPages.kt`：`featureTitle`（L17–L86）依据敏感阶段、步骤、重试阶段与 `dataStatus` 动态返回五态标题。
+  - `kmp/clientUi/src/commonMain/kotlin/com/ttkk0000/meowcircle/clientui/ConsumerApp.kt`：`handleAccountDeletionBack()`（L62–L88）、`retainTransientScopes` 注册 `DATA_REQUEST_UI_SCOPE`（L94）、`BackHandler` 与 `MobileShell`/`ContextPane` 标题及步进返回联动（L101–L133,L202–L214,L272–L276），保持 `key(owner)`、`session.useOwner(owner)` 与 `movableContentOf<MobileState>` 等约束。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`：在「F01／F13／B08 · 账号注销五态」下新增并勾选 `[x]` 原生共享 Compose 子项，回填五态路由与行号、完成层级、静态结果及 3 项只读合同阻塞；保持跨端父项 `[ ]` 未勾。
+- 验证：
+  - 静态检查：5 份 `kmp/clientUi` 目标文件 UTF-8 无 BOM、CRLF（无孤立 LF）、零冲突/样本标记、Kotlin 括号引号注释平衡及 `Mnd*` 复用核对通过；`scripts/check_client_ui_static.py`（54 公共源码 / 48 功能分派 / 748 索引）与 `scripts/check_server_shared_contract_static.py`（90 DTO）退出 0；`scripts/check_android_ui_static.py` 第 11–48 项通过并在预存未改动 `Components.kt` 的 `Mnd*` 白名单断言（L54）中止；`git diff --check` 无错误。
+  - 构建测试：未运行 `gradle` 编译、类型检查、单元测试或模拟请求，遵循全局不自行编译规则。
+  - 设备：未在 Android / iOS / Desktop 真机或模拟器启动验收，跨端联调、视觉与键盘返回仍待签收。
+- 未完成与阻塞：3 项仅靠 `kmp/clientUi` 无法绕过的只读合同阻塞（见派工清单子项）：（1）OAuth／邮箱 `reauth` 用途验证合同缺失；（2）`SensitiveActionStore.reconcile()` 对账成功后未清本地会话及未回写 `resultId` 到安全存储；（3）`RestrictedReference` 前置区分类型、`DataRequestStatus` 逐项保全依据与失败原因字段、及 `revoke-access` 客户端封装缺失。
+- 最后完成的一步与下一步：完成派工清单回填、AI 跟踪释放与编码关卡 `review` 登记；下一步由共享／服务端负责人评估 3 项阻塞合同，并与 Android／iOS／Desktop／Web 各端联合完成编译、联调与五态真机验收。
+- 关联任务 / 决定 / 证据：[派工清单](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md)、Figma Phone `238:371757`/`238:371759`/`238:371760`/`238:371761`/`238:371762` 及 Desktop／Tablet `311:380033`–`311:380055`。
+- 执行状态：已完成（原生共享 Compose 源码与静态核对；阻塞与端侧运行待验收），执行标记已释放，无后台任务。
+
+## AI-20261119-WEB-OP-AGE-EVIDENCE / 2026-11-19（UTC+08:00）
+
+- 任务与执行者：B11／W02 · Web 业务后台：可信年龄区间登记；Antigravity (Gemini)。
+- 来源：本轮实际操作。
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:/GolandProjects/kitty-circle`，分支 `main`，HEAD `f9a2dab`，工作树含本任务与并发会话未提交改动（保留未触及并发会话文件）。
+- 本次授权范围：仅处理 `/app/operator` 的 `ageEvidence` 10 态（`age-empty`、`age-field-error`、`age-edit`、`age-review`、`age-confirmed`、`age-sending`、`age-accepted`、`age-rejected`、`age-unknown`、`age-unknown-done`）及岗位撤回 `role-lost`，保持现行请求白名单与 Go 后端合同；不改收款／退款／发布授权、Go、Figma 与其他会话文件；仅回填派工清单「39 个任务态」下可信年龄区间子项；不编译／构建／安装／测试／启动／部署／提交／推送／真实环境录入。
+- 实际完成与主要文件（仓库相对路径）：
+  - `web-client/src/operator/operator.css`：提高 `.operator-workspace .field ...[aria-invalid="true"]` 与 `.field > small.field-error` 优先级（L71–L78），修复红框与字段错误提示被 `operations.css` 覆盖的缺口。
+  - `web-client/src/operator/useOperator.ts`：403 分支补清 `drafts`（L100）；新增 `revokeAccess()` 取消在途请求、清队列／详情／草稿／待核对并回读最新 `context`（L396–L418）。
+  - `web-client/src/operator/RoleTasks.tsx`：补 `parseAgeValidUntil` 严格 RFC3339 含时区未来 366 天校验（L36–L66）、`prepare("ageEvidence")` 四字段全量校验（L267–L306）、按字段清除错误与错误自动聚焦（L171–L178、L575–L583）；增 `submit(confirmed)` 与 stage/prepared 切换重置 `ack`（L374–L384、L584–L588）；区分 10 个年龄态文案与操作（`age-sending` 冻结摘要与无动作、`age-accepted` 明示无独立编号且不代本人／监护人同意、`age-rejected` 保留输入并可 `backToEdit()`、`age-unknown` 保留原请求与 `reset(acknowledged)` 守卫、`age-unknown-done` 明示仅结束本机待办）；`403` 与撤岗立即清除 `state` 私密材料与未提交输入，待核对撤岗仅保留含用户编号的最小脱敏引用（L105–L146、L403–L415）。
+  - `web-client/src/operator/OperatorApp.tsx`：传 `view` 与 `go` 接入 `useRoleTasks`/`RoleTaskPage`（L57、L331–L336）；岗位缩减清理 `switchTo`（L65–L69）；锁定期间阻止「技术运维」侧栏跳离并允许返回锁定 `ageEvidence`（L75–L79、L206、L290–L305）；新增 `role-lost` 停止与最小引用提示（L306–L327）。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`、`docs/ai/{CONTEXT.md,TASKS.md,TASK_LOG.md}`：仅回填可信年龄区间 11 态子项签收并登记本轮跟踪。
+- 验证：静态检查通过（`-I -B -X utf8` 执行 `scripts/check_admin_role_workspaces_static.py`、`scripts/check_operator_pages_static.py`、`scripts/check_web_client_static.py` 通过 101 TS/TSX、461 引用、147 schema、22 原 SVG 核对，另 `git diff --check` 无空白／BOM／冲突标记）；构建测试：未运行编译，遵循全局不自行编译规则；设备／浏览器／真实后台：未验证（仅源码／静态可签收）。
+- 未完成与阻塞：「39 个任务态」父项其余子项（发布授权、实际收款、实际退款）及真实 Go 后端／浏览器键鼠焦点／网络恢复运行验收仍待后续执行。
+- 最后完成的一步与下一步：已完成源码修复、11 态回填、静态审查与 AI 跟踪释放；下一步由对应负责人继续发布授权／收款／退款或安排授权后的真实端到端验收。
+- 关联任务 / 决定 / 证据：[派工清单](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md)、[后台任务交互](../design/figma-study/admin-task-interaction-2026-10-29/README.md)、[交互合同](../design/ADMIN_TASK_INTERACTION_2026_10_29.md)。
+- 执行状态：已完成（源码／状态对照／静态审查层；父项与真实运行待验收），执行标记释放。
+
+## AI-20261119-WEB-COMMENT-ANCHOR / 2026-11-19T14:15:00+08:00
+
+- 记录 ID / 日期时间（含时区）：`AI-20261119-WEB-COMMENT-ANCHOR` / 2026-11-19（UTC+08:00）
+- 任务与执行者：领取并完成 P0 任务「F12／W02 · Web 评论锚点底栏」源码修复、静态核对与派工回填 / Antigravity (Gemini)
+- 来源：本轮实际操作
+- 工作树、分支、HEAD、未提交状态：唯一工作树 `J:\GolandProjects\kitty-circle`，分支 `main`，HEAD `f9a2dab`；起点及过程保留既有/同仓在途改动（`docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`、`web-client/src/operator/*`、`kmp/clientUi/.../AccountDeletionPages.kt`、`docs/ai/*`），未提交、未推送。
+- 本次授权范围：仅修改 Web 消费端 `web-client/src/features/ResourcePage.tsx` 与 `web-client/src/features/chat.tsx`、派工清单对应项及自身 AI 跟踪；不改 Go、KMP、Figma 或无关页面，不编译、构建、安装、测试、启动或提交推送。
+- 实际完成与主要文件（仓库相对路径）：
+  - `web-client/src/features/ResourcePage.tsx`：新增 `isAccessRevoked`（L136–L142），重写 `NotificationCommentPage`（L143–L291）以 `reread`（`readSeq` 防串序、`invalidateQueries(listPrefix)`、`reload(path)`）确认当前可见权限后再将 `Composer` 传入 `TaskPage` `actions`；在正在读取、不可查看（`958:377408`）、读取失败（`958:380184`）及中途失权时移除 `Composer` 及其焦点入口并隐藏旧评论；在可见（`958:371822`）与已更新（`958:374615`）态展示当前版本提示、当前评论与同父项分页列表并保留返回消息中心、重新读取与父对象／状态校验；增强 `CommentBatch`（L769–L811）在 `metrics.denied` 或点赞遇访问失权时调用可选 `onUnavailable` 收敛（不误伤普通页面与单条兄弟评论）。
+  - `web-client/src/features/chat.tsx`：`Composer` 新增可选 `onUnavailable`（L259,L269），在 `send()` 捕获 401/404/410 或 `403`（无子码或 `forbidden`）且落盘清除 `uncertain` 后通知重读（L584–L598），不把资格／联系受限子码误判为失权；修复 `compact` 模式下评论框占位文案为「说点什么…」（L686–L692），保持聊天框占位「发送消息…」。
+  - `docs/client/FIGMA_GAP_TASK_PLAN_2026_11_19.md`：仅更新第 3 节「F12／W02 · Web 评论锚点底栏」一项，回填负责人、状态、四态及中途失权源码证据并勾选主项、源码对照与静态审查框，保留视觉、浏览器运行与真实业务验收框未勾。
+  - `docs/ai/TASKS.md`、`docs/ai/CONTEXT.md`、`docs/ai/TASK_LOG.md`：同步登记、结果日志并释放执行标记。
+- 验证：
+  - 静态检查：`python -X utf8 scripts/check_web_client_static.py` 退出 0（101 份 TS/TSX、461 个本地引用、147 份 schema、22 枚原 SVG、字体／贴纸与依赖锁一致）；`syntax-reader.cjs`（Node 18 / `--max-old-space-size=384` / `--wasm-num-compilation-tasks=1`，可用内存 6459 MiB）读取 `ResourcePage.tsx` 与 `chat.tsx` 均返回 `errors: []`；`git -c core.safecrlf=false diff --check`、UTF-8 无 BOM 与修改文档本地相对链接检查通过。
+  - 构建测试：未运行编译、类型检查（`tsc`）、打包（`vite`）或测试，遵循全局不自行编译规则。
+  - 设备：未启动应用或浏览器，视觉、键鼠焦点、中文 IME 与真实后端失权／恢复链路待验收。
+- 未完成与阻塞：Web 消费端目标端视觉／键鼠与真实业务及失败恢复验收待人工或后续运行授权验证。
+- 最后完成的一步与下一步：完成派工清单回填、AI 跟踪释放与完整差异复审；下一步按运行授权在真实浏览器及后端联调四态展示、Tab 焦点与 401/403/404/410 失权恢复。
+- 关联任务 / 决定 / 证据：[派工清单](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md)、[通知对齐交接](../client/NOTIFICATION_ALIGNMENT_2026_11_06.md)、Figma 节点 `958:371820`（`958:371822`／`958:374615`／`958:377408`／`958:380184`）。
+- 执行状态：已完成（源码修复与静态核对；视觉与运行待验收），执行标记已释放，无后台任务。
+
+## AI-20261119-FIGMA-GAP-PLAN / 2026-11-19（UTC+08:00）
+
+- Codex 按用户要求只读核对 Figma 与源码，制作分端可勾选派工清单。工作树 `kitty-circle` 的 main／f9a2dab，起点无未提交变更。
+- 原设计和 Figma 文档中心各 12 个顶层页。台账的 3772 个唯一画板在四个预期原稿页命中，读了注销、返回失效、岗位失权等节点和账号受限、评论四态、财务原任务台账截图。当前 614 条仅功能族映射、全部 748 条运行标记 false。已读 35:15，其中通知锚点旧句仍在，当前双端源码已有精确定位。
+- [详细派工](../client/FIGMA_GAP_TASK_PLAN_2026_11_19.md)优先列账号受限合同、注销／会话／原任务状态和 Web 评论底栏差异，给 Android 手机／平板、iPhone／iPad、Web 消费端、Desktop、业务后台和技术运维分别设勾选项。保留搜索／运维执行器占位与产品决定边界。
+- 静态对照台账、设计节点和代表性源码。未运行编译，遵循全局不自行编译规则。测试、设备、浏览器运行、迁移和供应商配置未验证。未修改业务源码或 Figma，未提交／推送；执行标记释放，等待用户按计划分派。
+
 ## AI-20261106-NOTIFICATION-ALIGN / 2026-11-06T14:01:51+08:00
 
 - 任务与执行者：Codex；用户要求拉取代码并继续完善，本轮实际操作。工作树唯一，main／a300a01，起点已跟踪文件干净、127个未跟踪文件指纹记录；fetch成功，无远端新提交，本地领先1提交，ff-only返回最新。未暂存／提交／推送／切换分支。
